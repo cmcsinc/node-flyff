@@ -1,0 +1,23 @@
+{
+  "_comment": "Shared defaults for ALL servers. Override in <server-name>.json. NEVER put secrets here.",
+  "log": {
+    "level": "info",
+    "pretty": false
+  },
+  "database": {
+    "client": "sqlite3",
+    "filename": "./data/flyff_dev.sqlite3",
+    "url": "",
+    "pool": {
+      "min": 1,
+      "max": 10
+    }
+  },
+  "cache": {
+    "adapter": "memory",
+    "redisUrl": "redis://localhost:6379"
+  },
+  "ipc": {
+    "internalPort": 29000
+  }
+}

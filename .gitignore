@@ -112,6 +112,16 @@ packages/*/dist
 packages/*/coverage
 packages/*/.tsbuildinfo
 
+# Local config overrides — contain machine-specific settings, never commit
+config/*.local.json
+config/*.local.yml
+config/*.local.yaml
+
+# Runtime data files (SQLite WAL journals, dev databases)
+data/*.sqlite3
+data/*.sqlite3-wal
+data/*.sqlite3-shm
+
 # Resources (Do not commit game data files)
 resources/data/*.txt
 resources/data/*.inc

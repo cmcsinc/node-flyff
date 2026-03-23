@@ -12,7 +12,11 @@
     "./constants/*": "./dist/constants/*.js",
     "./errors": "./dist/errors/index.js",
     "./cache": "./dist/cache/index.js",
-    "./config": "./dist/config.js",
+    "./config": "./dist/config/index.js",
+    "./config/schemas/base": "./dist/config/schemas/base.schema.js",
+    "./config/schemas/login": "./dist/config/schemas/login.schema.js",
+    "./config/schemas/cluster": "./dist/config/schemas/cluster.schema.js",
+    "./config/schemas/world": "./dist/config/schemas/world.schema.js",
     "./logger": "./dist/logger.js",
     "./eventBus": "./dist/eventBus.js"
   },
@@ -24,10 +28,12 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "js-yaml": "^4.1.0",
     "pino": "^9.0.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.12.7",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"

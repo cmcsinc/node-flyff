@@ -1,0 +1,32 @@
+{
+  "_comment": "Cluster Server config. Secrets (ipc.secret, database.url) must come from process.env.",
+  "server": {
+    "id": "cluster_1",
+    "host": "0.0.0.0",
+    "port": 38100
+  },
+  "log": {
+    "level": "info",
+    "pretty": false
+  },
+  "registration": {
+    "_comment": "Controls which world servers may register, and how to register with the login server.",
+    "internalPort": 29000,
+    "allowedWorlds": ["world_1"],
+    "loginHost": "127.0.0.1",
+    "loginInternalPort": 29001,
+    "reconnectIntervalMs": 5000,
+    "heartbeatIntervalMs": 5000,
+    "worldHeartbeatTimeoutMs": 15000
+  },
+  "character": {
+    "maxPerAccount": 3,
+    "startMap": "WI_WORLD_FLARIS",
+    "startX": 3068.0,
+    "startY": 31.0,
+    "startZ": 3176.0,
+    "startLevel": 1,
+    "startGold": 0,
+    "startInventorySize": 42
+  }
+}
