@@ -12,14 +12,67 @@
       "Bash(git add CLAUDE.md)",
       "Bash(git commit -m \"docs: add CLAUDE.md architecture and coding standards\")",
       "Bash(git rm -r --cached .)",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"chore: clear git cache to apply updated .gitignore and include .claude files\")",
+      "Bash(pnpm install)",
+      "Bash(npx tsx scripts/agent-checkpoint.ts --task=*)",
+      "Bash(git add .claude/settings.json .claude/skills/flyff-cpp-to-nodejs/SKILL.md .claude/skills/flyff-packet-protocol/SKILL.md .claude/skills/flyff-security/SKILL.md CLAUDE.md package.json .claude/agents/ .claude/hooks/ .claude/skills/flyff-agent-workflow/ .claude/skills/flyff-brainstorming/ .claude/skills/flyff-research/ .claude/skills/flyff-testing-patterns/ .claude/state/ pnpm-lock.yaml scripts/)"
     ],
     "additionalDirectories": [
       "/Users/owner/.claude/projects/-Users-owner-Cyril-nodejs-flyff",
       "/Users/owner/Cyril/nodejs-flyff",
       "/Users/owner/Cyril/nodejs-flyff/.claude/skills/flyff-testing-patterns",
       "/Users/owner/Cyril/nodejs-flyff/.claude/skills/flyff-cache-layer",
-      "/Users/owner/Cyril/nodejs-flyff/.claude/skills/flyff-ipc-framework"
+      "/Users/owner/Cyril/nodejs-flyff/.claude/skills/flyff-ipc-framework",
+      "/Users/owner/Cyril/nodejs-flyff/.claude/skills",
+      "/Users/owner/Cyril/nodejs-flyff/.claude"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/pre-tool-safety-guard.mjs",
+            "timeout": 5,
+            "async": false
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/post-tool-checkpoint.mjs",
+            "timeout": 5,
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/post-tool-test-reminder.mjs",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/stop-session-checkpoint.mjs",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
     ]
   }
 }

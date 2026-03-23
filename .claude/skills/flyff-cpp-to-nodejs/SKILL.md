@@ -26,14 +26,16 @@ float   f;     // IEEE 754 32b  let f = 0.0;
 bool    bFlag; // 1 byte        let bFlag = false;
 char    ch;    // 1 byte char   let ch = '';
 CString str;   // MFC string    let str = '';
+__int64 i64;   // int64         let i64 = 0n;       // BigInt
 ```
 
 Bit-width enforcement for safety:
 ```js
-const u8  = v => (v & 0xFF) >>> 0;
-const u16 = v => (v & 0xFFFF) >>> 0;
-const u32 = v => (v >>> 0);           // fast uint32 clamp
-const i32 = v => (v | 0);             // fast int32 clamp
+const u8  = v => (Number(v) & 0xFF) >>> 0;
+const u16 = v => (Number(v) & 0xFFFF) >>> 0;
+const u32 = v => (Number(v) >>> 0);           // fast uint32 clamp
+const i32 = v => (Number(v) | 0);             // fast int32 clamp
+const i64 = v => BigInt(v);                   // 64-bit int
 ```
 
 ---

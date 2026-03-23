@@ -242,20 +242,23 @@ export function validatePlayerStats(player) {
 
 ## SQL Injection Prevention
 
-**Never** interpolate user data into SQL strings. Always use parameterized queries:
+**Never** interpolate user data into Knex query strings. Always use Knex's built-in parameterization or `.where({ key: val })` objects:
 
 ```js
 // WRONG ❌
-const rows = await db.query(`SELECT * FROM accounts WHERE username = '${username}'`);
+const rows = await db.raw(`SELECT * FROM accounts WHERE username = '${username}'`);
 
-// CORRECT ✅ — parameterized
-const rows = await db.query(
-  'SELECT id, password_hash FROM accounts WHERE username = $1',
+// CORRECT ✅ — parameterized via object
+const rows = await db('accounts').where({ username }).select('id', 'password_hash');
+
+// CORRECT ✅ — parameterized via raw array
+const rows = await db.raw(
+  'SELECT id, password_hash FROM accounts WHERE username = ?',
   [username]
 );
 ```
 
-All repository functions must use `$1`, `$2` ... placeholders (PostgreSQL) or `?` (MySQL).
+All repository functions must use Knex query builders securely.
 
 ---
 
