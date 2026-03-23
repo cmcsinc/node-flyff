@@ -1,7 +1,7 @@
 # Current Session State
 
 - **Active Goal**: Overhaul Flyff emulator into a fully agentic monorepo with TS, Knex, and secure IPC.
-- **Last Updated**: 2026-03-23 22:15 (session end)
+- **Last Updated**: 2026-03-23 22:25
 - **Status**: In Progress
 
 ## Progress Log
@@ -23,7 +23,7 @@
 
 ## Technical Context
 
-- **Current Task**: Modified `/Users/owner/Cyril/nodejs-flyff/.claude/state/SESSION.md` via Write at 2026-03-23 22:15
+- **Current Task**: Modified `/Users/owner/Cyril/nodejs-flyff/README.md` via Edit at 2026-03-23 22:25
 - **Current Branch**: `main`
 - **Key Decisions**: Using SQLite WAL for local persistence, Knex for multi-DB, and @flyff/ipc for signed messaging.
 - **Agent Roster**: architect (opus), implementor (sonnet), researcher (sonnet), security-auditor (sonnet), database-agent (sonnet), test-agent (haiku), devops-agent (haiku).
