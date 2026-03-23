@@ -109,6 +109,7 @@ tools/                ← packet-sniffer, resource-inspector (dev tools)
 | Language | **TypeScript** (strict mode, ESM, `.ts` files) |
 | Runtime | Node.js 20 LTS, ESM only |
 | Database | **Knex.js** — SQLite3 (local dev), PostgreSQL or MySQL (production) |
+| Persistence | **Hybrid WAL Pattern** — Embedded SQLite journal (0-latency crash recovery) + Knex Main DB sync |
 | Cache / State | **ICacheAdapter** — Redis (ioredis) or Cloudflare Workers KV |
 | IPC Framework | **@flyff/ipc** — HMAC-signed JSON over Redis pub/sub + internal TLS TCP |
 | Validation | **Zod** — config env, IPC schemas, packet field validation |
@@ -219,6 +220,7 @@ The game loop must stay under 10ms. CPU-heavy work (pathfinding, collision) goes
 
 - Zone-based broadcasting — iterate only players in the same zone, never all players
 - Dirty flags (`player._dirty` Set) — only persist changed fields; flush every 30s or on disconnect
+- **Hybrid WAL Persistence**: Critical state changes (items, exp) are written synchronously to an embedded local SQLite journal (`world_X_journal.sqlite`) to prevent data loss on crash without DDoS-ing the main database.
 - Object pooling for frequently allocated packets and vectors
 
 ---
@@ -277,6 +279,7 @@ This project has context-aware skills in `.claude/skills/`. They are auto-sugges
 | --- | --- |
 | `flyff-packet-protocol` | Packet parsing, opcodes, LSFR encryption, PacketReader/Writer |
 | `flyff-emulator-arch` | Server topology, zone management, resource loading, game loop |
+| `flyff-state-persistence` | Embedded SQLite WAL journal, crash recovery, dupe prevention |
 | `flyff-multi-layer-arch` | Handler/Service/Repository design, EventBus, DI patterns |
 | `flyff-database-layer` | Knex DB (SQLite/PG/MySQL), schema, repositories, migrations |
 | `flyff-cache-layer` | ICacheAdapter, Redis, Cloudflare KV, MemoryCache |

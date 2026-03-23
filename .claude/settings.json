@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/owner/Cyril/**)",
+      "Read(//Users/owner/Cyril/nodejs-flyff/.claude/skills/$skill/**)",
+      "Read(//Users/owner/.claude/**)",
+      "Read(//Users/owner/Cyril/nodejs-flyff/**)",
+      "Bash(git init)",
+      "Bash(git add .gitignore LICENSE README.md package.json pnpm-workspace.yaml .github/)",
+      "Bash(git commit -m \"Initial commit: GitHub preparation:*)",
+      "Bash(git branch -M main)",
+      "Bash(git add CLAUDE.md)",
+      "Bash(git commit -m \"docs: add CLAUDE.md architecture and coding standards\")",
+      "Bash(git rm -r --cached .)",
+      "Bash(git add .)"
+    ],
+    "additionalDirectories": [
+      "/Users/owner/.claude/projects/-Users-owner-Cyril-nodejs-flyff",
+      "/Users/owner/Cyril/nodejs-flyff",
+      "/Users/owner/Cyril/nodejs-flyff/.claude/skills/flyff-testing-patterns",
+      "/Users/owner/Cyril/nodejs-flyff/.claude/skills/flyff-cache-layer",
+      "/Users/owner/Cyril/nodejs-flyff/.claude/skills/flyff-ipc-framework"
+    ]
+  }
+}
