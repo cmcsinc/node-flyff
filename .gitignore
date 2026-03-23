@@ -120,7 +120,3 @@ resources/data/*.wld
 resources/data/*.rgn
 !resources/data/.gitkeep
 
-# Claude AI settings
-.claude/
-!.claude/CLAUDE.md
-!.claude/skills
