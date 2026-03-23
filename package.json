@@ -1,0 +1,21 @@
+{
+  "name": "flyff-nodejs",
+  "version": "1.0.0",
+  "description": "Modern Flyff (Fly For Fun) MMORPG server emulator in TypeScript/Node.js",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "node --experimental-vm-modules --test packages/*/src/**/*.test.ts",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
+  }
+}
