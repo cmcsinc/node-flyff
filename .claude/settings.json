@@ -16,7 +16,9 @@
       "Bash(git commit -m \"chore: clear git cache to apply updated .gitignore and include .claude files\")",
       "Bash(pnpm install)",
       "Bash(npx tsx scripts/agent-checkpoint.ts --task=*)",
-      "Bash(git add .claude/settings.json .claude/skills/flyff-cpp-to-nodejs/SKILL.md .claude/skills/flyff-packet-protocol/SKILL.md .claude/skills/flyff-security/SKILL.md CLAUDE.md package.json .claude/agents/ .claude/hooks/ .claude/skills/flyff-agent-workflow/ .claude/skills/flyff-brainstorming/ .claude/skills/flyff-research/ .claude/skills/flyff-testing-patterns/ .claude/state/ pnpm-lock.yaml scripts/)"
+      "Bash(git add .claude/settings.json .claude/skills/flyff-cpp-to-nodejs/SKILL.md .claude/skills/flyff-packet-protocol/SKILL.md .claude/skills/flyff-security/SKILL.md CLAUDE.md package.json .claude/agents/ .claude/hooks/ .claude/skills/flyff-agent-workflow/ .claude/skills/flyff-brainstorming/ .claude/skills/flyff-research/ .claude/skills/flyff-testing-patterns/ .claude/state/ pnpm-lock.yaml scripts/)",
+      "Bash(ls -R packages/core/src/config.ts packages/login-server/src/compose.ts packages/cluster-server/src/compose.ts packages/world-server/src/compose.ts packages/login-server/package.json packages/cluster-server/package.json packages/world-server/package.json .env*)",
+      "Bash(git commit:*)"
     ],
     "additionalDirectories": [
       "/Users/owner/.claude/projects/-Users-owner-Cyril-nodejs-flyff",
