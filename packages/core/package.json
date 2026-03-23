@@ -1,0 +1,35 @@
+{
+  "name": "@flyff/core",
+  "version": "1.0.0",
+  "description": "Shared core library — packet protocol, constants, errors, cache, event bus",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./net": "./dist/net/index.js",
+    "./constants/*": "./dist/constants/*.js",
+    "./errors": "./dist/errors/index.js",
+    "./cache": "./dist/cache/index.js",
+    "./config": "./dist/config.js",
+    "./logger": "./dist/logger.js",
+    "./eventBus": "./dist/eventBus.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "lint": "eslint src --ext .ts",
+    "test": "tsx --test src/**/*.test.ts",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "pino": "^9.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}

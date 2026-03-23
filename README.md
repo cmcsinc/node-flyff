@@ -1,58 +1,214 @@
 # Flyff Node.js Server Emulator
 
-This is a modern **Flyff (Fly For Fun) MMORPG server emulator** written in TypeScript/Node.js. It replicates the Login, Cluster, and World servers of the game and communicates with real Flyff game clients over TCP using the authentic binary packet protocol.
+> A modern, production-grade **Flyff (Fly For Fun) MMORPG server emulator** written in **TypeScript/Node.js**.
+> Replicates the Login, Cluster, and World servers, communicating with real Flyff clients over TCP using the authentic binary packet protocol.
 
-## Features
-- **Modern Stack**: Node.js 20 LTS, pure ESM, strict TypeScript.
-- **Monorepo Architecture**: Managed by `pnpm` workspaces for clear separation of concerns.
-- **Multi-Server Topology**: Independent Login, Cluster, and World servers communicating via signed Redis Pub/Sub IPC.
-- **Clean Architecture**: Strict separation of Handlers, Services, and Repositories.
-- **Multi-Database Support**: Knex.js query builder with support for PostgreSQL, MySQL, and SQLite3.
+[![CI](https://github.com/your-org/nodejs-flyff/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/nodejs-flyff/actions/workflows/ci.yml)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](LICENSE)
+[![Node.js: 20+](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org)
+[![pnpm](https://img.shields.io/badge/pnpm-9%2B-orange.svg)](https://pnpm.io)
 
-## Project Structure
+---
+
+## ✨ Features
+
+- **Modern TypeScript** — strict mode, pure ESM, zero `any`
+- **Multi-Server Topology** — independent Login, Cluster, and World servers
+- **Secure IPC** — HMAC-SHA256 signed Redis pub/sub + internal TLS TCP between servers
+- **Crash-Proof Persistence** — Hybrid WAL pattern: SQLite WAL journal (0-latency) + Knex main DB sync
+- **Multi-Database** — Knex.js supports SQLite3 (dev), PostgreSQL, and MySQL/MariaDB (production)
+- **Clean Architecture** — strict `Handler → Service → Repository` separation
+- **Fully Agentic** — 7 specialized Claude sub-agents and 4 lifecycle hooks for autonomous development
+
+---
+
+## 📁 Project Structure
+
 ```text
 packages/
-  core/               # Shared constants, packet protocol, utils, IPC
-  login-server/       # Authentication and server list (port 23000)
-  cluster-server/     # Character selection and creation (port 38100)
-  world-server/       # Core gameplay loop and game systems (port 38180)
-  database/           # Repositories, DB connection pool, migrations
-resources/            # Loaders, parsers, and game data (propItem, propMover, etc.)
+  core/               @flyff/core     — Shared: packet protocol, constants, cache, logger, errors
+  ipc/                @flyff/ipc      — Secure inter-server IPC (HMAC pub/sub + TLS TCP)
+  database/           @flyff/database — Knex migrations, repositories, WAL journal
+  login-server/       @flyff/login-server    — Auth + server list (port 23000)
+  cluster-server/     @flyff/cluster-server  — Character select/create (port 38100)
+  world-server/       @flyff/world-server    — Gameplay, AI, zones (port 38180)
+resources/            @flyff/resources — propItem/propMover/propSkill loaders and parsers
+tools/                Dev tools: packet sniffer, resource inspector
+scripts/              Agent and dev helper scripts
+.claude/
+  agents/             7 specialized sub-agents (architect, implementor, researcher, ...)
+  hooks/              4 lifecycle hooks (safety guard, checkpointing, test reminder)
+  skills/             18 context-aware knowledge skills
+  state/SESSION.md    Persistent agent session checkpoint
 ```
 
-## Requirements
-- **Node.js**: v20.x (LTS) or higher
-- **Package Manager**: `pnpm`
-- **Database**: PostgreSQL / MySQL / SQLite3 (for local dev)
-- **Cache / IPC**: Redis
+---
 
-## Getting Started
+## 🚀 Getting Started
 
-1. **Install dependencies:**
-   ```bash
-   pnpm install
-   ```
+### Prerequisites
 
-2. **Setup environment variables:**
-   Copy `.env.example` to `.env` and configure your database and Redis connections.
+| Tool | Version |
+| --- | --- |
+| Node.js | ≥ 20.0.0 |
+| pnpm | ≥ 9.0.0 |
+| Redis | ≥ 7 (optional for local dev — falls back to MemoryCache) |
+| PostgreSQL / MySQL | (optional — SQLite3 used by default) |
 
-3. **Run database migrations:**
-   ```bash
-   pnpm --filter @flyff/database run migrate
-   ```
+### 1. Install dependencies
 
-4. **Start the servers:**
-   ```bash
-   # In separate terminal windows:
-   pnpm --filter @flyff/login-server run dev
-   pnpm --filter @flyff/cluster-server run dev
-   pnpm --filter @flyff/world-server run dev
-   ```
+```bash
+pnpm install
+```
 
-## Development
-- **Testing**: `pnpm test` (Uses native Node.js `--test` runner via `tsx`)
-- **Linting**: `pnpm lint` (ESLint)
-- **Building**: `pnpm build` (tsc)
+### 2. Configure environment
 
-## License
-This project is licensed under the **AGPL-3.0 License**. See the `LICENSE` file for details.
+```bash
+cp .env.example .env
+# Edit .env — set DB_CLIENT, DATABASE_URL, REDIS_URL, IPC_SECRET
+```
+
+For **local development**, the defaults work out of the box:
+
+```bash
+DB_CLIENT=sqlite3
+DB_FILENAME=./data/flyff_dev.sqlite3
+IPC_SECRET=change-me-in-production
+```
+
+### 3. Run database migrations
+
+```bash
+pnpm --filter @flyff/database migrate
+```
+
+### 4. Start the servers
+
+Open three terminals:
+
+```bash
+# Terminal 1 — Login Server
+pnpm --filter @flyff/login-server dev
+
+# Terminal 2 — Cluster Server
+pnpm --filter @flyff/cluster-server dev
+
+# Terminal 3 — World Server
+pnpm --filter @flyff/world-server dev
+```
+
+Or with Docker Compose (Redis + PostgreSQL included):
+
+```bash
+docker compose up
+```
+
+---
+
+## 🧪 Development Commands
+
+```bash
+# Build all packages
+pnpm -r build
+
+# Run all tests (Node.js native test runner)
+pnpm -r test
+
+# Lint all packages
+pnpm -r lint
+
+# Format all files
+pnpm format
+
+# Update session checkpoint
+pnpm checkpoint --task="Description of what you did"
+```
+
+---
+
+## 🏗 Architecture
+
+### Server Topology
+
+```text
+Flyff Client ──► Login Server (:23000)   — authenticate, receive server list
+                      │
+                 @flyff/ipc (HMAC Redis pub/sub + internal TLS TCP)
+                      │
+Flyff Client ──► Cluster Server (:38100) — character select / create
+                      │
+                 @flyff/ipc
+                      │
+Flyff Client ──► World Server (:38180)   — gameplay, combat, AI, zones
+```
+
+### Layer Discipline
+
+Every feature follows a strict hierarchy — **no skipping layers**:
+
+| Layer | Owns | Must NOT |
+| --- | --- | --- |
+| **Handler** | Parse packets, validate input, call service | Access DB or implement game rules |
+| **Service** | Business logic, game rules, emit events | Call `socket.write()` or write SQL |
+| **Repository** | All Knex queries | Contain game logic |
+| **Manager** | In-memory live state | Persist data |
+| **System** | Per-tick game simulation | Handle packets |
+
+### Persistence (Hybrid WAL)
+
+To solve the "rollback vs. DB DDoS" MMORPG dilemma:
+
+1. **Critical mutations** (items, gold, exp) → written synchronously to a local SQLite WAL journal (`world_X_journal.sqlite`) in `< 0.1ms`
+2. **Main DB sync** → Knex batch-flushes dirty fields every 30 seconds
+3. **Crash recovery** → on startup, replay any unprocessed journal entries
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps:
+
+### 1. Fork & Branch
+
+```bash
+git checkout -b feat/your-feature-name
+```
+
+### 2. Follow Code Standards
+
+- **TypeScript strict** — no `any`, no `@ts-ignore`
+- **ESM only** — `import`/`export`, no `require()`
+- **Handler → Service → Repository** — never skip layers
+- **Zod** for all external input validation
+- **pino** for logging — no `console.log`
+- **node:test** for tests — no Jest/Mocha/Vitest
+- **WAL-first** for any mutation of items, gold, or exp
+
+See [`CLAUDE.md`](CLAUDE.md) for the full coding standards reference.
+
+### 3. Write Tests
+
+Every `.ts` source file must have a companion `.test.ts`.
+
+```bash
+pnpm -r test
+```
+
+### 4. Open a Pull Request
+
+- Target: `main` branch
+- Fill in the PR template
+- Ensure CI passes (lint, build, test on SQLite + PostgreSQL)
+
+---
+
+## 📜 License
+
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+See the [`LICENSE`](LICENSE) file for details.
+
+---
+
+## ⚠️ Disclaimer
+
+This project is for **educational and research purposes only**. It is not affiliated with, endorsed by, or connected to Gala Lab Corp. (formerly Gravity Co.) or any official Flyff product. All game content, assets, and trademarks belong to their respective owners. Do not use this software for commercial purposes or to replace official game services.
