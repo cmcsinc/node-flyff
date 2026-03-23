@@ -92,6 +92,7 @@ class PacketReader {
 
   readString() {
     const len = this.readDword();
+    if (len === 0) return '';
     const s = this.buf.toString('ascii', this.offset, this.offset + len);
     this.offset += len;
     return s;

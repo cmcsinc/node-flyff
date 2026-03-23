@@ -12,10 +12,13 @@
     "build": "pnpm -r build",
     "test": "node --experimental-vm-modules --test packages/*/src/**/*.test.ts",
     "lint": "pnpm -r lint",
+    "checkpoint": "tsx scripts/agent-checkpoint.ts",
     "format": "prettier --write \"**/*.{ts,js,json,md}\""
   },
   "devDependencies": {
+    "@types/node": "^20.12.7",
     "prettier": "^3.2.5",
+    "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   }
 }

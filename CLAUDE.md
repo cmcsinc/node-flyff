@@ -292,3 +292,16 @@ This project has context-aware skills in `.claude/skills/`. They are auto-sugges
 | `flyff-security` | Auth, password hashing, rate limiting, anti-cheat, input validation |
 | `flyff-nodejs-patterns` | Async patterns, EventEmitter, Worker Threads, Buffer, memory |
 | `flyff-testing-patterns` | tsx runner, Node test, SQLite in-memory tests, mock factories |
+| `flyff-agent-workflow` | Checkpointing, session restoration, autonomous handoffs |
+
+---
+
+## Agentic Workflow & Session Restoration
+
+To ensure a "fully agentic" experience, this project follows a strict checkpointing protocol:
+
+- **State File**: `.claude/state/SESSION.md` is the source of truth for the current agent session.
+- **Mandatory Checkpoint**: Agents must update `SESSION.md` or the `TodoWrite` list after every significant change.
+- **Restoration**: When resuming a session, always `Read` `SESSION.md` first and synchronize the active task list.
+- **Checkpoint Content**: Must include the active goal, progress log, technical context (last tool used, current branch), and pending questions.
+- **Skill Usage**: Trigger `flyff-agent-workflow` for any session management or handoff tasks.
