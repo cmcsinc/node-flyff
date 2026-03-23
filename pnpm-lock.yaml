@@ -45,6 +45,9 @@ importers:
 
   packages/core:
     dependencies:
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.1
       pino:
         specifier: ^9.0.0
         version: 9.14.0
@@ -52,6 +55,9 @@ importers:
         specifier: ^3.23.0
         version: 3.25.76
     devDependencies:
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/node':
         specifier: ^20.12.7
         version: 20.19.37
@@ -370,6 +376,9 @@ packages:
   '@types/better-sqlite3@7.6.13':
     resolution: {integrity: sha512-NMv9ASNARoKksWtsq/SHakpYAYnhBrQgGD8zkLYk/jaK8jUGn08CfEdTRgYhMypUQAfzSP8W6gNLe0q19/t4VA==}
 
+  '@types/js-yaml@4.0.9':
+    resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
+
   '@types/node@20.19.37':
     resolution: {integrity: sha512-8kzdPJ3FsNsVIurqBs7oodNnCEVbni9yUEkaHbgptDACOPW04jimGagZ51E6+lXUwJjgnBw+hyko/lkFWCldqw==}
 
@@ -406,6 +415,9 @@ packages:
   argon2@0.40.3:
     resolution: {integrity: sha512-FrSmz4VeM91jwFvvjsQv9GYp6o/kARWoYKjbjDB2U5io1H3e5X67PYGclFDeQff6UXIhUd4aHR3mxCdBbMMuQw==}
     engines: {node: '>=16.17.0'}
+
+  argparse@2.0.1:
+    resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
   atomic-sleep@1.0.0:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
@@ -672,6 +684,10 @@ packages:
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+
+  js-yaml@4.1.1:
+    resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
+    hasBin: true
 
   knex@3.2.4:
     resolution: {integrity: sha512-aTpal0lRQKH4YVJD032sicM4fsrZxCMq2r+kOjoFtleeX150JIry/C3Sw1/9uwE52ladrbFiO/OxBDNwQKDwEQ==}
@@ -1245,6 +1261,8 @@ snapshots:
     dependencies:
       '@types/node': 20.19.37
 
+  '@types/js-yaml@4.0.9': {}
+
   '@types/node@20.19.37':
     dependencies:
       undici-types: 6.21.0
@@ -1293,6 +1311,8 @@ snapshots:
       '@phc/format': 1.0.0
       node-addon-api: 8.6.0
       node-gyp-build: 4.8.4
+
+  argparse@2.0.1: {}
 
   atomic-sleep@1.0.0: {}
 
@@ -1599,6 +1619,10 @@ snapshots:
 
   isexe@2.0.0:
     optional: true
+
+  js-yaml@4.1.1:
+    dependencies:
+      argparse: 2.0.1
 
   knex@3.2.4(better-sqlite3@9.6.0)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7):
     dependencies:

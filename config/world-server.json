@@ -1,0 +1,40 @@
+{
+  "_comment": "World Server config. Secrets (ipc.secret, database.url) must come from process.env.",
+  "server": {
+    "id": "world_1",
+    "host": "0.0.0.0",
+    "port": 38180
+  },
+  "log": {
+    "level": "info",
+    "pretty": false
+  },
+  "ipc": {
+    "internalPort": 29000
+  },
+  "registration": {
+    "_comment": "How this world server connects to and registers with the cluster server.",
+    "clusterHost": "127.0.0.1",
+    "clusterInternalPort": 29000,
+    "channelId": 1,
+    "channelName": "Madrigal Ch.1",
+    "reconnectIntervalMs": 5000,
+    "heartbeatIntervalMs": 5000
+  },
+  "world": {
+    "tickRateMs": 50,
+    "maxPlayers": 500,
+    "expRate": 1.0,
+    "dropRate": 1.0,
+    "goldRate": 1.0,
+    "spawnMultiplier": 1.0
+  },
+  "zone": {
+    "broadcastRadius": 75.0,
+    "persistIntervalMs": 30000
+  },
+  "wal": {
+    "journalPath": "./data/world_journal.sqlite3",
+    "syncBatchSize": 100
+  }
+}

@@ -1,0 +1,20 @@
+# world-server.local.yml — LOCAL MACHINE OVERRIDES (gitignored)
+# Copy this file and fill in your local values.
+# This file takes priority over world-server.json.
+# NEVER commit this file — it is gitignored via config/*.local.*
+
+# Override log level for verbose local debugging
+log:
+  level: debug
+  pretty: true   # human-readable pino output
+
+# Local dev rates (10x for faster testing)
+world:
+  expRate: 10.0
+  dropRate: 10.0
+  goldRate: 10.0
+
+# Smaller WAL journal for dev (flush more often)
+wal:
+  journalPath: ./data/world_dev_journal.sqlite3
+  syncBatchSize: 10

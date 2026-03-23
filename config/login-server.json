@@ -1,0 +1,35 @@
+{
+  "_comment": "Login Server config. Secrets (ipc.secret, database.url) must come from process.env.",
+  "server": {
+    "id": "login_1",
+    "host": "0.0.0.0",
+    "port": 23000
+  },
+  "log": {
+    "level": "info",
+    "pretty": false
+  },
+  "registration": {
+    "_comment": "Controls which cluster servers may register with this login server.",
+    "internalPort": 29001,
+    "allowedClusters": ["cluster_1"],
+    "heartbeatTimeoutMs": 15000
+  },
+  "auth": {
+    "argon2MemoryCost": 65536,
+    "argon2TimeCost": 3,
+    "argon2Parallelism": 1,
+    "tokenTtlMs": 30000,
+    "maxLoginAttempts": 5,
+    "lockoutDurationMs": 300000
+  },
+  "serverList": [
+    {
+      "_comment": "Static fallback — used only before any cluster has dynamically registered.",
+      "name": "Madrigal",
+      "ip": "127.0.0.1",
+      "port": 38100,
+      "channels": 1
+    }
+  ]
+}
