@@ -116,6 +116,7 @@ packages/*/.tsbuildinfo
 packages/*/src/**/*.js
 packages/*/src/**/*.js.map
 packages/*/src/**/*.d.ts
+packages/*/src/**/*.d.ts.map
 
 # Local config overrides — contain machine-specific settings, never commit
 config/*.local.json
