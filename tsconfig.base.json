@@ -14,6 +14,17 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@flyff/core": ["packages/core/src/index.ts"],
+      "@flyff/core/*": ["packages/core/src/*"],
+      "@flyff/ipc": ["packages/ipc/src/index.ts"],
+      "@flyff/ipc/*": ["packages/ipc/src/*"],
+      "@flyff/database": ["packages/database/src/index.ts"],
+      "@flyff/database/*": ["packages/database/src/*"],
+      "@flyff/resources": ["resources/src/index.ts"],
+      "@flyff/resources/*": ["resources/src/*"]
+    }
   }
 }

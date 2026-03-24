@@ -12,11 +12,66 @@ description: >
 
 To ensure this project remains "fully agentic," every agent (main or sub-agent) must follow a strict checkpointing protocol. This allows any future agent instance to resume exactly where the previous one left off.
 
-## 1. The SESSION.md File
+---
 
-The source of truth for the current agent session is `.claude/state/SESSION.md`.
+## 1. The Two State Files
 
-### Structure of SESSION.md
+### SESSION.md — Per-session single-agent state
+Path: `.claude/state/SESSION.md`
+
+- Tracks the **current (main) agent's** active goal and in-progress task.
+- Written by hooks automatically (checkpoint + test reminder).
+- **One agent at a time writes to this.**
+- **Sub-agents do NOT write to SESSION.md** — they write to their own file + PROGRESS.md.
+
+### PROGRESS.md — Cross-agent persistent ledger
+Path: `.claude/state/PROGRESS.md`
+
+- The **shared memory layer** used by ALL agents.
+- Contains: module status table, test coverage, security audit log, research findings, **lessons learned**, and agent communication log.
+- **Every agent reads this at session start.**
+- **Every agent writes to this when completing work or recording a lesson.**
+
+---
+
+## 2. Per-Agent Session Files
+
+Each specialized agent has its own session file:
+
+```
+.claude/state/agents/
+  implementor.md
+  test-agent.md
+  researcher.md
+  security-auditor.md
+  database-agent.md
+  architect.md
+  devops-agent.md
+```
+
+### Session Restoration Protocol (every sub-agent must follow)
+
+```
+1. Read .claude/state/agents/<my-name>.md         ← restore my own state
+2. Read .claude/state/PROGRESS.md                  ← shared cross-agent memory
+3. Read CLAUDE.md                                  ← code standards
+4. Update .claude/state/agents/<my-name>.md        ← set Active Task
+5. Begin work
+```
+
+### Session Completion Protocol (every sub-agent must follow)
+
+```
+1. Update PROGRESS.md → module row status (⏳ → 🔄 → ✅)
+2. Write to PROGRESS.md → Agent Communication Log (handoff message)
+3. Write any lesson learned to PROGRESS.md → Lessons Learned
+4. Update .claude/state/agents/<my-name>.md → Active Task = "None", Phase = "Idle"
+```
+
+---
+
+## 3. The Main Session (SESSION.md) Structure
+
 ```markdown
 # Current Session State
 
@@ -31,33 +86,82 @@ The source of truth for the current agent session is `.claude/state/SESSION.md`.
 - [ ] Task D (Pending)
 
 ## Technical Context
-- **Current Branch**: `feature/item-system`
-- **Last Successful Tool**: `Write(packages/core/src/items.ts)`
-- **Discovered Blockers**: None
-- **Next Critical Step**: Define the Zod schema for items.
+- **Current Branch**: `main`
+- **Current Task**: Modified `<file>` via Write at <time>
+- **Key Decisions**: [Architecture decisions made]
+
+## Test Results
+- ✅ Test run [2026-03-25 12:00]: `packages/core/src/net/PacketBuffer.test.ts` — PASSED
 
 ## Pending Questions for User
 1. Should we support item duration in the initial MVP?
 ```
 
-## 2. Checkpointing Rules
+---
 
-1.  **Mandatory Checkpoint**: You **MUST** update `SESSION.md` (or the `TodoWrite` list) after every significant change (e.g., finishing a file edit, running a successful test suite, or completing a sub-task).
-2.  **Context Preservation**: If you are about to hit a context limit or expect a disconnect, write a "Deep Checkpoint" to `SESSION.md` detailing the exact internal state (e.g., "I was halfway through refactoring `Mover.ts`; line 450 is done, but line 500 needs the `updatePos` call updated").
-3.  **Atomic Tasks**: Break large tasks into small, checkpointable units.
+## 4. Checkpointing Rules
 
-## 3. Session Restoration Protocol
+1. **Mandatory Checkpoint**: Update `SESSION.md` (or your own agent session file) after every significant change.
+2. **Context Preservation**: Before a context limit, write a "Deep Checkpoint" with exact internal state (e.g., "I was halfway through refactoring `Mover.ts`; line 450 done, line 500 needs the `updatePos` call updated").
+3. **Atomic Tasks**: Break large tasks into small, checkpointable units.
 
-When you start a new session or "resume" an existing one:
+---
 
-1.  **Read the State**: Immediately `Read` `.claude/state/SESSION.md` and `CLAUDE.md`.
-2.  **Verify the Environment**: Run `git status` and check for any partially completed files mentioned in the session log.
-3.  **Sync the Todo List**: Use `TodoWrite` to restore the active task list based on the `SESSION.md` log.
-4.  **Acknowledge the User**: Briefly summarize where you are: "I've restored the session. I'm currently at Task C: Implementing the Item Zod schema."
+## 5. Self-Learning Protocol
 
-## 4. Sub-Agent Handoffs
+### When to record a lesson
+- After fixing a bug that caused a test to fail
+- After discovering a non-obvious edge case in the packet protocol
+- After resolving a TypeScript error that revealed a design flaw
 
-When spawning a sub-agent via the `Agent` tool:
-- Provide a summary of the current `SESSION.md` state in the prompt.
-- Instruct the sub-agent to return its results in a format that can be directly appended to the `Progress Log`.
-- Sub-agents do not write to `SESSION.md` directly; they report back to the parent who updates the main log.
+### Where to record it
+| Where | When |
+|-------|------|
+| `PROGRESS.md` → **Lessons Learned** | Always — for agent-to-agent communication |
+| `MEMORY.md` → `## Lessons Learned` | When the lesson applies broadly across sessions |
+
+### The hook does it automatically
+The `post-tool-auto-test.mjs` hook auto-detects when a test transitions FAIL → PASS and writes a brief entry to both `MEMORY.md` and `PROGRESS.md`. Agents should add the **root cause explanation** manually.
+
+### Example lesson entry (PROGRESS.md)
+```markdown
+## Lessons Learned
+| Date | Agent | File | Lesson |
+|------|-------|------|--------|
+| 2026-03-25 | implementor | PacketBuffer.ts | drain() panics on chunk < 4 bytes — guard with length check before readUInt32LE |
+```
+
+---
+
+## 6. Sub-Agent Handoff Protocol
+
+When the parent session spawns a sub-agent via the `Agent` tool:
+
+1. Include the current `SESSION.md` state summary in the agent prompt.
+2. Tell the agent which `PROGRESS.md` section to read for context.
+3. The sub-agent works autonomously and updates `PROGRESS.md` + its own session file.
+4. Sub-agents report back to the parent with a one-line summary + PROGRESS.md reference.
+5. The parent session updates `SESSION.md` Progress Log with the sub-agent's result.
+
+### Example handoff prompt to sub-agent
+```
+Context: See SESSION.md (Active Goal: implement auth system).
+Read PROGRESS.md → Research Findings for SNSP_LOGIN_CERTIFY.
+Your task: implement packages/login-server/src/handlers/auth.handler.ts.
+Update PROGRESS.md on completion. Update .claude/state/agents/implementor.md.
+```
+
+---
+
+## 7. The Full Agentic Loop
+
+```
+researcher  →  architect  →  security-auditor  →  implementor  →  test-agent
+   (facts)      (design)        (plan review)        (code)          (tests)
+                                                                        │
+                                                              FAIL → implementor (fix)
+                                                                        │
+                                                              PASS → PROGRESS.md ✅
+                                                                        │
+                                                            MEMORY.md lesson recorded
+```

@@ -16,7 +16,8 @@
   "dependencies": {
     "@flyff/core": "workspace:*",
     "@flyff/database": "workspace:*",
-    "@flyff/ipc": "workspace:*"
+    "@flyff/ipc": "workspace:*",
+    "pino": "^10.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

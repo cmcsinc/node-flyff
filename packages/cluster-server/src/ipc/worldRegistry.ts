@@ -146,6 +146,12 @@ export class WorldRegistry extends EventEmitter {
   // Public API
   // ---------------------------------------------------------------------------
 
+  /** The active net.Server instance. */
+  get server(): net.Server | null {
+    return this.#server;
+  }
+
+
   /**
    * Starts the internal TCP server and the heartbeat timeout monitor.
    * Call once on Cluster Server startup, before accepting game clients.

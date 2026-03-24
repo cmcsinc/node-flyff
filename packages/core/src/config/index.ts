@@ -26,7 +26,7 @@ export { BaseConfigSchema } from './schemas/base.schema.js';
 export type { BaseConfig } from './schemas/base.schema.js';
 
 // Server-specific schemas + types
-export { LoginServerConfigSchema } from './schemas/login.schema.js';
+export { LoginServerConfigSchema, ClusterEntrySchema } from './schemas/login.schema.js';
 export type { LoginServerConfig } from './schemas/login.schema.js';
 
 export { ClusterServerConfigSchema } from './schemas/cluster.schema.js';

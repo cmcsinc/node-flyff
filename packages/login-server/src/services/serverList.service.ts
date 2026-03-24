@@ -19,7 +19,7 @@
  */
 
 import type { ClusterRegistry, ClusterEntry } from '../ipc/clusterRegistry.js';
-import type { ClusterEntrySchema } from '@flyff/core/config/schemas/login.js';
+import type { ClusterEntrySchema } from '@flyff/core/config';
 import type { z } from 'zod';
 
 // ---------------------------------------------------------------------------

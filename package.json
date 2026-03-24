@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "pnpm -r build",
-    "test": "node --experimental-vm-modules --test packages/*/src/**/*.test.ts",
+    "test": "tsx --test packages/*/src/**/*.test.ts",
     "lint": "pnpm -r lint",
     "checkpoint": "tsx scripts/agent-checkpoint.ts",
     "format": "prettier --write \"**/*.{ts,js,json,md}\""
