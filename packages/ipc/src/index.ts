@@ -62,3 +62,16 @@ export type {
   PlayerEnterWorld,
   PlayerEnterWorldAck,
 } from './schemas/registration.schema.js';
+
+// ---------------------------------------------------------------------------
+// Core IPC Framework
+// ---------------------------------------------------------------------------
+export { signIpcMessage, verifyIpcMessage } from './signing.js';
+export { CircuitBreaker, CircuitOpenError } from './circuit.js';
+export type { CircuitBreakerOptions, CircuitState } from './circuit.js';
+export { IpcBus } from './IpcBus.js';
+export type { IpcMessageEnvelope, MessageHandler } from './IpcBus.js';
+export { IpcServer } from './IpcServer.js';
+export type { IpcRequest, IpcResponseEnvelope, RequestHandler, IpcServerTLSOptions } from './IpcServer.js';
+export { IpcClient, IpcTimeoutError, IpcRequestError } from './IpcClient.js';
+export type { IpcRequestPayload, IpcClientTLSOptions } from './IpcClient.js';

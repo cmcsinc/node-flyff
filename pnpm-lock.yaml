@@ -94,6 +94,9 @@ importers:
       sqlite3:
         specifier: ^5.1.7
         version: 5.1.7
+      zod:
+        specifier: ^3.22.4
+        version: 3.25.76
     devDependencies:
       '@types/better-sqlite3':
         specifier: ^7.6.10
