@@ -12,7 +12,8 @@ async function main(): Promise<void> {
 
   try {
     let content: string = await fs.readFile(sessionPath, 'utf8');
-    const now: string = new Date().toISOString().split('T')[0];
+    const nowParts = new Date().toISOString().split('T');
+    const now: string = nowParts[0] ?? new Date().toISOString().slice(0, 10);
 
     // Simple arg parsing
     const goal: string | undefined = args.find((a: string) => a.startsWith('--goal='))?.split('=')[1];

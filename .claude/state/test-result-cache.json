@@ -1,0 +1,23 @@
+{
+  "packages/core/src/config/merge.test.ts": "pass",
+  "packages/cluster-server/src/ipc/worldRegistry.test.ts": "pass",
+  "packages/core/src/errors.test.ts": "pass",
+  "packages/world-server/src/ipc/clusterRegistrar.test.ts": "pass",
+  "packages/core/src/config/schemas/cluster.schema.test.ts": "pass",
+  "packages/core/src/logger.test.ts": "pass",
+  "packages/core/src/eventBus.test.ts": "pass",
+  "packages/core/src/config/schemas/world.schema.test.ts": "pass",
+  "packages/core/src/cache/MemoryCache.test.ts": "pass",
+  "packages/core/src/cache/RedisCache.test.ts": "pass",
+  "packages/login-server/src/services/serverList.service.test.ts": "pass",
+  "packages/core/src/constants/opcodes.test.ts": "pass",
+  "packages/core/src/constants/objectTypes.test.ts": "pass",
+  "packages/core/src/constants/sessionState.test.ts": "pass",
+  "packages/login-server/src/index.test.ts": "pass",
+  "packages/login-server/src/compose.test.ts": "fail",
+  "packages/cluster-server/src/index.test.ts": "pass",
+  "packages/cluster-server/src/compose.test.ts": "fail",
+  "packages/world-server/src/index.test.ts": "pass",
+  "packages/world-server/src/compose.test.ts": "fail",
+  "packages/core/src/index.test.ts": "pass"
+}
