@@ -15,13 +15,46 @@ description: >
 This project uses the **Node.js Native Test Runner** (`node:test`) combined with `tsx` for TypeScript execution. **DO NOT** use Jest, Mocha, or Vitest.
 
 ```json
-// package.json
+// package.json (each package)
 {
   "scripts": {
-    "test": "tsx --test src/**/*.test.ts"
+    "test": "tsx --test test/**/*.test.ts"
   }
 }
 ```
+
+```json
+// Root package.json
+{
+  "scripts": {
+    "test": "tsx --test packages/*/test/**/*.test.ts",
+    "test:core": "tsx --test packages/core/test/**/*.test.ts"
+  }
+}
+```
+
+## ⚠️ CRITICAL: Test File Location
+
+**ALL test files MUST be in `test/` directories, NOT in `src/`.**
+
+```
+packages/core/
+  src/
+    net/
+      PacketWriter.ts          ← Source code only
+    cache/
+      MemoryCache.ts
+  test/
+    net/
+      PacketWriter.test.ts     ← Tests go here
+    cache/
+      MemoryCache.test.ts
+    utils/
+      mocks.ts
+```
+
+**FORBIDDEN:** Creating `src/**/*.test.ts` files
+**REQUIRED:** Creating `test/**/*.test.ts` files with relative imports to `src/`
 
 ---
 
@@ -30,10 +63,10 @@ This project uses the **Node.js Native Test Runner** (`node:test`) combined with
 Use `node:test` and `node:assert/strict`:
 
 ```ts
-// src/utils/math.test.ts
+// packages/core/test/utils/math.test.ts
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { distance3d } from './math.js';
+import { distance3d } from '../../src/utils/math.js';
 
 describe('Math Utils', () => {
   describe('distance3d()', () => {
@@ -58,12 +91,12 @@ describe('Math Utils', () => {
 When testing a Handler, you don't need a real TCP server. Create a mock socket and intercept `write`:
 
 ```ts
-// src/handlers/chat.handler.test.ts
+// packages/world-server/test/handlers/chat.handler.test.ts
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketWriter, PacketReader } from '@flyff/core/net/index.js';
 import { SNSP_PLAYER_CHAT } from '@flyff/core/constants/opcodes.js';
-import { makeChatHandler } from './chat.handler.js';
+import { makeChatHandler } from '../../src/handlers/chat.handler.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 
 function createMockSocket(player) {
@@ -118,11 +151,11 @@ describe('Chat Handler', () => {
 When testing repositories, swap the `Knex` connection to an in-memory SQLite database and run migrations before tests.
 
 ```ts
-// src/repositories/character.repo.test.ts
+// packages/database/test/repositories/character.repo.test.ts
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import Knex from 'knex';
-import { CharacterRepository } from './character.repo.js';
+import { CharacterRepository } from '../../src/repositories/character.repo.js';
 
 describe('CharacterRepository', () => {
   let db: Knex.Knex;
@@ -137,7 +170,7 @@ describe('CharacterRepository', () => {
     });
 
     // Run migrations (assuming they are exported or using Knex migrate api)
-    await db.migrate.latest({ directory: './src/migrations' });
+    await db.migrate.latest({ directory: '../../src/migrations' });
 
     repo = new CharacterRepository(db);
   });
@@ -172,10 +205,10 @@ describe('CharacterRepository', () => {
 Use `node:test`'s built-in `mock.timers`:
 
 ```ts
-// src/systems/buff.system.test.ts
+// packages/world-server/test/systems/buff.system.test.ts
 import { describe, it, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { BuffManager } from './buff.system.js';
+import { BuffManager } from '../../src/systems/buff.system.js';
 
 describe('Buff System', () => {
   it('should remove buff after duration expires', () => {

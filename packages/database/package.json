@@ -14,7 +14,7 @@
     "build": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json --watch",
     "lint": "eslint src --ext .ts",
-    "test": "tsx --test src/**/*.test.ts",
+    "test": "tsx --test test/**/*.test.ts",
     "migrate": "tsx src/migrate.ts",
     "migrate:rollback": "tsx src/migrate.ts rollback",
     "clean": "rm -rf dist"
@@ -25,7 +25,8 @@
     "knex": "^3.1.0",
     "mysql2": "^3.9.7",
     "pg": "^8.11.5",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.10",

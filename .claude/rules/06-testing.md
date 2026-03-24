@@ -11,19 +11,42 @@ import { describe, it, before, after, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
 ```
 
-Run with: `tsx --test src/**/*.test.ts`
+Run with: `tsx --test test/**/*.test.ts` (from package root)
+
+## Test Directory Structure
+
+**CRITICAL:** All test files MUST be in a `test/` directory at the package level, mirroring the `src/` structure. **NEVER** place `.test.ts` files in `src/`.
+
+```
+packages/core/
+  src/
+    net/
+      PacketWriter.ts          ← Source code only
+    cache/
+      MemoryCache.ts
+  test/
+    net/
+      PacketWriter.test.ts     ← Tests go here
+    cache/
+      MemoryCache.test.ts
+    utils/
+      mocks.ts
+```
 
 ## One Test File Per Source File
 
-Every `.ts` source file must have a companion `.test.ts` in the same directory:
+Every `.ts` source file in `src/` must have a companion `.test.ts` in the corresponding `test/` directory:
 
 ```
-src/handlers/auth.handler.ts      → src/handlers/auth.handler.test.ts
-src/services/auth.service.ts      → src/services/auth.service.test.ts
-src/repositories/account.repo.ts  → src/repositories/account.repo.test.ts
+src/handlers/auth.handler.ts      → test/handlers/auth.handler.test.ts
+src/services/auth.service.ts      → test/services/auth.service.test.ts
+src/repositories/account.repo.ts  → test/repositories/account.repo.test.ts
 ```
 
-If the companion test file does not exist, the `post-tool-test-reminder` hook will flag it in `SESSION.md`.
+**Forbidden:** Creating `.test.ts` files in `src/` directories.
+**Required:** Creating `.test.ts` files in `test/` directories with proper relative imports to `src/`.
+
+If the companion test file does not exist in `test/`, the `post-tool-test-reminder` hook will flag it in `SESSION.md`.
 
 ## What Must Be Tested
 
