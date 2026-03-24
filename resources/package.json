@@ -18,7 +18,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@flyff/core": "workspace:*"
+    "@flyff/core": "workspace:*",
+    "chokidar": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

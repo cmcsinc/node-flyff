@@ -1,0 +1,182 @@
+# items/consumables.yml
+# Consumable items for Flyff Node.js Emulator
+_version: "1.0"
+_kind: consumable
+items:
+  # Food (restores HP)
+  - id: 20001
+    name: "Refreshment"
+    name_id: "ITEM_REFRESHER"
+    icon: "icon_item_refresher.dds"
+    model: "mdl_food_refresher.o3d"
+    defense: 0
+    hp_restore: 100
+    fp_restore: 0
+    mp_restore: 0
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 20002
+    name: "Vital Drink X"
+    name_id: "ITEM_VITALDRINK"
+    icon: "icon_item_vitaldrink.dds"
+    model: "mdl_food_vitaldrink.o3d"
+    defense: 0
+    hp_restore: 250
+    fp_restore: 0
+    mp_restore: 0
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 20003
+    name: "Candy"
+    name_id: "ITEM_CANDY"
+    icon: "icon_item_candy.dds"
+    model: "mdl_food_candy.o3d"
+    defense: 0
+    hp_restore: 50
+    fp_restore: 0
+    mp_restore: 0
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 10
+    sell_price: 2
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 20004
+    name: "Dog Food"
+    name_id: "ITEM_DOGFOOD"
+    icon: "icon_item_dogfood.dds"
+    model: "mdl_food_dogfood.o3d"
+    defense: 0
+    hp_restore: 500
+    fp_restore: 50
+    mp_restore: 0
+    weight: 2
+    level_req: 1
+    job_req: [all]
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: uncommon
+
+  # Potions (restores MP/FP)
+  - id: 20010
+    name: "Refresher Hold"
+    name_id: "ITEM_REFRESHERHOLD"
+    icon: "icon_item_refresherhold.dds"
+    model: "mdl_potion_refresherhold.o3d"
+    defense: 0
+    hp_restore: 0
+    fp_restore: 50
+    mp_restore: 50
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 50
+    sell_price: 12
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 20011
+    name: "Activation"
+    name_id: "ITEM_ACTIVATION"
+    icon: "icon_item_activation.dds"
+    model: "mdl_potion_activation.o3d"
+    defense: 0
+    hp_restore: 0
+    fp_restore: 0
+    mp_restore: 100
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 80
+    sell_price: 20
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 20012
+    name: "Vital Drink X Hold"
+    name_id: "ITEM_VITALDRINKHOLD"
+    icon: "icon_item_vitaldrinkhold.dds"
+    model: "mdl_potion_vitaldrinkhold.o3d"
+    defense: 0
+    hp_restore: 100
+    fp_restore: 20
+    mp_restore: 0
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 150
+    sell_price: 37
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: uncommon
+
+  # Buff consumables
+  - id: 20020
+    name: "Upcut Stone"
+    name_id: "ITEM_UPCUTSTONE"
+    icon: "icon_item_upcutstone.dds"
+    model: "mdl_buff_upcutstone.o3d"
+    defense: 0
+    hp_restore: 0
+    fp_restore: 0
+    mp_restore: 0
+    attack_bonus: 20
+    duration: 300
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 50000
+    sell_price: 12500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: rare
+
+  - id: 20021
+    name: "Speed Awake"
+    name_id: "ITEM_SPEEDAWAKE"
+    icon: "icon_item_speedawake.dds"
+    model: "mdl_buff_speedawake.o3d"
+    defense: 0
+    hp_restore: 0
+    fp_restore: 0
+    mp_restore: 0
+    speed_bonus: 20
+    duration: 300
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 30000
+    sell_price: 7500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: rare

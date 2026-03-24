@@ -1,0 +1,41 @@
+{
+  "name": "@flyff/resources",
+  "version": "1.0.0",
+  "description": "Resource loaders for Flyff emulator data (items, movers, skills, zones)",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./schemas": {
+      "import": "./dist/schemas/index.js",
+      "types": "./dist/schemas/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "tsx --test test/**/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "watch": "tsx scripts/watch.ts"
+  },
+  "keywords": [
+    "flyff",
+    "resources",
+    "yaml",
+    "loader"
+  ],
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "pino": "^9.0.0",
+    "yaml": "^2.3.4",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.5"
+  }
+}

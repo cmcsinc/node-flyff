@@ -81,6 +81,24 @@ export const WorldRegistrationConfigSchema = z.object({
 });
 
 // ---------------------------------------------------------------------------
+// Resources sub-schema
+// ---------------------------------------------------------------------------
+
+/** Game resources (items, movers, skills, zones) loader settings. */
+export const ResourcesConfigSchema = z.object({
+  /**
+   * Path to the resources/data directory containing YAML files.
+   * Relative to the project root or absolute.
+   */
+  dataDir: z.string().default('./resources/data'),
+  /**
+   * Enable hot-reload in development mode.
+   * Watches resource files for changes and reloads automatically.
+   */
+  hotReload: z.boolean().default(false),
+});
+
+// ---------------------------------------------------------------------------
 // WAL persistence sub-schema
 // ---------------------------------------------------------------------------
 
@@ -120,6 +138,7 @@ export const WorldServerConfigSchema = BaseConfigSchema.merge(
     zone: ZoneConfigSchema.default({}),
     wal: WalConfigSchema.default({}),
     registration: WorldRegistrationConfigSchema.default({}),
+    resources: ResourcesConfigSchema.default({}),
   }),
 );
 

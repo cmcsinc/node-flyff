@@ -135,3 +135,7 @@ resources/data/*.wld
 resources/data/*.rgn
 !resources/data/.gitkeep
 
+# Game folder (client files, resources, etc.)
+game/
+game.zip
+
