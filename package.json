@@ -10,10 +10,22 @@
   },
   "scripts": {
     "build": "pnpm -r build",
-    "test": "tsx --test packages/*/src/**/*.test.ts",
+    "clean": "pnpm -r clean",
+    "test": "tsx --test packages/*/test/**/*.test.ts",
+    "test:all": "tsx --test packages/*/test/**/*.test.ts",
+    "test:core": "tsx --test packages/core/test/**/*.test.ts",
+    "test:ipc": "tsx --test packages/ipc/test/**/*.test.ts",
+    "test:database": "tsx --test packages/database/test/**/*.test.ts",
+    "test:login": "tsx --test packages/login-server/test/**/*.test.ts",
+    "test:cluster": "tsx --test packages/cluster-server/test/**/*.test.ts",
+    "test:world": "tsx --test packages/world-server/test/**/*.test.ts",
+    "test:coverage": "node --experimental-test-coverage --experimental-test-loader=tsx node_modulestsx/bin/cli.js --test packages/*/test/**/*.test.ts",
+    "test:watch": "tsx watch --test packages/*/test/**/*.test.ts",
     "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r -- lint --fix",
     "checkpoint": "tsx scripts/agent-checkpoint.ts",
-    "format": "prettier --write \"**/*.{ts,js,json,md}\""
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

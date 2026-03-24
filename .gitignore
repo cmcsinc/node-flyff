@@ -112,6 +112,11 @@ packages/*/dist
 packages/*/coverage
 packages/*/.tsbuildinfo
 
+# Compiled files in src directories (should only be in dist/)
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
+packages/*/src/**/*.d.ts
+
 # Local config overrides — contain machine-specific settings, never commit
 config/*.local.json
 config/*.local.yml
