@@ -52,6 +52,34 @@ Every feature follows a mandatory 5-phase loop. **No phase may be skipped.**
 
 **On success**: Update `PROGRESS.md` module row to `✅ Done`.
 
+### Parallel Mode (for independent subtasks)
+
+When an agent has multiple independent subtasks, it can spawn parallel sub-agents instead of running sequentially:
+
+```
+┌────────────────────────────────────────────────────────────────────────────┐
+│                    PARENT AGENT (e.g., implementor)                        │
+│                              │                                             │
+│           ┌──────────────────┼──────────────────┐                         │
+│           │                  │                  │                         │
+│           ▼                  ▼                  ▼                         │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐                   │
+│  │ database-    │   │ security-    │   │ test-        │                   │
+│  │ agent        │   │ auditor      │   │ agent        │                   │
+│  │ (migration)  │   │ (review)     │   │ (tests)      │                   │
+│  └──────────────┘   └──────────────┘   └──────────────┘                   │
+│           │                  │                  │                         │
+│           └──────────────────┼──────────────────┘                         │
+│                              ▼                                             │
+│                    PARENT MERGES RESULTS                                   │
+│                    → updates PROGRESS.md                                   │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Key principle:** Parallel sub-agents run independently, then the parent aggregates results via the Agent tool return value and updates shared state (PROGRESS.md).
+
+This is **optional** — use parallel spawning only when subtasks are truly independent. For sequential dependencies, use the standard loop.
+
 ---
 
 ## The Two State Files

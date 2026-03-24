@@ -33,6 +33,30 @@ When a migration or repo is complete:
 - [ ] Slow query threshold 200ms logged at `warn` level
 - [ ] Companion `.test.ts` uses in-memory SQLite with `await db.migrate.latest()`
 
+## Parallel Spawning Capability
+
+The `database-agent` agent can spawn parallel sub-agents for independent database tasks:
+
+**When to spawn parallel database agents:**
+- Creating migrations for multiple tables (spawn one `database-agent` per table)
+- Building multiple repositories for the same feature (spawn one per repo)
+- Running migration validation + query optimization (spawn one for each task)
+
+**Spawn pattern:**
+```
+database-agent (parent)
+  ├─ database-agent (accounts migration + repo)
+  ├─ database-agent (characters migration + repo)
+  └─ database-agent (inventory migration + repo)
+→ Aggregate results → Update PROGRESS.md @flyff/database section
+```
+
+**Safety limits:**
+- maxDepth: 3 (database-agent → database-agent → database-agent)
+- maxConcurrent: 5 (max 5 parallel database tasks at once)
+
+**See:** `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning" for full protocol.
+
 ## Schema Decisions Log
 
 | Table | Decision | Reason |
