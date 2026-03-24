@@ -1,7 +1,7 @@
 # Current Session State
 
 - **Active Goal**: Overhaul Flyff emulator into a fully agentic monorepo with TS, Knex, and secure IPC.
-- **Last Updated**: 2026-03-24 03:13 (session end)
+- **Last Updated**: 2026-03-24 09:23
 - **Status**: In Progress
 
 ## Progress Log
@@ -18,6 +18,10 @@
 - [x] Wired hooks into `.claude/settings.json`.
 - [x] Prepared project configs (tsconfig, eslint, prettier, .env.example).
 - [x] Created 8 comprehensive rule files in `.claude/rules/`.
+- [x] Added parallel sub-agent spawning capability to agentic workflow (task-based parallel model, maxDepth=3, maxConcurrent=5).
+- [x] Updated `.claude/rules/08-agent-workflow.md` with parallel spawning protocol.
+- [x] Updated `.claude/rules/09-agentic-selflearning.md` with parallel mode documentation.
+- [x] Updated agent session files (implementor, security-auditor, test-agent, database-agent) with parallel spawning sections.
 - [x] Implemented cache abstraction layer (ICacheAdapter, MemoryCache, RedisCache) with full test coverage (Checkpoint auto-log)
 - [x] Implemented test files for deepMerge, ClusterServerConfigSchema, WorldServerConfigSchema, and ServerListService (Checkpoint auto-log)
 - [x] Implemented packages/core foundation: errors.ts, logger.ts, eventBus.ts, constants/opcodes.ts, constants/objectTypes.ts, constants/sessionState.ts — 72 tests passing (Checkpoint auto-log)
@@ -28,10 +32,13 @@
 
 ## Technical Context
 
-- **Current Task**: Modified `/Users/owner/Cyril/nodejs-flyff/tsconfig.base.json` via Edit at 2026-03-24 02:46
-- **Current Branch**: `main`
-- **Key Decisions**: Using SQLite WAL for local persistence, Knex for multi-DB, and @flyff/ipc for signed messaging.
-- **Rule Engine**: 8 rule files active in `.claude/rules/`.
+- **Current Task**: Modified `h:/flyff/node-flyff/packages/resources/scripts/watch.ts` via Write at 2026-03-24 09:23
+- **Current Branch**: `master`
+- **Key Decisions**:
+  - Using SQLite WAL for local persistence, Knex for multi-DB, and @flyff/ipc for signed messaging
+  - **NEW**: Task-based parallel sub-agent spawning model with maxDepth=3, maxConcurrent=5
+  - All agents can now spawn parallel helpers for independent subtasks
+- **Rule Engine**: 8 rule files active in `.claude/rules/` (updated with parallel spawning protocol)
 
 - [ ] ⚠️  Missing test file: `/Users/owner/Cyril/nodejs-flyff/packages/core/src/config/merge.test.ts`
 
@@ -249,6 +256,78 @@
 - [ ] ⚠️  Missing test file: `/Users/owner/Cyril/nodejs-flyff/packages/world-server/src/index.test.ts`
 
 - [ ] ⚠️  Missing test file: `/Users/owner/Cyril/nodejs-flyff/packages/core/src/index.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\core\src\net\PacketReader.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\core\src\net\PacketWriter.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\core\src\net\LSFRCipher.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\ipc\src\circuit.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/core/test/utils/mocks.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\ipc\src\IpcBus.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\ipc\src\IpcServer.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\ipc\src\IpcClient.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\ipc\src\index.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\db.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\migrate.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\migrations\001_initial.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\repositories\account.repo.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\repositories\character.repo.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\repositories\inventory.repo.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\index.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\database\src\types.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\login-server\src\services\auth.service.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\login-server\src\services\token.service.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\login-server\src\handlers\auth.handler.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\login-server\src\handlers\serverList.handler.test.ts`
+
+- [ ] ⚠️  Missing test file: `H:\flyff\node-flyff\packages\login-server\src\compose.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/schemas/item.schema.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/schemas/mover.schema.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/schemas/skill.schema.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/schemas/zone.schema.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/schemas/index.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/loaders/item.loader.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/loaders/skill.loader.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/loaders/zone.loader.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/index.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/validators/index.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/world-server/src/compose.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/core/src/config/schemas/world.schema.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/src/hotReload.test.ts`
+
+- [ ] ⚠️  Missing test file: `h:/flyff/node-flyff/packages/resources/scripts/watch.test.ts`
 
 ## Pending Questions for User
 

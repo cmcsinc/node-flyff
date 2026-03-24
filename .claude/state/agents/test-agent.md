@@ -35,6 +35,30 @@ When tests are written and passing:
 - [ ] Mock sockets used (never real TCP), mock DB used (in-memory SQLite)
 - [ ] `mock.timers` used for any setTimeout/setInterval tests
 
+## Parallel Spawning Capability
+
+The `test-agent` agent can spawn parallel sub-runners for multiple independent test files:
+
+**When to spawn parallel test runners:**
+- Writing tests for multiple modules at once (spawn one `test-agent` per module)
+- Running test suites for multiple packages in parallel (spawn one per package)
+- Test-fix-validate loop (spawn one runner for tests, one for lint, one for type-check)
+
+**Spawn pattern:**
+```
+test-agent (parent)
+  ├─ test-agent (auth.handler.test.ts)
+  ├─ test-agent (token.service.test.ts)
+  └─ test-agent (account.repo.test.ts)
+→ Aggregate results → Update PROGRESS.md Test Coverage table
+```
+
+**Safety limits:**
+- maxDepth: 3 (test-agent → test-agent → test-agent)
+- maxConcurrent: 5 (max 5 parallel test runners at once)
+
+**See:** `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning" for full protocol.
+
 ## Test Run Log
 
 | Timestamp | File | Result | Notes |

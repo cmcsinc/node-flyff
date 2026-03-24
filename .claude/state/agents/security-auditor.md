@@ -48,6 +48,30 @@ Apply to every Handler + Service that touches player state:
 - [ ] Rate limiter applied
 - [ ] No server-trusted client values (HP, ATK, DEF computed server-side)
 
+## Parallel Spawning Capability
+
+The `security-auditor` agent can spawn parallel sub-auditors for multiple independent files:
+
+**When to spawn parallel auditors:**
+- Reviewing multiple handlers in the same server (spawn one `security-auditor` per file)
+- Plan review for multiple features (spawn one reviewer per feature)
+- Full security audit of a server (spawn reviewers for: handlers, services, repositories)
+
+**Spawn pattern:**
+```
+security-auditor (parent)
+  ├─ security-auditor (auth.handler.ts review)
+  ├─ security-auditor (serverList.handler.ts review)
+  └─ security-auditor (token.service.ts review)
+→ Aggregate findings → Update PROGRESS.md Security Audit Log
+```
+
+**Safety limits:**
+- maxDepth: 3 (security-auditor → security-auditor → security-auditor)
+- maxConcurrent: 5 (max 5 parallel file audits at once)
+
+**See:** `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning" for full protocol.
+
 ## Audit Queue
 
 | Priority | File | Status |
