@@ -1,0 +1,156 @@
+# items/materials.yml
+# Material items for crafting
+_version: "1.0"
+_kind: material
+items:
+  # Basic monster drops
+  - id: 30001
+    name: "Piece of Egg"
+    name_id: "ITEM_PIECE_OF_EGG"
+    icon: "icon_item_egg.dds"
+    model: "mdl_item_egg.o3d"
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 5
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 30002
+    name: "Piece of Apple"
+    name_id: "ITEM_PIECE_OF_APPLE"
+    icon: "icon_item_apple.dds"
+    model: "mdl_item_apple.o3d"
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 5
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 30003
+    name: "Piece of Golden Cup"
+    name_id: "ITEM_PIECE_OF_GOLDENCUP"
+    icon: "icon_item_goldencup.dds"
+    model: "mdl_item_goldencup.o3d"
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 10
+    sell_price: 2
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 30004
+    name: "Piece of Pipe"
+    name_id: "ITEM_PIECE_OF_PIPE"
+    icon: "icon_item_pipe.dds"
+    model: "mdl_item_pipe.o3d"
+    weight: 2
+    level_req: 1
+    job_req: [all]
+    price: 15
+    sell_price: 3
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  # Advanced crafting materials
+  - id: 30010
+    name: "Copper"
+    name_id: "ITEM_COPPER"
+    icon: "icon_item_copper.dds"
+    model: "mdl_item_copper.o3d"
+    weight: 5
+    level_req: 1
+    job_req: [all]
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 30011
+    name: "Iron"
+    name_id: "ITEM_IRON"
+    icon: "icon_item_iron.dds"
+    model: "mdl_item_iron.o3d"
+    weight: 5
+    level_req: 1
+    job_req: [all]
+    price: 200
+    sell_price: 50
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: uncommon
+
+  - id: 30012
+    name: "Steel"
+    name_id: "ITEM_STEEL"
+    icon: "icon_item_steel.dds"
+    model: "mdl_item_steel.o3d"
+    weight: 5
+    level_req: 1
+    job_req: [all]
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: rare
+
+  - id: 30013
+    name: "Moonstone"
+    name_id: "ITEM_MOONSTONE"
+    icon: "icon_item_moonstone.dds"
+    model: "mdl_item_moonstone.o3d"
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: rare
+
+  - id: 30014
+    name: "Sunstone"
+    name_id: "ITEM_SUNSTONE"
+    icon: "icon_item_sunstone.dds"
+    model: "mdl_item_sunstone.o3d"
+    weight: 1
+    level_req: 1
+    job_req: [all]
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: rare
+
+  # Penya (currency - technically a material item)
+  - id: 30020
+    name: "Penya"
+    name_id: "ITEM_PENYA"
+    icon: "icon_item_penya.dds"
+    weight: 0
+    level_req: 1
+    job_req: [all]
+    price: 1
+    sell_price: 1
+    tradeable: false
+    dropable: true
+    destroyable: true
+    rarity: common

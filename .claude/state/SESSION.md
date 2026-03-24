@@ -1,7 +1,7 @@
 # Current Session State
 
 - **Active Goal**: Overhaul Flyff emulator into a fully agentic monorepo with TS, Knex, and secure IPC.
-- **Last Updated**: 2026-03-24 09:23
+- **Last Updated**: 2026-03-24 09:50
 - **Status**: In Progress
 
 ## Progress Log
@@ -32,7 +32,7 @@
 
 ## Technical Context
 
-- **Current Task**: Modified `h:/flyff/node-flyff/packages/resources/scripts/watch.ts` via Write at 2026-03-24 09:23
+- **Current Task**: Modified `H:\flyff\node-flyff\.gitignore` via Edit at 2026-03-24 09:50
 - **Current Branch**: `master`
 - **Key Decisions**:
   - Using SQLite WAL for local persistence, Knex for multi-DB, and @flyff/ipc for signed messaging

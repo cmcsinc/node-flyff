@@ -1,0 +1,162 @@
+# items/armors.yml
+# Armor definitions for Flyff Node.js Emulator
+_version: "1.0"
+_kind: armor
+items:
+  # Vagrant armors
+  - id: 10001
+    name: "Vagrant Armor"
+    name_id: "ITEM_VAGRANT_ARMOR"
+    icon: "icon_item_vagrant_armor.dds"
+    model: "mdl_armor_vagrant.o3d"
+    defense: 5
+    defense_rate: 1.0
+    durability: 5000
+    weight: 20
+    level_req: 1
+    job_req: [all]
+    gender_req: both
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 10002
+    name: "Vigrant Helm"
+    name_id: "ITEM_VAGRANT_HELM"
+    icon: "icon_item_vagrant_helm.dds"
+    model: "mdl_helm_vagrant.o3d"
+    defense: 2
+    defense_rate: 1.0
+    durability: 3000
+    weight: 5
+    level_req: 1
+    job_req: [all]
+    gender_req: both
+    price: 50
+    sell_price: 12
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 10003
+    name: "Vagrant Gauntlets"
+    name_id: "ITEM_VAGRANT_GAUNTLET"
+    icon: "icon_item_vagrant_gauntlet.dds"
+    model: "mdl_glove_vagrant.o3d"
+    defense: 1
+    defense_rate: 1.0
+    durability: 2000
+    weight: 3
+    level_req: 1
+    job_req: [all]
+    gender_req: both
+    price: 30
+    sell_price: 7
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  - id: 10004
+    name: "Vagrant Boots"
+    name_id: "ITEM_VAGRANT_BOOTS"
+    icon: "icon_item_vagrant_boots.dds"
+    model: "mdl_boot_vagrant.o3d"
+    defense: 1
+    defense_rate: 1.0
+    durability: 2000
+    weight: 3
+    level_req: 1
+    job_req: [all]
+    gender_req: both
+    price: 30
+    sell_price: 7
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  # Mercenary armors
+  - id: 10101
+    name: "Mercenary Armor"
+    name_id: "ITEM_MERCENARY_ARMOR"
+    icon: "icon_item_mercenary_armor.dds"
+    model: "mdl_armor_mercenary.o3d"
+    defense: 15
+    defense_rate: 1.1
+    durability: 6000
+    weight: 25
+    level_req: 15
+    job_req: [mercenary, blade, knight]
+    gender_req: male
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  # Assist armors
+  - id: 10201
+    name: "Assist Armor"
+    name_id: "ITEM_ASSIST_ARMOR"
+    icon: "icon_item_assist_armor.dds"
+    model: "mdl_armor_assist.o3d"
+    defense: 12
+    defense_rate: 1.0
+    durability: 5500
+    weight: 20
+    level_req: 15
+    job_req: [assist, billposter, ringmaster]
+    gender_req: female
+    price: 4500
+    sell_price: 1125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  # Magician armors
+  - id: 10301
+    name: "Magician Armor"
+    name_id: "ITEM_MAGICIAN_ARMOR"
+    icon: "icon_item_magician_armor.dds"
+    model: "mdl_armor_magician.o3d"
+    defense: 8
+    magic_defense: 20
+    defense_rate: 0.9
+    durability: 4000
+    weight: 15
+    level_req: 15
+    job_req: [magician, elementor, psykeeper]
+    gender_req: both
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+
+  # Acrobat armors
+  - id: 10401
+    name: "Acrobat Armor"
+    name_id: "ITEM_ACROBAT_ARMOR"
+    icon: "icon_item_acrobat_armor.dds"
+    model: "mdl_armor_acrobat.o3d"
+    defense: 10
+    defense_rate: 1.05
+    durability: 5000
+    weight: 18
+    level_req: 15
+    job_req: [acrobat, ranger, jester]
+    gender_req: both
+    price: 4200
+    sell_price: 1050
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common

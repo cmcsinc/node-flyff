@@ -23,8 +23,8 @@
       "@flyff/ipc/*": ["packages/ipc/src/*"],
       "@flyff/database": ["packages/database/src/index.ts"],
       "@flyff/database/*": ["packages/database/src/*"],
-      "@flyff/resources": ["resources/src/index.ts"],
-      "@flyff/resources/*": ["resources/src/*"]
+      "@flyff/resources": ["packages/resources/src/index.ts"],
+      "@flyff/resources/*": ["packages/resources/src/*"]
     }
   }
 }

@@ -1,0 +1,123 @@
+# items/weapons.yml
+# Weapon definitions for Flyff Node.js Emulator
+_version: "1.0"
+_kind: weapon
+items:
+  # Vagrant/Mercenary weapons
+  - id: 1
+    name: "Sword"
+    name_id: "ITEM_SWORD"
+    icon: "icon_item_sword.dds"
+    model: "mdl_sword.o3d"
+    attack: 15
+    attack_rate: 1.0
+    durability: 5000
+    weight: 15
+    level_req: 1
+    job_req: [vagrant, mercenary, blade, knight]
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+    two_handed: false
+
+  - id: 2
+    name: "Blade"
+    name_id: "ITEM_BLADE"
+    icon: "icon_item_blade.dds"
+    model: "mdl_blade.o3d"
+    attack: 18
+    attack_rate: 1.1
+    durability: 4500
+    weight: 12
+    level_req: 5
+    job_req: [blade]
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+    two_handed: false
+
+  - id: 3
+    name: "Axe"
+    name_id: "ITEM_AXE"
+    icon: "icon_item_axe.dds"
+    model: "mdl_axe.o3d"
+    attack: 22
+    attack_rate: 1.2
+    durability: 4000
+    weight: 25
+    level_req: 5
+    job_req: [knight]
+    price: 600
+    sell_price: 150
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+    two_handed: true
+
+  # Assist weapons
+  - id: 10
+    name: "Knuckle"
+    name_id: "ITEM_KNUCKLE"
+    icon: "icon_item_knuckle.dds"
+    model: "mdl_knuckle.o3d"
+    attack: 14
+    attack_rate: 1.05
+    durability: 5000
+    weight: 10
+    level_req: 1
+    job_req: [assist, billposter]
+    price: 80
+    sell_price: 20
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+    two_handed: false
+
+  # Magic weapons
+  - id: 20
+    name: "Wand"
+    name_id: "ITEM_WAND"
+    icon: "icon_item_wand.dds"
+    model: "mdl_wand.o3d"
+    attack: 8
+    magic_attack: 25
+    attack_rate: 0.8
+    durability: 4000
+    weight: 8
+    level_req: 1
+    job_req: [magician, elementor, psykeeper]
+    price: 120
+    sell_price: 30
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+    two_handed: false
+
+  - id: 21
+    name: "Staff"
+    name_id: "ITEM_STAFF"
+    icon: "icon_item_staff.dds"
+    model: "mdl_staff.o3d"
+    attack: 12
+    magic_attack: 30
+    attack_rate: 0.9
+    durability: 4500
+    weight: 15
+    level_req: 5
+    job_req: [elementor]
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    rarity: common
+    two_handed: true

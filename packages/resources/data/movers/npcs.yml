@@ -1,0 +1,134 @@
+# movers/npcs.yml
+# NPC definitions for Flyff Node.js Emulator
+_version: "1.0"
+movers:
+  # Flaris NPCs
+  - id: 1001
+    name: "Marche"
+    name_id: "NPC_MARCHE"
+    model: "mdl_npc_marche.o3d"
+    scale: 1.0
+    type: npc
+    level: 1
+    hp: 1000
+    mp: 1000
+    fp: 1000
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0
+    attack_speed: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    functions:
+      - type: shop
+        shop_id: "flaris-weapon"
+      - type: dialogue
+        dialogue_id: "npc_marche_intro"
+
+  - id: 1002
+    name: "Peak"
+    name_id: "NPC_PEAK"
+    model: "mdl_npc_peak.o3d"
+    scale: 1.0
+    type: npc
+    level: 1
+    hp: 1000
+    mp: 1000
+    fp: 1000
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0
+    attack_speed: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    functions:
+      - type: teleport
+        destinations: ["saintmorning", "darkon1"]
+      - type: bank
+
+  - id: 1003
+    name: "Boboko"
+    name_id: "NPC_BOBOKO"
+    model: "mdl_npc_boboko.o3d"
+    scale: 1.0
+    type: npc
+    level: 1
+    hp: 1000
+    mp: 1000
+    fp: 1000
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0
+    attack_speed: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    functions:
+      - type: shop
+        shop_id: "flaris-armor"
+      - type: dialogue
+        dialogue_id: "npc_boboko_intro"
+
+  - id: 1004
+    name: "Mysterious Robot"
+    name_id: "NPC_ROBOT"
+    model: "mdl_npc_robot.o3d"
+    scale: 1.0
+    type: npc
+    level: 1
+    hp: 1000
+    mp: 1000
+    fp: 1000
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0
+    attack_speed: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    functions:
+      - type: warehouse
+
+  - id: 1005
+    name: "Mayor Paul"
+    name_id: "NPC_MAYOR_PAUL"
+    model: "mdl_npc_mayor.o3d"
+    scale: 1.0
+    type: npc
+    level: 1
+    hp: 1000
+    mp: 1000
+    fp: 1000
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0
+    attack_speed: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    functions:
+      - type: dialogue
+        dialogue_id: "npc_mayor_paul_intro"
+      - type: guild

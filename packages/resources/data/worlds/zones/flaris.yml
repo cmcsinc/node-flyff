@@ -1,0 +1,147 @@
+# worlds/zones/flaris.yml
+# Flaris (Zone 1) - New player starting area
+
+_version: "1.0"
+_id: "flaris"
+_id_numeric: 1
+name: "Flaris"
+name_id: "ZONE_FLARIS"
+
+# World linkage
+world_id: "madrigal"
+
+# Geography
+bounds:
+  min: { x: -4000, y: -1000, z: -4000 }
+  max: { x: 4000, y: 500, z: 4000 }
+
+# Revival point
+revival:
+  position: { x: 6978, y: 100, z: 3329 }
+  radius: 5.0
+
+# Portals to other zones
+portals:
+  - id: 1
+    name: "Saint Morning Portal"
+    position: { x: 3880, y: 0, z: 3500 }
+    radius: 5.0
+    target:
+      zone: "saintmorning"
+      position: { x: 850, y: 0, z: 1025 }
+
+  - id: 2
+    name: "Darkon Portal"
+    position: { x: -3800, y: 0, z: -1200 }
+    radius: 5.0
+    target:
+      zone: "darkon1"
+      position: { x: 5500, y: 0, z: 3800 }
+
+# Spawn points
+spawns:
+  # Near Flaris (Mia spawns)
+  - id: 1
+    mover_id: 1
+    position: { x: 6978, y: 100, z: 3329 }
+    radius: 100.0
+    count: 10
+    delay: 5000
+
+  # East of Flaris (Bang spawns)
+  - id: 2
+    mover_id: 2
+    position: { x: 7200, y: 100, z: 3500 }
+    radius: 150.0
+    count: 15
+    delay: 5000
+
+  # South of Flaris (PukePuke spawns)
+  - id: 3
+    mover_id: 3
+    position: { x: 6950, y: 100, z: 3100 }
+    radius: 200.0
+    count: 12
+    delay: 5000
+
+  # Giant Bang spawn (rare)
+  - id: 100
+    mover_id: 103
+    position: { x: 7200, y: 100, z: 3600 }
+    radius: 50.0
+    count: 1
+    delay: 3600000
+
+# NPCs
+npcs:
+  - id: 1
+    mover_id: 1001
+    position: { x: 6978, y: 100, z: 3329 }
+    angle: 0
+    functions:
+      - type: shop
+        shop_id: "flaris-weapon"
+      - type: dialogue
+        dialogue_id: "npc_marche_intro"
+
+  - id: 2
+    mover_id: 1002
+    position: { x: 6950, y: 100, z: 3350 }
+    angle: 1.57
+    functions:
+      - type: teleport
+        destinations: ["saintmorning", "darkon1"]
+      - type: bank
+
+  - id: 3
+    mover_id: 1003
+    position: { x: 7000, y: 100, z: 3300 }
+    angle: 3.14
+    functions:
+      - type: shop
+        shop_id: "flaris-armor"
+      - type: dialogue
+        dialogue_id: "npc_boboko_intro"
+
+  - id: 4
+    mover_id: 1004
+    position: { x: 6930, y: 100, z: 3320 }
+    angle: 0.78
+    functions:
+      - type: warehouse
+
+  - id: 5
+    mover_id: 1005
+    position: { x: 6920, y: 100, z: 3360 }
+    angle: 0
+    functions:
+      - type: dialogue
+        dialogue_id: "npc_mayor_paul_intro"
+      - type: guild
+
+# Regions (sub-zones)
+regions:
+  - id: 1
+    name: "Flaris Safe Zone"
+    type: safe
+    bounds:
+      min: { x: 6800, y: 0, z: 3100 }
+      max: { x: 7200, y: 500, z: 3600 }
+
+  - id: 2
+    name: "Flaris PVP Arena"
+    type: pvp
+    bounds:
+      min: { x: 6600, y: 0, z: 2900 }
+      max: { x: 6750, y: 500, z: 3050 }
+
+# Weather
+weather:
+  default: sunny
+  variations:
+    - type: rain
+      chance: 0.1
+      duration: 300
+    - type: thunder
+      chance: 0.02
+      duration: 180
