@@ -5,7 +5,7 @@
     "pretty": false
   },
   "database": {
-    "client": "sqlite3",
+    "client": "better-sqlite3",
     "filename": "./data/flyff_dev.sqlite3",
     "url": "",
     "pool": {
@@ -19,5 +19,8 @@
   },
   "ipc": {
     "internalPort": 29000
+  },
+  "resources": {
+    "dataDir": "./packages/resources/data"
   }
 }

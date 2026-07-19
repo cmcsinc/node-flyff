@@ -112,7 +112,7 @@ export async function up(db: Knex): Promise<void> {
       .references('id').inTable('characters').onDelete('CASCADE');
     table.integer('slot').unsigned().notNullable();
     table.integer('type').unsigned().notNullable(); // 0 = item, 1 = skill
-    table.integer('id').unsigned().notNullable(); // item_id or skill_id
+    table.integer('target_id').unsigned().notNullable(); // item_id or skill_id
     timestamps(table);
 
     table.unique(['character_id', 'slot']);

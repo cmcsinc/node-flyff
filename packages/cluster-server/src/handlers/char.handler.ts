@@ -1,0 +1,150 @@
+/**
+ * Character select/create/delete/enter-world handler.
+ *
+ * Handles the four client-facing character packets on the cluster server.
+ * Field layouts follow the C++ client send paths
+ * (`game/source/Neuz/DPLoginClient.cpp:118-202`). The handler only parses +
+ * validates + delegates to one service per packet (rule 02). On create/delete
+ * success the C++ server re-sends a fresh PLAYER_LIST; errors go via
+ * PACKETTYPE_ERROR (0xfe) with the error code as a DWORD payload.
+ *
+ * @module handlers/char.handler
+ */
+
+import type { Socket } from 'node:net';
+import { PacketReader } from '@flyff/core/net/PacketReader.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
+import { sendPacket } from '@flyff/core/net/dispatcher.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { createLogger } from '@flyff/core/logger.js';
+import type { CharListService } from '../services/charList.service.js';
+import type { CharCreateService } from '../services/charCreate.service.js';
+import type { CharSelectService } from '../services/charSelect.service.js';
+import type { PlayerListSerializer } from '../net/playerList.serializer.js';
+
+const logger = createLogger({ module: 'char-handler' });
+
+export class CharHandler {
+  constructor(
+    private charListService: CharListService,
+    private charCreateService: CharCreateService,
+    private charSelectService: CharSelectService,
+    private playerListSerializer: PlayerListSerializer,
+  ) {}
+
+  /** PACKETTYPE_GETPLAYERLIST (0xf6) → replies PLAYER_LIST. */
+  async handleGetPlayerList(socket: Socket, reader: PacketReader): Promise<void> {
+    try {
+      const _version = reader.readString();
+      const authKey = reader.readDword();
+      const account = reader.readString();
+      const _password = reader.readString();
+      const _dwId = reader.readDword();
+
+      // C++ destroys the connection when dwAuthKey == 0 (DPLoginSrvr.cpp:145).
+      if (authKey === 0) {
+        logger.warn({ account }, 'GETPLAYERLIST with zero auth key — dropping');
+        return;
+      }
+
+      await this.sendPlayerList(socket, authKey, account);
+    } catch (error) {
+      logger.error({ error }, 'GETPLAYERLIST failed');
+    }
+  }
+
+  /** PACKETTYPE_CREATE_PLAYER (0xf4) → PLAYER_LIST on success, ERROR on failure. */
+  async handleCreatePlayer(socket: Socket, reader: PacketReader): Promise<void> {
+    try {
+      const account = reader.readString();
+      const _password = reader.readString();
+      const slot = reader.readByte();
+      const name = reader.readString();
+      const _face = reader.readByte();
+      const _costume = reader.readByte();
+      const skinSet = reader.readByte();
+      const hairMesh = reader.readByte();
+      const hairColor = reader.readDword();
+      const sex = reader.readByte();
+      const job = reader.readByte();
+      const headMesh = reader.readByte();
+      const _bankPW = reader.readLong();
+      const authKey = reader.readDword();
+
+      const result = await this.charCreateService.create({
+        account, slot, name, skinSet, hairMesh, hairColor, headMesh, sex, job,
+      });
+
+      if (result.ok) {
+        await this.sendPlayerList(socket, authKey, account);
+      } else {
+        this.sendError(socket, result.errorCode);
+      }
+    } catch (error) {
+      logger.error({ error }, 'CREATE_PLAYER failed');
+      this.sendError(socket, 0);
+    }
+  }
+
+  /** PACKETTYPE_DEL_PLAYER (0xf5) → PLAYER_LIST on success, ERROR on failure. */
+  async handleDeletePlayer(socket: Socket, reader: PacketReader): Promise<void> {
+    try {
+      const account = reader.readString();
+      const _password = reader.readString();
+      const _deleteKey = reader.readString();
+      const idPlayer = reader.readDword();
+      const authKey = reader.readDword();
+
+      const result = await this.charCreateService.delete(account, idPlayer);
+
+      if (result.ok) {
+        await this.sendPlayerList(socket, authKey, account);
+      } else {
+        this.sendError(socket, result.errorCode);
+      }
+    } catch (error) {
+      logger.error({ error }, 'DEL_PLAYER failed');
+      this.sendError(socket, 0);
+    }
+  }
+
+  /**
+   * PACKETTYPE_PRE_JOIN (0xff05) — select char to enter world.
+   * Reply is a bare PRE_JOIN opcode (no payload), matching C++ SendHdr.
+   * SEL_PLAYER (0xf7) is dead code in the C++ source.
+   */
+  async handlePreJoin(socket: Socket, reader: PacketReader): Promise<void> {
+    try {
+      const account = reader.readString();
+      const idPlayer = reader.readDword();
+      const name = reader.readString();
+      const _bankPW = reader.readLong();
+
+      const result = await this.charSelectService.prejoin(account, idPlayer, name);
+      if (!result.ok) {
+        logger.warn({ account, idPlayer }, 'PRE_JOIN rejected');
+        return;
+      }
+
+      const writer = new PacketWriter();
+      writer.writeDword(PACKETTYPE.PRE_JOIN);
+      sendPacket(socket, writer.build());
+    } catch (error) {
+      logger.error({ error }, 'PRE_JOIN failed');
+    }
+  }
+
+  /** Build + send a fresh PLAYER_LIST for `account`, echoing `authKey`. */
+  private async sendPlayerList(socket: Socket, authKey: number, account: string): Promise<void> {
+    const chars = await this.charListService.listByAccount(account);
+    sendPacket(socket, this.playerListSerializer.build(authKey, chars));
+  }
+
+  /** Send a PACKETTYPE_ERROR packet with the given error code. */
+  private sendError(socket: Socket, errorCode: number): void {
+    const writer = new PacketWriter();
+    writer.writeDword(PACKETTYPE.ERROR);
+    writer.writeDword(errorCode);
+    sendPacket(socket, writer.build());
+  }
+}

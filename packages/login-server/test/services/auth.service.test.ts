@@ -6,10 +6,11 @@ import type { ICacheAdapter } from '@flyff/core/cache.js';
 import type { AccountRow } from '@flyff/database/repositories/account.repo.js';
 
 // Mock dependencies
-function makeMockCache(): ICacheAdapter {
+function makeMockCache(): ICacheAdapter & { store: Map<string, { value: string; expiresAt: number }> } {
   const store = new Map<string, { value: string; expiresAt: number }>();
 
   return {
+    store,
     get: async (key: string) => {
       const entry = store.get(key);
       if (!entry) return null;
@@ -29,10 +30,11 @@ function makeMockCache(): ICacheAdapter {
   };
 }
 
-function makeMockAccountRepo(): AccountRepository {
+function makeMockAccountRepo(): AccountRepository & { accounts: Map<number, AccountRow> } {
   const accounts = new Map<number, AccountRow>();
 
   return {
+    accounts,
     findById: async (id: number) => accounts.get(id) || null,
     findByUsername: async (username: string) => {
       for (const account of accounts.values()) {
@@ -82,7 +84,7 @@ describe('AuthService', () => {
       updated_at: new Date(),
     };
 
-    (mockRepo as any).accounts = new Map([[testAccountId, testAccount]]);
+    mockRepo.accounts.set(testAccountId, testAccount);
   });
 
   describe('hashPassword', () => {
@@ -131,9 +133,9 @@ describe('AuthService', () => {
       const password = 'testPassword123';
       const hash = await authService.hashPassword(password);
 
-      const accounts = mockRepo as any;
-      accounts.accounts.set(1, {
-        ...accounts.accounts.get(1),
+      const account = mockRepo.accounts.get(1)!;
+      mockRepo.accounts.set(1, {
+        ...account,
         password_hash: hash,
       });
 
@@ -155,9 +157,9 @@ describe('AuthService', () => {
       const password = 'testPassword123';
       const hash = await authService.hashPassword(password);
 
-      const accounts = mockRepo as any;
-      accounts.accounts.set(1, {
-        ...accounts.accounts.get(1),
+      const account = mockRepo.accounts.get(1)!;
+      mockRepo.accounts.set(1, {
+        ...account,
         password_hash: hash,
       });
 
@@ -172,9 +174,9 @@ describe('AuthService', () => {
       const password = 'testPassword123';
       const hash = await authService.hashPassword(password);
 
-      const accounts = mockRepo as any;
-      accounts.accounts.set(1, {
-        ...accounts.accounts.get(1),
+      const account = mockRepo.accounts.get(1)!;
+      mockRepo.accounts.set(1, {
+        ...account,
         password_hash: hash,
         banned: true,
         banned_until: null,
@@ -191,9 +193,9 @@ describe('AuthService', () => {
       const password = 'testPassword123';
       const hash = await authService.hashPassword(password);
 
-      const accounts = mockRepo as any;
-      accounts.accounts.set(1, {
-        ...accounts.accounts.get(1),
+      const account = mockRepo.accounts.get(1)!;
+      mockRepo.accounts.set(1, {
+        ...account,
         password_hash: hash,
         banned: true,
         banned_until: new Date(Date.now() - 10000), // Expired 10 seconds ago

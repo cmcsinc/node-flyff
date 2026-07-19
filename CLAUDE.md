@@ -142,18 +142,21 @@ See `packages/ipc/src/schemas/` for all typed IPC message schemas.
 
 ## Packet Protocol
 
-Every Flyff TCP packet on the wire:
+Every Flyff TCP packet on the wire (v19-style framing, as implemented in `@flyff/core`):
 
 ```text
-[4 bytes DWORD: size]  ← bytes after these 4
-[2 bytes WORD: header] ← always 0x5E80
-[2 bytes WORD: opcode] ← SNSP constant
-[N bytes: payload]     ← all integers Little-Endian
+[1 byte:  0x5E marker]
+[4 bytes DWORD: size]  ← bytes after these 4 (Little-Endian)
+[N bytes: payload]     ← payload leads with a DWORD opcode; all integers LE
 ```
 
-Strings are **DWORD-length-prefixed** (not null-terminated). Encryption is a per-connection **LSFR cipher** (`LSFRCipher` in `@flyff/core`). TCP is stream-based — always use `PacketBuffer.drain()` to reassemble frames before dispatch.
+The payload's first DWORD is the `PACKETTYPE_*` opcode (e.g. `PACKETTYPE.JOIN = 0x0000ff00`). The dispatcher strips the 5-byte frame + leading opcode DWORD and hands the remaining fields to the handler; replies write `writeDword(PACKETTYPE.X)` as the first payload DWORD.
 
-Opcodes use their original C++ `SNSP_*` names (e.g., `SNSP_LOGIN_CERTIFY = 0xFC03`). See `packages/core/src/constants/opcodes.ts`.
+> Note: `CLAUDE.md` previously documented a `[4 B size][2 B 0x5E80 header][2 B opcode]` frame and an LSFR cipher. That did not match the implementation. The code uses the `0x5E` marker frame above with **CRC** integrity (not LSFR). See `packages/core/src/net/PacketBuffer.ts`.
+
+Strings are **DWORD-length-prefixed** (not null-terminated). TCP is stream-based — always use `PacketBuffer.drain()` to reassemble frames before dispatch.
+
+Opcodes use their original C++ `PACKETTYPE_*` names from `_Network/MsgHdr.h` (e.g. `PACKETTYPE_CERTIFY`, `PACKETTYPE_JOIN`). See `packages/core/src/constants/opcodes.ts`.
 
 ---
 

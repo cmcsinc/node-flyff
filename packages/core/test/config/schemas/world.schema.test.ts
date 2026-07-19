@@ -48,7 +48,7 @@ describe('WorldServerConfigSchema', () => {
     assert.equal(result.log.pretty, false);
 
     // DB defaults
-    assert.equal(result.database.client, 'sqlite3');
+    assert.equal(result.database.client, 'better-sqlite3');
     assert.equal(result.database.filename, './data/flyff_dev.sqlite3');
 
     // Cache defaults

@@ -46,7 +46,7 @@ describe('ClusterServerConfigSchema', () => {
     assert.equal(result.log.pretty, false);
 
     // DB defaults
-    assert.equal(result.database.client, 'sqlite3');
+    assert.equal(result.database.client, 'better-sqlite3');
 
     // Cache defaults
     assert.equal(result.cache.adapter, 'memory');

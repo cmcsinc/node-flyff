@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import argon2 from 'argon2';
+import { hashPassword, verifyPassword } from '@flyff/core/utils/password.js';
 import type { ICacheAdapter } from '@flyff/core/cache';
 import type { AccountRepository } from '@flyff/database/repositories/account.repo.js';
 import { createLogger } from '@flyff/core/logger.js';
@@ -44,12 +44,7 @@ export class AuthService {
    * @returns Password hash
    */
   async hashPassword(password: string): Promise<string> {
-    return argon2.hash(password, {
-      type: argon2.argon2id,
-      memoryCost: 65536, // 64 MB
-      timeCost: 3,
-      parallelism: 4,
-    });
+    return hashPassword(password);
   }
 
   /**
@@ -60,11 +55,7 @@ export class AuthService {
    * @returns True if password matches
    */
   async verifyPassword(password: string, hash: string): Promise<boolean> {
-    try {
-      return await argon2.verify(hash, password);
-    } catch {
-      return false;
-    }
+    return verifyPassword(password, hash);
   }
 
   /**

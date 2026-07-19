@@ -35,7 +35,8 @@
       "Bash(pnpm test:*)",
       "Bash(pnpm test:core)",
       "Bash(pnpm test:database)",
-      "Bash(xargs -0 rm -f)"
+      "Bash(xargs -0 rm -f)",
+      "Bash(git reset:*)"
     ]
   }
 }

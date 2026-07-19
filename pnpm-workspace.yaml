@@ -1,4 +1,13 @@
 packages:
   - 'packages/*'
-  - 'resources'
   - 'tools/*'
+allowBuilds:
+  argon2: false
+  better-sqlite3: false
+  esbuild: false
+  sqlite3: false
+onlyBuiltDependencies:
+  - argon2
+  - better-sqlite3
+  - esbuild
+  - sqlite3

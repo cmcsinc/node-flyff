@@ -1,7 +1,8 @@
 import { compose } from './compose.js';
+import { buildLoginClientServer } from './clientServer.js';
 
 async function main(): Promise<void> {
-  const { config, logger, clusterRegistry } = await compose();
+  const { config, logger, clusterRegistry, authHandler } = await compose();
 
   process.on('unhandledRejection', err => {
     logger.error({ err }, 'Unhandled promise rejection');
@@ -9,7 +10,11 @@ async function main(): Promise<void> {
   });
 
   await clusterRegistry.start();
-  logger.info({ port: config.server.port }, 'Server started on port');
+
+  const { server } = buildLoginClientServer({ authHandler, logger });
+  server.listen(config.server.port, () => {
+    logger.info({ port: config.server.port }, 'Login client server listening');
+  });
 }
 
 void main();

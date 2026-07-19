@@ -8,28 +8,15 @@ import { ObjectType } from '../../src/constants/objectTypes.js';
 import type { ObjectTypeValue } from '../../src/constants/objectTypes.js';
 
 describe('ObjectType constants', () => {
-  it('MOVER equals 0', () => {
-    assert.equal(ObjectType.MOVER, 0);
-  });
-
-  it('ITEM equals 1', () => {
-    assert.equal(ObjectType.ITEM, 1);
-  });
-
-  it('CTRL equals 2', () => {
+  it('matches the C++ OT_* enum (sequential from 0)', () => {
+    assert.equal(ObjectType.OBJ, 0);
+    assert.equal(ObjectType.ANI, 1);
     assert.equal(ObjectType.CTRL, 2);
-  });
-
-  it('REGION equals 3', () => {
-    assert.equal(ObjectType.REGION, 3);
-  });
-
-  it('PATH equals 4', () => {
-    assert.equal(ObjectType.PATH, 4);
-  });
-
-  it('SHIP equals 5', () => {
-    assert.equal(ObjectType.SHIP, 5);
+    assert.equal(ObjectType.SFX, 3);
+    assert.equal(ObjectType.ITEM, 4);
+    assert.equal(ObjectType.MOVER, 5);
+    assert.equal(ObjectType.REGION, 6);
+    assert.equal(ObjectType.SHIP, 7);
   });
 
   it('all values are numbers', () => {
@@ -49,6 +36,6 @@ describe('ObjectType constants', () => {
 
   it('ObjectTypeValue type encompasses MOVER', () => {
     const t: ObjectTypeValue = ObjectType.MOVER;
-    assert.equal(t, 0);
+    assert.equal(t, 5);
   });
 });

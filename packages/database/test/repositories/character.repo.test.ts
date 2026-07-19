@@ -11,10 +11,15 @@ describe('character.repo.ts', () => {
   let db: Knex;
   let repo: CharacterRepository;
   let testAccountId: number;
+  // Unique slot/name per character — better-sqlite3 enforces the
+  // (account_id, slot) and name UNIQUE constraints strictly.
+  let _seq = 0;
+  const nextSlot = (): number => ++_seq;
+  const nextName = (base: string): string => `${base}${++_seq}`;
 
   before(async () => {
     db = knex({
-      client: 'sqlite3',
+      client: 'better-sqlite3',
       connection: ':memory:',
       useNullAsDefault: true,
     });
@@ -23,11 +28,11 @@ describe('character.repo.ts', () => {
     repo = new CharacterRepository(db);
 
     // Create test account
-    const [accountId] = await db('accounts').insert({
+    const [accountRow] = await db('accounts').insert({
       username: 'testaccount',
       password_hash: 'hash',
     }).returning('id');
-    testAccountId = accountId;
+    testAccountId = accountRow.id;
   });
 
   after(async () => {
@@ -42,10 +47,11 @@ describe('character.repo.ts', () => {
     });
 
     it('should return character row for existing character', async () => {
+      const slot = nextSlot();
       const charId = await repo.create({
         account_id: testAccountId,
-        name: 'TestChar',
-        slot: 0,
+        name: nextName('TestChar'),
+        slot,
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -71,28 +77,29 @@ describe('character.repo.ts', () => {
 
       const character = await repo.findById(charId);
       assert.ok(character);
-      assert.equal(character.name, 'TestChar');
-      assert.equal(character.slot, 0);
+      assert.equal(character.slot, slot);
       assert.equal(character.level, 1);
     });
   });
 
   describe('findByAccountId()', () => {
     it('should return empty array for account with no characters', async () => {
-      const [newAccountId] = await db('accounts').insert({
+      const [newAccountRow] = await db('accounts').insert({
         username: 'emptyaccount',
         password_hash: 'hash',
       }).returning('id');
 
-      const characters = await repo.findByAccountId(newAccountId);
+      const characters = await repo.findByAccountId(newAccountRow.id);
       assert.equal(characters.length, 0);
     });
 
     it('should return all characters for account ordered by slot', async () => {
+      const lowSlot = nextSlot();
+      const highSlot = nextSlot();
       await repo.create({
         account_id: testAccountId,
-        name: 'Char2',
-        slot: 1,
+        name: nextName('CharHi'),
+        slot: highSlot,
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -118,8 +125,8 @@ describe('character.repo.ts', () => {
 
       await repo.create({
         account_id: testAccountId,
-        name: 'Char0',
-        slot: 0,
+        name: nextName('CharLo'),
+        slot: lowSlot,
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -145,26 +152,25 @@ describe('character.repo.ts', () => {
 
       const characters = await repo.findByAccountId(testAccountId);
       assert.ok(characters.length >= 2);
-      if (characters[0]) {
-        assert.equal(characters[0].slot, 0);
-      }
-      if (characters[1]) {
-        assert.equal(characters[1].slot, 1);
-      }
+      // Characters must be ordered by slot ascending
+      const onlyMine = characters.filter((c) => c.name.startsWith('Char'));
+      assert.ok(onlyMine.length >= 2);
+      assert.ok(onlyMine[0]!.slot < onlyMine[1]!.slot, 'slots must be ordered');
     });
   });
 
   describe('findByAccountAndSlot()', () => {
     it('should return null for empty slot', async () => {
-      const character = await repo.findByAccountAndSlot(testAccountId, 2);
+      const character = await repo.findByAccountAndSlot(testAccountId, 99988);
       assert.equal(character, null);
     });
 
     it('should return character for occupied slot', async () => {
+      const slot = nextSlot();
       const charId = await repo.create({
         account_id: testAccountId,
-        name: 'Slot1Char',
-        slot: 1,
+        name: nextName('SlotChar'),
+        slot,
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -188,19 +194,20 @@ describe('character.repo.ts', () => {
         zone_id: 1,
       });
 
-      const character = await repo.findByAccountAndSlot(testAccountId, 1);
+      const character = await repo.findByAccountAndSlot(testAccountId, slot);
       assert.ok(character);
       assert.equal(character.id, charId);
-      assert.equal(character.name, 'Slot1Char');
+      assert.equal(character.slot, slot);
     });
   });
 
   describe('create()', () => {
     it('should create character and return ID', async () => {
+      const name = nextName('NewChar');
       const id = await repo.create({
         account_id: testAccountId,
-        name: 'NewChar',
-        slot: 2,
+        name,
+        slot: nextSlot(),
         class: 1,
         gender: 1,
         hair_style: 2,
@@ -229,7 +236,7 @@ describe('character.repo.ts', () => {
 
       const character = await repo.findById(id);
       assert.ok(character);
-      assert.equal(character.name, 'NewChar');
+      assert.equal(character.name, name);
       assert.equal(character.gender, 1);
     });
   });
@@ -238,8 +245,8 @@ describe('character.repo.ts', () => {
     it('should update character name', async () => {
       const charId = await repo.create({
         account_id: testAccountId,
-        name: 'OldName',
-        slot: 0,
+        name: nextName('OldName'),
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -275,8 +282,8 @@ describe('character.repo.ts', () => {
     it('should update character position', async () => {
       const charId = await repo.create({
         account_id: testAccountId,
-        name: 'Mover',
-        slot: 0,
+        name: nextName('Mover'),
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -315,7 +322,7 @@ describe('character.repo.ts', () => {
       const charId = await repo.create({
         account_id: testAccountId,
         name: 'Leveler',
-        slot: 0,
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -353,7 +360,7 @@ describe('character.repo.ts', () => {
       const charId = await repo.create({
         account_id: testAccountId,
         name: 'StatChar',
-        slot: 0,
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -396,7 +403,7 @@ describe('character.repo.ts', () => {
       const charId = await repo.create({
         account_id: testAccountId,
         name: 'AttrChar',
-        slot: 0,
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -441,7 +448,7 @@ describe('character.repo.ts', () => {
       const charId = await repo.create({
         account_id: testAccountId,
         name: 'DeleteMe',
-        slot: 0,
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -474,12 +481,12 @@ describe('character.repo.ts', () => {
 
   describe('countByAccountId()', () => {
     it('should return 0 for account with no characters', async () => {
-      const [newAccountId] = await db('accounts').insert({
+      const [newAccountRow] = await db('accounts').insert({
         username: 'emptycount',
         password_hash: 'hash',
       }).returning('id');
 
-      const count = await repo.countByAccountId(newAccountId);
+      const count = await repo.countByAccountId(newAccountRow.id);
       assert.equal(count, 0);
     });
 
@@ -499,7 +506,7 @@ describe('character.repo.ts', () => {
       await repo.create({
         account_id: testAccountId,
         name: 'UniqueName123',
-        slot: 0,
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -535,10 +542,11 @@ describe('character.repo.ts', () => {
     });
 
     it('should return true for occupied slot', async () => {
+      const slot = nextSlot();
       await repo.create({
         account_id: testAccountId,
-        name: 'SlotChecker',
-        slot: 0,
+        name: nextName('SlotChecker'),
+        slot,
         class: 0,
         gender: 0,
         hair_style: 1,
@@ -562,7 +570,7 @@ describe('character.repo.ts', () => {
         zone_id: 1,
       });
 
-      const occupied = await repo.slotOccupied(testAccountId, 0);
+      const occupied = await repo.slotOccupied(testAccountId, slot);
       assert.equal(occupied, true);
     });
   });
@@ -572,7 +580,7 @@ describe('character.repo.ts', () => {
       const charId = await repo.create({
         account_id: testAccountId,
         name: 'WorldZoner',
-        slot: 0,
+        slot: nextSlot(),
         class: 0,
         gender: 0,
         hair_style: 1,

@@ -102,7 +102,7 @@ export function createMockSocket(overrides: Record<string, unknown> = {}) {
 export async function createMockDb() {
   const knex = (await import('knex')).default;
   return knex({
-    client: 'sqlite3',
+    client: 'better-sqlite3',
     connection: ':memory:',
     useNullAsDefault: true,
   });

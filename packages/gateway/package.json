@@ -1,0 +1,28 @@
+{
+  "name": "@flyff/gateway",
+  "version": "1.0.0",
+  "description": "Unified WebSocket gateway server — auth, character select, and world in one process",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@flyff/core": "workspace:*",
+    "@flyff/database": "workspace:*",
+    "knex": "^3.1.0",
+    "sqlite3": "^5.1.7",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/ws": "^8.5.10",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}

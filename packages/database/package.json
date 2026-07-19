@@ -8,7 +8,8 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./repositories/*": "./dist/repositories/*.js"
+    "./repositories/*": "./dist/repositories/*.js",
+    "./migrations/*": "./dist/migrations/*.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -21,11 +22,10 @@
   },
   "dependencies": {
     "@flyff/core": "workspace:*",
-    "better-sqlite3": "^9.6.0",
+    "better-sqlite3": "^12.11.1",
     "knex": "^3.1.0",
     "mysql2": "^3.9.7",
     "pg": "^8.11.5",
-    "sqlite3": "^5.1.7",
     "zod": "^3.22.4"
   },
   "devDependencies": {

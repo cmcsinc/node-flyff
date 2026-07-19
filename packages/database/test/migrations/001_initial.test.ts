@@ -1,4 +1,4 @@
-import { describe, it, before, after } from 'node:test';
+import { describe, it, before, after, beforeEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
 import type { Knex } from '../../src/types.js';
@@ -12,7 +12,7 @@ describe('001_initial migration', () => {
 
   before(async () => {
     db = knex({
-      client: 'sqlite3',
+      client: 'better-sqlite3',
       connection: ':memory:',
       useNullAsDefault: true,
     });
@@ -20,6 +20,12 @@ describe('001_initial migration', () => {
 
   after(async () => {
     await db.destroy();
+  });
+
+  // Reset schema before each test so up() starts clean (better-sqlite3
+  // rejects createTable on existing tables, unlike the laxer sqlite3).
+  beforeEach(async () => {
+    await down(db).catch(() => {});
   });
 
   describe('up()', () => {
@@ -37,8 +43,7 @@ describe('001_initial migration', () => {
       assert.ok(tableNames.includes('bank'));
       assert.ok(tableNames.includes('skills'));
       assert.ok(tableNames.includes('quick_slots'));
-      assert.ok(tableNames.includes('knex_migrations'));
-      assert.ok(tableNames.includes('knex_migrations_lock'));
+      // knex_migrations tables are created by db.migrate.latest(), not by up()
     });
 
     it('should create accounts table with correct schema', async () => {
@@ -102,14 +107,14 @@ describe('001_initial migration', () => {
       await up(db);
 
       // Insert a test account
-      const [accountId] = await db('accounts').insert({
+      const [accountRow] = await db('accounts').insert({
         username: 'testuser',
         password_hash: 'hash',
       }).returning('id');
 
       // Insert first character in slot 0
       await db('characters').insert({
-        account_id: accountId,
+        account_id: accountRow.id,
         name: 'Char1',
         slot: 0,
       });
@@ -118,7 +123,7 @@ describe('001_initial migration', () => {
       await assert.rejects(
         async () => {
           await db('characters').insert({
-            account_id: accountId,
+            account_id: accountRow.id,
             name: 'Char2',
             slot: 0,
           });
@@ -131,14 +136,14 @@ describe('001_initial migration', () => {
       await up(db);
 
       // Insert a test account
-      const [accountId] = await db('accounts').insert({
+      const [accountRow] = await db('accounts').insert({
         username: 'testuser',
         password_hash: 'hash',
       }).returning('id');
 
       // Insert first character
       await db('characters').insert({
-        account_id: accountId,
+        account_id: accountRow.id,
         name: 'UniqueName',
         slot: 0,
       });
@@ -147,7 +152,7 @@ describe('001_initial migration', () => {
       await assert.rejects(
         async () => {
           await db('characters').insert({
-            account_id: accountId,
+            account_id: accountRow.id,
             name: 'UniqueName',
             slot: 1,
           });
@@ -180,51 +185,51 @@ describe('001_initial migration', () => {
     it('should delete inventory when character is deleted', async () => {
       await up(db);
 
-      const [accountId] = await db('accounts').insert({
+      const [accountRow] = await db('accounts').insert({
         username: 'testuser',
         password_hash: 'hash',
       }).returning('id');
 
-      const [charId] = await db('characters').insert({
-        account_id: accountId,
+      const [charRow] = await db('characters').insert({
+        account_id: accountRow.id,
         name: 'TestChar',
         slot: 0,
       }).returning('id');
 
       await db('inventory').insert({
-        character_id: charId,
+        character_id: charRow.id,
         slot: 0,
         item_id: 1,
         quantity: 10,
       });
 
       // Delete character
-      await db('characters').where({ id: charId }).del();
+      await db('characters').where({ id: charRow.id }).del();
 
       // Inventory should be deleted by cascade
-      const items = await db('inventory').where({ character_id: charId });
+      const items = await db('inventory').where({ character_id: charRow.id });
       assert.equal(items.length, 0);
     });
 
     it('should delete characters when account is deleted', async () => {
       await up(db);
 
-      const [accountId] = await db('accounts').insert({
+      const [accountRow] = await db('accounts').insert({
         username: 'testuser',
         password_hash: 'hash',
       }).returning('id');
 
       await db('characters').insert({
-        account_id: accountId,
+        account_id: accountRow.id,
         name: 'TestChar',
         slot: 0,
       });
 
       // Delete account
-      await db('accounts').where({ id: accountId }).del();
+      await db('accounts').where({ id: accountRow.id }).del();
 
       // Characters should be deleted by cascade
-      const chars = await db('characters').where({ account_id: accountId });
+      const chars = await db('characters').where({ account_id: accountRow.id });
       assert.equal(chars.length, 0);
     });
   });

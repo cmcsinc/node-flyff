@@ -13,7 +13,7 @@ describe('account.repo.ts', () => {
 
   before(async () => {
     db = knex({
-      client: 'sqlite3',
+      client: 'better-sqlite3',
       connection: ':memory:',
       useNullAsDefault: true,
     });

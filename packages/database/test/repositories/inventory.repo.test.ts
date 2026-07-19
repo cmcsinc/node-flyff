@@ -14,7 +14,7 @@ describe('inventory.repo.ts', () => {
 
   before(async () => {
     db = knex({
-      client: 'sqlite3',
+      client: 'better-sqlite3',
       connection: ':memory:',
       useNullAsDefault: true,
     });
@@ -23,13 +23,13 @@ describe('inventory.repo.ts', () => {
     repo = new InventoryRepository(db);
 
     // Create test account and character
-    const [accountId] = await db('accounts').insert({
+    const [accountRow] = await db('accounts').insert({
       username: 'testaccount',
       password_hash: 'hash',
     }).returning('id');
 
-    const [characterId] = await db('characters').insert({
-      account_id: accountId,
+    const [charRow] = await db('characters').insert({
+      account_id: accountRow.id,
       name: 'TestChar',
       slot: 0,
       class: 0,
@@ -55,7 +55,7 @@ describe('inventory.repo.ts', () => {
       zone_id: 1,
     }).returning('id');
 
-    testCharacterId = characterId;
+    testCharacterId = charRow.id;
   });
 
   after(async () => {
@@ -65,13 +65,13 @@ describe('inventory.repo.ts', () => {
 
   describe('findByCharacterId()', () => {
     it('should return empty array for character with no items', async () => {
-      const [newAccountId] = await db('accounts').insert({
+      const [newAccountRow] = await db('accounts').insert({
         username: 'emptyaccount',
         password_hash: 'hash',
       }).returning('id');
 
-      const [newCharId] = await db('characters').insert({
-        account_id: newAccountId,
+      const [newCharRow] = await db('characters').insert({
+        account_id: newAccountRow.id,
         name: 'EmptyChar',
         slot: 0,
         class: 0,
@@ -97,7 +97,7 @@ describe('inventory.repo.ts', () => {
         zone_id: 1,
       }).returning('id');
 
-      const items = await repo.findByCharacterId(newCharId);
+      const items = await repo.findByCharacterId(newCharRow.id);
       assert.equal(items.length, 0);
     });
 
@@ -322,13 +322,13 @@ describe('inventory.repo.ts', () => {
 
   describe('countItems()', () => {
     it('should return 0 for empty inventory', async () => {
-      const [newAccountId] = await db('accounts').insert({
+      const [newAccountRow] = await db('accounts').insert({
         username: 'emptycountacc',
         password_hash: 'hash',
       }).returning('id');
 
-      const [newCharId] = await db('characters').insert({
-        account_id: newAccountId,
+      const [newCharRow] = await db('characters').insert({
+        account_id: newAccountRow.id,
         name: 'EmptyCountChar',
         slot: 0,
         class: 0,
@@ -354,7 +354,7 @@ describe('inventory.repo.ts', () => {
         zone_id: 1,
       }).returning('id');
 
-      const count = await repo.countItems(newCharId);
+      const count = await repo.countItems(newCharRow.id);
       assert.equal(count, 0);
     });
 

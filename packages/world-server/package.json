@@ -18,10 +18,14 @@
     "@flyff/database": "workspace:*",
     "@flyff/ipc": "workspace:*",
     "@flyff/resources": "workspace:*",
+    "ioredis": "^5.4.1",
     "pino": "^10.3.1"
   },
   "devDependencies": {
+    "@flyff/cluster-server": "workspace:*",
+    "@flyff/login-server": "workspace:*",
     "@types/node": "^20.12.7",
+    "argon2": "^0.40.1",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   }

@@ -41,6 +41,19 @@ export class AccountRepository {
   constructor(private db: Knex) {}
 
   /**
+   * Coerces raw DB row boolean fields (stored as 0/1 integers) to booleans.
+   * better-sqlite3 returns raw integers; this keeps the AccountRow type honest.
+   */
+  private mapRow(row: AccountRow | undefined): AccountRow | null {
+    if (!row) return null;
+    return {
+      ...row,
+      gm: Boolean(row.gm),
+      banned: Boolean(row.banned),
+    };
+  }
+
+  /**
    * Find account by ID.
    *
    * @param id - Account ID
@@ -51,7 +64,7 @@ export class AccountRepository {
       .where({ id })
       .limit(1);
 
-    return rows[0] || null;
+    return this.mapRow(rows[0]);
   }
 
   /**
@@ -65,7 +78,7 @@ export class AccountRepository {
       .where({ username })
       .limit(1);
 
-    return rows[0] || null;
+    return this.mapRow(rows[0]);
   }
 
   /**
@@ -79,7 +92,7 @@ export class AccountRepository {
       .where({ email })
       .limit(1);
 
-    return rows[0] || null;
+    return this.mapRow(rows[0]);
   }
 
   /**

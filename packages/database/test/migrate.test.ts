@@ -1,21 +1,28 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import * as knexModule from 'knex';
-import type { Knex } from '../../src/types.js';
-import { runMigrations, rollbackMigrations, getCurrentMigration } from '../../src/migrate.js';
+import type { Knex } from '../src/types.js';
+import { runMigrations, rollbackMigrations, getCurrentMigration } from '../src/migrate.js';
 
 const knex = (knexModule as any).default || knexModule;
+
+// Resolve migrations dir absolutely from this test file so it does not depend
+// on whichever cwd pnpm invokes the test from.
+const MIGRATIONS_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'migrations');
 
 describe('migrate.ts', () => {
   let db: Knex;
 
   before(async () => {
     db = knex({
-      client: 'sqlite3',
+      client: 'better-sqlite3',
       connection: ':memory:',
       useNullAsDefault: true,
       migrations: {
-        directory: '../../src/migrations',
+        directory: MIGRATIONS_DIR,
+        loadExtensions: ['.js', '.ts'],
       },
     });
 

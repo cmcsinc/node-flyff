@@ -46,8 +46,8 @@ export const ClusterEntrySchema = z.object({
   name: z.string().min(1),
   /** Public IP address or hostname clients connect to. */
   ip: z.string().min(7),
-  /** Public port of the cluster server (default 38100). */
-  port: z.number().int().min(1).max(65535).default(38100),
+  /** Public port of the cluster/cache server (v15 default PN_CACHESRVR = 5400). */
+  port: z.number().int().min(1).max(65535).default(5400),
   /** Number of channels / world-server instances under this cluster. */
   channels: z.number().int().min(1).default(1),
 });
