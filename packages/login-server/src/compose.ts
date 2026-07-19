@@ -9,7 +9,7 @@ import { AuthHandler } from './handlers/auth.handler.js';
 import { ServerListHandler } from './handlers/serverList.handler.js';
 
 type LoginEvents = {
-  'login:success': [{ accountId: number; socket: unknown; handoffToken: string }];
+  'login:success': [{ accountId: number; account: string; socket: unknown; handoffToken: string }];
 };
 
 /**
@@ -98,8 +98,8 @@ export async function compose(): Promise<LoginComposeResult> {
   const serverListHandler = new ServerListHandler(serverListService);
 
   // Listen for login success events to send server list
-  eventBus.on('login:success', async (data: { accountId: number; socket: unknown; handoffToken: string }) => {
-    await serverListHandler.sendServerList(data.socket as any, data.accountId);
+  eventBus.on('login:success', async (data: { accountId: number; account: string; socket: unknown; handoffToken: string }) => {
+    await serverListHandler.sendServerList(data.socket as any, data.accountId, data.account);
   });
 
   return {

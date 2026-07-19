@@ -94,6 +94,21 @@ export type UnregisterWorld = z.infer<typeof UnregisterWorldSchema>;
 // ---------------------------------------------------------------------------
 
 /**
+ * One world channel entry, shared between {@link RegisterClusterRequestSchema}
+ * and {@link ClusterHeartbeatSchema}. Sent at registration so the Login Server
+ * can populate the server list immediately instead of waiting for the first
+ * heartbeat (the v15 client cannot proceed past server-select without a channel).
+ */
+export const WorldChannelSchema = z.object({
+  channelId: z.number().int().min(1),
+  name: z.string().min(1),
+  players: z.number().int().min(0),
+  maxPlayers: z.number().int().min(1),
+  status: z.enum(['online', 'offline', 'maintenance']),
+});
+export type WorldChannel = z.infer<typeof WorldChannelSchema>;
+
+/**
  * Payload sent by a Cluster Server when it connects to the Login Server's
  * internal IpcServer port. Provides the data needed to build the SNSP_SERVER_LIST
  * packet sent to game clients.
@@ -104,10 +119,16 @@ export const RegisterClusterRequestSchema = z.object({
   name: z.string().min(1).max(64),
   /** Public IP clients connect to for character selection. */
   publicIp: z.string().ip({ version: 'v4' }),
-  /** Public port of the cluster server (default: 38100). */
+  /** Public port of the cluster server (PN_LOGINSRVR = 28000). */
   publicPort: z.number().int().min(1024).max(65535),
   /** Number of world channels currently online under this cluster. */
   channelCount: z.number().int().min(0),
+  /**
+   * World channels currently online under this cluster. Sent at registration so
+   * the Login Server's server list has channel children immediately — the v15
+   * client requires a server + a channel to proceed past server-select.
+   */
+  worlds: z.array(WorldChannelSchema).default([]),
   /** Total players across all world channels. */
   players: z.number().int().min(0),
   /** Maximum players across all world channels. */
@@ -141,15 +162,7 @@ export type RegisterClusterAck = z.infer<typeof RegisterClusterAckSchema>;
 export const ClusterHeartbeatSchema = z.object({
   serverId: z.string().min(1),
   /** Worlds currently online under this cluster (live list). */
-  worlds: z.array(
-    z.object({
-      channelId: z.number().int().min(1),
-      name: z.string().min(1),
-      players: z.number().int().min(0),
-      maxPlayers: z.number().int().min(1),
-      status: z.enum(['online', 'offline', 'maintenance']),
-    }),
-  ),
+  worlds: z.array(WorldChannelSchema),
   ts: z.number().int(),
 });
 export type ClusterHeartbeat = z.infer<typeof ClusterHeartbeatSchema>;

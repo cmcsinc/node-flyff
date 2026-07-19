@@ -55,9 +55,9 @@ packets.**
 Export the `.env` secrets into your shell first (`IPC_SECRET` is required), then:
 
 ```bash
-npx tsx packages/login-server/src/index.ts    # :23000  (certifier: CERTIFY → SRVR_LIST)
-npx tsx packages/cluster-server/src/index.ts  # :38100  (GETPLAYERLIST, PRE_JOIN)
-npx tsx packages/world-server/src/index.ts    # :38180  (JOIN → self-spawn)
+npx tsx packages/login-server/src/index.ts    # :23000  (PN_CERTIFIER: CERTIFY → SRVR_LIST)
+npx tsx packages/cluster-server/src/index.ts  # :28000  (PN_LOGINSRVR: GETPLAYERLIST, PRE_JOIN)
+npx tsx packages/world-server/src/index.ts    # :2000   (PN_WORLDSRVR: JOIN → self-spawn)
 ```
 
 Each should log `… client server listening` on its port.
@@ -77,13 +77,14 @@ In the **login-server** terminal, on a successful CERTIFY you should see:
 … Login successful
 ```
 
-The client then disconnects from `:23000` and connects to the cluster `:38100`
-(the address from `SRVR_LIST`). Watch the **cluster-server** terminal for
+The client then disconnects from `:23000` and connects to the cluster `:28000`
+(hardcoded `PN_LOGINSRVR`; the IP comes from `SRVR_LIST` — `server.publicHost`,
+**not** the `0.0.0.0` bind `host`). Watch the **cluster-server** terminal for
 `opcode:'0xf6'` (GETPLAYERLIST), then `0xff05` (PRE_JOIN). On PRE_JOIN the
 cluster publishes `player:handoff` over Redis; the **world-server** terminal
 should log `Listening for player handoffs` then `Player handoff received`. The
-client's JOIN (`0xff00`) to `:38180` produces the JOIN/ADD_OBJ snapshot and
-`Player entered world`.
+client's JOIN (`0xff00`) to `:2000` (`PN_WORLDSRVR`) produces the JOIN/ADD_OBJ
+snapshot and `Player entered world`.
 
 ### If it breaks — the packet trace tells you where
 

@@ -66,6 +66,26 @@ export const PACKETTYPE = Object.freeze({
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];
 
+/**
+ * v15 certifier login error codes — the `LONG lError` payload of the
+ * `PACKETTYPE_ERROR` (0xfe) reply (`_Network/MsgHdr.h:1312-1346`).
+ * The client's `OnError` switch (`Neuz/DPCertified.cpp:305-389`) shows a
+ * localized message for each; an unmapped code (e.g. our old `0`) shows nothing.
+ * 0 (`ERROR_OK`) is a deliberate no-op — never use it for a real failure.
+ */
+export const LOGIN_ERROR = Object.freeze({
+  WRONG_PASSWORD:        120, // ERROR_FLYFF_PASSWORD — invalid credentials
+  UNKNOWN_ACCOUNT:       121, // ERROR_FLYFF_ACCOUNT
+  BLOCKED:               119, // ERROR_BLOCKGOLD_ACCOUNT — banned / gold-blocked
+  THROTTLE_15SEC:        134, // ERROR_15SEC_PREVENT — login rate limit
+  THROTTLE_15MIN:        135, // ERROR_15MIN_PREVENT
+  ALREADY_LOGGED_IN:     103, // ERROR_DUPLICATE_ACCOUNT
+  ILLEGAL_VERSION:       107, // ERROR_ILLEGAL_VER
+  CERT_GENERAL:          136, // ERROR_CERT_GENERAL — DB/generic failure
+} as const);
+
+export type LoginError = typeof LOGIN_ERROR[keyof typeof LOGIN_ERROR];
+
 export const SNAPSHOTTYPE = Object.freeze({
   CHAT:           0x0001,
   ACTMSG:         0x0002,

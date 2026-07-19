@@ -44,7 +44,7 @@ export async function compose(): Promise<WorldComposeResult> {
     serverId: config.server.id,
     channelId: config.registration.channelId,
     channelName: config.registration.channelName,
-    publicIp: config.server.host,
+    publicIp: config.server.publicHost,
     publicPort: config.server.port,
     maxPlayers: config.world.maxPlayers,
     ipcSecret: config.ipc.secret,

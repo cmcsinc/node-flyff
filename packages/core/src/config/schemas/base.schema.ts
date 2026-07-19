@@ -21,6 +21,12 @@ export const ServerNetworkSchema = z.object({
   id: z.string().min(1),
   /** Address to bind the TCP listener on. */
   host: z.string().default('0.0.0.0'),
+  /**
+   * Public IP advertised to clients via the server/channel list (what they
+   * connect TO). Must differ from `host` when binding 0.0.0.0 — advertising
+   * 0.0.0.0 makes the client dial an unreachable target after login.
+   */
+  publicHost: z.string().default('127.0.0.1'),
   /** Public TCP port clients connect to. */
   port: z.number().int().min(1).max(65535),
 });
