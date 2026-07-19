@@ -59,6 +59,20 @@ export class CharacterRepository {
   constructor(private db: Knex) {}
 
   /**
+   * Coerces raw DB row to match CharacterRow typing.
+   * `exp` is a bigInteger column — better-sqlite3 may return it as Number;
+   * normalize to string so comparisons are stable across drivers.
+   */
+  private mapRow(row: CharacterRow | undefined): CharacterRow | null {
+    if (!row) return null;
+    return { ...row, exp: String(row.exp) as unknown as bigint };
+  }
+
+  private mapRows(rows: CharacterRow[]): CharacterRow[] {
+    return rows.map((r) => ({ ...r, exp: String(r.exp) as unknown as bigint }));
+  }
+
+  /**
    * Find character by ID.
    *
    * @param id - Character ID
@@ -69,7 +83,7 @@ export class CharacterRepository {
       .where({ id })
       .limit(1);
 
-    return rows[0] || null;
+    return this.mapRow(rows[0]);
   }
 
   /**
@@ -79,9 +93,10 @@ export class CharacterRepository {
    * @returns Array of character rows
    */
   async findByAccountId(accountId: number): Promise<CharacterRow[]> {
-    return this.db('characters')
+    const rows = await this.db('characters')
       .where({ account_id: accountId })
       .orderBy('slot', 'asc');
+    return this.mapRows(rows);
   }
 
   /**
@@ -101,7 +116,7 @@ export class CharacterRepository {
       .where({ account_id: accountId, slot })
       .limit(1);
 
-    return rows[0] || null;
+    return this.mapRow(rows[0]);
   }
 
   /**
@@ -115,7 +130,7 @@ export class CharacterRepository {
       .where({ name })
       .limit(1);
 
-    return rows[0] || null;
+    return this.mapRow(rows[0]);
   }
 
   /**
@@ -128,6 +143,7 @@ export class CharacterRepository {
     const [row] = await this.db('characters')
       .insert({
         ...data,
+        exp: data.exp.toString(),
         created_at: new Date(),
         updated_at: new Date(),
       })
@@ -297,7 +313,8 @@ export class CharacterRepository {
     worldId: string,
     zoneId: number
   ): Promise<CharacterRow[]> {
-    return this.db('characters')
+    const rows = await this.db('characters')
       .where({ world_id: worldId, zone_id: zoneId });
+    return this.mapRows(rows);
   }
 }

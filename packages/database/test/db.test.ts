@@ -6,12 +6,12 @@ describe('db.ts', () => {
   describe('createDb', () => {
     it('should validate SQLite3 config schema', () => {
       const config: DbConfig = {
-        client: 'sqlite3',
+        client: 'better-sqlite3',
         connection: ':memory:',
       };
 
       // Just validate the config type - don't actually connect
-      assert.equal(config.client, 'sqlite3');
+      assert.equal(config.client, 'better-sqlite3');
       assert.equal(config.connection, ':memory:');
     });
 

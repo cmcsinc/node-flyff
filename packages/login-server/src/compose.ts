@@ -45,7 +45,7 @@ export async function compose(): Promise<LoginComposeResult> {
   // Create database connection
   const dbConfig: DbConfig = {
     client: config.database.client,
-    connection: config.database.client === 'sqlite3'
+    connection: config.database.client === 'better-sqlite3'
       ? config.database.filename
       : config.database.url || {
           host: 'localhost',

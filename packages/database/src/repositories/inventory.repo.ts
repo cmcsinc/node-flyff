@@ -181,18 +181,21 @@ export class InventoryRepository {
         .first();
 
       if (fromItem && toItem) {
-        // Swap: update both slots
+        // Swap: exchange the row contents (not the slot column) so the
+        // (character_id, slot) UNIQUE constraint is never violated mid-swap.
         await trx('inventory')
           .where({ character_id: characterId, slot: fromSlot })
           .update({
-            slot: toSlot,
+            item_id: toItem.item_id,
+            quantity: toItem.quantity,
             updated_at: new Date(),
           });
 
         await trx('inventory')
           .where({ character_id: characterId, slot: toSlot })
           .update({
-            slot: fromSlot,
+            item_id: fromItem.item_id,
+            quantity: fromItem.quantity,
             updated_at: new Date(),
           });
       } else if (fromItem && !toItem) {

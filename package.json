@@ -19,11 +19,12 @@
     "test:login": "tsx --test packages/login-server/test/**/*.test.ts",
     "test:cluster": "tsx --test packages/cluster-server/test/**/*.test.ts",
     "test:world": "tsx --test packages/world-server/test/**/*.test.ts",
-    "test:coverage": "node --experimental-test-coverage --experimental-test-loader=tsx node_modulestsx/bin/cli.js --test packages/*/test/**/*.test.ts",
+    "test:coverage": "tsx --test --experimental-test-coverage packages/*/test/**/*.test.ts",
     "test:watch": "tsx watch --test packages/*/test/**/*.test.ts",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r -- lint --fix",
     "checkpoint": "tsx scripts/agent-checkpoint.ts",
+    "servers": "node scripts/start-servers.mjs",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
   },

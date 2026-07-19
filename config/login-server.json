@@ -28,7 +28,7 @@
       "_comment": "Static fallback — used only before any cluster has dynamically registered.",
       "name": "Madrigal",
       "ip": "127.0.0.1",
-      "port": 38100,
+      "port": 5400,
       "channels": 1
     }
   ]

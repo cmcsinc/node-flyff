@@ -5,10 +5,10 @@ const knex = (knexModule as any).default || knexModule;
 
 /**
  * Zod schema for database configuration.
- * Supports SQLite3, PostgreSQL, and MySQL/MariaDB.
+ * Supports better-sqlite3, PostgreSQL, and MySQL/MariaDB.
  */
 const DbConfigSchema = z.object({
-  client: z.enum(['sqlite3', 'pg', 'mysql2']),
+  client: z.enum(['better-sqlite3', 'pg', 'mysql2']),
   connection: z.union([
     z.string(), // filename for SQLite
     z.object({
@@ -27,7 +27,7 @@ export type DbConfig = z.infer<typeof DbConfigSchema>;
  * Creates a Knex database connection.
  *
  * Pool configuration:
- * - SQLite3: min=1, max=1 (single connection due to file locking)
+ * - better-sqlite3: min=1, max=1 (single connection due to file locking)
  * - PostgreSQL/MySQL: min=2, max=10 (connection pooling)
  *
  * @param config - Validated database configuration
@@ -39,7 +39,7 @@ export function createDb(config: DbConfig): ReturnType<typeof knex> {
   return knex({
     client: validated.client,
     connection: validated.connection,
-    pool: validated.client === 'sqlite3'
+    pool: validated.client === 'better-sqlite3'
       ? { min: 1, max: 1 }
       : { min: 2, max: 10 },
     useNullAsDefault: true,

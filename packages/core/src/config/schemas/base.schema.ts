@@ -37,9 +37,9 @@ export const LogConfigSchema = z.object({
 
 /** Knex database connection configuration. */
 export const DatabaseConfigSchema = z.object({
-  /** Knex client adapter. */
-  client: z.enum(['sqlite3', 'pg', 'mysql2']).default('sqlite3'),
-  /** SQLite3 database file path (sqlite3 adapter only). */
+  /** Knex client adapter. better-sqlite3 is the local-dev default (synchronous, prebuilt). */
+  client: z.enum(['better-sqlite3', 'pg', 'mysql2']).default('better-sqlite3'),
+  /** SQLite3 database file path (better-sqlite3 adapter only). */
   filename: z.string().default('./data/flyff_dev.sqlite3'),
   /**
    * PostgreSQL / MySQL connection URL (pg / mysql2 adapters).

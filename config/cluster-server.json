@@ -3,7 +3,7 @@
   "server": {
     "id": "cluster_1",
     "host": "0.0.0.0",
-    "port": 38100
+    "port": 5400
   },
   "log": {
     "level": "info",

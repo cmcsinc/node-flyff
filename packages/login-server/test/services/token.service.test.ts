@@ -1,13 +1,14 @@
-import { describe, it } from 'node:test';
+import { describe, it, before } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { TokenService } from '../../src/services/token.service.js';
 import type { ICacheAdapter } from '@flyff/core/cache.js';
 
 // Mock cache
-function makeMockCache(): ICacheAdapter {
+function makeMockCache(): ICacheAdapter & { store: Map<string, { value: string; expiresAt: number }> } {
   const store = new Map<string, { value: string; expiresAt: number }>();
 
   return {
+    store,
     get: async (key: string) => {
       const entry = store.get(key);
       if (!entry) return null;

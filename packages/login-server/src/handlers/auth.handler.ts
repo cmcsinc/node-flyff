@@ -1,12 +1,14 @@
 import type { Socket } from 'node:net';
-import { SNSP } from '@flyff/core/constants/opcodes.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
+import { sendPacket } from '@flyff/core/net/dispatcher.js';
 import { PacketError, AuthError } from '@flyff/core/errors.js';
 import type { AuthService } from '../services/auth.service.js';
 import type { TokenService } from '../services/token.service.js';
 import type { EventBus } from '@flyff/core/eventBus.js';
 import { createLogger } from '@flyff/core/logger.js';
+import { decryptV15Password, V15_PASSWORD_BLOB_SIZE } from '../utils/v15Password.js';
 
 type LoginEvents = {
   'login:success': [{ accountId: number; socket: unknown; handoffToken: string }];
@@ -14,93 +16,71 @@ type LoginEvents = {
 
 const logger = createLogger({ module: 'auth-handler' });
 
-/**
- * Login certification result.
- */
-interface CertifyResult {
-  success: boolean;
-  errorCode?: number;
-  handoffToken?: string;
-  accountId?: number;
-}
+/** Default v15 protocol version (`NEUZ_MSGVR`, `_Common/LodeConfig.h:9`). */
+const DEFAULT_PROTOCOL_VERSION = '20100412';
 
 /**
- * Login authentication handler.
+ * Login certification handler — `PACKETTYPE_CERTIFY` (0xfc).
  *
- * Handles SNSP_LOGIN_CERTIFY packet from client.
+ * v15 client→certifier payload (after opcode, `Neuz/DPCertified.cpp:122-165`):
+ *   [string protocolVersion][string account][672-byte Rijndael-CBC password blob]
+ * The blob decrypts to the 32-char `md5("kikugalanet"+pwd)` lowercase hex; the
+ * service argon2-verifies that digest against the stored hash.
  */
 export class AuthHandler {
+  private readonly expectedProtocolVersion: string;
+
   constructor(
     private authService: AuthService,
     private tokenService: TokenService,
-    private bus: EventBus<LoginEvents>
-  ) {}
+    private bus: EventBus<LoginEvents>,
+    opts: { expectedProtocolVersion?: string } = {},
+  ) {
+    this.expectedProtocolVersion = opts.expectedProtocolVersion ?? DEFAULT_PROTOCOL_VERSION;
+  }
 
-  /**
-   * Handle LOGIN_CERTIFY packet.
-   *
-   * Packet structure:
-   * - key: DWORD (encryption key, unused initially)
-   * - username: string (DWORD-length-prefixed)
-   * - password: string (DWORD-length-prefixed, MD5 hash)
-   * - version: DWORD (client version)
-   *
-   * @param socket - Client socket
-   * @param reader - Packet reader
-   */
   async handleCertify(socket: Socket, reader: PacketReader): Promise<void> {
     try {
-      // Read packet fields
-      const key = reader.readDword();
-      const username = reader.readString();
-      const password = reader.readString();
-      const version = reader.readDword();
+      const protocolVersion = reader.readString();
+      const account = reader.readString();
+      const blob = reader.readBytes(V15_PASSWORD_BLOB_SIZE);
+      const md5hex = decryptV15Password(blob);
 
-      // Validate input
-      this.validateCertifyInput(username, password, version);
+      this.validateCertifyInput(account, md5hex, protocolVersion);
 
-      // Get client IP
       const ip = socket.remoteAddress ?? 'unknown';
 
-      // Check rate limit
       const rateLimitOk = await this.authService.checkRateLimit(ip);
       if (!rateLimitOk) {
-        this.sendError(socket, 2); // Error code 2: rate limit exceeded
+        this.sendError(socket, 2); // rate limit exceeded
         logger.warn({ ip }, 'Login rate limit exceeded');
         return;
       }
 
-      // Validate credentials
-      const result = await this.authService.validateCredentials(username, password);
+      const result = await this.authService.validateCredentials(account, md5hex);
 
       if (!result.valid) {
         if (result.banned) {
-          this.sendError(socket, 6); // Error code 6: account banned
-          logger.warn({ username, ip }, 'Login failed: account banned');
+          this.sendError(socket, 6); // account banned
+          logger.warn({ account, ip }, 'Login failed: account banned');
         } else {
-          this.sendError(socket, 0); // Error code 0: invalid credentials
-          logger.info({ username, ip }, 'Login failed: invalid credentials');
+          this.sendError(socket, 0); // invalid credentials
+          logger.info({ account, ip }, 'Login failed: invalid credentials');
         }
         return;
       }
 
-      // Clear rate limit on successful auth
       await this.authService.clearRateLimit(ip);
-
-      // Create session
       await this.authService.createSession(result.accountId, ip);
-
-      // Generate handoff token for cluster server
       const handoffToken = await this.tokenService.generateHandoffToken(result.accountId);
 
-      // Emit event for server list
       this.bus.emit('login:success', {
         accountId: result.accountId,
         socket,
         handoffToken,
       });
 
-      logger.info({ accountId: result.accountId, username, ip }, 'Login successful');
+      logger.info({ accountId: result.accountId, account, ip }, 'Login successful');
     } catch (error) {
       if (error instanceof PacketError || error instanceof AuthError) {
         logger.error({ error }, 'Login failed: packet/auth error');
@@ -112,58 +92,25 @@ export class AuthHandler {
     }
   }
 
-  /**
-   * Validate LOGIN_CERTIFY input fields.
-   *
-   * @param username - Username
-   * @param password - Password
-   * @param version - Client version
-   * @throws PacketError if validation fails
-   */
-  private validateCertifyInput(
-    username: string,
-    password: string,
-    version: number
-  ): void {
-    // Username: 3-16 alphanumeric characters
-    if (username.length < 3 || username.length > 16) {
-      throw new PacketError('Invalid username length');
+  private validateCertifyInput(account: string, md5hex: string, protocolVersion: string): void {
+    if (protocolVersion !== this.expectedProtocolVersion) {
+      throw new PacketError(`Illegal protocol version: ${protocolVersion}`);
     }
-
-    const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    if (!usernameRegex.test(username)) {
-      throw new PacketError('Invalid username format');
+    if (account.length < 1 || account.length > 42) {
+      throw new PacketError('Invalid account length');
     }
-
-    // Password: MD5 hash is 32 characters
-    if (password.length !== 32) {
-      throw new PacketError('Invalid password length');
+    if (!/^[a-zA-Z0-9_]+$/.test(account)) {
+      throw new PacketError('Invalid account format');
     }
-
-    const passwordRegex = /^[a-fA-F0-9]{32}$/;
-    if (!passwordRegex.test(password)) {
-      throw new PacketError('Invalid password format');
-    }
-
-    // Version: must be a reasonable value
-    if (version < 1000 || version > 99999) {
-      throw new PacketError('Invalid client version');
+    if (md5hex.length !== 32) {
+      throw new PacketError('Decrypted password is not a 32-char md5 hex');
     }
   }
 
-  /**
-   * Send error response to client.
-   *
-   * @param socket - Client socket
-   * @param errorCode - Error code (0 = invalid credentials, 2 = rate limit, 6 = banned)
-   */
   private sendError(socket: Socket, errorCode: number): void {
     const writer = new PacketWriter();
-    writer.writeWord(0x5E80); // Header
-    writer.writeWord(SNSP.ERROR_CODE);
+    writer.writeDword(PACKETTYPE.ERROR);
     writer.writeDword(errorCode);
-
-    const packet = writer.build();
-    socket.write(packet);
+    sendPacket(socket, writer.build());
   }
 }
