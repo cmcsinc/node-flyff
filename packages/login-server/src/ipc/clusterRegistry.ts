@@ -300,7 +300,7 @@ export class ClusterRegistry extends EventEmitter {
       publicPort: req.publicPort,
       players: req.players,
       maxPlayers: req.maxPlayers,
-      worlds: [],
+      worlds: req.worlds,
       status: 'online',
       registeredAt: new Date(),
       lastHeartbeatMs: Date.now(),

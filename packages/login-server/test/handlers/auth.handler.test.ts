@@ -79,7 +79,7 @@ describe('AuthHandler (v15 CERTIFY)', () => {
     assert.equal(sock._written.length, 1);
   });
 
-  it('rejects when credentials are invalid (ERROR code 0)', async () => {
+  it('rejects invalid credentials with ERROR_FLYFF_PASSWORD (120)', async () => {
     mockAuthService.validateCredentials = async () => ({ accountId: 0, valid: false });
     const sock = mockSocket();
     await authHandler.handleCertify(sock, new PacketReader(certifyPayload('testuser', MD5HEX)));
@@ -87,14 +87,14 @@ describe('AuthHandler (v15 CERTIFY)', () => {
     assert.equal(emitted.length, 0);
   });
 
-  it('rejects when the account is banned (ERROR code 6)', async () => {
+  it('rejects a banned account with ERROR_BLOCKGOLD_ACCOUNT (119)', async () => {
     mockAuthService.validateCredentials = async () => ({ accountId: 0, valid: false, banned: true });
     const sock = mockSocket();
     await authHandler.handleCertify(sock, new PacketReader(certifyPayload('testuser', MD5HEX)));
     assert.equal(sock._written.length, 1);
   });
 
-  it('honours the rate limiter (ERROR code 2)', async () => {
+  it('honours the rate limiter (ERROR_15SEC_PREVENT, 134)', async () => {
     mockAuthService.checkRateLimit = async () => false;
     const sock = mockSocket();
     await authHandler.handleCertify(sock, new PacketReader(certifyPayload('testuser', MD5HEX)));

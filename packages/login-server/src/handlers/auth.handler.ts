@@ -1,5 +1,5 @@
 import type { Socket } from 'node:net';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { PACKETTYPE, LOGIN_ERROR } from '@flyff/core/constants/opcodes.js';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { sendPacket } from '@flyff/core/net/dispatcher.js';
@@ -11,7 +11,7 @@ import { createLogger } from '@flyff/core/logger.js';
 import { decryptV15Password, V15_PASSWORD_BLOB_SIZE } from '../utils/v15Password.js';
 
 type LoginEvents = {
-  'login:success': [{ accountId: number; socket: unknown; handoffToken: string }];
+  'login:success': [{ accountId: number; account: string; socket: unknown; handoffToken: string }];
 };
 
 const logger = createLogger({ module: 'auth-handler' });
@@ -46,13 +46,20 @@ export class AuthHandler {
       const blob = reader.readBytes(V15_PASSWORD_BLOB_SIZE);
       const md5hex = decryptV15Password(blob);
 
+      // debug-only: what the real client sent (protocol version, decrypted md5,
+      // blob head). Useful when diagnosing live login failures.
+      logger.debug(
+        { protocolVersion, account, decryptedLen: md5hex.length, blobHead: blob.subarray(0, 16).toString('hex') },
+        'CERTIFY received',
+      );
+
       this.validateCertifyInput(account, md5hex, protocolVersion);
 
       const ip = socket.remoteAddress ?? 'unknown';
 
       const rateLimitOk = await this.authService.checkRateLimit(ip);
       if (!rateLimitOk) {
-        this.sendError(socket, 2); // rate limit exceeded
+        this.sendError(socket, LOGIN_ERROR.THROTTLE_15SEC);
         logger.warn({ ip }, 'Login rate limit exceeded');
         return;
       }
@@ -61,10 +68,10 @@ export class AuthHandler {
 
       if (!result.valid) {
         if (result.banned) {
-          this.sendError(socket, 6); // account banned
+          this.sendError(socket, LOGIN_ERROR.BLOCKED);
           logger.warn({ account, ip }, 'Login failed: account banned');
         } else {
-          this.sendError(socket, 0); // invalid credentials
+          this.sendError(socket, LOGIN_ERROR.WRONG_PASSWORD);
           logger.info({ account, ip }, 'Login failed: invalid credentials');
         }
         return;
@@ -76,6 +83,7 @@ export class AuthHandler {
 
       this.bus.emit('login:success', {
         accountId: result.accountId,
+        account,
         socket,
         handoffToken,
       });
@@ -84,10 +92,10 @@ export class AuthHandler {
     } catch (error) {
       if (error instanceof PacketError || error instanceof AuthError) {
         logger.error({ error }, 'Login failed: packet/auth error');
-        this.sendError(socket, 0);
+        this.sendError(socket, LOGIN_ERROR.WRONG_PASSWORD);
       } else {
         logger.error({ error }, 'Login failed: unexpected error');
-        this.sendError(socket, 0);
+        this.sendError(socket, LOGIN_ERROR.CERT_GENERAL);
       }
     }
   }
@@ -107,6 +115,7 @@ export class AuthHandler {
     }
   }
 
+  /** Send a v15 `PACKETTYPE_ERROR` (0xfe) reply: `[opcode][LONG errorCode]`. */
   private sendError(socket: Socket, errorCode: number): void {
     const writer = new PacketWriter();
     writer.writeDword(PACKETTYPE.ERROR);

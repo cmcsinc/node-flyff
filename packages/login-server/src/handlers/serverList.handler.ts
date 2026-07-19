@@ -29,30 +29,89 @@ const logger = createLogger({ module: 'serverlist-handler' });
 export class ServerListHandler {
   constructor(private serverListService: ServerListService) {}
 
-  async sendServerList(socket: Socket, accountId: number): Promise<void> {
+  async sendServerList(socket: Socket, accountId: number, account: string): Promise<void> {
     try {
       const servers = this.serverListService.getServerList();
       const dwAuthKey = randomInt(1, 0x100000000); // non-zero DWORD
 
+      // Flatten the server→channel tree into the SERVER_DESC array the v15
+      // client expects (WndTitle.cpp:691-721): top-level servers have
+      // dwParent=0 and populate the server list box; channels have
+      // dwParent=<server.dwID> and populate the channel list box. With no
+      // channel children the client cannot proceed past server-select, so the
+      // connect to PN_LOGINSRVR never happens.
+      let nextId = 1;
+      const entries: Array<{
+        parent: number; id: number; name: string; addr: string;
+        count: number; enable: number; max: number;
+      }> = [];
+      for (const server of servers) {
+        const serverId = nextId++;
+        entries.push({
+          parent: 0, id: serverId, name: server.name, addr: server.ip,
+          count: server.players,
+          enable: server.status === 'online' ? 1 : 0,
+          max: server.maxPlayers,
+        });
+        if (server.channels.length === 0 && server.status === 'online') {
+          logger.warn(
+            { server: server.name },
+            'Online server has no channels — client cannot select a channel. '
+              + 'Ensure the world server is registered with the cluster.',
+          );
+        }
+        for (const ch of server.channels) {
+          entries.push({
+            parent: serverId, id: nextId++, name: ch.name,
+            // Channel lpAddr is cosmetic — the client connects on the parent
+            // server's addr (WndTitle.cpp:1019-1034 walks to the parent).
+            addr: server.ip,
+            count: ch.players,
+            enable: ch.status === 'online' ? 1 : 0,
+            max: ch.maxPlayers,
+          });
+        }
+      }
+
       const writer = new PacketWriter();
       writer.writeDword(PACKETTYPE.SRVR_LIST);
-      writer.writeDword(dwAuthKey);       // dwAuthKey
-      writer.writeByte(0);                // cbAccountFlag
-      writer.writeDword(servers.length);  // dwSizeofServerset
+      writer.writeDword(dwAuthKey);        // dwAuthKey
+      writer.writeByte(0);                 // cbAccountFlag
+      // szBak (account-name echo) — REQUIRED by the client's __EUROPE_0514 build
+      // (Neuz/VersionCommon.h:169). OnSvrList reads this string right after
+      // cbAccountFlag and hard-exits on mismatch (DPCertified.cpp:224-231).
+      // Without it the client reads our count DWORD as the string length,
+      // then 3 bytes of dwParent as the account, lstrcmp != "test" → exit(0).
+      // Confirmed empirically: removing this line brings the crash back.
+      writer.writeString(account);         // szBak
+      writer.writeDword(entries.length);   // dwSizeofServerset (servers + channels)
 
-      servers.forEach((server, i) => {
-        writer.writeDword(0);             // dwParent (top-level)
-        writer.writeDword(i + 1);         // dwID (1-indexed)
-        writer.writeString(server.name);  // lpName
-        writer.writeString(server.ip);    // lpAddr
-        writer.writeDword(0);             // b18 (BOOL, 4 bytes)
-        writer.writeDword(server.players); // lCount
-        writer.writeDword(server.status === 'online' ? 1 : 0); // lEnable
-        writer.writeDword(server.maxPlayers); // lMax
-      });
+      for (const e of entries) {
+        writer.writeDword(e.parent);       // dwParent
+        writer.writeDword(e.id);           // dwID
+        writer.writeString(e.name);        // lpName
+        writer.writeString(e.addr);        // lpAddr
+        writer.writeDword(0);              // b18 (BOOL, 4 bytes)
+        writer.writeDword(e.count);        // lCount
+        writer.writeDword(e.enable);       // lEnable
+        writer.writeDword(e.max);          // lMax
+      }
 
-      sendPacket(socket, writer.build());
-      logger.info({ accountId, serverCount: servers.length, dwAuthKey }, 'Server list sent');
+      const payload = writer.build();
+      sendPacket(socket, payload);
+      logger.info(
+        {
+          accountId,
+          serverCount: servers.length,
+          entries: entries.length,
+          dwAuthKey,
+          // Diagnostic: exact wire bytes (after the 0x5E frame wrapper) so the
+          // client's OnSvrrList parse can be traced field-by-field.
+          hex: payload.toString('hex'),
+          tree: entries.map(e => ({ p: e.parent, id: e.id, name: e.name, addr: e.addr, on: e.enable })),
+        },
+        'Server list sent',
+      );
     } catch (error) {
       logger.error({ error, accountId }, 'Failed to send server list');
     }

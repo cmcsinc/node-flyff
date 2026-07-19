@@ -3,7 +3,8 @@
   "server": {
     "id": "cluster_1",
     "host": "0.0.0.0",
-    "port": 5400
+    "_comment_port": "PN_LOGINSRVR=28000 — v15 client dials the character-select (login) server on this hardcoded port (MsgHdr.h:1421). 5400 is the internal CacheServer, not client-facing.",
+    "port": 28000
   },
   "log": {
     "level": "info",

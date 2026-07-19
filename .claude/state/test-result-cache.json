@@ -43,7 +43,7 @@
   "h:/flyff/node-flyff/packages/database/test/migrate.test.ts": "fail",
   "h:/flyff/node-flyff/packages/resources/test/loaders.test.ts": "fail",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\net\\CrcIntegrity.test.ts": "pass",
-  "h:\\flyff\\node-flyff\\packages\\core\\test\\utils\\password.test.ts": "fail",
+  "h:\\flyff\\node-flyff\\packages\\core\\test\\utils\\password.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\handlers\\auth.handler.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\services\\token.service.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\services\\auth.service.test.ts": "pass",

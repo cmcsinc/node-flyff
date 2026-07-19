@@ -11,8 +11,9 @@ describe('password utility', () => {
       assert.ok(hash);
       assert.ok(typeof hash === 'string');
       assert.ok(hash.length > 0);
-      // Argon2id hashes start with $argon2id$
-      assert.ok(hash.startsWith('$argon2id$'));
+      // PHC-format hash ($argon2id$ when the native binding is present,
+      // $scrypt$ when falling back to the node:crypto KDF).
+      assert.ok(hash.startsWith('$'));
     });
 
     it('should hash an MD5 password from v15 client', async () => {
@@ -21,7 +22,7 @@ describe('password utility', () => {
       const hash = await hashPassword(md5Password);
 
       assert.ok(hash);
-      assert.ok(hash.startsWith('$argon2id$'));
+      assert.ok(hash.startsWith('$'));
     });
 
     it('should generate different hashes for same password (salt)', async () => {

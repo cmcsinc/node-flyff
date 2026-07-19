@@ -25,10 +25,10 @@
   },
   "serverList": [
     {
-      "_comment": "Static fallback — used only before any cluster has dynamically registered.",
+      "_comment": "Static fallback — used only before any cluster has dynamically registered. Port is cosmetic: the v15 client hardcodes PN_LOGINSRVR=28000 and only reads `ip` (lpAddr) from this list.",
       "name": "Madrigal",
       "ip": "127.0.0.1",
-      "port": 5400,
+      "port": 28000,
       "channels": 1
     }
   ]

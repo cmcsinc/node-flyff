@@ -132,7 +132,7 @@ describe('Login v15 TCP smoke (CRC frame + hello + rijndael CERTIFY)', () => {
     sock.destroy();
     assert.ok(reply, 'server must reply to a failed CERTIFY');
     assert.equal(reply!.readUInt32LE(0), PACKETTYPE.ERROR);
-    assert.equal(reply!.readUInt32LE(4), 0);
+    assert.equal(reply!.readUInt32LE(4), 120); // ERROR_FLYFF_PASSWORD
   });
 
   it('authenticates a valid CERTIFY (decrypts the blob, argon2-verifies md5hex)', async () => {

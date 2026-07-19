@@ -62,7 +62,7 @@ export async function compose(): Promise<ClusterComposeResult> {
   const loginRegistrar = new LoginRegistrar({
     serverId: config.server.id,
     serverName: config.server.id,
-    publicIp: config.server.host,
+    publicIp: config.server.publicHost,
     publicPort: config.server.port,
     ipcSecret: config.ipc.secret,
     loginHost: config.registration.loginHost,
