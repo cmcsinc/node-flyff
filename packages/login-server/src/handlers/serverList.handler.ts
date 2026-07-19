@@ -9,6 +9,16 @@ import { createLogger } from '@flyff/core/logger.js';
 const logger = createLogger({ module: 'serverlist-handler' });
 
 /**
+ * `NULL_ID` — Flyff sentinel for "no id / no parent" (`NULL_ID = 0xffffffff`,
+ * `_Network/Misc/Include/Misc.h:20`, `SERVER_DESC` default ctor). The client's
+ * server-select dialog (`WndTitle.cpp:691`) adds a server to the list box ONLY
+ * when `dwParent == NULL_ID`; sending `dwParent = 0` yields a silently empty
+ * list (no crash, dialog opens, zero entries). Channel entries keep
+ * `dwParent = <parent server dwID>`.
+ */
+const NULL_ID = 0xffffffff;
+
+/**
  * Server list handler — sends `PACKETTYPE_SRVR_LIST` (0xfd).
  *
  * Byte layout mirrors what the v15 client parses (`Neuz/DPCertified.cpp:204-270`
@@ -35,9 +45,9 @@ export class ServerListHandler {
       const dwAuthKey = randomInt(1, 0x100000000); // non-zero DWORD
 
       // Flatten the server→channel tree into the SERVER_DESC array the v15
-      // client expects (WndTitle.cpp:691-721): top-level servers have
-      // dwParent=0 and populate the server list box; channels have
-      // dwParent=<server.dwID> and populate the channel list box. With no
+      // client expects (WndTitle.cpp:685-747): top-level servers have
+      // dwParent=NULL_ID (0xffffffff) and populate the server list box; channels
+      // have dwParent=<server.dwID> and populate the channel list box. With no
       // channel children the client cannot proceed past server-select, so the
       // connect to PN_LOGINSRVR never happens.
       let nextId = 1;
@@ -48,7 +58,7 @@ export class ServerListHandler {
       for (const server of servers) {
         const serverId = nextId++;
         entries.push({
-          parent: 0, id: serverId, name: server.name, addr: server.ip,
+          parent: NULL_ID, id: serverId, name: server.name, addr: server.ip,
           count: server.players,
           enable: server.status === 'online' ? 1 : 0,
           max: server.maxPlayers,
