@@ -46,8 +46,24 @@ export const MAX_BANK_TABS = 3;
 export const MAX_POCKET_TABS = 3;
 export const QUEST_SIZE = 12;           // sizeof(QUEST)
 
-/** Wire size of an empty CItemContainer<CItemElem> (inventory or one bank tab). */
-export const EMPTY_ITEM_CONTAINER_SIZE =
-  4 * MAX_INVENTORY +  // m_apIndex[] (NULL_ID per empty slot)
-  1 +                  // chSize == 0 (no non-empty slots)
-  4 * MAX_INVENTORY;   // adwObjIndex[] (NULL_ID per empty slot)
+/**
+ * Live slot counts the client's `CItemContainer<CItemElem>` is sized with at
+ * `SetItemContainer` time — these, NOT the bare defines, drive `m_dwItemMax`
+ * and thus the array widths on the wire.
+ *
+ * Inventory: `m_Inventory.SetItemContainer( ITYPE_ITEM, MAX_INVENTORY, MAX_HUMAN_PARTS )`
+ * (`_Network/Objects/Obj.cpp:128`); `dwExtra != 0xffffffff` so `m_dwItemMax += MAX_HUMAN_PARTS`
+ * (`Obj.h:354-355`) → 42 + 31 = **73** slots. Writing only 42 here desyncs the stream
+ * by 248 bytes and crashes the client in `CItemContainer::Serialize` (garbage `ch` →
+ * `m_apItem[ch]` OOB → 0xC0000005 reading ~0x8).
+ *
+ * Bank tabs: `m_Bank[i].SetItemContainer( ITYPE_ITEM, MAX_BANK )` (`Obj.cpp:133`) —
+ * `dwExtra` defaults to 0xffffffff → no add → 42 slots.
+ */
+export const INVENTORY_SLOTS = MAX_INVENTORY + MAX_HUMAN_PARTS; // 73
+export const BANK_SLOTS = MAX_BANK;                             // 42
+
+/** Wire bytes of an empty CItemContainer<CItemElem> with `slots` slots. */
+export function emptyItemContainerSize(slots: number): number {
+  return 4 * slots + 1 + 4 * slots; // m_apIndex[] + chSize + adwObjIndex[]
+}

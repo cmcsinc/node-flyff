@@ -4,7 +4,8 @@ import { PlayerSnapshotSerializer } from '../../../src/net/snapshot/playerSnapsh
 import { CPlayer } from '../../../src/entities/player.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import {
-  OT_MOVER, MI_MALE, SNAPSHOTTYPE_ADD_OBJ, EMPTY_ITEM_CONTAINER_SIZE,
+  OT_MOVER, MI_MALE, SNAPSHOTTYPE_ADD_OBJ,
+  INVENTORY_SLOTS, BANK_SLOTS, emptyItemContainerSize,
 } from '../../../src/net/snapshot/constants.js';
 import type { CharacterRow } from '@flyff/database';
 
@@ -61,21 +62,27 @@ describe('PlayerSnapshotSerializer', () => {
     assert.equal(buf.readUInt32LE(77), 0x112233);     // m_dwHairColor
   });
 
-  it('produces the byte-exact total length (3086 + nameLen)', () => {
-    // fresh-spawn fixed budget + dynamic name; "Hero"=4 → 3090
-    assert.equal(buf.length, 3086 + 4);
+  it('produces the byte-exact total length (3328 + nameLen)', () => {
+    // fresh-spawn fixed budget + dynamic name; "Hero"=4 → 3332.
+    // Base 3328 = 3086 + 248 (inventory 42→73 slots) + 12 (3 EXPINTEGER exp
+    // fields m_nExp1/m_nDeathExp/m_nAngelExp widened 4→8 bytes)
+    // − 9 (m_nAttackResist{Left,Right} + m_nDefenseResist are BYTE, not DWORD)
+    // − 9 (m_nQuestSize / m_nCompleteQuestSize / m_nCheckedQuestSize are BYTE).
+    assert.equal(buf.length, 3328 + 4);
 
     const p2 = CPlayer.fromRow(makeRow({ name: 'X' }), { write: () => true });
-    assert.equal(serializer.build(p2).length, 3086 + 1);
+    assert.equal(serializer.build(p2).length, 3328 + 1);
 
     const p3 = CPlayer.fromRow(makeRow({ name: '' }), { write: () => true });
-    assert.equal(serializer.build(p3).length, 3086);
+    assert.equal(serializer.build(p3).length, 3328);
   });
 
   it('includes the empty inventory + 3 bank tabs (NULL_ID framing)', () => {
-    const fourContainers = 4 * EMPTY_ITEM_CONTAINER_SIZE;
-    assert.ok(fourContainers > 0);
-    assert.equal(buf.length, 3086 + 4);
+    const containers =
+      emptyItemContainerSize(INVENTORY_SLOTS) + // m_Inventory: 73 slots
+      3 * emptyItemContainerSize(BANK_SLOTS);   // m_Bank ×3: 42 slots each
+    assert.ok(containers > 0);
+    assert.equal(buf.length, 3328 + 4);
     // verify the NULL_ID pattern appears (empty index slots)
     assert.ok(buf.includes(Buffer.from([0xff, 0xff, 0xff, 0xff])));
   });
