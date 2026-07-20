@@ -59,7 +59,7 @@ async function main(): Promise<void> {
         hair_style: 0, hair_color: 0, face_style: 0, skin_color: 0, level: 1,
         exp: 0n, hp: 100, mp: 50, max_hp: 100, max_mp: 50,
         strength: 15, stamina: 15, dexterity: 15, intelligence: 15,
-        x: 0, y: 0, z: 0, world_id: 'W1', zone_id: 1,
+        x: 3068.0, y: 31.0, z: 3176.0, world_id: 'W1', zone_id: 1, // Flaris (Flarine) start
       });
       console.log(`[seed] created character "Tester" for account ${accountId}`);
     } else {
