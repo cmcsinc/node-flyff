@@ -15,9 +15,13 @@ function makeMockSocket(): Socket & { _written: Buffer[] } {
     remoteAddress: '127.0.0.1',
     write: (buf: Buffer) => { sink.push(buf); for (const p of sink.drain()) written.push(p); return true; },
     destroy: () => {},
+    once: () => {},
     _written: written,
   } as unknown as Socket & { _written: Buffer[] };
 }
+
+const noKickConnections = { bind: () => null } as any;
+const cacheAddrSource = { getCacheAddr: () => '10.0.0.5' };
 
 describe('CharHandler', () => {
   let handler: CharHandler;
@@ -29,7 +33,7 @@ describe('CharHandler', () => {
     listService = { listByAccount: async () => [] };
     createService = { create: async () => ({ ok: true, charId: 1 }), delete: async () => ({ ok: true }) };
     selectService = { prejoin: async () => ({ ok: true, charId: 77, token: 'tok' }) };
-    handler = new CharHandler(listService, createService, selectService, new PlayerListSerializer());
+    handler = new CharHandler(listService, createService, selectService, new PlayerListSerializer(), noKickConnections, cacheAddrSource);
   });
 
   describe('handleGetPlayerList()', () => {
@@ -42,8 +46,12 @@ describe('CharHandler', () => {
       w.writeString('pw');    // password
       w.writeDword(0);        // dwId
       await handler.handleGetPlayerList(socket, new PacketReader(w.build()));
-      assert.equal(socket._written.length, 1);
-      assert.equal(new PacketReader(socket._written[0]!).readDword(), PACKETTYPE.PLAYER_LIST);
+      // CACHE_ADDR (0xf2) first, then PLAYER_LIST — mirrors C++ DPLoginSrvr.cpp:167.
+      assert.equal(socket._written.length, 2);
+      const cacheReader = new PacketReader(socket._written[0]!);
+      assert.equal(cacheReader.readDword(), PACKETTYPE.CACHE_ADDR);
+      assert.equal(cacheReader.readString(), '10.0.0.5');
+      assert.equal(new PacketReader(socket._written[1]!).readDword(), PACKETTYPE.PLAYER_LIST);
     });
 
     it('drops the request silently when authKey is 0', async () => {

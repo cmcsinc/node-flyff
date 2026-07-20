@@ -3,7 +3,7 @@
   "server": {
     "id": "world_1",
     "host": "0.0.0.0",
-    "port": 2000
+    "port": 5400
   },
   "log": {
     "level": "info",

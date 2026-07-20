@@ -49,16 +49,20 @@
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\services\\auth.service.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\database\\test\\migrate.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\utils\\validate.test.ts": "fail",
-  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\net\\playerList.serializer.test.ts": "fail",
+  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\net\\playerList.serializer.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\config\\schemas\\cluster.schema.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\config\\schemas\\world.schema.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\world-server\\test\\entities\\player.test.ts": "fail",
-  "h:\\flyff\\node-flyff\\packages\\world-server\\test\\e2e\\join.e2e.test.ts": "fail",
+  "h:\\flyff\\node-flyff\\packages\\world-server\\test\\e2e\\join.e2e.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\world-server\\test\\e2e\\bytechain.e2e.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\constants\\objectTypes.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\net\\dispatcher.test.ts": "fail",
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\e2e\\login.tcp.e2e.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\handlers\\serverList.handler.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\utils\\v15Password.test.ts": "pass",
-  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\e2e\\char.tcp.e2e.test.ts": "pass"
+  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\e2e\\char.tcp.e2e.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\handlers\\char.handler.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\managers\\accountConnection.manager.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\join.handler.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\ipc\\test\\localBus.test.ts": "fail"
 }

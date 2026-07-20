@@ -71,6 +71,8 @@ export { CircuitBreaker, CircuitOpenError } from './circuit.js';
 export type { CircuitBreakerOptions, CircuitState } from './circuit.js';
 export { IpcBus } from './IpcBus.js';
 export type { IpcMessageEnvelope, MessageHandler } from './IpcBus.js';
+export { LocalBus, createLocalBus } from './localBus.js';
+export type { LocalBusLike, LocalBusOptions } from './localBus.js';
 export { IpcServer } from './IpcServer.js';
 export type { IpcRequest, IpcResponseEnvelope, RequestHandler, IpcServerTLSOptions } from './IpcServer.js';
 export { IpcClient, IpcTimeoutError, IpcRequestError } from './IpcClient.js';

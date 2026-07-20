@@ -82,6 +82,14 @@ export const IpcConfigSchema = z.object({
   secret: z.string().min(16),
   /** Internal TLS TCP port this server binds (if it acts as an IpcServer). */
   internalPort: z.number().int().min(1024).max(65535).default(29000),
+  /**
+   * LocalBus (dev-only no-Redis pub/sub) bind target. Used only when
+   * `cache.adapter === 'memory'` — the first process to bind becomes the
+   * broker; cluster + world exchange `player:handoff` over localhost TCP.
+   * Production uses Redis (`cache.adapter === 'redis'`); this is unused there.
+   */
+  localBusHost: z.string().default('127.0.0.1'),
+  localBusPort: z.number().int().min(1024).max(65535).default(6390),
 });
 
 // ---------------------------------------------------------------------------

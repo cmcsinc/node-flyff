@@ -21,8 +21,15 @@ import type { CharListService } from '../services/charList.service.js';
 import type { CharCreateService } from '../services/charCreate.service.js';
 import type { CharSelectService } from '../services/charSelect.service.js';
 import type { PlayerListSerializer } from '../net/playerList.serializer.js';
+import type { AccountConnectionManager } from '../managers/accountConnection.manager.js';
 
 const logger = createLogger({ module: 'char-handler' });
+
+/** Resolves the public address the client should dial for gameplay (:5400). */
+export interface CacheAddrSource {
+  /** World/cache server public IPv4, or null when no world is registered. */
+  getCacheAddr(): string | null;
+}
 
 export class CharHandler {
   constructor(
@@ -30,6 +37,8 @@ export class CharHandler {
     private charCreateService: CharCreateService,
     private charSelectService: CharSelectService,
     private playerListSerializer: PlayerListSerializer,
+    private accountConnections: AccountConnectionManager,
+    private cacheAddrSource: CacheAddrSource,
   ) {}
 
   /** PACKETTYPE_GETPLAYERLIST (0xf6) → replies PLAYER_LIST. */
@@ -47,6 +56,17 @@ export class CharHandler {
         return;
       }
 
+      // Mirror C++ g_UserMng.AddUser: one live connection per account. A stale
+      // socket (client "went back" without closing) is kicked so re-login works
+      // without restarting the client (DPLoginSrvr.cpp:164-181).
+      const kicked = this.accountConnections.bind(account, socket);
+      if (kicked) logger.info({ account }, 'Kicked stale account connection');
+
+      // C++ sends CACHE_ADDR (0xf2) BEFORE the player list (DPLoginSrvr.cpp:167).
+      // It carries the world/cache server IP the client dials on :5400 when a
+      // character is selected. Without it m_lpCacheAddr stays empty and the
+      // client hangs on "connecting please wait" (WndTitle.cpp:2105).
+      this.sendCacheAddr(socket);
       await this.sendPlayerList(socket, authKey, account);
     } catch (error) {
       logger.error({ error }, 'GETPLAYERLIST failed');
@@ -132,6 +152,20 @@ export class CharHandler {
     } catch (error) {
       logger.error({ error }, 'PRE_JOIN failed');
     }
+  }
+
+  /**
+   * Send CACHE_ADDR (0xf2): the world/cache server address the client dials on
+   * :5400 to enter the game. Payload is a single length-prefixed string, matching
+   * C++ `SendCacheAddr` (DPLoginSrvr.cpp:114-119). Falls back to 127.0.0.1 when
+   * no world has registered yet (dev single-box default).
+   */
+  private sendCacheAddr(socket: Socket): void {
+    const addr = this.cacheAddrSource.getCacheAddr() ?? '127.0.0.1';
+    const writer = new PacketWriter();
+    writer.writeDword(PACKETTYPE.CACHE_ADDR);
+    writer.writeString(addr);
+    sendPacket(socket, writer.build());
   }
 
   /** Build + send a fresh PLAYER_LIST for `account`, echoing `authKey`. */

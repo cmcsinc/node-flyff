@@ -1,15 +1,23 @@
 /**
- * JOIN handler — enter-world packet (`PACKETTYPE_JOIN`, CDPSrvr::OnAddUser,
- * `WORLDSERVER/DPSrvr.cpp:612`).
+ * JOIN handler — client enter-world packet (`PACKETTYPE_JOIN`).
  *
- * Fields read (Cache→World JOIN, `DPSrvr.cpp:616-626`):
- *   dwAuthKey:DWORD  idPlayer:DWORD  nSlot:BYTE  dpidSocket:DWORD
- *   account:String   password:String  addr:String
+ * This is the **client → cache/world** JOIN sent by Neuz
+ * (`Neuz/DPClient.cpp:8959` `CDPClient::SendJoin`), whose read order is fixed
+ * by `CACHESERVER/Player.cpp:35` `CPlayer::Join`:
  *
- * `nSlot >= 3` is rejected (C++ line 628). On a valid handoff + character the
- * handler delegates to `JoinService` and writes the JOIN self-spawn snapshot
- * back to the socket. On any failure the connection is dropped (C++ destroys
- * the ghost) — no error packet on this path.
+ *   dwWorldId:DWORD  idPlayer:DWORD  dwAuthKey:DWORD  idParty:DWORD
+ *   idGuild:DWORD    idWar:DWORD     uChannel:DWORD   nSlot:BYTE
+ *   name:String      account:String  password:String  [messenger block]
+ *
+ * Note: `WORLDSERVER/DPSrvr.cpp:612` `OnAddUser` reads a *different*
+ * (cache→world internal) layout. In v15 the CacheServer re-serializes the
+ * packet before forwarding. This emulator has no separate cache layer, so the
+ * world's client-facing port receives the Neuz-format packet directly.
+ *
+ * `nSlot >= 3` is rejected (C++ `OnAddUser` line 628). On a valid handoff +
+ * character the handler delegates to `JoinService` and writes the JOIN
+ * self-spawn snapshot back to the socket. On any failure the connection is
+ * dropped (C++ destroys the ghost) — no error packet on this path.
  *
  * @module handlers/join.handler
  */
@@ -32,13 +40,17 @@ export class JoinHandler {
   async handleJoin(socket: Socket, reader: PacketReader): Promise<void> {
     let outcome;
     try {
-      const _dwAuthKey = reader.readDword();
+      const _dwWorldId = reader.readDword();
       const idPlayer = reader.readDword();
+      const _dwAuthKey = reader.readDword();
+      const _idParty = reader.readDword();
+      const _idGuild = reader.readDword();
+      const _idWar = reader.readDword();
+      const _uChannel = reader.readDword();
       const nSlot = reader.readByte();
-      const _dpidSocket = reader.readDword();
+      const _name = reader.readString();
       const _account = reader.readString();
       const _password = reader.readString();
-      const _addr = reader.readString();
 
       if (nSlot >= 3) {
         logger.warn({ idPlayer, nSlot }, 'JOIN rejected — slot out of range');

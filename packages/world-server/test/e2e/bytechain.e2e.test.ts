@@ -24,6 +24,7 @@ import { CharSelectService } from '@flyff/cluster-server/src/services/charSelect
 import { WorldHandoffTokenService } from '@flyff/cluster-server/src/services/worldToken.service.js';
 import { PlayerListSerializer } from '@flyff/cluster-server/src/net/playerList.serializer.js';
 import { ClusterHandoffPublisher } from '@flyff/cluster-server/src/ipc/handoffPublisher.js';
+import { AccountConnectionManager } from '@flyff/cluster-server/src/managers/accountConnection.manager.js';
 // World-server (this package).
 import { ClusterListener } from '../../src/ipc/clusterListener.js';
 import { PlayerManager } from '../../src/managers/player.manager.js';
@@ -98,13 +99,17 @@ function preJoinPacket(charId: number): Buffer {
 
 function joinPacket(charId: number): Buffer {
   const w = new PacketWriter();
-  w.writeDword(0xdeadbeef);        // dwAuthKey
+  w.writeDword(1);                 // dwWorldId
   w.writeDword(charId);
+  w.writeDword(0xdeadbeef);        // dwAuthKey
+  w.writeDword(0);                 // idParty
+  w.writeDword(0);                 // idGuild
+  w.writeDword(0);                 // idWar
+  w.writeDword(0);                 // uChannel
   w.writeByte(0);                  // nSlot
-  w.writeDword(1);                 // dpidSocket
+  w.writeString(CHAR_NAME);        // name
   w.writeString(USERNAME);
   w.writeString(PASSWORD);
-  w.writeString('127.0.0.1');
   return w.build();
 }
 
@@ -168,6 +173,8 @@ describe('E2E byte chain: login CERTIFY → cluster PRE_JOIN → world JOIN snap
     });
     const charHandler = new CharHandler(
       charList, charCreate, charSelect, new PlayerListSerializer(),
+      new AccountConnectionManager(),
+      { getCacheAddr: () => '127.0.0.1' },
     );
 
     // --- World leg: real ClusterListener + JoinHandler --------------------
