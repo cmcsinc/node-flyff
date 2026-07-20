@@ -21,16 +21,21 @@ import type { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import type { CPlayer } from '../../entities/player.js';
 import {
   MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
-  MAX_HONOR_TITLE, MAX_INVENTORY, MAX_BANK_TABS, MAX_POCKET_TABS,
+  MAX_HONOR_TITLE, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
 } from './constants.js';
 
 const NULL_ID = 0xffffffff;
 
-/** Empty CItemContainer<CItemElem> — inventory or one bank tab. */
-export function writeEmptyItemContainer(w: PacketWriter): void {
-  for (let i = 0; i < MAX_INVENTORY; i++) w.writeDword(NULL_ID); // m_apIndex[]
-  w.writeByte(0);                                                // chSize
-  for (let i = 0; i < MAX_INVENTORY; i++) w.writeDword(NULL_ID); // adwObjIndex[]
+/**
+ * Empty CItemContainer<CItemElem> — `slots`-wide. `slots` MUST match the
+ * client's `m_dwItemMax`: inventory = `INVENTORY_SLOTS` (73), bank tab =
+ * `BANK_SLOTS` (42). See `constants.ts` for why these differ from the bare
+ * `MAX_INVENTORY` / `MAX_BANK` defines.
+ */
+export function writeEmptyItemContainer(w: PacketWriter, slots: number): void {
+  for (let i = 0; i < slots; i++) w.writeDword(NULL_ID); // m_apIndex[]
+  w.writeByte(0);                                        // chSize
+  for (let i = 0; i < slots; i++) w.writeDword(NULL_ID); // adwObjIndex[]
 }
 
 /** Empty CPocketController — 3 absent pocket tabs. */
@@ -95,17 +100,17 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(0);             // m_nTutorialState (__VER>=12)
   w.writeDword(0);             // m_nFxp
   w.writeDword(0);             // dwGold
-  w.writeDword(0);             // m_nExp1
+  w.writeQword(0);             // m_nExp1 (EXPINTEGER __int64, 8 bytes)
   w.writeDword(0);             // m_nSkillLevel
   w.writeDword(0);             // m_nSkillPoint
-  w.writeDword(0);             // m_nDeathExp
+  w.writeQword(0);             // m_nDeathExp (EXPINTEGER __int64, 8 bytes)
   w.writeDword(0);             // m_nDeathLevel
   for (let i = 0; i < MAX_JOB; i++) w.writeDword(0);         // dwJobLv ×32 (always 0)
   w.writeDword(NULL_ID);       // m_idMarkingWorld (gap — C++ writes numeric world ID, Mover.cpp:969)
   w.writeFloat(0); w.writeFloat(0); w.writeFloat(0);         // m_vMarkingPos
-  w.writeDword(0);             // m_nQuestSize (0 → no quest array)
-  w.writeDword(0);             // m_nCompleteQuestSize (0 → no array)
-  w.writeDword(0);             // m_nCheckedQuestSize (__VER>=15)
+  w.writeByte(0);              // m_nQuestSize (BYTE — Mover.h:714; 0 → no quest array)
+  w.writeByte(0);              // m_nCompleteQuestSize (BYTE — Mover.h:716; 0 → no array)
+  w.writeByte(0);              // m_nCheckedQuestSize (BYTE — Mover.h:719; __VER>=15)
   w.writeDword(NULL_ID);       // m_idMurderer
   w.writeWord(0);              // m_nRemainGP
   w.writeWord(0);              // padding (literal 0)
@@ -116,16 +121,16 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeByte(0);              // m_nSlot
   for (let k = 0; k < 3; k++) w.writeDword(0);               // m_dwGoldBank ×3
   for (let k = 0; k < 3; k++) w.writeDword(0);               // m_idPlayerBank ×3
-  w.writeDword(0);             // m_nPlusMaxHitPoint
-  w.writeDword(0);             // m_nAttackResistLeft
-  w.writeDword(0);             // m_nAttackResistRight
-  w.writeDword(0);             // m_nDefenseResist
-  w.writeDword(0);             // m_nAngelExp (__VER>=8)
+  w.writeDword(0);             // m_nPlusMaxHitPoint (LONG)
+  w.writeByte(0);              // m_nAttackResistLeft (BYTE — Mover.h:618)
+  w.writeByte(0);              // m_nAttackResistRight (BYTE — Mover.h:619)
+  w.writeByte(0);              // m_nDefenseResist (BYTE — Mover.h:620)
+  w.writeQword(0);             // m_nAngelExp (EXPINTEGER __int64, 8 bytes; __VER>=8)
   w.writeDword(0);             // m_nAngelLevel
 
   // --- containers ---
-  writeEmptyItemContainer(w);                          // m_Inventory (MAX_INVENTORY)
-  for (let k = 0; k < MAX_BANK_TABS; k++) writeEmptyItemContainer(w); // m_Bank ×3
+  writeEmptyItemContainer(w, INVENTORY_SLOTS);              // m_Inventory (73 = MAX_INVENTORY + MAX_HUMAN_PARTS)
+  for (let k = 0; k < MAX_BANK_TABS; k++) writeEmptyItemContainer(w, BANK_SLOTS); // m_Bank ×3 (42 each)
   w.writeDword(0);             // GetPetId (__VER>=9)
   writeEmptyPocketController(w);                       // m_Pocket (__VER>=11)
   w.writeDword(0);             // m_dwMute (#ifdef __JEFF_9_20 — defined in VersionCommon.h:112)

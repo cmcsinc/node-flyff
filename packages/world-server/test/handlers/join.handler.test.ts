@@ -64,7 +64,7 @@ describe('JoinHandler', () => {
     await handler.handleJoin(sock as unknown as never, new PacketReader(joinPayload(42, 0)));
 
     assert.equal(sock._written.length, 1);
-    assert.equal(sock._written[0]!.length, 3090); // "Hero" snapshot
+    assert.equal(sock._written[0]!.length, 3332); // "Hero" snapshot (3328 base + 4)
     assert.equal(sock._destroyed, false);
   });
 
