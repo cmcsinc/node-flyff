@@ -140,3 +140,6 @@ resources/data/*.rgn
 game/
 game.zip
 
+
+# Cygwin/MSYS crash dumps
+*.stackdump
