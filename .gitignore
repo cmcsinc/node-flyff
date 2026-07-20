@@ -143,3 +143,6 @@ game.zip
 
 # Cygwin/MSYS crash dumps
 *.stackdump
+
+# Agent worktrees (full repo working copies, not source)
+.claude/worktrees/

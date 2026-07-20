@@ -86,20 +86,20 @@
 | Module | Status | Last Agent | Notes |
 |--------|--------|------------|-------|
 | `ipc/clusterRegistrar.ts` | ✅ Done | implementor | Registers with cluster server |
-| `entities/player.ts` | ⏳ Pending | — | CPlayer extends CMover |
+| `entities/player.ts` | ✅ Done | implementor | CPlayer with m_fAngle/m_idTarget/m_idSetTarget/m_tickScript |
 | `entities/mover.ts` | ⏳ Pending | — | CMover base entity |
 | `entities/npc.ts` | ⏳ Pending | — | CCtrl NPC/monster |
-| `managers/zone.manager.ts` | ⏳ Pending | — | Zone-based spatial management |
+| `managers/zone.manager.ts` | ✅ Done | implementor | Zone-scoped broadcast |
 | `managers/object.manager.ts` | ⏳ Pending | — | World object lifecycle |
 | `managers/spawn.manager.ts` | ⏳ Pending | — | Spawn/respawn management |
-| `systems/combat.system.ts` | ⏳ Pending | — | Combat formulas |
+| `systems/combat.system.ts` | 🔴 Blocked | — | Need combat formulas for MELEE/MAGIC/RANGE_ATTACK |
 | `systems/ai.system.ts` | ⏳ Pending | — | NPC AI state machine |
-| `systems/movement.system.ts` | ⏳ Pending | — | Player movement validation |
+| `systems/movement.system.ts` | ✅ Done | implementor | Extended for PLAYERCORR/MOVED2/ANGLE/GETPOS |
 | `systems/exp.system.ts` | ⏳ Pending | — | Exp/level system |
 | `systems/drop.system.ts` | ⏳ Pending | — | Drop rolls |
-| `journal.ts` | ⏳ Pending | — | WAL journal (better-sqlite3) |
-| `index.ts` | ⏳ Pending | — | Entry point |
-| `compose.ts` | ⏳ Pending | — | Composition root / DI |
+| `journal.ts` | 🔴 Blocked | — | WAL journal — blocks DROPITEM/DOUSEITEM/BUYITEM/MOVEITEM/DOEQUIP |
+| `index.ts` | ✅ Done | implementor | Entry point — wires all handlers |
+| `compose.ts` | ✅ Done | implementor | DI root with 17 handlers wired |
 
 ### @flyff/database
 
@@ -166,7 +166,10 @@
 
 | Blocker | Affects | Reported By | Status |
 |---------|---------|-------------|--------|
-| — | — | — | — |
+| `journal.ts` WAL not implemented | DROPITEM, DOUSEITEM, BUYITEM, MOVEITEM, DOEQUIP handlers | implementor | 🔴 Blocked — inventory+WAL infrastructure required before these P0 packets can ship |
+| Combat system absent | MELEE_ATTACK, MAGIC_ATTACK, RANGE_ATTACK, USESKILL handlers | implementor | 🔴 Blocked — need target manager + damage formulas + skill propMover |
+| Skill system absent | USESKILL handler | implementor | 🔴 Blocked — need skill propMover + skill state |
+| `js-yaml` types missing | `packages/core/src/config/loader.ts:42` | pre-existing | 🟡 Low — install `@types/js-yaml` or write `.d.ts` shim |
 
 ---
 
@@ -177,7 +180,9 @@
 
 | Date | Agent | File | Lesson |
 |------|-------|------|--------|
-| — | — | — | — |
+| 2026-07-20 | implementor | entities/player.ts | Adding runtime-defaulted entity fields (`m_fAngle`, `m_idTarget`, etc.) via class-field initializers avoids the constructor signature growing for every new optional field. Initialize from a constant like `NULL_ID` to keep C++ semantics. |
+| 2026-07-20 | implementor | test/handlers/revival.handler.test.ts | `PacketReader` rejects empty buffers (`Cannot create PacketReader from empty buffer`). Empty-body packets like REVIVAL need a dummy byte in test payloads. |
+| 2026-07-20 | implementor | services/movement.service.ts | PLAYERCORR / PLAYERMOVED2 / PLAYERANGLE wire bodies look identical to PLAYERMOVED at first glance but differ: CORR=60B same, MOVED2=73B (+3 floats +BYTE), ANGLE=45B (no state block). Read C++ field lists twice before extending the serializer. |
 
 ---
 
@@ -185,6 +190,7 @@
 
 | Timestamp | From | To | Message |
 |-----------|------|----|---------|
+| 2026-07-20 | implementor | test-agent | Implemented 11 v15 C→S handlers (CHAT, MOTION, SETTARGET, LEAVE, PLAYERCORR, PLAYERMOVED2, PLAYERANGLE, QUERYGETPOS, GETPOS, SCRIPTDLG, REVIVAL) + 7 services + 2 serializers + extensions to movement.service/moverBroadcast.serializer — 36 new tests pass, 77/77 world-server tests green. Skipped 8 packets that need combat/inventory/WAL subsystems (see Known Blockers). |
 | 2026-03-24 | implementor | test-agent | Verified core utility modules (constants, errors, logger, eventBus, cache) — all tests passing (92 total tests), tsc compilation successful with 0 errors |
 | 2026-03-24 | implementor | test-agent | Implemented PacketBuffer stream reassembly + tests; ready for review. |
 | 2026-03-24 | researcher | implementor | Packet framing confirmed in docs: size DWORD excludes itself, header 0x5E80, opcode WORD; PacketBuffer.drain should buffer until 4+size bytes then slice 4..4+size. Sources in PROGRESS.md Research Findings. |

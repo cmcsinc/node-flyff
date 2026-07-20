@@ -14,6 +14,7 @@
  */
 
 import type { CharacterRow } from '@flyff/database';
+import { NULL_ID } from '../net/snapshot/constants.js';
 
 /** Minimal write-capable socket view a player holds for broadcasts. */
 export interface PlayerSocket {
@@ -55,6 +56,14 @@ export class CPlayer {
   m_nHeadMesh: number;
   m_worldId: string;
   m_nZoneId: number;
+  /** Y-axis rotation (C++ `m_fAngle`). Updated by GETPOS/PLAYERANGLE. */
+  m_fAngle: number = 0;
+  /** Per-player target lock (C++ `m_idTarget`) — set by SETTARGET, consumed by combat. */
+  m_idTarget: number = NULL_ID;
+  /** Objective target id (C++ `m_idSetTarget`) — SETTARGET with bClear=2. */
+  m_idSetTarget: number = NULL_ID;
+  /** Last SCRIPTDLG tick (C++ `m_tickScript`) — 400ms rate limit (DPSrvr.cpp:903). */
+  m_tickScript: number = 0;
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
   readonly _dirty: Set<string> = new Set();

@@ -80,3 +80,32 @@ export const BANK_SLOTS = MAX_BANK;                             // 42
 export function emptyItemContainerSize(slots: number): number {
   return 4 * slots + 1 + 4 * slots; // m_apIndex[] + chSize + adwObjIndex[]
 }
+
+// --- Peer-broadcast snapshot sub-types (S→C) --------------------------------
+// `_Network/MsgHdr.h` — all typed `(WORD)`, written as 2 bytes on the wire
+// (mirrors the working JOIN serializer's `writeWord(SNAPSHOTTYPE_*)`).
+export const SNAPSHOTTYPE_DESTPOS = 0x00c1;          // MsgHdr.h:1086 — click-to-move echo
+export const SNAPSHOTTYPE_MOVERMOVED = 0x00ca;       // MsgHdr.h:1095 — 60B movement frame
+export const SNAPSHOTTYPE_MOVERBEHAVIOR = 0x00cb;    // MsgHdr.h:1096 — 60B motion frame (same body)
+export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195
+// Added for the remaining v15 C→S handlers (DPSrvr.cpp MsgHdr.h):
+export const SNAPSHOTTYPE_CHAT_OUT = 0x00bc;         // MsgHdr.h:1078 — CHATTEXT (S→C chat echo)
+export const SNAPSHOTTYPE_MOTION = 0x0098;           // MsgHdr.h:1034 — MOTION echo
+export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 — PLAYERCORR echo (60B body)
+export const SNAPSHOTTYPE_MOVERMOVED2 = 0x00cc;      // MsgHdr.h:1097 — PLAYERMOVED2 echo (73B body)
+
+/** `NULL_ID` (`_Network/MsgHdr.h`) — "no object" sentinel. */
+export const NULL_ID = 0xffffffff;
+
+/**
+ * Circular ground-plane broadcast radius approximating the v15 `CLinkMap`
+ * visibility grid (`LinkMap.cpp:66`): standard outdoor zone `nView=1`, 64-unit
+ * cells, 2-cell range ⇒ 256×256 broadcast box (128 half-extent per axis). A
+ * circle that covers that box needs r ≥ 128√2 ≈ 181; 200 rounds up to guarantee
+ * no in-box peer is missed (slight overshoot at the diagonals is harmless —
+ * extra writes to peers who can't yet render the mover, never a client crash).
+ *
+ * ponytail: `ZoneManager.broadcastAround` uses a circle, C++ uses a box; swap
+ * to a box check if peer pop-in/desync shows up under real load.
+ */
+export const VISIBILITY_RADIUS = 200;

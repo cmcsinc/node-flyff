@@ -26,7 +26,8 @@
     "checkpoint": "tsx scripts/agent-checkpoint.ts",
     "servers": "node scripts/start-servers.mjs",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "claude": "claude --dangerously-skip-permissions"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

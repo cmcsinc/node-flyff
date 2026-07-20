@@ -1,9 +1,37 @@
 # Implementor Agent Session
 
 - **Agent**: implementor
-- **Active Task**: @flyff/login-server implementation complete
-- **Phase**: 2 — Implement (Complete)
-- **Last Updated**: 2026-03-24
+- **Active Task**: v15 unimplemented packets batch — 11 of 19 gaps closed
+- **Phase**: 2 — Implement (Complete for this batch)
+- **Last Updated**: 2026-07-20
+
+## Current Work
+
+- [x] Implemented 11 v15 C→S handlers in single batch (parallel file writes):
+  - CHAT, MOTION, SETTARGET, LEAVE, PLAYERCORR, PLAYERMOVED2, PLAYERANGLE,
+    QUERYGETPOS, GETPOS, SCRIPTDLG, REVIVAL
+- [x] Created 6 new services (chat, motion, target, queryGetPos, scriptDlg, revival)
+- [x] Extended `movement.service.ts` with applyCorr/applyMoved2/applyAngle/applyGetPos
+- [x] Created 2 new serializers (chat, motion); extended moverBroadcast with buildCorr/buildMoved2
+- [x] Wired 11 new routes in clientServer.ts + 11 handlers in compose.ts + 11 destructures in index.ts
+- [x] Extended CPlayer with m_fAngle, m_idTarget, m_idSetTarget, m_tickScript
+- [x] Added 4 SNAPSHOTTYPE_* constants (CHAT_OUT, MOTION, MOVERCORR, MOVERMOVED2)
+- [x] Wrote 11 companion test files (36 new tests, all green)
+- [x] Full world-server test suite: 77/77 pass
+- [x] `tsc --noEmit` clean (only pre-existing js-yaml error remains)
+
+## Skipped (need unbuilt subsystems)
+
+8 packets deferred to Known Blockers:
+- MELEE/MAGIC/RANGE_ATTACK — need combat system
+- USESKILL — need skill system + propMover
+- DROPITEM/DOUSEITEM/BUYITEM/MOVEITEM/DOEQUIP — need inventory repo wired to CPlayer + WAL journal
+
+## Restore Protocol
+
+1. Read `.claude/state/PROGRESS.md` — find the first `⏳ Pending` module
+2. Read `.claude/state/SESSION.md` — understand current session goal
+3. Pick up the next `⏳ Pending` task and update this file to `🔄 In Progress`
 
 ## Current Work
 

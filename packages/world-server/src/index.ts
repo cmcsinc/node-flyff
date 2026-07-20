@@ -66,7 +66,29 @@ async function startClusterListener(
 }
 
 async function main(): Promise<void> {
-  const { config, logger, clusterRegistrar, clusterListener, joinHandler } = await compose();
+  const {
+    config,
+    logger,
+    clusterRegistrar,
+    clusterListener,
+    joinHandler,
+    mapKeyHandler,
+    queryPlayerDataHandler,
+    snapshotHandler,
+    playerMovedHandler,
+    playerBehaviorHandler,
+    chatHandler,
+    motionHandler,
+    setTargetHandler,
+    leaveHandler,
+    playerCorrHandler,
+    playerMoved2Handler,
+    playerAngleHandler,
+    queryGetPosHandler,
+    getPosHandler,
+    scriptDlgHandler,
+    revivalHandler,
+  } = await compose();
 
   process.on('unhandledRejection', err => {
     logger.error({ err }, 'Unhandled promise rejection');
@@ -88,7 +110,26 @@ async function main(): Promise<void> {
     logger,
   );
 
-  const { server } = buildWorldClientServer({ joinHandler, logger });
+  const { server } = buildWorldClientServer({
+    joinHandler,
+    mapKeyHandler,
+    queryPlayerDataHandler,
+    snapshotHandler,
+    playerMovedHandler,
+    playerBehaviorHandler,
+    chatHandler,
+    motionHandler,
+    setTargetHandler,
+    leaveHandler,
+    playerCorrHandler,
+    playerMoved2Handler,
+    playerAngleHandler,
+    queryGetPosHandler,
+    getPosHandler,
+    scriptDlgHandler,
+    revivalHandler,
+    logger,
+  });
   server.listen(config.server.port, () => {
     logger.info({ port: config.server.port }, 'World client server listening');
   });
