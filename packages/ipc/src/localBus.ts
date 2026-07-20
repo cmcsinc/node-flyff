@@ -302,12 +302,15 @@ export class LocalBus implements LocalBusLike {
     this.closed = true;
     this.client?.destroy();
     this.client = undefined;
+    // Force-drop any live broker connections first — otherwise server.close()
+    // blocks until every peer disconnects on its own and quit() never resolves.
+    for (const peer of this.remoteSubs.keys()) peer.destroy();
+    this.remoteSubs.clear();
     await new Promise<void>((resolve) => {
       if (this.server) this.server.close(() => resolve());
       else resolve();
     });
     this.server = undefined;
-    this.remoteSubs.clear();
     this.messageHandlers.length = 0;
   }
 }
