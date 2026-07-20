@@ -27,7 +27,6 @@ export interface CharSelectDeps {
   charRepo: CharacterRepository;
   tokenService: WorldTokenService;
   handoffPublisher: HandoffPublisher;
-  worldId: string;
 }
 
 export type PreJoinOutcome =
@@ -55,7 +54,9 @@ export class CharSelectService {
     }
 
     const token = await this.deps.tokenService.generateWorldHandoffToken(idPlayer);
-    await this.deps.handoffPublisher.publish(idPlayer, token, this.deps.worldId);
+    // Target world = the world the character actually lives in (DB row), not the
+    // cluster's own server id. World server validates row.world_id === handoff.worldId.
+    await this.deps.handoffPublisher.publish(idPlayer, token, character.world_id);
     return { ok: true, charId: idPlayer, token };
   }
 }

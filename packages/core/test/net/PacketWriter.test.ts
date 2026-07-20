@@ -91,6 +91,30 @@ describe('PacketWriter', () => {
     });
   });
 
+  describe('writeQword', () => {
+    it('should write 64-bit Little-Endian values', () => {
+      const writer = new PacketWriter();
+      writer.writeQword(0x0123456789abcdefn).writeQword(0);
+      const result = writer.build();
+      assert.equal(result.length, 16);
+      assert.equal(result.readBigUInt64LE(0), 0x0123456789abcdefn);
+      assert.equal(result.readBigUInt64LE(8), 0n);
+    });
+
+    it('should accept bigint for the full 64-bit range', () => {
+      const writer = new PacketWriter();
+      writer.writeQword(0xffffffffffffffffn);
+      const result = writer.build();
+      assert.equal(result.readBigUInt64LE(0), 0xffffffffffffffffn);
+    });
+
+    it('should return this for chaining', () => {
+      const writer = new PacketWriter();
+      const result = writer.writeQword(42);
+      assert.strictEqual(result, writer);
+    });
+  });
+
   describe('writeFloat', () => {
     it('should write 32-bit floats', () => {
       const writer = new PacketWriter();

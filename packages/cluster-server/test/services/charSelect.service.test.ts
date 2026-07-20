@@ -17,7 +17,7 @@ describe('CharSelectService', () => {
     const charRepo = {
       findById: async (id: number) =>
         id === 77
-          ? ({ id: 77, account_id: 10, name: 'Hero' } as any)
+          ? ({ id: 77, account_id: 10, name: 'Hero', world_id: 'world1' } as any)
           : null,
     } as unknown as CharacterRepository;
     const tokenService = { generateWorldHandoffToken: async () => 'world-token' };
@@ -31,7 +31,6 @@ describe('CharSelectService', () => {
       charRepo,
       tokenService,
       handoffPublisher,
-      worldId: '01',
     });
   });
 
@@ -45,7 +44,7 @@ describe('CharSelectService', () => {
     assert.equal(published.length, 1);
     assert.equal(published[0].charId, 77);
     assert.equal(published[0].token, 'world-token');
-    assert.equal(published[0].worldId, '01');
+    assert.equal(published[0].worldId, 'world1');
   });
 
   it('rejects when account is unknown', async () => {

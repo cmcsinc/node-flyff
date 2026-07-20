@@ -26,7 +26,8 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import type { CPlayer } from '../../entities/player.js';
 import {
-  SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, MI_MALE, MI_FEMALE, METHOD_NONE,
+  SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_WORLD_READINFO, WI_WORLD_MADRIGAL,
+  OT_MOVER, MI_MALE, MI_FEMALE, METHOD_NONE,
 } from './constants.js';
 import { writeMoverSerialize } from './mover.serializer.js';
 
@@ -39,7 +40,16 @@ export class PlayerSnapshotSerializer {
     // Frame header
     w.writeDword(PACKETTYPE.JOIN);     // dwHdr
     w.writeDword(player.m_idPlayer);   // objidPlayer
-    w.writeWord(1);                    // cb = 1 entry
+    w.writeWord(2);                    // cb = 2 sub-records (WORLD_READINFO + ADD_OBJ)
+
+    // WORLD_READINFO — loads the .wld + sets g_pWorld client-side. MUST precede
+    // ADD_OBJ or OnAddObj→OpenField derefs a null CWorld (User.cpp:317).
+    w.writeDword(player.m_idPlayer);         // objid (GetId)
+    w.writeWord(SNAPSHOTTYPE_WORLD_READINFO); // hdr
+    w.writeDword(WI_WORLD_MADRIGAL);         // dwWorldId
+    w.writeFloat(player.m_vPos.x);           // vPos
+    w.writeFloat(player.m_vPos.y);
+    w.writeFloat(player.m_vPos.z);
 
     // ADD_OBJ entry header
     w.writeDword(player.m_idPlayer);   // objid

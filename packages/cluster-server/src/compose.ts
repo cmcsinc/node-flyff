@@ -96,7 +96,6 @@ export async function compose(): Promise<ClusterComposeResult> {
     charRepo,
     tokenService: worldTokenService,
     handoffPublisher,
-    worldId: config.server.id,
   });
   const accountConnections = new AccountConnectionManager();
 

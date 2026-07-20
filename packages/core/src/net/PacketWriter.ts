@@ -139,6 +139,25 @@ export class PacketWriter {
   }
 
   /**
+   * Appends a 64-bit Little-Endian unsigned integer (Qword) to the packet.
+   *
+   * Flyff serializes `EXPINTEGER` (`__int64`) fields — `m_nExp1`, `m_nDeathExp`,
+   * `m_nAngelExp` — as 8 bytes in `CMover::Serialize` (`ObjSerializeOpt.cpp`).
+   * Writing these as DWORDs desyncs the stream and crashes the client in
+   * `CItemContainer::Serialize` (garbage `chSize` → OOB `m_apItem[ch]`).
+   *
+   * @param value - Qword value. `number` is precise up to 2^53; pass a `bigint`
+   *   for the full 64-bit range (late-game exp).
+   * @returns This writer for chaining.
+   */
+  writeQword(value: number | bigint): this {
+    const buf = Buffer.allocUnsafe(8);
+    buf.writeBigUInt64LE(typeof value === 'bigint' ? value : BigInt(value), 0);
+    this.chunks.push(buf);
+    return this;
+  }
+
+  /**
    * Appends a 32-bit Little-Endian float to the packet.
    *
    * @param value - Float value.
