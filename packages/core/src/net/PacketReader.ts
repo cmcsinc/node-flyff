@@ -154,6 +154,23 @@ export class PacketReader {
   }
 
   /**
+   * Reads an unsigned 64-bit Little-Endian integer (Qword / C++ `__int64`).
+   *
+   * Pairs with {@link PacketWriter.writeQword} — the bit pattern is preserved
+   * exactly, which is what echo fields like PLAYERMOVED's `nTickCount` need
+   * (semantically signed `__int64`, but only echoed, never interpreted).
+   * `bigint` because `number` loses precision past 2^53.
+   *
+   * @returns The qword value as a `bigint`.
+   */
+  readQword(): bigint {
+    this.checkBounds(8, 'readQword');
+    const value = this.buffer.readBigUInt64LE(this._offset);
+    this._offset += 8;
+    return value;
+  }
+
+  /**
    * Reads a DWORD-length-prefixed ASCII string.
    *
    * First reads a DWORD (4 bytes) for the string length, then reads that

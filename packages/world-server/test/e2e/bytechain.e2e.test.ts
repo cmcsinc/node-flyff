@@ -9,6 +9,7 @@ import { hashPassword } from '@flyff/core/utils/password.js';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
+import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { IpcBus } from '@flyff/ipc';
 
 // Login-server handlers/services (cross-package).
@@ -73,6 +74,7 @@ function mockSocket() {
   let destroyed = false;
   return {
     remoteAddress: '127.0.0.1',
+    session: { state: SessionState.CONNECTED },
     write: (b: Buffer) => { sink.push(b); for (const p of sink.drain()) written.push(p); return true; },
     destroy: () => { destroyed = true; },
     _written: () => written,

@@ -3,6 +3,7 @@ import * as assert from 'node:assert/strict';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
+import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { JoinHandler } from '../../src/handlers/join.handler.js';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer.js';
 import type { JoinService, JoinOutcome } from '../../src/services/join.service.js';
@@ -25,6 +26,7 @@ function mockSocket() {
   const sink = new PacketBuffer();
   let destroyed = false;
   return {
+    session: { state: SessionState.CONNECTED, charId: undefined as number | undefined },
     write: (b: Buffer) => { sink.push(b); for (const p of sink.drain()) written.push(p); return true; },
     destroy: () => { destroyed = true; },
     _written: written,

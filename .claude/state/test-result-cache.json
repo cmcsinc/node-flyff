@@ -67,5 +67,18 @@
   "h:\\flyff\\node-flyff\\packages\\ipc\\test\\localBus.test.ts": "fail",
   "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\services\\charSelect.service.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\playerSnapshot.serializer.test.ts": "pass",
-  "h:\\flyff\\node-flyff\\packages\\core\\test\\net\\PacketWriter.test.ts": "fail"
+  "h:\\flyff\\node-flyff\\packages\\core\\test\\net\\PacketWriter.test.ts": "fail",
+  "h:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\mapKey.handler.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\queryPlayerData.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\chat.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\motion.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\setTarget.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\leave.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\playerCorr.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\playerMoved2.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\playerAngle.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\queryGetPos.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\getPos.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\scriptDlg.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\revival.handler.test.ts": "fail"
 }

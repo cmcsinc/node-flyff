@@ -1,0 +1,144 @@
+/**
+ * MovementService — PLAYERMOVED + PLAYERBEHAVIOR (60-byte movement/motion frame).
+ *
+ * Both packets share an identical wire body (`DPSrvr.cpp:2271 OnPlayerMoved`,
+ * `DPSrvr.cpp:2349 OnPlayerBehavior`): `v, vd, f, dwState, dwStateFlag, dwMotion,
+ * nMotionEx, nLoop, dwMotionOption, nTickCount(__int64)`.
+ *
+ * `applyMovement` runs the verified anti-teleport guard
+ * (`D3DXVec3LengthSq(GetPos() - v) > 1e6` ⇒ drop, same threshold as DESTPOS),
+ * updates `m_vPos`, and echoes a `SNAPSHOTTYPE_MOVERMOVED` broadcast to peers.
+ *
+ * `applyBehavior` only echoes a `SNAPSHOTTYPE_MOVERBEHAVIOR` broadcast — it does
+ * NOT mutate server-side position. Behavior frames (sit/stand/cast) carry a
+ * position for the client animation, but authoritative position is owned by
+ * PLAYERMOVED/DESTPOS; mutating here would snap players on every motion packet.
+ * No verified C++ guard exists for OnPlayerBehavior, so none is applied.
+ *
+ * No WAL (position checkpoints every 30s, rule 04). No sender reply.
+ *
+ * ponytail: add a dead/CC'd mover guard (`m_nHp <= 0` ⇒ drop) + per-socket
+ * 30 Hz rate-limit once `rateLimit.ts` lands (rule 03).
+ *
+ * @module services/movement.service
+ */
+
+import type { ZoneManager } from '../managers/zone.manager.js';
+import type { Vec3 } from '../entities/player.js';
+import type { CPlayer } from '../entities/player.js';
+import {
+  MoverBroadcastSerializer, type MovementFrame, type Movement2Frame,
+} from '../net/snapshot/moverBroadcast.serializer.js';
+import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
+
+export interface MovementServiceDeps {
+  zoneManager: ZoneManager;
+}
+
+export type MovementOutcome =
+  | { ok: true; reached: number }
+  | { ok: false; reason: 'too_far' };
+
+export type GetPosOutcome =
+  | { ok: true }
+  | { ok: false; reason: 'too_far' | 'nan_angle' };
+
+/** `D3DXVec3LengthSq > 1_000_000` ⇒ drop (OnPlayerMoved, same as DESTPOS). */
+const ANTI_TELEPORT_SQ = 1_000_000;
+
+/** C++ `MAX_CORR_SIZE_150`-style frame cap for PLAYERMOVED2 — not enforced today. */
+// const MAX_CORR_SIZE_150 = 150;
+
+export class MovementService {
+  private readonly serializer = new MoverBroadcastSerializer();
+  constructor(private readonly deps: MovementServiceDeps) {}
+
+  /** Apply a PLAYERMOVED frame: anti-teleport, update pos, echo to peers. */
+  applyMovement(player: CPlayer, frame: MovementFrame): MovementOutcome {
+    if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
+      return { ok: false, reason: 'too_far' };
+    }
+    player.m_vPos = { ...frame.v };
+    player._dirty.add('m_vPos');
+    return this.broadcast(player, this.serializer.buildMoved(player.m_idPlayer, frame));
+  }
+
+  /** Apply a PLAYERBEHAVIOR frame: echo motion to peers (no position mutation). */
+  applyBehavior(player: CPlayer, frame: MovementFrame): MovementOutcome {
+    return this.broadcast(player, this.serializer.buildBehavior(player.m_idPlayer, frame));
+  }
+
+  /**
+   * Apply a PLAYERCORR frame (DPSrvr.cpp:2651 OnPlayerCorr). Anti-teleport guard
+   * applies only when not flying (we don't model flight yet). On pass: update
+   * pos, echo MOVERCORR to peers.
+   */
+  applyCorr(player: CPlayer, frame: MovementFrame): MovementOutcome {
+    if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
+      return { ok: false, reason: 'too_far' };
+    }
+    player.m_vPos = { ...frame.v };
+    player._dirty.add('m_vPos');
+    return this.broadcast(player, this.serializer.buildCorr(player.m_idPlayer, frame));
+  }
+
+  /**
+   * Apply a PLAYERMOVED2 frame (DPSrvr.cpp:2397 OnPlayerMoved2). 73-byte body.
+   * C++ only acts when flying; we always broadcast (no flight model yet).
+   * ponytail: gate on `player.m_pActMover?.IsFly()` once flight state exists.
+   */
+  applyMoved2(player: CPlayer, frame: Movement2Frame): MovementOutcome {
+    if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
+      return { ok: false, reason: 'too_far' };
+    }
+    player.m_vPos = { ...frame.v };
+    player._dirty.add('m_vPos');
+    return this.broadcast(player, this.serializer.buildMoved2(player.m_idPlayer, frame));
+  }
+
+  /**
+   * Apply a PLAYERANGLE frame (DPSrvr.cpp:2513 OnPlayerAngle). 45-byte body —
+   * `v, vd, f, fAngleX, fAccPower, fTurnAngle, nTickCount`. C++ only acts when
+   * flying. No `g_UserMng.Add*` call in the source — server-side state only.
+   * We accept + log without broadcast (no peer-visible effect documented).
+   */
+  applyAngle(_player: CPlayer, _now: number): MovementOutcome {
+    // ponytail: implement flight correction once ActMover/flight state exists.
+    return { ok: true, reached: 0 };
+  }
+
+  /**
+   * Apply a GETPOS frame (DPSrvr.cpp:1416 OnGetPos) — authoritative position
+   * report from client. NaN guard on `fAngle`, anti-teleport on `vPos`, then
+   * store on player. When `objid == NULL_ID`, C++ accepts the position as the
+   * player's own (the only path v15 uses).
+   */
+  applyGetPos(player: CPlayer, pos: Vec3, fAngle: number, objid: number): GetPosOutcome {
+    if (Number.isNaN(fAngle)) return { ok: false, reason: 'nan_angle' };
+    if (distSq3(player.m_vPos, pos) > ANTI_TELEPORT_SQ) {
+      return { ok: false, reason: 'too_far' };
+    }
+    if (objid === NULL_ID) {
+      player.m_vPos = { ...pos };
+      player.m_fAngle = fAngle;
+      player._dirty.add('m_vPos');
+      player._dirty.add('m_fAngle');
+    }
+    return { ok: true };
+  }
+
+  private broadcast(player: CPlayer, packet: Buffer): MovementOutcome {
+    const reached = this.deps.zoneManager.broadcastAround(
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet, player,
+    );
+    return { ok: true, reached };
+  }
+}
+
+/** Full 3-D squared distance (matches C++ `D3DXVec3LengthSq`). */
+function distSq3(a: Vec3, b: Vec3): number {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  const dz = a.z - b.z;
+  return dx * dx + dy * dy + dz * dz;
+}

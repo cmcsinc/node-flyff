@@ -11,6 +11,7 @@ import { JoinService } from '../../src/services/join.service.js';
 import { JoinHandler } from '../../src/handlers/join.handler.js';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { SessionState } from '@flyff/core/constants/sessionState.js';
 import type { CharacterRepository, CharacterRow } from '@flyff/database';
 
 /**
@@ -106,6 +107,7 @@ describe('E2E: cluster handoff → world JOIN → self-spawn snapshot', () => {
     const sink = new PacketBuffer();
     let destroyed = false;
     const socket = {
+      session: { state: SessionState.CONNECTED },
       write: (b: Buffer) => { sink.push(b); for (const p of sink.drain()) written.push(p); return true; },
       destroy: () => { destroyed = true; },
       _destroyed: () => destroyed,
@@ -130,6 +132,7 @@ describe('E2E: cluster handoff → world JOIN → self-spawn snapshot', () => {
     const sink = new PacketBuffer();
     let destroyed = false;
     const socket = {
+      session: { state: SessionState.CONNECTED },
       write: (b: Buffer) => { sink.push(b); for (const p of sink.drain()) written.push(p); return true; },
       destroy: () => { destroyed = true; },
     };

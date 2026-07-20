@@ -1,9 +1,10 @@
 /**
  * World client-facing TCP server.
  *
- * Binds the single enter-world packet (`JOIN`) to `JoinHandler`, which writes
- * the JOIN/ADD_OBJ self-spawn snapshot on success. `index.ts` calls
- * `server.listen(config.server.port)`.
+ * Binds client→world opcodes to their handlers. `JOIN` writes the self-spawn
+ * snapshot; the in-world handlers (MAP_KEY, QUERY_PLAYER_DATA, SNAPSHOT,
+ * PLAYERMOVED, PLAYERBEHAVIOR) validate + delegate to their services. `index.ts`
+ * calls `server.listen(config.server.port)`.
  *
  * @module clientServer
  */
@@ -12,9 +13,41 @@ import type { Server } from 'node:net';
 import { createClientServer, type PacketDispatcher, type DispatcherLogger } from '@flyff/core/net';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import type { JoinHandler } from './handlers/join.handler.js';
+import type { MapKeyHandler } from './handlers/mapKey.handler.js';
+import type { QueryPlayerDataHandler } from './handlers/queryPlayerData.handler.js';
+import type { SnapshotHandler } from './handlers/snapshot.handler.js';
+import type { PlayerMovedHandler } from './handlers/playerMoved.handler.js';
+import type { PlayerBehaviorHandler } from './handlers/playerBehavior.handler.js';
+import type { ChatHandler } from './handlers/chat.handler.js';
+import type { MotionHandler } from './handlers/motion.handler.js';
+import type { SetTargetHandler } from './handlers/setTarget.handler.js';
+import type { LeaveHandler } from './handlers/leave.handler.js';
+import type { PlayerCorrHandler } from './handlers/playerCorr.handler.js';
+import type { PlayerMoved2Handler } from './handlers/playerMoved2.handler.js';
+import type { PlayerAngleHandler } from './handlers/playerAngle.handler.js';
+import type { QueryGetPosHandler } from './handlers/queryGetPos.handler.js';
+import type { GetPosHandler } from './handlers/getPos.handler.js';
+import type { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
+import type { RevivalHandler } from './handlers/revival.handler.js';
 
 export interface WorldClientServerDeps {
   joinHandler: JoinHandler;
+  mapKeyHandler: MapKeyHandler;
+  queryPlayerDataHandler: QueryPlayerDataHandler;
+  snapshotHandler: SnapshotHandler;
+  playerMovedHandler: PlayerMovedHandler;
+  playerBehaviorHandler: PlayerBehaviorHandler;
+  chatHandler: ChatHandler;
+  motionHandler: MotionHandler;
+  setTargetHandler: SetTargetHandler;
+  leaveHandler: LeaveHandler;
+  playerCorrHandler: PlayerCorrHandler;
+  playerMoved2Handler: PlayerMoved2Handler;
+  playerAngleHandler: PlayerAngleHandler;
+  queryGetPosHandler: QueryGetPosHandler;
+  getPosHandler: GetPosHandler;
+  scriptDlgHandler: ScriptDlgHandler;
+  revivalHandler: RevivalHandler;
   logger?: DispatcherLogger;
 }
 
@@ -26,5 +59,21 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   if (deps.logger !== undefined) dd.logger = deps.logger;
   const { server, dispatcher } = createClientServer(dd);
   dispatcher.register(PACKETTYPE.JOIN, (s, r) => deps.joinHandler.handleJoin(s, r));
+  dispatcher.register(PACKETTYPE.MAP_KEY, (s, r) => deps.mapKeyHandler.handleMapKey(s, r));
+  dispatcher.register(PACKETTYPE.QUERY_PLAYER_DATA, (s, r) => deps.queryPlayerDataHandler.handleQueryPlayerData(s, r));
+  dispatcher.register(PACKETTYPE.SNAPSHOT, (s, r) => deps.snapshotHandler.handleSnapshot(s, r));
+  dispatcher.register(PACKETTYPE.PLAYERMOVED, (s, r) => deps.playerMovedHandler.handlePlayerMoved(s, r));
+  dispatcher.register(PACKETTYPE.PLAYERBEHAVIOR, (s, r) => deps.playerBehaviorHandler.handlePlayerBehavior(s, r));
+  dispatcher.register(PACKETTYPE.CHAT, (s, r) => deps.chatHandler.handleChat(s, r));
+  dispatcher.register(PACKETTYPE.MOTION, (s, r) => deps.motionHandler.handleMotion(s, r));
+  dispatcher.register(PACKETTYPE.SETTARGET, (s, r) => deps.setTargetHandler.handleSetTarget(s, r));
+  dispatcher.register(PACKETTYPE.LEAVE, (s) => deps.leaveHandler.handleLeave(s));
+  dispatcher.register(PACKETTYPE.PLAYERCORR, (s, r) => deps.playerCorrHandler.handlePlayerCorr(s, r));
+  dispatcher.register(PACKETTYPE.PLAYERMOVED2, (s, r) => deps.playerMoved2Handler.handlePlayerMoved2(s, r));
+  dispatcher.register(PACKETTYPE.PLAYERANGLE, (s, r) => deps.playerAngleHandler.handlePlayerAngle(s, r));
+  dispatcher.register(PACKETTYPE.QUERYGETPOS, (s, r) => deps.queryGetPosHandler.handleQueryGetPos(s, r));
+  dispatcher.register(PACKETTYPE.GETPOS, (s, r) => deps.getPosHandler.handleGetPos(s, r));
+  dispatcher.register(PACKETTYPE.SCRIPTDLG, (s, r) => deps.scriptDlgHandler.handleScriptDlg(s, r));
+  dispatcher.register(PACKETTYPE.REVIVAL, (s, r) => deps.revivalHandler.handleRevival(s, r));
   return { server, dispatcher };
 }

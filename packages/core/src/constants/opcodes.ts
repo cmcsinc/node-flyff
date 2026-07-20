@@ -62,6 +62,10 @@ export const PACKETTYPE = Object.freeze({
   GETPOS:               0xffffff09,
 
   GUILD:                0xffffff30,
+
+  // v15 client → world — `WORLDSERVER/DPSrvr.cpp` handlers.
+  MAP_KEY:              0xfffff000, // OnMapKey — per-.wld checksum as client loads the world
+  QUERY_PLAYER_DATA:    0xf000f802, // OnQueryPlayerData — peer data when client cache stale
 } as const);
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];

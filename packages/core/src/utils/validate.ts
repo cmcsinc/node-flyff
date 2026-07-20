@@ -47,6 +47,21 @@ export const Validate = {
   },
 
   /**
+   * Validate an arbitrary length-bounded string (file paths, map keys, chat…).
+   *
+   * Unlike {@link name}, no charset restriction — only length. Use this for
+   * non-name free-text fields the client sends (rule 03 — every string length-
+   * bounded).
+   *
+   * @throws PacketError if not a string or length outside `[min, max]`.
+   */
+  string(value: string, min: number, max: number): void {
+    if (typeof value !== 'string' || value.length < min || value.length > max) {
+      throw new PacketError(`String length must be ${min}-${max}`);
+    }
+  },
+
+  /**
    * Validate a slot index is an integer in `[0, max)`.
    *
    * @param slot - Slot index to check.

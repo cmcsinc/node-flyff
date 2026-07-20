@@ -22,9 +22,9 @@
  * @module handlers/join.handler
  */
 
-import type { Socket } from 'node:net';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { sendPacket } from '@flyff/core/net/dispatcher.js';
+import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher.js';
+import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { createLogger } from '@flyff/core/logger.js';
 import type { JoinService } from '../services/join.service.js';
 import type { PlayerSnapshotSerializer } from '../net/snapshot/playerSnapshot.serializer.js';
@@ -37,7 +37,7 @@ export class JoinHandler {
     private snapshotSerializer: PlayerSnapshotSerializer,
   ) {}
 
-  async handleJoin(socket: Socket, reader: PacketReader): Promise<void> {
+  async handleJoin(socket: ClientSocket, reader: PacketReader): Promise<void> {
     let outcome;
     try {
       const _dwWorldId = reader.readDword();
@@ -70,6 +70,12 @@ export class JoinHandler {
       socket.destroy();
       return;
     }
+
+    // Promote the session BEFORE the snapshot goes out — the client reacts to
+    // the JOIN reply by sending MAP_KEY / movement / behavior, and every in-world
+    // handler's session guard requires IN_WORLD (rule 03).
+    socket.session.state = SessionState.IN_WORLD;
+    socket.session.charId = outcome.player.m_idPlayer;
 
     sendPacket(socket, this.snapshotSerializer.build(outcome.player));
     logger.info({ idPlayer: outcome.player.m_idPlayer }, 'Player entered world');
