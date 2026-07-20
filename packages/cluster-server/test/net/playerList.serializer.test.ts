@@ -27,9 +27,9 @@ function makeChar(overrides: Partial<CharacterRow> = {}): CharacterRow {
     stamina: 18,
     dexterity: 16,
     intelligence: 14,
-    x: 3068.0,
-    y: 31.0,
-    z: 3176.0,
+    x: 6971.98,
+    y: 100.0,
+    z: 3336.88,
     world_id: 'WI_WORLD_MADRIGAL',
     zone_id: 1,
     created_at: new Date(),
@@ -77,9 +77,9 @@ describe('PlayerListSerializer', () => {
       assert.equal(reader.readDword(), 1);   // worldID (WI_WORLD_MADRIGAL)
       assert.equal(reader.readDword(), 11);  // m_dwIndex (MI_MALE)
       assert.equal(reader.readString(), 'Hero'); // m_szName
-      assert.equal(reader.readFloat(), 3068.0); // pos.x
-      assert.equal(reader.readFloat(), 31.0);   // pos.y
-      assert.equal(reader.readFloat(), 3176.0); // pos.z
+      assert.ok(Math.abs(reader.readFloat() - 6971.98) < 0.01); // pos.x (float32)
+      assert.equal(reader.readFloat(), 100.0);                    // pos.y
+      assert.ok(Math.abs(reader.readFloat() - 3336.88) < 0.01); // pos.z (float32)
       assert.equal(reader.readDword(), 1);   // m_idPlayer
       assert.equal(reader.readDword(), 0);   // idparty
       assert.equal(reader.readDword(), 0);   // idGuild

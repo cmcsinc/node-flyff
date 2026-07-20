@@ -201,9 +201,9 @@ describe('CharacterDefaultsSchema', () => {
     const result = CharacterDefaultsSchema.parse({});
     assert.equal(result.maxPerAccount, 3);
     assert.equal(result.startMap, 'WI_WORLD_FLARIS');
-    assert.equal(result.startX, 3068.0);
-    assert.equal(result.startY, 31.0);
-    assert.equal(result.startZ, 3176.0);
+    assert.equal(result.startX, 6971.98);
+    assert.equal(result.startY, 100.0);
+    assert.equal(result.startZ, 3336.88);
     assert.equal(result.startLevel, 1);
     assert.equal(result.startGold, 0);
     assert.equal(result.startInventorySize, 42);

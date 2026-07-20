@@ -23,9 +23,9 @@
   "character": {
     "maxPerAccount": 3,
     "startMap": "WI_WORLD_FLARIS",
-    "startX": 3068.0,
-    "startY": 31.0,
-    "startZ": 3176.0,
+    "startX": 6971.98,
+    "startY": 100.0,
+    "startZ": 3336.88,
     "startLevel": 1,
     "startGold": 0,
     "startInventorySize": 42

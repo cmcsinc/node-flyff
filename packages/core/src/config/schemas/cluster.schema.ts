@@ -25,12 +25,12 @@ export const CharacterDefaultsSchema = z.object({
    * e.g. "WI_WORLD_FLARIS"
    */
   startMap: z.string().min(1).default('WI_WORLD_FLARIS'),
-  /** Starting X world coordinate. */
-  startX: z.number().default(3068.0),
+  /** Starting X world coordinate. Flaris RI_BEGIN (WdMadrigal.rgn:742). */
+  startX: z.number().default(6971.98),
   /** Starting Y world coordinate (height). */
-  startY: z.number().default(31.0),
+  startY: z.number().default(100.0),
   /** Starting Z world coordinate. */
-  startZ: z.number().default(3176.0),
+  startZ: z.number().default(3336.88),
   /** Starting character level. */
   startLevel: z.number().int().min(1).max(999).default(1),
   /** Starting gold amount (penya). */

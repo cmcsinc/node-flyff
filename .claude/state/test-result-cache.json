@@ -49,7 +49,7 @@
   "h:\\flyff\\node-flyff\\packages\\login-server\\test\\services\\auth.service.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\database\\test\\migrate.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\utils\\validate.test.ts": "fail",
-  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\net\\playerList.serializer.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\net\\playerList.serializer.test.ts": "fail",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\config\\schemas\\cluster.schema.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\core\\test\\config\\schemas\\world.schema.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\world-server\\test\\entities\\player.test.ts": "fail",
