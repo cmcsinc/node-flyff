@@ -64,5 +64,8 @@
   "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\handlers\\char.handler.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\managers\\accountConnection.manager.test.ts": "pass",
   "h:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\join.handler.test.ts": "pass",
-  "h:\\flyff\\node-flyff\\packages\\ipc\\test\\localBus.test.ts": "fail"
+  "h:\\flyff\\node-flyff\\packages\\ipc\\test\\localBus.test.ts": "fail",
+  "h:\\flyff\\node-flyff\\packages\\cluster-server\\test\\services\\charSelect.service.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\playerSnapshot.serializer.test.ts": "pass",
+  "h:\\flyff\\node-flyff\\packages\\core\\test\\net\\PacketWriter.test.ts": "fail"
 }

@@ -17,6 +17,19 @@
 
 export const SNAPSHOTTYPE_ADD_OBJ = 0x00f0;
 
+/**
+ * `SNAPSHOTTYPE_WORLD_READINFO` (`_Network/MsgHdr.h:1278`). Under `__MAP_SECURITY`
+ * (defined in both Neuz/VersionCommon.h:172 and WORLDSERVER/VersionCommon.h:178),
+ * `CUser::Open` emits this sub-record BEFORE `ADD_OBJ` (`User.cpp:317`). The
+ * client's `OnWorldReadInfo` (`DPClient.cpp:18606`) calls `g_WorldMng.Open(dwWorldId)`
+ * — the ONLY place `g_pWorld` is set in the JOIN flow. Omit it and `OnAddObj`
+ * → `OpenField` derefs a null `CWorld` → `VecInWorld this==nullptr` crash.
+ */
+export const SNAPSHOTTYPE_WORLD_READINFO = 0x9910;
+
+/** Numeric world ID → which `.wld` the client loads. Resource/defineWorld.h:5. */
+export const WI_WORLD_MADRIGAL = 1;
+
 /** CObj method: full self-data (vs METHOD_EXCLUDE_ITEM for other players). */
 export const METHOD_NONE = 0;
 
