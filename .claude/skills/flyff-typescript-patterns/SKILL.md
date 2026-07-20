@@ -77,6 +77,10 @@ description: >
 
 Always use Zod to parse untrusted input (env config, IPC messages, packet fields).
 
+### Config file vs schema default (gotcha)
+
+`loadConfig` (`packages/core/src/config/loader.ts`) layers `config/default.json` → `config/<server>.json` → `config/*.yml` → env, **last-wins, on top of** Zod `.default()`. A `.default()` only fires when no layer provides the key. When changing a real-world default (spawn coords, ports, limits), update BOTH the schema `.default()` AND the matching key in `config/<server>.json`, then restart — config is read once at boot.
+
 ### Environment Config
 ```ts
 // packages/core/src/config.ts

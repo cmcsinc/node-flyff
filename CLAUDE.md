@@ -259,6 +259,18 @@ Available implementations: `RedisCache`, `CloudflareCache`, `MemoryCache` (testi
 
 ---
 
+## Configuration Precedence
+
+`loadConfig` (`packages/core/src/config/loader.ts`) merges layers last-wins:
+
+```text
+{}  →  config/default.json  →  config/<server>.json  →  config/*.yml  →  env overrides
+```
+
+Zod `.default()` in `packages/core/src/config/schemas/*.schema.ts` only fills a key when **no** layer provides it. **Runtime config files override schema defaults.** When changing a real-world default (spawn coords, ports, limits), update BOTH the schema `.default()` AND the matching key in `config/<server>.json`, then restart — config is read once at boot.
+
+---
+
 ## Inter-Server Security
 
 All IPC messages are HMAC-SHA256 signed with `IPC_SECRET` from env:
