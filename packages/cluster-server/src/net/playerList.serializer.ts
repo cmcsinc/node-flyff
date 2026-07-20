@@ -17,6 +17,9 @@ import type { CharacterRow } from '@flyff/database';
 const MI_MALE = 11;
 const MI_FEMALE = 12;
 const WI_WORLD_MADRIGAL = 1;
+// Client reads this as g_Neuz.m_nCharacterBlock[slot] (DPLoginClient.cpp:429).
+// 0 = blocked → "You cannot use this character", 1 = usable, 2 = empty slot.
+const CHARACTER_BLOCK_USABLE = 1;
 
 /**
  * Builds PLAYER_LIST packets from a character roster.
@@ -49,7 +52,7 @@ export class PlayerListSerializer {
    */
   private writeChar(writer: PacketWriter, c: CharacterRow): void {
     writer.writeDword(c.slot);                       // islot (int, 4 bytes)
-    writer.writeDword(0);                            // nBlock
+    writer.writeDword(CHARACTER_BLOCK_USABLE);       // m_nCharacterBlock: 1 = usable
     writer.writeDword(WI_WORLD_MADRIGAL);            // dwWorldID
     writer.writeDword(c.gender === 1 ? MI_FEMALE : MI_MALE); // m_dwIndex
     writer.writeString(c.name);                      // m_szName

@@ -73,7 +73,7 @@ describe('PlayerListSerializer', () => {
 
       // Per-char struct (DbManager.cpp:643-700):
       assert.equal(reader.readDword(), 0);   // slot (int, 4 bytes)
-      assert.equal(reader.readDword(), 0);   // block
+      assert.equal(reader.readDword(), 1);   // m_nCharacterBlock: 1 = usable (0 would block)
       assert.equal(reader.readDword(), 1);   // worldID (WI_WORLD_MADRIGAL)
       assert.equal(reader.readDword(), 11);  // m_dwIndex (MI_MALE)
       assert.equal(reader.readString(), 'Hero'); // m_szName

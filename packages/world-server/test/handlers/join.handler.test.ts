@@ -32,16 +32,20 @@ function mockSocket() {
   };
 }
 
-/** Build a JOIN payload: dwAuthKey, idPlayer, nSlot, dpidSocket, account, pw, addr. */
+/** Build a client→cache JOIN payload (Neuz/DPClient.cpp:8959 field order). */
 function joinPayload(idPlayer: number, nSlot: number): Buffer {
   const w = new PacketWriter();
-  w.writeDword(0xdeadbeef);       // dwAuthKey
+  w.writeDword(1);                // dwWorldId
   w.writeDword(idPlayer);
+  w.writeDword(0xdeadbeef);       // dwAuthKey
+  w.writeDword(0);                // idParty
+  w.writeDword(0);                // idGuild
+  w.writeDword(0);                // idWar
+  w.writeDword(0);                // uChannel
   w.writeByte(nSlot);
-  w.writeDword(1);                // dpidSocket
+  w.writeString('Hero');          // name
   w.writeString('acct');
   w.writeString('pw');
-  w.writeString('127.0.0.1');
   return w.build();
 }
 

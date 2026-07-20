@@ -57,13 +57,17 @@ function makeRow(): CharacterRow {
 
 function joinPayload(idPlayer: number): Buffer {
   const w = new PacketWriter();
-  w.writeDword(0xdeadbeef);      // dwAuthKey
+  w.writeDword(1);               // dwWorldId
   w.writeDword(idPlayer);
+  w.writeDword(0xdeadbeef);      // dwAuthKey
+  w.writeDword(0);               // idParty
+  w.writeDword(0);               // idGuild
+  w.writeDword(0);               // idWar
+  w.writeDword(0);               // uChannel
   w.writeByte(0);                // nSlot
-  w.writeDword(1);               // dpidSocket
+  w.writeString('Hero');         // name
   w.writeString('acct');
   w.writeString('pw');
-  w.writeString('127.0.0.1');
   return w.build();
 }
 

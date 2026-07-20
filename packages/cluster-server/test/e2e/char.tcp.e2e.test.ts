@@ -12,6 +12,7 @@ import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import { CharHandler } from '../../src/handlers/char.handler.js';
 import { CharListService } from '../../src/services/charList.service.js';
 import { PlayerListSerializer } from '../../src/net/playerList.serializer.js';
+import { AccountConnectionManager } from '../../src/managers/accountConnection.manager.js';
 import { buildClusterClientServer } from '../../src/clientServer.js';
 
 /**
@@ -82,7 +83,11 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
 
     const charList = new CharListService(accountRepo, charRepo);
     const stub = new Proxy({}, { get: () => async () => ({ ok: false }) }) as never;
-    const charHandler = new CharHandler(charList, stub, stub, new PlayerListSerializer());
+    const charHandler = new CharHandler(
+      charList, stub, stub, new PlayerListSerializer(),
+      new AccountConnectionManager(),
+      { getCacheAddr: () => '127.0.0.1' },
+    );
 
     server = buildClusterClientServer({ charHandler }).server;
     await new Promise<void>((r) => server.listen(0, '127.0.0.1', r));
@@ -107,20 +112,23 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
       .writeDword(1)
       .build();
 
-    const reply = await new Promise<Buffer | null>((resolve) => {
+    const replies = await new Promise<Buffer[]>((resolve) => {
       const onData = (c: Buffer) => {
         rx.push(c);
         const frames = rx.drain();
-        if (frames.length > 0) { sock.off('data', onData); resolve(frames[0]!); }
+        if (frames.length >= 2) { sock.off('data', onData); resolve(frames); }
       };
       sock.on('data', onData);
-      setTimeout(() => { sock.off('data', onData); resolve(null); }, 2000);
+      setTimeout(() => { sock.off('data', onData); resolve(rx.drain()); }, 2000);
       sock.write(clusterFrame(PACKETTYPE.GETPLAYERLIST, body, protocolId));
     });
     sock.destroy();
 
-    assert.ok(reply, 'cluster must reply with a PLAYER_LIST');
-    assert.equal(reply!.readUInt32LE(0), PACKETTYPE.PLAYER_LIST);
+    // First frame is CACHE_ADDR (0xf2), second is PLAYER_LIST — mirrors C++
+    // DPLoginSrvr.cpp:167 which sends the cache address before the player list.
+    assert.ok(replies.length >= 2, 'cluster must reply with CACHE_ADDR then PLAYER_LIST');
+    assert.equal(replies[0]!.readUInt32LE(0), PACKETTYPE.CACHE_ADDR);
+    assert.equal(replies[1]!.readUInt32LE(0), PACKETTYPE.PLAYER_LIST);
   });
 
   it('does not reply when the leading DPID is missing (opcode misread)', async () => {

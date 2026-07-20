@@ -112,6 +112,9 @@ function buildEnvOverrides(): PlainObject {
   if (env['DATABASE_URL'])  set(overrides, ['database', 'url'], env['DATABASE_URL']);
   if (env['REDIS_URL'])     set(overrides, ['cache', 'redisUrl'], env['REDIS_URL']);
   if (env['SERVER_ID'])     set(overrides, ['server', 'id'], env['SERVER_ID']);
+  // Dev-only no-Redis LocalBus target (used when cache.adapter === 'memory').
+  if (env['LOCAL_BUS_HOST']) set(overrides, ['ipc', 'localBusHost'], env['LOCAL_BUS_HOST']);
+  if (env['LOCAL_BUS_PORT']) set(overrides, ['ipc', 'localBusPort'], env['LOCAL_BUS_PORT']);
 
   // DB client / filename (commonly set in docker-compose / .env for local dev)
   if (env['DB_CLIENT'])     set(overrides, ['database', 'client'], env['DB_CLIENT']);

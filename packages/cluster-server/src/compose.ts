@@ -11,6 +11,7 @@ import { CharSelectService } from './services/charSelect.service.js';
 import { WorldHandoffTokenService } from './services/worldToken.service.js';
 import { PlayerListSerializer } from './net/playerList.serializer.js';
 import { CharHandler } from './handlers/char.handler.js';
+import { AccountConnectionManager } from './managers/accountConnection.manager.js';
 
 export interface ClusterComposeResult {
   config: ClusterServerConfig;
@@ -24,6 +25,7 @@ export interface ClusterComposeResult {
   charHandler: CharHandler;
   playerListSerializer: PlayerListSerializer;
   handoffPublisher: ClusterHandoffPublisher;
+  accountConnections: AccountConnectionManager;
 }
 
 export async function compose(): Promise<ClusterComposeResult> {
@@ -96,11 +98,22 @@ export async function compose(): Promise<ClusterComposeResult> {
     handoffPublisher,
     worldId: config.server.id,
   });
+  const accountConnections = new AccountConnectionManager();
+
+  // CACHE_ADDR source: the public IP of the first online world server (what the
+  // client dials on :5400). Null when none registered → handler falls back to
+  // 127.0.0.1 for single-box dev.
+  const cacheAddrSource = {
+    getCacheAddr: (): string | null => worldRegistry.getOnlineWorlds()[0]?.publicIp ?? null,
+  };
+
   const charHandler = new CharHandler(
     charListService,
     charCreateService,
     charSelectService,
     playerListSerializer,
+    accountConnections,
+    cacheAddrSource,
   );
 
   return {
@@ -115,5 +128,6 @@ export async function compose(): Promise<ClusterComposeResult> {
     charHandler,
     playerListSerializer,
     handoffPublisher,
+    accountConnections,
   };
 }
