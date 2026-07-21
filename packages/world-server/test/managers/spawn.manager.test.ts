@@ -61,6 +61,10 @@ function makeResources(): ResourceIndex {
           equip: [{ parts: 0, itemId: 1029 }],
         },
         dialogFile: 'MaDa_Homeit.txt',
+        vendorTabs: [],
+        vendorItems: [],
+        vendorItemIds: [],
+        venderType: undefined,
         vendorSlotCount: 0,
       }]]),
       byStem: new Map([['mada_homeit', {
@@ -72,6 +76,10 @@ function makeResources(): ResourceIndex {
           equip: [{ parts: 0, itemId: 1029 }],
         },
         dialogFile: 'MaDa_Homeit.txt',
+        vendorTabs: [],
+        vendorItems: [],
+        vendorItemIds: [],
+        venderType: undefined,
         vendorSlotCount: 0,
       }]]),
     },
@@ -134,6 +142,9 @@ describe('SpawnManager', () => {
     const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12);
     assert.ok(homeit);
     assert.deepEqual([...homeit!.m_abMoverMenu], [0, 2], 'MMI_DIALOG + MMI_TRADE propagated');
+    // characterKey decoupled from outfit — the client needs it to resolve
+    // m_abMoverMenu even when SetFigure/SetEquip are absent.
+    assert.equal(homeit!.m_szCharacterKey, 'MaDa_Homeit', 'characterKey propagated for client CNpcProperty lookup');
   });
 
   it('monsters spawn naked (no outfit)', () => {

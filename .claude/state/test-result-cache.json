@@ -85,7 +85,7 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\e2e\\join.e2e.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\e2e\\bytechain.e2e.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\npcSnapshot.serializer.test.ts": "fail",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\managers\\spawn.manager.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\managers\\spawn.manager.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\database\\test\\journal.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\mapKey.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders.test.ts": "pass",
