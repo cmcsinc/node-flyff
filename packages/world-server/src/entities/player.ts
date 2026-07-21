@@ -15,13 +15,18 @@
 
 import type { CharacterRow } from '@flyff/database';
 import { AUTH } from '../constants/authority.js';
-import { NULL_ID, INVENTORY_SLOTS } from '../net/snapshot/constants.js';
+import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS } from '../net/snapshot/constants.js';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest.js';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
 
-/** Minimal write-capable socket view a player holds for broadcasts. */
+/**
+ * Minimal write-capable socket view a player holds for broadcasts.
+ * `destroy` is optional — only the live `net.Socket` provides it; tests/mocks
+ * omit it. `/out` uses it to force-disconnect a named target.
+ */
 export interface PlayerSocket {
   write(buf: Buffer): boolean;
+  destroy?(): void;
 }
 
 /** D3DVECTOR stand-in — C++ `m_vPos`. */
@@ -33,12 +38,18 @@ export interface Vec3 {
 
 /**
  * One inventory slot (C++ `CItemElem`, vanilla subset). `itemId` is the propItem
- * id; `count` is `m_nItemNum`. Upgrade fields (refine/durability/stats) are
- * deferred to the equip story — a picked-up drop carries none of them.
+ * id; `count` is `m_nItemNum`. Upgrade fields carry refine/flag/durability so
+ * equipped items serialize correctly on JOIN; defaults are 0 (vanilla drop).
  */
 export interface InventorySlot {
   itemId: number;
   count: number;
+  /** CItemElem m_byFlag (elemental/rarity bits). 0 = plain. */
+  flags?: number;
+  /** Refine level (+0..+20). Shifted into nOption on the wire. */
+  refine?: number;
+  /** Durability / m_nHitPoint. -1 = indestructible. */
+  durability?: number;
 }
 
 /**
@@ -73,7 +84,7 @@ export class CPlayer {
   /**
    * Gold (C++ `m_nGold`). Persisted on the `characters.gold` column (migration
    * 003); hydrated on JOIN, fire-and-forget flushed by `QuestService.flushGold`
-   * on reward grant. WAL `GOLD_CHANGE` is the crash-recovery backup.
+   * on reward grant. WAL `CHAR_GOLD` is the crash-recovery backup.
    */
   m_nGold: number = 0;
   /**
@@ -96,6 +107,23 @@ export class CPlayer {
    * See `constants/authority.ts`.
    */
   m_bAuthority: number = AUTH.GENERAL;
+  /**
+   * Runtime mode bitmask (C++ `CMover::m_dwMode`, authorization.h:18). Holds GM
+   * toggles — `MATCHLESS_MODE` (`/undying`, invincible), `TRANSPARENT_MODE`
+   * (`/inv`, invisible). See `constants/mode.ts`. Transient — not persisted,
+   * resets each session (matches C++). Mutated by `/cmd` and broadcast via
+   * `SNAPSHOTTYPE_MODIFYMODE`. MATCHLESS is honored by `AISystem.monsterSwing`
+   * (skip HP subtraction). ponytail: add a `mode` column + JOIN hydration if a
+   * bit must survive reconnect.
+   */
+  m_dwMode: number = 0;
+  /**
+   * Disguise propMover index (C++ disguise `m_dwIndex`). 0 = none. Set by
+   * `/dis`, cleared by `/nodis`, broadcast via `SNAPSHOTTYPE_DISGUISE`. The
+   * client renders the player as this mover model. ponytail: persist + hydrate
+   * on JOIN so a disguise survives reconnect.
+   */
+  m_dwDisguise: number = 0;
   /** Y-axis rotation (C++ `m_fAngle`). Updated by GETPOS/PLAYERANGLE. */
   m_fAngle: number = 0;
   /** Per-player target lock (C++ `m_idTarget`) — set by SETTARGET, consumed by combat. */
@@ -144,6 +172,25 @@ export class CPlayer {
    * Indexes 0..MAX_INVENTORY-1 are the main bag; 42..72 are equip parts.
    */
   m_Inventory: (InventorySlot | null)[] = new Array(INVENTORY_SLOTS).fill(null);
+  /**
+   * Bank tabs (C++ `m_Bank[3]`, 42 slots each). Per-character in v15. Hydrated
+   * from `BankRepository` on JOIN; mutated by the bank service. Tab 0..2.
+   */
+  m_Bank: (InventorySlot | null)[][] = [
+    new Array(BANK_SLOTS).fill(null),
+    new Array(BANK_SLOTS).fill(null),
+    new Array(BANK_SLOTS).fill(null),
+  ];
+  /** Per-tab bank gold (C++ `m_dwGoldBank[3]`). */
+  m_BankGold: [number, number, number] = [0, 0, 0];
+  /** True while the bank window is open (NPC range / instant-bank). */
+  m_bBankOpen: boolean = false;
+  /**
+   * Fatigue point pool (C++ `m_nFatiguePoint`). Consumables (food/potion) restore
+   * it; most skills spend it. ponytail: real FP regen + skill spend once skills ship.
+   */
+  m_nFp: number = 0;
+  m_nMaxFp: number = 0;
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
   readonly _dirty: Set<string> = new Set();
