@@ -82,4 +82,23 @@ export class ZoneManager {
     for (const p of bucket) p.socket.write(framed);
     return bucket.size;
   }
+
+  /**
+   * Live players in `zoneId` within `radius` (ground-plane x/z) of `pos`.
+   * Zone-scoped (rule 05 — never iterate all players) for AI aggro scans + the
+   * future central tick. Optional `except` skips one player (e.g. self).
+   */
+  playersNear(pos: Vec3, zoneId: number, radius: number, except?: CPlayer): CPlayer[] {
+    const bucket = this.zones.get(zoneId);
+    if (!bucket) return [];
+    const r2 = radius * radius;
+    const out: CPlayer[] = [];
+    for (const p of bucket) {
+      if (p === except) continue;
+      const dx = p.m_vPos.x - pos.x;
+      const dz = p.m_vPos.z - pos.z;
+      if (dx * dx + dz * dz <= r2) out.push(p);
+    }
+    return out;
+  }
 }

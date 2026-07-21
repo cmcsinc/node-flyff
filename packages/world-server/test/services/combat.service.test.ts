@@ -85,22 +85,22 @@ describe('CombatService.resolveAttack', () => {
       spawnManager, zoneManager, playerManager, charRepo, journal, rng: fixedRng,
     });
 
-    // Swing 1: mover 30 → 15 HP (not dead); monster counter-swings the player.
+    // Swing 1: mover 30 → 15 HP (not dead); monster rages on the player.
     const r1 = combat.resolveAttack(player, mover.m_idMover);
     assert.equal(r1.ok && r1.hit, true);
     assert.equal(r1.ok && r1.killed, false);
     assert.equal(mover.m_nHitPoint, 15);
-    // DAMAGE on the mover + DAMAGE on the player (counter-swing) = 2 broadcasts.
+    // DAMAGE on the mover + MOVERSETDESTOBJ (rage acquire) = 2 broadcasts.
     assert.equal(broadcasts.length, 2);
     assert.equal(snapshotSubtype(broadcasts[0]), 0x0013); // SNAPSHOTTYPE_DAMAGE
     assert.equal(snapshotVictim(broadcasts[0]), mover.m_idMover);
-    assert.equal(snapshotSubtype(broadcasts[1]), 0x0013); // counter-swing DAMAGE
-    assert.equal(snapshotVictim(broadcasts[1]), player.m_idPlayer);
-    // Player took counter damage (bare-hand npc 16 − player DEF 7 = 9).
-    assert.equal(player.m_nHp, 200 - 9);
-    assert.equal(mover.m_nextAttackTick > 0, true); // throttle armed
+    assert.equal(snapshotSubtype(broadcasts[1]), 0x00c2); // SNAPSHOTTYPE_MOVERSETDESTOBJ
+    // Monster acquired the player as target (no inline counter-swing).
+    assert.equal(mover.m_idTarget, player.m_idPlayer);
+    assert.equal(mover.m_fSpeedFactor, 2.0);
+    assert.equal(player.m_nHp, 200); // untouched — AI tick swings, not combat
 
-    // Swing 2: mover 15 → 0 HP, dead (no counter-swing — mover is dead).
+    // Swing 2: mover 15 → 0 HP, dead (no re-rage — mover is dead).
     const r2 = combat.resolveAttack(player, mover.m_idMover);
     assert.equal(r2.ok && r2.killed, true);
     assert.equal(mover.m_bDead, true);
@@ -146,7 +146,7 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(r.ok === false && r.reason, 'target_not_attackable');
   });
 
-  it('skips the counter-swing while the monster is on attack cooldown', () => {
+  it('does not re-rage (no second MOVERSETDESTOBJ) while already chasing', () => {
     const socket = { write: () => true };
     const player = CPlayer.fromRow(makeRow(), socket);
     player.m_nZoneId = 1;
@@ -155,8 +155,8 @@ describe('CombatService.resolveAttack', () => {
       { modelIndex: 20, name: 'Aibatt', level: 1, hp: 30, atkMin: 16, atkMax: 16, armor: 3, hr: 40, er: 3, expValue: 0 },
       { x: 0, y: 0, z: 0 }, 1,
     );
-    // Cooldown not yet elapsed → counter-swing suppressed.
-    mover.m_nextAttackTick = Number.MAX_SAFE_INTEGER;
+    // Already chasing someone else → triggerRage early-outs.
+    mover.m_idTarget = 0x7fffffff;
     const spawnManager = { get: () => mover, kill: () => {} };
     const broadcasts: Buffer[] = [];
     const zoneManager = { broadcastAround: (_p: unknown, _z: number, _r: number, buf: Buffer) => { broadcasts.push(buf); return 1; } };
@@ -168,9 +168,11 @@ describe('CombatService.resolveAttack', () => {
     });
 
     combat.resolveAttack(player, mover.m_idMover);
-    // Only the mover DAMAGE — no player DAMAGE (counter throttled).
+    // Only the mover DAMAGE — no MOVERSETDESTOBJ (already had a target).
     assert.equal(broadcasts.length, 1);
+    assert.equal(snapshotSubtype(broadcasts[0]), 0x0013);
     assert.equal(snapshotVictim(broadcasts[0]), mover.m_idMover);
+    assert.equal(mover.m_idTarget, 0x7fffffff, 'target unchanged');
     assert.equal(player.m_nHp, 200); // untouched
   });
 });

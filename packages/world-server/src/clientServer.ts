@@ -26,6 +26,7 @@ import type { PlayerCorrHandler } from './handlers/playerCorr.handler.js';
 import type { PlayerMoved2Handler } from './handlers/playerMoved2.handler.js';
 import type { PlayerAngleHandler } from './handlers/playerAngle.handler.js';
 import type { QueryGetPosHandler } from './handlers/queryGetPos.handler.js';
+import type { QueryGetDestObjHandler } from './handlers/queryGetDestObj.handler.js';
 import type { GetPosHandler } from './handlers/getPos.handler.js';
 import type { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
 import type { RevivalHandler } from './handlers/revival.handler.js';
@@ -50,6 +51,7 @@ export interface WorldClientServerDeps {
   playerMoved2Handler: PlayerMoved2Handler;
   playerAngleHandler: PlayerAngleHandler;
   queryGetPosHandler: QueryGetPosHandler;
+  queryGetDestObjHandler: QueryGetDestObjHandler;
   getPosHandler: GetPosHandler;
   scriptDlgHandler: ScriptDlgHandler;
   revivalHandler: RevivalHandler;
@@ -82,9 +84,12 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.PLAYERMOVED2, (s, r) => deps.playerMoved2Handler.handlePlayerMoved2(s, r));
   dispatcher.register(PACKETTYPE.PLAYERANGLE, (s, r) => deps.playerAngleHandler.handlePlayerAngle(s, r));
   dispatcher.register(PACKETTYPE.QUERYGETPOS, (s, r) => deps.queryGetPosHandler.handleQueryGetPos(s, r));
+  dispatcher.register(PACKETTYPE.QUERYGETDESTOBJ, (s, r) => deps.queryGetDestObjHandler.handleQueryGetDestObj(s, r));
   dispatcher.register(PACKETTYPE.GETPOS, (s, r) => deps.getPosHandler.handleGetPos(s, r));
   dispatcher.register(PACKETTYPE.SCRIPTDLG, (s, r) => deps.scriptDlgHandler.handleScriptDlg(s, r));
   dispatcher.register(PACKETTYPE.REVIVAL, (s, r) => deps.revivalHandler.handleRevival(s, r));
+  dispatcher.register(PACKETTYPE.REVIVAL_TO_LODESTAR, (s, r) => deps.revivalHandler.handleRevivalLodestar(s, r));
+  dispatcher.register(PACKETTYPE.REVIVAL_TO_LODELIGHT, (s, r) => deps.revivalHandler.handleRevivalLodelight(s, r));
   dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r));
   dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));

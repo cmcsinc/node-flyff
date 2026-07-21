@@ -6,6 +6,7 @@ import type { CPlayer } from '../../src/entities/player.js';
 import type { CMover } from '../../src/entities/mover.js';
 import type { DialogIndex, QuestDef, QuestIndex } from '@flyff/resources';
 import type { QuestService } from '../../src/services/quest.service.js';
+import type { ScriptFunc } from '../../src/net/snapshot/scriptDialog.serializer.js';
 
 const NPC_ID = 0x40000001;
 
@@ -54,6 +55,17 @@ function endDialogQuest(id: number, charKey: string, addKey: string): QuestDef {
 
 /** Fake ChatSerializer returning a sentinel so we can assert it was used. */
 const fakeChat = { build: (id: number, _text: string) => Buffer.from([0xc0, id & 0xff]) };
+
+/** Fake ScriptDialogSerializer capturing the op lists it was handed. */
+function fakeScriptDialog(): { serializer: { build: (id: number, f: ScriptFunc[]) => Buffer }; calls: ScriptFunc[][]; sentinel: Buffer } {
+  const calls: ScriptFunc[][] = [];
+  const sentinel = Buffer.from([0x24]);
+  return {
+    sentinel,
+    calls,
+    serializer: { build: (_id: number, funcs: ScriptFunc[]) => { calls.push(funcs); return sentinel; } },
+  };
+}
 
 function fakeQuestService(): { svc: QuestService; began: number[]; frame: Buffer } {
   const began: number[] = [];
@@ -203,5 +215,49 @@ describe('ScriptDlgService.dialog', () => {
     if (!out.ok) throw new Error('expected ok');
     assert.equal(out.frames.length, 0);
     assert.equal(player.m_aQuest[0].flags, 0);
+  });
+
+  it('emits a RUNSCRIPTFUNC menu (RemoveAllKey + Say + AddKey + Exit) for a menu state', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const dialogs = mkDialogs(['', '', 'hello']); // index 2 = 'hello'; others unresolved
+    dialogs.byPrefix.set('mafl_test', {
+      _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+      states: { '0': { say: [2], keys: [{ label: 2 }, { label: 5, key: 7, param: 3 }], exit: true } },
+    } as never);
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs, quests: mkQuests([]), questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    assert.equal(calls.length, 1);
+    const f = calls[0]!;
+    assert.equal(f[0]!.type, 'removeAllKeys');
+    assert.deepEqual(f[1], { type: 'say', text: 'hello' });
+    assert.deepEqual(f[2], { type: 'addKey', word: 'hello', key: '2' }); // label 2, no key → routes to 2
+    assert.deepEqual(f[3], { type: 'addKey', word: '', key: '7', param: 3 }); // label 5 unresolved → ''
+    assert.equal(f[4]!.type, 'exit');
+  });
+
+  it('emits no menu frame for a speak-only state (C++ queues no RUNSCRIPTFUNC)', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const dialogs = mkDialogs(['', '', '', '', '', 'hi']);
+    dialogs.byPrefix.set('mafl_test', {
+      _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+      states: { '0': { speak: [5] } },
+    } as never);
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs, quests: mkQuests([]), questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    assert.equal(calls.length, 0); // no menu ops
+    assert.equal(out.frames.length, 1); // just the Speak chat frame
+    assert.deepEqual(out.frames, [Buffer.from([0xc0, NPC_ID & 0xff])]);
   });
 });

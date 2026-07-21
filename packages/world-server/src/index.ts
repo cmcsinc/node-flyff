@@ -85,6 +85,7 @@ async function main(): Promise<void> {
     playerMoved2Handler,
     playerAngleHandler,
     queryGetPosHandler,
+    queryGetDestObjHandler,
     getPosHandler,
     scriptDlgHandler,
     revivalHandler,
@@ -99,6 +100,7 @@ async function main(): Promise<void> {
     questTracker,
     spawnManager,
     aiSystem,
+    itemManager,
   } = await compose();
 
   process.on('unhandledRejection', err => {
@@ -123,6 +125,7 @@ async function main(): Promise<void> {
     questTracker.stop();
     aiSystem.stop();
     spawnManager.shutdown();
+    itemManager.shutdown();
     journal.close();
     process.exit(0);
   };
@@ -159,6 +162,7 @@ async function main(): Promise<void> {
     playerMoved2Handler,
     playerAngleHandler,
     queryGetPosHandler,
+    queryGetDestObjHandler,
     getPosHandler,
     scriptDlgHandler,
     revivalHandler,

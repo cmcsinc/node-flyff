@@ -1,33 +1,221 @@
 /**
- * RevivalService — `PACKETTYPE_REVIVAL` (0x00ff00c0).
+ * RevivalService — death→revival loop (`DPSrvr::OnRevival*`,
+ * `_Common/Mover.cpp::DoDie/SubDieDecExp`).
  *
- * `DPSrvr::OnRevival` (DPSrvr.cpp:960) reads no body — it inspects player state.
- * If the player is NOT dead (`pUser->IsDie() == FALSE`), it logs an error and
- * returns. Otherwise it consumes a resurrection scroll from inventory and
- * restarts the player (HP/MP/position restore).
+ * Two entry points:
+ *  - {@link onPlayerDeath}: called by `AISystem` on lethal damage. Flags dead,
+ *    broadcasts `MOVERDEATH` to vicinity, sends `ACTMSG STOP+DIE` to the dying
+ *    client (opens `CWndRevival`).
+ *  - {@link revive}: called by `RevivalHandler` for the 3 C→S opcodes.
+ *    `SCROLL` (`REVIVAL`) — consume resurrection scroll, in-place revive, no
+ *    exp penalty (non-chaotic). `LODESTAR` (`REVIVAL_TO_LODESTAR`) — town revive,
+ *    exp penalty + teleport to zone revival pos. `LODELIGHT` — C++ stubs this
+ *    empty; rejected.
  *
- * We have no death-state machine or inventory yet. Service enforces the IsDie
- * guard: revival is rejected when HP > 0. Dead players are accepted (no-op
- * until inventory+death system lands).
+ * HP restore rate 0.2 × max (v15 non-chaotic v9+ default). Exp penalty is the
+ * bracket table in `combat/formulas.subDieDecExp`.
  *
- * No WAL — revive is a state transition derived from existing HP; rule 04 lists
- * only item/exp/gold mutations as journal-worthy.
+ * WAL: scroll consume + exp loss are journaled before the ack (rule 04).
+ *
+ * ponytail: chaotic/PK revive (different HP rate + PK town), guild-war revive
+ * (full HP, no scroll consume), other-player resurrection skill, full REPLACE
+ * teleport snapshot, DiePenalty.inc table loader, `m_nDead` 5s lockout.
  *
  * @module services/revival.service
  */
 
-import type { CPlayer } from '../entities/player.js';
+import type { CharacterRepository, InventoryRepository, Journal } from '@flyff/database';
+import type { ZoneDefinition } from '@flyff/resources';
+import type { CPlayer, Vec3 } from '../entities/player.js';
+import type { PlayerManager } from '../managers/player.manager.js';
+import type { ZoneManager } from '../managers/zone.manager.js';
+import { cumulativeExp, subDieDecExp } from '../combat/formulas.js';
+import {
+  II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
+} from '../combat/aiConstants.js';
+import { MAX_INVENTORY, VISIBILITY_RADIUS, WI_WORLD_MADRIGAL } from '../net/snapshot/constants.js';
+import {
+  SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,
+} from '../net/snapshot/constants.js';
+import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer.js';
+import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer.js';
+import { RevivalSerializer } from '../net/snapshot/revival.serializer.js';
+import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
+import { ReplaceSerializer } from '../net/snapshot/replace.serializer.js';
+import { NULL_ID } from '../net/snapshot/constants.js';
+import { createLogger } from '@flyff/core/logger.js';
+
+const logger = createLogger({ module: 'revival-service' });
+
+export type RevivalType = 'SCROLL' | 'LODESTAR' | 'LODELIGHT';
 
 export type RevivalOutcome =
   | { ok: true }
-  | { ok: false; reason: 'not_dead' };
+  | { ok: false; reason: 'not_dead' | 'no_scroll' | 'lodelight_unsupported' };
+
+export interface RevivalServiceDeps {
+  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp'>;
+  readonly inventoryRepo: Pick<InventoryRepository, 'removeItem' | 'updateQuantity'>;
+  readonly journal?: Journal;
+  readonly zoneManager: ZoneManager;
+  readonly playerManager: Pick<PlayerManager, 'sendTo'>;
+  /** Zone revival-position lookup by numeric zone id (resources `byNumericId`). */
+  readonly zones: { byNumericId: Map<number, ZoneDefinition> };
+}
+
+const REVIVE_HP_RATE = 0.2; // v15 non-chaotic v9+ default (DPSrvr.cpp:997,1100)
 
 export class RevivalService {
-  /** Request revival. Caller must already be dead. */
-  revive(player: CPlayer): RevivalOutcome {
-    if (player.m_nHp > 0) return { ok: false, reason: 'not_dead' };
-    // ponytail: consume II_SYS_SYS_SCR_RESURRECTION from inventory, restore
-    // HP/MP, apply 0.1f exp penalty (C++ SubDieDecExp), revive at current pos.
+  private readonly moverDeath = new MoverDeathSerializer();
+  private readonly actMsg = new ActMsgSerializer();
+  private readonly revival = new RevivalSerializer();
+  private readonly setExp = new SetExperienceSerializer();
+  private readonly replace = new ReplaceSerializer();
+
+  constructor(private readonly deps: RevivalServiceDeps) {}
+
+  /**
+   * `CMover::DoDie` player path. Idempotent — the `m_bDead` guard stops
+   * double-trigger on multi-hit ticks that both cross HP=0.
+   */
+  onPlayerDeath(player: CPlayer, killerObjid: number): void {
+    if (player.m_bDead) return;
+    player.m_bDead = true;
+
+    // Vicinity: peers play the death animation (AddMoverDeath, User.cpp:4488).
+    this.deps.zoneManager.broadcastAround(
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+      this.moverDeath.build(player.m_idPlayer, killerObjid, 0),
+    );
+    // Self: halt then open the revive dialog (SendActMsg OBJMSG_STOP/OBJMSG_DIE).
+    this.deps.playerManager.sendTo(player, this.actMsg.build(player.m_idPlayer, OBJMSG_STOP, 0, 0));
+    this.deps.playerManager.sendTo(
+      player, this.actMsg.build(player.m_idPlayer, OBJMSG_DIE, 0, killerObjid),
+    );
+  }
+
+  /** `OnRevival` / `OnRevivalLodestar` / `OnRevivalLodelight` dispatch. */
+  revive(player: CPlayer, type: RevivalType): RevivalOutcome {
+    if (type === 'LODELIGHT') return { ok: false, reason: 'lodelight_unsupported' };
+    if (!player.m_bDead && player.m_nHp > 0) return { ok: false, reason: 'not_dead' };
+
+    if (type === 'SCROLL') return this.reviveScroll(player);
+    return this.reviveLodestar(player);
+  }
+
+  /** `OnRevival` (0x00ff00c0) — scroll revive in place. */
+  private reviveScroll(player: CPlayer): RevivalOutcome {
+    const slot = this.findScrollSlot(player);
+    if (slot < 0) return { ok: false, reason: 'no_scroll' };
+    const stack = player.m_Inventory[slot]!;
+
+    // WAL journal the slot's ABSOLUTE post-state before the client ack (rule
+    // 04): either decremented stack or cleared slot. Idempotent — the boot
+    // replayer re-applies this exact slot contents if the consume persist lost
+    // the race with a crash.
+    const remaining = stack.count - 1;
+    this.deps.journal?.append({
+      charId: player.m_idPlayer, type: 'INVENTORY_SLOT',
+      payload: remaining > 0
+        ? { slot, itemId: II_SYS_SYS_SCR_RESURRECTION, count: remaining }
+        : { slot, itemId: 0, count: 0 },
+    });
+    this.consumeSlot(player, slot, stack);
+
+    this.clearDeadState(player);
+    this.restoreVitals(player);
+    this.deps.zoneManager.broadcastAround(
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+      this.revival.build(player.m_idPlayer, SNAPSHOTTYPE_REVIVAL),
+    );
     return { ok: true };
   }
+
+  /** `OnRevivalLodestar` (0x00ff00c1) — town revive + exp penalty + teleport. */
+  private reviveLodestar(player: CPlayer): RevivalOutcome {
+    this.clearDeadState(player);
+
+    const before = player.m_nExp;
+    const pen = subDieDecExp(player.m_nLevel, player.m_nExp);
+    const lost = before - pen.exp;
+    if (lost > 0) {
+      player.m_nExp = pen.exp;
+      player._dirty.add('m_nExp');
+      // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
+      // Idempotent — the boot replayer re-applies (level, exp) if the
+      // fire-and-forget persist below lost the race with a crash.
+      const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
+      this.deps.journal?.append({
+        charId: player.m_idPlayer, type: 'CHAR_EXP',
+        payload: { level: player.m_nLevel, exp: cumulative },
+      });
+      this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
+        exp: cumulativeExp(player.m_nLevel, player.m_nExp), level: player.m_nLevel,
+      }));
+      this.deps.charRepo.updateLevelAndExp(
+        player.m_idPlayer, player.m_nLevel, BigInt(cumulative),
+      ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
+    }
+
+    this.restoreVitals(player);
+    this.teleportToRevival(player);
+    this.deps.zoneManager.broadcastAround(
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+      this.revival.build(player.m_idPlayer, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR),
+    );
+    return { ok: true };
+  }
+
+  private clearDeadState(player: CPlayer): void {
+    player.m_bDead = false;
+    // ponytail: ClearState buffs when the buff system lands.
+  }
+
+  /** HP/MP to 0.2 × max (v15 non-chaotic default). */
+  private restoreVitals(player: CPlayer): void {
+    const hp = Math.floor(player.m_nMaxHp * REVIVE_HP_RATE);
+    const mp = Math.floor(player.m_nMaxMp * REVIVE_HP_RATE);
+    if (player.m_nHp < hp) { player.m_nHp = hp; player._dirty.add('m_nHp'); }
+    if (player.m_nMp < mp) { player.m_nMp = mp; player._dirty.add('m_nMp'); }
+  }
+
+  /**
+   * Teleport to the zone's revival position. `REPLACE` notifies the client to
+   * load the world + relocate; zone broadcast at the new pos is the caller's
+   * concern (vicinity enter happens on the next ADD_OBJ cycle).
+   * ponytail: real `GetNearRevivalPos` nearest-point + per-world revival tables.
+   */
+  private teleportToRevival(player: CPlayer): void {
+    const zone = this.deps.zones.byNumericId.get(player.m_nZoneId);
+    const revivePos: Vec3 = zone?.revival.position ?? player.m_vPos;
+    player.m_vPos = { ...revivePos };
+    player._dirty.add('m_vPos');
+    this.deps.playerManager.sendTo(
+      player, this.replace.build(WI_WORLD_MADRIGAL, revivePos),
+    );
+  }
+
+  private findScrollSlot(player: CPlayer): number {
+    for (let i = 0; i < MAX_INVENTORY; i++) {
+      const s = player.m_Inventory[i];
+      if (s && s.itemId === II_SYS_SYS_SCR_RESURRECTION) return i;
+    }
+    return -1;
+  }
+
+  private consumeSlot(player: CPlayer, slot: number, stack: { count: number }): void {
+    if (stack.count > 1) {
+      stack.count--;
+      player._dirty.add('m_Inventory');
+      this.deps.inventoryRepo.updateQuantity(player.m_idPlayer, slot, stack.count)
+        .catch((err: unknown) => void err);
+    } else {
+      player.m_Inventory[slot] = null;
+      player._dirty.add('m_Inventory');
+      this.deps.inventoryRepo.removeItem(player.m_idPlayer, slot)
+        .catch((err: unknown) => void err);
+    }
+  }
 }
+
+void NULL_ID;

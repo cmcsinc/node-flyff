@@ -18,6 +18,13 @@
  */
 
 import type { Vec3 } from './player.js';
+import {
+  MELEE_ATTACK_RANGE, RANGE_ATTACK_RANGE, REATTACK_DELAY_MS, BELLI_RANGE_KEYS,
+  ACTIVE_BELLI,
+} from '../combat/aiConstants.js';
+
+/** `NULL_ID` (`_Network/MsgHdr.h` = 0xffffffff) — "no target" sentinel for `m_idTarget`. */
+const NULL_ID = 0xffffffff;
 
 /** One equipped part — C++ `m_Inventory.GetEquip(uParts)` iteration output. */
 export interface MoverEquipPart {
@@ -77,6 +84,19 @@ export interface MoverSpawnSource {
   readonly er?: number | undefined;
   /** `nExpValue` (col 58) — base exp granted on kill. */
   readonly expValue?: number | undefined;
+  /** propMover `fSpeed` (col 44) — per-sub-step walk distance; 0 = stationary. */
+  readonly speed?: number | undefined;
+  /**
+   * Attack distance (m) — yml `attack_range`. Melee contact when omitted; ranged
+   * monsters (belli `*_RANGE`) shoot from here. C++ derives this from the weapon
+   * `dwAttackRange` enum (`MoverMsg.cpp:140-166`); we take the yml value directly.
+   */
+  readonly attackRange?: number | undefined;
+  /**
+   * Re-attack delay (ms) — yml `attack_speed` (propMover `dwReAttackDelay`,
+   * col 31). Base cooldown between melee swings; ranged uses a fixed 3 s.
+   */
+  readonly reAttackDelay?: number | undefined;
 }
 
 /**
@@ -109,7 +129,13 @@ export class CMover {
   m_nZoneId: number;
   /** Aggressiveness (C++ `m_dwBelligerence`); 0 = peaceful. */
   m_dwBelligerence: number;
-  /** Aggro-on-sight flag (C++ `m_bActiveAttack`); 0 until AI lands. */
+  /**
+   * Aggro-on-sight flag (C++ `m_bActiveAttack`) — the red-name gate.
+   * `AIMonster.cpp:429` sight-acquires only when this is set, and
+   * `MoverRender.cpp:1448` renders the name red when `!IsPeaceful() && this`.
+   * Derived from belli at spawn; ponytail: propMover has no column for it, so a
+   * passive `BELLI_MELEE` mob can't be distinguished from an active one.
+   */
   m_bActiveAttack: number;
   /** AI speed multiplier (C++ `m_fSpeedFactor`); 1.0 = propMover speed. */
   m_fSpeedFactor: number;
@@ -138,6 +164,20 @@ export class CMover {
   m_nExpValue: number;
   /** Mover element (propMover `eElementType`); 0 = NO_PROP. */
   m_nElement: number;
+  /**
+   * Attack distance (m) — the gate radius for the AI swing check. Melee contact
+   * (~3 m) or ranged (`attack_range`, default `AR_RANGE` 10 m). C++ source is
+   * the weapon `dwAttackRange` enum (`MoverMsg.cpp:140-166`).
+   */
+  m_nAttackRange: number;
+  /** Base melee re-attack delay (ms) — propMover `dwReAttackDelay` (col 31). */
+  m_nReAttackDelay: number;
+  /**
+   * Ranged attacker — derived from belligerence `*_RANGE` (7/10/13). Such
+   * monsters shoot from `m_nAttackRange` on a fixed 3 s cadence and broadcast
+   * `SNAPSHOTTYPE_RANGE_ATTACK` instead of `MELEE_ATTACK`.
+   */
+  m_bRangeAttack: boolean;
   /** Combat death flag — set on lethal damage; swept from the spawn map on tick. */
   m_bDead: boolean = false;
   /**
@@ -146,6 +186,24 @@ export class CMover {
    * C++ drives this from `m_tmMove` + `SEC(5)+xRandom(SEC(1))` on arrival.
    */
   m_tmNextWander: number = 0;
+  /**
+   * Current aggro target objid (C++ `CAIMonster::m_dwIdTarget`, `AIMonster.h:37`).
+   * `NULL_ID` = idle. Set on sight (active BELLI) or on damage (`AIMSG_DAMAGE`,
+   * `AIMonster.cpp:485`). Single slot — no aggro list (ponytail: full table).
+   */
+  m_idTarget: number = NULL_ID;
+  /** Position when first damaged (C++ `m_vPosDamage`) — 120 m pursuit leash origin. */
+  m_vPosDamage: Vec3;
+  /** Current walk destination (C++ `GetDestPos()`) — idle pick, pursue target, or home. */
+  m_vDestPos: Vec3;
+  /** propMover `fSpeed` — per-sub-step distance; the AI stepper scales it into u/s. */
+  m_fSpeedBase: number;
+  /** Leashing home (C++ `m_bReturnToBegin`) — run to anchor at 2.66×, restore HP, drop target. */
+  m_bReturnToBegin: boolean = false;
+  /** Timestamp (ms) the current return-home began — feeds the stuck-teleport gate. */
+  m_tmReturnToBegin: number = 0;
+  /** Chase-window expiry (C++ `m_tmAttack`, `s_tmAttack = SEC(15)`) — anti-stuck gate. */
+  m_tmAttack: number = 0;
   /**
    * Hit-share table for kill exp (`m_idEnemies`). OBJID → cumulative damage.
    * v1: single-attacker (no party grouping). ponytail: full HIT_INFO + party.
@@ -167,11 +225,14 @@ export class CMover {
     this.m_nMaxHitPoint = src.hp;
     this.m_vPos = { ...pos };
     this.m_vPosBegin = { ...pos };
+    this.m_vPosDamage = { ...pos };
+    this.m_vDestPos = { ...pos };
+    this.m_fSpeedBase = src.speed ?? 0;
     this.m_fAngle = 0;
     this.m_vScale = src.scale ?? 1.0;
     this.m_nZoneId = zoneId;
     this.m_dwBelligerence = src.belligerence ?? 0;
-    this.m_bActiveAttack = 0;
+    this.m_bActiveAttack = ACTIVE_BELLI.has(this.m_dwBelligerence) ? 1 : 0;
     this.m_fSpeedFactor = 1.0;
     this.m_bAttackable = src.attackable ?? true;
     this.m_bGuard = src.guard ?? false;
@@ -183,6 +244,9 @@ export class CMover {
     this.m_nER = src.er ?? 0;
     this.m_nExpValue = src.expValue ?? 0;
     this.m_nElement = 0;
+    this.m_bRangeAttack = BELLI_RANGE_KEYS.has(this.m_dwBelligerence);
+    this.m_nAttackRange = src.attackRange ?? (this.m_bRangeAttack ? RANGE_ATTACK_RANGE : MELEE_ATTACK_RANGE);
+    this.m_nReAttackDelay = src.reAttackDelay ?? REATTACK_DELAY_MS;
   }
 
   /** Spawn a live monster from a definition + position. Caller assigns the id. */

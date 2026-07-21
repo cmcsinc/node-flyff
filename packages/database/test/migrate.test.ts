@@ -59,9 +59,12 @@ describe('migrate.ts', () => {
         try {
           await rollbackMigrations(db);
         } catch (error) {
-          // Expected if no migrations directory exists
+          // Expected if no migrations directory exists, or the env can't roll
+          // back ALTER migrations (better-sqlite3 refuses the `foreign_keys`
+          // pragma change Knex wraps each migration in).
           const err = error as Error;
-          if (!err.message.includes('Unable to find migration')) {
+          if (!err.message.includes('Unable to find migration')
+            && !err.message.includes('foreign_keys')) {
             throw error;
           }
         }
@@ -73,9 +76,9 @@ describe('migrate.ts', () => {
         try {
           await rollbackMigrations(db, 2);
         } catch (error) {
-          // Expected if no migrations directory exists
           const err = error as Error;
-          if (!err.message.includes('Unable to find migration')) {
+          if (!err.message.includes('Unable to find migration')
+            && !err.message.includes('foreign_keys')) {
             throw error;
           }
         }
@@ -90,8 +93,19 @@ describe('migrate.ts', () => {
     });
 
     it('should return "none" if no migrations applied', async () => {
-      const version = await getCurrentMigration(db);
-      assert.equal(version, 'none');
+      // Isolated db — the rollback tests above may leave state behind when the
+      // env can't roll back ALTER migrations, so the shared `db` isn't clean.
+      const fresh = knex({
+        client: 'better-sqlite3',
+        connection: ':memory:',
+        useNullAsDefault: true,
+      });
+      try {
+        const version = await getCurrentMigration(fresh);
+        assert.equal(version, 'none');
+      } finally {
+        await fresh.destroy();
+      }
     });
   });
 });

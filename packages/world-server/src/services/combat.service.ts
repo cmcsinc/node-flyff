@@ -26,32 +26,23 @@ import type { ZoneManager } from '../managers/zone.manager.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import {
   resolveMelee, xRandomRng, expLevelDiffMult, addExp, cumulativeExp,
-  type Combatant, type WeaponStats, type Rng, type MeleeResult,
+  type Rng, type MeleeResult,
 } from '../combat/formulas.js';
 import { EXP_TABLE } from '../combat/expTable.js';
-import { NO_PROP, WT_MELEE_SWD, AF_MISS } from '../combat/tables.js';
+import { AF_MISS } from '../combat/tables.js';
+import { playerCombatant, moverCombatant } from '../combat/combatants.js';
+import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '../combat/aiConstants.js';
 import { isMoverAttackableBy } from './combat.policy.js';
+import type { DropService } from './drop.service.js';
 import { DamageSerializer } from '../net/snapshot/damage.serializer.js';
 import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer.js';
 import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
 import { SetLevelSerializer } from '../net/snapshot/setLevel.serializer.js';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
+import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
+import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 import { createLogger } from '@flyff/core/logger.js';
 
 const logger = createLogger({ module: 'combat-service' });
-
-/** Bare-hand profile for an unarmed player (ponytail: read equipped weapon). */
-const BARE_HAND: WeaponStats = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
-
-/** Bare-hand stub for NPC (NPCs use raw propMover cols, not the weapon curve). */
-const FIST_NPC: WeaponStats = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
-
-/**
- * Base monster counter-attack interval (ms). v15 derives this from propMover
- * `nAttacksPerSec` via the `ATK_SPEED` table on the AI tick; ponytail: read the
- * real column once the resource converter exports it. 1200ms ≈ low-monster cadence.
- */
-const RETALIATE_COOLDOWN_MS = 1200;
 
 export interface CombatServiceDeps {
   spawnManager: SpawnManager;
@@ -66,6 +57,8 @@ export interface CombatServiceDeps {
    * matching `SetEndCondKillNPC` slots.
    */
   questTracker?: { onKill(killer: CPlayer, victimModelIdx: number): void };
+  /** Optional drop-roller (Phase A–C). Spawns ground piles for the kill. */
+  dropService?: DropService;
 }
 
 export type CombatOutcome =
@@ -77,6 +70,7 @@ export class CombatService {
   private readonly death = new MoverDeathSerializer();
   private readonly setExp = new SetExperienceSerializer();
   private readonly setLevel = new SetLevelSerializer();
+  private readonly destObj = new DestObjSerializer();
   private readonly rng: Rng;
   constructor(private readonly deps: CombatServiceDeps) {
     this.rng = deps.rng ?? xRandomRng;
@@ -105,47 +99,30 @@ export class CombatService {
 
     const killed = mover.m_nHitPoint <= 0;
     if (killed) this.onDeath(player, mover);
-    else this.counterSwing(mover, player);
+    else this.triggerRage(mover, player);
     return { ok: true, hit: result.hit, damage: dealt, killed };
   }
 
   /**
-   * Reactive counter-attack — the monster swings back at its last attacker.
+   * `AIMSG_DAMAGE` (`AIMonster.cpp:485-500`) — being hit makes the monster rage
+   * on its attacker. Sets the aggro target + damage-pos leash origin + pursue
+   * speed + one `MOVERSETDESTOBJ` broadcast so peer clients walk the monster
+   * toward the player. The actual swing runs on the `AISystem` tick (the C++
+   * `OnActTimer` cadence), NOT here — combat no longer retaliates inline.
    *
-   * C++ runs NPC swings on `CMover::OnActTimer` (its own attack-speed cadence,
-   * independent of the player's swing event); this emulator has no central AI
-   * tick yet, so v1 fires the counter-swing from the player's swing, throttled
-   * by {@link CMover.m_nextAttackTick} so a monster never swings faster than its
-   * `RETALIATE_COOLDOWN_MS / m_fSpeedFactor` cadence. Any hit monster retaliates
-   * — `BELLI_PEACEFUL` gates *auto-aggro on sight* in C++, not self-defense, and
-   * non-attackable town NPCs can't be hit at all so they never reach here.
-   * ponytail: full AI tick (aggro-on-sight, chase via movement, range check).
-   *
-   * Player death (HP→0) clamps at 0; the DAMAGE broadcast is the HP sync so the
-   * client shows its revive UI. ponytail: exp penalty + auto-revival + respawn.
+   * No-op if the monster is already chasing a target (C++ `MoveToDst(objid)`
+   * early-outs on target-repeat, `AIMonster.cpp:159`). Any hit attackable
+   * monster rages; peaceful town NPCs never reach here (non-attackable).
    */
-  private counterSwing(mover: CMover, player: CPlayer): void {
-    const now = Date.now();
-    if (now < mover.m_nextAttackTick) return;
-    mover.m_nextAttackTick = now + RETALIATE_COOLDOWN_MS / mover.m_fSpeedFactor;
-
-    const result = resolveMelee(moverCombatant(mover), playerCombatant(player), this.rng);
-    let dealt = 0;
-    if (result.hit && result.damage > 0 && !(result.atkFlags & AF_MISS)) {
-      const before = player.m_nHp;
-      player.m_nHp = Math.max(0, before - result.damage);
-      dealt = before - player.m_nHp;
-      player._dirty.add('m_nHp');
-    }
-
-    this.deps.zoneManager.broadcastAround(
-      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
-      this.damage.build(player.m_idPlayer, { attackerObjid: mover.m_idMover, hit: dealt, atkFlags: result.atkFlags }),
-    );
-
-    if (player.m_nHp <= 0) {
-      logger.warn({ charId: player.m_idPlayer, killerIdx: mover.m_dwIndex }, 'player killed by monster — revival handler pending');
-    }
+  private triggerRage(mover: CMover, player: CPlayer): void {
+    if (mover.m_idTarget !== NULL_ID) return;
+    mover.m_idTarget = player.m_idPlayer;
+    mover.m_vPosDamage = { ...mover.m_vPos };
+    mover.m_tmAttack = Date.now() + CHASE_WINDOW_MS;
+    mover.m_fSpeedFactor = PURSUE_SPEED_FACTOR;
+    mover.m_nextAttackTick = 0; // ready to swing as soon as in range
+    const pkt = this.destObj.build(mover.m_idMover, player.m_idPlayer, mover.m_nAttackRange);
+    this.deps.zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, pkt);
   }
 
   /** `OnDied` NPC fast-path: broadcast MOVERDEATH, grant exp, remove mover. */
@@ -154,6 +131,8 @@ export class CombatService {
     const deathPkt = this.death.build(mover.m_idMover, killer.m_idPlayer, 0);
     this.deps.zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, deathPkt);
     this.grantExp(killer, mover);
+    // Roll drops while the mover still holds its pos + hit-share table.
+    this.deps.dropService?.roll(mover, killer);
     // Phase 7 — increment SetEndCondKillNPC slots before the mover leaves scope.
     this.deps.questTracker?.onKill(killer, mover.m_dwIndex);
     this.deps.spawnManager.kill(mover.m_idMover);
@@ -170,11 +149,7 @@ export class CombatService {
     const cap = Math.min(base, EXP_TABLE[player.m_nLevel]?.nLimitExp ?? base);
     if (cap <= 0) return;
 
-    // WAL journal BEFORE the exp mutation / client ack (rule 04).
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'EXP_GAIN', payload: { amount: cap, src: mover.m_dwIndex } });
-
     // m_nExp is within-level (resets at each boundary); addExp carries excess.
-    const startLevel = player.m_nLevel;
     const gain = addExp(player.m_nLevel, player.m_nExp, cap);
     player.m_nExp = gain.exp;
     player.m_nLevel = gain.level;
@@ -187,6 +162,16 @@ export class CombatService {
       player._dirty.add('m_nHp');
       player._dirty.add('m_nMp');
     }
+
+    // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
+    // Idempotent — the boot replayer re-applies this exact (level, exp) if the
+    // fire-and-forget persist below lost the race with a crash. Stored as a
+    // JSON-safe string so BigInt precision survives the round-trip.
+    const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
+    this.deps.journal?.append({
+      charId: player.m_idPlayer, type: 'CHAR_EXP',
+      payload: { level: player.m_nLevel, exp: cumulative },
+    });
 
     // SETEXPERIENCE → self only (wire expects cumulative nExp1).
     this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
@@ -202,35 +187,15 @@ export class CombatService {
     }
 
     // Persist async — fire-and-forget (rule 02: service calls repo, no SQL).
-    // DB stores cumulative (matches C++ m_nExp1 column semantics).
+    // DB stores cumulative (matches C++ m_nExp1 column semantics). The WAL row
+    // above is the crash-recovery backup for this write.
     this.deps.charRepo.updateLevelAndExp(
-      player.m_idPlayer, player.m_nLevel,
-      BigInt(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp))),
+      player.m_idPlayer, player.m_nLevel, BigInt(cumulative),
     ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
   }
 }
 
-// --- Combatant views ---------------------------------------------------------
-
-function playerCombatant(p: CPlayer): Combatant {
-  return {
-    kind: 'player', level: p.m_nLevel, job: p.m_nJob,
-    str: p.m_nStr, sta: p.m_nSta, dex: p.m_nDex, int: p.m_nInt,
-    weapon: BARE_HAND,
-    npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0, npcHR: 0, npcER: 0,
-    element: NO_PROP,
-  };
-}
-
-function moverCombatant(m: CMover): Combatant {
-  return {
-    kind: 'npc', level: m.m_nLevel, job: 0,
-    str: 0, sta: 0, dex: 0, int: 0,
-    weapon: FIST_NPC,
-    npcAtkMin: m.m_nAtkMin, npcAtkMax: m.m_nAtkMax, npcArmor: m.m_nArmor,
-    npcResisMagic: 0, npcHR: m.m_nHR, npcER: m.m_nER, element: m.m_nElement,
-  };
-}
+// --- Combat damage helpers ---------------------------------------------------
 
 /** Apply `MinusHP` to the mover; returns damage actually dealt (0 on miss). */
 function applyDamage(mover: CMover, result: MeleeResult): number {

@@ -101,6 +101,7 @@ export function emptyItemContainerSize(slots: number): number {
 // (mirrors the working JOIN serializer's `writeWord(SNAPSHOTTYPE_*)`).
 export const SNAPSHOTTYPE_DESTPOS = 0x00c1;          // MsgHdr.h:1086 — click-to-move echo
 export const SNAPSHOTTYPE_MOVERSETDESTOBJ = 0x00c2;  // MsgHdr.h:1087 — PLAYERSETDESTOBJ echo
+export const SNAPSHOTTYPE_GETDESTOBJ = 0x004a;       // MsgHdr.h:947 — AddGetDestObj query reply (dest objid + fRange)
 export const SNAPSHOTTYPE_MOVERMOVED = 0x00ca;       // MsgHdr.h:1095 — 60B movement frame
 export const SNAPSHOTTYPE_MOVERBEHAVIOR = 0x00cb;    // MsgHdr.h:1096 — 60B motion frame (same body)
 export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195
@@ -108,6 +109,7 @@ export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195
 export const SNAPSHOTTYPE_CHAT_OUT = 0x00bc;         // MsgHdr.h:1078 — CHATTEXT (defined-text echo)
 export const SNAPSHOTTYPE_MOTION = 0x0098;           // MsgHdr.h:1034 — MOTION echo
 export const SNAPSHOTTYPE_MELEE_ATTACK = 0x00e0;     // MsgHdr.h:1110 — MELEE_ATTACK swing echo
+export const SNAPSHOTTYPE_RANGE_ATTACK = 0x00e2;    // MsgHdr.h:1112 — RANGE_ATTACK projectile swing echo
 export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 — PLAYERCORR echo (60B body)
 export const SNAPSHOTTYPE_MOVERMOVED2 = 0x00cc;      // MsgHdr.h:1097 — PLAYERMOVED2 echo (73B body)
 
@@ -119,6 +121,35 @@ export const SNAPSHOTTYPE_DAMAGE = 0x0013;           // MsgHdr.h — AddDamage v
 export const SNAPSHOTTYPE_SETEXPERIENCE = 0x0012;    // MsgHdr.h — AddSetExperience self-only
 export const SNAPSHOTTYPE_SETLEVEL = 0x0011;         // MsgHdr.h — AddSetLevel vicinity (skips self)
 export const SNAPSHOTTYPE_MOVERDEATH = 0x00c7;       // MsgHdr.h — AddMoverDeath vicinity
+
+// --- Revival S→C confirm snapshots (`_Network/MsgHdr.h:1044-1046`) -----------
+// `CUserMng::AddRevival`-style confirm — body is just `OBJID objid + WORD wHdr`
+// (the AddHdr prefix); no per-type fields. Broadcast to vicinity (peers see the
+// revive). Client `CDPClient::OnRevival/OnRevivalLodestar/OnRevivalLodelight`
+// (DPClient.cpp:3384/3418/3449) calls `ClearState()` + applies client-local
+// HP/MP/FP restore from the follow-up SETEXPERIENCE/SETPOINTPARAM frames.
+export const SNAPSHOTTYPE_REVIVAL = 0x00a1;              // MsgHdr.h:1044 — scroll (in-place) revive
+export const SNAPSHOTTYPE_REVIVAL_TO_LODESTAR = 0x00a2;  // MsgHdr.h:1045 — town (lodestar) revive
+export const SNAPSHOTTYPE_REVIVAL_TO_LODELIGHT = 0x00a3; // MsgHdr.h:1046 — lodelight (unused — C++ stub)
+
+// --- Ground-item S→C snapshot sub-types (`_Network/MsgHdr.h`) -----------------
+// OT_ITEM=4 is the CObj type for ground `CItem` (CreateObj.cpp:618). DEL_OBJ
+// (MsgHdr.h:1128) is bodyless: `User::AddRemoveObj(objid)` → `AddHdr(objid, DEL_OBJ)`.
+export const OT_ITEM = 4;
+export const SNAPSHOTTYPE_DEL_OBJ = 0x00f1;          // MsgHdr.h:1128 — AddRemoveObj (bodyless)
+
+/**
+ * `SNAPSHOTTYPE_CREATEITEM` (0x0003, MsgHdr.h:859) — `CUser::AddCreateItem`
+ * (User.cpp:727). Notifies the client that N inventory slots now hold a new
+ * item. One pItemBase body (CItemBase 20B + CItemElem 55B — same fields as the
+ * OT_ITEM ground item, MINUS the CObj/CCtrl frame) followed by a per-slot
+ * `[BYTE nCount][BYTE×nCount slotIds][short×nCount counts]` trailer. Used by
+ * the pickup path (Phase E) to place looted items into the bag.
+ *
+ * `UPDATE_ITEM` (0x0018) is the count-only delta on an EXISTING slot; not
+ * needed until moveitem/split ship.
+ */
+export const SNAPSHOTTYPE_CREATEITEM = 0x0003;
 
 // --- Chat-family S→C snapshot sub-types (`_Network/msghdr.h`) ----------------
 // All `CUser::Add*` per-user snapshots: `OBJID | WORD type | payload`, wrapped
@@ -140,10 +171,36 @@ export const SNAPSHOTTYPE_QUEST_TEXT_TIME = 0x00ba;   // msghdr.h:906 — AddQue
 export const SNAPSHOTTYPE_QUESTHELPER_NPCPOS = 0x9400; // msghdr.h:1040 — AddNPCPos (D3DVECTOR)
 export const SNAPSHOTTYPE_QUEST_CHECKED = 0x8820;     // msghdr.h:1065 — AddCheckedQuest
 
+// --- NPC dialog menu S→C (`_Network/MsgHdr.h`) --------------------------------
+// `CUser::AddRunScriptFunc` (User.cpp:6259) queues one RUNSCRIPTFUNC entry per
+// `Say`/`AddKey`/`Exit` the dialog script emits; they flush inside a single
+// PACKETTYPE_SNAPSHOT frame and are applied client-side by `CDPClient::OnRunScriptFunc`
+// (Neuz/DPClient.cpp:14127) to the `CWndDialog` the client opened on click
+// (`_Interface/WndWorld.cpp:5163`). There is no separate "open" packet.
+export const SNAPSHOTTYPE_RUNSCRIPTFUNC = 0x0024;   // MsgHdr.h:898
+// FUNCTYPE_* (MsgHdr.h:1387-1409) — the per-op WORD after the snapshot type.
+export const FUNCTYPE_ADDKEY = 0x0010;              // MsgHdr.h:1387 — String word, String key, DWORD param, DWORD quest
+export const FUNCTYPE_REMOVEKEY = 0x0011;           // MsgHdr.h:1388 — String key
+export const FUNCTYPE_SAY = 0x0012;                 // MsgHdr.h:1389 — String text, DWORD quest
+export const FUNCTYPE_ADDANSWER = 0x0013;           // MsgHdr.h:1390 — String word, String key, DWORD param, DWORD quest
+export const FUNCTYPE_EXIT = 0x0016;                // MsgHdr.h:1393 — (no payload)
+export const FUNCTYPE_ENDSAY = 0x0017;              // MsgHdr.h:1394 — (no payload)
+export const FUNCTYPE_REMOVEALLKEY = 0x001d;        // MsgHdr.h:1400 — (no payload)
+
 /** Default shout color `0xffff99cc` (TextCmd_shout, FuncTextCmd.cpp:1551). */
 export const SHOUT_COLOR_DEFAULT = 0xffff99cc;
 /** Default notice/system text color (yellow). */
 export const TEXT_COLOR_NOTICE = 0xffffff00;
+
+/**
+ * `OnText` state BYTE — written by `CUser::AddText` ONLY when `__S_SERVER_UNIFY`
+ * is defined (`User.cpp:660-662`). Florist defines it (`WorldServer
+ * /VersionCommon.h:30`), so the client's `OnText` (`DPClient.cpp:1341-1344`)
+ * reads `BYTE nState` before the string. Omit it and the string-length DWORD
+ * shifts by one byte → garbled text → silent drop. MsgHdr.h:1421-1422.
+ */
+export const TEXT_GENERAL = 0x01; // PutString (normal notice)
+export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
 
 /** `NULL_ID` (`_Network/MsgHdr.h`) — "no object" sentinel. */
 export const NULL_ID = 0xffffffff;

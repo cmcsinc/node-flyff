@@ -13,7 +13,7 @@
  * @module services/quest
  */
 
-import type { JournalEntry, QuestRepository } from '@flyff/database';
+import type { JournalEntry, QuestRepository, CharacterRepository } from '@flyff/database';
 import type { QuestDef, QuestIndex } from '@flyff/resources';
 import type { CPlayer } from '../entities/player.js';
 import { QUEST_LOG_ACTION, QS_BEGIN, QS_END } from '@flyff/core/constants/quest.js';
@@ -24,10 +24,13 @@ import {
   buildCheckedQuest,
 } from '../net/snapshot/quest.serializer.js';
 import { REMOVEQUEST_TYPE } from '@flyff/core/constants/quest.js';
+import { createLogger } from '@flyff/core/logger.js';
 import type { InventoryOps, QuestFailReason } from './questConditions.js';
 import { canBegin, isComplete } from './questConditions.js';
 import type { RewardSink } from './questRewards.js';
 import { applyBeginSet, applyEnd } from './questRewards.js';
+
+const logger = createLogger({ module: 'quest-service' });
 
 /** Inventory the service needs: evaluator reads + reward grantor writes. */
 export type QuestInventory = InventoryOps & {
@@ -42,6 +45,11 @@ export interface QuestServiceDeps {
   inventory?: QuestInventory;
   /** WAL journal for reward audit (rule 03/04). Optional for tests. */
   journal?: { append(entry: JournalEntry): number };
+  /**
+   * Character repo for gold persistence (migration 003). Optional — gold still
+   * mutates in-memory + WAL without it; only the cold DB flush is skipped.
+   */
+  charRepo?: Pick<CharacterRepository, 'updateGold'>;
 }
 
 export type QuestOpResult =
@@ -92,6 +100,15 @@ export class QuestService {
     const sink: RewardSink = { inventory: this.inv };
     const journal = this.deps.journal;
     if (journal) sink.journal = (entry) => { journal.append(entry); };
+    const charRepo = this.deps.charRepo;
+    if (charRepo) {
+      // Fire-and-forget gold flush (mirrors combat's updateLevelAndExp pattern).
+      sink.flushGold = (charId, gold) => {
+        charRepo.updateGold(charId, gold).catch((err: unknown) =>
+          logger.error({ err, charId, gold }, 'gold persist failed'),
+        );
+      };
+    }
     return sink;
   }
 

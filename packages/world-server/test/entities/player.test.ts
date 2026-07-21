@@ -17,6 +17,7 @@ function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
     skin_color: 1,
     level: 15,
     exp: 0n,
+    gold: 0,
     hp: 100,
     mp: 50,
     max_hp: 100,
@@ -51,6 +52,7 @@ describe('CPlayer entity', () => {
     assert.equal(p.m_nLevel, 15);
     assert.equal(p.m_nJob, 1);
     assert.equal(p.m_nSex, 0);
+    assert.equal(p.m_nGold, 0);
     assert.deepEqual(p.m_vPos, { x: 1.5, y: 2.5, z: 3.5 });
     assert.equal(p.m_nHp, 100);
     assert.equal(p.m_nMp, 50);
@@ -67,6 +69,11 @@ describe('CPlayer entity', () => {
   it('starts with an empty _dirty set', () => {
     const p = CPlayer.fromRow(makeRow(), makeSocket());
     assert.equal(p._dirty.size, 0);
+  });
+
+  it('hydrates m_nGold from the row (migration 003)', () => {
+    const p = CPlayer.fromRow(makeRow({ gold: 4500 }), makeSocket());
+    assert.equal(p.m_nGold, 4500);
   });
 
   it('marks dirty fields for partial flush', () => {

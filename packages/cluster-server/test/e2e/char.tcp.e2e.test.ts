@@ -4,6 +4,7 @@ import net, { type Server, type Socket } from 'node:net';
 
 import { createDb, AccountRepository, CharacterRepository } from '@flyff/database';
 import { up, down } from '@flyff/database/migrations/001_initial';
+import { up as upGold } from '@flyff/database/migrations/003_character_gold';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
 import { framePacketCrc } from '@flyff/core/net/crcFrame.js';
@@ -67,6 +68,7 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
   before(async () => {
     db = createDb({ client: 'better-sqlite3', connection: ':memory:' });
     await up(db);
+    await upGold(db);
     const accountRepo = new AccountRepository(db);
     const charRepo = new CharacterRepository(db);
     const accountId = await accountRepo.create({

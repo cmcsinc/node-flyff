@@ -15,7 +15,7 @@
  * @module services/join.service
  */
 
-import type { CharacterRepository, AccountRepository } from '@flyff/database';
+import type { CharacterRepository, AccountRepository, InventoryRepository } from '@flyff/database';
 import { createLogger } from '@flyff/core/logger.js';
 import { CPlayer } from '../entities/player.js';
 import type { PlayerSocket } from '../entities/player.js';
@@ -38,6 +38,8 @@ export interface JoinServiceDeps {
   accountRepo?: Pick<AccountRepository, 'findById'>;
   /** Quest state hydration on JOIN. Optional: skips quest load if absent. */
   questService?: { loadOnJoin(player: CPlayer): Promise<void> };
+  /** Inventory hydration on JOIN. Optional: empty bag if absent. */
+  inventoryRepo?: Pick<InventoryRepository, 'findByCharacterId'>;
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   handoffSource: HandoffSource;
@@ -88,9 +90,24 @@ export class JoinService {
       'JOIN resolved authority',
     );
     if (this.deps.questService) await this.deps.questService.loadOnJoin(player);
+    await this.loadInventory(player);
     this.deps.playerManager.add(player);
     this.deps.zoneManager.place(player);
     return { ok: true, player };
+  }
+
+  /**
+   * Hydrate `m_Inventory` from the DB (rule 02 — service maps DB rows to entity
+   * state; the entity stays free of repo types). Slots outside the array bounds
+   * are dropped defensively. No repo = leave the bag empty (fresh character).
+   */
+  private async loadInventory(player: CPlayer): Promise<void> {
+    if (!this.deps.inventoryRepo) return;
+    const rows = await this.deps.inventoryRepo.findByCharacterId(player.m_idPlayer);
+    for (const r of rows) {
+      if (r.slot < 0 || r.slot >= player.m_Inventory.length) continue;
+      player.m_Inventory[r.slot] = { itemId: r.item_id, count: r.quantity };
+    }
   }
 
   /** Disconnect cleanup — drop from both managers (rule 05 — explicit removal). */

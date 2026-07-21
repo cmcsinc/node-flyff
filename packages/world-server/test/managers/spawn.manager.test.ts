@@ -2,6 +2,7 @@ import { describe, it, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
 import type { ResourceIndex, ZoneIndex } from '@flyff/resources';
 import { SpawnManager } from '../../src/managers/spawn.manager.js';
+import { CMover } from '../../src/entities/mover.js';
 
 /** Build a minimal in-memory resource index for spawn-wiring tests. */
 function makeResources(): ResourceIndex {
@@ -20,7 +21,8 @@ function makeResources(): ResourceIndex {
   movers.set(1, {
     id: 1, name: 'Guard', name_id: 'MOVER_GUARD', model: 'mdl_guard.o3d',
     dwObjIndex: 20, scale: 1.0, type: 'monster', level: 80, hp: 50000, mp: 10, fp: 10,
-    attack: 7000, defense: 300, attack_rate: 150, dodge_rate: 10, speed: 1, attack_speed: 1,
+    attack: 7000, defense: 300, attack_rate: 150, dodge_rate: 10, speed: 1, attack_speed: 1500,
+    attack_range: 5,
     flyable: false, boss: false, giant: false, raid: false, attackable: true, guard: true,
     belligerence: 12, // BELLI_MELEE — aggressive
   });
@@ -100,11 +102,35 @@ describe('SpawnManager', () => {
     assert.ok(guard, 'guard monster spawned');
     assert.equal(guard!.m_bAttackable, true, 'guard is attackable');
     assert.equal(guard!.m_bGuard, true, 'guard flag carried through');
+    // attack_range (5) + attack_speed (1500) thread onto the entity; belli 12 = melee.
+    assert.equal(guard!.m_nAttackRange, 5, 'attack_range threaded');
+    assert.equal(guard!.m_nReAttackDelay, 1500, 'attack_speed threaded as re-attack delay');
+    assert.equal(guard!.m_bRangeAttack, false, 'BELLI_MELEE is not ranged');
 
     const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12);
     assert.ok(homeit, 'NPC spawned');
     assert.equal(homeit!.m_bAttackable, false, 'peaceful NPC is non-attackable');
     assert.equal(homeit!.m_bGuard, false);
+  });
+
+  it('flags ranged + default range distance for BELLI_RANGE belligerence (7/10/13)', () => {
+    const ranges: Array<[number, number]> = [[7, 10], [10, 10], [13, 12]];
+    for (const [belli, attackRange] of ranges) {
+      const m = CMover.spawn(
+        0x40000040,
+        { modelIndex: 99, name: 'R', level: 1, hp: 10, attackable: true, belligerence: belli, attackRange },
+        { x: 0, y: 0, z: 0 }, 1,
+      );
+      assert.equal(m.m_bRangeAttack, true, `belli ${belli} → ranged`);
+      assert.equal(m.m_nAttackRange, attackRange, `belli ${belli} → attack range ${attackRange}`);
+    }
+    // Default range distance when attack_range omitted = AR_RANGE (10 m).
+    const defaulted = CMover.spawn(
+      0x40000041,
+      { modelIndex: 99, name: 'R', level: 1, hp: 10, attackable: true, belligerence: 13 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    assert.equal(defaulted.m_nAttackRange, 10, 'omitted attack_range defaults to AR_RANGE');
   });
 
   it('propagates m_dwBelligerence from the mover definition (peaceful vs aggressive)', () => {

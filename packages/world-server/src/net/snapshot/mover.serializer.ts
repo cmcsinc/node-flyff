@@ -80,7 +80,12 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeByte(0);              // guild flag (no guild → skip idGuild/idWar)
   w.writeDword(0);             // m_idGuildCloak (Mover.cpp:381 inits to 0)
   w.writeByte(0);              // party flag (no party → skip idparty/idDuelParty)
-  w.writeByte(0);              // m_dwAuthorization
+  // m_dwAuthorization (1 byte — ObjSerializeOpt.cpp:147). CRITICAL: the client
+  // gates `/cmd` routing on `g_pPlayer->m_dwAuthorization` INSIDE ParsingCommand
+  // (FuncTextCmd.cpp:4476) BEFORE it ever sends the chat packet. Writing 0 here
+  // makes the client silently drop every GM command (/sys /te /su /lv) locally —
+  // no PACKETTYPE_CHAT ever reaches the server. Must mirror the server-side rank.
+  w.writeByte(p.m_bAuthority);
   w.writeDword(0);             // m_dwMode
   w.writeDword(0);             // m_dwStateMode
   w.writeDword(0);             // dwUseItemId (0 = none)

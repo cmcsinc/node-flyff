@@ -20,18 +20,23 @@ import { dirname } from 'node:path';
 import { createDb, AccountRepository, CharacterRepository } from '@flyff/database';
 import { up as migrationUp001 } from '@flyff/database/migrations/001_initial';
 import { up as migrationUp002 } from '@flyff/database/migrations/002_quests';
+import { up as migrationUp003 } from '@flyff/database/migrations/003_character_gold';
 import { hashPassword } from '@flyff/core/utils/password.js';
 
 /**
- * Ordered migration list — each `up()` is gated on its own marker table so
- * re-running seed is idempotent and brings an existing dev DB up to head.
- * Without this, a new migration file (e.g. 002_quests) is never applied to the
- * dev DB and the first query against it throws SQLITE_ERROR at runtime (JOIN).
+ * Ordered migration list — each `up()` is gated so re-running seed is
+ * idempotent and brings an existing dev DB up to head. Without this, a new
+ * migration file is never applied to the dev DB and the first query against it
+ * throws SQLITE_ERROR at runtime (missing column/table).
+ *
+ * `marker` gates on `hasTable`; `column: [table, col]` gates on `hasColumn`
+ * for ALTER migrations that don't create a table.
  */
 const MIGRATIONS = [
   { marker: 'accounts', up: migrationUp001 },
   { marker: 'character_quests', up: migrationUp002 },
-];
+  { column: ['characters', 'gold'], up: migrationUp003 },
+] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';
 const SALT = 'kikugalanet';
@@ -42,10 +47,14 @@ async function main(): Promise<void> {
   if (DB_FILENAME !== ':memory:') mkdirSync(dirname(DB_FILENAME), { recursive: true });
   const db = createDb({ client: 'better-sqlite3', connection: DB_FILENAME });
   try {
-    for (const { marker, up } of MIGRATIONS) {
-      if (await db.schema.hasTable(marker)) continue;
-      console.log(`[seed] ${marker} missing — running migration up()`);
-      await up(db);
+    for (const m of MIGRATIONS) {
+      const done = 'column' in m
+        ? await db.schema.hasColumn(m.column[0], m.column[1])
+        : await db.schema.hasTable(m.marker);
+      if (done) continue;
+      const label = 'column' in m ? `${m.column[0]}.${m.column[1]}` : m.marker;
+      console.log(`[seed] ${label} missing — running migration up()`);
+      await m.up(db);
     }
     const accountRepo = new AccountRepository(db);
     const charRepo = new CharacterRepository(db);

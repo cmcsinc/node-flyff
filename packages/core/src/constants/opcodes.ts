@@ -1,4 +1,5 @@
 export const PACKETTYPE = Object.freeze({
+  QUERYTICKCOUNT:       0x0000000b,
   PING:                 0x00000014,
   KEEP_ALIVE:           0x00000018,
 
@@ -39,6 +40,12 @@ export const PACKETTYPE = Object.freeze({
   DOUSEITEM:            0x00ff0021,
   SETTARGET:            0x00ff0023,
   REVIVAL:              0x00ff00c0,
+  // v15 client → world revival opcodes (DPSrvr.cpp:960/1061/1188). All three
+  // handlers read ZERO body fields — the opcode alone selects the branch
+  // (`SendHdr` on the client side). OnRevival=scroll, OnRevivalLodestar=town,
+  // OnRevivalLodelight=empty C++ stub.
+  REVIVAL_TO_LODESTAR:  0x00ff00c1,
+  REVIVAL_TO_LODELIGHT: 0x00ff00c2,
   WHISPER:              0x00ff00d4,
   SAY:                  0x00ff00e0,
   SHOUT:                0x00ff00e1,
@@ -65,6 +72,9 @@ export const PACKETTYPE = Object.freeze({
   PLAYERANGLE:          0xffffff29,
   QUERYGETPOS:          0xffffff08,
   GETPOS:               0xffffff09,
+  // v15 `WORLDSERVER/DPSrvr.cpp:1355` OnQueryGetDestObj — OBJID objid. Client
+  // polls a mover's walk-to-object destination (~3×/s) to sync pathfinding.
+  QUERYGETDESTOBJ:      0xffffff72,
 
   GUILD:                0xffffff30,
 

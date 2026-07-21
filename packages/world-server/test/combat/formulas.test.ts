@@ -11,7 +11,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import {
   resolveMelee, getHitMinMax, getAttackResult, calcDefense, expLevelDiffMult,
-  addExp, expToNextLevel, withinLevelExp, cumulativeExp,
+  addExp, expToNextLevel, withinLevelExp, cumulativeExp, subDieDecExp,
   type Combatant, type Rng,
 } from '../../src/combat/formulas.js';
 import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1 } from '../../src/combat/tables.js';
@@ -166,5 +166,35 @@ describe('combat cumulative ↔ within-level conversion', () => {
   it('cumulativeExp is the inverse of withinLevelExp', () => {
     assert.equal(cumulativeExp(12, 27), 1000);
     assert.equal(cumulativeExp(2, 0), 14);
+  });
+});
+
+describe('combat subDieDecExp (death penalty)', () => {
+  it('no loss at level ≤ 20', () => {
+    assert.equal(subDieDecExp(15, 100).exp, 100);
+    assert.equal(subDieDecExp(20, 100).exp, 100);
+  });
+
+  it('loses 6% of current-level cost at level 25 (Lv≤29 bracket)', () => {
+    const need = expToNextLevel(25);
+    const loss = Math.floor(need * 0.06);
+    assert.equal(subDieDecExp(25, 1000).exp, 1000 - loss);
+  });
+
+  it('loses 5% of current-level cost at level 40 (Lv≤59 bracket)', () => {
+    const need = expToNextLevel(40);
+    const loss = Math.floor(need * 0.05);
+    // Use enough within-level exp that the loss does not clamp to 0.
+    assert.equal(subDieDecExp(40, 200_000).exp, 200_000 - loss);
+  });
+
+  it('clamps at 0 when loss exceeds current within-level exp', () => {
+    const r = subDieDecExp(40, 100);
+    assert.equal(r.exp, 0);
+    assert.equal(r.level, 40);
+  });
+
+  it('never changes the level', () => {
+    assert.equal(subDieDecExp(30, 100000).level, 30);
   });
 });

@@ -17,7 +17,7 @@
  * @module index
  */
 
-import pino from 'pino';
+import { createResourceLogger } from './logger.js';
 
 // Loaders
 import { loadItems, type ItemIndex } from './loaders/item.loader.js';
@@ -26,8 +26,9 @@ import { loadSkills, type SkillIndex } from './loaders/skill.loader.js';
 import { loadZones, type ZoneIndex } from './loaders/zone.loader.js';
 import { loadDialogs, type DialogIndex } from './loaders/dialog.loader.js';
 import { loadQuests, type QuestIndex } from './loaders/quest.loader.js';
+import { loadDrops, type DropIndex } from './loaders/drop.loader.js';
 
-const logger = pino({ name: '@flyff/resources' });
+const logger = createResourceLogger('resources');
 
 /**
  * Complete resource index.
@@ -52,6 +53,9 @@ export interface ResourceIndex {
 
   /** Quest definitions */
   quests: QuestIndex;
+
+  /** Drop tables (propMoverEx.inc) — keyed by mover model index. */
+  drops: DropIndex;
 }
 
 /**
@@ -68,13 +72,14 @@ export async function loadAllResources(
 ): Promise<ResourceIndex> {
   logger.info({ dataDir }, 'Loading all resources...');
 
-  const [items, movers, skills, zones, dialogs, quests] = await Promise.all([
+  const [items, movers, skills, zones, dialogs, quests, drops] = await Promise.all([
     loadItems(dataDir),
     loadMovers(dataDir),
     loadSkills(dataDir),
     loadZones(dataDir),
     loadDialogs(dataDir),
     loadQuests(dataDir),
+    loadDrops(dataDir),
   ]);
 
   logger.info(
@@ -85,11 +90,12 @@ export async function loadAllResources(
       zones: zones.zones.size,
       dialogs: dialogs.byPrefix.size,
       quests: quests.byId.size,
+      drops: drops.drops.size,
     },
     'All resources loaded'
   );
 
-  return { items, movers, skills, zones, dialogs, quests };
+  return { items, movers, skills, zones, dialogs, quests, drops };
 }
 
 /**
@@ -145,6 +151,7 @@ export type { SkillDefinition } from './schemas/skill.schema.js';
 export type { ZoneDefinition } from './schemas/zone.schema.js';
 export type { DialogFile, DialogState, DialogKey } from './schemas/dialog.schema.js';
 export type { QuestDef, QuestCommand, QuestArg, QuestItem, QuestState } from './schemas/quest.schema.js';
+export type { DropTable, DropItem } from './schemas/drop.schema.js';
 export {
   loadDialogs,
   prefixForNpc,

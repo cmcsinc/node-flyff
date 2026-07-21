@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 
 import { createDb, AccountRepository, CharacterRepository } from '@flyff/database';
 import { up, down } from '@flyff/database/migrations/001_initial';
+import { up as upGold } from '@flyff/database/migrations/003_character_gold';
 import { MemoryCache, createEventBus } from '@flyff/core';
 import { hashPassword } from '@flyff/core/utils/password.js';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
@@ -162,6 +163,7 @@ describe('E2E byte chain: login CERTIFY → cluster PRE_JOIN → world JOIN snap
     // --- Shared in-memory DB + migrations + seed ---------------------------
     db = createDb({ client: 'better-sqlite3', connection: ':memory:' });
     await up(db);
+    await upGold(db);
     const accountRepo = new AccountRepository(db);
     const charRepo = new CharacterRepository(db);
     const passwordHash = await hashPassword(VALID_MD5);

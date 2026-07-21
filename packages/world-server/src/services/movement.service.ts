@@ -150,6 +150,7 @@ export class MovementService {
       return { ok: true, reached: 0 };
     }
     player.m_idDestObj = destObjid;
+    player.m_fArrivalRange = fRange;
     const packet = this.destObjSerializer.build(player.m_idPlayer, destObjid, fRange);
     return this.broadcast(player, packet);
   }
