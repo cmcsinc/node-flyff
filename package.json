@@ -25,6 +25,9 @@
     "lint:fix": "pnpm -r -- lint --fix",
     "checkpoint": "tsx scripts/agent-checkpoint.ts",
     "servers": "node scripts/start-servers.mjs",
+    "server:login": "tsx packages/login-server/src/index.ts",
+    "server:cluster": "tsx packages/cluster-server/src/index.ts",
+    "server:world": "tsx packages/world-server/src/index.ts",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
     "claude": "claude --dangerously-skip-permissions"

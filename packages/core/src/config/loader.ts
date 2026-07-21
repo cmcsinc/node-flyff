@@ -153,9 +153,56 @@ function resolveFilePaths(serverName: string, configRoot: string): string[] {
 export interface LoadConfigOptions {
   /**
    * Root directory that contains the config files.
-   * Defaults to `<monorepo-root>/config` (resolved relative to cwd).
+   * Defaults to the first ancestor of cwd that contains a `config/` dir
+   * (walked upward so `pnpm --filter <pkg> dev`, which runs from the package
+   * dir, still resolves to the repo-root `config/`).
    */
   configRoot?: string;
+}
+
+/**
+ * Walks upward from `start` (inclusive) to find the first directory that
+ * contains a `config/` subdir. Returns the `config/` path, or `start/config`
+ * if none found (preserves prior behavior as the fallback).
+ */
+function discoverConfigRoot(start: string): string {
+  let dir = path.resolve(start);
+  for (let i = 0; i < 10; i++) {
+    const candidate = path.join(dir, 'config');
+    if (fs.existsSync(candidate)) return candidate;
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return path.resolve(start, 'config');
+}
+
+/**
+ * Minimal stdlib `.env` loader (no new dependency). Parses `KEY=VALUE` lines
+ * from `<repoRoot>/.env` and populates `process.env` for keys not already set
+ * — real environment wins, file only fills gaps. Runs once at config load so
+ * `IPC_SECRET` / `DATABASE_URL` etc. reach the env-override layer below.
+ */
+function loadDotenv(repoRoot: string): void {
+  const envPath = path.join(repoRoot, '.env');
+  if (!fs.existsSync(envPath)) return;
+  const source = fs.readFileSync(envPath, 'utf-8');
+  for (const rawLine of source.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    const eq = line.indexOf('=');
+    if (eq <= 0) continue;
+    const key = line.slice(0, eq).trim();
+    let value = line.slice(eq + 1).trim();
+    // Strip surrounding quotes: KEY="v" / KEY='v' → v
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (process.env[key] === undefined) process.env[key] = value;
+  }
 }
 
 /**
@@ -188,7 +235,8 @@ export async function loadConfig<T extends ZodTypeAny>(
   schema: T,
   options: LoadConfigOptions = {},
 ): Promise<ReturnType<T['parse']>> {
-  const configRoot = options.configRoot ?? path.resolve(process.cwd(), 'config');
+  const configRoot = options.configRoot ?? discoverConfigRoot(process.cwd());
+  loadDotenv(path.dirname(configRoot));
   const filePaths = resolveFilePaths(serverName, configRoot);
 
   // Read all config files in priority order
@@ -246,7 +294,8 @@ export function loadConfigSync<T extends ZodTypeAny>(
   schema: T,
   options: LoadConfigOptions = {},
 ): ReturnType<T['parse']> {
-  const configRoot = options.configRoot ?? path.resolve(process.cwd(), 'config');
+  const configRoot = options.configRoot ?? discoverConfigRoot(process.cwd());
+  loadDotenv(path.dirname(configRoot));
   const filePaths = resolveFilePaths(serverName, configRoot);
 
   const layers: PlainObject[] = [];
