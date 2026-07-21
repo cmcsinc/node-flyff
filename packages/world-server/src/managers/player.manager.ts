@@ -9,6 +9,7 @@
  */
 
 import type { CPlayer } from '../entities/player.js';
+import { framePacket } from '@flyff/core/net/PacketBuffer.js';
 
 export class PlayerManager {
   private readonly players = new Map<number, CPlayer>();
@@ -62,7 +63,9 @@ export class PlayerManager {
    * socket sink, services never import `net.Socket` (rule 02).
    */
   sendTo(player: CPlayer, buf: Buffer): void {
-    player.socket.write(buf);
+    // Frame here — serializers build raw payloads; the 0x5E frame is added at
+    // the write boundary (mirrors `sendPacket()`). Raw writes are silent drops.
+    player.socket.write(framePacket(buf));
   }
 
   /**
@@ -71,9 +74,10 @@ export class PlayerManager {
    * single-process emulator a straight iteration is the equivalent.
    */
   broadcastAll(buf: Buffer): number {
+    const framed = framePacket(buf);
     let n = 0;
     for (const p of this.players.values()) {
-      p.socket.write(buf);
+      p.socket.write(framed);
       n++;
     }
     return n;

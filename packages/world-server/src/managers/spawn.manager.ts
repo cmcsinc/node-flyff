@@ -109,6 +109,14 @@ export class SpawnManager {
     return this.movers.get(id);
   }
 
+  /** Find a placed NPC by `character.inc` key (QUESTHELPER_REQNPCPOS target). */
+  findByCharacterKey(key: string): CMover | undefined {
+    for (const m of this.movers.values()) {
+      if (m.outfit?.characterKey === key) return m;
+    }
+    return undefined;
+  }
+
   /** All live movers in `zoneId` (zone-scoped join snapshot / broadcast). */
   inZone(zoneId: number): CMover[] {
     const out: CMover[] = [];

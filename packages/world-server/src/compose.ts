@@ -43,6 +43,9 @@ import { RevivalHandler } from './handlers/revival.handler.js';
 import { MeleeAttackService } from './services/meleeAttack.service.js';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
+import { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
+import { QuestCheckHandler } from './handlers/questCheck.handler.js';
+import { QuestHelperHandler } from './handlers/questHelper.handler.js';
 import { JournalReplayer } from './systems/journalReplayer.js';
 
 export interface WorldComposeResult {
@@ -90,6 +93,9 @@ export interface WorldComposeResult {
   meleeAttackService: MeleeAttackService;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
+  removeQuestHandler: RemoveQuestHandler;
+  questCheckHandler: QuestCheckHandler;
+  questHelperHandler: QuestHelperHandler;
   journal: Journal;
   journalReplayer: JournalReplayer;
 }
@@ -235,6 +241,11 @@ export async function compose(): Promise<WorldComposeResult> {
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
 
+  // Phase 4 — C→S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
+  const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
+  const questCheckHandler = new QuestCheckHandler(playerManager, questService);
+  const questHelperHandler = new QuestHelperHandler(playerManager, spawnManager);
+
   return {
     config,
     logger,
@@ -280,6 +291,9 @@ export async function compose(): Promise<WorldComposeResult> {
     meleeAttackService,
     playerSetDestObjHandler,
     meleeAttackHandler,
+    removeQuestHandler,
+    questCheckHandler,
+    questHelperHandler,
     journal,
     journalReplayer,
   };

@@ -21,6 +21,7 @@ import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
 import {
   buildSetQuest,
   buildRemoveQuest,
+  buildCheckedQuest,
 } from '../net/snapshot/quest.serializer.js';
 import { REMOVEQUEST_TYPE } from '@flyff/core/constants/quest.js';
 import type { InventoryOps, QuestFailReason } from './questConditions.js';
@@ -171,6 +172,17 @@ export class QuestService {
     await this.deps.questRepo.removeActive(player.m_idPlayer, questId);
     await this.deps.questRepo.insertLog(player.m_idPlayer, questId, QUEST_LOG_ACTION.CANCEL);
     return { ok: true, frames: [buildRemoveQuest(player.m_idPlayer, REMOVEQUEST_TYPE.CANCEL, questId)] };
+  }
+
+  /**
+   * Toggle a quest in the checked (tracked) list — `PACKETTYPE_QUEST_CHECK`.
+   * Mutates the CPlayer array, persists the full replacement, returns the
+   * QUEST_CHECKED frame for the handler to write.
+   */
+  async setChecked(player: CPlayer, questId: number, check: boolean): Promise<Buffer> {
+    const list = player.setCheckedQuest(questId, check);
+    await this.deps.questRepo.setChecked(player.m_idPlayer, list);
+    return buildCheckedQuest(player.m_idPlayer, list);
   }
 
   /** Upsert one active record (DTO shape mirrors `CharacterQuestRow` minus metadata). */

@@ -10,6 +10,7 @@
  */
 
 import type { CPlayer, Vec3 } from '../entities/player.js';
+import { framePacket } from '@flyff/core/net/PacketBuffer.js';
 
 export class ZoneManager {
   /** zoneId → live players in that zone. */
@@ -51,6 +52,11 @@ export class ZoneManager {
     const bucket = this.zones.get(zoneId);
     if (!bucket) return 0;
 
+    // Frame once, reuse for every write — serializers build raw payloads
+    // (opcode + fields); the 0x5E wire frame is added here at the write
+    // boundary, same as `sendPacket()` does for direct replies. Writing raw
+    // would send unframed garbage the client silently drops.
+    const framed = framePacket(packet);
     const r2 = radius * radius;
     let reached = 0;
     for (const p of bucket) {
@@ -58,7 +64,7 @@ export class ZoneManager {
       const dx = p.m_vPos.x - pos.x;
       const dz = p.m_vPos.z - pos.z;
       if (dx * dx + dz * dz <= r2) {
-        p.socket.write(packet);
+        p.socket.write(framed);
         reached++;
       }
     }
@@ -72,7 +78,8 @@ export class ZoneManager {
   broadcastZone(zoneId: number, packet: Buffer): number {
     const bucket = this.zones.get(zoneId);
     if (!bucket) return 0;
-    for (const p of bucket) p.socket.write(packet);
+    const framed = framePacket(packet);
+    for (const p of bucket) p.socket.write(framed);
     return bucket.size;
   }
 }

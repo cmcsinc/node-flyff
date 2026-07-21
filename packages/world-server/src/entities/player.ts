@@ -16,7 +16,7 @@
 import type { CharacterRow } from '@flyff/database';
 import { AUTH } from '../constants/authority.js';
 import { NULL_ID } from '../net/snapshot/constants.js';
-import { MAX_QUEST, MAX_COMPLETE_QUEST, QS_END } from '@flyff/core/constants/quest.js';
+import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest.js';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
 
 /** Minimal write-capable socket view a player holds for broadcasts. */
@@ -191,5 +191,23 @@ export class CPlayer {
     this.m_aCompleteQuest = this.m_aCompleteQuest.filter((id) => id !== questId);
     this.m_aCheckedQuest = this.m_aCheckedQuest.filter((id) => id !== questId);
     this._dirty.add('m_aQuest');
+  }
+
+  /**
+   * `CMover::AddCheckedQuest` — toggle a quest in the "checked" (tracked) list
+   * (cap `MAX_CHECKED_QUEST`, newest-first). Returns the resulting list. Driven
+   * by `PACKETTYPE_QUEST_CHECK`; persisted by `QuestService.setChecked`.
+   */
+  setCheckedQuest(questId: number, check: boolean): number[] {
+    const idx = this.m_aCheckedQuest.indexOf(questId);
+    if (check && idx === -1) {
+      this.m_aCheckedQuest.unshift(questId);
+      if (this.m_aCheckedQuest.length > MAX_CHECKED_QUEST)
+        this.m_aCheckedQuest.length = MAX_CHECKED_QUEST;
+    } else if (!check && idx !== -1) {
+      this.m_aCheckedQuest.splice(idx, 1);
+    }
+    this._dirty.add('m_aCheckedQuest');
+    return this.m_aCheckedQuest;
   }
 }
