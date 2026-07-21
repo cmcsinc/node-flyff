@@ -7,12 +7,12 @@
  */
 
 import type { FSWatcher } from 'chokidar';
-import pino from 'pino';
+import { createResourceLogger } from './logger.js';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { reloadResources } from './index.js';
 
-const logger = pino({ name: '@flyff/resources/hotReload' });
+const logger = createResourceLogger('hotReload');
 
 let watcher: FSWatcher | null = null;
 

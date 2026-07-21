@@ -10,14 +10,14 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import pino from 'pino';
+import { createResourceLogger } from '../logger.js';
 import {
   MoverDefinitionSchema,
   MoverFileSchema,
   MoverIndexSchema,
 } from '../schemas/mover.schema.js';
 
-const logger = pino({ name: 'mover.loader' });
+const logger = createResourceLogger('mover.loader');
 
 /**
  * Loaded mover index structure.

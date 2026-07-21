@@ -34,16 +34,32 @@ function loadDotEnv(file) {
   return out;
 }
 
+/**
+ * Build a line pump that prefixes each emitted line with a colored `[tag]`.
+ * Indented continuation lines (pino-pretty object fields) are aligned under
+ * the timestamp with spaces instead of a second tag, so multi-line records
+ * stay readable. Children run with LOG_PRETTY=1 + FORCE_COLOR=1 so the piped
+ * stdout still emits colored pretty output (pino's TTY auto-detect would
+ * otherwise fall back to raw JSON).
+ */
+function makePump(tag, color) {
+  const prefix = `${color}[${tag}]${RESET} `;
+  const pad = ' '.repeat(tag.length + 3); // visible width of "[tag] "
+  return (chunk) => {
+    for (const l of chunk.toString().split(/\r?\n/)) {
+      if (!l.length) continue;
+      process.stdout.write((/^\s/.test(l) ? pad : prefix) + l + '\n');
+    }
+  };
+}
+
 /** Run a child to completion, streaming its output prefixed. */
 function run(cmd, args, env, tag, color) {
   return new Promise((resolveExit) => {
     const child = spawn(cmd, args, {
       cwd: ROOT, env, stdio: ['ignore', 'pipe', 'pipe'], shell: IS_WIN,
     });
-    const prefix = `${color}[${tag}]${RESET} `;
-    const pump = (chunk) => {
-      for (const l of chunk.toString().split(/\r?\n/)) if (l.length) process.stdout.write(prefix + l + '\n');
-    };
+    const pump = makePump(tag, color);
     child.stdout.on('data', pump);
     child.stderr.on('data', pump);
     child.on('exit', resolveExit);
@@ -87,14 +103,14 @@ async function main() {
   console.log('  (Ctrl-C stops all)\n');
 
   const procs = [];
+  // Children inherit a LOG_PRETTY=1 + FORCE_COLOR=1 hint: their stdout is a
+  // pipe (not a TTY), so without this they'd emit raw JSON and no color.
+  const childEnv = { ...env, LOG_PRETTY: '1', FORCE_COLOR: '1' };
   for (const s of SERVERS) {
     const child = spawn('npx', ['tsx', s.entry], {
-      cwd: ROOT, env, stdio: ['ignore', 'pipe', 'pipe'], shell: IS_WIN,
+      cwd: ROOT, env: childEnv, stdio: ['ignore', 'pipe', 'pipe'], shell: IS_WIN,
     });
-    const prefix = `${s.color}[${s.tag}]${RESET} `;
-    const pump = (chunk) => {
-      for (const l of chunk.toString().split(/\r?\n/)) if (l.length) process.stdout.write(prefix + l + '\n');
-    };
+    const pump = makePump(s.tag, s.color);
     child.stdout.on('data', pump);
     child.stderr.on('data', pump);
     child.on('exit', (code) => console.log(`${s.color}[${s.tag}]${RESET} exited with code ${code}`));
