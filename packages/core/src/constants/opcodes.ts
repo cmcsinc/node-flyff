@@ -45,6 +45,10 @@ export const PACKETTYPE = Object.freeze({
   DEFINEDTEXT:          0x00ff00ec,
   SCRIPTDLG:            0x00ff00b0,
   BUYITEM:              0x00ff00b3,
+  // v15 client → world quest handlers (`WORLDSERVER/DPSrvr.cpp`, msghdr.h)
+  REMOVEQUEST:          0x00ff0026, // OnRemoveQuest — DWORD dwQuestCancelID
+  QUESTHELPER_REQNPCPOS: 0x70005000, // OnReqQuestNPCPos — String szCharKey
+  QUEST_CHECK:          0x88100110, // OnCheckedQuest — int nQuestId, BOOL bCheck
 
   REPLACE:              0x00ff0f00,
   SETQUEST:             0x00ff0ff3,
@@ -56,6 +60,7 @@ export const PACKETTYPE = Object.freeze({
   PLAYERBEHAVIOR:       0xffffff02,
   PLAYERMOVED2:         0xffffff03,
   PLAYERCORR:           0xffffff05,
+  PLAYERSETDESTOBJ:     0xffffff07,
   MOVERDESTPOS:         0xffffff0f,
   PLAYERANGLE:          0xffffff29,
   QUERYGETPOS:          0xffffff08,
