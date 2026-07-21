@@ -136,6 +136,9 @@ resources/data/*.wld
 resources/data/*.rgn
 !resources/data/.gitkeep
 
+# Regenerable dev dumps (not consumed at runtime)
+packages/resources/data/dialogues/_ALL.txt
+
 # Game folder (client files, resources, etc.)
 game/
 game.zip
