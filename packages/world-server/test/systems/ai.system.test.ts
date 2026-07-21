@@ -8,6 +8,7 @@ import type { MoverSpawnSource } from '../../src/entities/mover.js';
 import type { Vec3 } from '../../src/entities/player.js';
 import type { CharacterRow } from '@flyff/database';
 import { AISystem } from '../../src/systems/ai.system.js';
+import { MODE } from '../../src/constants/mode.js';
 
 /** Minimal CharacterRow for a live player at `id`. */
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
@@ -210,6 +211,114 @@ describe('AISystem (idle wander)', () => {
     assert.equal(subtypeOf(casts[0]!.packet), 0x00c2, 'MOVERSETDESTOBJ');
   });
 
+  it('derives m_bActiveAttack from belli (red-name gate): aggressive=1, cautious=0', () => {
+    const aggressive = CMover.spawn(
+      0x40000050,
+      { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: true, belligerence: 12 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    assert.equal(aggressive.m_bActiveAttack, 1, 'BELLI_MELEE → red-name (active)');
+    const cautious = CMover.spawn(
+      0x40000051,
+      { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: true, belligerence: 2 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    assert.equal(cautious.m_bActiveAttack, 0, 'BELLI_CAUTIOUSATTACK → not red-name');
+    const peaceful = CMover.spawn(
+      0x40000052,
+      { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: false, belligerence: 1 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    assert.equal(peaceful.m_bActiveAttack, 0, 'BELLI_PEACEFUL → not red-name');
+  });
+
+  it('red-name mob does NOT sight-acquire a player beyond AGGRO_LEVEL_BAND above it', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 60, level: 30 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 1003, y: 0, z: 1000 }; // ~3 m away, in SIGHT_RANGE
+    const m = CMover.spawn(
+      0x40000053,
+      { modelIndex: 20, name: 'Low Mob', level: 5, hp: 100, attackable: true, belligerence: 12 },
+      { x: 1000, y: 0, z: 1000 }, 1,
+    );
+    m.m_tmNextWander = 100_000; // suppress idle wander so casts stay clean
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts, [player]),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, 0xffffffff, 'out-leveled player not aggrod');
+    assert.equal(casts.length, 0, 'no acquire broadcast');
+  });
+
+  it('red-name mob sight-acquires a player within AGGRO_LEVEL_BAND', () => {
+    const casts: Cast[] = [];
+    // mob level 5, player level 14 → 14 <= 5+9 → eligible.
+    const player = CPlayer.fromRow(makeRow({ id: 61, level: 14 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 1003, y: 0, z: 1000 };
+    const m = CMover.spawn(
+      0x40000054,
+      { modelIndex: 20, name: 'Mob', level: 5, hp: 100, attackable: true, belligerence: 12 },
+      { x: 1000, y: 0, z: 1000 }, 1,
+    );
+    m.m_tmNextWander = 100_000;
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts, [player]),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, player.m_idPlayer, 'in-band player aggrod');
+    assert.equal(subtypeOf(casts[0]!.packet), 0x00c2, 'MOVERSETDESTOBJ');
+  });
+
+  it('TRANSPARENT (/inv) player is never sight-acquired', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 70, level: 5 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 1003, y: 0, z: 1000 }; // ~3 m away, in band
+    player.m_dwMode = MODE.TRANSPARENT; // /inv active
+    const m = CMover.spawn(
+      0x40000060,
+      { modelIndex: 20, name: 'Mob', level: 5, hp: 100, attackable: true, belligerence: 12 },
+      { x: 1000, y: 0, z: 1000 }, 1,
+    );
+    m.m_tmNextWander = 100_000; // suppress wander so casts stay clean
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts, [player]),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, 0xffffffff, 'invisible player not aggrod');
+    assert.equal(casts.length, 0, 'no acquire broadcast');
+  });
+
+  it('passive mob (m_bActiveAttack unset) never sight-acquires, any level', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 62, level: 1 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 1003, y: 0, z: 1000 };
+    const m = CMover.spawn(
+      0x40000055,
+      { modelIndex: 20, name: 'Cautious', level: 1, hp: 100, attackable: true, belligerence: 2 },
+      { x: 1000, y: 0, z: 1000 }, 1,
+    );
+    assert.equal(m.m_bActiveAttack, 0, 'cautious belli → not red-name');
+    m.m_tmNextWander = 100_000;
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts, [player]),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, 0xffffffff, 'passive mob does not sight-aggro');
+    assert.equal(casts.length, 0, 'no acquire broadcast');
+  });
+
   it('pursue steps toward the player and swings when in melee range', () => {
     const casts: Cast[] = [];
     const player = CPlayer.fromRow(makeRow({ id: 7, hp: 200, max_hp: 200 }), { write: () => true } as never);
@@ -233,6 +342,53 @@ describe('AISystem (idle wander)', () => {
     assert.equal(dmg!.packet.readUInt32LE(10), player.m_idPlayer, 'victim = player');
     assert.ok(player.m_nHp < 200, 'player took damage');
     assert.ok(m.m_nextAttackTick > 1000, 're-attack cadence armed');
+  });
+
+  it('MATCHLESS (/undying) player takes no damage from a monster swing', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 9, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 2, y: 0, z: 0 }; // within 3 m melee range
+    player.m_dwMode = MODE.MATCHLESS; // /undying active
+    const m = makeMover(0x40000021, { x: 0, y: 0, z: 0 });
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 0;
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+      rng: { int: (() => { const s = [0, 99, 50]; let i = 0; return () => s[i++ % s.length]; })(), range: () => 16 } as never,
+    });
+    ai.tick(1000);
+    // Swing anim still fires, DAMAGE still broadcast, but HP unchanged.
+    const dmg = casts.find((c) => subtypeOf(c.packet) === 0x0013);
+    assert.ok(dmg, 'player DAMAGE broadcast (swing still animates)');
+    assert.equal(player.m_nHp, 200, 'MATCHLESS player lost no HP');
+    assert.ok(!player._dirty.has('m_nHp'), 'no dirty flag — HP not mutated');
+  });
+
+  it('monster drops a acquired target that goes TRANSPARENT (/inv) mid-fight', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 11, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 2, y: 0, z: 0 };
+    player.m_dwMode = MODE.TRANSPARENT; // went invisible AFTER being acquired
+    const m = makeMover(0x40000022, { x: 0, y: 0, z: 0 });
+    m.m_idTarget = player.m_idPlayer; // already raged before the toggle
+    m.m_nextAttackTick = 0;
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, 0xffffffff, 'invisible target released');
+    assert.equal(m.m_bReturnToBegin, true, 'monster returns home');
+    // No swing landed on the vanished player.
+    const dmg = casts.find((c) => subtypeOf(c.packet) === 0x0013);
+    assert.equal(dmg, undefined, 'no DAMAGE on invisible target');
   });
 
   it('ranged monster holds at range, broadcasts RANGE_ATTACK, uses 3 s cadence', () => {
@@ -339,3 +495,57 @@ describe('AISystem (idle wander)', () => {
     assert.equal(m.m_nHitPoint, m.m_nMaxHitPoint, 'HP restored');
   });
 });
+
+/** Zones stub with zone 1 revival point at `town`. */
+function makeZones(town: Vec3): { byNumericId: Map<number, { revival: { position: Vec3 } }> } {
+  return { byNumericId: new Map([[1, { revival: { position: town } }]]) };
+}
+
+describe('AISystem (town safe-zone)', () => {
+  it('does NOT sight-acquire a player standing in town', () => {
+    const casts: Cast[] = [];
+    const TOWN: Vec3 = { x: 6978, y: 100, z: 3329 };
+    const player = CPlayer.fromRow(makeRow({ id: 5, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { ...TOWN }; // inside the 1000-unit safe zone
+    const m = makeMover(0x40000040, { x: TOWN.x + 20, y: 0, z: TOWN.z }); // within SIGHT_RANGE
+    m.m_tmNextWander = 1000;
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts, [player]),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+      zones: makeZones(TOWN),
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, 0xffffffff, 'town player not aggrod');
+    // The mob may still wander (DESTPOS), but it must NOT emit an acquire
+    // (MOVERSETDESTOBJ 0x00c2) against the town player.
+    const acquire = casts.find((c) => subtypeOf(c.packet) === 0x00c2);
+    assert.equal(acquire, undefined, 'no acquire broadcast in town');
+  });
+
+  it('releases an acquired target and deals no damage once it reaches town', () => {
+    const casts: Cast[] = [];
+    const TOWN: Vec3 = { x: 6978, y: 100, z: 3329 };
+    const player = CPlayer.fromRow(makeRow({ id: 6, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { ...TOWN }; // fled into town mid-fight
+    const m = makeMover(0x40000041, { x: TOWN.x + 5, y: 0, z: TOWN.z });
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer; // already raged before the player reached town
+    m.m_nextAttackTick = 0; // ready to swing
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+      zones: makeZones(TOWN),
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, 0xffffffff, 'town target released');
+    assert.equal(m.m_bReturnToBegin, true, 'monster turns back');
+    const dmg = casts.find((c) => subtypeOf(c.packet) === 0x0013);
+    assert.equal(dmg, undefined, 'no DAMAGE landed in town');
+  });
+});
+

@@ -51,7 +51,9 @@ import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
 import { DamageSerializer } from '../net/snapshot/damage.serializer.js';
 import { MeleeAttackSerializer } from '../net/snapshot/meleeAttack.serializer.js';
 import { RangeAttackSerializer } from '../net/snapshot/rangeAttack.serializer.js';
+import { isInSafeZone } from '../combat/safeZone.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
+import { MODE } from '../constants/mode.js';
 import { createLogger } from '@flyff/core/logger.js';
 
 const logger = createLogger({ module: 'ai-system' });
@@ -67,6 +69,12 @@ export interface AISystemDeps {
   spawnManager: SpawnManager;
   zoneManager: ZoneManager;
   playerManager: Pick<PlayerManager, 'get'>;
+  /**
+   * Zone revival-position lookup by numeric zone id (resources `byNumericId`).
+   * Drives the town safe-zone guard (`combat/safeZone`). Optional — when absent
+   * (tests), no safe-zone guard applies and combat is lethal everywhere.
+   */
+  readonly zones?: { byNumericId: Map<number, { revival: { position: Vec3 } }> };
   rng?: Rng;
   /** Called when a player's HP reaches 0 from a monster swing. */
   onPlayerDeath?: (player: CPlayer, killerObjid: number) => void;
@@ -127,15 +135,24 @@ export class AISystem {
     this.wander(m, now);
   }
 
+  /** True if `player` is within the town safe-zone of their current zone. */
+  private inSafeZone(player: CPlayer): boolean {
+    const r = this.deps.zones?.byNumericId.get(player.m_nZoneId)?.revival.position;
+    return isInSafeZone(player.m_vPos, r);
+  }
+
   /**
    * Sight-scan `SIGHT_RANGE` for the nearest eligible player; acquire if found.
-   * Eligible = alive AND within `AGGRO_LEVEL_BAND` levels above the mob. The
-   * level cap is a CUSTOM deviation (ponytail in `aiConstants.ts`); vanilla
-   * `ScanTarget` aggros any level.
+   * Eligible = alive AND visible AND within `AGGRO_LEVEL_BAND` levels above the
+   * mob. The level cap is a CUSTOM deviation (ponytail in `aiConstants.ts`);
+   * vanilla `ScanTarget` aggros any level. The TRANSPARENT skip mirrors C++
+   * `ScanTarget` (`AIMonster.cpp:344-432`) — invisible players (`/inv`) are
+   * never acquired.
    */
   private acquireBySight(m: CMover, now: number): boolean {
     const players = this.deps.zoneManager.playersNear(m.m_vPos, m.m_nZoneId, SIGHT_RANGE)
-      .filter((p) => !p.m_bDead && p.m_nLevel <= m.m_nLevel + AGGRO_LEVEL_BAND);
+      .filter((p) => !p.m_bDead && !isHidden(p) && !this.inSafeZone(p)
+        && p.m_nLevel <= m.m_nLevel + AGGRO_LEVEL_BAND);
     if (players.length === 0) return false;
     let nearest = players[0]!;
     let best = distSq2(m.m_vPos, nearest.m_vPos);
@@ -168,7 +185,12 @@ export class AISystem {
 
   private pursue(m: CMover, now: number, dtMs: number): void {
     const target = this.deps.playerManager.get(m.m_idTarget);
-    if (target === undefined || target.m_nHp <= 0 || target.m_bDead) {
+    if (target === undefined || target.m_nHp <= 0 || target.m_bDead || isHidden(target)
+      || this.inSafeZone(target)) {
+      // Target gone, dead, vanished (`/inv` mid-fight), or reached a town
+      // safe-zone → release + go home. The safe-zone drop is the no-combat
+      // guard: a monster chasing a player into town stops at the edge and
+      // never lands a swing inside the revival radius (`combat/safeZone`).
       this.startReturn(m, now);
       return;
     }
@@ -206,8 +228,13 @@ export class AISystem {
     this.deps.zoneManager.broadcastAround(m.m_vPos, m.m_nZoneId, VISIBILITY_RADIUS, animPkt);
 
     const result = resolveMelee(moverCombatant(m), playerCombatant(target), this.rng);
+    // MATCHLESS (undying `/undying`) → invincible: swing anim + DAMAGE still
+    // broadcast (hit=0) so the client sees the monster wind up, but no HP is
+    // subtracted. Mirrors C++ `IsMode(MATCHLESS_MODE)` gating MinusHP.
+    const invincible = (target.m_dwMode & MODE.MATCHLESS) !== 0
+      || (target.m_dwMode & MODE.MATCHLESS2) !== 0;
     let dealt = 0;
-    if (result.hit && result.damage > 0 && !(result.atkFlags & AF_MISS)) {
+    if (result.hit && result.damage > 0 && !(result.atkFlags & AF_MISS) && !invincible) {
       const before = target.m_nHp;
       target.m_nHp = Math.max(0, before - result.damage);
       dealt = before - target.m_nHp;
@@ -304,4 +331,14 @@ function distSq2(a: Vec3, b: Vec3): number {
   const dx = a.x - b.x;
   const dz = a.z - b.z;
   return dx * dx + dz * dz;
+}
+
+/**
+ * Is `player` hidden from monster aggro? `TRANSPARENT_MODE` (`/inv`) — mirrors
+ * the C++ `ScanTarget` filter (`AIMonster.cpp:344-432`). MATCHLESS (undying) is
+ * NOT hidden: monsters still swing, the damage gate in `monsterSwing` blocks HP
+ * loss. ponytail: add `IK3_TEXT_DISGUISE` buff check when buffs ship.
+ */
+function isHidden(player: CPlayer): boolean {
+  return (player.m_dwMode & MODE.TRANSPARENT) !== 0;
 }
