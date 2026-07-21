@@ -1,0 +1,10482 @@
+"11":
+  file: weapons.yml
+  name: Hand
+"21":
+  file: weapons.yml
+  name: Wooden Sword
+"23":
+  file: weapons.yml
+  name: Long Sword
+"25":
+  file: weapons.yml
+  name: Hand Claw
+"27":
+  file: weapons.yml
+  name: Parmil Sword
+"29":
+  file: weapons.yml
+  name: Petal Sword
+"31":
+  file: weapons.yml
+  name: Blink Sword
+"33":
+  file: weapons.yml
+  name: Outlaw Sword
+"35":
+  file: weapons.yml
+  name: Fairslender Sword
+"37":
+  file: weapons.yml
+  name: Clip Sword
+"39":
+  file: weapons.yml
+  name: Tao Sword
+"41":
+  file: weapons.yml
+  name: Sepal Sword
+"43":
+  file: weapons.yml
+  name: Cylos Sword
+"45":
+  file: weapons.yml
+  name: Invader Sword
+"47":
+  file: weapons.yml
+  name: Stitch Sword
+"49":
+  file: weapons.yml
+  name: Multiblade Sword
+"51":
+  file: weapons.yml
+  name: Panggril Sword
+"53":
+  file: weapons.yml
+  name: Carnage Sword
+"55":
+  file: weapons.yml
+  name: Janitor Sword
+"57":
+  file: weapons.yml
+  name: Blue Jade Sword
+"59":
+  file: weapons.yml
+  name: Zeroth Sword
+"61":
+  file: weapons.yml
+  name: Crimson Sword
+"63":
+  file: weapons.yml
+  name: Emeryl Sword
+"65":
+  file: weapons.yml
+  name: Chainsing Sword
+"67":
+  file: weapons.yml
+  name: Harpion Sword
+"69":
+  file: weapons.yml
+  name: Smiter Sword
+"71":
+  file: weapons.yml
+  name: Shadeving Sword
+"73":
+  file: weapons.yml
+  name: Hotter Sword
+"76":
+  file: weapons.yml
+  name: Police Club
+"81":
+  file: weapons.yml
+  name: Rodney Axe
+"83":
+  file: weapons.yml
+  name: Morrow Axe
+"85":
+  file: weapons.yml
+  name: Curning Axe
+"87":
+  file: weapons.yml
+  name: Shyadin Axe
+"89":
+  file: weapons.yml
+  name: Bronze Axe
+"91":
+  file: weapons.yml
+  name: Grang Axe
+"93":
+  file: weapons.yml
+  name: Drone Axe
+"95":
+  file: weapons.yml
+  name: Proem Axe
+"97":
+  file: weapons.yml
+  name: Corin Axe
+"99":
+  file: weapons.yml
+  name: Crow Axe
+"101":
+  file: weapons.yml
+  name: Raptor Axe
+"103":
+  file: weapons.yml
+  name: Berk Axe
+"105":
+  file: weapons.yml
+  name: Ardalin Axe
+"107":
+  file: weapons.yml
+  name: Dolphin Axe
+"109":
+  file: weapons.yml
+  name: Bonebar Axe
+"111":
+  file: weapons.yml
+  name: Luxior Axe
+"113":
+  file: weapons.yml
+  name: Exhaust Axe
+"115":
+  file: weapons.yml
+  name: Shakyfin Axe
+"117":
+  file: weapons.yml
+  name: Hitch Axe
+"119":
+  file: weapons.yml
+  name: Catchy Axe
+"121":
+  file: weapons.yml
+  name: Fellpeed Axe
+"123":
+  file: weapons.yml
+  name: Darcro Axe
+"125":
+  file: weapons.yml
+  name: Waturan Axe
+"127":
+  file: weapons.yml
+  name: Lichiky Axe
+"128":
+  file: weapons.yml
+  name: Bastard Sword
+"129":
+  file: weapons.yml
+  name: Two Handed Sword
+"130":
+  file: weapons.yml
+  name: Darkonizer
+"131":
+  file: weapons.yml
+  name: Adaptizer
+"132":
+  file: weapons.yml
+  name: Zweigazer
+"133":
+  file: weapons.yml
+  name: Kaleonizer
+"134":
+  file: weapons.yml
+  name: Gootnizer
+"135":
+  file: weapons.yml
+  name: Hauntizer
+"136":
+  file: weapons.yml
+  name: Clock Slayer
+"137":
+  file: weapons.yml
+  name: Two Handed Axe
+"138":
+  file: weapons.yml
+  name: Great Axe
+"139":
+  file: weapons.yml
+  name: Kergnition
+"140":
+  file: weapons.yml
+  name: Lurknition
+"141":
+  file: weapons.yml
+  name: Avnition
+"142":
+  file: weapons.yml
+  name: Kanainition
+"143":
+  file: weapons.yml
+  name: Orcanition
+"144":
+  file: weapons.yml
+  name: Linition
+"145":
+  file: weapons.yml
+  name: Hardinition
+"181":
+  file: weapons.yml
+  name: Plim Stick
+"183":
+  file: weapons.yml
+  name: Scull Stick
+"185":
+  file: weapons.yml
+  name: Huey Stick
+"187":
+  file: weapons.yml
+  name: Kudos Stick
+"189":
+  file: weapons.yml
+  name: Sayram Stick
+"191":
+  file: weapons.yml
+  name: Saint Stick
+"193":
+  file: weapons.yml
+  name: Flury Stick
+"195":
+  file: weapons.yml
+  name: Ninegale Stick
+"197":
+  file: weapons.yml
+  name: Mirth Stick
+"199":
+  file: weapons.yml
+  name: Sizzle Stick
+"201":
+  file: weapons.yml
+  name: Sealine Stick
+"203":
+  file: weapons.yml
+  name: Pinacle Stick
+"205":
+  file: weapons.yml
+  name: Rave Stick
+"207":
+  file: weapons.yml
+  name: Fanta Stick
+"209":
+  file: weapons.yml
+  name: Moralemine Stick
+"211":
+  file: weapons.yml
+  name: Shinewing Stick
+"213":
+  file: weapons.yml
+  name: Shalow Stick
+"215":
+  file: weapons.yml
+  name: Prede Stick
+"217":
+  file: weapons.yml
+  name: Leoss Stick
+"219":
+  file: weapons.yml
+  name: Forlas Stick
+"221":
+  file: weapons.yml
+  name: Shait Stick
+"223":
+  file: weapons.yml
+  name: Garlain Stick
+"231":
+  file: weapons.yml
+  name: Seal Wand
+"233":
+  file: weapons.yml
+  name: Cubic Wand
+"235":
+  file: weapons.yml
+  name: Epi Wand
+"237":
+  file: weapons.yml
+  name: Niz Wand
+"239":
+  file: weapons.yml
+  name: Ruby Wand
+"241":
+  file: weapons.yml
+  name: Kalis Wand
+"243":
+  file: weapons.yml
+  name: Poly Wand
+"245":
+  file: weapons.yml
+  name: Mekerhill Wand
+"247":
+  file: weapons.yml
+  name: Naz Wand
+"249":
+  file: weapons.yml
+  name: Zerem Wand
+"251":
+  file: weapons.yml
+  name: Bluebow Wand
+"253":
+  file: weapons.yml
+  name: Splhail Wand
+"255":
+  file: weapons.yml
+  name: Mirage Wand
+"257":
+  file: weapons.yml
+  name: Aris Wand
+"259":
+  file: weapons.yml
+  name: Moira Wand
+"261":
+  file: weapons.yml
+  name: Arcadia Wand
+"263":
+  file: weapons.yml
+  name: Taris Wand
+"265":
+  file: weapons.yml
+  name: Jalate Wand
+"267":
+  file: weapons.yml
+  name: Kroril Wand
+"269":
+  file: weapons.yml
+  name: Rekis Wand
+"271":
+  file: weapons.yml
+  name: Daris Wand
+"273":
+  file: weapons.yml
+  name: Lorai Wand
+"281":
+  file: weapons.yml
+  name: Mile Staff
+"283":
+  file: weapons.yml
+  name: Nile Staff
+"285":
+  file: weapons.yml
+  name: Inner Staff
+"287":
+  file: weapons.yml
+  name: Herald Staff
+"289":
+  file: weapons.yml
+  name: Addself Staff
+"291":
+  file: weapons.yml
+  name: Sign Staff
+"293":
+  file: weapons.yml
+  name: Ignis Staff
+"295":
+  file: weapons.yml
+  name: Teba Staff
+"297":
+  file: weapons.yml
+  name: Sline Staff
+"299":
+  file: weapons.yml
+  name: Starwheel Staff
+"301":
+  file: weapons.yml
+  name: Karzam Staff
+"303":
+  file: weapons.yml
+  name: Astrol Staff
+"305":
+  file: weapons.yml
+  name: Sheikane Staff
+"307":
+  file: weapons.yml
+  name: Twenkeen Staff
+"309":
+  file: weapons.yml
+  name: Ruofl Staff
+"311":
+  file: weapons.yml
+  name: Featherwing Staff
+"313":
+  file: weapons.yml
+  name: Holyous Staff
+"315":
+  file: weapons.yml
+  name: Portel Staff
+"317":
+  file: weapons.yml
+  name: Mariner Staff
+"319":
+  file: weapons.yml
+  name: Remodic Staff
+"321":
+  file: weapons.yml
+  name: Elfyren Staff
+"323":
+  file: weapons.yml
+  name: Fosharpen Staff
+"331":
+  file: weapons.yml
+  name: Overam Knuckle
+"333":
+  file: weapons.yml
+  name: Sardine Knuckle
+"335":
+  file: weapons.yml
+  name: Twit Knuckle
+"337":
+  file: weapons.yml
+  name: Xeno Knuckle
+"339":
+  file: weapons.yml
+  name: Side Knuckle
+"341":
+  file: weapons.yml
+  name: Talin Knuckle
+"343":
+  file: weapons.yml
+  name: Rigor Knuckle
+"345":
+  file: weapons.yml
+  name: Rampart Knuckle
+"347":
+  file: weapons.yml
+  name: Revenant Knuckle
+"349":
+  file: weapons.yml
+  name: Marvel Knuckle
+"351":
+  file: weapons.yml
+  name: Overpass Knuckle
+"353":
+  file: weapons.yml
+  name: Gravity Knuckle
+"355":
+  file: weapons.yml
+  name: Corean Knuckle
+"357":
+  file: weapons.yml
+  name: Fistomber Knuckle
+"359":
+  file: weapons.yml
+  name: Edoren Knuckle
+"361":
+  file: weapons.yml
+  name: Skellock Knuckle
+"363":
+  file: weapons.yml
+  name: Goldross Knuckle
+"365":
+  file: weapons.yml
+  name: Blesever Knuckle
+"367":
+  file: weapons.yml
+  name: Muncuto Knuckle
+"369":
+  file: weapons.yml
+  name: Federhorn Knuckle
+"371":
+  file: weapons.yml
+  name: Knighteel Knuckle
+"373":
+  file: weapons.yml
+  name: Lordorbl Knuckle
+"381":
+  file: weapons.yml
+  name: Itun
+"383":
+  file: weapons.yml
+  name: Slepint
+"385":
+  file: weapons.yml
+  name: Client
+"387":
+  file: weapons.yml
+  name: Tensu
+"389":
+  file: weapons.yml
+  name: Emporer
+"391":
+  file: weapons.yml
+  name: Dicein
+"393":
+  file: weapons.yml
+  name: Miragle
+"395":
+  file: weapons.yml
+  name: Ridener
+"397":
+  file: weapons.yml
+  name: Firee
+"399":
+  file: weapons.yml
+  name: Immote
+"401":
+  file: weapons.yml
+  name: Stencil
+"403":
+  file: weapons.yml
+  name: Repoyit
+"405":
+  file: weapons.yml
+  name: Gelonde
+"407":
+  file: weapons.yml
+  name: Wingfull
+"409":
+  file: weapons.yml
+  name: Anakun
+"411":
+  file: weapons.yml
+  name: Circern
+"413":
+  file: weapons.yml
+  name: Mishend
+"415":
+  file: weapons.yml
+  name: Slinfes
+"417":
+  file: weapons.yml
+  name: Akane
+"419":
+  file: weapons.yml
+  name: Clantob
+"421":
+  file: weapons.yml
+  name: Enaphoon
+"423":
+  file: weapons.yml
+  name: Coroner
+"431":
+  file: weapons.yml
+  name: Woodness Bow
+"433":
+  file: weapons.yml
+  name: Greentin Bow
+"435":
+  file: weapons.yml
+  name: Stienger Bow
+"437":
+  file: weapons.yml
+  name: Clasemit Bow
+"439":
+  file: weapons.yml
+  name: Redianer Bow
+"441":
+  file: weapons.yml
+  name: Cristia Bow
+"443":
+  file: weapons.yml
+  name: Irun Bow
+"445":
+  file: weapons.yml
+  name: Refometi Bow
+"447":
+  file: weapons.yml
+  name: Curusier Bow
+"449":
+  file: weapons.yml
+  name: Siggers Bow
+"451":
+  file: weapons.yml
+  name: Fullarch Bow
+"453":
+  file: weapons.yml
+  name: Setien Bow
+"455":
+  file: weapons.yml
+  name: Varife Bow
+"457":
+  file: weapons.yml
+  name: Defnan Bow
+"459":
+  file: weapons.yml
+  name: Hydron Bow
+"461":
+  file: weapons.yml
+  name: Cenatin Bow
+"463":
+  file: weapons.yml
+  name: Cyron Bow
+"465":
+  file: weapons.yml
+  name: Sionic Bow
+"467":
+  file: weapons.yml
+  name: Regen Bow
+"469":
+  file: weapons.yml
+  name: Fiont Bow
+"471":
+  file: weapons.yml
+  name: Brouton Bow
+"473":
+  file: weapons.yml
+  name: Sevoy Bow
+"500":
+  file: armors.yml
+  name: Pike Helmet
+"501":
+  file: armors.yml
+  name: Silk Helmet
+"502":
+  file: armors.yml
+  name: Cotton Suit
+"503":
+  file: armors.yml
+  name: Pike Suit
+"504":
+  file: armors.yml
+  name: Cream Suit
+"505":
+  file: armors.yml
+  name: Silk Suit
+"506":
+  file: armors.yml
+  name: Cotton Gauntlet
+"507":
+  file: armors.yml
+  name: Pike Gauntlet
+"508":
+  file: armors.yml
+  name: Cream Gauntlet
+"509":
+  file: armors.yml
+  name: Silk Gauntlet
+"510":
+  file: armors.yml
+  name: Cotton Boots
+"511":
+  file: armors.yml
+  name: Pike Boots
+"512":
+  file: armors.yml
+  name: Cream Boots
+"513":
+  file: armors.yml
+  name: Silk Boots
+"514":
+  file: armors.yml
+  name: Iner Helmet
+"515":
+  file: armors.yml
+  name: Rose Helmet
+"516":
+  file: armors.yml
+  name: Iner Suit
+"517":
+  file: armors.yml
+  name: Rose Suit
+"518":
+  file: armors.yml
+  name: Iner Gauntlet
+"519":
+  file: armors.yml
+  name: Rose Gauntlet
+"520":
+  file: armors.yml
+  name: Iner Boots
+"521":
+  file: armors.yml
+  name: Rose Boots
+"522":
+  file: armors.yml
+  name: Parmil Helmet
+"523":
+  file: armors.yml
+  name: Parmil Suit
+"524":
+  file: armors.yml
+  name: Parmil Gauntlet
+"525":
+  file: armors.yml
+  name: Parmil Boots
+"526":
+  file: armors.yml
+  name: Leaf Helmet
+"527":
+  file: armors.yml
+  name: Leaf Suit
+"528":
+  file: armors.yml
+  name: Leaf Gauntlet
+"529":
+  file: armors.yml
+  name: Leaf Boots
+"534":
+  file: armors.yml
+  name: Mythic Helmet
+"535":
+  file: armors.yml
+  name: Fortune Helmet
+"536":
+  file: armors.yml
+  name: Valor Helmet
+"537":
+  file: armors.yml
+  name: Vigor Helmet
+"539":
+  file: armors.yml
+  name: Beast Helmet
+"541":
+  file: armors.yml
+  name: Koon Helmet
+"543":
+  file: armors.yml
+  name: Hodr Helmet
+"545":
+  file: armors.yml
+  name: Keimay Helmet
+"547":
+  file: armors.yml
+  name: Rukips Helmet
+"549":
+  file: armors.yml
+  name: Godchent Helmet
+"551":
+  file: armors.yml
+  name: Darkbin Helmet
+"553":
+  file: armors.yml
+  name: Nipedot Helmet
+"555":
+  file: armors.yml
+  name: Saremender Helmet
+"564":
+  file: armors.yml
+  name: Swift Helmet
+"565":
+  file: armors.yml
+  name: Force Helmet
+"566":
+  file: armors.yml
+  name: Grace Helmet
+"567":
+  file: armors.yml
+  name: Gorgeous Helmet
+"569":
+  file: armors.yml
+  name: Daisy Helmet
+"571":
+  file: armors.yml
+  name: Prato Helmet
+"573":
+  file: armors.yml
+  name: Shuema Helmet
+"575":
+  file: armors.yml
+  name: Keriphis Helmet
+"577":
+  file: armors.yml
+  name: Rufoen Helmet
+"579":
+  file: armors.yml
+  name: Godvean Helmet
+"581":
+  file: armors.yml
+  name: Darkomet Helmet
+"583":
+  file: armors.yml
+  name: Nirufy Helmet
+"585":
+  file: armors.yml
+  name: Saryeve Helmet
+"591":
+  file: armors.yml
+  name: Syner Helmet
+"593":
+  file: armors.yml
+  name: Vilet Helmet
+"595":
+  file: armors.yml
+  name: Phrinde Helmet
+"597":
+  file: armors.yml
+  name: Fethertin Helmet
+"599":
+  file: armors.yml
+  name: Redble Helmet
+"601":
+  file: armors.yml
+  name: Touflak Helmet
+"603":
+  file: armors.yml
+  name: Silven Helmet
+"605":
+  file: armors.yml
+  name: Henen Helmet
+"607":
+  file: armors.yml
+  name: Rokai Helmet
+"609":
+  file: armors.yml
+  name: Spacon Helmet
+"611":
+  file: armors.yml
+  name: Grantus Helmet
+"613":
+  file: armors.yml
+  name: Geiler Helmet
+"615":
+  file: armors.yml
+  name: Ruisil Helmet
+"621":
+  file: armors.yml
+  name: Syanto Helmet
+"623":
+  file: armors.yml
+  name: Vaindiec Helmet
+"625":
+  file: armors.yml
+  name: Phiatoic Helmet
+"627":
+  file: armors.yml
+  name: Ferbain Helmet
+"629":
+  file: armors.yml
+  name: Reandetal Helmet
+"631":
+  file: armors.yml
+  name: Touthyeto Helmet
+"633":
+  file: armors.yml
+  name: Silusia Helmet
+"635":
+  file: armors.yml
+  name: Heintis Helmet
+"637":
+  file: armors.yml
+  name: Rokhantia Helmet
+"639":
+  file: armors.yml
+  name: Spimel Helmet
+"641":
+  file: armors.yml
+  name: Grentio Helmet
+"643":
+  file: armors.yml
+  name: Gesanan Helmet
+"645":
+  file: armors.yml
+  name: Luses Helmet
+"654":
+  file: armors.yml
+  name: Breeze Helmet
+"655":
+  file: armors.yml
+  name: Gale Helmet
+"656":
+  file: armors.yml
+  name: Storm Helmet
+"657":
+  file: armors.yml
+  name: Cloud Helmet
+"659":
+  file: armors.yml
+  name: Saturn Helmet
+"661":
+  file: armors.yml
+  name: Beok Helmet
+"663":
+  file: armors.yml
+  name: Dian Helmet
+"665":
+  file: armors.yml
+  name: Mectic Helmet
+"667":
+  file: armors.yml
+  name: Havey Helmet
+"669":
+  file: armors.yml
+  name: Ferraol Helmet
+"671":
+  file: armors.yml
+  name: Oriene Helmet
+"673":
+  file: armors.yml
+  name: Phasleb Helmet
+"675":
+  file: armors.yml
+  name: Cupo Helmet
+"684":
+  file: armors.yml
+  name: Floral Helmet
+"685":
+  file: armors.yml
+  name: Iris Helmet
+"686":
+  file: armors.yml
+  name: Aster Helmet
+"687":
+  file: armors.yml
+  name: Lily Helmet
+"689":
+  file: armors.yml
+  name: Lavanda Helmet
+"691":
+  file: armors.yml
+  name: Sigel Helmet
+"693":
+  file: armors.yml
+  name: Vin Helmet
+"695":
+  file: armors.yml
+  name: Mecarine Helmet
+"697":
+  file: armors.yml
+  name: Hanel Helmet
+"699":
+  file: armors.yml
+  name: Festein Helmet
+"701":
+  file: armors.yml
+  name: Orgon Helmet
+"703":
+  file: armors.yml
+  name: Phaisel Helmet
+"705":
+  file: armors.yml
+  name: Cumel Helmet
+"714":
+  file: armors.yml
+  name: Dice Helmet
+"715":
+  file: armors.yml
+  name: Shuffle Helmet
+"716":
+  file: armors.yml
+  name: Coring Helmet
+"717":
+  file: armors.yml
+  name: Ditch Helmet
+"719":
+  file: armors.yml
+  name: Props Helmet
+"721":
+  file: armors.yml
+  name: Hagal Helmet
+"723":
+  file: armors.yml
+  name: Maclir Helmet
+"725":
+  file: armors.yml
+  name: Rendaic Helmet
+"727":
+  file: armors.yml
+  name: Khin Helmet
+"729":
+  file: armors.yml
+  name: Skypoon Helmet
+"731":
+  file: armors.yml
+  name: Uon Helmet
+"733":
+  file: armors.yml
+  name: Shurib Helmet
+"735":
+  file: armors.yml
+  name: Rhan Helmet
+"744":
+  file: armors.yml
+  name: Lux Helmet
+"745":
+  file: armors.yml
+  name: Jay Helmet
+"746":
+  file: armors.yml
+  name: Marble Helmet
+"747":
+  file: armors.yml
+  name: Mistic Helmet
+"749":
+  file: armors.yml
+  name: Moonshine Helmet
+"751":
+  file: armors.yml
+  name: Bluemoon Helmet
+"753":
+  file: armors.yml
+  name: Idunn Helmet
+"755":
+  file: armors.yml
+  name: Rensylien Helmet
+"757":
+  file: armors.yml
+  name: Khinyker Helmet
+"759":
+  file: armors.yml
+  name: Psephis Helmet
+"761":
+  file: armors.yml
+  name: Urante Helmet
+"763":
+  file: armors.yml
+  name: Sumifos Helmet
+"765":
+  file: armors.yml
+  name: Rhaneat Helmet
+"767":
+  file: armors.yml
+  name: Revantu Helmet
+"769":
+  file: armors.yml
+  name: Gricky Helmet
+"771":
+  file: armors.yml
+  name: Huedom Helmet
+"773":
+  file: armors.yml
+  name: Labon Helmet
+"775":
+  file: armors.yml
+  name: Redios Helmet
+"777":
+  file: armors.yml
+  name: Greynis Helmet
+"779":
+  file: armors.yml
+  name: Huaris Helmet
+"781":
+  file: armors.yml
+  name: Lavkeon Helmet
+"783":
+  file: armors.yml
+  name: Decasron Helmet
+"785":
+  file: armors.yml
+  name: Claien Helmet
+"787":
+  file: armors.yml
+  name: Mithril Helmet
+"789":
+  file: armors.yml
+  name: Branto Helmet
+"791":
+  file: armors.yml
+  name: Merian Helmet
+"793":
+  file: armors.yml
+  name: Violin Helmet
+"795":
+  file: armors.yml
+  name: Rhenia Helmet
+"797":
+  file: armors.yml
+  name: Hania Helmet
+"799":
+  file: armors.yml
+  name: Lordyin Helmet
+"801":
+  file: armors.yml
+  name: Venopy Helmet
+"803":
+  file: armors.yml
+  name: Snaic Helmet
+"805":
+  file: armors.yml
+  name: Hanei Helmet
+"807":
+  file: armors.yml
+  name: Lohendiff Helmet
+"809":
+  file: armors.yml
+  name: Venlrai Helmet
+"811":
+  file: armors.yml
+  name: Srehios Helmet
+"813":
+  file: armors.yml
+  name: Hanisbo Helmet
+"815":
+  file: armors.yml
+  name: Kaharn Helmet
+"817":
+  file: armors.yml
+  name: Hellieng Helmet
+"819":
+  file: armors.yml
+  name: Hyusein Helmet
+"821":
+  file: armors.yml
+  name: Phaharn Helmet
+"823":
+  file: armors.yml
+  name: Kafoneka Helmet
+"825":
+  file: armors.yml
+  name: Hellsinove Helmet
+"827":
+  file: armors.yml
+  name: Hyupirein Helmet
+"829":
+  file: armors.yml
+  name: Phahunin Helmet
+"834":
+  file: armors.yml
+  name: Mythic Suit
+"835":
+  file: armors.yml
+  name: Fortune Suit
+"836":
+  file: armors.yml
+  name: Valor Suit
+"837":
+  file: armors.yml
+  name: Vigor Suit
+"839":
+  file: armors.yml
+  name: Beast Suit
+"841":
+  file: armors.yml
+  name: Koon Suit
+"843":
+  file: armors.yml
+  name: Hodr Suit
+"845":
+  file: armors.yml
+  name: Keimay Suit
+"847":
+  file: armors.yml
+  name: Rukips Suit
+"849":
+  file: armors.yml
+  name: Godchent Suit
+"851":
+  file: armors.yml
+  name: Darkbin Suit
+"853":
+  file: armors.yml
+  name: Nipedot Suit
+"855":
+  file: armors.yml
+  name: Saremender Suit
+"864":
+  file: armors.yml
+  name: Swift Suit
+"865":
+  file: armors.yml
+  name: Force Suit
+"866":
+  file: armors.yml
+  name: Grace Suit
+"867":
+  file: armors.yml
+  name: Gorgeous Suit
+"869":
+  file: armors.yml
+  name: Daisy Suit
+"871":
+  file: armors.yml
+  name: Prato Suit
+"873":
+  file: armors.yml
+  name: Shuema Suit
+"875":
+  file: armors.yml
+  name: Keriphis Suit
+"877":
+  file: armors.yml
+  name: Rufoen Suit
+"879":
+  file: armors.yml
+  name: Godvean Suit
+"881":
+  file: armors.yml
+  name: Darkomet Suit
+"883":
+  file: armors.yml
+  name: Nirufy Suit
+"885":
+  file: armors.yml
+  name: Saryeve Suit
+"891":
+  file: armors.yml
+  name: Syner Suit
+"893":
+  file: armors.yml
+  name: Vilet Suit
+"895":
+  file: armors.yml
+  name: Phrinde Suit
+"897":
+  file: armors.yml
+  name: Fethertin Suit
+"899":
+  file: armors.yml
+  name: Redble Suit
+"901":
+  file: armors.yml
+  name: Touflak Suit
+"903":
+  file: armors.yml
+  name: Silven Suit
+"905":
+  file: armors.yml
+  name: Henen Suit
+"907":
+  file: armors.yml
+  name: Rokai Suit
+"909":
+  file: armors.yml
+  name: Spacon Suit
+"911":
+  file: armors.yml
+  name: Grantus Suit
+"913":
+  file: armors.yml
+  name: Geiler Suit
+"915":
+  file: armors.yml
+  name: Ruisil Suit
+"921":
+  file: armors.yml
+  name: Syanto Suit
+"923":
+  file: armors.yml
+  name: Vaindiec Suit
+"925":
+  file: armors.yml
+  name: Phiatoic Suit
+"927":
+  file: armors.yml
+  name: Ferbain Suit
+"929":
+  file: armors.yml
+  name: Reandetal Suit
+"931":
+  file: armors.yml
+  name: Touthyeto Suit
+"933":
+  file: armors.yml
+  name: Silusia Suit
+"935":
+  file: armors.yml
+  name: Heintis Suit
+"937":
+  file: armors.yml
+  name: Rokhantia Suit
+"939":
+  file: armors.yml
+  name: Spimel Suit
+"941":
+  file: armors.yml
+  name: Grentio Suit
+"943":
+  file: armors.yml
+  name: Gesanan Suit
+"945":
+  file: armors.yml
+  name: Luses Suit
+"984":
+  file: armors.yml
+  name: Breeze Suit
+"985":
+  file: armors.yml
+  name: Gale Suit
+"986":
+  file: armors.yml
+  name: Storm Suit
+"987":
+  file: armors.yml
+  name: Cloud Suit
+"989":
+  file: armors.yml
+  name: Saturn Suit
+"991":
+  file: armors.yml
+  name: Beok Suit
+"993":
+  file: armors.yml
+  name: Dian Suit
+"995":
+  file: armors.yml
+  name: Mectic Suit
+"997":
+  file: armors.yml
+  name: Havey Suit
+"999":
+  file: armors.yml
+  name: Ferraol Suit
+"1001":
+  file: armors.yml
+  name: Oriene Suit
+"1003":
+  file: armors.yml
+  name: Phasleb Suit
+"1005":
+  file: armors.yml
+  name: Cupo Suit
+"1014":
+  file: armors.yml
+  name: Floral Suit
+"1015":
+  file: armors.yml
+  name: Iris Suit
+"1016":
+  file: armors.yml
+  name: Aster Suit
+"1017":
+  file: armors.yml
+  name: Lily Suit
+"1019":
+  file: armors.yml
+  name: Lavanda Suit
+"1021":
+  file: armors.yml
+  name: Sigel Suit
+"1023":
+  file: armors.yml
+  name: Vin Suit
+"1025":
+  file: armors.yml
+  name: Mecarine Suit
+"1027":
+  file: armors.yml
+  name: Hanel Suit
+"1029":
+  file: armors.yml
+  name: Festein Suit
+"1031":
+  file: armors.yml
+  name: Orgon Suit
+"1033":
+  file: armors.yml
+  name: Phaisel Suit
+"1035":
+  file: armors.yml
+  name: Cumel Suit
+"1044":
+  file: armors.yml
+  name: Dice Suit
+"1045":
+  file: armors.yml
+  name: Shuffle Suit
+"1046":
+  file: armors.yml
+  name: Coring Suit
+"1047":
+  file: armors.yml
+  name: Ditch Suit
+"1049":
+  file: armors.yml
+  name: Props Suit
+"1051":
+  file: armors.yml
+  name: Hagal Suit
+"1053":
+  file: armors.yml
+  name: Maclir Suit
+"1055":
+  file: armors.yml
+  name: Rendaic Suit
+"1057":
+  file: armors.yml
+  name: Khin Suit
+"1059":
+  file: armors.yml
+  name: Skypoon Suit
+"1061":
+  file: armors.yml
+  name: Uon Suit
+"1063":
+  file: armors.yml
+  name: Shurib Suit
+"1065":
+  file: armors.yml
+  name: Rhan Suit
+"1074":
+  file: armors.yml
+  name: Lux Suit
+"1075":
+  file: armors.yml
+  name: Jay Suit
+"1076":
+  file: armors.yml
+  name: Marble Suit
+"1077":
+  file: armors.yml
+  name: Mistic Suit
+"1079":
+  file: armors.yml
+  name: Moonshine Suit
+"1081":
+  file: armors.yml
+  name: Bluemoon Suit
+"1083":
+  file: armors.yml
+  name: Idunn Suit
+"1085":
+  file: armors.yml
+  name: Rensylien Suit
+"1087":
+  file: armors.yml
+  name: Khinyker Suit
+"1089":
+  file: armors.yml
+  name: Psephis Suit
+"1091":
+  file: armors.yml
+  name: Urante Suit
+"1093":
+  file: armors.yml
+  name: Sumifos Suit
+"1095":
+  file: armors.yml
+  name: Rhaneat Suit
+"1097":
+  file: armors.yml
+  name: Revantu Suit
+"1099":
+  file: armors.yml
+  name: Gricky Suit
+"1101":
+  file: armors.yml
+  name: Huedom Suit
+"1103":
+  file: armors.yml
+  name: Labon Suit
+"1105":
+  file: armors.yml
+  name: Redios Suit
+"1107":
+  file: armors.yml
+  name: Greynis Suit
+"1109":
+  file: armors.yml
+  name: Huaris Suit
+"1111":
+  file: armors.yml
+  name: Lavkeon Suit
+"1113":
+  file: armors.yml
+  name: Decasron Suit
+"1115":
+  file: armors.yml
+  name: Claien Suit
+"1117":
+  file: armors.yml
+  name: Mithril Suit
+"1119":
+  file: armors.yml
+  name: Branto Suit
+"1121":
+  file: armors.yml
+  name: Merian Suit
+"1123":
+  file: armors.yml
+  name: Violin Suit
+"1125":
+  file: armors.yml
+  name: Rhenia Suit
+"1127":
+  file: armors.yml
+  name: Hania Suit
+"1129":
+  file: armors.yml
+  name: Lordyin Suit
+"1131":
+  file: armors.yml
+  name: Venopy Suit
+"1133":
+  file: armors.yml
+  name: Snaic Suit
+"1135":
+  file: armors.yml
+  name: Hanei Suit
+"1137":
+  file: armors.yml
+  name: Lohendiff Suit
+"1139":
+  file: armors.yml
+  name: Venlrai Suit
+"1141":
+  file: armors.yml
+  name: Srehios Suit
+"1143":
+  file: armors.yml
+  name: Hanisbo Suit
+"1145":
+  file: armors.yml
+  name: Kaharn Suit
+"1147":
+  file: armors.yml
+  name: Hellieng Suit
+"1149":
+  file: armors.yml
+  name: Hyusein Suit
+"1151":
+  file: armors.yml
+  name: Phaharn Suit
+"1153":
+  file: armors.yml
+  name: Kafoneka Suit
+"1155":
+  file: armors.yml
+  name: Hellsinove Suit
+"1157":
+  file: armors.yml
+  name: Hyupirein Suit
+"1159":
+  file: armors.yml
+  name: Phahunin Suit
+"1164":
+  file: armors.yml
+  name: Mythic Gauntlet
+"1165":
+  file: armors.yml
+  name: Fortune Gauntlet
+"1166":
+  file: armors.yml
+  name: Valor Gauntlet
+"1167":
+  file: armors.yml
+  name: Vigor Gauntlet
+"1169":
+  file: armors.yml
+  name: Beast Gauntlet
+"1171":
+  file: armors.yml
+  name: Koon Gauntlet
+"1173":
+  file: armors.yml
+  name: Hodr Gauntlet
+"1175":
+  file: armors.yml
+  name: Keimay Gauntlet
+"1177":
+  file: armors.yml
+  name: Rukips Gauntlet
+"1179":
+  file: armors.yml
+  name: Godchent Gauntlet
+"1181":
+  file: armors.yml
+  name: Darkbin Gauntlet
+"1183":
+  file: armors.yml
+  name: Nipedot Gauntlet
+"1185":
+  file: armors.yml
+  name: Saremender Gauntlet
+"1194":
+  file: armors.yml
+  name: Swift Gauntlet
+"1195":
+  file: armors.yml
+  name: Force Gauntlet
+"1196":
+  file: armors.yml
+  name: Grace Gauntlet
+"1197":
+  file: armors.yml
+  name: Gorgeous Gauntlet
+"1199":
+  file: armors.yml
+  name: Daisy Gauntlet
+"1201":
+  file: armors.yml
+  name: Prato Gauntlet
+"1203":
+  file: armors.yml
+  name: Shuema Gauntlet
+"1205":
+  file: armors.yml
+  name: Keriphis Gauntlet
+"1207":
+  file: armors.yml
+  name: Rufoen Gauntlet
+"1209":
+  file: armors.yml
+  name: Godvean Gauntlet
+"1211":
+  file: armors.yml
+  name: Darkomet Gauntlet
+"1213":
+  file: armors.yml
+  name: Nirufy Gauntlet
+"1215":
+  file: armors.yml
+  name: Saryeve Gauntlet
+"1221":
+  file: armors.yml
+  name: Syner Gauntlet
+"1223":
+  file: armors.yml
+  name: Vilet Gauntlet
+"1225":
+  file: armors.yml
+  name: Phrinde Gauntlet
+"1227":
+  file: armors.yml
+  name: Fethertin Gauntlet
+"1229":
+  file: armors.yml
+  name: Redble Gauntlet
+"1231":
+  file: armors.yml
+  name: Touflak Gauntlet
+"1233":
+  file: armors.yml
+  name: Silven Gauntlet
+"1235":
+  file: armors.yml
+  name: Henen Gauntlet
+"1237":
+  file: armors.yml
+  name: Rokai Gauntlet
+"1239":
+  file: armors.yml
+  name: Spacon Gauntlet
+"1241":
+  file: armors.yml
+  name: Grantus Gauntlet
+"1243":
+  file: armors.yml
+  name: Geiler Gauntlet
+"1245":
+  file: armors.yml
+  name: Ruisil Gauntlet
+"1251":
+  file: armors.yml
+  name: Syanto Gauntlet
+"1253":
+  file: armors.yml
+  name: Vaindiec Gauntlet
+"1255":
+  file: armors.yml
+  name: Phiatoic Gauntlet
+"1257":
+  file: armors.yml
+  name: Ferbain Gauntlet
+"1259":
+  file: armors.yml
+  name: Reandetal Gauntlet
+"1261":
+  file: armors.yml
+  name: Touthyeto Gauntlet
+"1263":
+  file: armors.yml
+  name: Silusia Gauntlet
+"1265":
+  file: armors.yml
+  name: Heintis Gauntlet
+"1267":
+  file: armors.yml
+  name: Rokhantia Gauntlet
+"1269":
+  file: armors.yml
+  name: Spimel Gauntlet
+"1271":
+  file: armors.yml
+  name: Grentio Gauntlet
+"1273":
+  file: armors.yml
+  name: Gesanan Gauntlet
+"1275":
+  file: armors.yml
+  name: Luses Gauntlet
+"1284":
+  file: armors.yml
+  name: Breeze Gauntlet
+"1285":
+  file: armors.yml
+  name: Gale Gauntlet
+"1286":
+  file: armors.yml
+  name: Storm Gauntlet
+"1287":
+  file: armors.yml
+  name: Cloud Gauntlet
+"1289":
+  file: armors.yml
+  name: Saturn Gauntlet
+"1291":
+  file: armors.yml
+  name: Beok Gauntlet
+"1293":
+  file: armors.yml
+  name: Dian Gauntlet
+"1295":
+  file: armors.yml
+  name: Mectic Gauntlet
+"1297":
+  file: armors.yml
+  name: Havey Gauntlet
+"1299":
+  file: armors.yml
+  name: Ferraol Gauntlet
+"1301":
+  file: armors.yml
+  name: Oriene Gauntlet
+"1303":
+  file: armors.yml
+  name: Phasleb Gauntlet
+"1305":
+  file: armors.yml
+  name: Cupo Gauntlet
+"1314":
+  file: armors.yml
+  name: Floral Gauntlet
+"1315":
+  file: armors.yml
+  name: Iris Gauntlet
+"1316":
+  file: armors.yml
+  name: Aster Gauntlet
+"1317":
+  file: armors.yml
+  name: Lily Gauntlet
+"1319":
+  file: armors.yml
+  name: Lavanda Gauntlet
+"1321":
+  file: armors.yml
+  name: Sigel Gauntlet
+"1323":
+  file: armors.yml
+  name: Vin Gauntlet
+"1325":
+  file: armors.yml
+  name: Mecarine Gauntlet
+"1327":
+  file: armors.yml
+  name: Hanel Gauntlet
+"1329":
+  file: armors.yml
+  name: Festein Gauntlet
+"1331":
+  file: armors.yml
+  name: Orgon Gauntlet
+"1333":
+  file: armors.yml
+  name: Phaisel Gauntlet
+"1335":
+  file: armors.yml
+  name: Cumel Gauntlet
+"1344":
+  file: armors.yml
+  name: Dice Gauntlet
+"1345":
+  file: armors.yml
+  name: Shuffle Gauntlet
+"1346":
+  file: armors.yml
+  name: Coring Gauntlet
+"1347":
+  file: armors.yml
+  name: Ditch Gauntlet
+"1349":
+  file: armors.yml
+  name: Props Gauntlet
+"1351":
+  file: armors.yml
+  name: Hagal Gauntlet
+"1353":
+  file: armors.yml
+  name: Maclir Gauntlet
+"1355":
+  file: armors.yml
+  name: Rendaic Gauntlet
+"1357":
+  file: armors.yml
+  name: Khin Gauntlet
+"1359":
+  file: armors.yml
+  name: Skypoon Gauntlet
+"1361":
+  file: armors.yml
+  name: Uon Gauntlet
+"1363":
+  file: armors.yml
+  name: Shurib Gauntlet
+"1365":
+  file: armors.yml
+  name: Rhan Gauntlet
+"1374":
+  file: armors.yml
+  name: Lux Gauntlet
+"1375":
+  file: armors.yml
+  name: Jay Gauntlet
+"1376":
+  file: armors.yml
+  name: Marble Gauntlet
+"1377":
+  file: armors.yml
+  name: Mistic Gauntlet
+"1379":
+  file: armors.yml
+  name: Moonshine Gauntlet
+"1381":
+  file: armors.yml
+  name: Bluemoon Gauntlet
+"1383":
+  file: armors.yml
+  name: Idunn Gauntlet
+"1385":
+  file: armors.yml
+  name: Rensylien Gauntlet
+"1387":
+  file: armors.yml
+  name: Khinyker Gauntlet
+"1389":
+  file: armors.yml
+  name: Psephis Gauntlet
+"1391":
+  file: armors.yml
+  name: Urante Gauntlet
+"1393":
+  file: armors.yml
+  name: Sumifos Gauntlet
+"1395":
+  file: armors.yml
+  name: Rhaneat Gauntlet
+"1397":
+  file: armors.yml
+  name: Revantu Gauntlet
+"1399":
+  file: armors.yml
+  name: Gricky Gauntlet
+"1401":
+  file: armors.yml
+  name: Huedom Gauntlet
+"1403":
+  file: armors.yml
+  name: Labon Gauntlet
+"1405":
+  file: armors.yml
+  name: Redios Gauntlet
+"1407":
+  file: armors.yml
+  name: Greynis Gauntlet
+"1409":
+  file: armors.yml
+  name: Huaris Gauntlet
+"1411":
+  file: armors.yml
+  name: Lavkeon Gauntlet
+"1413":
+  file: armors.yml
+  name: Decasron Gauntlet
+"1415":
+  file: armors.yml
+  name: Claien Gauntlet
+"1417":
+  file: armors.yml
+  name: Mithril Gauntlet
+"1419":
+  file: armors.yml
+  name: Branto Gauntlet
+"1421":
+  file: armors.yml
+  name: Merian Gauntlet
+"1423":
+  file: armors.yml
+  name: Violin Gauntlet
+"1425":
+  file: armors.yml
+  name: Rhenia Gauntlet
+"1427":
+  file: armors.yml
+  name: Hania Gauntlet
+"1429":
+  file: armors.yml
+  name: Lordyin Gauntlet
+"1431":
+  file: armors.yml
+  name: Venopy Gauntlet
+"1433":
+  file: armors.yml
+  name: Snaic Gauntlet
+"1435":
+  file: armors.yml
+  name: Hanei Gauntlet
+"1437":
+  file: armors.yml
+  name: Lohendiff Gauntlet
+"1439":
+  file: armors.yml
+  name: Venlrai Gauntlet
+"1441":
+  file: armors.yml
+  name: Srehios Gauntlet
+"1443":
+  file: armors.yml
+  name: Hanisbo Gauntlet
+"1445":
+  file: armors.yml
+  name: Kaharn Gauntlet
+"1447":
+  file: armors.yml
+  name: Hellieng Gauntlet
+"1449":
+  file: armors.yml
+  name: Hyusein Gauntlet
+"1451":
+  file: armors.yml
+  name: Phaharn Gauntlet
+"1453":
+  file: armors.yml
+  name: Kafoneka Gauntlet
+"1455":
+  file: armors.yml
+  name: Hellsinove Gauntlet
+"1457":
+  file: armors.yml
+  name: Hyupirein Gauntlet
+"1459":
+  file: armors.yml
+  name: Phahunin Gauntlet
+"1464":
+  file: armors.yml
+  name: Mythic Boots
+"1465":
+  file: armors.yml
+  name: Fortune Boots
+"1466":
+  file: armors.yml
+  name: Valor Boots
+"1467":
+  file: armors.yml
+  name: Vigor Boots
+"1469":
+  file: armors.yml
+  name: Beast Boots
+"1471":
+  file: armors.yml
+  name: Koon Boots
+"1473":
+  file: armors.yml
+  name: Hodr Boots
+"1475":
+  file: armors.yml
+  name: Keimay Boots
+"1477":
+  file: armors.yml
+  name: Rukips Boots
+"1479":
+  file: armors.yml
+  name: Godchent Boots
+"1481":
+  file: armors.yml
+  name: Darkbin Boots
+"1483":
+  file: armors.yml
+  name: Nipedot Boots
+"1485":
+  file: armors.yml
+  name: Saremender Boots
+"1494":
+  file: armors.yml
+  name: Swift Boots
+"1495":
+  file: armors.yml
+  name: Force Boots
+"1496":
+  file: armors.yml
+  name: Grace Boots
+"1497":
+  file: armors.yml
+  name: Gorgeous Boots
+"1499":
+  file: armors.yml
+  name: Daisy Boots
+"1501":
+  file: armors.yml
+  name: Prato Boots
+"1503":
+  file: armors.yml
+  name: Shuema Boots
+"1505":
+  file: armors.yml
+  name: Keriphis Boots
+"1507":
+  file: armors.yml
+  name: Rufoen Boots
+"1509":
+  file: armors.yml
+  name: Godvean Boots
+"1511":
+  file: armors.yml
+  name: Darkomet Boots
+"1513":
+  file: armors.yml
+  name: Nirufy Boots
+"1515":
+  file: armors.yml
+  name: Saryeve Boots
+"1521":
+  file: armors.yml
+  name: Syner Boots
+"1523":
+  file: armors.yml
+  name: Vilet Boots
+"1525":
+  file: armors.yml
+  name: Phrinde Boots
+"1527":
+  file: armors.yml
+  name: Fethertin Boots
+"1529":
+  file: armors.yml
+  name: Redble Boots
+"1531":
+  file: armors.yml
+  name: Touflak Boots
+"1533":
+  file: armors.yml
+  name: Silven Boots
+"1535":
+  file: armors.yml
+  name: Henen Boots
+"1537":
+  file: armors.yml
+  name: Rokai Boots
+"1539":
+  file: armors.yml
+  name: Spacon Boots
+"1541":
+  file: armors.yml
+  name: Grantus Boots
+"1543":
+  file: armors.yml
+  name: Geiler Boots
+"1545":
+  file: armors.yml
+  name: Ruisil Boots
+"1551":
+  file: armors.yml
+  name: Syanto Boots
+"1553":
+  file: armors.yml
+  name: Vaindiec Boots
+"1555":
+  file: armors.yml
+  name: Phiatoic Boots
+"1557":
+  file: armors.yml
+  name: Ferbain Boots
+"1559":
+  file: armors.yml
+  name: Reandetal Boots
+"1561":
+  file: armors.yml
+  name: Touthyeto Boots
+"1563":
+  file: armors.yml
+  name: Silusia Boots
+"1565":
+  file: armors.yml
+  name: Heintis Boots
+"1567":
+  file: armors.yml
+  name: Rokhantia Boots
+"1569":
+  file: armors.yml
+  name: Spimel Boots
+"1571":
+  file: armors.yml
+  name: Grentio Boots
+"1573":
+  file: armors.yml
+  name: Gesanan Boots
+"1575":
+  file: armors.yml
+  name: Luses Boots
+"1584":
+  file: armors.yml
+  name: Breeze Boots
+"1585":
+  file: armors.yml
+  name: Gale Boots
+"1586":
+  file: armors.yml
+  name: Storm Boots
+"1587":
+  file: armors.yml
+  name: Cloud Boots
+"1589":
+  file: armors.yml
+  name: Saturn Boots
+"1591":
+  file: armors.yml
+  name: Beok Boots
+"1593":
+  file: armors.yml
+  name: Dian Boots
+"1595":
+  file: armors.yml
+  name: Mectic Boots
+"1597":
+  file: armors.yml
+  name: Havey Boots
+"1599":
+  file: armors.yml
+  name: Ferraol Boots
+"1601":
+  file: armors.yml
+  name: Oriene Boots
+"1603":
+  file: armors.yml
+  name: Phasleb Boots
+"1605":
+  file: armors.yml
+  name: Cupo Boots
+"1614":
+  file: armors.yml
+  name: Floral Boots
+"1615":
+  file: armors.yml
+  name: Iris Boots
+"1616":
+  file: armors.yml
+  name: Aster Boots
+"1617":
+  file: armors.yml
+  name: Lily Boots
+"1619":
+  file: armors.yml
+  name: Lavanda Boots
+"1621":
+  file: armors.yml
+  name: Sigel Boots
+"1623":
+  file: armors.yml
+  name: Vin Boots
+"1625":
+  file: armors.yml
+  name: Mecarine Boots
+"1627":
+  file: armors.yml
+  name: Hanel Boots
+"1629":
+  file: armors.yml
+  name: Festein Boots
+"1631":
+  file: armors.yml
+  name: Orgon Boots
+"1633":
+  file: armors.yml
+  name: Phaisel Boots
+"1635":
+  file: armors.yml
+  name: Cumel Boots
+"1644":
+  file: armors.yml
+  name: Dice Boots
+"1645":
+  file: armors.yml
+  name: Shuffle Boots
+"1646":
+  file: armors.yml
+  name: Coring Boots
+"1647":
+  file: armors.yml
+  name: Ditch Boots
+"1649":
+  file: armors.yml
+  name: Props Boots
+"1651":
+  file: armors.yml
+  name: Hagal Boots
+"1653":
+  file: armors.yml
+  name: Maclir Boots
+"1655":
+  file: armors.yml
+  name: Rendaic Boots
+"1657":
+  file: armors.yml
+  name: Khin Boots
+"1659":
+  file: armors.yml
+  name: Skypoon Boots
+"1661":
+  file: armors.yml
+  name: Uon Boots
+"1663":
+  file: armors.yml
+  name: Shurib Boots
+"1665":
+  file: armors.yml
+  name: Rhan Boots
+"1674":
+  file: armors.yml
+  name: Lux Boots
+"1675":
+  file: armors.yml
+  name: Jay Boots
+"1676":
+  file: armors.yml
+  name: Marble Boots
+"1677":
+  file: armors.yml
+  name: Mistic Boots
+"1679":
+  file: armors.yml
+  name: Moonshine Boots
+"1681":
+  file: armors.yml
+  name: Bluemoon Boots
+"1683":
+  file: armors.yml
+  name: Idunn Boots
+"1685":
+  file: armors.yml
+  name: Rensylien Boots
+"1687":
+  file: armors.yml
+  name: Khinyker Boots
+"1689":
+  file: armors.yml
+  name: Psephis Boots
+"1691":
+  file: armors.yml
+  name: Urante Boots
+"1693":
+  file: armors.yml
+  name: Sumifos Boots
+"1695":
+  file: armors.yml
+  name: Rhaneat Boots
+"1697":
+  file: armors.yml
+  name: Revantu Boots
+"1699":
+  file: armors.yml
+  name: Gricky Boots
+"1701":
+  file: armors.yml
+  name: Huedom Boots
+"1703":
+  file: armors.yml
+  name: Labon Boots
+"1705":
+  file: armors.yml
+  name: Redios Boots
+"1707":
+  file: armors.yml
+  name: Greynis Boots
+"1709":
+  file: armors.yml
+  name: Huaris Boots
+"1711":
+  file: armors.yml
+  name: Lavkeon Boots
+"1713":
+  file: armors.yml
+  name: Decasron Boots
+"1715":
+  file: armors.yml
+  name: Claien Boots
+"1717":
+  file: armors.yml
+  name: Mithril Boots
+"1719":
+  file: armors.yml
+  name: Branto Boots
+"1721":
+  file: armors.yml
+  name: Merian Boots
+"1723":
+  file: armors.yml
+  name: Violin Boots
+"1725":
+  file: armors.yml
+  name: Rhenia Boots
+"1727":
+  file: armors.yml
+  name: Hania Boots
+"1729":
+  file: armors.yml
+  name: Lordyin Boots
+"1731":
+  file: armors.yml
+  name: Venopy Boots
+"1733":
+  file: armors.yml
+  name: Snaic Boots
+"1735":
+  file: armors.yml
+  name: Hanei Boots
+"1737":
+  file: armors.yml
+  name: Lohendiff Boots
+"1739":
+  file: armors.yml
+  name: Venlrai Boots
+"1741":
+  file: armors.yml
+  name: Srehios Boots
+"1743":
+  file: armors.yml
+  name: Hanisbo Boots
+"1745":
+  file: armors.yml
+  name: Kaharn Boots
+"1747":
+  file: armors.yml
+  name: Hellieng Boots
+"1749":
+  file: armors.yml
+  name: Hyusein Boots
+"1751":
+  file: armors.yml
+  name: Phaharn Boots
+"1753":
+  file: armors.yml
+  name: Kafoneka Boots
+"1755":
+  file: armors.yml
+  name: Hellsinove Boots
+"1757":
+  file: armors.yml
+  name: Hyupirein Boots
+"1759":
+  file: armors.yml
+  name: Phahunin Boots
+"2001":
+  file: armors.yml
+  name: Green Shield
+"2003":
+  file: armors.yml
+  name: Round Shield
+"2005":
+  file: armors.yml
+  name: Sentinel Shield
+"2007":
+  file: armors.yml
+  name: Sparkle Shield
+"2009":
+  file: armors.yml
+  name: Shurain Shield
+"2011":
+  file: armors.yml
+  name: Gyro Shield
+"2013":
+  file: armors.yml
+  name: Vortex Shield
+"2015":
+  file: armors.yml
+  name: Plus Shield
+"2017":
+  file: armors.yml
+  name: Plate Shield
+"2019":
+  file: armors.yml
+  name: Kite Shield
+"2021":
+  file: armors.yml
+  name: Aster Shield
+"2023":
+  file: armors.yml
+  name: Comet Shield
+"2025":
+  file: armors.yml
+  name: Icicle Shield
+"2026":
+  file: materials.yml
+  name: Skill Poster
+"2027":
+  file: materials.yml
+  name: Bless Poster
+"2028":
+  file: materials.yml
+  name: Arrows
+"2029":
+  file: materials.yml
+  name: Diamond
+"2030":
+  file: materials.yml
+  name: Emerald
+"2031":
+  file: materials.yml
+  name: Sapphire
+"2032":
+  file: materials.yml
+  name: Ruby
+"2033":
+  file: materials.yml
+  name: Topaz
+"2034":
+  file: materials.yml
+  name: Shining Oricalkum
+"2035":
+  file: materials.yml
+  name: Sunstone
+"2036":
+  file: materials.yml
+  name: Moonstone
+"2037":
+  file: materials.yml
+  name: Diamond for Exp.
+"2038":
+  file: materials.yml
+  name: Emerald for Exp.
+"2039":
+  file: materials.yml
+  name: Sapphire for Exp.
+"2040":
+  file: materials.yml
+  name: Ruby for Exp.
+"2041":
+  file: materials.yml
+  name: Topaz for Exp.
+"2042":
+  file: materials.yml
+  name: Diamond for Reflecting Damage
+"2043":
+  file: materials.yml
+  name: Emerald for Reflecting Damage
+"2044":
+  file: materials.yml
+  name: Sapphire for Reflecting Damage
+"2045":
+  file: materials.yml
+  name: Ruby for Reflecting Damage
+"2046":
+  file: materials.yml
+  name: Topaz for Reflecting Damage
+"2047":
+  file: materials.yml
+  name: Diamond for Bloodsucking
+"2048":
+  file: materials.yml
+  name: Emerald for Bloodsucking
+"2049":
+  file: materials.yml
+  name: Sapphire for Bloodsucking
+"2050":
+  file: materials.yml
+  name: Ruby for Bloodsucking
+"2051":
+  file: materials.yml
+  name: Topaz for Bloodsucking
+"2052":
+  file: materials.yml
+  name: Harsh Damage Diamond
+"2053":
+  file: materials.yml
+  name: Harsh Damage Emerald
+"2054":
+  file: materials.yml
+  name: Harsh Damage Sapphire
+"2055":
+  file: materials.yml
+  name: Harsh Damage Ruby
+"2056":
+  file: materials.yml
+  name: Harsh Damage Topaz
+"2057":
+  file: materials.yml
+  name: Cruel Damage Diamond
+"2058":
+  file: materials.yml
+  name: Cruel Damage Emerald.
+"2059":
+  file: materials.yml
+  name: Cruel Damage Sapphire
+"2060":
+  file: materials.yml
+  name: Cruel Damage Ruby
+"2061":
+  file: materials.yml
+  name: Cruel Damage Topaz
+"2062":
+  file: materials.yml
+  name: Power Diamond
+"2063":
+  file: materials.yml
+  name: Power Emerald
+"2064":
+  file: materials.yml
+  name: Power Sapphire
+"2065":
+  file: materials.yml
+  name: Power Ruby
+"2066":
+  file: materials.yml
+  name: Power Topaz
+"2067":
+  file: materials.yml
+  name: Diamond of Strength
+"2068":
+  file: materials.yml
+  name: Emerald of Strength
+"2069":
+  file: materials.yml
+  name: Sapphire of Strength
+"2070":
+  file: materials.yml
+  name: Ruby of Strength
+"2071":
+  file: materials.yml
+  name: Topaz of Strength
+"2072":
+  file: materials.yml
+  name: Diamond of Dexterity
+"2073":
+  file: materials.yml
+  name: Emerald of Dexterity
+"2074":
+  file: materials.yml
+  name: Sapphire of Dexterity
+"2075":
+  file: materials.yml
+  name: Ruby of Dexterity
+"2076":
+  file: materials.yml
+  name: Topaz of Dexterity
+"2077":
+  file: materials.yml
+  name: Diamond of Intelligence
+"2078":
+  file: materials.yml
+  name: Emerald of Intelligence
+"2079":
+  file: materials.yml
+  name: Sapphire of Intelligence
+"2080":
+  file: materials.yml
+  name: Ruby of Intelligence
+"2081":
+  file: materials.yml
+  name: Topaz of Intelligence
+"2082":
+  file: materials.yml
+  name: Event Sunstone
+"2083":
+  file: materials.yml
+  name: Event Moonstone
+"2530":
+  file: materials.yml
+  name: First Refresher
+"2531":
+  file: materials.yml
+  name: Second Refresher
+"2532":
+  file: materials.yml
+  name: Third Refresher
+"2533":
+  file: materials.yml
+  name: Fourth Refresher
+"2534":
+  file: materials.yml
+  name: Fifth Refresher
+"2535":
+  file: materials.yml
+  name: Sixth Refresher
+"2536":
+  file: materials.yml
+  name: Seventh Refresher
+"2537":
+  file: materials.yml
+  name: Eighth Refresher
+"2538":
+  file: materials.yml
+  name: Ninth Refresher
+"2539":
+  file: materials.yml
+  name: Tenth Refresher
+"2540":
+  file: materials.yml
+  name: II_GEN_POT_POT_ANTIDOTE
+"2541":
+  file: materials.yml
+  name: Cure Disease Potion
+"2542":
+  file: materials.yml
+  name: Water Bottle
+"2543":
+  file: materials.yml
+  name: Oil Bottle
+"2544":
+  file: materials.yml
+  name: VitalDrink 100
+"2545":
+  file: materials.yml
+  name: VitalDrink 200
+"2546":
+  file: materials.yml
+  name: VitalDrink 300
+"2547":
+  file: materials.yml
+  name: VitalDrink 400
+"2548":
+  file: materials.yml
+  name: VitalDrink 500
+"2549":
+  file: materials.yml
+  name: VitalDrink 600
+"2550":
+  file: materials.yml
+  name: VitalDrink 700
+"2551":
+  file: materials.yml
+  name: VitalDrink 800
+"2552":
+  file: materials.yml
+  name: VitalDrink 900
+"2555":
+  file: materials.yml
+  name: Poison Immunity Potion
+"2560":
+  file: materials.yml
+  name: Demol Earring +1
+"2561":
+  file: materials.yml
+  name: Demol Earring +2
+"2562":
+  file: materials.yml
+  name: Demol Earring +3
+"2563":
+  file: materials.yml
+  name: Demol Earring +4
+"2564":
+  file: materials.yml
+  name: Demol Earring +5
+"2565":
+  file: materials.yml
+  name: Demol Earring +6
+"2566":
+  file: materials.yml
+  name: Plug Earring +1
+"2567":
+  file: materials.yml
+  name: Plug Earring +2
+"2568":
+  file: materials.yml
+  name: Plug Earring +3
+"2569":
+  file: materials.yml
+  name: Plug Earring +4
+"2570":
+  file: materials.yml
+  name: Plug Ear ring +5
+"2571":
+  file: materials.yml
+  name: Plug Ear ring +6
+"2578":
+  file: materials.yml
+  name: Gore Necklace +1
+"2579":
+  file: materials.yml
+  name: Gore Necklace +2
+"2580":
+  file: materials.yml
+  name: Gore Necklace +3
+"2581":
+  file: materials.yml
+  name: Gore Necklace +4
+"2582":
+  file: materials.yml
+  name: Gore Necklace +5
+"2583":
+  file: materials.yml
+  name: Gore Necklace +6
+"2584":
+  file: materials.yml
+  name: Mental Necklace +1
+"2585":
+  file: materials.yml
+  name: Mental Necklace +2
+"2586":
+  file: materials.yml
+  name: Mental Necklace +3
+"2587":
+  file: materials.yml
+  name: Mental Necklace +4
+"2588":
+  file: materials.yml
+  name: Mental Necklace +5
+"2589":
+  file: materials.yml
+  name: Mental Necklace +6
+"2590":
+  file: materials.yml
+  name: Peision Necklace +1
+"2591":
+  file: materials.yml
+  name: Peision Necklace +2
+"2592":
+  file: materials.yml
+  name: Peision Necklace +3
+"2593":
+  file: materials.yml
+  name: Peision Necklace +4
+"2594":
+  file: materials.yml
+  name: Peision Necklace +5
+"2595":
+  file: materials.yml
+  name: Peision Necklace +6
+"2596":
+  file: materials.yml
+  name: Vigorring +1
+"2597":
+  file: materials.yml
+  name: Vigorring +2
+"2598":
+  file: materials.yml
+  name: Vigorring +3
+"2599":
+  file: materials.yml
+  name: Vigorring +4
+"2600":
+  file: materials.yml
+  name: Vigorring +5
+"2601":
+  file: materials.yml
+  name: Vigorring +6
+"2602":
+  file: materials.yml
+  name: Intellring +1
+"2603":
+  file: materials.yml
+  name: Intellring +2
+"2604":
+  file: materials.yml
+  name: Intellring +3
+"2605":
+  file: materials.yml
+  name: Intellring +4
+"2606":
+  file: materials.yml
+  name: Intellring +5
+"2607":
+  file: materials.yml
+  name: Intellring +6
+"2608":
+  file: materials.yml
+  name: Arekring +1
+"2609":
+  file: materials.yml
+  name: Arekring +2
+"2610":
+  file: materials.yml
+  name: Arekring +3
+"2611":
+  file: materials.yml
+  name: Arekring +4
+"2612":
+  file: materials.yml
+  name: Arekring +5
+"2613":
+  file: materials.yml
+  name: Arekring +6
+"2614":
+  file: materials.yml
+  name: Stamring +1
+"2615":
+  file: materials.yml
+  name: Stamring +2
+"2616":
+  file: materials.yml
+  name: Stamring +3
+"2617":
+  file: materials.yml
+  name: Stamring +4
+"2618":
+  file: materials.yml
+  name: Stamring +5
+"2619":
+  file: materials.yml
+  name: Stamring +6
+"2701":
+  file: materials.yml
+  name: Mighteer+1
+"2702":
+  file: materials.yml
+  name: Mighteer+2
+"2703":
+  file: materials.yml
+  name: Mighteer+3
+"2704":
+  file: materials.yml
+  name: Penzeru+1
+"2705":
+  file: materials.yml
+  name: Penzeru+2
+"2706":
+  file: materials.yml
+  name: Penzeru+3
+"2707":
+  file: materials.yml
+  name: Speedo+1
+"2708":
+  file: materials.yml
+  name: Speedo+2
+"2709":
+  file: materials.yml
+  name: Speedo+3
+"2710":
+  file: materials.yml
+  name: Pep+1
+"2711":
+  file: materials.yml
+  name: Pep+2
+"2712":
+  file: materials.yml
+  name: Pep+3
+"2713":
+  file: materials.yml
+  name: Socecle+1
+"2714":
+  file: materials.yml
+  name: Socecle+2
+"2715":
+  file: materials.yml
+  name: Socecle+3
+"2716":
+  file: materials.yml
+  name: Enduky+1
+"2717":
+  file: materials.yml
+  name: Enduky+2
+"2718":
+  file: materials.yml
+  name: Enduky+3
+"2719":
+  file: materials.yml
+  name: Strente+1
+"2720":
+  file: materials.yml
+  name: Strente+2
+"2721":
+  file: materials.yml
+  name: Strente+3
+"2722":
+  file: materials.yml
+  name: Intiret+1
+"2723":
+  file: materials.yml
+  name: Intiret+2
+"2724":
+  file: materials.yml
+  name: Intiret+3
+"2725":
+  file: materials.yml
+  name: Dexion+1
+"2726":
+  file: materials.yml
+  name: Dexion+2
+"2727":
+  file: materials.yml
+  name: Dexion+3
+"2800":
+  file: materials.yml
+  name: Lollipop
+"2801":
+  file: materials.yml
+  name: Biscuit
+"2802":
+  file: materials.yml
+  name: Chocolate Bar
+"2803":
+  file: materials.yml
+  name: Milk
+"2804":
+  file: materials.yml
+  name: Roll Bread
+"2805":
+  file: materials.yml
+  name: Hot Dog
+"2806":
+  file: materials.yml
+  name: Meat Skewer
+"2807":
+  file: materials.yml
+  name: Barbecue
+"2808":
+  file: materials.yml
+  name: Seafood Pan Cake
+"2809":
+  file: materials.yml
+  name: Fish Soup
+"2810":
+  file: materials.yml
+  name: Sausage Casserole
+"2811":
+  file: materials.yml
+  name: Fish Stew
+"2812":
+  file: materials.yml
+  name: Steamed Seafood
+"2813":
+  file: materials.yml
+  name: Meat Salad
+"2814":
+  file: materials.yml
+  name: Gratin
+"2815":
+  file: materials.yml
+  name: Seafood Pizza
+"2816":
+  file: materials.yml
+  name: Orange Juice
+"2817":
+  file: materials.yml
+  name: Strawberry Shake
+"2818":
+  file: materials.yml
+  name: Pineapple Cone
+"2819":
+  file: materials.yml
+  name: Banana Jujubar
+"2820":
+  file: materials.yml
+  name: Fruit Juice
+"2821":
+  file: materials.yml
+  name: Fruit Icewater
+"2822":
+  file: materials.yml
+  name: Fruit Parfait
+"2823":
+  file: materials.yml
+  name: Fruit Sherbet
+"2824":
+  file: materials.yml
+  name: Icecream Cake
+"2825":
+  file: materials.yml
+  name: Fruit Punch
+"2826":
+  file: materials.yml
+  name: Super Hot Dog
+"2827":
+  file: materials.yml
+  name: Pizza
+"2828":
+  file: materials.yml
+  name: Kimbap
+"2829":
+  file: materials.yml
+  name: Chicken Stick
+"2830":
+  file: materials.yml
+  name: Star Candy
+"2892":
+  file: materials.yml
+  name: Gray Pill
+"2893":
+  file: materials.yml
+  name: Yellow Pill
+"2894":
+  file: materials.yml
+  name: Blue Pill
+"2895":
+  file: materials.yml
+  name: Red Pill
+"2896":
+  file: materials.yml
+  name: Gold Pill
+"2897":
+  file: materials.yml
+  name: Hot Ddukguk
+"2898":
+  file: materials.yml
+  name: Fresh Ddukguk
+"2899":
+  file: materials.yml
+  name: Sweet Ddukguk
+"2904":
+  file: consumables.yml
+  name: New Year's Bomb
+"2905":
+  file: consumables.yml
+  name: Fireshower
+"2906":
+  file: consumables.yml
+  name: Sulnal Bomb
+"2907":
+  file: consumables.yml
+  name: Goodbye Bomb
+"2908":
+  file: consumables.yml
+  name: Jack-O-Lantern Fireworks
+"2950":
+  file: materials.yml
+  name: Twinkle Stone
+"2951":
+  file: materials.yml
+  name: Forform
+"2952":
+  file: materials.yml
+  name: Palin
+"2953":
+  file: materials.yml
+  name: Chupim
+"2954":
+  file: materials.yml
+  name: Teddy Bear
+"2955":
+  file: materials.yml
+  name: Poporam
+"2956":
+  file: materials.yml
+  name: Fangs
+"2957":
+  file: materials.yml
+  name: Tarin Root
+"2958":
+  file: materials.yml
+  name: Star Stone
+"2959":
+  file: materials.yml
+  name: Golden Wing
+"2960":
+  file: materials.yml
+  name: Blue Honey
+"2961":
+  file: materials.yml
+  name: Cardrin
+"2962":
+  file: materials.yml
+  name: Furious Match
+"2963":
+  file: materials.yml
+  name: Crescent Stone
+"2964":
+  file: materials.yml
+  name: Kalin
+"2965":
+  file: materials.yml
+  name: Golden Fist
+"2966":
+  file: materials.yml
+  name: Orbrin
+"2967":
+  file: materials.yml
+  name: Golden Cup
+"2968":
+  file: materials.yml
+  name: Clock Heart
+"2969":
+  file: materials.yml
+  name: Mia Doll
+"2970":
+  file: materials.yml
+  name: Bearball
+"2971":
+  file: materials.yml
+  name: Ampere
+"2972":
+  file: materials.yml
+  name: Tomb Marble
+"2973":
+  file: materials.yml
+  name: Steam Tear
+"2974":
+  file: materials.yml
+  name: Peakyrind
+"2975":
+  file: materials.yml
+  name: Hammarble
+"2976":
+  file: materials.yml
+  name: Gigglande
+"2977":
+  file: materials.yml
+  name: Boband
+"2978":
+  file: materials.yml
+  name: Dumbling
+"2979":
+  file: materials.yml
+  name: Toma
+"2980":
+  file: materials.yml
+  name: Knightler
+"2981":
+  file: materials.yml
+  name: Wheeshoe
+"2982":
+  file: materials.yml
+  name: Droil
+"2983":
+  file: materials.yml
+  name: Guardieye
+"2984":
+  file: materials.yml
+  name: Garbageton
+"2985":
+  file: materials.yml
+  name: Eronior
+"2986":
+  file: materials.yml
+  name: Sycale
+"2987":
+  file: materials.yml
+  name: Mong Tear
+"2988":
+  file: materials.yml
+  name: Bomb Timer
+"2989":
+  file: materials.yml
+  name: Zem Mark
+"2990":
+  file: materials.yml
+  name: Nuctu-Wheel
+"2991":
+  file: materials.yml
+  name: Zombyhoe
+"2992":
+  file: materials.yml
+  name: Bucring
+"2993":
+  file: materials.yml
+  name: Scoptooth
+"2994":
+  file: materials.yml
+  name: Trangoggle
+"2995":
+  file: materials.yml
+  name: Flyclaw
+"2996":
+  file: materials.yml
+  name: Grrr Bandage
+"2997":
+  file: materials.yml
+  name: Dumptire
+"2998":
+  file: materials.yml
+  name: Repygle
+"2999":
+  file: materials.yml
+  name: Boopoison
+"3000":
+  file: materials.yml
+  name: Prewing
+"3001":
+  file: materials.yml
+  name: Poiespore
+"3002":
+  file: materials.yml
+  name: Renyken
+"3003":
+  file: materials.yml
+  name: Tangkask
+"3004":
+  file: materials.yml
+  name: Rootioe
+"3005":
+  file: materials.yml
+  name: Luchest
+"3006":
+  file: materials.yml
+  name: Eronsimint
+"3007":
+  file: materials.yml
+  name: Hammamer
+"3008":
+  file: materials.yml
+  name: Rnamond
+"3009":
+  file: materials.yml
+  name: Phanbubble
+"3010":
+  file: materials.yml
+  name: Furiscoop
+"3011":
+  file: materials.yml
+  name: Dragon Heart
+"3012":
+  file: materials.yml
+  name: Dragon Tooth
+"3013":
+  file: materials.yml
+  name: Mysterious eyeball
+"3014":
+  file: materials.yml
+  name: Cat Bell
+"3015":
+  file: materials.yml
+  name: Harpy Feather
+"3016":
+  file: materials.yml
+  name: Gullah Mud
+"3017":
+  file: materials.yml
+  name: Snake Tongue
+"3018":
+  file: materials.yml
+  name: Hague Nail
+"3019":
+  file: materials.yml
+  name: Tote Bill
+"3020":
+  file: materials.yml
+  name: Horn of Asterius
+"3021":
+  file: materials.yml
+  name: Magic Bead
+"3022":
+  file: materials.yml
+  name: Strange Ivory
+"3023":
+  file: materials.yml
+  name: Metal Heart
+"3024":
+  file: materials.yml
+  name: Big Nippers
+"3025":
+  file: materials.yml
+  name: Ink Pouch
+"3026":
+  file: materials.yml
+  name: Crab Shell
+"3027":
+  file: materials.yml
+  name: Crumbly Hair
+"3028":
+  file: materials.yml
+  name: Broken Wings
+"3029":
+  file: materials.yml
+  name: Great Crown
+"3030":
+  file: materials.yml
+  name: Sharp Canine
+"3031":
+  file: materials.yml
+  name: Keen Tooth
+"3032":
+  file: materials.yml
+  name: Gogloo
+"3033":
+  file: materials.yml
+  name: Poison Bag
+"3034":
+  file: materials.yml
+  name: Troglodon Sword
+"3035":
+  file: materials.yml
+  name: Bolo Necklace
+"3036":
+  file: materials.yml
+  name: Araknoid Flower
+"3037":
+  file: materials.yml
+  name: Reptilion Tooth
+"3038":
+  file: materials.yml
+  name: Slimy Ant Egg
+"3039":
+  file: materials.yml
+  name: Juicy Scorpede Leg
+"3040":
+  file: materials.yml
+  name: Swiss Cheese
+"3041":
+  file: materials.yml
+  name: Claw of Lykanos
+"3042":
+  file: materials.yml
+  name: Blood of Drakul
+"3043":
+  file: materials.yml
+  name: Cursed Slimy Ant Egg
+"3044":
+  file: materials.yml
+  name: Cursed Juicy Scorpede Leg
+"3045":
+  file: materials.yml
+  name: Cursed Swiss Cheese
+"3046":
+  file: materials.yml
+  name: Cursed Claw of Lykanos
+"3047":
+  file: materials.yml
+  name: Cursed Blood of Drakul
+"3048":
+  file: materials.yml
+  name: Gryphon Feather
+"3049":
+  file: materials.yml
+  name: Bone Scythe
+"3050":
+  file: materials.yml
+  name: Razor Scythe
+"3051":
+  file: materials.yml
+  name: Necromancy 101
+"3052":
+  file: materials.yml
+  name: Magic Orb of Darkness
+"3053":
+  file: materials.yml
+  name: Kheldor's Helm
+"3054":
+  file: materials.yml
+  name: Hellhound Tooth
+"3055":
+  file: materials.yml
+  name: Gladiator's Mantle
+"3056":
+  file: materials.yml
+  name: Pikeman's Skull
+"3057":
+  file: materials.yml
+  name: Staff Piece
+"3058":
+  file: materials.yml
+  name: Blade Piece
+"3059":
+  file: materials.yml
+  name: Warrior's Toolbox
+"3060":
+  file: materials.yml
+  name: General Razgul's Horn
+"3061":
+  file: materials.yml
+  name: Poison Canine
+"3062":
+  file: materials.yml
+  name: Cobra Skin
+"3063":
+  file: materials.yml
+  name: Soft Fur
+"3064":
+  file: materials.yml
+  name: Shattered Blade
+"3065":
+  file: materials.yml
+  name: Tribal Bracelet
+"3066":
+  file: materials.yml
+  name: Tribal Mask
+"3067":
+  file: materials.yml
+  name: Oversized Heart
+"3068":
+  file: materials.yml
+  name: Brilliant Poison Canine
+"3069":
+  file: materials.yml
+  name: Brilliant Cobra Skin
+"3070":
+  file: materials.yml
+  name: Brilliant Soft Fur
+"3071":
+  file: materials.yml
+  name: Brilliant Shattered Blade
+"3072":
+  file: materials.yml
+  name: Brilliant Tribal Bracelet
+"3073":
+  file: materials.yml
+  name: Brilliant Tribal Mask
+"3074":
+  file: materials.yml
+  name: Brilliant Oversized Heart
+"3200":
+  file: materials.yml
+  name: Mineral
+"3201":
+  file: materials.yml
+  name: Erons
+"3202":
+  file: materials.yml
+  name: Krasec
+"3203":
+  file: materials.yml
+  name: Guru
+"3204":
+  file: materials.yml
+  name: Volcano Card(2%)
+"3205":
+  file: materials.yml
+  name: Torch Card
+"3206":
+  file: materials.yml
+  name: Flame Card
+"3207":
+  file: materials.yml
+  name: Volcano Card(4%)
+"3208":
+  file: materials.yml
+  name: Volcano Card(7%)
+"3209":
+  file: materials.yml
+  name: Ocean Card(2%)
+"3210":
+  file: materials.yml
+  name: Lake Card
+"3211":
+  file: materials.yml
+  name: River Card
+"3212":
+  file: materials.yml
+  name: Ocean Card(4%)
+"3213":
+  file: materials.yml
+  name: Ocean Card(7%)
+"3214":
+  file: materials.yml
+  name: Lightning Card(2%)
+"3215":
+  file: materials.yml
+  name: Voltage Card
+"3216":
+  file: materials.yml
+  name: Generator Card
+"3217":
+  file: materials.yml
+  name: Lightning Card(4%)
+"3218":
+  file: materials.yml
+  name: Lightning Card(7%)
+"3219":
+  file: materials.yml
+  name: Earthquake Card(2%)
+"3220":
+  file: materials.yml
+  name: Stone Card
+"3221":
+  file: materials.yml
+  name: Desert Card
+"3222":
+  file: materials.yml
+  name: Earthquake Card(4%)
+"3223":
+  file: materials.yml
+  name: Earthquake Card(7%)
+"3224":
+  file: materials.yml
+  name: Vacuum Card(2%)
+"3225":
+  file: materials.yml
+  name: Gale Card
+"3226":
+  file: materials.yml
+  name: Cyclone Card
+"3227":
+  file: materials.yml
+  name: Vacuum Card(4%)
+"3228":
+  file: materials.yml
+  name: Vacuum Card(7%)
+"3229":
+  file: materials.yml
+  name: Power Dice 4
+"3230":
+  file: materials.yml
+  name: Power Dice 6
+"3231":
+  file: materials.yml
+  name: Power Dice 8
+"3232":
+  file: materials.yml
+  name: Power Dice 10
+"3233":
+  file: materials.yml
+  name: Power Dice 12
+"3235":
+  file: materials.yml
+  name: Low Mighty Dice
+"3236":
+  file: materials.yml
+  name: High Mighty Dice
+"3237":
+  file: materials.yml
+  name: Vuul Card
+"3238":
+  file: materials.yml
+  name: Vulcanus Card
+"3239":
+  file: materials.yml
+  name: Vulkan Card
+"3240":
+  file: materials.yml
+  name: Mountain Breeze Card
+"3241":
+  file: materials.yml
+  name: Mountain Wind Card
+"3242":
+  file: materials.yml
+  name: Mountain Valley Wind Card
+"3243":
+  file: materials.yml
+  name: Valley Wind Card
+"3244":
+  file: materials.yml
+  name: Dust Whirl Card
+"3245":
+  file: materials.yml
+  name: Geostrophic Wind Card
+"3246":
+  file: materials.yml
+  name: Vurkan Card
+"3247":
+  file: materials.yml
+  name: Tine Card
+"3248":
+  file: materials.yml
+  name: Tan Card
+"3249":
+  file: materials.yml
+  name: Microseism Card
+"3250":
+  file: materials.yml
+  name: Hypocenter Card
+"3251":
+  file: materials.yml
+  name: Epicenter Card
+"3252":
+  file: materials.yml
+  name: Moment Card
+"3253":
+  file: materials.yml
+  name: Rayleigh Card
+"3254":
+  file: materials.yml
+  name: Tsunami Card
+"3255":
+  file: materials.yml
+  name: Volcano Card(3%)
+"3256":
+  file: materials.yml
+  name: Ocean Card(3%)
+"3257":
+  file: materials.yml
+  name: Vacuum Card(3%)
+"3258":
+  file: materials.yml
+  name: Lightning Card(3%)
+"3259":
+  file: materials.yml
+  name: Earthquake Card(3%)
+"3500":
+  file: materials.yml
+  name: Sweam Card
+"3501":
+  file: materials.yml
+  name: Falm Card
+"3502":
+  file: materials.yml
+  name: Acap Card
+"3503":
+  file: materials.yml
+  name: Bilo Card
+"3504":
+  file: materials.yml
+  name: Adass Card
+"3505":
+  file: materials.yml
+  name: Reaba Card
+"3506":
+  file: materials.yml
+  name: Sikeki Card
+"3507":
+  file: materials.yml
+  name: Gosemi Card
+"3508":
+  file: materials.yml
+  name: Tilic Card
+"3509":
+  file: materials.yml
+  name: Pelss Card
+"3510":
+  file: materials.yml
+  name: Bukuri Card
+"3511":
+  file: materials.yml
+  name: Dhan Card
+"3512":
+  file: materials.yml
+  name: Ilabud Card
+"3513":
+  file: materials.yml
+  name: Grop Card
+"3514":
+  file: materials.yml
+  name: Pererty Card
+"3515":
+  file: materials.yml
+  name: Tper Card
+"3516":
+  file: materials.yml
+  name: Jemss Card
+"3517":
+  file: materials.yml
+  name: Tniss Card
+"3518":
+  file: materials.yml
+  name: Jedin Card
+"3519":
+  file: materials.yml
+  name: Hitar Card
+"3520":
+  file: materials.yml
+  name: Sunse Card
+"3521":
+  file: materials.yml
+  name: Sunhung Card
+"3522":
+  file: materials.yml
+  name: Whabe Card
+"3523":
+  file: materials.yml
+  name: Hachon Card
+"3524":
+  file: materials.yml
+  name: Buklu Card
+"3525":
+  file: materials.yml
+  name: Hosoo Card
+"3526":
+  file: materials.yml
+  name: Giha Card
+"3527":
+  file: materials.yml
+  name: Senmul Card
+"3528":
+  file: materials.yml
+  name: Bulmul Card
+"3529":
+  file: materials.yml
+  name: Gunmul Card
+"3530":
+  file: materials.yml
+  name: Munmul Card
+"3531":
+  file: materials.yml
+  name: Bodi Card
+"3532":
+  file: materials.yml
+  name: Gldiro Card
+"3600":
+  file: materials.yml
+  name: Couple Ring
+"3601":
+  file: materials.yml
+  name: Couples Ring
+"4000":
+  file: materials.yml
+  name: Collector
+"4001":
+  file: materials.yml
+  name: V3 Collector
+"4002":
+  file: materials.yml
+  name: Power  Collector
+"4003":
+  file: materials.yml
+  name: Ultra  Collector
+"4100":
+  file: materials.yml
+  name: Buff breaker
+"4400":
+  file: armors.yml
+  name: Goggles
+"4401":
+  file: armors.yml
+  name: Star Hair Band
+"4402":
+  file: armors.yml
+  name: Iron Mask
+"4403":
+  file: armors.yml
+  name: Butterfly Mask
+"4404":
+  file: armors.yml
+  name: Mushroom Hat
+"4405":
+  file: armors.yml
+  name: Warm Slippers
+"4406":
+  file: armors.yml
+  name: Santa Gloves (M)
+"4407":
+  file: armors.yml
+  name: Santa Hat (M)
+"4408":
+  file: armors.yml
+  name: Santa Shoes (M)
+"4409":
+  file: armors.yml
+  name: Santa Suit (M)
+"4410":
+  file: armors.yml
+  name: Santa Gloves (F)
+"4411":
+  file: armors.yml
+  name: Santa Hat (F)
+"4412":
+  file: armors.yml
+  name: Santa Shoes (F)
+"4413":
+  file: armors.yml
+  name: Santa Suit (F)
+"4414":
+  file: armors.yml
+  name: Rudolph Gloves (M)
+"4415":
+  file: armors.yml
+  name: Rudolph Hat (M)
+"4416":
+  file: armors.yml
+  name: Rudolph Shoes (M)
+"4417":
+  file: armors.yml
+  name: Rudolph Suit (M)
+"4418":
+  file: armors.yml
+  name: Rudolph Gloves (F)
+"4419":
+  file: armors.yml
+  name: Rudolph Hat (F)
+"4420":
+  file: armors.yml
+  name: Rudolph Shoes (F)
+"4421":
+  file: armors.yml
+  name: Rudolph Suit (F)
+"4422":
+  file: armors.yml
+  name: Shiny Glasses
+"4423":
+  file: armors.yml
+  name: Paco Mask
+"4424":
+  file: armors.yml
+  name: Foraim Mask
+"4425":
+  file: armors.yml
+  name: Carnival Mask
+"4426":
+  file: armors.yml
+  name: Bluebird Mask
+"4427":
+  file: armors.yml
+  name: Ponycat Mask
+"4428":
+  file: armors.yml
+  name: Sunglasses
+"4429":
+  file: armors.yml
+  name: Fortrin Mask
+"4430":
+  file: armors.yml
+  name: Bluenine Mask
+"4431":
+  file: armors.yml
+  name: Fucat Mask
+"4432":
+  file: armors.yml
+  name: Fashion Sunglasses (Red)
+"4433":
+  file: armors.yml
+  name: Fashion Sunglasses (Orange)
+"4434":
+  file: armors.yml
+  name: Fashion Sunglasses (Green)
+"4435":
+  file: armors.yml
+  name: Sunglasses (Black)
+"4436":
+  file: armors.yml
+  name: Sunglasses (White)
+"4437":
+  file: armors.yml
+  name: Sunglasses (Red)
+"4438":
+  file: armors.yml
+  name: Sunglasses (Blue)
+"4439":
+  file: armors.yml
+  name: Glasses (Red)
+"4440":
+  file: armors.yml
+  name: Glasses (Yellow)
+"4441":
+  file: armors.yml
+  name: Glasses (Black)
+"4442":
+  file: armors.yml
+  name: Glasses (Purple)
+"4443":
+  file: armors.yml
+  name: Glasses (Green)
+"4444":
+  file: armors.yml
+  name: Mini Glasses (White)
+"4445":
+  file: armors.yml
+  name: Mini Glasses (Red)
+"4446":
+  file: armors.yml
+  name: Mini Glasses (Blue)
+"4447":
+  file: armors.yml
+  name: Rimless Glasses (White)
+"4448":
+  file: armors.yml
+  name: Rimless Glasses (Blue)
+"4449":
+  file: armors.yml
+  name: Rimless Glasses (Purple)
+"4600":
+  file: armors.yml
+  name: Cloak Test
+"4601":
+  file: armors.yml
+  name: Blank Cloak
+"4602":
+  file: armors.yml
+  name: Cloak 01
+"4603":
+  file: armors.yml
+  name: Cloak 02
+"4604":
+  file: armors.yml
+  name: Cloak 03
+"4605":
+  file: armors.yml
+  name: Cloak 04
+"4606":
+  file: armors.yml
+  name: Cloak 05
+"4607":
+  file: armors.yml
+  name: Cloak 06
+"4608":
+  file: armors.yml
+  name: Cloak 07
+"4609":
+  file: armors.yml
+  name: Cloak 08
+"4610":
+  file: armors.yml
+  name: Cloak 09
+"4611":
+  file: armors.yml
+  name: Cloak 10
+"4612":
+  file: armors.yml
+  name: Cloak 11
+"4613":
+  file: armors.yml
+  name: Cloak 12
+"4614":
+  file: armors.yml
+  name: Cloak 13
+"4615":
+  file: armors.yml
+  name: Cloak 14
+"4616":
+  file: armors.yml
+  name: Cloak 15
+"4617":
+  file: armors.yml
+  name: Cloak 16
+"4618":
+  file: armors.yml
+  name: Cloak 17
+"4619":
+  file: armors.yml
+  name: Cloak 18
+"4620":
+  file: armors.yml
+  name: Cloak 19
+"4621":
+  file: armors.yml
+  name: Cloak 20
+"4700":
+  file: armors.yml
+  name: School Event Gift
+"4701":
+  file: armors.yml
+  name: Gaia Cloak
+"4702":
+  file: armors.yml
+  name: Dark Vader Cloak
+"4703":
+  file: armors.yml
+  name: Dragon Cloak of the Initiate
+"4704":
+  file: armors.yml
+  name: Dragon Cloak of the Adept
+"4705":
+  file: armors.yml
+  name: Dragon Cloak of the Master
+"4706":
+  file: armors.yml
+  name: Dragon Cloak of the Hero
+"4707":
+  file: armors.yml
+  name: Cloak of the Sea God
+"4708":
+  file: armors.yml
+  name: USA Flag Cloak
+"4709":
+  file: armors.yml
+  name: Chile Flag Cloak
+"4710":
+  file: armors.yml
+  name: European Union Flag Cloak
+"4711":
+  file: armors.yml
+  name: Japan Flag Cloak
+"4712":
+  file: armors.yml
+  name: Philippines Flag Cloak
+"4713":
+  file: armors.yml
+  name: Taiwan Flag Cloak
+"4714":
+  file: armors.yml
+  name: Thailand Flag Cloak
+"4715":
+  file: armors.yml
+  name: Brazil Flag Cloak
+"4716":
+  file: armors.yml
+  name: Canada Flag Cloak
+"4717":
+  file: armors.yml
+  name: Hong Kong Flag Cloak
+"4718":
+  file: armors.yml
+  name: Venezuela Flag Cloak
+"4719":
+  file: armors.yml
+  name: Cloak of Australia
+"4720":
+  file: armors.yml
+  name: Cloak of France
+"4721":
+  file: armors.yml
+  name: Cloak of United Kingdom
+"4722":
+  file: armors.yml
+  name: Cloak of Germany
+"4723":
+  file: armors.yml
+  name: Cloak of Italy
+"4724":
+  file: armors.yml
+  name: Cloak of Spain
+"4725":
+  file: armors.yml
+  name: Cloak of Argentina
+"4726":
+  file: armors.yml
+  name: Cloak of Columbia
+"4727":
+  file: armors.yml
+  name: Cloak of Mexico
+"4728":
+  file: armors.yml
+  name: Cloak of Peru
+"4729":
+  file: armors.yml
+  name: Star Sign Cloak (Aries)
+"4730":
+  file: armors.yml
+  name: Star Sign Cloak (Taurus)
+"4731":
+  file: armors.yml
+  name: Star Sign Cloak (Gemini)
+"4732":
+  file: armors.yml
+  name: Star Sign Cloak (Cancer)
+"4733":
+  file: armors.yml
+  name: Star Sign Cloak (Leo)
+"4734":
+  file: armors.yml
+  name: Star Sign Cloak (Virgo)
+"4735":
+  file: armors.yml
+  name: Star Sign Cloak (Libra)
+"4736":
+  file: armors.yml
+  name: Star Sign Cloak (Scorpion)
+"4737":
+  file: armors.yml
+  name: Star Sign Cloak (Sagittarius)
+"4738":
+  file: armors.yml
+  name: Star Sign Cloak (Capricorn)
+"4739":
+  file: armors.yml
+  name: Star Sign Cloak (Aquarius)
+"4740":
+  file: armors.yml
+  name: Star Sign Cloak (Pisces)
+"4741":
+  file: armors.yml
+  name: Star Sign Cloak (Serpent)
+"4742":
+  file: armors.yml
+  name: Cloak of Hero
+"4743":
+  file: armors.yml
+  name: Gaia Cloak(Bind)
+"4744":
+  file: armors.yml
+  name: Dragon Cloak of Challenge(Bind)
+"4745":
+  file: armors.yml
+  name: Dragon Cloak of Courage(Bind)
+"4746":
+  file: armors.yml
+  name: School Cloak(Untradable)
+"4748":
+  file: armors.yml
+  name: Dragon Cloak(Untradable)
+"4749":
+  file: armors.yml
+  name: Korea Cloak(Untradable)
+"4750":
+  file: armors.yml
+  name: Taeguk Cloak(Untradable)
+"4751":
+  file: armors.yml
+  name: Cloak of Russia
+"4752":
+  file: armors.yml
+  name: Cloak of Vietnam
+"4753":
+  file: armors.yml
+  name: Cloak of the Rat
+"4754":
+  file: armors.yml
+  name: Cloak of the Ox
+"4755":
+  file: armors.yml
+  name: Cloak of the Tiger
+"4756":
+  file: armors.yml
+  name: Cloak of the Rabbit
+"4757":
+  file: armors.yml
+  name: Cloak of the Dragon
+"4758":
+  file: armors.yml
+  name: Cloak of the Snake
+"4759":
+  file: armors.yml
+  name: Cloak of the Horse
+"4760":
+  file: armors.yml
+  name: Cloak of the Sheep
+"4761":
+  file: armors.yml
+  name: Cloak of the Monkey
+"4762":
+  file: armors.yml
+  name: Cloak of the Rooster
+"4763":
+  file: armors.yml
+  name: Cloak of the Dog
+"4764":
+  file: armors.yml
+  name: Cloak of the Pig
+"4765":
+  file: armors.yml
+  name: St. Patrick's Day Cloak
+"6320":
+  file: weapons.yml
+  name: Heart Stone
+"6321":
+  file: armors.yml
+  name: Bruce Lee Suit
+"6322":
+  file: armors.yml
+  name: Martial Arts Shoes
+"6323":
+  file: weapons.yml
+  name: Bruce Lee Fist
+"6324":
+  file: armors.yml
+  name: China Suit
+"6325":
+  file: armors.yml
+  name: China Gloves
+"6326":
+  file: armors.yml
+  name: China Shoes
+"6332":
+  file: materials.yml
+  name: Conepine Seed
+"6333":
+  file: materials.yml
+  name: Fir Seed
+"6334":
+  file: materials.yml
+  name: Persimmon Seed
+"6335":
+  file: materials.yml
+  name: Pear Seed
+"6336":
+  file: materials.yml
+  name: Pine Seed
+"6345":
+  file: armors.yml
+  name: Male Yukata
+"6346":
+  file: armors.yml
+  name: Male Zouri
+"6347":
+  file: armors.yml
+  name: Female Yukata
+"6348":
+  file: armors.yml
+  name: Female Zouri
+"6500":
+  file: weapons.yml
+  name: Kehin Sword
+"6501":
+  file: weapons.yml
+  name: Arkon Sword
+"6502":
+  file: weapons.yml
+  name: Zirkan Sword
+"6503":
+  file: weapons.yml
+  name: Strad Sword
+"6504":
+  file: weapons.yml
+  name: Sibak Sword
+"6505":
+  file: weapons.yml
+  name: Flam Sword
+"6506":
+  file: weapons.yml
+  name: Karmel Sword
+"6507":
+  file: weapons.yml
+  name: Sparkling Sword
+"6550":
+  file: weapons.yml
+  name: Meryl Stick
+"6551":
+  file: weapons.yml
+  name: Grim Stick
+"6552":
+  file: weapons.yml
+  name: PaPang Stick
+"6553":
+  file: weapons.yml
+  name: Dain Stick
+"6554":
+  file: weapons.yml
+  name: Sephy Stick
+"6555":
+  file: weapons.yml
+  name: Barem Stick
+"6556":
+  file: weapons.yml
+  name: Bosl Stick
+"6557":
+  file: weapons.yml
+  name: Hyper Stick
+"6600":
+  file: weapons.yml
+  name: Nefume Wand
+"6601":
+  file: weapons.yml
+  name: Dia Wand
+"6602":
+  file: weapons.yml
+  name: Dazzle Wand
+"6603":
+  file: weapons.yml
+  name: Peny Wand
+"6604":
+  file: weapons.yml
+  name: Eclipse Wand
+"6605":
+  file: weapons.yml
+  name: Fire Wand
+"6606":
+  file: weapons.yml
+  name: Saint Wand
+"6607":
+  file: weapons.yml
+  name: Rune Wand
+"6700":
+  file: weapons.yml
+  name: Shuprim Staff
+"6701":
+  file: weapons.yml
+  name: Vega Staff
+"6702":
+  file: weapons.yml
+  name: Papanew Staff
+"6703":
+  file: weapons.yml
+  name: Pinsi Staff
+"6704":
+  file: weapons.yml
+  name: Leafgale Staff
+"6705":
+  file: weapons.yml
+  name: Flam Staff
+"6706":
+  file: weapons.yml
+  name: Venhill Staff
+"6707":
+  file: weapons.yml
+  name: Sege Staff
+"6800":
+  file: weapons.yml
+  name: Pazion Knuckle
+"6801":
+  file: weapons.yml
+  name: Babil Knuckle
+"6802":
+  file: weapons.yml
+  name: Prenil Knuckle
+"6803":
+  file: weapons.yml
+  name: Salamander Knuckle
+"6804":
+  file: weapons.yml
+  name: Gigaton Knuckle
+"6805":
+  file: weapons.yml
+  name: Paipol Knuckle
+"6806":
+  file: weapons.yml
+  name: Appel Knuckle
+"6807":
+  file: weapons.yml
+  name: Zikmoon Knuckle
+"6900":
+  file: weapons.yml
+  name: Grabber Axe
+"6901":
+  file: weapons.yml
+  name: Karhem Axe
+"6902":
+  file: weapons.yml
+  name: Crest Axe
+"6903":
+  file: weapons.yml
+  name: Canine Axe
+"6904":
+  file: weapons.yml
+  name: Crawler Axe
+"6905":
+  file: weapons.yml
+  name: Drakhan Axe
+"6906":
+  file: weapons.yml
+  name: Frenetic Axe
+"6907":
+  file: weapons.yml
+  name: Critin Axe
+"7000":
+  file: armors.yml
+  name: Light Shield
+"7001":
+  file: armors.yml
+  name: Battle Shield
+"7002":
+  file: armors.yml
+  name: Fury Shield
+"7003":
+  file: armors.yml
+  name: Heavy Shield
+"7004":
+  file: armors.yml
+  name: Avalon Shield
+"7005":
+  file: armors.yml
+  name: Ancient Shield
+"8000":
+  file: weapons.yml
+  name: Penel Sword
+"8001":
+  file: weapons.yml
+  name: Crimson Sword
+"8002":
+  file: weapons.yml
+  name: Broad Sword
+"8003":
+  file: weapons.yml
+  name: Sirain Sword
+"8004":
+  file: weapons.yml
+  name: Crimson Sword
+"8005":
+  file: weapons.yml
+  name: Karlim Sword
+"8006":
+  file: weapons.yml
+  name: Gemini Sword
+"8007":
+  file: weapons.yml
+  name: Gore Sword
+"8008":
+  file: weapons.yml
+  name: Bravery Sword
+"8010":
+  file: weapons.yml
+  name: Cheer Stick Devotion
+"8011":
+  file: weapons.yml
+  name: Mule Wand
+"8013":
+  file: weapons.yml
+  name: Sewal Sword
+"8014":
+  file: weapons.yml
+  name: Mangchi Sword
+"8015":
+  file: weapons.yml
+  name: Pinocchio  Sword
+"8016":
+  file: weapons.yml
+  name: Emperor Sword
+"8017":
+  file: weapons.yml
+  name: Sniperrin Sword
+"8018":
+  file: weapons.yml
+  name: Nightmare Stick
+"8500":
+  file: armors.yml
+  name: Dunkan Helmet (M)
+"8501":
+  file: armors.yml
+  name: Dunkan Helmet (F)
+"8502":
+  file: armors.yml
+  name: Vagrant Suit (M)
+"8503":
+  file: armors.yml
+  name: Vagrant Suit (F)
+"8504":
+  file: materials.yml
+  name: VigorRing
+"8505":
+  file: materials.yml
+  name: IntellRing
+"8506":
+  file: materials.yml
+  name: StamRing
+"9000":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9001":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9002":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9003":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9004":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9005":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9006":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9007":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9008":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9009":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9010":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9011":
+  file: weapons.yml
+  name: "Mob Weapon: Aibatt"
+"9012":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9013":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9014":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9015":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9016":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9017":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9018":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9019":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9020":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9021":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9022":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9023":
+  file: weapons.yml
+  name: "Mob Weapon: Mushpang"
+"9024":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9025":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9026":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9027":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9028":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9029":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9030":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9031":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9032":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9033":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9034":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9035":
+  file: weapons.yml
+  name: "Mob Weapon: Burudeng"
+"9036":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9037":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9038":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9039":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9040":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9041":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9042":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9043":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9044":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9045":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9046":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9047":
+  file: weapons.yml
+  name: "Mob Weapon: Pukepuke"
+"9048":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9049":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9050":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9051":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9052":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9053":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9054":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9055":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9056":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9057":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9058":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9059":
+  file: weapons.yml
+  name: "Mob Weapon: Demian"
+"9060":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9061":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9062":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9063":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9064":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9065":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9066":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9067":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9068":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9069":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9070":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9071":
+  file: weapons.yml
+  name: "Mob Weapon: Doridoma"
+"9072":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9073":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9074":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9075":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9076":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9077":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9078":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9079":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9080":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9081":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9082":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9083":
+  file: weapons.yml
+  name: "Mob Weapon: Lawolf"
+"9084":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9085":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9086":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9087":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9088":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9089":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9090":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9091":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9092":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9093":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9094":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9095":
+  file: weapons.yml
+  name: "Mob Weapon: Fefern"
+"9096":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9097":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9098":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9099":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9100":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9101":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9102":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9103":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9104":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9105":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9106":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9107":
+  file: weapons.yml
+  name: "Mob Weapon: Nyang Nyang"
+"9108":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9109":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9110":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9111":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9112":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9113":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9114":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9115":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9116":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9117":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9118":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9119":
+  file: weapons.yml
+  name: "Mob Weapon: Bang"
+"9120":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9121":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9122":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9123":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9124":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9125":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9126":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9127":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9128":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9129":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9130":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9131":
+  file: weapons.yml
+  name: "Mob Weapon: Wagsaac"
+"9132":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9133":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9134":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9135":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9136":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9137":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9138":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9139":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9140":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9141":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9142":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9143":
+  file: weapons.yml
+  name: "Mob Weapon: Red Mantis"
+"9144":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9145":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9146":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9147":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9148":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9149":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9150":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9151":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9152":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9153":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9154":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9155":
+  file: weapons.yml
+  name: "Mob Weapon: Mr. Pumpkin"
+"9156":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9157":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9158":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9159":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9160":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9161":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9162":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9163":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9164":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9165":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9166":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9167":
+  file: weapons.yml
+  name: "Mob Weapon: Rock Muscle"
+"9168":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9169":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9170":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9171":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9172":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9173":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9174":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9175":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9176":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9177":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9178":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9179":
+  file: weapons.yml
+  name: "Mob Weapon: Totemia"
+"9180":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9181":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9182":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9183":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9184":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9185":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9186":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9187":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9188":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9189":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9190":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9191":
+  file: weapons.yml
+  name: "Mob Weapon: Basque"
+"9192":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9193":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9194":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9195":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9196":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9197":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9198":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9199":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9200":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9201":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9202":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9203":
+  file: weapons.yml
+  name: "Mob Weapon: Prankster"
+"9204":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9205":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9206":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9207":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9208":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9209":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9210":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9211":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9212":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9213":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9214":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9215":
+  file: weapons.yml
+  name: "Mob Weapon: Wheelem"
+"9216":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9217":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9218":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9219":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9220":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9221":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9222":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9223":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9224":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9225":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9226":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9227":
+  file: weapons.yml
+  name: "Mob Weapon: Card Puppet"
+"9228":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9229":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9230":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9231":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9232":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9233":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9234":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9235":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9236":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9237":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9238":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9239":
+  file: weapons.yml
+  name: "Mob Weapon: Tombstone"
+"9240":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9241":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9242":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9243":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9244":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9245":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9246":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9247":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9248":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9249":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9250":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9251":
+  file: weapons.yml
+  name: "Mob Weapon: Steamwalker"
+"9252":
+  file: weapons.yml
+  name: Mob Weapon
+"9253":
+  file: weapons.yml
+  name: Mob Weapon
+"9254":
+  file: weapons.yml
+  name: Mob Weapon
+"9255":
+  file: weapons.yml
+  name: Mob Weapon
+"9256":
+  file: weapons.yml
+  name: Mob Weapon
+"9257":
+  file: weapons.yml
+  name: Mob Weapon
+"9258":
+  file: weapons.yml
+  name: Mob Weapon
+"9259":
+  file: weapons.yml
+  name: Mob Weapon
+"9260":
+  file: weapons.yml
+  name: Mob Weapon
+"9261":
+  file: weapons.yml
+  name: Mob Weapon
+"9262":
+  file: weapons.yml
+  name: Mob Weapon
+"9263":
+  file: weapons.yml
+  name: Mob Weapon
+"9264":
+  file: weapons.yml
+  name: "Mob Weapon: Clockworks"
+"9265":
+  file: weapons.yml
+  name: "Mob Weapon: Clockworks"
+"9266":
+  file: weapons.yml
+  name: "Mob Weapon: Clockworks"
+"9267":
+  file: weapons.yml
+  name: "Mob Weapon: Clockworks"
+"9268":
+  file: weapons.yml
+  name: II_WEA_MOB_METEONYKER_ATK1
+"9269":
+  file: weapons.yml
+  name: II_WEA_MOB_METEONYKER_ATK2
+"9270":
+  file: weapons.yml
+  name: II_WEA_MOB_METEONYKER_ATK3
+"9271":
+  file: weapons.yml
+  name: II_WEA_MOB_METEONYKER_ATK4
+"9272":
+  file: weapons.yml
+  name: Skelton General Weapon 1
+"9273":
+  file: weapons.yml
+  name: Skelton General Weapon 2
+"9274":
+  file: weapons.yml
+  name: Skelton General Weapon 3
+"9275":
+  file: weapons.yml
+  name: Skelton Devil Weapon 1
+"9276":
+  file: weapons.yml
+  name: Skelton Devil Weapon 2
+"9277":
+  file: weapons.yml
+  name: Skelton Devil Weapon 3
+"10000":
+  file: armors.yml
+  name: Shamutra Helmet
+"10001":
+  file: armors.yml
+  name: Shamutra Suit
+"10002":
+  file: armors.yml
+  name: Shamutra Gauntlet
+"10003":
+  file: armors.yml
+  name: Shamutra Boots
+"10004":
+  file: armors.yml
+  name: Rashadain Helmet
+"10005":
+  file: armors.yml
+  name: Rashadain Suit
+"10006":
+  file: armors.yml
+  name: Rashadain Gauntlet
+"10007":
+  file: armors.yml
+  name: Rashadain Boots
+"10008":
+  file: armors.yml
+  name: Forgiel Helmet
+"10009":
+  file: armors.yml
+  name: Forgiel Suit
+"10010":
+  file: armors.yml
+  name: Forgiel Gauntlet
+"10011":
+  file: armors.yml
+  name: Forgiel Boots
+"10012":
+  file: armors.yml
+  name: Shaentra Helmet
+"10013":
+  file: armors.yml
+  name: Shaentra Suit
+"10014":
+  file: armors.yml
+  name: Shaentra Gauntlet
+"10015":
+  file: armors.yml
+  name: Shaentra Boots
+"10016":
+  file: armors.yml
+  name: Yuandain Helmet
+"10017":
+  file: armors.yml
+  name: Yuandain Suit
+"10018":
+  file: armors.yml
+  name: Yuandain Gauntlet
+"10019":
+  file: armors.yml
+  name: Yuandain Boots
+"10020":
+  file: armors.yml
+  name: Seidel Helmet
+"10021":
+  file: armors.yml
+  name: Seidel Suit
+"10022":
+  file: armors.yml
+  name: Seidel Gauntlet
+"10023":
+  file: armors.yml
+  name: Seidel Boots
+"10024":
+  file: armors.yml
+  name: Rorend Helmet
+"10025":
+  file: armors.yml
+  name: Rorend Suit
+"10026":
+  file: armors.yml
+  name: Rorend Gauntlet
+"10027":
+  file: armors.yml
+  name: Rorend Boots
+"10028":
+  file: armors.yml
+  name: Rorient Helmet
+"10029":
+  file: armors.yml
+  name: Rorient Suit
+"10030":
+  file: armors.yml
+  name: Rorient Gauntlet
+"10031":
+  file: armors.yml
+  name: Rorient Boots
+"10200":
+  file: weapons.yml
+  name: Dretra Sword
+"10201":
+  file: weapons.yml
+  name: Taytra Axe
+"10202":
+  file: weapons.yml
+  name: Yakshadain Stick
+"10203":
+  file: weapons.yml
+  name: Clrael Wand
+"10204":
+  file: weapons.yml
+  name: Shamerel Staff
+"10205":
+  file: weapons.yml
+  name: Yakadain Knuckle
+"10221":
+  file: consumables.yml
+  name: Rocket Cracker
+"10222":
+  file: consumables.yml
+  name: Heart Cracker
+"10224":
+  file: consumables.yml
+  name: Twister Cracker
+"10225":
+  file: materials.yml
+  name: Meteor
+"10226":
+  file: materials.yml
+  name: Meteofy
+"10255":
+  file: weapons.yml
+  name: Pre-BastardSword
+"10256":
+  file: weapons.yml
+  name: Pre-Shyer Sword
+"10257":
+  file: weapons.yml
+  name: Pre-Necrynzi Knuckle
+"10258":
+  file: weapons.yml
+  name: Pre-Shabere Stick
+"10259":
+  file: weapons.yml
+  name: Pre-Neplus Wand
+"10260":
+  file: weapons.yml
+  name: Pre-Birdin Staff
+"10261":
+  file: weapons.yml
+  name: Pericuum Sword
+"10262":
+  file: weapons.yml
+  name: Pericuum Axe
+"10263":
+  file: weapons.yml
+  name: Pericuum Stick
+"10264":
+  file: weapons.yml
+  name: Pericuum Knuckle
+"10265":
+  file: weapons.yml
+  name: Pericuum Wand
+"10266":
+  file: weapons.yml
+  name: Pericuum Staff
+"10273":
+  file: armors.yml
+  name: Cloak of Strong
+"10274":
+  file: armors.yml
+  name: Cloak of Accord
+"10275":
+  file: armors.yml
+  name: Cloak of Wisdom
+"10294":
+  file: armors.yml
+  name: Hileitine Shield
+"10295":
+  file: armors.yml
+  name: Coien Shield
+"10296":
+  file: armors.yml
+  name: Rukenshia Shield
+"10297":
+  file: armors.yml
+  name: Toeffin Shield
+"10298":
+  file: armors.yml
+  name: Catepo Shield
+"10299":
+  file: armors.yml
+  name: Blue Sailor Hat
+"10300":
+  file: armors.yml
+  name: Blue Sailor Suit
+"10301":
+  file: armors.yml
+  name: Blue Sailor Shoes
+"10302":
+  file: armors.yml
+  name: Loker Sailor Hat
+"10303":
+  file: armors.yml
+  name: Loker Sailor Suit
+"10304":
+  file: armors.yml
+  name: Loker Sailor Shoes
+"10305":
+  file: armors.yml
+  name: Green Sailor Hat
+"10306":
+  file: armors.yml
+  name: Green Sailor Suit
+"10307":
+  file: armors.yml
+  name: Green Sailor Shoes
+"10308":
+  file: armors.yml
+  name: Forkim Sailor Hat
+"10309":
+  file: armors.yml
+  name: Forkim Sailor Suit
+"10310":
+  file: armors.yml
+  name: Forkim Sailor Shoes
+"10311":
+  file: armors.yml
+  name: Morning Sailor Suit
+"10312":
+  file: armors.yml
+  name: Morning Sailor Shoes
+"10313":
+  file: armors.yml
+  name: Lin Sailor Suit
+"10314":
+  file: armors.yml
+  name: Lin Sailor Shoes
+"10315":
+  file: armors.yml
+  name: Nine Sailor Suit
+"10316":
+  file: armors.yml
+  name: Nine Sailor Shoes
+"10317":
+  file: armors.yml
+  name: Kertty Sailor Suit
+"10318":
+  file: armors.yml
+  name: Kertty Sailor Shoes
+"10319":
+  file: armors.yml
+  name: Formal School Hat
+"10320":
+  file: armors.yml
+  name: Formal School Suit
+"10321":
+  file: armors.yml
+  name: Formal School Gloves
+"10322":
+  file: armors.yml
+  name: Formal School Shoes
+"10323":
+  file: armors.yml
+  name: Dark Nurse Hat
+"10324":
+  file: armors.yml
+  name: Dark Nurse Suit
+"10325":
+  file: armors.yml
+  name: Dark Nurse Gloves
+"10326":
+  file: armors.yml
+  name: Dark Nurse Shoes
+"10327":
+  file: armors.yml
+  name: Bright Nurse Hat
+"10328":
+  file: armors.yml
+  name: Bright Nurse Suit
+"10329":
+  file: armors.yml
+  name: Bright Nurse Gloves
+"10330":
+  file: armors.yml
+  name: Bright Nurse Shoes
+"10331":
+  file: armors.yml
+  name: Catseon Hat
+"10332":
+  file: armors.yml
+  name: Catseon Suit
+"10333":
+  file: armors.yml
+  name: Catseon Gloves
+"10334":
+  file: armors.yml
+  name: Catseon Shoes
+"10335":
+  file: armors.yml
+  name: Catsin Hat
+"10336":
+  file: armors.yml
+  name: Catsin Suit
+"10337":
+  file: armors.yml
+  name: Catsin Gloves
+"10338":
+  file: armors.yml
+  name: Catsin Shoes
+"10339":
+  file: armors.yml
+  name: BunBun Hat
+"10340":
+  file: armors.yml
+  name: BunBun Suit
+"10341":
+  file: armors.yml
+  name: BunBun Gloves
+"10342":
+  file: armors.yml
+  name: BunBun Shoes
+"10343":
+  file: armors.yml
+  name: Baji Suit
+"10344":
+  file: armors.yml
+  name: Baji Shoes
+"10345":
+  file: armors.yml
+  name: Sakdong Hat
+"10346":
+  file: armors.yml
+  name: Sakdong Suit
+"10347":
+  file: armors.yml
+  name: Sakdong Shoes
+"10349":
+  file: materials.yml
+  name: Dungeon Tarin Root
+"10350":
+  file: materials.yml
+  name: Dungeon Star Stone
+"10351":
+  file: materials.yml
+  name: Dungeon Golden Wing
+"10352":
+  file: materials.yml
+  name: Hair of Wormveduque
+"10355":
+  file: materials.yml
+  name: Hair of Serus Uriel
+"10356":
+  file: weapons.yml
+  name: Tritium Sword
+"10357":
+  file: weapons.yml
+  name: Tritium Axe
+"10358":
+  file: weapons.yml
+  name: Tritium Stick
+"10359":
+  file: weapons.yml
+  name: Tritium Knuckle
+"10360":
+  file: weapons.yml
+  name: Tritium Wand
+"10361":
+  file: weapons.yml
+  name: Tritium Staff
+"10402":
+  file: materials.yml
+  name: Shubrin Ring
+"10408":
+  file: weapons.yml
+  name: Qurion Sword
+"10409":
+  file: weapons.yml
+  name: Qurion Axe
+"10410":
+  file: weapons.yml
+  name: Qurion Stick
+"10411":
+  file: weapons.yml
+  name: Qurion Knucle
+"10412":
+  file: weapons.yml
+  name: Qurion Wand
+"10413":
+  file: weapons.yml
+  name: Qurion Staff
+"10421":
+  file: materials.yml
+  name: Puran Necklace
+"10436":
+  file: materials.yml
+  name: ArekRing
+"10437":
+  file: weapons.yml
+  name: Tritium Yoyo
+"10438":
+  file: weapons.yml
+  name: Tritium Bow
+"10439":
+  file: weapons.yml
+  name: Qurion Yoyo
+"10440":
+  file: weapons.yml
+  name: Qurion Bow
+"10446":
+  file: materials.yml
+  name: Keakoon Worker Pike
+"10447":
+  file: materials.yml
+  name: Elite Keakoon Worker Peak
+"10448":
+  file: materials.yml
+  name: Mutant Keakoon Worker Peak
+"10449":
+  file: materials.yml
+  name: Keakoon Guard Sword
+"10450":
+  file: materials.yml
+  name: Elite Keakoon Guard Sword
+"10451":
+  file: materials.yml
+  name: Mutant Keakoon Guard Sword
+"10452":
+  file: materials.yml
+  name: Blue Roach Leg
+"10453":
+  file: materials.yml
+  name: Pink Roach Leg
+"10454":
+  file: materials.yml
+  name: Green Trillipy Shell
+"10455":
+  file: materials.yml
+  name: Violet Trillipy Shell
+"10456":
+  file: materials.yml
+  name: Blood Trillipy Shell
+"10457":
+  file: materials.yml
+  name: Chimeradon Horn
+"10481":
+  file: armors.yml
+  name: Cloak of Quick
+"10482":
+  file: armors.yml
+  name: Cloak of Low Strong
+"10483":
+  file: armors.yml
+  name: Cloak of Low Accord
+"10484":
+  file: armors.yml
+  name: Cloak of Low Quick
+"10485":
+  file: armors.yml
+  name: Cloak of Low Wisdom
+"15001":
+  file: armors.yml
+  name: Cloth Santa Hat (M)
+"15002":
+  file: armors.yml
+  name: Cloth Santa Suit (M)
+"15003":
+  file: armors.yml
+  name: Cloth Santa Gloves (M)
+"15004":
+  file: armors.yml
+  name: Cloth Santa Shoes (M)
+"15005":
+  file: armors.yml
+  name: Cloth Santa Hat (F)
+"15006":
+  file: armors.yml
+  name: Cloth Santa Suit (F)
+"15007":
+  file: armors.yml
+  name: Cloth Santa Shoes (f)
+"15008":
+  file: armors.yml
+  name: Dress Red Dress Gloves (F)
+"15009":
+  file: armors.yml
+  name: Blue Sailor Hat (M)
+"15010":
+  file: armors.yml
+  name: Blue Sailor Suit (M)
+"15011":
+  file: armors.yml
+  name: Blue Sailor Shoes (M)
+"15012":
+  file: armors.yml
+  name: Red Sailor Hat (M)
+"15013":
+  file: armors.yml
+  name: Red Sailor Suit (M)
+"15014":
+  file: armors.yml
+  name: Red Sailor Shoes (M)
+"15015":
+  file: armors.yml
+  name: Green Sailor Hat (M)
+"15016":
+  file: armors.yml
+  name: Green Sailor Suit (M)
+"15017":
+  file: armors.yml
+  name: Green Sailor Shoes (M)
+"15018":
+  file: armors.yml
+  name: Indigo Sailor Hat (M)
+"15019":
+  file: armors.yml
+  name: Indigo Sailor Suit (M)
+"15020":
+  file: armors.yml
+  name: Indigo Sailor Shoes (M)
+"15021":
+  file: armors.yml
+  name: Red Sailor Suit (F)
+"15022":
+  file: armors.yml
+  name: Red Sailor Shoes (F)
+"15023":
+  file: armors.yml
+  name: Indigo Sailor Suit (F)
+"15024":
+  file: armors.yml
+  name: Indigo Sailor Shoes (F)
+"15025":
+  file: armors.yml
+  name: Green Sailor Suit (F)
+"15026":
+  file: armors.yml
+  name: Green Sailor Shoes (F)
+"15027":
+  file: armors.yml
+  name: Blue Sailor Suit (F)
+"15028":
+  file: armors.yml
+  name: Blue Sailor Shoes(F)
+"15029":
+  file: armors.yml
+  name: Uniform Hat (M)
+"15030":
+  file: armors.yml
+  name: Uniform Suit (M)
+"15031":
+  file: armors.yml
+  name: Uniform Gloves (M)
+"15032":
+  file: armors.yml
+  name: Uniform Shoes (M)
+"15033":
+  file: armors.yml
+  name: Dark Nurse Hat (F)
+"15034":
+  file: armors.yml
+  name: Dark Nurse Suit (F)
+"15035":
+  file: armors.yml
+  name: Dark Nurse Gloves (F)
+"15036":
+  file: armors.yml
+  name: Dark Nurse Shoes (F)
+"15037":
+  file: armors.yml
+  name: Pink Nurse Hat (F)
+"15038":
+  file: armors.yml
+  name: Pink Nurse Suit (F)
+"15039":
+  file: armors.yml
+  name: Pink Nurse Gloves (F)
+"15040":
+  file: armors.yml
+  name: Pink Nurse Shoes (F)
+"15041":
+  file: armors.yml
+  name: Cats Hat (M)
+"15042":
+  file: armors.yml
+  name: Cats Suit (M)
+"15043":
+  file: armors.yml
+  name: Cats Gloves (M)
+"15044":
+  file: armors.yml
+  name: Cats Shoes (M)
+"15045":
+  file: armors.yml
+  name: Cats Hat (F)
+"15046":
+  file: armors.yml
+  name: Cats Suit (F)
+"15047":
+  file: armors.yml
+  name: Cats Gloves (F)
+"15048":
+  file: armors.yml
+  name: Cats Shoes (F)
+"15049":
+  file: armors.yml
+  name: Bunny Hat (F)
+"15050":
+  file: armors.yml
+  name: Bunny Suit (F)
+"15051":
+  file: armors.yml
+  name: Bunny Gloves (F)
+"15052":
+  file: armors.yml
+  name: Bunny Shoes (F)
+"15053":
+  file: armors.yml
+  name: Hanbok Suit (M)
+"15054":
+  file: armors.yml
+  name: Hanbok Shoes (M)
+"15055":
+  file: armors.yml
+  name: Hanbok Hat (F)
+"15056":
+  file: armors.yml
+  name: Hanbok Suit (F)
+"15057":
+  file: armors.yml
+  name: Hanbok Shoes (F)
+"15058":
+  file: armors.yml
+  name: Santa Hat (M)
+"15059":
+  file: armors.yml
+  name: Santa Suit (M)
+"15060":
+  file: armors.yml
+  name: Santa Gloves (M)
+"15061":
+  file: armors.yml
+  name: Santa Shoes (M)
+"15062":
+  file: armors.yml
+  name: Santa Hat (F)
+"15063":
+  file: armors.yml
+  name: Santa Suit (F)
+"15064":
+  file: armors.yml
+  name: Santa Gloves (F)
+"15065":
+  file: armors.yml
+  name: Santa Shoes (F)
+"15066":
+  file: armors.yml
+  name: Rudolph Hat (M)
+"15067":
+  file: armors.yml
+  name: Rudolph Suit (M)
+"15068":
+  file: armors.yml
+  name: Rudolph Gloves (M)
+"15069":
+  file: armors.yml
+  name: Rudolph Shoes (M)
+"15070":
+  file: armors.yml
+  name: Rudolph Hat (F)
+"15071":
+  file: armors.yml
+  name: Rudolph Suit (F)
+"15072":
+  file: armors.yml
+  name: Rudolph Gloves (F)
+"15073":
+  file: armors.yml
+  name: Rudolph Shoes (F)
+"15074":
+  file: armors.yml
+  name: Yukata (M)
+"15075":
+  file: armors.yml
+  name: Geta Shoes (M)
+"15076":
+  file: armors.yml
+  name: Yukata (F)
+"15077":
+  file: armors.yml
+  name: Geta Shoes (F)
+"15078":
+  file: armors.yml
+  name: Bruce Suit (M)
+"15079":
+  file: armors.yml
+  name: Bruce Shoes (M)
+"15080":
+  file: armors.yml
+  name: Chapao Suit (F)
+"15081":
+  file: armors.yml
+  name: Chapao Bracelet (F)
+"15082":
+  file: armors.yml
+  name: Chapao Shoes (F)
+"15138":
+  file: armors.yml
+  name: Gray Tuxedo Suit (M)
+"15139":
+  file: armors.yml
+  name: Tuxedo Gloves (M)
+"15140":
+  file: armors.yml
+  name: Gray Tuxedo Shoes (M)
+"15141":
+  file: armors.yml
+  name: Black Tuxedo suit (M)
+"15142":
+  file: armors.yml
+  name: Black Tuxedo Gloves (M)
+"15143":
+  file: armors.yml
+  name: Black Tuxedo shoes (M)
+"15145":
+  file: armors.yml
+  name: Brown Tuxedo Suit (M)
+"15146":
+  file: armors.yml
+  name: Brown Tuxedo Gloves (M)
+"15147":
+  file: armors.yml
+  name: Brown Tuxedo Shoes (M)
+"15148":
+  file: armors.yml
+  name: Pink Dress Hat (F)
+"15149":
+  file: armors.yml
+  name: Pink Dress Suit (F)
+"15150":
+  file: armors.yml
+  name: Pink Dress Gloves (F)
+"15151":
+  file: armors.yml
+  name: Pink Dress Shoes (F)
+"15152":
+  file: armors.yml
+  name: Dress Red Hat (F)
+"15153":
+  file: armors.yml
+  name: Red Dress Suit (F)
+"15154":
+  file: armors.yml
+  name: Red Dress Gloves (F)
+"15155":
+  file: armors.yml
+  name: Red Dress Shoes (F)
+"15156":
+  file: armors.yml
+  name: Green Dress Hat (F)
+"15157":
+  file: armors.yml
+  name: Green Dress Suit (F)
+"15158":
+  file: armors.yml
+  name: Green Dress Gloves (F)
+"15159":
+  file: armors.yml
+  name: Green Dress Shoes (F)
+"15160":
+  file: armors.yml
+  name: Police Hat (M)
+"15161":
+  file: armors.yml
+  name: Police Suit (M)
+"15162":
+  file: armors.yml
+  name: Police Gloves (M)
+"15163":
+  file: armors.yml
+  name: Police Shoes (M)
+"15164":
+  file: armors.yml
+  name: Police Hat (F)
+"15165":
+  file: armors.yml
+  name: Police Suit (F)
+"15166":
+  file: armors.yml
+  name: Police Gloves (F)
+"15167":
+  file: armors.yml
+  name: Police Shoes (F)
+"15206":
+  file: armors.yml
+  name: Dark Vader Hat (M)
+"15207":
+  file: armors.yml
+  name: Dark Vader Suit (M)
+"15208":
+  file: armors.yml
+  name: Dark Vader Gloves (M)
+"15209":
+  file: armors.yml
+  name: Dark Vader Shoes (M)
+"15210":
+  file: armors.yml
+  name: Dark Vader Hat (F)
+"15211":
+  file: armors.yml
+  name: Dark Vader Suit (F)
+"15212":
+  file: armors.yml
+  name: Dark Vader Gloves (F)
+"15213":
+  file: armors.yml
+  name: Dark Vader Shoes (F)
+"15216":
+  file: armors.yml
+  name: Witch School Hat (F)
+"15217":
+  file: armors.yml
+  name: Witch School Suit (F)
+"15218":
+  file: armors.yml
+  name: Witch School Shoes (F)
+"16170":
+  file: armors.yml
+  name: Turban (F)
+"16171":
+  file: armors.yml
+  name: Turban (M)
+"16172":
+  file: armors.yml
+  name: Fool Glasses
+"16173":
+  file: armors.yml
+  name: Ball Mask 09
+"16179":
+  file: armors.yml
+  name: Devil Hairband
+"16180":
+  file: armors.yml
+  name: Angel Hairband
+"16181":
+  file: armors.yml
+  name: Queen of Hearts Hat (F)
+"16182":
+  file: armors.yml
+  name: Queen of Hearts (F)
+"16183":
+  file: armors.yml
+  name: Queen of Hearts Shoes (F)
+"16185":
+  file: armors.yml
+  name: Dressed Up Hat (F)
+"16186":
+  file: armors.yml
+  name: Dressed Up Suit (F)
+"16187":
+  file: armors.yml
+  name: Dressed Up Gloves (F)
+"16188":
+  file: armors.yml
+  name: Dress Girl Shoes (F)
+"16190":
+  file: armors.yml
+  name: Ninja Hat (F)
+"16191":
+  file: armors.yml
+  name: Ninja Suit (F)
+"16192":
+  file: armors.yml
+  name: Ninja Gloves (F)
+"16193":
+  file: armors.yml
+  name: Ninja Shoes (F)
+"16195":
+  file: armors.yml
+  name: Ninja Hat (M)
+"16196":
+  file: armors.yml
+  name: Ninja Suit (M)
+"16197":
+  file: armors.yml
+  name: Ninja Gloves (M)
+"16198":
+  file: armors.yml
+  name: Ninja Shoes (M)
+"16200":
+  file: armors.yml
+  name: Uniform EX Suit (M)
+"16201":
+  file: armors.yml
+  name: Uniform EX Gloves (M)
+"16202":
+  file: armors.yml
+  name: Uniform EX Shoes (M)
+"16204":
+  file: armors.yml
+  name: Uniform EX Suit (F)
+"16205":
+  file: armors.yml
+  name: Uniform EX Gloves (F)
+"16206":
+  file: armors.yml
+  name: Uniform EX Shoes (F)
+"16208":
+  file: armors.yml
+  name: Maid Hat (F)
+"16209":
+  file: armors.yml
+  name: Maid Suit (F)
+"16210":
+  file: armors.yml
+  name: Maid Gloves (F)
+"16211":
+  file: armors.yml
+  name: Maid Shoes (F)
+"16213":
+  file: armors.yml
+  name: Spy Hat (M)
+"16214":
+  file: armors.yml
+  name: Spy Suit (M)
+"16215":
+  file: armors.yml
+  name: Spy Gloves (M)
+"16216":
+  file: armors.yml
+  name: Spy Shoes (M)
+"16218":
+  file: armors.yml
+  name: Spy Hat (F)
+"16219":
+  file: armors.yml
+  name: Spy Suit (F)
+"16220":
+  file: armors.yml
+  name: Spy Gloves (F)
+"16221":
+  file: armors.yml
+  name: Spy Shoes (F)
+"16223":
+  file: armors.yml
+  name: Red Soccer Uniform (M)
+"16224":
+  file: armors.yml
+  name: Blue Soccer Shoes (M)
+"16226":
+  file: armors.yml
+  name: Red Soccer Uniform (F)
+"16227":
+  file: armors.yml
+  name: Blue Soccer Shoes (F)
+"16229":
+  file: armors.yml
+  name: White Soccer Uniform (M)
+"16230":
+  file: armors.yml
+  name: Red Soccer Shoes (M)
+"16232":
+  file: armors.yml
+  name: White Soccer Uniform (F)
+"16233":
+  file: armors.yml
+  name: Red Soccer Shoes (F)
+"16235":
+  file: armors.yml
+  name: Blue Soccer Uniform (M)
+"16236":
+  file: armors.yml
+  name: White Soccer Shoes (M)
+"16238":
+  file: armors.yml
+  name: Blue Soccer Uniform (F)
+"16239":
+  file: armors.yml
+  name: White Soccer Shoes (F)
+"16241":
+  file: armors.yml
+  name: Yukata 2006 (M)
+"16242":
+  file: armors.yml
+  name: Geta 2006 (M)
+"16244":
+  file: armors.yml
+  name: Yukata 2006 (F)
+"16245":
+  file: armors.yml
+  name: Geta 2006 (F)
+"16253":
+  file: armors.yml
+  name: Swimwear (M)
+"16254":
+  file: armors.yml
+  name: Swimwear (F)
+"16255":
+  file: armors.yml
+  name: Slipper (M)
+"16256":
+  file: armors.yml
+  name: Slipper (F)
+"16275":
+  file: armors.yml
+  name: Skeleton Mask (M)
+"16276":
+  file: armors.yml
+  name: Skeleton Suit (M)
+"16277":
+  file: armors.yml
+  name: Skeleton Shoes (M)
+"16279":
+  file: armors.yml
+  name: Skeleton Mask (F)
+"16280":
+  file: armors.yml
+  name: Skeleton Suit (F)
+"16281":
+  file: armors.yml
+  name: Skeleton Shoes (F)
+"16283":
+  file: armors.yml
+  name: Skeleton Gloves (M)
+"16284":
+  file: armors.yml
+  name: Skeleton Gloves (F) Gloves
+"16285":
+  file: armors.yml
+  name: Clown Hat (M)
+"16286":
+  file: armors.yml
+  name: Clown Suit (M)
+"16287":
+  file: armors.yml
+  name: Clown Shoes (M)
+"16289":
+  file: armors.yml
+  name: Superhero Cloak (M)
+"16290":
+  file: armors.yml
+  name: Superhero Suit (M)
+"16291":
+  file: armors.yml
+  name: Superhero Gloves (M)
+"16292":
+  file: armors.yml
+  name: Superhero Shoes (M)
+"16294":
+  file: armors.yml
+  name: Superhero Headband (F)
+"16295":
+  file: armors.yml
+  name: Superhero Suit (F)
+"16296":
+  file: armors.yml
+  name: Superhero Gloves (F)
+"16297":
+  file: armors.yml
+  name: Superhero Shoes (F)
+"16299":
+  file: armors.yml
+  name: Sinbad Turban (M)
+"16302":
+  file: armors.yml
+  name: Sinbad Suit (M)
+"16303":
+  file: armors.yml
+  name: Sinbad Shoes (M)
+"16305":
+  file: armors.yml
+  name: Sinbad Veil (F)
+"16306":
+  file: armors.yml
+  name: Sinbad Suit (F)
+"16307":
+  file: armors.yml
+  name: Sinbad Shoes (F)
+"16309":
+  file: armors.yml
+  name: Snowboarder Hat (M) Hat
+"16310":
+  file: armors.yml
+  name: Snowboarder Suit (M)
+"16311":
+  file: armors.yml
+  name: Snowboarder Gloves (M)
+"16312":
+  file: armors.yml
+  name: Snowboarder Shoes (M)
+"16314":
+  file: armors.yml
+  name: Snowboarder Hat (F)
+"16315":
+  file: armors.yml
+  name: Snowboarder Suit (F)
+"16316":
+  file: armors.yml
+  name: Snowboarder Gloves (F)
+"16317":
+  file: armors.yml
+  name: Snowboarder Shoes (F)
+"16321":
+  file: armors.yml
+  name: Snowman Hat (M)
+"16322":
+  file: armors.yml
+  name: Snowman Suit (M)
+"16323":
+  file: armors.yml
+  name: Snowman Gloves (M)
+"16324":
+  file: armors.yml
+  name: Snowman Shoes (M)
+"16326":
+  file: armors.yml
+  name: Snowman Hat (F)
+"16327":
+  file: armors.yml
+  name: Snowman Suit (F)
+"16328":
+  file: armors.yml
+  name: Snowman Gloves (F)
+"16329":
+  file: armors.yml
+  name: Snowman Shoes (F)
+"16331":
+  file: armors.yml
+  name: Frog Hat (M)
+"16332":
+  file: armors.yml
+  name: Frog Suit (M)
+"16333":
+  file: armors.yml
+  name: Frog Gloves (M)
+"16334":
+  file: armors.yml
+  name: Frog Shoes (M)
+"16336":
+  file: armors.yml
+  name: Frog Hat (F)
+"16337":
+  file: armors.yml
+  name: Frog Suit (F)
+"16338":
+  file: armors.yml
+  name: Frog Gloves (F)
+"16339":
+  file: armors.yml
+  name: Frog Shoes (F)
+"16341":
+  file: armors.yml
+  name: Lamb Hat (M)
+"16342":
+  file: armors.yml
+  name: Lamb Suit (M)
+"16343":
+  file: armors.yml
+  name: Lamb Gloves (M)
+"16344":
+  file: armors.yml
+  name: Lamb Shoes (M)
+"16346":
+  file: armors.yml
+  name: Lamb Hat (F)
+"16347":
+  file: armors.yml
+  name: Lamb Suit (F) Suit
+"16348":
+  file: armors.yml
+  name: Lamb Gloves (F)
+"16349":
+  file: armors.yml
+  name: Lamb Shoes (F)
+"16351":
+  file: armors.yml
+  name: Teddy Bear Hat (M)
+"16352":
+  file: armors.yml
+  name: Teddy Bear Suit (M)
+"16353":
+  file: armors.yml
+  name: Teddy Bear Gloves (M)
+"16354":
+  file: armors.yml
+  name: Teddy Bear Shoes (M)
+"16356":
+  file: armors.yml
+  name: Teddy Bear Hat (F)
+"16357":
+  file: armors.yml
+  name: Teddy Bear Suit (F)
+"16358":
+  file: armors.yml
+  name: Teddy Bear Gloves ( F)
+"16359":
+  file: armors.yml
+  name: Teddy Bear Shoes (F)
+"16361":
+  file: armors.yml
+  name: Bodyguard(M) Suit
+"16362":
+  file: armors.yml
+  name: Bodyguard(M) Shoes
+"16364":
+  file: armors.yml
+  name: Bodyguard(F) Suit
+"16365":
+  file: armors.yml
+  name: Bodyguard(F) Shoes
+"16367":
+  file: armors.yml
+  name: Samurai(M) Hat
+"16368":
+  file: armors.yml
+  name: Samurai(M) Suit
+"16369":
+  file: armors.yml
+  name: Samurai(M) Gloves
+"16370":
+  file: armors.yml
+  name: Samurai(M) Shoes
+"16372":
+  file: armors.yml
+  name: Samurai(F) Hat
+"16373":
+  file: armors.yml
+  name: Samurai(F) Suit
+"16374":
+  file: armors.yml
+  name: Samurai(F) Gloves
+"16375":
+  file: armors.yml
+  name: Samurai(F) Shoes
+"16377":
+  file: armors.yml
+  name: Sexy Hanbok Hat
+"16378":
+  file: armors.yml
+  name: Sexy Hanbok Suit
+"16379":
+  file: armors.yml
+  name: Sexy Hanbok Shoes
+"16381":
+  file: armors.yml
+  name: Muaythai (M) Hat
+"16382":
+  file: armors.yml
+  name: Muaythai (M) Suit
+"16383":
+  file: armors.yml
+  name: Muaythai (M) Gloves
+"16384":
+  file: armors.yml
+  name: Muaythai (M) Shoes
+"16386":
+  file: armors.yml
+  name: Muaythai (F) Hat
+"16387":
+  file: armors.yml
+  name: Muaythai (F) Suit
+"16388":
+  file: armors.yml
+  name: Muaythai (F) Gloves
+"16389":
+  file: armors.yml
+  name: Muaythai (F) Shoes
+"16391":
+  file: armors.yml
+  name: Pirate (M) Hat
+"16392":
+  file: armors.yml
+  name: Pirate (M) Suit
+"16393":
+  file: armors.yml
+  name: Pirate (M) Shoes
+"16395":
+  file: armors.yml
+  name: Pirate (F) Hat
+"16396":
+  file: armors.yml
+  name: Pirate (F) Suit
+"16397":
+  file: armors.yml
+  name: Pirate (F) Shoes
+"16499":
+  file: armors.yml
+  name: Vampire (M) Hat
+"16500":
+  file: armors.yml
+  name: Vampire (M) Suit
+"16501":
+  file: armors.yml
+  name: Vampire (M) Gloves
+"16502":
+  file: armors.yml
+  name: Vampire (M) Shoes
+"16504":
+  file: armors.yml
+  name: Vampire (F) Hat
+"16505":
+  file: armors.yml
+  name: Vampire (F) Suit
+"16506":
+  file: armors.yml
+  name: Vampire (F) Gloves
+"16507":
+  file: armors.yml
+  name: Vampire (F) Shoes
+"16509":
+  file: armors.yml
+  name: Kang shi (M) Hat
+"16510":
+  file: armors.yml
+  name: Kang shi (M) Suit
+"16511":
+  file: armors.yml
+  name: Kang shi (M) Shoes
+"16513":
+  file: armors.yml
+  name: Kang shi (F) Hat
+"16514":
+  file: armors.yml
+  name: Kang shi (F) Suit
+"16515":
+  file: armors.yml
+  name: Kang shi (F) Shoes
+"16517":
+  file: armors.yml
+  name: Royal Cook (M) Hat
+"16518":
+  file: armors.yml
+  name: Royal Cook (M) Suit
+"16519":
+  file: armors.yml
+  name: Royal Cook (M) Shoes
+"16521":
+  file: armors.yml
+  name: Royal Cook (F) Hat
+"16522":
+  file: armors.yml
+  name: Royal Cook (F) Suit
+"16523":
+  file: armors.yml
+  name: Royal Cook( F) Shoes
+"16525":
+  file: armors.yml
+  name: Madrigal Guardian (M) Blue Helmet
+"16526":
+  file: armors.yml
+  name: Madrigal Guardian (M) Blue Suit
+"16527":
+  file: armors.yml
+  name: Madrigal Guardian (M) Blue Gloves
+"16528":
+  file: armors.yml
+  name: Madrigal Guardian (M) Blue Boots
+"16530":
+  file: armors.yml
+  name: Madrigal Guardian (F) Blue Helmet
+"16531":
+  file: armors.yml
+  name: Madrigal Guardian (F) Blue Suit
+"16532":
+  file: armors.yml
+  name: Madrigal Guardian (F) Blue Gloves
+"16533":
+  file: armors.yml
+  name: Madrigal Guardian (F) Blue Boots
+"16535":
+  file: armors.yml
+  name: Madrigal Guardian (M) Red Helmet
+"16536":
+  file: armors.yml
+  name: Madrigal Guardian (M) Red Suit
+"16537":
+  file: armors.yml
+  name: Madrigal Guardian (M) Red Gloves
+"16538":
+  file: armors.yml
+  name: Madrigal Guardian (M) Red Boots
+"16540":
+  file: armors.yml
+  name: Madrigal Guardian (F) Red Helmet
+"16541":
+  file: armors.yml
+  name: Madrigal Guardian (F) Red Suit
+"16542":
+  file: armors.yml
+  name: Madrigal Guardian (F) Red Gloves
+"16543":
+  file: armors.yml
+  name: Madrigal Guardian (F) Red Boots
+"16545":
+  file: armors.yml
+  name: Madrigal Guardian (M) Yellow Helmet
+"16546":
+  file: armors.yml
+  name: Madrigal Guardian (M) Yellow Suit
+"16547":
+  file: armors.yml
+  name: Madrigal Guardian (M) Yellow Gloves
+"16548":
+  file: armors.yml
+  name: Madrigal Guardian (M) Yellow Boots
+"16550":
+  file: armors.yml
+  name: Madrigal Guardian (F) Yellow Helmet
+"16551":
+  file: armors.yml
+  name: Madrigal Guardian (F) Yellow Suit
+"16552":
+  file: armors.yml
+  name: Madrigal Guardian (F) Yellow Gloves
+"16553":
+  file: armors.yml
+  name: Madrigal Guardian (F) Yellow Boots
+"16555":
+  file: armors.yml
+  name: Madrigal Guardian (M) Green Helmet
+"16556":
+  file: armors.yml
+  name: Madrigal Guardian (M) Green Suit
+"16557":
+  file: armors.yml
+  name: Madrigal Guardian (M) Green Gloves
+"16558":
+  file: armors.yml
+  name: Madrigal Guardian (M) Green Boots
+"16560":
+  file: armors.yml
+  name: Madrigal Guardian (F) Green Helmet
+"16561":
+  file: armors.yml
+  name: Madrigal Guardian (F) Green Suit
+"16562":
+  file: armors.yml
+  name: Madrigal Guardian (F) Green Gloves
+"16563":
+  file: armors.yml
+  name: Madrigal Guardian (F) Green Boots
+"16565":
+  file: armors.yml
+  name: Madrigal Guardian (M) Pink Helmet
+"16566":
+  file: armors.yml
+  name: Madrigal Guardian (M) Pink Suit
+"16567":
+  file: armors.yml
+  name: Madrigal Guardian (M) Pink Gloves
+"16568":
+  file: armors.yml
+  name: Madrigal Guardian (M) Pink Boots
+"16570":
+  file: armors.yml
+  name: Madrigal Guardian (F) Pink Helmet
+"16571":
+  file: armors.yml
+  name: Madrigal Guardian (F) Pink Suit
+"16572":
+  file: armors.yml
+  name: Madrigal Guardian (F) Pink Gloves
+"16573":
+  file: armors.yml
+  name: Madrigal Guardian (F) Pink Boots
+"16575":
+  file: armors.yml
+  name: Mummy (M) Hat
+"16576":
+  file: armors.yml
+  name: Mummy (M) Suit
+"16577":
+  file: armors.yml
+  name: Mummy (M) Gloves
+"16578":
+  file: armors.yml
+  name: Mummy (M) Shoes
+"16580":
+  file: armors.yml
+  name: Mummy (F) Hat
+"16581":
+  file: armors.yml
+  name: Mummy (F) Suit
+"16582":
+  file: armors.yml
+  name: Mummy (F) Gloves
+"16583":
+  file: armors.yml
+  name: Mummy (F) Shoes
+"16585":
+  file: armors.yml
+  name: Primitive (M) Suit
+"16587":
+  file: armors.yml
+  name: Primitive (M) Shoes
+"16589":
+  file: armors.yml
+  name: Primitive (F) Suit
+"16590":
+  file: armors.yml
+  name: Primitive (F) Shoes
+"16592":
+  file: armors.yml
+  name: Casual beanie(M)
+"16593":
+  file: armors.yml
+  name: Casual suit(M)
+"16594":
+  file: armors.yml
+  name: Casual gloves(M)
+"16595":
+  file: armors.yml
+  name: Casual shoes(M)
+"16597":
+  file: armors.yml
+  name: Casual hat(F)
+"16598":
+  file: armors.yml
+  name: Casual suit(F)
+"16599":
+  file: armors.yml
+  name: Casual gloves(F)
+"16600":
+  file: armors.yml
+  name: Casual shoes(F)
+"16602":
+  file: armors.yml
+  name: Hip-Hop Cap and Bandana(M)
+"16603":
+  file: armors.yml
+  name: Hip-Hop Shirt and Pants(M)
+"16604":
+  file: armors.yml
+  name: Hiphop Gloves(M)
+"16605":
+  file: armors.yml
+  name: Hip-Hop Sneakers(M)
+"16607":
+  file: armors.yml
+  name: Workout Hair Band(F)
+"16608":
+  file: armors.yml
+  name: Workout Suit(F)
+"16609":
+  file: armors.yml
+  name: Workout Gloves(F)
+"16610":
+  file: armors.yml
+  name: Workout Sneakers(F)
+"16612":
+  file: armors.yml
+  name: Wedding Hair(M)
+"16613":
+  file: armors.yml
+  name: Wedding Tuxedo(M)
+"16614":
+  file: armors.yml
+  name: Wedding Ring(M)
+"16615":
+  file: armors.yml
+  name: Wedding Shoes(M)
+"16617":
+  file: armors.yml
+  name: Wedding Hair(F)
+"16618":
+  file: armors.yml
+  name: Wedding Dress(F)
+"16619":
+  file: armors.yml
+  name: Wedding Ring(F)
+"16620":
+  file: armors.yml
+  name: Wedding Shoes(F)
+"16622":
+  file: armors.yml
+  name: Yukata 2009 (M)
+"16623":
+  file: armors.yml
+  name: Hands (M)
+"16624":
+  file: armors.yml
+  name: Geta 2009 (M)
+"16626":
+  file: armors.yml
+  name: Yukata 2009 (F)
+"16627":
+  file: armors.yml
+  name: Hands (F)
+"16628":
+  file: armors.yml
+  name: Geta 2009 (F)
+"16630":
+  file: armors.yml
+  name: Martial artist Hair(M)
+"16631":
+  file: armors.yml
+  name: Martial artist Suit(M)
+"16632":
+  file: armors.yml
+  name: Martial artist Gloves(M)
+"16633":
+  file: armors.yml
+  name: Martial artist Shoes(M)
+"16635":
+  file: armors.yml
+  name: Martial artist Hair(F)
+"16636":
+  file: armors.yml
+  name: Martial artist Suit(F)
+"16637":
+  file: armors.yml
+  name: Martial artist Gloves(F)
+"16638":
+  file: armors.yml
+  name: Martial artist Shoes(F)
+"16640":
+  file: armors.yml
+  name: Modern Black Swimsuit(M)
+"16641":
+  file: armors.yml
+  name: Modern Hands(M)
+"16642":
+  file: armors.yml
+  name: Modern Aqua Shoes(M)
+"16644":
+  file: armors.yml
+  name: Beach Swimsuit Green(M)
+"16645":
+  file: armors.yml
+  name: Hands(M)
+"16646":
+  file: armors.yml
+  name: Brown Sandal(M)
+"16648":
+  file: armors.yml
+  name: Beach Wear Orange(F)
+"16649":
+  file: armors.yml
+  name: Hands(F)
+"16650":
+  file: armors.yml
+  name: Orange Sandal(F)
+"16652":
+  file: armors.yml
+  name: Blue Polka Dots Bikini(F)
+"16653":
+  file: armors.yml
+  name: Hands(F)
+"16654":
+  file: armors.yml
+  name: Brown Sandal(F)
+"16656":
+  file: armors.yml
+  name: Baseball Cap(M)
+"16657":
+  file: armors.yml
+  name: Baseball Suit(M)
+"16658":
+  file: armors.yml
+  name: Baseball Gloves(M)
+"16659":
+  file: armors.yml
+  name: Baseball Shoes(M)
+"16661":
+  file: armors.yml
+  name: Baseball Cap(F)
+"16662":
+  file: armors.yml
+  name: Baseball Suit(F)
+"16663":
+  file: armors.yml
+  name: Baseball Gloves(F)
+"16664":
+  file: armors.yml
+  name: Baseball Shoes(F)
+"16666":
+  file: armors.yml
+  name: Kung Fu Hat(M)
+"16667":
+  file: armors.yml
+  name: Kung Fu Suit(M)
+"16668":
+  file: armors.yml
+  name: Kung Fu Hands(M)
+"16669":
+  file: armors.yml
+  name: Kung Fu Feet(M)
+"16671":
+  file: armors.yml
+  name: Kung Fu Hair(F)
+"16672":
+  file: armors.yml
+  name: Kung Fu Suit(F)
+"16673":
+  file: armors.yml
+  name: Kung Fu Hands(F)
+"16674":
+  file: armors.yml
+  name: Kung Fu Feet(F)
+"16676":
+  file: armors.yml
+  name: Traditional German Hat (M)
+"16677":
+  file: armors.yml
+  name: Traditional German Suit (M)
+"16678":
+  file: armors.yml
+  name: Traditional German Hands (M)
+"16679":
+  file: armors.yml
+  name: Traditional German Shoes (M)
+"16681":
+  file: armors.yml
+  name: Traditional German Hat (F)
+"16682":
+  file: armors.yml
+  name: Traditional German Suit (F)
+"16683":
+  file: armors.yml
+  name: Traditional German Hands (F)
+"16684":
+  file: armors.yml
+  name: Traditional German Shoes (F)
+"16686":
+  file: armors.yml
+  name: Cowboy Hat(M)
+"16687":
+  file: armors.yml
+  name: Cowboy Suit(M)
+"16688":
+  file: armors.yml
+  name: Cowboy Gloves(M)
+"16689":
+  file: armors.yml
+  name: Cowboy Shoes(M)
+"16691":
+  file: armors.yml
+  name: Cowboy Hat(F)
+"16692":
+  file: armors.yml
+  name: Cowboy Suit(F)
+"16693":
+  file: armors.yml
+  name: Cowboy Gloves(F)
+"16694":
+  file: armors.yml
+  name: Cowboy Shoes(F)
+"16696":
+  file: armors.yml
+  name: Traditional Thailand Hat (M)
+"16697":
+  file: armors.yml
+  name: Traditional Thailand Suit (M)
+"16698":
+  file: armors.yml
+  name: Traditional Thailand Gloves (M)
+"16699":
+  file: armors.yml
+  name: Traditional Thailand Shoes (M)
+"16701":
+  file: armors.yml
+  name: Traditional Thailand Hat (F)
+"16702":
+  file: armors.yml
+  name: Traditional Thailand Suit (F)
+"16703":
+  file: armors.yml
+  name: Traditional Thailand Gloves (F)
+"16704":
+  file: armors.yml
+  name: Traditional Thailand Shoes (F)
+"16706":
+  file: armors.yml
+  name: Traditional Philippines Hat (M)
+"16707":
+  file: armors.yml
+  name: Traditional Philippines Suit (M)
+"16708":
+  file: armors.yml
+  name: Traditional Philippines Gloves (M)
+"16709":
+  file: armors.yml
+  name: Traditional Philippines Shoes (M)
+"16711":
+  file: armors.yml
+  name: Traditional Philippines Hat (F)
+"16712":
+  file: armors.yml
+  name: Traditional Philippines Suit (F)
+"16713":
+  file: armors.yml
+  name: Traditional Philippines Gloves (F)
+"16714":
+  file: armors.yml
+  name: Traditional Philippines Shoes (F)
+"16716":
+  file: armors.yml
+  name: Rabbit Hat(M)
+"16717":
+  file: armors.yml
+  name: Rabbit Outfit(M)
+"16718":
+  file: armors.yml
+  name: Rabbit Hand(M)
+"16719":
+  file: armors.yml
+  name: Rabbit Shoes (M)
+"16721":
+  file: armors.yml
+  name: Rabbit Hat(F)
+"16722":
+  file: armors.yml
+  name: Rabbit Outfit(F)
+"16723":
+  file: armors.yml
+  name: Rabbit Hand(F)
+"16724":
+  file: armors.yml
+  name: Rabbit Shoes(F)
+"16728":
+  file: armors.yml
+  name: Traditional Chile Hat (M)
+"16729":
+  file: armors.yml
+  name: Traditional Chile Suit (M)
+"16730":
+  file: armors.yml
+  name: Traditional Chile Hand (M)
+"16731":
+  file: armors.yml
+  name: Traditional Chile Shoes (M)
+"16733":
+  file: armors.yml
+  name: Traditional Chile Hat (F)
+"16734":
+  file: armors.yml
+  name: Traditional Chile Suit (F)
+"16735":
+  file: armors.yml
+  name: Traditional Chile Hand (F)
+"16736":
+  file: armors.yml
+  name: Traditional Chile Shoes (F)
+"16742":
+  file: armors.yml
+  name: Panda Hat(M)
+"16743":
+  file: armors.yml
+  name: Panda Suit(M)
+"16744":
+  file: armors.yml
+  name: Panda Gloves(M)
+"16745":
+  file: armors.yml
+  name: Panda Shoes(M)
+"16747":
+  file: armors.yml
+  name: Panda Hat(F)
+"16748":
+  file: armors.yml
+  name: Panda Suit(F)
+"16749":
+  file: armors.yml
+  name: Panda Gloves(F)
+"16750":
+  file: armors.yml
+  name: Panda Shoes(F)
+"16752":
+  file: armors.yml
+  name: NFL Helmet(M)
+"16753":
+  file: armors.yml
+  name: NFL Uniform(M)
+"16754":
+  file: armors.yml
+  name: NFL Gloves(M)
+"16755":
+  file: armors.yml
+  name: NFL Shoes(M)
+"16757":
+  file: armors.yml
+  name: NFL Helmet(F)
+"16758":
+  file: armors.yml
+  name: NFL Uniform(F)
+"16759":
+  file: armors.yml
+  name: NFL Gloves(F)
+"16760":
+  file: armors.yml
+  name: NFL Shoes(F)
+"16762":
+  file: armors.yml
+  name: Chipao Panda Hat(M)
+"16763":
+  file: armors.yml
+  name: Chipao Panda Suit(M)
+"16764":
+  file: armors.yml
+  name: Chipao Panda Gloves(M)
+"16765":
+  file: armors.yml
+  name: Chipao Panda Shoes(M)
+"16767":
+  file: armors.yml
+  name: Chipao Panda Hat(F)
+"16768":
+  file: armors.yml
+  name: Chipao Panda Suit(F)
+"16769":
+  file: armors.yml
+  name: Chipao Panda Gloves(F)
+"16770":
+  file: armors.yml
+  name: Chipao Panda Shoes(F)
+"16772":
+  file: armors.yml
+  name: Bull's Hat(M)
+"16773":
+  file: armors.yml
+  name: Bull's Suit(M)
+"16774":
+  file: armors.yml
+  name: Bull's Glove(M)
+"16775":
+  file: armors.yml
+  name: Bulls's Shoes(M)
+"16777":
+  file: armors.yml
+  name: Milk Cow Hat(F)
+"16778":
+  file: armors.yml
+  name: Milk Cow Suit(F)
+"16779":
+  file: armors.yml
+  name: Milk Cow Glove(F)
+"16780":
+  file: armors.yml
+  name: Milk Cow Shoes(F)
+"16785":
+  file: armors.yml
+  name: Chef Hat(M)
+"16786":
+  file: armors.yml
+  name: Chef Uniform(M)
+"16787":
+  file: armors.yml
+  name: Chef Gloves(M)
+"16788":
+  file: armors.yml
+  name: Chef Shoes(M)
+"16790":
+  file: armors.yml
+  name: Chef Hat(F)
+"16791":
+  file: armors.yml
+  name: Chef Uniform(F)
+"16792":
+  file: armors.yml
+  name: Chef Gloves(F)
+"16793":
+  file: armors.yml
+  name: Chef Shoes(F)
+"16795":
+  file: armors.yml
+  name: Gothic Hat (M)
+"16796":
+  file: armors.yml
+  name: Gothic Suit (M)
+"16797":
+  file: armors.yml
+  name: Gothic Gloves (M)
+"16798":
+  file: armors.yml
+  name: Gothic Shoes (M)
+"16800":
+  file: armors.yml
+  name: Gothic Hat (F)
+"16801":
+  file: armors.yml
+  name: Gothic Suit (F)
+"16802":
+  file: armors.yml
+  name: Gothic Gloves (F)
+"16803":
+  file: armors.yml
+  name: Gothic Shoes (F)
+"16805":
+  file: armors.yml
+  name: Spacesuit Hat(M)
+"16806":
+  file: armors.yml
+  name: Spacesuit Outfit(M)
+"16807":
+  file: armors.yml
+  name: Spacesuit Gloves(M)
+"16808":
+  file: armors.yml
+  name: Spacesuit Shoes(M)
+"16900":
+  file: armors.yml
+  name: Spacesuit Hat(F)
+"16901":
+  file: armors.yml
+  name: Spacesuit Outfit(F)
+"16902":
+  file: armors.yml
+  name: Spacesuit Gloves(F)
+"16903":
+  file: armors.yml
+  name: Spacesuit Shoes(F)
+"16935":
+  file: armors.yml
+  name: Big Bad Wolf Hat (M)
+"16936":
+  file: armors.yml
+  name: Big Bad Wolf Suit (M)
+"16937":
+  file: armors.yml
+  name: Big Bad Wolf Claws (M)
+"16938":
+  file: armors.yml
+  name: Big Bad Wolf Shoes (M)
+"16940":
+  file: armors.yml
+  name: Red Riding Hood Hat (F)
+"16941":
+  file: armors.yml
+  name: Red Riding Hood Suit (F)
+"16942":
+  file: armors.yml
+  name: Red Riding Hood Gloves (F)
+"16943":
+  file: armors.yml
+  name: Red Riding Hood Shoes (F)
+"16945":
+  file: armors.yml
+  name: Traditional Native American Headset (M)
+"16946":
+  file: armors.yml
+  name: Traditional Native American Outfit (M)
+"16947":
+  file: armors.yml
+  name: Traditional Native American Gloves (M)
+"16948":
+  file: armors.yml
+  name: Traditional Native American Footwear (M)
+"16950":
+  file: armors.yml
+  name: Traditional Native American Headset (F)
+"16951":
+  file: armors.yml
+  name: Traditional Native American Outfit (F)
+"16952":
+  file: armors.yml
+  name: Traditional Native American Gloves (F)
+"16953":
+  file: armors.yml
+  name: Traditional Native American Footwear (F)
+"16955":
+  file: armors.yml
+  name: Yetti Hat(M)
+"16956":
+  file: armors.yml
+  name: Yetti Suit(M)
+"16957":
+  file: armors.yml
+  name: Yetti Gloves(M)
+"16958":
+  file: armors.yml
+  name: Yetti Shoes(M)
+"16960":
+  file: armors.yml
+  name: Yetti Hat(F)
+"16961":
+  file: armors.yml
+  name: Yetti Suit(F)
+"16962":
+  file: armors.yml
+  name: Yetti Gloves(F)
+"16963":
+  file: armors.yml
+  name: Yetti Shoes(F)
+"16967":
+  file: armors.yml
+  name: School Swimsuit (M)
+"16968":
+  file: armors.yml
+  name: School Swimsuit Hand (M)
+"16969":
+  file: armors.yml
+  name: Kid's sandal (M)
+"16971":
+  file: armors.yml
+  name: School Swimsuit (F)
+"16972":
+  file: armors.yml
+  name: School Swimsuit Hand (M)
+"16973":
+  file: armors.yml
+  name: Kid's sandal (F)
+"16975":
+  file: armors.yml
+  name: Cyber Punk Hat (M)
+"16976":
+  file: armors.yml
+  name: Cyber Punk Outfit (M)
+"16977":
+  file: armors.yml
+  name: Cyber Punk Gloves (M)
+"16978":
+  file: armors.yml
+  name: Cyber Punk Shoes (M)
+"16980":
+  file: armors.yml
+  name: Cyber Punk Hat (F)
+"16981":
+  file: armors.yml
+  name: Cyber Punk Outfit (F)
+"16982":
+  file: armors.yml
+  name: Cyber Punk Gloves (F)
+"16983":
+  file: armors.yml
+  name: Cyber Punk Shoes (F)
+"16985":
+  file: armors.yml
+  name: Warlord Headpiece (M)
+"16986":
+  file: armors.yml
+  name: Warlord Outfit (M)
+"16987":
+  file: armors.yml
+  name: Warlord Gloves (M)
+"16988":
+  file: armors.yml
+  name: Warlord Shoes (M)
+"16990":
+  file: armors.yml
+  name: Warlord Headpiece (F)
+"16991":
+  file: armors.yml
+  name: Warlord Outfit (F)
+"16992":
+  file: armors.yml
+  name: Warlord Gloves (F)
+"16993":
+  file: armors.yml
+  name: Warlord Shoes (F)
+"16995":
+  file: armors.yml
+  name: Skipper Cap (M)
+"16996":
+  file: armors.yml
+  name: Skipper Outfit (M)
+"16997":
+  file: armors.yml
+  name: Skipper Gloves (M)
+"16998":
+  file: armors.yml
+  name: Skipper Shoes (M)
+"17000":
+  file: armors.yml
+  name: Harbor Cap (F)
+"17001":
+  file: armors.yml
+  name: Harbor Outfit (F)
+"17002":
+  file: armors.yml
+  name: Harbor Gloves (F)
+"17003":
+  file: armors.yml
+  name: Harbor Shoes (F)
+"17005":
+  file: armors.yml
+  name: Space Cadet Hair (M)
+"17006":
+  file: armors.yml
+  name: Space Cadet Uniform (M)
+"17007":
+  file: armors.yml
+  name: Hands (M)
+"17008":
+  file: armors.yml
+  name: Space Cadet Boots (M)
+"17010":
+  file: armors.yml
+  name: Space Cadet Hair (F)
+"17011":
+  file: armors.yml
+  name: Space Cadet Uniform (F)
+"17012":
+  file: armors.yml
+  name: Hands (F)
+"17013":
+  file: armors.yml
+  name: Space Cadet Boots (F)
+"17015":
+  file: armors.yml
+  name: FV-13 Power Armor Helmet (M)
+"17016":
+  file: armors.yml
+  name: FV-13 Power Armor Suit (M)
+"17017":
+  file: armors.yml
+  name: FV-13 Power Armor Gloves (M)
+"17018":
+  file: armors.yml
+  name: FV-13 Power Armor Boots (M)
+"17020":
+  file: armors.yml
+  name: FV-13 Power Armor Helmet (F)
+"17021":
+  file: armors.yml
+  name: FV-13 Power Armor Suit (F)
+"17022":
+  file: armors.yml
+  name: FV-13 Power Armor Gloves (F)
+"17023":
+  file: armors.yml
+  name: FV-13 Power Armor Boots (F)
+"17025":
+  file: armors.yml
+  name: Detective Hat (M)
+"17026":
+  file: armors.yml
+  name: Detective Suit (M)
+"17027":
+  file: armors.yml
+  name: Detective Hands (M)
+"17028":
+  file: armors.yml
+  name: Detective Shoes (M)
+"17030":
+  file: armors.yml
+  name: Detective Hat (F)
+"17031":
+  file: armors.yml
+  name: Detective Suit (F)
+"17032":
+  file: armors.yml
+  name: Detective Hands (F)
+"17033":
+  file: armors.yml
+  name: Detective Shoes (F)
+"17035":
+  file: armors.yml
+  name: Sul Bim Hat (M)
+"17036":
+  file: armors.yml
+  name: Sul Bim Tuxedo (M)
+"17037":
+  file: armors.yml
+  name: Sul Bim Gloves (M)
+"17038":
+  file: armors.yml
+  name: Sul Bim Shoes (M)
+"17040":
+  file: armors.yml
+  name: Sul Bim Hat (F)
+"17041":
+  file: armors.yml
+  name: Sul Bim Dress (F)
+"17042":
+  file: armors.yml
+  name: Sul Bim Gloves (F)
+"17043":
+  file: armors.yml
+  name: Sul Bim Shoes (F)
+"17045":
+  file: armors.yml
+  name: Kai Hat(M)
+"17046":
+  file: armors.yml
+  name: Kai Suit(M)
+"17047":
+  file: armors.yml
+  name: Kai Gloves(M)
+"17048":
+  file: armors.yml
+  name: Kai Shoes(M)
+"17050":
+  file: armors.yml
+  name: Chi Hat(F)
+"17051":
+  file: armors.yml
+  name: Chi Suit(F)
+"17052":
+  file: armors.yml
+  name: Chi Gloves(F)
+"17053":
+  file: armors.yml
+  name: Chi Shoes(F)
+"17055":
+  file: armors.yml
+  name: Mad Hatter's Hat (M)
+"17056":
+  file: armors.yml
+  name: Mad Hatter Suit (M)
+"17057":
+  file: armors.yml
+  name: Mad Hatter Gloves (M)
+"17058":
+  file: armors.yml
+  name: Mad Hatter Shoes (M)
+"17060":
+  file: armors.yml
+  name: Alice Hair (F)
+"17061":
+  file: armors.yml
+  name: Alice Dress (F)
+"17062":
+  file: armors.yml
+  name: Alice Gloves (F)
+"17063":
+  file: armors.yml
+  name: Alice Shoes (F)
+"17065":
+  file: armors.yml
+  name: Leprechaun Hat (M)
+"17066":
+  file: armors.yml
+  name: Leprechaun Suit (M)
+"17067":
+  file: armors.yml
+  name: Leprechaun Gloves (M)
+"17068":
+  file: armors.yml
+  name: Leprechaun Shoes (M)
+"17070":
+  file: armors.yml
+  name: Leprechaun Hat (F)
+"17071":
+  file: armors.yml
+  name: Leprechaun Outfit (F)
+"17072":
+  file: armors.yml
+  name: Leprechaun Gloves (F)
+"17073":
+  file: armors.yml
+  name: Leprechaun Shoes (F)
+"17075":
+  file: armors.yml
+  name: Leprechaun Hat (M) - Ignore duplicate
+"17076":
+  file: armors.yml
+  name: Leprechaun Hat (F) - Ignore duplicate
+"18000":
+  file: armors.yml
+  name: Flower Helmet
+"18001":
+  file: armors.yml
+  name: Flower Suit
+"18002":
+  file: armors.yml
+  name: Flower Gauntlet
+"18003":
+  file: armors.yml
+  name: Flower Boots
+"18004":
+  file: armors.yml
+  name: Petal Helmet
+"18005":
+  file: armors.yml
+  name: Petal Suit
+"18006":
+  file: armors.yml
+  name: Petal Gauntlet
+"18007":
+  file: armors.yml
+  name: Petal Boots
+"18008":
+  file: armors.yml
+  name: Stinger Helmet
+"18009":
+  file: armors.yml
+  name: Stinger Suit
+"18010":
+  file: armors.yml
+  name: Stinger Gauntlet
+"18011":
+  file: armors.yml
+  name: Stinger Boots
+"18012":
+  file: armors.yml
+  name: Slepint Helmet
+"18013":
+  file: armors.yml
+  name: Slepint Suit
+"18014":
+  file: armors.yml
+  name: Slepint Gauntlet
+"18015":
+  file: armors.yml
+  name: Slepint Boots
+"18016":
+  file: armors.yml
+  name: Curus Helmet
+"18017":
+  file: armors.yml
+  name: Curus Suit
+"18018":
+  file: armors.yml
+  name: Curus Gauntlet
+"18019":
+  file: armors.yml
+  name: Curus Boots
+"18020":
+  file: armors.yml
+  name: Sardine Helmet
+"18021":
+  file: armors.yml
+  name: Sardine Suit
+"18022":
+  file: armors.yml
+  name: Sardine Gauntlet
+"18023":
+  file: armors.yml
+  name: Sardine Boots
+"18024":
+  file: armors.yml
+  name: Niz Helmet
+"18025":
+  file: armors.yml
+  name: Niz Suit
+"18026":
+  file: armors.yml
+  name: Niz Gauntlet
+"18027":
+  file: armors.yml
+  name: Niz Boots
+"18028":
+  file: armors.yml
+  name: Seer Helmet
+"18029":
+  file: armors.yml
+  name: Seer Suit
+"18030":
+  file: armors.yml
+  name: Seer Gauntlet
+"18031":
+  file: armors.yml
+  name: Seer Boots
+"18032":
+  file: armors.yml
+  name: Cylos Helmet
+"18033":
+  file: armors.yml
+  name: Cylos Suit
+"18034":
+  file: armors.yml
+  name: Cylos Gauntlet
+"18035":
+  file: armors.yml
+  name: Cylos Boots
+"18036":
+  file: armors.yml
+  name: Comet Helmet
+"18037":
+  file: armors.yml
+  name: Comet Suit
+"18038":
+  file: armors.yml
+  name: Comet Gauntlet
+"18039":
+  file: armors.yml
+  name: Comet Boots
+"18040":
+  file: armors.yml
+  name: Miracle Helmet
+"18041":
+  file: armors.yml
+  name: Miracle Suit
+"18042":
+  file: armors.yml
+  name: Miracle Gauntlet
+"18043":
+  file: armors.yml
+  name: Miracle Boots
+"18044":
+  file: armors.yml
+  name: Layered Helmet
+"18045":
+  file: armors.yml
+  name: Layered Suit
+"18046":
+  file: armors.yml
+  name: Layered Gauntlet
+"18047":
+  file: armors.yml
+  name: Layered Boots
+"18048":
+  file: armors.yml
+  name: Sayram Helmet
+"18049":
+  file: armors.yml
+  name: Sayram Suit
+"18050":
+  file: armors.yml
+  name: Sayram Gauntlet
+"18051":
+  file: armors.yml
+  name: Sayram Boots
+"18052":
+  file: armors.yml
+  name: Talin Helmet
+"18053":
+  file: armors.yml
+  name: Talin Suit
+"18054":
+  file: armors.yml
+  name: Talin Gauntlet
+"18055":
+  file: armors.yml
+  name: Talin Boots
+"18056":
+  file: armors.yml
+  name: Merr Helmet
+"18057":
+  file: armors.yml
+  name: Merr Suit
+"18058":
+  file: armors.yml
+  name: Merr Gauntlet
+"18059":
+  file: armors.yml
+  name: Merr Boots
+"18060":
+  file: armors.yml
+  name: Sorain Helmet
+"18061":
+  file: armors.yml
+  name: Sorain Suit
+"18062":
+  file: armors.yml
+  name: Sorain Gauntlet
+"18063":
+  file: armors.yml
+  name: Sorain Boots
+"18064":
+  file: armors.yml
+  name: Stitch Helmet
+"18065":
+  file: armors.yml
+  name: Stitch Suit
+"18066":
+  file: armors.yml
+  name: Stitch Gauntlet
+"18067":
+  file: armors.yml
+  name: Stitch Boots
+"18068":
+  file: armors.yml
+  name: Panggril Helmet
+"18069":
+  file: armors.yml
+  name: Panggril Suit
+"18070":
+  file: armors.yml
+  name: Panggril Gauntlet
+"18071":
+  file: armors.yml
+  name: Panggril Boots
+"18072":
+  file: armors.yml
+  name: Hyper Helmet
+"18073":
+  file: armors.yml
+  name: Hyper Suit
+"18074":
+  file: armors.yml
+  name: Hyper Gauntlet
+"18075":
+  file: armors.yml
+  name: Hyper Boots
+"18076":
+  file: armors.yml
+  name: Cruiser Helmet
+"18077":
+  file: armors.yml
+  name: Cruiser Suit
+"18078":
+  file: armors.yml
+  name: Cruiser Gauntlet
+"18079":
+  file: armors.yml
+  name: Cruiser Boots
+"18080":
+  file: armors.yml
+  name: Flury Helmet
+"18081":
+  file: armors.yml
+  name: Flury Suit
+"18082":
+  file: armors.yml
+  name: Flury Gauntlet
+"18083":
+  file: armors.yml
+  name: Flury Boots
+"18084":
+  file: armors.yml
+  name: Wedge Helmet
+"18085":
+  file: armors.yml
+  name: Wedge Suit
+"18086":
+  file: armors.yml
+  name: Wedge Gauntlet
+"18087":
+  file: armors.yml
+  name: Wedge Boots
+"18088":
+  file: armors.yml
+  name: Misty Helmet
+"18089":
+  file: armors.yml
+  name: Misty Suit
+"18090":
+  file: armors.yml
+  name: Misty Gauntlet
+"18091":
+  file: armors.yml
+  name: Misty Boots
+"18092":
+  file: armors.yml
+  name: Teba Helmet
+"18093":
+  file: armors.yml
+  name: Teba Suit
+"18094":
+  file: armors.yml
+  name: Teba Gauntlet
+"18095":
+  file: armors.yml
+  name: Teba Boots
+"18145":
+  file: weapons.yml
+  name: Entanale Sword
+"18167":
+  file: materials.yml
+  name: Doridori Sushi
+"18186":
+  file: materials.yml
+  name: Wedding Ring
+"20026":
+  file: armors.yml
+  name: Helmet of Dignity (M)
+"20027":
+  file: armors.yml
+  name: Suit of Dignity (M)
+"20028":
+  file: armors.yml
+  name: Gauntlet of Dignity (M)
+"20029":
+  file: armors.yml
+  name: Boots of Dignity (M)
+"20031":
+  file: armors.yml
+  name: Helmet of Dignity (F)
+"20032":
+  file: armors.yml
+  name: Suit of Dignity (F)
+"20033":
+  file: armors.yml
+  name: Gauntlet of Dignity (F)
+"20034":
+  file: armors.yml
+  name: Boots of Dignity (F)
+"20044":
+  file: armors.yml
+  name: Red Cherry Blossom Yukata (F)
+"20045":
+  file: armors.yml
+  name: Red Cherry Blossom Yukata Hands (F)
+"20046":
+  file: armors.yml
+  name: Red Cherry Blossom Geta (F)
+"20047":
+  file: armors.yml
+  name: Dragon Yukata (M)
+"20048":
+  file: armors.yml
+  name: Dragon Yukata Hands (M)
+"20049":
+  file: armors.yml
+  name: Dragon Geta (M)
+"20059":
+  file: materials.yml
+  name: Melon Denish
+"20060":
+  file: materials.yml
+  name: Melon Waffle
+"20068":
+  file: armors.yml
+  name: Shower Cap (M)
+"20069":
+  file: armors.yml
+  name: Bathrobe (M)
+"20070":
+  file: armors.yml
+  name: Hands (M)
+"20071":
+  file: armors.yml
+  name: Bathroom Slippers (M)
+"20073":
+  file: armors.yml
+  name: Shower Cap (F)
+"20074":
+  file: armors.yml
+  name: Bathrobe (F)
+"20075":
+  file: armors.yml
+  name: Hands (F)
+"20076":
+  file: armors.yml
+  name: Bathroom Slippers (F)
+"20091":
+  file: weapons.yml
+  name: Pink Parasol
+"20101":
+  file: armors.yml
+  name: Neko Soul Mask
+"20102":
+  file: armors.yml
+  name: Champion's Cloak
+"20105":
+  file: consumables.yml
+  name: 하트폭죽(태국01)
+"20106":
+  file: consumables.yml
+  name: 하트폭죽(태국02)
+"20109":
+  file: armors.yml
+  name: Jester Hat of Iblis
+"20110":
+  file: armors.yml
+  name: Jester Hat of Bubble
+"20111":
+  file: armors.yml
+  name: Jester Hat of Shade
+"20113":
+  file: materials.yml
+  name: Johnny Four-Wheels
+"20121":
+  file: armors.yml
+  name: Rays and Clouds Cloak
+"20122":
+  file: armors.yml
+  name: Double Dragon Cloak
+"20123":
+  file: armors.yml
+  name: Yin-Yang Cloak
+"20148":
+  file: weapons.yml
+  name: Lusaka's Sword
+"20149":
+  file: weapons.yml
+  name: Lusaka's Heavy Sword
+"20150":
+  file: weapons.yml
+  name: Lusaka's Axe
+"20151":
+  file: weapons.yml
+  name: Lusaka's Heavy Axe
+"20152":
+  file: weapons.yml
+  name: Lusaka's Fist
+"20153":
+  file: weapons.yml
+  name: Lusaka's Stick
+"20154":
+  file: weapons.yml
+  name: Lusaka's Wand
+"20155":
+  file: weapons.yml
+  name: Lusaka's Staff
+"20156":
+  file: weapons.yml
+  name: Lusaka's Bow
+"20157":
+  file: weapons.yml
+  name: Lusaka's Yo-Yo
+"20158":
+  file: weapons.yml
+  name: Lusaka's Crystal Sword
+"20159":
+  file: weapons.yml
+  name: Lusaka's Heavy Crystal Sword
+"20160":
+  file: weapons.yml
+  name: Lusaka's Crystal Axe
+"20161":
+  file: weapons.yml
+  name: Lusaka's Heavy Crystal Axe
+"20162":
+  file: weapons.yml
+  name: Lusaka's Crystal Fist
+"20163":
+  file: weapons.yml
+  name: Lusaka's Crystal Stick
+"20164":
+  file: weapons.yml
+  name: Lusaka's Crystal Wand
+"20165":
+  file: weapons.yml
+  name: Lusaka's Crystal Staff
+"20166":
+  file: weapons.yml
+  name: Lusaka's Crystal Bow
+"20167":
+  file: weapons.yml
+  name: Lusaka's Crystal Yo-Yo
+"20180":
+  file: materials.yml
+  name: Christmas Cake
+"20182":
+  file: materials.yml
+  name: Vanilla Cupcakes
+"20186":
+  file: materials.yml
+  name: Mini Santa
+"20187":
+  file: materials.yml
+  name: Mini Snowman
+"20211":
+  file: materials.yml
+  name: Champion's Ring
+"20212":
+  file: materials.yml
+  name: Defender's Ring
+"20213":
+  file: materials.yml
+  name: Adept's Ring
+"20214":
+  file: materials.yml
+  name: Marksman's Ring
+"20215":
+  file: materials.yml
+  name: Champion's Demol Earring
+"20216":
+  file: materials.yml
+  name: Defender's Plug Earring
+"20217":
+  file: materials.yml
+  name: Champion's Gore Necklace
+"20218":
+  file: materials.yml
+  name: Adept's Mental Necklace
+"20219":
+  file: materials.yml
+  name: Marksman's Peision Necklace
+"20220":
+  file: materials.yml
+  name: Defender's Necklace of Protection
+"20221":
+  file: materials.yml
+  name: Adept's Earring of Power
+"20222":
+  file: materials.yml
+  name: Marksman's Earring of Power
+"20240":
+  file: armors.yml
+  name: Clock Cloak(Japan)
+"20241":
+  file: armors.yml
+  name: Rose Cloak(Japan)
+"20242":
+  file: armors.yml
+  name: Cherry Blossom(Japan)
+"20378":
+  file: weapons.yml
+  name: Ultimate Guardian Axe @
+"20500":
+  file: materials.yml
+  name: Merahook
+"20501":
+  file: materials.yml
+  name: Nerkymane
+"20502":
+  file: materials.yml
+  name: Rincruet
+"20503":
+  file: materials.yml
+  name: Popshift
+"21000":
+  file: materials.yml
+  name: Baby Lawolf
+"21001":
+  file: materials.yml
+  name: Baby Aibatt
+"21002":
+  file: materials.yml
+  name: Baby Leyena
+"21003":
+  file: materials.yml
+  name: Baby Luia
+"21004":
+  file: materials.yml
+  name: Doggy
+"21005":
+  file: materials.yml
+  name: Kitty
+"21007":
+  file: materials.yml
+  name: Polar Bear
+"21026":
+  file: materials.yml
+  name: Baby Penguin
+"21027":
+  file: materials.yml
+  name: Baby Iguana
+"21028":
+  file: materials.yml
+  name: Baby Cobra
+"21029":
+  file: materials.yml
+  name: Egg
+"21039":
+  file: materials.yml
+  name: White Tiger Cage
+"21040":
+  file: materials.yml
+  name: Babari Lion Cage
+"21041":
+  file: materials.yml
+  name: Rabbit Coop
+"21042":
+  file: materials.yml
+  name: Baby Dragon Cage
+"21043":
+  file: materials.yml
+  name: Unicorn Corral
+"21044":
+  file: materials.yml
+  name: Old Fox Cage
+"21045":
+  file: materials.yml
+  name: Baby Griffin Cage
+"21050":
+  file: materials.yml
+  name: Cute Frog
+"21051":
+  file: materials.yml
+  name: Cute Hamburger
+"21052":
+  file: materials.yml
+  name: Baby Turtle
+"21053":
+  file: materials.yml
+  name: Baby Chicken
+"21054":
+  file: materials.yml
+  name: Baby Cow
+"21055":
+  file: materials.yml
+  name: Baby Beagle
+"21056":
+  file: materials.yml
+  name: Baby Blue Dragon
+"21057":
+  file: materials.yml
+  name: Baby Hamster
+"21058":
+  file: materials.yml
+  name: Baby Horse
+"21059":
+  file: materials.yml
+  name: Baby Monkey
+"21060":
+  file: materials.yml
+  name: Baby Pig
+"21061":
+  file: materials.yml
+  name: Baby Rabbit
+"21062":
+  file: materials.yml
+  name: Cute Lamb
+"21063":
+  file: materials.yml
+  name: Baby Tiger
+"21064":
+  file: materials.yml
+  name: Little Maid Cardpuppet
+"21065":
+  file: materials.yml
+  name: Little Mia
+"21066":
+  file: materials.yml
+  name: Baby Black Dragon
+"21067":
+  file: materials.yml
+  name: Baby Yetti
+"21069":
+  file: materials.yml
+  name: English Bulldog
+"21070":
+  file: materials.yml
+  name: Naughty Ghost
+"21071":
+  file: materials.yml
+  name: Baby Fu Lion
+"21072":
+  file: materials.yml
+  name: Smart Owl
+"21073":
+  file: materials.yml
+  name: Patches
+"21074":
+  file: materials.yml
+  name: Baby Robot
+"21075":
+  file: materials.yml
+  name: Baby Bang
+"21076":
+  file: materials.yml
+  name: Baby Panda
+"21077":
+  file: materials.yml
+  name: Red Armored Tigar
+"21078":
+  file: materials.yml
+  name: Blue Armored Tigar
+"21079":
+  file: materials.yml
+  name: Yellow Armored Tigar
+"21080":
+  file: materials.yml
+  name: Tommy Toucan
+"21081":
+  file: materials.yml
+  name: Little Lykan
+"21082":
+  file: materials.yml
+  name: Joey
+"21083":
+  file: materials.yml
+  name: Spike
+"21084":
+  file: materials.yml
+  name: Lumia
+"21085":
+  file: materials.yml
+  name: Inspector Koko
+"21086":
+  file: materials.yml
+  name: Cheshire Cat
+"21087":
+  file: materials.yml
+  name: The White Rabbit
+"21088":
+  file: materials.yml
+  name: Tiger Cub
+"21089":
+  file: materials.yml
+  name: Bone Golem
+"22000":
+  file: weapons.yml
+  name: Sword of BoBoKu
+"22001":
+  file: weapons.yml
+  name: Axe of Luda
+"22002":
+  file: weapons.yml
+  name: Shining Sword
+"22003":
+  file: weapons.yml
+  name: Claw of Lawolf
+"22004":
+  file: weapons.yml
+  name: Irony Knuckle
+"22005":
+  file: weapons.yml
+  name: Iron of Clockworks
+"22006":
+  file: weapons.yml
+  name: Sword of Silver Sword
+"22007":
+  file: weapons.yml
+  name: Elemental Axe
+"22008":
+  file: weapons.yml
+  name: Masquerpet Cutter
+"22009":
+  file: weapons.yml
+  name: Steel Knuckle
+"22010":
+  file: weapons.yml
+  name: Fist of Revenge
+"22011":
+  file: weapons.yml
+  name: Toy of Iblis
+"22012":
+  file: weapons.yml
+  name: Wheel of Wheelem
+"22013":
+  file: weapons.yml
+  name: Pulley of Clockworks
+"22014":
+  file: weapons.yml
+  name: Bow of Accuracy
+"22015":
+  file: weapons.yml
+  name: Bow of Spirit
+"22016":
+  file: weapons.yml
+  name: Flaming Bow
+"22017":
+  file: weapons.yml
+  name: Flarine Stick
+"22018":
+  file: weapons.yml
+  name: Saint Guardian Stick
+"22019":
+  file: weapons.yml
+  name: Stick of Roritoren
+"22020":
+  file: weapons.yml
+  name: Lightened Wand
+"22021":
+  file: weapons.yml
+  name: Wand of Earthquake
+"22022":
+  file: weapons.yml
+  name: Branch of Rhsis
+"22023":
+  file: weapons.yml
+  name: Staff of Luena Lab
+"22024":
+  file: weapons.yml
+  name: Flaming Stick
+"22025":
+  file: weapons.yml
+  name: Stick of Vel Parpone
+"22026":
+  file: weapons.yml
+  name: Guardian Sword
+"22027":
+  file: weapons.yml
+  name: Historic Sword
+"22028":
+  file: weapons.yml
+  name: Angel Sword
+"22029":
+  file: weapons.yml
+  name: Legendary Golden Sword
+"22030":
+  file: weapons.yml
+  name: Guardian Big Sword
+"22031":
+  file: weapons.yml
+  name: Historic Big Sword
+"22032":
+  file: weapons.yml
+  name: Angel Big Sword
+"22033":
+  file: weapons.yml
+  name: Legendary Golden Big Sword
+"22034":
+  file: weapons.yml
+  name: Guardian Axe
+"22035":
+  file: weapons.yml
+  name: Historic Axe
+"22036":
+  file: weapons.yml
+  name: Angel Axe
+"22037":
+  file: weapons.yml
+  name: Legendary Golden Axe
+"22038":
+  file: weapons.yml
+  name: Guardian Ambidextrous Axe
+"22039":
+  file: weapons.yml
+  name: Historic Ambidextrous Axe
+"22040":
+  file: weapons.yml
+  name: Angel Ambidextrous Axe
+"22041":
+  file: weapons.yml
+  name: Legendary Big Golden Axe
+"22042":
+  file: weapons.yml
+  name: Guardian Knuckle
+"22043":
+  file: weapons.yml
+  name: Historic Knuckle
+"22044":
+  file: weapons.yml
+  name: Angel Glove
+"22045":
+  file: weapons.yml
+  name: Legendary Golden Gloves
+"22046":
+  file: weapons.yml
+  name: Guardian Stick
+"22047":
+  file: weapons.yml
+  name: Historic Stick
+"22048":
+  file: weapons.yml
+  name: Angel Stick
+"22049":
+  file: weapons.yml
+  name: Legendary Golden Stick
+"22050":
+  file: weapons.yml
+  name: Guardian Bow
+"22051":
+  file: weapons.yml
+  name: Historic Bow
+"22052":
+  file: weapons.yml
+  name: Angel Bow
+"22053":
+  file: weapons.yml
+  name: Legendary Golden Bow
+"22054":
+  file: weapons.yml
+  name: Guardian Yo-Yo
+"22055":
+  file: weapons.yml
+  name: Historic Yo-Yo
+"22056":
+  file: weapons.yml
+  name: Angel Yo-Yo
+"22057":
+  file: weapons.yml
+  name: Legendary Golden Yo-Yo
+"22058":
+  file: weapons.yml
+  name: Guardian Wand
+"22059":
+  file: weapons.yml
+  name: Historic Wand
+"22060":
+  file: weapons.yml
+  name: Angel Wand
+"22061":
+  file: weapons.yml
+  name: Legendary Golden Wand
+"22062":
+  file: weapons.yml
+  name: Guardian Staff
+"22063":
+  file: weapons.yml
+  name: Historic Staff
+"22064":
+  file: weapons.yml
+  name: Angel Staff
+"22065":
+  file: weapons.yml
+  name: Legendary Golden Staff
+"22066":
+  file: armors.yml
+  name: Recorn Helmet
+"22067":
+  file: armors.yml
+  name: Recorn Suit
+"22068":
+  file: armors.yml
+  name: Recorn Gauntlet
+"22069":
+  file: armors.yml
+  name: Recorn Boots
+"22070":
+  file: armors.yml
+  name: Rescorn Helmet
+"22071":
+  file: armors.yml
+  name: Rescorn Suit
+"22072":
+  file: armors.yml
+  name: Rescorn Gauntlet
+"22073":
+  file: armors.yml
+  name: Rescorn Boots
+"22074":
+  file: armors.yml
+  name: Rebron Helmet
+"22075":
+  file: armors.yml
+  name: Rebron Suit
+"22076":
+  file: armors.yml
+  name: Rebron Gauntlet
+"22077":
+  file: armors.yml
+  name: Rebron Boots
+"22078":
+  file: armors.yml
+  name: Restron Helmet
+"22079":
+  file: armors.yml
+  name: Restron Suit
+"22080":
+  file: armors.yml
+  name: Restron Gauntlet
+"22081":
+  file: armors.yml
+  name: Restron Boots
+"22082":
+  file: armors.yml
+  name: Shurand Helmet
+"22083":
+  file: armors.yml
+  name: Shurand Suit
+"22084":
+  file: armors.yml
+  name: Shurand Gauntlet
+"22085":
+  file: armors.yml
+  name: Shurand Boots
+"22086":
+  file: armors.yml
+  name: Shuran Helmet
+"22087":
+  file: armors.yml
+  name: Shuran Suit
+"22088":
+  file: armors.yml
+  name: Shuran Gauntlet
+"22089":
+  file: armors.yml
+  name: Shuran Boots
+"22090":
+  file: armors.yml
+  name: Ahes Helmet
+"22091":
+  file: armors.yml
+  name: Ahes Suit
+"22092":
+  file: armors.yml
+  name: Ahes Gauntlet
+"22093":
+  file: armors.yml
+  name: Ahes Boots
+"22094":
+  file: armors.yml
+  name: Anoos Helmet
+"22095":
+  file: armors.yml
+  name: Anoos Suit
+"22096":
+  file: armors.yml
+  name: Anoos Gauntlet
+"22097":
+  file: armors.yml
+  name: Anoos Boots
+"22098":
+  file: armors.yml
+  name: Warpon Helmet
+"22099":
+  file: armors.yml
+  name: Warpon Suit
+"22100":
+  file: armors.yml
+  name: Warpon Gauntlet
+"22101":
+  file: armors.yml
+  name: Warpon Boots
+"22102":
+  file: armors.yml
+  name: Warspon Helmet
+"22103":
+  file: armors.yml
+  name: Warspon Suit
+"22104":
+  file: armors.yml
+  name: Warspon Gauntlet
+"22105":
+  file: armors.yml
+  name: Warspon Boots
+"22106":
+  file: armors.yml
+  name: Wees Helmet
+"22107":
+  file: armors.yml
+  name: Wees Suit
+"22108":
+  file: armors.yml
+  name: Wees Gauntlet
+"22109":
+  file: armors.yml
+  name: Wees Boots
+"22110":
+  file: armors.yml
+  name: Weeshian Helmet
+"22111":
+  file: armors.yml
+  name: Weeshian Suit
+"22112":
+  file: armors.yml
+  name: Weeshian Gauntlet
+"22113":
+  file: armors.yml
+  name: Weeshian Boots
+"22114":
+  file: armors.yml
+  name: Ectro Helmet
+"22115":
+  file: armors.yml
+  name: Ectro Suit
+"22116":
+  file: armors.yml
+  name: Ectro Gauntlet
+"22117":
+  file: armors.yml
+  name: Ectro Boots
+"22118":
+  file: armors.yml
+  name: Extro Helmet
+"22119":
+  file: armors.yml
+  name: Extro Suit
+"22120":
+  file: armors.yml
+  name: Extro Gauntlet
+"22121":
+  file: armors.yml
+  name: Extro Boots
+"22122":
+  file: armors.yml
+  name: Einy Helmet
+"22123":
+  file: armors.yml
+  name: Einy Suit
+"22124":
+  file: armors.yml
+  name: Einy Gauntlet
+"22125":
+  file: armors.yml
+  name: Einy Boots
+"22126":
+  file: armors.yml
+  name: Akan Helmet
+"22127":
+  file: armors.yml
+  name: Akan Suit
+"22128":
+  file: armors.yml
+  name: Akan Gauntlet
+"22129":
+  file: armors.yml
+  name: Akan Boots
+"22130":
+  file: armors.yml
+  name: Dayst Helmet
+"22131":
+  file: armors.yml
+  name: Dayst Suit
+"22132":
+  file: armors.yml
+  name: Dayst Gauntlet
+"22133":
+  file: armors.yml
+  name: Dayst Boots
+"22134":
+  file: armors.yml
+  name: Dest Helmet
+"22135":
+  file: armors.yml
+  name: Dest Suit
+"22136":
+  file: armors.yml
+  name: Dest Gauntlet
+"22137":
+  file: armors.yml
+  name: Dest Boots
+"22138":
+  file: armors.yml
+  name: Hanes Helmet
+"22139":
+  file: armors.yml
+  name: Hanes Suit
+"22140":
+  file: armors.yml
+  name: Hanes Gauntlet
+"22141":
+  file: armors.yml
+  name: Hanes Boots
+"22142":
+  file: armors.yml
+  name: Haganes Helmet
+"22143":
+  file: armors.yml
+  name: Haganes Suit
+"22144":
+  file: armors.yml
+  name: Haganes Gauntlet
+"22145":
+  file: armors.yml
+  name: Haganes Boots
+"22146":
+  file: armors.yml
+  name: Katria Helmet
+"22147":
+  file: armors.yml
+  name: Katria Suit
+"22148":
+  file: armors.yml
+  name: Katria Guantlet
+"22149":
+  file: armors.yml
+  name: Katria Boots
+"22150":
+  file: armors.yml
+  name: Kanarin Helmet
+"22151":
+  file: armors.yml
+  name: Kanarin Suit
+"22152":
+  file: armors.yml
+  name: Kanarin Gauntlet
+"22153":
+  file: armors.yml
+  name: Kanarin Boots
+"22154":
+  file: armors.yml
+  name: Restra Helmet
+"22155":
+  file: armors.yml
+  name: Restra Suit
+"22156":
+  file: armors.yml
+  name: Restra Gauntlet
+"22157":
+  file: armors.yml
+  name: Restra Boots
+"22158":
+  file: armors.yml
+  name: Rasra Helmet
+"22159":
+  file: armors.yml
+  name: Rasra Suit
+"22160":
+  file: armors.yml
+  name: Rasra Gauntlet
+"22161":
+  file: armors.yml
+  name: Rasra Boots
+"22162":
+  file: armors.yml
+  name: Neis Helmet
+"22163":
+  file: armors.yml
+  name: Neis Suit
+"22164":
+  file: armors.yml
+  name: Neis Gauntlet
+"22165":
+  file: armors.yml
+  name: Neis Boots
+"22166":
+  file: armors.yml
+  name: Nation Helmet
+"22167":
+  file: armors.yml
+  name: Nation Suit
+"22168":
+  file: armors.yml
+  name: Nation Gauntlet
+"22169":
+  file: armors.yml
+  name: Nation Boots
+"22170":
+  file: armors.yml
+  name: Oska Helmet
+"22171":
+  file: armors.yml
+  name: Oska Suit
+"22172":
+  file: armors.yml
+  name: Oska Gauntlet
+"22173":
+  file: armors.yml
+  name: Oska Boots
+"22174":
+  file: armors.yml
+  name: Okas Helmet
+"22175":
+  file: armors.yml
+  name: Okas Suit
+"22176":
+  file: armors.yml
+  name: Okas Gauntlet
+"22177":
+  file: armors.yml
+  name: Okas Boots
+"22178":
+  file: armors.yml
+  name: Asren Helmet
+"22179":
+  file: armors.yml
+  name: Asren Suit
+"22180":
+  file: armors.yml
+  name: Asren Gauntlet
+"22181":
+  file: armors.yml
+  name: Asren Boots
+"22182":
+  file: armors.yml
+  name: Aren Helmet
+"22183":
+  file: armors.yml
+  name: Aren Suit
+"22184":
+  file: armors.yml
+  name: Aren Gauntlet
+"22185":
+  file: armors.yml
+  name: Aren Boots
+"22186":
+  file: armors.yml
+  name: Tyrent Helmet
+"22187":
+  file: armors.yml
+  name: Tyrent Suit
+"22188":
+  file: armors.yml
+  name: Tyrent Gauntlet
+"22189":
+  file: armors.yml
+  name: Tyrent Boots
+"22190":
+  file: armors.yml
+  name: Tight Helmet
+"22191":
+  file: armors.yml
+  name: Tight Suit
+"22192":
+  file: armors.yml
+  name: Tight Gauntlet
+"22193":
+  file: armors.yml
+  name: Tight Boots
+"22194":
+  file: armors.yml
+  name: Pact Helmet
+"22195":
+  file: armors.yml
+  name: Pact Suit
+"22196":
+  file: armors.yml
+  name: Pact Gauntlet
+"22197":
+  file: armors.yml
+  name: Pact Boots
+"22198":
+  file: armors.yml
+  name: Paxt Helmet
+"22199":
+  file: armors.yml
+  name: Paxt Suit
+"22200":
+  file: armors.yml
+  name: Paxt Gauntlet
+"22201":
+  file: armors.yml
+  name: Paxt Boots
+"22202":
+  file: armors.yml
+  name: Shupon Helmet
+"22203":
+  file: armors.yml
+  name: Shupon Suit
+"22204":
+  file: armors.yml
+  name: Shupon Gauntlet
+"22205":
+  file: armors.yml
+  name: Shupon Boots
+"22206":
+  file: armors.yml
+  name: Shrian Helmet
+"22207":
+  file: armors.yml
+  name: Shrian Suit
+"22208":
+  file: armors.yml
+  name: Shrian Gauntlet
+"22209":
+  file: armors.yml
+  name: Shrian Boots
+"22210":
+  file: armors.yml
+  name: Navil Helmet
+"22211":
+  file: armors.yml
+  name: Navil Suit
+"22212":
+  file: armors.yml
+  name: Navil Gauntlet
+"22213":
+  file: armors.yml
+  name: Navil Boots
+"22214":
+  file: armors.yml
+  name: Neclus Helmet
+"22215":
+  file: armors.yml
+  name: Neclus Suit
+"22216":
+  file: armors.yml
+  name: Neclus Gauntlet
+"22217":
+  file: armors.yml
+  name: Neclus Boots
+"22218":
+  file: armors.yml
+  name: Alext Helmet
+"22219":
+  file: armors.yml
+  name: Alext Suit
+"22220":
+  file: armors.yml
+  name: Alext Gauntlet
+"22221":
+  file: armors.yml
+  name: Alext Boots
+"22222":
+  file: armors.yml
+  name: Ales Helmet
+"22223":
+  file: armors.yml
+  name: Ales Suit
+"22224":
+  file: armors.yml
+  name: Ales Gauntlet
+"22225":
+  file: armors.yml
+  name: Ales Boots
+"22226":
+  file: armors.yml
+  name: Akent Helmet
+"22227":
+  file: armors.yml
+  name: Akent Suit
+"22228":
+  file: armors.yml
+  name: Akent Gauntlet
+"22229":
+  file: armors.yml
+  name: Akent Boots
+"22230":
+  file: armors.yml
+  name: Aken Helmet
+"22231":
+  file: armors.yml
+  name: Aken Suit
+"22232":
+  file: armors.yml
+  name: Aken Gautlet
+"22233":
+  file: armors.yml
+  name: Aken Boots
+"22234":
+  file: armors.yml
+  name: Rody Helmet
+"22235":
+  file: armors.yml
+  name: Rody Suit
+"22236":
+  file: armors.yml
+  name: Rody Gauntlet
+"22237":
+  file: armors.yml
+  name: Rody Boots
+"22238":
+  file: armors.yml
+  name: Rodey Helmet
+"22239":
+  file: armors.yml
+  name: Rodey Suit
+"22240":
+  file: armors.yml
+  name: Rodey Gauntlet
+"22241":
+  file: armors.yml
+  name: Rodey Boots
+"22242":
+  file: armors.yml
+  name: Ropang Helmet
+"22243":
+  file: armors.yml
+  name: Ropang Suit
+"22244":
+  file: armors.yml
+  name: Ropang Gauntlet
+"22245":
+  file: armors.yml
+  name: Ropang Boots
+"22246":
+  file: armors.yml
+  name: Roshel Helmet
+"22247":
+  file: armors.yml
+  name: Roshel Suit
+"22248":
+  file: armors.yml
+  name: Roshel Gauntlet
+"22249":
+  file: armors.yml
+  name: Roshel Boots
+"22250":
+  file: armors.yml
+  name: Geniun Helmet
+"22251":
+  file: armors.yml
+  name: Geniun Suit
+"22252":
+  file: armors.yml
+  name: Geniun Gauntlet
+"22253":
+  file: armors.yml
+  name: Geniun Boots
+"22254":
+  file: armors.yml
+  name: Gynas Helmet
+"22255":
+  file: armors.yml
+  name: Gynas Suit
+"22256":
+  file: armors.yml
+  name: Gynas Gauntlet
+"22257":
+  file: armors.yml
+  name: Gynas Boots
+"22258":
+  file: armors.yml
+  name: Mekatro Helmet
+"22259":
+  file: armors.yml
+  name: Mekatro Suit
+"22260":
+  file: armors.yml
+  name: Mekatro Gauntlet
+"22261":
+  file: armors.yml
+  name: Mekatro Boots
+"22262":
+  file: armors.yml
+  name: Mekaron Helmet
+"22263":
+  file: armors.yml
+  name: Mekaron Suit
+"22264":
+  file: armors.yml
+  name: Mekaron Gauntlet
+"22265":
+  file: armors.yml
+  name: Mekaron Boots
+"22266":
+  file: armors.yml
+  name: Myuran Helmet
+"22267":
+  file: armors.yml
+  name: Myuran Suit
+"22268":
+  file: armors.yml
+  name: Myuran Gauntlet
+"22269":
+  file: armors.yml
+  name: Myuran Boots
+"22270":
+  file: armors.yml
+  name: Myurian Helmet
+"22271":
+  file: armors.yml
+  name: Myurian Suit
+"22272":
+  file: armors.yml
+  name: Myurian Gauntlet
+"22273":
+  file: armors.yml
+  name: Myurian Boots
+"22274":
+  file: armors.yml
+  name: Elder Helmet
+"22275":
+  file: armors.yml
+  name: Elder Suit
+"22276":
+  file: armors.yml
+  name: Elder Gauntlet
+"22277":
+  file: armors.yml
+  name: Elder Boots
+"22278":
+  file: armors.yml
+  name: Ellean Helmet
+"22279":
+  file: armors.yml
+  name: Ellean Suit
+"22280":
+  file: armors.yml
+  name: Ellean Gauntlet
+"22281":
+  file: armors.yml
+  name: Ellean Boots
+"22282":
+  file: armors.yml
+  name: Shabel Helmet
+"22283":
+  file: armors.yml
+  name: Shabel Suit
+"22284":
+  file: armors.yml
+  name: Shabel Gauntlet
+"22285":
+  file: armors.yml
+  name: Shabel Boots
+"22286":
+  file: armors.yml
+  name: Shurian Helmet
+"22287":
+  file: armors.yml
+  name: Shurian Suit
+"22288":
+  file: armors.yml
+  name: Shurian Gauntlet
+"22289":
+  file: armors.yml
+  name: Shurian Boots
+"22290":
+  file: armors.yml
+  name: Knighert Helmet
+"22291":
+  file: armors.yml
+  name: Knighert Suit
+"22292":
+  file: armors.yml
+  name: Knighert Gauntlet
+"22293":
+  file: armors.yml
+  name: Knighert Boots
+"22294":
+  file: armors.yml
+  name: Knighz Helmet
+"22295":
+  file: armors.yml
+  name: Knighz Suit
+"22296":
+  file: armors.yml
+  name: Knighz Gauntlet
+"22297":
+  file: armors.yml
+  name: Knighz Boots
+"22298":
+  file: armors.yml
+  name: Blain Helmet
+"22299":
+  file: armors.yml
+  name: Blain Suit
+"22300":
+  file: armors.yml
+  name: Blain Gauntlet
+"22301":
+  file: armors.yml
+  name: Blain Boots
+"22302":
+  file: armors.yml
+  name: Virain Helmet
+"22303":
+  file: armors.yml
+  name: Virain Suit
+"22304":
+  file: armors.yml
+  name: Virain Gauntlet
+"22305":
+  file: armors.yml
+  name: Virain Boots
+"22306":
+  file: armors.yml
+  name: Jesis Helmet
+"22307":
+  file: armors.yml
+  name: Jesis Suit
+"22308":
+  file: armors.yml
+  name: Jesis Gauntlet
+"22309":
+  file: armors.yml
+  name: Jesis Boots
+"22310":
+  file: armors.yml
+  name: Jenes Helmet
+"22311":
+  file: armors.yml
+  name: Jenes Suit
+"22312":
+  file: armors.yml
+  name: Jenes Gauntlet
+"22313":
+  file: armors.yml
+  name: Jenes Boots
+"22314":
+  file: armors.yml
+  name: Ranerz Helmet
+"22315":
+  file: armors.yml
+  name: Ranerz Suit
+"22316":
+  file: armors.yml
+  name: Ranerz Gauntlet
+"22317":
+  file: armors.yml
+  name: Ranerz Boots
+"22318":
+  file: armors.yml
+  name: Raze Helmet
+"22319":
+  file: armors.yml
+  name: Raze Suit
+"22320":
+  file: armors.yml
+  name: Raze Gauntlet
+"22321":
+  file: armors.yml
+  name: Raze Boots
+"22322":
+  file: armors.yml
+  name: Rimyth Helmet
+"22323":
+  file: armors.yml
+  name: Rimyth Suit
+"22324":
+  file: armors.yml
+  name: Rimyth Gauntlet
+"22325":
+  file: armors.yml
+  name: Rimyth Boots
+"22326":
+  file: armors.yml
+  name: Remingster Helmet
+"22327":
+  file: armors.yml
+  name: Remingster Suit
+"22328":
+  file: armors.yml
+  name: Remingster Gauntlet
+"22329":
+  file: armors.yml
+  name: Remingster Boots
+"22330":
+  file: armors.yml
+  name: Billst Helmet
+"22331":
+  file: armors.yml
+  name: Billst Suit
+"22332":
+  file: armors.yml
+  name: Billst Gauntlet
+"22333":
+  file: armors.yml
+  name: Billst Boots
+"22334":
+  file: armors.yml
+  name: Billporon Helmet
+"22335":
+  file: armors.yml
+  name: Billporon Suit
+"22336":
+  file: armors.yml
+  name: Billporon Gauntlet
+"22337":
+  file: armors.yml
+  name: Billporon Boots
+"22338":
+  file: armors.yml
+  name: Psykon Helmet
+"22339":
+  file: armors.yml
+  name: Psykon Suit
+"22340":
+  file: armors.yml
+  name: Psykon Gauntlet
+"22341":
+  file: armors.yml
+  name: Psykon Boots
+"22342":
+  file: armors.yml
+  name: Psyuniper Helmet
+"22343":
+  file: armors.yml
+  name: Psyuniper Suit
+"22344":
+  file: armors.yml
+  name: Psyuniper Gauntlet
+"22345":
+  file: armors.yml
+  name: Psyuniper Boots
+"22346":
+  file: armors.yml
+  name: Ellis Helmet
+"22347":
+  file: armors.yml
+  name: Ellist Suit
+"22348":
+  file: armors.yml
+  name: Ellis Gauntlet
+"22349":
+  file: armors.yml
+  name: Ellis Boots
+"22350":
+  file: armors.yml
+  name: Ellsis Helmet
+"22351":
+  file: armors.yml
+  name: Ellsis Suit
+"22352":
+  file: armors.yml
+  name: Ellsis Gauntlet
+"22353":
+  file: armors.yml
+  name: Ellsis Boots
+"22354":
+  file: weapons.yml
+  name: Bloody Sword
+"22355":
+  file: weapons.yml
+  name: Bloody Slayer
+"22356":
+  file: weapons.yml
+  name: Bloody Axe
+"22357":
+  file: weapons.yml
+  name: Bloody Two-Handed Axe
+"22358":
+  file: weapons.yml
+  name: Bloody Knuckle
+"22359":
+  file: weapons.yml
+  name: Bloody Stick
+"22360":
+  file: weapons.yml
+  name: Bloody Wand
+"22361":
+  file: weapons.yml
+  name: Bloody Staff
+"22362":
+  file: weapons.yml
+  name: Bloody Yo-Yo
+"22363":
+  file: weapons.yml
+  name: Bloody Bow
+"22364":
+  file: weapons.yml
+  name: Pieceslayer
+"22365":
+  file: weapons.yml
+  name: Lasterslayer
+"22366":
+  file: weapons.yml
+  name: Piecenition
+"22367":
+  file: weapons.yml
+  name: Lasternition
+"22368":
+  file: weapons.yml
+  name: Ultimate Guardian Sword @
+"22369":
+  file: weapons.yml
+  name: Ultimate Historic Sword @
+"22370":
+  file: weapons.yml
+  name: Ultimate Angel Sword @
+"22371":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Sword @
+"22372":
+  file: weapons.yml
+  name: Ultimate Bloody Sword @
+"22373":
+  file: weapons.yml
+  name: Ultimate Guardian Big Sword @
+"22374":
+  file: weapons.yml
+  name: Ultimate Historic Big Sword @
+"22375":
+  file: weapons.yml
+  name: Ultimate Angel Big Sword @
+"22376":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Big Sword @
+"22377":
+  file: weapons.yml
+  name: Ultimate Bloody Slayer @
+"22379":
+  file: weapons.yml
+  name: Ultimate Historic Axe @
+"22380":
+  file: weapons.yml
+  name: Ultimate Angel Axe @
+"22381":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Axe @
+"22382":
+  file: weapons.yml
+  name: Ultimate Bloody Axe @
+"22383":
+  file: weapons.yml
+  name: Ultimate Guardian Ambidextrous Axe @
+"22384":
+  file: weapons.yml
+  name: Ultimate Historic Ambidextrous Axe @
+"22385":
+  file: weapons.yml
+  name: Ultimate Angel Two-Handed Axe @
+"22386":
+  file: weapons.yml
+  name: Ultimate Legendary Big Golden Axe @
+"22387":
+  file: weapons.yml
+  name: Ultimate Bloody Two-hand Axe @
+"22388":
+  file: weapons.yml
+  name: Ultimate Guardian Knuckle @
+"22389":
+  file: weapons.yml
+  name: Ultimate Historic Knuckle @
+"22390":
+  file: weapons.yml
+  name: Ultimate Angel Glove @
+"22391":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Gloves @
+"22392":
+  file: weapons.yml
+  name: Ultimate Bloody Knuckle @
+"22393":
+  file: weapons.yml
+  name: Ultimate Guardian Stick @
+"22394":
+  file: weapons.yml
+  name: Ultimate Historic Stick @
+"22395":
+  file: weapons.yml
+  name: Ultimate Angel Stick @
+"22396":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Stick @
+"22397":
+  file: weapons.yml
+  name: Ultimate Bloody Stick @
+"22398":
+  file: weapons.yml
+  name: Ultimate Guardian Bow @
+"22399":
+  file: weapons.yml
+  name: Ultimate Historic Bow @
+"22400":
+  file: weapons.yml
+  name: Ultimate Angel Bow @
+"22401":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Bow @
+"22402":
+  file: weapons.yml
+  name: Ultimate Bloody Bow @
+"22403":
+  file: weapons.yml
+  name: Ultimate Guardian Yo-Yo @
+"22404":
+  file: weapons.yml
+  name: Ultimate Historic Yo-Yo @
+"22405":
+  file: weapons.yml
+  name: Ultimate Angel Yo-Yo @
+"22406":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Yo-Yo @
+"22407":
+  file: weapons.yml
+  name: Ultimate Bloody Yo-Yo @
+"22408":
+  file: weapons.yml
+  name: Ultimate Guardian Wand @
+"22409":
+  file: weapons.yml
+  name: Ultimate Historic Wand @
+"22410":
+  file: weapons.yml
+  name: Ultimate Angel Wand @
+"22411":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Wand @
+"22412":
+  file: weapons.yml
+  name: Ultimate Bloody Wand @
+"22413":
+  file: weapons.yml
+  name: Ultimate Guardian Staff @
+"22414":
+  file: weapons.yml
+  name: Ultimate Historic Staff @
+"22415":
+  file: weapons.yml
+  name: Ultimate Angel Staff @
+"22416":
+  file: weapons.yml
+  name: Ultimate Legendary Golden Staff @
+"22417":
+  file: weapons.yml
+  name: Ultimate Bloody Staff @
+"22418":
+  file: armors.yml
+  name: Cruentus Helmet (M)
+"22419":
+  file: armors.yml
+  name: Cruentus Suit (M)
+"22420":
+  file: armors.yml
+  name: Cruentus Gauntlets (M)
+"22421":
+  file: armors.yml
+  name: Cruentus Boots (M)
+"22422":
+  file: armors.yml
+  name: Cruentus Helmet (F)
+"22423":
+  file: armors.yml
+  name: Cruentus Suit (F)
+"22424":
+  file: armors.yml
+  name: Cruentus Gauntlets (F)
+"22425":
+  file: armors.yml
+  name: Cruentus Boots (F)
+"22426":
+  file: armors.yml
+  name: Noctis Helmet (M)
+"22427":
+  file: armors.yml
+  name: Noctis Suit (M)
+"22428":
+  file: armors.yml
+  name: Noctis Gauntlets (M)
+"22429":
+  file: armors.yml
+  name: Noctis Boots (M)
+"22430":
+  file: armors.yml
+  name: Nox Helmet (F)
+"22431":
+  file: armors.yml
+  name: Nox Suit (F)
+"22432":
+  file: armors.yml
+  name: Nox Gauntlets (F)
+"22433":
+  file: armors.yml
+  name: Nox Boots (F)
+"22434":
+  file: armors.yml
+  name: Velox Helmet (M)
+"22435":
+  file: armors.yml
+  name: Velox Suit (M)
+"22436":
+  file: armors.yml
+  name: Velox Gauntlets (M)
+"22437":
+  file: armors.yml
+  name: Velox Boots (M)
+"22438":
+  file: armors.yml
+  name: Velox Helmet (F)
+"22439":
+  file: armors.yml
+  name: Velox Suit (F)
+"22440":
+  file: armors.yml
+  name: Velox Gauntlets (F)
+"22441":
+  file: armors.yml
+  name: Velox Boots (F)
+"22442":
+  file: armors.yml
+  name: Acer Helmet (M)
+"22443":
+  file: armors.yml
+  name: Acer Suit (M)
+"22444":
+  file: armors.yml
+  name: Acer Gauntlets (M)
+"22445":
+  file: armors.yml
+  name: Acer Boots (M)
+"22446":
+  file: armors.yml
+  name: Acer Helmet (F)
+"22447":
+  file: armors.yml
+  name: Acer Suit (F)
+"22448":
+  file: armors.yml
+  name: Acer Gauntlets (F)
+"22449":
+  file: armors.yml
+  name: Acer Boots (F)
+"22450":
+  file: armors.yml
+  name: Revenio Helmet (M)
+"22451":
+  file: armors.yml
+  name: Revenio Suit (M)
+"22452":
+  file: armors.yml
+  name: Revenio Gauntlets (M)
+"22453":
+  file: armors.yml
+  name: Revenio Boots (M)
+"22454":
+  file: armors.yml
+  name: Revenio Helmet (F)
+"22455":
+  file: armors.yml
+  name: Revenio Suit (F)
+"22456":
+  file: armors.yml
+  name: Revenio Gauntlets (F)
+"22457":
+  file: armors.yml
+  name: Revenio Boots (F)
+"22458":
+  file: armors.yml
+  name: Grim Helmet (M)
+"22459":
+  file: armors.yml
+  name: Grim Suit (M)
+"22460":
+  file: armors.yml
+  name: Grim Gauntlets (M)
+"22461":
+  file: armors.yml
+  name: Grim Boots (M)
+"22462":
+  file: armors.yml
+  name: Grim Helmet (F)
+"22463":
+  file: armors.yml
+  name: Grim Suit (F)
+"22464":
+  file: armors.yml
+  name: Grim Gauntlets (F)
+"22465":
+  file: armors.yml
+  name: Grim Boots (F)
+"22466":
+  file: armors.yml
+  name: Twilight Helmet (M)
+"22467":
+  file: armors.yml
+  name: Twilight Suit (M)
+"22468":
+  file: armors.yml
+  name: Twilight Gauntlets (M)
+"22469":
+  file: armors.yml
+  name: Twilight Boots (M)
+"22470":
+  file: armors.yml
+  name: Twilight Helmet (F)
+"22471":
+  file: armors.yml
+  name: Twilight Suit (F)
+"22472":
+  file: armors.yml
+  name: Twilight Gauntlets (F)
+"22473":
+  file: armors.yml
+  name: Twilight Boots (F)
+"22474":
+  file: armors.yml
+  name: Nanemvis Helmet (M)
+"22475":
+  file: armors.yml
+  name: Nanemvis Suit (M)
+"22476":
+  file: armors.yml
+  name: Nanemvis Gauntlets (M)
+"22477":
+  file: armors.yml
+  name: Nanemvis Boots (M)
+"22478":
+  file: armors.yml
+  name: Nanemvis Helmet (F)
+"22479":
+  file: armors.yml
+  name: Nanemvis Suit (F)
+"22480":
+  file: armors.yml
+  name: Nanemvis Gauntlets (F)
+"22481":
+  file: armors.yml
+  name: Nanemvis Boots (F)
+"22500":
+  file: weapons.yml
+  name: Ultimate Ancient One-hand Sword
+"22501":
+  file: weapons.yml
+  name: Ultimate Ancient Two-hand Sword
+"22502":
+  file: weapons.yml
+  name: Ultimate Ancient One-hand Axe
+"22503":
+  file: weapons.yml
+  name: Ultimate Ancient Two-hand Axe
+"22504":
+  file: weapons.yml
+  name: Ultimate Ancient Knuckle
+"22505":
+  file: weapons.yml
+  name: Ultimate Ancient Stick
+"22506":
+  file: weapons.yml
+  name: Ultimate Ancient Wand
+"22507":
+  file: weapons.yml
+  name: Ultimate Ancient Staff
+"22508":
+  file: weapons.yml
+  name: Ultimate Ancient Yo-Yo
+"22509":
+  file: weapons.yml
+  name: Ultimate Ancient Bow
+"22510":
+  file: weapons.yml
+  name: Ultimate Vampire Blade
+"22511":
+  file: weapons.yml
+  name: Ultimate Vampire Slayer
+"22512":
+  file: weapons.yml
+  name: Ultimate Vampire Axe
+"22513":
+  file: weapons.yml
+  name: Ultimate Vampire Two-hand Axe
+"22514":
+  file: weapons.yml
+  name: Ultimate Vampire Knuckle
+"22515":
+  file: weapons.yml
+  name: Ultimate Vampire Stick
+"22516":
+  file: weapons.yml
+  name: Ultimate Vampire Wand
+"22517":
+  file: weapons.yml
+  name: Ultimate Vampire Staff
+"22518":
+  file: weapons.yml
+  name: Ultimate Vampire Bow
+"22519":
+  file: weapons.yml
+  name: Ultimate Vampire Yo-Yo
+"22533":
+  file: armors.yml
+  name: Bileire Helmet (M)
+"22534":
+  file: armors.yml
+  name: Bileire Suit (M)
+"22535":
+  file: armors.yml
+  name: Bileire Gauntlets (M)
+"22536":
+  file: armors.yml
+  name: Bileire Boots (M)
+"22537":
+  file: armors.yml
+  name: Bilari Helmet (F)
+"22538":
+  file: armors.yml
+  name: Bilari Suit (F)
+"22539":
+  file: armors.yml
+  name: Bilari Gauntlets (F)
+"22540":
+  file: armors.yml
+  name: Bilari Boots (F)
+"22541":
+  file: armors.yml
+  name: Heraud Helmet (M)
+"22542":
+  file: armors.yml
+  name: Heraud Suit (M)
+"22543":
+  file: armors.yml
+  name: Heraud Gauntlets (M)
+"22544":
+  file: armors.yml
+  name: Heraud Boots (M)
+"22545":
+  file: armors.yml
+  name: Herainn Helmet (F)
+"22546":
+  file: armors.yml
+  name: Herainn Suit (F)
+"22547":
+  file: armors.yml
+  name: Herainn Gauntlets (F)
+"22548":
+  file: armors.yml
+  name: Herainn Boots (F)
+"22549":
+  file: armors.yml
+  name: Curio Helmet (M)
+"22550":
+  file: armors.yml
+  name: Curio Suit (M)
+"22551":
+  file: armors.yml
+  name: Curio Gauntlets (M)
+"22552":
+  file: armors.yml
+  name: Curio Boots (M)
+"22553":
+  file: armors.yml
+  name: Curena Helmet (F)
+"22554":
+  file: armors.yml
+  name: Curena Suit (F)
+"22555":
+  file: armors.yml
+  name: Curena Gauntlets (F)
+"22556":
+  file: armors.yml
+  name: Curena Boots (F)
+"22557":
+  file: armors.yml
+  name: Hainure Helmet (M)
+"22558":
+  file: armors.yml
+  name: Hainure Suit (M)
+"22559":
+  file: armors.yml
+  name: Hainure Gauntlets (M)
+"22560":
+  file: armors.yml
+  name: Hainure Boots (M)
+"22561":
+  file: armors.yml
+  name: Hanira Helmet (F)
+"22562":
+  file: armors.yml
+  name: Hanira Suit (F)
+"22563":
+  file: armors.yml
+  name: Hanira Gauntlets (F)
+"22564":
+  file: armors.yml
+  name: Hanira Boots (F)
+"22565":
+  file: armors.yml
+  name: Reine Helmet (M)
+"22566":
+  file: armors.yml
+  name: Reine Suit (M)
+"22567":
+  file: armors.yml
+  name: Reine Gauntlets (M)
+"22568":
+  file: armors.yml
+  name: Reine Boots (M)
+"22569":
+  file: armors.yml
+  name: Rayne Helmet (F)
+"22570":
+  file: armors.yml
+  name: Rayne Suit (F)
+"22571":
+  file: armors.yml
+  name: Rayne Gauntlets (F)
+"22572":
+  file: armors.yml
+  name: Rayne Boots (F)
+"22573":
+  file: armors.yml
+  name: Roenier Helmet (M)
+"22574":
+  file: armors.yml
+  name: Roenier Suit (M)
+"22575":
+  file: armors.yml
+  name: Roenier Gauntlets (M)
+"22576":
+  file: armors.yml
+  name: Roenier Boots (M)
+"22577":
+  file: armors.yml
+  name: Roelayne Helmet (F)
+"22578":
+  file: armors.yml
+  name: Roelayne Suit (F)
+"22579":
+  file: armors.yml
+  name: Roelayne Gauntlets (F)
+"22580":
+  file: armors.yml
+  name: Roelayne Boots (F)
+"22581":
+  file: armors.yml
+  name: Reffiro Helmet (M)
+"22582":
+  file: armors.yml
+  name: Reffiro Suit (M)
+"22583":
+  file: armors.yml
+  name: Reffiro Gauntlets (M)
+"22584":
+  file: armors.yml
+  name: Reffiro Boots (M)
+"22585":
+  file: armors.yml
+  name: Rephira Helmet (F)
+"22586":
+  file: armors.yml
+  name: Rephira Suit (F)
+"22587":
+  file: armors.yml
+  name: Rephira Gauntlets (F)
+"22588":
+  file: armors.yml
+  name: Rephira Boots (F)
+"22589":
+  file: armors.yml
+  name: Lippin Helmet (M)
+"22590":
+  file: armors.yml
+  name: Lippin Suit (M)
+"22591":
+  file: armors.yml
+  name: Lippin Gauntlets (M)
+"22592":
+  file: armors.yml
+  name: Lippin Boots (M)
+"22593":
+  file: armors.yml
+  name: Lypine Helmet (F)
+"22594":
+  file: armors.yml
+  name: Lypine Suit (F)
+"22595":
+  file: armors.yml
+  name: Lypine Gauntlets (F)
+"22596":
+  file: armors.yml
+  name: Lypine Boots (F)
+"26104":
+  file: armors.yml
+  name: Cats Hat+ (M)
+"26105":
+  file: armors.yml
+  name: Cats Suit+ (M)
+"26106":
+  file: armors.yml
+  name: Cats Gloves+ (M)
+"26107":
+  file: armors.yml
+  name: Cats Shoes+ (M)
+"26108":
+  file: armors.yml
+  name: Cats Hat+ (F)
+"26109":
+  file: armors.yml
+  name: Cats Suit+ (F)
+"26110":
+  file: armors.yml
+  name: Cats Gloves+ (F)
+"26111":
+  file: armors.yml
+  name: Cats Shoes+ (F)
+"26234":
+  file: weapons.yml
+  name: Sword of Ivillines
+"26235":
+  file: weapons.yml
+  name: Great Sword of Ivillines
+"26236":
+  file: weapons.yml
+  name: Axe of Ivillines
+"26237":
+  file: weapons.yml
+  name: Great Axe of Ivillines
+"26238":
+  file: weapons.yml
+  name: Gloves of Ivillines
+"26239":
+  file: weapons.yml
+  name: Stick of Ivillines
+"26240":
+  file: weapons.yml
+  name: Wand of Ivillines
+"26241":
+  file: weapons.yml
+  name: Staff of Ivillines
+"26242":
+  file: weapons.yml
+  name: Bow of Ivillines
+"26243":
+  file: weapons.yml
+  name: Yo-Yo of Ivillines
+"26247":
+  file: armors.yml
+  name: Shield of Ivillnes
+"26322":
+  file: materials.yml
+  name: White Cake
+"26323":
+  file: materials.yml
+  name: Green Cake
+"26324":
+  file: materials.yml
+  name: Pink Cake
+"26334":
+  file: materials.yml
+  name: 小重量杯
+"26336":
+  file: armors.yml
+  name: Rudolph's Nose
+"26337":
+  file: materials.yml
+  name: Christmas Cookies
+"26341":
+  file: armors.yml
+  name: Flower Hair (M) Gold
+"26342":
+  file: armors.yml
+  name: Flower Hair (M) Pink
+"26343":
+  file: armors.yml
+  name: Flower Hair (M) Blue
+"26344":
+  file: armors.yml
+  name: Bomb Hair (M) Brown
+"26345":
+  file: armors.yml
+  name: Bomb Hair (M) Red
+"26346":
+  file: armors.yml
+  name: Bomb Hair (M) Blue
+"26347":
+  file: armors.yml
+  name: Splendid Whirlpool Hair (M)
+"26348":
+  file: armors.yml
+  name: Passionate Whirlpool Hair (M)
+"26349":
+  file: armors.yml
+  name: Elegant Whirlpool Hair (M)
+"26350":
+  file: armors.yml
+  name: Moussed Hair (M) Black
+"26351":
+  file: armors.yml
+  name: Moussed Hair (M) Brown
+"26352":
+  file: armors.yml
+  name: Moussed Hair (M) Green
+"26353":
+  file: armors.yml
+  name: Cactus Hair (M) Gold
+"26354":
+  file: armors.yml
+  name: Cactus Hair (M) Silver
+"26355":
+  file: armors.yml
+  name: Cactus Hair (M) Red
+"26356":
+  file: armors.yml
+  name: Mohawk (M) Brown
+"26357":
+  file: armors.yml
+  name: Mohawk (M) Red
+"26358":
+  file: armors.yml
+  name: Mohawk (M) Orange
+"26359":
+  file: armors.yml
+  name: Warrior Hair (M) Black
+"26360":
+  file: armors.yml
+  name: Warrior Hair (M) Blue
+"26361":
+  file: armors.yml
+  name: Warrior Hair (M) Brown
+"26362":
+  file: armors.yml
+  name: Luxury Hair (M) Black
+"26363":
+  file: armors.yml
+  name: Luxury Hair (M) Violet
+"26364":
+  file: armors.yml
+  name: Luxury Hair (M) Brown
+"26365":
+  file: armors.yml
+  name: Wind Hair (M) Brown
+"26366":
+  file: armors.yml
+  name: Wind Hair (M) Silver
+"26367":
+  file: armors.yml
+  name: Wind Hair (M) Blue
+"26368":
+  file: armors.yml
+  name: Sphinx Hair (M) Blue
+"26369":
+  file: armors.yml
+  name: Sphinx Hair (M) Green
+"26370":
+  file: armors.yml
+  name: Sphinx Hair (M) Violet
+"26371":
+  file: armors.yml
+  name: Flower Hair (F) Gold
+"26372":
+  file: armors.yml
+  name: Flower Hair (F) Pink
+"26373":
+  file: armors.yml
+  name: Flower Hair (F) Blue
+"26374":
+  file: armors.yml
+  name: Bomb Hair (F) Brown
+"26375":
+  file: armors.yml
+  name: Bomb Hair (F) Red
+"26376":
+  file: armors.yml
+  name: Bomb Hair (F) Blue
+"26377":
+  file: armors.yml
+  name: Splendid Whirlpool Hair (F)
+"26378":
+  file: armors.yml
+  name: Passionate Whirlpool Hair (F)
+"26379":
+  file: armors.yml
+  name: Elegant Whirlpool Hair (F)
+"26380":
+  file: armors.yml
+  name: Cutesy Hair (F) Gold
+"26381":
+  file: armors.yml
+  name: Cutesy Hair (F) Brown
+"26382":
+  file: armors.yml
+  name: Cutesy Hair (F) Green
+"26383":
+  file: armors.yml
+  name: High-class Hair (F) Gold
+"26384":
+  file: armors.yml
+  name: High-class Hair (F) Silver
+"26385":
+  file: armors.yml
+  name: High-class Hair (F) Red
+"26386":
+  file: armors.yml
+  name: Ponytail Hair (F) Brown
+"26387":
+  file: armors.yml
+  name: Ponytail Hair (F) Blue
+"26388":
+  file: armors.yml
+  name: Ponytail Hair (F) Orange
+"26389":
+  file: armors.yml
+  name: Sensate Hair (F) Black
+"26390":
+  file: armors.yml
+  name: Sensate Hair (F) Blue
+"26391":
+  file: armors.yml
+  name: Sensate Hair (F) Brown
+"26392":
+  file: armors.yml
+  name: Nymph Hair (F) Black
+"26393":
+  file: armors.yml
+  name: Nymph Hair (F) Violet
+"26394":
+  file: armors.yml
+  name: Nymph Hair (F) Brown
+"26395":
+  file: armors.yml
+  name: Lamb Hair (F) Brown
+"26396":
+  file: armors.yml
+  name: Lamb Hair (F) Silver
+"26397":
+  file: armors.yml
+  name: Lamb Hair (F) Blue
+"26398":
+  file: armors.yml
+  name: Cleopatra Hair (F) Blue
+"26399":
+  file: armors.yml
+  name: Cleopatra Hair (F) Green
+"26400":
+  file: armors.yml
+  name: Cleopatra Hair( F) Violet
+"26402":
+  file: materials.yml
+  name: Heart Cookies
+"26423":
+  file: materials.yml
+  name: Pumpkin Pie
+"26424":
+  file: armors.yml
+  name: Pumpkin Mask
+"26426":
+  file: armors.yml
+  name: Taegeuk Cloak
+"26452":
+  file: materials.yml
+  name: Collector
+"26453":
+  file: materials.yml
+  name: Battery
+"26457":
+  file: materials.yml
+  name: Mysterious Pill
+"26460":
+  file: materials.yml
+  name: Red Chips
+"26464":
+  file: materials.yml
+  name: Vigor Ring
+"26465":
+  file: materials.yml
+  name: Stam Ring
+"26466":
+  file: materials.yml
+  name: Arek Ring
+"26467":
+  file: materials.yml
+  name: Intelli Ring
+"26468":
+  file: materials.yml
+  name: Demol Earring
+"26469":
+  file: materials.yml
+  name: Plug Earring
+"26470":
+  file: materials.yml
+  name: Gore Necklace
+"26471":
+  file: materials.yml
+  name: Mental Necklace
+"26472":
+  file: materials.yml
+  name: Peision Necklace
+"26525":
+  file: materials.yml
+  name: Red Crystal
+"26526":
+  file: materials.yml
+  name: Yellow Crystal
+"26527":
+  file: materials.yml
+  name: Green Crystal
+"26528":
+  file: materials.yml
+  name: Blue Crystal
+"26535":
+  file: armors.yml
+  name: Cloak of Bravery
+"26536":
+  file: armors.yml
+  name: Cloak of honor
+"26565":
+  file: materials.yml
+  name: Collector (14 days)
+"26594":
+  file: materials.yml
+  name: Fire Card (D)
+"26595":
+  file: materials.yml
+  name: Fire Card (C)
+"26596":
+  file: materials.yml
+  name: Fire Card (B)
+"26597":
+  file: materials.yml
+  name: Fire Card (A)
+"26598":
+  file: materials.yml
+  name: Water Card (D)
+"26599":
+  file: materials.yml
+  name: Water Card (C)
+"26600":
+  file: materials.yml
+  name: Water Card (B)
+"26601":
+  file: materials.yml
+  name: Water Card (A)
+"26602":
+  file: materials.yml
+  name: Wind Card (D)
+"26603":
+  file: materials.yml
+  name: Wind Card (C)
+"26604":
+  file: materials.yml
+  name: Wind Card (B)
+"26605":
+  file: materials.yml
+  name: Wind Card (A)
+"26606":
+  file: materials.yml
+  name: Electric Card (D)
+"26607":
+  file: materials.yml
+  name: Electric Card (C)
+"26608":
+  file: materials.yml
+  name: Electric Card (B)
+"26609":
+  file: materials.yml
+  name: Electric Card (A)
+"26610":
+  file: materials.yml
+  name: Land Card (D)
+"26611":
+  file: materials.yml
+  name: Land Card (C)
+"26612":
+  file: materials.yml
+  name: Land Card (B)
+"26613":
+  file: materials.yml
+  name: Land Card (A)
+"26644":
+  file: weapons.yml
+  name: Apple Wheat-Gluten
+"26645":
+  file: weapons.yml
+  name: Bamboo Stick
+"26646":
+  file: armors.yml
+  name: Cat Punch (White)
+"26647":
+  file: armors.yml
+  name: Cat Punch (Black)
+"26655":
+  file: armors.yml
+  name: Event Sense Wig (Black) (F)
+"26656":
+  file: armors.yml
+  name: Event Sense Wig (Blue) (F)
+"26657":
+  file: armors.yml
+  name: Event Wind Wig (Brown) (F)
+"26658":
+  file: armors.yml
+  name: Event Wind Wig (Brown) (M)
+"26659":
+  file: armors.yml
+  name: Event Wind Wig (Silver) (M)
+"26660":
+  file: armors.yml
+  name: Event Wind Wig (Blue) (M)
+"26665":
+  file: weapons.yml
+  name: Blood Red Umbrella
+"26745":
+  file: materials.yml
+  name: Snow Flake
+"26748":
+  file: materials.yml
+  name: Wish Roll
+"26750":
+  file: materials.yml
+  name: Soju
+"26755":
+  file: materials.yml
+  name: Chocolate Drink
+"26756":
+  file: materials.yml
+  name: Chocolate Cookie
+"26759":
+  file: materials.yml
+  name: Chocolate of Love
+"26765":
+  file: materials.yml
+  name: Love Chocolate
+"26772":
+  file: materials.yml
+  name: Herb of Life
+"26773":
+  file: materials.yml
+  name: Peach Punch
+"26789":
+  file: armors.yml
+  name: Cloak of Brave(Bind)
+"26854":
+  file: materials.yml
+  name: Tiny Tanuki
+"26902":
+  file: armors.yml
+  name: FITA Cloak
+"26905":
+  file: materials.yml
+  name: Sardine Roll
+"26906":
+  file: materials.yml
+  name: Watermelon Drink
+"26954":
+  file: materials.yml
+  name: Lost lucky bag
+"30026":
+  file: materials.yml
+  name: Secret Medicine 1
+"30027":
+  file: materials.yml
+  name: Secret Medicine 2
+"30077":
+  file: armors.yml
+  name: 2008 Yukata (M)
+"30078":
+  file: armors.yml
+  name: Geta 2008 (M)
+"30080":
+  file: armors.yml
+  name: Yukata 2008 (F)
+"30081":
+  file: armors.yml
+  name: Geta 2008 (F)
+"30083":
+  file: armors.yml
+  name: Purple Bikini (F)
+"30084":
+  file: armors.yml
+  name: Purple Beach Shoes (F)
+"30085":
+  file: armors.yml
+  name: Orange Bikini(F)
+"30086":
+  file: armors.yml
+  name: Orange Beach Shoes (F)
+"30087":
+  file: armors.yml
+  name: Pink Beachwear (F)
+"30088":
+  file: armors.yml
+  name: Pink Flower Sandal (F)
+"30089":
+  file: armors.yml
+  name: Blue Beachwear (F)
+"30090":
+  file: armors.yml
+  name: Blue Flower Sandal(F)
+"30091":
+  file: armors.yml
+  name: Purple Beachwear (F)
+"30092":
+  file: armors.yml
+  name: Purple Flower Sandals (F)
+"30093":
+  file: armors.yml
+  name: Green Beachwear (M)
+"30094":
+  file: armors.yml
+  name: Green Summer Sneakers (M)
+"30095":
+  file: armors.yml
+  name: Red Beachwear (M)
+"30100":
+  file: armors.yml
+  name: Red Beach Shoes (M)
+"30101":
+  file: armors.yml
+  name: Green Swimwear (M)
+"30102":
+  file: armors.yml
+  name: Green Beach Shoes (M)
+"30196":
+  file: armors.yml
+  name: Red Summer Sneakers (M)
+"30197":
+  file: armors.yml
+  name: Black Diver Suit(M)
+"30198":
+  file: armors.yml
+  name: Black Diver Flipers (M)
+"30199":
+  file: armors.yml
+  name: Red Swimwear (M)
