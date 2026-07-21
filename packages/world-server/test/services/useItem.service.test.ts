@@ -1,0 +1,122 @@
+/**
+ * UseItemService test — DOUSEITEM router.
+ *
+ * `nId = HIWORD(dwData)`. Routes by prop fields:
+ *   equip_slot set → EquipService.equip
+ *   item_kind2 IK2_POTION/FOOD → ConsumableService.apply
+ *   item_kind2 IK2_BUFF/BUF2/SKILL/TEXT/WARP → consume charge (effect ponytail)
+ *   else reject
+ */
+
+import { describe, it } from 'node:test';
+import * as assert from 'node:assert/strict';
+import { CPlayer } from '../../src/entities/player.js';
+import { UseItemService } from '../../src/services/useItem.service.js';
+import { MAX_INVENTORY } from '../../src/net/snapshot/constants.js';
+import type { CharacterRow } from '@flyff/database';
+import type { ItemDefinition } from '@flyff/resources';
+import type { EquipService, EquipResult } from '../../src/services/equip.service.js';
+import type { ConsumableService, ConsumableResult } from '../../src/services/consumable.service.js';
+import type { InventoryService } from '../../src/services/inventory.service.js';
+
+function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
+  return {
+    id: 1, account_id: 1, name: 'Tester', slot: 0, class: 0, gender: 0,
+    hair_style: 0, hair_color: 0, face_style: 0, skin_color: 0,
+    level: 1, exp: 0n, hp: 200, mp: 100, max_hp: 200, max_mp: 100,
+    strength: 15, stamina: 15, dexterity: 15, intelligence: 15,
+    x: 0, y: 0, z: 0, world_id: 'flaris', zone_id: 1,
+    created_at: new Date(), updated_at: new Date(), ...over,
+  };
+}
+
+function dwData(slot: number): number {
+  return (slot << 16) >>> 0;
+}
+
+function makeSvc(opts: {
+  getItem: (id: number) => ItemDefinition | undefined;
+  equipResult?: EquipResult;
+  consumableResult?: ConsumableResult;
+}) {
+  let equipCalled = false;
+  let consumeCalled = false;
+  let applyCalled = false;
+  const equipService = {
+    equip: () => { equipCalled = true; return opts.equipResult ?? { ok: true, parts: 9, itemId: 5000, invSlot: 4 }; },
+  } as unknown as EquipService;
+  const consumableService = {
+    apply: () => { applyCalled = true; return opts.consumableResult ?? { hp: 150, consumed: null }; },
+  } as unknown as ConsumableService;
+  const inventoryService = {
+    consume: () => { consumeCalled = true; return null; },
+  } as unknown as InventoryService;
+  const svc = new UseItemService({ equipService, consumableService, inventoryService, getItem: opts.getItem });
+  return { svc, equipCalled: () => equipCalled, applyCalled: () => applyCalled, consumeCalled: () => consumeCalled };
+}
+
+describe('UseItemService.use', () => {
+  it('routes an equip_slot item to EquipService (slot = HIWORD(dwData))', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[4] = { itemId: 5000, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 9 }],
+    ]);
+    const { svc, equipCalled } = makeSvc({ getItem: (id) => table.get(id) });
+
+    const r = svc.use(player, dwData(4), 9);
+
+    assert.equal(r.kind, 'equip');
+    assert.equal(equipCalled(), true);
+  });
+
+  it('routes an IK2_POTION to ConsumableService', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[2] = { itemId: 7000, count: 5 };
+    const table = new Map<number, ItemDefinition>([
+      [7000, { id: 7000, name: 'Potion', name_id: 'ITEM_P', stack_size: 99, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_POTION' }],
+    ]);
+    const { svc, applyCalled } = makeSvc({
+      getItem: (id) => table.get(id),
+      consumableResult: { hp: 180, mp: 90, consumed: null },
+    });
+
+    const r = svc.use(player, dwData(2), 0);
+
+    assert.equal(r.kind, 'consumable');
+    if (r.kind === 'consumable') {
+      assert.equal(r.nId, 2);
+      assert.equal(r.hp, 180);
+      assert.equal(r.mp, 90);
+    }
+    assert.equal(applyCalled(), true);
+  });
+
+  it('routes IK2_BUFF to consume-only (effect ponytail)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[1] = { itemId: 7100, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [7100, { id: 7100, name: 'Buff', name_id: 'ITEM_B', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_BUFF' }],
+    ]);
+    const { svc, consumeCalled } = makeSvc({ getItem: (id) => table.get(id) });
+
+    const r = svc.use(player, dwData(1), 0);
+
+    assert.equal(r.kind, 'consumed');
+    assert.equal(consumeCalled(), true, 'charge consumed');
+  });
+
+  it('rejects when the slot is empty', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const { svc } = makeSvc({ getItem: () => undefined });
+    const r = svc.use(player, dwData(0), 0);
+    assert.equal(r.kind, 'reject');
+  });
+
+  it('rejects when nId (HIWORD) is outside the main bag', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const { svc } = makeSvc({ getItem: () => undefined });
+    const r = svc.use(player, dwData(MAX_INVENTORY), 0);
+    assert.equal(r.kind, 'reject');
+  });
+});

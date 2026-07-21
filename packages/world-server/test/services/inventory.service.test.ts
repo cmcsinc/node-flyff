@@ -118,3 +118,122 @@ describe('InventoryService', () => {
     assert.equal(ctx.journalCalls[0]!.payload.gold, MAX_GOLD, 'absolute gold total in payload');
   });
 });
+
+/** Richer dep mock: stacking + move + drop + consume. */
+function makeFullDeps(stackSizeFor: (id: number) => number = () => 1) {
+  const setItem: Array<{ slot: number; itemId: number; quantity: number }> = [];
+  const removed: number[] = [];
+  const moved: Array<{ src: number; dst: number }> = [];
+  const gold: number[] = [];
+  const journal: Array<{ type: string; payload: Record<string, unknown> }> = [];
+  const deps = {
+    inventoryRepo: {
+      setItem: async (_c: number, slot: number, itemId: number, quantity: number) => setItem.push({ slot, itemId, quantity }),
+      removeItem: async (_c: number, slot: number) => removed.push(slot),
+      updateQuantity: async () => {},
+      moveItem: async (_c: number, src: number, dst: number) => moved.push({ src, dst }),
+    },
+    charRepo: { updateGold: async (_c: number, g: number) => gold.push(g) },
+    journal: { append: (e: { type: string; payload: Record<string, unknown> }) => journal.push(e) },
+    getStackSize: stackSizeFor,
+  };
+  return { deps, setItem, removed, moved, gold, journal };
+}
+
+describe('InventoryService — stacking', () => {
+  it('merges onto an existing partial stack (isNew=false)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 40 };
+    const ctx = makeFullDeps(() => 99);
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.addItem(player, 2001, 10);
+
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.isNew, false, 'merged, not a new slot');
+      assert.equal(r.slot, 0);
+      assert.equal(r.count, 50);
+    }
+    assert.equal(player.m_Inventory[0]!.count, 50);
+  });
+
+  it('takes a fresh slot when no partial stack exists (isNew=true)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const ctx = makeFullDeps(() => 99);
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.addItem(player, 2001, 5);
+
+    assert.equal(r.ok, true);
+    if (r.ok) assert.equal(r.isNew, true);
+    assert.equal(player.m_Inventory[0]!.count, 5);
+  });
+});
+
+describe('InventoryService — moveItem / dropItem / dropGold', () => {
+  it('moveItem swaps two main-bag slots', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[1] = { itemId: 100, count: 1 };
+    player.m_Inventory[2] = { itemId: 200, count: 1 };
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.moveItem(player, 1, 2);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_Inventory[1]!.itemId, 200);
+    assert.equal(player.m_Inventory[2]!.itemId, 100);
+    assert.deepEqual(ctx.moved[0], { src: 1, dst: 2 });
+  });
+
+  it('moveItem rejects equip-range slots', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+    assert.equal(svc.moveItem(player, 0, MAX_INVENTORY).ok, false);
+    assert.equal(svc.moveItem(player, 0, 0).ok, false, 'src===dst');
+  });
+
+  it('dropItem partial-decrements the stack', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 10 };
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.dropItem(player, 0, 4, { x: 1, y: 2, z: 3 });
+
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.count, 4);
+      assert.equal(r.itemId, 2001);
+    }
+    assert.equal(player.m_Inventory[0]!.count, 6, 'remainder stays in bag');
+  });
+
+  it('dropItem full-stack clears the slot', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 3 };
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.dropItem(player, 0, 3, { x: 0, y: 0, z: 0 });
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_Inventory[0], null);
+    assert.equal(ctx.removed[0], 0, 'row removed from DB');
+  });
+
+  it('dropGold subtracts and rejects over-spend', () => {
+    const player = CPlayer.fromRow(makeRow({ gold: 500 }), { write: () => true });
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+
+    const ok = svc.dropGold(player, 200, { x: 0, y: 0, z: 0 });
+    assert.equal(ok.ok, true);
+    assert.equal(player.m_nGold, 300);
+
+    const bad = svc.dropGold(player, 999, { x: 0, y: 0, z: 0 });
+    assert.equal(bad.ok, false, 'rejects more than held');
+  });
+});

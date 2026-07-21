@@ -183,6 +183,9 @@ export {
   type CharacterIncBlock,
   type CharacterIncOutfit,
   type CharacterIncEquipPart,
+  type CharacterIncVendorTab,
+  type CharacterIncVendorItem,
+  type CharacterIncVendorItemId,
 } from './loaders/characterInc.loader.js';
 
 // Re-export schemas

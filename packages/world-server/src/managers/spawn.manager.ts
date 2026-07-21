@@ -90,6 +90,7 @@ export class SpawnManager {
           src: {
             modelIndex: def.dwObjIndex,
             key: def.key,
+            characterKey: charBlock?.key,
             name: def.name,
             level: def.level,
             hp: def.hp,

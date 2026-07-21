@@ -43,9 +43,8 @@
  * path for any non-self mover; the player's own JOIN uses METHOD_NONE via
  * `playerSnapshot.serializer` instead.
  *
- * ponytail: equipment loop (`uSize > 0`) and `IsEquipableNPC` parts are not
- * modeled — monsters spawn naked. Add a `CMover.m_aEquipInfo` map when an
- * equipped NPC (guard with weapon, mounted NPC) needs to render correctly.
+ * Equipment loop (`uSize` + per-part `{uParts, m_dwItemId}`) is wired from
+ * `outfit.equip`; monsters and AddMenu-only NPCs send `uSize=0`.
  *
  * @module net/snapshot/npcSnapshot.serializer
  */
@@ -105,9 +104,12 @@ export class NpcSnapshotSerializer {
     w.writeByte(outfit?.hairMesh ?? 0);  // m_dwHairMesh (u_char)
     w.writeDword(outfit?.hairColor ?? 0); // m_dwHairColor
     w.writeByte(outfit?.headMesh ?? 0);  // m_dwHeadMesh (u_char)
-    // m_szCharacterKey — character.inc key for human NPCs; EMPTY for monsters
-    // (writing m_szName here was a bug: client uses the key for appearance lookup)
-    w.writeString(outfit?.characterKey ?? '');
+    // m_szCharacterKey — the character.inc block key (e.g. "MaFl_Marche"). The
+    // client uses it to look up CNpcProperty → m_abMoverMenu (AddMenu flags) AND
+    // the appearance. MUST be sent even when the NPC has no outfit (SetFigure/
+    // SetEquip): an AddMenu-only NPC still needs its key or the right-click
+    // "Dialog" option never appears. Monsters send an empty string.
+    w.writeString(m.m_szCharacterKey || outfit?.characterKey || '');
 
     // Equipment parts: uSize then uSize × { uParts:BYTE, m_dwItemId:WORD }
     const equip = outfit?.equip ?? EMPTY_EQUIP;

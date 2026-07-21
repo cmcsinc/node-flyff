@@ -53,6 +53,13 @@ export interface MoverSpawnSource {
   readonly modelIndex: number;
   /** Symbolic `MI_*` name (defineObj.h) → resolves NPC dialog prefix. Omit for monsters. */
   readonly key?: string | undefined;
+  /**
+   * character.inc block key (e.g. `MaFl_Marche`) → sent as `m_szCharacterKey` so
+   * the client resolves its own `CNpcProperty` (which carries `m_abMoverMenu`
+   * from AddMenu). Decoupled from {@link outfit}: an NPC may have AddMenu but no
+   * SetFigure/SetEquip. Omit for monsters.
+   */
+  readonly characterKey?: string | undefined;
   readonly level: number;
   readonly hp: number;
   readonly name: string;
@@ -112,6 +119,13 @@ export class CMover {
   m_dwIndex: number;
   /** Symbolic `MI_*` name (defineObj.h); resolves NPC dialog prefix. Empty for monsters. */
   m_szKey: string;
+  /**
+   * character.inc block key (e.g. `MaFl_Marche`). Serialized as
+   * `m_szCharacterKey` in the NPC ADD_OBJ branch so the client can look up its
+   * own `CNpcProperty` → `m_abMoverMenu` (AddMenu flags). Empty for monsters.
+   * Distinct from {@link m_szKey} (which is the `MI_*` form).
+   */
+  m_szCharacterKey: string;
   m_szName: string;
   m_nLevel: number;
   /** Current HP (C++ `m_nHitPoint`). */
@@ -230,6 +244,7 @@ export class CMover {
     this.m_idMover = id;
     this.m_dwIndex = src.modelIndex;
     this.m_szKey = src.key ?? '';
+    this.m_szCharacterKey = src.characterKey ?? '';
     this.m_szName = src.name;
     this.m_nLevel = src.level;
     this.m_nHitPoint = src.hp;
