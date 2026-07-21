@@ -122,7 +122,8 @@ describe('RevivalService', () => {
     assert.equal(p.m_bDead, false);
     assert.equal(p.m_nHp, 40); // floor(200 * 0.2)
     assert.equal(p.m_nExp, 100); // unchanged — no penalty on scroll revive
-    assert.equal(journal[0].type, 'SCROLL_CONSUME');
+    assert.equal(journal[0].type, 'INVENTORY_SLOT');
+    assert.deepEqual(journal[0].payload, { slot: 0, itemId: II_SYS_SYS_SCR_RESURRECTION, count: 2 });
     assert.equal(snapshotSubtype(broadcasts[0]), 0x00a1); // SNAPSHOTTYPE_REVIVAL
   });
 
@@ -151,12 +152,14 @@ describe('RevivalService', () => {
     assert.equal(out.ok, true);
     assert.equal(p.m_bDead, false);
     assert.equal(p.m_nExp < expBefore, true); // exp penalty applied
-    assert.equal(journal.some((j) => j.type === 'EXP_LOSS'), true);
+    assert.equal(journal.some((j) => j.type === 'CHAR_EXP'), true);
     assert.equal(repoExp.length, 1); // persisted
     // Teleported to the zone revival position.
     assert.equal(p.m_vPos.x, 6978);
-    // SETEXPERIENCE self-send + REPLACE self-send present.
+    // SETEXPERIENCE self-send (exp loss) + SETPOS self-send (same-world teleport).
     assert.equal(sends.length >= 2, true);
+    const setpos = sends.find((b) => snapshotSubtype(b) === 0x0010); // SNAPSHOTTYPE_SETPOS
+    assert.equal(setpos !== undefined, true);
     assert.equal(snapshotSubtype(broadcasts[0]), 0x00a2); // SNAPSHOTTYPE_REVIVAL_TO_LODESTAR
   });
 
@@ -170,7 +173,7 @@ describe('RevivalService', () => {
 
     svc.revive(p, 'LODESTAR');
     assert.equal(p.m_nExp, 50); // no loss
-    assert.equal(journal.some((j) => j.type === 'EXP_LOSS'), false);
+    assert.equal(journal.some((j) => j.type === 'CHAR_EXP'), false);
   });
 
   it('revive LODELIGHT is rejected (C++ empty stub)', () => {

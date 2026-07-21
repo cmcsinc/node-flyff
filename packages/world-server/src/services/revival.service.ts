@@ -33,7 +33,7 @@ import { cumulativeExp, subDieDecExp } from '../combat/formulas.js';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
 } from '../combat/aiConstants.js';
-import { MAX_INVENTORY, VISIBILITY_RADIUS, WI_WORLD_MADRIGAL } from '../net/snapshot/constants.js';
+import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
 import {
   SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,
 } from '../net/snapshot/constants.js';
@@ -41,8 +41,7 @@ import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer.js';
 import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer.js';
 import { RevivalSerializer } from '../net/snapshot/revival.serializer.js';
 import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
-import { ReplaceSerializer } from '../net/snapshot/replace.serializer.js';
-import { NULL_ID } from '../net/snapshot/constants.js';
+import { SetPosSerializer } from '../net/snapshot/setPos.serializer.js';
 import { createLogger } from '@flyff/core/logger.js';
 
 const logger = createLogger({ module: 'revival-service' });
@@ -70,7 +69,7 @@ export class RevivalService {
   private readonly actMsg = new ActMsgSerializer();
   private readonly revival = new RevivalSerializer();
   private readonly setExp = new SetExperienceSerializer();
-  private readonly replace = new ReplaceSerializer();
+  private readonly setPos = new SetPosSerializer();
 
   constructor(private readonly deps: RevivalServiceDeps) {}
 
@@ -158,11 +157,14 @@ export class RevivalService {
     }
 
     this.restoreVitals(player);
-    this.teleportToRevival(player);
+    // Broadcast REVIVAL_TO_LODESTAR at the death vicinity BEFORE teleporting
+    // (DPSrvr.cpp:1122 precedes the REPLACE at :1143) so peers who saw the death
+    // play the revive animation before the player leaves their view.
     this.deps.zoneManager.broadcastAround(
       player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
       this.revival.build(player.m_idPlayer, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR),
     );
+    this.teleportToRevival(player);
     return { ok: true };
   }
 
@@ -180,19 +182,23 @@ export class RevivalService {
   }
 
   /**
-   * Teleport to the zone's revival position. `REPLACE` notifies the client to
-   * load the world + relocate; zone broadcast at the new pos is the caller's
-   * concern (vicinity enter happens on the next ADD_OBJ cycle).
-   * ponytail: real `GetNearRevivalPos` nearest-point + per-world revival tables.
+   * Same-world teleport to the zone's revival position via `SETPOS` — the C++
+   * `_replace` same-world branch (`World.cpp:1589-1604`). The client's `OnSetPos`
+   * relocates the local player (ReadWorld + SetPos) WITHOUT nulling `g_pPlayer`,
+   * so ticking UI windows stay safe.
+   *
+   * `REPLACE` would null `g_pPlayer` (`DPClient.cpp:2352`) and — since we don't
+   * re-send the player's own ADD_OBJ — leave it null, crashing the first window
+   * to deref it (`CWndQuestQuickInfo::Process:259`).
+   * ponytail: cross-world teleports need REPLACE followed by self `AddAddObj`
+   * to restore `g_pPlayer`; plus real `GetNearRevivalPos` nearest-point tables.
    */
   private teleportToRevival(player: CPlayer): void {
     const zone = this.deps.zones.byNumericId.get(player.m_nZoneId);
     const revivePos: Vec3 = zone?.revival.position ?? player.m_vPos;
     player.m_vPos = { ...revivePos };
     player._dirty.add('m_vPos');
-    this.deps.playerManager.sendTo(
-      player, this.replace.build(WI_WORLD_MADRIGAL, revivePos),
-    );
+    this.deps.playerManager.sendTo(player, this.setPos.build(player.m_idPlayer, revivePos));
   }
 
   private findScrollSlot(player: CPlayer): number {
@@ -217,5 +223,3 @@ export class RevivalService {
     }
   }
 }
-
-void NULL_ID;
