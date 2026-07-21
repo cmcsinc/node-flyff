@@ -27,6 +27,11 @@ export interface RewardSink {
   };
   /** WAL journal — appended before any gold/exp/item mutation (rule 04). */
   journal?: (entry: JournalEntry) => void;
+  /**
+   * Fire-and-forget gold persist (migration 003). Called after the WAL append
+   * so the DB is consistent even if the server exits before the next 30s flush.
+   */
+  flushGold?: (charId: number, gold: number) => void;
 }
 
 function num(arg: QuestArg | undefined, fallback = 0): number {
@@ -110,6 +115,7 @@ export function applyEnd(player: CPlayer, def: QuestDef, sink: RewardSink): void
         if (gold > 0) {
           player.m_nGold = Math.max(0, player.m_nGold - gold);
           journal(player, 'GOLD_CHANGE', { delta: -gold, total: player.m_nGold }, sink);
+          sink.flushGold?.(player.m_idPlayer, player.m_nGold);
         }
         break;
       }
@@ -135,6 +141,7 @@ function grantGold(player: CPlayer, amount: number, sink: RewardSink): void {
   journal(player, 'GOLD_CHANGE', { delta: amount, total: player.m_nGold + amount }, sink);
   player.m_nGold += amount;
   player._dirty.add('m_nGold');
+  sink.flushGold?.(player.m_idPlayer, player.m_nGold);
 }
 
 function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {

@@ -54,8 +54,9 @@ export class CPlayer {
   m_nDex: number;
   m_nInt: number;
   /**
-   * Gold (C++ `m_nGold`). ponytail: no DB column on `characters` yet — persists
-   * via WAL only until the column + repo update ship. Quest rewards mutate this.
+   * Gold (C++ `m_nGold`). Persisted on the `characters.gold` column (migration
+   * 003); hydrated on JOIN, fire-and-forget flushed by `QuestService.flushGold`
+   * on reward grant. WAL `GOLD_CHANGE` is the crash-recovery backup.
    */
   m_nGold: number = 0;
   /**
@@ -123,6 +124,7 @@ export class CPlayer {
     this.m_nLevel = row.level;
     this.m_nJob = row.class;
     this.m_nSex = row.gender;
+    this.m_nGold = row.gold;
     this.m_vPos = { x: row.x, y: row.y, z: row.z };
     this.m_nHp = row.hp;
     this.m_nMp = row.mp;
