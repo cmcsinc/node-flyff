@@ -41,12 +41,14 @@ function fakeSink(counts: Record<number, number> = {}) {
 }
 
 describe('questRewards — applyEnd', () => {
-  it('grants gold (min==max deterministic) and journals GOLD_CHANGE', () => {
+  it('grants gold (min==max deterministic) and journals CHAR_GOLD (absolute)', () => {
     const { sink, log } = fakeSink();
     const p = player();
     applyEnd(p, def([cmd('SetEndRewardGold', 500, 500)]), sink);
     assert.equal(p.m_nGold, 500);
-    assert.equal(log.find((e) => e.type === 'GOLD_CHANGE')?.type, 'GOLD_CHANGE');
+    const row = log.find((e) => e.type === 'CHAR_GOLD');
+    assert.equal(row?.type, 'CHAR_GOLD');
+    assert.equal((row!.payload as { gold: number }).gold, 500, 'absolute gold total');
   });
 
   it('removes all of the turn-in item when count is -1 (QUEST_1 teeth)', () => {
@@ -72,14 +74,17 @@ describe('questRewards — applyEnd', () => {
     assert.equal(female.store[7000], 1);
   });
 
-  it('grants exp, cascades level-ups with carryover, and journals EXP_CHANGE', () => {
+  it('grants exp, cascades level-ups with carryover, and journals CHAR_EXP (absolute cumulative)', () => {
     const { sink, log } = fakeSink();
     const p = player(); // L1, within-level exp 0
     applyEnd(p, def([cmd('SetEndRewardExp', 1000, 1000)]), sink);
     // 1000 cumulative exp lands at L12 (nExp1=973); within-level remainder = 27.
     assert.equal(p.m_nLevel, 12);
     assert.equal(p.m_nExp, 27);
-    assert.equal(log.find((e) => e.type === 'EXP_CHANGE')?.type, 'EXP_CHANGE');
+    const row = log.find((e) => e.type === 'CHAR_EXP');
+    assert.equal(row?.type, 'CHAR_EXP');
+    assert.equal((row!.payload as { level: number; exp: string }).level, 12);
+    assert.equal((row!.payload as { level: number; exp: string }).exp, '1000', 'absolute cumulative exp, idempotent on replay');
   });
 
   it('resets within-level exp to 0 at an exact level boundary (no carryover)', () => {

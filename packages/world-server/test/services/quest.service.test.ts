@@ -186,6 +186,28 @@ describe('quest.service — begin/end engine (QUEST_1 worked example)', () => {
     assert.equal(p.findQuest(7), undefined);
   });
 
+  it('removeAllQuests clears the active list + emits a REMOVEQUEST ALL frame', async () => {
+    const def = quest1Def();
+    const { svc } = makeService(fakeInv(), def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10, class: 5 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 7);
+    assert.equal(p.m_aQuest.length, 1);
+    const res = await svc.removeAllQuests(p);
+    assert.equal(res.ok, true);
+    if (res.ok) assert.equal(res.frames.length, 1);
+    assert.equal(p.m_aQuest.length, 0);
+    assert.ok(p._dirty.has('m_aQuest'));
+  });
+
+  it('removeCompleteQuests clears the completed ledger + emits a CLEAR_COMPLETE frame', async () => {
+    const def = quest1Def();
+    const { svc } = makeService(fakeInv(), def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10, class: 5 }, { write: () => true }, 0);
+    const res = await svc.removeCompleteQuests(p);
+    assert.equal(res.ok, true);
+    if (res.ok) assert.equal(res.frames.length, 1);
+  });
+
   it('journals every gold/exp/item mutation through the reward sink', async () => {
     const def = quest1Def();
     const inv = fakeInv({ 6005: 20 });
@@ -194,7 +216,9 @@ describe('quest.service — begin/end engine (QUEST_1 worked example)', () => {
     await svc.beginQuest(p, 7);
     await svc.endQuest(p, 7);
     const types = log.map((e) => e.type).sort();
-    assert.ok(types.includes('GOLD_CHANGE'));
-    assert.ok(types.includes('ITEM_REMOVE'));
+    assert.ok(types.includes('CHAR_GOLD'), 'gold reward journaled as absolute CHAR_GOLD');
+    // Item removal is no longer journaled (no inventory persistence behind the
+    // quest path today); gold/exp WAL coverage is the crash-recovery surface.
+    assert.equal(types.includes('ITEM_REMOVE'), false);
   });
 });

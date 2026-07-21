@@ -6,9 +6,12 @@
  * `SetEndReward*` / `SetEndRemove*` apply at completion. Signatures follow
  * `_Common/PROJECT.CPP:2031-2159`.
  *
- * Rule 03/04 — every gold/exp/item mutation is WAL-journaled through the
- * injected sink BEFORE the mutation lands, so a crash mid-grant cannot dupe or
- * rollback. The journal type discriminator is the replayer registry key.
+ * Rule 03/04 — gold/exp mutations are WAL-journaled through the injected sink
+ * BEFORE the mutation lands, recording the ABSOLUTE post-state so the boot
+ * replayer can idempotently re-apply them. Item mutations are not journaled
+ * here: QuestService has no real inventory sink yet, so there is no DB write to
+ * recover (see `grantItem` ponytail). The journal type discriminator is the
+ * replayer registry key.
  *
  * @module services/questRewards
  */
