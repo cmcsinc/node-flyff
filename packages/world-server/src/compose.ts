@@ -1,16 +1,19 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, Journal } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar.js';
 import { ClusterListener } from './ipc/clusterListener.js';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
 import { PlayerManager } from './managers/player.manager.js';
 import { ZoneManager } from './managers/zone.manager.js';
+import { SpawnManager } from './managers/spawn.manager.js';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer.js';
+import { NpcSnapshotSerializer } from './net/snapshot/npcSnapshot.serializer.js';
 import { JoinService } from './services/join.service.js';
 import { JoinHandler } from './handlers/join.handler.js';
 import { MapKeyService } from './services/mapKey.service.js';
 import { MapKeyHandler } from './handlers/mapKey.handler.js';
+import { VicinityService } from './services/vicinity.service.js';
 import { QueryPlayerDataService } from './services/queryPlayerData.service.js';
 import { QueryPlayerDataHandler } from './handlers/queryPlayerData.handler.js';
 import { SnapshotService } from './services/snapshot.service.js';
@@ -35,6 +38,7 @@ import { ScriptDlgService } from './services/scriptDlg.service.js';
 import { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
 import { RevivalService } from './services/revival.service.js';
 import { RevivalHandler } from './handlers/revival.handler.js';
+import { JournalReplayer } from './systems/journalReplayer.js';
 
 export interface WorldComposeResult {
   config: WorldServerConfig;
@@ -44,11 +48,14 @@ export interface WorldComposeResult {
   resources: ResourceIndex;
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
+  spawnManager: SpawnManager;
   snapshotSerializer: PlayerSnapshotSerializer;
+  npcSnapshotSerializer: NpcSnapshotSerializer;
   joinService: JoinService;
   joinHandler: JoinHandler;
   mapKeyService: MapKeyService;
   mapKeyHandler: MapKeyHandler;
+  vicinityService: VicinityService;
   queryPlayerDataService: QueryPlayerDataService;
   queryPlayerDataHandler: QueryPlayerDataHandler;
   snapshotService: SnapshotService;
@@ -73,6 +80,8 @@ export interface WorldComposeResult {
   scriptDlgHandler: ScriptDlgHandler;
   revivalService: RevivalService;
   revivalHandler: RevivalHandler;
+  journal: Journal;
+  journalReplayer: JournalReplayer;
 }
 
 export async function compose(): Promise<WorldComposeResult> {
@@ -124,21 +133,50 @@ export async function compose(): Promise<WorldComposeResult> {
   const db = createDb(dbConfig);
   const charRepo = new CharacterRepository(db);
 
+  // WAL journal — embedded SQLite, opened once per process. Critical mutations
+  // (items, gold, exp, level) append here before ack so a crash never dupes or
+  // rolls back. Closed on shutdown via index.ts. See rule `04-persistence.md`.
+  const journal = new Journal({ path: config.wal.journalPath, logger });
+  const journalReplayer = new JournalReplayer({ journal, logger });
+  // ponytail: services register replay handlers here as they come online, e.g.
+  //   journalReplayer.register('ITEM_ADD', (row) => inventoryService.replayAdd(row));
+  // Nothing registers yet — recover() is a no-op until the first WAL caller ships.
+
   // In-memory world state + enter-world stack.
   const playerManager = new PlayerManager();
   const zoneManager = new ZoneManager();
   const clusterListener = new ClusterListener({});
   const snapshotSerializer = new PlayerSnapshotSerializer();
+  const npcSnapshotSerializer = new NpcSnapshotSerializer();
+
+  // Boot the spawn table before the TCP listener opens so the first JOIN sees a
+  // populated zone. Static NPCs (with outfit) + monster spawn points come from
+  // the loaded zone YAML + mover resource index.
+  const spawnManager = new SpawnManager({ resources });
+  spawnManager.bootstrap();
+  logger.info(
+    { movers: spawnManager.size, zoneId: 1 },
+    'Spawn table bootstrapped',
+  );
+
   const joinService = new JoinService({
     charRepo,
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
   });
-  const joinHandler = new JoinHandler(joinService, snapshotSerializer);
+  const joinHandler = new JoinHandler(
+    joinService,
+    snapshotSerializer,
+  );
 
   const mapKeyService = new MapKeyService({ playerManager });
-  const mapKeyHandler = new MapKeyHandler(mapKeyService);
+  const vicinityService = new VicinityService({
+    playerManager,
+    spawnManager,
+    npcSnapshotSerializer,
+  });
+  const mapKeyHandler = new MapKeyHandler(mapKeyService, vicinityService);
   const queryPlayerDataService = new QueryPlayerDataService({ playerManager });
   const queryPlayerDataHandler = new QueryPlayerDataHandler(queryPlayerDataService);
 
@@ -178,11 +216,14 @@ export async function compose(): Promise<WorldComposeResult> {
     resources,
     playerManager,
     zoneManager,
+    spawnManager,
     snapshotSerializer,
+    npcSnapshotSerializer,
     joinService,
     joinHandler,
     mapKeyService,
     mapKeyHandler,
+    vicinityService,
     queryPlayerDataService,
     queryPlayerDataHandler,
     snapshotService,
@@ -207,5 +248,7 @@ export async function compose(): Promise<WorldComposeResult> {
     scriptDlgHandler,
     revivalService,
     revivalHandler,
+    journal,
+    journalReplayer,
   };
 }

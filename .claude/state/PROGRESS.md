@@ -87,11 +87,11 @@
 |--------|--------|------------|-------|
 | `ipc/clusterRegistrar.ts` | ✅ Done | implementor | Registers with cluster server |
 | `entities/player.ts` | ✅ Done | implementor | CPlayer with m_fAngle/m_idTarget/m_idSetTarget/m_tickScript |
-| `entities/mover.ts` | ⏳ Pending | — | CMover base entity |
-| `entities/npc.ts` | ⏳ Pending | — | CCtrl NPC/monster |
+| `entities/mover.ts` | ✅ Done | implementor | CMover NPC/monster entity (NPC serialize branch fields, objid-allocated) |
+| `entities/npc.ts` | 🚫 Skipped | — | Folded into mover.ts — single CMover class sufficient until equipped NPCs |
 | `managers/zone.manager.ts` | ✅ Done | implementor | Zone-scoped broadcast |
-| `managers/object.manager.ts` | ⏳ Pending | — | World object lifecycle |
-| `managers/spawn.manager.ts` | ⏳ Pending | — | Spawn/respawn management |
+| `managers/object.manager.ts` | 🚫 Skipped | — | Objid allocator folded into SpawnManager (0x40000000+ range) |
+| `managers/spawn.manager.ts` | ✅ Done | implementor | Bootstraps DEFAULT_SPAWNS (5 small mushpangs, Flaris zone 1); inZone() lookup; no respawn yet |
 | `systems/combat.system.ts` | 🔴 Blocked | — | Need combat formulas for MELEE/MAGIC/RANGE_ATTACK |
 | `systems/ai.system.ts` | ⏳ Pending | — | NPC AI state machine |
 | `systems/movement.system.ts` | ✅ Done | implementor | Extended for PLAYERCORR/MOVED2/ANGLE/GETPOS |
@@ -99,6 +99,7 @@
 | `systems/drop.system.ts` | ⏳ Pending | — | Drop rolls |
 | `journal.ts` | 🔴 Blocked | — | WAL journal — blocks DROPITEM/DOUSEITEM/BUYITEM/MOVEITEM/DOEQUIP |
 | `index.ts` | ✅ Done | implementor | Entry point — wires all handlers |
+| `systems/journalReplayer.ts` | ✅ Done | implementor | Boot crash-recovery: replays `replayed=0` journal rows via per-type handler registry before TCP listener opens (5 tests) |
 | `compose.ts` | ✅ Done | implementor | DI root with 17 handlers wired |
 
 ### @flyff/database
@@ -111,6 +112,7 @@
 | `repositories/account.repo.ts` | ✅ Done | implementor | Account CRUD repository (17 test methods) |
 | `repositories/character.repo.ts` | ✅ Done | implementor | Character CRUD repository (22 test methods) |
 | `repositories/inventory.repo.ts` | ✅ Done | implementor | Inventory CRUD with stack/split/merge (15 test methods) |
+| `journal.ts` | ✅ Done | implementor | WAL journal (better-sqlite3, WAL+NORMAL pragmas, append/getUnreplayed/markReplayed, 9 tests) — gates inventory handlers |
 
 ### @flyff/resources
 
@@ -166,7 +168,7 @@
 
 | Blocker | Affects | Reported By | Status |
 |---------|---------|-------------|--------|
-| `journal.ts` WAL not implemented | DROPITEM, DOUSEITEM, BUYITEM, MOVEITEM, DOEQUIP handlers | implementor | 🔴 Blocked — inventory+WAL infrastructure required before these P0 packets can ship |
+| `journal.ts` WAL not implemented | DROPITEM, DOUSEITEM, BUYITEM, MOVEITEM, DOEQUIP handlers | implementor | ✅ Done 2026-07-21 — `Journal` in `@flyff/database`, `JournalReplayer` boots before listener; handlers still need combat/skill for some |
 | Combat system absent | MELEE_ATTACK, MAGIC_ATTACK, RANGE_ATTACK, USESKILL handlers | implementor | 🔴 Blocked — need target manager + damage formulas + skill propMover |
 | Skill system absent | USESKILL handler | implementor | 🔴 Blocked — need skill propMover + skill state |
 | `js-yaml` types missing | `packages/core/src/config/loader.ts:42` | pre-existing | 🟡 Low — install `@types/js-yaml` or write `.d.ts` shim |
@@ -180,6 +182,9 @@
 
 | Date | Agent | File | Lesson |
 |------|-------|------|--------|
+| 2026-07-21 | implementor | database/journal.ts + systems/journalReplayer.ts | WAL journal landed. `Journal` class lives in `@flyff/database` (owns better-sqlite3); `JournalReplayer` in world-server `systems/`. Boot order: `compose()` → `journalReplayer.recover()` → `server.listen()`. Journal rows use `replayed INTEGER DEFAULT 0` flag (rule 04 says mark, not delete — keeps audit trail). No caller registers a replayer yet → recover() is a no-op today; Tier 2 inventory services register handlers (`journalReplayer.register('ITEM_ADD', fn)`) when they ship. |
+| 2026-07-21 | implementor | database/journal.ts | Do NOT `import type { Logger } from '@flyff/core'` inside `@flyff/database` — database tsconfig has `rootDir: src`, and resolving `@flyff/core` pulls core's source into the program → TS6059 across every core file. Use a local minimal `JournalLogger` interface (pino is structurally compatible). Database pkg was previously core-free; keep it that way. |
+| 2026-07-21 | implementor | entities/mover.ts + npcSnapshot.serializer.ts | NPC ADD_OBJ uses the short `m_bPlayer=0` serialize branch (~45B), NOT the player METHOD_NONE blob. `m_szCharacterKey` must be the character.inc key (empty for monsters) — writing the display name there is a bug. Outfit = SetFigure (hairMesh/hairColor/headMesh/characterKey) + SetEquip (`uSize × {uParts:BYTE, itemId:WORD}`, no byFlag). Flaris shopkeepers have no character.inc outfit; MaDa_Homeit/MaDa_Corel do. |
 | 2026-07-20 | implementor | entities/player.ts | Adding runtime-defaulted entity fields (`m_fAngle`, `m_idTarget`, etc.) via class-field initializers avoids the constructor signature growing for every new optional field. Initialize from a constant like `NULL_ID` to keep C++ semantics. |
 | 2026-07-20 | implementor | test/handlers/revival.handler.test.ts | `PacketReader` rejects empty buffers (`Cannot create PacketReader from empty buffer`). Empty-body packets like REVIVAL need a dummy byte in test payloads. |
 | 2026-07-20 | implementor | services/movement.service.ts | PLAYERCORR / PLAYERMOVED2 / PLAYERANGLE wire bodies look identical to PLAYERMOVED at first glance but differ: CORR=60B same, MOVED2=73B (+3 floats +BYTE), ANGLE=45B (no state block). Read C++ field lists twice before extending the serializer. |
@@ -190,6 +195,7 @@
 
 | Timestamp | From | To | Message |
 |-----------|------|----|---------|
+| 2026-07-21 | implementor | all | WAL journal unblocked: `Journal` class in `@flyff/database/src/journal.ts` (better-sqlite3, WAL+NORMAL, append/getUnreplayed/markReplayed/clearAll/countUnreplayed, 9 tests) + export. `JournalReplayer` in `packages/world-server/src/systems/journalReplayer.ts` (per-type handler registry + boot recover(), 5 tests). Wired in compose.ts (config.wal.journalPath) + index.ts (recover before listen, close on SIGINT/SIGTERM). database 90/90 + world 101/101 green. Tier 2 inventory handlers (DROPITEM/MOVEITEM/DOUSEITEM/DOEQUIP/BUYITEM) can now call `journal.append()` + register replayers. Flusher (30s dirty→main DB) deferred — ponytail in compose.ts. |
 | 2026-07-20 | implementor | test-agent | Implemented 11 v15 C→S handlers (CHAT, MOTION, SETTARGET, LEAVE, PLAYERCORR, PLAYERMOVED2, PLAYERANGLE, QUERYGETPOS, GETPOS, SCRIPTDLG, REVIVAL) + 7 services + 2 serializers + extensions to movement.service/moverBroadcast.serializer — 36 new tests pass, 77/77 world-server tests green. Skipped 8 packets that need combat/inventory/WAL subsystems (see Known Blockers). |
 | 2026-03-24 | implementor | test-agent | Verified core utility modules (constants, errors, logger, eventBus, cache) — all tests passing (92 total tests), tsc compilation successful with 0 errors |
 | 2026-03-24 | implementor | test-agent | Implemented PacketBuffer stream reassembly + tests; ready for review. |
@@ -204,6 +210,8 @@
 | 2026-03-24 | implementor | test-agent | Implemented @flyff/login-server auth services and handlers — AuthService (argon2id), TokenService (HMAC handoff tokens), AuthHandler (LOGIN_CERTIFY), ServerListHandler (SERVER_LIST). TypeScript compilation successful with 0 errors. Test files created, ready for test execution. |
 | 2026-03-24 | main | all | NEW FEATURE: Parallel sub-agent spawning capability added to agentic workflow. All agents can now spawn parallel helpers for independent subtasks. Safety limits: maxDepth=3, maxConcurrent=5. See `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning", `.claude/skills/flyff-parallel-spawning/SKILL.md`, and each agent's session file for usage patterns. Example: implementor can spawn database-agent + security-auditor + test-agent in parallel to build features faster. |
 | 2026-03-24 | main | all | DOCUMENTATION UPDATE: Created comprehensive documentation for parallel spawning feature. See: (1) `.claude/skills/flyff-parallel-spawning/SKILL.md` — full skill guide with patterns for all agent types, (2) `docs/agent-workflow/parallel-spawning-guide.md` — user-facing guide with examples, (3) `MEMORY.md` — project memory index with feature overview, (4) `memory/parallel_spawning_feature.md` — persistent memory entry. All agents: Review the skill guide before using parallel spawning. |
+| 2026-07-21 | main | all | RESOURCE MIGRATION: Copied 24 source files from `game/resource/` → `packages/resources/raw/` (editable snapshot; client keeps originals). Built txt→yml converter (`scripts/convert.ts` + `scripts/converters/{parse,movers,items,skills}.ts`), wired as `pnpm --filter @flyff/resources convert`. One run regenerates `data/`: 782 movers (606 monsters/174 npcs/2 player), 3494 items (weapons/armors/consumables/materials), 166 skills (12 job files). Schemas relaxed: mover `model` optional, mover/item/skill `name_id` accept raw `IDS_*` keys. Flaris zone spawns/NPCs remapped to real MI_* ids (Aibatt 20-23, Marche 214, Boboku 211, Lui 213, Julia 212, Infopeng 200). All 8 loader tests green. TODO: jewelry/quest item buckets, propSkillAdd.csv per-level merge, character.inc NPC outfits. |
+
 
 
 

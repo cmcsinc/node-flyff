@@ -1,0 +1,75 @@
+_version: "1.0"
+_job: knight
+skills:
+  - id: 128
+    name: Guard
+    name_id: IDS_PROPSKILL_TXT_000036
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 129
+    name: Pain Reflection
+    name_id: IDS_PROPSKILL_TXT_000038
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 130
+    name: Rage
+    name_id: IDS_PROPSKILL_TXT_000040
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 131
+    name: Power Swing
+    name_id: IDS_PROPSKILL_TXT_000042
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 132
+    name: Earth Divider
+    name_id: IDS_PROPSKILL_TXT_000044
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 133
+    name: Charge
+    name_id: IDS_PROPSKILL_TXT_000046
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 134
+    name: Pain Dealer
+    name_id: IDS_PROPSKILL_TXT_000048
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 135
+    name: Power Stomp
+    name_id: IDS_PROPSKILL_TXT_000050
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

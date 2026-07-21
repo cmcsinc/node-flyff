@@ -1,0 +1,75 @@
+_version: "1.0"
+_job: psykeeper
+skills:
+  - id: 160
+    name: Demonology
+    name_id: IDS_PROPSKILL_TXT_000168
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 161
+    name: Satanology
+    name_id: IDS_PROPSKILL_TXT_000170
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 162
+    name: Psychic Bomb
+    name_id: IDS_PROPSKILL_TXT_000172
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 163
+    name: Psychic Wall
+    name_id: IDS_PROPSKILL_TXT_000174
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 164
+    name: Spirit Bomb
+    name_id: IDS_PROPSKILL_TXT_000176
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 165
+    name: Crucio Spell
+    name_id: IDS_PROPSKILL_TXT_000178
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 166
+    name: Maximum Crisis
+    name_id: IDS_PROPSKILL_TXT_000180
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 167
+    name: Psychic Square
+    name_id: IDS_PROPSKILL_TXT_000182
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

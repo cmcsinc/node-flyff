@@ -1,0 +1,75 @@
+_version: "1.0"
+_job: jester
+skills:
+  - id: 207
+    name: Critical Swing
+    name_id: IDS_PROPSKILL_TXT_000254
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 208
+    name: Enchant Poison
+    name_id: IDS_PROPSKILL_TXT_000256
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 209
+    name: Enchant Blood
+    name_id: IDS_PROPSKILL_TXT_000258
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 210
+    name: Enchant Absorb
+    name_id: IDS_PROPSKILL_TXT_000260
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 211
+    name: Sneak Stab
+    name_id: IDS_PROPSKILL_TXT_000262
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 212
+    name: Penya Strike
+    name_id: IDS_PROPSKILL_TXT_000264
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 213
+    name: Escape
+    name_id: IDS_PROPSKILL_TXT_000266
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 214
+    name: Vital stab
+    name_id: IDS_PROPSKILL_TXT_000268
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

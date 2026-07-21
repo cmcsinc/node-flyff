@@ -70,6 +70,21 @@ describe('JoinHandler', () => {
     assert.equal(sock._destroyed, false);
   });
 
+  it('sends only the self-spawn — NPC/monster spawns are decoupled to MAP_KEY vicinity', async () => {
+    // JOIN must not touch SpawnManager. Server-side spawns materialize at boot;
+    // client notification is the MAP_KEY-triggered vicinity burst (see
+    // VicinityService). Bolting ADD_OBJ onto JOIN races the client world load
+    // and null-derefs OnAddObj (DPClient.cpp:1160).
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const handler = new JoinHandler(fakeJoinService({ ok: true, player }), snapshotSerializer);
+    const sock = mockSocket();
+
+    await handler.handleJoin(sock as unknown as never, new PacketReader(joinPayload(42, 0)));
+
+    assert.equal(sock._written.length, 1); // self-spawn only — never an NPC snapshot
+    assert.equal(sock._destroyed, false);
+  });
+
   it('destroys the socket when the join is rejected', async () => {
     const handler = new JoinHandler(
       fakeJoinService({ ok: false, reason: 'bad_token' }),

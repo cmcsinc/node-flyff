@@ -1,198 +1,138 @@
-# skills/mercenary.yml
-# Mercenary class skills
 _version: "1.0"
 _job: mercenary
 skills:
-  # Passive skills
-  - id: 1
-    name: "Splmash"
-    name_id: "SKILL_SPLMASH"
-    name_desc_id: "SKILL_SPLMASH_DESC"
-    icon: "icon_skill_splmash.dds"
-    type: passive
+  - id: 4
+    name: Slash
+    name_id: IDS_PROPSKILL_TXT_000006
+    type: active
     level_req: 1
     skill_points: 1
-    max_level: 20
+    max_level: 1
     levels:
-      - { level: 1, attack_bonus: 3, attack_rate: 1.0 }
-      - { level: 2, attack_bonus: 6, attack_rate: 1.0 }
-      - { level: 3, attack_bonus: 9, attack_rate: 1.0 }
-      - { level: 4, attack_bonus: 12, attack_rate: 1.0 }
-      - { level: 5, attack_bonus: 15, attack_rate: 1.0 }
-      - { level: 6, attack_bonus: 18, attack_rate: 1.0 }
-      - { level: 7, attack_bonus: 21, attack_rate: 1.0 }
-      - { level: 8, attack_bonus: 24, attack_rate: 1.0 }
-      - { level: 9, attack_bonus: 27, attack_rate: 1.0 }
-      - { level: 10, attack_bonus: 30, attack_rate: 1.0 }
-      - { level: 11, attack_bonus: 33, attack_rate: 1.0 }
-      - { level: 12, attack_bonus: 36, attack_rate: 1.0 }
-      - { level: 13, attack_bonus: 39, attack_rate: 1.0 }
-      - { level: 14, attack_bonus: 42, attack_rate: 1.0 }
-      - { level: 15, attack_bonus: 45, attack_rate: 1.0 }
-      - { level: 16, attack_bonus: 48, attack_rate: 1.0 }
-      - { level: 17, attack_bonus: 51, attack_rate: 1.0 }
-      - { level: 18, attack_bonus: 54, attack_rate: 1.0 }
-      - { level: 19, attack_bonus: 57, attack_rate: 1.0 }
-      - { level: 20, attack_bonus: 60, attack_rate: 1.0 }
-
-  - id: 2
-    name: "Reflex"
-    name_id: "SKILL_REFLEX"
-    name_desc_id: "SKILL_REFLEX_DESC"
-    icon: "icon_skill_reflex.dds"
-    type: passive
+      - level: 1
+  - id: 5
+    name: Keenwheel
+    name_id: IDS_PROPSKILL_TXT_000008
+    type: active
     level_req: 1
     skill_points: 1
-    max_level: 20
+    max_level: 1
     levels:
-      - { level: 1, dodge_bonus: 5, defense_bonus: 2 }
-      - { level: 2, dodge_bonus: 10, defense_bonus: 4 }
-      - { level: 3, dodge_bonus: 15, defense_bonus: 6 }
-      - { level: 4, dodge_bonus: 20, defense_bonus: 8 }
-      - { level: 5, dodge_bonus: 25, defense_bonus: 10 }
-      - { level: 6, dodge_bonus: 30, defense_bonus: 12 }
-      - { level: 7, dodge_bonus: 35, defense_bonus: 14 }
-      - { level: 8, dodge_bonus: 40, defense_bonus: 16 }
-      - { level: 9, dodge_bonus: 45, defense_bonus: 18 }
-      - { level: 10, dodge_bonus: 50, defense_bonus: 20 }
-      - { level: 11, dodge_bonus: 55, defense_bonus: 22 }
-      - { level: 12, dodge_bonus: 60, defense_bonus: 24 }
-      - { level: 13, dodge_bonus: 65, defense_bonus: 26 }
-      - { level: 14, dodge_bonus: 70, defense_bonus: 28 }
-      - { level: 15, dodge_bonus: 75, defense_bonus: 30 }
-      - { level: 16, dodge_bonus: 80, defense_bonus: 32 }
-      - { level: 17, dodge_bonus: 85, defense_bonus: 34 }
-      - { level: 18, dodge_bonus: 90, defense_bonus: 36 }
-      - { level: 19, dodge_bonus: 95, defense_bonus: 38 }
-      - { level: 20, dodge_bonus: 100, defense_bonus: 40 }
-
-  # Active skills
+      - level: 1
+  - id: 6
+    name: Blindside
+    name_id: IDS_PROPSKILL_TXT_000010
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 9
+    name: Protection
+    name_id: IDS_PROPSKILL_TXT_000012
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
   - id: 10
-    name: "Blind"
-    name_id: "SKILL_BLIND"
-    name_desc_id: "SKILL_BLIND_DESC"
-    icon: "icon_skill_blind.dds"
+    name: Pan Barrier
+    name_id: IDS_PROPSKILL_TXT_000014
     type: active
-    target_type: single
-    level_req: 20
+    level_req: 1
     skill_points: 1
-    max_level: 20
-    mp_cost: 20
-    cast_time: 0.5
-    cooldown: 5.0
-    range: 10.0
-    aoe_radius: 0
-    duration: 10.0
+    max_level: 1
     levels:
-      - { level: 1, blind_chance: 30, blind_accuracy_penalty: 20, mp_cost: 20, duration: 10.0 }
-      - { level: 2, blind_chance: 32, blind_accuracy_penalty: 22, mp_cost: 21, duration: 10.5 }
-      - { level: 3, blind_chance: 34, blind_accuracy_penalty: 24, mp_cost: 22, duration: 11.0 }
-      - { level: 4, blind_chance: 36, blind_accuracy_penalty: 26, mp_cost: 23, duration: 11.5 }
-      - { level: 5, blind_chance: 38, blind_accuracy_penalty: 28, mp_cost: 24, duration: 12.0 }
-      - { level: 10, blind_chance: 48, blind_accuracy_penalty: 38, mp_cost: 29, duration: 14.5 }
-      - { level: 15, blind_chance: 58, blind_accuracy_penalty: 48, mp_cost: 34, duration: 17.0 }
-      - { level: 20, blind_chance: 68, blind_accuracy_penalty: 58, mp_cost: 39, duration: 19.5 }
-
+      - level: 1
+  - id: 108
+    name: Blazing Sword
+    name_id: IDS_PROPSKILL_TXT_000016
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 109
+    name: Smite Axe
+    name_id: IDS_PROPSKILL_TXT_000018
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 111
+    name: Empower Weapon
+    name_id: IDS_PROPSKILL_TXT_000020
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 112
+    name: Bloody Strike
+    name_id: IDS_PROPSKILL_TXT_000022
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 7
+    name: Sword Mastery
+    name_id: IDS_PROPSKILL_TXT_000024
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 8
+    name: Axe Mastery
+    name_id: IDS_PROPSKILL_TXT_000026
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
   - id: 11
-    name: "Keenwheel"
-    name_id: "SKILL_KEENWHEEL"
-    name_desc_id: "SKILL_KEENWHEEL_DESC"
-    icon: "icon_skill_keenwheel.dds"
+    name: Special Hit
+    name_id: IDS_PROPSKILL_TXT_000028
     type: active
-    target_type: aoe_circle
-    level_req: 30
+    level_req: 1
     skill_points: 1
-    max_level: 20
-    mp_cost: 35
-    fp_cost: 15
-    cast_time: 1.0
-    cooldown: 10.0
-    range: 0
-    aoe_radius: 3.0
+    max_level: 1
     levels:
-      - { level: 1, damage: 200, damage_multiplier: 1.5, mp_cost: 35, fp_cost: 15 }
-      - { level: 2, damage: 220, damage_multiplier: 1.6, mp_cost: 37, fp_cost: 16 }
-      - { level: 3, damage: 240, damage_multiplier: 1.7, mp_cost: 39, fp_cost: 17 }
-      - { level: 4, damage: 260, damage_multiplier: 1.8, mp_cost: 41, fp_cost: 18 }
-      - { level: 5, damage: 280, damage_multiplier: 1.9, mp_cost: 43, fp_cost: 19 }
-      - { level: 10, damage: 380, damage_multiplier: 2.4, mp_cost: 53, fp_cost: 24 }
-      - { level: 15, damage: 480, damage_multiplier: 2.9, mp_cost: 63, fp_cost: 29 }
-      - { level: 20, damage: 580, damage_multiplier: 3.4, mp_cost: 73, fp_cost: 34 }
-
+      - level: 1
   - id: 12
-    name: "Guillotine"
-    name_id: "SKILL_GUILLOTINE"
-    name_desc_id: "SKILL_GUILLOTINE_DESC"
-    icon: "icon_skill_guillotine.dds"
+    name: Guillotine
+    name_id: IDS_PROPSKILL_TXT_000030
     type: active
-    target_type: single
-    level_req: 60
+    level_req: 1
     skill_points: 1
-    max_level: 20
-    mp_cost: 80
-    fp_cost: 40
-    cast_time: 2.0
-    cooldown: 15.0
-    range: 2.5
-    aoe_radius: 0
+    max_level: 1
     levels:
-      - { level: 1, damage: 500, damage_multiplier: 3.0, mp_cost: 80, fp_cost: 40 }
-      - { level: 2, damage: 550, damage_multiplier: 3.2, mp_cost: 85, fp_cost: 42 }
-      - { level: 3, damage: 600, damage_multiplier: 3.4, mp_cost: 90, fp_cost: 44 }
-      - { level: 4, damage: 650, damage_multiplier: 3.6, mp_cost: 95, fp_cost: 46 }
-      - { level: 5, damage: 700, damage_multiplier: 3.8, mp_cost: 100, fp_cost: 48 }
-      - { level: 10, damage: 950, damage_multiplier: 4.8, mp_cost: 125, fp_cost: 58 }
-      - { level: 15, damage: 1200, damage_multiplier: 5.8, mp_cost: 150, fp_cost: 68 }
-      - { level: 20, damage: 1450, damage_multiplier: 6.8, mp_cost: 175, fp_cost: 78 }
-
-  # Blade-specific skills
-  - id: 20
-    name: "Silence"
-    name_id: "SKILL_SILENCE"
-    name_desc_id: "SKILL_SILENCE_DESC"
-    icon: "icon_skill_silence.dds"
+      - level: 1
+  - id: 13
+    name: Sneaker
+    name_id: IDS_PROPSKILL_TXT_000032
     type: active
-    target_type: single
-    level_req: 15
-    job_req: blade
+    level_req: 1
     skill_points: 1
-    max_level: 20
-    mp_cost: 25
-    fp_cost: 10
-    cast_time: 0.5
-    cooldown: 8.0
-    range: 8.0
-    aoe_radius: 0
-    duration: 5.0
+    max_level: 1
     levels:
-      - { level: 1, silence_chance: 30, mp_cost: 25, fp_cost: 10, duration: 5.0 }
-      - { level: 5, silence_chance: 38, mp_cost: 29, fp_cost: 12, duration: 6.0 }
-      - { level: 10, silence_chance: 48, mp_cost: 34, fp_cost: 14, duration: 7.5 }
-      - { level: 15, silence_chance: 58, mp_cost: 39, fp_cost: 16, duration: 9.0 }
-      - { level: 20, silence_chance: 68, mp_cost: 44, fp_cost: 18, duration: 10.5 }
-
-  # Knight-specific skills
-  - id: 30
-    name: "Protection"
-    name_id: "SKILL_PROTECTION"
-    name_desc_id: "SKILL_PROTECTION_DESC"
-    icon: "icon_skill_protection.dds"
-    type: buff
-    target_type: single
-    level_req: 15
-    job_req: knight
+      - level: 1
+  - id: 14
+    name: Hit Reflect
+    name_id: IDS_PROPSKILL_TXT_000034
+    type: active
+    level_req: 1
     skill_points: 1
-    max_level: 20
-    mp_cost: 30
-    fp_cost: 10
-    cast_time: 1.0
-    cooldown: 30.0
-    range: 10.0
-    aoe_radius: 0
-    duration: 60.0
+    max_level: 1
     levels:
-      - { level: 1, defense_bonus: 20, mp_cost: 30, fp_cost: 10, duration: 60.0 }
-      - { level: 5, defense_bonus: 28, mp_cost: 34, fp_cost: 12, duration: 65.0 }
-      - { level: 10, defense_bonus: 38, mp_cost: 39, fp_cost: 14, duration: 72.5 }
-      - { level: 15, defense_bonus: 48, mp_cost: 44, fp_cost: 16, duration: 80.0 }
-      - { level: 20, defense_bonus: 58, mp_cost: 49, fp_cost: 18, duration: 87.5 }
+      - level: 1

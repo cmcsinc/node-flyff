@@ -18,7 +18,9 @@ import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { Validate } from '@flyff/core/utils/validate.js';
 import { createLogger } from '@flyff/core/logger.js';
+import { sendPacket } from '@flyff/core/net/dispatcher.js';
 import type { MapKeyService } from '../services/mapKey.service.js';
+import type { VicinityService } from '../services/vicinity.service.js';
 
 const logger = createLogger({ module: 'mapKey-handler' });
 
@@ -26,7 +28,10 @@ const logger = createLogger({ module: 'mapKey-handler' });
 const MAP_KEY_MAX_LEN = 64;
 
 export class MapKeyHandler {
-  constructor(private mapKeyService: MapKeyService) {}
+  constructor(
+    private mapKeyService: MapKeyService,
+    private vicinityService: VicinityService,
+  ) {}
 
   handleMapKey(socket: ClientSocket, reader: PacketReader): void {
     let fileName: string;
@@ -62,5 +67,22 @@ export class MapKeyHandler {
     }
 
     logger.debug({ charId, fileName, remaining: reader.remaining }, 'MAP_KEY accepted');
+
+    // First MAP_KEY = client finished loading the world (g_pWorld + g_pPlayer
+    // set). This is the earliest safe point to stream the zone's NPC/monster
+    // ADD_OBJ snapshot — JOIN was too early (raced the world load, desync,
+    // OnAddObj null-deref). Fire once per player; MAP_KEY repeats per .wld.
+    this.maybeSendVicinity(socket, charId);
+  }
+
+  private maybeSendVicinity(socket: ClientSocket, charId: number): void {
+    const result = this.vicinityService.enterZone(charId);
+    if (result === null) return; // empty zone — nothing to send
+    if ('ok' in result) {
+      logger.warn({ charId, reason: result.reason }, 'vicinity lookup failed — dropping');
+      socket.destroy();
+      return;
+    }
+    sendPacket(socket, result.snapshot);
   }
 }

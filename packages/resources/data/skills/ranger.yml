@@ -1,0 +1,75 @@
+_version: "1.0"
+_job: ranger
+skills:
+  - id: 215
+    name: Fast Shot
+    name_id: IDS_PROPSKILL_TXT_000270
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 216
+    name: Ice Arrow
+    name_id: IDS_PROPSKILL_TXT_000272
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 217
+    name: Flame Arrow
+    name_id: IDS_PROPSKILL_TXT_000274
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 218
+    name: Piercing Arrow
+    name_id: IDS_PROPSKILL_TXT_000276
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 219
+    name: Poison Arrow
+    name_id: IDS_PROPSKILL_TXT_000278
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 220
+    name: Silent Arrow
+    name_id: IDS_PROPSKILL_TXT_000280
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 221
+    name: Nature
+    name_id: IDS_PROPSKILL_TXT_000282
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 222
+    name: Triple shot
+    name_id: IDS_PROPSKILL_TXT_000284
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

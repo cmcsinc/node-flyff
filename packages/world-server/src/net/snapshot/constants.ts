@@ -30,8 +30,9 @@ export const SNAPSHOTTYPE_WORLD_READINFO = 0x9910;
 /** Numeric world ID → which `.wld` the client loads. Resource/defineWorld.h:5. */
 export const WI_WORLD_MADRIGAL = 1;
 
-/** CObj method: full self-data (vs METHOD_EXCLUDE_ITEM for other players). */
+/** CObj method: full self-data (METHOD_NONE) vs peer/NPC (METHOD_EXCLUDE_ITEM). */
 export const METHOD_NONE = 0;
+export const METHOD_EXCLUDE_ITEM = 1;
 
 // --- ADD_OBJ prefix values (locked vs C++ source) ---------------------------
 // OT_ enum is sequential from 0: OT_OBJ=0, OT_ANI=1, OT_CTRL=2, OT_SFX=3,
@@ -45,6 +46,20 @@ export const OT_MOVER = 5;
 // values in resource/defineObj.h:962-963, cross-verified vs propMover.txt:4-5.
 export const MI_MALE = 11;
 export const MI_FEMALE = 12;
+
+// --- Monster model indices (resource/defineObj.h) ---------------------------
+// Real propMover row indices the client resolves via prj.GetMover(dwIndex).
+// Used as dwObjIndex/m_dwIndex on the NPC ADD_OBJ path so Neuz renders the
+// actual monster model. Add more as spawn coverage widens.
+export const MI_SMALL_MUSHPOIE = 168;   // defineObj.h:1161 — small mushpang, Flaris area
+
+/**
+ * `BELLI_*` aggressiveness (propMover `dwBelligerence` column). Sent as the
+ * `m_dwBelligerence` BYTE in the CMover::Serialize prefix (_Common
+ * /ObjSerializeOpt.cpp:109). PEACEFUL = never auto-attacks; rendered identically
+ * regardless of value, so 0 is safe until the AI/combat system lands.
+ */
+export const BELLI_PEACEFUL = 0;
 
 // --- Raw struct / array sizes (bytes) ---------------------------------------
 export const MAX_HUMAN_PARTS = 31;
