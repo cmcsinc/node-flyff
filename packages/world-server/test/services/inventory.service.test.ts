@@ -74,7 +74,7 @@ describe('InventoryService', () => {
 
     // setItem is fire-and-forget; flush its microtask then assert ordering.
     await Promise.resolve();
-    assert.deepEqual(ctx.order, ['journal:ITEM_PICKUP', 'setItem'], 'journal before repo write');
+    assert.deepEqual(ctx.order, ['journal:INVENTORY_SLOT', 'setItem'], 'journal before repo write');
     assert.equal(ctx.setItemCalls[0]!.slot, 0);
   });
 
@@ -103,7 +103,7 @@ describe('InventoryService', () => {
     assert.equal(player.m_Inventory[0], null);
   });
 
-  it('addGold clamps to MAX_GOLD + journals GOLD_GAIN before persist', async () => {
+  it('addGold clamps to MAX_GOLD + journals CHAR_GOLD (absolute) before persist', async () => {
     const player = CPlayer.fromRow(makeRow({ gold: MAX_GOLD - 100 }), { write: () => true });
     const ctx = makeDeps();
     const svc = new InventoryService(ctx.deps);
@@ -113,8 +113,8 @@ describe('InventoryService', () => {
     assert.equal(player.m_nGold, MAX_GOLD, 'clamped, no overflow');
     assert.ok(player._dirty.has('m_nGold'));
     await Promise.resolve();
-    assert.deepEqual(ctx.order, ['journal:GOLD_GAIN', 'updateGold']);
+    assert.deepEqual(ctx.order, ['journal:CHAR_GOLD', 'updateGold']);
     assert.equal(ctx.goldCalls[0], MAX_GOLD);
-    assert.equal(ctx.journalCalls[0]!.payload.amount, 100, 'gained only the pre-clamp delta');
+    assert.equal(ctx.journalCalls[0]!.payload.gold, MAX_GOLD, 'absolute gold total in payload');
   });
 });

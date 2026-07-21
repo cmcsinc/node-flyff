@@ -33,6 +33,7 @@ import { AF_MISS } from '../combat/tables.js';
 import { playerCombatant, moverCombatant } from '../combat/combatants.js';
 import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '../combat/aiConstants.js';
 import { isMoverAttackableBy } from './combat.policy.js';
+import { MODE } from '../constants/mode.js';
 import type { DropService } from './drop.service.js';
 import { DamageSerializer } from '../net/snapshot/damage.serializer.js';
 import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer.js';
@@ -85,22 +86,29 @@ export class CombatService {
 
     const result: MeleeResult = resolveMelee(playerCombatant(player), moverCombatant(mover), this.rng);
 
+    // `/ok` ONEKILL_MODE (authorization.h:22) — GM one-shot override: force a
+    // guaranteed lethal hit (full current HP) regardless of the rolled result.
+    // Mirrors C++ `IsMode(ONEKILL_MODE)` forcing lethal damage on the attacker's swing.
+    const eff: MeleeResult = (player.m_dwMode & MODE.ONEKILL) !== 0
+      ? { hit: true, damage: mover.m_nHitPoint, atkFlags: result.atkFlags & ~AF_MISS }
+      : result;
+
     // Apply MinusHP + record hit-share even on a miss (0 damage).
-    const dealt = applyDamage(mover, result);
+    const dealt = applyDamage(mover, eff);
     recordHit(mover, player.m_idPlayer, dealt);
 
     // Broadcast DAMAGE (vicinity) — the per-mover HP sync. dwHit=0 + AF_MISS on miss.
     const packet = this.damage.build(mover.m_idMover, {
       attackerObjid: player.m_idPlayer,
       hit: dealt,
-      atkFlags: result.atkFlags,
+      atkFlags: eff.atkFlags,
     });
     this.deps.zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, packet);
 
     const killed = mover.m_nHitPoint <= 0;
     if (killed) this.onDeath(player, mover);
     else this.triggerRage(mover, player);
-    return { ok: true, hit: result.hit, damage: dealt, killed };
+    return { ok: true, hit: eff.hit, damage: dealt, killed };
   }
 
   /**

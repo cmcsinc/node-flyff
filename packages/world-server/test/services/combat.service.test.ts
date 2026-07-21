@@ -13,6 +13,7 @@ import { CPlayer } from '../../src/entities/player.js';
 import type { CharacterRow } from '@flyff/database';
 import { CMover } from '../../src/entities/mover.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { MODE } from '../../src/constants/mode.js';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {
@@ -109,10 +110,11 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(broadcasts.length, 4);
     assert.equal(snapshotSubtype(broadcasts[3]), 0x00c7); // SNAPSHOTTYPE_MOVERDEATH
 
-    // Exp granted (2 × 1.0 mult), WAL-journaled before ack, persisted.
+    // Exp granted (2 × 1.0 mult), WAL-journaled (absolute CHAR_EXP) before ack, persisted.
     assert.equal(player.m_nExp, 2);
     assert.equal(journalCalls.length, 1);
-    assert.equal(journalCalls[0].type, 'EXP_GAIN');
+    assert.equal(journalCalls[0].type, 'CHAR_EXP');
+    assert.equal((journalCalls[0].payload as { exp: string }).exp, '2', 'absolute cumulative exp in payload');
     assert.equal(repoCalls.length, 1);
     assert.equal(repoCalls[0].exp, 2n);
 
@@ -174,5 +176,35 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(snapshotVictim(broadcasts[0]), mover.m_idMover);
     assert.equal(mover.m_idTarget, 0x7fffffff, 'target unchanged');
     assert.equal(player.m_nHp, 200); // untouched
+  });
+
+  it('ONEKILL (/ok) mode one-shots a full-HP mover in a single swing', () => {
+    const socket = { write: () => true };
+    const player = CPlayer.fromRow(makeRow(), socket);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 0, y: 0, z: 0 };
+    player.m_dwMode = MODE.ONEKILL; // /ok active
+
+    const mover = CMover.spawn(
+      0x40000010,
+      { modelIndex: 20, name: 'Tank', level: 1, hp: 5000, atkMin: 0, atkMax: 0, armor: 0, hr: 0, er: 0, expValue: 2 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    const spawns = new Map([[mover.m_idMover, mover]]);
+    const spawnManager = { get: (id: number) => spawns.get(id), kill: () => {} };
+    const broadcasts: Buffer[] = [];
+    const zoneManager = { broadcastAround: (_p: unknown, _z: number, _r: number, buf: Buffer) => { broadcasts.push(buf); return 1; } };
+    const playerManager = { sendTo: () => {} };
+    const charRepo = { updateLevelAndExp: async () => {} };
+    const journal = { append: () => {} };
+    const combat = new CombatService({
+      // @ts-expect-error — mock managers satisfy only the read surface
+      spawnManager, zoneManager, playerManager, charRepo, journal, rng: fixedRng,
+    });
+
+    const r = combat.resolveAttack(player, mover.m_idMover);
+    assert.equal(r.ok && r.killed, true, 'one-shot kill');
+    assert.equal(mover.m_nHitPoint, 0, 'full 5000 HP gone in one swing');
+    assert.equal(mover.m_bDead, true);
   });
 });

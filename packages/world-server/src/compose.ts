@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar.js';
 import { ClusterListener } from './ipc/clusterListener.js';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
@@ -47,14 +47,17 @@ import { RevivalHandler } from './handlers/revival.handler.js';
 import { MeleeAttackService } from './services/meleeAttack.service.js';
 import { CombatService } from './services/combat.service.js';
 import { DropService } from './services/drop.service.js';
+import { InventoryService } from './services/inventory.service.js';
 import { ItemManager } from './managers/item.manager.js';
 import { VISIBILITY_RADIUS } from './net/snapshot/constants.js';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
+import { ActMsgHandler } from './handlers/actMsg.handler.js';
 import { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import { QuestHelperHandler } from './handlers/questHelper.handler.js';
 import { JournalReplayer } from './systems/journalReplayer.js';
+import { registerReplayers } from './systems/journalReplayers.js';
 import { QuestTrackerSystem } from './systems/questTracker.system.js';
 import { AISystem } from './systems/ai.system.js';
 
@@ -109,6 +112,7 @@ export interface WorldComposeResult {
   dropService: DropService;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
+  actMsgHandler: ActMsgHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -169,15 +173,17 @@ export async function compose(): Promise<WorldComposeResult> {
   const accountRepo = new AccountRepository(db);
   const questRepo = new QuestRepository(db);
   const inventoryRepo = new InventoryRepository(db);
+  const bankRepo = new BankRepository(db);
 
   // WAL journal — embedded SQLite, opened once per process. Critical mutations
   // (items, gold, exp, level) append here before ack so a crash never dupes or
   // rolls back. Closed on shutdown via index.ts. See rule `04-persistence.md`.
   const journal = new Journal({ path: config.wal.journalPath, logger });
   const journalReplayer = new JournalReplayer({ journal, logger });
-  // ponytail: services register replay handlers here as they come online, e.g.
-  //   journalReplayer.register('ITEM_ADD', (row) => inventoryService.replayAdd(row));
-  // Nothing registers yet — recover() is a no-op until the first WAL caller ships.
+  // Register idempotent replay handlers for every WAL event type the services
+  // emit (CHAR_EXP / CHAR_GOLD / INVENTORY_SLOT). Payloads are absolute
+  // end-state, so recover() can re-apply them on the next boot without dupes.
+  registerReplayers(journalReplayer, { charRepo, inventoryRepo, logger });
 
   // In-memory world state + enter-world stack.
   const playerManager = new PlayerManager();
@@ -244,7 +250,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // are skipped. Self-driven 1 s timer; `tick(now)` is public for the future
   // unified 50 ms loop. Stopped on shutdown via index.ts (no leaked timer).
   const aiSystem = new AISystem({
-    spawnManager, zoneManager, playerManager,
+    spawnManager, zoneManager, playerManager, zones: resources.zones,
     onPlayerDeath: (p, killerObjid) => revivalService.onPlayerDeath(p, killerObjid),
   });
   aiSystem.start();
@@ -254,6 +260,7 @@ export async function compose(): Promise<WorldComposeResult> {
     accountRepo,
     questService,
     inventoryRepo,
+    bankRepo,
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
@@ -286,7 +293,11 @@ export async function compose(): Promise<WorldComposeResult> {
   // Phase 6 — remaining v15 C→S handlers (chat, motion, target, movement
   // variants, query/getpos, script dialog, revival). See PROGRESS.md for
   // the audit that scoped these.
-  const commandService = new CommandService({ playerManager });
+  const inventoryService = new InventoryService({ inventoryRepo, charRepo, journal });
+  const commandService = new CommandService({
+    playerManager, spawnManager, questService, journal,
+    inventoryService, charRepo,
+  });
   const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
   const motionService = new MotionService({ zoneManager });
@@ -316,6 +327,8 @@ export async function compose(): Promise<WorldComposeResult> {
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
+  // Phase E — ground-item pickup (PACKETTYPE_ACTMSG / OBJMSG_PICKUP).
+  const actMsgHandler = new ActMsgHandler({ playerManager, itemManager, inventoryService });
 
   // Phase 4 — C→S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
   const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
@@ -375,6 +388,7 @@ export async function compose(): Promise<WorldComposeResult> {
     dropService,
     playerSetDestObjHandler,
     meleeAttackHandler,
+    actMsgHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,
