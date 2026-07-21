@@ -10,12 +10,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import pino from 'pino';
+import { createResourceLogger } from '../logger.js';
 import {
   ZoneDefinitionSchema,
 } from '../schemas/zone.schema.js';
 
-const logger = pino({ name: 'zone.loader' });
+const logger = createResourceLogger('zone.loader');
 
 /**
  * Loaded zone index structure.

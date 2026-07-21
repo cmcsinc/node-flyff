@@ -10,14 +10,14 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import pino from 'pino';
+import { createResourceLogger } from '../logger.js';
 import {
   ItemDefinitionSchema,
   ItemFileSchema,
   ItemIndexSchema,
 } from '../schemas/item.schema.js';
 
-const logger = pino({ name: 'item.loader' });
+const logger = createResourceLogger('item.loader');
 
 /**
  * Loaded item index structure.

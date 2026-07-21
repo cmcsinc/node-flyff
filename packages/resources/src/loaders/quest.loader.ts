@@ -12,7 +12,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parse } from 'yaml';
-import pino from 'pino';
+import { createResourceLogger } from '../logger.js';
 import {
   QuestDefSchema,
   QuestIndexSchema,
@@ -20,7 +20,7 @@ import {
   type QuestItem,
 } from '../schemas/quest.schema.js';
 
-const logger = pino({ name: 'quest.loader' });
+const logger = createResourceLogger('quest.loader');
 
 export interface QuestIndex {
   /** Quest id → definition. */

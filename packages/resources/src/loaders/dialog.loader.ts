@@ -11,7 +11,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import pino from 'pino';
+import { createResourceLogger } from '../logger.js';
 import {
   DialogFileSchema,
   DialogStringTableSchema,
@@ -20,7 +20,7 @@ import {
   type DialogState,
 } from '../schemas/dialog.schema.js';
 
-const logger = pino({ name: 'dialog.loader' });
+const logger = createResourceLogger('dialog.loader');
 
 export interface DialogIndex {
   /** WorldDialog.txt strings; `strings[n]` resolves `Say(n)` / `Speak(n)`. */

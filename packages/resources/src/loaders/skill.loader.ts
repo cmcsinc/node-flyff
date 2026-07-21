@@ -10,14 +10,14 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import pino from 'pino';
+import { createResourceLogger } from '../logger.js';
 import {
   SkillDefinitionSchema,
   SkillFileSchema,
   SkillIndexSchema,
 } from '../schemas/skill.schema.js';
 
-const logger = pino({ name: 'skill.loader' });
+const logger = createResourceLogger('skill.loader');
 
 /**
  * Loaded skill index structure.
