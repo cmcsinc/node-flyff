@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mada_gatekeeper
+states:
+  "0":
+    speak:
+      - 978
+    timer: 15
+    source: "Speak( NpcId(), 978 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 979
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 980
+  "10":
+    speak:
+      - 981
+    exit: true
+    source: "Speak( NpcId(), 981 );\r\n\tExit();"

@@ -1,0 +1,29 @@
+_version: "1.0"
+prefix: mafl_kawibawibo01
+states:
+  "0":
+    speak:
+      - 963
+    timer: 15
+    source: "Speak( NpcId(), 963 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4": {}
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 964
+  "10":
+    speak:
+      - 965
+    exit: true
+    source: "Speak( NpcId(), 965 );\r\n\tExit();"

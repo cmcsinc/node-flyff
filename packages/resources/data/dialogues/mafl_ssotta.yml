@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_ssotta
+states:
+  "0":
+    speak:
+      - 687
+    timer: 15
+    source: "Speak( NpcId(), 687 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 688
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 689
+  "10":
+    speak:
+      - 690
+    exit: true
+    source: "Speak( NpcId(), 690 );\r\n\tExit();"

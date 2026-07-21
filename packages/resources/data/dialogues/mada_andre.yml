@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mada_andre
+states:
+  "0":
+    speak:
+      - 111
+    timer: 15
+    source: "Speak( NpcId(), 111 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 12
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 112
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "10":
+    say:
+      - 114
+    exit: true
+  "12":
+    say:
+      - 113

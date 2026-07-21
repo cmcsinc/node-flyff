@@ -1,0 +1,76 @@
+_version: "1.0"
+prefix: mada_heingard
+states:
+  "0":
+    speak:
+      - 243
+    timer: 15
+    source: "Speak( NpcId(), 243 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 244
+  "4":
+    say:
+      - 245
+    source: "if( GetQuestState( QUEST_HEROJES_TRN5 ) == QS_END && GetPlayerJob() ==
+      2 && GetPlayerLvl() == 60  )\r
+
+      \t{\r
+
+      \t\t\r
+
+      \t\tChangeJob( 8 );\r
+
+      \t}\r
+
+      \t\r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tSay ( 245 );\r
+
+      \t}"
+  "5": {}
+  "6": {}
+  "7": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState( QUEST_HEROJES_TRN5 ) == QS_END && GetPlayerJob() ==
+      2 && GetPlayerLvl() == 60  )\r
+
+      \t{\r
+
+      \t\t\r
+
+      \t\tChangeJob( 8 );\r
+
+      \t}\r
+
+      \t\r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 246
+    source: "Say ( 246 );\r\n\tAddAnswer( 10 );"
+  "10":
+    speak:
+      - 247
+    exit: true
+    source: "Speak( NpcId(), 247 );\r\n\tExit();"

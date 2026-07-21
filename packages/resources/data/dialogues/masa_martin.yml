@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: masa_martin
+states:
+  "0":
+    speak:
+      - 786
+    timer: 15
+    source: "Speak( NpcId(), 786 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 787
+  "4":
+    say:
+      - 788
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 789
+  "10":
+    speak:
+      - 790
+    exit: true
+    source: "Speak( NpcId(), 790 );\r\n\tExit();"

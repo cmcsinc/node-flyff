@@ -8,7 +8,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadAllResources, validateReferences } from '../src/index.js';
+import { loadAllResources, validateReferences, prefixForNpc } from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -110,5 +110,31 @@ describe('Resource Loaders', () => {
       assert.ok(portal.target.zone, `Portal ${portal.id} should have target zone`);
       assert.ok(typeof portal.target.position.x === 'number', 'Portal target should have valid position');
     }
+  });
+
+  it('should load NPC dialogs and resolve every spawned NPC dialogue_id', async () => {
+    const resources = await loadAllResources(DATA_DIR);
+
+    // String table + per-prefix files loaded
+    assert.ok(resources.dialogs.strings.length > 1000, 'WorldDialog string table loaded');
+    assert.ok(resources.dialogs.byPrefix.has('mafl_marche'), 'Marche dialog migrated');
+
+    // Say(631) resolves to Marche's greeting text
+    assert.ok(resources.dialogs.strings[631]?.includes('Marche'), 'strings[631] = Marche greeting');
+
+    // Every flaris NPC functions[].dialogue_id must resolve to a real prefix
+    const flaris = resources.zones.zones.get('flaris')!;
+    for (const npc of flaris.npcs) {
+      const dlg = npc.functions.find((f) => f.type === 'dialogue');
+      if (!dlg || !dlg.dialogue_id) continue;
+      assert.ok(
+        resources.dialogs.byPrefix.has(dlg.dialogue_id),
+        `NPC ${npc.id} dialogue_id "${dlg.dialogue_id}" must resolve to a migrated dialog prefix`,
+      );
+    }
+
+    // Reverse-lookup helper: character.inc key + MI_* stem both collapse to prefix
+    assert.equal(prefixForNpc(resources.dialogs, 'MaFl_Marche'), 'mafl_marche');
+    assert.equal(prefixForNpc(resources.dialogs, 'MI_MAFL_MARCHE'), 'mafl_marche');
   });
 });

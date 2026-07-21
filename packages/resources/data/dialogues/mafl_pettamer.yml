@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mafl_pettamer
+states:
+  "0":
+    speak:
+      - 974
+    timer: 15
+    source: "Speak( NpcId(), 974 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 975
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 976
+  "10":
+    speak:
+      - 977
+    exit: true
+    source: "Speak( NpcId(), 977 );\r\n\tExit();"

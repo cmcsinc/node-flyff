@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_sgradion
+states:
+  "0":
+    speak:
+      - 682
+    timer: 15
+    source: "Speak( NpcId(), 682 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 683
+  "4":
+    say:
+      - 684
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 685
+  "10":
+    speak:
+      - 686
+    exit: true
+    source: "Speak( NpcId(), 686 );\r\n\tExit();"

@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mafl_bobochan
+states:
+  "0":
+    speak:
+      - 990
+    timer: 15
+    source: "Speak( NpcId(), 990 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 991
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 992
+  "10":
+    speak:
+      - 993
+    exit: true
+    source: "Speak( NpcId(), 993 );\r\n\tExit();"

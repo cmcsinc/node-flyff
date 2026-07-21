@@ -1,0 +1,154 @@
+_version: "1.0"
+prefix: mafl_gornus
+states:
+  "0":
+    speak:
+      - 505
+    timer: 15
+    source: "Speak( NpcId(), 505 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 506
+      - 507
+      - 508
+      - 509
+      - 510
+      - 511
+    keys:
+      - label: 10
+      - label: 10
+      - label: 10
+      - label: 10
+      - label: 10
+    exit: true
+    source: "if( GetPlayerLvl() >= 30 )\r
+
+      \t{\r
+
+      \t\tif( IsWormonServer() == TRUE )\r
+
+      \t\t{\t\r
+
+      \t\t\tif( IsSetQuest( QUEST_DREADKREN ) == TRUE && GetQuestState(
+      QUEST_DREADKREN ) == QS_END )\r
+
+      \t\t\t{\r
+
+      \t\t\t\tif( IsParty() == TRUE )\r
+
+      \t\t\t\t{\r
+
+      \t\t\t\t\tif( MonHuntStartParty( QUEST_BOSS_LV2, QS_BEGIN, QS_END, 1 ) ==
+      FALSE )\r
+
+      \t\t\t\t\t{\r
+
+      \t\t\t\t\t\tSay( 506 );\r
+
+      \t\t\t\t\t\tAddKey( 10 );\r
+
+      \t\t\t\t\t}\r
+
+      \t\t\t\r
+
+      \r
+
+      \t\t\t\t\telse if( MonHuntStartParty( QUEST_BOSS_LV2, QS_BEGIN, QS_END, 1
+      ) == TRUE )\r
+
+      \t\t\t\t\t{\r
+
+      \t\t\t\t\t\t\t\t\t\t\t\r
+
+      \t\t\t\t\t}\r
+
+      \r
+
+      \t\t\t\t\telse\r
+
+      \t\t\t\t\t{\r
+
+      \t\t\t\t\t\tSay( 507 );\r
+
+      \t\t\t\t\t\tAddKey( 10 );\t\r
+
+      \t\t\t\t\t}\r
+
+      \t\t\t\t}\t\r
+
+      \t\t\t\t\t\r
+
+      \t\t\t\telse\r
+
+      \t\t\t\t{\r
+
+      \t\t\t\t\tSay( 508 );\t\r
+
+      \t\t\t\t\tAddKey( 10 );\r
+
+      \t\t\t\t}\r
+
+      \t\r
+
+      \t\t\t}\t\r
+
+      \t\t\t\r
+
+      \t\t\telse\r
+
+      \t\t\t{\r
+
+      \t\t\t\tSay( 509);\r
+
+      \t\t\t\tSay( 510 );\t\r
+
+      \t\t\t\tAddKey( 10 );\r
+
+      \t\t\t}\r
+
+      \t\t}\r
+
+      \r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tPrintSystemMessage( TID_GAME_NOTPLAYSERVER );\r
+
+      \t\t\tExit();\t\r
+
+      \t\t}\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tSay( 511 );\t\r
+
+      \t\tAddKey( 10 );\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4": {}
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 512
+  "10":
+    speak:
+      - 513
+    exit: true
+    source: "Speak( NpcId(), 513 );\r\n\tExit();"

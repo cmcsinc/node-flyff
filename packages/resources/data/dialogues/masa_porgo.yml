@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: masa_porgo
+states:
+  "0":
+    speak:
+      - 799
+    timer: 15
+    source: "Speak( NpcId(), 799 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 800
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 801
+  "10":
+    speak:
+      - 802
+    exit: true
+    source: "Speak( NpcId(), 802 );\r\n\tExit();"

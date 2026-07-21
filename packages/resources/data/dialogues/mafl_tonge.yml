@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_tonge
+states:
+  "0":
+    speak:
+      - 1195
+    timer: 15
+    source: "Speak( NpcId(), 1195 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1196
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1197
+  "10":
+    speak:
+      - 1198
+    exit: true
+    source: "Speak( NpcId(), 1198 );\r\n\tExit();"

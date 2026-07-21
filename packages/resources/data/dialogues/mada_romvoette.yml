@@ -1,0 +1,52 @@
+_version: "1.0"
+prefix: mada_romvoette
+states:
+  "0":
+    speak:
+      - 353
+    timer: 15
+    source: "Speak( NpcId(), 353 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 354
+  "5": {}
+  "6": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_HERORIN_TRN5) == QS_END && GetPlayerJob() == 3
+      && GetPlayerLvl() == 60 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 10 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 355
+  "10":
+    speak:
+      - 356
+    exit: true
+    source: "Speak( NpcId(), 356 );\r\n\tExit();"

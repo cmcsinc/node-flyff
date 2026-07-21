@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_darmayor
+states:
+  "0":
+    speak:
+      - 858
+    timer: 15
+    source: "Speak( NpcId(), 858 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 859
+  "4":
+    say:
+      - 860
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 861
+  "10":
+    speak:
+      - 862
+    exit: true
+    source: "Speak( NpcId(), 862 );\r\n\tExit();"

@@ -1,0 +1,34 @@
+_version: "1.0"
+prefix: mada_rupim
+states:
+  "0":
+    speak:
+      - 362
+    timer: 12
+    source: "Speak( NpcId(), 362 );\r
+
+      \tSetScriptTimer( 12 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 254
+  "4":
+    say:
+      - 363
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 364
+  "10":
+    speak:
+      - 365
+    exit: true
+    source: "Speak( NpcId(), 365 );\r\n\tExit();"

@@ -1,0 +1,129 @@
+_version: "1.0"
+id: 3
+symbol: QUEST_CHANGEJOB3
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 15
+      - type: num
+        value: 15
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 15
+      - type: num
+        value: 150
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6023
+      - type: num
+        value: 10
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6024
+      - type: num
+        value: 5
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6016
+      - type: num
+        value: 3
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 8010
+      - type: num
+        value: 1
+  - cmd: SetEndCondState
+    args:
+      - type: num
+        value: 3
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaFl_Rooney
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6004
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000028
+    cond: IDS_PROPQUEST_INC_000029
+    status: IDS_PROPQUEST_INC_000030
+  "1":
+    desc: IDS_PROPQUEST_INC_000031
+    cond: IDS_PROPQUEST_INC_000032
+    status: IDS_PROPQUEST_INC_000033
+  "2":
+    desc: IDS_PROPQUEST_INC_000034
+    cond: IDS_PROPQUEST_INC_000035
+    status: IDS_PROPQUEST_INC_000036
+  "3":
+    desc: IDS_PROPQUEST_INC_000037
+    cond: IDS_PROPQUEST_INC_000038
+    status: IDS_PROPQUEST_INC_000039
+  "14":
+    desc: IDS_PROPQUEST_INC_000040
+    cond: IDS_PROPQUEST_INC_000041
+    status: IDS_PROPQUEST_INC_000042
+quest_items:
+  - mover: 29
+    item: 6023
+    prob: 1500000000
+    num: 1
+  - mover: 32
+    item: 6024
+    prob: 1500000000
+    num: 1
+  - mover: 38
+    item: 6016
+    prob: 1500000000
+    num: 1
+title: IDS_PROPQUEST_INC_000027

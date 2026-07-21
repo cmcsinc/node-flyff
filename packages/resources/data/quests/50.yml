@@ -1,0 +1,37 @@
+_version: "1.0"
+id: 50
+symbol: QUEST_MASDU3
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6054
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000452
+    cond: IDS_PROPQUEST_INC_000453
+    status: IDS_PROPQUEST_INC_000454
+  "1":
+    desc: IDS_PROPQUEST_INC_000455
+    cond: IDS_PROPQUEST_INC_000456
+    status: IDS_PROPQUEST_INC_000457
+  "2":
+    desc: IDS_PROPQUEST_INC_000458
+    cond: IDS_PROPQUEST_INC_000459
+    status: IDS_PROPQUEST_INC_000460
+dialog:
+  "0": IDS_PROPQUEST_INC_000451
+quest_items:
+  - mover: 664
+    item: 10352
+    prob: 150000000
+    num: 1
+  - mover: 665
+    item: 10355
+    prob: 30000000
+    num: 1
+title: IDS_PROPQUEST_INC_000450

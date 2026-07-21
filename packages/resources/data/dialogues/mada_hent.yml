@@ -1,0 +1,79 @@
+_version: "1.0"
+prefix: mada_hent
+states:
+  "0":
+    speak:
+      - 248
+    timer: 15
+    source: "Speak( NpcId(), 248 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    keys:
+      - label: 9
+      - label: 10
+    launch_quest: true
+    source: "//Ãß°¡(20051018)\r
+
+      \tif( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState(
+      QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0)\r
+
+      \t{\r
+
+      \t\tif( GetQuestState( QUEST_SCE_MDRIGALTEACHER4 ) >= 0 )\r
+
+      \t\t\tLaunchQuest();\r
+
+      \t\telse\r
+
+      \t\t\tSayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );\r
+
+      \t\tAddKey( 9 );\r
+
+      \t\tAddKey( 10 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tLaunchQuest();\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 249
+  "4":
+    say:
+      - 250
+  "5": {}
+  "6":
+    source: "//»õ·Î¹ø¿ª(20060104)\r
+
+      \t//Say( \"¾Æ½±°Ôµµ, ÀÌÁ¦ ³»°¡ °¡Áö°í ÀÖ´Â ºí¸µÅ©À®Àº ¸ðµÎ ¼ÒÁøµÇ¾ú´Ù
+      Á¦±º. ´ë½Å ½Ã°£À» ´õ ´Ã·ÈÁö. ºí¸µÅ©À®Àº ±¸ÀÔÇÏ¿© ¾²µµ·Ï, ÀÌ»ó!\" );\r
+
+      \tif( GetQuestState(QUEST_VOCACR_BFTRN) == QS_BEGIN )\r
+
+      \t{\r
+
+      \t\tReplace( WI_WORLD_MADRIGAL, 7161.0, 100.0, 3264.0 );\r
+
+      \t}"
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 251
+  "10":
+    speak:
+      - 252
+    exit: true
+    source: "Speak( NpcId(), 252 );\r\n\tExit();"

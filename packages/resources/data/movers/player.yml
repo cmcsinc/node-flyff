@@ -23,6 +23,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 12
     name: Female
     name_id: IDS_PROPMOVER_TXT_000004
@@ -45,3 +47,5 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1

@@ -1,0 +1,91 @@
+_version: "1.0"
+prefix: mada_bernard
+states:
+  "0":
+    speak:
+      - 58
+    timer: 15
+    source: "Speak( NpcId(), 58 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 12
+      - label: 10
+    source: "AddKey( 12 );\r
+
+      \t  AddCondKey( 115,16 );\r
+
+      \t  AddKey( 10 );"
+  "3":
+    say:
+      - 116
+  "4":
+    say:
+      - 117
+  "5": {}
+  "6":
+    exit: true
+    source: "if(IsSetQuest(QUEST_DUDK_VOL6) == TRUE)\r
+
+      \t{ \r
+
+      \t\tif( GetEmptyInventoryNum() < 1)\r
+
+      \t\t{\r
+
+      \t\t\tPrintSystemMessage(TID_GAME_LACKSPACE);\r
+
+      \t\t\tExit();\r
+
+      \t\t}\r
+
+      \t\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tCreateItem(II_SYS_SYS_QUE_WAKEROACHWATER, 1);\r
+
+      \t\t}\r
+
+      \t}"
+  "7": {}
+  "8": {}
+  "10":
+    say:
+      - 119
+    exit: true
+  "12":
+    say:
+      - 118
+  "16":
+    say:
+      - 120
+    exit: true
+    source: "Say( 120 );\r
+
+      \t//if( GetEmptyInventoryNum() < 1)\r
+
+      \t//{\r
+
+      \t//\tPrintSystemMessage(TID_GAME_LACKSPACE);\r
+
+      \t//\tExit();\r
+
+      \t//}\r
+
+      \t//\r
+
+      \t//else\r
+
+      \t//{\r
+
+      \t//\tCreateItem( II_SYS_SYS_QUE_DRIANCARGO, 1 );\r
+
+      \t//}\r
+
+      \t//Exit();"

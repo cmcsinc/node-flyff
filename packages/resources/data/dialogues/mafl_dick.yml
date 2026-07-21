@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_dick
+states:
+  "0":
+    speak:
+      - 1028
+    timer: 15
+    source: "Speak( NpcId(), 1028 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1029
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1030
+  "10":
+    speak:
+      - 1031
+    exit: true
+    source: "Speak( NpcId(), 1031 );\r\n\tExit();"

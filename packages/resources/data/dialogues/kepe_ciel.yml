@@ -1,0 +1,24 @@
+_version: "1.0"
+prefix: kepe_ciel
+states:
+  "0":
+    speak:
+      - 62
+    timer: 15
+    source: "Speak( NpcId(), 62 );\r
+
+      \t\tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 63
+    keys:
+      - label: 9
+      - label: 10
+  "9":
+    say:
+      - 64
+  "10":
+    speak:
+      - 65
+    exit: true
+    source: "Speak( NpcId(), 65 );\r\n\t\tExit();"

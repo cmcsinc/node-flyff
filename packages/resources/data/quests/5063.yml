@@ -1,0 +1,315 @@
+_version: "1.0"
+id: 5063
+symbol: QUEST_ALICE02
+commands:
+  - cmd: SetRepeat
+    args:
+      - type: num
+        value: 0
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaFl_Alice
+      - type: sym
+        value: LANG_KOR
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaFl_Alice
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0046
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 70
+      - type: num
+        value: 129
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 5062
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 3026
+      - type: num
+        value: 150
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0047
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 3027
+      - type: num
+        value: 200
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0047
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 3015
+      - type: num
+        value: 250
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0049
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 26478
+      - type: num
+        value: 1500
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0054
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 26479
+      - type: num
+        value: 1500
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0054
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 26482
+      - type: num
+        value: 20
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0054
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 3026
+      - type: num
+        value: 150
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 3027
+      - type: num
+        value: 200
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 2
+      - type: sym
+        value: 3015
+      - type: num
+        value: 250
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 3
+      - type: sym
+        value: 26478
+      - type: num
+        value: 1500
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 4
+      - type: sym
+        value: 26479
+      - type: num
+        value: 1500
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 5
+      - type: sym
+        value: 26482
+      - type: num
+        value: 20
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 4743
+      - type: num
+        value: 1
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6004
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_002406
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_002407
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_002408
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_002409
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_002410
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_002411
+  "14":
+    desc: IDS_PROPQUEST_INC_002412
+quest_items: []
+title: IDS_PROPQUEST_INC_002405

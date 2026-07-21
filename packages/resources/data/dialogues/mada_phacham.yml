@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_phacham
+states:
+  "0":
+    speak:
+      - 325
+    timer: 15
+    source: "Speak( NpcId(), 325 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 326
+  "4":
+    say:
+      - 327
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 328
+  "10":
+    speak:
+      - 329
+    exit: true
+    source: "Speak( NpcId(), 329 );\r\n\tExit();"

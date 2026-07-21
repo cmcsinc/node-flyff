@@ -1,0 +1,148 @@
+_version: "1.0"
+prefix: dudk_drian
+states:
+  "0":
+    speak:
+      - 44
+    timer: 15
+    source: "Speak( NpcId(), 44 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    keys:
+      - label: 9
+      - label: 10
+    launch_quest: true
+    source: "if(GetQuestState(QUEST_DUDK_VOL1) == QS_END)\r
+
+      \t{ \r
+
+      \tLaunchQuest();\r
+
+      \t}\r
+
+      \telse\r
+
+      \t{\r
+
+      \tAddKey( 9 );\r
+
+      \tAddKey( 10 );\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+    source: "AddKey( 9 );\r
+
+      \tif(GetItemNum(II_SYS_SYS_QUE_DRIANCARGO) == 0)\r
+
+      \t{\r
+
+      \tAddCondKey( 45,11 );\r
+
+      \t}\r
+
+      \tAddKey( 10 );"
+  "3":
+    say:
+      - 46
+  "4":
+    say:
+      - 47
+      - 48
+      - 49
+    source: "if(IsSetQuest(QUEST_DUDK_VOL3) == TRUE)\r
+
+      \t{\r
+
+      \t\tif(IsSetQuest(QUEST_DUDK_VOL4) == TRUE)\r
+
+      \t\t{\r
+
+      \t\tSay ( 47);\r
+
+      \t\t}\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\tSay ( 48);\t\r
+
+      \t\t}\t\r
+
+      \t}\r
+
+      \telse \r
+
+      \t{\r
+
+      \tSay ( 49 );\r
+
+      \t}"
+  "5": {}
+  "6":
+    exit: true
+    source: "if(IsSetQuest(QUEST_DUDK_VOL3) == TRUE)\r
+
+      \t{ \r
+
+      \t\tif( GetEmptyInventoryNum() < 1 )\r
+
+      \t\t{\r
+
+      \t\t\tPrintSystemMessage(TID_GAME_LACKSPACE);\r
+
+      \t\t\tExit();\t\r
+
+      \t\t}\r
+
+      \t\t\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tCreateItem(II_SYS_SYS_KEY_NEVILPRISON, 1);\r
+
+      \t\t}\r
+
+      \t}"
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 50
+  "10":
+    say:
+      - 51
+    exit: true
+  "11":
+    say:
+      - 52
+    exit: true
+    source: "Say( 52 );\r
+
+      \tif( GetEmptyInventoryNum() < 1 )\r
+
+      \t{\r
+
+      \t\tPrintSystemMessage(TID_GAME_LACKSPACE);\r
+
+      \t\tExit();\t\r
+
+      \t}\r
+
+      \t\t\r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tCreateItem( II_SYS_SYS_QUE_DRIANCARGO, 1 );\r
+
+      \t}\r
+
+      \tRemoveKey(11);"

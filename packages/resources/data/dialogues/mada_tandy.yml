@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_tandy
+states:
+  "0":
+    speak:
+      - 853
+    timer: 15
+    source: "Speak( NpcId(), 853 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 854
+  "4":
+    say:
+      - 855
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 856
+  "10":
+    speak:
+      - 857
+    exit: true
+    source: "Speak( NpcId(), 857 );\r\n\tExit();"

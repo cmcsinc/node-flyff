@@ -1,0 +1,28 @@
+_version: "1.0"
+prefix: mafl_flraness
+states:
+  "0":
+    speak:
+      - 490
+    timer: 15
+    source: "Speak( NpcId(), 490 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 491
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "10":
+    speak:
+      - 492
+    exit: true
+    source: "Speak( NpcId(), 492 );\r\n\tExit();"

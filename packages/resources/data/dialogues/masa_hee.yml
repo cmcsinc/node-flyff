@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: masa_hee
+states:
+  "0":
+    speak:
+      - 747
+    timer: 15
+    source: "Speak( NpcId(), 747 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 748
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 749
+  "10":
+    speak:
+      - 750
+    exit: true
+    source: "Speak( NpcId(), 750 );\r\n\tExit();"

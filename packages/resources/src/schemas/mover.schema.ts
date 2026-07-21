@@ -176,6 +176,25 @@ export const MoverDefinitionSchema = z.object({
   /** Can be attacked */
   attackable: z.boolean().default(true),
 
+  /**
+   * Town guard — `RANK_GUARD` in propMover.txt `dwClass` (e.g. MI_GUARDIAN,
+   * MI_MAFL_PATROL). PK-gated: only chaotic/player-killer attackers may target
+   * it. Mirrors C++ `CMover::IsAttackAbleNPC` (Mover.cpp:6572).
+   */
+  guard: z.boolean().default(false),
+
+  /**
+   * Aggressiveness — C++ `m_dwBelligerence` from propMover.txt
+   * (`defineAttribute.h:203-215`). The client's attack cursor is gated by
+   * `CMover::IsAttackAbleNPC` (Mover.cpp:6572): `BELLI_PEACEFUL` (1) suppresses
+   * it, so peaceful town NPCs must send their real value rather than 0.
+   * Values: PEACEFUL=1, CAUTIOUSATTACK=2, ACTIVEATTACK=3, ALLIANCE=4,
+   * ACTIVEATTACK_MELEE2X=5, ACTIVEATTACK_MELEE=6, ACTIVEATTACK_RANGE=7,
+   * CAUTIOUSATTACK_MELEE2X=8, CAUTIOUSATTACK_MELEE=9, CAUTIOUSATTACK_RANGE=10,
+   * MELEE2X=11, MELEE=12, RANGE=13. 0 = unspecified (legacy default).
+   */
+  belligerence: z.number().int().min(0).max(13).default(0),
+
   // NPC-specific
   /** NPC functions (for NPCs only) */
   functions: z.array(z.object({

@@ -1,0 +1,209 @@
+_version: "1.0"
+id: 158
+symbol: QUEST_VOCASS_TRN3
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaFl_Goripeg
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaFl_Kidmen
+      - type: num
+        value: 7156
+      - type: num
+        value: 3250
+      - type: num
+        value: 1
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 15
+      - type: num
+        value: 15
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 157
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: sym
+        value: 10388
+      - type: num
+        value: 1
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0062
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 10388
+      - type: num
+        value: 1
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 750
+      - type: num
+        value: 1
+      - type: num
+        value: 7296
+      - type: num
+        value: 3684
+      - type: num
+        value: 1
+  - cmd: SetEndRewardSkillPoint
+    args:
+      - type: num
+        value: 60
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10434
+      - type: num
+        value: 1
+      - type: num
+        value: 2
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: sym
+        value: 10209
+      - type: num
+        value: 1
+      - type: num
+        value: 2
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: sym
+        value: 10207
+      - type: num
+        value: 1
+      - type: num
+        value: 2
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: sym
+        value: 10218
+      - type: num
+        value: 1
+      - type: num
+        value: 2
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6051
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_000761
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_000762
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_000763
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_000764
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_000765
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_000766
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 8
+      - type: sym
+        value: IDS_PROPQUEST_INC_000767
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 9
+      - type: sym
+        value: IDS_PROPQUEST_INC_000768
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_000769
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000770
+  "14":
+    desc: IDS_PROPQUEST_INC_000771
+quest_items: []
+title: IDS_PROPQUEST_INC_000760

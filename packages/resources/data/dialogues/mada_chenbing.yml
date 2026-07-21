@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_chenbing
+states:
+  "0":
+    speak:
+      - 141
+    timer: 15
+    source: "Speak( NpcId(), 141 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 142
+  "4":
+    say:
+      - 143
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 144
+  "10":
+    speak:
+      - 145
+    exit: true
+    source: "Speak( NpcId(), 145 );\r\n\tExit();"

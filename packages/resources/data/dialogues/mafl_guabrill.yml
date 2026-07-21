@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_guabrill
+states:
+  "0":
+    speak:
+      - 514
+    timer: 15
+    source: "Speak( NpcId(), 514 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 515
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 516
+  "10":
+    speak:
+      - 517
+    exit: true
+    source: "Speak( NpcId(), 517 );\r\n\tExit();"

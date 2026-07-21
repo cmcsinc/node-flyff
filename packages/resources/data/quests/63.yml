@@ -1,0 +1,175 @@
+_version: "1.0"
+id: 63
+symbol: QUEST_HERORAN_TRN2
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaDa_Eliff
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaFl_Kimel
+      - type: num
+        value: 7637
+      - type: num
+        value: 4228
+      - type: num
+        value: 1
+  - cmd: SetQuestType
+    args:
+      - type: sym
+        value: 0
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 60
+      - type: num
+        value: 60
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 1
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 62
+  - cmd: SetBeginCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10389
+      - type: num
+        value: 1
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 60
+      - type: num
+        value: 129
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 690
+      - type: num
+        value: 1
+      - type: num
+        value: 4539
+      - type: num
+        value: 3886
+      - type: num
+        value: 1
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10392
+      - type: num
+        value: 1
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0010
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 10389
+      - type: num
+        value: -1
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6052
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_000582
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_000583
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_000584
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_000585
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_000586
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_000587
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 8
+      - type: sym
+        value: IDS_PROPQUEST_INC_000588
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 9
+      - type: sym
+        value: IDS_PROPQUEST_INC_000589
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_000590
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000591
+  "14":
+    desc: IDS_PROPQUEST_INC_000592
+quest_items:
+  - mover: 690
+    item: 10392
+    prob: 3000000000
+    num: 1
+title: IDS_PROPQUEST_INC_000581

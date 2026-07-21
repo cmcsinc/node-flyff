@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mafl_cooker01
+states:
+  "0":
+    speak:
+      - 936
+    timer: 15
+    source: "Speak( NpcId(), 936 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 937
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 938
+  "10":
+    speak:
+      - 939
+    exit: true
+    source: "Speak( NpcId(), 939 );\r\n\tExit();"

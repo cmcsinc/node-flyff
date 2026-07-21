@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_cuarine
+states:
+  "0":
+    speak:
+      - 440
+    timer: 12
+    source: "Speak( NpcId(), 440 );\t\r
+
+      \tSetScriptTimer( 12 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 441
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 442
+  "10":
+    speak:
+      - 443
+    exit: true
+    source: "Speak( NpcId(), 443 );\r\n\tExit();"

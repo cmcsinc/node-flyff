@@ -1,0 +1,71 @@
+_version: "1.0"
+id: 49
+symbol: QUEST_MASDU2
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 1995
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6054
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000441
+    cond: IDS_PROPQUEST_INC_000442
+    status: IDS_PROPQUEST_INC_000443
+  "1":
+    desc: IDS_PROPQUEST_INC_000444
+    cond: IDS_PROPQUEST_INC_000445
+    status: IDS_PROPQUEST_INC_000446
+  "2":
+    desc: IDS_PROPQUEST_INC_000447
+    cond: IDS_PROPQUEST_INC_000448
+    status: IDS_PROPQUEST_INC_000449
+dialog:
+  "0": IDS_PROPQUEST_INC_000438
+  "1": IDS_PROPQUEST_INC_000439
+  "2": IDS_PROPQUEST_INC_000440
+quest_items:
+  - mover: 654
+    item: 10349
+    prob: 500000000
+    num: 1
+  - mover: 655
+    item: 10349
+    prob: 500000000
+    num: 1
+  - mover: 656
+    item: 10349
+    prob: 500000000
+    num: 1
+  - mover: 657
+    item: 10350
+    prob: 500000000
+    num: 1
+  - mover: 658
+    item: 10350
+    prob: 500000000
+    num: 1
+  - mover: 659
+    item: 10350
+    prob: 500000000
+    num: 1
+  - mover: 660
+    item: 10351
+    prob: 500000000
+    num: 1
+  - mover: 661
+    item: 10351
+    prob: 500000000
+    num: 1
+  - mover: 662
+    item: 10351
+    prob: 500000000
+    num: 1
+title: IDS_PROPQUEST_INC_000437

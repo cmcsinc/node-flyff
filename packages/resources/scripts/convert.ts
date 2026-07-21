@@ -18,6 +18,8 @@ import { fileURLToPath } from 'node:url';
 import { convertMovers } from './converters/movers.js';
 import { convertItems } from './converters/items.js';
 import { convertSkills } from './converters/skills.js';
+import { convertDialogs } from './converters/dialogs.js';
+import { convertQuests } from './converters/quests.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(__dirname, '..');
@@ -33,6 +35,8 @@ async function main(): Promise<void> {
     convertMovers(RAW_DIR, DATA_DIR),
     convertItems(RAW_DIR, DATA_DIR),
     convertSkills(RAW_DIR, DATA_DIR),
+    convertDialogs(RAW_DIR, DATA_DIR),
+    convertQuests(RAW_DIR, DATA_DIR),
   ]);
 
   console.log('✅ Conversion complete');

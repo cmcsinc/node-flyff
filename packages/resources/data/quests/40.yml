@@ -1,0 +1,177 @@
+_version: "1.0"
+id: 40
+symbol: QUEST_WARMON_LV1ID
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 70
+      - type: num
+        value: 130
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 70
+      - type: num
+        value: 150
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6059
+      - type: num
+        value: 1
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6060
+      - type: num
+        value: 1
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6061
+      - type: num
+        value: 1
+  - cmd: SetEndCondState
+    args:
+      - type: num
+        value: 4
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6062
+      - type: num
+        value: 1
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaDa_Haven
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 1997
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000326
+    cond: IDS_PROPQUEST_INC_000327
+    status: IDS_PROPQUEST_INC_000328
+  "1":
+    desc: IDS_PROPQUEST_INC_000329
+    cond: IDS_PROPQUEST_INC_000330
+    status: IDS_PROPQUEST_INC_000331
+  "2":
+    desc: IDS_PROPQUEST_INC_000332
+    cond: IDS_PROPQUEST_INC_000333
+    status: IDS_PROPQUEST_INC_000334
+  "3":
+    desc: IDS_PROPQUEST_INC_000335
+    cond: IDS_PROPQUEST_INC_000336
+    status: IDS_PROPQUEST_INC_000337
+  "4":
+    desc: IDS_PROPQUEST_INC_000338
+    cond: IDS_PROPQUEST_INC_000339
+    status: IDS_PROPQUEST_INC_000340
+  "14":
+    desc: IDS_PROPQUEST_INC_000341
+    cond: IDS_PROPQUEST_INC_000342
+    status: IDS_PROPQUEST_INC_000343
+quest_items: []
+title: IDS_PROPQUEST_INC_000325

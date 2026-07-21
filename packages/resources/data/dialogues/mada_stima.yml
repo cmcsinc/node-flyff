@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_stima
+states:
+  "0":
+    speak:
+      - 374
+    timer: 15
+    source: "Speak( NpcId(), 374 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 375
+  "4":
+    say:
+      - 376
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 377
+  "10":
+    speak:
+      - 378
+    exit: true
+    source: "Speak( NpcId(), 378 );\r\n\tExit();"

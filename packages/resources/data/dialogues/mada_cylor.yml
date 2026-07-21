@@ -1,0 +1,54 @@
+_version: "1.0"
+prefix: mada_cylor
+states:
+  "0":
+    speak:
+      - 163
+    timer: 15
+    source: "Speak( NpcId(), 163 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    keys:
+      - label: 10
+    launch_quest: true
+    source: "if( GetQuestState( QUEST_HEROELE_TRN1 ) >= 0 )\r
+
+      \t{\r
+
+      \t\tSayQuest( QUEST_HEROPSY_TRN1, QSAY_EXTRA01 );\r
+
+      \t\tAddKey( 10 );\r
+
+      \t}\r
+
+      \t\t\r
+
+      \telse\r
+
+      \t{ \r
+
+      \t\tLaunchQuest();\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 164
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 165
+  "10":
+    speak:
+      - 166
+    exit: true
+    source: "Speak( NpcId(), 166 );\r\n\tExit();"

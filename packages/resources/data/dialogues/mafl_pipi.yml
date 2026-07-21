@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_pipi
+states:
+  "0":
+    speak:
+      - 663
+    timer: 15
+    source: "Speak( NpcId(), 663 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 664
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 665
+  "10":
+    speak:
+      - 65
+    exit: true
+    source: "Speak( NpcId(), 65 );\r\n\tExit();"

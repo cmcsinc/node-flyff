@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_nein
+states:
+  "0":
+    speak:
+      - 311
+    timer: 15
+    source: "Speak( NpcId(), 311 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 312
+  "4":
+    say:
+      - 313
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 314
+  "10":
+    say:
+      - 315
+    exit: true

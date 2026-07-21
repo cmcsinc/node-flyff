@@ -1,0 +1,50 @@
+_version: "1.0"
+prefix: masa_leann
+states:
+  "0":
+    speak:
+      - 535
+    timer: 15
+    source: "Speak( NpcId(), 535 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 26
+      - label: 42
+      - label: 43
+      - label: 10
+  "3":
+    say:
+      - 589
+  "4":
+    say:
+      - 540
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 780
+  "10":
+    speak:
+      - 65
+    exit: true
+    source: "Speak( NpcId(), 65 );\r\n\tExit();"
+  "26":
+    say:
+      - 709
+      - 710
+  "42":
+    say:
+      - 546
+      - 547
+      - 548
+  "43":
+    say:
+      - 549
+      - 550
+      - 551

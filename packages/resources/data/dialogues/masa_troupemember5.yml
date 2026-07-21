@@ -1,0 +1,79 @@
+_version: "1.0"
+prefix: masa_troupemember5
+states:
+  "0":
+    speak:
+      - 839
+      - 840
+      - 841
+    timer: 5
+    source: "switch( Random ( 3 ) )\r
+
+      \t{\r
+
+      \t\tcase 0:\r
+
+      \t\t{\r
+
+      \t\t\tSpeak( NpcId(), 839 );\r
+
+      \t\t\tSetScriptTimer( 5 );\r
+
+      \t\t}\r
+
+      \t\tbreak;\r
+
+      \r
+
+      \t\tcase 1:\r
+
+      \t\t{\r
+
+      \t\t\tSpeak( NpcId(), 840 );\r
+
+      \t\t\tSetScriptTimer( 5 );\r
+
+      \t\t}\r
+
+      \t\tbreak;\r
+
+      \r
+
+      \t\tcase 2:\r
+
+      \t\t{\r
+
+      \t\t\tSpeak( NpcId(), 841 );\r
+
+      \t\t\tSetScriptTimer( 5 );\r
+
+      \t\t}\r
+
+      \t\tbreak;\r
+
+      \t}"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 842
+  "4":
+    say:
+      - 843
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 824
+    source: "Say( 824 );\r\n\tAddAnswer( 10 );"
+  "10":
+    speak:
+      - 825
+    exit: true
+    source: "Speak( NpcId(), 825 );\r\n\tExit();"

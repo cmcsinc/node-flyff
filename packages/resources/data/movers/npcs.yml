@@ -23,6 +23,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 13
   - id: 200
     name: Infopeng
     name_id: IDS_PROPMOVER_TXT_000624
@@ -45,6 +47,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 210
     name: Losha
     name_id: IDS_PROPMOVER_TXT_000626
@@ -67,6 +71,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 211
     name: Boboku
     name_id: IDS_PROPMOVER_TXT_000628
@@ -89,6 +95,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 212
     name: Julia
     name_id: IDS_PROPMOVER_TXT_000630
@@ -111,6 +119,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 213
     name: Lui
     name_id: IDS_PROPMOVER_TXT_000632
@@ -133,6 +143,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 214
     name: Marche
     name_id: IDS_PROPMOVER_TXT_000634
@@ -155,6 +167,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 215
     name: Bulrox
     name_id: IDS_PROPMOVER_TXT_000636
@@ -177,6 +191,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 216
     name: Tina
     name_id: IDS_PROPMOVER_TXT_000638
@@ -199,6 +215,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 217
     name: Karin
     name_id: IDS_PROPMOVER_TXT_000640
@@ -221,6 +239,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 218
     name: Martin
     name_id: IDS_PROPMOVER_TXT_000642
@@ -243,6 +263,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 219
     name: Bill
     name_id: IDS_PROPMOVER_TXT_000644
@@ -265,6 +287,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 201
     name: Dwarpet
     name_id: IDS_PROPMOVER_TXT_000646
@@ -287,6 +311,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 202
     name: Master Dwarpet
     name_id: IDS_PROPMOVER_TXT_000648
@@ -309,6 +335,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 203
     name: Iblis
     name_id: IDS_PROPMOVER_TXT_000650
@@ -331,6 +359,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 204
     name: Shade
     name_id: IDS_PROPMOVER_TXT_000652
@@ -353,6 +383,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 221
     name: Stima
     name_id: IDS_PROPMOVER_TXT_000654
@@ -375,6 +407,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 222
     name: Phacham
     name_id: IDS_PROPMOVER_TXT_000656
@@ -397,6 +431,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 205
     name: Bubble
     name_id: IDS_PROPMOVER_TXT_000658
@@ -419,6 +455,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 220
     name: Rhine
     name_id: IDS_PROPMOVER_TXT_000660
@@ -441,6 +479,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 223
     name: Roocky
     name_id: IDS_PROPMOVER_TXT_000662
@@ -463,6 +503,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 224
     name: Ollien
     name_id: IDS_PROPMOVER_TXT_000664
@@ -485,6 +527,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 225
     name: Haven
     name_id: IDS_PROPMOVER_TXT_000666
@@ -507,6 +551,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 226
     name: Chitller
     name_id: IDS_PROPMOVER_TXT_000668
@@ -529,6 +575,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 227
     name: Bolpor
     name_id: IDS_PROPMOVER_TXT_000670
@@ -551,6 +599,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 228
     name: Almani
     name_id: IDS_PROPMOVER_TXT_000672
@@ -573,6 +623,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 229
     name: Achaben
     name_id: IDS_PROPMOVER_TXT_000674
@@ -595,6 +647,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 230
     name: Eshylop
     name_id: IDS_PROPMOVER_TXT_000676
@@ -617,6 +671,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 231
     name: Remine
     name_id: IDS_PROPMOVER_TXT_000678
@@ -639,6 +695,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 232
     name: Unknown
     name_id: IDS_PROPMOVER_TXT_000680
@@ -661,6 +719,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 233
     name: Agent
     name_id: IDS_PROPMOVER_TXT_000682
@@ -683,6 +743,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 235
     name: Ancimys
     name_id: IDS_PROPMOVER_TXT_000684
@@ -705,6 +767,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 234
     name: Guardian
     name_id: IDS_PROPMOVER_TXT_000686
@@ -727,6 +791,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 669
     name: Captain Guard
     name_id: IDS_PROPMOVER_TXT_000688
@@ -749,6 +815,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 236
     name: Santa
     name_id: IDS_PROPMOVER_TXT_000730
@@ -771,6 +839,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 237
     name: Priest
     name_id: IDS_PROPMOVER_TXT_000732
@@ -793,6 +863,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 238
     name: Chitos
     name_id: IDS_PROPMOVER_TXT_000906
@@ -815,6 +887,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 239
     name: Polar Bear
     name_id: IDS_PROPMOVER_TXT_000936
@@ -837,6 +911,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 753
     name: Red Meteonyker
     name_id: IDS_PROPMOVER_TXT_000948
@@ -859,6 +935,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 12
   - id: 720
     name: Baby Lawolf
     name_id: IDS_PROPMOVER_TXT_000828
@@ -881,6 +959,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 721
     name: Baby Aibatt
     name_id: IDS_PROPMOVER_TXT_000830
@@ -903,6 +983,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 722
     name: Baby Leyena
     name_id: IDS_PROPMOVER_TXT_000832
@@ -925,6 +1007,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 723
     name: Baby Luia
     name_id: IDS_PROPMOVER_TXT_000834
@@ -947,6 +1031,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 724
     name: Kitty
     name_id: IDS_PROPMOVER_TXT_000836
@@ -969,6 +1055,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 725
     name: Doggy
     name_id: IDS_PROPMOVER_TXT_000838
@@ -991,6 +1079,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 726
     name: Soccerball Angel
     name_id: IDS_PROPMOVER_TXT_000866
@@ -1013,6 +1103,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 727
     name: Baby Polar Bear
     name_id: IDS_PROPMOVER_TXT_000934
@@ -1035,6 +1127,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 728
     name: Baby Penguin
     name_id: IDS_PROPMOVER_TXT_000954
@@ -1057,6 +1151,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 729
     name: Baby Iguana
     name_id: IDS_PROPMOVER_TXT_000956
@@ -1079,6 +1175,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 730
     name: Baby Cobra
     name_id: IDS_PROPMOVER_TXT_000958
@@ -1101,6 +1199,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 746
     name: Cute Frog
     name_id: IDS_PROPMOVER_TXT_001024
@@ -1123,6 +1223,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 747
     name: Cute Hamburger
     name_id: IDS_PROPMOVER_TXT_001026
@@ -1145,6 +1247,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 748
     name: Baby Turtle
     name_id: IDS_PROPMOVER_TXT_001028
@@ -1167,6 +1271,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 893
     name: Baby Chicken
     name_id: IDS_PROPMOVER_TXT_001034
@@ -1189,6 +1295,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 894
     name: Baby Cow
     name_id: IDS_PROPMOVER_TXT_001036
@@ -1211,6 +1319,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 895
     name: Baby Beagle
     name_id: IDS_PROPMOVER_TXT_001038
@@ -1233,6 +1343,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 896
     name: Baby Blue Dragon
     name_id: IDS_PROPMOVER_TXT_001040
@@ -1255,6 +1367,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 916
     name: Baby Black Dragon
     name_id: IDS_PROPMOVER_TXT_001080
@@ -1277,6 +1391,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 897
     name: Baby Hamster
     name_id: IDS_PROPMOVER_TXT_001042
@@ -1299,6 +1415,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 898
     name: Baby Horse
     name_id: IDS_PROPMOVER_TXT_001044
@@ -1321,6 +1439,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 899
     name: Baby Monkey
     name_id: IDS_PROPMOVER_TXT_001046
@@ -1343,6 +1463,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 900
     name: Baby Pig
     name_id: IDS_PROPMOVER_TXT_001048
@@ -1365,6 +1487,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 901
     name: Baby Rabbit
     name_id: IDS_PROPMOVER_TXT_001050
@@ -1387,6 +1511,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 902
     name: Cute Lamb
     name_id: IDS_PROPMOVER_TXT_001052
@@ -1409,6 +1535,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 903
     name: Baby Tiger
     name_id: IDS_PROPMOVER_TXT_001054
@@ -1431,6 +1559,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 165
     name: Big Muscle
     name_id: IDS_PROPMOVER_TXT_000844
@@ -1453,6 +1583,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 11
   - id: 166
     name: Krrr
     name_id: IDS_PROPMOVER_TXT_000846
@@ -1475,6 +1607,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 11
   - id: 167
     name: Mushmoot
     name_id: IDS_PROPMOVER_TXT_000848
@@ -1497,6 +1631,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 11
   - id: 822
     name: Lord Clockworks Alpha
     name_id: IDS_PROPMOVER_TXT_000854
@@ -1519,6 +1655,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 13
   - id: 873
     name: Post Box
     name_id: IDS_PROPMOVER_TXT_000946
@@ -1541,6 +1679,8 @@ movers:
     giant: true
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 731
     name: Egg
     name_id: IDS_PROPMOVER_TXT_000960
@@ -1563,6 +1703,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 732
     name: White Tiger
     name_id: IDS_PROPMOVER_TXT_000962
@@ -1585,6 +1727,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 733
     name: White Tiger
     name_id: IDS_PROPMOVER_TXT_000964
@@ -1607,6 +1751,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 884
     name: "[Captain] Behemoth"
     name_id: IDS_PROPMOVER_TXT_001010
@@ -1629,6 +1775,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 734
     name: Babari lion
     name_id: IDS_PROPMOVER_TXT_000966
@@ -1651,6 +1799,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 735
     name: Babari lion
     name_id: IDS_PROPMOVER_TXT_000968
@@ -1673,6 +1823,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 885
     name: "[Captain] Hellion"
     name_id: IDS_PROPMOVER_TXT_001012
@@ -1695,6 +1847,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 736
     name: Rabbit
     name_id: IDS_PROPMOVER_TXT_000970
@@ -1717,6 +1871,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 737
     name: Rabbit
     name_id: IDS_PROPMOVER_TXT_000972
@@ -1739,6 +1895,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 886
     name: "[Captain] Jackalope"
     name_id: IDS_PROPMOVER_TXT_001014
@@ -1761,6 +1919,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 738
     name: Dragon
     name_id: IDS_PROPMOVER_TXT_000974
@@ -1783,6 +1943,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 739
     name: Dragon
     name_id: IDS_PROPMOVER_TXT_000976
@@ -1805,6 +1967,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 887
     name: "[Captain] Bahamut"
     name_id: IDS_PROPMOVER_TXT_001016
@@ -1827,6 +1991,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 740
     name: Unicorn
     name_id: IDS_PROPMOVER_TXT_000978
@@ -1849,6 +2015,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 741
     name: Unicorn
     name_id: IDS_PROPMOVER_TXT_000980
@@ -1871,6 +2039,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 888
     name: "[Captain] Nightmare"
     name_id: IDS_PROPMOVER_TXT_001018
@@ -1893,6 +2063,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 742
     name: Old fox
     name_id: IDS_PROPMOVER_TXT_000982
@@ -1915,6 +2087,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 743
     name: Old fox
     name_id: IDS_PROPMOVER_TXT_000984
@@ -1937,6 +2111,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 889
     name: "[Captain] Reinecke"
     name_id: IDS_PROPMOVER_TXT_001020
@@ -1959,6 +2135,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 744
     name: Griffin
     name_id: IDS_PROPMOVER_TXT_000986
@@ -1981,6 +2159,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 745
     name: Griffin
     name_id: IDS_PROPMOVER_TXT_000988
@@ -2003,6 +2183,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 890
     name: "[Captain] Hippogryph"
     name_id: IDS_PROPMOVER_TXT_001022
@@ -2025,6 +2207,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 875
     name: Mysterious Robed Boy
     name_id: IDS_PROPMOVER_TXT_000992
@@ -2047,6 +2231,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 876
     name: Mysterious Robed Girl
     name_id: IDS_PROPMOVER_TXT_000994
@@ -2069,6 +2255,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 877
     name: Gambler
     name_id: IDS_PROPMOVER_TXT_000996
@@ -2091,6 +2279,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 878
     name: Hair Designer
     name_id: IDS_PROPMOVER_TXT_000998
@@ -2113,6 +2303,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 879
     name: Make-Up Artist
     name_id: IDS_PROPMOVER_TXT_001000
@@ -2135,6 +2327,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 880
     name: Pet Tamer
     name_id: IDS_PROPMOVER_TXT_001002
@@ -2157,6 +2351,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 881
     name: Dancer
     name_id: IDS_PROPMOVER_TXT_001004
@@ -2179,6 +2375,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 882
     name: Miss Flyff
     name_id: IDS_PROPMOVER_TXT_001006
@@ -2201,6 +2399,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 883
     name: Mr. Flyff
     name_id: IDS_PROPMOVER_TXT_001008
@@ -2223,6 +2423,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 891
     name: Priest of Penence
     name_id: IDS_PROPMOVER_TXT_001030
@@ -2245,6 +2447,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 892
     name: Mysterious Boy
     name_id: IDS_PROPMOVER_TXT_001032
@@ -2267,6 +2471,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 910
     name: Waforu
     name_id: IDS_PROPMOVER_TXT_001068
@@ -2289,6 +2495,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 913
     name: Collins
     name_id: IDS_PROPMOVER_TXT_001074
@@ -2311,6 +2519,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 914
     name: Small Maid Cardpuppet
     name_id: IDS_PROPMOVER_TXT_001076
@@ -2333,6 +2543,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 915
     name: Small Mia
     name_id: IDS_PROPMOVER_TXT_001078
@@ -2355,6 +2567,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 920
     name: GM Cromiell
     name_id: IDS_PROPMOVER_TXT_001088
@@ -2377,6 +2591,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 13
   - id: 921
     name: Target
     name_id: IDS_PROPMOVER_TXT_001090
@@ -2399,6 +2615,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 970
     name: Baby Yetti
     name_id: IDS_PROPMOVER_TXT_001196
@@ -2421,6 +2639,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 981
     name: Knight 2
     name_id: IDS_PROPMOVER_TXT_001218
@@ -2443,6 +2663,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 982
     name: Knight 1
     name_id: IDS_PROPMOVER_TXT_001220
@@ -2465,6 +2687,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 983
     name: Lord Manager
     name_id: IDS_PROPMOVER_TXT_001222
@@ -2487,6 +2711,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 984
     name: Ice Lady
     name_id: IDS_PROPMOVER_TXT_001224
@@ -2509,6 +2735,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 985
     name: "[Spirit of Rainbow] Red"
     name_id: IDS_PROPMOVER_TXT_001280
@@ -2531,6 +2759,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 986
     name: "[Spirit of Rainbow] Orange"
     name_id: IDS_PROPMOVER_TXT_001282
@@ -2553,6 +2783,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 987
     name: "[Spirit of Rainbow] Yellow"
     name_id: IDS_PROPMOVER_TXT_001284
@@ -2575,6 +2807,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 988
     name: "[Spirit of Rainbow] Green"
     name_id: IDS_PROPMOVER_TXT_001286
@@ -2597,6 +2831,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 989
     name: "[Spirit of Rainbow] Blue"
     name_id: IDS_PROPMOVER_TXT_001288
@@ -2619,6 +2855,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 990
     name: "[Spirit of Rainbow] Indigo"
     name_id: IDS_PROPMOVER_TXT_001290
@@ -2641,6 +2879,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 991
     name: "[Spirit of Rainbow] Violet"
     name_id: IDS_PROPMOVER_TXT_001292
@@ -2663,6 +2903,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 992
     name: Rainbow Race Officer
     name_id: IDS_PROPMOVER_TXT_001294
@@ -2685,6 +2927,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1020
     name: MI_NPC_MINIDOOR01
     name_id: IDS_PROPMOVER_TXT_001296
@@ -2707,6 +2951,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1022
     name: "[Guildwar Manager] Frankie"
     name_id: IDS_PROPMOVER_TXT_001300
@@ -2729,6 +2975,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1023
     name: "[Guildwar Manager] Donaris"
     name_id: IDS_PROPMOVER_TXT_001302
@@ -2751,6 +2999,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1024
     name: "[1vs1Guildwar Manager] Amos"
     name_id: IDS_PROPMOVER_TXT_001304
@@ -2773,6 +3023,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1025
     name: "[1vs1Guildwar Manager] Annie"
     name_id: IDS_PROPMOVER_TXT_001306
@@ -2795,6 +3047,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1026
     name: "[Arena Manager] Ray"
     name_id: IDS_PROPMOVER_TXT_001308
@@ -2817,6 +3071,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1027
     name: Mayor
     name_id: IDS_PROPMOVER_TXT_001310
@@ -2839,6 +3095,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1028
     name: Charlie
     name_id: IDS_PROPMOVER_TXT_001312
@@ -2861,6 +3119,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1029
     name: Baby Snowman
     name_id: IDS_PROPMOVER_TXT_001314
@@ -2883,6 +3143,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1030
     name: Daddy Snowman
     name_id: IDS_PROPMOVER_TXT_001316
@@ -2905,6 +3167,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: true
+    belligerence: 1
   - id: 1031
     name: English Bulldog
     name_id: IDS_PROPMOVER_TXT_001318
@@ -2927,6 +3191,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1032
     name: Naughty Ghost
     name_id: IDS_PROPMOVER_TXT_001320
@@ -2949,6 +3215,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1033
     name: Baby Fu Lion
     name_id: IDS_PROPMOVER_TXT_001322
@@ -2971,6 +3239,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1034
     name: Smart Owl
     name_id: IDS_PROPMOVER_TXT_001324
@@ -2993,6 +3263,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1035
     name: Patches
     name_id: IDS_PROPMOVER_TXT_001326
@@ -3015,6 +3287,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1036
     name: Cute Robot
     name_id: IDS_PROPMOVER_TXT_001328
@@ -3037,6 +3311,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1037
     name: Baby Bang
     name_id: IDS_PROPMOVER_TXT_001330
@@ -3059,6 +3335,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1038
     name: Baby Panda
     name_id: IDS_PROPMOVER_TXT_001332
@@ -3081,6 +3359,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1039
     name: Red Armored Tigar
     name_id: IDS_PROPMOVER_TXT_001334
@@ -3103,6 +3383,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1040
     name: Blue Armored Tigar
     name_id: IDS_PROPMOVER_TXT_001336
@@ -3125,6 +3407,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1041
     name: Yellow Armored Tigar
     name_id: IDS_PROPMOVER_TXT_001338
@@ -3147,6 +3431,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1090
     name: "[Adventure Assitant] Jano"
     name_id: IDS_PROPMOVER_TXT_001436
@@ -3169,6 +3455,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1092
     name: Luka
     name_id: IDS_PROPMOVER_TXT_001438
@@ -3191,6 +3479,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1091
     name: "[Adventure Captain] Bespoo"
     name_id: IDS_PROPMOVER_TXT_001440
@@ -3213,6 +3503,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1093
     name: Lasa
     name_id: IDS_PROPMOVER_TXT_001442
@@ -3235,6 +3527,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1094
     name: Ryan
     name_id: IDS_PROPMOVER_TXT_001444
@@ -3257,6 +3551,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1095
     name: Tommy Toucan
     name_id: IDS_PROPMOVER_TXT_001446
@@ -3279,6 +3575,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1096
     name: Ete
     name_id: IDS_PROPMOVER_TXT_001448
@@ -3301,6 +3599,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1097
     name: Tong
     name_id: IDS_PROPMOVER_TXT_001450
@@ -3323,6 +3623,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1098
     name: Johnny Four-Wheels
     name_id: IDS_PROPMOVER_TXT_001452
@@ -3345,6 +3647,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1099
     name: Miss Vietnam
     name_id: IDS_PROPMOVER_TXT_001454
@@ -3367,6 +3671,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1101
     name: "[Teleporter] Master"
     name_id: IDS_PROPMOVER_TXT_001458
@@ -3389,6 +3695,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1102
     name: Tiny Tanuki
     name_id: IDS_PROPMOVER_TXT_001460
@@ -3411,6 +3719,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1103
     name: MI_NPC_GUILDHOUSE_DOOR01
     name_id: IDS_PROPMOVER_TXT_001462
@@ -3433,6 +3743,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1104
     name: Sellia
     name_id: IDS_PROPMOVER_TXT_001464
@@ -3455,6 +3767,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1105
     name: Inisis
     name_id: IDS_PROPMOVER_TXT_001466
@@ -3477,6 +3791,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1119
     name: "[Teleporter] Apprentice"
     name_id: IDS_PROPMOVER_TXT_001494
@@ -3499,6 +3815,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1120
     name: Mini Santa
     name_id: IDS_PROPMOVER_TXT_001496
@@ -3521,6 +3839,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1121
     name: Mini Snowman
     name_id: IDS_PROPMOVER_TXT_001498
@@ -3543,6 +3863,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1122
     name: Bellosia
     name_id: IDS_PROPMOVER_TXT_001500
@@ -3565,6 +3887,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1123
     name: Loraine
     name_id: IDS_PROPMOVER_TXT_001502
@@ -3587,6 +3911,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1124
     name: Little Lykan
     name_id: IDS_PROPMOVER_TXT_001504
@@ -3609,6 +3935,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1149
     name: Joey
     name_id: IDS_PROPMOVER_TXT_001554
@@ -3631,6 +3959,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1150
     name: Spike
     name_id: IDS_PROPMOVER_TXT_001556
@@ -3653,6 +3983,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1151
     name: Lumia
     name_id: IDS_PROPMOVER_TXT_001558
@@ -3675,6 +4007,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1152
     name: Inspector Koko
     name_id: IDS_PROPMOVER_TXT_001560
@@ -3697,6 +4031,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1153
     name: Leprechaun
     name_id: IDS_PROPMOVER_TXT_001562
@@ -3719,6 +4055,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1154
     name: Cheshire Cat
     name_id: IDS_PROPMOVER_TXT_001564
@@ -3741,6 +4079,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1155
     name: The White Rabbit
     name_id: IDS_PROPMOVER_TXT_001566
@@ -3763,6 +4103,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1156
     name: Tiger Cub
     name_id: IDS_PROPMOVER_TXT_001568
@@ -3785,6 +4127,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1164
     name: Laveau
     name_id: IDS_PROPMOVER_TXT_001584
@@ -3807,6 +4151,8 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1
   - id: 1165
     name: Bone Golem
     name_id: IDS_PROPMOVER_TXT_001586
@@ -3829,3 +4175,5 @@ movers:
     giant: false
     raid: false
     attackable: false
+    guard: false
+    belligerence: 1

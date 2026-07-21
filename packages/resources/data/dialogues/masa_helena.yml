@@ -1,0 +1,193 @@
+_version: "1.0"
+prefix: masa_helena
+states:
+  "0":
+    speak:
+      - 751
+    timer: 15
+    source: "Speak( NpcId(), 751 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 864
+      - 863
+    keys:
+      - label: 866
+      - label: 865
+      - label: 10
+    launch_quest: true
+    source: "if(  IsGuildMaster() == 1 )\r
+
+      \t{\r
+
+      \t\tLaunchQuest();\r
+
+      \t}\r
+
+      \t\t\r
+
+      \telse if( IsSetQuest( QUEST_CREGUILD ) == TRUE && GetQuestState(
+      QUEST_CREGUILD ) == QS_END && GetPlayerGold() >= 3000000 )\t\r
+
+      \t{\r
+
+      \t\tif( IsPartyMaster() == 1 && GetPartyNum() >= 3  && IsPartyGuild() == 0
+      )\r
+
+      \t\t{\r
+
+      \r
+
+      \t\t\tSay(864);\r
+
+      \t\t\tAddKey(866);\r
+
+      \t\t\tAddKey(865);\r
+
+      \t\t}\r
+
+      \t\t\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tSay( 863 );\r
+
+      \t\t\tAddKey( 10 );\r
+
+      \t\t} \r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\t\r
+
+      \t\tLaunchQuest();\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 754
+  "5": {}
+  "6": {}
+  "8":
+    say:
+      - 752
+      - 753
+      - 755
+    source: "if( IsSetQuest( QUEST_CREGUILD ) == TRUE && GetQuestState(
+      QUEST_CREGUILD ) == QS_END && GetPlayerGold() >= 3000000 )\t\r
+
+      \t{\r
+
+      \t\tif( IsPartyMaster() == 1 && GetPartyNum() >= 3 && IsPartyGuild() ==
+      0   )\r
+
+      \t\t{\r
+
+      \t\t\tRemoveGold( 3000000 );\r
+
+      \t\t\tCreateGuild();\r
+
+      \t\t\tSay(752);\r
+
+      \t\t}\r
+
+      \t\t\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tSay( 753 );\r
+
+      \t\t} \r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\t\r
+
+      \t\tSay( 755 );\r
+
+      \t}"
+  "9":
+    say:
+      - 756
+  "10":
+    speak:
+      - 757
+    exit: true
+    source: "Speak( NpcId(), 757 );\r\n\tExit();"
+  "865":
+    say:
+      - 752
+      - 863
+      - 755
+    keys:
+      - label: 10
+      - label: 10
+    source: "if( IsSetQuest( QUEST_CREGUILD ) == TRUE && GetQuestState(
+      QUEST_CREGUILD ) == QS_END && GetPlayerGold() >= 3000000 )\r
+
+      \t{\r
+
+      \r
+
+      \t\tif( IsPartyMaster() == 1 && GetPartyNum() >= 3 && IsPartyGuild() ==
+      0  )\r
+
+      \t\t{\r
+
+      \t\t\tRemoveGold( 3000000 );\r
+
+      \t\t\tCreateGuild();\r
+
+      \t\t\tSay(752);\r
+
+      \t\t\tAddKey( 10 );\r
+
+      \t\t\tRemoveKey( 865 );\r
+
+      \t\t}\r
+
+      \r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tSay( 863 );\r
+
+      \t\t\tAddKey( 10 );\r
+
+      \t\t} \r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tSay( 755 );\r
+
+      \t}"
+  "866":
+    launch_quest: true

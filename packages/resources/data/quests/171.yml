@@ -1,0 +1,185 @@
+_version: "1.0"
+id: 171
+symbol: QUEST_HEROBLA_TRN4
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaFl_Ata
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaDa_Jeperdy
+      - type: num
+        value: 3526
+      - type: num
+        value: 2792
+      - type: num
+        value: 1
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 60
+      - type: num
+        value: 60
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 0
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 170
+  - cmd: SetBeginCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10391
+      - type: num
+        value: 1
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 60
+      - type: num
+        value: 129
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 842
+      - type: num
+        value: 1
+      - type: num
+        value: 8261
+      - type: num
+        value: 2278
+      - type: num
+        value: 1
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: 1
+      - type: sym
+        value: 18172
+      - type: num
+        value: 1
+      - type: num
+        value: -1
+      - type: num
+        value: -1
+      - type: sym
+        value: QUEST_DESTINATION_ID_0016
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 18172
+      - type: num
+        value: -1
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 10391
+      - type: num
+        value: -1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: 1
+      - type: sym
+        value: 10249
+      - type: num
+        value: 1
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6052
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_001460
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_001461
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_001462
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_001463
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_001464
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_001465
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 8
+      - type: sym
+        value: IDS_PROPQUEST_INC_001466
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_001467
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_001468
+  "14":
+    desc: IDS_PROPQUEST_INC_001469
+quest_items:
+  - mover: 842
+    item: 18172
+    prob: 3000000000
+    num: 1
+title: IDS_PROPQUEST_INC_001459

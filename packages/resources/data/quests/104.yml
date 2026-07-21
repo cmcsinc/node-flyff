@@ -1,0 +1,183 @@
+_version: "1.0"
+id: 104
+symbol: QUEST_DOLL_MIA
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaSa_Porgo
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaSa_JeongHwa
+      - type: num
+        value: 8335
+      - type: num
+        value: 3713
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 20
+      - type: num
+        value: 30
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 103
+  - cmd: SetBeginCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 18121
+      - type: num
+        value: 1
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 20
+      - type: num
+        value: 129
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 18122
+      - type: num
+        value: 1
+      - type: num
+        value: 8138
+      - type: num
+        value: 3004
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 18122
+      - type: num
+        value: -1
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 18121
+      - type: num
+        value: -1
+  - cmd: SetEndRewardExp
+    args:
+      - type: num
+        value: 2076
+      - type: num
+        value: 2076
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6005
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_001039
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_001040
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_001041
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 3
+      - type: sym
+        value: IDS_PROPQUEST_INC_001042
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_001043
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_001044
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_001045
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_001046
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_001047
+  "14":
+    desc: IDS_PROPQUEST_INC_001048
+quest_items:
+  - mover: 120
+    item: 18122
+    prob: 800000000
+    num: 1
+  - mover: 121
+    item: 18122
+    prob: 700000000
+    num: 1
+  - mover: 122
+    item: 18122
+    prob: 650000000
+    num: 1
+  - mover: 123
+    item: 18122
+    prob: 600000000
+    num: 1
+title: IDS_PROPQUEST_INC_001038

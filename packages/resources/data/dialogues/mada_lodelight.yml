@@ -1,0 +1,37 @@
+_version: "1.0"
+prefix: mada_lodelight
+states:
+  "0":
+    speak:
+      - 296
+    timer: 15
+    source: "Speak( NpcId(), 296 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+      - label: 36
+  "3":
+    say:
+      - 297
+  "4":
+    say:
+      - 298
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 299
+  "10":
+    speak:
+      - 301
+    exit: true
+    source: "Speak( NpcId(), 301 );\r\n\tExit();"
+  "36":
+    say:
+      - 300

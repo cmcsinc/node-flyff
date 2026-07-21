@@ -1,0 +1,133 @@
+_version: "1.0"
+id: 183
+symbol: QUEST_HEROPSY_TRN1
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaDa_Cylor
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaDa_Cylor
+      - type: num
+        value: 3781
+      - type: num
+        value: 4485
+      - type: num
+        value: 1
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 60
+      - type: num
+        value: 60
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 3
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 60
+      - type: num
+        value: 129
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 505
+      - type: num
+        value: 20
+      - type: num
+        value: 5500
+      - type: num
+        value: 4179
+      - type: num
+        value: 1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: 4
+      - type: sym
+        value: 10389
+      - type: num
+        value: 1
+  - cmd: SetEndRewardHide
+    args:
+      - type: num
+        value: 1
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6052
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_001600
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_001601
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_001602
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_001603
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_001604
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_001605
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_001606
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 15
+      - type: sym
+        value: IDS_PROPQUEST_INC_001607
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_001608
+  "14":
+    desc: IDS_PROPQUEST_INC_001609
+quest_items: []
+title: IDS_PROPQUEST_INC_001599

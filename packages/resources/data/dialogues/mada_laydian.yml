@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mada_laydian
+states:
+  "0":
+    speak:
+      - 1232
+    timer: 15
+    source: "Speak( NpcId(), 1232 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1233
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1234
+  "10":
+    speak:
+      - 1235
+    exit: true
+    source: "Speak( NpcId(), 1235 );\r\n\tExit();"

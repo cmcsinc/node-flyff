@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_haven
+states:
+  "0":
+    speak:
+      - 848
+    timer: 15
+    source: "Speak(NpcId(), 848 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 849
+  "4":
+    say:
+      - 850
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 851
+  "10":
+    speak:
+      - 852
+    exit: true
+    source: "Speak( NpcId(), 852 );\r\n\tExit();"

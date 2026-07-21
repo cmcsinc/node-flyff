@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_kablloc
+states:
+  "0":
+    speak:
+      - 269
+    timer: 15
+    source: "Speak( NpcId(), 269 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 142
+  "4":
+    say:
+      - 143
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 270
+  "10":
+    speak:
+      - 145
+    exit: true
+    source: "Speak( NpcId(), 145 );\r\n\tExit();"

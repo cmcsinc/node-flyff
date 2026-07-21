@@ -1,0 +1,29 @@
+_version: "1.0"
+prefix: mafl_chorus3
+states:
+  "0":
+    speak:
+      - 432
+    timer: 19
+    source: "Speak( NpcId(), 432 );\t\r
+
+      \tSetScriptTimer( 19 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 433
+  "5": {}
+  "6": {}
+  "8": {}
+  "10":
+    speak:
+      - 429
+    exit: true
+    source: "Speak( NpcId(), 429 );\r\n\tExit();"

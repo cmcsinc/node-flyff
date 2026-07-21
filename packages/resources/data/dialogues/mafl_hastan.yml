@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_hastan
+states:
+  "0":
+    speak:
+      - 522
+    timer: 15
+    source: "Speak( NpcId(), 522 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 523
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 524
+  "10":
+    speak:
+      - 525
+    exit: true
+    source: "Speak( NpcId(), 525 );\r\n\tExit();"

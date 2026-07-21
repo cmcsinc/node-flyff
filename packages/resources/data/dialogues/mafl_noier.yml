@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_noier
+states:
+  "0":
+    speak:
+      - 650
+    timer: 15
+    source: "Speak( NpcId(), 650 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 651
+  "4":
+    say:
+      - 652
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 653
+  "10":
+    speak:
+      - 654
+    exit: true
+    source: "Speak( NpcId(), 654 );\r\n\tExit();"

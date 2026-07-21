@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_redrobeman
+states:
+  "0":
+    speak:
+      - 966
+    timer: 15
+    source: "Speak( NpcId(), 966 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 967
+  "4":
+    say:
+      - 967
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 968
+  "10":
+    speak:
+      - 969
+    exit: true
+    source: "Speak( NpcId(), 969 );\r\n\tExit();"

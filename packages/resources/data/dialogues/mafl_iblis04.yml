@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mafl_iblis04
+states:
+  "0":
+    speak:
+      - 896
+    timer: 15
+    source: "Speak( NpcId(), 896  );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 897
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 898
+  "10":
+    speak:
+      - 899
+    exit: true
+    source: "Speak( NpcId(), 899 );\r\n\tExit();"

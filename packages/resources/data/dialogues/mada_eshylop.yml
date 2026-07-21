@@ -1,0 +1,148 @@
+_version: "1.0"
+prefix: mada_eshylop
+states:
+  "0":
+    speak:
+      - 180
+    timer: 15
+    source: "Speak( NpcId(), 180 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 181
+      - 182
+      - 183
+    launch_quest: true
+    source: "if( GetPlayerLvl() >= 70 && IsWormonServer() == TRUE && IsGuild() == 1
+      && IsGuildMaster() == 1 )\r
+
+      \t{\t\t\t\r
+
+      \t\tif( IsGuildQuest( QUEST_WARMON_LV1 ) == FALSE && GetQuestState(
+      QUEST_ABILITYYE ) == QS_END )\r
+
+      \t\t{\r
+
+      \t\t\tSay( 181 ); \r
+
+      \t\t}\r
+
+      \t\t\t\r
+
+      \t\telse if( IsGuildQuest( QUEST_WARMON_LV1 ) == TRUE &&
+      (GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_BEGIN || GetGuildQuestState(
+      QUEST_WARMON_LV1 ) == 1 ) )\r
+
+      \t\t{\r
+
+      \t\t\tSay( 182 );\r
+
+      \t\t}\r
+
+      \               \r
+
+      \t\telse if( GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_END )\r
+
+      \t\t{\r
+
+      \t\t\tSay( 183 );\r
+
+      \t\t}\r
+
+      \r
+
+      \t\telse\r
+
+      \t\t{\t\r
+
+      \t\t\tLaunchQuest();\r
+
+      \t        }\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\t\t\r
+
+      \t\tLaunchQuest();\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 147
+  "4":
+    say:
+      - 148
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 149
+  "10":
+    speak:
+      - 150
+    exit: true
+    source: "Speak( NpcId(), 150 );\r\n\tExit();"
+  "19":
+    say:
+      - 184
+  "20":
+    say:
+      - 185
+  "21":
+    say:
+      - 186
+  "22":
+    say:
+      - 187
+      - 188
+    source: "if( IsGuildQuest( QUEST_WARMON_LV1 ) == FALSE || GetGuildQuestState(
+      QUEST_WARMON_LV1 ) == QS_BEGIN || GetGuildQuestState( QUEST_WARMON_LV1 )
+      == 1 )\r
+
+      \t{\r
+
+      \t\tif( MonHuntStart( QUEST_WARMON_LV1, QS_BEGIN, QS_END, 1 ) == FALSE )\r
+
+      \t\t{\r
+
+      \t\t\tSay( 187 );\r
+
+      \t\t\t\r
+
+      \t\t}\r
+
+      \r
+
+      \t\telse if( MonHuntStart( QUEST_WARMON_LV1, QS_BEGIN, QS_END, 1 ) == TRUE
+      )\r
+
+      \t\t{\r
+
+      \t\t\t\r
+
+      \t\t}\r
+
+      \t\t\t\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tSay( 188 );\r
+
+      \t\t}\r
+
+      \t}"
+  "23":
+    say:
+      - 189

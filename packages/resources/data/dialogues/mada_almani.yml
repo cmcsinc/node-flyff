@@ -1,0 +1,52 @@
+_version: "1.0"
+prefix: mada_almani
+states:
+  "0":
+    speak:
+      - 88
+    timer: 15
+    source: "Speak( NpcId(), 88 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+      - label: 14
+      - label: 15
+  "3":
+    say:
+      - 89
+  "4":
+    say:
+      - 90
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 91
+  "10":
+    speak:
+      - 105
+    exit: true
+    source: "Speak( NpcId(), 105 );\r\n\tExit();"
+  "14":
+    say:
+      - 92
+      - 93
+      - 94
+      - 95
+      - 96
+      - 97
+  "15":
+    say:
+      - 98
+      - 99
+      - 100
+      - 101
+      - 102
+      - 103
+      - 104

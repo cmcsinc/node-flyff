@@ -1,0 +1,34 @@
+_version: "1.0"
+prefix: maha_jano
+states:
+  "0":
+    speak:
+      - 1139
+    timer: 15
+    source: "Speak( NpcId(), 1139 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1140
+  "4":
+    say:
+      - 1141
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1142
+  "10":
+    speak:
+      - 1143
+    exit: true
+    source: "Speak( NpcId(), 1143 );\r\n\tExit();"

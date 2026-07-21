@@ -1,0 +1,50 @@
+_version: "1.0"
+prefix: mada_boneper
+states:
+  "0":
+    speak:
+      - 126
+    timer: 15
+    source: "Speak( NpcId(), 126 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 127
+  "5": {}
+  "6": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_HEROKNI_TRN5) == QS_END && GetPlayerJob() == 1
+      && GetPlayerLvl() == 60 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 6 );\r
+
+      \t}\r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 128
+  "10":
+    speak:
+      - 129
+    exit: true
+    source: "Speak( NpcId(), 129 );\r\n\tExit();"

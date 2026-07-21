@@ -1,146 +1,9372 @@
 # worlds/zones/flaris.yml
-# Flaris (Zone 1) - New player starting area
-
+# Flaris (Zone 1) — GENERATED from WdMadrigal.dyo + .rgn by scripts/extractFlaris.ts.
+# Edit placement via the extractor (or raw/ world files), not by hand.
 _version: "1.0"
-_id: "flaris"
+_id: flaris
 _id_numeric: 1
-name: "Flaris"
-name_id: "ZONE_FLARIS"
-
-# World linkage
-world_id: "madrigal"
-
-# Geography
+name: Flaris
+name_id: ZONE_FLARIS
+world_id: madrigal
 bounds:
-  min: { x: -4000, y: -1000, z: -4000 }
-  max: { x: 4000, y: 500, z: 4000 }
-
-# Revival point
+  min:
+    x: -4000
+    y: -1000
+    z: -4000
+  max:
+    x: 4000
+    y: 500
+    z: 4000
 revival:
-  position: { x: 6978, y: 100, z: 3329 }
-  radius: 5.0
-
-# Portals to other zones
+  position:
+    x: 6978
+    y: 100
+    z: 3329
+  radius: 5
 portals:
   - id: 1
-    name: "Saint Morning Portal"
-    position: { x: 3880, y: 0, z: 3500 }
-    radius: 5.0
+    name: Saint Morning Portal
+    position:
+      x: 3880
+      y: 0
+      z: 3500
+    radius: 5
     target:
-      zone: "saintmorning"
-      position: { x: 850, y: 0, z: 1025 }
-
+      zone: saintmorning
+      position:
+        x: 850
+        y: 0
+        z: 1025
   - id: 2
-    name: "Darkon Portal"
-    position: { x: -3800, y: 0, z: -1200 }
-    radius: 5.0
+    name: Darkon Portal
+    position:
+      x: -3800
+      y: 0
+      z: -1200
+    radius: 5
     target:
-      zone: "darkon1"
-      position: { x: 5500, y: 0, z: 3800 }
-
-# Spawn points
+      zone: darkon1
+      position:
+        x: 5500
+        y: 0
+        z: 3800
 spawns:
-  # Near Flaris (Small Aibatt) — MI_AIBATT1=20
   - id: 1
-    mover_id: 20
-    position: { x: 6978, y: 100, z: 3329 }
-    radius: 100.0
-    count: 10
-    delay: 5000
-
-  # East of Flaris (Aibatt) — MI_AIBATT2=21
-  - id: 2
-    mover_id: 21
-    position: { x: 7200, y: 100, z: 3500 }
-    radius: 150.0
-    count: 15
-    delay: 5000
-
-  # South of Flaris (Captain Aibatt) — MI_AIBATT3=22
-  - id: 3
-    mover_id: 22
-    position: { x: 6950, y: 100, z: 3100 }
-    radius: 200.0
+    mover_id: 651
+    position:
+      x: 3016.812
+      y: 71.096
+      z: 2479.062
+    radius: 58.5
     count: 12
-    delay: 5000
-
-  # Giant Aibatt spawn (rare) — MI_AIBATT4=23
-  - id: 100
-    mover_id: 23
-    position: { x: 7200, y: 100, z: 3600 }
-    radius: 50.0
+    delay: 55000
+  - id: 2
+    mover_id: 651
+    position:
+      x: 2984.665
+      y: 88.678
+      z: 2248.557
+    radius: 66
+    count: 10
+    delay: 55000
+  - id: 3
+    mover_id: 652
+    position:
+      x: 2881.031
+      y: 100.294
+      z: 2461.607
+    radius: 96.5
+    count: 15
+    delay: 55000
+  - id: 4
+    mover_id: 653
+    position:
+      x: 2928.981
+      y: 88.826
+      z: 2480.142
+    radius: 88
+    count: 1
+    delay: 2100000
+  - id: 5
+    mover_id: 610
+    position:
+      x: 3114.328
+      y: 80
+      z: 2350.178
+    radius: 26.5
+    count: 5
+    delay: 55000
+  - id: 6
+    mover_id: 610
+    position:
+      x: 3184.78
+      y: 80
+      z: 2348.515
+    radius: 46
+    count: 6
+    delay: 55000
+  - id: 7
+    mover_id: 610
+    position:
+      x: 3343.735
+      y: 94
+      z: 2556.138
+    radius: 60
+    count: 4
+    delay: 55000
+  - id: 8
+    mover_id: 611
+    position:
+      x: 3166.707
+      y: 81
+      z: 2404.889
+    radius: 31
+    count: 5
+    delay: 55000
+  - id: 9
+    mover_id: 611
+    position:
+      x: 3165.184
+      y: 86
+      z: 2277.377
+    radius: 42.5
+    count: 5
+    delay: 55000
+  - id: 10
+    mover_id: 612
+    position:
+      x: 3155.098
+      y: 80
+      z: 2501.24
+    radius: 35
+    count: 5
+    delay: 55000
+  - id: 11
+    mover_id: 612
+    position:
+      x: 3156.073
+      y: 82.079
+      z: 2198.4
+    radius: 58.5
+    count: 5
+    delay: 55000
+  - id: 12
+    mover_id: 613
+    position:
+      x: 3167.28
+      y: 80
+      z: 2344.496
+    radius: 180.5
+    count: 1
+    delay: 2100000
+  - id: 13
+    mover_id: 663
+    position:
+      x: 3246.042
+      y: 70
+      z: 2524.754
+    radius: 10.5
+    count: 1
+    delay: 60000
+  - id: 14
+    mover_id: 608
+    position:
+      x: 3065.382
+      y: 100
+      z: 2781.765
+    radius: 86
+    count: 5
+    delay: 55000
+  - id: 15
+    mover_id: 608
+    position:
+      x: 3001.95
+      y: 93.363
+      z: 3007.512
+    radius: 91.5
+    count: 6
+    delay: 55000
+  - id: 16
+    mover_id: 650
+    position:
+      x: 2968.711
+      y: 99.328
+      z: 2618.277
+    radius: 100
+    count: 12
+    delay: 55000
+  - id: 17
+    mover_id: 650
+    position:
+      x: 2892.393
+      y: 102.814
+      z: 2563.12
+    radius: 78
+    count: 10
+    delay: 55000
+  - id: 18
+    mover_id: 689
+    position:
+      x: 2959.816
+      y: 98.788
+      z: 2753.429
+    radius: 5.5
+    count: 1
+    delay: 60000
+  - id: 19
+    mover_id: 614
+    position:
+      x: 3409.341
+      y: 88.078
+      z: 2884.669
+    radius: 58
+    count: 4
+    delay: 55000
+  - id: 20
+    mover_id: 614
+    position:
+      x: 3550.784
+      y: 84.44
+      z: 2897.225
+    radius: 44
+    count: 4
+    delay: 55000
+  - id: 21
+    mover_id: 616
+    position:
+      x: 3531.256
+      y: 88.554
+      z: 2601.792
+    radius: 51.5
+    count: 4
+    delay: 55000
+  - id: 22
+    mover_id: 616
+    position:
+      x: 3477.904
+      y: 87.066
+      z: 2656.813
+    radius: 55
+    count: 4
+    delay: 55000
+  - id: 23
+    mover_id: 642
+    position:
+      x: 3405.301
+      y: 79.185
+      z: 3056.961
+    radius: 60.5
+    count: 8
+    delay: 55000
+  - id: 24
+    mover_id: 642
+    position:
+      x: 3284.349
+      y: 90
+      z: 2988.77
+    radius: 91.5
+    count: 4
+    delay: 55000
+  - id: 25
+    mover_id: 643
+    position:
+      x: 3342.642
+      y: 82.047
+      z: 2891.882
+    radius: 59.5
+    count: 6
+    delay: 55000
+  - id: 26
+    mover_id: 643
+    position:
+      x: 3266.301
+      y: 81.935
+      z: 2868.762
+    radius: 56.5
+    count: 7
+    delay: 55000
+  - id: 27
+    mover_id: 644
+    position:
+      x: 3317.792
+      y: 69.982
+      z: 2733.891
+    radius: 57.5
+    count: 7
+    delay: 55000
+  - id: 28
+    mover_id: 644
+    position:
+      x: 3430.498
+      y: 71.397
+      z: 2732.818
+    radius: 66
+    count: 5
+    delay: 55000
+  - id: 29
+    mover_id: 645
+    position:
+      x: 3309.338
+      y: 68.182
+      z: 2825.225
+    radius: 118
+    count: 1
+    delay: 2100000
+  - id: 30
+    mover_id: 615
+    position:
+      x: 3589.522
+      y: 74.557
+      z: 2839.723
+    radius: 28.5
+    count: 4
+    delay: 55000
+  - id: 31
+    mover_id: 615
+    position:
+      x: 3607.135
+      y: 75
+      z: 2754.838
+    radius: 77
+    count: 5
+    delay: 55000
+  - id: 32
+    mover_id: 616
+    position:
+      x: 3596.323
+      y: 77.717
+      z: 2622.301
+    radius: 34
+    count: 4
+    delay: 55000
+  - id: 33
+    mover_id: 617
+    position:
+      x: 3606.286
+      y: 75
+      z: 2652.229
+    radius: 146.5
+    count: 1
+    delay: 2100000
+  - id: 34
+    mover_id: 622
+    position:
+      x: 3890.939
+      y: 70.306
+      z: 3071.241
+    radius: 67
+    count: 5
+    delay: 55000
+  - id: 35
+    mover_id: 647
+    position:
+      x: 4066.5
+      y: 50.146
+      z: 3050.797
+    radius: 62.5
+    count: 10
+    delay: 55000
+  - id: 36
+    mover_id: 520
+    position:
+      x: 4069.979
+      y: 109.89
+      z: 2701.251
+    radius: 43
+    count: 10
+    delay: 45000
+  - id: 37
+    mover_id: 522
+    position:
+      x: 4076.332
+      y: 106.374
+      z: 2686.817
+    radius: 64.5
+    count: 5
+    delay: 35000
+  - id: 38
+    mover_id: 521
+    position:
+      x: 4072.554
+      y: 109.453
+      z: 2692.07
+    radius: 53.5
+    count: 10
+    delay: 45000
+  - id: 39
+    mover_id: 634
+    position:
+      x: 3919.858
+      y: 105.101
+      z: 2641.943
+    radius: 91
+    count: 20
+    delay: 45000
+  - id: 40
+    mover_id: 635
+    position:
+      x: 3928.368
+      y: 104.128
+      z: 2640.97
+    radius: 81
+    count: 20
+    delay: 45000
+  - id: 41
+    mover_id: 636
+    position:
+      x: 3939.754
+      y: 104.366
+      z: 2640.112
+    radius: 70.5
+    count: 10
+    delay: 35000
+  - id: 42
+    mover_id: 637
+    position:
+      x: 3948.332
+      y: 104.152
+      z: 2641.964
+    radius: 59.5
+    count: 10
+    delay: 35000
+  - id: 43
+    mover_id: 838
+    position:
+      x: 3967.607
+      y: 106.565
+      z: 2639.837
+    radius: 42
+    count: 1
+    delay: 2100000
+  - id: 44
+    mover_id: 523
+    position:
+      x: 4084.787
+      y: 102.939
+      z: 2687.714
+    radius: 58.5
+    count: 5
+    delay: 35000
+  - id: 45
+    mover_id: 523
+    position:
+      x: 4063.966
+      y: 109.356
+      z: 2618.602
+    radius: 14.5
+    count: 2
+    delay: 35000
+  - id: 46
+    mover_id: 828
+    position:
+      x: 3940.882
+      y: 147.095
+      z: 2830.178
+    radius: 73
+    count: 20
+    delay: 45000
+  - id: 47
+    mover_id: 829
+    position:
+      x: 3948.326
+      y: 145.017
+      z: 2825.84
+    radius: 53.5
+    count: 20
+    delay: 45000
+  - id: 48
+    mover_id: 830
+    position:
+      x: 3957.219
+      y: 143.56
+      z: 2828.698
+    radius: 53.5
+    count: 10
+    delay: 35000
+  - id: 49
+    mover_id: 831
+    position:
+      x: 3965.588
+      y: 141.742
+      z: 2831.001
+    radius: 52
+    count: 10
+    delay: 35000
+  - id: 50
+    mover_id: 832
+    position:
+      x: 3975.861
+      y: 134.837
+      z: 2820.296
+    radius: 31.5
+    count: 1
+    delay: 2100000
+  - id: 51
+    mover_id: 522
+    position:
+      x: 4063.394
+      y: 109.141
+      z: 2615.215
+    radius: 18
+    count: 2
+    delay: 35000
+  - id: 52
+    mover_id: 521
+    position:
+      x: 4062.651
+      y: 108.841
+      z: 2611.094
+    radius: 24
+    count: 3
+    delay: 45000
+  - id: 53
+    mover_id: 520
+    position:
+      x: 4062.661
+      y: 108.222
+      z: 2605.835
+    radius: 24.5
+    count: 3
+    delay: 45000
+  - id: 54
+    mover_id: 624
+    position:
+      x: 4151.032
+      y: 106.752
+      z: 2955.893
+    radius: 69.5
+    count: 10
+    delay: 55000
+  - id: 55
+    mover_id: 623
+    position:
+      x: 4107.656
+      y: 66.442
+      z: 3048.957
+    radius: 72.5
+    count: 8
+    delay: 55000
+  - id: 56
+    mover_id: 648
+    position:
+      x: 4120.186
+      y: 95.615
+      z: 2932.086
+    radius: 90
+    count: 10
+    delay: 55000
+  - id: 57
+    mover_id: 833
+    position:
+      x: 4145.445
+      y: 97.985
+      z: 2832.558
+    radius: 83
+    count: 20
+    delay: 45000
+  - id: 58
+    mover_id: 834
+    position:
+      x: 4141.126
+      y: 98.683
+      z: 2824.873
+    radius: 72.5
+    count: 20
+    delay: 45000
+  - id: 59
+    mover_id: 835
+    position:
+      x: 4135.657
+      y: 99.191
+      z: 2817.681
+    radius: 64.5
+    count: 10
+    delay: 35000
+  - id: 60
+    mover_id: 836
+    position:
+      x: 4145.571
+      y: 99.303
+      z: 2813.887
+    radius: 52.5
+    count: 10
+    delay: 35000
+  - id: 61
+    mover_id: 837
+    position:
+      x: 4139.333
+      y: 99.516
+      z: 2811.109
+    radius: 33
+    count: 1
+    delay: 2100000
+  - id: 62
+    mover_id: 839
+    position:
+      x: 4134.689
+      y: 99.128
+      z: 2666.772
+    radius: 38
+    count: 1
+    delay: 2100000
+  - id: 63
+    mover_id: 523
+    position:
+      x: 4135.896
+      y: 100
+      z: 2656.856
+    radius: 30
+    count: 3
+    delay: 35000
+  - id: 64
+    mover_id: 522
+    position:
+      x: 4135.803
+      y: 100.003
+      z: 2650.748
+    radius: 28.5
+    count: 3
+    delay: 35000
+  - id: 65
+    mover_id: 521
+    position:
+      x: 4097.091
+      y: 100
+      z: 2573.065
+    radius: 58.5
+    count: 5
+    delay: 45000
+  - id: 66
+    mover_id: 521
+    position:
+      x: 4136.073
+      y: 100.266
+      z: 2643.446
+    radius: 38
+    count: 7
+    delay: 45000
+  - id: 67
+    mover_id: 520
+    position:
+      x: 4097.219
+      y: 100
+      z: 2569.979
+    radius: 60
+    count: 5
+    delay: 45000
+  - id: 68
+    mover_id: 520
+    position:
+      x: 4135.962
+      y: 100.604
+      z: 2638.435
+    radius: 37.5
+    count: 7
+    delay: 45000
+  - id: 69
+    mover_id: 596
+    position:
+      x: 2857.284
+      y: 71.3
+      z: 3424.99
+    radius: 86
+    count: 10
+    delay: 55000
+  - id: 70
+    mover_id: 606
+    position:
+      x: 2948.891
+      y: 76.688
+      z: 3170.671
+    radius: 83
+    count: 7
+    delay: 55000
+  - id: 71
+    mover_id: 607
+    position:
+      x: 2939.561
+      y: 90.356
+      z: 3082.456
+    radius: 58
+    count: 5
+    delay: 55000
+  - id: 72
+    mover_id: 607
+    position:
+      x: 3021.881
+      y: 87.569
+      z: 3092.982
+    radius: 55
+    count: 4
+    delay: 55000
+  - id: 73
+    mover_id: 609
+    position:
+      x: 3018.161
+      y: 90.806
+      z: 3074.677
+    radius: 99.5
+    count: 1
+    delay: 2100000
+  - id: 74
+    mover_id: 602
+    position:
+      x: 3501.287
+      y: 45.179
+      z: 3493.512
+    radius: 89.5
+    count: 10
+    delay: 55000
+  - id: 75
+    mover_id: 603
+    position:
+      x: 3486.97
+      y: 55.365
+      z: 3346.086
+    radius: 77.5
+    count: 12
+    delay: 55000
+  - id: 76
+    mover_id: 604
+    position:
+      x: 3551.004
+      y: 59
+      z: 3184.458
+    radius: 78
+    count: 20
+    delay: 55000
+  - id: 77
+    mover_id: 605
+    position:
+      x: 3552.095
+      y: 51.577
+      z: 3315.316
+    radius: 124
+    count: 1
+    delay: 2100000
+  - id: 78
+    mover_id: 606
+    position:
+      x: 3215.183
+      y: 28.464
+      z: 3216.997
+    radius: 76
+    count: 7
+    delay: 55000
+  - id: 79
+    mover_id: 1021
+    position:
+      x: 3206.585
+      y: 10.089
+      z: 3434.72
+    radius: 5.5
+    count: 1
+    delay: 1000
+  - id: 80
+    mover_id: 1021
+    position:
+      x: 3234.032
+      y: 11.122
+      z: 3420.995
+    radius: 4
+    count: 1
+    delay: 1000
+  - id: 81
+    mover_id: 646
+    position:
+      x: 3950.685
+      y: 25.489
+      z: 3104.959
+    radius: 67.5
+    count: 2
+    delay: 200000
+  - id: 82
+    mover_id: 618
+    position:
+      x: 3833.598
+      y: 38.544
+      z: 3480.052
+    radius: 165
+    count: 10
+    delay: 100000
+  - id: 83
+    mover_id: 621
+    position:
+      x: 3870.978
+      y: 28.673
+      z: 3546.695
+    radius: 115.5
     count: 1
     delay: 3600000
-
-# NPCs
+  - id: 84
+    mover_id: 620
+    position:
+      x: 4082.691
+      y: 31.633
+      z: 3578.849
+    radius: 87.5
+    count: 10
+    delay: 100000
+  - id: 85
+    mover_id: 619
+    position:
+      x: 3986.086
+      y: 30.813
+      z: 3477.2
+    radius: 74.5
+    count: 5
+    delay: 100000
+  - id: 86
+    mover_id: 602
+    position:
+      x: 3675.742
+      y: 32.752
+      z: 3432.576
+    radius: 78
+    count: 15
+    delay: 100000
+  - id: 87
+    mover_id: 603
+    position:
+      x: 3615.205
+      y: 42.753
+      z: 3282.265
+    radius: 68
+    count: 12
+    delay: 55000
+  - id: 88
+    mover_id: 625
+    position:
+      x: 4315.513
+      y: 108.314
+      z: 3176.897
+    radius: 78
+    count: 1
+    delay: 2100000
+  - id: 89
+    mover_id: 623
+    position:
+      x: 4210.638
+      y: 118.692
+      z: 3132.374
+    radius: 78
+    count: 10
+    delay: 55000
+  - id: 90
+    mover_id: 649
+    position:
+      x: 4302.749
+      y: 103.499
+      z: 3146.539
+    radius: 61
+    count: 1
+    delay: 2100000
+  - id: 91
+    mover_id: 508
+    position:
+      x: 5494.796
+      y: 80.817
+      z: 3514.131
+    radius: 82.5
+    count: 10
+    delay: 55000
+  - id: 92
+    mover_id: 508
+    position:
+      x: 5557.613
+      y: 97
+      z: 3453.459
+    radius: 33
+    count: 8
+    delay: 55000
+  - id: 93
+    mover_id: 509
+    position:
+      x: 5492.792
+      y: 75
+      z: 3450.396
+    radius: 80.5
+    count: 10
+    delay: 55000
+  - id: 94
+    mover_id: 510
+    position:
+      x: 5324.062
+      y: 44.497
+      z: 3401.037
+    radius: 87.5
+    count: 10
+    delay: 55000
+  - id: 95
+    mover_id: 510
+    position:
+      x: 5446.615
+      y: 54.571
+      z: 3393.162
+    radius: 61.5
+    count: 10
+    delay: 55000
+  - id: 96
+    mover_id: 511
+    position:
+      x: 5402.578
+      y: 54
+      z: 3386.313
+    radius: 62
+    count: 1
+    delay: 2100000
+  - id: 97
+    mover_id: 800
+    position:
+      x: 5248.75
+      y: 42.598
+      z: 3396.182
+    radius: 31.5
+    count: 6
+    delay: 120000
+  - id: 98
+    mover_id: 817
+    position:
+      x: 5241.153
+      y: 41.869
+      z: 3397.073
+    radius: 32.5
+    count: 1
+    delay: 180000
+  - id: 99
+    mover_id: 800
+    position:
+      x: 5188.35
+      y: 63.159
+      z: 3378.324
+    radius: 23
+    count: 12
+    delay: 120000
+  - id: 100
+    mover_id: 817
+    position:
+      x: 5177.451
+      y: 73.449
+      z: 3376.297
+    radius: 25.5
+    count: 2
+    delay: 180000
+  - id: 101
+    mover_id: 827
+    position:
+      x: 5153.416
+      y: 92.299
+      z: 3361.673
+    radius: 11
+    count: 1
+    delay: 240000
+  - id: 102
+    mover_id: 800
+    position:
+      x: 5521.252
+      y: 83.435
+      z: 3557.992
+    radius: 15.5
+    count: 3
+    delay: 120000
+  - id: 103
+    mover_id: 548
+    position:
+      x: 5685.912
+      y: 85
+      z: 3305.385
+    radius: 57.5
+    count: 8
+    delay: 55000
+  - id: 104
+    mover_id: 548
+    position:
+      x: 5686.163
+      y: 85
+      z: 3436.717
+    radius: 55
+    count: 8
+    delay: 55000
+  - id: 105
+    mover_id: 549
+    position:
+      x: 5729.711
+      y: 106
+      z: 3389.711
+    radius: 36
+    count: 8
+    delay: 55000
+  - id: 106
+    mover_id: 550
+    position:
+      x: 5813.288
+      y: 85
+      z: 3348.475
+    radius: 37
+    count: 8
+    delay: 55000
+  - id: 107
+    mover_id: 550
+    position:
+      x: 5816.647
+      y: 85
+      z: 3454.498
+    radius: 45.5
+    count: 8
+    delay: 55000
+  - id: 108
+    mover_id: 551
+    position:
+      x: 5738.827
+      y: 106
+      z: 3395.648
+    radius: 81.5
+    count: 1
+    delay: 2100000
+  - id: 109
+    mover_id: 594
+    position:
+      x: 2756.586
+      y: 52.716
+      z: 3973.656
+    radius: 83
+    count: 15
+    delay: 55000
+  - id: 110
+    mover_id: 594
+    position:
+      x: 2978.019
+      y: 47.395
+      z: 3997.965
+    radius: 129
+    count: 15
+    delay: 55000
+  - id: 111
+    mover_id: 595
+    position:
+      x: 2692.883
+      y: 48.051
+      z: 3828.55
+    radius: 109.5
+    count: 15
+    delay: 55000
+  - id: 112
+    mover_id: 595
+    position:
+      x: 3023.731
+      y: 47.109
+      z: 3834.813
+    radius: 126.5
+    count: 12
+    delay: 55000
+  - id: 113
+    mover_id: 596
+    position:
+      x: 2702.896
+      y: 49.52
+      z: 3621.378
+    radius: 106
+    count: 10
+    delay: 55000
+  - id: 114
+    mover_id: 596
+    position:
+      x: 2945.019
+      y: 58.425
+      z: 3683.898
+    radius: 106.5
+    count: 10
+    delay: 55000
+  - id: 115
+    mover_id: 596
+    position:
+      x: 2841.267
+      y: 41.156
+      z: 3836.413
+    radius: 76.5
+    count: 15
+    delay: 55000
+  - id: 116
+    mover_id: 597
+    position:
+      x: 2865.447
+      y: 40.389
+      z: 3837.524
+    radius: 156
+    count: 1
+    delay: 2100000
+  - id: 117
+    mover_id: 626
+    position:
+      x: 3276.754
+      y: 37.616
+      z: 3838.946
+    radius: 117
+    count: 12
+    delay: 55000
+  - id: 118
+    mover_id: 626
+    position:
+      x: 3176.423
+      y: 36.806
+      z: 3745.169
+    radius: 115
+    count: 10
+    delay: 55000
+  - id: 119
+    mover_id: 627
+    position:
+      x: 3371.276
+      y: 37.85
+      z: 3681.832
+    radius: 65
+    count: 15
+    delay: 55000
+  - id: 120
+    mover_id: 627
+    position:
+      x: 3412.439
+      y: 36.755
+      z: 3829.119
+    radius: 94
+    count: 12
+    delay: 55000
+  - id: 121
+    mover_id: 628
+    position:
+      x: 3471.684
+      y: 35.018
+      z: 3785.145
+    radius: 144
+    count: 20
+    delay: 55000
+  - id: 122
+    mover_id: 629
+    position:
+      x: 3425.087
+      y: 36.233
+      z: 3783.379
+    radius: 156.5
+    count: 1
+    delay: 2100000
+  - id: 123
+    mover_id: 618
+    position:
+      x: 3830.518
+      y: 32.623
+      z: 3614.009
+    radius: 59
+    count: 5
+    delay: 55000
+  - id: 124
+    mover_id: 619
+    position:
+      x: 3941.948
+      y: 31.223
+      z: 3667.71
+    radius: 81
+    count: 5
+    delay: 55000
+  - id: 125
+    mover_id: 502
+    position:
+      x: 4391.91
+      y: 16
+      z: 4060.22
+    radius: 56.5
+    count: 8
+    delay: 55000
+  - id: 126
+    mover_id: 569
+    position:
+      x: 4603.256
+      y: 60.112
+      z: 3867.879
+    radius: 37
+    count: 8
+    delay: 55000
+  - id: 127
+    mover_id: 570
+    position:
+      x: 4547.708
+      y: 63.559
+      z: 3940.931
+    radius: 42.5
+    count: 8
+    delay: 55000
+  - id: 128
+    mover_id: 571
+    position:
+      x: 4506.93
+      y: 60.044
+      z: 3891.904
+    radius: 152.5
+    count: 1
+    delay: 2100000
+  - id: 129
+    mover_id: 690
+    position:
+      x: 4544.702
+      y: 60.916
+      z: 3909.053
+    radius: 3.5
+    count: 1
+    delay: 60000
+  - id: 130
+    mover_id: 404
+    position:
+      x: 5073.765
+      y: 54.897
+      z: 3867.346
+    radius: 45
+    count: 8
+    delay: 55000
+  - id: 131
+    mover_id: 406
+    position:
+      x: 5067.455
+      y: 51.442
+      z: 3780.009
+    radius: 52.5
+    count: 8
+    delay: 55000
+  - id: 132
+    mover_id: 407
+    position:
+      x: 5074.775
+      y: 51.203
+      z: 3813.407
+    radius: 132.5
+    count: 1
+    delay: 2100000
+  - id: 133
+    mover_id: 513
+    position:
+      x: 5001.066
+      y: 53.25
+      z: 4087.397
+    radius: 79
+    count: 8
+    delay: 55000
+  - id: 134
+    mover_id: 514
+    position:
+      x: 4934.218
+      y: 55
+      z: 3970.34
+    radius: 53.5
+    count: 8
+    delay: 55000
+  - id: 135
+    mover_id: 514
+    position:
+      x: 5044.395
+      y: 55
+      z: 3963.63
+    radius: 49
+    count: 8
+    delay: 55000
+  - id: 136
+    mover_id: 515
+    position:
+      x: 4985.981
+      y: 55
+      z: 3976.085
+    radius: 63.5
+    count: 1
+    delay: 2100000
+  - id: 137
+    mover_id: 568
+    position:
+      x: 4682.884
+      y: 60
+      z: 3877.025
+    radius: 36
+    count: 8
+    delay: 55000
+  - id: 138
+    mover_id: 568
+    position:
+      x: 4782.763
+      y: 60
+      z: 3868.08
+    radius: 44.5
+    count: 8
+    delay: 55000
+  - id: 139
+    mover_id: 405
+    position:
+      x: 5133.504
+      y: 62.504
+      z: 3918.093
+    radius: 56.5
+    count: 6
+    delay: 55000
+  - id: 140
+    mover_id: 406
+    position:
+      x: 5133.306
+      y: 62.627
+      z: 3861.489
+    radius: 68.5
+    count: 8
+    delay: 55000
+  - id: 141
+    mover_id: 516
+    position:
+      x: 5190.409
+      y: 74.832
+      z: 3993.752
+    radius: 76.5
+    count: 8
+    delay: 55000
+  - id: 142
+    mover_id: 516
+    position:
+      x: 5226.99
+      y: 75.242
+      z: 3820.45
+    radius: 61
+    count: 8
+    delay: 55000
+  - id: 143
+    mover_id: 517
+    position:
+      x: 5223.574
+      y: 75.11
+      z: 3880.541
+    radius: 37
+    count: 8
+    delay: 55000
+  - id: 144
+    mover_id: 518
+    position:
+      x: 5285.768
+      y: 75.051
+      z: 3992.377
+    radius: 47
+    count: 8
+    delay: 55000
+  - id: 145
+    mover_id: 518
+    position:
+      x: 5279.396
+      y: 75.104
+      z: 3869.819
+    radius: 55.5
+    count: 8
+    delay: 55000
+  - id: 146
+    mover_id: 519
+    position:
+      x: 5243.729
+      y: 75.211
+      z: 3950.981
+    radius: 78
+    count: 1
+    delay: 2100000
+  - id: 147
+    mover_id: 800
+    position:
+      x: 5611.137
+      y: 74.941
+      z: 3676.276
+    radius: 16
+    count: 3
+    delay: 120000
+  - id: 148
+    mover_id: 800
+    position:
+      x: 5574.553
+      y: 75
+      z: 3615.651
+    radius: 13
+    count: 2
+    delay: 120000
+  - id: 149
+    mover_id: 1021
+    position:
+      x: 5576.159
+      y: 75.015
+      z: 3904.148
+    radius: 4
+    count: 1
+    delay: 1000
+  - id: 150
+    mover_id: 107
+    position:
+      x: 5932.208
+      y: 77.863
+      z: 3821.024
+    radius: 41.5
+    count: 10
+    delay: 55000
+  - id: 151
+    mover_id: 107
+    position:
+      x: 5877.305
+      y: 67.494
+      z: 3777.095
+    radius: 42.5
+    count: 10
+    delay: 55000
+  - id: 152
+    mover_id: 108
+    position:
+      x: 5891.663
+      y: 63.437
+      z: 3721.061
+    radius: 36
+    count: 10
+    delay: 55000
+  - id: 153
+    mover_id: 109
+    position:
+      x: 5774.165
+      y: 60
+      z: 3672.966
+    radius: 41
+    count: 10
+    delay: 55000
+  - id: 154
+    mover_id: 109
+    position:
+      x: 5869.497
+      y: 53.109
+      z: 3657.938
+    radius: 49.5
+    count: 10
+    delay: 55000
+  - id: 155
+    mover_id: 109
+    position:
+      x: 5828.344
+      y: 94.07
+      z: 3955.8
+    radius: 51
+    count: 10
+    delay: 55000
+  - id: 156
+    mover_id: 110
+    position:
+      x: 5850.744
+      y: 51.877
+      z: 3662.747
+    radius: 80
+    count: 1
+    delay: 2100000
+  - id: 157
+    mover_id: 504
+    position:
+      x: 5745.963
+      y: 105.683
+      z: 4053.744
+    radius: 47
+    count: 8
+    delay: 55000
+  - id: 158
+    mover_id: 540
+    position:
+      x: 6140.583
+      y: 88.384
+      z: 3925.439
+    radius: 58.5
+    count: 10
+    delay: 55000
+  - id: 159
+    mover_id: 540
+    position:
+      x: 5982.252
+      y: 95.438
+      z: 3917.45
+    radius: 76
+    count: 10
+    delay: 55000
+  - id: 160
+    mover_id: 541
+    position:
+      x: 6042.588
+      y: 92.715
+      z: 3933.923
+    radius: 43
+    count: 10
+    delay: 55000
+  - id: 161
+    mover_id: 543
+    position:
+      x: 6102.19
+      y: 122.426
+      z: 4049.317
+    radius: 81
+    count: 1
+    delay: 2100000
+  - id: 162
+    mover_id: 589
+    position:
+      x: 6051.379
+      y: 123.403
+      z: 3719.501
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 163
+    mover_id: 589
+    position:
+      x: 6117.1
+      y: 108.699
+      z: 3704.084
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 164
+    mover_id: 589
+    position:
+      x: 6087.37
+      y: 88.425
+      z: 3845.781
+    radius: 20.5
+    count: 2
+    delay: 55000
+  - id: 165
+    mover_id: 589
+    position:
+      x: 6137.546
+      y: 98.528
+      z: 3780.036
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 166
+    mover_id: 589
+    position:
+      x: 6055.673
+      y: 87.024
+      z: 3798.204
+    radius: 20.5
+    count: 2
+    delay: 55000
+  - id: 167
+    mover_id: 590
+    position:
+      x: 6082.117
+      y: 87.169
+      z: 3839.087
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 168
+    mover_id: 590
+    position:
+      x: 6128.032
+      y: 96.485
+      z: 3780.255
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 169
+    mover_id: 590
+    position:
+      x: 6045.895
+      y: 127.988
+      z: 3716.925
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 170
+    mover_id: 590
+    position:
+      x: 6119.278
+      y: 108.699
+      z: 3712.523
+    radius: 19
+    count: 2
+    delay: 55000
+  - id: 171
+    mover_id: 590
+    position:
+      x: 6051.583
+      y: 88.05
+      z: 3794.995
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 172
+    mover_id: 591
+    position:
+      x: 6134.274
+      y: 99.798
+      z: 3773.947
+    radius: 19.5
+    count: 1
+    delay: 55000
+  - id: 173
+    mover_id: 591
+    position:
+      x: 6077.268
+      y: 87.025
+      z: 3841.161
+    radius: 21
+    count: 1
+    delay: 55000
+  - id: 174
+    mover_id: 591
+    position:
+      x: 6054.646
+      y: 122.095
+      z: 3716.228
+    radius: 19
+    count: 1
+    delay: 55000
+  - id: 175
+    mover_id: 591
+    position:
+      x: 6124.178
+      y: 108.699
+      z: 3710.345
+    radius: 20
+    count: 1
+    delay: 55000
+  - id: 176
+    mover_id: 591
+    position:
+      x: 6057.525
+      y: 85.872
+      z: 3793.639
+    radius: 20.5
+    count: 1
+    delay: 55000
+  - id: 177
+    mover_id: 592
+    position:
+      x: 6095.714
+      y: 101.631
+      z: 3768.651
+    radius: 62.5
+    count: 1
+    delay: 2100000
+  - id: 178
+    mover_id: 844
+    position:
+      x: 6073.209
+      y: 105.806
+      z: 3758.173
+    radius: 11.5
+    count: 1
+    delay: 60000
+  - id: 179
+    mover_id: 845
+    position:
+      x: 5660.393
+      y: 109.319
+      z: 3710.03
+    radius: 6
+    count: 1
+    delay: 60000
+  - id: 180
+    mover_id: 308
+    position:
+      x: 6470.898
+      y: 153.19
+      z: 3916.378
+    radius: 138
+    count: 5
+    delay: 55000
+  - id: 181
+    mover_id: 308
+    position:
+      x: 6309.054
+      y: 143.289
+      z: 3607.473
+    radius: 126.5
+    count: 5
+    delay: 55000
+  - id: 182
+    mover_id: 309
+    position:
+      x: 6405.411
+      y: 168.303
+      z: 3833.403
+    radius: 131.5
+    count: 5
+    delay: 55000
+  - id: 183
+    mover_id: 310
+    position:
+      x: 6259.376
+      y: 190.813
+      z: 3634.65
+    radius: 96.5
+    count: 5
+    delay: 55000
+  - id: 184
+    mover_id: 310
+    position:
+      x: 6280.577
+      y: 110.7
+      z: 3818.67
+    radius: 70
+    count: 5
+    delay: 55000
+  - id: 185
+    mover_id: 311
+    position:
+      x: 6299.638
+      y: 180.691
+      z: 3756.251
+    radius: 150
+    count: 1
+    delay: 2100000
+  - id: 186
+    mover_id: 524
+    position:
+      x: 6632.372
+      y: 114.645
+      z: 3647.068
+    radius: 24
+    count: 10
+    delay: 60000
+  - id: 187
+    mover_id: 524
+    position:
+      x: 6588.2
+      y: 114.645
+      z: 3612.504
+    radius: 24
+    count: 10
+    delay: 60000
+  - id: 188
+    mover_id: 525
+    position:
+      x: 6584.501
+      y: 114.644
+      z: 3643.097
+    radius: 34
+    count: 10
+    delay: 60000
+  - id: 189
+    mover_id: 526
+    position:
+      x: 6599.197
+      y: 114.644
+      z: 3704.895
+    radius: 24
+    count: 10
+    delay: 60000
+  - id: 190
+    mover_id: 526
+    position:
+      x: 6495.5
+      y: 115.276
+      z: 3641.935
+    radius: 43.5
+    count: 10
+    delay: 60000
+  - id: 191
+    mover_id: 527
+    position:
+      x: 6564.978
+      y: 108.244
+      z: 3686.437
+    radius: 59.5
+    count: 1
+    delay: 2100000
+  - id: 192
+    mover_id: 542
+    position:
+      x: 6158.167
+      y: 121.097
+      z: 4071.52
+    radius: 49
+    count: 10
+    delay: 55000
+  - id: 193
+    mover_id: 589
+    position:
+      x: 6156.554
+      y: 108.812
+      z: 3845.902
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 194
+    mover_id: 590
+    position:
+      x: 6162.739
+      y: 107.723
+      z: 3839.444
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 195
+    mover_id: 591
+    position:
+      x: 6152.945
+      y: 107.491
+      z: 3842.465
+    radius: 19.5
+    count: 1
+    delay: 55000
+  - id: 196
+    mover_id: 811
+    position:
+      x: 6586.858
+      y: 114.644
+      z: 3609.919
+    radius: 13.5
+    count: 3
+    delay: 60000
+  - id: 197
+    mover_id: 812
+    position:
+      x: 6594.013
+      y: 112.751
+      z: 3731.665
+    radius: 10
+    count: 5
+    delay: 240000
+  - id: 198
+    mover_id: 813
+    position:
+      x: 6498.059
+      y: 114.644
+      z: 3611.74
+    radius: 9.5
+    count: 3
+    delay: 180000
+  - id: 199
+    mover_id: 814
+    position:
+      x: 6635.658
+      y: 114.649
+      z: 3687.724
+    radius: 9
+    count: 3
+    delay: 180000
+  - id: 200
+    mover_id: 538
+    position:
+      x: 4088.921
+      y: 57.293
+      z: 4452.925
+    radius: 40
+    count: 8
+    delay: 55000
+  - id: 201
+    mover_id: 572
+    position:
+      x: 3645.537
+      y: 56.144
+      z: 4594.542
+    radius: 26
+    count: 2
+    delay: 55000
+  - id: 202
+    mover_id: 573
+    position:
+      x: 3641.486
+      y: 55.824
+      z: 4592.599
+    radius: 26
+    count: 2
+    delay: 55000
+  - id: 203
+    mover_id: 575
+    position:
+      x: 3647.12
+      y: 56.12
+      z: 4590.672
+    radius: 27
+    count: 1
+    delay: 55000
+  - id: 204
+    mover_id: 1021
+    position:
+      x: 3884.067
+      y: 59
+      z: 4302.057
+    radius: 4
+    count: 1
+    delay: 1000
+  - id: 205
+    mover_id: 687
+    position:
+      x: 4060.086
+      y: 65.2
+      z: 4381.229
+    radius: 7
+    count: 1
+    delay: 60000
+  - id: 206
+    mover_id: 841
+    position:
+      x: 3895.335
+      y: 59
+      z: 4276.105
+    radius: 4
+    count: 1
+    delay: 60000
+  - id: 207
+    mover_id: 846
+    position:
+      x: 3679.093
+      y: 59
+      z: 4537.395
+    radius: 5
+    count: 1
+    delay: 300000
+  - id: 208
+    mover_id: 1021
+    position:
+      x: 3718.985
+      y: 60.8
+      z: 4536.914
+    radius: 3.5
+    count: 1
+    delay: 1000
+  - id: 209
+    mover_id: 1021
+    position:
+      x: 3719.504
+      y: 59
+      z: 4533.393
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 210
+    mover_id: 1021
+    position:
+      x: 3895.066
+      y: 58.517
+      z: 4300.686
+    radius: 5.5
+    count: 1
+    delay: 1000
+  - id: 211
+    mover_id: 1021
+    position:
+      x: 3964.297
+      y: 59
+      z: 4425.026
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 212
+    mover_id: 1021
+    position:
+      x: 3971.303
+      y: 59
+      z: 4424.764
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 213
+    mover_id: 1021
+    position:
+      x: 3963.906
+      y: 59
+      z: 4439.091
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 214
+    mover_id: 1021
+    position:
+      x: 3971.568
+      y: 59
+      z: 4439.09
+    radius: 2
+    count: 1
+    delay: 1000
+  - id: 215
+    mover_id: 1021
+    position:
+      x: 3827.679
+      y: 59.311
+      z: 4471.771
+    radius: 3.5
+    count: 1
+    delay: 1000
+  - id: 216
+    mover_id: 1021
+    position:
+      x: 3712.783
+      y: 59
+      z: 4528.167
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 217
+    mover_id: 1021
+    position:
+      x: 3706.156
+      y: 59.5
+      z: 4531.32
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 218
+    mover_id: 500
+    position:
+      x: 4532.847
+      y: 19.305
+      z: 4217.591
+    radius: 49
+    count: 8
+    delay: 55000
+  - id: 219
+    mover_id: 500
+    position:
+      x: 4470.652
+      y: 12
+      z: 4308.96
+    radius: 49
+    count: 8
+    delay: 55000
+  - id: 220
+    mover_id: 501
+    position:
+      x: 4398.529
+      y: 12
+      z: 4357.703
+    radius: 63.5
+    count: 8
+    delay: 55000
+  - id: 221
+    mover_id: 501
+    position:
+      x: 4397.763
+      y: 16
+      z: 4159.448
+    radius: 52
+    count: 8
+    delay: 55000
+  - id: 222
+    mover_id: 501
+    position:
+      x: 4400.331
+      y: 15.874
+      z: 4252.092
+    radius: 65
+    count: 8
+    delay: 55000
+  - id: 223
+    mover_id: 502
+    position:
+      x: 4246.2
+      y: 16.028
+      z: 4487.527
+    radius: 85
+    count: 8
+    delay: 55000
+  - id: 224
+    mover_id: 503
+    position:
+      x: 4426.954
+      y: 21.874
+      z: 4285.01
+    radius: 112
+    count: 1
+    delay: 2100000
+  - id: 225
+    mover_id: 536
+    position:
+      x: 4215.008
+      y: 65
+      z: 4175.981
+    radius: 49.5
+    count: 8
+    delay: 55000
+  - id: 226
+    mover_id: 536
+    position:
+      x: 4230.172
+      y: 47.669
+      z: 4292.373
+    radius: 53
+    count: 8
+    delay: 55000
+  - id: 227
+    mover_id: 537
+    position:
+      x: 4186.417
+      y: 53.403
+      z: 4357.029
+    radius: 38
+    count: 8
+    delay: 55000
+  - id: 228
+    mover_id: 537
+    position:
+      x: 4140.458
+      y: 61.075
+      z: 4428.683
+    radius: 50.5
+    count: 8
+    delay: 55000
+  - id: 229
+    mover_id: 538
+    position:
+      x: 4180.674
+      y: 62
+      z: 4582.525
+    radius: 62
+    count: 8
+    delay: 55000
+  - id: 230
+    mover_id: 539
+    position:
+      x: 4217.028
+      y: 49.039
+      z: 4290.302
+    radius: 83.5
+    count: 1
+    delay: 2100000
+  - id: 231
+    mover_id: 512
+    position:
+      x: 5051.029
+      y: 65.009
+      z: 4297.957
+    radius: 71.5
+    count: 8
+    delay: 55000
+  - id: 232
+    mover_id: 512
+    position:
+      x: 5009.142
+      y: 59.68
+      z: 4193.964
+    radius: 61
+    count: 8
+    delay: 55000
+  - id: 233
+    mover_id: 568
+    position:
+      x: 4864.431
+      y: 85
+      z: 4117.192
+    radius: 52.5
+    count: 8
+    delay: 55000
+  - id: 234
+    mover_id: 568
+    position:
+      x: 4844.183
+      y: 73
+      z: 4356.713
+    radius: 43.5
+    count: 8
+    delay: 55000
+  - id: 235
+    mover_id: 569
+    position:
+      x: 4752.701
+      y: 85.05
+      z: 4097.212
+    radius: 43
+    count: 8
+    delay: 55000
+  - id: 236
+    mover_id: 569
+    position:
+      x: 4727.941
+      y: 73
+      z: 4360.136
+    radius: 48
+    count: 8
+    delay: 55000
+  - id: 237
+    mover_id: 570
+    position:
+      x: 4750.382
+      y: 85.473
+      z: 4196.396
+    radius: 38.5
+    count: 8
+    delay: 55000
+  - id: 238
+    mover_id: 570
+    position:
+      x: 4690.124
+      y: 85.298
+      z: 4103.21
+    radius: 39.5
+    count: 8
+    delay: 55000
+  - id: 239
+    mover_id: 112
+    position:
+      x: 5336.687
+      y: 70
+      z: 4179.493
+    radius: 67
+    count: 8
+    delay: 55000
+  - id: 240
+    mover_id: 112
+    position:
+      x: 5378.816
+      y: 70
+      z: 4259.333
+    radius: 58.5
+    count: 8
+    delay: 55000
+  - id: 241
+    mover_id: 113
+    position:
+      x: 5274.015
+      y: 70
+      z: 4244.306
+    radius: 56
+    count: 8
+    delay: 55000
+  - id: 242
+    mover_id: 114
+    position:
+      x: 5212.004
+      y: 66.984
+      z: 4314.67
+    radius: 61
+    count: 8
+    delay: 55000
+  - id: 243
+    mover_id: 114
+    position:
+      x: 5166.008
+      y: 69.652
+      z: 4257.864
+    radius: 61
+    count: 8
+    delay: 55000
+  - id: 244
+    mover_id: 115
+    position:
+      x: 5146.648
+      y: 65
+      z: 4308.322
+    radius: 106
+    count: 1
+    delay: 2100000
+  - id: 245
+    mover_id: 504
+    position:
+      x: 5594.518
+      y: 83.415
+      z: 4157.716
+    radius: 43.5
+    count: 8
+    delay: 55000
+  - id: 246
+    mover_id: 505
+    position:
+      x: 5470.621
+      y: 83.037
+      z: 4201.984
+    radius: 59.5
+    count: 8
+    delay: 55000
+  - id: 247
+    mover_id: 506
+    position:
+      x: 5497.614
+      y: 70.787
+      z: 4283.362
+    radius: 66.5
+    count: 8
+    delay: 55000
+  - id: 248
+    mover_id: 506
+    position:
+      x: 5616.538
+      y: 74.036
+      z: 4285.036
+    radius: 64
+    count: 8
+    delay: 55000
+  - id: 249
+    mover_id: 507
+    position:
+      x: 5482.482
+      y: 70.082
+      z: 4287.395
+    radius: 82
+    count: 1
+    delay: 2100000
+  - id: 250
+    mover_id: 818
+    position:
+      x: 5350.276
+      y: 111.99
+      z: 4412.018
+    radius: 9
+    count: 1
+    delay: 480000
+  - id: 251
+    mover_id: 542
+    position:
+      x: 6056.605
+      y: 102.293
+      z: 4100.825
+    radius: 66
+    count: 10
+    delay: 55000
+  - id: 252
+    mover_id: 572
+    position:
+      x: 3702.306
+      y: 59.064
+      z: 4754.984
+    radius: 20.5
+    count: 2
+    delay: 55000
+  - id: 253
+    mover_id: 572
+    position:
+      x: 3692.172
+      y: 51.384
+      z: 4680.043
+    radius: 22
+    count: 2
+    delay: 55000
+  - id: 254
+    mover_id: 572
+    position:
+      x: 3706.015
+      y: 60.883
+      z: 4818.265
+    radius: 25
+    count: 2
+    delay: 55000
+  - id: 255
+    mover_id: 572
+    position:
+      x: 3755.252
+      y: 59.062
+      z: 4876.512
+    radius: 22
+    count: 2
+    delay: 55000
+  - id: 256
+    mover_id: 572
+    position:
+      x: 3690.105
+      y: 59
+      z: 4868.588
+    radius: 21
+    count: 2
+    delay: 55000
+  - id: 257
+    mover_id: 572
+    position:
+      x: 3623.285
+      y: 59.584
+      z: 4823.15
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 258
+    mover_id: 573
+    position:
+      x: 3703.421
+      y: 62.12
+      z: 4819.929
+    radius: 25
+    count: 2
+    delay: 55000
+  - id: 259
+    mover_id: 573
+    position:
+      x: 3683.843
+      y: 49.382
+      z: 4678.717
+    radius: 21.5
+    count: 2
+    delay: 55000
+  - id: 260
+    mover_id: 573
+    position:
+      x: 3699.906
+      y: 60.214
+      z: 4748.74
+    radius: 22.5
+    count: 2
+    delay: 55000
+  - id: 261
+    mover_id: 573
+    position:
+      x: 3761.771
+      y: 59.321
+      z: 4877.142
+    radius: 21
+    count: 2
+    delay: 55000
+  - id: 262
+    mover_id: 573
+    position:
+      x: 3681.252
+      y: 59
+      z: 4869.695
+    radius: 19
+    count: 2
+    delay: 55000
+  - id: 263
+    mover_id: 573
+    position:
+      x: 3633.883
+      y: 59.749
+      z: 4821.781
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 264
+    mover_id: 575
+    position:
+      x: 3766.088
+      y: 59.149
+      z: 4866.656
+    radius: 23
+    count: 12
+    delay: 55000
+  - id: 265
+    mover_id: 575
+    position:
+      x: 3629.829
+      y: 59.663
+      z: 4821.863
+    radius: 20.5
+    count: 1
+    delay: 55000
+  - id: 266
+    mover_id: 575
+    position:
+      x: 3697.341
+      y: 54.265
+      z: 4671.558
+    radius: 22.5
+    count: 1
+    delay: 55000
+  - id: 267
+    mover_id: 575
+    position:
+      x: 3705.204
+      y: 59.662
+      z: 4749.807
+    radius: 21.5
+    count: 1
+    delay: 55000
+  - id: 268
+    mover_id: 575
+    position:
+      x: 3702.745
+      y: 59.495
+      z: 4816.554
+    radius: 25.5
+    count: 1
+    delay: 55000
+  - id: 269
+    mover_id: 575
+    position:
+      x: 3686.37
+      y: 59
+      z: 4863.608
+    radius: 19.5
+    count: 1
+    delay: 55000
+  - id: 270
+    mover_id: 576
+    position:
+      x: 3664.284
+      y: 59.908
+      z: 4805.499
+    radius: 86
+    count: 1
+    delay: 2100000
+  - id: 271
+    mover_id: 1021
+    position:
+      x: 5878.264
+      y: 99.222
+      z: 5361.105
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 272
+    mover_id: 1021
+    position:
+      x: 5888.896
+      y: 98.995
+      z: 5348.913
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 273
+    mover_id: 1021
+    position:
+      x: 5860.062
+      y: 101.678
+      z: 5494.029
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 274
+    mover_id: 1021
+    position:
+      x: 5845.957
+      y: 102.419
+      z: 5491.663
+    radius: 3.5
+    count: 1
+    delay: 1000
+  - id: 275
+    mover_id: 1021
+    position:
+      x: 5950.797
+      y: 100.392
+      z: 5417.848
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 276
+    mover_id: 1052
+    position:
+      x: 6060.854
+      y: 76.719
+      z: 6102.625
+    radius: 64
+    count: 40
+    delay: 35000
+  - id: 277
+    mover_id: 1051
+    position:
+      x: 5997.676
+      y: 81.492
+      z: 5971.038
+    radius: 80.5
+    count: 50
+    delay: 1000
+  - id: 278
+    mover_id: 1051
+    position:
+      x: 5919.976
+      y: 83.716
+      z: 5855.867
+    radius: 64
+    count: 30
+    delay: 35000
+  - id: 279
+    mover_id: 1051
+    position:
+      x: 5790.804
+      y: 80.616
+      z: 5857.618
+    radius: 63.5
+    count: 30
+    delay: 35000
+  - id: 280
+    mover_id: 1050
+    position:
+      x: 5855.52
+      y: 96.167
+      z: 5727.584
+    radius: 78.5
+    count: 40
+    delay: 35000
+  - id: 281
+    mover_id: 1050
+    position:
+      x: 5709.04
+      y: 85.713
+      z: 5663.601
+    radius: 94
+    count: 40
+    delay: 35000
+  - id: 282
+    mover_id: 1053
+    position:
+      x: 6030.787
+      y: 83.744
+      z: 6032.183
+    radius: 95
+    count: 1
+    delay: 1800000
+  - id: 283
+    mover_id: 1054
+    position:
+      x: 6637.396
+      y: 72.155
+      z: 5826.483
+    radius: 95.5
+    count: 20
+    delay: 35000
+  - id: 284
+    mover_id: 1055
+    position:
+      x: 6638.161
+      y: 68.496
+      z: 5806.837
+    radius: 95
+    count: 20
+    delay: 35000
+  - id: 285
+    mover_id: 1055
+    position:
+      x: 6497.905
+      y: 86.689
+      z: 5806.33
+    radius: 58
+    count: 30
+    delay: 35000
+  - id: 286
+    mover_id: 1056
+    position:
+      x: 6368.813
+      y: 98.199
+      z: 5794.407
+    radius: 72
+    count: 30
+    delay: 35000
+  - id: 287
+    mover_id: 1057
+    position:
+      x: 6448.639
+      y: 90.829
+      z: 5808.719
+    radius: 114
+    count: 1
+    delay: 1800000
+  - id: 288
+    mover_id: 1046
+    position:
+      x: 6226.29
+      y: 101.004
+      z: 5822.46
+    radius: 88
+    count: 30
+    delay: 35000
+  - id: 289
+    mover_id: 1047
+    position:
+      x: 6226.765
+      y: 101.301
+      z: 5728.823
+    radius: 103.5
+    count: 30
+    delay: 35000
+  - id: 290
+    mover_id: 1048
+    position:
+      x: 6160.068
+      y: 103.118
+      z: 5647.939
+    radius: 111
+    count: 20
+    delay: 35000
+  - id: 291
+    mover_id: 1049
+    position:
+      x: 6207.187
+      y: 102.391
+      z: 5684.951
+    radius: 88
+    count: 1
+    delay: 1800000
+  - id: 292
+    mover_id: 1042
+    position:
+      x: 6479.56
+      y: 97.377
+      z: 6047.117
+    radius: 65
+    count: 30
+    delay: 35000
+  - id: 293
+    mover_id: 1043
+    position:
+      x: 6559.712
+      y: 97.355
+      z: 6048.011
+    radius: 78.5
+    count: 30
+    delay: 35000
+  - id: 294
+    mover_id: 1044
+    position:
+      x: 6655.972
+      y: 97.259
+      z: 6047.885
+    radius: 80.5
+    count: 20
+    delay: 35000
+  - id: 295
+    mover_id: 1045
+    position:
+      x: 6583.469
+      y: 97.4
+      z: 6048.009
+    radius: 113
+    count: 1
+    delay: 1800000
+  - id: 296
+    mover_id: 630
+    position:
+      x: 2511.145
+      y: 61.2
+      z: 4328.775
+    radius: 28.5
+    count: 3
+    delay: 55000
+  - id: 297
+    mover_id: 640
+    position:
+      x: 2534.998
+      y: 50.826
+      z: 4599.667
+    radius: 43.5
+    count: 4
+    delay: 55000
+  - id: 298
+    mover_id: 630
+    position:
+      x: 2583.156
+      y: 59.859
+      z: 4256.065
+    radius: 27.5
+    count: 2
+    delay: 55000
+  - id: 299
+    mover_id: 630
+    position:
+      x: 2629.251
+      y: 62.756
+      z: 4355.53
+    radius: 28
+    count: 3
+    delay: 55000
+  - id: 300
+    mover_id: 630
+    position:
+      x: 2888.16
+      y: 56.779
+      z: 4255.181
+    radius: 41
+    count: 4
+    delay: 55000
+  - id: 301
+    mover_id: 630
+    position:
+      x: 2804.788
+      y: 2.236
+      z: 4241.29
+    radius: 34.5
+    count: 2
+    delay: 55000
+  - id: 302
+    mover_id: 631
+    position:
+      x: 2984.423
+      y: 55
+      z: 4265.494
+    radius: 46.5
+    count: 2
+    delay: 55000
+  - id: 303
+    mover_id: 631
+    position:
+      x: 3063.251
+      y: 60.009
+      z: 4313.164
+    radius: 58.5
+    count: 3
+    delay: 55000
+  - id: 304
+    mover_id: 631
+    position:
+      x: 3071.901
+      y: 58.425
+      z: 4209.245
+    radius: 51.5
+    count: 8
+    delay: 55000
+  - id: 305
+    mover_id: 639
+    position:
+      x: 2957.358
+      y: 59.376
+      z: 4532.838
+    radius: 56
+    count: 8
+    delay: 55000
+  - id: 306
+    mover_id: 640
+    position:
+      x: 2573.031
+      y: 49.332
+      z: 4550.796
+    radius: 62.5
+    count: 3
+    delay: 55000
+  - id: 307
+    mover_id: 641
+    position:
+      x: 2576.657
+      y: 44.977
+      z: 4571.217
+    radius: 190
+    count: 1
+    delay: 2100000
+  - id: 308
+    mover_id: 640
+    position:
+      x: 2922.73
+      y: 51.048
+      z: 4402.064
+    radius: 51.5
+    count: 8
+    delay: 55000
+  - id: 309
+    mover_id: 639
+    position:
+      x: 2772.84
+      y: 53.717
+      z: 4511.891
+    radius: 45.5
+    count: 8
+    delay: 55000
+  - id: 310
+    mover_id: 575
+    position:
+      x: 3568.471
+      y: 60.867
+      z: 4606.436
+    radius: 21.5
+    count: 1
+    delay: 55000
+  - id: 311
+    mover_id: 598
+    position:
+      x: 3264.177
+      y: 70.032
+      z: 4189.037
+    radius: 45.5
+    count: 4
+    delay: 55000
+  - id: 312
+    mover_id: 598
+    position:
+      x: 3266.723
+      y: 61.859
+      z: 4322.521
+    radius: 45.5
+    count: 4
+    delay: 55000
+  - id: 313
+    mover_id: 599
+    position:
+      x: 3347.677
+      y: 79.187
+      z: 4330.059
+    radius: 43.5
+    count: 5
+    delay: 55000
+  - id: 314
+    mover_id: 599
+    position:
+      x: 3337.31
+      y: 67.182
+      z: 4175.197
+    radius: 55.5
+    count: 4
+    delay: 55000
+  - id: 315
+    mover_id: 600
+    position:
+      x: 3365.052
+      y: 61.877
+      z: 4240.146
+    radius: 71.5
+    count: 8
+    delay: 55000
+  - id: 316
+    mover_id: 601
+    position:
+      x: 3343.865
+      y: 61.284
+      z: 4233.438
+    radius: 76.5
+    count: 1
+    delay: 2100000
+  - id: 317
+    mover_id: 632
+    position:
+      x: 3178.752
+      y: 66.428
+      z: 4299.91
+    radius: 41
+    count: 5
+    delay: 55000
+  - id: 318
+    mover_id: 632
+    position:
+      x: 3176.75
+      y: 60.093
+      z: 4214.619
+    radius: 45
+    count: 4
+    delay: 55000
+  - id: 319
+    mover_id: 633
+    position:
+      x: 3157.573
+      y: 62.763
+      z: 4240.979
+    radius: 89
+    count: 1
+    delay: 2100000
+  - id: 320
+    mover_id: 638
+    position:
+      x: 2922.184
+      y: 63.085
+      z: 4750.446
+    radius: 66.5
+    count: 4
+    delay: 55000
+  - id: 321
+    mover_id: 638
+    position:
+      x: 2976.374
+      y: 53.273
+      z: 4633.315
+    radius: 65.5
+    count: 5
+    delay: 55000
+  - id: 322
+    mover_id: 638
+    position:
+      x: 2805.521
+      y: 48.098
+      z: 4664.7
+    radius: 35
+    count: 8
+    delay: 55000
+  - id: 323
+    mover_id: 560
+    position:
+      x: 3491.12
+      y: 40
+      z: 4781
+    radius: 23
+    count: 2
+    delay: 55000
+  - id: 324
+    mover_id: 560
+    position:
+      x: 3454.732
+      y: 40
+      z: 4691.79
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 325
+    mover_id: 560
+    position:
+      x: 3390.054
+      y: 59
+      z: 4786.2
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 326
+    mover_id: 560
+    position:
+      x: 3393.265
+      y: 45.028
+      z: 4881.012
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 327
+    mover_id: 560
+    position:
+      x: 3500.969
+      y: 61.39
+      z: 4876.025
+    radius: 20.5
+    count: 2
+    delay: 55000
+  - id: 328
+    mover_id: 561
+    position:
+      x: 3388.855
+      y: 59
+      z: 4778.8
+    radius: 19
+    count: 2
+    delay: 55000
+  - id: 329
+    mover_id: 561
+    position:
+      x: 3489.344
+      y: 40
+      z: 4777.264
+    radius: 23.5
+    count: 2
+    delay: 55000
+  - id: 330
+    mover_id: 561
+    position:
+      x: 3453.146
+      y: 40
+      z: 4686.279
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 331
+    mover_id: 561
+    position:
+      x: 3377.606
+      y: 45
+      z: 4875.361
+    radius: 21
+    count: 2
+    delay: 55000
+  - id: 332
+    mover_id: 561
+    position:
+      x: 3493.447
+      y: 60.83
+      z: 4879.09
+    radius: 19
+    count: 2
+    delay: 55000
+  - id: 333
+    mover_id: 562
+    position:
+      x: 3386.14
+      y: 45.002
+      z: 4881.448
+    radius: 19.5
+    count: 1
+    delay: 55000
+  - id: 334
+    mover_id: 562
+    position:
+      x: 3493.991
+      y: 40
+      z: 4778.954
+    radius: 24
+    count: 1
+    delay: 55000
+  - id: 335
+    mover_id: 562
+    position:
+      x: 3446.668
+      y: 40
+      z: 4687.828
+    radius: 20.5
+    count: 1
+    delay: 55000
+  - id: 336
+    mover_id: 562
+    position:
+      x: 3379.06
+      y: 59
+      z: 4789.449
+    radius: 20
+    count: 1
+    delay: 55000
+  - id: 337
+    mover_id: 562
+    position:
+      x: 3492.843
+      y: 59.755
+      z: 4873.738
+    radius: 19.5
+    count: 1
+    delay: 55000
+  - id: 338
+    mover_id: 563
+    position:
+      x: 3417.245
+      y: 59
+      z: 4818.874
+    radius: 75
+    count: 1
+    delay: 2100000
+  - id: 339
+    mover_id: 564
+    position:
+      x: 3309.735
+      y: 61.739
+      z: 4780.586
+    radius: 18.5
+    count: 2
+    delay: 55000
+  - id: 340
+    mover_id: 564
+    position:
+      x: 3224.251
+      y: 10.734
+      z: 4720.404
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 341
+    mover_id: 564
+    position:
+      x: 3161.273
+      y: 14.919
+      z: 4715.415
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 342
+    mover_id: 564
+    position:
+      x: 3283.868
+      y: 61.855
+      z: 4842.136
+    radius: 18
+    count: 2
+    delay: 55000
+  - id: 343
+    mover_id: 564
+    position:
+      x: 3308.727
+      y: 45.601
+      z: 4901.403
+    radius: 17.5
+    count: 2
+    delay: 55000
+  - id: 344
+    mover_id: 564
+    position:
+      x: 3201.736
+      y: 17.727
+      z: 4815.142
+    radius: 21.5
+    count: 2
+    delay: 55000
+  - id: 345
+    mover_id: 565
+    position:
+      x: 3233.915
+      y: 7.236
+      z: 4715.349
+    radius: 20.5
+    count: 2
+    delay: 55000
+  - id: 346
+    mover_id: 565
+    position:
+      x: 3305.88
+      y: 62.805
+      z: 4784.501
+    radius: 18
+    count: 2
+    delay: 55000
+  - id: 347
+    mover_id: 565
+    position:
+      x: 3151.101
+      y: 15.015
+      z: 4712.4
+    radius: 21
+    count: 2
+    delay: 55000
+  - id: 348
+    mover_id: 565
+    position:
+      x: 3292.756
+      y: 62.204
+      z: 4846.15
+    radius: 18
+    count: 2
+    delay: 55000
+  - id: 349
+    mover_id: 565
+    position:
+      x: 3301.64
+      y: 49.056
+      z: 4897.593
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 350
+    mover_id: 565
+    position:
+      x: 3192.509
+      y: 16.354
+      z: 4806.392
+    radius: 21
+    count: 2
+    delay: 55000
+  - id: 351
+    mover_id: 566
+    position:
+      x: 3228.672
+      y: 9.796
+      z: 4711.635
+    radius: 20
+    count: 1
+    delay: 55000
+  - id: 352
+    mover_id: 566
+    position:
+      x: 3312.277
+      y: 61.758
+      z: 4788.655
+    radius: 18
+    count: 1
+    delay: 55000
+  - id: 353
+    mover_id: 566
+    position:
+      x: 3162.056
+      y: 15.477
+      z: 4708.647
+    radius: 19.5
+    count: 1
+    delay: 55000
+  - id: 354
+    mover_id: 566
+    position:
+      x: 3292.27
+      y: 60.638
+      z: 4839.765
+    radius: 18
+    count: 1
+    delay: 55000
+  - id: 355
+    mover_id: 566
+    position:
+      x: 3311.793
+      y: 45.248
+      z: 4896.705
+    radius: 17.5
+    count: 1
+    delay: 55000
+  - id: 356
+    mover_id: 566
+    position:
+      x: 3203.651
+      y: 17.268
+      z: 4803.007
+    radius: 19.5
+    count: 1
+    delay: 55000
+  - id: 357
+    mover_id: 567
+    position:
+      x: 3272.971
+      y: 60.419
+      z: 4802.085
+    radius: 75
+    count: 1
+    delay: 2100000
+  - id: 358
+    mover_id: 572
+    position:
+      x: 3563.446
+      y: 59.982
+      z: 4608.193
+    radius: 23
+    count: 2
+    delay: 55000
+  - id: 359
+    mover_id: 572
+    position:
+      x: 3566.166
+      y: 62.948
+      z: 4825.789
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 360
+    mover_id: 573
+    position:
+      x: 3569.437
+      y: 61
+      z: 4611.662
+    radius: 21.5
+    count: 2
+    delay: 55000
+  - id: 361
+    mover_id: 573
+    position:
+      x: 3566.009
+      y: 63.614
+      z: 4821.919
+    radius: 20.5
+    count: 2
+    delay: 55000
+  - id: 362
+    mover_id: 575
+    position:
+      x: 3560
+      y: 63.876
+      z: 4824.707
+    radius: 20
+    count: 1
+    delay: 55000
+  - id: 363
+    mover_id: 20
+    position:
+      x: 6922.861
+      y: 96.448
+      z: 2953.877
+    radius: 32
+    count: 18
+    delay: 60000
+  - id: 364
+    mover_id: 20
+    position:
+      x: 7054.159
+      y: 120.216
+      z: 2999.579
+    radius: 58.5
+    count: 18
+    delay: 60000
+  - id: 365
+    mover_id: 21
+    position:
+      x: 6944.535
+      y: 105.605
+      z: 2931.387
+    radius: 27
+    count: 18
+    delay: 60000
+  - id: 366
+    mover_id: 21
+    position:
+      x: 6705.906
+      y: 99.868
+      z: 3017.33
+    radius: 21
+    count: 18
+    delay: 60000
+  - id: 367
+    mover_id: 21
+    position:
+      x: 6919.695
+      y: 98.945
+      z: 2907.926
+    radius: 18
+    count: 18
+    delay: 60000
+  - id: 368
+    mover_id: 21
+    position:
+      x: 7140.718
+      y: 116.266
+      z: 3045.284
+    radius: 24
+    count: 10
+    delay: 60000
+  - id: 369
+    mover_id: 22
+    position:
+      x: 6866.99
+      y: 98.921
+      z: 2887.055
+    radius: 29
+    count: 18
+    delay: 60000
+  - id: 370
+    mover_id: 22
+    position:
+      x: 6773.881
+      y: 101.505
+      z: 3001.466
+    radius: 31
+    count: 18
+    delay: 60000
+  - id: 371
+    mover_id: 22
+    position:
+      x: 6738.485
+      y: 97.728
+      z: 2968.712
+    radius: 24
+    count: 10
+    delay: 55000
+  - id: 372
+    mover_id: 23
+    position:
+      x: 6718.738
+      y: 99.891
+      z: 3007.823
+    radius: 48
+    count: 1
+    delay: 2100000
+  - id: 373
+    mover_id: 22
+    position:
+      x: 7186.768
+      y: 105.289
+      z: 3001.304
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 374
+    mover_id: 20
+    position:
+      x: 6711.443
+      y: 116.452
+      z: 3191.731
+    radius: 21.5
+    count: 18
+    delay: 60000
+  - id: 375
+    mover_id: 20
+    position:
+      x: 7133.263
+      y: 100.746
+      z: 3339.702
+    radius: 29.5
+    count: 18
+    delay: 60000
+  - id: 376
+    mover_id: 20
+    position:
+      x: 6839.46
+      y: 105.003
+      z: 3329.747
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 377
+    mover_id: 20
+    position:
+      x: 6893.733
+      y: 103.054
+      z: 3472.918
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 378
+    mover_id: 20
+    position:
+      x: 7053.456
+      y: 100
+      z: 3417.434
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 379
+    mover_id: 20
+    position:
+      x: 7013.978
+      y: 100
+      z: 3424.53
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 380
+    mover_id: 20
+    position:
+      x: 6851.166
+      y: 102.529
+      z: 3178.838
+    radius: 42.5
+    count: 18
+    delay: 60000
+  - id: 381
+    mover_id: 21
+    position:
+      x: 6802.625
+      y: 108.358
+      z: 3334.191
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 382
+    mover_id: 21
+    position:
+      x: 6774.683
+      y: 132.37
+      z: 3437.419
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 383
+    mover_id: 21
+    position:
+      x: 7146.32
+      y: 100.931
+      z: 3384.455
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 384
+    mover_id: 21
+    position:
+      x: 7038.019
+      y: 93.457
+      z: 3463.383
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 385
+    mover_id: 22
+    position:
+      x: 7062.696
+      y: 100.69
+      z: 3496.414
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 386
+    mover_id: 22
+    position:
+      x: 6900.113
+      y: 98.362
+      z: 3507.422
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 387
+    mover_id: 22
+    position:
+      x: 6790.68
+      y: 107.406
+      z: 3364.282
+    radius: 21
+    count: 18
+    delay: 60000
+  - id: 388
+    mover_id: 22
+    position:
+      x: 6733.184
+      y: 125.513
+      z: 3457.352
+    radius: 29
+    count: 10
+    delay: 55000
+  - id: 389
+    mover_id: 24
+    position:
+      x: 6733.147
+      y: 100.371
+      z: 3526.389
+    radius: 42
+    count: 15
+    delay: 55000
+  - id: 390
+    mover_id: 24
+    position:
+      x: 6729.243
+      y: 100.568
+      z: 3557.306
+    radius: 47.5
+    count: 15
+    delay: 55000
+  - id: 391
+    mover_id: 24
+    position:
+      x: 6864.938
+      y: 104.824
+      z: 3505.695
+    radius: 24
+    count: 15
+    delay: 55000
+  - id: 392
+    mover_id: 25
+    position:
+      x: 6671.678
+      y: 102.221
+      z: 3550.074
+    radius: 34.5
+    count: 15
+    delay: 55000
+  - id: 393
+    mover_id: 25
+    position:
+      x: 6870.226
+      y: 100.27
+      z: 3554.703
+    radius: 30.5
+    count: 15
+    delay: 55000
+  - id: 394
+    mover_id: 26
+    position:
+      x: 6670.323
+      y: 112.085
+      z: 3582.336
+    radius: 43.5
+    count: 15
+    delay: 55000
+  - id: 395
+    mover_id: 96
+    position:
+      x: 7112.355
+      y: 100.051
+      z: 3483.914
+    radius: 24
+    count: 10
+    delay: 55000
+  - id: 396
+    mover_id: 96
+    position:
+      x: 7153.268
+      y: 99.938
+      z: 3480.853
+    radius: 24
+    count: 12
+    delay: 55000
+  - id: 397
+    mover_id: 96
+    position:
+      x: 7065.607
+      y: 102.371
+      z: 3517.699
+    radius: 30
+    count: 12
+    delay: 55000
+  - id: 398
+    mover_id: 97
+    position:
+      x: 7106.374
+      y: 101.562
+      z: 3549.21
+    radius: 24
+    count: 10
+    delay: 55000
+  - id: 399
+    mover_id: 97
+    position:
+      x: 7148.118
+      y: 99.106
+      z: 3527.966
+    radius: 24
+    count: 10
+    delay: 55000
+  - id: 400
+    mover_id: 98
+    position:
+      x: 7155.575
+      y: 100.089
+      z: 3571.957
+    radius: 30.5
+    count: 12
+    delay: 55000
+  - id: 401
+    mover_id: 304
+    position:
+      x: 6909.214
+      y: 107.157
+      z: 3397.584
+    radius: 39.5
+    count: 8
+    delay: 80000
+  - id: 402
+    mover_id: 304
+    position:
+      x: 6977.847
+      y: 116.752
+      z: 3574.407
+    radius: 36.5
+    count: 8
+    delay: 80000
+  - id: 403
+    mover_id: 1021
+    position:
+      x: 6872.385
+      y: 100
+      z: 3243.038
+    radius: 2
+    count: 1
+    delay: 1000
+  - id: 404
+    mover_id: 1021
+    position:
+      x: 6965.546
+      y: 100
+      z: 3212.694
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 405
+    mover_id: 1021
+    position:
+      x: 6957.083
+      y: 100
+      z: 3378.455
+    radius: 2
+    count: 1
+    delay: 1000
+  - id: 406
+    mover_id: 751
+    position:
+      x: 6962.749
+      y: 100
+      z: 3157.698
+    radius: 7.5
+    count: 1
+    delay: 120000
+  - id: 407
+    mover_id: 811
+    position:
+      x: 6983.76
+      y: 100
+      z: 3446.355
+    radius: 6.5
+    count: 3
+    delay: 60000
+  - id: 408
+    mover_id: 811
+    position:
+      x: 6931.802
+      y: 99.703
+      z: 3481.95
+    radius: 11.5
+    count: 3
+    delay: 60000
+  - id: 409
+    mover_id: 811
+    position:
+      x: 7166.155
+      y: 98.544
+      z: 3512.051
+    radius: 10
+    count: 3
+    delay: 60000
+  - id: 410
+    mover_id: 1021
+    position:
+      x: 6962.111
+      y: 100.012
+      z: 3378.158
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 411
+    mover_id: 1021
+    position:
+      x: 7157.009
+      y: 100.381
+      z: 3191.541
+    radius: 3.5
+    count: 1
+    delay: 1000
+  - id: 412
+    mover_id: 1021
+    position:
+      x: 7163.142
+      y: 100.217
+      z: 3191.885
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 413
+    mover_id: 1021
+    position:
+      x: 7162.378
+      y: 100
+      z: 3284.85
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 414
+    mover_id: 1021
+    position:
+      x: 7156.362
+      y: 100
+      z: 3284.799
+    radius: 1.5
+    count: 1
+    delay: 1000
+  - id: 415
+    mover_id: 1021
+    position:
+      x: 7123.659
+      y: 100
+      z: 3283.973
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 416
+    mover_id: 1021
+    position:
+      x: 7087.32
+      y: 100
+      z: 3241.547
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 417
+    mover_id: 1021
+    position:
+      x: 6918.181
+      y: 100
+      z: 3201.628
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 418
+    mover_id: 1021
+    position:
+      x: 6953.977
+      y: 100
+      z: 3243.12
+    radius: 4
+    count: 1
+    delay: 1000
+  - id: 419
+    mover_id: 1021
+    position:
+      x: 7122.508
+      y: 100
+      z: 3203.719
+    radius: 4
+    count: 1
+    delay: 1000
+  - id: 420
+    mover_id: 20
+    position:
+      x: 7267.842
+      y: 103.991
+      z: 3323.717
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 421
+    mover_id: 20
+    position:
+      x: 7213.674
+      y: 99.664
+      z: 3478.525
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 422
+    mover_id: 20
+    position:
+      x: 7279.533
+      y: 167.495
+      z: 3427.368
+    radius: 24
+    count: 10
+    delay: 60000
+  - id: 423
+    mover_id: 21
+    position:
+      x: 7316.537
+      y: 107.32
+      z: 3331.459
+    radius: 35.5
+    count: 18
+    delay: 60000
+  - id: 424
+    mover_id: 21
+    position:
+      x: 7232.597
+      y: 98.632
+      z: 3512.31
+    radius: 24
+    count: 18
+    delay: 60000
+  - id: 425
+    mover_id: 22
+    position:
+      x: 7266.901
+      y: 100
+      z: 3479.469
+    radius: 20
+    count: 18
+    delay: 60000
+  - id: 426
+    mover_id: 22
+    position:
+      x: 7226.664
+      y: 101.062
+      z: 3394.087
+    radius: 23.5
+    count: 9
+    delay: 60000
+  - id: 427
+    mover_id: 24
+    position:
+      x: 7370.721
+      y: 106.436
+      z: 3357.656
+    radius: 31
+    count: 15
+    delay: 55000
+  - id: 428
+    mover_id: 98
+    position:
+      x: 7168.851
+      y: 98.21
+      z: 3549.754
+    radius: 24
+    count: 12
+    delay: 55000
+  - id: 429
+    mover_id: 99
+    position:
+      x: 7213.723
+      y: 106.729
+      z: 3560.099
+    radius: 71
+    count: 1
+    delay: 2100000
+  - id: 430
+    mover_id: 304
+    position:
+      x: 7244.447
+      y: 114.1
+      z: 3461.154
+    radius: 42
+    count: 8
+    delay: 80000
+  - id: 431
+    mover_id: 1021
+    position:
+      x: 7200.26
+      y: 100
+      z: 3282.04
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 432
+    mover_id: 1021
+    position:
+      x: 7206.384
+      y: 100
+      z: 3247.65
+    radius: 3.5
+    count: 1
+    delay: 1000
+  - id: 433
+    mover_id: 1021
+    position:
+      x: 7184.502
+      y: 100
+      z: 3224.238
+    radius: 1.5
+    count: 1
+    delay: 1000
+  - id: 434
+    mover_id: 24
+    position:
+      x: 7127.917
+      y: 106.885
+      z: 3591.235
+    radius: 37
+    count: 8
+    delay: 55000
+  - id: 435
+    mover_id: 25
+    position:
+      x: 7157.091
+      y: 107.153
+      z: 3611.415
+    radius: 27.5
+    count: 8
+    delay: 55000
+  - id: 436
+    mover_id: 27
+    position:
+      x: 6669.108
+      y: 114.612
+      z: 3622.423
+    radius: 77.5
+    count: 1
+    delay: 2100000
+  - id: 437
+    mover_id: 28
+    position:
+      x: 7011.686
+      y: 105.881
+      z: 3679.812
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 438
+    mover_id: 28
+    position:
+      x: 7054.413
+      y: 113.174
+      z: 3677.268
+    radius: 34.5
+    count: 8
+    delay: 55000
+  - id: 439
+    mover_id: 28
+    position:
+      x: 7118.409
+      y: 116.635
+      z: 3719.76
+    radius: 22
+    count: 8
+    delay: 55000
+  - id: 440
+    mover_id: 28
+    position:
+      x: 6973.182
+      y: 104.241
+      z: 3648.382
+    radius: 39.5
+    count: 8
+    delay: 55000
+  - id: 441
+    mover_id: 28
+    position:
+      x: 6799.221
+      y: 100.374
+      z: 3635.353
+    radius: 27.5
+    count: 8
+    delay: 55000
+  - id: 442
+    mover_id: 29
+    position:
+      x: 7021.729
+      y: 114.831
+      z: 3726.339
+    radius: 27.5
+    count: 8
+    delay: 55000
+  - id: 443
+    mover_id: 29
+    position:
+      x: 7067.148
+      y: 114.665
+      z: 3732.863
+    radius: 27.5
+    count: 8
+    delay: 55000
+  - id: 444
+    mover_id: 29
+    position:
+      x: 7135.584
+      y: 118.718
+      z: 3782.053
+    radius: 23.5
+    count: 8
+    delay: 55000
+  - id: 445
+    mover_id: 30
+    position:
+      x: 7033.388
+      y: 110.856
+      z: 3781.447
+    radius: 31
+    count: 8
+    delay: 55000
+  - id: 446
+    mover_id: 30
+    position:
+      x: 7080.49
+      y: 105.614
+      z: 3789.447
+    radius: 22.5
+    count: 8
+    delay: 55000
+  - id: 447
+    mover_id: 30
+    position:
+      x: 7049.119
+      y: 105.033
+      z: 3796.711
+    radius: 26.5
+    count: 8
+    delay: 55000
+  - id: 448
+    mover_id: 31
+    position:
+      x: 7016.956
+      y: 98.225
+      z: 3791.213
+    radius: 57.5
+    count: 1
+    delay: 2100000
+  - id: 449
+    mover_id: 32
+    position:
+      x: 6817.13
+      y: 100
+      z: 3701.385
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 450
+    mover_id: 32
+    position:
+      x: 6839.499
+      y: 100
+      z: 3743.125
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 451
+    mover_id: 32
+    position:
+      x: 6883.986
+      y: 100.739
+      z: 3744.528
+    radius: 32.5
+    count: 8
+    delay: 55000
+  - id: 452
+    mover_id: 33
+    position:
+      x: 6856.239
+      y: 100.795
+      z: 3785.991
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 453
+    mover_id: 33
+    position:
+      x: 6904.972
+      y: 100.789
+      z: 3805.895
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 454
+    mover_id: 34
+    position:
+      x: 6863.883
+      y: 103.812
+      z: 3836.558
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 455
+    mover_id: 34
+    position:
+      x: 6822.782
+      y: 100.939
+      z: 3795.608
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 456
+    mover_id: 35
+    position:
+      x: 6822.983
+      y: 102.491
+      z: 3814.174
+    radius: 43
+    count: 1
+    delay: 2100000
+  - id: 457
+    mover_id: 37
+    position:
+      x: 7112.396
+      y: 129.585
+      z: 3889.939
+    radius: 35.5
+    count: 8
+    delay: 55000
+  - id: 458
+    mover_id: 37
+    position:
+      x: 7037.569
+      y: 121.585
+      z: 3994.26
+    radius: 59
+    count: 8
+    delay: 55000
+  - id: 459
+    mover_id: 38
+    position:
+      x: 7048.69
+      y: 145.935
+      z: 4040.178
+    radius: 30
+    count: 8
+    delay: 55000
+  - id: 460
+    mover_id: 39
+    position:
+      x: 7053.078
+      y: 150.925
+      z: 4090.637
+    radius: 91.5
+    count: 1
+    delay: 2100000
+  - id: 461
+    mover_id: 304
+    position:
+      x: 6907.951
+      y: 114.4
+      z: 3702.792
+    radius: 46.5
+    count: 8
+    delay: 80000
+  - id: 462
+    mover_id: 524
+    position:
+      x: 6957.528
+      y: 99.498
+      z: 3707.098
+    radius: 42
+    count: 2
+    delay: 55000
+  - id: 463
+    mover_id: 524
+    position:
+      x: 6846.806
+      y: 99.858
+      z: 3668.983
+    radius: 33.5
+    count: 2
+    delay: 55000
+  - id: 464
+    mover_id: 811
+    position:
+      x: 7158.858
+      y: 111.136
+      z: 3632.049
+    radius: 9.5
+    count: 3
+    delay: 60000
+  - id: 465
+    mover_id: 811
+    position:
+      x: 7096.413
+      y: 115.196
+      z: 3747.445
+    radius: 13.5
+    count: 3
+    delay: 60000
+  - id: 466
+    mover_id: 811
+    position:
+      x: 7045.091
+      y: 117.196
+      z: 3905.795
+    radius: 25.5
+    count: 3
+    delay: 60000
+  - id: 467
+    mover_id: 811
+    position:
+      x: 6840.572
+      y: 103.13
+      z: 3830.64
+    radius: 13
+    count: 3
+    delay: 60000
+  - id: 468
+    mover_id: 815
+    position:
+      x: 6685.025
+      y: 114.649
+      z: 3642.214
+    radius: 9
+    count: 3
+    delay: 180000
+  - id: 469
+    mover_id: 25
+    position:
+      x: 7186.045
+      y: 106.187
+      z: 3602.22
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 470
+    mover_id: 26
+    position:
+      x: 7205.144
+      y: 109.381
+      z: 3644.61
+    radius: 18
+    count: 8
+    delay: 55000
+  - id: 471
+    mover_id: 26
+    position:
+      x: 7217.335
+      y: 109.411
+      z: 3607.465
+    radius: 18.5
+    count: 8
+    delay: 55000
+  - id: 472
+    mover_id: 28
+    position:
+      x: 7186.967
+      y: 125.381
+      z: 3776.389
+    radius: 34
+    count: 8
+    delay: 55000
+  - id: 473
+    mover_id: 32
+    position:
+      x: 7321
+      y: 85.024
+      z: 3994
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 474
+    mover_id: 32
+    position:
+      x: 7438
+      y: 85.237
+      z: 3958
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 475
+    mover_id: 36
+    position:
+      x: 7239.402
+      y: 154.656
+      z: 3862.846
+    radius: 29
+    count: 8
+    delay: 55000
+  - id: 476
+    mover_id: 36
+    position:
+      x: 7264.827
+      y: 155.692
+      z: 3908.638
+    radius: 35
+    count: 8
+    delay: 55000
+  - id: 477
+    mover_id: 37
+    position:
+      x: 7168.232
+      y: 150.867
+      z: 3877.182
+    radius: 32
+    count: 8
+    delay: 55000
+  - id: 478
+    mover_id: 40
+    position:
+      x: 7466.913
+      y: 153.788
+      z: 4073.259
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 479
+    mover_id: 60
+    position:
+      x: 7330.685
+      y: 144.306
+      z: 4070.544
+    radius: 37
+    count: 8
+    delay: 55000
+  - id: 480
+    mover_id: 60
+    position:
+      x: 7264.7
+      y: 149.709
+      z: 4071.479
+    radius: 22.5
+    count: 8
+    delay: 55000
+  - id: 481
+    mover_id: 88
+    position:
+      x: 7302.762
+      y: 108.219
+      z: 3618.176
+    radius: 26.5
+    count: 8
+    delay: 55000
+  - id: 482
+    mover_id: 88
+    position:
+      x: 7196.146
+      y: 116.835
+      z: 3701.512
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 483
+    mover_id: 88
+    position:
+      x: 7290.929
+      y: 118.709
+      z: 3678.76
+    radius: 25.5
+    count: 8
+    delay: 55000
+  - id: 484
+    mover_id: 89
+    position:
+      x: 7344.235
+      y: 126.146
+      z: 3702.885
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 485
+    mover_id: 89
+    position:
+      x: 7341.455
+      y: 111.762
+      z: 3624.289
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 486
+    mover_id: 90
+    position:
+      x: 7378.221
+      y: 126.255
+      z: 3689.097
+    radius: 25.5
+    count: 8
+    delay: 55000
+  - id: 487
+    mover_id: 90
+    position:
+      x: 7381.341
+      y: 107.399
+      z: 3602.733
+    radius: 26
+    count: 8
+    delay: 55000
+  - id: 488
+    mover_id: 91
+    position:
+      x: 7425.569
+      y: 125.72
+      z: 3646.68
+    radius: 83
+    count: 1
+    delay: 2100000
+  - id: 489
+    mover_id: 304
+    position:
+      x: 7409.566
+      y: 173.038
+      z: 4045.086
+    radius: 58.5
+    count: 8
+    delay: 80000
+  - id: 490
+    mover_id: 750
+    position:
+      x: 7274.079
+      y: 116.976
+      z: 3694.981
+    radius: 7
+    count: 1
+    delay: 120000
+  - id: 491
+    mover_id: 811
+    position:
+      x: 7381.859
+      y: 131.873
+      z: 3724.881
+    radius: 10.5
+    count: 3
+    delay: 60000
+  - id: 492
+    mover_id: 811
+    position:
+      x: 7366.63
+      y: 154.091
+      z: 3906.589
+    radius: 15.5
+    count: 3
+    delay: 60000
+  - id: 493
+    mover_id: 38
+    position:
+      x: 7040.833
+      y: 124.409
+      z: 4137.936
+    radius: 27.5
+    count: 8
+    delay: 55000
+  - id: 494
+    mover_id: 811
+    position:
+      x: 7011.271
+      y: 115.351
+      z: 4137.915
+    radius: 13.5
+    count: 3
+    delay: 60000
+  - id: 495
+    mover_id: 40
+    position:
+      x: 7419.412
+      y: 143.883
+      z: 4123.387
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 496
+    mover_id: 41
+    position:
+      x: 7490.211
+      y: 150.353
+      z: 4128.055
+    radius: 40
+    count: 8
+    delay: 55000
+  - id: 497
+    mover_id: 42
+    position:
+      x: 7381.871
+      y: 142.436
+      z: 4227.992
+    radius: 30.5
+    count: 8
+    delay: 55000
+  - id: 498
+    mover_id: 42
+    position:
+      x: 7432.239
+      y: 139.208
+      z: 4189.003
+    radius: 57
+    count: 8
+    delay: 55000
+  - id: 499
+    mover_id: 43
+    position:
+      x: 7425.562
+      y: 151.628
+      z: 4280.689
+    radius: 78.5
+    count: 1
+    delay: 2100000
+  - id: 500
+    mover_id: 44
+    position:
+      x: 7550.973
+      y: 150.626
+      z: 4150.389
+    radius: 33.5
+    count: 8
+    delay: 55000
+  - id: 501
+    mover_id: 44
+    position:
+      x: 7588.668
+      y: 154.708
+      z: 4113.789
+    radius: 30
+    count: 8
+    delay: 55000
+  - id: 502
+    mover_id: 45
+    position:
+      x: 7602.508
+      y: 168.295
+      z: 4221.761
+    radius: 42.5
+    count: 8
+    delay: 55000
+  - id: 503
+    mover_id: 45
+    position:
+      x: 7620.84
+      y: 153.03
+      z: 4170.599
+    radius: 39.5
+    count: 10
+    delay: 55000
+  - id: 504
+    mover_id: 61
+    position:
+      x: 7224.404
+      y: 147.534
+      z: 4118.244
+    radius: 32.5
+    count: 8
+    delay: 55000
+  - id: 505
+    mover_id: 62
+    position:
+      x: 7188.811
+      y: 151.894
+      z: 4162.924
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 506
+    mover_id: 62
+    position:
+      x: 7250.135
+      y: 140.627
+      z: 4195.446
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 507
+    mover_id: 63
+    position:
+      x: 7210.653
+      y: 147.763
+      z: 4198.95
+    radius: 53.5
+    count: 1
+    delay: 2100000
+  - id: 508
+    mover_id: 800
+    position:
+      x: 7504.776
+      y: 157.623
+      z: 4213.988
+    radius: 15
+    count: 6
+    delay: 60000
+  - id: 509
+    mover_id: 811
+    position:
+      x: 7254.604
+      y: 134.768
+      z: 4179.825
+    radius: 9
+    count: 3
+    delay: 60000
+  - id: 510
+    mover_id: 811
+    position:
+      x: 7473.663
+      y: 149.091
+      z: 4109.509
+    radius: 12
+    count: 3
+    delay: 60000
+  - id: 511
+    mover_id: 811
+    position:
+      x: 7367.928
+      y: 141.687
+      z: 4279.927
+    radius: 14
+    count: 3
+    delay: 60000
+  - id: 512
+    mover_id: 811
+    position:
+      x: 7613.144
+      y: 165.764
+      z: 4210.994
+    radius: 12.5
+    count: 3
+    delay: 60000
+  - id: 513
+    mover_id: 817
+    position:
+      x: 7514.72
+      y: 157.694
+      z: 4227.474
+    radius: 5.5
+    count: 3
+    delay: 240000
+  - id: 514
+    mover_id: 1054
+    position:
+      x: 6976.161
+      y: 68.27
+      z: 5951.851
+    radius: 71
+    count: 40
+    delay: 1000
+  - id: 515
+    mover_id: 1054
+    position:
+      x: 6801.177
+      y: 69.783
+      z: 5887.898
+    radius: 96.5
+    count: 40
+    delay: 35000
+  - id: 516
+    mover_id: 1058
+    position:
+      x: 6447.806
+      y: 52.854
+      z: 6386.289
+    radius: 81
+    count: 40
+    delay: 35000
+  - id: 517
+    mover_id: 1058
+    position:
+      x: 6640.903
+      y: 53.172
+      z: 6335.92
+    radius: 96.5
+    count: 40
+    delay: 35000
+  - id: 518
+    mover_id: 1059
+    position:
+      x: 6879.755
+      y: 54.556
+      z: 6287.324
+    radius: 111.5
+    count: 40
+    delay: 35000
+  - id: 519
+    mover_id: 1059
+    position:
+      x: 7124.817
+      y: 55.007
+      z: 6272.175
+    radius: 128.5
+    count: 40
+    delay: 35000
+  - id: 520
+    mover_id: 1106
+    position:
+      x: 7060.206
+      y: 100
+      z: 6649.965
+    radius: 26
+    count: 7
+    delay: 35000
+  - id: 521
+    mover_id: 528
+    position:
+      x: 8079.118
+      y: 107.751
+      z: 1937.478
+    radius: 71
+    count: 10
+    delay: 55000
+  - id: 522
+    mover_id: 529
+    position:
+      x: 8013.018
+      y: 103.03
+      z: 1993.257
+    radius: 50.5
+    count: 10
+    delay: 55000
+  - id: 523
+    mover_id: 811
+    position:
+      x: 8092.968
+      y: 103.024
+      z: 1878.7
+    radius: 18
+    count: 3
+    delay: 60000
+  - id: 524
+    mover_id: 93
+    position:
+      x: 8315.853
+      y: 118.073
+      z: 2001.588
+    radius: 53
+    count: 10
+    delay: 55000
+  - id: 525
+    mover_id: 94
+    position:
+      x: 8218.428
+      y: 107.404
+      z: 1976.017
+    radius: 45
+    count: 10
+    delay: 55000
+  - id: 526
+    mover_id: 94
+    position:
+      x: 8325.248
+      y: 102.058
+      z: 1861.23
+    radius: 70.5
+    count: 10
+    delay: 55000
+  - id: 527
+    mover_id: 95
+    position:
+      x: 8280.385
+      y: 108.068
+      z: 1948.009
+    radius: 85
+    count: 1
+    delay: 2100000
+  - id: 528
+    mover_id: 581
+    position:
+      x: 8665.439
+      y: 99.155
+      z: 2028.392
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 529
+    mover_id: 582
+    position:
+      x: 8663.597
+      y: 99.794
+      z: 2025.26
+    radius: 20.5
+    count: 2
+    delay: 55000
+  - id: 530
+    mover_id: 583
+    position:
+      x: 8672.01
+      y: 100.405
+      z: 2023.183
+    radius: 20
+    count: 1
+    delay: 55000
+  - id: 531
+    mover_id: 811
+    position:
+      x: 8372.89
+      y: 105.161
+      z: 2041.148
+    radius: 24
+    count: 6
+    delay: 60000
+  - id: 532
+    mover_id: 581
+    position:
+      x: 8734.071
+      y: 94.35
+      z: 2031.028
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 533
+    mover_id: 581
+    position:
+      x: 8796.793
+      y: 100.126
+      z: 2037.113
+    radius: 22
+    count: 2
+    delay: 55000
+  - id: 534
+    mover_id: 582
+    position:
+      x: 8730.187
+      y: 94.935
+      z: 2028.423
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 535
+    mover_id: 582
+    position:
+      x: 8801.611
+      y: 100.026
+      z: 2034.286
+    radius: 21
+    count: 2
+    delay: 55000
+  - id: 536
+    mover_id: 583
+    position:
+      x: 8733.447
+      y: 95.311
+      z: 2039.538
+    radius: 20.5
+    count: 1
+    delay: 55000
+  - id: 537
+    mover_id: 583
+    position:
+      x: 8806.042
+      y: 100.001
+      z: 2025.951
+    radius: 21
+    count: 1
+    delay: 55000
+  - id: 538
+    mover_id: 584
+    position:
+      x: 8720.13
+      y: 95.763
+      z: 2038.565
+    radius: 70
+    count: 1
+    delay: 2100000
+  - id: 539
+    mover_id: 528
+    position:
+      x: 8142.451
+      y: 128.02
+      z: 2061.245
+    radius: 49.5
+    count: 10
+    delay: 55000
+  - id: 540
+    mover_id: 529
+    position:
+      x: 8178.752
+      y: 147.058
+      z: 2199.001
+    radius: 45
+    count: 5
+    delay: 55000
+  - id: 541
+    mover_id: 530
+    position:
+      x: 7957.404
+      y: 102.631
+      z: 2059.045
+    radius: 49.5
+    count: 10
+    delay: 55000
+  - id: 542
+    mover_id: 530
+    position:
+      x: 7981.418
+      y: 101.114
+      z: 2193.367
+    radius: 52
+    count: 10
+    delay: 55000
+  - id: 543
+    mover_id: 531
+    position:
+      x: 7968.18
+      y: 102.481
+      z: 2152.115
+    radius: 120
+    count: 1
+    delay: 2100000
+  - id: 544
+    mover_id: 553
+    position:
+      x: 8075.835
+      y: 90.2
+      z: 2550.363
+    radius: 40.5
+    count: 10
+    delay: 55000
+  - id: 545
+    mover_id: 554
+    position:
+      x: 8008.312
+      y: 94.121
+      z: 2518.448
+    radius: 34
+    count: 10
+    delay: 55000
+  - id: 546
+    mover_id: 554
+    position:
+      x: 8133.875
+      y: 96.027
+      z: 2544.552
+    radius: 30.5
+    count: 10
+    delay: 55000
+  - id: 547
+    mover_id: 555
+    position:
+      x: 8126.148
+      y: 102.88
+      z: 2512.98
+    radius: 64.5
+    count: 1
+    delay: 2100000
+  - id: 548
+    mover_id: 811
+    position:
+      x: 8061.839
+      y: 94.584
+      z: 2519.23
+    radius: 13
+    count: 3
+    delay: 60000
+  - id: 549
+    mover_id: 811
+    position:
+      x: 7952.216
+      y: 100.232
+      z: 2214.094
+    radius: 12.5
+    count: 3
+    delay: 60000
+  - id: 550
+    mover_id: 85
+    position:
+      x: 8689.83
+      y: 142.669
+      z: 2544.209
+    radius: 52
+    count: 10
+    delay: 55000
+  - id: 551
+    mover_id: 86
+    position:
+      x: 8667.513
+      y: 144.668
+      z: 2494.731
+    radius: 43.5
+    count: 10
+    delay: 55000
+  - id: 552
+    mover_id: 92
+    position:
+      x: 8563.144
+      y: 90.238
+      z: 2155.403
+    radius: 63
+    count: 10
+    delay: 60000
+  - id: 553
+    mover_id: 92
+    position:
+      x: 8394.828
+      y: 101.382
+      z: 2075.316
+    radius: 76.5
+    count: 10
+    delay: 55000
+  - id: 554
+    mover_id: 554
+    position:
+      x: 8558.055
+      y: 106.147
+      z: 2507.432
+    radius: 45.5
+    count: 5
+    delay: 55000
+  - id: 555
+    mover_id: 554
+    position:
+      x: 8603.761
+      y: 106.666
+      z: 2346.834
+    radius: 37
+    count: 5
+    delay: 55000
+  - id: 556
+    mover_id: 581
+    position:
+      x: 8701.748
+      y: 96.957
+      z: 2086.705
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 557
+    mover_id: 583
+    position:
+      x: 8701.777
+      y: 95.419
+      z: 2096.477
+    radius: 20.5
+    count: 1
+    delay: 55000
+  - id: 558
+    mover_id: 811
+    position:
+      x: 8671.644
+      y: 155.276
+      z: 2413.286
+    radius: 12.5
+    count: 3
+    delay: 60000
+  - id: 559
+    mover_id: 811
+    position:
+      x: 8574.877
+      y: 107.885
+      z: 2446.995
+    radius: 17.5
+    count: 3
+    delay: 60000
+  - id: 560
+    mover_id: 842
+    position:
+      x: 8255.101
+      y: 171.762
+      z: 2274.156
+    radius: 8
+    count: 1
+    delay: 60000
+  - id: 561
+    mover_id: 86
+    position:
+      x: 8710.361
+      y: 161.958
+      z: 2426.767
+    radius: 38.5
+    count: 10
+    delay: 55000
+  - id: 562
+    mover_id: 87
+    position:
+      x: 8705.34
+      y: 157.313
+      z: 2440.322
+    radius: 109
+    count: 1
+    delay: 2100000
+  - id: 563
+    mover_id: 544
+    position:
+      x: 8935.25
+      y: 100.902
+      z: 2400.346
+    radius: 43
+    count: 10
+    delay: 55000
+  - id: 564
+    mover_id: 544
+    position:
+      x: 9067.979
+      y: 98.025
+      z: 2411.982
+    radius: 70.5
+    count: 10
+    delay: 55000
+  - id: 565
+    mover_id: 544
+    position:
+      x: 8807.681
+      y: 106.856
+      z: 2211.84
+    radius: 79
+    count: 4
+    delay: 55000
+  - id: 566
+    mover_id: 545
+    position:
+      x: 8941.962
+      y: 107.175
+      z: 2440.845
+    radius: 38
+    count: 10
+    delay: 55000
+  - id: 567
+    mover_id: 581
+    position:
+      x: 8785.232
+      y: 103.355
+      z: 2097.625
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 568
+    mover_id: 582
+    position:
+      x: 8709.606
+      y: 95.195
+      z: 2093.455
+    radius: 19.5
+    count: 2
+    delay: 55000
+  - id: 569
+    mover_id: 582
+    position:
+      x: 8776.501
+      y: 104.411
+      z: 2110.782
+    radius: 20
+    count: 2
+    delay: 55000
+  - id: 570
+    mover_id: 583
+    position:
+      x: 8780.793
+      y: 104.596
+      z: 2108.107
+    radius: 20
+    count: 1
+    delay: 55000
+  - id: 571
+    mover_id: 688
+    position:
+      x: 8779.899
+      y: 104.133
+      z: 2181.173
+    radius: 4
+    count: 1
+    delay: 60000
+  - id: 572
+    mover_id: 811
+    position:
+      x: 8734.788
+      y: 99.607
+      z: 2062.127
+    radius: 24
+    count: 3
+    delay: 60000
+  - id: 573
+    mover_id: 811
+    position:
+      x: 8991.644
+      y: 105.615
+      z: 2450.552
+    radius: 14
+    count: 3
+    delay: 60000
+  - id: 574
+    mover_id: 811
+    position:
+      x: 8729.045
+      y: 153.564
+      z: 2513.111
+    radius: 19
+    count: 3
+    delay: 60000
+  - id: 575
+    mover_id: 811
+    position:
+      x: 8809.609
+      y: 125.944
+      z: 2348.083
+    radius: 14.5
+    count: 3
+    delay: 60000
+  - id: 576
+    mover_id: 64
+    position:
+      x: 8017.442
+      y: 84.346
+      z: 2828.504
+    radius: 44
+    count: 10
+    delay: 55000
+  - id: 577
+    mover_id: 64
+    position:
+      x: 8069.151
+      y: 81.065
+      z: 2742.108
+    radius: 35
+    count: 10
+    delay: 55000
+  - id: 578
+    mover_id: 65
+    position:
+      x: 7997.656
+      y: 76.975
+      z: 2777.442
+    radius: 35.5
+    count: 10
+    delay: 55000
+  - id: 579
+    mover_id: 66
+    position:
+      x: 7967.813
+      y: 74.872
+      z: 2732.609
+    radius: 35
+    count: 10
+    delay: 55000
+  - id: 580
+    mover_id: 66
+    position:
+      x: 7923.746
+      y: 76.909
+      z: 2819.092
+    radius: 39.5
+    count: 10
+    delay: 55000
+  - id: 581
+    mover_id: 67
+    position:
+      x: 7861.474
+      y: 83.478
+      z: 2801.629
+    radius: 107
+    count: 1
+    delay: 2100000
+  - id: 582
+    mover_id: 69
+    position:
+      x: 8171.79
+      y: 84.944
+      z: 2771.805
+    radius: 44
+    count: 10
+    delay: 55000
+  - id: 583
+    mover_id: 70
+    position:
+      x: 8118.021
+      y: 84.883
+      z: 2750.672
+    radius: 35.5
+    count: 10
+    delay: 55000
+  - id: 584
+    mover_id: 70
+    position:
+      x: 8179.016
+      y: 85.748
+      z: 2663.101
+    radius: 35.5
+    count: 10
+    delay: 55000
+  - id: 585
+    mover_id: 71
+    position:
+      x: 8152.389
+      y: 84.81
+      z: 2711.953
+    radius: 71.5
+    count: 1
+    delay: 2100000
+  - id: 586
+    mover_id: 120
+    position:
+      x: 8156.741
+      y: 88.264
+      z: 3036.259
+    radius: 41
+    count: 10
+    delay: 55000
+  - id: 587
+    mover_id: 122
+    position:
+      x: 8096.323
+      y: 87.443
+      z: 2902.939
+    radius: 42.5
+    count: 10
+    delay: 55000
+  - id: 588
+    mover_id: 122
+    position:
+      x: 8105.361
+      y: 88.4
+      z: 3007.752
+    radius: 40
+    count: 10
+    delay: 55000
+  - id: 589
+    mover_id: 123
+    position:
+      x: 8058.298
+      y: 90.637
+      z: 2950.008
+    radius: 85
+    count: 1
+    delay: 2100000
+  - id: 590
+    mover_id: 400
+    position:
+      x: 7899.201
+      y: 79.861
+      z: 2722.622
+    radius: 46.5
+    count: 10
+    delay: 55000
+  - id: 591
+    mover_id: 400
+    position:
+      x: 7979.149
+      y: 78.561
+      z: 2672.293
+    radius: 37
+    count: 10
+    delay: 55000
+  - id: 592
+    mover_id: 401
+    position:
+      x: 7928.61
+      y: 79.127
+      z: 2684.003
+    radius: 33
+    count: 10
+    delay: 55000
+  - id: 593
+    mover_id: 402
+    position:
+      x: 7840.493
+      y: 80.384
+      z: 2693.81
+    radius: 44
+    count: 10
+    delay: 55000
+  - id: 594
+    mover_id: 402
+    position:
+      x: 7944.122
+      y: 82.541
+      z: 2602.462
+    radius: 36.5
+    count: 10
+    delay: 55000
+  - id: 595
+    mover_id: 403
+    position:
+      x: 7881.058
+      y: 83.872
+      z: 2644.815
+    radius: 55
+    count: 1
+    delay: 2100000
+  - id: 596
+    mover_id: 552
+    position:
+      x: 8101.828
+      y: 86.248
+      z: 2612.232
+    radius: 48
+    count: 10
+    delay: 55000
+  - id: 597
+    mover_id: 552
+    position:
+      x: 8043.208
+      y: 77.36
+      z: 2623.851
+    radius: 50
+    count: 10
+    delay: 55000
+  - id: 598
+    mover_id: 811
+    position:
+      x: 8160.437
+      y: 93.058
+      z: 2951.53
+    radius: 12.5
+    count: 3
+    delay: 60000
+  - id: 599
+    mover_id: 811
+    position:
+      x: 8167.585
+      y: 85.3
+      z: 2811.924
+    radius: 20
+    count: 3
+    delay: 60000
+  - id: 600
+    mover_id: 811
+    position:
+      x: 8091.446
+      y: 83.019
+      z: 2647.887
+    radius: 18
+    count: 3
+    delay: 60000
+  - id: 601
+    mover_id: 816
+    position:
+      x: 7834.98
+      y: 85.212
+      z: 2758.609
+    radius: 9
+    count: 1
+    delay: 600000
+  - id: 602
+    mover_id: 812
+    position:
+      x: 7844.682
+      y: 84.031
+      z: 2752.157
+    radius: 14
+    count: 2
+    delay: 300000
+  - id: 603
+    mover_id: 68
+    position:
+      x: 8256.192
+      y: 82.262
+      z: 2815.599
+    radius: 31
+    count: 10
+    delay: 55000
+  - id: 604
+    mover_id: 68
+    position:
+      x: 8241.367
+      y: 83.657
+      z: 2744.359
+    radius: 46
+    count: 10
+    delay: 55000
+  - id: 605
+    mover_id: 84
+    position:
+      x: 8641.668
+      y: 141.351
+      z: 2582.741
+    radius: 41
+    count: 10
+    delay: 55000
+  - id: 606
+    mover_id: 105
+    position:
+      x: 8640.619
+      y: 143.27
+      z: 2677.314
+    radius: 62
+    count: 10
+    delay: 55000
+  - id: 607
+    mover_id: 105
+    position:
+      x: 8641.18
+      y: 139.583
+      z: 2800.317
+    radius: 68
+    count: 10
+    delay: 55000
+  - id: 608
+    mover_id: 106
+    position:
+      x: 8657.256
+      y: 141.869
+      z: 2752.189
+    radius: 65
+    count: 1
+    delay: 2100000
+  - id: 609
+    mover_id: 120
+    position:
+      x: 8580.957
+      y: 100.412
+      z: 2978.313
+    radius: 71
+    count: 10
+    delay: 55000
+  - id: 610
+    mover_id: 120
+    position:
+      x: 8397.018
+      y: 89.145
+      z: 2873.929
+    radius: 39.5
+    count: 10
+    delay: 55000
+  - id: 611
+    mover_id: 121
+    position:
+      x: 8204.284
+      y: 87.227
+      z: 2957.458
+    radius: 36
+    count: 10
+    delay: 55000
+  - id: 612
+    mover_id: 811
+    position:
+      x: 8675.905
+      y: 141.82
+      z: 2740.309
+    radius: 17
+    count: 3
+    delay: 60000
+  - id: 613
+    mover_id: 811
+    position:
+      x: 8471.772
+      y: 91.92
+      z: 2792.492
+    radius: 35
+    count: 3
+    delay: 60000
+  - id: 614
+    mover_id: 84
+    position:
+      x: 8752.842
+      y: 143.251
+      z: 2585.272
+    radius: 38
+    count: 10
+    delay: 55000
+  - id: 615
+    mover_id: 103
+    position:
+      x: 8825.807
+      y: 147.168
+      z: 2880.591
+    radius: 59
+    count: 10
+    delay: 55000
+  - id: 616
+    mover_id: 103
+    position:
+      x: 8773.547
+      y: 143.666
+      z: 2683.767
+    radius: 55
+    count: 10
+    delay: 55000
+  - id: 617
+    mover_id: 104
+    position:
+      x: 8763.405
+      y: 141.941
+      z: 2734.309
+    radius: 60
+    count: 10
+    delay: 55000
+  - id: 618
+    mover_id: 529
+    position:
+      x: 8957.799
+      y: 151.059
+      z: 3047.72
+    radius: 41.5
+    count: 5
+    delay: 55000
+  - id: 619
+    mover_id: 546
+    position:
+      x: 8888.446
+      y: 130.092
+      z: 2608.669
+    radius: 64
+    count: 10
+    delay: 55000
+  - id: 620
+    mover_id: 546
+    position:
+      x: 8928.146
+      y: 135.193
+      z: 2658.215
+    radius: 159
+    count: 10
+    delay: 55000
+  - id: 621
+    mover_id: 547
+    position:
+      x: 8928.764
+      y: 140.708
+      z: 2697.393
+    radius: 186
+    count: 1
+    delay: 2100000
+  - id: 622
+    mover_id: 811
+    position:
+      x: 8846.452
+      y: 140.739
+      z: 2615.059
+    radius: 16.5
+    count: 3
+    delay: 60000
+  - id: 623
+    mover_id: 811
+    position:
+      x: 8906.11
+      y: 163.854
+      z: 2980.07
+    radius: 15.5
+    count: 3
+    delay: 60000
+  - id: 624
+    mover_id: 821
+    position:
+      x: 8961.755
+      y: 162.897
+      z: 2912.112
+    radius: 7
+    count: 2
+    delay: 180000
+  - id: 625
+    mover_id: 120
+    position:
+      x: 8185.881
+      y: 90.758
+      z: 3086.533
+    radius: 49.5
+    count: 5
+    delay: 55000
+  - id: 626
+    mover_id: 44
+    position:
+      x: 8423.403
+      y: 93.478
+      z: 3377.126
+    radius: 46
+    count: 8
+    delay: 55000
+  - id: 627
+    mover_id: 45
+    position:
+      x: 8483.244
+      y: 101.363
+      z: 3284.006
+    radius: 55
+    count: 8
+    delay: 55000
+  - id: 628
+    mover_id: 45
+    position:
+      x: 8444.252
+      y: 100.028
+      z: 3280.269
+    radius: 50.5
+    count: 8
+    delay: 55000
+  - id: 629
+    mover_id: 46
+    position:
+      x: 8505.207
+      y: 96.311
+      z: 3328.653
+    radius: 45
+    count: 8
+    delay: 55000
+  - id: 630
+    mover_id: 48
+    position:
+      x: 8605.104
+      y: 91.565
+      z: 3266.06
+    radius: 42.5
+    count: 8
+    delay: 55000
+  - id: 631
+    mover_id: 48
+    position:
+      x: 8578.099
+      y: 99.818
+      z: 3148.505
+    radius: 53
+    count: 8
+    delay: 55000
+  - id: 632
+    mover_id: 49
+    position:
+      x: 8615.475
+      y: 100
+      z: 3104.779
+    radius: 47.5
+    count: 8
+    delay: 55000
+  - id: 633
+    mover_id: 50
+    position:
+      x: 8664.988
+      y: 95.878
+      z: 3231.6
+    radius: 48.5
+    count: 8
+    delay: 55000
+  - id: 634
+    mover_id: 120
+    position:
+      x: 8306.038
+      y: 100.341
+      z: 3191.417
+    radius: 40
+    count: 5
+    delay: 55000
+  - id: 635
+    mover_id: 305
+    position:
+      x: 8371.693
+      y: 115.197
+      z: 3390.264
+    radius: 82.5
+    count: 8
+    delay: 80000
+  - id: 636
+    mover_id: 305
+    position:
+      x: 8662.074
+      y: 143.979
+      z: 3491.492
+    radius: 51.5
+    count: 8
+    delay: 80000
+  - id: 637
+    mover_id: 305
+    position:
+      x: 8588.22
+      y: 115.454
+      z: 3314.571
+    radius: 51.5
+    count: 8
+    delay: 80000
+  - id: 638
+    mover_id: 306
+    position:
+      x: 8465.977
+      y: 161.301
+      z: 3075.069
+    radius: 64.5
+    count: 8
+    delay: 80000
+  - id: 639
+    mover_id: 577
+    position:
+      x: 8440.976
+      y: 105.608
+      z: 3203.599
+    radius: 16.5
+    count: 2
+    delay: 55000
+  - id: 640
+    mover_id: 577
+    position:
+      x: 8497.771
+      y: 107.505
+      z: 3197.093
+    radius: 16
+    count: 2
+    delay: 55000
+  - id: 641
+    mover_id: 577
+    position:
+      x: 8446.195
+      y: 105.608
+      z: 3166.082
+    radius: 16
+    count: 2
+    delay: 55000
+  - id: 642
+    mover_id: 577
+    position:
+      x: 8381.31
+      y: 105.396
+      z: 3197.373
+    radius: 16.5
+    count: 2
+    delay: 55000
+  - id: 643
+    mover_id: 577
+    position:
+      x: 8377.875
+      y: 108.431
+      z: 3150.433
+    radius: 15.5
+    count: 2
+    delay: 55000
+  - id: 644
+    mover_id: 578
+    position:
+      x: 8492.461
+      y: 113.666
+      z: 3193.986
+    radius: 16.5
+    count: 2
+    delay: 55000
+  - id: 645
+    mover_id: 578
+    position:
+      x: 8443.428
+      y: 105.608
+      z: 3204.898
+    radius: 16
+    count: 2
+    delay: 55000
+  - id: 646
+    mover_id: 578
+    position:
+      x: 8433.765
+      y: 105.608
+      z: 3154.406
+    radius: 15.5
+    count: 2
+    delay: 55000
+  - id: 647
+    mover_id: 578
+    position:
+      x: 8377.379
+      y: 104.988
+      z: 3196.913
+    radius: 16
+    count: 2
+    delay: 55000
+  - id: 648
+    mover_id: 578
+    position:
+      x: 8378.132
+      y: 106.319
+      z: 3144.481
+    radius: 15.5
+    count: 2
+    delay: 55000
+  - id: 649
+    mover_id: 579
+    position:
+      x: 8372.343
+      y: 110.028
+      z: 3194.206
+    radius: 17
+    count: 1
+    delay: 55000
+  - id: 650
+    mover_id: 579
+    position:
+      x: 8438.407
+      y: 105.608
+      z: 3206.013
+    radius: 15.5
+    count: 1
+    delay: 55000
+  - id: 651
+    mover_id: 579
+    position:
+      x: 8495.077
+      y: 110.365
+      z: 3190.492
+    radius: 17.5
+    count: 1
+    delay: 55000
+  - id: 652
+    mover_id: 579
+    position:
+      x: 8438.268
+      y: 105.608
+      z: 3153.814
+    radius: 15.5
+    count: 1
+    delay: 55000
+  - id: 653
+    mover_id: 579
+    position:
+      x: 8376.232
+      y: 106.624
+      z: 3141.995
+    radius: 16
+    count: 1
+    delay: 55000
+  - id: 654
+    mover_id: 580
+    position:
+      x: 8404.227
+      y: 105.778
+      z: 3181.291
+    radius: 63
+    count: 1
+    delay: 2100000
+  - id: 655
+    mover_id: 1021
+    position:
+      x: 8562.795
+      y: 100
+      z: 3559.871
+    radius: 3.5
+    count: 1
+    delay: 1000
+  - id: 656
+    mover_id: 752
+    position:
+      x: 8621.985
+      y: 100
+      z: 3557.549
+    radius: 6.5
+    count: 1
+    delay: 120000
+  - id: 657
+    mover_id: 811
+    position:
+      x: 8440.828
+      y: 93.508
+      z: 3351.602
+    radius: 15.5
+    count: 3
+    delay: 60000
+  - id: 658
+    mover_id: 811
+    position:
+      x: 8633.598
+      y: 101.943
+      z: 3117.449
+    radius: 18
+    count: 3
+    delay: 60000
+  - id: 659
+    mover_id: 811
+    position:
+      x: 8428.753
+      y: 105.608
+      z: 3146.729
+    radius: 11
+    count: 3
+    delay: 60000
+  - id: 660
+    mover_id: 1021
+    position:
+      x: 8571.123
+      y: 100
+      z: 3559.68
+    radius: 2
+    count: 1
+    delay: 1000
+  - id: 661
+    mover_id: 1021
+    position:
+      x: 8482.786
+      y: 100
+      z: 3560.999
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 662
+    mover_id: 1021
+    position:
+      x: 8445.944
+      y: 100
+      z: 3560.8
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 663
+    mover_id: 50
+    position:
+      x: 8710.034
+      y: 99.554
+      z: 3136.449
+    radius: 38
+    count: 10
+    delay: 55000
+  - id: 664
+    mover_id: 51
+    position:
+      x: 8715.237
+      y: 97.917
+      z: 3213.869
+    radius: 74
+    count: 1
+    delay: 2100000
+  - id: 665
+    mover_id: 305
+    position:
+      x: 8853.927
+      y: 167.181
+      z: 3261.678
+    radius: 55.5
+    count: 8
+    delay: 80000
+  - id: 666
+    mover_id: 306
+    position:
+      x: 8746.687
+      y: 126.001
+      z: 3286.715
+    radius: 53.5
+    count: 8
+    delay: 80000
+  - id: 667
+    mover_id: 811
+    position:
+      x: 8997.466
+      y: 162.305
+      z: 3088.421
+    radius: 16
+    count: 3
+    delay: 60000
+  - id: 668
+    mover_id: 1021
+    position:
+      x: 8383.477
+      y: 100
+      z: 3782.192
+    radius: 3.5
+    count: 1
+    delay: 1000
+  - id: 669
+    mover_id: 1021
+    position:
+      x: 8415.225
+      y: 140.053
+      z: 3976.511
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 670
+    mover_id: 811
+    position:
+      x: 8253.741
+      y: 101.705
+      z: 4050.04
+    radius: 27
+    count: 5
+    delay: 60000
+  - id: 671
+    mover_id: 812
+    position:
+      x: 8295.217
+      y: 100
+      z: 4029.987
+    radius: 15.5
+    count: 2
+    delay: 180000
+  - id: 672
+    mover_id: 1021
+    position:
+      x: 8276.211
+      y: 100
+      z: 3799.326
+    radius: 2
+    count: 1
+    delay: 1000
+  - id: 673
+    mover_id: 1021
+    position:
+      x: 8281.378
+      y: 100
+      z: 3799.126
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 674
+    mover_id: 1021
+    position:
+      x: 8462.336
+      y: 100
+      z: 3742.279
+    radius: 2
+    count: 1
+    delay: 1000
+  - id: 675
+    mover_id: 1021
+    position:
+      x: 8465.948
+      y: 100
+      z: 3777.567
+    radius: 3
+    count: 1
+    delay: 1000
+  - id: 676
+    mover_id: 1021
+    position:
+      x: 8343.627
+      y: 100
+      z: 3874.151
+    radius: 6.5
+    count: 1
+    delay: 1000
+  - id: 677
+    mover_id: 1021
+    position:
+      x: 8343.81
+      y: 100
+      z: 3867.755
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 678
+    mover_id: 1021
+    position:
+      x: 8458.827
+      y: 100
+      z: 3854.347
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 679
+    mover_id: 1021
+    position:
+      x: 8466.975
+      y: 100
+      z: 3854.718
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 680
+    mover_id: 1021
+    position:
+      x: 8465.035
+      y: 100
+      z: 3596.484
+    radius: 2
+    count: 1
+    delay: 1000
+  - id: 681
+    mover_id: 1021
+    position:
+      x: 8513.12
+      y: 100
+      z: 3834.436
+    radius: 2.5
+    count: 1
+    delay: 1000
+  - id: 682
+    mover_id: 300
+    position:
+      x: 8893.948
+      y: 131.036
+      z: 3685.673
+    radius: 97
+    count: 5
+    delay: 55000
+  - id: 683
+    mover_id: 300
+    position:
+      x: 8770.197
+      y: 157.646
+      z: 3955.406
+    radius: 118
+    count: 5
+    delay: 55000
+  - id: 684
+    mover_id: 301
+    position:
+      x: 8825.413
+      y: 127.192
+      z: 3875.657
+    radius: 94
+    count: 5
+    delay: 55000
+  - id: 685
+    mover_id: 302
+    position:
+      x: 8850.838
+      y: 125.306
+      z: 4045.037
+    radius: 125.5
+    count: 5
+    delay: 55000
+  - id: 686
+    mover_id: 302
+    position:
+      x: 9038.732
+      y: 159.373
+      z: 3698.277
+    radius: 102.5
+    count: 5
+    delay: 55000
+  - id: 687
+    mover_id: 303
+    position:
+      x: 8890.659
+      y: 152.015
+      z: 3886.189
+    radius: 149.5
+    count: 1
+    delay: 2100000
+  - id: 688
+    mover_id: 585
+    position:
+      x: 9164.56
+      y: 81.153
+      z: 3927.306
+    radius: 17.5
+    count: 2
+    delay: 55000
+  - id: 689
+    mover_id: 585
+    position:
+      x: 9182.563
+      y: 81.006
+      z: 3986.379
+    radius: 17
+    count: 2
+    delay: 55000
+  - id: 690
+    mover_id: 585
+    position:
+      x: 9129.418
+      y: 80.622
+      z: 3979.318
+    radius: 16.5
+    count: 2
+    delay: 55000
+  - id: 691
+    mover_id: 585
+    position:
+      x: 9064.822
+      y: 88.042
+      z: 4006.76
+    radius: 17.5
+    count: 2
+    delay: 55000
+  - id: 692
+    mover_id: 585
+    position:
+      x: 9091.153
+      y: 74.489
+      z: 4068.425
+    radius: 16
+    count: 2
+    delay: 55000
+  - id: 693
+    mover_id: 586
+    position:
+      x: 9165.15
+      y: 81.17
+      z: 3931.221
+    radius: 17.5
+    count: 2
+    delay: 55000
+  - id: 694
+    mover_id: 586
+    position:
+      x: 9187.909
+      y: 81.033
+      z: 3985.173
+    radius: 15.5
+    count: 2
+    delay: 55000
+  - id: 695
+    mover_id: 586
+    position:
+      x: 9127.031
+      y: 80.412
+      z: 3971.181
+    radius: 16
+    count: 2
+    delay: 55000
+  - id: 696
+    mover_id: 586
+    position:
+      x: 9086.682
+      y: 75.398
+      z: 4068.31
+    radius: 17
+    count: 2
+    delay: 55000
+  - id: 697
+    mover_id: 586
+    position:
+      x: 9070.235
+      y: 87.435
+      z: 4007.22
+    radius: 16
+    count: 2
+    delay: 55000
+  - id: 698
+    mover_id: 587
+    position:
+      x: 9074.05
+      y: 88.698
+      z: 4018.079
+    radius: 15.5
+    count: 1
+    delay: 55000
+  - id: 699
+    mover_id: 587
+    position:
+      x: 9120.768
+      y: 81.182
+      z: 3977.524
+    radius: 16.5
+    count: 1
+    delay: 55000
+  - id: 700
+    mover_id: 587
+    position:
+      x: 9189.35
+      y: 81.052
+      z: 3980.66
+    radius: 16
+    count: 1
+    delay: 55000
+  - id: 701
+    mover_id: 587
+    position:
+      x: 9161.218
+      y: 81.147
+      z: 3924.672
+    radius: 17.5
+    count: 1
+    delay: 55000
+  - id: 702
+    mover_id: 588
+    position:
+      x: 9132.904
+      y: 81.164
+      z: 3959.57
+    radius: 41
+    count: 1
+    delay: 2100000
+  - id: 703
+    mover_id: 52
+    position:
+      x: 9552.288
+      y: 96.645
+      z: 4052.036
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 704
+    mover_id: 52
+    position:
+      x: 9494.783
+      y: 96.731
+      z: 4043.453
+    radius: 29
+    count: 8
+    delay: 55000
+  - id: 705
+    mover_id: 80
+    position:
+      x: 9288.311
+      y: 98.493
+      z: 3752.407
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 706
+    mover_id: 80
+    position:
+      x: 9386.888
+      y: 83.235
+      z: 3815.716
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 707
+    mover_id: 80
+    position:
+      x: 9295.736
+      y: 76.094
+      z: 3845.398
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 708
+    mover_id: 81
+    position:
+      x: 9334.38
+      y: 59.947
+      z: 3996.972
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 709
+    mover_id: 81
+    position:
+      x: 9333.882
+      y: 59.77
+      z: 3925.428
+    radius: 32.5
+    count: 8
+    delay: 55000
+  - id: 710
+    mover_id: 81
+    position:
+      x: 9437.187
+      y: 76.327
+      z: 3845.673
+    radius: 41.5
+    count: 8
+    delay: 55000
+  - id: 711
+    mover_id: 82
+    position:
+      x: 9391.538
+      y: 74.589
+      z: 3952.45
+    radius: 38
+    count: 8
+    delay: 55000
+  - id: 712
+    mover_id: 82
+    position:
+      x: 9526.422
+      y: 91.318
+      z: 3954.102
+    radius: 33.5
+    count: 8
+    delay: 55000
+  - id: 713
+    mover_id: 83
+    position:
+      x: 9452.158
+      y: 78.179
+      z: 3938.121
+    radius: 24
+    count: 1
+    delay: 2100000
+  - id: 714
+    mover_id: 44
+    position:
+      x: 7868.307
+      y: 159.789
+      z: 4298.425
+    radius: 23.5
+    count: 8
+    delay: 55000
+  - id: 715
+    mover_id: 46
+    position:
+      x: 7716.362
+      y: 138.268
+      z: 4170.822
+    radius: 42.5
+    count: 8
+    delay: 55000
+  - id: 716
+    mover_id: 46
+    position:
+      x: 7743.213
+      y: 119.433
+      z: 4118.715
+    radius: 34.5
+    count: 8
+    delay: 55000
+  - id: 717
+    mover_id: 304
+    position:
+      x: 8023.504
+      y: 154.87
+      z: 4308.789
+    radius: 50.5
+    count: 5
+    delay: 55000
+  - id: 718
+    mover_id: 304
+    position:
+      x: 7999.019
+      y: 138.654
+      z: 4192.049
+    radius: 41.5
+    count: 5
+    delay: 55000
+  - id: 719
+    mover_id: 305
+    position:
+      x: 8074.683
+      y: 164.987
+      z: 4203.164
+    radius: 53
+    count: 5
+    delay: 55000
+  - id: 720
+    mover_id: 306
+    position:
+      x: 8063.022
+      y: 159.929
+      z: 4109.227
+    radius: 66.5
+    count: 5
+    delay: 55000
+  - id: 721
+    mover_id: 306
+    position:
+      x: 8190.715
+      y: 152.662
+      z: 4125.113
+    radius: 54.5
+    count: 5
+    delay: 55000
+  - id: 722
+    mover_id: 307
+    position:
+      x: 8141.193
+      y: 167.017
+      z: 4179.019
+    radius: 111.5
+    count: 1
+    delay: 2100000
+  - id: 723
+    mover_id: 800
+    position:
+      x: 7793.469
+      y: 214.33
+      z: 4491.979
+    radius: 12.5
+    count: 12
+    delay: 120000
+  - id: 724
+    mover_id: 817
+    position:
+      x: 7801.089
+      y: 214.035
+      z: 4498.994
+    radius: 12.5
+    count: 3
+    delay: 180000
+  - id: 725
+    mover_id: 47
+    position:
+      x: 7704.153
+      y: 152.398
+      z: 4187.553
+    radius: 53
+    count: 1
+    delay: 2100000
+  - id: 726
+    mover_id: 56
+    position:
+      x: 9019.233
+      y: 67.369
+      z: 4121.819
+    radius: 37
+    count: 8
+    delay: 55000
+  - id: 727
+    mover_id: 56
+    position:
+      x: 9104.875
+      y: 78.595
+      z: 4269.401
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 728
+    mover_id: 56
+    position:
+      x: 9006.328
+      y: 80.921
+      z: 4178.28
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 729
+    mover_id: 57
+    position:
+      x: 9091.969
+      y: 66.739
+      z: 4185.427
+    radius: 35.5
+    count: 8
+    delay: 55000
+  - id: 730
+    mover_id: 57
+    position:
+      x: 8930.874
+      y: 75.556
+      z: 4171.037
+    radius: 30.5
+    count: 8
+    delay: 55000
+  - id: 731
+    mover_id: 57
+    position:
+      x: 9021.725
+      y: 70.504
+      z: 4238.763
+    radius: 24.5
+    count: 8
+    delay: 55000
+  - id: 732
+    mover_id: 57
+    position:
+      x: 9045.259
+      y: 79.238
+      z: 4305.389
+    radius: 32.5
+    count: 8
+    delay: 55000
+  - id: 733
+    mover_id: 58
+    position:
+      x: 8861.287
+      y: 81.28
+      z: 4342.13
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 734
+    mover_id: 58
+    position:
+      x: 8863.422
+      y: 78.611
+      z: 4200.25
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 735
+    mover_id: 58
+    position:
+      x: 8949.904
+      y: 81.746
+      z: 4354.674
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 736
+    mover_id: 59
+    position:
+      x: 8727.672
+      y: 133.821
+      z: 4378.351
+    radius: 28
+    count: 1
+    delay: 2100000
+  - id: 737
+    mover_id: 72
+    position:
+      x: 9122.569
+      y: 80.801
+      z: 4330.678
+    radius: 30
+    count: 8
+    delay: 55000
+  - id: 738
+    mover_id: 72
+    position:
+      x: 9193.018
+      y: 78.991
+      z: 4367.591
+    radius: 20
+    count: 8
+    delay: 55000
+  - id: 739
+    mover_id: 72
+    position:
+      x: 9165.112
+      y: 73.232
+      z: 4167.528
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 740
+    mover_id: 556
+    position:
+      x: 8927.588
+      y: 81.272
+      z: 4336.214
+    radius: 212.5
+    count: 3
+    delay: 2100000
+  - id: 741
+    mover_id: 843
+    position:
+      x: 9050.504
+      y: 69.85
+      z: 4186.004
+    radius: 6.5
+    count: 1
+    delay: 60000
+  - id: 742
+    mover_id: 52
+    position:
+      x: 9518.932
+      y: 97.529
+      z: 4119.886
+    radius: 38.5
+    count: 8
+    delay: 55000
+  - id: 743
+    mover_id: 53
+    position:
+      x: 9565.389
+      y: 87.626
+      z: 4162.28
+    radius: 25
+    count: 8
+    delay: 55000
+  - id: 744
+    mover_id: 53
+    position:
+      x: 9572.743
+      y: 92.07
+      z: 4102.458
+    radius: 19
+    count: 8
+    delay: 55000
+  - id: 745
+    mover_id: 54
+    position:
+      x: 9634.429
+      y: 89.868
+      z: 4210.745
+    radius: 24.5
+    count: 8
+    delay: 55000
+  - id: 746
+    mover_id: 55
+    position:
+      x: 9704.357
+      y: 90.167
+      z: 4262.367
+    radius: 21
+    count: 1
+    delay: 2100000
+  - id: 747
+    mover_id: 72
+    position:
+      x: 9263.764
+      y: 77.131
+      z: 4191.444
+    radius: 12.5
+    count: 2
+    delay: 55000
+  - id: 748
+    mover_id: 72
+    position:
+      x: 9301.292
+      y: 75.681
+      z: 4226.456
+    radius: 11.5
+    count: 2
+    delay: 55000
+  - id: 749
+    mover_id: 73
+    position:
+      x: 9334.321
+      y: 81.617
+      z: 4399.902
+    radius: 35.5
+    count: 9
+    delay: 55000
+  - id: 750
+    mover_id: 73
+    position:
+      x: 9358.512
+      y: 80.211
+      z: 4337.476
+    radius: 32
+    count: 8
+    delay: 55000
+  - id: 751
+    mover_id: 74
+    position:
+      x: 9418.936
+      y: 80.971
+      z: 4400.487
+    radius: 24
+    count: 8
+    delay: 55000
+  - id: 752
+    mover_id: 74
+    position:
+      x: 9401.678
+      y: 80.979
+      z: 4353.972
+    radius: 32.5
+    count: 8
+    delay: 55000
+  - id: 753
+    mover_id: 74
+    position:
+      x: 9444.461
+      y: 81.263
+      z: 4488.618
+    radius: 31
+    count: 8
+    delay: 55000
+  - id: 754
+    mover_id: 75
+    position:
+      x: 9409.694
+      y: 80.872
+      z: 4446.316
+    radius: 22.5
+    count: 1
+    delay: 2100000
+  - id: 755
+    mover_id: 1060
+    position:
+      x: 7328.269
+      y: 52.601
+      z: 6143.676
+    radius: 64.5
+    count: 30
+    delay: 35000
+  - id: 756
+    mover_id: 1060
+    position:
+      x: 7327.95
+      y: 51.557
+      z: 6032.829
+    radius: 95.5
+    count: 40
+    delay: 35000
+  - id: 757
+    mover_id: 1061
+    position:
+      x: 7328.21
+      y: 53.5
+      z: 6079.934
+    radius: 111.5
+    count: 1
+    delay: 1800000
+  - id: 758
+    mover_id: 1106
+    position:
+      x: 7019.898
+      y: 100
+      z: 6740.894
+    radius: 15
+    count: 5
+    delay: 35000
+  - id: 759
+    mover_id: 1106
+    position:
+      x: 6995.668
+      y: 100.01
+      z: 6801.388
+    radius: 37
+    count: 10
+    delay: 35000
+  - id: 760
+    mover_id: 1106
+    position:
+      x: 7040.927
+      y: 100.58
+      z: 6857.114
+    radius: 9.5
+    count: 3
+    delay: 35000
+  - id: 761
+    mover_id: 1106
+    position:
+      x: 7069.355
+      y: 99.822
+      z: 6879.246
+    radius: 12
+    count: 3
+    delay: 35000
+  - id: 762
+    mover_id: 1106
+    position:
+      x: 7089.665
+      y: 100.193
+      z: 6901.681
+    radius: 13
+    count: 3
+    delay: 35000
+  - id: 763
+    mover_id: 1106
+    position:
+      x: 7123.286
+      y: 100.467
+      z: 6987.227
+    radius: 17
+    count: 7
+    delay: 35000
+  - id: 764
+    mover_id: 1106
+    position:
+      x: 7067.75
+      y: 100
+      z: 6997.233
+    radius: 27
+    count: 5
+    delay: 35000
+  - id: 765
+    mover_id: 1106
+    position:
+      x: 6861.03
+      y: 100
+      z: 7145.472
+    radius: 11
+    count: 3
+    delay: 35000
+  - id: 766
+    mover_id: 1106
+    position:
+      x: 6926.209
+      y: 99.117
+      z: 7121.626
+    radius: 23.5
+    count: 5
+    delay: 35000
+  - id: 767
+    mover_id: 1106
+    position:
+      x: 7003.109
+      y: 100.146
+      z: 7154.742
+    radius: 10.5
+    count: 2
+    delay: 35000
+  - id: 768
+    mover_id: 1106
+    position:
+      x: 6981.542
+      y: 100
+      z: 7118.521
+    radius: 35.5
+    count: 10
+    delay: 35000
+  - id: 769
+    mover_id: 1106
+    position:
+      x: 7003.125
+      y: 100.009
+      z: 7042.468
+    radius: 8.5
+    count: 2
+    delay: 35000
+  - id: 770
+    mover_id: 1106
+    position:
+      x: 7085.891
+      y: 100
+      z: 7093.326
+    radius: 26.5
+    count: 20
+    delay: 35000
+  - id: 771
+    mover_id: 1107
+    position:
+      x: 7186.917
+      y: 100
+      z: 7147.672
+    radius: 26.5
+    count: 10
+    delay: 35000
+  - id: 772
+    mover_id: 1107
+    position:
+      x: 7187.008
+      y: 99.728
+      z: 7097.438
+    radius: 34.5
+    count: 7
+    delay: 35000
+  - id: 773
+    mover_id: 1107
+    position:
+      x: 7184.82
+      y: 100
+      z: 7045.328
+    radius: 24
+    count: 10
+    delay: 35000
+  - id: 774
+    mover_id: 1107
+    position:
+      x: 7275.224
+      y: 100
+      z: 7035.275
+    radius: 55
+    count: 7
+    delay: 35000
+  - id: 775
+    mover_id: 1107
+    position:
+      x: 7402.889
+      y: 98.006
+      z: 7059.688
+    radius: 110.5
+    count: 30
+    delay: 35000
+  - id: 776
+    mover_id: 1108
+    position:
+      x: 7913.682
+      y: 100
+      z: 7055.403
+    radius: 46
+    count: 7
+    delay: 35000
+  - id: 777
+    mover_id: 1108
+    position:
+      x: 7772.446
+      y: 98.077
+      z: 7070.815
+    radius: 107.5
+    count: 25
+    delay: 35000
+  - id: 778
+    mover_id: 1108
+    position:
+      x: 8107.04
+      y: 98.29
+      z: 7113.551
+    radius: 43
+    count: 15
+    delay: 35000
+  - id: 779
+    mover_id: 1108
+    position:
+      x: 8031.734
+      y: 100
+      z: 7020.613
+    radius: 39.5
+    count: 5
+    delay: 35000
+  - id: 780
+    mover_id: 1106
+    position:
+      x: 8019.201
+      y: 98.485
+      z: 6879.598
+    radius: 43.5
+    count: 10
+    delay: 35000
+  - id: 781
+    mover_id: 1110
+    position:
+      x: 8151.931
+      y: 100
+      z: 6714.054
+    radius: 44
+    count: 10
+    delay: 35000
+  - id: 782
+    mover_id: 1107
+    position:
+      x: 7935.432
+      y: 98.528
+      z: 6855
+    radius: 12.5
+    count: 4
+    delay: 35000
+  - id: 783
+    mover_id: 1107
+    position:
+      x: 7954.055
+      y: 100
+      z: 6868.89
+    radius: 21
+    count: 3
+    delay: 35000
+  - id: 784
+    mover_id: 1107
+    position:
+      x: 7896.759
+      y: 100.202
+      z: 6817.669
+    radius: 16
+    count: 3
+    delay: 35000
+  - id: 785
+    mover_id: 1108
+    position:
+      x: 7879.523
+      y: 100.045
+      z: 6774.233
+    radius: 43.5
+    count: 7
+    delay: 35000
+  - id: 786
+    mover_id: 1108
+    position:
+      x: 7887.782
+      y: 98.497
+      z: 6731.739
+    radius: 24.5
+    count: 3
+    delay: 35000
+  - id: 787
+    mover_id: 1109
+    position:
+      x: 7970.481
+      y: 99.624
+      z: 6707.015
+    radius: 62.5
+    count: 10
+    delay: 35000
+  - id: 788
+    mover_id: 1107
+    position:
+      x: 8106.734
+      y: 99.179
+      z: 6899.024
+    radius: 14
+    count: 3
+    delay: 35000
+  - id: 789
+    mover_id: 1107
+    position:
+      x: 8140.639
+      y: 100.314
+      z: 6912.693
+    radius: 17
+    count: 2
+    delay: 35000
+  - id: 790
+    mover_id: 1108
+    position:
+      x: 8178.781
+      y: 100
+      z: 6911.858
+    radius: 19.5
+    count: 5
+    delay: 35000
+  - id: 791
+    mover_id: 1106
+    position:
+      x: 6879.269
+      y: 98.732
+      z: 7312.295
+    radius: 14.5
+    count: 3
+    delay: 35000
+  - id: 792
+    mover_id: 1106
+    position:
+      x: 6923.802
+      y: 99.952
+      z: 7281.884
+    radius: 12
+    count: 3
+    delay: 35000
+  - id: 793
+    mover_id: 1106
+    position:
+      x: 6948.779
+      y: 100
+      z: 7242.691
+    radius: 15.5
+    count: 3
+    delay: 35000
+  - id: 794
+    mover_id: 1106
+    position:
+      x: 7007.672
+      y: 100
+      z: 7218.778
+    radius: 8.5
+    count: 2
+    delay: 35000
+  - id: 795
+    mover_id: 1106
+    position:
+      x: 7030.161
+      y: 100.127
+      z: 7177.115
+    radius: 19.5
+    count: 5
+    delay: 35000
+  - id: 796
+    mover_id: 1106
+    position:
+      x: 7090.441
+      y: 100
+      z: 7187.128
+    radius: 28.5
+    count: 5
+    delay: 35000
+  - id: 797
+    mover_id: 1107
+    position:
+      x: 7274.361
+      y: 101.22
+      z: 7172.356
+    radius: 10
+    count: 2
+    delay: 35000
+  - id: 798
+    mover_id: 1107
+    position:
+      x: 7327.443
+      y: 99.494
+      z: 7208.083
+    radius: 16
+    count: 4
+    delay: 35000
+  - id: 799
+    mover_id: 1107
+    position:
+      x: 7401.401
+      y: 100.282
+      z: 7238.426
+    radius: 78.5
+    count: 10
+    delay: 35000
+  - id: 800
+    mover_id: 1107
+    position:
+      x: 7577.363
+      y: 99.431
+      z: 7253.709
+    radius: 58.5
+    count: 15
+    delay: 35000
+  - id: 801
+    mover_id: 1108
+    position:
+      x: 7604.576
+      y: 100
+      z: 7168.115
+    radius: 87.5
+    count: 10
+    delay: 35000
+  - id: 802
+    mover_id: 1109
+    position:
+      x: 7661.963
+      y: 98
+      z: 7543.757
+    radius: 50.5
+    count: 10
+    delay: 5000
+  - id: 803
+    mover_id: 1109
+    position:
+      x: 7628.778
+      y: 100
+      z: 7645.098
+    radius: 68.5
+    count: 7
+    delay: 35000
+  - id: 804
+    mover_id: 1109
+    position:
+      x: 7551.773
+      y: 101.003
+      z: 7511.281
+    radius: 53.5
+    count: 5
+    delay: 35000
+  - id: 805
+    mover_id: 1109
+    position:
+      x: 7488.037
+      y: 98.192
+      z: 7593.234
+    radius: 61
+    count: 7
+    delay: 35000
+  - id: 806
+    mover_id: 1109
+    position:
+      x: 7337.834
+      y: 99.783
+      z: 7509.396
+    radius: 136.5
+    count: 10
+    delay: 35000
+  - id: 807
+    mover_id: 1110
+    position:
+      x: 7197.929
+      y: 100
+      z: 7594.188
+    radius: 57
+    count: 15
+    delay: 35000
+  - id: 808
+    mover_id: 1110
+    position:
+      x: 7289.592
+      y: 100
+      z: 7679.859
+    radius: 54
+    count: 5
+    delay: 35000
+  - id: 809
+    mover_id: 1108
+    position:
+      x: 7690.124
+      y: 98.769
+      z: 7249.539
+    radius: 76.5
+    count: 10
+    delay: 35000
+  - id: 810
+    mover_id: 1108
+    position:
+      x: 7818.018
+      y: 99.874
+      z: 7298.264
+    radius: 29.5
+    count: 7
+    delay: 35000
+  - id: 811
+    mover_id: 1108
+    position:
+      x: 8090.204
+      y: 98.284
+      z: 7331.551
+    radius: 112
+    count: 20
+    delay: 35000
+  - id: 812
+    mover_id: 1108
+    position:
+      x: 7940.141
+      y: 98.384
+      z: 7306.384
+    radius: 84.5
+    count: 10
+    delay: 35000
+  - id: 813
+    mover_id: 1109
+    position:
+      x: 8185.046
+      y: 98
+      z: 7457.219
+    radius: 75.5
+    count: 15
+    delay: 35000
+  - id: 814
+    mover_id: 1109
+    position:
+      x: 7812.989
+      y: 100.005
+      z: 7410.603
+    radius: 57.5
+    count: 7
+    delay: 35000
+  - id: 815
+    mover_id: 1109
+    position:
+      x: 7896.119
+      y: 98
+      z: 7497.487
+    radius: 68
+    count: 15
+    delay: 35000
+  - id: 816
+    mover_id: 1111
+    position:
+      x: 6415.844
+      y: 99.99
+      z: 8008.458
+    radius: 19
+    count: 4
+    delay: 35000
+  - id: 817
+    mover_id: 1111
+    position:
+      x: 6469.487
+      y: 100
+      z: 7966.687
+    radius: 39
+    count: 5
+    delay: 35000
+  - id: 818
+    mover_id: 1111
+    position:
+      x: 6558.275
+      y: 99.937
+      z: 8075.116
+    radius: 36.5
+    count: 5
+    delay: 35000
+  - id: 819
+    mover_id: 1111
+    position:
+      x: 6630.84
+      y: 98.104
+      z: 8087.114
+    radius: 39.5
+    count: 3
+    delay: 35000
+  - id: 820
+    mover_id: 1111
+    position:
+      x: 6558.23
+      y: 100.049
+      z: 8142.829
+    radius: 32.5
+    count: 3
+    delay: 35000
+  - id: 821
+    mover_id: 1111
+    position:
+      x: 6552.876
+      y: 100
+      z: 7913.979
+    radius: 11.5
+    count: 2
+    delay: 35000
+  - id: 822
+    mover_id: 1111
+    position:
+      x: 6622.977
+      y: 100
+      z: 7839.546
+    radius: 45.5
+    count: 7
+    delay: 35000
+  - id: 823
+    mover_id: 1111
+    position:
+      x: 6640.228
+      y: 98.523
+      z: 7764.526
+    radius: 33
+    count: 5
+    delay: 35000
+  - id: 824
+    mover_id: 1111
+    position:
+      x: 6703.704
+      y: 100
+      z: 8112.069
+    radius: 32
+    count: 4
+    delay: 35000
+  - id: 825
+    mover_id: 1111
+    position:
+      x: 6774.675
+      y: 100
+      z: 8187.776
+    radius: 28.5
+    count: 4
+    delay: 35000
+  - id: 826
+    mover_id: 1111
+    position:
+      x: 6738.802
+      y: 100
+      z: 7699.752
+    radius: 120
+    count: 15
+    delay: 35000
+  - id: 827
+    mover_id: 1111
+    position:
+      x: 6968.634
+      y: 100
+      z: 7757.227
+    radius: 75
+    count: 10
+    delay: 35000
+  - id: 828
+    mover_id: 1111
+    position:
+      x: 7022.459
+      y: 98.338
+      z: 7868.275
+    radius: 90
+    count: 15
+    delay: 35000
+  - id: 829
+    mover_id: 1111
+    position:
+      x: 6706.634
+      y: 98.083
+      z: 7914.587
+    radius: 65
+    count: 7
+    delay: 35000
+  - id: 830
+    mover_id: 1111
+    position:
+      x: 6836.632
+      y: 100
+      z: 7915.766
+    radius: 86.5
+    count: 15
+    delay: 35000
+  - id: 831
+    mover_id: 1110
+    position:
+      x: 7584.454
+      y: 100
+      z: 8005.453
+    radius: 15.5
+    count: 3
+    delay: 35000
+  - id: 832
+    mover_id: 1110
+    position:
+      x: 7459.541
+      y: 98.07
+      z: 8081.708
+    radius: 102
+    count: 20
+    delay: 35000
+  - id: 833
+    mover_id: 1109
+    position:
+      x: 7587.607
+      y: 98.049
+      z: 7729.69
+    radius: 23.5
+    count: 5
+    delay: 35000
+  - id: 834
+    mover_id: 1109
+    position:
+      x: 7533.232
+      y: 100
+      z: 7705.036
+    radius: 25.5
+    count: 3
+    delay: 35000
+  - id: 835
+    mover_id: 1109
+    position:
+      x: 7627.985
+      y: 98.181
+      z: 7822.628
+    radius: 38.5
+    count: 4
+    delay: 35000
+  - id: 836
+    mover_id: 1110
+    position:
+      x: 7189.516
+      y: 100
+      z: 8135.361
+    radius: 43.5
+    count: 5
+    delay: 35000
+  - id: 837
+    mover_id: 1110
+    position:
+      x: 7186.569
+      y: 100
+      z: 8058.443
+    radius: 35.5
+    count: 5
+    delay: 35000
+  - id: 838
+    mover_id: 1110
+    position:
+      x: 7332.538
+      y: 100
+      z: 7811.29
+    radius: 92
+    count: 10
+    delay: 35000
+  - id: 839
+    mover_id: 1110
+    position:
+      x: 7171.295
+      y: 99.809
+      z: 7971.056
+    radius: 65
+    count: 10
+    delay: 35000
+  - id: 840
+    mover_id: 1111
+    position:
+      x: 7233.046
+      y: 100
+      z: 7864.686
+    radius: 120
+    count: 15
+    delay: 35000
+  - id: 841
+    mover_id: 1109
+    position:
+      x: 7751.927
+      y: 98
+      z: 7922.002
+    radius: 85.5
+    count: 20
+    delay: 35000
+  - id: 842
+    mover_id: 1112
+    position:
+      x: 8200.808
+      y: 98.179
+      z: 6759.257
+    radius: 28.5
+    count: 1
+    delay: 21600000
+  - id: 843
+    mover_id: 1111
+    position:
+      x: 8194.592
+      y: 100
+      z: 6816.314
+    radius: 30
+    count: 7
+    delay: 35000
+  - id: 844
+    mover_id: 1109
+    position:
+      x: 8199.295
+      y: 100
+      z: 6869.906
+    radius: 25
+    count: 5
+    delay: 35000
+  - id: 845
+    mover_id: 1109
+    position:
+      x: 8209.905
+      y: 98
+      z: 7584.225
+    radius: 56.5
+    count: 15
+    delay: 35000
+  - id: 846
+    mover_id: 1111
+    position:
+      x: 6535.986
+      y: 100
+      z: 8309.228
+    radius: 49.5
+    count: 5
+    delay: 35000
+  - id: 847
+    mover_id: 1111
+    position:
+      x: 6540.976
+      y: 100
+      z: 8204.322
+    radius: 28.5
+    count: 3
+    delay: 35000
+  - id: 848
+    mover_id: 1110
+    position:
+      x: 7147.598
+      y: 100
+      z: 8299.322
+    radius: 22.5
+    count: 5
+    delay: 35000
+  - id: 849
+    mover_id: 1110
+    position:
+      x: 7077.891
+      y: 100
+      z: 8251.788
+    radius: 16
+    count: 3
+    delay: 35000
+  - id: 850
+    mover_id: 1110
+    position:
+      x: 7041.155
+      y: 100
+      z: 8345.178
+    radius: 37.5
+    count: 4
+    delay: 35000
+  - id: 851
+    mover_id: 1110
+    position:
+      x: 6985.442
+      y: 100
+      z: 8559.887
+    radius: 47.5
+    count: 7
+    delay: 35000
+  - id: 852
+    mover_id: 1110
+    position:
+      x: 7008.805
+      y: 98.531
+      z: 8496.679
+    radius: 27.5
+    count: 5
+    delay: 35000
+  - id: 853
+    mover_id: 1110
+    position:
+      x: 7068.896
+      y: 100
+      z: 8412.134
+    radius: 23
+    count: 3
+    delay: 35000
+  - id: 854
+    mover_id: 1110
+    position:
+      x: 7154.692
+      y: 100
+      z: 8405.402
+    radius: 51.5
+    count: 5
+    delay: 35000
+  - id: 855
+    mover_id: 1111
+    position:
+      x: 6760.755
+      y: 100
+      z: 8373.383
+    radius: 37.5
+    count: 5
+    delay: 35000
+  - id: 856
+    mover_id: 1111
+    position:
+      x: 6762.96
+      y: 100
+      z: 8271.855
+    radius: 40
+    count: 5
+    delay: 35000
+  - id: 857
+    mover_id: 1110
+    position:
+      x: 7371.105
+      y: 100
+      z: 8205.445
+    radius: 47
+    count: 5
+    delay: 35000
+  - id: 858
+    mover_id: 1110
+    position:
+      x: 7168.209
+      y: 100
+      z: 8214.168
+    radius: 40
+    count: 4
+    delay: 35000
+  - id: 859
+    mover_id: 1110
+    position:
+      x: 7241.305
+      y: 100
+      z: 8331.67
+    radius: 74.5
+    count: 7
+    delay: 35000
 npcs:
-  # Marche (weapon shop) — MI_MAFL_MARCHE=214
   - id: 1
-    mover_id: 214
-    position: { x: 6978, y: 100, z: 3329 }
+    mover_id: 220
+    position:
+      x: 7940.799
+      y: 159.076
+      z: 2405.927
     angle: 0
-    functions:
-      - type: shop
-        shop_id: "flaris-weapon"
-      - type: dialogue
-        dialogue_id: "npc_marche_intro"
-
-  # Infopeng (teleport + bank) — MI_MAFL_INFOPENG=200
+    functions: []
   - id: 2
-    mover_id: 200
-    position: { x: 6950, y: 100, z: 3350 }
-    angle: 1.57
-    functions:
-      - type: teleport
-        destinations: ["saintmorning", "darkon1"]
-      - type: bank
-
-  # Boboku (armor shop) — MI_MAFL_BOBOKU=211
+    mover_id: 212
+    position:
+      x: 6958.434
+      y: 100
+      z: 3211.789
+    angle: 3.183
+    functions: []
   - id: 3
-    mover_id: 211
-    position: { x: 7000, y: 100, z: 3300 }
-    angle: 3.14
-    functions:
-      - type: shop
-        shop_id: "flaris-armor"
-      - type: dialogue
-        dialogue_id: "npc_boboku_intro"
-
-  # Lui (warehouse) — MI_MAFL_LUI=213
-  - id: 4
     mover_id: 213
-    position: { x: 6930, y: 100, z: 3320 }
-    angle: 0.78
-    functions:
-      - type: warehouse
-
-  # Julia (guild) — MI_MAFL_JULIA=212
+    position:
+      x: 6975.657
+      y: 100
+      z: 3266.874
+    angle: 5.273
+    functions: []
+  - id: 4
+    mover_id: 216
+    position:
+      x: 6957.963
+      y: 100
+      z: 3238.348
+    angle: 5.633
+    functions: []
   - id: 5
     mover_id: 212
-    position: { x: 6920, y: 100, z: 3360 }
+    position:
+      x: 6960.071
+      y: 100
+      z: 3266.104
+    angle: 0.06
+    functions: []
+  - id: 6
+    mover_id: 212
+    position:
+      x: 7042.263
+      y: 99.494
+      z: 3244.289
+    angle: 4.713
+    functions: []
+  - id: 7
+    mover_id: 212
+    position:
+      x: 7160.067
+      y: 100
+      z: 3221.458
+    angle: 3.123
+    functions: []
+  - id: 8
+    mover_id: 212
+    position:
+      x: 6937.835
+      y: 100
+      z: 3243.339
+    angle: 1.49
+    functions: []
+  - id: 9
+    mover_id: 211
+    position:
+      x: 6926.101
+      y: 100
+      z: 3232.107
+    angle: 1.653
+    functions: []
+  - id: 10
+    mover_id: 211
+    position:
+      x: 6926.547
+      y: 100
+      z: 3229.595
+    angle: 1.883
+    functions: []
+  - id: 11
+    mover_id: 219
+    position:
+      x: 6954.721
+      y: 100
+      z: 3274.097
+    angle: 1.6
+    functions: []
+  - id: 12
+    mover_id: 233
+    position:
+      x: 7129.189
+      y: 99.958
+      z: 3252.483
+    angle: 1.403
+    functions: []
+  - id: 13
+    mover_id: 218
+    position:
+      x: 6703.289
+      y: 135.965
+      z: 3327.764
+    angle: 1.49
+    functions: []
+  - id: 14
+    mover_id: 215
+    position:
+      x: 6927.303
+      y: 100
+      z: 3236.48
+    angle: 0.59
+    functions: []
+  - id: 15
+    mover_id: 218
+    position:
+      x: 6929.957
+      y: 100.3
+      z: 3328.84
+    angle: 1.69
+    functions: []
+  - id: 16
+    mover_id: 226
+    position:
+      x: 7153.918
+      y: 99.999
+      z: 3244.066
+    angle: 4.203
+    functions: []
+  - id: 17
+    mover_id: 226
+    position:
+      x: 7155.717
+      y: 99.999
+      z: 3248.06
+    angle: 4.413
+    functions: []
+  - id: 18
+    mover_id: 214
+    position:
+      x: 7152.513
+      y: 99.999
+      z: 3242.401
+    angle: 4.203
+    functions: []
+  - id: 19
+    mover_id: 214
+    position:
+      x: 7156.194
+      y: 100
+      z: 3250.17
+    angle: 4.253
+    functions: []
+  - id: 20
+    mover_id: 218
+    position:
+      x: 6930.361
+      y: 100.3
+      z: 3324.302
+    angle: 1.68
+    functions: []
+  - id: 21
+    mover_id: 220
+    position:
+      x: 6960.414
+      y: 100
+      z: 3204.269
+    angle: 3.07
+    functions: []
+  - id: 22
+    mover_id: 233
+    position:
+      x: 6998.787
+      y: 100
+      z: 3203.146
+    angle: 2.963
+    functions: []
+  - id: 23
+    mover_id: 232
+    position:
+      x: 6835.973
+      y: 108.616
+      z: 3132.558
+    angle: 1.57
+    functions: []
+  - id: 24
+    mover_id: 1024
+    position:
+      x: 6988.322
+      y: 100
+      z: 3326.006
+    angle: 4.693
+    functions: []
+  - id: 25
+    mover_id: 1025
+    position:
+      x: 6988.117
+      y: 100
+      z: 3321.666
+    angle: 4.623
+    functions: []
+  - id: 26
+    mover_id: 226
+    position:
+      x: 6960.132
+      y: 100
+      z: 3339.728
     angle: 0
-    functions:
-      - type: dialogue
-        dialogue_id: "npc_mayor_paul_intro"
-      - type: guild
-
-# Regions (sub-zones)
+    functions: []
+  - id: 27
+    mover_id: 219
+    position:
+      x: 6703.564
+      y: 136.085
+      z: 3326.786
+    angle: 2.26
+    functions: []
+  - id: 28
+    mover_id: 873
+    position:
+      x: 6957.511
+      y: 100
+      z: 3211.723
+    angle: 3.143
+    functions: []
+  - id: 29
+    mover_id: 880
+    position:
+      x: 6989.561
+      y: 100
+      z: 3256.066
+    angle: 5.183
+    functions: []
+  - id: 30
+    mover_id: 879
+    position:
+      x: 6961.313
+      y: 100
+      z: 3349.829
+    angle: 0
+    functions: []
+  - id: 31
+    mover_id: 878
+    position:
+      x: 6958.221
+      y: 100
+      z: 3349.968
+    angle: 0
+    functions: []
+  - id: 32
+    mover_id: 211
+    position:
+      x: 6927.54
+      y: 100
+      z: 3227.029
+    angle: 2.14
+    functions: []
+  - id: 33
+    mover_id: 1026
+    position:
+      x: 6932.14
+      y: 100
+      z: 3259.181
+    angle: 1.08
+    functions: []
+  - id: 34
+    mover_id: 910
+    position:
+      x: 6982.488
+      y: 100
+      z: 3351.127
+    angle: 5.533
+    functions: []
+  - id: 35
+    mover_id: 913
+    position:
+      x: 6943.974
+      y: 100.138
+      z: 3101.107
+    angle: 3.193
+    functions: []
+  - id: 36
+    mover_id: 1028
+    position:
+      x: 6989.697
+      y: 100
+      z: 3231.317
+    angle: 4.313
+    functions: []
+  - id: 37
+    mover_id: 877
+    position:
+      x: 7130.349
+      y: 99.955
+      z: 3257.222
+    angle: 1.02
+    functions: []
+  - id: 38
+    mover_id: 231
+    position:
+      x: 6930.677
+      y: 100
+      z: 3226.022
+    angle: 3.55
+    functions: []
+  - id: 39
+    mover_id: 200
+    position:
+      x: 6971.151
+      y: 100
+      z: 3215.15
+    angle: 3.63
+    functions: []
+  - id: 40
+    mover_id: 983
+    position:
+      x: 6981.303
+      y: 100
+      z: 3305.344
+    angle: 4.02
+    functions: []
+  - id: 41
+    mover_id: 982
+    position:
+      x: 6982.605
+      y: 100
+      z: 3306.908
+    angle: 4.093
+    functions: []
+  - id: 42
+    mover_id: 981
+    position:
+      x: 6960.913
+      y: 100
+      z: 3211.651
+    angle: 3.133
+    functions: []
+  - id: 43
+    mover_id: 1022
+    position:
+      x: 6988.44
+      y: 100
+      z: 3335.072
+    angle: 4.673
+    functions: []
+  - id: 44
+    mover_id: 1023
+    position:
+      x: 6988.448
+      y: 100
+      z: 3331.129
+    angle: 4.723
+    functions: []
+  - id: 45
+    mover_id: 1027
+    position:
+      x: 6960.532
+      y: 100
+      z: 3227.768
+    angle: 0
+    functions: []
+  - id: 46
+    mover_id: 984
+    position:
+      x: 6953.646
+      y: 100
+      z: 3213.32
+    angle: 3.11
+    functions: []
+  - id: 47
+    mover_id: 1027
+    position:
+      x: 7160.808
+      y: 100
+      z: 3237.676
+    angle: 0
+    functions: []
+  - id: 48
+    mover_id: 217
+    position:
+      x: 6961.198
+      y: 100
+      z: 3237.463
+    angle: 0.17
+    functions: []
+  - id: 49
+    mover_id: 221
+    position:
+      x: 6953.808
+      y: 100
+      z: 3327.366
+    angle: 4.633
+    functions: []
+  - id: 50
+    mover_id: 88
+    position:
+      x: 6965.74
+      y: 100
+      z: 3241.599
+    angle: 1.18
+    functions: []
+  - id: 51
+    mover_id: 1025
+    position:
+      x: 6947.594
+      y: 100
+      z: 3274.652
+    angle: 0.41
+    functions: []
+  - id: 52
+    mover_id: 218
+    position:
+      x: 6942.959
+      y: 100
+      z: 3269.011
+    angle: 0.75
+    functions: []
+  - id: 53
+    mover_id: 228
+    position:
+      x: 5535.894
+      y: 97
+      z: 3462.183
+    angle: 3.693
+    functions: []
+  - id: 54
+    mover_id: 235
+    position:
+      x: 8638.007
+      y: 100
+      z: 3569.618
+    angle: 0
+    functions: []
+  - id: 55
+    mover_id: 229
+    position:
+      x: 8447.493
+      y: 100
+      z: 3576.305
+    angle: 4.733
+    functions: []
+  - id: 56
+    mover_id: 233
+    position:
+      x: 8439.945
+      y: 100.025
+      z: 3547.745
+    angle: 0
+    functions: []
+  - id: 57
+    mover_id: 201
+    position:
+      x: 5072.615
+      y: 55
+      z: 3962.481
+    angle: 0
+    functions: []
+  - id: 58
+    mover_id: 212
+    position:
+      x: 8463.478
+      y: 100
+      z: 3600.757
+    angle: 3.18
+    functions: []
+  - id: 59
+    mover_id: 212
+    position:
+      x: 8478.097
+      y: 100
+      z: 3634.131
+    angle: 0
+    functions: []
+  - id: 60
+    mover_id: 217
+    position:
+      x: 8359.337
+      y: 100
+      z: 3640.241
+    angle: 2.38
+    functions: []
+  - id: 61
+    mover_id: 212
+    position:
+      x: 8536.5
+      y: 100
+      z: 3643.722
+    angle: 0
+    functions: []
+  - id: 62
+    mover_id: 212
+    position:
+      x: 8374.658
+      y: 100
+      z: 3659.452
+    angle: 3.21
+    functions: []
+  - id: 63
+    mover_id: 211
+    position:
+      x: 8375.102
+      y: 100
+      z: 3673.197
+    angle: 0.08
+    functions: []
+  - id: 64
+    mover_id: 215
+    position:
+      x: 8372.59
+      y: 100
+      z: 3671.628
+    angle: 0.1
+    functions: []
+  - id: 65
+    mover_id: 212
+    position:
+      x: 8461.95
+      y: 100
+      z: 3709.779
+    angle: 0
+    functions: []
+  - id: 66
+    mover_id: 212
+    position:
+      x: 8360.62
+      y: 100
+      z: 3751.038
+    angle: 0
+    functions: []
+  - id: 67
+    mover_id: 216
+    position:
+      x: 8412.976
+      y: 140.249
+      z: 3974.41
+    angle: 0
+    functions: []
+  - id: 68
+    mover_id: 218
+    position:
+      x: 8315.521
+      y: 100
+      z: 3728.628
+    angle: 0
+    functions: []
+  - id: 69
+    mover_id: 219
+    position:
+      x: 8410.16
+      y: 100
+      z: 3680.759
+    angle: 5.513
+    functions: []
+  - id: 70
+    mover_id: 222
+    position:
+      x: 8403.951
+      y: 100
+      z: 3657.744
+    angle: 1.9
+    functions: []
+  - id: 71
+    mover_id: 201
+    position:
+      x: 8386.912
+      y: 100
+      z: 3651.859
+    angle: 0.19
+    functions: []
+  - id: 72
+    mover_id: 220
+    position:
+      x: 8396.128
+      y: 100.2
+      z: 3655.721
+    angle: 1.97
+    functions: []
+  - id: 73
+    mover_id: 225
+    position:
+      x: 8398.086
+      y: 100.1
+      z: 3657.5
+    angle: 5.913
+    functions: []
+  - id: 74
+    mover_id: 230
+    position:
+      x: 8396.88
+      y: 100.1
+      z: 3654.479
+    angle: 3.263
+    functions: []
+  - id: 75
+    mover_id: 219
+    position:
+      x: 8385.096
+      y: 100
+      z: 3653.676
+    angle: 3.883
+    functions: []
+  - id: 76
+    mover_id: 233
+    position:
+      x: 8480.749
+      y: 100
+      z: 3660.423
+    angle: 5.503
+    functions: []
+  - id: 77
+    mover_id: 215
+    position:
+      x: 8369.506
+      y: 100
+      z: 3675.497
+    angle: 0.12
+    functions: []
+  - id: 78
+    mover_id: 233
+    position:
+      x: 8341.125
+      y: 100.6
+      z: 3750.59
+    angle: 0.75
+    functions: []
+  - id: 79
+    mover_id: 225
+    position:
+      x: 8483.716
+      y: 100.6
+      z: 3810.268
+    angle: 3.193
+    functions: []
+  - id: 80
+    mover_id: 214
+    position:
+      x: 8481.515
+      y: 100
+      z: 3810.405
+    angle: 3.123
+    functions: []
+  - id: 81
+    mover_id: 223
+    position:
+      x: 8449.088
+      y: 100
+      z: 3638.129
+    angle: 1.41
+    functions: []
+  - id: 82
+    mover_id: 691
+    position:
+      x: 8383.202
+      y: 145
+      z: 4085.15
+    angle: 0.06
+    functions: []
+  - id: 83
+    mover_id: 225
+    position:
+      x: 8334.948
+      y: 100
+      z: 3713.428
+    angle: 3.933
+    functions: []
+  - id: 84
+    mover_id: 213
+    position:
+      x: 8532.436
+      y: 100
+      z: 3607.489
+    angle: 5.863
+    functions: []
+  - id: 85
+    mover_id: 228
+    position:
+      x: 8353.016
+      y: 99.775
+      z: 3983.67
+    angle: 5.583
+    functions: []
+  - id: 86
+    mover_id: 221
+    position:
+      x: 8414.342
+      y: 140.141
+      z: 3974.805
+    angle: 0
+    functions: []
+  - id: 87
+    mover_id: 873
+    position:
+      x: 8462.629
+      y: 100
+      z: 3600.31
+    angle: 3.133
+    functions: []
+  - id: 88
+    mover_id: 880
+    position:
+      x: 8465.417
+      y: 100
+      z: 3622.853
+    angle: 0
+    functions: []
+  - id: 89
+    mover_id: 913
+    position:
+      x: 8636.335
+      y: 100.195
+      z: 3738.453
+    angle: 4.563
+    functions: []
+  - id: 90
+    mover_id: 1026
+    position:
+      x: 8437.869
+      y: 100
+      z: 3616.031
+    angle: 1.493
+    functions: []
+  - id: 91
+    mover_id: 200
+    position:
+      x: 8444.201
+      y: 100
+      z: 3602.293
+    angle: 3.11
+    functions: []
+  - id: 92
+    mover_id: 1027
+    position:
+      x: 8464.083
+      y: 100
+      z: 3651.99
+    angle: 0
+    functions: []
+  - id: 93
+    mover_id: 984
+    position:
+      x: 8484.061
+      y: 100
+      z: 3601.587
+    angle: 3.14
+    functions: []
+  - id: 94
+    mover_id: 983
+    position:
+      x: 8395.563
+      y: 100
+      z: 3647.58
+    angle: 2.02
+    functions: []
+  - id: 95
+    mover_id: 1153
+    position:
+      x: 8484.063
+      y: 100
+      z: 3600.694
+    angle: 3.143
+    functions: []
+  - id: 96
+    mover_id: 232
+    position:
+      x: 3890.031
+      y: 58.841
+      z: 4145.79
+    angle: 3.183
+    functions: []
+  - id: 97
+    mover_id: 231
+    position:
+      x: 3748.583
+      y: 59
+      z: 4412.304
+    angle: 1.36
+    functions: []
+  - id: 98
+    mover_id: 224
+    position:
+      x: 3829.779
+      y: 59.1
+      z: 4457.244
+    angle: 0.09
+    functions: []
+  - id: 99
+    mover_id: 228
+    position:
+      x: 3846.71
+      y: 59
+      z: 4443.019
+    angle: 0
+    functions: []
+  - id: 100
+    mover_id: 229
+    position:
+      x: 3879.864
+      y: 59
+      z: 4458.07
+    angle: 0
+    functions: []
+  - id: 101
+    mover_id: 225
+    position:
+      x: 3908.938
+      y: 59
+      z: 4376.03
+    angle: 4.033
+    functions: []
+  - id: 102
+    mover_id: 227
+    position:
+      x: 3831.705
+      y: 59
+      z: 4356.61
+    angle: 3.783
+    functions: []
+  - id: 103
+    mover_id: 233
+    position:
+      x: 3841.457
+      y: 59
+      z: 4422.948
+    angle: 3.46
+    functions: []
+  - id: 104
+    mover_id: 223
+    position:
+      x: 3742.223
+      y: 59
+      z: 4413.738
+    angle: 2.1
+    functions: []
+  - id: 105
+    mover_id: 226
+    position:
+      x: 3931.297
+      y: 59.007
+      z: 4385.881
+    angle: 4.033
+    functions: []
+  - id: 106
+    mover_id: 214
+    position:
+      x: 3931.982
+      y: 59.021
+      z: 4389.937
+    angle: 4.863
+    functions: []
+  - id: 107
+    mover_id: 218
+    position:
+      x: 3850.12
+      y: 59
+      z: 4425.958
+    angle: 3.15
+    functions: []
+  - id: 108
+    mover_id: 201
+    position:
+      x: 3733.891
+      y: 59
+      z: 4525.849
+    angle: 5.733
+    functions: []
+  - id: 109
+    mover_id: 213
+    position:
+      x: 3827.019
+      y: 59
+      z: 4548.456
+    angle: 0
+    functions: []
+  - id: 110
+    mover_id: 1027
+    position:
+      x: 3831.669
+      y: 59
+      z: 4457.402
+    angle: 5.883
+    functions: []
+  - id: 111
+    mover_id: 873
+    position:
+      x: 3834.107
+      y: 59
+      z: 4456.45
+    angle: 5.373
+    functions: []
+  - id: 112
+    mover_id: 223
+    position:
+      x: 3742.822
+      y: 59
+      z: 4419.581
+    angle: 1.363
+    functions: []
+  - id: 113
+    mover_id: 880
+    position:
+      x: 3824.431
+      y: 59
+      z: 4462.046
+    angle: 6.073
+    functions: []
+  - id: 114
+    mover_id: 1026
+    position:
+      x: 3801.5
+      y: 59
+      z: 4448.122
+    angle: 0.8
+    functions: []
+  - id: 115
+    mover_id: 981
+    position:
+      x: 3827.025
+      y: 59
+      z: 4459.583
+    angle: 5.363
+    functions: []
+  - id: 116
+    mover_id: 200
+    position:
+      x: 3793.978
+      y: 59
+      z: 4444.591
+    angle: 0.11
+    functions: []
+  - id: 117
+    mover_id: 992
+    position:
+      x: 3832.407
+      y: 60
+      z: 4480.829
+    angle: 4.763
+    functions: []
+  - id: 118
+    mover_id: 984
+    position:
+      x: 3835.305
+      y: 59
+      z: 4455.136
+    angle: 5.413
+    functions: []
+  - id: 119
+    mover_id: 877
+    position:
+      x: 3806.893
+      y: 59
+      z: 4431.258
+    angle: 2.38
+    functions: []
+  - id: 120
+    mover_id: 231
+    position:
+      x: 3743.44
+      y: 59
+      z: 4424.454
+    angle: 1.58
+    functions: []
+  - id: 121
+    mover_id: 1105
+    position:
+      x: 3804.733
+      y: 59
+      z: 4455.187
+    angle: 1.6
+    functions: []
+  - id: 122
+    mover_id: 220
+    position:
+      x: 5541.337
+      y: 71.62
+      z: 4352.409
+    angle: 0
+    functions: []
+  - id: 123
+    mover_id: 891
+    position:
+      x: 5482.891
+      y: 71.351
+      z: 4362.686
+    angle: 1.06
+    functions: []
+  - id: 124
+    mover_id: 891
+    position:
+      x: 8247.269
+      y: 95.585
+      z: 2525.551
+    angle: 2.33
+    functions: []
+  - id: 125
+    mover_id: 219
+    position:
+      x: 8197.681
+      y: 84.793
+      z: 2805.672
+    angle: 0.48
+    functions: []
+  - id: 126
+    mover_id: 200
+    position:
+      x: 8279
+      y: 81.204
+      z: 2812.229
+    angle: 1.58
+    functions: []
+  - id: 127
+    mover_id: 200
+    position:
+      x: 8279.326
+      y: 81.118
+      z: 2810.451
+    angle: 1.98
+    functions: []
+  - id: 128
+    mover_id: 214
+    position:
+      x: 7169.168
+      y: 100
+      z: 3271.165
+    angle: 5.993
+    functions: []
+  - id: 129
+    mover_id: 210
+    position:
+      x: 7172.419
+      y: 100
+      z: 3212.385
+    angle: 3.44
+    functions: []
+  - id: 130
+    mover_id: 228
+    position:
+      x: 7219.015
+      y: 108.631
+      z: 3190.55
+    angle: 3.253
+    functions: []
+  - id: 131
+    mover_id: 210
+    position:
+      x: 7169.417
+      y: 100
+      z: 3208.961
+    angle: 2.9
+    functions: []
+  - id: 132
+    mover_id: 227
+    position:
+      x: 7179.42
+      y: 100
+      z: 3216.337
+    angle: 4.463
+    functions: []
+  - id: 133
+    mover_id: 216
+    position:
+      x: 7202.364
+      y: 100
+      z: 3228.752
+    angle: 1.41
+    functions: []
+  - id: 134
+    mover_id: 231
+    position:
+      x: 7204.369
+      y: 100
+      z: 3227.884
+    angle: 4.593
+    functions: []
+  - id: 135
+    mover_id: 227
+    position:
+      x: 7204.204
+      y: 100
+      z: 3229.8
+    angle: 5.183
+    functions: []
+  - id: 136
+    mover_id: 225
+    position:
+      x: 7204.647
+      y: 100
+      z: 3226.729
+    angle: 4.21
+    functions: []
+  - id: 137
+    mover_id: 223
+    position:
+      x: 7203.204
+      y: 100
+      z: 3231.362
+    angle: 5.493
+    functions: []
+  - id: 138
+    mover_id: 228
+    position:
+      x: 6552.239
+      y: 108.244
+      z: 3618.515
+    angle: 3.533
+    functions: []
+  - id: 139
+    mover_id: 891
+    position:
+      x: 6589.828
+      y: 100.1
+      z: 3822.047
+    angle: 0
+    functions: []
+  - id: 140
+    mover_id: 235
+    position:
+      x: 6955.456
+      y: 149.134
+      z: 3848.429
+    angle: 3.043
+    functions: []
+  - id: 141
+    mover_id: 201
+    position:
+      x: 6995.009
+      y: 125.335
+      z: 3897.01
+    angle: 0
+    functions: []
+  - id: 142
+    mover_id: 201
+    position:
+      x: 6998.488
+      y: 125.05
+      z: 3897.479
+    angle: 6.073
+    functions: []
+  - id: 143
+    mover_id: 201
+    position:
+      x: 6991.909
+      y: 124.603
+      z: 3891.937
+    angle: 0.93
+    functions: []
+  - id: 144
+    mover_id: 201
+    position:
+      x: 7002.028
+      y: 124.395
+      z: 3894.994
+    angle: 5.433
+    functions: []
+  - id: 145
+    mover_id: 235
+    position:
+      x: 7036.381
+      y: 118.339
+      z: 3728.501
+    angle: 0
+    functions: []
+  - id: 146
+    mover_id: 233
+    position:
+      x: 6691.423
+      y: 120.054
+      z: 3619.134
+    angle: 3.903
+    functions: []
+  - id: 147
+    mover_id: 220
+    position:
+      x: 7186.78
+      y: 156.2
+      z: 4090.626
+    angle: 0
+    functions: []
+  - id: 148
+    mover_id: 232
+    position:
+      x: 7453.871
+      y: 130.719
+      z: 3670.846
+    angle: 1.56
+    functions: []
+  - id: 149
+    mover_id: 220
+    position:
+      x: 7214.24
+      y: 109.498
+      z: 3673.458
+    angle: 5.643
+    functions: []
+  - id: 150
+    mover_id: 200
+    position:
+      x: 7351.099
+      y: 155.903
+      z: 3926.167
+    angle: 5.803
+    functions: []
+  - id: 151
+    mover_id: 200
+    position:
+      x: 7340.922
+      y: 155.977
+      z: 3933.153
+    angle: 5.483
+    functions: []
+  - id: 152
+    mover_id: 232
+    position:
+      x: 7741.04
+      y: 95.515
+      z: 4074.891
+    angle: 3.09
+    functions: []
+  - id: 153
+    mover_id: 201
+    position:
+      x: 9560.335
+      y: 90.535
+      z: 4020.011
+    angle: 4.773
+    functions: []
+  - id: 154
+    mover_id: 219
+    position:
+      x: 6133.405
+      y: 100
+      z: 4168.766
+    angle: 0
+    functions: []
+  - id: 155
+    mover_id: 237
+    position:
+      x: 5852.805
+      y: 200.176
+      z: 4316.906
+    angle: 1.48
+    functions: []
+  - id: 156
+    mover_id: 218
+    position:
+      x: 7640.476
+      y: 175.12
+      z: 4254.254
+    angle: 3.183
+    functions: []
+  - id: 157
+    mover_id: 218
+    position:
+      x: 7635.972
+      y: 169.02
+      z: 4229.069
+    angle: 1.84
+    functions: []
+  - id: 158
+    mover_id: 218
+    position:
+      x: 7636.031
+      y: 168.84
+      z: 4227.36
+    angle: 1.65
+    functions: []
+  - id: 159
+    mover_id: 218
+    position:
+      x: 7677.743
+      y: 179.378
+      z: 4252.203
+    angle: 5.553
+    functions: []
+  - id: 160
+    mover_id: 218
+    position:
+      x: 7678.735
+      y: 179.091
+      z: 4251.526
+    angle: 5.553
+    functions: []
+  - id: 161
+    mover_id: 218
+    position:
+      x: 7655.598
+      y: 161.675
+      z: 4191.633
+    angle: 3.113
+    functions: []
+  - id: 162
+    mover_id: 218
+    position:
+      x: 7657.554
+      y: 161.695
+      z: 4191.509
+    angle: 3.073
+    functions: []
+  - id: 163
+    mover_id: 222
+    position:
+      x: 7644.777
+      y: 236.285
+      z: 4349.111
+    angle: 4.413
+    functions: []
+  - id: 164
+    mover_id: 218
+    position:
+      x: 7693.445
+      y: 170.711
+      z: 4227.503
+    angle: 4.703
+    functions: []
+  - id: 165
+    mover_id: 218
+    position:
+      x: 7693.286
+      y: 170.203
+      z: 4225.888
+    angle: 4.693
+    functions: []
+  - id: 166
+    mover_id: 223
+    position:
+      x: 3947.286
+      y: 117.651
+      z: 2748.429
+    angle: 1.68
+    functions: []
+  - id: 167
+    mover_id: 232
+    position:
+      x: 3889.866
+      y: 59
+      z: 3923.519
+    angle: 3.16
+    functions: []
+  - id: 168
+    mover_id: 221
+    position:
+      x: 5572.357
+      y: 75
+      z: 3897.209
+    angle: 3.643
+    functions: []
+  - id: 169
+    mover_id: 222
+    position:
+      x: 5580.702
+      y: 75
+      z: 3901.839
+    angle: 4.063
+    functions: []
+  - id: 170
+    mover_id: 235
+    position:
+      x: 5370.744
+      y: 75
+      z: 3991.255
+    angle: 4.333
+    functions: []
+  - id: 171
+    mover_id: 215
+    position:
+      x: 5561.092
+      y: 75.029
+      z: 3909.131
+    angle: 0
+    functions: []
+  - id: 172
+    mover_id: 213
+    position:
+      x: 5600.739
+      y: 75
+      z: 3767.308
+    angle: 0
+    functions: []
+  - id: 173
+    mover_id: 880
+    position:
+      x: 5569.151
+      y: 75.019
+      z: 3898.975
+    angle: 2.62
+    functions: []
+  - id: 174
+    mover_id: 200
+    position:
+      x: 5576.784
+      y: 75.002
+      z: 3897.412
+    angle: 3.52
+    functions: []
+  - id: 175
+    mover_id: 913
+    position:
+      x: 3851.173
+      y: 94.769
+      z: 4660.096
+    angle: 5.703
+    functions: []
+  - id: 176
+    mover_id: 1090
+    position:
+      x: 5961.892
+      y: 100.392
+      z: 5387.442
+    angle: 3.813
+    functions: []
+  - id: 177
+    mover_id: 1091
+    position:
+      x: 5959.499
+      y: 100.392
+      z: 5406.146
+    angle: 5.11
+    functions: []
+  - id: 178
+    mover_id: 1092
+    position:
+      x: 5937.609
+      y: 100.392
+      z: 5431.081
+    angle: 6.123
+    functions: []
+  - id: 179
+    mover_id: 873
+    position:
+      x: 5960.862
+      y: 100.395
+      z: 5404.19
+    angle: 5.223
+    functions: []
+  - id: 180
+    mover_id: 1093
+    position:
+      x: 5987.453
+      y: 100.555
+      z: 5457.813
+    angle: 5.643
+    functions: []
+  - id: 181
+    mover_id: 1094
+    position:
+      x: 6025.444
+      y: 100.434
+      z: 5346.865
+    angle: 4.433
+    functions: []
+  - id: 182
+    mover_id: 222
+    position:
+      x: 3238.182
+      y: 11.651
+      z: 3421.026
+    angle: 5.483
+    functions: []
+  - id: 183
+    mover_id: 222
+    position:
+      x: 3239.983
+      y: 11.651
+      z: 3417.698
+    angle: 4.793
+    functions: []
+  - id: 184
+    mover_id: 222
+    position:
+      x: 3202.744
+      y: 10.069
+      z: 3437.849
+    angle: 0.52
+    functions: []
+  - id: 185
+    mover_id: 222
+    position:
+      x: 3208.391
+      y: 10.155
+      z: 3437.291
+    angle: 5.583
+    functions: []
+  - id: 186
+    mover_id: 226
+    position:
+      x: 2991.348
+      y: 56.731
+      z: 4063.505
+    angle: 0
+    functions: []
+  - id: 187
+    mover_id: 234
+    position:
+      x: 3344.027
+      y: 146.956
+      z: 2071.1
+    angle: 3.14
+    functions: []
+  - id: 188
+    mover_id: 234
+    position:
+      x: 3344.047
+      y: 146.952
+      z: 2056.097
+    angle: 0.013
+    functions: []
+  - id: 189
+    mover_id: 234
+    position:
+      x: 3348.991
+      y: 146.967
+      z: 2068.673
+    angle: 2.313
+    functions: []
+  - id: 190
+    mover_id: 234
+    position:
+      x: 3339.078
+      y: 146.882
+      z: 2058.45
+    angle: 5.533
+    functions: []
+  - id: 191
+    mover_id: 234
+    position:
+      x: 3348.821
+      y: 146.927
+      z: 2058.485
+    angle: 0.78
+    functions: []
+  - id: 192
+    mover_id: 234
+    position:
+      x: 3339.107
+      y: 146.917
+      z: 2068.671
+    angle: 4.023
+    functions: []
+  - id: 193
+    mover_id: 234
+    position:
+      x: 3336.709
+      y: 146.9
+      z: 2063.72
+    angle: 4.743
+    functions: []
+  - id: 194
+    mover_id: 234
+    position:
+      x: 3351.367
+      y: 146.986
+      z: 2063.716
+    angle: 1.57
+    functions: []
+  - id: 195
+    mover_id: 875
+    position:
+      x: 3343.95
+      y: 114.628
+      z: 1859.324
+    angle: 3.193
+    functions: []
 regions:
   - id: 1
-    name: "Flaris Safe Zone"
+    name: Flaris Safe Zone
     type: safe
     bounds:
-      min: { x: 6800, y: 0, z: 3100 }
-      max: { x: 7200, y: 500, z: 3600 }
-
+      min:
+        x: 6800
+        y: 0
+        z: 3100
+      max:
+        x: 7200
+        y: 500
+        z: 3600
   - id: 2
-    name: "Flaris PVP Arena"
+    name: Flaris PVP Arena
     type: pvp
     bounds:
-      min: { x: 6600, y: 0, z: 2900 }
-      max: { x: 6750, y: 500, z: 3050 }
-
-# Weather
+      min:
+        x: 6600
+        y: 0
+        z: 2900
+      max:
+        x: 6750
+        y: 500
+        z: 3050
 weather:
   default: sunny
   variations:

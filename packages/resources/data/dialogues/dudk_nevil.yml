@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: dudk_nevil
+states:
+  "0":
+    speak:
+      - 58
+    timer: 15
+    source: "Speak( NpcId(), 58 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2": {}
+  "3":
+    keys:
+      - label: 12
+      - label: 10
+  "4":
+    say:
+      - 59
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "10":
+    say:
+      - 61
+    exit: true
+  "12":
+    say:
+      - 60

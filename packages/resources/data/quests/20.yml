@@ -1,0 +1,93 @@
+_version: "1.0"
+id: 20
+symbol: QUEST_13
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 5
+      - type: num
+        value: 15
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 5
+      - type: num
+        value: 150
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 1
+      - type: num
+        value: -1
+      - type: sym
+        value: 6025
+      - type: num
+        value: 25
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 8500
+      - type: num
+        value: 1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: 1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 8501
+      - type: num
+        value: 1
+  - cmd: SetEndRewardHide
+    args:
+      - type: num
+        value: 1
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6004
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000135
+    cond: IDS_PROPQUEST_INC_000136
+    status: IDS_PROPQUEST_INC_000137
+  "14":
+    desc: IDS_PROPQUEST_INC_000138
+    cond: IDS_PROPQUEST_INC_000139
+    status: IDS_PROPQUEST_INC_000140
+quest_items:
+  - mover: 98
+    item: 6025
+    prob: 1500000000
+    num: 1
+title: IDS_PROPQUEST_INC_000134
