@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, Journal } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar.js';
 import { ClusterListener } from './ipc/clusterListener.js';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
@@ -10,6 +10,7 @@ import { SpawnManager } from './managers/spawn.manager.js';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer.js';
 import { NpcSnapshotSerializer } from './net/snapshot/npcSnapshot.serializer.js';
 import { JoinService } from './services/join.service.js';
+import { QuestService } from './services/quest.service.js';
 import { JoinHandler } from './handlers/join.handler.js';
 import { MapKeyService } from './services/mapKey.service.js';
 import { MapKeyHandler } from './handlers/mapKey.handler.js';
@@ -23,6 +24,7 @@ import { PlayerMovedHandler } from './handlers/playerMoved.handler.js';
 import { PlayerBehaviorHandler } from './handlers/playerBehavior.handler.js';
 import { ChatService } from './services/chat.service.js';
 import { ChatHandler } from './handlers/chat.handler.js';
+import { CommandService } from './services/command.service.js';
 import { MotionService } from './services/motion.service.js';
 import { MotionHandler } from './handlers/motion.handler.js';
 import { TargetService } from './services/target.service.js';
@@ -38,6 +40,9 @@ import { ScriptDlgService } from './services/scriptDlg.service.js';
 import { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
 import { RevivalService } from './services/revival.service.js';
 import { RevivalHandler } from './handlers/revival.handler.js';
+import { MeleeAttackService } from './services/meleeAttack.service.js';
+import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
+import { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
 import { JournalReplayer } from './systems/journalReplayer.js';
 
 export interface WorldComposeResult {
@@ -52,6 +57,7 @@ export interface WorldComposeResult {
   snapshotSerializer: PlayerSnapshotSerializer;
   npcSnapshotSerializer: NpcSnapshotSerializer;
   joinService: JoinService;
+  questService: QuestService;
   joinHandler: JoinHandler;
   mapKeyService: MapKeyService;
   mapKeyHandler: MapKeyHandler;
@@ -65,6 +71,7 @@ export interface WorldComposeResult {
   playerBehaviorHandler: PlayerBehaviorHandler;
   chatService: ChatService;
   chatHandler: ChatHandler;
+  commandService: CommandService;
   motionService: MotionService;
   motionHandler: MotionHandler;
   targetService: TargetService;
@@ -80,6 +87,9 @@ export interface WorldComposeResult {
   scriptDlgHandler: ScriptDlgHandler;
   revivalService: RevivalService;
   revivalHandler: RevivalHandler;
+  meleeAttackService: MeleeAttackService;
+  playerSetDestObjHandler: PlayerSetDestObjHandler;
+  meleeAttackHandler: MeleeAttackHandler;
   journal: Journal;
   journalReplayer: JournalReplayer;
 }
@@ -132,6 +142,8 @@ export async function compose(): Promise<WorldComposeResult> {
   };
   const db = createDb(dbConfig);
   const charRepo = new CharacterRepository(db);
+  const accountRepo = new AccountRepository(db);
+  const questRepo = new QuestRepository(db);
 
   // WAL journal — embedded SQLite, opened once per process. Critical mutations
   // (items, gold, exp, level) append here before ack so a crash never dupes or
@@ -159,8 +171,18 @@ export async function compose(): Promise<WorldComposeResult> {
     'Spawn table bootstrapped',
   );
 
+  // ponytail: `inventory` left permissive-stubbed (no inventory system yet).
+  // Item quests stay uncompletable until it lands; non-item quests work today.
+  const questService = new QuestService({
+    questRepo,
+    quests: resources.quests,
+    journal,
+  });
+
   const joinService = new JoinService({
     charRepo,
+    accountRepo,
+    questService,
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
@@ -190,11 +212,12 @@ export async function compose(): Promise<WorldComposeResult> {
   // Phase 6 — remaining v15 C→S handlers (chat, motion, target, movement
   // variants, query/getpos, script dialog, revival). See PROGRESS.md for
   // the audit that scoped these.
-  const chatService = new ChatService({ zoneManager });
+  const commandService = new CommandService({ playerManager });
+  const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
   const motionService = new MotionService({ zoneManager });
   const motionHandler = new MotionHandler(playerManager, motionService);
-  const targetService = new TargetService();
+  const targetService = new TargetService({ spawnManager });
   const setTargetHandler = new SetTargetHandler(playerManager, targetService);
   const leaveHandler = new LeaveHandler();
   const playerCorrHandler = new PlayerCorrHandler(playerManager, movementService);
@@ -207,6 +230,10 @@ export async function compose(): Promise<WorldComposeResult> {
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalService = new RevivalService();
   const revivalHandler = new RevivalHandler(playerManager, revivalService);
+
+  const meleeAttackService = new MeleeAttackService({ zoneManager });
+  const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
+  const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
 
   return {
     config,
@@ -221,6 +248,7 @@ export async function compose(): Promise<WorldComposeResult> {
     npcSnapshotSerializer,
     joinService,
     joinHandler,
+    questService,
     mapKeyService,
     mapKeyHandler,
     vicinityService,
@@ -233,6 +261,7 @@ export async function compose(): Promise<WorldComposeResult> {
     playerBehaviorHandler,
     chatService,
     chatHandler,
+    commandService,
     motionService,
     motionHandler,
     targetService,
@@ -248,6 +277,9 @@ export async function compose(): Promise<WorldComposeResult> {
     scriptDlgHandler,
     revivalService,
     revivalHandler,
+    meleeAttackService,
+    playerSetDestObjHandler,
+    meleeAttackHandler,
     journal,
     journalReplayer,
   };

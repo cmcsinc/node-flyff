@@ -1,38 +1,39 @@
 /**
  * ChatService — `PACKETTYPE_CHAT` (0x00ff0000) business logic.
  *
- * `DPSrvr::OnChat` (DPSrvr.cpp:663):
- *   1. Reject if `uBufSize > 1031` (4 + 4 + 1024 - 1) — caller-side guard.
- *   2. Read string, replace literal `\n` with space.
- *   3. If first char is `/` and `ParsingCommand` accepts → command path (no broadcast).
- *   4. Otherwise `g_UserMng.AddChat(pUser, strChat)` → S→C CHATTEXT to zone.
+ * `DPSrvr::OnChat` (`DPSrvr.cpp:650`):
+ *   1. Drop if `uBufSize > 1031` (4 + 4 + 1024 - 1).
+ *   2. Read `DWORD dwAuth` (client-claimed authority) + the chat string.
+ *   3. Replace literal `\n` / `@` / `@@` with space.
+ *   4. If `text[0] == '/'` and `ParsingCommand` accepts → command path.
+ *   5. Else `g_UserMng.AddChat(pUser, strChat)` → S→C vicinity chat.
  *
- * Command router (`ParsingCommand`) is a giant if/else over `/move`, `/summon`,
- * `/goto`, etc. gated by `m_dwAuthorization`. ponytail: route to a `CommandRouter`
- * once any real commands are needed. For now we only broadcast normal chat.
+ * The `dwAuth` anti-cheat (mismatch ⇒ boot) is enforced in the handler, which
+ * owns the socket — the service only sees the trusted `CPlayer`. TALK_MODE /
+ * mute checks omitted (no buff/mute system yet).
  *
- * `TALK_MODE` and mute checks omitted (no buff/mute system yet). Sender's name is
- * trusted from the session's player entity — never from the packet (rule 03).
- *
- * No WAL (chat is not in the journal list, rule 04).
+ * The sender's name is trusted from the session's player entity — never from
+ * the packet (rule 03). No WAL (rule 04 — chat is not journaled).
  *
  * @module services/chat.service
  */
 
 import type { ZoneManager } from '../managers/zone.manager.js';
 import type { CPlayer } from '../entities/player.js';
+import type { CommandService } from './command.service.js';
 import { ChatSerializer } from '../net/snapshot/chat.serializer.js';
 import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
 
 export interface ChatServiceDeps {
   zoneManager: ZoneManager;
+  commandService: CommandService;
 }
 
 export type ChatOutcome =
   | { ok: true; reached: number }
-  | { ok: false; reason: 'empty' | 'too_long' | 'command_unknown' };
+  | { ok: false; reason: 'empty' | 'too_long' | 'command_unknown' | 'command_no_auth' };
 
-/** Byte cap on chat text — `uBufSize > 1031 ⇒ drop` (DPSrvr.cpp:666). */
+/** Byte cap on chat text — `uBufSize > 1031 ⇒ drop` (DPSrvr.cpp:653). */
 export const MAX_CHAT_LEN = 1024;
 
 export class ChatService {
@@ -41,24 +42,22 @@ export class ChatService {
 
   /** Apply a chat packet from `player`. Returns reach count on broadcast. */
   chat(player: CPlayer, text: string): ChatOutcome {
-    // C++ replaces literal "\\n" with space; we do the same on the raw string.
-    const sanitized = text.replace(/\\n/g, ' ');
+    // C++ replaces "\\n", "@", "@@" with spaces (OnChat:658-660).
+    const sanitized = text.replace(/\\n|@+/g, ' ');
     if (sanitized.length === 0) return { ok: false, reason: 'empty' };
     if (sanitized.length > MAX_CHAT_LEN) return { ok: false, reason: 'too_long' };
 
-    // ponytail: route `/cmd` via a CommandRouter once GM/teleport commands ship.
-    // For now a leading `/` is treated as unknown command and dropped silently —
-    // matches C++ where `ParsingCommand` returns FALSE for unknown commands and
-    // the line falls through to broadcast. We drop instead of broadcast to avoid
-    // leaking raw slash-commands as plain chat.
-    if (sanitized[0] === '/') return { ok: false, reason: 'command_unknown' };
+    if (sanitized[0] === '/') {
+      const result = this.deps.commandService.route(player, sanitized);
+      if (result.ok) return { ok: true, reached: 0 };
+      // Unknown slash-lines fall through to vicinity broadcast in C++ (the
+      // client shows "/foo" as plain text). We drop instead so raw slash
+      // spam never leaks as chat.
+      if (result.reason === 'no_auth') return { ok: false, reason: 'command_no_auth' };
+      return { ok: false, reason: 'command_unknown' };
+    }
 
-    const packet = this.serializer.build(player.m_idPlayer, {
-      speakerName: player.m_szName,
-      speakerJobId: player.m_nJob,
-      speakerLevel: player.m_nLevel,
-      text: sanitized,
-    });
+    const packet = this.serializer.build(player.m_idPlayer, sanitized);
     const reached = this.deps.zoneManager.broadcastAround(
       player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet,
     );

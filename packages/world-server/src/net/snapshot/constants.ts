@@ -100,14 +100,41 @@ export function emptyItemContainerSize(slots: number): number {
 // `_Network/MsgHdr.h` — all typed `(WORD)`, written as 2 bytes on the wire
 // (mirrors the working JOIN serializer's `writeWord(SNAPSHOTTYPE_*)`).
 export const SNAPSHOTTYPE_DESTPOS = 0x00c1;          // MsgHdr.h:1086 — click-to-move echo
+export const SNAPSHOTTYPE_MOVERSETDESTOBJ = 0x00c2;  // MsgHdr.h:1087 — PLAYERSETDESTOBJ echo
 export const SNAPSHOTTYPE_MOVERMOVED = 0x00ca;       // MsgHdr.h:1095 — 60B movement frame
 export const SNAPSHOTTYPE_MOVERBEHAVIOR = 0x00cb;    // MsgHdr.h:1096 — 60B motion frame (same body)
 export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195
 // Added for the remaining v15 C→S handlers (DPSrvr.cpp MsgHdr.h):
-export const SNAPSHOTTYPE_CHAT_OUT = 0x00bc;         // MsgHdr.h:1078 — CHATTEXT (S→C chat echo)
+export const SNAPSHOTTYPE_CHAT_OUT = 0x00bc;         // MsgHdr.h:1078 — CHATTEXT (defined-text echo)
 export const SNAPSHOTTYPE_MOTION = 0x0098;           // MsgHdr.h:1034 — MOTION echo
+export const SNAPSHOTTYPE_MELEE_ATTACK = 0x00e0;     // MsgHdr.h:1110 — MELEE_ATTACK swing echo
 export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 — PLAYERCORR echo (60B body)
 export const SNAPSHOTTYPE_MOVERMOVED2 = 0x00cc;      // MsgHdr.h:1097 — PLAYERMOVED2 echo (73B body)
+
+// --- Chat-family S→C snapshot sub-types (`_Network/msghdr.h`) ----------------
+// All `CUser::Add*` per-user snapshots: `OBJID | WORD type | payload`, wrapped
+// once in PACKETTYPE_SNAPSHOT. Mirrors the single-snapshot flush the other
+// peer-broadcast serializers use.
+export const SNAPSHOTTYPE_CHAT = 0x0001;              // msghdr.h:733  — AddChat vicinity chat (objid + text only)
+export const SNAPSHOTTYPE_TEXT = 0x00a0;              // msghdr.h:877  — AddText per-user color text (notice/system)
+export const SNAPSHOTTYPE_RETURNSAY = 0x00a9;         // msghdr.h:885  — AddReturnSay whisper error reply
+export const SNAPSHOTTYPE_SHOUT = 0x00d0;             // msghdr.h:923  — AddShout server-wide shout
+export const SNAPSHOTTYPE_REPLACE = 0x00f2;           // msghdr.h:948  — AddReplace teleport notify
+
+// --- Quest S→C snapshot sub-types (`_Network/msghdr.h`) -----------------------
+// All `CUser::Add*Quest*` per-user snapshots: `OBJID | WORD subtype | payload`,
+// wrapped once in PACKETTYPE_SNAPSHOT. SETQUEST blits the 12-byte QUEST struct
+// raw (`User.cpp:1826`); see quest.serializer.ts for the field layout.
+export const SNAPSHOTTYPE_SETQUEST = 0x00b0;          // msghdr.h:784 — AddSetQuest (12B QUEST blit)
+export const SNAPSHOTTYPE_QUEST_REMOVE = 0x003a;      // msghdr.h:892 — AddCancelQuest/AddRemoveQuest…
+export const SNAPSHOTTYPE_QUEST_TEXT_TIME = 0x00ba;   // msghdr.h:906 — AddQuestTextTime
+export const SNAPSHOTTYPE_QUESTHELPER_NPCPOS = 0x9400; // msghdr.h:1040 — AddNPCPos (D3DVECTOR)
+export const SNAPSHOTTYPE_QUEST_CHECKED = 0x8820;     // msghdr.h:1065 — AddCheckedQuest
+
+/** Default shout color `0xffff99cc` (TextCmd_shout, FuncTextCmd.cpp:1551). */
+export const SHOUT_COLOR_DEFAULT = 0xffff99cc;
+/** Default notice/system text color (yellow). */
+export const TEXT_COLOR_NOTICE = 0xffffff00;
 
 /** `NULL_ID` (`_Network/MsgHdr.h`) — "no object" sentinel. */
 export const NULL_ID = 0xffffffff;

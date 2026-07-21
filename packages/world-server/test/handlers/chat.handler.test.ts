@@ -20,6 +20,7 @@ function mockSocket(state = SessionState.IN_WORLD) {
   };
 }
 
+/** OnChat wire layout (`Neuz/DPClient.cpp:9003` SendChat): `String text` only. */
 function chatPayload(text: string): Buffer {
   const w = new PacketWriter();
   w.writeString(text);
@@ -34,7 +35,7 @@ function fakeService(outcome: ChatOutcome): ChatService {
   return { chat: () => outcome } as unknown as ChatService;
 }
 
-const player = { m_idPlayer: 42, m_szName: 'Bob', m_nJob: 1, m_nLevel: 15 } as unknown as CPlayer;
+const player = { m_idPlayer: 42, m_szName: 'Bob', m_bAuthority: 0 } as unknown as CPlayer;
 
 describe('ChatHandler', () => {
   it('broadcasts a well-formed chat from an IN_WORLD session', () => {

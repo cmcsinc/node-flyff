@@ -51,6 +51,15 @@ export interface MoverSpawnSource {
   readonly scale?: number | undefined;
   /** Human-NPC outfit (character.inc SetFigure/SetEquip). Omit for monsters. */
   readonly outfit?: MoverOutfit | undefined;
+  /** C++ `bKillable` + peaceful flag collapsed — may be targeted for attack. */
+  readonly attackable?: boolean | undefined;
+  /** C++ `RANK_GUARD` — town guard; PK-gated attackability. */
+  readonly guard?: boolean | undefined;
+  /**
+   * C++ `m_dwBelligerence` (defineAttribute.h:203-215). 1 = BELLI_PEACEFUL
+   * (suppresses client attack cursor); 11/12/13 = aggressive. 0 = unspecified.
+   */
+  readonly belligerence?: number | undefined;
 }
 
 /**
@@ -79,6 +88,10 @@ export class CMover {
   m_bActiveAttack: number;
   /** AI speed multiplier (C++ `m_fSpeedFactor`); 1.0 = propMover speed. */
   m_fSpeedFactor: number;
+  /** C++ `bKillable` + peaceful flag collapsed — may be targeted for attack. */
+  m_bAttackable: boolean;
+  /** C++ `RANK_GUARD` — town guard; only chaotic/PK players may attack. */
+  m_bGuard: boolean;
   /** Human-NPC outfit (character.inc). Undefined for monsters → naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
 
@@ -98,9 +111,11 @@ export class CMover {
     this.m_fAngle = 0;
     this.m_vScale = src.scale ?? 1.0;
     this.m_nZoneId = zoneId;
-    this.m_dwBelligerence = 0;
+    this.m_dwBelligerence = src.belligerence ?? 0;
     this.m_bActiveAttack = 0;
     this.m_fSpeedFactor = 1.0;
+    this.m_bAttackable = src.attackable ?? true;
+    this.m_bGuard = src.guard ?? false;
     this.outfit = src.outfit;
   }
 

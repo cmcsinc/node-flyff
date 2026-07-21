@@ -1,0 +1,165 @@
+/**
+ * Quest reward grantors + removers — pure functions side-effecting via deps.
+ *
+ * Mirrors the C++ reward-grant path invoked from `CUser::OnEndQuest`-style
+ * handlers (`WORLDSERVER/User.cpp`): `SetBeginSetAdd*` apply at quest start;
+ * `SetEndReward*` / `SetEndRemove*` apply at completion. Signatures follow
+ * `_Common/PROJECT.CPP:2031-2159`.
+ *
+ * Rule 03/04 — every gold/exp/item mutation is WAL-journaled through the
+ * injected sink BEFORE the mutation lands, so a crash mid-grant cannot dupe or
+ * rollback. The journal type discriminator is the replayer registry key.
+ *
+ * @module services/questRewards
+ */
+
+import type { QuestArg, QuestDef } from '@flyff/resources';
+import type { JournalEntry } from '@flyff/database';
+import type { CPlayer } from '../entities/player.js';
+import type { InventoryOps } from './questConditions.js';
+
+/** Sink the grantors mutate through. `inventory` covers count/add/remove. */
+export interface RewardSink {
+  inventory: InventoryOps & {
+    add(itemId: number, count: number): void;
+    remove(itemId: number, count: number): void;
+  };
+  /** WAL journal — appended before any gold/exp/item mutation (rule 04). */
+  journal?: (entry: JournalEntry) => void;
+}
+
+function num(arg: QuestArg | undefined, fallback = 0): number {
+  if (!arg) return fallback;
+  return typeof arg.value === 'number' ? arg.value : fallback;
+}
+
+/**
+ * Resolve a min/max reward pair to a concrete amount. min==max → that value
+ * (deterministic for tests); otherwise uniform in [min, max]. Mirrors C++
+ * `Random(min, max)` in the gold/exp grant paths.
+ */
+function resolveRange(min: number, max: number): number {
+  if (min === max) return min;
+  if (max < min) return min;
+  return min + Math.floor(Math.random() * (max - min + 1));
+}
+
+function passesSexJob(
+  player: CPlayer,
+  inv: InventoryOps,
+  nSex: number,
+  nType: number,
+  nJobOrItem: number,
+): boolean {
+  if (nSex !== -1 && nSex !== player.m_nSex) return false;
+  if (nType === 0) return nJobOrItem === -1 || nJobOrItem === player.m_nJob;
+  return nJobOrItem === -1 || inv.count(nJobOrItem) > 0;
+}
+
+/**
+ * `SetBeginSetAdd*` — granted on quest accept. Gold (`SetBeginSetAddGold`) and
+ * up to 4 `SetBeginSetAddItem(idx, item, num)` slots (`PROJECT.CPP:1707-1725`).
+ */
+export function applyBeginSet(player: CPlayer, def: QuestDef, sink: RewardSink): void {
+  for (const c of def.commands) {
+    if (c.cmd === 'SetBeginSetAddGold') {
+      const gold = num(c.args[0]);
+      if (gold > 0) grantGold(player, gold, sink);
+    } else if (c.cmd === 'SetBeginSetAddItem') {
+      const item = num(c.args[1]);
+      const count = num(c.args[2], 1);
+      if (item !== 0) grantItem(player, item, count, sink);
+    }
+  }
+}
+
+/**
+ * `SetEndReward*` + `SetEndRemove*` — granted on quest completion
+ * (`PROJECT.CPP:2031-2159`). Rewards grant first, removes after, matching the
+ * C++ turn-in order.
+ */
+export function applyEnd(player: CPlayer, def: QuestDef, sink: RewardSink): void {
+  for (const c of def.commands) {
+    switch (c.cmd) {
+      case 'SetEndRewardItem': {
+        const item = num(c.args[3]);
+        const count = num(c.args[4], 1);
+        if (item !== 0 && passesSexJob(player, sink.inventory, num(c.args[0]), num(c.args[1]), num(c.args[2])))
+          grantItem(player, item, count, sink);
+        break;
+      }
+      case 'SetEndRewardGold': {
+        const gold = resolveRange(num(c.args[0]), num(c.args[1]));
+        if (gold > 0) grantGold(player, gold, sink);
+        break;
+      }
+      case 'SetEndRewardExp': {
+        const exp = resolveRange(num(c.args[0]), num(c.args[1]));
+        if (exp > 0) grantExp(player, exp, sink);
+        break;
+      }
+      case 'SetEndRemoveItem': {
+        const item = num(c.args[1]);
+        const count = num(c.args[2]);
+        if (item !== 0) removeItem(player, item, count, sink);
+        break;
+      }
+      case 'SetEndRemoveGold': {
+        const gold = num(c.args[0]);
+        if (gold > 0) {
+          player.m_nGold = Math.max(0, player.m_nGold - gold);
+          journal(player, 'GOLD_CHANGE', { delta: -gold, total: player.m_nGold }, sink);
+        }
+        break;
+      }
+      case 'SetEndRemoveQuest':
+        // Turn-in removes the listed quests from the completed log.
+        for (const a of c.args) {
+          const id = num(a);
+          if (id !== 0) {
+            player.removeQuest(id);
+            journal(player, 'QUEST_REMOVE', { questId: id }, sink);
+          }
+        }
+        break;
+      // SetEndRewardPKValue/Teleport/Hide/PetLevelup: ponytail — wire when those
+      // systems (PK, teleport, pet, hide state) land. No-op for now.
+      default:
+        break;
+    }
+  }
+}
+
+function grantGold(player: CPlayer, amount: number, sink: RewardSink): void {
+  journal(player, 'GOLD_CHANGE', { delta: amount, total: player.m_nGold + amount }, sink);
+  player.m_nGold += amount;
+  player._dirty.add('m_nGold');
+}
+
+function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
+  journal(player, 'EXP_CHANGE', { delta: amount, total: player.m_nExp + amount }, sink);
+  player.m_nExp += amount;
+  player._dirty.add('m_nExp');
+}
+
+function grantItem(player: CPlayer, item: number, count: number, sink: RewardSink): void {
+  journal(player, 'ITEM_ADD', { itemId: item, count }, sink);
+  sink.inventory.add(item, count);
+}
+
+/**
+ * Remove an item. `count < 0` means "all of that item" (the `-1` turn-in
+ * sentinel used by QUEST_1's `SetEndRemoveItem(0, 6005, -1)`); `count > 0`
+ * removes exactly that many.
+ */
+function removeItem(player: CPlayer, item: number, count: number, sink: RewardSink): void {
+  const have = sink.inventory.count(item);
+  const remove = count < 0 ? have : Math.min(have, count);
+  if (remove <= 0) return;
+  journal(player, 'ITEM_REMOVE', { itemId: item, count: remove }, sink);
+  sink.inventory.remove(item, remove);
+}
+
+function journal(player: CPlayer, type: string, payload: unknown, sink: RewardSink): void {
+  sink.journal?.({ charId: player.m_idPlayer, type, payload });
+}

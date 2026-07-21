@@ -10,17 +10,19 @@ function makeResources(): ResourceIndex {
     id: 1006, name: 'Homeit', name_id: 'NPC_HOMEIT', model: 'mdl_npc_homeit.o3d',
     dwObjIndex: 12, scale: 1.0, type: 'npc', level: 1, hp: 1000, mp: 1000, fp: 1000,
     attack: 0, defense: 0, attack_rate: 0, dodge_rate: 0, speed: 0, attack_speed: 0,
-    flyable: false, boss: false, giant: false, raid: false, attackable: false,
+    flyable: false, boss: false, giant: false, raid: false, attackable: false, guard: false,
+    belligerence: 1, // BELLI_PEACEFUL — suppresses client attack cursor
     outfit: {
       characterKey: 'MaDa_Homeit', hairMesh: 1, hairColor: 0xff0000ff, headMesh: 3,
       equip: [{ parts: 2, itemId: 1029 }],
     },
   });
   movers.set(1, {
-    id: 1, name: 'Aibat', name_id: 'MOVER_AIBAT', model: 'mdl_aibat.o3d',
-    dwObjIndex: 20, scale: 1.0, type: 'monster', level: 1, hp: 50, mp: 10, fp: 10,
-    attack: 5, defense: 2, attack_rate: 100, dodge_rate: 10, speed: 1, attack_speed: 1,
-    flyable: false, boss: false, giant: false, raid: false, attackable: true,
+    id: 1, name: 'Guard', name_id: 'MOVER_GUARD', model: 'mdl_guard.o3d',
+    dwObjIndex: 20, scale: 1.0, type: 'monster', level: 80, hp: 50000, mp: 10, fp: 10,
+    attack: 7000, defense: 300, attack_rate: 150, dodge_rate: 10, speed: 1, attack_speed: 1,
+    flyable: false, boss: false, giant: false, raid: false, attackable: true, guard: true,
+    belligerence: 12, // BELLI_MELEE — aggressive
   });
 
   const flaris = {
@@ -88,6 +90,34 @@ describe('SpawnManager', () => {
     const aibat = mgr.inZone(1).find((m) => m.m_dwIndex === 20);
     assert.ok(aibat, 'monster spawned');
     assert.equal(aibat!.outfit, undefined);
+  });
+
+  it('propagates attackable + guard flags from the mover definition', () => {
+    const mgr = new SpawnManager({ resources: makeResources() });
+    mgr.bootstrap();
+
+    const guard = mgr.inZone(1).find((m) => m.m_dwIndex === 20);
+    assert.ok(guard, 'guard monster spawned');
+    assert.equal(guard!.m_bAttackable, true, 'guard is attackable');
+    assert.equal(guard!.m_bGuard, true, 'guard flag carried through');
+
+    const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12);
+    assert.ok(homeit, 'NPC spawned');
+    assert.equal(homeit!.m_bAttackable, false, 'peaceful NPC is non-attackable');
+    assert.equal(homeit!.m_bGuard, false);
+  });
+
+  it('propagates m_dwBelligerence from the mover definition (peaceful vs aggressive)', () => {
+    const mgr = new SpawnManager({ resources: makeResources() });
+    mgr.bootstrap();
+
+    const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12);
+    assert.ok(homeit, 'NPC spawned');
+    assert.equal(homeit!.m_dwBelligerence, 1, 'peaceful NPC carries BELLI_PEACEFUL');
+
+    const guard = mgr.inZone(1).find((m) => m.m_dwIndex === 20);
+    assert.ok(guard, 'guard monster spawned');
+    assert.equal(guard!.m_dwBelligerence, 12, 'aggressive monster carries BELLI_MELEE');
   });
 
   it('does not allocate any id until bootstrap runs', () => {
