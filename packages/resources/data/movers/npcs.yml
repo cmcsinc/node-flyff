@@ -2,6 +2,7 @@
 _version: "1.0"
 movers:
   - id: 164
+    key: MI_CLOCKWORK1
     name: Clockworks
     name_id: IDS_PROPMOVER_TXT_000382
     dwObjIndex: 164
@@ -26,6 +27,7 @@ movers:
     guard: false
     belligerence: 13
   - id: 200
+    key: MI_INFO_PENG
     name: Infopeng
     name_id: IDS_PROPMOVER_TXT_000624
     dwObjIndex: 200
@@ -50,6 +52,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 210
+    key: MI_MAFL_LOSHA
     name: Losha
     name_id: IDS_PROPMOVER_TXT_000626
     dwObjIndex: 210
@@ -74,6 +77,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 211
+    key: MI_MAFL_BOBOKU
     name: Boboku
     name_id: IDS_PROPMOVER_TXT_000628
     dwObjIndex: 211
@@ -98,6 +102,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 212
+    key: MI_MAFL_JURIA
     name: Julia
     name_id: IDS_PROPMOVER_TXT_000630
     dwObjIndex: 212
@@ -122,6 +127,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 213
+    key: MI_MAFL_LUI
     name: Lui
     name_id: IDS_PROPMOVER_TXT_000632
     dwObjIndex: 213
@@ -146,6 +152,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 214
+    key: MI_MAFL_MARCHE
     name: Marche
     name_id: IDS_PROPMOVER_TXT_000634
     dwObjIndex: 214
@@ -170,6 +177,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 215
+    key: MI_MASA_BULROX
     name: Bulrox
     name_id: IDS_PROPMOVER_TXT_000636
     dwObjIndex: 215
@@ -194,6 +202,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 216
+    key: MI_MASA_TINA
     name: Tina
     name_id: IDS_PROPMOVER_TXT_000638
     dwObjIndex: 216
@@ -218,6 +227,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 217
+    key: MI_MASA_KARIN
     name: Karin
     name_id: IDS_PROPMOVER_TXT_000640
     dwObjIndex: 217
@@ -242,6 +252,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 218
+    key: MI_MASA_MARTIN
     name: Martin
     name_id: IDS_PROPMOVER_TXT_000642
     dwObjIndex: 218
@@ -266,6 +277,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 219
+    key: MI_MASA_BILL
     name: Bill
     name_id: IDS_PROPMOVER_TXT_000644
     dwObjIndex: 219
@@ -290,6 +302,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 201
+    key: MI_DWARPET
     name: Dwarpet
     name_id: IDS_PROPMOVER_TXT_000646
     dwObjIndex: 201
@@ -314,6 +327,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 202
+    key: MI_DWARPETMAS
     name: Master Dwarpet
     name_id: IDS_PROPMOVER_TXT_000648
     dwObjIndex: 202
@@ -338,6 +352,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 203
+    key: MI_CROWNIBLIS
     name: Iblis
     name_id: IDS_PROPMOVER_TXT_000650
     dwObjIndex: 203
@@ -362,6 +377,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 204
+    key: MI_CROWNSHADE
     name: Shade
     name_id: IDS_PROPMOVER_TXT_000652
     dwObjIndex: 204
@@ -386,6 +402,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 221
+    key: MI_NPC_STIMA
     name: Stima
     name_id: IDS_PROPMOVER_TXT_000654
     dwObjIndex: 221
@@ -410,6 +427,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 222
+    key: MI_NPC_PHACHAM
     name: Phacham
     name_id: IDS_PROPMOVER_TXT_000656
     dwObjIndex: 222
@@ -434,6 +452,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 205
+    key: MI_CROWNBUBBLE
     name: Bubble
     name_id: IDS_PROPMOVER_TXT_000658
     dwObjIndex: 205
@@ -458,6 +477,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 220
+    key: MI_NPC_RHINE
     name: Rhine
     name_id: IDS_PROPMOVER_TXT_000660
     dwObjIndex: 220
@@ -482,6 +502,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 223
+    key: MI_MADA_ROOCKY
     name: Roocky
     name_id: IDS_PROPMOVER_TXT_000662
     dwObjIndex: 223
@@ -506,6 +527,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 224
+    key: MI_MADA_OLLIEN
     name: Ollien
     name_id: IDS_PROPMOVER_TXT_000664
     dwObjIndex: 224
@@ -530,6 +552,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 225
+    key: MI_MADA_HAVEN
     name: Haven
     name_id: IDS_PROPMOVER_TXT_000666
     dwObjIndex: 225
@@ -554,6 +577,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 226
+    key: MI_MADA_CHITLLER
     name: Chitller
     name_id: IDS_PROPMOVER_TXT_000668
     dwObjIndex: 226
@@ -578,6 +602,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 227
+    key: MI_MADA_BOLPOR
     name: Bolpor
     name_id: IDS_PROPMOVER_TXT_000670
     dwObjIndex: 227
@@ -602,6 +627,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 228
+    key: MI_MADA_ALMANI
     name: Almani
     name_id: IDS_PROPMOVER_TXT_000672
     dwObjIndex: 228
@@ -626,6 +652,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 229
+    key: MI_MADA_ACHABEN
     name: Achaben
     name_id: IDS_PROPMOVER_TXT_000674
     dwObjIndex: 229
@@ -650,6 +677,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 230
+    key: MI_MADA_ESHYLOP
     name: Eshylop
     name_id: IDS_PROPMOVER_TXT_000676
     dwObjIndex: 230
@@ -674,6 +702,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 231
+    key: MI_MADA_REMINE
     name: Remine
     name_id: IDS_PROPMOVER_TXT_000678
     dwObjIndex: 231
@@ -698,6 +727,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 232
+    key: MI_MADA_UNKNOWN
     name: Unknown
     name_id: IDS_PROPMOVER_TXT_000680
     dwObjIndex: 232
@@ -722,6 +752,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 233
+    key: MI_MADA_AGENT
     name: Agent
     name_id: IDS_PROPMOVER_TXT_000682
     dwObjIndex: 233
@@ -746,6 +777,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 235
+    key: MI_MAMA_ANCIMYS
     name: Ancimys
     name_id: IDS_PROPMOVER_TXT_000684
     dwObjIndex: 235
@@ -770,6 +802,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 234
+    key: MI_MADA_GUARDIAN
     name: Guardian
     name_id: IDS_PROPMOVER_TXT_000686
     dwObjIndex: 234
@@ -794,6 +827,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 669
+    key: MI_NPC_REWARD
     name: Captain Guard
     name_id: IDS_PROPMOVER_TXT_000688
     dwObjIndex: 669
@@ -818,6 +852,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 236
+    key: MI_MAFL_SANTA
     name: Santa
     name_id: IDS_PROPMOVER_TXT_000730
     dwObjIndex: 236
@@ -842,6 +877,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 237
+    key: MI_MAFL_PRIST
     name: Priest
     name_id: IDS_PROPMOVER_TXT_000732
     dwObjIndex: 237
@@ -866,6 +902,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 238
+    key: MI_NPC_CHEETOS
     name: Chitos
     name_id: IDS_PROPMOVER_TXT_000906
     dwObjIndex: 238
@@ -890,6 +927,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 239
+    key: MI_NPC_COLABEAR
     name: Polar Bear
     name_id: IDS_PROPMOVER_TXT_000936
     dwObjIndex: 239
@@ -914,6 +952,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 753
+    key: MI_DU_METEONYKER2
     name: Red Meteonyker
     name_id: IDS_PROPMOVER_TXT_000948
     dwObjIndex: 753
@@ -938,6 +977,7 @@ movers:
     guard: false
     belligerence: 12
   - id: 720
+    key: MI_PET_LAWOLF
     name: Baby Lawolf
     name_id: IDS_PROPMOVER_TXT_000828
     dwObjIndex: 720
@@ -962,6 +1002,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 721
+    key: MI_PET_AIBATT
     name: Baby Aibatt
     name_id: IDS_PROPMOVER_TXT_000830
     dwObjIndex: 721
@@ -986,6 +1027,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 722
+    key: MI_PET_LEYENA
     name: Baby Leyena
     name_id: IDS_PROPMOVER_TXT_000832
     dwObjIndex: 722
@@ -1010,6 +1052,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 723
+    key: MI_PET_LUIA
     name: Baby Luia
     name_id: IDS_PROPMOVER_TXT_000834
     dwObjIndex: 723
@@ -1034,6 +1077,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 724
+    key: MI_PET_CAT01
     name: Kitty
     name_id: IDS_PROPMOVER_TXT_000836
     dwObjIndex: 724
@@ -1058,6 +1102,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 725
+    key: MI_PET_DOG01
     name: Doggy
     name_id: IDS_PROPMOVER_TXT_000838
     dwObjIndex: 725
@@ -1082,6 +1127,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 726
+    key: MI_PET_SOCCERBALL
     name: Soccerball Angel
     name_id: IDS_PROPMOVER_TXT_000866
     dwObjIndex: 726
@@ -1106,6 +1152,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 727
+    key: MI_PET_COLABEAR
     name: Baby Polar Bear
     name_id: IDS_PROPMOVER_TXT_000934
     dwObjIndex: 727
@@ -1130,6 +1177,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 728
+    key: MI_PET_PENGUIN
     name: Baby Penguin
     name_id: IDS_PROPMOVER_TXT_000954
     dwObjIndex: 728
@@ -1154,6 +1202,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 729
+    key: MI_PET_IGUANA
     name: Baby Iguana
     name_id: IDS_PROPMOVER_TXT_000956
     dwObjIndex: 729
@@ -1178,6 +1227,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 730
+    key: MI_PET_COBRA
     name: Baby Cobra
     name_id: IDS_PROPMOVER_TXT_000958
     dwObjIndex: 730
@@ -1202,6 +1252,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 746
+    key: MI_PET_FROG
     name: Cute Frog
     name_id: IDS_PROPMOVER_TXT_001024
     dwObjIndex: 746
@@ -1226,6 +1277,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 747
+    key: MI_PET_HAMBURGER
     name: Cute Hamburger
     name_id: IDS_PROPMOVER_TXT_001026
     dwObjIndex: 747
@@ -1250,6 +1302,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 748
+    key: MI_PET_TURTLE
     name: Baby Turtle
     name_id: IDS_PROPMOVER_TXT_001028
     dwObjIndex: 748
@@ -1274,6 +1327,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 893
+    key: MI_PET_CHICKEN
     name: Baby Chicken
     name_id: IDS_PROPMOVER_TXT_001034
     dwObjIndex: 893
@@ -1298,6 +1352,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 894
+    key: MI_PET_COW
     name: Baby Cow
     name_id: IDS_PROPMOVER_TXT_001036
     dwObjIndex: 894
@@ -1322,6 +1377,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 895
+    key: MI_PET_DOG2
     name: Baby Beagle
     name_id: IDS_PROPMOVER_TXT_001038
     dwObjIndex: 895
@@ -1346,6 +1402,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 896
+    key: MI_PET_DRAGON
     name: Baby Blue Dragon
     name_id: IDS_PROPMOVER_TXT_001040
     dwObjIndex: 896
@@ -1370,6 +1427,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 916
+    key: MI_PET_DRAGON1
     name: Baby Black Dragon
     name_id: IDS_PROPMOVER_TXT_001080
     dwObjIndex: 916
@@ -1394,6 +1452,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 897
+    key: MI_PET_HAMSTER
     name: Baby Hamster
     name_id: IDS_PROPMOVER_TXT_001042
     dwObjIndex: 897
@@ -1418,6 +1477,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 898
+    key: MI_PET_HORSE
     name: Baby Horse
     name_id: IDS_PROPMOVER_TXT_001044
     dwObjIndex: 898
@@ -1442,6 +1502,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 899
+    key: MI_PET_MONKEY
     name: Baby Monkey
     name_id: IDS_PROPMOVER_TXT_001046
     dwObjIndex: 899
@@ -1466,6 +1527,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 900
+    key: MI_PET_PIG
     name: Baby Pig
     name_id: IDS_PROPMOVER_TXT_001048
     dwObjIndex: 900
@@ -1490,6 +1552,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 901
+    key: MI_PET_RABBIT
     name: Baby Rabbit
     name_id: IDS_PROPMOVER_TXT_001050
     dwObjIndex: 901
@@ -1514,6 +1577,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 902
+    key: MI_PET_SHEEP
     name: Cute Lamb
     name_id: IDS_PROPMOVER_TXT_001052
     dwObjIndex: 902
@@ -1538,6 +1602,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 903
+    key: MI_PET_TIGER
     name: Baby Tiger
     name_id: IDS_PROPMOVER_TXT_001054
     dwObjIndex: 903
@@ -1562,6 +1627,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 165
+    key: MI_BIGMUSCLE
     name: Big Muscle
     name_id: IDS_PROPMOVER_TXT_000844
     dwObjIndex: 165
@@ -1586,6 +1652,7 @@ movers:
     guard: false
     belligerence: 11
   - id: 166
+    key: MI_KRRR
     name: Krrr
     name_id: IDS_PROPMOVER_TXT_000846
     dwObjIndex: 166
@@ -1610,6 +1677,7 @@ movers:
     guard: false
     belligerence: 11
   - id: 167
+    key: MI_MUSHMOOT
     name: Mushmoot
     name_id: IDS_PROPMOVER_TXT_000848
     dwObjIndex: 167
@@ -1634,6 +1702,7 @@ movers:
     guard: false
     belligerence: 11
   - id: 822
+    key: MI_LOADCLOCKWORK
     name: Lord Clockworks Alpha
     name_id: IDS_PROPMOVER_TXT_000854
     dwObjIndex: 822
@@ -1658,6 +1727,7 @@ movers:
     guard: false
     belligerence: 13
   - id: 873
+    key: MI_POSTBOX
     name: Post Box
     name_id: IDS_PROPMOVER_TXT_000946
     dwObjIndex: 873
@@ -1682,6 +1752,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 731
+    key: MI_PET_EGG
     name: Egg
     name_id: IDS_PROPMOVER_TXT_000960
     dwObjIndex: 731
@@ -1706,6 +1777,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 732
+    key: MI_PET_WHITETIGER01
     name: White Tiger
     name_id: IDS_PROPMOVER_TXT_000962
     dwObjIndex: 732
@@ -1730,6 +1802,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 733
+    key: MI_PET_WHITETIGER01_1
     name: White Tiger
     name_id: IDS_PROPMOVER_TXT_000964
     dwObjIndex: 733
@@ -1754,6 +1827,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 884
+    key: MI_PET_WHITETIGER01_2
     name: "[Captain] Behemoth"
     name_id: IDS_PROPMOVER_TXT_001010
     dwObjIndex: 884
@@ -1778,6 +1852,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 734
+    key: MI_PET_BARBARYLION01
     name: Babari lion
     name_id: IDS_PROPMOVER_TXT_000966
     dwObjIndex: 734
@@ -1802,6 +1877,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 735
+    key: MI_PET_BARBARYLION01_1
     name: Babari lion
     name_id: IDS_PROPMOVER_TXT_000968
     dwObjIndex: 735
@@ -1826,6 +1902,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 885
+    key: MI_PET_BARBARYLION01_2
     name: "[Captain] Hellion"
     name_id: IDS_PROPMOVER_TXT_001012
     dwObjIndex: 885
@@ -1850,6 +1927,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 736
+    key: MI_PET_RABBIT02
     name: Rabbit
     name_id: IDS_PROPMOVER_TXT_000970
     dwObjIndex: 736
@@ -1874,6 +1952,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 737
+    key: MI_PET_RABBIT02_1
     name: Rabbit
     name_id: IDS_PROPMOVER_TXT_000972
     dwObjIndex: 737
@@ -1898,6 +1977,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 886
+    key: MI_PET_RABBIT02_2
     name: "[Captain] Jackalope"
     name_id: IDS_PROPMOVER_TXT_001014
     dwObjIndex: 886
@@ -1922,6 +2002,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 738
+    key: MI_PET_DRAGON01
     name: Dragon
     name_id: IDS_PROPMOVER_TXT_000974
     dwObjIndex: 738
@@ -1946,6 +2027,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 739
+    key: MI_PET_DRAGON01_1
     name: Dragon
     name_id: IDS_PROPMOVER_TXT_000976
     dwObjIndex: 739
@@ -1970,6 +2052,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 887
+    key: MI_PET_DRAGON01_2
     name: "[Captain] Bahamut"
     name_id: IDS_PROPMOVER_TXT_001016
     dwObjIndex: 887
@@ -1994,6 +2077,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 740
+    key: MI_PET_UNICORN01
     name: Unicorn
     name_id: IDS_PROPMOVER_TXT_000978
     dwObjIndex: 740
@@ -2018,6 +2102,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 741
+    key: MI_PET_UNICORN01_1
     name: Unicorn
     name_id: IDS_PROPMOVER_TXT_000980
     dwObjIndex: 741
@@ -2042,6 +2127,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 888
+    key: MI_PET_UNICORN01_2
     name: "[Captain] Nightmare"
     name_id: IDS_PROPMOVER_TXT_001018
     dwObjIndex: 888
@@ -2066,6 +2152,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 742
+    key: MI_PET_NINEFOX01
     name: Old fox
     name_id: IDS_PROPMOVER_TXT_000982
     dwObjIndex: 742
@@ -2090,6 +2177,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 743
+    key: MI_PET_NINEFOX01_1
     name: Old fox
     name_id: IDS_PROPMOVER_TXT_000984
     dwObjIndex: 743
@@ -2114,6 +2202,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 889
+    key: MI_PET_NINEFOX01_2
     name: "[Captain] Reinecke"
     name_id: IDS_PROPMOVER_TXT_001020
     dwObjIndex: 889
@@ -2138,6 +2227,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 744
+    key: MI_PET_EAGLE01
     name: Griffin
     name_id: IDS_PROPMOVER_TXT_000986
     dwObjIndex: 744
@@ -2162,6 +2252,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 745
+    key: MI_PET_EAGLE01_1
     name: Griffin
     name_id: IDS_PROPMOVER_TXT_000988
     dwObjIndex: 745
@@ -2186,6 +2277,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 890
+    key: MI_PET_EAGLE01_2
     name: "[Captain] Hippogryph"
     name_id: IDS_PROPMOVER_TXT_001022
     dwObjIndex: 890
@@ -2210,6 +2302,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 875
+    key: MI_MADA_REDROBEMAN
     name: Mysterious Robed Boy
     name_id: IDS_PROPMOVER_TXT_000992
     dwObjIndex: 875
@@ -2234,6 +2327,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 876
+    key: MI_MADA_REDROBEGIRL
     name: Mysterious Robed Girl
     name_id: IDS_PROPMOVER_TXT_000994
     dwObjIndex: 876
@@ -2258,6 +2352,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 877
+    key: MI_NPC_DEALER
     name: Gambler
     name_id: IDS_PROPMOVER_TXT_000996
     dwObjIndex: 877
@@ -2282,6 +2377,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 878
+    key: MI_NPC_HAIR
     name: Hair Designer
     name_id: IDS_PROPMOVER_TXT_000998
     dwObjIndex: 878
@@ -2306,6 +2402,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 879
+    key: MI_NPC_MAKEUP
     name: Make-Up Artist
     name_id: IDS_PROPMOVER_TXT_001000
     dwObjIndex: 879
@@ -2330,6 +2427,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 880
+    key: MI_NPC_PETTAMER
     name: Pet Tamer
     name_id: IDS_PROPMOVER_TXT_001002
     dwObjIndex: 880
@@ -2354,6 +2452,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 881
+    key: MI_NPC_DANCER
     name: Dancer
     name_id: IDS_PROPMOVER_TXT_001004
     dwObjIndex: 881
@@ -2378,6 +2477,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 882
+    key: MI_NPC_MISSFLYFF
     name: Miss Flyff
     name_id: IDS_PROPMOVER_TXT_001006
     dwObjIndex: 882
@@ -2402,6 +2502,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 883
+    key: MI_NPC_MRFLYFF
     name: Mr. Flyff
     name_id: IDS_PROPMOVER_TXT_001008
     dwObjIndex: 883
@@ -2426,6 +2527,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 891
+    key: MI_NPC_PRIEST
     name: Priest of Penence
     name_id: IDS_PROPMOVER_TXT_001030
     dwObjIndex: 891
@@ -2450,6 +2552,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 892
+    key: MI_NPC_MISTBOY
     name: Mysterious Boy
     name_id: IDS_PROPMOVER_TXT_001032
     dwObjIndex: 892
@@ -2474,6 +2577,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 910
+    key: MI_NPC_WAFORU
     name: Waforu
     name_id: IDS_PROPMOVER_TXT_001068
     dwObjIndex: 910
@@ -2498,6 +2602,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 913
+    key: MI_NPC_COLLECT
     name: Collins
     name_id: IDS_PROPMOVER_TXT_001074
     dwObjIndex: 913
@@ -2522,6 +2627,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 914
+    key: MI_PET_CARDPUPPET1
     name: Small Maid Cardpuppet
     name_id: IDS_PROPMOVER_TXT_001076
     dwObjIndex: 914
@@ -2546,6 +2652,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 915
+    key: MI_PET_MIA1
     name: Small Mia
     name_id: IDS_PROPMOVER_TXT_001078
     dwObjIndex: 915
@@ -2570,6 +2677,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 920
+    key: MI_EVENT04
     name: GM Cromiell
     name_id: IDS_PROPMOVER_TXT_001088
     dwObjIndex: 920
@@ -2594,6 +2702,7 @@ movers:
     guard: false
     belligerence: 13
   - id: 921
+    key: MI_NPC_TARGET
     name: Target
     name_id: IDS_PROPMOVER_TXT_001090
     dwObjIndex: 921
@@ -2618,6 +2727,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 970
+    key: MI_PET_YETI
     name: Baby Yetti
     name_id: IDS_PROPMOVER_TXT_001196
     dwObjIndex: 970
@@ -2642,6 +2752,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 981
+    key: MI_NPC_KNIGHT01
     name: Knight 2
     name_id: IDS_PROPMOVER_TXT_001218
     dwObjIndex: 981
@@ -2666,6 +2777,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 982
+    key: MI_NPC_KNIGHT02
     name: Knight 1
     name_id: IDS_PROPMOVER_TXT_001220
     dwObjIndex: 982
@@ -2690,6 +2802,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 983
+    key: MI_NPC_SECRETARY
     name: Lord Manager
     name_id: IDS_PROPMOVER_TXT_001222
     dwObjIndex: 983
@@ -2714,6 +2827,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 984
+    key: MI_NPC_SNOWGIRL
     name: Ice Lady
     name_id: IDS_PROPMOVER_TXT_001224
     dwObjIndex: 984
@@ -2738,6 +2852,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 985
+    key: MI_NPC_RAINBOWNPC01
     name: "[Spirit of Rainbow] Red"
     name_id: IDS_PROPMOVER_TXT_001280
     dwObjIndex: 985
@@ -2762,6 +2877,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 986
+    key: MI_NPC_RAINBOWNPC02
     name: "[Spirit of Rainbow] Orange"
     name_id: IDS_PROPMOVER_TXT_001282
     dwObjIndex: 986
@@ -2786,6 +2902,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 987
+    key: MI_NPC_RAINBOWNPC03
     name: "[Spirit of Rainbow] Yellow"
     name_id: IDS_PROPMOVER_TXT_001284
     dwObjIndex: 987
@@ -2810,6 +2927,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 988
+    key: MI_NPC_RAINBOWNPC04
     name: "[Spirit of Rainbow] Green"
     name_id: IDS_PROPMOVER_TXT_001286
     dwObjIndex: 988
@@ -2834,6 +2952,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 989
+    key: MI_NPC_RAINBOWNPC05
     name: "[Spirit of Rainbow] Blue"
     name_id: IDS_PROPMOVER_TXT_001288
     dwObjIndex: 989
@@ -2858,6 +2977,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 990
+    key: MI_NPC_RAINBOWNPC06
     name: "[Spirit of Rainbow] Indigo"
     name_id: IDS_PROPMOVER_TXT_001290
     dwObjIndex: 990
@@ -2882,6 +3002,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 991
+    key: MI_NPC_RAINBOWNPC07
     name: "[Spirit of Rainbow] Violet"
     name_id: IDS_PROPMOVER_TXT_001292
     dwObjIndex: 991
@@ -2906,6 +3027,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 992
+    key: MI_NPC_RAINBOWSTART
     name: Rainbow Race Officer
     name_id: IDS_PROPMOVER_TXT_001294
     dwObjIndex: 992
@@ -2930,6 +3052,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1020
+    key: MI_NPC_MINIDOOR01
     name: MI_NPC_MINIDOOR01
     name_id: IDS_PROPMOVER_TXT_001296
     dwObjIndex: 1020
@@ -2954,6 +3077,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1022
+    key: MI_MAFL_GUILDWAR01
     name: "[Guildwar Manager] Frankie"
     name_id: IDS_PROPMOVER_TXT_001300
     dwObjIndex: 1022
@@ -2978,6 +3102,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1023
+    key: MI_MAFL_GUILDWAR02
     name: "[Guildwar Manager] Donaris"
     name_id: IDS_PROPMOVER_TXT_001302
     dwObjIndex: 1023
@@ -3002,6 +3127,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1024
+    key: MI_MAFL_GUILDWAR03
     name: "[1vs1Guildwar Manager] Amos"
     name_id: IDS_PROPMOVER_TXT_001304
     dwObjIndex: 1024
@@ -3026,6 +3152,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1025
+    key: MI_MAFL_GUILDWAR04
     name: "[1vs1Guildwar Manager] Annie"
     name_id: IDS_PROPMOVER_TXT_001306
     dwObjIndex: 1025
@@ -3050,6 +3177,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1026
+    key: MI_MAFL_ARENA
     name: "[Arena Manager] Ray"
     name_id: IDS_PROPMOVER_TXT_001308
     dwObjIndex: 1026
@@ -3074,6 +3202,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1027
+    key: MI_MAFL_MAYOR
     name: Mayor
     name_id: IDS_PROPMOVER_TXT_001310
     dwObjIndex: 1027
@@ -3098,6 +3227,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1028
+    key: MI_NPC_CHARLIE
     name: Charlie
     name_id: IDS_PROPMOVER_TXT_001312
     dwObjIndex: 1028
@@ -3122,6 +3252,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1029
+    key: MI_NPC_SNOWMAN01
     name: Baby Snowman
     name_id: IDS_PROPMOVER_TXT_001314
     dwObjIndex: 1029
@@ -3146,6 +3277,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1030
+    key: MI_NPC_SNOWMAN02
     name: Daddy Snowman
     name_id: IDS_PROPMOVER_TXT_001316
     dwObjIndex: 1030
@@ -3170,6 +3302,7 @@ movers:
     guard: true
     belligerence: 1
   - id: 1031
+    key: MI_PET_BULLDOG
     name: English Bulldog
     name_id: IDS_PROPMOVER_TXT_001318
     dwObjIndex: 1031
@@ -3194,6 +3327,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1032
+    key: MI_PET_GHOST
     name: Naughty Ghost
     name_id: IDS_PROPMOVER_TXT_001320
     dwObjIndex: 1032
@@ -3218,6 +3352,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1033
+    key: MI_PET_HAETAE
     name: Baby Fu Lion
     name_id: IDS_PROPMOVER_TXT_001322
     dwObjIndex: 1033
@@ -3242,6 +3377,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1034
+    key: MI_PET_OWL
     name: Smart Owl
     name_id: IDS_PROPMOVER_TXT_001324
     dwObjIndex: 1034
@@ -3266,6 +3402,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1035
+    key: MI_PET_RAGDOLL
     name: Patches
     name_id: IDS_PROPMOVER_TXT_001326
     dwObjIndex: 1035
@@ -3290,6 +3427,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1036
+    key: MI_PET_ROBOT
     name: Cute Robot
     name_id: IDS_PROPMOVER_TXT_001328
     dwObjIndex: 1036
@@ -3314,6 +3452,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1037
+    key: MI_PET_BANG1
     name: Baby Bang
     name_id: IDS_PROPMOVER_TXT_001330
     dwObjIndex: 1037
@@ -3338,6 +3477,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1038
+    key: MI_PET_PANDA
     name: Baby Panda
     name_id: IDS_PROPMOVER_TXT_001332
     dwObjIndex: 1038
@@ -3362,6 +3502,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1039
+    key: MI_PET_TAIGA01
     name: Red Armored Tigar
     name_id: IDS_PROPMOVER_TXT_001334
     dwObjIndex: 1039
@@ -3386,6 +3527,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1040
+    key: MI_PET_TAIGA02
     name: Blue Armored Tigar
     name_id: IDS_PROPMOVER_TXT_001336
     dwObjIndex: 1040
@@ -3410,6 +3552,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1041
+    key: MI_PET_TAIGA03
     name: Yellow Armored Tigar
     name_id: IDS_PROPMOVER_TXT_001338
     dwObjIndex: 1041
@@ -3434,6 +3577,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1090
+    key: MI_MAHA_JANO
     name: "[Adventure Assitant] Jano"
     name_id: IDS_PROPMOVER_TXT_001436
     dwObjIndex: 1090
@@ -3458,6 +3602,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1092
+    key: MI_MAHA_LUCA
     name: Luka
     name_id: IDS_PROPMOVER_TXT_001438
     dwObjIndex: 1092
@@ -3482,6 +3627,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1091
+    key: MI_MAHA_VESPU
     name: "[Adventure Captain] Bespoo"
     name_id: IDS_PROPMOVER_TXT_001440
     dwObjIndex: 1091
@@ -3506,6 +3652,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1093
+    key: MI_MAHA_LASA
     name: Lasa
     name_id: IDS_PROPMOVER_TXT_001442
     dwObjIndex: 1093
@@ -3530,6 +3677,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1094
+    key: MI_MAHA_RYAN
     name: Ryan
     name_id: IDS_PROPMOVER_TXT_001444
     dwObjIndex: 1094
@@ -3554,6 +3702,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1095
+    key: MI_PET_PARROT
     name: Tommy Toucan
     name_id: IDS_PROPMOVER_TXT_001446
     dwObjIndex: 1095
@@ -3578,6 +3727,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1096
+    key: MI_MAFL_ETE
     name: Ete
     name_id: IDS_PROPMOVER_TXT_001448
     dwObjIndex: 1096
@@ -3602,6 +3752,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1097
+    key: MI_MAFL_TONGE
     name: Tong
     name_id: IDS_PROPMOVER_TXT_001450
     dwObjIndex: 1097
@@ -3626,6 +3777,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1098
+    key: MI_PET_ROBOT01
     name: Johnny Four-Wheels
     name_id: IDS_PROPMOVER_TXT_001452
     dwObjIndex: 1098
@@ -3650,6 +3802,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1099
+    key: MI_MAFL_MISSVTN
     name: Miss Vietnam
     name_id: IDS_PROPMOVER_TXT_001454
     dwObjIndex: 1099
@@ -3674,6 +3827,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1101
+    key: MI_MAFL_TELEPORTER
     name: "[Teleporter] Master"
     name_id: IDS_PROPMOVER_TXT_001458
     dwObjIndex: 1101
@@ -3698,6 +3852,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1102
+    key: MI_PET_RACCON
     name: Tiny Tanuki
     name_id: IDS_PROPMOVER_TXT_001460
     dwObjIndex: 1102
@@ -3722,6 +3877,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1103
+    key: MI_NPC_GUILDHOUSE_DOOR01
     name: MI_NPC_GUILDHOUSE_DOOR01
     name_id: IDS_PROPMOVER_TXT_001462
     dwObjIndex: 1103
@@ -3746,6 +3902,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1104
+    key: MI_NPC_SELIA
     name: Sellia
     name_id: IDS_PROPMOVER_TXT_001464
     dwObjIndex: 1104
@@ -3770,6 +3927,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1105
+    key: MI_NPC_ICINIS
     name: Inisis
     name_id: IDS_PROPMOVER_TXT_001466
     dwObjIndex: 1105
@@ -3794,6 +3952,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1119
+    key: MI_MAFL_TELEPORTER_3VAT
     name: "[Teleporter] Apprentice"
     name_id: IDS_PROPMOVER_TXT_001494
     dwObjIndex: 1119
@@ -3818,6 +3977,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1120
+    key: MI_PET_SANTACLAUS
     name: Mini Santa
     name_id: IDS_PROPMOVER_TXT_001496
     dwObjIndex: 1120
@@ -3842,6 +4002,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1121
+    key: MI_PET_SNOWMAN02
     name: Mini Snowman
     name_id: IDS_PROPMOVER_TXT_001498
     dwObjIndex: 1121
@@ -3866,6 +4027,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1122
+    key: MI_NPC_VALLOSIA
     name: Bellosia
     name_id: IDS_PROPMOVER_TXT_001500
     dwObjIndex: 1122
@@ -3890,6 +4052,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1123
+    key: MI_NPC_ROLINE
     name: Loraine
     name_id: IDS_PROPMOVER_TXT_001502
     dwObjIndex: 1123
@@ -3914,6 +4077,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1124
+    key: MI_PET_RICAN
     name: Little Lykan
     name_id: IDS_PROPMOVER_TXT_001504
     dwObjIndex: 1124
@@ -3938,6 +4102,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1149
+    key: MI_PET_DESERTFOX
     name: Joey
     name_id: IDS_PROPMOVER_TXT_001554
     dwObjIndex: 1149
@@ -3962,6 +4127,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1150
+    key: MI_PET_DOBERMAN
     name: Spike
     name_id: IDS_PROPMOVER_TXT_001556
     dwObjIndex: 1150
@@ -3986,6 +4152,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1151
+    key: MI_PET_ICEQUEEN
     name: Lumia
     name_id: IDS_PROPMOVER_TXT_001558
     dwObjIndex: 1151
@@ -4010,6 +4177,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1152
+    key: MI_PET_WRONGKOALA
     name: Inspector Koko
     name_id: IDS_PROPMOVER_TXT_001560
     dwObjIndex: 1152
@@ -4034,6 +4202,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1153
+    key: MI_NPC_LEPRECHAUN
     name: Leprechaun
     name_id: IDS_PROPMOVER_TXT_001562
     dwObjIndex: 1153
@@ -4058,6 +4227,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1154
+    key: MI_PET_CHESHIRECAT
     name: Cheshire Cat
     name_id: IDS_PROPMOVER_TXT_001564
     dwObjIndex: 1154
@@ -4082,6 +4252,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1155
+    key: MI_PET_WHITERABBIT
     name: The White Rabbit
     name_id: IDS_PROPMOVER_TXT_001566
     dwObjIndex: 1155
@@ -4106,6 +4277,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1156
+    key: MI_PET_WHITETIGER02
     name: Tiger Cub
     name_id: IDS_PROPMOVER_TXT_001568
     dwObjIndex: 1156
@@ -4130,6 +4302,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1164
+    key: MI_MaFl_Babario
     name: Laveau
     name_id: IDS_PROPMOVER_TXT_001584
     dwObjIndex: 1164
@@ -4154,6 +4327,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 1165
+    key: MI_PET_SKEL01
     name: Bone Golem
     name_id: IDS_PROPMOVER_TXT_001586
     dwObjIndex: 1165

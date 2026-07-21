@@ -66,6 +66,9 @@ function rowToMover(row: Row, id: number, name: string): Record<string, unknown>
 
   return {
     id,
+    // Persist the symbolic MI_* name so loaders can link NPC → dialog prefix
+    // (prefixForNpc strips `MI_` + lowercases → `mafl_boboku` dialog file).
+    key: row.dwID,
     name,
     name_id: row.szName,
     dwObjIndex: id,

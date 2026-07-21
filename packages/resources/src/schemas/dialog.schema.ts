@@ -37,8 +37,16 @@ export const DialogStateSchema = z.object({
   exit: z.boolean().optional(),
   /** `SetScriptTimer(n)` auto-close seconds. */
   timer: z.number().int().positive().optional(),
-  /** `LaunchQuest()` hook. */
+  /** `LaunchQuest()` / `BeginQuest(n)` hook — state triggers a quest lifecycle op. */
   launch_quest: z.boolean().optional(),
+  /**
+   * Quest id to begin when this state's `LaunchQuest`/`BeginQuest(n)` fires.
+   * Optional — the simple-subset converter could not extract the id from the
+   * global-state-routed `LaunchQuest()` form, so most launch states leave this
+   * unset until the `source` bodies are ported. `runDialog` only calls
+   * `questService.beginQuest` when an id is present.
+   */
+  launch_quest_id: z.number().int().nonnegative().optional(),
   /**
    * Raw C++ body for states using calls/conditionals outside the simple subset
    * (GetQuestState, BeginQuest, ChangeJob, CreateItem, if/for, …). Ported later.

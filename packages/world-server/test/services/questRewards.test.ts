@@ -72,12 +72,22 @@ describe('questRewards — applyEnd', () => {
     assert.equal(female.store[7000], 1);
   });
 
-  it('grants exp and journals EXP_CHANGE', () => {
+  it('grants exp, cascades level-ups with carryover, and journals EXP_CHANGE', () => {
     const { sink, log } = fakeSink();
-    const p = player();
+    const p = player(); // L1, within-level exp 0
     applyEnd(p, def([cmd('SetEndRewardExp', 1000, 1000)]), sink);
-    assert.equal(p.m_nExp, 1000);
+    // 1000 cumulative exp lands at L12 (nExp1=973); within-level remainder = 27.
+    assert.equal(p.m_nLevel, 12);
+    assert.equal(p.m_nExp, 27);
     assert.equal(log.find((e) => e.type === 'EXP_CHANGE')?.type, 'EXP_CHANGE');
+  });
+
+  it('resets within-level exp to 0 at an exact level boundary (no carryover)', () => {
+    const { sink } = fakeSink();
+    const p = player(); // L1, exp 0 — L1→L2 needs 14 cumulative
+    applyEnd(p, def([cmd('SetEndRewardExp', 14, 14)]), sink);
+    assert.equal(p.m_nLevel, 2);
+    assert.equal(p.m_nExp, 0);
   });
 });
 

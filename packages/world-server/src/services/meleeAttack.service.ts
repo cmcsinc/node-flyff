@@ -28,9 +28,11 @@ import {
   MeleeAttackSerializer, type MeleeAttackFrame,
 } from '../net/snapshot/meleeAttack.serializer.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
+import type { CombatService } from './combat.service.js';
 
 export interface MeleeAttackServiceDeps {
   zoneManager: ZoneManager;
+  combatService: CombatService;
 }
 
 export type MeleeAttackOutcome =
@@ -41,7 +43,12 @@ export class MeleeAttackService {
   private readonly serializer = new MeleeAttackSerializer();
   constructor(private readonly deps: MeleeAttackServiceDeps) {}
 
-  /** Validate target + broadcast the swing animation to zone peers (no damage). */
+  /**
+   * Broadcast the swing animation to zone peers, then run the damage pipeline
+   * (`CombatService.resolveAttack`) against the targeted mover. The swing echo
+   * always fires so peers see the animation; damage/HP/death follow the
+   * server-authoritative `resolveMelee` result.
+   */
   attack(player: CPlayer, frame: MeleeAttackFrame): MeleeAttackOutcome {
     if (frame.objid === NULL_ID) {
       return { ok: false, reason: 'invalid_target' };
@@ -50,6 +57,8 @@ export class MeleeAttackService {
     const reached = this.deps.zoneManager.broadcastAround(
       player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet,
     );
+    // Run the damage round-trip (DAMAGE broadcast + death/exp if lethal).
+    this.deps.combatService.resolveAttack(player, frame.objid);
     return { ok: true, reached };
   }
 }

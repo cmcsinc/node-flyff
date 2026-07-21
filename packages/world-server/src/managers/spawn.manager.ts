@@ -11,11 +11,14 @@
  * disjoint from player char ids so the client never confuses NPC and player
  * objids (memory: v15-npc-addobj-method-exclude-item).
  *
- * No tick, no respawn, no AI here yet (rule 05 — Systems do per-tick work; the
- * combat/AI systems are blocked, see PROGRESS.md). Pure in-memory state.
+ * Respawn: on `kill(id)`, if the mover's spawn `delay > 0` (monsters only), a
+ * `setTimeout` re-materializes it at the same placement after `delay` ms and
+ * fires `onSpawn(mover)` so the compose root can broadcast its ADD_OBJ to the
+ * zone. Static NPCs pass `delay=0` and never respawn (they don't die anyway).
+ * Timers are tracked and cleared on `shutdown()` (rule 05 — no leaked timers).
  *
- * ponytail: respawn-on-death and timed respawns land with the combat system.
- * When they do, add `kill(id)` + a respawn queue drained in `tick(dt)`.
+ * No tick loop, no AI here (rule 05 — Systems do per-tick work; the AI system
+ * is blocked, see PROGRESS.md). Pure in-memory state + per-respawn timer.
  *
  * @module managers/spawn.manager
  */
@@ -33,17 +36,39 @@ const FIRST_MOVER_ID = 0x40000000;
 /** Cap on monsters materialized per spawn point — bounds memory on bad data. */
 const MAX_PER_SPAWN = 50;
 
+/** Everything needed to re-materialize a mover on respawn. */
+interface SpawnDesc {
+  readonly src: MoverSpawnSource;
+  readonly pos: Vec3;
+  readonly angle: number;
+  readonly zoneId: number;
+  /** 0 = never respawn (static NPC). */
+  readonly delayMs: number;
+}
+
 export interface SpawnManagerDeps {
   resources: ResourceIndex;
+  /**
+   * Fired when a respawn completes (new mover live in the table). The compose
+   * root wires this to broadcast a single-mover ADD_OBJ to the zone so players
+   * already present see the monster reappear. Not fired for the boot batch.
+   */
+  onSpawn?: (mover: CMover) => void;
 }
 
 export class SpawnManager {
   private readonly movers = new Map<number, CMover>();
+  /** objid → respawn descriptor, so `kill` can schedule a replacement. */
+  private readonly descs = new Map<number, SpawnDesc>();
+  /** Live respawn timers — cleared on `shutdown()` (rule 05). */
+  private readonly timers = new Set<NodeJS.Timeout>();
   private nextId = FIRST_MOVER_ID;
   private readonly resources: ResourceIndex;
+  private readonly onSpawn: ((mover: CMover) => void) | undefined;
 
   constructor(deps: SpawnManagerDeps) {
     this.resources = deps.resources;
+    this.onSpawn = deps.onSpawn;
   }
 
   /** Instantiate every zone NPC + monster spawn once, at boot. */
@@ -58,16 +83,27 @@ export class SpawnManager {
           continue;
         }
         this.materialize({
-          modelIndex: def.dwObjIndex,
-          name: def.name,
-          level: def.level,
-          hp: def.hp,
-          scale: def.scale,
-          outfit: toOutfit(def),
-          attackable: def.attackable,
-          guard: def.guard ?? false,
-          belligerence: def.belligerence ?? 0,
-        }, npcSpawn.position, npcSpawn.angle, zone._id_numeric);
+          src: {
+            modelIndex: def.dwObjIndex,
+            key: def.key,
+            name: def.name,
+            level: def.level,
+            hp: def.hp,
+            scale: def.scale,
+            outfit: toOutfit(def),
+            attackable: def.attackable,
+            guard: def.guard ?? false,
+            belligerence: def.belligerence ?? 0,
+            atkMin: def.attack,
+            atkMax: def.attack,
+            armor: def.defense,
+            hr: def.attack_rate,
+            er: def.dodge_rate,
+            expValue: def.exp ?? 0,
+          },
+          pos: npcSpawn.position, angle: npcSpawn.angle, zoneId: zone._id_numeric,
+          delayMs: 0, // static NPC — never respawns
+        });
       }
 
       // Monster spawn points — `count` instances around `position`.
@@ -80,27 +116,38 @@ export class SpawnManager {
         const count = Math.min(MAX_PER_SPAWN, spawn.count);
         for (let i = 0; i < count; i++) {
           this.materialize({
-            modelIndex: def.dwObjIndex,
-            name: def.name,
-            level: def.level,
-            hp: def.hp,
-            scale: def.scale,
-            attackable: def.attackable,
-            guard: def.guard ?? false,
-            belligerence: def.belligerence ?? 0,
-          }, jitter(spawn.position, spawn.radius), 0, zone._id_numeric);
+            src: {
+              modelIndex: def.dwObjIndex,
+              name: def.name,
+              level: def.level,
+              hp: def.hp,
+              scale: def.scale,
+              attackable: def.attackable,
+              guard: def.guard ?? false,
+              belligerence: def.belligerence ?? 0,
+              atkMin: def.attack,
+              atkMax: def.attack,
+              armor: def.defense,
+              hr: def.attack_rate,
+              er: def.dodge_rate,
+              expValue: def.exp ?? 0,
+            },
+            pos: jitter(spawn.position, spawn.radius, i, count), angle: 0, zoneId: zone._id_numeric,
+            delayMs: spawn.delay, // ms until respawn after kill
+          });
         }
       }
     }
     logger.info({ count: this.movers.size }, 'Movers spawned');
   }
 
-  /** Create + register a mover from a definition + placement. */
-  private materialize(src: MoverSpawnSource, pos: Vec3, angle: number, zoneId: number): CMover {
+  /** Create + register a mover from a respawn descriptor. */
+  private materialize(desc: SpawnDesc): CMover {
     const id = this.nextId++;
-    const mover = CMover.spawn(id, { ...src }, pos, zoneId);
-    mover.m_fAngle = angle;
+    const mover = CMover.spawn(id, desc.src, desc.pos, desc.zoneId);
+    mover.m_fAngle = desc.angle;
     this.movers.set(id, mover);
+    this.descs.set(id, desc);
     return mover;
   }
 
@@ -109,12 +156,49 @@ export class SpawnManager {
     return this.movers.get(id);
   }
 
+  /**
+   * Remove a dead mover from the live table. C++ NPC fast-path: `OnDied` calls
+   * `Delete()` immediately — no corpse, no death animation state on the server.
+   * If the mover carries a respawn `delay > 0`, schedule a replacement at the
+   * same placement; otherwise it is gone for good (static NPC).
+   */
+  kill(id: number): boolean {
+    const desc = this.descs.get(id);
+    const had = this.movers.delete(id);
+    this.descs.delete(id);
+    if (desc && desc.delayMs > 0) {
+      const timer = setTimeout(() => {
+        this.timers.delete(timer);
+        this.respawn(desc);
+      }, desc.delayMs);
+      this.timers.add(timer);
+    }
+    return had;
+  }
+
+  /** Re-materialize a descriptor and notify the compose root to broadcast it. */
+  private respawn(desc: SpawnDesc): void {
+    const mover = this.materialize(desc);
+    this.onSpawn?.(mover);
+  }
+
+  /** Clear every pending respawn timer (called on world shutdown). */
+  shutdown(): void {
+    for (const t of this.timers) clearTimeout(t);
+    this.timers.clear();
+  }
+
   /** Find a placed NPC by `character.inc` key (QUESTHELPER_REQNPCPOS target). */
   findByCharacterKey(key: string): CMover | undefined {
     for (const m of this.movers.values()) {
       if (m.outfit?.characterKey === key) return m;
     }
     return undefined;
+  }
+
+  /** Iterate every live mover (ambient systems, boot-time scans). */
+  *all(): IterableIterator<CMover> {
+    yield* this.movers.values();
   }
 
   /** All live movers in `zoneId` (zone-scoped join snapshot / broadcast). */
@@ -145,10 +229,19 @@ function toOutfit(def: { outfit?: { characterKey: string; hairMesh: number; hair
   };
 }
 
-/** Deterministic small offset so stacked spawns don't all sit on one point. */
-function jitter(pos: Vec3, radius: number): Vec3 {
-  if (radius <= 0) return { ...pos };
-  // Deterministic pseudo-spread within radius (no Math.random — boot-time stable).
-  const r = radius * 0.6;
-  return { x: pos.x + r, y: pos.y, z: pos.z + r };
+/**
+ * Deterministic per-index offset so `count` monsters of one spawn point don't
+ * stack on a single coord. Vogel/sunflower distribution (golden-angle stride +
+ * sqrt radius) gives an even, non-overlapping spread within half the spawn
+ * radius. Deterministic (no Math.random) — boot-time stable + reproducible.
+ *
+ * @param i      - 0-based instance index within the spawn point.
+ * @param count  - total instances at this spawn point.
+ */
+function jitter(pos: Vec3, radius: number, i: number, count: number): Vec3 {
+  if (radius <= 0 || count <= 1) return { ...pos };
+  const GOLDEN_ANGLE = 2.39996323; // radians — Vogel's sunflower stride
+  const theta = i * GOLDEN_ANGLE;
+  const r = radius * 0.5 * Math.sqrt((i + 0.5) / count);
+  return { x: pos.x + r * Math.cos(theta), y: pos.y, z: pos.z + r * Math.sin(theta) };
 }

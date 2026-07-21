@@ -2,6 +2,7 @@
 _version: "1.0"
 movers:
   - id: 11
+    key: MI_MALE
     name: Male
     name_id: IDS_PROPMOVER_TXT_000002
     dwObjIndex: 11
@@ -26,6 +27,7 @@ movers:
     guard: false
     belligerence: 1
   - id: 12
+    key: MI_FEMALE
     name: Female
     name_id: IDS_PROPMOVER_TXT_000004
     dwObjIndex: 12
