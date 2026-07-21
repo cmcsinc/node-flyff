@@ -38,6 +38,7 @@ import type { DropItemHandler } from './handlers/dropItem.handler.js';
 import type { DropGoldHandler } from './handlers/dropGold.handler.js';
 import type { DoEquipHandler } from './handlers/doEquip.handler.js';
 import type { DoUseItemHandler } from './handlers/doUseItem.handler.js';
+import type { BankHandler } from './handlers/bank.handler.js';
 import type { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import type { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import type { QuestHelperHandler } from './handlers/questHelper.handler.js';
@@ -69,6 +70,7 @@ export interface WorldClientServerDeps {
   dropGoldHandler: DropGoldHandler;
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
+  bankHandler: BankHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -110,6 +112,12 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.DROPGOLD, (s, r) => deps.dropGoldHandler.handleDropGold(s, r));
   dispatcher.register(PACKETTYPE.DOEQUIP, (s, r) => deps.doEquipHandler.handleDoEquip(s, r));
   dispatcher.register(PACKETTYPE.DOUSEITEM, (s, r) => deps.doUseItemHandler.handleDoUseItem(s, r));
+  dispatcher.register(PACKETTYPE.OPENBANKWND, (s, r) => deps.bankHandler.handleOpen(s, r));
+  dispatcher.register(PACKETTYPE.CLOSEBANKWND, (s, r) => deps.bankHandler.handleClose(s, r));
+  dispatcher.register(PACKETTYPE.PUTITEMBACK, (s, r) => deps.bankHandler.handleDeposit(s, r));
+  dispatcher.register(PACKETTYPE.GETITEMBACK, (s, r) => deps.bankHandler.handleWithdraw(s, r));
+  dispatcher.register(PACKETTYPE.PUTGOLDBACK, (s, r) => deps.bankHandler.handleDepositGold(s, r));
+  dispatcher.register(PACKETTYPE.GETGOLDBACK, (s, r) => deps.bankHandler.handleWithdrawGold(s, r));
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
   dispatcher.register(PACKETTYPE.QUEST_CHECK, (s, r) => deps.questCheckHandler.handleQuestCheck(s, r));
   dispatcher.register(PACKETTYPE.QUESTHELPER_REQNPCPOS, (s, r) => deps.questHelperHandler.handleQuestHelper(s, r));
