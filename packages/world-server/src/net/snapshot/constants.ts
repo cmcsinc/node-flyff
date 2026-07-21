@@ -99,6 +99,7 @@ export function emptyItemContainerSize(slots: number): number {
 // --- Peer-broadcast snapshot sub-types (S→C) --------------------------------
 // `_Network/MsgHdr.h` — all typed `(WORD)`, written as 2 bytes on the wire
 // (mirrors the working JOIN serializer's `writeWord(SNAPSHOTTYPE_*)`).
+export const SNAPSHOTTYPE_SETPOS = 0x0010;           // MsgHdr.h:874 — same-world teleport (AddSetPos)
 export const SNAPSHOTTYPE_DESTPOS = 0x00c1;          // MsgHdr.h:1086 — click-to-move echo
 export const SNAPSHOTTYPE_MOVERSETDESTOBJ = 0x00c2;  // MsgHdr.h:1087 — PLAYERSETDESTOBJ echo
 export const SNAPSHOTTYPE_GETDESTOBJ = 0x004a;       // MsgHdr.h:947 — AddGetDestObj query reply (dest objid + fRange)
