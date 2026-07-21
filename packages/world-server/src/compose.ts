@@ -61,6 +61,8 @@ import { EquipService } from './services/equip.service.js';
 import { ConsumableService } from './services/consumable.service.js';
 import { UseItemService } from './services/useItem.service.js';
 import { DoUseItemHandler } from './handlers/doUseItem.handler.js';
+import { BankService } from './services/bank.service.js';
+import { BankHandler } from './handlers/bank.handler.js';
 import { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import { QuestHelperHandler } from './handlers/questHelper.handler.js';
@@ -126,6 +128,7 @@ export interface WorldComposeResult {
   dropGoldHandler: DropGoldHandler;
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
+  bankHandler: BankHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -367,6 +370,10 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const doUseItemHandler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
 
+  // Bank — open + deposit/withdraw item & gold (account-shared).
+  const bankService = new BankService({ bankRepo, inventoryRepo, journal });
+  const bankHandler = new BankHandler({ playerManager, bankService });
+
   // Phase 4 — C→S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
   const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
   const questCheckHandler = new QuestCheckHandler(playerManager, questService);
@@ -431,6 +438,7 @@ export async function compose(): Promise<WorldComposeResult> {
     dropGoldHandler,
     doEquipHandler,
     doUseItemHandler,
+    bankHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,

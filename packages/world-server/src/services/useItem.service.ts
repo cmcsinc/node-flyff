@@ -53,7 +53,11 @@ export class UseItemService {
     const k2 = prop.item_kind2;
     if (k2 === 'IK2_POTION' || k2 === 'IK2_FOOD') {
       const r = this.deps.consumableService.apply(player, prop, nId);
-      return { kind: 'consumable', nId, hp: r.hp, mp: r.mp, fp: r.fp };
+      const out: { kind: 'consumable'; nId: number; hp?: number; mp?: number; fp?: number } = { kind: 'consumable', nId };
+      if (r.hp !== undefined) out.hp = r.hp;
+      if (r.mp !== undefined) out.mp = r.mp;
+      if (r.fp !== undefined) out.fp = r.fp;
+      return out;
     }
     if (k2 === 'IK2_BUFF' || k2 === 'IK2_BUFF2' || k2 === 'IK2_SKILL' || k2 === 'IK2_TEXT' || k2 === 'IK2_WARP') {
       this.deps.inventoryService.consume(player, nId, 1);

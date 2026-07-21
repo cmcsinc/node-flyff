@@ -129,5 +129,13 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\journalReplayer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\modifyMode.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\setPos.serializer.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\actMsg.handler.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\actMsg.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\itemElemBody.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\updateItem.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\doEquip.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\bank.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\combat\\equipStats.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\mover.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\equip.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\consumable.service.test.ts": "pass"
 }

@@ -86,8 +86,8 @@ export const ItemDefinitionSchema = z.object({
   /** Raw max attack (propItem dwAbilityMax) — weapons only */
   attack_max: z.number().int().min(0).optional(),
 
-  /** Raw attack speed (propItem dwAttackSpeed) — feeds combat atkSpeed table */
-  attack_speed: z.number().int().min(0).optional(),
+  /** Raw attack speed (propItem dwAttackSpeed) — fractional multiplier, feeds combat atkSpeed table */
+  attack_speed: z.number().min(0).optional(),
 
   /** Defense rating (armor only) */
   defense: z.number().int().min(0).optional(),
