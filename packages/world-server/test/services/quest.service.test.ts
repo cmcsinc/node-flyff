@@ -1,9 +1,10 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { QuestService } from '../../src/services/quest.service.js';
+import { QuestService, type QuestInventory } from '../../src/services/quest.service.js';
 import { CPlayer } from '../../src/entities/player.js';
 import { QS_BEGIN, QS_END, QUEST_FLAG } from '@flyff/core/constants/quest.js';
-import type { CharacterRow } from '@flyff/database';
+import type { CharacterRow, JournalEntry } from '@flyff/database';
+import type { QuestCommand, QuestDef, QuestIndex } from '@flyff/resources';
 
 const baseRow = {
   id: 1, account_id: 1, name: 'Tester', slot: 0, class: 0, gender: 0,
@@ -66,5 +67,134 @@ describe('quest.service.ts + CPlayer quest helpers', () => {
     // already complete → re-add is a no-op
     p.setQuest({ state: QS_BEGIN, time: 0, id: 9, killNpcNum: [0, 0], flags: 0 });
     assert.equal(p.findQuest(9), undefined);
+  });
+});
+
+// --- Phase 3: begin/end engine + QUEST_1 worked example ---
+
+/** QUEST_1 definition as converted from propQuest.inc (vagrant, lvl5-15, 20 teeth → 500 gold). */
+function quest1Def(): QuestDef {
+  const num = (value: number): QuestCommand['args'][number] => ({ type: 'num', value });
+  const sym = (value: number): QuestCommand['args'][number] => ({ type: 'sym', value });
+  return {
+    _version: '1.0', id: 7, symbol: 'QUEST_1', title: 'IDS_PROPQUEST_INC_000065',
+    states: { '0': { desc: 'x', cond: 'x', status: 'x' } },
+    quest_items: [{ mover: 24, item: 6005, prob: 1500000000, num: 1 }],
+    commands: [
+      { cmd: 'SetCharacter', args: [num(0)] },
+      { cmd: 'SetBeginCondLevel', args: [num(5), num(15)] },
+      { cmd: 'SetRepeat', args: [num(1)] },
+      { cmd: 'SetBeginCondParty', args: [num(0), num(0), num(0), num(0)] },
+      { cmd: 'SetBeginCondJob', args: [sym(5)] },
+      { cmd: 'SetEndCondLevel', args: [num(5), num(150)] },
+      { cmd: 'SetEndCondItem', args: [num(-1), num(0), num(-1), sym(6005), num(20)] },
+      { cmd: 'SetEndRemoveItem', args: [num(0), sym(6005), num(-1)] },
+      { cmd: 'SetEndRewardGold', args: [num(500), num(500)] },
+      { cmd: 'SetHeadQuest', args: [num(6004)] },
+    ],
+  };
+}
+
+/** Fake inventory backed by an in-memory item store. */
+function fakeInv(counts: Record<number, number> = {}): QuestInventory {
+  const store = { ...counts };
+  return {
+    count: (id) => store[id] ?? 0,
+    emptySlots: () => 32,
+    add: (id, n) => { store[id] = (store[id] ?? 0) + n; },
+    remove: (id, n) => { store[id] = Math.max(0, (store[id] ?? 0) - n); },
+  };
+}
+
+function questIndex(def: QuestDef): QuestIndex {
+  return { byId: new Map([[def.id, def]]), drops: new Map() };
+}
+
+describe('quest.service — begin/end engine (QUEST_1 worked example)', () => {
+  function makeService(inv: QuestInventory, def: QuestDef) {
+    const log: JournalEntry[] = [];
+    const repo = {
+      loadState: async () => ({ active: [], completed: [], checked: [] }),
+      upsertActive: async () => {},
+      removeActive: async () => {},
+      addCompleted: async () => {},
+      removeCompleted: async () => {},
+      clearCompleted: async () => {},
+      setChecked: async () => {},
+      insertLog: async () => {},
+    };
+    const quests = questIndex(def);
+    const svc = new QuestService({
+      questRepo: repo as unknown as Parameters<typeof Object> extends never ? never : any,
+      quests,
+      inventory: inv,
+      journal: { append: (e) => { log.push(e); return 1; } },
+    });
+    return { svc, log };
+  }
+
+  it('refuses to begin QUEST_1 below level 5', async () => {
+    const def = quest1Def();
+    const { svc } = makeService(fakeInv(), def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 4, class: 5 }, { write: () => true }, 0);
+    const res = await svc.beginQuest(p, 7);
+    assert.equal(res.ok, false);
+    if (!res.ok) assert.equal(res.reason, 'level');
+  });
+
+  it('begins QUEST_1 at vagrant lvl5-15, then completes on 20 teeth → 500 gold', async () => {
+    const def = quest1Def();
+    const inv = fakeInv({ 6005: 20 });
+    const { svc } = makeService(inv, def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10, class: 5 }, { write: () => true }, 0);
+
+    const begin = await svc.beginQuest(p, 7);
+    assert.equal(begin.ok, true);
+    assert.equal(p.findQuest(7)?.state, QS_BEGIN);
+
+    // Teeth in inventory → isComplete passes.
+    const end = await svc.endQuest(p, 7);
+    assert.equal(end.ok, true);
+    assert.equal(p.findQuest(7), undefined);        // moved out of active
+    assert.equal(p.isCompleteQuest(7), true);        // landed in completed list
+    assert.equal(p.m_nGold, 500);                    // reward granted
+    assert.equal(inv.count(6005), 0);                // 20 teeth removed (count -1)
+  });
+
+  it('refuses to complete QUEST_1 without 20 teeth', async () => {
+    const def = quest1Def();
+    const inv = fakeInv({ 6005: 19 });
+    const { svc } = makeService(inv, def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10, class: 5 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 7);
+    const res = await svc.endQuest(p, 7);
+    assert.equal(res.ok, false);
+    if (!res.ok) assert.equal(res.reason, 'item');
+    // Nothing granted, quest still active.
+    assert.equal(p.m_nGold, 0);
+    assert.equal(p.findQuest(7)?.state, QS_BEGIN);
+  });
+
+  it('cancelQuest drops the active record + emits a QUEST_REMOVE frame', async () => {
+    const def = quest1Def();
+    const { svc } = makeService(fakeInv(), def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10, class: 5 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 7);
+    const res = await svc.cancelQuest(p, 7);
+    assert.equal(res.ok, true);
+    if (res.ok) assert.equal(res.frames.length, 1);
+    assert.equal(p.findQuest(7), undefined);
+  });
+
+  it('journals every gold/exp/item mutation through the reward sink', async () => {
+    const def = quest1Def();
+    const inv = fakeInv({ 6005: 20 });
+    const { svc, log } = makeService(inv, def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10, class: 5 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 7);
+    await svc.endQuest(p, 7);
+    const types = log.map((e) => e.type).sort();
+    assert.ok(types.includes('GOLD_CHANGE'));
+    assert.ok(types.includes('ITEM_REMOVE'));
   });
 });
