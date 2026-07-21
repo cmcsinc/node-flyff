@@ -18,8 +18,20 @@ import { createHash } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { createDb, AccountRepository, CharacterRepository } from '@flyff/database';
-import { up as migrationUp } from '@flyff/database/migrations/001_initial';
+import { up as migrationUp001 } from '@flyff/database/migrations/001_initial';
+import { up as migrationUp002 } from '@flyff/database/migrations/002_quests';
 import { hashPassword } from '@flyff/core/utils/password.js';
+
+/**
+ * Ordered migration list — each `up()` is gated on its own marker table so
+ * re-running seed is idempotent and brings an existing dev DB up to head.
+ * Without this, a new migration file (e.g. 002_quests) is never applied to the
+ * dev DB and the first query against it throws SQLITE_ERROR at runtime (JOIN).
+ */
+const MIGRATIONS = [
+  { marker: 'accounts', up: migrationUp001 },
+  { marker: 'character_quests', up: migrationUp002 },
+];
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';
 const SALT = 'kikugalanet';
@@ -30,9 +42,10 @@ async function main(): Promise<void> {
   if (DB_FILENAME !== ':memory:') mkdirSync(dirname(DB_FILENAME), { recursive: true });
   const db = createDb({ client: 'better-sqlite3', connection: DB_FILENAME });
   try {
-    if (!(await db.schema.hasTable('accounts'))) {
-      console.log('[seed] accounts table missing — running migration up()');
-      await migrationUp(db);
+    for (const { marker, up } of MIGRATIONS) {
+      if (await db.schema.hasTable(marker)) continue;
+      console.log(`[seed] ${marker} missing — running migration up()`);
+      await up(db);
     }
     const accountRepo = new AccountRepository(db);
     const charRepo = new CharacterRepository(db);
