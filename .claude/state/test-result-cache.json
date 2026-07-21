@@ -104,5 +104,8 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\playerSetDestObj.handler.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\meleeAttack.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\questConditions.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\questRewards.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\questRewards.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\removeQuest.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\questCheck.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\questHelper.handler.test.ts": "pass"
 }
