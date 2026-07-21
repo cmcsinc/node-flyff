@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
+import { framePacket } from '@flyff/core/net/PacketBuffer.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { RemoveQuestHandler } from '../../src/handlers/removeQuest.handler.js';
 import type { QuestService } from '../../src/services/quest.service.js';
@@ -35,7 +36,7 @@ describe('RemoveQuestHandler', () => {
     const sock = mockSocket();
     await new RemoveQuestHandler(fakePm(player), svc).handleRemoveQuest(sock as never, new PacketReader(payload(7)));
     assert.equal(got, 7);
-    assert.deepEqual(sock._written, [frame]);
+    assert.deepEqual(sock._written, [framePacket(frame)]);
   });
 
   it('rate-limits repeat sends within 400ms', async () => {

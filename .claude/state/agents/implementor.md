@@ -1,11 +1,30 @@
 # Implementor Agent Session
 
 - **Agent**: implementor
-- **Active Task**: Flaris canonical NPC/spawn port + belligerence wire — COMPLETE
-- **Phase**: Idle
+- **Active Task**: character.inc parser + outfit/menus wire — COMPLETE (pending approval)
+- **Phase**: 2 — Implement
 - **Last Updated**: 2026-07-21
 
-## Current Work
+## Current Work — character.inc parser
+
+- [x] Located MMI enum: `game/resource/defineNeuz.h:92-314`. **MMI_DIALOG=0** (line 92),
+      MAX_MOVER_MENU=175 (line 314). Copied defineNeuz.h → raw/ so loader resolves all 175.
+- [x] Wrote `packages/resources/src/loaders/characterInc.loader.ts` (230 lines): UTF-16LE
+      decode, BOM strip, `//` comment strip, brace-counted block scan, AddMenu/AddMenuLang
+      MMI extraction, SetFigure/SetEquip outfit with II_* resolved via defineItem.h,
+      m_szDialog file, AddVendorSlot count.
+- [x] Wired into `loadAllResources(dataDir, rawDir=default ../raw)` — exposed as
+      `resources.characterInc: CharacterIncIndex`. Re-exported `blockForMover`, `MMI_DIALOG`.
+- [x] `CMover.m_abMoverMenu: readonly number[]` field; populated from `MoverSpawnSource.menus`.
+- [x] `SpawnManager.bootstrap` NPC loop resolves block via `blockForMover(idx, def.key)`,
+      threads menus + block-sourced outfit (overrides yml `outfit` when present).
+- [x] 12 loader tests + 1 new spawn-manager test for `m_abMoverMenu` propagation.
+      Resources 26/26, world 360/360 green. tsc clean (only pre-existing js-yaml +
+      unrelated BANK_SLOTS error from concurrent work in player.ts).
+- [x] Real `raw/character.inc`: **360 blocks, 324 with MMI_DIALOG**, 47 trade, 5 banking,
+      29 outfits, 48 vendors.
+
+## Prior Current Work section
 
 - [x] Wired `m_dwBelligerence` end-to-end (was hardcoded 0): schema field +
       `BELLI_TEXT_TO_NUM` in `converters/movers.ts` + `MoverSpawnSource.belligerence`

@@ -17,6 +17,34 @@
 
 ---
 
+## User-Verified Status (2026-07-21)
+
+> Per the **OVERRIDE RULE** in CLAUDE.md ("Task Completion & Fix Authority", 2026-07-21): only the user can declare a feature complete/fixed. Below is the user's own verified-in-client verdict. Anything NOT in the ✅ list is **not verified / not working** and MUST NOT be marked ✅ by any agent — keep iterating until the user confirms.
+
+**✅ Verified working (user-tested 2026-07-21):**
+1. Core net layer — PacketReader/Writer/Buffer, LSFRCipher
+2. IPC framework — HMAC signing, circuit breaker, IpcBus/Server/Client
+3. Database — migrations, account/character/inventory repos, WAL journal
+4. Resource migration — txt→yml converter (782 movers, 3494 items, 166 skills)
+5. Login server — CERTIFY + server list (index.ts still pending)
+6. Cluster server — world list + registrar (character select/create/compose/index still pending)
+7. World server — join, movement, spawn, zone broadcast, journalReplayer
+8. Combat — player→NPC melee damage + death + exp/level-up
+10. Monster wander AI — idle FSM, leash, snap-on-pick
+13. Death→revival loop — scroll/town/lodelight, exp penalty
+14. CHAT + command router — `/w /s /say` etc.
+16. Flaris canonical spawns — 195 NPCs + 859 monsters from `.dyo`/`.rgn`
+
+**🔄 Partial / mixed (some cmds work, some not — NOT complete):**
+15. GM commands — 35 ported; **user reports some not yet working** (which ones TBD — see below)
+
+**❌ NOT verified / not working (claimed shipped in Agent Communication Log but UNTESTED in-client — do NOT mark ✅, keep working):**
+9. Drops A–E — kill→drop→pickup→inventory+gold
+11. Quest engine — 285 quests, begin/complete, trackers
+12. NPC dialog menu — RUNSCRIPTFUNC SAY/ADDKEY/EXIT
+
+---
+
 ## Module Status
 
 ### @flyff/core
@@ -92,14 +120,15 @@
 | `managers/zone.manager.ts` | ✅ Done | implementor | Zone-scoped broadcast |
 | `managers/object.manager.ts` | 🚫 Skipped | — | Objid allocator folded into SpawnManager (0x40000000+ range) |
 | `managers/spawn.manager.ts` | ✅ Done | implementor | Bootstraps zone NPCs + monster spawns (count, jitter); inZone() lookup; per-mover setTimeout respawn on `kill()` (delay from zone.spawn.delay); onSpawn callback broadcasts ADD_OBJ; shutdown() clears timers |
-| `systems/combat.system.ts` | 🔴 Blocked | — | Need combat formulas for MELEE/MAGIC/RANGE_ATTACK |
-| `systems/ai.system.ts` | ⏳ Pending | — | NPC AI state machine |
+| `systems/combat.system.ts` | ✅ Done | user | Melee damage+death+exp lives in `src/combat/` (CombatService, formulas, tables). **User-verified 2026-07-21.** MAGIC/RANGE/USESKILL still pending |
+| `systems/ai.system.ts` | ✅ Done | user | Idle-wander FSM. **User-verified 2026-07-21.** Aggro/attack AI still pending |
 | `systems/movement.system.ts` | ✅ Done | implementor | Extended for PLAYERCORR/MOVED2/ANGLE/GETPOS |
-| `systems/exp.system.ts` | ⏳ Pending | — | Exp/level system |
-| `systems/drop.system.ts` | ⏳ Pending | — | Drop rolls |
-| `journal.ts` | 🔴 Blocked | — | WAL journal — blocks DROPITEM/DOUSEITEM/BUYITEM/MOVEITEM/DOEQUIP |
+| `systems/exp.system.ts` | ✅ Done | user | Folded into `src/combat/` (CombatService.grantExp). **User-verified w/ combat 2026-07-21** |
+| `systems/drop.system.ts` | 🔄 In Progress | — | **NOT user-verified.** Drops A–E claimed in comm log (kill→drop→pickup→bag+gold) but UNTESTED in-client — keep working |
+| `journal.ts` | ✅ Done | user | WAL journal in `@flyff/database`. **User-verified via combat/database 2026-07-21** |
 | `index.ts` | ✅ Done | implementor | Entry point — wires all handlers |
-| `systems/journalReplayer.ts` | ✅ Done | implementor | Boot crash-recovery: replays `replayed=0` journal rows via per-type handler registry before TCP listener opens (5 tests) |
+| `systems/journalReplayer.ts` | ✅ Done | implementor | Boot crash-recovery: replays `replayed=0` journal rows via per-type handler registry before TCP listener opens; one warn per unhandled type (6 tests) |
+| `systems/journalReplayers.ts` | ✅ Done | implementor | **Idempotent WAL recovery shipped.** Registers CHAR_EXP/CHAR_GOLD/INVENTORY_SLOT handlers; payloads are absolute end-state so replay can't dupe/rollback. combat+revival+inventory+questRewards converted off old delta types (4 tests). Dev journal clear procedure + design in memory `wal-crash-recovery-absolute-state`. |
 | `compose.ts` | ✅ Done | implementor | DI root with 17 handlers wired |
 
 ### @flyff/database
@@ -188,7 +217,7 @@
 | Blocker | Affects | Reported By | Status |
 |---------|---------|-------------|--------|
 | `journal.ts` WAL not implemented | DROPITEM, DOUSEITEM, BUYITEM, MOVEITEM, DOEQUIP handlers | implementor | ✅ Done 2026-07-21 — `Journal` in `@flyff/database`, `JournalReplayer` boots before listener; handlers still need combat/skill for some |
-| Combat system absent | MELEE_ATTACK, MAGIC_ATTACK, RANGE_ATTACK, USESKILL handlers | implementor | 🔴 Blocked — need target manager + damage formulas + skill propMover |
+| Combat system absent | MELEE_ATTACK, MAGIC_ATTACK, RANGE_ATTACK, USESKILL handlers | implementor | ✅ Melee shipped + user-verified 2026-07-21 (damage+death+exp in `src/combat/`). MAGIC_ATTACK/RANGE_ATTACK/USESKILL still 🔴 Blocked on skill system |
 | Skill system absent | USESKILL handler | implementor | 🔴 Blocked — need skill propMover + skill state |
 | `js-yaml` types missing | `packages/core/src/config/loader.ts:42` | pre-existing | 🟡 Low — install `@types/js-yaml` or write `.d.ts` shim |
 
@@ -252,5 +281,5 @@
 
 ---
 
-*Last updated: 2026-03-24*
+*Last updated: 2026-07-21*
 *Update protocol: When completing a module, change its row Status + Last Agent + Notes.*

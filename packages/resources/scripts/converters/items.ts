@@ -76,13 +76,26 @@ function rowToItem(row: Row, id: number, name: string, kind1: string): Record<st
     tradeable: true,
     dropable: true,
     destroyable: true,
+    stack_size: Math.max(1, num(row, 'dwPackMax', 1)),
   };
+
+  // Equip slot / weapon type / kind routing — raw propItem columns.
+  const parts = num(row, 'dwParts', 0);
+  if (parts > 0) item.equip_slot = parts;
+  const weaponType = num(row, 'dwWeaponType', 0);
+  if (weaponType > 0) item.weapon_type = weaponType;
+  if (row.dwItemKind2) item.item_kind2 = row.dwItemKind2;
+  if (row.dwItemKind3) item.item_kind3 = row.dwItemKind3;
 
   if (isWeapon) {
     item.attack = Math.round((abilMin + abilMax) / 2);
     item.attack_rate = num(row, 'dwAttackSpeed', 0) / 100;
+    item.attack_min = abilMin;
+    item.attack_max = abilMax;
+    item.attack_speed = num(row, 'dwAttackSpeed', 0);
   } else if (isArmor) {
     item.defense = abilMin;
+    item.attack_min = abilMin;
   }
 
   const dur = num(row, 'dwEndurance', 0);

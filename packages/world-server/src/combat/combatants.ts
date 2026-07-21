@@ -13,20 +13,26 @@ import type { CPlayer } from '../entities/player.js';
 import type { CMover } from '../entities/mover.js';
 import { NO_PROP, WT_MELEE_SWD } from './tables.js';
 import type { Combatant, WeaponStats } from './formulas.js';
+import { sumEquipStats, type ItemLookup } from './equipStats.js';
 
-/** Bare-hand profile for an unarmed player (ponytail: read equipped weapon). */
+/** Bare-hand profile for an unarmed player. */
 export const BARE_HAND: WeaponStats = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 
 /** Bare-hand stub for NPC (NPCs use raw propMover cols, not the weapon curve). */
 export const FIST_NPC: WeaponStats = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 
-/** Project a live player onto the melee-formula combatant shape. */
-export function playerCombatant(p: CPlayer): Combatant {
+/**
+ * Project a live player onto the melee-formula combatant shape. When `getItem`
+ * is supplied, the equipped weapon + armor fold into `weapon` / `npcArmor`;
+ * otherwise bare hands (NPC→player path that lacks resource access — ponytail).
+ */
+export function playerCombatant(p: CPlayer, getItem?: ItemLookup): Combatant {
+  const eq = getItem ? sumEquipStats(p, getItem) : { weapon: BARE_HAND, armorDef: 0 };
   return {
     kind: 'player', level: p.m_nLevel, job: p.m_nJob,
     str: p.m_nStr, sta: p.m_nSta, dex: p.m_nDex, int: p.m_nInt,
-    weapon: BARE_HAND,
-    npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0, npcHR: 0, npcER: 0,
+    weapon: eq.weapon,
+    npcAtkMin: 0, npcAtkMax: 0, npcArmor: eq.armorDef, npcResisMagic: 0, npcHR: 0, npcER: 0,
     element: NO_PROP,
   };
 }

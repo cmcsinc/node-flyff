@@ -24,8 +24,10 @@
  */
 
 import type { ResourceIndex } from '@flyff/resources';
+import { blockForMover, type CharacterIncBlock } from '@flyff/resources';
 import type { Vec3 } from '../entities/player.js';
 import { CMover, type MoverSpawnSource, type MoverOutfit } from '../entities/mover.js';
+import { isInSafeZone } from '../combat/safeZone.js';
 import { createLogger } from '@flyff/core/logger.js';
 
 const logger = createLogger({ module: 'spawn-manager' });
@@ -74,6 +76,7 @@ export class SpawnManager {
   /** Instantiate every zone NPC + monster spawn once, at boot. */
   bootstrap(): void {
     const { zones, movers } = this.resources;
+    let townSkipped = 0;
     for (const zone of zones.zones.values()) {
       // Static NPCs (shopkeepers, quest NPCs) — carry outfit if defined.
       for (const npcSpawn of zone.npcs) {
@@ -82,6 +85,7 @@ export class SpawnManager {
           logger.warn({ moverId: npcSpawn.mover_id, zone: zone._id }, 'NPC mover def missing — skipping');
           continue;
         }
+        const charBlock = blockForMover(this.resources.characterInc, def.key);
         this.materialize({
           src: {
             modelIndex: def.dwObjIndex,
@@ -90,7 +94,8 @@ export class SpawnManager {
             level: def.level,
             hp: def.hp,
             scale: def.scale,
-            outfit: toOutfit(def),
+            outfit: toOutfit(def, charBlock),
+            menus: charBlock?.menus,
             attackable: def.attackable,
             guard: def.guard ?? false,
             belligerence: def.belligerence ?? 0,
@@ -114,6 +119,12 @@ export class SpawnManager {
         const def = movers.movers.get(spawn.mover_id);
         if (!def) {
           logger.warn({ moverId: spawn.mover_id, zone: zone._id }, 'Monster mover def missing — skipping');
+          continue;
+        }
+        // Keep monsters out of town — skip spawns inside the safe-zone radius
+        // around the zone's revival point (shared with AI combat immunity).
+        if (isInSafeZone(spawn.position, zone.revival.position)) {
+          townSkipped++;
           continue;
         }
         const count = Math.min(MAX_PER_SPAWN, spawn.count);
@@ -144,7 +155,7 @@ export class SpawnManager {
         }
       }
     }
-    logger.info({ count: this.movers.size }, 'Movers spawned');
+    logger.info({ count: this.movers.size, townSkipped }, 'Movers spawned');
   }
 
   /** Create + register a mover from a respawn descriptor. */
@@ -222,9 +233,24 @@ export class SpawnManager {
   }
 }
 
-/** Map a validated mover definition's outfit block to the entity outfit shape. */
-function toOutfit(def: { outfit?: { characterKey: string; hairMesh: number; hairColor: number; headMesh: number; equip: ReadonlyArray<{ parts: number; itemId: number }> } | undefined }): MoverOutfit | undefined {
-  const o = def.outfit;
+/**
+ * Map a validated mover definition's outfit block to the entity outfit shape.
+ * Prefers a parsed character.inc outfit (canonical source) when present; falls
+ * back to the mover-yml `outfit` field (test fixtures, hand-authored data).
+ */
+function toOutfit(
+  def: {
+    outfit?: {
+      characterKey: string;
+      hairMesh: number;
+      hairColor: number;
+      headMesh: number;
+      equip: ReadonlyArray<{ parts: number; itemId: number }>;
+    } | undefined;
+  },
+  charBlock: CharacterIncBlock | undefined,
+): MoverOutfit | undefined {
+  const o = charBlock?.outfit ?? def.outfit;
   if (!o) return undefined;
   return {
     characterKey: o.characterKey,

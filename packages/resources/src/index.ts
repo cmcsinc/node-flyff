@@ -17,6 +17,7 @@
  * @module index
  */
 
+import { resolve } from 'node:path';
 import { createResourceLogger } from './logger.js';
 
 // Loaders
@@ -27,6 +28,7 @@ import { loadZones, type ZoneIndex } from './loaders/zone.loader.js';
 import { loadDialogs, type DialogIndex } from './loaders/dialog.loader.js';
 import { loadQuests, type QuestIndex } from './loaders/quest.loader.js';
 import { loadDrops, type DropIndex } from './loaders/drop.loader.js';
+import { loadCharacterInc, type CharacterIncIndex } from './loaders/characterInc.loader.js';
 
 const logger = createResourceLogger('resources');
 
@@ -56,6 +58,9 @@ export interface ResourceIndex {
 
   /** Drop tables (propMoverEx.inc) — keyed by mover model index. */
   drops: DropIndex;
+
+  /** character.inc NPC outfits + AddMenu capability + dialog file. */
+  characterInc: CharacterIncIndex;
 }
 
 /**
@@ -64,15 +69,17 @@ export interface ResourceIndex {
  * This function parses and validates all YAML resource files.
  * It throws if any file fails validation.
  *
- * @param dataDir - Path to resources/data directory
+ * @param dataDir  - Path to resources/data directory
+ * @param rawDir   - Path to resources/raw directory (character.inc source). Defaults to `<dataDir>/../raw`.
  * @returns Complete resource index
  */
 export async function loadAllResources(
-  dataDir: string = './resources/data'
+  dataDir: string = './resources/data',
+  rawDir: string = resolve(dataDir, '..', 'raw'),
 ): Promise<ResourceIndex> {
-  logger.info({ dataDir }, 'Loading all resources...');
+  logger.info({ dataDir, rawDir }, 'Loading all resources...');
 
-  const [items, movers, skills, zones, dialogs, quests, drops] = await Promise.all([
+  const [items, movers, skills, zones, dialogs, quests, drops, characterInc] = await Promise.all([
     loadItems(dataDir),
     loadMovers(dataDir),
     loadSkills(dataDir),
@@ -80,6 +87,7 @@ export async function loadAllResources(
     loadDialogs(dataDir),
     loadQuests(dataDir),
     loadDrops(dataDir),
+    loadCharacterInc(rawDir),
   ]);
 
   logger.info(
@@ -91,11 +99,12 @@ export async function loadAllResources(
       dialogs: dialogs.byPrefix.size,
       quests: quests.byId.size,
       drops: drops.drops.size,
+      characterInc: characterInc.byKey.size,
     },
     'All resources loaded'
   );
 
-  return { items, movers, skills, zones, dialogs, quests, drops };
+  return { items, movers, skills, zones, dialogs, quests, drops, characterInc };
 }
 
 /**
@@ -165,6 +174,16 @@ export {
   dropsFor,
   type QuestIndex,
 } from './loaders/quest.loader.js';
+export {
+  loadCharacterInc,
+  parseCharacterInc,
+  blockForMover,
+  MMI_DIALOG,
+  type CharacterIncIndex,
+  type CharacterIncBlock,
+  type CharacterIncOutfit,
+  type CharacterIncEquipPart,
+} from './loaders/characterInc.loader.js';
 
 // Re-export schemas
 export * from './schemas/index.js';

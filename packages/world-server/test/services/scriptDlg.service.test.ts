@@ -25,7 +25,7 @@ function mkPlayer(overrides: Partial<CPlayer> = {}): CPlayer {
 function mkNpc(characterKey?: string, pos = { x: 0, y: 0, z: 0 }): CMover {
   return {
     m_idMover: NPC_ID, m_vPos: pos,
-    outfit: characterKey ? { characterKey } : undefined,
+    m_szKey: characterKey ?? '',
   } as unknown as CMover;
 }
 
@@ -99,10 +99,21 @@ describe('ScriptDlgService.dialog', () => {
     if (!out.ok) assert.equal(out.reason, 'key_too_long');
   });
 
-  it('rejects an NPC with no outfit (monster, not a dialog NPC)', async () => {
+  it('resolves an NPC with no dialog prefix to zero frames (monster / unknown NPC)', async () => {
     const { svc } = fakeQuestService();
     const s = new ScriptDlgService({
       spawnManager: { get: () => mkNpc() },
+      dialogs: mkDialogs(), quests: mkQuests([]), questService: svc, chat: fakeChat as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    assert.equal(out.ok, true);
+    if (out.ok) assert.equal(out.frames.length, 0);
+  });
+
+  it('returns invalid_target when no mover exists for the objid', async () => {
+    const { svc } = fakeQuestService();
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => undefined },
       dialogs: mkDialogs(), quests: mkQuests([]), questService: svc, chat: fakeChat as never,
     });
     const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
@@ -134,7 +145,8 @@ describe('ScriptDlgService.dialog', () => {
     });
     const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
     assert.equal(out.ok, true);
-    if (out.ok) assert.deepEqual(out.frames, [Buffer.from([0xc0, NPC_ID & 0xff])]);
+    // Speak→chat frame is emitted alongside the synthesized #init menu frame.
+    if (out.ok) assert.ok(out.frames.some((f) => f.equals(Buffer.from([0xc0, NPC_ID & 0xff]))));
   });
 
   it('fires beginQuest when a launch state carries a quest id', async () => {
@@ -241,7 +253,7 @@ describe('ScriptDlgService.dialog', () => {
     assert.equal(f[4]!.type, 'exit');
   });
 
-  it('emits no menu frame for a speak-only state (C++ queues no RUNSCRIPTFUNC)', async () => {
+  it('synthesizes a #init menu (greeting SAY + Exit) for a speak-only state 0', async () => {
     const { svc } = fakeQuestService();
     const { serializer, calls } = fakeScriptDialog();
     const dialogs = mkDialogs(['', '', '', '', '', 'hi']);
@@ -256,8 +268,11 @@ describe('ScriptDlgService.dialog', () => {
     });
     const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
     if (!out.ok) throw new Error('expected ok');
-    assert.equal(calls.length, 0); // no menu ops
-    assert.equal(out.frames.length, 1); // just the Speak chat frame
-    assert.deepEqual(out.frames, [Buffer.from([0xc0, NPC_ID & 0xff])]);
+    assert.equal(calls.length, 1); // synthesized menu
+    const funcs = calls[0];
+    assert.equal(funcs[0].type, 'removeAllKeys');
+    assert.deepEqual(funcs.filter((f) => f.type === 'say'), [{ type: 'say', text: 'hi' }]);
+    assert.equal(funcs[funcs.length - 1].type, 'exit');
+    assert.ok(out.frames.some((f) => f.equals(Buffer.from([0xc0, NPC_ID & 0xff])))); // Speak chat too
   });
 });

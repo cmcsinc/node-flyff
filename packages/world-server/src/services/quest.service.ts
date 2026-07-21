@@ -192,6 +192,32 @@ export class QuestService {
   }
 
   /**
+   * `/raq` — `TextCmd_RemoveAllQuest` (FuncTextCmd.cpp:4020). Clears the entire
+   * active quest list: drops every record from `m_aQuest`, removes each from the
+   * active repo table, returns one `REMOVEQUEST_TYPE.ALL` frame (questId 0).
+   */
+  async removeAllQuests(player: CPlayer): Promise<QuestOpResult> {
+    const ids = player.m_aQuest.map((q) => q.id);
+    player.m_aQuest = [];
+    player._dirty.add('m_aQuest');
+    await Promise.all(ids.map((id) => this.deps.questRepo.removeActive(player.m_idPlayer, id)));
+    return { ok: true, frames: [buildRemoveQuest(player.m_idPlayer, REMOVEQUEST_TYPE.ALL, 0)] };
+  }
+
+  /**
+   * `/rcq` — `TextCmd_RemoveCompleteQuest` (FuncTextCmd.cpp:4031). Clears the
+   * completed-quest ledger only (active list untouched); returns one
+   * `REMOVEQUEST_TYPE.CLEAR_COMPLETED` frame.
+   */
+  async removeCompleteQuests(player: CPlayer): Promise<QuestOpResult> {
+    await this.deps.questRepo.clearCompleted(player.m_idPlayer);
+    return {
+      ok: true,
+      frames: [buildRemoveQuest(player.m_idPlayer, REMOVEQUEST_TYPE.CLEAR_COMPLETE, 0)],
+    };
+  }
+
+  /**
    * Toggle a quest in the checked (tracked) list — `PACKETTYPE_QUEST_CHECK`.
    * Mutates the CPlayer array, persists the full replacement, returns the
    * QUEST_CHECKED frame for the handler to write.

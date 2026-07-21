@@ -122,6 +122,23 @@ export const SNAPSHOTTYPE_DAMAGE = 0x0013;           // MsgHdr.h — AddDamage v
 export const SNAPSHOTTYPE_SETEXPERIENCE = 0x0012;    // MsgHdr.h — AddSetExperience self-only
 export const SNAPSHOTTYPE_SETLEVEL = 0x0011;         // MsgHdr.h — AddSetLevel vicinity (skips self)
 export const SNAPSHOTTYPE_MOVERDEATH = 0x00c7;       // MsgHdr.h — AddMoverDeath vicinity
+export const SNAPSHOTTYPE_SETPOINTPARAM = 0x001e;    // MsgHdr.h — AddSetPointParam: int param(DST_*) | int value
+/**
+ * `SNAPSHOTTYPE_MODIFYMODE` (MsgHdr.h:1105) — `CUserMng::AddModifyMode`
+ * (User.cpp:5096): `OBJID | MODIFYMODE | m_dwMode:DWORD`. Broadcast to vicinity
+ * on any `m_dwMode` bit flip so peers re-render the mover (transparency,
+ * undying glow, etc.). Body is one DWORD — the full new mode bitmask.
+ */
+export const SNAPSHOTTYPE_MODIFYMODE = 0x00d3;       // MsgHdr.h:1105 — AddModifyMode
+
+/**
+ * `SNAPSHOTTYPE_DISGUISE` / `NODISGUISE` (MsgHdr.h:1133-1134) —
+ * `CUserMng::AddDisguise/AddNoDisguise` (User.cpp:4455/4466). DISGUISE body is
+ * one DWORD (the propMover index to render as); NODISGUISE is bodyless. The
+ * disguised player renders as that mover model until cleared.
+ */
+export const SNAPSHOTTYPE_DISGUISE = 0x00f5;          // MsgHdr.h:1133 — AddDisguise (dwMoverIdx:DWORD)
+export const SNAPSHOTTYPE_NODISGUISE = 0x00f6;        // MsgHdr.h:1134 — AddNoDisguise (bodyless)
 
 // --- Revival S→C confirm snapshots (`_Network/MsgHdr.h:1044-1046`) -----------
 // `CUserMng::AddRevival`-style confirm — body is just `OBJID objid + WORD wHdr`
@@ -205,6 +222,13 @@ export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
 
 /** `NULL_ID` (`_Network/MsgHdr.h`) — "no object" sentinel. */
 export const NULL_ID = 0xffffffff;
+
+// --- SetPointParam S→C (`_Network/MsgHdr.h` / `resource/defineAttribute.h`) ----
+// Generic per-mover stat update: `objid | SETPOINTPARAM | paramId:DWORD | value:DWORD`
+// (`CUserMng::AddSetPointParam`, User.cpp:3169). `CMover::AddGold` (Mover.cpp:638)
+// notifies the client of a gold-balance change via AddSetPointParam(self, DST_GOLD, total).
+// (SNAPSHOTTYPE_SETPOINTPARAM is defined with the combat snapshots above.)
+export const DST_GOLD = 10000;                       // defineAttribute.h:352
 
 /**
  * Circular ground-plane broadcast radius approximating the v15 `CLinkMap`

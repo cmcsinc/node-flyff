@@ -10,7 +10,7 @@
  */
 
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
+import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { Validate } from '@flyff/core/utils/validate.js';
 import { PacketError } from '@flyff/core/errors.js';
@@ -58,7 +58,7 @@ export class RemoveQuestHandler {
 
     const outcome = await this.questService.cancelQuest(player, questId);
     if (outcome.ok) {
-      for (const frame of outcome.frames) socket.write(frame);
+      for (const frame of outcome.frames) sendPacket(socket, frame);
     } else {
       logger.debug({ charId: player.m_idPlayer, questId, reason: outcome.reason }, 'REMOVEQUEST rejected');
     }

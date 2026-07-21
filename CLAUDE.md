@@ -322,6 +322,13 @@ This project has context-aware skills in `.claude/skills/`. They are auto-sugges
 
 ## Agentic Workflow & Session Restoration
 
+> **OVERRIDE RULE — Task Completion & Fix Authority (2026-07-21).**
+> **The user is the ONLY source of truth for whether something is complete or fixed.** This overrides every checklist, gate, and Phase-4 "mark done" instruction in `.claude/rules/08-agent-workflow.md`, `09-agentic-selflearning.md`, and any agent definition file. Three rules, all hard:
+>
+> 1. **No marking complete.** No agent (main or sub) may mark ANY task complete, ✅ Done, finished, or resolved — in `TodoWrite`, `SESSION.md`, `PROGRESS.md`, commit messages, PR bodies, or chat — unless the user explicitly says so (e.g. "mark it done", "ship it", "go ahead and complete"). When work passes all your checks but the user has not approved, leave the task `in_progress`, write a one-line checkpoint of what was verified, do NOT flip status, do NOT auto-commit, do NOT delete tasks.
+> 2. **"Not complete" means "not working."** A task staying open is a statement that the feature/issue is NOT actually working yet. **Do not stop working on it until the user says it is fixed.** Do not hand it off as done-pending, do not park it, do not move on — keep iterating until it works or the user tells you to stop.
+> 3. **Never say "fixed" (or "works", "resolved", "passing") unless the user tested it.** The agent may say "implemented", "changed", "tests pass on my side", or "ready for you to test" — never claim a fix is real until the user confirms by testing. Only the user can declare something fixed.
+
 To ensure a "fully agentic" experience, this project follows a strict checkpointing protocol:
 
 - **State File**: `.claude/state/SESSION.md` is the source of truth for the current agent session.

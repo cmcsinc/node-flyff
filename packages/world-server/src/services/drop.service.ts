@@ -140,4 +140,9 @@ export function goldSeedId(amount: number): number {
   return II_GOLD_SEED4;
 }
 
+/** True if `itemId` is a gold-pile seed (`II_GOLD_SEED1..4`). Used by the pickup handler to route gold vs item loot. */
+export function isGoldSeed(itemId: number): boolean {
+  return itemId === II_GOLD_SEED1 || itemId === II_GOLD_SEED2 || itemId === II_GOLD_SEED3 || itemId === II_GOLD_SEED4;
+}
+
 void NULL_ID;

@@ -31,6 +31,7 @@ import {
 import { EXP_TABLE } from '../combat/expTable.js';
 import { AF_MISS } from '../combat/tables.js';
 import { playerCombatant, moverCombatant } from '../combat/combatants.js';
+import type { ItemLookup } from '../combat/equipStats.js';
 import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '../combat/aiConstants.js';
 import { isMoverAttackableBy } from './combat.policy.js';
 import { MODE } from '../constants/mode.js';
@@ -60,6 +61,8 @@ export interface CombatServiceDeps {
   questTracker?: { onKill(killer: CPlayer, victimModelIdx: number): void };
   /** Optional drop-roller (Phase A–C). Spawns ground piles for the kill. */
   dropService?: DropService;
+  /** Optional item-definition lookup — folds equipped weapon/armor into ATK/DEF. */
+  getItem?: ItemLookup;
 }
 
 export type CombatOutcome =
@@ -84,7 +87,7 @@ export class CombatService {
     if (mover.m_bDead) return { ok: false, reason: 'target_dead' };
     if (!isMoverAttackableBy(player, mover)) return { ok: false, reason: 'target_not_attackable' };
 
-    const result: MeleeResult = resolveMelee(playerCombatant(player), moverCombatant(mover), this.rng);
+    const result: MeleeResult = resolveMelee(playerCombatant(player, this.deps.getItem), moverCombatant(mover), this.rng);
 
     // `/ok` ONEKILL_MODE (authorization.h:22) — GM one-shot override: force a
     // guaranteed lethal hit (full current HP) regardless of the rolled result.

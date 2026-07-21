@@ -10,6 +10,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -22,6 +25,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -34,6 +40,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -46,6 +55,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -58,6 +70,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -70,6 +85,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -82,6 +100,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -94,6 +115,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -106,6 +130,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -118,6 +145,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_REFRESHER
+    item_kind3: IK3_REFRESHER
     durability: 12000000
     job_req:
       - knight
@@ -130,6 +160,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_POTION
     durability: 12000000
     job_req:
       - knight
@@ -142,6 +175,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 20
+    item_kind2: IK2_POTION
+    item_kind3: IK3_POTION
     durability: 12000000
     job_req:
       - knight
@@ -154,6 +190,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 20
+    item_kind2: IK2_POTION
+    item_kind3: IK3_POTION
     durability: 12000000
     job_req:
       - knight
@@ -166,6 +205,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 20
+    item_kind2: IK2_POTION
+    item_kind3: IK3_POTION
     durability: 12000000
     job_req:
       - knight
@@ -178,6 +220,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -190,6 +235,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -202,6 +250,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -214,6 +265,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -226,6 +280,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -238,6 +295,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -250,6 +310,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -262,6 +325,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -274,6 +340,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 12000000
     job_req:
       - knight
@@ -286,6 +355,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_POTION
     durability: 12000000
     job_req:
       - knight
@@ -298,6 +370,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -310,6 +385,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -322,6 +400,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -334,6 +415,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -346,6 +430,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -358,6 +445,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -370,6 +460,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -382,6 +475,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -394,6 +490,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -406,6 +505,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -418,6 +520,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -430,6 +535,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -442,6 +550,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -454,6 +565,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -466,6 +580,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -478,6 +595,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -490,6 +610,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -502,6 +625,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -514,6 +640,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -526,6 +655,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -538,6 +670,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -550,6 +685,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -562,6 +700,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -574,6 +715,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -586,6 +730,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -598,6 +745,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -610,6 +760,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -622,6 +775,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -634,6 +790,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -646,6 +805,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -658,6 +820,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -670,6 +835,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -682,6 +850,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -694,6 +865,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -706,6 +880,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - knight
@@ -718,6 +895,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -730,6 +910,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -742,6 +925,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -754,6 +940,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -766,6 +955,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -778,6 +970,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -790,6 +985,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -802,6 +1000,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -814,6 +1015,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -826,6 +1030,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -838,6 +1045,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -850,6 +1060,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -862,6 +1075,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -874,6 +1090,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -886,6 +1105,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -898,6 +1120,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -910,6 +1135,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -922,6 +1150,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -934,6 +1165,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -946,6 +1180,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -958,6 +1195,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -970,6 +1210,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -982,6 +1225,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -994,6 +1240,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1006,6 +1255,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1018,6 +1270,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1030,6 +1285,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1042,6 +1300,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1054,6 +1315,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1066,6 +1330,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1078,6 +1345,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1090,6 +1360,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - knight
@@ -1102,6 +1375,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -1114,6 +1390,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -1126,6 +1405,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -1138,6 +1420,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -1150,6 +1435,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -1162,6 +1450,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - knight
@@ -1174,6 +1465,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - vagrant
@@ -1186,6 +1480,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - vagrant
@@ -1198,6 +1495,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 12000000
     job_req:
       - vagrant
@@ -1210,6 +1510,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1222,6 +1525,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1234,6 +1540,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1246,6 +1555,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1258,6 +1570,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1270,6 +1585,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1282,6 +1600,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1294,6 +1615,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1306,6 +1630,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 12000000
     job_req:
       - vagrant
@@ -1318,6 +1645,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1330,6 +1660,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1342,6 +1675,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1354,6 +1690,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1366,6 +1705,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1378,6 +1720,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1390,6 +1735,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1402,6 +1750,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1414,6 +1765,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1426,6 +1780,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1438,6 +1795,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 12000000
     job_req:
       - vagrant
@@ -1450,6 +1810,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1462,6 +1825,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1474,6 +1840,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1486,6 +1855,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1498,6 +1870,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1510,6 +1885,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1522,6 +1900,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1534,6 +1915,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1546,6 +1930,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1558,6 +1945,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1570,6 +1960,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 12000000
     job_req:
       - vagrant
@@ -1582,6 +1975,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1594,6 +1990,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1606,6 +2005,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1618,6 +2020,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1630,6 +2035,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1642,6 +2050,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1654,6 +2065,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1666,6 +2080,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1678,6 +2095,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1690,6 +2110,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1702,6 +2125,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1714,6 +2140,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1726,6 +2155,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1738,6 +2170,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1750,6 +2185,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1762,6 +2200,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1774,6 +2215,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1786,6 +2230,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1798,6 +2245,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1810,6 +2260,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 12000000
     job_req:
       - vagrant
@@ -1822,6 +2275,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
     durability: 12000000
     job_req:
       - vagrant
@@ -1834,6 +2290,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
     durability: 12000000
     job_req:
       - vagrant
@@ -1846,6 +2305,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
     durability: 12000000
     job_req:
       - vagrant
@@ -1858,6 +2320,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
     durability: 12000000
     job_req:
       - vagrant
@@ -1870,6 +2335,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
     durability: 12000000
     job_req:
       - vagrant
@@ -1882,6 +2350,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
     durability: 12000000
     job_req:
       - vagrant
@@ -1894,6 +2365,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1906,6 +2380,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1918,6 +2395,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 12000000
     job_req:
       - vagrant
@@ -1930,6 +2410,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -1942,6 +2425,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -1954,6 +2440,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -1966,6 +2455,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -1978,6 +2470,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -1990,6 +2485,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ENCHANT
     durability: 12000000
     job_req:
       - vagrant
@@ -2002,6 +2500,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ENCHANT
     durability: 12000000
     job_req:
       - vagrant
@@ -2014,6 +2515,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_PIERDICE
     durability: 12000000
     job_req:
       - vagrant
@@ -2026,6 +2530,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ENCHANT
     durability: 12000000
     job_req:
       - vagrant
@@ -2038,6 +2545,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_PIERDICE
     durability: 12000000
     job_req:
       - vagrant
@@ -2050,6 +2560,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2062,6 +2575,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2074,6 +2590,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2086,6 +2605,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2098,6 +2620,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2110,6 +2635,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2122,6 +2650,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2134,6 +2665,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2146,6 +2680,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2158,6 +2695,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2170,6 +2710,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2182,6 +2725,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2194,6 +2740,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2206,6 +2755,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2218,6 +2770,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2230,6 +2785,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2242,6 +2800,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2254,6 +2815,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2266,6 +2830,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2278,6 +2845,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2290,6 +2860,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2302,6 +2875,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2314,6 +2890,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2326,6 +2905,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2338,6 +2920,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2350,6 +2935,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2362,6 +2950,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2374,6 +2965,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2386,6 +2980,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2398,6 +2995,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2410,6 +3010,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2422,6 +3025,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2434,6 +3040,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2446,6 +3055,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2458,6 +3070,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2470,6 +3085,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2482,6 +3100,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2494,6 +3115,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2506,6 +3130,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2518,6 +3145,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2530,6 +3160,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2542,6 +3175,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2554,6 +3190,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2566,6 +3205,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2578,6 +3220,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 12000000
     job_req:
       - vagrant
@@ -2590,6 +3235,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 250
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SUPSTONE
     durability: 12000000
     job_req:
       - vagrant
@@ -2602,6 +3250,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 250
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SUPSTONE
     durability: 12000000
     job_req:
       - vagrant
@@ -2614,6 +3265,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 250
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SUPSTONE
     durability: 12000000
     job_req:
       - vagrant
@@ -2626,6 +3280,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 250
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SUPSTONE
     durability: 12000000
     job_req:
       - vagrant
@@ -2638,6 +3295,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2650,6 +3310,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2662,6 +3325,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2674,6 +3340,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2686,6 +3355,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2698,6 +3370,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2710,6 +3385,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2722,6 +3400,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2734,6 +3415,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2746,6 +3430,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ELECARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2758,6 +3445,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_DICE
     durability: 12000000
     job_req:
       - vagrant
@@ -2770,6 +3460,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_DICE
     durability: 12000000
     job_req:
       - vagrant
@@ -2782,6 +3475,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_PIERDICE
     durability: 12000000
     job_req:
       - vagrant
@@ -2794,6 +3490,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_PIERDICE
     durability: 12000000
     job_req:
       - vagrant
@@ -2806,6 +3505,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_DICE
     durability: 12000000
     job_req:
       - vagrant
@@ -2818,6 +3520,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2830,6 +3535,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2842,6 +3550,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2854,6 +3565,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2866,6 +3580,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2878,6 +3595,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2890,6 +3610,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2902,6 +3625,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2914,6 +3640,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2926,6 +3655,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2938,6 +3670,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2950,6 +3685,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2962,6 +3700,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2974,6 +3715,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2986,6 +3730,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -2998,6 +3745,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3010,6 +3760,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3022,6 +3775,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3034,6 +3790,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3046,6 +3805,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3058,6 +3820,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3070,6 +3835,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3082,6 +3850,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3094,6 +3865,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3106,6 +3880,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3118,6 +3895,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3130,6 +3910,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3142,6 +3925,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3154,6 +3940,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3166,6 +3955,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3178,6 +3970,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3190,6 +3985,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3202,6 +4000,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3214,6 +4015,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3226,6 +4030,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3238,6 +4045,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3250,6 +4060,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3262,6 +4075,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3274,6 +4090,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3286,6 +4105,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
     durability: 12000000
     job_req:
       - vagrant
@@ -3298,6 +4120,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_PIERDICE
     durability: 12000000
     job_req:
       - vagrant
@@ -3310,6 +4135,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_PIERDICE
     durability: 12000000
     job_req:
       - vagrant
@@ -3322,6 +4150,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3334,6 +4165,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3346,6 +4180,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3358,6 +4195,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3370,6 +4210,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3382,6 +4225,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3394,6 +4240,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3406,6 +4255,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3418,6 +4270,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3430,6 +4285,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3442,6 +4300,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3454,6 +4315,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3466,6 +4330,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3478,6 +4345,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3490,6 +4360,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3502,6 +4375,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3514,6 +4390,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3526,6 +4405,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3538,6 +4420,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3550,6 +4435,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3562,6 +4450,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3574,6 +4465,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3586,6 +4480,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3598,6 +4495,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3610,6 +4510,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3622,6 +4525,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3634,6 +4540,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3646,6 +4555,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3658,6 +4570,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3670,6 +4585,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3682,6 +4600,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3694,6 +4615,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3706,6 +4630,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3718,6 +4645,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3730,6 +4660,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3742,6 +4675,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3754,6 +4690,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3766,6 +4705,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3778,6 +4720,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3790,6 +4735,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3802,6 +4750,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3814,6 +4765,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3826,6 +4780,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3838,6 +4795,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3850,6 +4810,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3862,6 +4825,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3874,6 +4840,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3886,6 +4855,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3898,6 +4870,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3910,6 +4885,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3922,6 +4900,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
     durability: 12000000
     job_req:
       - vagrant
@@ -3934,6 +4915,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 9999
+    item_kind2: IK2_CHARM
+    item_kind3: IK3_BCHARM
     durability: 12000000
     job_req:
       - billposter
@@ -3946,6 +4930,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 9999
+    item_kind2: IK2_CHARM
+    item_kind3: IK3_RCHARM
     durability: 12000000
     job_req:
       - ringmaster
@@ -3958,6 +4945,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 9999
+    item_kind2: IK2_BULLET
+    item_kind3: IK3_ARROW
     durability: 12000000
     job_req:
       - acrobat
@@ -3970,6 +4960,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_TOOLS
+    item_kind3: IK3_COLLECTER
     durability: 12000000
     job_req:
       - acrobat
@@ -3982,6 +4975,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_TOOLS
+    item_kind3: IK3_COLLECTER
     durability: 12000000
     job_req:
       - acrobat
@@ -3994,6 +4990,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_TOOLS
+    item_kind3: IK3_COLLECTER
     durability: 12000000
     job_req:
       - acrobat
@@ -4006,6 +5005,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_TOOLS
+    item_kind3: IK3_COLLECTER
     durability: 12000000
     job_req:
       - acrobat
@@ -4018,6 +5020,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_TOOLS
+    item_kind3: IK3_COLLECTER
     durability: 12000000
     job_req:
       - acrobat
@@ -4030,6 +5035,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_TOOLS
+    item_kind3: IK3_COLLECTER
     durability: 12000000
     job_req:
       - acrobat
@@ -4042,6 +5050,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_SCROLL
     durability: 12000000
     job_req:
       - acrobat
@@ -4054,6 +5065,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4066,6 +5080,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4078,6 +5095,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4090,6 +5110,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4102,6 +5125,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4114,6 +5140,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4126,6 +5155,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4138,6 +5170,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4150,6 +5185,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4162,6 +5200,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4174,6 +5215,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4186,6 +5230,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4198,6 +5245,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4210,6 +5260,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4222,6 +5275,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4234,6 +5290,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4246,6 +5305,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4258,6 +5320,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4270,6 +5335,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4282,6 +5350,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4294,6 +5365,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4306,6 +5380,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4318,6 +5395,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4330,6 +5410,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4342,6 +5425,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4354,6 +5440,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4366,6 +5455,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4378,6 +5470,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4390,6 +5485,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4402,6 +5500,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4414,6 +5515,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4426,6 +5530,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4438,6 +5545,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4450,6 +5560,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4462,6 +5575,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4474,6 +5590,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4486,6 +5605,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4498,6 +5620,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4510,6 +5635,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4522,6 +5650,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4534,6 +5665,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4546,6 +5680,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4558,6 +5695,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4570,6 +5710,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4582,6 +5725,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4594,6 +5740,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4606,6 +5755,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4618,6 +5770,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4630,6 +5785,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4642,6 +5800,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4654,6 +5815,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4666,6 +5830,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4678,6 +5845,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4690,6 +5860,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4702,6 +5875,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4714,6 +5890,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4726,6 +5905,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4738,6 +5920,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4750,6 +5935,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4762,6 +5950,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4774,6 +5965,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4786,6 +5980,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4798,6 +5995,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4810,6 +6010,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4822,6 +6025,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4834,6 +6040,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4846,6 +6055,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4858,6 +6070,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4870,6 +6085,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4882,6 +6100,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4894,6 +6115,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4906,6 +6130,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4918,6 +6145,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4930,6 +6160,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4942,6 +6175,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4954,6 +6190,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4966,6 +6205,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4978,6 +6220,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -4990,6 +6235,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5002,6 +6250,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5014,6 +6265,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5026,6 +6280,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5038,6 +6295,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5050,6 +6310,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5062,6 +6325,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5074,6 +6340,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5086,6 +6355,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5098,6 +6370,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5110,6 +6385,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5122,6 +6400,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5134,6 +6415,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5146,6 +6430,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5158,6 +6445,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5170,6 +6460,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5182,6 +6475,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5194,6 +6490,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5206,6 +6505,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5218,6 +6520,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5230,6 +6535,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5242,6 +6550,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5254,6 +6565,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5266,6 +6580,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5278,6 +6595,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5290,6 +6610,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5302,6 +6625,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5314,6 +6640,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5326,6 +6655,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5338,6 +6670,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5350,6 +6685,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5362,6 +6700,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5374,6 +6715,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5386,6 +6730,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5398,6 +6745,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5410,6 +6760,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5422,6 +6775,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5434,6 +6790,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5446,6 +6805,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5458,6 +6820,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5470,6 +6835,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5482,6 +6850,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5494,6 +6865,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5506,6 +6880,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5518,6 +6895,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5530,6 +6910,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5542,6 +6925,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5554,6 +6940,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5566,6 +6955,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5578,6 +6970,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5590,6 +6985,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5602,6 +7000,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5614,6 +7015,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5626,6 +7030,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5638,6 +7045,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 4500000
     job_req:
       - acrobat
@@ -5650,6 +7060,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 3200000
     job_req:
       - mercenary
@@ -5662,6 +7075,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 3200000
     job_req:
       - vagrant
@@ -5674,6 +7090,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 3200000
     job_req:
       - vagrant
@@ -5686,6 +7105,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 3200000
     job_req:
       - vagrant
@@ -5698,6 +7120,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 3200000
     job_req:
       - vagrant
@@ -5710,6 +7135,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 3200000
     job_req:
       - vagrant
@@ -5722,6 +7150,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 3200000
     job_req:
       - vagrant
@@ -5734,6 +7165,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 280000
     job_req:
       - magician
@@ -5746,6 +7180,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5758,6 +7195,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5770,6 +7210,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5782,6 +7225,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5794,6 +7240,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5806,6 +7255,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5818,6 +7270,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5830,6 +7285,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5842,6 +7300,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5854,6 +7315,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5866,6 +7330,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5878,6 +7345,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
     durability: 280000
     job_req:
       - magician
@@ -5890,6 +7360,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 50
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 4500000
     job_req:
       - vagrant
@@ -5902,6 +7375,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 50
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 4500000
     job_req:
       - vagrant
@@ -5914,6 +7390,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 50
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 4500000
     job_req:
       - vagrant
@@ -5926,6 +7405,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 50
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 4500000
     job_req:
       - vagrant
@@ -5938,6 +7420,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 50
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 4500000
     job_req:
       - vagrant
@@ -5950,6 +7435,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -5962,6 +7450,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -5974,6 +7465,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -5986,6 +7480,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -5998,6 +7495,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6010,6 +7510,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6022,6 +7525,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6034,6 +7540,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6046,6 +7555,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6058,6 +7570,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6070,6 +7585,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6082,6 +7600,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6094,6 +7615,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6106,6 +7630,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6118,6 +7645,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6130,6 +7660,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6142,6 +7675,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6154,6 +7690,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6166,6 +7705,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6178,6 +7720,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6190,6 +7735,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6202,6 +7750,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6214,6 +7765,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6226,6 +7780,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6238,6 +7795,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6250,6 +7810,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6262,6 +7825,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6274,6 +7840,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6286,6 +7855,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6298,6 +7870,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6310,6 +7885,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6322,6 +7900,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6334,6 +7915,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6346,6 +7930,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6358,6 +7945,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6370,6 +7960,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6382,6 +7975,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6394,6 +7990,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6406,6 +8005,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6418,6 +8020,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_WARP
+    item_kind3: IK3_EVENTSUB
     durability: 4500000
     job_req:
       - vagrant
@@ -6430,6 +8035,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_WARP
+    item_kind3: IK3_EVENTSUB
     durability: 4500000
     job_req:
       - vagrant
@@ -6442,6 +8050,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SKILL
+    item_kind3: IK3_GENERAL
     durability: 4500000
     job_req:
       - vagrant
@@ -6454,6 +8065,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 6570000
     job_req:
       - vagrant
@@ -6466,6 +8080,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_DRINK
     durability: 6570000
     job_req:
       - vagrant
@@ -6478,6 +8095,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 6570000
     job_req:
       - vagrant
@@ -6490,6 +8110,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 6570000
     job_req:
       - vagrant
@@ -6502,6 +8125,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 6570000
     job_req:
       - vagrant
@@ -6514,6 +8140,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_WARP
+    item_kind3: IK3_EVENTSUB
     durability: 3600000
     job_req:
       - vagrant
@@ -6526,6 +8155,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 3600000
     job_req:
       - vagrant
@@ -6538,6 +8170,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 50000
     job_req:
       - vagrant
@@ -6550,6 +8185,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 4500000
     job_req:
       - vagrant
@@ -6562,6 +8200,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 4500000
     job_req:
       - vagrant
@@ -6574,6 +8215,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6586,6 +8230,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6598,6 +8245,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6610,6 +8260,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6622,6 +8275,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6634,6 +8290,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6646,6 +8305,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6658,6 +8320,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_EGG
     durability: 50000
     job_req:
       - vagrant
@@ -6670,6 +8335,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 9999
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_ULTIMATE
     durability: 50000
     job_req:
       - vagrant
@@ -6682,6 +8350,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_ICECEARM
     durability: 8800000
     job_req:
       - vagrant
@@ -6694,6 +8365,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 8800000
     job_req:
       - vagrant
@@ -6706,6 +8380,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_DRINK
     durability: 8800000
     job_req:
       - vagrant
@@ -6718,6 +8395,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_DRINK
     durability: 8800000
     job_req:
       - vagrant
@@ -6730,6 +8410,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 8800000
     job_req:
       - vagrant
@@ -6742,6 +8425,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 8800000
     job_req:
       - vagrant
@@ -6754,6 +8440,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
     durability: 8800000
     job_req:
       - vagrant
@@ -6766,6 +8455,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_DRINK
     durability: 8800000
     job_req:
       - vagrant
@@ -6778,6 +8470,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_DRINK
     durability: 8800000
     job_req:
       - vagrant
@@ -6790,6 +8485,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 4500000
     job_req:
       - vagrant
@@ -6802,6 +8500,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
     durability: 4500000
     job_req:
       - vagrant
@@ -6814,6 +8515,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
     job_req:
       - vagrant
@@ -6826,6 +8530,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 7200000
     job_req:
       - vagrant
@@ -6838,6 +8545,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 50000
     job_req:
       - vagrant
@@ -6850,6 +8560,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
     durability: 7200000
   - id: 20182
     name: Vanilla Cupcakes
@@ -6860,6 +8573,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 7200000
   - id: 20186
     name: Mini Santa
@@ -6870,6 +8586,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 7200000
   - id: 20187
     name: Mini Snowman
@@ -6880,6 +8599,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 7200000
   - id: 21081
     name: Little Lykan
@@ -6890,6 +8612,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 7200000
   - id: 20211
     name: Champion's Ring
@@ -6900,6 +8625,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 7200000
   - id: 20212
     name: Defender's Ring
@@ -6910,6 +8638,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 7200000
   - id: 20213
     name: Adept's Ring
@@ -6920,6 +8651,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 7200000
   - id: 20214
     name: Marksman's Ring
@@ -6930,6 +8664,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
     durability: 7200000
   - id: 20215
     name: Champion's Demol Earring
@@ -6940,6 +8677,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 7200000
   - id: 20216
     name: Defender's Plug Earring
@@ -6950,6 +8690,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 7200000
   - id: 20221
     name: Adept's Earring of Power
@@ -6960,6 +8703,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 7200000
   - id: 20222
     name: Marksman's Earring of Power
@@ -6970,6 +8716,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
     durability: 7200000
   - id: 20217
     name: Champion's Gore Necklace
@@ -6980,6 +8729,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 7200000
   - id: 20218
     name: Adept's Mental Necklace
@@ -6990,6 +8742,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 7200000
   - id: 20219
     name: Marksman's Peision Necklace
@@ -7000,6 +8755,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 7200000
   - id: 20220
     name: Defender's Necklace of Protection
@@ -7010,6 +8768,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
     durability: 7200000
   - id: 26905
     name: Sardine Roll
@@ -7020,6 +8781,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 50000
   - id: 26906
     name: Watermelon Drink
@@ -7030,6 +8794,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_POTION
+    item_kind3: IK3_DRINK
     durability: 50000
   - id: 26954
     name: Lost lucky bag
@@ -7040,6 +8807,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
     durability: 50000
   - id: 21082
     name: Joey
@@ -7050,6 +8820,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
   - id: 21083
     name: Spike
@@ -7060,6 +8833,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
   - id: 21084
     name: Lumia
@@ -7070,6 +8846,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
   - id: 21085
     name: Inspector Koko
@@ -7080,6 +8859,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
   - id: 21086
     name: Cheshire Cat
@@ -7090,6 +8872,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
   - id: 21087
     name: The White Rabbit
@@ -7100,6 +8885,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
   - id: 21088
     name: Tiger Cub
@@ -7110,6 +8898,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 4500000
   - id: 21089
     name: Bone Golem
@@ -7120,4 +8911,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 1
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
     durability: 50000
