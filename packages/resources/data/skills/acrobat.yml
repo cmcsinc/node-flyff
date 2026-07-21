@@ -1,0 +1,147 @@
+_version: "1.0"
+_job: acrobat
+skills:
+  - id: 191
+    name: Yo-Yo mastery
+    name_id: IDS_PROPSKILL_TXT_000222
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 192
+    name: Bow Mastery
+    name_id: IDS_PROPSKILL_TXT_000224
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 193
+    name: Dark Illusion
+    name_id: IDS_PROPSKILL_TXT_000226
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 194
+    name: Junk Arrow
+    name_id: IDS_PROPSKILL_TXT_000228
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 195
+    name: Fast Walker
+    name_id: IDS_PROPSKILL_TXT_000230
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 196
+    name: Aimed Shot
+    name_id: IDS_PROPSKILL_TXT_000232
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 197
+    name: Slow Step
+    name_id: IDS_PROPSKILL_TXT_000234
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 198
+    name: Silent Shot
+    name_id: IDS_PROPSKILL_TXT_000236
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 199
+    name: Perfect Block
+    name_id: IDS_PROPSKILL_TXT_000238
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 200
+    name: Arrow Rain
+    name_id: IDS_PROPSKILL_TXT_000240
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 201
+    name: Cross Line
+    name_id: IDS_PROPSKILL_TXT_000242
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 202
+    name: Auto Shot
+    name_id: IDS_PROPSKILL_TXT_000244
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 203
+    name: Snatch
+    name_id: IDS_PROPSKILL_TXT_000246
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 204
+    name: Counterattack
+    name_id: IDS_PROPSKILL_TXT_000248
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 205
+    name: Deadly swing
+    name_id: IDS_PROPSKILL_TXT_000250
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 206
+    name: Pulling
+    name_id: IDS_PROPSKILL_TXT_000252
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

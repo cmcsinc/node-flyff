@@ -4,7 +4,8 @@
  * Mirrors `CUserMng::AddSetDestPos` (`WORLDSERVER/User.cpp:4703`):
  *   ar << GETID( pMover ) << SNAPSHOTTYPE_DESTPOS;
  *   ar << vPos << fForward;
- *   ar << objidIAObj;            // __IAOBJ0622 — defined in v15
+ *   // ar << objidIAObj;  — only `#ifdef __IAOBJ0622` (User.cpp:4714),
+ *   // which is NOT defined in this v15 build, so no trailing DWORD.
  *
  * Wrapped in a SNAPSHOT packet the client dispatches in
  * `CDPClient::OnSnapshot` (`Neuz/DPClient.cpp:333`):
@@ -28,8 +29,6 @@ export interface DestPosFrame {
   vPos: Vec3;
   /** Facing/forward flag (BYTE). */
   fForward: number;
-  /** Ship objid when boarding (`__IAOBJ0622`), else NULL_ID. */
-  objidIAObj: number;
 }
 
 export class DestPosSerializer {
@@ -45,7 +44,6 @@ export class DestPosSerializer {
     w.writeFloat(frame.vPos.y);
     w.writeFloat(frame.vPos.z);
     w.writeByte(frame.fForward);
-    w.writeDword(frame.objidIAObj);
     return w.build();
   }
 }

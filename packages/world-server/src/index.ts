@@ -88,12 +88,33 @@ async function main(): Promise<void> {
     getPosHandler,
     scriptDlgHandler,
     revivalHandler,
+    journal,
+    journalReplayer,
   } = await compose();
 
   process.on('unhandledRejection', err => {
     logger.error({ err }, 'Unhandled promise rejection');
     process.exit(1);
   });
+
+  // Crash recovery: replay any journaled mutations the previous run never
+  // flushed to the main DB, BEFORE accepting players. Rule `04-persistence.md`.
+  const recovery = await journalReplayer.recover();
+  if (recovery.total > 0) {
+    logger.info(
+      { replayed: recovery.replayed, skipped: recovery.skipped },
+      'Journal recovery finished'
+    );
+  }
+
+  // Flush + close the journal cleanly on shutdown.
+  const shutdown = (signal: string): void => {
+    logger.info({ signal }, 'Shutting down world server');
+    journal.close();
+    process.exit(0);
+  };
+  process.on('SIGINT', () => shutdown('SIGINT'));
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
 
   clusterRegistrar.start();
   await startClusterListener(

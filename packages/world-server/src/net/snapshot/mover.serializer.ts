@@ -43,8 +43,8 @@ function writeEmptyPocketController(w: PacketWriter): void {
   for (let i = 0; i < MAX_POCKET_TABS; i++) w.writeByte(0); // availability flag
 }
 
-/** Empty CBuffMgr — zero buffs (__BUFF_1107 active). */
-function writeEmptyBuffs(w: PacketWriter): void {
+/** Empty CBuffMgr — zero buffs (__BUFF_1107 active). Shared with NPC branch. */
+export function writeEmptyBuffs(w: PacketWriter): void {
   w.writeDword(0); // size_t count
 }
 

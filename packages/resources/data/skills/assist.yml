@@ -1,0 +1,156 @@
+_version: "1.0"
+_job: assist
+skills:
+  - id: 44
+    name: Heal
+    name_id: IDS_PROPSKILL_TXT_000068
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 104
+    name: Straight Punch
+    name_id: IDS_PROPSKILL_TXT_000070
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 45
+    name: Resurrection
+    name_id: IDS_PROPSKILL_TXT_000072
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 46
+    name: Patience
+    name_id: IDS_PROPSKILL_TXT_000074
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 48
+    name: Prevention
+    name_id: IDS_PROPSKILL_TXT_000076
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 49
+    name: Heap Up
+    name_id: IDS_PROPSKILL_TXT_000078
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 50
+    name: Cannon Ball
+    name_id: IDS_PROPSKILL_TXT_000080
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 51
+    name: Circle Healing
+    name_id: IDS_PROPSKILL_TXT_000082
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 52
+    name: Mental Sign
+    name_id: IDS_PROPSKILL_TXT_000084
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 53
+    name: Beef Up
+    name_id: IDS_PROPSKILL_TXT_000086
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 105
+    name: Burst Crack
+    name_id: IDS_PROPSKILL_TXT_000088
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 113
+    name: Stonehand
+    name_id: IDS_PROPSKILL_TXT_000090
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 114
+    name: Quick Step
+    name_id: IDS_PROPSKILL_TXT_000092
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 115
+    name: Cat's Reflex
+    name_id: IDS_PROPSKILL_TXT_000094
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 116
+    name: Accuracy
+    name_id: IDS_PROPSKILL_TXT_000096
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 117
+    name: Power Fist
+    name_id: IDS_PROPSKILL_TXT_000098
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 20
+    name: Haste
+    name_id: IDS_PROPSKILL_TXT_000100
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

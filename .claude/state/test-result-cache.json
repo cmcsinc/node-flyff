@@ -80,5 +80,12 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\queryGetPos.handler.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\getPos.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\scriptDlg.handler.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\revival.handler.test.ts": "fail"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\revival.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\join.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\e2e\\join.e2e.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\e2e\\bytechain.e2e.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\npcSnapshot.serializer.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\managers\\spawn.manager.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\journal.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\mapKey.handler.test.ts": "pass"
 }

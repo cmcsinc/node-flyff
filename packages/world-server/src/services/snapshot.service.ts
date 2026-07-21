@@ -3,7 +3,9 @@
  *
  * `DPSrvr::OnSnapshot` (DPSrvr.cpp:4338) multiplexes `c:BYTE` entries by
  * `wHdr:WORD`; v15 sends only `SNAPSHOTTYPE_DESTPOS`, whose body
- * (`OnPlayerDestPos` DPSrvr.cpp:4364) is `vPos:Vec3 + fForward:BYTE + objidIAObj:DWORD`.
+ * (`OnPlayerDestPos` DPSrvr.cpp:4364) is `vPos:Vec3 + fForward:BYTE`.
+ * (A trailing `objidIAObj:DWORD` exists only `#ifdef __IAOBJ0622`, which is
+ * NOT defined in this v15 build.)
  *
  * Server-side anti-teleport (`OnPlayerDestPos:4371`):
  *   D3DXVec3LengthSq( GetPos() - vPos ) > 1000000.0f  ⇒ silent drop.

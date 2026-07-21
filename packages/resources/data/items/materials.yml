@@ -1,156 +1,7123 @@
-# items/materials.yml
-# Material items for crafting
 _version: "1.0"
 _kind: material
 items:
-  # Basic monster drops
-  - id: 30001
-    name: "Piece of Egg"
-    name_id: "ITEM_PIECE_OF_EGG"
-    icon: "icon_item_egg.dds"
-    model: "mdl_item_egg.o3d"
-    weight: 1
-    level_req: 1
-    job_req: [all]
-    price: 5
-    sell_price: 1
+  - id: 2530
+    name: First Refresher
+    name_id: IDS_PROPITEM_TXT_003966
+    weight: 100
+    price: 28
+    sell_price: 7
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: common
-
-  - id: 30002
-    name: "Piece of Apple"
-    name_id: "ITEM_PIECE_OF_APPLE"
-    icon: "icon_item_apple.dds"
-    model: "mdl_item_apple.o3d"
-    weight: 1
-    level_req: 1
-    job_req: [all]
-    price: 5
-    sell_price: 1
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2531
+    name: Second Refresher
+    name_id: IDS_PROPITEM_TXT_003968
+    weight: 100
+    price: 46
+    sell_price: 11
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: common
-
-  - id: 30003
-    name: "Piece of Golden Cup"
-    name_id: "ITEM_PIECE_OF_GOLDENCUP"
-    icon: "icon_item_goldencup.dds"
-    model: "mdl_item_goldencup.o3d"
-    weight: 1
-    level_req: 1
-    job_req: [all]
-    price: 10
-    sell_price: 2
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2532
+    name: Third Refresher
+    name_id: IDS_PROPITEM_TXT_003970
+    weight: 100
+    price: 73
+    sell_price: 18
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: common
-
-  - id: 30004
-    name: "Piece of Pipe"
-    name_id: "ITEM_PIECE_OF_PIPE"
-    icon: "icon_item_pipe.dds"
-    model: "mdl_item_pipe.o3d"
-    weight: 2
-    level_req: 1
-    job_req: [all]
-    price: 15
-    sell_price: 3
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2533
+    name: Fourth Refresher
+    name_id: IDS_PROPITEM_TXT_003972
+    weight: 100
+    price: 90
+    sell_price: 22
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: common
-
-  # Advanced crafting materials
-  - id: 30010
-    name: "Copper"
-    name_id: "ITEM_COPPER"
-    icon: "icon_item_copper.dds"
-    model: "mdl_item_copper.o3d"
-    weight: 5
-    level_req: 1
-    job_req: [all]
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2534
+    name: Fifth Refresher
+    name_id: IDS_PROPITEM_TXT_003974
+    weight: 100
+    price: 106
+    sell_price: 26
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2535
+    name: Sixth Refresher
+    name_id: IDS_PROPITEM_TXT_003976
+    weight: 100
+    price: 130
+    sell_price: 32
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2536
+    name: Seventh Refresher
+    name_id: IDS_PROPITEM_TXT_003978
+    weight: 100
+    price: 153
+    sell_price: 38
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2537
+    name: Eighth Refresher
+    name_id: IDS_PROPITEM_TXT_003980
+    weight: 100
+    price: 176
+    sell_price: 44
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2538
+    name: Ninth Refresher
+    name_id: IDS_PROPITEM_TXT_003982
+    weight: 100
+    price: 206
+    sell_price: 51
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2539
+    name: Tenth Refresher
+    name_id: IDS_PROPITEM_TXT_003984
+    weight: 100
+    price: 240
+    sell_price: 60
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2540
+    name: II_GEN_POT_POT_ANTIDOTE
+    name_id: IDS_PROPITEM_TXT_003986
+    weight: 100
     price: 100
     sell_price: 25
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: common
-
-  - id: 30011
-    name: "Iron"
-    name_id: "ITEM_IRON"
-    icon: "icon_item_iron.dds"
-    model: "mdl_item_iron.o3d"
-    weight: 5
-    level_req: 1
-    job_req: [all]
-    price: 200
-    sell_price: 50
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2541
+    name: Cure Disease Potion
+    name_id: IDS_PROPITEM_TXT_003988
+    weight: 100
+    price: 100
+    sell_price: 25
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: uncommon
-
-  - id: 30012
-    name: "Steel"
-    name_id: "ITEM_STEEL"
-    icon: "icon_item_steel.dds"
-    model: "mdl_item_steel.o3d"
-    weight: 5
-    level_req: 1
-    job_req: [all]
-    price: 500
-    sell_price: 125
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2542
+    name: Water Bottle
+    name_id: IDS_PROPITEM_TXT_003990
+    weight: 100
+    price: 100
+    sell_price: 25
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: rare
-
-  - id: 30013
-    name: "Moonstone"
-    name_id: "ITEM_MOONSTONE"
-    icon: "icon_item_moonstone.dds"
-    model: "mdl_item_moonstone.o3d"
-    weight: 1
-    level_req: 1
-    job_req: [all]
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2543
+    name: Oil Bottle
+    name_id: IDS_PROPITEM_TXT_003992
+    weight: 100
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2544
+    name: VitalDrink 100
+    name_id: IDS_PROPITEM_TXT_003994
+    weight: 100
+    price: 108
+    sell_price: 27
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2545
+    name: VitalDrink 200
+    name_id: IDS_PROPITEM_TXT_003996
+    weight: 100
+    price: 129
+    sell_price: 32
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2546
+    name: VitalDrink 300
+    name_id: IDS_PROPITEM_TXT_003998
+    weight: 100
+    price: 145
+    sell_price: 36
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2547
+    name: VitalDrink 400
+    name_id: IDS_PROPITEM_TXT_004000
+    weight: 100
+    price: 165
+    sell_price: 41
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2548
+    name: VitalDrink 500
+    name_id: IDS_PROPITEM_TXT_004002
+    weight: 100
+    price: 172
+    sell_price: 43
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2549
+    name: VitalDrink 600
+    name_id: IDS_PROPITEM_TXT_004004
+    weight: 100
+    price: 195
+    sell_price: 48
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2550
+    name: VitalDrink 700
+    name_id: IDS_PROPITEM_TXT_004006
+    weight: 100
+    price: 222
+    sell_price: 55
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2551
+    name: VitalDrink 800
+    name_id: IDS_PROPITEM_TXT_004008
+    weight: 100
+    price: 250
+    sell_price: 62
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2552
+    name: VitalDrink 900
+    name_id: IDS_PROPITEM_TXT_004010
+    weight: 100
+    price: 280
+    sell_price: 70
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2555
+    name: Poison Immunity Potion
+    name_id: IDS_PROPITEM_TXT_004012
+    weight: 100
+    price: 300
+    sell_price: 75
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26468
+    name: Demol Earring
+    name_id: IDS_PROPITEM_TXT_008948
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2560
+    name: Demol Earring +1
+    name_id: IDS_PROPITEM_TXT_004014
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2561
+    name: Demol Earring +2
+    name_id: IDS_PROPITEM_TXT_004016
+    weight: 100
+    price: 14505
+    sell_price: 3626
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2562
+    name: Demol Earring +3
+    name_id: IDS_PROPITEM_TXT_004018
+    weight: 100
+    price: 41599
+    sell_price: 10399
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2563
+    name: Demol Earring +4
+    name_id: IDS_PROPITEM_TXT_004020
+    weight: 100
+    price: 81004
+    sell_price: 20251
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2564
+    name: Demol Earring +5
+    name_id: IDS_PROPITEM_TXT_004022
+    weight: 100
+    price: 167517
+    sell_price: 41879
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2565
+    name: Demol Earring +6
+    name_id: IDS_PROPITEM_TXT_004024
+    weight: 100
+    price: 417810
+    sell_price: 104452
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26469
+    name: Plug Earring
+    name_id: IDS_PROPITEM_TXT_008950
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2566
+    name: Plug Earring +1
+    name_id: IDS_PROPITEM_TXT_004026
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2567
+    name: Plug Earring +2
+    name_id: IDS_PROPITEM_TXT_004028
+    weight: 100
+    price: 14505
+    sell_price: 3626
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2568
+    name: Plug Earring +3
+    name_id: IDS_PROPITEM_TXT_004030
+    weight: 100
+    price: 41599
+    sell_price: 10399
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2569
+    name: Plug Earring +4
+    name_id: IDS_PROPITEM_TXT_004032
+    weight: 100
+    price: 81004
+    sell_price: 20251
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2570
+    name: Plug Ear ring +5
+    name_id: IDS_PROPITEM_TXT_004034
+    weight: 100
+    price: 167517
+    sell_price: 41879
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2571
+    name: Plug Ear ring +6
+    name_id: IDS_PROPITEM_TXT_004036
+    weight: 100
+    price: 417810
+    sell_price: 104452
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26470
+    name: Gore Necklace
+    name_id: IDS_PROPITEM_TXT_008952
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2578
+    name: Gore Necklace +1
+    name_id: IDS_PROPITEM_TXT_004038
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2579
+    name: Gore Necklace +2
+    name_id: IDS_PROPITEM_TXT_004040
+    weight: 100
+    price: 3215
+    sell_price: 803
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2580
+    name: Gore Necklace +3
+    name_id: IDS_PROPITEM_TXT_004042
+    weight: 100
+    price: 6960
+    sell_price: 1740
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2581
+    name: Gore Necklace +4
+    name_id: IDS_PROPITEM_TXT_004044
+    weight: 100
+    price: 19120
+    sell_price: 4780
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2582
+    name: Gore Necklace +5
+    name_id: IDS_PROPITEM_TXT_004046
+    weight: 100
+    price: 54384
+    sell_price: 13596
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2583
+    name: Gore Necklace +6
+    name_id: IDS_PROPITEM_TXT_004048
+    weight: 100
+    price: 170256
+    sell_price: 42564
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26471
+    name: Mental Necklace
+    name_id: IDS_PROPITEM_TXT_008954
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2584
+    name: Mental Necklace +1
+    name_id: IDS_PROPITEM_TXT_004050
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2585
+    name: Mental Necklace +2
+    name_id: IDS_PROPITEM_TXT_004052
+    weight: 100
+    price: 3215
+    sell_price: 803
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2586
+    name: Mental Necklace +3
+    name_id: IDS_PROPITEM_TXT_004054
+    weight: 100
+    price: 6960
+    sell_price: 1740
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2587
+    name: Mental Necklace +4
+    name_id: IDS_PROPITEM_TXT_004056
+    weight: 100
+    price: 19120
+    sell_price: 4780
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2588
+    name: Mental Necklace +5
+    name_id: IDS_PROPITEM_TXT_004058
+    weight: 100
+    price: 54384
+    sell_price: 13596
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2589
+    name: Mental Necklace +6
+    name_id: IDS_PROPITEM_TXT_004060
+    weight: 100
+    price: 170256
+    sell_price: 42564
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26472
+    name: Peision Necklace
+    name_id: IDS_PROPITEM_TXT_008956
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2590
+    name: Peision Necklace +1
+    name_id: IDS_PROPITEM_TXT_004062
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2591
+    name: Peision Necklace +2
+    name_id: IDS_PROPITEM_TXT_004064
+    weight: 100
+    price: 3215
+    sell_price: 803
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2592
+    name: Peision Necklace +3
+    name_id: IDS_PROPITEM_TXT_004066
+    weight: 100
+    price: 6960
+    sell_price: 1740
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2593
+    name: Peision Necklace +4
+    name_id: IDS_PROPITEM_TXT_004068
+    weight: 100
+    price: 19120
+    sell_price: 4780
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2594
+    name: Peision Necklace +5
+    name_id: IDS_PROPITEM_TXT_004070
+    weight: 100
+    price: 54384
+    sell_price: 13596
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2595
+    name: Peision Necklace +6
+    name_id: IDS_PROPITEM_TXT_004072
+    weight: 100
+    price: 170256
+    sell_price: 42564
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26464
+    name: Vigor Ring
+    name_id: IDS_PROPITEM_TXT_008958
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2596
+    name: Vigorring +1
+    name_id: IDS_PROPITEM_TXT_004074
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2597
+    name: Vigorring +2
+    name_id: IDS_PROPITEM_TXT_004076
+    weight: 100
+    price: 12433
+    sell_price: 3108
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2598
+    name: Vigorring +3
+    name_id: IDS_PROPITEM_TXT_004078
+    weight: 100
+    price: 35656
+    sell_price: 8914
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2599
+    name: Vigorring +4
+    name_id: IDS_PROPITEM_TXT_004080
+    weight: 100
+    price: 95277
+    sell_price: 23819
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2600
+    name: Vigorring +5
+    name_id: IDS_PROPITEM_TXT_004082
+    weight: 100
+    price: 236140
+    sell_price: 59035
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2601
+    name: Vigorring +6
+    name_id: IDS_PROPITEM_TXT_004084
+    weight: 100
+    price: 593502
+    sell_price: 148375
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26467
+    name: Intelli Ring
+    name_id: IDS_PROPITEM_TXT_008960
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2602
+    name: Intellring +1
+    name_id: IDS_PROPITEM_TXT_004086
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2603
+    name: Intellring +2
+    name_id: IDS_PROPITEM_TXT_004088
+    weight: 100
+    price: 12433
+    sell_price: 3108
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2604
+    name: Intellring +3
+    name_id: IDS_PROPITEM_TXT_004090
+    weight: 100
+    price: 35656
+    sell_price: 8914
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2605
+    name: Intellring +4
+    name_id: IDS_PROPITEM_TXT_004092
+    weight: 100
+    price: 95277
+    sell_price: 23819
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2606
+    name: Intellring +5
+    name_id: IDS_PROPITEM_TXT_004094
+    weight: 100
+    price: 236140
+    sell_price: 59035
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2607
+    name: Intellring +6
+    name_id: IDS_PROPITEM_TXT_004096
+    weight: 100
+    price: 593502
+    sell_price: 148375
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26466
+    name: Arek Ring
+    name_id: IDS_PROPITEM_TXT_008962
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2608
+    name: Arekring +1
+    name_id: IDS_PROPITEM_TXT_004098
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2609
+    name: Arekring +2
+    name_id: IDS_PROPITEM_TXT_004100
+    weight: 100
+    price: 12433
+    sell_price: 3108
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2610
+    name: Arekring +3
+    name_id: IDS_PROPITEM_TXT_004102
+    weight: 100
+    price: 35656
+    sell_price: 8914
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2611
+    name: Arekring +4
+    name_id: IDS_PROPITEM_TXT_004104
+    weight: 100
+    price: 95277
+    sell_price: 23819
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2612
+    name: Arekring +5
+    name_id: IDS_PROPITEM_TXT_004106
+    weight: 100
+    price: 236140
+    sell_price: 59035
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2613
+    name: Arekring +6
+    name_id: IDS_PROPITEM_TXT_004108
+    weight: 100
+    price: 593502
+    sell_price: 148375
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 26465
+    name: Stam Ring
+    name_id: IDS_PROPITEM_TXT_008964
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2614
+    name: Stamring +1
+    name_id: IDS_PROPITEM_TXT_004110
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2615
+    name: Stamring +2
+    name_id: IDS_PROPITEM_TXT_004112
+    weight: 100
+    price: 12433
+    sell_price: 3108
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2616
+    name: Stamring +3
+    name_id: IDS_PROPITEM_TXT_004114
+    weight: 100
+    price: 35656
+    sell_price: 8914
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2617
+    name: Stamring +4
+    name_id: IDS_PROPITEM_TXT_004116
+    weight: 100
+    price: 95277
+    sell_price: 23819
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2618
+    name: Stamring +5
+    name_id: IDS_PROPITEM_TXT_004118
+    weight: 100
+    price: 236140
+    sell_price: 59035
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2619
+    name: Stamring +6
+    name_id: IDS_PROPITEM_TXT_004120
+    weight: 100
+    price: 593502
+    sell_price: 148375
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 8504
+    name: VigorRing
+    name_id: IDS_PROPITEM_TXT_004122
+    weight: 100
+    price: 1455
+    sell_price: 363
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 8505
+    name: IntellRing
+    name_id: IDS_PROPITEM_TXT_004124
+    weight: 100
+    price: 1455
+    sell_price: 363
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 8506
+    name: StamRing
+    name_id: IDS_PROPITEM_TXT_004126
+    weight: 100
+    price: 1455
+    sell_price: 363
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 10436
+    name: ArekRing
+    name_id: IDS_PROPITEM_TXT_004128
+    weight: 100
+    price: 1455
+    sell_price: 363
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2701
+    name: Mighteer+1
+    name_id: IDS_PROPITEM_TXT_004130
+    weight: 100
+    price: 578000
+    sell_price: 144500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2702
+    name: Mighteer+2
+    name_id: IDS_PROPITEM_TXT_004132
+    weight: 100
+    price: 644500
+    sell_price: 161125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2703
+    name: Mighteer+3
+    name_id: IDS_PROPITEM_TXT_004134
+    weight: 100
+    price: 711000
+    sell_price: 177750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2704
+    name: Penzeru+1
+    name_id: IDS_PROPITEM_TXT_004136
+    weight: 100
+    price: 578000
+    sell_price: 144500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2705
+    name: Penzeru+2
+    name_id: IDS_PROPITEM_TXT_004138
+    weight: 100
+    price: 644500
+    sell_price: 161125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2706
+    name: Penzeru+3
+    name_id: IDS_PROPITEM_TXT_004140
+    weight: 100
+    price: 711000
+    sell_price: 177750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - knight
+  - id: 2707
+    name: Speedo+1
+    name_id: IDS_PROPITEM_TXT_004142
+    weight: 100
+    price: 578000
+    sell_price: 144500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2708
+    name: Speedo+2
+    name_id: IDS_PROPITEM_TXT_004144
+    weight: 100
+    price: 644500
+    sell_price: 161125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2709
+    name: Speedo+3
+    name_id: IDS_PROPITEM_TXT_004146
+    weight: 100
+    price: 711000
+    sell_price: 177750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2710
+    name: Pep+1
+    name_id: IDS_PROPITEM_TXT_004148
+    weight: 100
+    price: 578700
+    sell_price: 144675
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2711
+    name: Pep+2
+    name_id: IDS_PROPITEM_TXT_004150
+    weight: 100
+    price: 645200
+    sell_price: 161300
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2712
+    name: Pep+3
+    name_id: IDS_PROPITEM_TXT_004152
+    weight: 100
+    price: 711700
+    sell_price: 177925
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2713
+    name: Socecle+1
+    name_id: IDS_PROPITEM_TXT_004154
+    weight: 100
+    price: 578700
+    sell_price: 144675
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2714
+    name: Socecle+2
+    name_id: IDS_PROPITEM_TXT_004156
+    weight: 100
+    price: 645200
+    sell_price: 161300
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2715
+    name: Socecle+3
+    name_id: IDS_PROPITEM_TXT_004158
+    weight: 100
+    price: 711700
+    sell_price: 177925
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2716
+    name: Enduky+1
+    name_id: IDS_PROPITEM_TXT_004160
+    weight: 100
+    price: 578700
+    sell_price: 144675
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2717
+    name: Enduky+2
+    name_id: IDS_PROPITEM_TXT_004162
+    weight: 100
+    price: 645200
+    sell_price: 161300
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2718
+    name: Enduky+3
+    name_id: IDS_PROPITEM_TXT_004164
+    weight: 100
+    price: 711700
+    sell_price: 177925
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2719
+    name: Strente+1
+    name_id: IDS_PROPITEM_TXT_004166
+    weight: 100
+    price: 578500
+    sell_price: 144625
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2720
+    name: Strente+2
+    name_id: IDS_PROPITEM_TXT_004168
+    weight: 100
+    price: 645000
+    sell_price: 161250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2721
+    name: Strente+3
+    name_id: IDS_PROPITEM_TXT_004170
+    weight: 100
+    price: 711500
+    sell_price: 177875
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2722
+    name: Intiret+1
+    name_id: IDS_PROPITEM_TXT_004172
+    weight: 100
+    price: 578500
+    sell_price: 144625
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2723
+    name: Intiret+2
+    name_id: IDS_PROPITEM_TXT_004174
+    weight: 100
+    price: 645000
+    sell_price: 161250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2724
+    name: Intiret+3
+    name_id: IDS_PROPITEM_TXT_004176
+    weight: 100
+    price: 711500
+    sell_price: 177875
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2725
+    name: Dexion+1
+    name_id: IDS_PROPITEM_TXT_004178
+    weight: 100
+    price: 578500
+    sell_price: 144625
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2726
+    name: Dexion+2
+    name_id: IDS_PROPITEM_TXT_004180
+    weight: 100
+    price: 645000
+    sell_price: 161250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2727
+    name: Dexion+3
+    name_id: IDS_PROPITEM_TXT_004182
+    weight: 100
+    price: 711500
+    sell_price: 177875
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 10225
+    name: Meteor
+    name_id: IDS_PROPITEM_TXT_004184
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 10226
+    name: Meteofy
+    name_id: IDS_PROPITEM_TXT_004186
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2800
+    name: Lollipop
+    name_id: IDS_PROPITEM_TXT_004198
+    weight: 100
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2801
+    name: Biscuit
+    name_id: IDS_PROPITEM_TXT_004200
+    weight: 100
+    price: 35
+    sell_price: 8
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2802
+    name: Chocolate Bar
+    name_id: IDS_PROPITEM_TXT_004202
+    weight: 100
+    price: 50
+    sell_price: 12
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2803
+    name: Milk
+    name_id: IDS_PROPITEM_TXT_004204
+    weight: 100
+    price: 70
+    sell_price: 17
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2804
+    name: Roll Bread
+    name_id: IDS_PROPITEM_TXT_004206
+    weight: 100
+    price: 80
+    sell_price: 20
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2805
+    name: Hot Dog
+    name_id: IDS_PROPITEM_TXT_004208
+    weight: 100
+    price: 110
+    sell_price: 27
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2826
+    name: Super Hot Dog
+    name_id: IDS_PROPITEM_TXT_004210
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2827
+    name: Pizza
+    name_id: IDS_PROPITEM_TXT_004212
+    weight: 100
+    price: 144
+    sell_price: 36
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2828
+    name: Kimbap
+    name_id: IDS_PROPITEM_TXT_004214
+    weight: 100
+    price: 188
+    sell_price: 47
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2829
+    name: Chicken Stick
+    name_id: IDS_PROPITEM_TXT_004216
+    weight: 100
+    price: 231
+    sell_price: 57
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2830
+    name: Star Candy
+    name_id: IDS_PROPITEM_TXT_004218
+    weight: 100
+    price: 285
+    sell_price: 71
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2806
+    name: Meat Skewer
+    name_id: IDS_PROPITEM_TXT_004220
+    weight: 100
+    price: 22
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2807
+    name: Barbecue
+    name_id: IDS_PROPITEM_TXT_004222
+    weight: 100
+    price: 38
+    sell_price: 9
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2808
+    name: Seafood Pan Cake
+    name_id: IDS_PROPITEM_TXT_004224
+    weight: 100
+    price: 55
+    sell_price: 13
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2809
+    name: Fish Soup
+    name_id: IDS_PROPITEM_TXT_004226
+    weight: 100
+    price: 77
+    sell_price: 19
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2810
+    name: Sausage Casserole
+    name_id: IDS_PROPITEM_TXT_004228
+    weight: 100
+    price: 88
+    sell_price: 22
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2811
+    name: Fish Stew
+    name_id: IDS_PROPITEM_TXT_004230
+    weight: 100
+    price: 128
+    sell_price: 32
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2812
+    name: Steamed Seafood
+    name_id: IDS_PROPITEM_TXT_004232
+    weight: 100
+    price: 176
+    sell_price: 44
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2813
+    name: Meat Salad
+    name_id: IDS_PROPITEM_TXT_004234
+    weight: 100
+    price: 240
+    sell_price: 60
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2814
+    name: Gratin
+    name_id: IDS_PROPITEM_TXT_004236
+    weight: 100
+    price: 304
+    sell_price: 76
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2815
+    name: Seafood Pizza
+    name_id: IDS_PROPITEM_TXT_004238
+    weight: 100
+    price: 386
+    sell_price: 96
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2816
+    name: Orange Juice
+    name_id: IDS_PROPITEM_TXT_004240
+    weight: 100
+    price: 18
+    sell_price: 4
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2817
+    name: Strawberry Shake
+    name_id: IDS_PROPITEM_TXT_004242
+    weight: 100
+    price: 31
+    sell_price: 7
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2818
+    name: Pineapple Cone
+    name_id: IDS_PROPITEM_TXT_004244
+    weight: 100
+    price: 45
+    sell_price: 11
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2819
+    name: Banana Jujubar
+    name_id: IDS_PROPITEM_TXT_004246
+    weight: 100
+    price: 63
+    sell_price: 15
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2820
+    name: Fruit Juice
+    name_id: IDS_PROPITEM_TXT_004248
+    weight: 100
+    price: 72
+    sell_price: 18
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2821
+    name: Fruit Icewater
+    name_id: IDS_PROPITEM_TXT_004250
+    weight: 100
+    price: 97
+    sell_price: 24
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2822
+    name: Fruit Parfait
+    name_id: IDS_PROPITEM_TXT_004252
+    weight: 100
+    price: 125
+    sell_price: 31
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2823
+    name: Fruit Sherbet
+    name_id: IDS_PROPITEM_TXT_004254
+    weight: 100
+    price: 161
+    sell_price: 40
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2824
+    name: Icecream Cake
+    name_id: IDS_PROPITEM_TXT_004256
+    weight: 100
+    price: 195
+    sell_price: 48
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2825
+    name: Fruit Punch
+    name_id: IDS_PROPITEM_TXT_004258
+    weight: 100
+    price: 239
+    sell_price: 59
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2892
+    name: Gray Pill
+    name_id: IDS_PROPITEM_TXT_004260
+    weight: 100
+    price: 1000
+    sell_price: 250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2893
+    name: Yellow Pill
+    name_id: IDS_PROPITEM_TXT_004262
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2894
+    name: Blue Pill
+    name_id: IDS_PROPITEM_TXT_004264
+    weight: 100
     price: 5000
     sell_price: 1250
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: rare
-
-  - id: 30014
-    name: "Sunstone"
-    name_id: "ITEM_SUNSTONE"
-    icon: "icon_item_sunstone.dds"
-    model: "mdl_item_sunstone.o3d"
-    weight: 1
-    level_req: 1
-    job_req: [all]
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2895
+    name: Red Pill
+    name_id: IDS_PROPITEM_TXT_004266
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2896
+    name: Gold Pill
+    name_id: IDS_PROPITEM_TXT_004268
+    weight: 100
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26457
+    name: Mysterious Pill
+    name_id: IDS_PROPITEM_TXT_008914
+    weight: 100
+    price: 50000
+    sell_price: 12500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2897
+    name: Hot Ddukguk
+    name_id: IDS_PROPITEM_TXT_004270
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2898
+    name: Fresh Ddukguk
+    name_id: IDS_PROPITEM_TXT_004272
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2899
+    name: Sweet Ddukguk
+    name_id: IDS_PROPITEM_TXT_004274
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2029
+    name: Diamond
+    name_id: IDS_PROPITEM_TXT_008052
+    weight: 100
     price: 8000
     sell_price: 2000
     tradeable: true
     dropable: true
     destroyable: true
-    rarity: rare
-
-  # Penya (currency - technically a material item)
-  - id: 30020
-    name: "Penya"
-    name_id: "ITEM_PENYA"
-    icon: "icon_item_penya.dds"
-    weight: 0
-    level_req: 1
-    job_req: [all]
-    price: 1
-    sell_price: 1
-    tradeable: false
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2030
+    name: Emerald
+    name_id: IDS_PROPITEM_TXT_008054
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
     dropable: true
     destroyable: true
-    rarity: common
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2031
+    name: Sapphire
+    name_id: IDS_PROPITEM_TXT_008056
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2032
+    name: Ruby
+    name_id: IDS_PROPITEM_TXT_008058
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2033
+    name: Topaz
+    name_id: IDS_PROPITEM_TXT_008060
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2034
+    name: Shining Oricalkum
+    name_id: IDS_PROPITEM_TXT_008062
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2035
+    name: Sunstone
+    name_id: IDS_PROPITEM_TXT_008064
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2036
+    name: Moonstone
+    name_id: IDS_PROPITEM_TXT_008066
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2082
+    name: Event Sunstone
+    name_id: IDS_PROPITEM_TXT_008896
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2083
+    name: Event Moonstone
+    name_id: IDS_PROPITEM_TXT_008898
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2037
+    name: Diamond for Exp.
+    name_id: IDS_PROPITEM_TXT_008250
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2038
+    name: Emerald for Exp.
+    name_id: IDS_PROPITEM_TXT_008252
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2039
+    name: Sapphire for Exp.
+    name_id: IDS_PROPITEM_TXT_008254
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2040
+    name: Ruby for Exp.
+    name_id: IDS_PROPITEM_TXT_008256
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2041
+    name: Topaz for Exp.
+    name_id: IDS_PROPITEM_TXT_008258
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2042
+    name: Diamond for Reflecting Damage
+    name_id: IDS_PROPITEM_TXT_008260
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2043
+    name: Emerald for Reflecting Damage
+    name_id: IDS_PROPITEM_TXT_008262
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2044
+    name: Sapphire for Reflecting Damage
+    name_id: IDS_PROPITEM_TXT_008264
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2045
+    name: Ruby for Reflecting Damage
+    name_id: IDS_PROPITEM_TXT_008266
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2046
+    name: Topaz for Reflecting Damage
+    name_id: IDS_PROPITEM_TXT_008268
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2047
+    name: Diamond for Bloodsucking
+    name_id: IDS_PROPITEM_TXT_008270
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2048
+    name: Emerald for Bloodsucking
+    name_id: IDS_PROPITEM_TXT_008272
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2049
+    name: Sapphire for Bloodsucking
+    name_id: IDS_PROPITEM_TXT_008274
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2050
+    name: Ruby for Bloodsucking
+    name_id: IDS_PROPITEM_TXT_008276
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2051
+    name: Topaz for Bloodsucking
+    name_id: IDS_PROPITEM_TXT_008278
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2052
+    name: Harsh Damage Diamond
+    name_id: IDS_PROPITEM_TXT_008280
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2053
+    name: Harsh Damage Emerald
+    name_id: IDS_PROPITEM_TXT_008282
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2054
+    name: Harsh Damage Sapphire
+    name_id: IDS_PROPITEM_TXT_008284
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2055
+    name: Harsh Damage Ruby
+    name_id: IDS_PROPITEM_TXT_008286
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2056
+    name: Harsh Damage Topaz
+    name_id: IDS_PROPITEM_TXT_008288
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2057
+    name: Cruel Damage Diamond
+    name_id: IDS_PROPITEM_TXT_008290
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2058
+    name: Cruel Damage Emerald.
+    name_id: IDS_PROPITEM_TXT_008292
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2059
+    name: Cruel Damage Sapphire
+    name_id: IDS_PROPITEM_TXT_008294
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2060
+    name: Cruel Damage Ruby
+    name_id: IDS_PROPITEM_TXT_008296
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2061
+    name: Cruel Damage Topaz
+    name_id: IDS_PROPITEM_TXT_008298
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2062
+    name: Power Diamond
+    name_id: IDS_PROPITEM_TXT_008300
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2063
+    name: Power Emerald
+    name_id: IDS_PROPITEM_TXT_008302
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2064
+    name: Power Sapphire
+    name_id: IDS_PROPITEM_TXT_008304
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2065
+    name: Power Ruby
+    name_id: IDS_PROPITEM_TXT_008306
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2066
+    name: Power Topaz
+    name_id: IDS_PROPITEM_TXT_008308
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2067
+    name: Diamond of Strength
+    name_id: IDS_PROPITEM_TXT_008310
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2068
+    name: Emerald of Strength
+    name_id: IDS_PROPITEM_TXT_008312
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2069
+    name: Sapphire of Strength
+    name_id: IDS_PROPITEM_TXT_008314
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2070
+    name: Ruby of Strength
+    name_id: IDS_PROPITEM_TXT_008316
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2071
+    name: Topaz of Strength
+    name_id: IDS_PROPITEM_TXT_008318
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2072
+    name: Diamond of Dexterity
+    name_id: IDS_PROPITEM_TXT_008320
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2073
+    name: Emerald of Dexterity
+    name_id: IDS_PROPITEM_TXT_008322
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2074
+    name: Sapphire of Dexterity
+    name_id: IDS_PROPITEM_TXT_008324
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2075
+    name: Ruby of Dexterity
+    name_id: IDS_PROPITEM_TXT_008326
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2076
+    name: Topaz of Dexterity
+    name_id: IDS_PROPITEM_TXT_008328
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2077
+    name: Diamond of Intelligence
+    name_id: IDS_PROPITEM_TXT_008330
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2078
+    name: Emerald of Intelligence
+    name_id: IDS_PROPITEM_TXT_008332
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2079
+    name: Sapphire of Intelligence
+    name_id: IDS_PROPITEM_TXT_008334
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2080
+    name: Ruby of Intelligence
+    name_id: IDS_PROPITEM_TXT_008336
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2081
+    name: Topaz of Intelligence
+    name_id: IDS_PROPITEM_TXT_008338
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3200
+    name: Mineral
+    name_id: IDS_PROPITEM_TXT_004276
+    weight: 100
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3201
+    name: Erons
+    name_id: IDS_PROPITEM_TXT_004278
+    weight: 100
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3202
+    name: Krasec
+    name_id: IDS_PROPITEM_TXT_004280
+    weight: 100
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3203
+    name: Guru
+    name_id: IDS_PROPITEM_TXT_004282
+    weight: 100
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3205
+    name: Torch Card
+    name_id: IDS_PROPITEM_TXT_004284
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3206
+    name: Flame Card
+    name_id: IDS_PROPITEM_TXT_004286
+    weight: 100
+    price: 6000
+    sell_price: 1500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3210
+    name: Lake Card
+    name_id: IDS_PROPITEM_TXT_004288
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3211
+    name: River Card
+    name_id: IDS_PROPITEM_TXT_004290
+    weight: 100
+    price: 6000
+    sell_price: 1500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3215
+    name: Voltage Card
+    name_id: IDS_PROPITEM_TXT_004292
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3216
+    name: Generator Card
+    name_id: IDS_PROPITEM_TXT_004294
+    weight: 100
+    price: 6000
+    sell_price: 1500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3220
+    name: Stone Card
+    name_id: IDS_PROPITEM_TXT_004296
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3221
+    name: Desert Card
+    name_id: IDS_PROPITEM_TXT_004298
+    weight: 100
+    price: 6000
+    sell_price: 1500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3225
+    name: Gale Card
+    name_id: IDS_PROPITEM_TXT_004300
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3226
+    name: Cyclone Card
+    name_id: IDS_PROPITEM_TXT_004302
+    weight: 100
+    price: 6000
+    sell_price: 1500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3229
+    name: Power Dice 4
+    name_id: IDS_PROPITEM_TXT_004304
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3230
+    name: Power Dice 6
+    name_id: IDS_PROPITEM_TXT_004306
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3231
+    name: Power Dice 8
+    name_id: IDS_PROPITEM_TXT_004308
+    weight: 100
+    price: 6000
+    sell_price: 1500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3232
+    name: Power Dice 10
+    name_id: IDS_PROPITEM_TXT_004310
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3233
+    name: Power Dice 12
+    name_id: IDS_PROPITEM_TXT_004312
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3204
+    name: Volcano Card(2%)
+    name_id: IDS_PROPITEM_TXT_004314
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3207
+    name: Volcano Card(4%)
+    name_id: IDS_PROPITEM_TXT_004316
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3208
+    name: Volcano Card(7%)
+    name_id: IDS_PROPITEM_TXT_004318
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3255
+    name: Volcano Card(3%)
+    name_id: IDS_PROPITEM_TXT_009528
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3209
+    name: Ocean Card(2%)
+    name_id: IDS_PROPITEM_TXT_004320
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3212
+    name: Ocean Card(4%)
+    name_id: IDS_PROPITEM_TXT_004322
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3213
+    name: Ocean Card(7%)
+    name_id: IDS_PROPITEM_TXT_004324
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3256
+    name: Ocean Card(3%)
+    name_id: IDS_PROPITEM_TXT_009530
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3224
+    name: Vacuum Card(2%)
+    name_id: IDS_PROPITEM_TXT_004326
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3227
+    name: Vacuum Card(4%)
+    name_id: IDS_PROPITEM_TXT_004328
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3228
+    name: Vacuum Card(7%)
+    name_id: IDS_PROPITEM_TXT_004330
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3257
+    name: Vacuum Card(3%)
+    name_id: IDS_PROPITEM_TXT_009532
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3214
+    name: Lightning Card(2%)
+    name_id: IDS_PROPITEM_TXT_004332
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3217
+    name: Lightning Card(4%)
+    name_id: IDS_PROPITEM_TXT_004334
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3218
+    name: Lightning Card(7%)
+    name_id: IDS_PROPITEM_TXT_004336
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3258
+    name: Lightning Card(3%)
+    name_id: IDS_PROPITEM_TXT_009534
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3219
+    name: Earthquake Card(2%)
+    name_id: IDS_PROPITEM_TXT_004338
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3222
+    name: Earthquake Card(4%)
+    name_id: IDS_PROPITEM_TXT_004340
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3223
+    name: Earthquake Card(7%)
+    name_id: IDS_PROPITEM_TXT_004342
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3259
+    name: Earthquake Card(3%)
+    name_id: IDS_PROPITEM_TXT_009536
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26594
+    name: Fire Card (D)
+    name_id: IDS_PROPITEM_TXT_009460
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26595
+    name: Fire Card (C)
+    name_id: IDS_PROPITEM_TXT_009462
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26596
+    name: Fire Card (B)
+    name_id: IDS_PROPITEM_TXT_009464
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26597
+    name: Fire Card (A)
+    name_id: IDS_PROPITEM_TXT_009466
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26598
+    name: Water Card (D)
+    name_id: IDS_PROPITEM_TXT_009468
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26599
+    name: Water Card (C)
+    name_id: IDS_PROPITEM_TXT_009470
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26600
+    name: Water Card (B)
+    name_id: IDS_PROPITEM_TXT_009472
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26601
+    name: Water Card (A)
+    name_id: IDS_PROPITEM_TXT_009474
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26602
+    name: Wind Card (D)
+    name_id: IDS_PROPITEM_TXT_009476
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26603
+    name: Wind Card (C)
+    name_id: IDS_PROPITEM_TXT_009478
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26604
+    name: Wind Card (B)
+    name_id: IDS_PROPITEM_TXT_009480
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26605
+    name: Wind Card (A)
+    name_id: IDS_PROPITEM_TXT_009482
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26606
+    name: Electric Card (D)
+    name_id: IDS_PROPITEM_TXT_009484
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26607
+    name: Electric Card (C)
+    name_id: IDS_PROPITEM_TXT_009486
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26608
+    name: Electric Card (B)
+    name_id: IDS_PROPITEM_TXT_009488
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26609
+    name: Electric Card (A)
+    name_id: IDS_PROPITEM_TXT_009490
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26610
+    name: Land Card (D)
+    name_id: IDS_PROPITEM_TXT_009492
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26611
+    name: Land Card (C)
+    name_id: IDS_PROPITEM_TXT_009494
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26612
+    name: Land Card (B)
+    name_id: IDS_PROPITEM_TXT_009496
+    weight: 100
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 26613
+    name: Land Card (A)
+    name_id: IDS_PROPITEM_TXT_009498
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3235
+    name: Low Mighty Dice
+    name_id: IDS_PROPITEM_TXT_004344
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3236
+    name: High Mighty Dice
+    name_id: IDS_PROPITEM_TXT_004346
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3237
+    name: Vuul Card
+    name_id: IDS_PROPITEM_TXT_004348
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3238
+    name: Vulcanus Card
+    name_id: IDS_PROPITEM_TXT_004350
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3239
+    name: Vulkan Card
+    name_id: IDS_PROPITEM_TXT_004352
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3240
+    name: Mountain Breeze Card
+    name_id: IDS_PROPITEM_TXT_004354
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3241
+    name: Mountain Wind Card
+    name_id: IDS_PROPITEM_TXT_004356
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3242
+    name: Mountain Valley Wind Card
+    name_id: IDS_PROPITEM_TXT_004358
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3243
+    name: Valley Wind Card
+    name_id: IDS_PROPITEM_TXT_004360
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3244
+    name: Dust Whirl Card
+    name_id: IDS_PROPITEM_TXT_004362
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3245
+    name: Geostrophic Wind Card
+    name_id: IDS_PROPITEM_TXT_004364
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3246
+    name: Vurkan Card
+    name_id: IDS_PROPITEM_TXT_004366
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3247
+    name: Tine Card
+    name_id: IDS_PROPITEM_TXT_004368
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3248
+    name: Tan Card
+    name_id: IDS_PROPITEM_TXT_004370
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3249
+    name: Microseism Card
+    name_id: IDS_PROPITEM_TXT_004372
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3250
+    name: Hypocenter Card
+    name_id: IDS_PROPITEM_TXT_004374
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3251
+    name: Epicenter Card
+    name_id: IDS_PROPITEM_TXT_004376
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3252
+    name: Moment Card
+    name_id: IDS_PROPITEM_TXT_004378
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3253
+    name: Rayleigh Card
+    name_id: IDS_PROPITEM_TXT_004380
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3254
+    name: Tsunami Card
+    name_id: IDS_PROPITEM_TXT_004382
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3500
+    name: Sweam Card
+    name_id: IDS_PROPITEM_TXT_004384
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3501
+    name: Falm Card
+    name_id: IDS_PROPITEM_TXT_004386
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3502
+    name: Acap Card
+    name_id: IDS_PROPITEM_TXT_004388
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3503
+    name: Bilo Card
+    name_id: IDS_PROPITEM_TXT_004390
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3504
+    name: Adass Card
+    name_id: IDS_PROPITEM_TXT_004392
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3505
+    name: Reaba Card
+    name_id: IDS_PROPITEM_TXT_004394
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3506
+    name: Sikeki Card
+    name_id: IDS_PROPITEM_TXT_004396
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3507
+    name: Gosemi Card
+    name_id: IDS_PROPITEM_TXT_004398
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3508
+    name: Tilic Card
+    name_id: IDS_PROPITEM_TXT_004400
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3509
+    name: Pelss Card
+    name_id: IDS_PROPITEM_TXT_004402
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3510
+    name: Bukuri Card
+    name_id: IDS_PROPITEM_TXT_004404
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3511
+    name: Dhan Card
+    name_id: IDS_PROPITEM_TXT_004406
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3512
+    name: Ilabud Card
+    name_id: IDS_PROPITEM_TXT_004408
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3513
+    name: Grop Card
+    name_id: IDS_PROPITEM_TXT_004410
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3514
+    name: Pererty Card
+    name_id: IDS_PROPITEM_TXT_004412
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3515
+    name: Tper Card
+    name_id: IDS_PROPITEM_TXT_004414
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3516
+    name: Jemss Card
+    name_id: IDS_PROPITEM_TXT_004416
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3517
+    name: Tniss Card
+    name_id: IDS_PROPITEM_TXT_004418
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3518
+    name: Jedin Card
+    name_id: IDS_PROPITEM_TXT_004420
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3519
+    name: Hitar Card
+    name_id: IDS_PROPITEM_TXT_004422
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3520
+    name: Sunse Card
+    name_id: IDS_PROPITEM_TXT_004424
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3521
+    name: Sunhung Card
+    name_id: IDS_PROPITEM_TXT_004426
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3522
+    name: Whabe Card
+    name_id: IDS_PROPITEM_TXT_004428
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3523
+    name: Hachon Card
+    name_id: IDS_PROPITEM_TXT_004430
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3524
+    name: Buklu Card
+    name_id: IDS_PROPITEM_TXT_004432
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3525
+    name: Hosoo Card
+    name_id: IDS_PROPITEM_TXT_004434
+    weight: 100
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3526
+    name: Giha Card
+    name_id: IDS_PROPITEM_TXT_004436
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3527
+    name: Senmul Card
+    name_id: IDS_PROPITEM_TXT_004438
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3528
+    name: Bulmul Card
+    name_id: IDS_PROPITEM_TXT_004440
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3529
+    name: Gunmul Card
+    name_id: IDS_PROPITEM_TXT_004442
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3530
+    name: Munmul Card
+    name_id: IDS_PROPITEM_TXT_004444
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3531
+    name: Bodi Card
+    name_id: IDS_PROPITEM_TXT_004446
+    weight: 100
+    price: 4000
+    sell_price: 1000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 3532
+    name: Gldiro Card
+    name_id: IDS_PROPITEM_TXT_004448
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - vagrant
+  - id: 2026
+    name: Skill Poster
+    name_id: IDS_PROPITEM_TXT_004450
+    weight: 100
+    price: 50
+    sell_price: 12
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - billposter
+  - id: 2027
+    name: Bless Poster
+    name_id: IDS_PROPITEM_TXT_004452
+    weight: 100
+    price: 50
+    sell_price: 12
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - ringmaster
+  - id: 2028
+    name: Arrows
+    name_id: IDS_PROPITEM_TXT_004454
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 4000
+    name: Collector
+    name_id: IDS_PROPITEM_TXT_004456
+    weight: 100
+    price: 3000
+    sell_price: 750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 4001
+    name: V3 Collector
+    name_id: IDS_PROPITEM_TXT_004458
+    weight: 100
+    price: 15000
+    sell_price: 3750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 4002
+    name: Power  Collector
+    name_id: IDS_PROPITEM_TXT_004460
+    weight: 100
+    price: 50000
+    sell_price: 12500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 4003
+    name: Ultra  Collector
+    name_id: IDS_PROPITEM_TXT_004462
+    weight: 100
+    price: 200000
+    sell_price: 50000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 26452
+    name: Collector
+    name_id: IDS_PROPITEM_TXT_008904
+    weight: 100
+    price: 1000000
+    sell_price: 250000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 26565
+    name: Collector (14 days)
+    name_id: IDS_PROPITEM_TXT_009372
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 26453
+    name: Battery
+    name_id: IDS_PROPITEM_TXT_008906
+    weight: 100
+    price: 70000
+    sell_price: 17500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 2950
+    name: Twinkle Stone
+    name_id: IDS_PROPITEM_TXT_004866
+    weight: 100
+    price: 160
+    sell_price: 40
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2951
+    name: Forform
+    name_id: IDS_PROPITEM_TXT_004868
+    weight: 100
+    price: 230
+    sell_price: 57
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2952
+    name: Palin
+    name_id: IDS_PROPITEM_TXT_004870
+    weight: 100
+    price: 280
+    sell_price: 70
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2953
+    name: Chupim
+    name_id: IDS_PROPITEM_TXT_004872
+    weight: 100
+    price: 350
+    sell_price: 87
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2974
+    name: Peakyrind
+    name_id: IDS_PROPITEM_TXT_004874
+    weight: 100
+    price: 390
+    sell_price: 97
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2954
+    name: Teddy Bear
+    name_id: IDS_PROPITEM_TXT_004876
+    weight: 100
+    price: 430
+    sell_price: 107
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2955
+    name: Poporam
+    name_id: IDS_PROPITEM_TXT_004878
+    weight: 100
+    price: 510
+    sell_price: 127
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2956
+    name: Fangs
+    name_id: IDS_PROPITEM_TXT_004880
+    weight: 100
+    price: 590
+    sell_price: 147
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2957
+    name: Tarin Root
+    name_id: IDS_PROPITEM_TXT_004882
+    weight: 100
+    price: 680
+    sell_price: 170
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2958
+    name: Star Stone
+    name_id: IDS_PROPITEM_TXT_004884
+    weight: 100
+    price: 760
+    sell_price: 190
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2959
+    name: Golden Wing
+    name_id: IDS_PROPITEM_TXT_004886
+    weight: 100
+    price: 840
+    sell_price: 210
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2960
+    name: Blue Honey
+    name_id: IDS_PROPITEM_TXT_004888
+    weight: 100
+    price: 930
+    sell_price: 232
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2969
+    name: Mia Doll
+    name_id: IDS_PROPITEM_TXT_004890
+    weight: 100
+    price: 1010
+    sell_price: 252
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2962
+    name: Furious Match
+    name_id: IDS_PROPITEM_TXT_004892
+    weight: 100
+    price: 1080
+    sell_price: 270
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2961
+    name: Cardrin
+    name_id: IDS_PROPITEM_TXT_004894
+    weight: 100
+    price: 1170
+    sell_price: 292
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2975
+    name: Hammarble
+    name_id: IDS_PROPITEM_TXT_004896
+    weight: 100
+    price: 1280
+    sell_price: 320
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2976
+    name: Gigglande
+    name_id: IDS_PROPITEM_TXT_004898
+    weight: 100
+    price: 1400
+    sell_price: 350
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2963
+    name: Crescent Stone
+    name_id: IDS_PROPITEM_TXT_004900
+    weight: 100
+    price: 1510
+    sell_price: 377
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2977
+    name: Boband
+    name_id: IDS_PROPITEM_TXT_004902
+    weight: 100
+    price: 1650
+    sell_price: 412
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2978
+    name: Dumbling
+    name_id: IDS_PROPITEM_TXT_004904
+    weight: 100
+    price: 1810
+    sell_price: 452
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2964
+    name: Kalin
+    name_id: IDS_PROPITEM_TXT_004906
+    weight: 100
+    price: 1960
+    sell_price: 490
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2968
+    name: Clock Heart
+    name_id: IDS_PROPITEM_TXT_004908
+    weight: 100
+    price: 2110
+    sell_price: 527
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2972
+    name: Tomb Marble
+    name_id: IDS_PROPITEM_TXT_004910
+    weight: 100
+    price: 2270
+    sell_price: 567
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2965
+    name: Golden Fist
+    name_id: IDS_PROPITEM_TXT_004912
+    weight: 100
+    price: 2430
+    sell_price: 607
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2966
+    name: Orbrin
+    name_id: IDS_PROPITEM_TXT_004914
+    weight: 100
+    price: 2620
+    sell_price: 655
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2967
+    name: Golden Cup
+    name_id: IDS_PROPITEM_TXT_004916
+    weight: 100
+    price: 2800
+    sell_price: 700
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2979
+    name: Toma
+    name_id: IDS_PROPITEM_TXT_004918
+    weight: 100
+    price: 2960
+    sell_price: 740
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2973
+    name: Steam Tear
+    name_id: IDS_PROPITEM_TXT_004920
+    weight: 100
+    price: 3110
+    sell_price: 777
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2980
+    name: Knightler
+    name_id: IDS_PROPITEM_TXT_004922
+    weight: 100
+    price: 3270
+    sell_price: 817
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2981
+    name: Wheeshoe
+    name_id: IDS_PROPITEM_TXT_004924
+    weight: 100
+    price: 3460
+    sell_price: 865
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2982
+    name: Droil
+    name_id: IDS_PROPITEM_TXT_004926
+    weight: 100
+    price: 3660
+    sell_price: 915
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2971
+    name: Ampere
+    name_id: IDS_PROPITEM_TXT_004928
+    weight: 100
+    price: 3850
+    sell_price: 962
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2983
+    name: Guardieye
+    name_id: IDS_PROPITEM_TXT_004930
+    weight: 100
+    price: 4070
+    sell_price: 1017
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2984
+    name: Garbageton
+    name_id: IDS_PROPITEM_TXT_004932
+    weight: 100
+    price: 4300
+    sell_price: 1075
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2985
+    name: Eronior
+    name_id: IDS_PROPITEM_TXT_004934
+    weight: 100
+    price: 4530
+    sell_price: 1132
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2970
+    name: Bearball
+    name_id: IDS_PROPITEM_TXT_004936
+    weight: 100
+    price: 150
+    sell_price: 37
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2986
+    name: Sycale
+    name_id: IDS_PROPITEM_TXT_004938
+    weight: 100
+    price: 4760
+    sell_price: 1190
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2987
+    name: Mong Tear
+    name_id: IDS_PROPITEM_TXT_004940
+    weight: 100
+    price: 4990
+    sell_price: 1247
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2988
+    name: Bomb Timer
+    name_id: IDS_PROPITEM_TXT_004942
+    weight: 100
+    price: 5220
+    sell_price: 1305
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2991
+    name: Zombyhoe
+    name_id: IDS_PROPITEM_TXT_004944
+    weight: 100
+    price: 3430
+    sell_price: 857
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2990
+    name: Nuctu-Wheel
+    name_id: IDS_PROPITEM_TXT_004946
+    weight: 100
+    price: 3633
+    sell_price: 908
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2989
+    name: Zem Mark
+    name_id: IDS_PROPITEM_TXT_004948
+    weight: 100
+    price: 3843
+    sell_price: 960
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2992
+    name: Bucring
+    name_id: IDS_PROPITEM_TXT_004950
+    weight: 100
+    price: 1580
+    sell_price: 395
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2993
+    name: Scoptooth
+    name_id: IDS_PROPITEM_TXT_004952
+    weight: 100
+    price: 2380
+    sell_price: 595
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2994
+    name: Trangoggle
+    name_id: IDS_PROPITEM_TXT_004954
+    weight: 100
+    price: 3060
+    sell_price: 765
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2995
+    name: Flyclaw
+    name_id: IDS_PROPITEM_TXT_004956
+    weight: 100
+    price: 970
+    sell_price: 242
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2996
+    name: Grrr Bandage
+    name_id: IDS_PROPITEM_TXT_004958
+    weight: 100
+    price: 5780
+    sell_price: 1445
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2997
+    name: Dumptire
+    name_id: IDS_PROPITEM_TXT_004960
+    weight: 100
+    price: 6270
+    sell_price: 1567
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2998
+    name: Repygle
+    name_id: IDS_PROPITEM_TXT_004962
+    weight: 100
+    price: 6640
+    sell_price: 1660
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 2999
+    name: Boopoison
+    name_id: IDS_PROPITEM_TXT_004964
+    weight: 100
+    price: 7020
+    sell_price: 1755
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3000
+    name: Prewing
+    name_id: IDS_PROPITEM_TXT_004966
+    weight: 100
+    price: 7430
+    sell_price: 1857
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3001
+    name: Poiespore
+    name_id: IDS_PROPITEM_TXT_004968
+    weight: 100
+    price: 7850
+    sell_price: 1962
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3002
+    name: Renyken
+    name_id: IDS_PROPITEM_TXT_004970
+    weight: 100
+    price: 8310
+    sell_price: 2077
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3003
+    name: Tangkask
+    name_id: IDS_PROPITEM_TXT_004972
+    weight: 100
+    price: 8780
+    sell_price: 2195
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3004
+    name: Rootioe
+    name_id: IDS_PROPITEM_TXT_004974
+    weight: 100
+    price: 9290
+    sell_price: 2322
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3005
+    name: Luchest
+    name_id: IDS_PROPITEM_TXT_004976
+    weight: 100
+    price: 9630
+    sell_price: 2407
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3006
+    name: Eronsimint
+    name_id: IDS_PROPITEM_TXT_004978
+    weight: 100
+    price: 3820
+    sell_price: 955
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3007
+    name: Hammamer
+    name_id: IDS_PROPITEM_TXT_004980
+    weight: 100
+    price: 4260
+    sell_price: 1065
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3008
+    name: Rnamond
+    name_id: IDS_PROPITEM_TXT_004982
+    weight: 100
+    price: 4760
+    sell_price: 1190
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3009
+    name: Phanbubble
+    name_id: IDS_PROPITEM_TXT_004984
+    weight: 100
+    price: 5310
+    sell_price: 1327
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3010
+    name: Furiscoop
+    name_id: IDS_PROPITEM_TXT_004986
+    weight: 100
+    price: 5310
+    sell_price: 1327
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 20500
+    name: Merahook
+    name_id: IDS_PROPITEM_TXT_007546
+    weight: 100
+    price: 5860
+    sell_price: 1465
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 20501
+    name: Nerkymane
+    name_id: IDS_PROPITEM_TXT_007548
+    weight: 100
+    price: 6410
+    sell_price: 1602
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 20502
+    name: Rincruet
+    name_id: IDS_PROPITEM_TXT_007550
+    weight: 100
+    price: 6960
+    sell_price: 1740
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 20503
+    name: Popshift
+    name_id: IDS_PROPITEM_TXT_007552
+    weight: 100
+    price: 7510
+    sell_price: 1877
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3011
+    name: Dragon Heart
+    name_id: IDS_PROPITEM_TXT_008652
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3012
+    name: Dragon Tooth
+    name_id: IDS_PROPITEM_TXT_008654
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3013
+    name: Mysterious eyeball
+    name_id: IDS_PROPITEM_TXT_008656
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26525
+    name: Red Crystal
+    name_id: IDS_PROPITEM_TXT_009068
+    weight: 100
+    price: 7850
+    sell_price: 1962
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26526
+    name: Yellow Crystal
+    name_id: IDS_PROPITEM_TXT_009070
+    weight: 100
+    price: 9630
+    sell_price: 2407
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26527
+    name: Green Crystal
+    name_id: IDS_PROPITEM_TXT_009072
+    weight: 100
+    price: 5310
+    sell_price: 1327
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26528
+    name: Blue Crystal
+    name_id: IDS_PROPITEM_TXT_009074
+    weight: 100
+    price: 7510
+    sell_price: 1877
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3014
+    name: Cat Bell
+    name_id: IDS_PROPITEM_TXT_009632
+    weight: 100
+    price: 3850
+    sell_price: 962
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3015
+    name: Harpy Feather
+    name_id: IDS_PROPITEM_TXT_009634
+    weight: 100
+    price: 4070
+    sell_price: 1017
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3016
+    name: Gullah Mud
+    name_id: IDS_PROPITEM_TXT_009636
+    weight: 100
+    price: 4300
+    sell_price: 1075
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3017
+    name: Snake Tongue
+    name_id: IDS_PROPITEM_TXT_009638
+    weight: 100
+    price: 4530
+    sell_price: 1132
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3018
+    name: Hague Nail
+    name_id: IDS_PROPITEM_TXT_009640
+    weight: 100
+    price: 4760
+    sell_price: 1190
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3019
+    name: Tote Bill
+    name_id: IDS_PROPITEM_TXT_009642
+    weight: 100
+    price: 4990
+    sell_price: 1247
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3020
+    name: Horn of Asterius
+    name_id: IDS_PROPITEM_TXT_009644
+    weight: 100
+    price: 5220
+    sell_price: 1305
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3021
+    name: Magic Bead
+    name_id: IDS_PROPITEM_TXT_009646
+    weight: 100
+    price: 5780
+    sell_price: 1445
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3022
+    name: Strange Ivory
+    name_id: IDS_PROPITEM_TXT_009648
+    weight: 100
+    price: 6270
+    sell_price: 1567
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3023
+    name: Metal Heart
+    name_id: IDS_PROPITEM_TXT_009650
+    weight: 100
+    price: 6640
+    sell_price: 1660
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3024
+    name: Big Nippers
+    name_id: IDS_PROPITEM_TXT_010030
+    weight: 100
+    price: 2380
+    sell_price: 595
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3025
+    name: Ink Pouch
+    name_id: IDS_PROPITEM_TXT_010032
+    weight: 100
+    price: 2620
+    sell_price: 655
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3026
+    name: Crab Shell
+    name_id: IDS_PROPITEM_TXT_010034
+    weight: 100
+    price: 2800
+    sell_price: 700
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3027
+    name: Crumbly Hair
+    name_id: IDS_PROPITEM_TXT_010036
+    weight: 100
+    price: 2960
+    sell_price: 740
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3028
+    name: Broken Wings
+    name_id: IDS_PROPITEM_TXT_010038
+    weight: 100
+    price: 3110
+    sell_price: 777
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3029
+    name: Great Crown
+    name_id: IDS_PROPITEM_TXT_010040
+    weight: 100
+    price: 3270
+    sell_price: 817
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3030
+    name: Sharp Canine
+    name_id: IDS_PROPITEM_TXT_010042
+    weight: 100
+    price: 3460
+    sell_price: 865
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3031
+    name: Keen Tooth
+    name_id: IDS_PROPITEM_TXT_010044
+    weight: 100
+    price: 3660
+    sell_price: 915
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3032
+    name: Gogloo
+    name_id: IDS_PROPITEM_TXT_010046
+    weight: 100
+    price: 3850
+    sell_price: 962
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3033
+    name: Poison Bag
+    name_id: IDS_PROPITEM_TXT_010834
+    weight: 100
+    price: 5860
+    sell_price: 1465
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3034
+    name: Troglodon Sword
+    name_id: IDS_PROPITEM_TXT_010836
+    weight: 100
+    price: 6410
+    sell_price: 1602
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3035
+    name: Bolo Necklace
+    name_id: IDS_PROPITEM_TXT_010838
+    weight: 100
+    price: 6960
+    sell_price: 1740
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3036
+    name: Araknoid Flower
+    name_id: IDS_PROPITEM_TXT_010840
+    weight: 100
+    price: 7510
+    sell_price: 1877
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3037
+    name: Reptilion Tooth
+    name_id: IDS_PROPITEM_TXT_010842
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3038
+    name: Slimy Ant Egg
+    name_id: IDS_PROPITEM_TXT_010878
+    weight: 100
+    price: 7032
+    sell_price: 1758
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3039
+    name: Juicy Scorpede Leg
+    name_id: IDS_PROPITEM_TXT_010880
+    weight: 100
+    price: 7692
+    sell_price: 1923
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3040
+    name: Swiss Cheese
+    name_id: IDS_PROPITEM_TXT_010882
+    weight: 100
+    price: 8352
+    sell_price: 2088
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3041
+    name: Claw of Lykanos
+    name_id: IDS_PROPITEM_TXT_010884
+    weight: 100
+    price: 9012
+    sell_price: 2253
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3042
+    name: Blood of Drakul
+    name_id: IDS_PROPITEM_TXT_010886
+    weight: 100
+    price: 12000
+    sell_price: 3000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3043
+    name: Cursed Slimy Ant Egg
+    name_id: IDS_PROPITEM_TXT_010888
+    weight: 100
+    price: 8790
+    sell_price: 2197
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3044
+    name: Cursed Juicy Scorpede Leg
+    name_id: IDS_PROPITEM_TXT_010890
+    weight: 100
+    price: 9615
+    sell_price: 2403
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3045
+    name: Cursed Swiss Cheese
+    name_id: IDS_PROPITEM_TXT_010892
+    weight: 100
+    price: 10440
+    sell_price: 2610
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3046
+    name: Cursed Claw of Lykanos
+    name_id: IDS_PROPITEM_TXT_010894
+    weight: 100
+    price: 11265
+    sell_price: 2816
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3047
+    name: Cursed Blood of Drakul
+    name_id: IDS_PROPITEM_TXT_010896
+    weight: 100
+    price: 15000
+    sell_price: 3750
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3048
+    name: Gryphon Feather
+    name_id: IDS_PROPITEM_TXT_011228
+    weight: 100
+    price: 10915
+    sell_price: 2728
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3049
+    name: Bone Scythe
+    name_id: IDS_PROPITEM_TXT_011230
+    weight: 100
+    price: 11098
+    sell_price: 2774
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3050
+    name: Razor Scythe
+    name_id: IDS_PROPITEM_TXT_011232
+    weight: 100
+    price: 11281
+    sell_price: 2820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3051
+    name: Necromancy 101
+    name_id: IDS_PROPITEM_TXT_011234
+    weight: 100
+    price: 11464
+    sell_price: 2866
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3052
+    name: Magic Orb of Darkness
+    name_id: IDS_PROPITEM_TXT_011236
+    weight: 100
+    price: 11647
+    sell_price: 2911
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3053
+    name: Kheldor's Helm
+    name_id: IDS_PROPITEM_TXT_011238
+    weight: 100
+    price: 16405
+    sell_price: 4101
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3054
+    name: Hellhound Tooth
+    name_id: IDS_PROPITEM_TXT_011240
+    weight: 100
+    price: 10183
+    sell_price: 2545
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3055
+    name: Gladiator's Mantle
+    name_id: IDS_PROPITEM_TXT_011242
+    weight: 100
+    price: 10366
+    sell_price: 2591
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3056
+    name: Pikeman's Skull
+    name_id: IDS_PROPITEM_TXT_011244
+    weight: 100
+    price: 10549
+    sell_price: 2637
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3057
+    name: Staff Piece
+    name_id: IDS_PROPITEM_TXT_011246
+    weight: 100
+    price: 10732
+    sell_price: 2683
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3058
+    name: Blade Piece
+    name_id: IDS_PROPITEM_TXT_011248
+    weight: 100
+    price: 10915
+    sell_price: 2728
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3059
+    name: Warrior's Toolbox
+    name_id: IDS_PROPITEM_TXT_011250
+    weight: 100
+    price: 11098
+    sell_price: 2774
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3060
+    name: General Razgul's Horn
+    name_id: IDS_PROPITEM_TXT_011252
+    weight: 100
+    price: 16039
+    sell_price: 4009
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3061
+    name: Poison Canine
+    name_id: IDS_PROPITEM_TXT_011254
+    weight: 100
+    price: 7020
+    sell_price: 1755
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3062
+    name: Cobra Skin
+    name_id: IDS_PROPITEM_TXT_011256
+    weight: 100
+    price: 7430
+    sell_price: 1857
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3063
+    name: Soft Fur
+    name_id: IDS_PROPITEM_TXT_011258
+    weight: 100
+    price: 7850
+    sell_price: 1962
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3064
+    name: Shattered Blade
+    name_id: IDS_PROPITEM_TXT_011260
+    weight: 100
+    price: 8310
+    sell_price: 2077
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3065
+    name: Tribal Bracelet
+    name_id: IDS_PROPITEM_TXT_011262
+    weight: 100
+    price: 8780
+    sell_price: 2195
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3066
+    name: Tribal Mask
+    name_id: IDS_PROPITEM_TXT_011264
+    weight: 100
+    price: 9290
+    sell_price: 2322
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3067
+    name: Oversized Heart
+    name_id: IDS_PROPITEM_TXT_011266
+    weight: 100
+    price: 9630
+    sell_price: 2407
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3068
+    name: Brilliant Poison Canine
+    name_id: IDS_PROPITEM_TXT_011268
+    weight: 100
+    price: 8775
+    sell_price: 2193
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3069
+    name: Brilliant Cobra Skin
+    name_id: IDS_PROPITEM_TXT_011270
+    weight: 100
+    price: 9287
+    sell_price: 2321
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3070
+    name: Brilliant Soft Fur
+    name_id: IDS_PROPITEM_TXT_011272
+    weight: 100
+    price: 9812
+    sell_price: 2453
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3071
+    name: Brilliant Shattered Blade
+    name_id: IDS_PROPITEM_TXT_011274
+    weight: 100
+    price: 10387
+    sell_price: 2596
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3072
+    name: Brilliant Tribal Bracelet
+    name_id: IDS_PROPITEM_TXT_011276
+    weight: 100
+    price: 10975
+    sell_price: 2743
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3073
+    name: Brilliant Tribal Mask
+    name_id: IDS_PROPITEM_TXT_011278
+    weight: 100
+    price: 11612
+    sell_price: 2903
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 3074
+    name: Brilliant Oversized Heart
+    name_id: IDS_PROPITEM_TXT_011280
+    weight: 100
+    price: 12037
+    sell_price: 3009
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 18167
+    name: Doridori Sushi
+    name_id: IDS_PROPITEM_TXT_007128
+    weight: 100
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 10349
+    name: Dungeon Tarin Root
+    name_id: IDS_PROPITEM_TXT_005746
+    weight: 100
+    price: 1100
+    sell_price: 275
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10350
+    name: Dungeon Star Stone
+    name_id: IDS_PROPITEM_TXT_005748
+    weight: 100
+    price: 1200
+    sell_price: 300
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10351
+    name: Dungeon Golden Wing
+    name_id: IDS_PROPITEM_TXT_005750
+    weight: 100
+    price: 1300
+    sell_price: 325
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10352
+    name: Hair of Wormveduque
+    name_id: IDS_PROPITEM_TXT_005756
+    weight: 100
+    price: 2500
+    sell_price: 625
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10355
+    name: Hair of Serus Uriel
+    name_id: IDS_PROPITEM_TXT_005758
+    weight: 100
+    price: 100000
+    sell_price: 25000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10402
+    name: Shubrin Ring
+    name_id: IDS_PROPITEM_TXT_005776
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10421
+    name: Puran Necklace
+    name_id: IDS_PROPITEM_TXT_005818
+    weight: 100
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10446
+    name: Keakoon Worker Pike
+    name_id: IDS_PROPITEM_TXT_005822
+    weight: 100
+    price: 8650
+    sell_price: 2162
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10449
+    name: Keakoon Guard Sword
+    name_id: IDS_PROPITEM_TXT_005824
+    weight: 100
+    price: 8720
+    sell_price: 2180
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10447
+    name: Elite Keakoon Worker Peak
+    name_id: IDS_PROPITEM_TXT_005826
+    weight: 100
+    price: 8770
+    sell_price: 2192
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10450
+    name: Elite Keakoon Guard Sword
+    name_id: IDS_PROPITEM_TXT_005828
+    weight: 100
+    price: 8820
+    sell_price: 2205
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10448
+    name: Mutant Keakoon Worker Peak
+    name_id: IDS_PROPITEM_TXT_005830
+    weight: 100
+    price: 9120
+    sell_price: 2280
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10451
+    name: Mutant Keakoon Guard Sword
+    name_id: IDS_PROPITEM_TXT_005832
+    weight: 100
+    price: 9170
+    sell_price: 2292
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10452
+    name: Blue Roach Leg
+    name_id: IDS_PROPITEM_TXT_005834
+    weight: 100
+    price: 8870
+    sell_price: 2217
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10453
+    name: Pink Roach Leg
+    name_id: IDS_PROPITEM_TXT_005836
+    weight: 100
+    price: 8920
+    sell_price: 2230
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10454
+    name: Green Trillipy Shell
+    name_id: IDS_PROPITEM_TXT_005838
+    weight: 100
+    price: 8970
+    sell_price: 2242
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10455
+    name: Violet Trillipy Shell
+    name_id: IDS_PROPITEM_TXT_005840
+    weight: 100
+    price: 9020
+    sell_price: 2255
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10456
+    name: Blood Trillipy Shell
+    name_id: IDS_PROPITEM_TXT_005842
+    weight: 100
+    price: 9070
+    sell_price: 2267
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10457
+    name: Chimeradon Horn
+    name_id: IDS_PROPITEM_TXT_005844
+    weight: 100
+    price: 9220
+    sell_price: 2305
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 280000
+    job_req:
+      - magician
+  - id: 6332
+    name: Conepine Seed
+    name_id: IDS_PROPITEM_TXT_006038
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 6333
+    name: Fir Seed
+    name_id: IDS_PROPITEM_TXT_006040
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 6334
+    name: Persimmon Seed
+    name_id: IDS_PROPITEM_TXT_006042
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 6335
+    name: Pear Seed
+    name_id: IDS_PROPITEM_TXT_006044
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 6336
+    name: Pine Seed
+    name_id: IDS_PROPITEM_TXT_006046
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21000
+    name: Baby Lawolf
+    name_id: IDS_PROPITEM_TXT_006150
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21001
+    name: Baby Aibatt
+    name_id: IDS_PROPITEM_TXT_006152
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21002
+    name: Baby Leyena
+    name_id: IDS_PROPITEM_TXT_006154
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21003
+    name: Baby Luia
+    name_id: IDS_PROPITEM_TXT_006156
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21004
+    name: Doggy
+    name_id: IDS_PROPITEM_TXT_006158
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21005
+    name: Kitty
+    name_id: IDS_PROPITEM_TXT_006160
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21007
+    name: Polar Bear
+    name_id: IDS_PROPITEM_TXT_007540
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21026
+    name: Baby Penguin
+    name_id: IDS_PROPITEM_TXT_008170
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21027
+    name: Baby Iguana
+    name_id: IDS_PROPITEM_TXT_008172
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21028
+    name: Baby Cobra
+    name_id: IDS_PROPITEM_TXT_008174
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21050
+    name: Cute Frog
+    name_id: IDS_PROPITEM_TXT_008776
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21051
+    name: Cute Hamburger
+    name_id: IDS_PROPITEM_TXT_008778
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21052
+    name: Baby Turtle
+    name_id: IDS_PROPITEM_TXT_008780
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21053
+    name: Baby Chicken
+    name_id: IDS_PROPITEM_TXT_008820
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21054
+    name: Baby Cow
+    name_id: IDS_PROPITEM_TXT_008822
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21055
+    name: Baby Beagle
+    name_id: IDS_PROPITEM_TXT_008824
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21056
+    name: Baby Blue Dragon
+    name_id: IDS_PROPITEM_TXT_008826
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21066
+    name: Baby Black Dragon
+    name_id: IDS_PROPITEM_TXT_009274
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21057
+    name: Baby Hamster
+    name_id: IDS_PROPITEM_TXT_008828
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21058
+    name: Baby Horse
+    name_id: IDS_PROPITEM_TXT_008830
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21059
+    name: Baby Monkey
+    name_id: IDS_PROPITEM_TXT_008832
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21060
+    name: Baby Pig
+    name_id: IDS_PROPITEM_TXT_008834
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21061
+    name: Baby Rabbit
+    name_id: IDS_PROPITEM_TXT_008836
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21062
+    name: Cute Lamb
+    name_id: IDS_PROPITEM_TXT_008838
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21063
+    name: Baby Tiger
+    name_id: IDS_PROPITEM_TXT_008840
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21064
+    name: Little Maid Cardpuppet
+    name_id: IDS_PROPITEM_TXT_009258
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21065
+    name: Little Mia
+    name_id: IDS_PROPITEM_TXT_009260
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21067
+    name: Baby Yetti
+    name_id: IDS_PROPITEM_TXT_009610
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21069
+    name: English Bulldog
+    name_id: IDS_PROPITEM_TXT_010272
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21070
+    name: Naughty Ghost
+    name_id: IDS_PROPITEM_TXT_010274
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21071
+    name: Baby Fu Lion
+    name_id: IDS_PROPITEM_TXT_010276
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21072
+    name: Smart Owl
+    name_id: IDS_PROPITEM_TXT_010278
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21073
+    name: Patches
+    name_id: IDS_PROPITEM_TXT_010280
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21074
+    name: Baby Robot
+    name_id: IDS_PROPITEM_TXT_010282
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21075
+    name: Baby Bang
+    name_id: IDS_PROPITEM_TXT_010350
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21076
+    name: Baby Panda
+    name_id: IDS_PROPITEM_TXT_010372
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21077
+    name: Red Armored Tigar
+    name_id: IDS_PROPITEM_TXT_010466
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21078
+    name: Blue Armored Tigar
+    name_id: IDS_PROPITEM_TXT_010468
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21079
+    name: Yellow Armored Tigar
+    name_id: IDS_PROPITEM_TXT_010470
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 3600
+    name: Couple Ring
+    name_id: IDS_PROPITEM_TXT_006162
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 3601
+    name: Couples Ring
+    name_id: IDS_PROPITEM_TXT_008132
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 4100
+    name: Buff breaker
+    name_id: IDS_PROPITEM_TXT_006164
+    weight: 100
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 30026
+    name: Secret Medicine 1
+    name_id: IDS_PROPITEM_TXT_007535
+    weight: 100
+    price: 108
+    sell_price: 27
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 6570000
+    job_req:
+      - vagrant
+  - id: 30027
+    name: Secret Medicine 2
+    name_id: IDS_PROPITEM_TXT_007537
+    weight: 100
+    price: 2500
+    sell_price: 625
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 6570000
+    job_req:
+      - vagrant
+  - id: 26322
+    name: White Cake
+    name_id: IDS_PROPITEM_TXT_007594
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 6570000
+    job_req:
+      - vagrant
+  - id: 26323
+    name: Green Cake
+    name_id: IDS_PROPITEM_TXT_007596
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 6570000
+    job_req:
+      - vagrant
+  - id: 26324
+    name: Pink Cake
+    name_id: IDS_PROPITEM_TXT_007598
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 6570000
+    job_req:
+      - vagrant
+  - id: 18186
+    name: Wedding Ring
+    name_id: IDS_PROPITEM_TXT_007830
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3600000
+    job_req:
+      - vagrant
+  - id: 26334
+    name: 小重量杯
+    name_id: IDS_PROPITEM_TXT_007846
+    weight: 100
+    price: 31
+    sell_price: 7
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 3600000
+    job_req:
+      - vagrant
+  - id: 26337
+    name: Christmas Cookies
+    name_id: IDS_PROPITEM_TXT_007852
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26402
+    name: Heart Cookies
+    name_id: IDS_PROPITEM_TXT_008014
+    weight: 100
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 26423
+    name: Pumpkin Pie
+    name_id: IDS_PROPITEM_TXT_008104
+    weight: 100
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21029
+    name: Egg
+    name_id: IDS_PROPITEM_TXT_008466
+    weight: 100
+    price: 40000
+    sell_price: 10000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 21039
+    name: White Tiger Cage
+    name_id: IDS_PROPITEM_TXT_008658
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 21040
+    name: Babari Lion Cage
+    name_id: IDS_PROPITEM_TXT_008660
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 21041
+    name: Rabbit Coop
+    name_id: IDS_PROPITEM_TXT_008662
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 21042
+    name: Baby Dragon Cage
+    name_id: IDS_PROPITEM_TXT_008664
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 21043
+    name: Unicorn Corral
+    name_id: IDS_PROPITEM_TXT_008666
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 21044
+    name: Old Fox Cage
+    name_id: IDS_PROPITEM_TXT_008668
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 21045
+    name: Baby Griffin Cage
+    name_id: IDS_PROPITEM_TXT_008670
+    weight: 100
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26460
+    name: Red Chips
+    name_id: IDS_PROPITEM_TXT_008902
+    weight: 100
+    price: 200000
+    sell_price: 50000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26745
+    name: Snow Flake
+    name_id: IDS_PROPITEM_TXT_010196
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26748
+    name: Wish Roll
+    name_id: IDS_PROPITEM_TXT_010254
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26750
+    name: Soju
+    name_id: IDS_PROPITEM_TXT_010258
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26755
+    name: Chocolate Drink
+    name_id: IDS_PROPITEM_TXT_010304
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26756
+    name: Chocolate Cookie
+    name_id: IDS_PROPITEM_TXT_010306
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26759
+    name: Chocolate of Love
+    name_id: IDS_PROPITEM_TXT_010312
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26765
+    name: Love Chocolate
+    name_id: IDS_PROPITEM_TXT_010348
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26772
+    name: Herb of Life
+    name_id: IDS_PROPITEM_TXT_010454
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26773
+    name: Peach Punch
+    name_id: IDS_PROPITEM_TXT_010456
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 20059
+    name: Melon Denish
+    name_id: IDS_PROPITEM_TXT_010922
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20060
+    name: Melon Waffle
+    name_id: IDS_PROPITEM_TXT_010924
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21080
+    name: Tommy Toucan
+    name_id: IDS_PROPITEM_TXT_011044
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 26854
+    name: Tiny Tanuki
+    name_id: IDS_PROPITEM_TXT_011116
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20113
+    name: Johnny Four-Wheels
+    name_id: IDS_PROPITEM_TXT_011224
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20180
+    name: Christmas Cake
+    name_id: IDS_PROPITEM_TXT_011496
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20182
+    name: Vanilla Cupcakes
+    name_id: IDS_PROPITEM_TXT_011500
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20186
+    name: Mini Santa
+    name_id: IDS_PROPITEM_TXT_011636
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20187
+    name: Mini Snowman
+    name_id: IDS_PROPITEM_TXT_011638
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 21081
+    name: Little Lykan
+    name_id: IDS_PROPITEM_TXT_011658
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20211
+    name: Champion's Ring
+    name_id: IDS_PROPITEM_TXT_011702
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20212
+    name: Defender's Ring
+    name_id: IDS_PROPITEM_TXT_011704
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20213
+    name: Adept's Ring
+    name_id: IDS_PROPITEM_TXT_011706
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20214
+    name: Marksman's Ring
+    name_id: IDS_PROPITEM_TXT_011708
+    weight: 100
+    price: 3355
+    sell_price: 838
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20215
+    name: Champion's Demol Earring
+    name_id: IDS_PROPITEM_TXT_011710
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20216
+    name: Defender's Plug Earring
+    name_id: IDS_PROPITEM_TXT_011712
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20221
+    name: Adept's Earring of Power
+    name_id: IDS_PROPITEM_TXT_011722
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20222
+    name: Marksman's Earring of Power
+    name_id: IDS_PROPITEM_TXT_011724
+    weight: 100
+    price: 3283
+    sell_price: 820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20217
+    name: Champion's Gore Necklace
+    name_id: IDS_PROPITEM_TXT_011714
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20218
+    name: Adept's Mental Necklace
+    name_id: IDS_PROPITEM_TXT_011716
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20219
+    name: Marksman's Peision Necklace
+    name_id: IDS_PROPITEM_TXT_011718
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 20220
+    name: Defender's Necklace of Protection
+    name_id: IDS_PROPITEM_TXT_011720
+    weight: 100
+    price: 889
+    sell_price: 222
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 7200000
+  - id: 26905
+    name: Sardine Roll
+    name_id: IDS_PROPITEM_TXT_011756
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+  - id: 26906
+    name: Watermelon Drink
+    name_id: IDS_PROPITEM_TXT_011758
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+  - id: 26954
+    name: Lost lucky bag
+    name_id: IDS_PROPITEM_TXT_011884
+    weight: 100
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000
+  - id: 21082
+    name: Joey
+    name_id: IDS_PROPITEM_TXT_011906
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+  - id: 21083
+    name: Spike
+    name_id: IDS_PROPITEM_TXT_011908
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+  - id: 21084
+    name: Lumia
+    name_id: IDS_PROPITEM_TXT_011910
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+  - id: 21085
+    name: Inspector Koko
+    name_id: IDS_PROPITEM_TXT_011912
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+  - id: 21086
+    name: Cheshire Cat
+    name_id: IDS_PROPITEM_TXT_011952
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+  - id: 21087
+    name: The White Rabbit
+    name_id: IDS_PROPITEM_TXT_011954
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+  - id: 21088
+    name: Tiger Cub
+    name_id: IDS_PROPITEM_TXT_011956
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 4500000
+  - id: 21089
+    name: Bone Golem
+    name_id: IDS_PROPITEM_TXT_012160
+    weight: 100
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    durability: 50000

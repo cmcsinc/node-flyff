@@ -40,33 +40,33 @@ portals:
 
 # Spawn points
 spawns:
-  # Near Flaris (Mia spawns)
+  # Near Flaris (Small Aibatt) — MI_AIBATT1=20
   - id: 1
-    mover_id: 1
+    mover_id: 20
     position: { x: 6978, y: 100, z: 3329 }
     radius: 100.0
     count: 10
     delay: 5000
 
-  # East of Flaris (Bang spawns)
+  # East of Flaris (Aibatt) — MI_AIBATT2=21
   - id: 2
-    mover_id: 2
+    mover_id: 21
     position: { x: 7200, y: 100, z: 3500 }
     radius: 150.0
     count: 15
     delay: 5000
 
-  # South of Flaris (PukePuke spawns)
+  # South of Flaris (Captain Aibatt) — MI_AIBATT3=22
   - id: 3
-    mover_id: 3
+    mover_id: 22
     position: { x: 6950, y: 100, z: 3100 }
     radius: 200.0
     count: 12
     delay: 5000
 
-  # Giant Bang spawn (rare)
+  # Giant Aibatt spawn (rare) — MI_AIBATT4=23
   - id: 100
-    mover_id: 103
+    mover_id: 23
     position: { x: 7200, y: 100, z: 3600 }
     radius: 50.0
     count: 1
@@ -74,8 +74,9 @@ spawns:
 
 # NPCs
 npcs:
+  # Marche (weapon shop) — MI_MAFL_MARCHE=214
   - id: 1
-    mover_id: 1001
+    mover_id: 214
     position: { x: 6978, y: 100, z: 3329 }
     angle: 0
     functions:
@@ -84,8 +85,9 @@ npcs:
       - type: dialogue
         dialogue_id: "npc_marche_intro"
 
+  # Infopeng (teleport + bank) — MI_MAFL_INFOPENG=200
   - id: 2
-    mover_id: 1002
+    mover_id: 200
     position: { x: 6950, y: 100, z: 3350 }
     angle: 1.57
     functions:
@@ -93,25 +95,28 @@ npcs:
         destinations: ["saintmorning", "darkon1"]
       - type: bank
 
+  # Boboku (armor shop) — MI_MAFL_BOBOKU=211
   - id: 3
-    mover_id: 1003
+    mover_id: 211
     position: { x: 7000, y: 100, z: 3300 }
     angle: 3.14
     functions:
       - type: shop
         shop_id: "flaris-armor"
       - type: dialogue
-        dialogue_id: "npc_boboko_intro"
+        dialogue_id: "npc_boboku_intro"
 
+  # Lui (warehouse) — MI_MAFL_LUI=213
   - id: 4
-    mover_id: 1004
+    mover_id: 213
     position: { x: 6930, y: 100, z: 3320 }
     angle: 0.78
     functions:
       - type: warehouse
 
+  # Julia (guild) — MI_MAFL_JULIA=212
   - id: 5
-    mover_id: 1005
+    mover_id: 212
     position: { x: 6920, y: 100, z: 3360 }
     angle: 0
     functions:

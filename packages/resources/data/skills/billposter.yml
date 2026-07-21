@@ -1,0 +1,75 @@
+_version: "1.0"
+_job: billposter
+skills:
+  - id: 152
+    name: Belial Smashing
+    name_id: IDS_PROPSKILL_TXT_000118
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 153
+    name: Piercing Serpent
+    name_id: IDS_PROPSKILL_TXT_000120
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 154
+    name: Blood Fist
+    name_id: IDS_PROPSKILL_TXT_000122
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 155
+    name: Sonichand
+    name_id: IDS_PROPSKILL_TXT_000124
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 156
+    name: Asmodeus
+    name_id: IDS_PROPSKILL_TXT_000126
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 157
+    name: Baraqijal Esna
+    name_id: IDS_PROPSKILL_TXT_000128
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 158
+    name: Bgvur Tialbold
+    name_id: IDS_PROPSKILL_TXT_000130
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 159
+    name: Asalraalaikum
+    name_id: IDS_PROPSKILL_TXT_000132
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

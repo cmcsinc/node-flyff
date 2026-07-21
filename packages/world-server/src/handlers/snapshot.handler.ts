@@ -3,7 +3,11 @@
  *
  * `DPSrvr::OnSnapshot` (DPSrvr.cpp:4338) reads `c:BYTE` entries, then per entry
  * a `wHdr:WORD` switch. v15 sends ONLY `SNAPSHOTTYPE_DESTPOS` (click-to-move):
- *   c:BYTE  [ [wHdr:WORD(=0x00c1)] [vPos:Vec3][fForward:BYTE][objidIAObj:DWORD] ]
+ *   c:BYTE  [ [wHdr:WORD(=0x00c1)] [vPos:Vec3][fForward:BYTE] ]
+ *
+ * The trailing `objidIAObj:DWORD` is only read `#ifdef __IAOBJ0622`
+ * (DPSrvr.cpp:4377). That macro is NOT defined in this v15 build, so the
+ * wire body is Vec3(12)+fForward(1) = 13 bytes — no ship-objid field.
  *
  * Other sub-types hit the C++ `default: ASSERT(0)` — treated as a protocol error
  * here (log + drop the whole frame). `c` is capped at 16 (a legitimate client
@@ -64,11 +68,9 @@ export class SnapshotHandler {
         }
         const vPos = readVec3(reader);
         const fForward = reader.readByte();
-        const objidIAObj = reader.readDword();
         Validate.pos(vPos.x, vPos.y, vPos.z);
-        Validate.dword(objidIAObj);
 
-        const outcome = this.snapshotService.destPos(player, { vPos, fForward, objidIAObj });
+        const outcome = this.snapshotService.destPos(player, { vPos, fForward });
         if (!outcome.ok) {
           // Anti-teleport drop — silent in C++; log at debug for diagnostics.
           logger.debug({ charId: player.m_idPlayer }, 'DESTPOS dropped (anti-teleport)');

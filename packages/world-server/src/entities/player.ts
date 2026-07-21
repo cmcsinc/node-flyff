@@ -64,6 +64,12 @@ export class CPlayer {
   m_idSetTarget: number = NULL_ID;
   /** Last SCRIPTDLG tick (C++ `m_tickScript`) — 400ms rate limit (DPSrvr.cpp:903). */
   m_tickScript: number = 0;
+  /**
+   * One-shot: the zone's NPC/monster ADD_OBJ snapshot has been sent for this
+   * player. Neuz sends MAP_KEY once per `.wld` as it loads the world; the
+   * vicinity burst must fire only on the first (world-enter), not every map.
+   */
+  m_vicinitySent: boolean = false;
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
   readonly _dirty: Set<string> = new Set();

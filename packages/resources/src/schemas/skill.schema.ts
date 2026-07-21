@@ -106,7 +106,9 @@ export const SkillDefinitionSchema = z.object({
   name: z.string().max(64),
 
   /** Localization key */
-  name_id: z.string().startsWith('SKILL_'),
+  name_id: z.string().refine((s) => s.startsWith('SKILL_') || s.startsWith('IDS_PROPSKILL_'), {
+    message: "must start with 'SKILL_' or 'IDS_PROPSKILL_'",
+  }),
 
   /** Description localization key */
   name_desc_id: z.string().startsWith('SKILL_').optional(),

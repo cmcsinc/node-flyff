@@ -1,0 +1,47 @@
+# Player base stats — generated from propMover.txt
+_version: "1.0"
+movers:
+  - id: 11
+    name: Male
+    name_id: IDS_PROPMOVER_TXT_000002
+    dwObjIndex: 11
+    scale: 1
+    type: player
+    level: 1
+    hp: 1
+    mp: 0
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 10
+    dodge_rate: 10
+    speed: 0.1
+    attack_speed: 0
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+  - id: 12
+    name: Female
+    name_id: IDS_PROPMOVER_TXT_000004
+    dwObjIndex: 12
+    scale: 1
+    type: player
+    level: 1
+    hp: 1
+    mp: 0
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 10
+    dodge_rate: 10
+    speed: 0.1
+    attack_speed: 0
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false

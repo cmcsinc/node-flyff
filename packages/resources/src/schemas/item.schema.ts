@@ -65,8 +65,10 @@ export const ItemDefinitionSchema = z.object({
   /** Display name */
   name: z.string().max(64),
 
-  /** Localization key */
-  name_id: z.string().startsWith('ITEM_'),
+  /** Localization key — symbolic (`ITEM_*`) or raw Flyff text ID (`IDS_PROPITEM_*`) */
+  name_id: z.string().refine((s) => s.startsWith('ITEM_') || s.startsWith('IDS_PROPITEM_'), {
+    message: "must start with 'ITEM_' or 'IDS_PROPITEM_'",
+  }),
 
   /** Icon filename (optional) */
   icon: z.string().endsWith('.dds').optional(),

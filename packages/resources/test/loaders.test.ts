@@ -20,11 +20,11 @@ describe('Resource Loaders', () => {
 
     // Verify items loaded
     assert.ok(resources.items.items.size > 0, 'Items should be loaded');
-    assert.ok(resources.items.byName.has('Sword'), 'Should have "Sword" item');
+    assert.ok(resources.items.byName.has('Rodney Axe'), 'Should have "Rodney Axe" item');
 
     // Verify movers loaded
     assert.ok(resources.movers.movers.size > 0, 'Movers should be loaded');
-    assert.ok(resources.movers.byName.has('Mia'), 'Should have "Mia" mover');
+    assert.ok(resources.movers.byName.has('Small Aibatt'), 'Should have "Small Aibatt" mover');
 
     // Verify zones loaded
     assert.ok(resources.zones.zones.size > 0, 'Zones should be loaded');
@@ -48,24 +48,25 @@ describe('Resource Loaders', () => {
 
   it('should load item with correct properties', async () => {
     const resources = await loadAllResources(DATA_DIR);
-    const sword = resources.items.items.get(1);
+    // II_WEA_AXE_RODNEY=81 → "Rodney Axe"
+    const rodney = resources.items.items.get(81);
 
-    assert.ok(sword, 'Sword should exist');
-    assert.equal(sword!.name, 'Sword');
-    assert.equal(sword!.attack, 15);
-    assert.equal(sword!.level_req, 1);
-    assert.equal(sword!.two_handed, false);
+    assert.ok(rodney, 'Rodney Axe should exist');
+    assert.equal(rodney!.name, 'Rodney Axe');
+    assert.equal(rodney!.attack, 29);
+    assert.equal(rodney!.level_req, 1);
   });
 
   it('should load monster with correct properties', async () => {
     const resources = await loadAllResources(DATA_DIR);
-    const mia = resources.movers.movers.get(1);
+    // MI_AIBATT1=20 → "Small Aibatt"
+    const aibatt = resources.movers.movers.get(20);
 
-    assert.ok(mia, 'Mia should exist');
-    assert.equal(mia!.name, 'Mia');
-    assert.equal(mia!.level, 1);
-    assert.equal(mia!.hp, 50);
-    assert.equal(mia!.ai_type, 'aggressive');
+    assert.ok(aibatt, 'Small Aibatt should exist');
+    assert.equal(aibatt!.name, 'Small Aibatt');
+    assert.equal(aibatt!.level, 1);
+    assert.equal(aibatt!.hp, 120);
+    assert.equal(aibatt!.dwObjIndex, 20);
   });
 
   it('should load zone with correct properties', async () => {

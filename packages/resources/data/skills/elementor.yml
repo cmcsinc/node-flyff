@@ -1,0 +1,174 @@
+_version: "1.0"
+_job: elementor
+skills:
+  - id: 168
+    name: Firebird
+    name_id: IDS_PROPSKILL_TXT_000184
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 169
+    name: Fire Master
+    name_id: IDS_PROPSKILL_TXT_000186
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 170
+    name: Burningfield
+    name_id: IDS_PROPSKILL_TXT_000188
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 171
+    name: Lightning Strike
+    name_id: IDS_PROPSKILL_TXT_000190
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 172
+    name: Lightning Mastery
+    name_id: IDS_PROPSKILL_TXT_000192
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 173
+    name: Electric Shock
+    name_id: IDS_PROPSKILL_TXT_000194
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 174
+    name: Stone Spear
+    name_id: IDS_PROPSKILL_TXT_000196
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 175
+    name: Earth Master
+    name_id: IDS_PROPSKILL_TXT_000198
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 176
+    name: Earthquake
+    name_id: IDS_PROPSKILL_TXT_000200
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 177
+    name: Iceshark
+    name_id: IDS_PROPSKILL_TXT_000202
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 178
+    name: Water Master
+    name_id: IDS_PROPSKILL_TXT_000204
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 179
+    name: Poison Cloud
+    name_id: IDS_PROPSKILL_TXT_000206
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 180
+    name: Void
+    name_id: IDS_PROPSKILL_TXT_000208
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 181
+    name: Wind Master
+    name_id: IDS_PROPSKILL_TXT_000210
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 182
+    name: Windfield
+    name_id: IDS_PROPSKILL_TXT_000212
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 183
+    name: Meteo Shower
+    name_id: IDS_PROPSKILL_TXT_000214
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 184
+    name: Lightingstorm
+    name_id: IDS_PROPSKILL_TXT_000216
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 185
+    name: Sandstorm
+    name_id: IDS_PROPSKILL_TXT_000218
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 186
+    name: Blizzard
+    name_id: IDS_PROPSKILL_TXT_000220
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

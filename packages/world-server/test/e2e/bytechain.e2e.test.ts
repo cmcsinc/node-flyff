@@ -30,10 +30,43 @@ import { AccountConnectionManager } from '@flyff/cluster-server/src/managers/acc
 import { ClusterListener } from '../../src/ipc/clusterListener.js';
 import { PlayerManager } from '../../src/managers/player.manager.js';
 import { ZoneManager } from '../../src/managers/zone.manager.js';
+import { SpawnManager } from '../../src/managers/spawn.manager.js';
 import { JoinService } from '../../src/services/join.service.js';
 import { JoinHandler } from '../../src/handlers/join.handler.js';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer.js';
+import { NpcSnapshotSerializer } from '../../src/net/snapshot/npcSnapshot.serializer.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import type { ResourceIndex, ZoneIndex } from '@flyff/resources';
+
+/** Minimal resource index for e2e: zone 1 with one NPC (no monsters needed). */
+function fixtureResources(): ResourceIndex {
+  const movers = new Map<number, any>([[1006, {
+    id: 1006, name: 'Homeit', name_id: 'NPC_HOMEIT', model: 'm.o3d', dwObjIndex: 12,
+    scale: 1.0, type: 'npc', level: 1, hp: 1000, mp: 0, fp: 0, attack: 0, defense: 0,
+    attack_rate: 0, dodge_rate: 0, speed: 0, attack_speed: 0,
+    flyable: false, boss: false, giant: false, raid: false, attackable: false,
+  }]]);
+  const flaris = {
+    _version: '1.0', _id: 'flaris', _id_numeric: 1, name: 'Flaris', name_id: 'ZONE_FLARIS',
+    world_id: 'madrigal',
+    bounds: { min: { x: 0, y: 0, z: 0 }, max: { x: 1, y: 1, z: 1 } },
+    revival: { position: { x: 0, y: 0, z: 0 }, radius: 1 },
+    portals: [],
+    npcs: [{ id: 1, mover_id: 1006, position: { x: 1, y: 1, z: 1 }, angle: 0, functions: [] }],
+    spawns: [], regions: [],
+  };
+  const zones: ZoneIndex = {
+    zones: new Map([['flaris', flaris as never]]),
+    byNumericId: new Map([[1, flaris as never]]),
+    byWorld: new Map([['madrigal', [flaris as never]]]),
+  };
+  return {
+    items: { items: new Map(), byName: new Map(), byKind: new Map() },
+    movers: { movers, byName: new Map(), byType: new Map() },
+    skills: { skills: new Map(), byName: new Map(), byJob: new Map() },
+    zones,
+  } as unknown as ResourceIndex;
+}
 
 /**
  * Full 3-server byte chain with REAL handlers + REAL IpcBus + a SHARED in-memory
@@ -186,7 +219,10 @@ describe('E2E byte chain: login CERTIFY → cluster PRE_JOIN → world JOIN snap
     const joinService = new JoinService({
       charRepo, playerManager: worldPlayers, zoneManager: zones, handoffSource: listener,
     });
-    const joinHandler = new JoinHandler(joinService, new PlayerSnapshotSerializer());
+    const joinHandler = new JoinHandler(
+      joinService,
+      new PlayerSnapshotSerializer(),
+    );
     await listener.start();
 
     clusterSocket = mockSocket();

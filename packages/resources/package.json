@@ -19,6 +19,7 @@
     "clean": "rm -rf dist",
     "test": "tsx --test test/**/*.test.ts",
     "typecheck": "tsc --noEmit",
+    "convert": "tsx scripts/convert.ts",
     "watch": "tsx scripts/watch.ts"
   },
   "keywords": [

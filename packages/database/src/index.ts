@@ -26,3 +26,11 @@ export {
   type InventoryRow,
   type InventoryCreateData,
 } from './repositories/inventory.repo.js';
+
+// WAL journal — embedded SQLite crash-recovery log
+export {
+  Journal,
+  type JournalEntry,
+  type JournalRow,
+  type JournalDeps,
+} from './journal.js';

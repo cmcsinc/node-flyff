@@ -1,0 +1,300 @@
+_version: "1.0"
+_job: vagrant
+skills:
+  - id: 1
+    name: Clean Hit
+    name_id: IDS_PROPSKILL_TXT_000000
+    type: passive
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 2
+    name: Flurry
+    name_id: IDS_PROPSKILL_TXT_000002
+    type: passive
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 3
+    name: Over Cut
+    name_id: IDS_PROPSKILL_TXT_000004
+    type: passive
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 187
+    name: Flash
+    name_id: IDS_PROPSKILL_TXT_000286
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 189
+    name: Single Stun
+    name_id: IDS_PROPSKILL_TXT_000288
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 190
+    name: Stun Group
+    name_id: IDS_PROPSKILL_TXT_000290
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 188
+    name: Damage
+    name_id: IDS_PROPSKILL_TXT_000292
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 223
+    name: Atk. Counter
+    name_id: IDS_PROPSKILL_TXT_000294
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 224
+    name: Knock back
+    name_id: IDS_PROPSKILL_TXT_000296
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 225
+    name: Burningfield
+    name_id: IDS_PROPSKILL_TXT_000298
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 226
+    name: Poison
+    name_id: IDS_PROPSKILL_TXT_000300
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 227
+    name: Stun
+    name_id: IDS_PROPSKILL_TXT_000302
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 228
+    name: Bleeding
+    name_id: IDS_PROPSKILL_TXT_000304
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 229
+    name: Steal HP
+    name_id: IDS_PROPSKILL_TXT_000306
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 231
+    name: Poison sting
+    name_id: IDS_PROPSKILL_TXT_000310
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 232
+    name: Bleeding
+    name_id: IDS_PROPSKILL_TXT_000312
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 233
+    name: Low Attack
+    name_id: IDS_PROPSKILL_TXT_000314
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 234
+    name: Low Attack
+    name_id: IDS_PROPSKILL_TXT_000316
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 300
+    name: Stun Group
+    name_id: IDS_PROPSKILL_TXT_000318
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 301
+    name: Krrr's poison
+    name_id: IDS_PROPSKILL_TXT_000320
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 302
+    name: Stun Group
+    name_id: IDS_PROPSKILL_TXT_000322
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 303
+    name: Berserker Mushroom
+    name_id: IDS_PROPSKILL_TXT_000324
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 304
+    name: Protective Tree Bark
+    name_id: IDS_PROPSKILL_TXT_000326
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 235
+    name: Buff Break
+    name_id: IDS_PROPSKILL_TXT_000328
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 236
+    name: Buff Break X
+    name_id: IDS_PROPSKILL_TXT_000330
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 305
+    name: Toggle Buff
+    name_id: IDS_PROPSKILL_TXT_000332
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 306
+    name: Toggle Buff
+    name_id: IDS_PROPSKILL_TXT_000332
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 307
+    name: Toggle Buff
+    name_id: IDS_PROPSKILL_TXT_000332
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 308
+    name: Burn
+    name_id: IDS_PROPSKILL_TXT_000350
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 317
+    name: Quick Step (Event)
+    name_id: IDS_PROPSKILL_TXT_000368
+    type: passive
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 318
+    name: Haste (Event)
+    name_id: IDS_PROPSKILL_TXT_000370
+    type: passive
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 319
+    name: Heap Up (Event)
+    name_id: IDS_PROPSKILL_TXT_000372
+    type: passive
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 320
+    name: Accuracy (Event)
+    name_id: IDS_PROPSKILL_TXT_000374
+    type: passive
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

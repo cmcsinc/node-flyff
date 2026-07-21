@@ -1,0 +1,84 @@
+_version: "1.0"
+_job: ringmaster
+skills:
+  - id: 144
+    name: Heal Rain
+    name_id: IDS_PROPSKILL_TXT_000102
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 145
+    name: Holycross
+    name_id: IDS_PROPSKILL_TXT_000104
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 146
+    name: Protect
+    name_id: IDS_PROPSKILL_TXT_000106
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 147
+    name: Holyguard
+    name_id: IDS_PROPSKILL_TXT_000108
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 148
+    name: Spirit Fortune
+    name_id: IDS_PROPSKILL_TXT_000110
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 149
+    name: Gvur Tialla
+    name_id: IDS_PROPSKILL_TXT_000112
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 150
+    name: Geburah Tiphreth
+    name_id: IDS_PROPSKILL_TXT_000114
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 151
+    name: Merkaba Hanzelrusha
+    name_id: IDS_PROPSKILL_TXT_000116
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 230
+    name: Swordcross
+    name_id: IDS_PROPSKILL_TXT_000308
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1

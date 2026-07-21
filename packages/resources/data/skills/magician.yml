@@ -1,0 +1,156 @@
+_version: "1.0"
+_job: magician
+skills:
+  - id: 64
+    name: Flame Ball
+    name_id: IDS_PROPSKILL_TXT_000134
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 65
+    name: Flame Geyser
+    name_id: IDS_PROPSKILL_TXT_000136
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 69
+    name: Swordwind
+    name_id: IDS_PROPSKILL_TXT_000138
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 70
+    name: Strongwind
+    name_id: IDS_PROPSKILL_TXT_000140
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 107
+    name: Blinkpool
+    name_id: IDS_PROPSKILL_TXT_000142
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 118
+    name: Ice Missile
+    name_id: IDS_PROPSKILL_TXT_000144
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 119
+    name: Static Ball
+    name_id: IDS_PROPSKILL_TXT_000146
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 120
+    name: Stone Spike
+    name_id: IDS_PROPSKILL_TXT_000148
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 121
+    name: Mental Strike
+    name_id: IDS_PROPSKILL_TXT_000150
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 30
+    name: Fire Strike
+    name_id: IDS_PROPSKILL_TXT_000152
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 31
+    name: Wind Cutter
+    name_id: IDS_PROPSKILL_TXT_000154
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 32
+    name: Waterball
+    name_id: IDS_PROPSKILL_TXT_000156
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 33
+    name: Water Well
+    name_id: IDS_PROPSKILL_TXT_000158
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 34
+    name: Lighting Ram
+    name_id: IDS_PROPSKILL_TXT_000160
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 35
+    name: Lighting Shock
+    name_id: IDS_PROPSKILL_TXT_000162
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 36
+    name: Rock Crash
+    name_id: IDS_PROPSKILL_TXT_000164
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
+  - id: 37
+    name: Rooting
+    name_id: IDS_PROPSKILL_TXT_000166
+    type: active
+    level_req: 1
+    skill_points: 1
+    max_level: 1
+    levels:
+      - level: 1
