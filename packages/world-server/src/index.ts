@@ -90,6 +90,9 @@ async function main(): Promise<void> {
     revivalHandler,
     playerSetDestObjHandler,
     meleeAttackHandler,
+    removeQuestHandler,
+    questCheckHandler,
+    questHelperHandler,
     journal,
     journalReplayer,
   } = await compose();
@@ -153,6 +156,9 @@ async function main(): Promise<void> {
     revivalHandler,
     playerSetDestObjHandler,
     meleeAttackHandler,
+    removeQuestHandler,
+    questCheckHandler,
+    questHelperHandler,
     logger,
   });
   server.listen(config.server.port, () => {

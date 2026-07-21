@@ -31,6 +31,9 @@ import type { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
 import type { RevivalHandler } from './handlers/revival.handler.js';
 import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import type { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
+import type { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
+import type { QuestCheckHandler } from './handlers/questCheck.handler.js';
+import type { QuestHelperHandler } from './handlers/questHelper.handler.js';
 
 export interface WorldClientServerDeps {
   joinHandler: JoinHandler;
@@ -52,6 +55,9 @@ export interface WorldClientServerDeps {
   revivalHandler: RevivalHandler;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
+  removeQuestHandler: RemoveQuestHandler;
+  questCheckHandler: QuestCheckHandler;
+  questHelperHandler: QuestHelperHandler;
   logger?: DispatcherLogger;
 }
 
@@ -81,5 +87,8 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.REVIVAL, (s, r) => deps.revivalHandler.handleRevival(s, r));
   dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r));
   dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
+  dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
+  dispatcher.register(PACKETTYPE.QUEST_CHECK, (s, r) => deps.questCheckHandler.handleQuestCheck(s, r));
+  dispatcher.register(PACKETTYPE.QUESTHELPER_REQNPCPOS, (s, r) => deps.questHelperHandler.handleQuestHelper(s, r));
   return { server, dispatcher };
 }
