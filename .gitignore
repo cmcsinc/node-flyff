@@ -124,9 +124,14 @@ config/*.local.yml
 config/*.local.yaml
 
 # Runtime data files (SQLite WAL journals, dev databases)
+# Cover root data/ AND nested packages/*/data/ — DB_FILENAME is CWD-relative so
+# filter-launched servers/seed create stray DBs alongside each package.
 data/*.sqlite3
 data/*.sqlite3-wal
 data/*.sqlite3-shm
+packages/*/data/*.sqlite3
+packages/*/data/*.sqlite3-wal
+packages/*/data/*.sqlite3-shm
 
 # Resources (Do not commit game data files)
 resources/data/*.txt
