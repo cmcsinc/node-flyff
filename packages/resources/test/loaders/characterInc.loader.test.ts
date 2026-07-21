@@ -26,6 +26,13 @@ const MMI = new Map<string, number>([
   ['MMI_BANKING', 9],
 ]);
 
+const IK3 = new Map<string, number>([
+  ['IK3_SWD', 2],
+  ['IK3_AXE', 3],
+  ['IK3_SUIT', 11],
+  ['IK3_PET', 99],
+]);
+
 const FIXTURE = `
 MaFl_Noier
 {
@@ -52,6 +59,26 @@ MaDa_Lorein
 	AddVendorSlot( 2, IDS_Z );
 }
 
+MaFl_Marche
+{
+	setting
+	{
+		AddMenu( MMI_DIALOG );
+		AddMenu( MMI_TRADE );
+		m_szDialog= "MaFl_Marche.txt";
+		SetVenderType( 1 );
+	}
+
+	AddVendorSlot( 0, IDS_CHARACTER_INC_000022 );
+	AddVendorSlot( 1,
+		IDS_CHARACTER_INC_000023
+	);
+	AddVendorItem( 0, IK3_SWD, 1, 15, 27, 50 );
+	AddVendorItem( 0, IK3_AXE, 1, 15, 27, 50 );
+	AddVendorItem( 1, IK3_SUIT, 3, 15, 27, 25 );
+	AddVendorItem2( 2, 1234 );
+}
+
 MaFl_BankTeller
 {
 	setting
@@ -64,7 +91,7 @@ MaFl_BankTeller
 `;
 
 function index(): CharacterIncIndex {
-  const blocks = parseCharacterInc(FIXTURE, II, MMI);
+  const blocks = parseCharacterInc(FIXTURE, II, IK3, MMI);
   const byKey = new Map(blocks.map((b) => [b.key, b]));
   const byStem = new Map(blocks.map((b) => [b.key.toLowerCase(), b]));
   return { byKey, byStem };
@@ -76,7 +103,8 @@ describe('parseCharacterInc', () => {
     assert.ok(idx.byKey.has('MaFl_Noier'));
     assert.ok(idx.byKey.has('MaDa_Lorein'));
     assert.ok(idx.byKey.has('MaFl_BankTeller'));
-    assert.equal(idx.byKey.size, 3);
+    assert.ok(idx.byKey.has('MaFl_Marche'));
+    assert.equal(idx.byKey.size, 4);
   });
 
   it('extracts MMI_DIALOG for every dialog NPC', () => {
@@ -122,10 +150,49 @@ describe('parseCharacterInc', () => {
     assert.equal(idx.byKey.get('MaDa_Lorein')!.dialogFile, 'MaDa_Lorein.txt');
   });
 
-  it('counts AddVendorSlot entries', () => {
+  it('captures AddVendorSlot entries as tabs with slot + label token', () => {
     const idx = index();
-    assert.equal(idx.byKey.get('MaDa_Lorein')!.vendorSlotCount, 3);
+    const lorein = idx.byKey.get('MaDa_Lorein')!;
+    assert.equal(lorein.vendorSlotCount, 3);
+    assert.deepEqual(
+      lorein.vendorTabs.map((t) => [t.slot, t.label]),
+      [[0, 'IDS_X'], [1, 'IDS_Y'], [2, 'IDS_Z']],
+    );
     assert.equal(idx.byKey.get('MaFl_Noier')!.vendorSlotCount, 0);
+  });
+
+  it('parses AddVendorItem (IK3 resolved) + AddVendorItem2 + SetVenderType', () => {
+    const idx = index();
+    const m = idx.byKey.get('MaFl_Marche')!;
+    assert.deepEqual(
+      m.vendorTabs.map((t) => [t.slot, t.label]),
+      [[0, 'IDS_CHARACTER_INC_000022'], [1, 'IDS_CHARACTER_INC_000023']],
+      'multiline AddVendorSlot arg form captured',
+    );
+    assert.deepEqual(
+      m.vendorItems.map((v) => [v.slot, v.itemKind3, v.itemJob, v.uniqueMin, v.uniqueMax, v.totalNum]),
+      [
+        [0, IK3.get('IK3_SWD')!, 1, 15, 27, 50],
+        [0, IK3.get('IK3_AXE')!, 1, 15, 27, 50],
+        [1, IK3.get('IK3_SUIT')!, 3, 15, 27, 25],
+      ],
+      'IK3_* resolved to defineItemkind.h numbers',
+    );
+    assert.deepEqual(
+      m.vendorItemIds.map((v) => [v.slot, v.itemId]),
+      [[2, 1234]],
+      'AddVendorItem2 captures concrete item id',
+    );
+    assert.equal(m.venderType, 1);
+  });
+
+  it('resolves a character.inc block key even without outfit (AddMenu-only NPC)', () => {
+    const idx = index();
+    const noier = idx.byKey.get('MaFl_Noier')!;
+    assert.equal(noier.outfit, undefined, 'no SetFigure/SetEquip');
+    assert.equal(noier.key, 'MaFl_Noier', 'block key still present for m_szCharacterKey');
+    assert.equal(noier.hasDialog, true);
+    assert.equal(noier.vendorItems.length, 0);
   });
 
   it('handles AddMenuLang form (lang, sub, MMI_*) like AddMenu', () => {
@@ -139,7 +206,7 @@ MaFl_Langer
 	}
 }
 `;
-    const blocks = parseCharacterInc(src, II, MMI);
+    const blocks = parseCharacterInc(src, II, IK3, MMI);
     assert.equal(blocks[0]!.menus.includes(MMI_DIALOG), true);
     assert.equal(blocks[0]!.menus.includes(MMI.get('MMI_TRADE')!), true);
   });
@@ -156,7 +223,7 @@ MaFl_Hidden
 	}
 }
 `;
-    const blocks = parseCharacterInc(src, II, MMI);
+    const blocks = parseCharacterInc(src, II, IK3, MMI);
     assert.equal(blocks[0]!.outfit, undefined, 'commented outfit lines must not match');
   });
 });

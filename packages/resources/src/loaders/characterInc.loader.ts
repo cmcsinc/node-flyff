@@ -54,6 +54,47 @@ export interface CharacterIncEquipPart {
   readonly itemId: number;
 }
 
+/**
+ * One shop tab — C++ `AddVendorSlot( nSlot, IDS_* )` → `m_venderSlot[nSlot]`
+ * (Project.cpp:3047-3053). The label is a client string-table id (resolved from
+ * the client's own resources); the server stores the raw token verbatim.
+ */
+export interface CharacterIncVendorTab {
+  readonly slot: number;
+  /** Raw label token (e.g. `IDS_CHARACTER_INC_000022`). Client resolves text. */
+  readonly label: string;
+}
+
+/**
+ * One category-based shop entry — C++ `AddVendorItem` → `VENDOR_ITEM` pushed to
+ * `m_venderItemAry[nSlot]` (Project.cpp:3095-3112). The server expands the
+ * category + sex/level range into concrete propItem ids when a future shop-open
+ * handler needs the stock list.
+ */
+export interface CharacterIncVendorItem {
+  readonly slot: number;
+  /** `m_nItemkind3` — IK3_* (defineItemkind.h) resolved to its number. */
+  readonly itemKind3: number;
+  /** `m_nItemJob` — sex/job filter (raw arg 3; -1 = any). */
+  readonly itemJob: number;
+  /** `m_nUniqueMin` — min item level/grade bound. */
+  readonly uniqueMin: number;
+  /** `m_nUniqueMax` — max item level/grade bound. */
+  readonly uniqueMax: number;
+  /** `m_nTotalNum` — stock count / density. */
+  readonly totalNum: number;
+}
+
+/**
+ * One explicit-id shop entry — C++ `AddVendorItem2( nSlot, dwId )` →
+ * `m_venderItemAry2[nSlot]` (Project.cpp:3114-3123). `dwId` is a concrete
+ * propItem id (II_* value), no category expansion needed.
+ */
+export interface CharacterIncVendorItemId {
+  readonly slot: number;
+  readonly itemId: number;
+}
+
 /** Outfit fields — C++ `SetFigure` (Project.cpp:2959) + `SetEquip` (:2928). */
 export interface CharacterIncOutfit {
   readonly characterKey: string;
@@ -77,7 +118,15 @@ export interface CharacterIncBlock {
   readonly outfit: CharacterIncOutfit | undefined;
   /** `m_szDialog` filename (e.g. `MaFl_Marche.txt`). */
   readonly dialogFile: string | undefined;
-  /** Count of `AddVendorSlot(...)` entries. */
+  /** Shop tabs from `AddVendorSlot` (label is a client string-table id). */
+  readonly vendorTabs: readonly CharacterIncVendorTab[];
+  /** Category stock from `AddVendorItem` (IK3_* + sex/level range). */
+  readonly vendorItems: readonly CharacterIncVendorItem[];
+  /** Explicit-id stock from `AddVendorItem2` (concrete propItem ids). */
+  readonly vendorItemIds: readonly CharacterIncVendorItemId[];
+  /** `m_nVenderType` from `SetVenderType` (`undefined` when not set). */
+  readonly venderType: number | undefined;
+  /** Count of `AddVendorSlot(...)` entries (`vendorTabs.length`). */
   readonly vendorSlotCount: number;
 }
 
@@ -134,6 +183,7 @@ function parseBlock(
   key: string,
   body: string,
   iiIds: Map<string, number>,
+  ik3Ids: Map<string, number>,
   mmiIds: Map<string, number>,
 ): CharacterIncBlock {
   const menus = new Set<number>();
@@ -148,7 +198,11 @@ function parseBlock(
   const dlg = body.match(/m_szDialog\s*=\s*"([^"]+)"/);
   const dialogFile = dlg?.[1];
 
-  const vendorSlotCount = body.split(/\bAddVendorSlot\b/).length - 1;
+  const vendorTabs = parseVendorTabs(body);
+  const vendorItems = parseVendorItems(body, ik3Ids);
+  const vendorItemIds = parseVendorItemIds(body);
+  const vt = body.match(/\bSetVend[oe]rType\s*\(\s*(-?\d+)\s*\)/);
+  const venderType = vt?.[1] !== undefined ? parseInt(vt[1], 10) : undefined;
 
   const fig = body.match(
     /SetFigure\s*\(\s*MI_[A-Z0-9_]+\s*,\s*(\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(\d+)\s*\)/,
@@ -175,7 +229,77 @@ function parseBlock(
   }
 
   const menuArr = [...menus].sort((a, b) => a - b);
-  return { key, menus: menuArr, hasDialog: menus.has(MMI_DIALOG), outfit, dialogFile, vendorSlotCount };
+  return {
+    key,
+    menus: menuArr,
+    hasDialog: menus.has(MMI_DIALOG),
+    outfit,
+    dialogFile,
+    vendorTabs,
+    vendorItems,
+    vendorItemIds,
+    venderType,
+    vendorSlotCount: vendorTabs.length,
+  };
+}
+
+/**
+ * `AddVendorSlot( nSlot, IDS_* )` → `m_venderSlot[nSlot]` (Project.cpp:3047).
+ * Accepts the C++ `AddVenderSlot` misspelling too. The label token is captured
+ * verbatim — it's a client string-table id the server never resolves.
+ */
+function parseVendorTabs(body: string): CharacterIncVendorTab[] {
+  const re = /\bAddVend[oe]rSlot\s*\(\s*(\d+)\s*,\s*([A-Za-z0-9_]+)\s*\)/g;
+  const out: CharacterIncVendorTab[] = [];
+  for (const m of body.matchAll(re)) {
+    const slot = m[1];
+    const label = m[2];
+    if (slot !== undefined && label !== undefined) out.push({ slot: parseInt(slot, 10), label });
+  }
+  return out;
+}
+
+/**
+ * `AddVendorItem( nSlot, IK3_*, nJob, nUniqueMin, nUniqueMax, nTotalNum )` →
+ * `m_venderItemAry[nSlot]` (Project.cpp:3095). IK3_* resolved via
+ * `defineItemkind.h`; a bare numeric literal is accepted too. `AddVendorItem2`
+ * is excluded by the trailing `\b\s*\)` boundary (the `2` has no word boundary
+ * before the paren-less form).
+ */
+function parseVendorItems(body: string, ik3Ids: Map<string, number>): CharacterIncVendorItem[] {
+  const re = /\bAddVend[oe]rItem\s*\(\s*(\d+)\s*,\s*([A-Za-z0-9_]+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/g;
+  const out: CharacterIncVendorItem[] = [];
+  for (const m of body.matchAll(re)) {
+    const [, slotRaw, kindTok, jobRaw, minRaw, maxRaw, numRaw] = m;
+    if (slotRaw === undefined || kindTok === undefined || jobRaw === undefined ||
+        minRaw === undefined || maxRaw === undefined || numRaw === undefined) continue;
+    const itemKind3 = ik3Ids.get(kindTok) ?? (/^\d+$/.test(kindTok) ? parseInt(kindTok, 10) : -1);
+    out.push({
+      slot: parseInt(slotRaw, 10),
+      itemKind3,
+      itemJob: parseInt(jobRaw, 10),
+      uniqueMin: parseInt(minRaw, 10),
+      uniqueMax: parseInt(maxRaw, 10),
+      totalNum: parseInt(numRaw, 10),
+    });
+  }
+  return out;
+}
+
+/**
+ * `AddVendorItem2( nSlot, dwId )` → `m_venderItemAry2[nSlot]`
+ * (Project.cpp:3114). `dwId` is a concrete propItem id. Distinct from
+ * `AddVendorItem` by the explicit `2` before the paren.
+ */
+function parseVendorItemIds(body: string): CharacterIncVendorItemId[] {
+  const re = /\bAddVend[oe]rItem2\s*\(\s*(\d+)\s*,\s*(-?\d+)\s*\)/g;
+  const out: CharacterIncVendorItemId[] = [];
+  for (const m of body.matchAll(re)) {
+    const slot = m[1];
+    const itemId = m[2];
+    if (slot !== undefined && itemId !== undefined) out.push({ slot: parseInt(slot, 10), itemId: parseInt(itemId, 10) });
+  }
+  return out;
 }
 
 function parseHex(s: string): number {
@@ -188,6 +312,7 @@ function parseHex(s: string): number {
 export function parseCharacterInc(
   content: string,
   iiIds: Map<string, number>,
+  ik3Ids: Map<string, number>,
   mmiIds: Map<string, number>,
 ): CharacterIncBlock[] {
   const blocks: CharacterIncBlock[] = [];
@@ -208,7 +333,7 @@ export function parseCharacterInc(
       i++;
     }
     const body = src.slice(openIdx + 1, i - 1);
-    blocks.push(parseBlock(key, body, iiIds, mmiIds));
+    blocks.push(parseBlock(key, body, iiIds, ik3Ids, mmiIds));
     headerRe.lastIndex = i;
   }
   return blocks;
@@ -229,14 +354,16 @@ export async function loadCharacterInc(rawDir: string): Promise<CharacterIncInde
     return { byKey: new Map(), byStem: new Map() };
   }
 
-  const [iiBuf, mmiBuf] = await Promise.all([
+  const [iiBuf, ik3Buf, mmiBuf] = await Promise.all([
     readFile(resolve(rawDir, 'defineItem.h')).catch(() => null),
+    readFile(resolve(rawDir, 'defineItemkind.h')).catch(() => null),
     readFile(resolve(rawDir, 'defineNeuz.h')).catch(() => null),
   ]);
   const iiIds = iiBuf ? parseDefines(decode(iiBuf), 'II_') : new Map<string, number>();
+  const ik3Ids = ik3Buf ? parseDefines(decode(ik3Buf), 'IK3_') : new Map<string, number>();
   const mmiIds = mmiBuf ? parseDefines(decode(mmiBuf), 'MMI_') : new Map<string, number>();
 
-  const blocks = parseCharacterInc(decode(buf), iiIds, mmiIds);
+  const blocks = parseCharacterInc(decode(buf), iiIds, ik3Ids, mmiIds);
   const byKey = new Map<string, CharacterIncBlock>();
   const byStem = new Map<string, CharacterIncBlock>();
   for (const b of blocks) {
@@ -244,7 +371,7 @@ export async function loadCharacterInc(rawDir: string): Promise<CharacterIncInde
     byStem.set(b.key.toLowerCase(), b);
   }
   logger.info(
-    { blocks: blocks.length, dialog: blocks.filter((b) => b.hasDialog).length, ii: iiIds.size, mmi: mmiIds.size },
+    { blocks: blocks.length, dialog: blocks.filter((b) => b.hasDialog).length, ii: iiIds.size, ik3: ik3Ids.size, mmi: mmiIds.size },
     'character.inc loaded',
   );
   return { byKey, byStem };

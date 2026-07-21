@@ -39,6 +39,20 @@ function makeEquippedNpc(id: number): CMover {
   return m;
 }
 
+/**
+ * Dialog-only NPC (Mikyel): AddMenu(MMI_DIALOG) but NO SetFigure/SetEquip.
+ * `characterKey` is set standalone (decoupled from outfit) so the client can
+ * resolve its `m_abMoverMenu` → right-click "Dialog" option.
+ */
+function makeDialogNpc(id: number): CMover {
+  return CMover.spawn(
+    id,
+    { modelIndex: 12, level: 1, hp: 1000, name: 'Mikyel', characterKey: 'MaFl_Mikyel' },
+    { x: 1000, y: 100, z: 2000 },
+    1,
+  );
+}
+
 describe('NpcSnapshotSerializer', () => {
   const serializer = new NpcSnapshotSerializer();
 
@@ -124,5 +138,19 @@ describe('NpcSnapshotSerializer', () => {
     assert.equal(buf.readUInt16LE(8), 2);
     assert.equal(buf.length, 10 + 2 * 82); // 174
     assert.equal(buf.readUInt32LE(92), 0x40000001); // second objid after frame+entry0
+  });
+
+  it('emits characterKey for a dialog-only NPC with no outfit (menu fix)', () => {
+    const buf = serializer.build([makeDialogNpc(0x40000002)]);
+    // Frame(10) + entry: monster base 82 + 11 chars "MaFl_Mikyel" = 93 → 103.
+    assert.equal(buf.length, 103);
+    // Same NPC-branch layout as the equipped case up to uSize; key present,
+    // hair/head zeroed, equip empty.
+    assert.equal(buf.readUInt8(66), 0);                  // hairMesh
+    assert.equal(buf.readUInt32LE(67), 0);               // hairColor
+    assert.equal(buf.readUInt8(71), 0);                  // headMesh
+    assert.equal(buf.readUInt32LE(72), 11);              // strlen "MaFl_Mikyel"
+    assert.equal(buf.subarray(76, 87).toString('ascii'), 'MaFl_Mikyel');
+    assert.equal(buf.readUInt8(87), 0);                  // uSize — no equip parts
   });
 });

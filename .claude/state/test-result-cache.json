@@ -137,5 +137,14 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\combat\\equipStats.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\mover.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\equip.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\consumable.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\consumable.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\useItem.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\bank.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\moveItem.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\dropItem.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\dropGold.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\doEquip.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\doUseItem.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\bank.handler.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\characterInc.loader.test.ts": "pass"
 }
