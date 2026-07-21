@@ -1,0 +1,2346 @@
+"11":
+  file: player.yml
+  name: Male
+"12":
+  file: player.yml
+  name: Female
+"20":
+  file: monsters.yml
+  name: Small Aibatt
+"21":
+  file: monsters.yml
+  name: Aibatt
+"22":
+  file: monsters.yml
+  name: Captain Aibatt
+"23":
+  file: monsters.yml
+  name: Giant Aibatt
+"24":
+  file: monsters.yml
+  name: Small Burudeng
+"25":
+  file: monsters.yml
+  name: Burudeng
+"26":
+  file: monsters.yml
+  name: Captain Burudeng
+"27":
+  file: monsters.yml
+  name: Giant Burudeng
+"28":
+  file: monsters.yml
+  name: Small Pukepuke
+"29":
+  file: monsters.yml
+  name: Pukepuke
+"30":
+  file: monsters.yml
+  name: Captain Pukepuke
+"31":
+  file: monsters.yml
+  name: Giant Pukepuke
+"32":
+  file: monsters.yml
+  name: Small Doridoma
+"33":
+  file: monsters.yml
+  name: Doridoma
+"34":
+  file: monsters.yml
+  name: Captain Doridoma
+"35":
+  file: monsters.yml
+  name: Giant Doridoma
+"36":
+  file: monsters.yml
+  name: Young Lawolf
+"37":
+  file: monsters.yml
+  name: Lawolf
+"38":
+  file: monsters.yml
+  name: Grownup Lawolf
+"39":
+  file: monsters.yml
+  name: Giant Lawolf
+"40":
+  file: monsters.yml
+  name: Cute Nyangnyang
+"41":
+  file: monsters.yml
+  name: Nyangnyang
+"42":
+  file: monsters.yml
+  name: Creep Nyangnyang
+"43":
+  file: monsters.yml
+  name: Giant Nyangnyang
+"44":
+  file: monsters.yml
+  name: Bang
+"45":
+  file: monsters.yml
+  name: Captain Bang
+"46":
+  file: monsters.yml
+  name: Boss Bang
+"47":
+  file: monsters.yml
+  name: Giant Bang
+"48":
+  file: monsters.yml
+  name: Small Wagsaac
+"49":
+  file: monsters.yml
+  name: Wagsaac
+"50":
+  file: monsters.yml
+  name: Captain Wagsaac
+"51":
+  file: monsters.yml
+  name: Giant Wagsaac
+"52":
+  file: monsters.yml
+  name: Rough Wheelem
+"53":
+  file: monsters.yml
+  name: Wheelem
+"54":
+  file: monsters.yml
+  name: Bouncing Wheelem
+"55":
+  file: monsters.yml
+  name: Giant Wheelem
+"56":
+  file: monsters.yml
+  name: Small Tombstone Bearer
+"57":
+  file: monsters.yml
+  name: Tombstone Bearer
+"58":
+  file: monsters.yml
+  name: Captain Tombstone Bearer
+"59":
+  file: monsters.yml
+  name: Giant Tombstone Bearer
+"60":
+  file: monsters.yml
+  name: 1st Class Fefern
+"61":
+  file: monsters.yml
+  name: Fefern
+"62":
+  file: monsters.yml
+  name: 2nd Class Fefern
+"63":
+  file: monsters.yml
+  name: Giant Fefern
+"64":
+  file: monsters.yml
+  name: Red Mantis C
+"65":
+  file: monsters.yml
+  name: Red Mantis B
+"66":
+  file: monsters.yml
+  name: Red Mantis A
+"67":
+  file: monsters.yml
+  name: Giant Red Mantis
+"68":
+  file: monsters.yml
+  name: Stale Mr. Pumpkin
+"69":
+  file: monsters.yml
+  name: Mr. Pumpkin
+"70":
+  file: monsters.yml
+  name: Rotten Mr Pumpkin
+"71":
+  file: monsters.yml
+  name: Giant Mr. Pumpkin
+"72":
+  file: monsters.yml
+  name: Phantom Basque
+"73":
+  file: monsters.yml
+  name: Basque
+"74":
+  file: monsters.yml
+  name: Lumping Basque
+"75":
+  file: monsters.yml
+  name: Giant Basque
+"80":
+  file: monsters.yml
+  name: Small Mage Prankster
+"81":
+  file: monsters.yml
+  name: Prankster
+"82":
+  file: monsters.yml
+  name: Master Mage Prankster
+"83":
+  file: monsters.yml
+  name: Giantmage Prankster
+"84":
+  file: monsters.yml
+  name: Maid Cardpuppet
+"85":
+  file: monsters.yml
+  name: Cardpuppet
+"86":
+  file: monsters.yml
+  name: Manager Cardpuppet
+"87":
+  file: monsters.yml
+  name: Boss Cardpuppet
+"88":
+  file: monsters.yml
+  name: Urchin Demian
+"89":
+  file: monsters.yml
+  name: Demian
+"90":
+  file: monsters.yml
+  name: Bad Demian
+"91":
+  file: monsters.yml
+  name: Giant Demian
+"92":
+  file: monsters.yml
+  name: Small Rock Muscle
+"93":
+  file: monsters.yml
+  name: Rock Muscle
+"94":
+  file: monsters.yml
+  name: Captain Rock Muscle
+"95":
+  file: monsters.yml
+  name: Giant Rock Muscle
+"96":
+  file: monsters.yml
+  name: Small Mushpang
+"97":
+  file: monsters.yml
+  name: Mushpang
+"98":
+  file: monsters.yml
+  name: Captain Mushpang
+"99":
+  file: monsters.yml
+  name: Giant Mushpang
+"100":
+  file: monsters.yml
+  name: Brazenface Pukepuke
+"101":
+  file: monsters.yml
+  name: Heartless Bang
+"102":
+  file: monsters.yml
+  name: Tough Rock Muscle
+"103":
+  file: monsters.yml
+  name: Small Totemia
+"104":
+  file: monsters.yml
+  name: Totemia
+"105":
+  file: monsters.yml
+  name: Captain Totemia
+"106":
+  file: monsters.yml
+  name: Giant Totemia
+"107":
+  file: monsters.yml
+  name: Small Steam Walker
+"108":
+  file: monsters.yml
+  name: Steam Walker
+"109":
+  file: monsters.yml
+  name: Captain Steam Walker
+"110":
+  file: monsters.yml
+  name: Giant Steam Walker
+"111":
+  file: monsters.yml
+  name: Flying Aibatt
+"112":
+  file: monsters.yml
+  name: Small Volt
+"113":
+  file: monsters.yml
+  name: Volt
+"114":
+  file: monsters.yml
+  name: Captain Volt
+"115":
+  file: monsters.yml
+  name: Giant Volt
+"116":
+  file: monsters.yml
+  name: Small Circus Bear
+"117":
+  file: monsters.yml
+  name: Circus Bear
+"118":
+  file: monsters.yml
+  name: Captain Circus Bear
+"119":
+  file: monsters.yml
+  name: Giant Circus Bear
+"120":
+  file: monsters.yml
+  name: Small Mia
+"121":
+  file: monsters.yml
+  name: Mia
+"122":
+  file: monsters.yml
+  name: Captain Mia
+"123":
+  file: monsters.yml
+  name: Giant Mia
+"130":
+  file: monsters.yml
+  name: Small Pire
+"131":
+  file: monsters.yml
+  name: Pire
+"132":
+  file: monsters.yml
+  name: Captain Pire
+"133":
+  file: monsters.yml
+  name: Giant Pire
+"134":
+  file: monsters.yml
+  name: Small Froziest
+"135":
+  file: monsters.yml
+  name: Froziest
+"136":
+  file: monsters.yml
+  name: Captain Froziest
+"137":
+  file: monsters.yml
+  name: Giant Froziest
+"160":
+  file: monsters.yml
+  name: Small Burn Bird
+"161":
+  file: monsters.yml
+  name: Burn Bird
+"162":
+  file: monsters.yml
+  name: Captain Burn Bird
+"163":
+  file: monsters.yml
+  name: Giant Burn Bird
+"164":
+  file: npcs.yml
+  name: Clockworks
+"165":
+  file: npcs.yml
+  name: Big Muscle
+"166":
+  file: npcs.yml
+  name: Krrr
+"167":
+  file: npcs.yml
+  name: Mushmoot
+"168":
+  file: monsters.yml
+  name: Small Mushpoie
+"190":
+  file: monsters.yml
+  name: Small Buketfoot
+"191":
+  file: monsters.yml
+  name: Buketfoot
+"192":
+  file: monsters.yml
+  name: Captain Buketfoot
+"193":
+  file: monsters.yml
+  name: Giant Buketfoot
+"196":
+  file: monsters.yml
+  name: Master Demian
+"197":
+  file: monsters.yml
+  name: Master Keakoon
+"198":
+  file: monsters.yml
+  name: Master Muffrin
+"199":
+  file: monsters.yml
+  name: Beast Mr. Pumpkin
+"200":
+  file: npcs.yml
+  name: Infopeng
+"201":
+  file: npcs.yml
+  name: Dwarpet
+"202":
+  file: npcs.yml
+  name: Master Dwarpet
+"203":
+  file: npcs.yml
+  name: Iblis
+"204":
+  file: npcs.yml
+  name: Shade
+"205":
+  file: npcs.yml
+  name: Bubble
+"206":
+  file: monsters.yml
+  name: Beast Zombiger
+"210":
+  file: npcs.yml
+  name: Losha
+"211":
+  file: npcs.yml
+  name: Boboku
+"212":
+  file: npcs.yml
+  name: Julia
+"213":
+  file: npcs.yml
+  name: Lui
+"214":
+  file: npcs.yml
+  name: Marche
+"215":
+  file: npcs.yml
+  name: Bulrox
+"216":
+  file: npcs.yml
+  name: Tina
+"217":
+  file: npcs.yml
+  name: Karin
+"218":
+  file: npcs.yml
+  name: Martin
+"219":
+  file: npcs.yml
+  name: Bill
+"220":
+  file: npcs.yml
+  name: Rhine
+"221":
+  file: npcs.yml
+  name: Stima
+"222":
+  file: npcs.yml
+  name: Phacham
+"223":
+  file: npcs.yml
+  name: Roocky
+"224":
+  file: npcs.yml
+  name: Ollien
+"225":
+  file: npcs.yml
+  name: Haven
+"226":
+  file: npcs.yml
+  name: Chitller
+"227":
+  file: npcs.yml
+  name: Bolpor
+"228":
+  file: npcs.yml
+  name: Almani
+"229":
+  file: npcs.yml
+  name: Achaben
+"230":
+  file: npcs.yml
+  name: Eshylop
+"231":
+  file: npcs.yml
+  name: Remine
+"232":
+  file: npcs.yml
+  name: Unknown
+"233":
+  file: npcs.yml
+  name: Agent
+"234":
+  file: npcs.yml
+  name: Guardian
+"235":
+  file: npcs.yml
+  name: Ancimys
+"236":
+  file: npcs.yml
+  name: Santa
+"237":
+  file: npcs.yml
+  name: Priest
+"238":
+  file: npcs.yml
+  name: Chitos
+"239":
+  file: npcs.yml
+  name: Polar Bear
+"300":
+  file: monsters.yml
+  name: Small Flbyrigen
+"301":
+  file: monsters.yml
+  name: Flbyrigen
+"302":
+  file: monsters.yml
+  name: Captain Flbyrigen
+"303":
+  file: monsters.yml
+  name: Giant Flbyrigen
+"304":
+  file: monsters.yml
+  name: Small Mothbee
+"305":
+  file: monsters.yml
+  name: Mothbee
+"306":
+  file: monsters.yml
+  name: Captain Mothbee
+"307":
+  file: monsters.yml
+  name: Giant Mothbee
+"308":
+  file: monsters.yml
+  name: Small Rockepeller
+"309":
+  file: monsters.yml
+  name: Rockepeller
+"310":
+  file: monsters.yml
+  name: Captain Rockepeller
+"311":
+  file: monsters.yml
+  name: Giant Rockepeller
+"400":
+  file: monsters.yml
+  name: Small Giggle Box
+"401":
+  file: monsters.yml
+  name: Giggle Box
+"402":
+  file: monsters.yml
+  name: Captain Giggle Box
+"403":
+  file: monsters.yml
+  name: Giant Giggle Box
+"404":
+  file: monsters.yml
+  name: Small Garbagepider
+"405":
+  file: monsters.yml
+  name: Garbagepider
+"406":
+  file: monsters.yml
+  name: Captain Garbagepider
+"407":
+  file: monsters.yml
+  name: Giant Garbagepider
+"408":
+  file: monsters.yml
+  name: Small Rampage Butcher
+"409":
+  file: monsters.yml
+  name: Small Rampage Butcher
+"410":
+  file: monsters.yml
+  name: Captain Rampage Butcher
+"411":
+  file: monsters.yml
+  name: Giant Rampage Butcher
+"500":
+  file: monsters.yml
+  name: Small Greemong
+"501":
+  file: monsters.yml
+  name: Greemong
+"502":
+  file: monsters.yml
+  name: Captain Greemong
+"503":
+  file: monsters.yml
+  name: Giant Greemong
+"504":
+  file: monsters.yml
+  name: Small Driller
+"505":
+  file: monsters.yml
+  name: Driller
+"506":
+  file: monsters.yml
+  name: Captain Driller
+"507":
+  file: monsters.yml
+  name: Giant Driller
+"508":
+  file: monsters.yml
+  name: Small Steel Knight
+"509":
+  file: monsters.yml
+  name: Steel Knight
+"510":
+  file: monsters.yml
+  name: Captain Steel Knight
+"511":
+  file: monsters.yml
+  name: Giant Steel Knight
+"512":
+  file: monsters.yml
+  name: Small Elderguard
+"513":
+  file: monsters.yml
+  name: Elderguard
+"514":
+  file: monsters.yml
+  name: Captain Elderguard
+"515":
+  file: monsters.yml
+  name: Giant Elderguard
+"516":
+  file: monsters.yml
+  name: Small Crane Machinery
+"517":
+  file: monsters.yml
+  name: Crane Machinery
+"518":
+  file: monsters.yml
+  name: Captain Crane Machinery
+"519":
+  file: monsters.yml
+  name: Giant Crane Machinery
+"520":
+  file: monsters.yml
+  name: Pawn Popcrank
+"521":
+  file: monsters.yml
+  name: Knight Popcrank
+"522":
+  file: monsters.yml
+  name: Rook Popcrank
+"523":
+  file: monsters.yml
+  name: Bishop Popcrank
+"524":
+  file: monsters.yml
+  name: Small Peakyturtle
+"525":
+  file: monsters.yml
+  name: Peakyturtle
+"526":
+  file: monsters.yml
+  name: Captain Peakyturtle
+"527":
+  file: monsters.yml
+  name: Giant Peakyturtle
+"528":
+  file: monsters.yml
+  name: Small Hobo
+"529":
+  file: monsters.yml
+  name: Hobo
+"530":
+  file: monsters.yml
+  name: Captain Hobo
+"531":
+  file: monsters.yml
+  name: Giant Hobo
+"532":
+  file: monsters.yml
+  name: Small Clawdoll
+"533":
+  file: monsters.yml
+  name: Clawdoll
+"534":
+  file: monsters.yml
+  name: Captain Clawdoll
+"535":
+  file: monsters.yml
+  name: Giant Clawdoll
+"536":
+  file: monsters.yml
+  name: Small Carrierbomb
+"537":
+  file: monsters.yml
+  name: Carrierbomb
+"538":
+  file: monsters.yml
+  name: Captain Carrierbomb
+"539":
+  file: monsters.yml
+  name: Giant Carrierbomb
+"540":
+  file: monsters.yml
+  name: Small Leyena
+"541":
+  file: monsters.yml
+  name: Leyena
+"542":
+  file: monsters.yml
+  name: Captain Leyena
+"543":
+  file: monsters.yml
+  name: Giant Leyena
+"544":
+  file: monsters.yml
+  name: Small Dumb Bull
+"545":
+  file: monsters.yml
+  name: Dumb Bull
+"546":
+  file: monsters.yml
+  name: Captain Dumb Bull
+"547":
+  file: monsters.yml
+  name: Giant Dumb Bull
+"548":
+  file: monsters.yml
+  name: Small Nutty Wheel
+"549":
+  file: monsters.yml
+  name: Nutty Wheel
+"550":
+  file: monsters.yml
+  name: Captain Nutty Wheel
+"551":
+  file: monsters.yml
+  name: Giant Nutty Wheel
+"552":
+  file: monsters.yml
+  name: Small Jack the Hammer
+"553":
+  file: monsters.yml
+  name: Jack the Hammer
+"554":
+  file: monsters.yml
+  name: Captain Jack the Hammer
+"555":
+  file: monsters.yml
+  name: Giant Jack the Hammer
+"556":
+  file: monsters.yml
+  name: Mine Catcher
+"557":
+  file: monsters.yml
+  name: Erons Catcher
+"558":
+  file: monsters.yml
+  name: Krasec Catcher
+"559":
+  file: monsters.yml
+  name: Guru Catcher
+"560":
+  file: monsters.yml
+  name: Small Nuctuvehicle
+"561":
+  file: monsters.yml
+  name: Nuctuvehicle
+"562":
+  file: monsters.yml
+  name: Captain Nuctuvehicle
+"563":
+  file: monsters.yml
+  name: Giant Nuctuvehicle
+"564":
+  file: monsters.yml
+  name: Small Risem
+"565":
+  file: monsters.yml
+  name: Risem
+"566":
+  file: monsters.yml
+  name: Captain Risem
+"567":
+  file: monsters.yml
+  name: Giant Risem
+"568":
+  file: monsters.yml
+  name: Young Syliaca
+"569":
+  file: monsters.yml
+  name: Syliaca
+"570":
+  file: monsters.yml
+  name: Grownup Syliaca
+"571":
+  file: monsters.yml
+  name: Giant Syliaca
+"572":
+  file: monsters.yml
+  name: Small Zombiger
+"573":
+  file: monsters.yml
+  name: Zombiger
+"575":
+  file: monsters.yml
+  name: Captain Zombiger
+"576":
+  file: monsters.yml
+  name: Giant Zombiger
+"577":
+  file: monsters.yml
+  name: Small Flybat
+"578":
+  file: monsters.yml
+  name: Flybat
+"579":
+  file: monsters.yml
+  name: Captain Flybat
+"580":
+  file: monsters.yml
+  name: Giant Flybat
+"581":
+  file: monsters.yml
+  name: Small Bucrow
+"582":
+  file: monsters.yml
+  name: Bucrow
+"583":
+  file: monsters.yml
+  name: Captain Bucrow
+"584":
+  file: monsters.yml
+  name: Giant Bucrow
+"585":
+  file: monsters.yml
+  name: Small Scorpicon
+"586":
+  file: monsters.yml
+  name: Scorpicon
+"587":
+  file: monsters.yml
+  name: Captain Scorpicon
+"588":
+  file: monsters.yml
+  name: Giant Scorpicon
+"589":
+  file: monsters.yml
+  name: Small Trangfoma
+"590":
+  file: monsters.yml
+  name: Trangfoma
+"591":
+  file: monsters.yml
+  name: Captain Trangfoma
+"592":
+  file: monsters.yml
+  name: Giant Trangfoma
+"593":
+  file: monsters.yml
+  name: Guru Catcher
+"594":
+  file: monsters.yml
+  name: Small Watangka
+"595":
+  file: monsters.yml
+  name: Watangka
+"596":
+  file: monsters.yml
+  name: Captain Watangka
+"597":
+  file: monsters.yml
+  name: Giant Watangka
+"598":
+  file: monsters.yml
+  name: Small Iren
+"599":
+  file: monsters.yml
+  name: Iren
+"600":
+  file: monsters.yml
+  name: Captain Iren
+"601":
+  file: monsters.yml
+  name: Giant Iren
+"602":
+  file: monsters.yml
+  name: Small Boo
+"603":
+  file: monsters.yml
+  name: Boo
+"604":
+  file: monsters.yml
+  name: Captain Boo
+"605":
+  file: monsters.yml
+  name: Giant Boo
+"606":
+  file: monsters.yml
+  name: Small Luia
+"607":
+  file: monsters.yml
+  name: Luia
+"608":
+  file: monsters.yml
+  name: Captain Luia
+"609":
+  file: monsters.yml
+  name: Giant Luia
+"610":
+  file: monsters.yml
+  name: Small Glaphan
+"611":
+  file: monsters.yml
+  name: Glaphan
+"612":
+  file: monsters.yml
+  name: Captain Glaphan
+"613":
+  file: monsters.yml
+  name: Giant Glaphan
+"614":
+  file: monsters.yml
+  name: Small Shuhamma
+"615":
+  file: monsters.yml
+  name: Shuhamma
+"616":
+  file: monsters.yml
+  name: Captain Shuhamma
+"617":
+  file: monsters.yml
+  name: Giant Shuhamma
+"618":
+  file: monsters.yml
+  name: Small Nautrepy
+"619":
+  file: monsters.yml
+  name: Nautrepy
+"620":
+  file: monsters.yml
+  name: Captain Nautrepy
+"621":
+  file: monsters.yml
+  name: Giant Nautrepy
+"622":
+  file: monsters.yml
+  name: Small Grrr
+"623":
+  file: monsters.yml
+  name: Grrr
+"624":
+  file: monsters.yml
+  name: Captain Grrr
+"625":
+  file: monsters.yml
+  name: Giant Grrr
+"626":
+  file: monsters.yml
+  name: Small Antiquery
+"627":
+  file: monsters.yml
+  name: Antiquery
+"628":
+  file: monsters.yml
+  name: Captain Antiquery
+"629":
+  file: monsters.yml
+  name: Giant Antiquery
+"630":
+  file: monsters.yml
+  name: Small Mushpoie
+"631":
+  file: monsters.yml
+  name: Mushpoie
+"632":
+  file: monsters.yml
+  name: Captain Mushpoie
+"633":
+  file: monsters.yml
+  name: Giant Mushpoie
+"634":
+  file: monsters.yml
+  name: Trainee Chef Muffrin
+"635":
+  file: monsters.yml
+  name: 3rd Chef Muffrin
+"636":
+  file: monsters.yml
+  name: 2nd Chef Muffrin
+"637":
+  file: monsters.yml
+  name: 1st Chef Muffrin
+"638":
+  file: monsters.yml
+  name: Small Hoppre
+"639":
+  file: monsters.yml
+  name: Hoppre
+"640":
+  file: monsters.yml
+  name: Captain Hoppre
+"641":
+  file: monsters.yml
+  name: Giant Hoppre
+"642":
+  file: monsters.yml
+  name: Small Gongury
+"643":
+  file: monsters.yml
+  name: Gongury
+"644":
+  file: monsters.yml
+  name: Captain Gongury
+"645":
+  file: monsters.yml
+  name: Giant Gongury
+"646":
+  file: monsters.yml
+  name: Small Dump
+"647":
+  file: monsters.yml
+  name: Dump
+"648":
+  file: monsters.yml
+  name: Captain Dump
+"649":
+  file: monsters.yml
+  name: Giant Dump
+"650":
+  file: monsters.yml
+  name: Small Kern
+"651":
+  file: monsters.yml
+  name: Kern
+"652":
+  file: monsters.yml
+  name: Captain Kern
+"653":
+  file: monsters.yml
+  name: Giant Kern
+"654":
+  file: monsters.yml
+  name: Mutant Fefern
+"655":
+  file: monsters.yml
+  name: Mutant Fefern King
+"656":
+  file: monsters.yml
+  name: Mutant Giant 2nd Class Fefern
+"657":
+  file: monsters.yml
+  name: Mutant Nyangnyang
+"658":
+  file: monsters.yml
+  name: Mutant Nyangnyang Queen
+"659":
+  file: monsters.yml
+  name: Mutant Giant Nyangnyang
+"660":
+  file: monsters.yml
+  name: Mutant Bang
+"661":
+  file: monsters.yml
+  name: Mutant Boss Bang
+"662":
+  file: monsters.yml
+  name: Mutant Giant Bang King
+"663":
+  file: monsters.yml
+  name: Venel Guardian
+"664":
+  file: monsters.yml
+  name: Worm Veduque
+"665":
+  file: monsters.yml
+  name: Serus Uriel
+"666":
+  file: monsters.yml
+  name: Vice Veduque
+"667":
+  file: monsters.yml
+  name: Guardian NPC
+"668":
+  file: monsters.yml
+  name: Chaos Guardian NPC
+"669":
+  file: npcs.yml
+  name: Captain Guard
+"670":
+  file: monsters.yml
+  name: Criminal Wagsaac
+"671":
+  file: monsters.yml
+  name: Criminal Mr. Pumpkin
+"672":
+  file: monsters.yml
+  name: Criminal Gigglebox
+"673":
+  file: monsters.yml
+  name: Criminal Hobo
+"674":
+  file: monsters.yml
+  name: Criminal Cardpuppet
+"675":
+  file: monsters.yml
+  name: Criminal Basque
+"676":
+  file: monsters.yml
+  name: Criminal Leyena
+"677":
+  file: monsters.yml
+  name: Criminal Steelknight
+"678":
+  file: monsters.yml
+  name: Criminal Volt
+"679":
+  file: monsters.yml
+  name: Criminal Garbagepider
+"680":
+  file: monsters.yml
+  name: Criminal Greemong
+"681":
+  file: monsters.yml
+  name: Criminal Hoppre
+"682":
+  file: monsters.yml
+  name: Criminal Iren
+"683":
+  file: monsters.yml
+  name: Criminal Watangka
+"684":
+  file: monsters.yml
+  name: Criminal Luia
+"685":
+  file: monsters.yml
+  name: Criminal Shuhamma
+"686":
+  file: monsters.yml
+  name: Criminal Glaphan
+"687":
+  file: monsters.yml
+  name: Shuraiture
+"688":
+  file: monsters.yml
+  name: Ren
+"689":
+  file: monsters.yml
+  name: Sisif
+"690":
+  file: monsters.yml
+  name: Rubo
+"691":
+  file: monsters.yml
+  name: Keakoon Worker
+"692":
+  file: monsters.yml
+  name: Keakoon Guard
+"693":
+  file: monsters.yml
+  name: Keakoon Worker Leader
+"694":
+  file: monsters.yml
+  name: Keakoon Guard Leader
+"695":
+  file: monsters.yml
+  name: Elite Keakoon Worker
+"696":
+  file: monsters.yml
+  name: Elite Keakoon Guard
+"697":
+  file: monsters.yml
+  name: Elite Keakoon Worker Leader
+"698":
+  file: monsters.yml
+  name: Elite Keakoon Guard Leader
+"699":
+  file: monsters.yml
+  name: Mutant Keakoon Worker
+"700":
+  file: monsters.yml
+  name: Mutant Keakoon Guard
+"701":
+  file: monsters.yml
+  name: Mutant Keakoon Worker Leader
+"702":
+  file: monsters.yml
+  name: Mutant Keakoon Guard Leader
+"703":
+  file: monsters.yml
+  name: Pink Roach
+"704":
+  file: monsters.yml
+  name: Blue Roach
+"705":
+  file: monsters.yml
+  name: Pink Roach Queen
+"707":
+  file: monsters.yml
+  name: Green Trillipy
+"708":
+  file: monsters.yml
+  name: Hazardous Green Trillipy
+"709":
+  file: monsters.yml
+  name: Violet Trillipy
+"710":
+  file: monsters.yml
+  name: Hazardous Violet Trillipy
+"711":
+  file: monsters.yml
+  name: Blood Trillipy
+"712":
+  file: monsters.yml
+  name: Hazardous Blood Trillipy
+"713":
+  file: monsters.yml
+  name: Chimeradon
+"714":
+  file: monsters.yml
+  name: Giant Chimeradon
+"715":
+  file: monsters.yml
+  name: Meteonyker
+"716":
+  file: monsters.yml
+  name: Pink Roach Larva
+"717":
+  file: monsters.yml
+  name: Blue Roach Larva
+"718":
+  file: monsters.yml
+  name: Blue Roach Queen
+"719":
+  file: monsters.yml
+  name: Criminal Fefern
+"720":
+  file: npcs.yml
+  name: Baby Lawolf
+"721":
+  file: npcs.yml
+  name: Baby Aibatt
+"722":
+  file: npcs.yml
+  name: Baby Leyena
+"723":
+  file: npcs.yml
+  name: Baby Luia
+"724":
+  file: npcs.yml
+  name: Kitty
+"725":
+  file: npcs.yml
+  name: Doggy
+"726":
+  file: npcs.yml
+  name: Soccerball Angel
+"727":
+  file: npcs.yml
+  name: Baby Polar Bear
+"728":
+  file: npcs.yml
+  name: Baby Penguin
+"729":
+  file: npcs.yml
+  name: Baby Iguana
+"730":
+  file: npcs.yml
+  name: Baby Cobra
+"731":
+  file: npcs.yml
+  name: Egg
+"732":
+  file: npcs.yml
+  name: White Tiger
+"733":
+  file: npcs.yml
+  name: White Tiger
+"734":
+  file: npcs.yml
+  name: Babari lion
+"735":
+  file: npcs.yml
+  name: Babari lion
+"736":
+  file: npcs.yml
+  name: Rabbit
+"737":
+  file: npcs.yml
+  name: Rabbit
+"738":
+  file: npcs.yml
+  name: Dragon
+"739":
+  file: npcs.yml
+  name: Dragon
+"740":
+  file: npcs.yml
+  name: Unicorn
+"741":
+  file: npcs.yml
+  name: Unicorn
+"742":
+  file: npcs.yml
+  name: Old fox
+"743":
+  file: npcs.yml
+  name: Old fox
+"744":
+  file: npcs.yml
+  name: Griffin
+"745":
+  file: npcs.yml
+  name: Griffin
+"746":
+  file: npcs.yml
+  name: Cute Frog
+"747":
+  file: npcs.yml
+  name: Cute Hamburger
+"748":
+  file: npcs.yml
+  name: Baby Turtle
+"750":
+  file: monsters.yml
+  name: Chaner
+"751":
+  file: monsters.yml
+  name: Babari
+"752":
+  file: monsters.yml
+  name: Seido
+"753":
+  file: npcs.yml
+  name: Red Meteonyker
+"754":
+  file: monsters.yml
+  name: Blue Meteonyker
+"755":
+  file: monsters.yml
+  name: Green Meteonyker
+"800":
+  file: monsters.yml
+  name: Red Bang Troupe Member
+"811":
+  file: monsters.yml
+  name: Member of the Violet Magician Troupe
+"812":
+  file: monsters.yml
+  name: Member of the Violet Magician Troupe
+"813":
+  file: monsters.yml
+  name: Organigor
+"814":
+  file: monsters.yml
+  name: Gangard
+"815":
+  file: monsters.yml
+  name: Hadeseor
+"816":
+  file: monsters.yml
+  name: Arc Master of the Violet Magician Troupe
+"817":
+  file: monsters.yml
+  name: Red Bang Troupe Leader
+"818":
+  file: monsters.yml
+  name: Lord Bang
+"819":
+  file: monsters.yml
+  name: Hammer Kick
+"820":
+  file: monsters.yml
+  name: Ant Turtle
+"821":
+  file: monsters.yml
+  name: Emeraldmantis
+"822":
+  file: npcs.yml
+  name: Lord Clockworks Alpha
+"823":
+  file: monsters.yml
+  name: Brigadier General Crumple
+"824":
+  file: monsters.yml
+  name: Lieutenant General Scythoid
+"825":
+  file: monsters.yml
+  name: Air Marshall Spiketail
+"826":
+  file: monsters.yml
+  name: General Glyphaxz
+"827":
+  file: monsters.yml
+  name: Lord Bang Hanoyan
+"828":
+  file: monsters.yml
+  name: Soldier Chimeradon
+"829":
+  file: monsters.yml
+  name: Brigadier Chimeradon
+"830":
+  file: monsters.yml
+  name: Major Chimeradon
+"831":
+  file: monsters.yml
+  name: Lieutenant Chimeradon
+"832":
+  file: monsters.yml
+  name: General Chimeradon
+"833":
+  file: monsters.yml
+  name: Private Bearnerky
+"834":
+  file: monsters.yml
+  name: Specialist Bearnerky
+"835":
+  file: monsters.yml
+  name: Sergeant Bearnerky
+"836":
+  file: monsters.yml
+  name: Captian Bearnerky
+"837":
+  file: monsters.yml
+  name: General Bearnerky
+"838":
+  file: monsters.yml
+  name: Great Chef Muffrin
+"839":
+  file: monsters.yml
+  name: Queen Popcrank
+"840":
+  file: monsters.yml
+  name: Mother Yoln
+"841":
+  file: monsters.yml
+  name: Kidler
+"842":
+  file: monsters.yml
+  name: Shacalpion
+"843":
+  file: monsters.yml
+  name: Hoiren
+"844":
+  file: monsters.yml
+  name: Hunter X
+"845":
+  file: monsters.yml
+  name: Kynsy
+"846":
+  file: monsters.yml
+  name: Clocks
+"855":
+  file: monsters.yml
+  name: Ivillis Crasher
+"856":
+  file: monsters.yml
+  name: Ivillis Poisoner
+"857":
+  file: monsters.yml
+  name: Ivillis Wrecker
+"858":
+  file: monsters.yml
+  name: Ivillis Destroyer
+"859":
+  file: monsters.yml
+  name: Ivillis Puppet
+"860":
+  file: monsters.yml
+  name: Ivillis Thief
+"861":
+  file: monsters.yml
+  name: Ivillis Guardian
+"862":
+  file: monsters.yml
+  name: Ivillis Quaker
+"863":
+  file: monsters.yml
+  name: Ivillis Mushellizer
+"864":
+  file: monsters.yml
+  name: Ivillis Leanes
+"865":
+  file: monsters.yml
+  name: Ivillis Red Otem
+"866":
+  file: monsters.yml
+  name: Ivillis Black Otem
+"867":
+  file: monsters.yml
+  name: Ivillis Boxter
+"868":
+  file: monsters.yml
+  name: Ivillis Dandysher
+"869":
+  file: monsters.yml
+  name: Red Angel
+"870":
+  file: monsters.yml
+  name: Blue Angel
+"871":
+  file: monsters.yml
+  name: Green Angel
+"872":
+  file: monsters.yml
+  name: White Angel
+"873":
+  file: npcs.yml
+  name: Post Box
+"874":
+  file: monsters.yml
+  name: Cyclops X
+"875":
+  file: npcs.yml
+  name: Mysterious Robed Boy
+"876":
+  file: npcs.yml
+  name: Mysterious Robed Girl
+"877":
+  file: npcs.yml
+  name: Gambler
+"878":
+  file: npcs.yml
+  name: Hair Designer
+"879":
+  file: npcs.yml
+  name: Make-Up Artist
+"880":
+  file: npcs.yml
+  name: Pet Tamer
+"881":
+  file: npcs.yml
+  name: Dancer
+"882":
+  file: npcs.yml
+  name: Miss Flyff
+"883":
+  file: npcs.yml
+  name: Mr. Flyff
+"884":
+  file: npcs.yml
+  name: "[Captain] Behemoth"
+"885":
+  file: npcs.yml
+  name: "[Captain] Hellion"
+"886":
+  file: npcs.yml
+  name: "[Captain] Jackalope"
+"887":
+  file: npcs.yml
+  name: "[Captain] Bahamut"
+"888":
+  file: npcs.yml
+  name: "[Captain] Nightmare"
+"889":
+  file: npcs.yml
+  name: "[Captain] Reinecke"
+"890":
+  file: npcs.yml
+  name: "[Captain] Hippogryph"
+"891":
+  file: npcs.yml
+  name: Priest of Penence
+"892":
+  file: npcs.yml
+  name: Mysterious Boy
+"893":
+  file: npcs.yml
+  name: Baby Chicken
+"894":
+  file: npcs.yml
+  name: Baby Cow
+"895":
+  file: npcs.yml
+  name: Baby Beagle
+"896":
+  file: npcs.yml
+  name: Baby Blue Dragon
+"897":
+  file: npcs.yml
+  name: Baby Hamster
+"898":
+  file: npcs.yml
+  name: Baby Horse
+"899":
+  file: npcs.yml
+  name: Baby Monkey
+"900":
+  file: npcs.yml
+  name: Baby Pig
+"901":
+  file: npcs.yml
+  name: Baby Rabbit
+"902":
+  file: npcs.yml
+  name: Cute Lamb
+"903":
+  file: npcs.yml
+  name: Baby Tiger
+"904":
+  file: monsters.yml
+  name: Yetti
+"905":
+  file: monsters.yml
+  name: Mutant Yetti
+"906":
+  file: monsters.yml
+  name: Augu
+"907":
+  file: monsters.yml
+  name: Mutant Augu
+"908":
+  file: monsters.yml
+  name: Ghost of the Forgotten Prince
+"909":
+  file: monsters.yml
+  name: Ghost of the Forgotten King
+"910":
+  file: npcs.yml
+  name: Waforu
+"911":
+  file: monsters.yml
+  name: Mammoth
+"912":
+  file: monsters.yml
+  name: Cannibal Mammoth
+"913":
+  file: npcs.yml
+  name: Collins
+"914":
+  file: npcs.yml
+  name: Small Maid Cardpuppet
+"915":
+  file: npcs.yml
+  name: Small Mia
+"916":
+  file: npcs.yml
+  name: Baby Black Dragon
+"917":
+  file: monsters.yml
+  name: GM Lysis
+"918":
+  file: monsters.yml
+  name: GM Demian
+"919":
+  file: monsters.yml
+  name: GM Redsun
+"920":
+  file: npcs.yml
+  name: GM Cromiell
+"921":
+  file: npcs.yml
+  name: Target
+"922":
+  file: monsters.yml
+  name: Small Harpy
+"923":
+  file: monsters.yml
+  name: Harpy
+"924":
+  file: monsters.yml
+  name: Captain Harpy
+"925":
+  file: monsters.yml
+  name: Giant Harpy
+"926":
+  file: monsters.yml
+  name: Small Gullah
+"927":
+  file: monsters.yml
+  name: Gullah
+"928":
+  file: monsters.yml
+  name: Captain Gullah
+"929":
+  file: monsters.yml
+  name: Giant Gullah
+"930":
+  file: monsters.yml
+  name: Small Abraxas
+"931":
+  file: monsters.yml
+  name: Abraxas
+"932":
+  file: monsters.yml
+  name: Captain Abraxas
+"933":
+  file: monsters.yml
+  name: Giant Abraxas
+"934":
+  file: monsters.yml
+  name: Small Hague
+"935":
+  file: monsters.yml
+  name: Hague
+"936":
+  file: monsters.yml
+  name: Captain Hague
+"937":
+  file: monsters.yml
+  name: Giant Hague
+"938":
+  file: monsters.yml
+  name: Small Tengu
+"939":
+  file: monsters.yml
+  name: Tengu
+"940":
+  file: monsters.yml
+  name: Captain Tengu
+"941":
+  file: monsters.yml
+  name: Giant Tengu
+"942":
+  file: monsters.yml
+  name: Small Asterius
+"943":
+  file: monsters.yml
+  name: Asterius
+"944":
+  file: monsters.yml
+  name: Captain Asterius
+"945":
+  file: monsters.yml
+  name: Giant Asterius
+"946":
+  file: monsters.yml
+  name: Small Dantalian
+"947":
+  file: monsters.yml
+  name: Dantalian
+"948":
+  file: monsters.yml
+  name: Captain Dantalian
+"949":
+  file: monsters.yml
+  name: Giant Dantalian
+"950":
+  file: monsters.yml
+  name: Small Gannessa
+"951":
+  file: monsters.yml
+  name: Gannessa
+"952":
+  file: monsters.yml
+  name: Captain Gannessa
+"953":
+  file: monsters.yml
+  name: Giant Gannessa
+"954":
+  file: monsters.yml
+  name: Small Asuras
+"955":
+  file: monsters.yml
+  name: Asuras
+"956":
+  file: monsters.yml
+  name: Captain Asuras
+"957":
+  file: monsters.yml
+  name: Giant Asuras
+"958":
+  file: monsters.yml
+  name: Small Catsy
+"959":
+  file: monsters.yml
+  name: Catsy
+"960":
+  file: monsters.yml
+  name: Captain Catsy
+"961":
+  file: monsters.yml
+  name: Giant Catsy
+"962":
+  file: monsters.yml
+  name: Small Nyx
+"963":
+  file: monsters.yml
+  name: Nyx
+"964":
+  file: monsters.yml
+  name: Captain Nyx
+"965":
+  file: monsters.yml
+  name: Asmodan
+"966":
+  file: monsters.yml
+  name: Rangda
+"967":
+  file: monsters.yml
+  name: Horrible Rangda
+"968":
+  file: monsters.yml
+  name: Uncanny Rangda
+"969":
+  file: monsters.yml
+  name: Dreadful Rangda
+"970":
+  file: npcs.yml
+  name: Baby Yetti
+"971":
+  file: monsters.yml
+  name: Great Catsy
+"972":
+  file: monsters.yml
+  name: Great Harpy
+"973":
+  file: monsters.yml
+  name: Great Gullah
+"974":
+  file: monsters.yml
+  name: Great Abraxas
+"975":
+  file: monsters.yml
+  name: Great Hague
+"976":
+  file: monsters.yml
+  name: Great Tengu
+"977":
+  file: monsters.yml
+  name: Great Asterius
+"978":
+  file: monsters.yml
+  name: Great Dantalian
+"979":
+  file: monsters.yml
+  name: Great Gannessa
+"980":
+  file: monsters.yml
+  name: Great Asuras
+"981":
+  file: npcs.yml
+  name: Knight 2
+"982":
+  file: npcs.yml
+  name: Knight 1
+"983":
+  file: npcs.yml
+  name: Lord Manager
+"984":
+  file: npcs.yml
+  name: Ice Lady
+"985":
+  file: npcs.yml
+  name: "[Spirit of Rainbow] Red"
+"986":
+  file: npcs.yml
+  name: "[Spirit of Rainbow] Orange"
+"987":
+  file: npcs.yml
+  name: "[Spirit of Rainbow] Yellow"
+"988":
+  file: npcs.yml
+  name: "[Spirit of Rainbow] Green"
+"989":
+  file: npcs.yml
+  name: "[Spirit of Rainbow] Blue"
+"990":
+  file: npcs.yml
+  name: "[Spirit of Rainbow] Indigo"
+"991":
+  file: npcs.yml
+  name: "[Spirit of Rainbow] Violet"
+"992":
+  file: npcs.yml
+  name: Rainbow Race Officer
+"993":
+  file: monsters.yml
+  name: Small Kingster
+"994":
+  file: monsters.yml
+  name: Kingster
+"995":
+  file: monsters.yml
+  name: Captain Kingster
+"996":
+  file: monsters.yml
+  name: Small Kraken
+"997":
+  file: monsters.yml
+  name: Kraken
+"998":
+  file: monsters.yml
+  name: Captain Kraken
+"999":
+  file: monsters.yml
+  name: Small Creper
+"1000":
+  file: monsters.yml
+  name: Creper
+"1001":
+  file: monsters.yml
+  name: Captain Creper
+"1002":
+  file: monsters.yml
+  name: Small Naga
+"1003":
+  file: monsters.yml
+  name: Naga
+"1004":
+  file: monsters.yml
+  name: Captain Naga
+"1005":
+  file: monsters.yml
+  name: Small Atrox
+"1006":
+  file: monsters.yml
+  name: Atrox
+"1007":
+  file: monsters.yml
+  name: Captain Atrox
+"1008":
+  file: monsters.yml
+  name: Small Okean
+"1009":
+  file: monsters.yml
+  name: Okean
+"1010":
+  file: monsters.yml
+  name: Captain Okean
+"1011":
+  file: monsters.yml
+  name: Small Tigar
+"1012":
+  file: monsters.yml
+  name: Tigar
+"1013":
+  file: monsters.yml
+  name: Captain Tigar
+"1014":
+  file: monsters.yml
+  name: Small Dorian
+"1015":
+  file: monsters.yml
+  name: Dorian
+"1016":
+  file: monsters.yml
+  name: Captain Dorian
+"1017":
+  file: monsters.yml
+  name: Small Meral
+"1018":
+  file: monsters.yml
+  name: Meral
+"1019":
+  file: monsters.yml
+  name: Captain Meral
+"1020":
+  file: npcs.yml
+  name: MI_NPC_MINIDOOR01
+"1021":
+  file: monsters.yml
+  name: Guard
+"1022":
+  file: npcs.yml
+  name: "[Guildwar Manager] Frankie"
+"1023":
+  file: npcs.yml
+  name: "[Guildwar Manager] Donaris"
+"1024":
+  file: npcs.yml
+  name: "[1vs1Guildwar Manager] Amos"
+"1025":
+  file: npcs.yml
+  name: "[1vs1Guildwar Manager] Annie"
+"1026":
+  file: npcs.yml
+  name: "[Arena Manager] Ray"
+"1027":
+  file: npcs.yml
+  name: Mayor
+"1028":
+  file: npcs.yml
+  name: Charlie
+"1029":
+  file: npcs.yml
+  name: Baby Snowman
+"1030":
+  file: npcs.yml
+  name: Daddy Snowman
+"1031":
+  file: npcs.yml
+  name: English Bulldog
+"1032":
+  file: npcs.yml
+  name: Naughty Ghost
+"1033":
+  file: npcs.yml
+  name: Baby Fu Lion
+"1034":
+  file: npcs.yml
+  name: Smart Owl
+"1035":
+  file: npcs.yml
+  name: Patches
+"1036":
+  file: npcs.yml
+  name: Cute Robot
+"1037":
+  file: npcs.yml
+  name: Baby Bang
+"1038":
+  file: npcs.yml
+  name: Baby Panda
+"1039":
+  file: npcs.yml
+  name: Red Armored Tigar
+"1040":
+  file: npcs.yml
+  name: Blue Armored Tigar
+"1041":
+  file: npcs.yml
+  name: Yellow Armored Tigar
+"1042":
+  file: monsters.yml
+  name: Small Club-tailed Reptilion
+"1043":
+  file: monsters.yml
+  name: Club-tailed Reptilion
+"1044":
+  file: monsters.yml
+  name: Captain Club-tailed Reptilion
+"1045":
+  file: monsters.yml
+  name: Colonel Club-tailed Reptilion
+"1046":
+  file: monsters.yml
+  name: Lazy Araknoid
+"1047":
+  file: monsters.yml
+  name: Araknoid
+"1048":
+  file: monsters.yml
+  name: Creepy Araknoid
+"1049":
+  file: monsters.yml
+  name: Giant Araknoid
+"1050":
+  file: monsters.yml
+  name: Small Battle Toadrin
+"1051":
+  file: monsters.yml
+  name: Battle Toadrin
+"1052":
+  file: monsters.yml
+  name: Creepy Battle Toadrin
+"1053":
+  file: monsters.yml
+  name: Giant Battle Toadrin
+"1054":
+  file: monsters.yml
+  name: Brown Bolo
+"1055":
+  file: monsters.yml
+  name: Spotted Bolo
+"1056":
+  file: monsters.yml
+  name: Superior Spotted Bolo
+"1057":
+  file: monsters.yml
+  name: Great White Bolo
+"1058":
+  file: monsters.yml
+  name: Troglodon Clansman
+"1059":
+  file: monsters.yml
+  name: Troglodon Warrior
+"1060":
+  file: monsters.yml
+  name: Troglodon Captain
+"1061":
+  file: monsters.yml
+  name: Troglodon Warlord
+"1062":
+  file: monsters.yml
+  name: Blunt Axe-Jaw Ant
+"1063":
+  file: monsters.yml
+  name: Axe-Jaw Ant
+"1064":
+  file: monsters.yml
+  name: Sharp Axe-Jaw Ant
+"1065":
+  file: monsters.yml
+  name: Razor Axe-Jaw Ant
+"1066":
+  file: monsters.yml
+  name: Small Scorpede
+"1067":
+  file: monsters.yml
+  name: Scorpede
+"1068":
+  file: monsters.yml
+  name: Creepy Scorpede
+"1069":
+  file: monsters.yml
+  name: Giant Scorpede
+"1070":
+  file: monsters.yml
+  name: Small Maul Rat
+"1071":
+  file: monsters.yml
+  name: Maul Rat
+"1072":
+  file: monsters.yml
+  name: Creepy Maul Rat
+"1073":
+  file: monsters.yml
+  name: Giant Maul Rat
+"1074":
+  file: monsters.yml
+  name: Lykanos the Malevolent
+"1075":
+  file: monsters.yml
+  name: Drakul the Diabolic
+"1076":
+  file: monsters.yml
+  name: Cursed Blunt Axe-Jaw Ant
+"1077":
+  file: monsters.yml
+  name: Cursed Axe-Jaw Ant
+"1078":
+  file: monsters.yml
+  name: Cursed Sharp Axe-Jaw Ant
+"1079":
+  file: monsters.yml
+  name: Cursed Razor Axe-Jaw Ant
+"1080":
+  file: monsters.yml
+  name: Cursed Small Scorpede
+"1081":
+  file: monsters.yml
+  name: Cursed Scorpede
+"1082":
+  file: monsters.yml
+  name: Cursed Creepy Scorpede
+"1083":
+  file: monsters.yml
+  name: Cursed Giant Scorpede
+"1084":
+  file: monsters.yml
+  name: Cursed Small Maul Rat
+"1085":
+  file: monsters.yml
+  name: Cursed Maul Rat
+"1086":
+  file: monsters.yml
+  name: Cursed Creepy Maul Rat
+"1087":
+  file: monsters.yml
+  name: Cursed Giant Maul Rat
+"1088":
+  file: monsters.yml
+  name: Dread Lykanos the Malevolent
+"1089":
+  file: monsters.yml
+  name: Dread Drakul the Diabolic
+"1090":
+  file: npcs.yml
+  name: "[Adventure Assitant] Jano"
+"1091":
+  file: npcs.yml
+  name: "[Adventure Captain] Bespoo"
+"1092":
+  file: npcs.yml
+  name: Luka
+"1093":
+  file: npcs.yml
+  name: Lasa
+"1094":
+  file: npcs.yml
+  name: Ryan
+"1095":
+  file: npcs.yml
+  name: Tommy Toucan
+"1096":
+  file: npcs.yml
+  name: Ete
+"1097":
+  file: npcs.yml
+  name: Tong
+"1098":
+  file: npcs.yml
+  name: Johnny Four-Wheels
+"1099":
+  file: npcs.yml
+  name: Miss Vietnam
+"1100":
+  file: monsters.yml
+  name: Mocomochi
+"1101":
+  file: npcs.yml
+  name: "[Teleporter] Master"
+"1102":
+  file: npcs.yml
+  name: Tiny Tanuki
+"1103":
+  file: npcs.yml
+  name: MI_NPC_GUILDHOUSE_DOOR01
+"1104":
+  file: npcs.yml
+  name: Sellia
+"1105":
+  file: npcs.yml
+  name: Inisis
+"1106":
+  file: monsters.yml
+  name: Hellhound
+"1107":
+  file: monsters.yml
+  name: Risen Gladiator
+"1108":
+  file: monsters.yml
+  name: Risen Pikeman
+"1109":
+  file: monsters.yml
+  name: Risen Mage
+"1110":
+  file: monsters.yml
+  name: Risen Assassin
+"1111":
+  file: monsters.yml
+  name: Risen Warrior
+"1112":
+  file: monsters.yml
+  name: "[General] Razgul"
+"1113":
+  file: monsters.yml
+  name: Blighted Gryphon
+"1114":
+  file: monsters.yml
+  name: Scythe Protector
+"1115":
+  file: monsters.yml
+  name: Vile Flayer
+"1116":
+  file: monsters.yml
+  name: Fallen Necromancer
+"1117":
+  file: monsters.yml
+  name: Forsaken Banshee
+"1118":
+  file: monsters.yml
+  name: "[Deathbringer] Kheldor"
+"1119":
+  file: npcs.yml
+  name: "[Teleporter] Apprentice"
+"1120":
+  file: npcs.yml
+  name: Mini Santa
+"1121":
+  file: npcs.yml
+  name: Mini Snowman
+"1122":
+  file: npcs.yml
+  name: Bellosia
+"1123":
+  file: npcs.yml
+  name: Loraine
+"1124":
+  file: npcs.yml
+  name: Little Lykan
+"1125":
+  file: monsters.yml
+  name: Idol of the Blighted Gryphon
+"1126":
+  file: monsters.yml
+  name: Idol of the Scythe Protector
+"1127":
+  file: monsters.yml
+  name: Idol of the Vile Flayer
+"1128":
+  file: monsters.yml
+  name: Idol of the Fallen Necromancer
+"1129":
+  file: monsters.yml
+  name: Idol of the Forsaken Banshee
+"1130":
+  file: monsters.yml
+  name: Idol of Kheldor
+"1131":
+  file: monsters.yml
+  name: Prismatic Cobra
+"1132":
+  file: monsters.yml
+  name: Twinstrike Cobra
+"1133":
+  file: monsters.yml
+  name: Tanuki Enforcer
+"1134":
+  file: monsters.yml
+  name: Tanuki Protector
+"1135":
+  file: monsters.yml
+  name: Wildwood Stalker
+"1136":
+  file: monsters.yml
+  name: Wildwood Shaman
+"1137":
+  file: monsters.yml
+  name: Beast King Khan
+"1138":
+  file: monsters.yml
+  name: Mythic Prismatic Cobra
+"1139":
+  file: monsters.yml
+  name: Mythic Twinstrike Cobra
+"1140":
+  file: monsters.yml
+  name: Elite Tanuki Enforcer
+"1141":
+  file: monsters.yml
+  name: Elite Tanuki Protector
+"1142":
+  file: monsters.yml
+  name: Mythic Wildwood Stalker
+"1143":
+  file: monsters.yml
+  name: Shadowy Wildwood Shaman
+"1144":
+  file: monsters.yml
+  name: Beast Overlord Khan
+"1145":
+  file: monsters.yml
+  name: Water Totem pole
+"1146":
+  file: monsters.yml
+  name: Wind Totem pole
+"1147":
+  file: monsters.yml
+  name: Earth Totem pole
+"1148":
+  file: monsters.yml
+  name: Fire Totem pole
+"1149":
+  file: npcs.yml
+  name: Joey
+"1150":
+  file: npcs.yml
+  name: Spike
+"1151":
+  file: npcs.yml
+  name: Lumia
+"1152":
+  file: npcs.yml
+  name: Inspector Koko
+"1153":
+  file: npcs.yml
+  name: Leprechaun
+"1154":
+  file: npcs.yml
+  name: Cheshire Cat
+"1155":
+  file: npcs.yml
+  name: The White Rabbit
+"1156":
+  file: npcs.yml
+  name: Tiger Cub
+"1164":
+  file: npcs.yml
+  name: Laveau
+"1165":
+  file: npcs.yml
+  name: Bone Golem

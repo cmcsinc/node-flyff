@@ -1,0 +1,498 @@
+"1":
+  file: vagrant.yml
+  name: Clean Hit
+"2":
+  file: vagrant.yml
+  name: Flurry
+"3":
+  file: vagrant.yml
+  name: Over Cut
+"4":
+  file: mercenary.yml
+  name: Slash
+"5":
+  file: mercenary.yml
+  name: Keenwheel
+"6":
+  file: mercenary.yml
+  name: Blindside
+"7":
+  file: mercenary.yml
+  name: Sword Mastery
+"8":
+  file: mercenary.yml
+  name: Axe Mastery
+"9":
+  file: mercenary.yml
+  name: Protection
+"10":
+  file: mercenary.yml
+  name: Pan Barrier
+"11":
+  file: mercenary.yml
+  name: Special Hit
+"12":
+  file: mercenary.yml
+  name: Guillotine
+"13":
+  file: mercenary.yml
+  name: Sneaker
+"14":
+  file: mercenary.yml
+  name: Hit Reflect
+"20":
+  file: assist.yml
+  name: Haste
+"30":
+  file: magician.yml
+  name: Fire Strike
+"31":
+  file: magician.yml
+  name: Wind Cutter
+"32":
+  file: magician.yml
+  name: Waterball
+"33":
+  file: magician.yml
+  name: Water Well
+"34":
+  file: magician.yml
+  name: Lighting Ram
+"35":
+  file: magician.yml
+  name: Lighting Shock
+"36":
+  file: magician.yml
+  name: Rock Crash
+"37":
+  file: magician.yml
+  name: Rooting
+"44":
+  file: assist.yml
+  name: Heal
+"45":
+  file: assist.yml
+  name: Resurrection
+"46":
+  file: assist.yml
+  name: Patience
+"48":
+  file: assist.yml
+  name: Prevention
+"49":
+  file: assist.yml
+  name: Heap Up
+"50":
+  file: assist.yml
+  name: Cannon Ball
+"51":
+  file: assist.yml
+  name: Circle Healing
+"52":
+  file: assist.yml
+  name: Mental Sign
+"53":
+  file: assist.yml
+  name: Beef Up
+"64":
+  file: magician.yml
+  name: Flame Ball
+"65":
+  file: magician.yml
+  name: Flame Geyser
+"69":
+  file: magician.yml
+  name: Swordwind
+"70":
+  file: magician.yml
+  name: Strongwind
+"104":
+  file: assist.yml
+  name: Straight Punch
+"105":
+  file: assist.yml
+  name: Burst Crack
+"107":
+  file: magician.yml
+  name: Blinkpool
+"108":
+  file: mercenary.yml
+  name: Blazing Sword
+"109":
+  file: mercenary.yml
+  name: Smite Axe
+"111":
+  file: mercenary.yml
+  name: Empower Weapon
+"112":
+  file: mercenary.yml
+  name: Bloody Strike
+"113":
+  file: assist.yml
+  name: Stonehand
+"114":
+  file: assist.yml
+  name: Quick Step
+"115":
+  file: assist.yml
+  name: Cat's Reflex
+"116":
+  file: assist.yml
+  name: Accuracy
+"117":
+  file: assist.yml
+  name: Power Fist
+"118":
+  file: magician.yml
+  name: Ice Missile
+"119":
+  file: magician.yml
+  name: Static Ball
+"120":
+  file: magician.yml
+  name: Stone Spike
+"121":
+  file: magician.yml
+  name: Mental Strike
+"128":
+  file: knight.yml
+  name: Guard
+"129":
+  file: knight.yml
+  name: Pain Reflection
+"130":
+  file: knight.yml
+  name: Rage
+"131":
+  file: knight.yml
+  name: Power Swing
+"132":
+  file: knight.yml
+  name: Earth Divider
+"133":
+  file: knight.yml
+  name: Charge
+"134":
+  file: knight.yml
+  name: Pain Dealer
+"135":
+  file: knight.yml
+  name: Power Stomp
+"144":
+  file: ringmaster.yml
+  name: Heal Rain
+"145":
+  file: ringmaster.yml
+  name: Holycross
+"146":
+  file: ringmaster.yml
+  name: Protect
+"147":
+  file: ringmaster.yml
+  name: Holyguard
+"148":
+  file: ringmaster.yml
+  name: Spirit Fortune
+"149":
+  file: ringmaster.yml
+  name: Gvur Tialla
+"150":
+  file: ringmaster.yml
+  name: Geburah Tiphreth
+"151":
+  file: ringmaster.yml
+  name: Merkaba Hanzelrusha
+"152":
+  file: billposter.yml
+  name: Belial Smashing
+"153":
+  file: billposter.yml
+  name: Piercing Serpent
+"154":
+  file: billposter.yml
+  name: Blood Fist
+"155":
+  file: billposter.yml
+  name: Sonichand
+"156":
+  file: billposter.yml
+  name: Asmodeus
+"157":
+  file: billposter.yml
+  name: Baraqijal Esna
+"158":
+  file: billposter.yml
+  name: Bgvur Tialbold
+"159":
+  file: billposter.yml
+  name: Asalraalaikum
+"160":
+  file: psykeeper.yml
+  name: Demonology
+"161":
+  file: psykeeper.yml
+  name: Satanology
+"162":
+  file: psykeeper.yml
+  name: Psychic Bomb
+"163":
+  file: psykeeper.yml
+  name: Psychic Wall
+"164":
+  file: psykeeper.yml
+  name: Spirit Bomb
+"165":
+  file: psykeeper.yml
+  name: Crucio Spell
+"166":
+  file: psykeeper.yml
+  name: Maximum Crisis
+"167":
+  file: psykeeper.yml
+  name: Psychic Square
+"168":
+  file: elementor.yml
+  name: Firebird
+"169":
+  file: elementor.yml
+  name: Fire Master
+"170":
+  file: elementor.yml
+  name: Burningfield
+"171":
+  file: elementor.yml
+  name: Lightning Strike
+"172":
+  file: elementor.yml
+  name: Lightning Mastery
+"173":
+  file: elementor.yml
+  name: Electric Shock
+"174":
+  file: elementor.yml
+  name: Stone Spear
+"175":
+  file: elementor.yml
+  name: Earth Master
+"176":
+  file: elementor.yml
+  name: Earthquake
+"177":
+  file: elementor.yml
+  name: Iceshark
+"178":
+  file: elementor.yml
+  name: Water Master
+"179":
+  file: elementor.yml
+  name: Poison Cloud
+"180":
+  file: elementor.yml
+  name: Void
+"181":
+  file: elementor.yml
+  name: Wind Master
+"182":
+  file: elementor.yml
+  name: Windfield
+"183":
+  file: elementor.yml
+  name: Meteo Shower
+"184":
+  file: elementor.yml
+  name: Lightingstorm
+"185":
+  file: elementor.yml
+  name: Sandstorm
+"186":
+  file: elementor.yml
+  name: Blizzard
+"187":
+  file: vagrant.yml
+  name: Flash
+"188":
+  file: vagrant.yml
+  name: Damage
+"189":
+  file: vagrant.yml
+  name: Single Stun
+"190":
+  file: vagrant.yml
+  name: Stun Group
+"191":
+  file: acrobat.yml
+  name: Yo-Yo mastery
+"192":
+  file: acrobat.yml
+  name: Bow Mastery
+"193":
+  file: acrobat.yml
+  name: Dark Illusion
+"194":
+  file: acrobat.yml
+  name: Junk Arrow
+"195":
+  file: acrobat.yml
+  name: Fast Walker
+"196":
+  file: acrobat.yml
+  name: Aimed Shot
+"197":
+  file: acrobat.yml
+  name: Slow Step
+"198":
+  file: acrobat.yml
+  name: Silent Shot
+"199":
+  file: acrobat.yml
+  name: Perfect Block
+"200":
+  file: acrobat.yml
+  name: Arrow Rain
+"201":
+  file: acrobat.yml
+  name: Cross Line
+"202":
+  file: acrobat.yml
+  name: Auto Shot
+"203":
+  file: acrobat.yml
+  name: Snatch
+"204":
+  file: acrobat.yml
+  name: Counterattack
+"205":
+  file: acrobat.yml
+  name: Deadly swing
+"206":
+  file: acrobat.yml
+  name: Pulling
+"207":
+  file: jester.yml
+  name: Critical Swing
+"208":
+  file: jester.yml
+  name: Enchant Poison
+"209":
+  file: jester.yml
+  name: Enchant Blood
+"210":
+  file: jester.yml
+  name: Enchant Absorb
+"211":
+  file: jester.yml
+  name: Sneak Stab
+"212":
+  file: jester.yml
+  name: Penya Strike
+"213":
+  file: jester.yml
+  name: Escape
+"214":
+  file: jester.yml
+  name: Vital stab
+"215":
+  file: ranger.yml
+  name: Fast Shot
+"216":
+  file: ranger.yml
+  name: Ice Arrow
+"217":
+  file: ranger.yml
+  name: Flame Arrow
+"218":
+  file: ranger.yml
+  name: Piercing Arrow
+"219":
+  file: ranger.yml
+  name: Poison Arrow
+"220":
+  file: ranger.yml
+  name: Silent Arrow
+"221":
+  file: ranger.yml
+  name: Nature
+"222":
+  file: ranger.yml
+  name: Triple shot
+"223":
+  file: vagrant.yml
+  name: Atk. Counter
+"224":
+  file: vagrant.yml
+  name: Knock back
+"225":
+  file: vagrant.yml
+  name: Burningfield
+"226":
+  file: vagrant.yml
+  name: Poison
+"227":
+  file: vagrant.yml
+  name: Stun
+"228":
+  file: vagrant.yml
+  name: Bleeding
+"229":
+  file: vagrant.yml
+  name: Steal HP
+"230":
+  file: ringmaster.yml
+  name: Swordcross
+"231":
+  file: vagrant.yml
+  name: Poison sting
+"232":
+  file: vagrant.yml
+  name: Bleeding
+"233":
+  file: vagrant.yml
+  name: Low Attack
+"234":
+  file: vagrant.yml
+  name: Low Attack
+"235":
+  file: vagrant.yml
+  name: Buff Break
+"236":
+  file: vagrant.yml
+  name: Buff Break X
+"300":
+  file: vagrant.yml
+  name: Stun Group
+"301":
+  file: vagrant.yml
+  name: Krrr's poison
+"302":
+  file: vagrant.yml
+  name: Stun Group
+"303":
+  file: vagrant.yml
+  name: Berserker Mushroom
+"304":
+  file: vagrant.yml
+  name: Protective Tree Bark
+"305":
+  file: vagrant.yml
+  name: Toggle Buff
+"306":
+  file: vagrant.yml
+  name: Toggle Buff
+"307":
+  file: vagrant.yml
+  name: Toggle Buff
+"308":
+  file: vagrant.yml
+  name: Burn
+"317":
+  file: vagrant.yml
+  name: Quick Step (Event)
+"318":
+  file: vagrant.yml
+  name: Haste (Event)
+"319":
+  file: vagrant.yml
+  name: Heap Up (Event)
+"320":
+  file: vagrant.yml
+  name: Accuracy (Event)

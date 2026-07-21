@@ -20,6 +20,8 @@
     "test": "tsx --test test/**/*.test.ts",
     "typecheck": "tsc --noEmit",
     "convert": "tsx scripts/convert.ts",
+    "generate:indexes": "tsx scripts/generateIndexes.ts",
+    "extract:flaris": "tsx scripts/extractFlaris.ts",
     "watch": "tsx scripts/watch.ts"
   },
   "keywords": [
