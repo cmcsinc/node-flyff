@@ -111,6 +111,15 @@ export const SNAPSHOTTYPE_MELEE_ATTACK = 0x00e0;     // MsgHdr.h:1110 — MELEE_
 export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 — PLAYERCORR echo (60B body)
 export const SNAPSHOTTYPE_MOVERMOVED2 = 0x00cc;      // MsgHdr.h:1097 — PLAYERMOVED2 echo (73B body)
 
+// --- Combat S→C snapshot sub-types (`_Network/MsgHdr.h`) ----------------------
+// DAMAGE is the per-mover HP-sync mechanism (all nearby clients decrement HP
+// identically). MOVERDEATH zeroes + removes. SETEXPERIENCE is self-only;
+// SETLEVEL broadcasts to vicinity but skips self (self gets level via exp).
+export const SNAPSHOTTYPE_DAMAGE = 0x0013;           // MsgHdr.h — AddDamage vicinity HP sync
+export const SNAPSHOTTYPE_SETEXPERIENCE = 0x0012;    // MsgHdr.h — AddSetExperience self-only
+export const SNAPSHOTTYPE_SETLEVEL = 0x0011;         // MsgHdr.h — AddSetLevel vicinity (skips self)
+export const SNAPSHOTTYPE_MOVERDEATH = 0x00c7;       // MsgHdr.h — AddMoverDeath vicinity
+
 // --- Chat-family S→C snapshot sub-types (`_Network/msghdr.h`) ----------------
 // All `CUser::Add*` per-user snapshots: `OBJID | WORD type | payload`, wrapped
 // once in PACKETTYPE_SNAPSHOT. Mirrors the single-snapshot flush the other

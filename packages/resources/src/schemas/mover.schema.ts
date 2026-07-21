@@ -39,6 +39,9 @@ export const MoverDefinitionSchema = z.object({
   /** Unique mover ID */
   id: z.number().int().positive(),
 
+  /** Symbolic `MI_*` name from defineObj.h (e.g. `MI_MAFL_BOBOKU`). Links mover → dialog prefix. */
+  key: z.string().optional(),
+
   /** Display name */
   name: z.string().max(64),
 

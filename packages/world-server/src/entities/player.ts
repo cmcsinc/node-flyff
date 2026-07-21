@@ -59,9 +59,11 @@ export class CPlayer {
    */
   m_nGold: number = 0;
   /**
-   * Experience (C++ `m_nExp`). Source-of-truth is the `exp` column; this field
-   * is the live in-memory mirror. ponytail: not yet hydrated from the row on
-   * JOIN (CPlayer.fromRow does not copy `row.exp`) — wire when exp gains ship.
+   * Within-level experience (C++ `m_nExp1` delta): progress toward the next
+   * level, 0 at each level boundary. On level-up the consumed portion is
+   * subtracted and any excess carries over (see `combat/formulas.addExp`).
+   * Hydrated on JOIN via `withinLevelExp`; the DB `exp` column and the
+   * SETEXPERIENCE wire field store the cumulative value.
    */
   m_nExp: number = 0;
   m_dwSkin: number;

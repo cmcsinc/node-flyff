@@ -34,6 +34,13 @@ import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 
 export interface MovementServiceDeps {
   zoneManager: ZoneManager;
+  /**
+   * Optional position-change hook (Phase 7 — wired to
+   * `QuestTrackerSystem.onPlayerMoved` for `SetEndCondPatrolZone`). Invoked
+   * after every accepted pos mutation so reactive quest conditions can test
+   * the new position against their patrol rects.
+   */
+  onMoved?: (player: CPlayer) => void;
 }
 
 export type MovementOutcome =
@@ -62,6 +69,7 @@ export class MovementService {
     }
     player.m_vPos = { ...frame.v };
     player._dirty.add('m_vPos');
+    this.deps.onMoved?.(player);
     return this.broadcast(player, this.serializer.buildMoved(player.m_idPlayer, frame));
   }
 
@@ -81,6 +89,7 @@ export class MovementService {
     }
     player.m_vPos = { ...frame.v };
     player._dirty.add('m_vPos');
+    this.deps.onMoved?.(player);
     return this.broadcast(player, this.serializer.buildCorr(player.m_idPlayer, frame));
   }
 
@@ -95,6 +104,7 @@ export class MovementService {
     }
     player.m_vPos = { ...frame.v };
     player._dirty.add('m_vPos');
+    this.deps.onMoved?.(player);
     return this.broadcast(player, this.serializer.buildMoved2(player.m_idPlayer, frame));
   }
 

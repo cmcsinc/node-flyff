@@ -44,6 +44,8 @@ export interface MoverOutfit {
 export interface MoverSpawnSource {
   /** propMover row index (MI_* define) → `dwObjIndex` / `m_dwIndex`. */
   readonly modelIndex: number;
+  /** Symbolic `MI_*` name (defineObj.h) → resolves NPC dialog prefix. Omit for monsters. */
+  readonly key?: string | undefined;
   readonly level: number;
   readonly hp: number;
   readonly name: string;
@@ -60,6 +62,21 @@ export interface MoverSpawnSource {
    * (suppresses client attack cursor); 11/12/13 = aggressive. 0 = unspecified.
    */
   readonly belligerence?: number | undefined;
+  /**
+   * Combat stats (propMover cols). Populated by `SpawnManager` from the mover
+   * definition. ponytail: yml `attack` is a single field — split into raw
+   * `dwAtkMin/Max` when the resources converter exports them separately.
+   */
+  readonly atkMin?: number | undefined;
+  readonly atkMax?: number | undefined;
+  /** `dwNaturalArmor` (propMover col 35) — NPC melee DEF source. */
+  readonly armor?: number | undefined;
+  /** `dwHR` (col 6) — NPC hit rate. */
+  readonly hr?: number | undefined;
+  /** `dwER` (col 7) — NPC parrying / evasion. */
+  readonly er?: number | undefined;
+  /** `nExpValue` (col 58) — base exp granted on kill. */
+  readonly expValue?: number | undefined;
 }
 
 /**
@@ -71,12 +88,20 @@ export class CMover {
   m_idMover: number;
   /** propMover model index (C++ `m_dwIndex`). */
   m_dwIndex: number;
+  /** Symbolic `MI_*` name (defineObj.h); resolves NPC dialog prefix. Empty for monsters. */
+  m_szKey: string;
   m_szName: string;
   m_nLevel: number;
   /** Current HP (C++ `m_nHitPoint`). */
   m_nHitPoint: number;
   m_nMaxHitPoint: number;
   m_vPos: Vec3;
+  /**
+   * Spawn anchor — C++ `CAIMonster::m_vPosBegin` (`AIMonster.cpp:127-132`), set
+   * once at materialize from the spawn position. The idle-wander AI leashes
+   * within `RANGE_MOVE` (30 m) of this point and returns here on evade.
+   */
+  m_vPosBegin: Vec3;
   /** Y-axis rotation (C++ `m_fAngle`); written as `(short)(m_fAngle * 10)`. */
   m_fAngle: number;
   /** Model scale (C++ `m_vScale.x`); written as `(u_short)(scale * 100)`. */
@@ -88,12 +113,44 @@ export class CMover {
   m_bActiveAttack: number;
   /** AI speed multiplier (C++ `m_fSpeedFactor`); 1.0 = propMover speed. */
   m_fSpeedFactor: number;
+  /**
+   * Next wall-clock ms the monster may swing back (C++ `OnActTimer` cadence).
+   * 0 = may retaliate now. Throttle on the reactive counter-swing path; bumped
+   * after each retaliation by `RETALIATE_COOLDOWN_MS / m_fSpeedFactor`.
+   * ponytail: replaced by the AI tick (`CMover::OnActTimer`) when it lands.
+   */
+  m_nextAttackTick: number = 0;
   /** C++ `bKillable` + peaceful flag collapsed — may be targeted for attack. */
   m_bAttackable: boolean;
   /** C++ `RANK_GUARD` — town guard; only chaotic/PK players may attack. */
   m_bGuard: boolean;
   /** Human-NPC outfit (character.inc). Undefined for monsters → naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
+  /** NPC attack min/max (propMover `dwAtkMin/Max`). */
+  m_nAtkMin: number;
+  m_nAtkMax: number;
+  /** NPC melee DEF source (propMover `dwNaturalArmor`). */
+  m_nArmor: number;
+  /** NPC hit rate / parrying (propMover `dwHR`/`dwER`). */
+  m_nHR: number;
+  m_nER: number;
+  /** Base exp granted on kill (propMover `nExpValue`). */
+  m_nExpValue: number;
+  /** Mover element (propMover `eElementType`); 0 = NO_PROP. */
+  m_nElement: number;
+  /** Combat death flag — set on lethal damage; swept from the spawn map on tick. */
+  m_bDead: boolean = false;
+  /**
+   * Timestamp (ms, `Date.now()`) when this mover next picks an idle-wander
+   * destination. `0` = uninitialized → the AI stagger-seeds it on first tick.
+   * C++ drives this from `m_tmMove` + `SEC(5)+xRandom(SEC(1))` on arrival.
+   */
+  m_tmNextWander: number = 0;
+  /**
+   * Hit-share table for kill exp (`m_idEnemies`). OBJID → cumulative damage.
+   * v1: single-attacker (no party grouping). ponytail: full HIT_INFO + party.
+   */
+  readonly m_idEnemies = new Map<number, number>();
 
   private constructor(
     id: number,
@@ -103,11 +160,13 @@ export class CMover {
   ) {
     this.m_idMover = id;
     this.m_dwIndex = src.modelIndex;
+    this.m_szKey = src.key ?? '';
     this.m_szName = src.name;
     this.m_nLevel = src.level;
     this.m_nHitPoint = src.hp;
     this.m_nMaxHitPoint = src.hp;
     this.m_vPos = { ...pos };
+    this.m_vPosBegin = { ...pos };
     this.m_fAngle = 0;
     this.m_vScale = src.scale ?? 1.0;
     this.m_nZoneId = zoneId;
@@ -117,6 +176,13 @@ export class CMover {
     this.m_bAttackable = src.attackable ?? true;
     this.m_bGuard = src.guard ?? false;
     this.outfit = src.outfit;
+    this.m_nAtkMin = src.atkMin ?? 0;
+    this.m_nAtkMax = src.atkMax ?? src.atkMin ?? 0;
+    this.m_nArmor = src.armor ?? 0;
+    this.m_nHR = src.hr ?? 0;
+    this.m_nER = src.er ?? 0;
+    this.m_nExpValue = src.expValue ?? 0;
+    this.m_nElement = 0;
   }
 
   /** Spawn a live monster from a definition + position. Caller assigns the id. */

@@ -17,6 +17,7 @@ import type { QuestArg, QuestDef } from '@flyff/resources';
 import type { JournalEntry } from '@flyff/database';
 import type { CPlayer } from '../entities/player.js';
 import type { InventoryOps } from './questConditions.js';
+import { addExp } from '../combat/formulas.js';
 
 /** Sink the grantors mutate through. `inventory` covers count/add/remove. */
 export interface RewardSink {
@@ -137,9 +138,21 @@ function grantGold(player: CPlayer, amount: number, sink: RewardSink): void {
 }
 
 function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
-  journal(player, 'EXP_CHANGE', { delta: amount, total: player.m_nExp + amount }, sink);
-  player.m_nExp += amount;
+  // m_nExp is within-level; addExp carries excess across level boundaries.
+  const gain = addExp(player.m_nLevel, player.m_nExp, amount);
+  journal(player, 'EXP_CHANGE', { delta: amount, levelFrom: player.m_nLevel, levelTo: gain.level, total: gain.exp }, sink);
+  player.m_nExp = gain.exp;
+  player.m_nLevel = gain.level;
   player._dirty.add('m_nExp');
+  if (gain.levelsGained > 0) {
+    player.m_nHp = player.m_nMaxHp;
+    player.m_nMp = player.m_nMaxMp;
+    player._dirty.add('m_nLevel');
+    player._dirty.add('m_nHp');
+    player._dirty.add('m_nMp');
+    // ponytail: no SETEXPERIENCE/SETLEVEL broadcast here — quest reward path has
+    // no serializer/manager access; next exp gain or a dedicated flush broadcasts.
+  }
 }
 
 function grantItem(player: CPlayer, item: number, count: number, sink: RewardSink): void {

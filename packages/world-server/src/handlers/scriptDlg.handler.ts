@@ -29,7 +29,7 @@ export class ScriptDlgHandler {
     private scriptDlgService: ScriptDlgService,
   ) {}
 
-  handleScriptDlg(socket: ClientSocket, reader: PacketReader): void {
+  async handleScriptDlg(socket: ClientSocket, reader: PacketReader): Promise<void> {
     if (socket.session.state !== SessionState.IN_WORLD) {
       socket.destroy();
       return;
@@ -56,9 +56,12 @@ export class ScriptDlgHandler {
       throw error;
     }
 
-    const outcome = this.scriptDlgService.dialog(player, frame, Date.now());
-    if (!outcome.ok && outcome.reason === 'rate_limited') {
-      logger.debug({ charId: player.m_idPlayer }, 'SCRIPTDLG rate-limited');
+    const outcome = await this.scriptDlgService.dialog(player, frame, Date.now());
+    if (!outcome.ok) {
+      if (outcome.reason === 'rate_limited')
+        logger.debug({ charId: player.m_idPlayer }, 'SCRIPTDLG rate-limited');
+      return;
     }
+    for (const buf of outcome.frames) socket.write(buf);
   }
 }

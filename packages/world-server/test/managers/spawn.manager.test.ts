@@ -1,4 +1,4 @@
-import { describe, it } from 'node:test';
+import { describe, it, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
 import type { ResourceIndex, ZoneIndex } from '@flyff/resources';
 import { SpawnManager } from '../../src/managers/spawn.manager.js';
@@ -124,5 +124,78 @@ describe('SpawnManager', () => {
     const mgr = new SpawnManager({ resources: makeResources() });
     assert.equal(mgr.size, 0);
     assert.equal(mgr.inZone(1).length, 0);
+  });
+
+  it('spreads the count monsters of a spawn across distinct positions (no stacking)', () => {
+    // Bump the fixture spawn count so multiple instances materialize.
+    const resources = makeResources();
+    const flaris = resources.zones.zones.get('flaris') as never as { spawns: Array<{ count: number; radius: number; position: { x: number; y: number; z: number } }> };
+    flaris.spawns[0]!.count = 8;
+    flaris.spawns[0]!.radius = 40;
+    const mgr = new SpawnManager({ resources });
+    mgr.bootstrap();
+
+    const guards = mgr.inZone(1).filter((m) => m.m_dwIndex === 20);
+    assert.equal(guards.length, 8);
+    const positions = new Set(guards.map((m) => `${m.m_vPos.x.toFixed(3)},${m.m_vPos.z.toFixed(3)}`));
+    assert.equal(positions.size, 8, 'each monster on a distinct position');
+    // Every offset within the spawn radius (sunflower keeps r ≤ radius*0.5).
+    const { x, z } = flaris.spawns[0]!.position;
+    for (const m of guards) {
+      const dx = m.m_vPos.x - x;
+      const dz = m.m_vPos.z - z;
+      assert.ok(dx * dx + dz * dz <= 40 * 40, 'inside spawn radius');
+    }
+  });
+
+  it('kill() removes the mover immediately (no respawn for static NPCs)', () => {
+    const mgr = new SpawnManager({ resources: makeResources() });
+    mgr.bootstrap();
+    const before = mgr.size;
+    // Kill the peaceful NPC (delayMs=0) → no respawn scheduled, mover gone now.
+    const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12)!;
+    assert.equal(mgr.kill(homeit.m_idMover), true);
+    assert.equal(mgr.get(homeit.m_idMover), undefined);
+    assert.equal(mgr.size, before - 1);
+    assert.equal(mgr.kill(homeit.m_idMover), false); // already gone
+  });
+
+  it('kill() schedules a respawn after spawn.delay; onSpawn fires with a fresh mover', () => {
+    mock.timers.enable();
+    const spawned: number[] = [];
+    const mgr = new SpawnManager({
+      resources: makeResources(),
+      onSpawn: (m) => spawned.push(m.m_idMover),
+    });
+    mgr.bootstrap();
+
+    // Fixture spawn: Guard (MI 20), count=2, delay=5000ms.
+    const guards = mgr.inZone(1).filter((m) => m.m_dwIndex === 20);
+    assert.equal(guards.length, 2);
+    const victim = guards[0]!;
+    const originalId = victim.m_idMover;
+    const originalHp = victim.m_nHitPoint;
+
+    assert.equal(mgr.kill(victim.m_idMover), true);
+    assert.equal(mgr.get(originalId), undefined);
+    assert.equal(spawned.length, 0); // not yet — timer pending
+
+    mock.timers.tick(5001);
+
+    assert.equal(spawned.length, 1);
+    const replacement = mgr.get(spawned[0]!);
+    assert.ok(replacement, 'respawned mover is live');
+    assert.notEqual(replacement!.m_idMover, originalId, 'new objid');
+    assert.equal(replacement!.m_dwIndex, 20, 'same model index');
+    assert.equal(replacement!.m_nHitPoint, originalHp, 'full HP on respawn');
+    assert.equal(replacement!.m_bDead, false, 'death flag reset');
+
+    // The replacement is itself respawnable.
+    const secondId = replacement!.m_idMover;
+    mgr.kill(secondId);
+    mock.timers.tick(5001);
+    assert.equal(spawned.length, 2);
+    assert.notEqual(spawned[1]!, secondId);
+    mock.restoreAll();
   });
 });

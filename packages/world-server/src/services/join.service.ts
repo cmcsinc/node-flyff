@@ -16,12 +16,16 @@
  */
 
 import type { CharacterRepository, AccountRepository } from '@flyff/database';
+import { createLogger } from '@flyff/core/logger.js';
 import { CPlayer } from '../entities/player.js';
 import type { PlayerSocket } from '../entities/player.js';
 import { AUTH } from '../constants/authority.js';
+import { withinLevelExp } from '../combat/formulas.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { ZoneManager } from '../managers/zone.manager.js';
 import type { ConsumedHandoff } from '../ipc/clusterListener.js';
+
+const logger = createLogger({ module: 'join-service' });
 
 /** Port the join service reads handoffs from — `ClusterListener` satisfies it. */
 export interface HandoffSource {
@@ -77,6 +81,12 @@ export class JoinService {
     }
 
     const player = CPlayer.fromRow(row, socket, authority);
+    // DB stores cumulative exp (C++ m_nExp1); live field is within-level.
+    player.m_nExp = withinLevelExp(Number(row.exp), player.m_nLevel);
+    logger.info(
+      { charId: player.m_idPlayer, account: row.account_id, gm: authority > AUTH.GENERAL, authority },
+      'JOIN resolved authority',
+    );
     if (this.deps.questService) await this.deps.questService.loadOnJoin(player);
     this.deps.playerManager.add(player);
     this.deps.zoneManager.place(player);

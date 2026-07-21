@@ -95,6 +95,10 @@ async function main(): Promise<void> {
     questHelperHandler,
     journal,
     journalReplayer,
+    npcSpeechService,
+    questTracker,
+    spawnManager,
+    aiSystem,
   } = await compose();
 
   process.on('unhandledRejection', err => {
@@ -115,6 +119,10 @@ async function main(): Promise<void> {
   // Flush + close the journal cleanly on shutdown.
   const shutdown = (signal: string): void => {
     logger.info({ signal }, 'Shutting down world server');
+    npcSpeechService.stop();
+    questTracker.stop();
+    aiSystem.stop();
+    spawnManager.shutdown();
     journal.close();
     process.exit(0);
   };

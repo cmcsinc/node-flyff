@@ -39,14 +39,19 @@ import { GetPosHandler } from './handlers/getPos.handler.js';
 import { ScriptDlgService } from './services/scriptDlg.service.js';
 import { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
 import { RevivalService } from './services/revival.service.js';
+import { NpcSpeechService } from './services/npcSpeech.service.js';
 import { RevivalHandler } from './handlers/revival.handler.js';
 import { MeleeAttackService } from './services/meleeAttack.service.js';
+import { CombatService } from './services/combat.service.js';
+import { VISIBILITY_RADIUS } from './net/snapshot/constants.js';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
 import { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import { QuestHelperHandler } from './handlers/questHelper.handler.js';
 import { JournalReplayer } from './systems/journalReplayer.js';
+import { QuestTrackerSystem } from './systems/questTracker.system.js';
+import { AISystem } from './systems/ai.system.js';
 
 export interface WorldComposeResult {
   config: WorldServerConfig;
@@ -57,6 +62,7 @@ export interface WorldComposeResult {
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   spawnManager: SpawnManager;
+  npcSpeechService: NpcSpeechService;
   snapshotSerializer: PlayerSnapshotSerializer;
   npcSnapshotSerializer: NpcSnapshotSerializer;
   joinService: JoinService;
@@ -91,6 +97,7 @@ export interface WorldComposeResult {
   revivalService: RevivalService;
   revivalHandler: RevivalHandler;
   meleeAttackService: MeleeAttackService;
+  combatService: CombatService;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
   removeQuestHandler: RemoveQuestHandler;
@@ -98,6 +105,8 @@ export interface WorldComposeResult {
   questHelperHandler: QuestHelperHandler;
   journal: Journal;
   journalReplayer: JournalReplayer;
+  questTracker: QuestTrackerSystem;
+  aiSystem: AISystem;
 }
 
 export async function compose(): Promise<WorldComposeResult> {
@@ -170,12 +179,30 @@ export async function compose(): Promise<WorldComposeResult> {
   // Boot the spawn table before the TCP listener opens so the first JOIN sees a
   // populated zone. Static NPCs (with outfit) + monster spawn points come from
   // the loaded zone YAML + mover resource index.
-  const spawnManager = new SpawnManager({ resources });
+  const spawnManager = new SpawnManager({
+    resources,
+    // Respawn broadcast: push a 1-entry ADD_OBJ snapshot to players already in
+    // the zone so they see the monster reappear. zoneManager + npcSnapshot
+    // exist above, so the closure captures them by reference.
+    onSpawn: (mover) => {
+      const pkt = npcSnapshotSerializer.build([mover]);
+      zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, pkt);
+    },
+  });
   spawnManager.bootstrap();
   logger.info(
     { movers: spawnManager.size, zoneId: 1 },
     'Spawn table bootstrapped',
   );
+
+  // Ambient NPC speech bubbles — scans spawned NPCs for state-0 `speak`
+  // greetings and broadcasts them on the vanilla `CNpcProperty` cadence.
+  const npcSpeechService = new NpcSpeechService({
+    spawnManager,
+    zoneManager,
+    dialogs: resources.dialogs,
+  });
+  npcSpeechService.start();
 
   // ponytail: `inventory` left permissive-stubbed (no inventory system yet).
   // Item quests stay uncompletable until it lands; non-item quests work today.
@@ -184,6 +211,23 @@ export async function compose(): Promise<WorldComposeResult> {
     quests: resources.quests,
     journal,
   });
+
+  // Phase 6 — reactive quest tracker (kill/patrol/time). Self-driven 1 s timer
+  // for the time-limit countdown; `onKill`/`onPlayerMoved` are hooks the combat
+  // and movement services call (wired in Phase 7 integration).
+  const questTracker = new QuestTrackerSystem({
+    quests: resources.quests,
+    playerManager,
+    questRepo,
+  });
+  questTracker.start();
+
+  // Monster idle-wander FSM (C++ CAIMonster::StateIdle). Emits one DESTPOS per
+  // new destination; the client walks itself. Monsters only — town NPCs/guards
+  // are skipped. Self-driven 1 s timer; `tick(now)` is public for the future
+  // unified 50 ms loop. Stopped on shutdown via index.ts (no leaked timer).
+  const aiSystem = new AISystem({ spawnManager, zoneManager });
+  aiSystem.start();
 
   const joinService = new JoinService({
     charRepo,
@@ -211,7 +255,10 @@ export async function compose(): Promise<WorldComposeResult> {
   // In-world movement + peer-broadcast handlers (Phases 3-5).
   const snapshotService = new SnapshotService({ zoneManager });
   const snapshotHandler = new SnapshotHandler(playerManager, snapshotService);
-  const movementService = new MovementService({ zoneManager });
+  const movementService = new MovementService({
+    zoneManager,
+    onMoved: (p) => questTracker.onPlayerMoved(p),
+  });
   const playerMovedHandler = new PlayerMovedHandler(playerManager, movementService);
   const playerBehaviorHandler = new PlayerBehaviorHandler(playerManager, movementService);
 
@@ -232,12 +279,17 @@ export async function compose(): Promise<WorldComposeResult> {
   const queryGetPosService = new QueryGetPosService();
   const queryGetPosHandler = new QueryGetPosHandler(playerManager, queryGetPosService);
   const getPosHandler = new GetPosHandler(playerManager, movementService);
-  const scriptDlgService = new ScriptDlgService();
+  const scriptDlgService = new ScriptDlgService({
+    spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
+  });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalService = new RevivalService();
   const revivalHandler = new RevivalHandler(playerManager, revivalService);
 
-  const meleeAttackService = new MeleeAttackService({ zoneManager });
+  const combatService = new CombatService({
+    spawnManager, zoneManager, playerManager, charRepo, journal, questTracker,
+  });
+  const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
 
@@ -255,6 +307,9 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager,
     zoneManager,
     spawnManager,
+    npcSpeechService,
+    questTracker,
+    aiSystem,
     snapshotSerializer,
     npcSnapshotSerializer,
     joinService,
@@ -289,6 +344,7 @@ export async function compose(): Promise<WorldComposeResult> {
     revivalService,
     revivalHandler,
     meleeAttackService,
+    combatService,
     playerSetDestObjHandler,
     meleeAttackHandler,
     removeQuestHandler,
