@@ -78,7 +78,7 @@ describe('questConditions — canBegin', () => {
 
 describe('questConditions — isComplete', () => {
   const rt = (over: Partial<{ state: number; time: number; id: number; k: [number, number]; flags: number }> = {}) => ({
-    state: 0, time: 0, id: 1,
+    state: over.state ?? 0, time: over.time ?? 0, id: 1,
     killNpcNum: over.k ?? [0, 0], flags: over.flags ?? 0,
   });
 
