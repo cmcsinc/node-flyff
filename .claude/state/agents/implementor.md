@@ -1,11 +1,23 @@
 # Implementor Agent Session
 
 - **Agent**: implementor
-- **Active Task**: v15 unimplemented packets batch — 11 of 19 gaps closed
-- **Phase**: 2 — Implement (Complete for this batch)
-- **Last Updated**: 2026-07-20
+- **Active Task**: Flaris canonical NPC/spawn port + belligerence wire — COMPLETE
+- **Phase**: Idle
+- **Last Updated**: 2026-07-21
 
 ## Current Work
+
+- [x] Wired `m_dwBelligerence` end-to-end (was hardcoded 0): schema field +
+      `BELLI_TEXT_TO_NUM` in `converters/movers.ts` + `MoverSpawnSource.belligerence`
+      + `CMover.m_dwBelligerence` populated from src + both `spawn.manager.ts` loops
+- [x] Wrote `packages/resources/scripts/extractFlaris.ts` (`pnpm extract:flaris`):
+      parses binary `.dyo` (200B records, OT_MOVER invariant) + UTF-16LE `.rgn`
+      → `data/worlds/zones/flaris.yml`: **195 NPCs + 859 spawns**
+- [x] Regenerated movers.yml (belligerence on all 782) + flaris.yml
+- [x] Tests: spawn.manager belligerence propagation; extractFlaris smoke (3).
+      Resources 12/12, world 139/139 green. tsc clean (only pre-existing js-yaml).
+
+## Original Current Work section (prior task) below
 
 - [x] Implemented 11 v15 C→S handlers in single batch (parallel file writes):
   - CHAT, MOTION, SETTARGET, LEAVE, PLAYERCORR, PLAYERMOVED2, PLAYERANGLE,
