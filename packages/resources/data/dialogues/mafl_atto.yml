@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_atto
+states:
+  "0":
+    speak:
+      - 405
+    timer: 10
+    source: "Speak( NpcId(), 405 );\t\r
+
+      \tSetScriptTimer( 10 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 406
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 407
+  "10":
+    speak:
+      - 408
+    exit: true
+    source: "Speak( NpcId(), 408 );\r\n\tExit();"

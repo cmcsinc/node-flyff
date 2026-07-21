@@ -4,7 +4,7 @@ items:
   - id: 10221
     name: Rocket Cracker
     name_id: IDS_PROPITEM_TXT_004496
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -16,7 +16,7 @@ items:
   - id: 10222
     name: Heart Cracker
     name_id: IDS_PROPITEM_TXT_004498
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -28,7 +28,7 @@ items:
   - id: 10224
     name: Twister Cracker
     name_id: IDS_PROPITEM_TXT_004502
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -40,7 +40,7 @@ items:
   - id: 2904
     name: New Year's Bomb
     name_id: IDS_PROPITEM_TXT_004850
-    weight: 100
+    weight: 1
     price: 40
     sell_price: 10
     tradeable: true
@@ -52,7 +52,7 @@ items:
   - id: 2905
     name: Fireshower
     name_id: IDS_PROPITEM_TXT_004852
-    weight: 100
+    weight: 1
     price: 40
     sell_price: 10
     tradeable: true
@@ -64,7 +64,7 @@ items:
   - id: 2906
     name: Sulnal Bomb
     name_id: IDS_PROPITEM_TXT_004854
-    weight: 100
+    weight: 1
     price: 40
     sell_price: 10
     tradeable: true
@@ -76,7 +76,7 @@ items:
   - id: 2907
     name: Goodbye Bomb
     name_id: IDS_PROPITEM_TXT_004856
-    weight: 100
+    weight: 1
     price: 40
     sell_price: 10
     tradeable: true
@@ -88,7 +88,7 @@ items:
   - id: 2908
     name: Jack-O-Lantern Fireworks
     name_id: IDS_PROPITEM_TXT_004858
-    weight: 100
+    weight: 1
     price: 40
     sell_price: 10
     tradeable: true
@@ -100,7 +100,7 @@ items:
   - id: 20105
     name: 하트폭죽(태국01)
     name_id: IDS_PROPITEM_TXT_011192
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -112,7 +112,7 @@ items:
   - id: 20106
     name: 하트폭죽(태국02)
     name_id: IDS_PROPITEM_TXT_011194
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true

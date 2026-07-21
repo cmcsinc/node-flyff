@@ -1,0 +1,30 @@
+_version: "1.0"
+prefix: mama_ancimys
+states:
+  "0":
+    speak:
+      - 704
+    timer: 15
+    source: "Speak( NpcId(), 704 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 705
+  "4":
+    say:
+      - 706
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 707
+  "10":
+    exit: true

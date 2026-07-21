@@ -1,0 +1,40 @@
+_version: "1.0"
+prefix: mada_ollien
+states:
+  "0":
+    speak:
+      - 316
+    timer: 15
+    source: "Speak( NpcId(), 316 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+    source: "AddKey( 9 );\r
+
+      \tAddKey( 10 );\r
+
+      \t//AddKey( \"½ºÅÈÃÊ±âÈ­\" );"
+  "3":
+    say:
+      - 317
+  "4":
+    say:
+      - 318
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 319
+  "10":
+    speak:
+      - 320
+    exit: true
+    source: "Speak( NpcId(), 320 );\r\n\tExit();"
+  "37":
+    source: InitStat();

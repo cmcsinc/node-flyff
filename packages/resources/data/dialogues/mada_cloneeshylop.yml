@@ -1,0 +1,53 @@
+_version: "1.0"
+prefix: mada_cloneeshylop
+states:
+  "0": {}
+  "1":
+    say:
+      - 146
+    keys:
+      - label: 18
+    launch_quest: true
+    source: "if( GetPlayerLvl() >= 70  && IsWormonServer() == TRUE &&
+      GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_END )\r
+
+      \t{\r
+
+      \t \tSay( 146 );\t\t\r
+
+      \t \tAddKey( 18 );\t\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\t\t\r
+
+      \t\tLaunchQuest();\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 147
+  "4":
+    say:
+      - 148
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 149
+  "10":
+    speak:
+      - 150
+    exit: true
+    source: "Speak( NpcId(), 150 );\r\n\tExit();"
+  "18":
+    source: Replace( WI_WORLD_MADRIGAL, 3780.0, 58.0, 4466.0 );

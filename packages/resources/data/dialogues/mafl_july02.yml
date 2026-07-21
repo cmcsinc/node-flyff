@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mafl_july02
+states:
+  "0":
+    speak:
+      - 986
+    timer: 15
+    source: "Speak( NpcId(), 986 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 987
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 988
+  "10":
+    speak:
+      - 989
+    exit: true
+    source: "Speak( NpcId(), 989 );\r\n\tExit();"

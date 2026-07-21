@@ -1,0 +1,159 @@
+_version: "1.0"
+id: 31
+symbol: QUEST_24
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 28
+      - type: num
+        value: 130
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 28
+      - type: num
+        value: 150
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6049
+      - type: num
+        value: 3
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 2808
+      - type: num
+        value: 5
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 2807
+      - type: num
+        value: 10
+  - cmd: SetEndCondState
+    args:
+      - type: num
+        value: 2
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6005
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000224
+    cond: IDS_PROPQUEST_INC_000225
+    status: IDS_PROPQUEST_INC_000226
+  "1":
+    desc: IDS_PROPQUEST_INC_000227
+    cond: IDS_PROPQUEST_INC_000228
+    status: IDS_PROPQUEST_INC_000229
+  "2":
+    desc: IDS_PROPQUEST_INC_000230
+    cond: IDS_PROPQUEST_INC_000231
+    status: IDS_PROPQUEST_INC_000232
+  "14":
+    desc: IDS_PROPQUEST_INC_000233
+    cond: IDS_PROPQUEST_INC_000234
+    status: IDS_PROPQUEST_INC_000235
+quest_items:
+  - mover: 64
+    item: 6048
+    prob: 1500000000
+    num: 1
+  - mover: 65
+    item: 6049
+    prob: 1500000000
+    num: 1
+title: IDS_PROPQUEST_INC_000223

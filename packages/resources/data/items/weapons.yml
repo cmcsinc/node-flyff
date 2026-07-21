@@ -4,7 +4,7 @@ items:
   - id: 81
     name: Rodney Axe
     name_id: IDS_PROPITEM_TXT_000124
-    weight: 100
+    weight: 1
     price: 1200
     sell_price: 300
     tradeable: true
@@ -18,7 +18,7 @@ items:
   - id: 83
     name: Morrow Axe
     name_id: IDS_PROPITEM_TXT_000128
-    weight: 100
+    weight: 1
     price: 3300
     sell_price: 825
     tradeable: true
@@ -32,7 +32,7 @@ items:
   - id: 85
     name: Curning Axe
     name_id: IDS_PROPITEM_TXT_000132
-    weight: 100
+    weight: 1
     price: 4700
     sell_price: 1175
     tradeable: true
@@ -46,7 +46,7 @@ items:
   - id: 87
     name: Shyadin Axe
     name_id: IDS_PROPITEM_TXT_000136
-    weight: 100
+    weight: 1
     price: 6800
     sell_price: 1700
     tradeable: true
@@ -60,7 +60,7 @@ items:
   - id: 89
     name: Bronze Axe
     name_id: IDS_PROPITEM_TXT_000140
-    weight: 100
+    weight: 1
     price: 10100
     sell_price: 2525
     tradeable: true
@@ -74,7 +74,7 @@ items:
   - id: 91
     name: Grang Axe
     name_id: IDS_PROPITEM_TXT_000144
-    weight: 100
+    weight: 1
     price: 17100
     sell_price: 4275
     tradeable: true
@@ -88,7 +88,7 @@ items:
   - id: 93
     name: Drone Axe
     name_id: IDS_PROPITEM_TXT_000148
-    weight: 100
+    weight: 1
     price: 24800
     sell_price: 6200
     tradeable: true
@@ -102,7 +102,7 @@ items:
   - id: 95
     name: Proem Axe
     name_id: IDS_PROPITEM_TXT_000152
-    weight: 100
+    weight: 1
     price: 34700
     sell_price: 8675
     tradeable: true
@@ -116,7 +116,7 @@ items:
   - id: 97
     name: Corin Axe
     name_id: IDS_PROPITEM_TXT_000156
-    weight: 100
+    weight: 1
     price: 66900
     sell_price: 16725
     tradeable: true
@@ -130,7 +130,7 @@ items:
   - id: 99
     name: Crow Axe
     name_id: IDS_PROPITEM_TXT_000160
-    weight: 100
+    weight: 1
     price: 88000
     sell_price: 22000
     tradeable: true
@@ -144,7 +144,7 @@ items:
   - id: 101
     name: Raptor Axe
     name_id: IDS_PROPITEM_TXT_000164
-    weight: 100
+    weight: 1
     price: 153300
     sell_price: 38325
     tradeable: true
@@ -158,7 +158,7 @@ items:
   - id: 103
     name: Berk Axe
     name_id: IDS_PROPITEM_TXT_000168
-    weight: 100
+    weight: 1
     price: 200500
     sell_price: 50125
     tradeable: true
@@ -172,7 +172,7 @@ items:
   - id: 105
     name: Ardalin Axe
     name_id: IDS_PROPITEM_TXT_000172
-    weight: 100
+    weight: 1
     price: 274000
     sell_price: 68500
     tradeable: true
@@ -186,7 +186,7 @@ items:
   - id: 107
     name: Dolphin Axe
     name_id: IDS_PROPITEM_TXT_000176
-    weight: 100
+    weight: 1
     price: 448300
     sell_price: 112075
     tradeable: true
@@ -200,7 +200,7 @@ items:
   - id: 109
     name: Bonebar Axe
     name_id: IDS_PROPITEM_TXT_000180
-    weight: 100
+    weight: 1
     price: 626800
     sell_price: 156700
     tradeable: true
@@ -214,7 +214,7 @@ items:
   - id: 111
     name: Luxior Axe
     name_id: IDS_PROPITEM_TXT_000184
-    weight: 100
+    weight: 1
     price: 1126600
     sell_price: 281650
     tradeable: true
@@ -228,7 +228,7 @@ items:
   - id: 113
     name: Exhaust Axe
     name_id: IDS_PROPITEM_TXT_000188
-    weight: 100
+    weight: 1
     price: 1731400
     sell_price: 432850
     tradeable: true
@@ -242,7 +242,7 @@ items:
   - id: 115
     name: Shakyfin Axe
     name_id: IDS_PROPITEM_TXT_000192
-    weight: 100
+    weight: 1
     price: 2963100
     sell_price: 740775
     tradeable: true
@@ -256,7 +256,7 @@ items:
   - id: 117
     name: Hitch Axe
     name_id: IDS_PROPITEM_TXT_000196
-    weight: 100
+    weight: 1
     price: 3452400
     sell_price: 863100
     tradeable: true
@@ -270,7 +270,7 @@ items:
   - id: 119
     name: Catchy Axe
     name_id: IDS_PROPITEM_TXT_000200
-    weight: 100
+    weight: 1
     price: 3915400
     sell_price: 978850
     tradeable: true
@@ -284,7 +284,7 @@ items:
   - id: 121
     name: Fellpeed Axe
     name_id: IDS_PROPITEM_TXT_000204
-    weight: 100
+    weight: 1
     price: 4341700
     sell_price: 1085425
     tradeable: true
@@ -298,7 +298,7 @@ items:
   - id: 123
     name: Darcro Axe
     name_id: IDS_PROPITEM_TXT_000208
-    weight: 100
+    weight: 1
     price: 4877200
     sell_price: 1219300
     tradeable: true
@@ -312,7 +312,7 @@ items:
   - id: 125
     name: Waturan Axe
     name_id: IDS_PROPITEM_TXT_000212
-    weight: 100
+    weight: 1
     price: 5521900
     sell_price: 1380475
     tradeable: true
@@ -326,7 +326,7 @@ items:
   - id: 127
     name: Lichiky Axe
     name_id: IDS_PROPITEM_TXT_000216
-    weight: 100
+    weight: 1
     price: 5415900
     sell_price: 1353975
     tradeable: true
@@ -340,7 +340,7 @@ items:
   - id: 137
     name: Two Handed Axe
     name_id: IDS_PROPITEM_TXT_000236
-    weight: 100
+    weight: 1
     price: 537900
     sell_price: 134475
     tradeable: true
@@ -354,7 +354,7 @@ items:
   - id: 138
     name: Great Axe
     name_id: IDS_PROPITEM_TXT_000238
-    weight: 100
+    weight: 1
     price: 597200
     sell_price: 149300
     tradeable: true
@@ -368,7 +368,7 @@ items:
   - id: 139
     name: Kergnition
     name_id: IDS_PROPITEM_TXT_000240
-    weight: 100
+    weight: 1
     price: 752100
     sell_price: 188025
     tradeable: true
@@ -382,7 +382,7 @@ items:
   - id: 140
     name: Lurknition
     name_id: IDS_PROPITEM_TXT_000242
-    weight: 100
+    weight: 1
     price: 1052000
     sell_price: 263000
     tradeable: true
@@ -396,7 +396,7 @@ items:
   - id: 141
     name: Avnition
     name_id: IDS_PROPITEM_TXT_000244
-    weight: 100
+    weight: 1
     price: 1351900
     sell_price: 337975
     tradeable: true
@@ -410,7 +410,7 @@ items:
   - id: 142
     name: Kanainition
     name_id: IDS_PROPITEM_TXT_000246
-    weight: 100
+    weight: 1
     price: 1573600
     sell_price: 393400
     tradeable: true
@@ -424,7 +424,7 @@ items:
   - id: 143
     name: Orcanition
     name_id: IDS_PROPITEM_TXT_000248
-    weight: 100
+    weight: 1
     price: 2077600
     sell_price: 519400
     tradeable: true
@@ -438,7 +438,7 @@ items:
   - id: 144
     name: Linition
     name_id: IDS_PROPITEM_TXT_000250
-    weight: 100
+    weight: 1
     price: 2923200
     sell_price: 730800
     tradeable: true
@@ -452,7 +452,7 @@ items:
   - id: 145
     name: Hardinition
     name_id: IDS_PROPITEM_TXT_000252
-    weight: 100
+    weight: 1
     price: 3555700
     sell_price: 888925
     tradeable: true
@@ -466,7 +466,7 @@ items:
   - id: 431
     name: Woodness Bow
     name_id: IDS_PROPITEM_TXT_000696
-    weight: 100
+    weight: 1
     price: 4400
     sell_price: 1100
     tradeable: true
@@ -480,7 +480,7 @@ items:
   - id: 433
     name: Greentin Bow
     name_id: IDS_PROPITEM_TXT_000700
-    weight: 100
+    weight: 1
     price: 6300
     sell_price: 1575
     tradeable: true
@@ -494,7 +494,7 @@ items:
   - id: 435
     name: Stienger Bow
     name_id: IDS_PROPITEM_TXT_000704
-    weight: 100
+    weight: 1
     price: 9500
     sell_price: 2375
     tradeable: true
@@ -508,7 +508,7 @@ items:
   - id: 437
     name: Clasemit Bow
     name_id: IDS_PROPITEM_TXT_000708
-    weight: 100
+    weight: 1
     price: 15900
     sell_price: 3975
     tradeable: true
@@ -522,7 +522,7 @@ items:
   - id: 439
     name: Redianer Bow
     name_id: IDS_PROPITEM_TXT_000712
-    weight: 100
+    weight: 1
     price: 23200
     sell_price: 5800
     tradeable: true
@@ -536,7 +536,7 @@ items:
   - id: 441
     name: Cristia Bow
     name_id: IDS_PROPITEM_TXT_000716
-    weight: 100
+    weight: 1
     price: 32400
     sell_price: 8100
     tradeable: true
@@ -550,7 +550,7 @@ items:
   - id: 443
     name: Irun Bow
     name_id: IDS_PROPITEM_TXT_000720
-    weight: 100
+    weight: 1
     price: 62000
     sell_price: 15500
     tradeable: true
@@ -564,7 +564,7 @@ items:
   - id: 445
     name: Refometi Bow
     name_id: IDS_PROPITEM_TXT_000724
-    weight: 100
+    weight: 1
     price: 82000
     sell_price: 20500
     tradeable: true
@@ -578,7 +578,7 @@ items:
   - id: 447
     name: Curusier Bow
     name_id: IDS_PROPITEM_TXT_000728
-    weight: 100
+    weight: 1
     price: 143000
     sell_price: 35750
     tradeable: true
@@ -592,7 +592,7 @@ items:
   - id: 449
     name: Siggers Bow
     name_id: IDS_PROPITEM_TXT_000732
-    weight: 100
+    weight: 1
     price: 187000
     sell_price: 46750
     tradeable: true
@@ -606,7 +606,7 @@ items:
   - id: 451
     name: Fullarch Bow
     name_id: IDS_PROPITEM_TXT_000736
-    weight: 100
+    weight: 1
     price: 255000
     sell_price: 63750
     tradeable: true
@@ -620,7 +620,7 @@ items:
   - id: 453
     name: Setien Bow
     name_id: IDS_PROPITEM_TXT_000740
-    weight: 100
+    weight: 1
     price: 418000
     sell_price: 104500
     tradeable: true
@@ -634,7 +634,7 @@ items:
   - id: 455
     name: Varife Bow
     name_id: IDS_PROPITEM_TXT_000744
-    weight: 100
+    weight: 1
     price: 580000
     sell_price: 145000
     tradeable: true
@@ -648,7 +648,7 @@ items:
   - id: 457
     name: Defnan Bow
     name_id: IDS_PROPITEM_TXT_000748
-    weight: 100
+    weight: 1
     price: 1050000
     sell_price: 262500
     tradeable: true
@@ -662,7 +662,7 @@ items:
   - id: 459
     name: Hydron Bow
     name_id: IDS_PROPITEM_TXT_000752
-    weight: 100
+    weight: 1
     price: 1610000
     sell_price: 402500
     tradeable: true
@@ -676,7 +676,7 @@ items:
   - id: 461
     name: Cenatin Bow
     name_id: IDS_PROPITEM_TXT_000756
-    weight: 100
+    weight: 1
     price: 2760000
     sell_price: 690000
     tradeable: true
@@ -690,7 +690,7 @@ items:
   - id: 463
     name: Cyron Bow
     name_id: IDS_PROPITEM_TXT_000760
-    weight: 100
+    weight: 1
     price: 3220000
     sell_price: 805000
     tradeable: true
@@ -704,7 +704,7 @@ items:
   - id: 465
     name: Sionic Bow
     name_id: IDS_PROPITEM_TXT_000764
-    weight: 100
+    weight: 1
     price: 3650000
     sell_price: 912500
     tradeable: true
@@ -718,7 +718,7 @@ items:
   - id: 467
     name: Regen Bow
     name_id: IDS_PROPITEM_TXT_000768
-    weight: 100
+    weight: 1
     price: 4050000
     sell_price: 1012500
     tradeable: true
@@ -732,7 +732,7 @@ items:
   - id: 469
     name: Fiont Bow
     name_id: IDS_PROPITEM_TXT_000772
-    weight: 100
+    weight: 1
     price: 4550000
     sell_price: 1137500
     tradeable: true
@@ -746,7 +746,7 @@ items:
   - id: 471
     name: Brouton Bow
     name_id: IDS_PROPITEM_TXT_000776
-    weight: 100
+    weight: 1
     price: 5050000
     sell_price: 1262500
     tradeable: true
@@ -760,7 +760,7 @@ items:
   - id: 473
     name: Sevoy Bow
     name_id: IDS_PROPITEM_TXT_000780
-    weight: 100
+    weight: 1
     price: 5810000
     sell_price: 1452500
     tradeable: true
@@ -774,7 +774,7 @@ items:
   - id: 181
     name: Plim Stick
     name_id: IDS_PROPITEM_TXT_000256
-    weight: 100
+    weight: 1
     price: 4200
     sell_price: 1050
     tradeable: true
@@ -788,7 +788,7 @@ items:
   - id: 183
     name: Scull Stick
     name_id: IDS_PROPITEM_TXT_000260
-    weight: 100
+    weight: 1
     price: 6100
     sell_price: 1525
     tradeable: true
@@ -802,7 +802,7 @@ items:
   - id: 185
     name: Huey Stick
     name_id: IDS_PROPITEM_TXT_000264
-    weight: 100
+    weight: 1
     price: 9200
     sell_price: 2300
     tradeable: true
@@ -816,7 +816,7 @@ items:
   - id: 187
     name: Kudos Stick
     name_id: IDS_PROPITEM_TXT_000268
-    weight: 100
+    weight: 1
     price: 15400
     sell_price: 3850
     tradeable: true
@@ -830,7 +830,7 @@ items:
   - id: 189
     name: Sayram Stick
     name_id: IDS_PROPITEM_TXT_000272
-    weight: 100
+    weight: 1
     price: 22500
     sell_price: 5625
     tradeable: true
@@ -844,7 +844,7 @@ items:
   - id: 191
     name: Saint Stick
     name_id: IDS_PROPITEM_TXT_000276
-    weight: 100
+    weight: 1
     price: 31400
     sell_price: 7850
     tradeable: true
@@ -858,7 +858,7 @@ items:
   - id: 193
     name: Flury Stick
     name_id: IDS_PROPITEM_TXT_000280
-    weight: 100
+    weight: 1
     price: 60000
     sell_price: 15000
     tradeable: true
@@ -872,7 +872,7 @@ items:
   - id: 195
     name: Ninegale Stick
     name_id: IDS_PROPITEM_TXT_000284
-    weight: 100
+    weight: 1
     price: 79000
     sell_price: 19750
     tradeable: true
@@ -886,7 +886,7 @@ items:
   - id: 197
     name: Mirth Stick
     name_id: IDS_PROPITEM_TXT_000288
-    weight: 100
+    weight: 1
     price: 138000
     sell_price: 34500
     tradeable: true
@@ -900,7 +900,7 @@ items:
   - id: 199
     name: Sizzle Stick
     name_id: IDS_PROPITEM_TXT_000292
-    weight: 100
+    weight: 1
     price: 181000
     sell_price: 45250
     tradeable: true
@@ -914,7 +914,7 @@ items:
   - id: 201
     name: Sealine Stick
     name_id: IDS_PROPITEM_TXT_000296
-    weight: 100
+    weight: 1
     price: 247000
     sell_price: 61750
     tradeable: true
@@ -928,7 +928,7 @@ items:
   - id: 203
     name: Pinacle Stick
     name_id: IDS_PROPITEM_TXT_000300
-    weight: 100
+    weight: 1
     price: 405000
     sell_price: 101250
     tradeable: true
@@ -942,7 +942,7 @@ items:
   - id: 205
     name: Rave Stick
     name_id: IDS_PROPITEM_TXT_000304
-    weight: 100
+    weight: 1
     price: 560000
     sell_price: 140000
     tradeable: true
@@ -956,7 +956,7 @@ items:
   - id: 207
     name: Fanta Stick
     name_id: IDS_PROPITEM_TXT_000308
-    weight: 100
+    weight: 1
     price: 1010000
     sell_price: 252500
     tradeable: true
@@ -970,7 +970,7 @@ items:
   - id: 209
     name: Moralemine Stick
     name_id: IDS_PROPITEM_TXT_000312
-    weight: 100
+    weight: 1
     price: 1560000
     sell_price: 390000
     tradeable: true
@@ -984,7 +984,7 @@ items:
   - id: 211
     name: Shinewing Stick
     name_id: IDS_PROPITEM_TXT_000316
-    weight: 100
+    weight: 1
     price: 2680000
     sell_price: 670000
     tradeable: true
@@ -998,7 +998,7 @@ items:
   - id: 213
     name: Shalow Stick
     name_id: IDS_PROPITEM_TXT_000320
-    weight: 100
+    weight: 1
     price: 3120000
     sell_price: 780000
     tradeable: true
@@ -1012,7 +1012,7 @@ items:
   - id: 215
     name: Prede Stick
     name_id: IDS_PROPITEM_TXT_000324
-    weight: 100
+    weight: 1
     price: 3540000
     sell_price: 885000
     tradeable: true
@@ -1026,7 +1026,7 @@ items:
   - id: 217
     name: Leoss Stick
     name_id: IDS_PROPITEM_TXT_000328
-    weight: 100
+    weight: 1
     price: 3920000
     sell_price: 980000
     tradeable: true
@@ -1040,7 +1040,7 @@ items:
   - id: 219
     name: Forlas Stick
     name_id: IDS_PROPITEM_TXT_000332
-    weight: 100
+    weight: 1
     price: 4410000
     sell_price: 1102500
     tradeable: true
@@ -1054,7 +1054,7 @@ items:
   - id: 221
     name: Shait Stick
     name_id: IDS_PROPITEM_TXT_000336
-    weight: 100
+    weight: 1
     price: 4900000
     sell_price: 1225000
     tradeable: true
@@ -1068,7 +1068,7 @@ items:
   - id: 223
     name: Garlain Stick
     name_id: IDS_PROPITEM_TXT_000340
-    weight: 100
+    weight: 1
     price: 5630000
     sell_price: 1407500
     tradeable: true
@@ -1082,7 +1082,7 @@ items:
   - id: 11
     name: Hand
     name_id: IDS_PROPITEM_TXT_000002
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -1094,7 +1094,7 @@ items:
   - id: 331
     name: Overam Knuckle
     name_id: IDS_PROPITEM_TXT_000520
-    weight: 100
+    weight: 1
     price: 4200
     sell_price: 1050
     tradeable: true
@@ -1108,7 +1108,7 @@ items:
   - id: 333
     name: Sardine Knuckle
     name_id: IDS_PROPITEM_TXT_000524
-    weight: 100
+    weight: 1
     price: 6100
     sell_price: 1525
     tradeable: true
@@ -1122,7 +1122,7 @@ items:
   - id: 335
     name: Twit Knuckle
     name_id: IDS_PROPITEM_TXT_000528
-    weight: 100
+    weight: 1
     price: 9200
     sell_price: 2300
     tradeable: true
@@ -1136,7 +1136,7 @@ items:
   - id: 337
     name: Xeno Knuckle
     name_id: IDS_PROPITEM_TXT_000532
-    weight: 100
+    weight: 1
     price: 15400
     sell_price: 3850
     tradeable: true
@@ -1150,7 +1150,7 @@ items:
   - id: 339
     name: Side Knuckle
     name_id: IDS_PROPITEM_TXT_000536
-    weight: 100
+    weight: 1
     price: 22500
     sell_price: 5625
     tradeable: true
@@ -1164,7 +1164,7 @@ items:
   - id: 341
     name: Talin Knuckle
     name_id: IDS_PROPITEM_TXT_000540
-    weight: 100
+    weight: 1
     price: 31400
     sell_price: 7850
     tradeable: true
@@ -1178,7 +1178,7 @@ items:
   - id: 343
     name: Rigor Knuckle
     name_id: IDS_PROPITEM_TXT_000544
-    weight: 100
+    weight: 1
     price: 60000
     sell_price: 15000
     tradeable: true
@@ -1192,7 +1192,7 @@ items:
   - id: 345
     name: Rampart Knuckle
     name_id: IDS_PROPITEM_TXT_000548
-    weight: 100
+    weight: 1
     price: 79000
     sell_price: 19750
     tradeable: true
@@ -1206,7 +1206,7 @@ items:
   - id: 347
     name: Revenant Knuckle
     name_id: IDS_PROPITEM_TXT_000552
-    weight: 100
+    weight: 1
     price: 138000
     sell_price: 34500
     tradeable: true
@@ -1220,7 +1220,7 @@ items:
   - id: 349
     name: Marvel Knuckle
     name_id: IDS_PROPITEM_TXT_000556
-    weight: 100
+    weight: 1
     price: 181000
     sell_price: 45250
     tradeable: true
@@ -1234,7 +1234,7 @@ items:
   - id: 351
     name: Overpass Knuckle
     name_id: IDS_PROPITEM_TXT_000560
-    weight: 100
+    weight: 1
     price: 247000
     sell_price: 61750
     tradeable: true
@@ -1248,7 +1248,7 @@ items:
   - id: 353
     name: Gravity Knuckle
     name_id: IDS_PROPITEM_TXT_000564
-    weight: 100
+    weight: 1
     price: 405000
     sell_price: 101250
     tradeable: true
@@ -1262,7 +1262,7 @@ items:
   - id: 355
     name: Corean Knuckle
     name_id: IDS_PROPITEM_TXT_000568
-    weight: 100
+    weight: 1
     price: 560000
     sell_price: 140000
     tradeable: true
@@ -1276,7 +1276,7 @@ items:
   - id: 357
     name: Fistomber Knuckle
     name_id: IDS_PROPITEM_TXT_000572
-    weight: 100
+    weight: 1
     price: 1010000
     sell_price: 252500
     tradeable: true
@@ -1290,7 +1290,7 @@ items:
   - id: 359
     name: Edoren Knuckle
     name_id: IDS_PROPITEM_TXT_000576
-    weight: 100
+    weight: 1
     price: 1560000
     sell_price: 390000
     tradeable: true
@@ -1304,7 +1304,7 @@ items:
   - id: 361
     name: Skellock Knuckle
     name_id: IDS_PROPITEM_TXT_000580
-    weight: 100
+    weight: 1
     price: 2680000
     sell_price: 670000
     tradeable: true
@@ -1318,7 +1318,7 @@ items:
   - id: 363
     name: Goldross Knuckle
     name_id: IDS_PROPITEM_TXT_000584
-    weight: 100
+    weight: 1
     price: 3120000
     sell_price: 780000
     tradeable: true
@@ -1332,7 +1332,7 @@ items:
   - id: 365
     name: Blesever Knuckle
     name_id: IDS_PROPITEM_TXT_000588
-    weight: 100
+    weight: 1
     price: 3540000
     sell_price: 885000
     tradeable: true
@@ -1346,7 +1346,7 @@ items:
   - id: 367
     name: Muncuto Knuckle
     name_id: IDS_PROPITEM_TXT_000592
-    weight: 100
+    weight: 1
     price: 3920000
     sell_price: 980000
     tradeable: true
@@ -1360,7 +1360,7 @@ items:
   - id: 369
     name: Federhorn Knuckle
     name_id: IDS_PROPITEM_TXT_000596
-    weight: 100
+    weight: 1
     price: 4410000
     sell_price: 1102500
     tradeable: true
@@ -1374,7 +1374,7 @@ items:
   - id: 371
     name: Knighteel Knuckle
     name_id: IDS_PROPITEM_TXT_000600
-    weight: 100
+    weight: 1
     price: 4900000
     sell_price: 1225000
     tradeable: true
@@ -1388,7 +1388,7 @@ items:
   - id: 373
     name: Lordorbl Knuckle
     name_id: IDS_PROPITEM_TXT_000604
-    weight: 100
+    weight: 1
     price: 5630000
     sell_price: 1407500
     tradeable: true
@@ -1402,7 +1402,7 @@ items:
   - id: 281
     name: Mile Staff
     name_id: IDS_PROPITEM_TXT_000432
-    weight: 100
+    weight: 1
     price: 4400
     sell_price: 1100
     tradeable: true
@@ -1416,7 +1416,7 @@ items:
   - id: 283
     name: Nile Staff
     name_id: IDS_PROPITEM_TXT_000436
-    weight: 100
+    weight: 1
     price: 6400
     sell_price: 1600
     tradeable: true
@@ -1430,7 +1430,7 @@ items:
   - id: 285
     name: Inner Staff
     name_id: IDS_PROPITEM_TXT_000440
-    weight: 100
+    weight: 1
     price: 9600
     sell_price: 2400
     tradeable: true
@@ -1444,7 +1444,7 @@ items:
   - id: 287
     name: Herald Staff
     name_id: IDS_PROPITEM_TXT_000444
-    weight: 100
+    weight: 1
     price: 16100
     sell_price: 4025
     tradeable: true
@@ -1458,7 +1458,7 @@ items:
   - id: 289
     name: Addself Staff
     name_id: IDS_PROPITEM_TXT_000448
-    weight: 100
+    weight: 1
     price: 23400
     sell_price: 5850
     tradeable: true
@@ -1472,7 +1472,7 @@ items:
   - id: 291
     name: Sign Staff
     name_id: IDS_PROPITEM_TXT_000452
-    weight: 100
+    weight: 1
     price: 32700
     sell_price: 8175
     tradeable: true
@@ -1486,7 +1486,7 @@ items:
   - id: 293
     name: Ignis Staff
     name_id: IDS_PROPITEM_TXT_000456
-    weight: 100
+    weight: 1
     price: 63000
     sell_price: 15750
     tradeable: true
@@ -1500,7 +1500,7 @@ items:
   - id: 295
     name: Teba Staff
     name_id: IDS_PROPITEM_TXT_000460
-    weight: 100
+    weight: 1
     price: 83000
     sell_price: 20750
     tradeable: true
@@ -1514,7 +1514,7 @@ items:
   - id: 297
     name: Sline Staff
     name_id: IDS_PROPITEM_TXT_000464
-    weight: 100
+    weight: 1
     price: 144000
     sell_price: 36000
     tradeable: true
@@ -1528,7 +1528,7 @@ items:
   - id: 299
     name: Starwheel Staff
     name_id: IDS_PROPITEM_TXT_000468
-    weight: 100
+    weight: 1
     price: 189000
     sell_price: 47250
     tradeable: true
@@ -1542,7 +1542,7 @@ items:
   - id: 301
     name: Karzam Staff
     name_id: IDS_PROPITEM_TXT_000472
-    weight: 100
+    weight: 1
     price: 258000
     sell_price: 64500
     tradeable: true
@@ -1556,7 +1556,7 @@ items:
   - id: 303
     name: Astrol Staff
     name_id: IDS_PROPITEM_TXT_000476
-    weight: 100
+    weight: 1
     price: 422000
     sell_price: 105500
     tradeable: true
@@ -1570,7 +1570,7 @@ items:
   - id: 305
     name: Sheikane Staff
     name_id: IDS_PROPITEM_TXT_000480
-    weight: 100
+    weight: 1
     price: 590000
     sell_price: 147500
     tradeable: true
@@ -1584,7 +1584,7 @@ items:
   - id: 307
     name: Twenkeen Staff
     name_id: IDS_PROPITEM_TXT_000484
-    weight: 100
+    weight: 1
     price: 1060000
     sell_price: 265000
     tradeable: true
@@ -1598,7 +1598,7 @@ items:
   - id: 309
     name: Ruofl Staff
     name_id: IDS_PROPITEM_TXT_000488
-    weight: 100
+    weight: 1
     price: 1630000
     sell_price: 407500
     tradeable: true
@@ -1612,7 +1612,7 @@ items:
   - id: 311
     name: Featherwing Staff
     name_id: IDS_PROPITEM_TXT_000492
-    weight: 100
+    weight: 1
     price: 2790000
     sell_price: 697500
     tradeable: true
@@ -1626,7 +1626,7 @@ items:
   - id: 313
     name: Holyous Staff
     name_id: IDS_PROPITEM_TXT_000496
-    weight: 100
+    weight: 1
     price: 3250000
     sell_price: 812500
     tradeable: true
@@ -1640,7 +1640,7 @@ items:
   - id: 315
     name: Portel Staff
     name_id: IDS_PROPITEM_TXT_000500
-    weight: 100
+    weight: 1
     price: 3690000
     sell_price: 922500
     tradeable: true
@@ -1654,7 +1654,7 @@ items:
   - id: 317
     name: Mariner Staff
     name_id: IDS_PROPITEM_TXT_000504
-    weight: 100
+    weight: 1
     price: 4090000
     sell_price: 1022500
     tradeable: true
@@ -1668,7 +1668,7 @@ items:
   - id: 319
     name: Remodic Staff
     name_id: IDS_PROPITEM_TXT_000508
-    weight: 100
+    weight: 1
     price: 4590000
     sell_price: 1147500
     tradeable: true
@@ -1682,7 +1682,7 @@ items:
   - id: 321
     name: Elfyren Staff
     name_id: IDS_PROPITEM_TXT_000512
-    weight: 100
+    weight: 1
     price: 5100000
     sell_price: 1275000
     tradeable: true
@@ -1696,7 +1696,7 @@ items:
   - id: 323
     name: Fosharpen Staff
     name_id: IDS_PROPITEM_TXT_000516
-    weight: 100
+    weight: 1
     price: 5870000
     sell_price: 1467500
     tradeable: true
@@ -1710,7 +1710,7 @@ items:
   - id: 21
     name: Wooden Sword
     name_id: IDS_PROPITEM_TXT_000016
-    weight: 100
+    weight: 1
     price: 8
     sell_price: 2
     tradeable: true
@@ -1724,7 +1724,7 @@ items:
   - id: 23
     name: Long Sword
     name_id: IDS_PROPITEM_TXT_000020
-    weight: 100
+    weight: 1
     price: 190
     sell_price: 47
     tradeable: true
@@ -1738,7 +1738,7 @@ items:
   - id: 25
     name: Hand Claw
     name_id: IDS_PROPITEM_TXT_000024
-    weight: 100
+    weight: 1
     price: 590
     sell_price: 147
     tradeable: true
@@ -1752,7 +1752,7 @@ items:
   - id: 27
     name: Parmil Sword
     name_id: IDS_PROPITEM_TXT_000028
-    weight: 100
+    weight: 1
     price: 1400
     sell_price: 350
     tradeable: true
@@ -1766,7 +1766,7 @@ items:
   - id: 61
     name: Crimson Sword
     name_id: IDS_PROPITEM_TXT_000032
-    weight: 100
+    weight: 1
     price: 3000
     sell_price: 750
     tradeable: true
@@ -1780,7 +1780,7 @@ items:
   - id: 29
     name: Petal Sword
     name_id: IDS_PROPITEM_TXT_000036
-    weight: 100
+    weight: 1
     price: 4400
     sell_price: 1100
     tradeable: true
@@ -1794,7 +1794,7 @@ items:
   - id: 31
     name: Blink Sword
     name_id: IDS_PROPITEM_TXT_000040
-    weight: 100
+    weight: 1
     price: 6300
     sell_price: 1575
     tradeable: true
@@ -1808,7 +1808,7 @@ items:
   - id: 33
     name: Outlaw Sword
     name_id: IDS_PROPITEM_TXT_000044
-    weight: 100
+    weight: 1
     price: 9500
     sell_price: 2375
     tradeable: true
@@ -1822,7 +1822,7 @@ items:
   - id: 35
     name: Fairslender Sword
     name_id: IDS_PROPITEM_TXT_000048
-    weight: 100
+    weight: 1
     price: 15900
     sell_price: 3975
     tradeable: true
@@ -1836,7 +1836,7 @@ items:
   - id: 37
     name: Clip Sword
     name_id: IDS_PROPITEM_TXT_000052
-    weight: 100
+    weight: 1
     price: 23200
     sell_price: 5800
     tradeable: true
@@ -1850,7 +1850,7 @@ items:
   - id: 39
     name: Tao Sword
     name_id: IDS_PROPITEM_TXT_000056
-    weight: 100
+    weight: 1
     price: 32400
     sell_price: 8100
     tradeable: true
@@ -1864,7 +1864,7 @@ items:
   - id: 41
     name: Sepal Sword
     name_id: IDS_PROPITEM_TXT_000060
-    weight: 100
+    weight: 1
     price: 62000
     sell_price: 15500
     tradeable: true
@@ -1878,7 +1878,7 @@ items:
   - id: 43
     name: Cylos Sword
     name_id: IDS_PROPITEM_TXT_000064
-    weight: 100
+    weight: 1
     price: 82000
     sell_price: 20500
     tradeable: true
@@ -1892,7 +1892,7 @@ items:
   - id: 45
     name: Invader Sword
     name_id: IDS_PROPITEM_TXT_000068
-    weight: 100
+    weight: 1
     price: 143000
     sell_price: 35750
     tradeable: true
@@ -1906,7 +1906,7 @@ items:
   - id: 47
     name: Stitch Sword
     name_id: IDS_PROPITEM_TXT_000072
-    weight: 100
+    weight: 1
     price: 187000
     sell_price: 46750
     tradeable: true
@@ -1920,7 +1920,7 @@ items:
   - id: 49
     name: Multiblade Sword
     name_id: IDS_PROPITEM_TXT_000076
-    weight: 100
+    weight: 1
     price: 255000
     sell_price: 63750
     tradeable: true
@@ -1934,7 +1934,7 @@ items:
   - id: 51
     name: Panggril Sword
     name_id: IDS_PROPITEM_TXT_000080
-    weight: 100
+    weight: 1
     price: 418000
     sell_price: 104500
     tradeable: true
@@ -1948,7 +1948,7 @@ items:
   - id: 53
     name: Carnage Sword
     name_id: IDS_PROPITEM_TXT_000084
-    weight: 100
+    weight: 1
     price: 580000
     sell_price: 145000
     tradeable: true
@@ -1962,7 +1962,7 @@ items:
   - id: 55
     name: Janitor Sword
     name_id: IDS_PROPITEM_TXT_000088
-    weight: 100
+    weight: 1
     price: 1050000
     sell_price: 262500
     tradeable: true
@@ -1976,7 +1976,7 @@ items:
   - id: 57
     name: Blue Jade Sword
     name_id: IDS_PROPITEM_TXT_000092
-    weight: 100
+    weight: 1
     price: 1610000
     sell_price: 402500
     tradeable: true
@@ -1990,7 +1990,7 @@ items:
   - id: 59
     name: Zeroth Sword
     name_id: IDS_PROPITEM_TXT_000096
-    weight: 100
+    weight: 1
     price: 2760000
     sell_price: 690000
     tradeable: true
@@ -2004,7 +2004,7 @@ items:
   - id: 63
     name: Emeryl Sword
     name_id: IDS_PROPITEM_TXT_000100
-    weight: 100
+    weight: 1
     price: 3220000
     sell_price: 805000
     tradeable: true
@@ -2018,7 +2018,7 @@ items:
   - id: 65
     name: Chainsing Sword
     name_id: IDS_PROPITEM_TXT_000104
-    weight: 100
+    weight: 1
     price: 3650000
     sell_price: 912500
     tradeable: true
@@ -2032,7 +2032,7 @@ items:
   - id: 67
     name: Harpion Sword
     name_id: IDS_PROPITEM_TXT_000108
-    weight: 100
+    weight: 1
     price: 4050000
     sell_price: 1012500
     tradeable: true
@@ -2046,7 +2046,7 @@ items:
   - id: 69
     name: Smiter Sword
     name_id: IDS_PROPITEM_TXT_000112
-    weight: 100
+    weight: 1
     price: 4550000
     sell_price: 1137500
     tradeable: true
@@ -2060,7 +2060,7 @@ items:
   - id: 71
     name: Shadeving Sword
     name_id: IDS_PROPITEM_TXT_000116
-    weight: 100
+    weight: 1
     price: 5050000
     sell_price: 1262500
     tradeable: true
@@ -2074,7 +2074,7 @@ items:
   - id: 73
     name: Hotter Sword
     name_id: IDS_PROPITEM_TXT_000120
-    weight: 100
+    weight: 1
     price: 5810000
     sell_price: 1452500
     tradeable: true
@@ -2088,7 +2088,7 @@ items:
   - id: 128
     name: Bastard Sword
     name_id: IDS_PROPITEM_TXT_000218
-    weight: 100
+    weight: 1
     price: 418000
     sell_price: 104500
     tradeable: true
@@ -2102,7 +2102,7 @@ items:
   - id: 129
     name: Two Handed Sword
     name_id: IDS_PROPITEM_TXT_000220
-    weight: 100
+    weight: 1
     price: 460000
     sell_price: 115000
     tradeable: true
@@ -2116,7 +2116,7 @@ items:
   - id: 130
     name: Darkonizer
     name_id: IDS_PROPITEM_TXT_000222
-    weight: 100
+    weight: 1
     price: 580000
     sell_price: 145000
     tradeable: true
@@ -2130,7 +2130,7 @@ items:
   - id: 131
     name: Adaptizer
     name_id: IDS_PROPITEM_TXT_000224
-    weight: 100
+    weight: 1
     price: 810000
     sell_price: 202500
     tradeable: true
@@ -2144,7 +2144,7 @@ items:
   - id: 132
     name: Zweigazer
     name_id: IDS_PROPITEM_TXT_000226
-    weight: 100
+    weight: 1
     price: 1050000
     sell_price: 262500
     tradeable: true
@@ -2158,7 +2158,7 @@ items:
   - id: 133
     name: Kaleonizer
     name_id: IDS_PROPITEM_TXT_000228
-    weight: 100
+    weight: 1
     price: 1220000
     sell_price: 305000
     tradeable: true
@@ -2172,7 +2172,7 @@ items:
   - id: 134
     name: Gootnizer
     name_id: IDS_PROPITEM_TXT_000230
-    weight: 100
+    weight: 1
     price: 1610000
     sell_price: 402500
     tradeable: true
@@ -2186,7 +2186,7 @@ items:
   - id: 135
     name: Hauntizer
     name_id: IDS_PROPITEM_TXT_000232
-    weight: 100
+    weight: 1
     price: 2270000
     sell_price: 567500
     tradeable: true
@@ -2200,7 +2200,7 @@ items:
   - id: 136
     name: Clock Slayer
     name_id: IDS_PROPITEM_TXT_000234
-    weight: 100
+    weight: 1
     price: 2760000
     sell_price: 690000
     tradeable: true
@@ -2214,7 +2214,7 @@ items:
   - id: 231
     name: Seal Wand
     name_id: IDS_PROPITEM_TXT_000344
-    weight: 100
+    weight: 1
     price: 3800
     sell_price: 950
     tradeable: true
@@ -2228,7 +2228,7 @@ items:
   - id: 233
     name: Cubic Wand
     name_id: IDS_PROPITEM_TXT_000348
-    weight: 100
+    weight: 1
     price: 5500
     sell_price: 1375
     tradeable: true
@@ -2242,7 +2242,7 @@ items:
   - id: 235
     name: Epi Wand
     name_id: IDS_PROPITEM_TXT_000352
-    weight: 100
+    weight: 1
     price: 8200
     sell_price: 2050
     tradeable: true
@@ -2256,7 +2256,7 @@ items:
   - id: 237
     name: Niz Wand
     name_id: IDS_PROPITEM_TXT_000356
-    weight: 100
+    weight: 1
     price: 13800
     sell_price: 3450
     tradeable: true
@@ -2270,7 +2270,7 @@ items:
   - id: 239
     name: Ruby Wand
     name_id: IDS_PROPITEM_TXT_000360
-    weight: 100
+    weight: 1
     price: 20100
     sell_price: 5025
     tradeable: true
@@ -2284,7 +2284,7 @@ items:
   - id: 241
     name: Kalis Wand
     name_id: IDS_PROPITEM_TXT_000364
-    weight: 100
+    weight: 1
     price: 28100
     sell_price: 7025
     tradeable: true
@@ -2298,7 +2298,7 @@ items:
   - id: 243
     name: Poly Wand
     name_id: IDS_PROPITEM_TXT_000368
-    weight: 100
+    weight: 1
     price: 54000
     sell_price: 13500
     tradeable: true
@@ -2312,7 +2312,7 @@ items:
   - id: 245
     name: Mekerhill Wand
     name_id: IDS_PROPITEM_TXT_000372
-    weight: 100
+    weight: 1
     price: 71000
     sell_price: 17750
     tradeable: true
@@ -2326,7 +2326,7 @@ items:
   - id: 247
     name: Naz Wand
     name_id: IDS_PROPITEM_TXT_000376
-    weight: 100
+    weight: 1
     price: 124000
     sell_price: 31000
     tradeable: true
@@ -2340,7 +2340,7 @@ items:
   - id: 249
     name: Zerem Wand
     name_id: IDS_PROPITEM_TXT_000380
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -2354,7 +2354,7 @@ items:
   - id: 251
     name: Bluebow Wand
     name_id: IDS_PROPITEM_TXT_000384
-    weight: 100
+    weight: 1
     price: 221000
     sell_price: 55250
     tradeable: true
@@ -2368,7 +2368,7 @@ items:
   - id: 253
     name: Splhail Wand
     name_id: IDS_PROPITEM_TXT_000388
-    weight: 100
+    weight: 1
     price: 362000
     sell_price: 90500
     tradeable: true
@@ -2382,7 +2382,7 @@ items:
   - id: 255
     name: Mirage Wand
     name_id: IDS_PROPITEM_TXT_000392
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -2396,7 +2396,7 @@ items:
   - id: 257
     name: Aris Wand
     name_id: IDS_PROPITEM_TXT_000396
-    weight: 100
+    weight: 1
     price: 910000
     sell_price: 227500
     tradeable: true
@@ -2410,7 +2410,7 @@ items:
   - id: 259
     name: Moira Wand
     name_id: IDS_PROPITEM_TXT_000400
-    weight: 100
+    weight: 1
     price: 1400000
     sell_price: 350000
     tradeable: true
@@ -2424,7 +2424,7 @@ items:
   - id: 261
     name: Arcadia Wand
     name_id: IDS_PROPITEM_TXT_000404
-    weight: 100
+    weight: 1
     price: 2390000
     sell_price: 597500
     tradeable: true
@@ -2438,7 +2438,7 @@ items:
   - id: 263
     name: Taris Wand
     name_id: IDS_PROPITEM_TXT_000408
-    weight: 100
+    weight: 1
     price: 2790000
     sell_price: 697500
     tradeable: true
@@ -2452,7 +2452,7 @@ items:
   - id: 265
     name: Jalate Wand
     name_id: IDS_PROPITEM_TXT_000412
-    weight: 100
+    weight: 1
     price: 3160000
     sell_price: 790000
     tradeable: true
@@ -2466,7 +2466,7 @@ items:
   - id: 267
     name: Kroril Wand
     name_id: IDS_PROPITEM_TXT_000416
-    weight: 100
+    weight: 1
     price: 3510000
     sell_price: 877500
     tradeable: true
@@ -2480,7 +2480,7 @@ items:
   - id: 269
     name: Rekis Wand
     name_id: IDS_PROPITEM_TXT_000420
-    weight: 100
+    weight: 1
     price: 3940000
     sell_price: 985000
     tradeable: true
@@ -2494,7 +2494,7 @@ items:
   - id: 271
     name: Daris Wand
     name_id: IDS_PROPITEM_TXT_000424
-    weight: 100
+    weight: 1
     price: 4380000
     sell_price: 1095000
     tradeable: true
@@ -2508,7 +2508,7 @@ items:
   - id: 273
     name: Lorai Wand
     name_id: IDS_PROPITEM_TXT_000428
-    weight: 100
+    weight: 1
     price: 5040000
     sell_price: 1260000
     tradeable: true
@@ -2522,7 +2522,7 @@ items:
   - id: 381
     name: Itun
     name_id: IDS_PROPITEM_TXT_000608
-    weight: 100
+    weight: 1
     price: 4400
     sell_price: 1100
     tradeable: true
@@ -2536,7 +2536,7 @@ items:
   - id: 383
     name: Slepint
     name_id: IDS_PROPITEM_TXT_000612
-    weight: 100
+    weight: 1
     price: 6300
     sell_price: 1575
     tradeable: true
@@ -2550,7 +2550,7 @@ items:
   - id: 385
     name: Client
     name_id: IDS_PROPITEM_TXT_000616
-    weight: 100
+    weight: 1
     price: 9500
     sell_price: 2375
     tradeable: true
@@ -2564,7 +2564,7 @@ items:
   - id: 387
     name: Tensu
     name_id: IDS_PROPITEM_TXT_000620
-    weight: 100
+    weight: 1
     price: 15900
     sell_price: 3975
     tradeable: true
@@ -2578,7 +2578,7 @@ items:
   - id: 389
     name: Emporer
     name_id: IDS_PROPITEM_TXT_000624
-    weight: 100
+    weight: 1
     price: 23200
     sell_price: 5800
     tradeable: true
@@ -2592,7 +2592,7 @@ items:
   - id: 391
     name: Dicein
     name_id: IDS_PROPITEM_TXT_000628
-    weight: 100
+    weight: 1
     price: 32400
     sell_price: 8100
     tradeable: true
@@ -2606,7 +2606,7 @@ items:
   - id: 393
     name: Miragle
     name_id: IDS_PROPITEM_TXT_000632
-    weight: 100
+    weight: 1
     price: 62000
     sell_price: 15500
     tradeable: true
@@ -2620,7 +2620,7 @@ items:
   - id: 395
     name: Ridener
     name_id: IDS_PROPITEM_TXT_000636
-    weight: 100
+    weight: 1
     price: 82000
     sell_price: 20500
     tradeable: true
@@ -2634,7 +2634,7 @@ items:
   - id: 397
     name: Firee
     name_id: IDS_PROPITEM_TXT_000640
-    weight: 100
+    weight: 1
     price: 143000
     sell_price: 35750
     tradeable: true
@@ -2648,7 +2648,7 @@ items:
   - id: 399
     name: Immote
     name_id: IDS_PROPITEM_TXT_000644
-    weight: 100
+    weight: 1
     price: 187000
     sell_price: 46750
     tradeable: true
@@ -2662,7 +2662,7 @@ items:
   - id: 401
     name: Stencil
     name_id: IDS_PROPITEM_TXT_000648
-    weight: 100
+    weight: 1
     price: 255000
     sell_price: 63750
     tradeable: true
@@ -2676,7 +2676,7 @@ items:
   - id: 403
     name: Repoyit
     name_id: IDS_PROPITEM_TXT_000652
-    weight: 100
+    weight: 1
     price: 418000
     sell_price: 104500
     tradeable: true
@@ -2690,7 +2690,7 @@ items:
   - id: 405
     name: Gelonde
     name_id: IDS_PROPITEM_TXT_000656
-    weight: 100
+    weight: 1
     price: 580000
     sell_price: 145000
     tradeable: true
@@ -2704,7 +2704,7 @@ items:
   - id: 407
     name: Wingfull
     name_id: IDS_PROPITEM_TXT_000660
-    weight: 100
+    weight: 1
     price: 1050000
     sell_price: 262500
     tradeable: true
@@ -2718,7 +2718,7 @@ items:
   - id: 409
     name: Anakun
     name_id: IDS_PROPITEM_TXT_000664
-    weight: 100
+    weight: 1
     price: 1610000
     sell_price: 402500
     tradeable: true
@@ -2732,7 +2732,7 @@ items:
   - id: 411
     name: Circern
     name_id: IDS_PROPITEM_TXT_000668
-    weight: 100
+    weight: 1
     price: 2760000
     sell_price: 690000
     tradeable: true
@@ -2746,7 +2746,7 @@ items:
   - id: 413
     name: Mishend
     name_id: IDS_PROPITEM_TXT_000672
-    weight: 100
+    weight: 1
     price: 3220000
     sell_price: 805000
     tradeable: true
@@ -2760,7 +2760,7 @@ items:
   - id: 415
     name: Slinfes
     name_id: IDS_PROPITEM_TXT_000676
-    weight: 100
+    weight: 1
     price: 3650000
     sell_price: 912500
     tradeable: true
@@ -2774,7 +2774,7 @@ items:
   - id: 417
     name: Akane
     name_id: IDS_PROPITEM_TXT_000680
-    weight: 100
+    weight: 1
     price: 4050000
     sell_price: 1012500
     tradeable: true
@@ -2788,7 +2788,7 @@ items:
   - id: 419
     name: Clantob
     name_id: IDS_PROPITEM_TXT_000684
-    weight: 100
+    weight: 1
     price: 4550000
     sell_price: 1137500
     tradeable: true
@@ -2802,7 +2802,7 @@ items:
   - id: 421
     name: Enaphoon
     name_id: IDS_PROPITEM_TXT_000688
-    weight: 100
+    weight: 1
     price: 5050000
     sell_price: 1262500
     tradeable: true
@@ -2816,7 +2816,7 @@ items:
   - id: 423
     name: Coroner
     name_id: IDS_PROPITEM_TXT_000692
-    weight: 100
+    weight: 1
     price: 5810000
     sell_price: 1452500
     tradeable: true
@@ -2830,7 +2830,7 @@ items:
   - id: 10200
     name: Dretra Sword
     name_id: IDS_PROPITEM_TXT_003722
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -2844,7 +2844,7 @@ items:
   - id: 10201
     name: Taytra Axe
     name_id: IDS_PROPITEM_TXT_003724
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -2858,7 +2858,7 @@ items:
   - id: 10202
     name: Yakshadain Stick
     name_id: IDS_PROPITEM_TXT_003726
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -2872,7 +2872,7 @@ items:
   - id: 10203
     name: Clrael Wand
     name_id: IDS_PROPITEM_TXT_003728
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -2886,7 +2886,7 @@ items:
   - id: 10204
     name: Shamerel Staff
     name_id: IDS_PROPITEM_TXT_003730
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -2900,7 +2900,7 @@ items:
   - id: 10205
     name: Yakadain Knuckle
     name_id: IDS_PROPITEM_TXT_003732
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -2914,7 +2914,7 @@ items:
   - id: 10356
     name: Tritium Sword
     name_id: IDS_PROPITEM_TXT_003806
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -2928,7 +2928,7 @@ items:
   - id: 10357
     name: Tritium Axe
     name_id: IDS_PROPITEM_TXT_003808
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -2942,7 +2942,7 @@ items:
   - id: 10358
     name: Tritium Stick
     name_id: IDS_PROPITEM_TXT_003810
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -2956,7 +2956,7 @@ items:
   - id: 10359
     name: Tritium Knuckle
     name_id: IDS_PROPITEM_TXT_003812
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -2970,7 +2970,7 @@ items:
   - id: 10360
     name: Tritium Wand
     name_id: IDS_PROPITEM_TXT_003814
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -2984,7 +2984,7 @@ items:
   - id: 10437
     name: Tritium Yoyo
     name_id: IDS_PROPITEM_TXT_003816
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -2998,7 +2998,7 @@ items:
   - id: 10438
     name: Tritium Bow
     name_id: IDS_PROPITEM_TXT_003818
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -3012,7 +3012,7 @@ items:
   - id: 10361
     name: Tritium Staff
     name_id: IDS_PROPITEM_TXT_003820
-    weight: 100
+    weight: 1
     price: 250000
     sell_price: 62500
     tradeable: true
@@ -3026,7 +3026,7 @@ items:
   - id: 10261
     name: Pericuum Sword
     name_id: IDS_PROPITEM_TXT_003822
-    weight: 100
+    weight: 1
     price: 50000
     sell_price: 12500
     tradeable: true
@@ -3040,7 +3040,7 @@ items:
   - id: 10262
     name: Pericuum Axe
     name_id: IDS_PROPITEM_TXT_003824
-    weight: 100
+    weight: 1
     price: 50000
     sell_price: 12500
     tradeable: true
@@ -3054,7 +3054,7 @@ items:
   - id: 10263
     name: Pericuum Stick
     name_id: IDS_PROPITEM_TXT_003826
-    weight: 100
+    weight: 1
     price: 50000
     sell_price: 12500
     tradeable: true
@@ -3068,7 +3068,7 @@ items:
   - id: 10264
     name: Pericuum Knuckle
     name_id: IDS_PROPITEM_TXT_003828
-    weight: 100
+    weight: 1
     price: 50000
     sell_price: 12500
     tradeable: true
@@ -3082,7 +3082,7 @@ items:
   - id: 10265
     name: Pericuum Wand
     name_id: IDS_PROPITEM_TXT_003830
-    weight: 100
+    weight: 1
     price: 50000
     sell_price: 12500
     tradeable: true
@@ -3096,7 +3096,7 @@ items:
   - id: 10266
     name: Pericuum Staff
     name_id: IDS_PROPITEM_TXT_003832
-    weight: 100
+    weight: 1
     price: 50000
     sell_price: 12500
     tradeable: true
@@ -3110,7 +3110,7 @@ items:
   - id: 22000
     name: Sword of BoBoKu
     name_id: IDS_PROPITEM_TXT_003834
-    weight: 100
+    weight: 1
     price: 2400
     sell_price: 600
     tradeable: true
@@ -3124,7 +3124,7 @@ items:
   - id: 22001
     name: Axe of Luda
     name_id: IDS_PROPITEM_TXT_003836
-    weight: 100
+    weight: 1
     price: 2400
     sell_price: 600
     tradeable: true
@@ -3138,7 +3138,7 @@ items:
   - id: 22002
     name: Shining Sword
     name_id: IDS_PROPITEM_TXT_003838
-    weight: 100
+    weight: 1
     price: 26100
     sell_price: 6525
     tradeable: true
@@ -3152,7 +3152,7 @@ items:
   - id: 22003
     name: Claw of Lawolf
     name_id: IDS_PROPITEM_TXT_003840
-    weight: 100
+    weight: 1
     price: 26100
     sell_price: 6525
     tradeable: true
@@ -3166,7 +3166,7 @@ items:
   - id: 22004
     name: Irony Knuckle
     name_id: IDS_PROPITEM_TXT_003842
-    weight: 100
+    weight: 1
     price: 26100
     sell_price: 6525
     tradeable: true
@@ -3180,7 +3180,7 @@ items:
   - id: 22005
     name: Iron of Clockworks
     name_id: IDS_PROPITEM_TXT_003844
-    weight: 100
+    weight: 1
     price: 59000
     sell_price: 14750
     tradeable: true
@@ -3194,7 +3194,7 @@ items:
   - id: 22006
     name: Sword of Silver Sword
     name_id: IDS_PROPITEM_TXT_003846
-    weight: 100
+    weight: 1
     price: 200250
     sell_price: 50062
     tradeable: true
@@ -3208,7 +3208,7 @@ items:
   - id: 22007
     name: Elemental Axe
     name_id: IDS_PROPITEM_TXT_003848
-    weight: 100
+    weight: 1
     price: 56000
     sell_price: 14000
     tradeable: true
@@ -3222,7 +3222,7 @@ items:
   - id: 22008
     name: Masquerpet Cutter
     name_id: IDS_PROPITEM_TXT_003850
-    weight: 100
+    weight: 1
     price: 121750
     sell_price: 30437
     tradeable: true
@@ -3236,7 +3236,7 @@ items:
   - id: 22009
     name: Steel Knuckle
     name_id: IDS_PROPITEM_TXT_003852
-    weight: 100
+    weight: 1
     price: 24000
     sell_price: 6000
     tradeable: true
@@ -3250,7 +3250,7 @@ items:
   - id: 22010
     name: Fist of Revenge
     name_id: IDS_PROPITEM_TXT_003854
-    weight: 100
+    weight: 1
     price: 101250
     sell_price: 25312
     tradeable: true
@@ -3264,7 +3264,7 @@ items:
   - id: 22011
     name: Toy of Iblis
     name_id: IDS_PROPITEM_TXT_003856
-    weight: 100
+    weight: 1
     price: 8100
     sell_price: 2025
     tradeable: true
@@ -3278,7 +3278,7 @@ items:
   - id: 22012
     name: Wheel of Wheelem
     name_id: IDS_PROPITEM_TXT_003858
-    weight: 100
+    weight: 1
     price: 35750
     sell_price: 8937
     tradeable: true
@@ -3292,7 +3292,7 @@ items:
   - id: 22013
     name: Pulley of Clockworks
     name_id: IDS_PROPITEM_TXT_003860
-    weight: 100
+    weight: 1
     price: 115000
     sell_price: 28750
     tradeable: true
@@ -3306,7 +3306,7 @@ items:
   - id: 22014
     name: Bow of Accuracy
     name_id: IDS_PROPITEM_TXT_003862
-    weight: 100
+    weight: 1
     price: 8100
     sell_price: 2025
     tradeable: true
@@ -3320,7 +3320,7 @@ items:
   - id: 22015
     name: Bow of Spirit
     name_id: IDS_PROPITEM_TXT_003864
-    weight: 100
+    weight: 1
     price: 35750
     sell_price: 8937
     tradeable: true
@@ -3334,7 +3334,7 @@ items:
   - id: 22016
     name: Flaming Bow
     name_id: IDS_PROPITEM_TXT_003866
-    weight: 100
+    weight: 1
     price: 145000
     sell_price: 36250
     tradeable: true
@@ -3348,7 +3348,7 @@ items:
   - id: 22017
     name: Flarine Stick
     name_id: IDS_PROPITEM_TXT_003868
-    weight: 100
+    weight: 1
     price: 7850
     sell_price: 1962
     tradeable: true
@@ -3362,7 +3362,7 @@ items:
   - id: 22018
     name: Saint Guardian Stick
     name_id: IDS_PROPITEM_TXT_003870
-    weight: 100
+    weight: 1
     price: 34500
     sell_price: 8625
     tradeable: true
@@ -3376,7 +3376,7 @@ items:
   - id: 22019
     name: Stick of Roritoren
     name_id: IDS_PROPITEM_TXT_003872
-    weight: 100
+    weight: 1
     price: 140000
     sell_price: 35000
     tradeable: true
@@ -3390,7 +3390,7 @@ items:
   - id: 22020
     name: Lightened Wand
     name_id: IDS_PROPITEM_TXT_003874
-    weight: 100
+    weight: 1
     price: 7025
     sell_price: 1756
     tradeable: true
@@ -3404,7 +3404,7 @@ items:
   - id: 22021
     name: Wand of Earthquake
     name_id: IDS_PROPITEM_TXT_003876
-    weight: 100
+    weight: 1
     price: 31000
     sell_price: 7750
     tradeable: true
@@ -3418,7 +3418,7 @@ items:
   - id: 22022
     name: Branch of Rhsis
     name_id: IDS_PROPITEM_TXT_003878
-    weight: 100
+    weight: 1
     price: 125000
     sell_price: 31250
     tradeable: true
@@ -3432,7 +3432,7 @@ items:
   - id: 22023
     name: Staff of Luena Lab
     name_id: IDS_PROPITEM_TXT_003880
-    weight: 100
+    weight: 1
     price: 8175
     sell_price: 2043
     tradeable: true
@@ -3446,7 +3446,7 @@ items:
   - id: 22024
     name: Flaming Stick
     name_id: IDS_PROPITEM_TXT_003882
-    weight: 100
+    weight: 1
     price: 36000
     sell_price: 9000
     tradeable: true
@@ -3460,7 +3460,7 @@ items:
   - id: 22025
     name: Stick of Vel Parpone
     name_id: IDS_PROPITEM_TXT_003884
-    weight: 100
+    weight: 1
     price: 147500
     sell_price: 36875
     tradeable: true
@@ -3474,7 +3474,7 @@ items:
   - id: 22026
     name: Guardian Sword
     name_id: IDS_PROPITEM_TXT_003886
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3488,7 +3488,7 @@ items:
   - id: 22030
     name: Guardian Big Sword
     name_id: IDS_PROPITEM_TXT_003888
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3502,7 +3502,7 @@ items:
   - id: 22034
     name: Guardian Axe
     name_id: IDS_PROPITEM_TXT_003890
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3516,7 +3516,7 @@ items:
   - id: 22038
     name: Guardian Ambidextrous Axe
     name_id: IDS_PROPITEM_TXT_003892
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3530,7 +3530,7 @@ items:
   - id: 22042
     name: Guardian Knuckle
     name_id: IDS_PROPITEM_TXT_003894
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3544,7 +3544,7 @@ items:
   - id: 22046
     name: Guardian Stick
     name_id: IDS_PROPITEM_TXT_003896
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3558,7 +3558,7 @@ items:
   - id: 22058
     name: Guardian Wand
     name_id: IDS_PROPITEM_TXT_003898
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3572,7 +3572,7 @@ items:
   - id: 22062
     name: Guardian Staff
     name_id: IDS_PROPITEM_TXT_003900
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3586,7 +3586,7 @@ items:
   - id: 22050
     name: Guardian Bow
     name_id: IDS_PROPITEM_TXT_003902
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3600,7 +3600,7 @@ items:
   - id: 22054
     name: Guardian Yo-Yo
     name_id: IDS_PROPITEM_TXT_003904
-    weight: 100
+    weight: 1
     price: 100000
     sell_price: 25000
     tradeable: true
@@ -3614,7 +3614,7 @@ items:
   - id: 22027
     name: Historic Sword
     name_id: IDS_PROPITEM_TXT_003906
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3628,7 +3628,7 @@ items:
   - id: 22031
     name: Historic Big Sword
     name_id: IDS_PROPITEM_TXT_003908
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3642,7 +3642,7 @@ items:
   - id: 22035
     name: Historic Axe
     name_id: IDS_PROPITEM_TXT_003910
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3656,7 +3656,7 @@ items:
   - id: 22039
     name: Historic Ambidextrous Axe
     name_id: IDS_PROPITEM_TXT_003912
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3670,7 +3670,7 @@ items:
   - id: 22043
     name: Historic Knuckle
     name_id: IDS_PROPITEM_TXT_003914
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3684,7 +3684,7 @@ items:
   - id: 22047
     name: Historic Stick
     name_id: IDS_PROPITEM_TXT_003916
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3698,7 +3698,7 @@ items:
   - id: 22059
     name: Historic Wand
     name_id: IDS_PROPITEM_TXT_003918
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3712,7 +3712,7 @@ items:
   - id: 22063
     name: Historic Staff
     name_id: IDS_PROPITEM_TXT_003920
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3726,7 +3726,7 @@ items:
   - id: 22051
     name: Historic Bow
     name_id: IDS_PROPITEM_TXT_003922
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3740,7 +3740,7 @@ items:
   - id: 22055
     name: Historic Yo-Yo
     name_id: IDS_PROPITEM_TXT_003924
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -3754,7 +3754,7 @@ items:
   - id: 22028
     name: Angel Sword
     name_id: IDS_PROPITEM_TXT_003926
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3768,7 +3768,7 @@ items:
   - id: 22032
     name: Angel Big Sword
     name_id: IDS_PROPITEM_TXT_003928
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3782,7 +3782,7 @@ items:
   - id: 22036
     name: Angel Axe
     name_id: IDS_PROPITEM_TXT_003930
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3796,7 +3796,7 @@ items:
   - id: 22040
     name: Angel Ambidextrous Axe
     name_id: IDS_PROPITEM_TXT_003932
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3810,7 +3810,7 @@ items:
   - id: 22044
     name: Angel Glove
     name_id: IDS_PROPITEM_TXT_003934
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3824,7 +3824,7 @@ items:
   - id: 22048
     name: Angel Stick
     name_id: IDS_PROPITEM_TXT_003936
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3838,7 +3838,7 @@ items:
   - id: 22060
     name: Angel Wand
     name_id: IDS_PROPITEM_TXT_003938
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3852,7 +3852,7 @@ items:
   - id: 22064
     name: Angel Staff
     name_id: IDS_PROPITEM_TXT_003940
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3866,7 +3866,7 @@ items:
   - id: 22052
     name: Angel Bow
     name_id: IDS_PROPITEM_TXT_003942
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3880,7 +3880,7 @@ items:
   - id: 22056
     name: Angel Yo-Yo
     name_id: IDS_PROPITEM_TXT_003944
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -3894,7 +3894,7 @@ items:
   - id: 22029
     name: Legendary Golden Sword
     name_id: IDS_PROPITEM_TXT_003946
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -3908,7 +3908,7 @@ items:
   - id: 22033
     name: Legendary Golden Big Sword
     name_id: IDS_PROPITEM_TXT_003948
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -3922,7 +3922,7 @@ items:
   - id: 22037
     name: Legendary Golden Axe
     name_id: IDS_PROPITEM_TXT_003950
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -3936,7 +3936,7 @@ items:
   - id: 22041
     name: Legendary Big Golden Axe
     name_id: IDS_PROPITEM_TXT_003952
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -3950,7 +3950,7 @@ items:
   - id: 22045
     name: Legendary Golden Gloves
     name_id: IDS_PROPITEM_TXT_003954
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -3964,7 +3964,7 @@ items:
   - id: 22049
     name: Legendary Golden Stick
     name_id: IDS_PROPITEM_TXT_003956
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -3978,7 +3978,7 @@ items:
   - id: 22061
     name: Legendary Golden Wand
     name_id: IDS_PROPITEM_TXT_003958
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -3992,7 +3992,7 @@ items:
   - id: 22065
     name: Legendary Golden Staff
     name_id: IDS_PROPITEM_TXT_003960
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4006,7 +4006,7 @@ items:
   - id: 22053
     name: Legendary Golden Bow
     name_id: IDS_PROPITEM_TXT_003962
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4020,7 +4020,7 @@ items:
   - id: 22057
     name: Legendary Golden Yo-Yo
     name_id: IDS_PROPITEM_TXT_003964
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4034,7 +4034,7 @@ items:
   - id: 22354
     name: Bloody Sword
     name_id: IDS_PROPITEM_TXT_007515
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4048,7 +4048,7 @@ items:
   - id: 22355
     name: Bloody Slayer
     name_id: IDS_PROPITEM_TXT_007517
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4062,7 +4062,7 @@ items:
   - id: 22356
     name: Bloody Axe
     name_id: IDS_PROPITEM_TXT_007519
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4076,7 +4076,7 @@ items:
   - id: 22357
     name: Bloody Two-Handed Axe
     name_id: IDS_PROPITEM_TXT_007521
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4090,7 +4090,7 @@ items:
   - id: 22358
     name: Bloody Knuckle
     name_id: IDS_PROPITEM_TXT_007523
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4104,7 +4104,7 @@ items:
   - id: 22359
     name: Bloody Stick
     name_id: IDS_PROPITEM_TXT_007525
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4118,7 +4118,7 @@ items:
   - id: 22360
     name: Bloody Wand
     name_id: IDS_PROPITEM_TXT_007527
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4132,7 +4132,7 @@ items:
   - id: 22361
     name: Bloody Staff
     name_id: IDS_PROPITEM_TXT_007529
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4146,7 +4146,7 @@ items:
   - id: 22363
     name: Bloody Bow
     name_id: IDS_PROPITEM_TXT_007531
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4160,7 +4160,7 @@ items:
   - id: 22362
     name: Bloody Yo-Yo
     name_id: IDS_PROPITEM_TXT_007533
-    weight: 100
+    weight: 1
     price: 500000
     sell_price: 125000
     tradeable: true
@@ -4174,7 +4174,7 @@ items:
   - id: 22500
     name: Ultimate Ancient One-hand Sword
     name_id: IDS_PROPITEM_TXT_010794
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4186,7 +4186,7 @@ items:
   - id: 22501
     name: Ultimate Ancient Two-hand Sword
     name_id: IDS_PROPITEM_TXT_010796
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4198,7 +4198,7 @@ items:
   - id: 22502
     name: Ultimate Ancient One-hand Axe
     name_id: IDS_PROPITEM_TXT_010798
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4210,7 +4210,7 @@ items:
   - id: 22503
     name: Ultimate Ancient Two-hand Axe
     name_id: IDS_PROPITEM_TXT_010800
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4222,7 +4222,7 @@ items:
   - id: 22504
     name: Ultimate Ancient Knuckle
     name_id: IDS_PROPITEM_TXT_010802
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4234,7 +4234,7 @@ items:
   - id: 22505
     name: Ultimate Ancient Stick
     name_id: IDS_PROPITEM_TXT_010804
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4246,7 +4246,7 @@ items:
   - id: 22506
     name: Ultimate Ancient Wand
     name_id: IDS_PROPITEM_TXT_010806
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4258,7 +4258,7 @@ items:
   - id: 22507
     name: Ultimate Ancient Staff
     name_id: IDS_PROPITEM_TXT_010808
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4270,7 +4270,7 @@ items:
   - id: 22509
     name: Ultimate Ancient Bow
     name_id: IDS_PROPITEM_TXT_010810
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4282,7 +4282,7 @@ items:
   - id: 22508
     name: Ultimate Ancient Yo-Yo
     name_id: IDS_PROPITEM_TXT_010812
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4294,7 +4294,7 @@ items:
   - id: 22510
     name: Ultimate Vampire Blade
     name_id: IDS_PROPITEM_TXT_010814
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4306,7 +4306,7 @@ items:
   - id: 22511
     name: Ultimate Vampire Slayer
     name_id: IDS_PROPITEM_TXT_010816
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4320,7 +4320,7 @@ items:
   - id: 22512
     name: Ultimate Vampire Axe
     name_id: IDS_PROPITEM_TXT_010818
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4332,7 +4332,7 @@ items:
   - id: 22513
     name: Ultimate Vampire Two-hand Axe
     name_id: IDS_PROPITEM_TXT_010820
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4346,7 +4346,7 @@ items:
   - id: 22514
     name: Ultimate Vampire Knuckle
     name_id: IDS_PROPITEM_TXT_010822
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4360,7 +4360,7 @@ items:
   - id: 22515
     name: Ultimate Vampire Stick
     name_id: IDS_PROPITEM_TXT_010824
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4374,7 +4374,7 @@ items:
   - id: 22516
     name: Ultimate Vampire Wand
     name_id: IDS_PROPITEM_TXT_010826
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4388,7 +4388,7 @@ items:
   - id: 22517
     name: Ultimate Vampire Staff
     name_id: IDS_PROPITEM_TXT_010828
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4402,7 +4402,7 @@ items:
   - id: 22518
     name: Ultimate Vampire Bow
     name_id: IDS_PROPITEM_TXT_010830
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4416,7 +4416,7 @@ items:
   - id: 22519
     name: Ultimate Vampire Yo-Yo
     name_id: IDS_PROPITEM_TXT_010832
-    weight: 100
+    weight: 1
     price: 5000000
     sell_price: 1250000
     tradeable: true
@@ -4430,7 +4430,7 @@ items:
   - id: 22368
     name: Ultimate Guardian Sword @
     name_id: IDS_PROPITEM_TXT_008534
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4444,7 +4444,7 @@ items:
   - id: 22373
     name: Ultimate Guardian Big Sword @
     name_id: IDS_PROPITEM_TXT_008536
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4458,7 +4458,7 @@ items:
   - id: 20378
     name: Ultimate Guardian Axe @
     name_id: IDS_PROPITEM_TXT_008538
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4472,7 +4472,7 @@ items:
   - id: 22383
     name: Ultimate Guardian Ambidextrous Axe @
     name_id: IDS_PROPITEM_TXT_008540
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4486,7 +4486,7 @@ items:
   - id: 22388
     name: Ultimate Guardian Knuckle @
     name_id: IDS_PROPITEM_TXT_008542
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4500,7 +4500,7 @@ items:
   - id: 22393
     name: Ultimate Guardian Stick @
     name_id: IDS_PROPITEM_TXT_008544
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4514,7 +4514,7 @@ items:
   - id: 22408
     name: Ultimate Guardian Wand @
     name_id: IDS_PROPITEM_TXT_008546
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4528,7 +4528,7 @@ items:
   - id: 22413
     name: Ultimate Guardian Staff @
     name_id: IDS_PROPITEM_TXT_008548
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4542,7 +4542,7 @@ items:
   - id: 22398
     name: Ultimate Guardian Bow @
     name_id: IDS_PROPITEM_TXT_008550
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4556,7 +4556,7 @@ items:
   - id: 22403
     name: Ultimate Guardian Yo-Yo @
     name_id: IDS_PROPITEM_TXT_008552
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -4570,7 +4570,7 @@ items:
   - id: 22369
     name: Ultimate Historic Sword @
     name_id: IDS_PROPITEM_TXT_008554
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4584,7 +4584,7 @@ items:
   - id: 22374
     name: Ultimate Historic Big Sword @
     name_id: IDS_PROPITEM_TXT_008556
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4598,7 +4598,7 @@ items:
   - id: 22379
     name: Ultimate Historic Axe @
     name_id: IDS_PROPITEM_TXT_008558
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4612,7 +4612,7 @@ items:
   - id: 22384
     name: Ultimate Historic Ambidextrous Axe @
     name_id: IDS_PROPITEM_TXT_008560
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4626,7 +4626,7 @@ items:
   - id: 22389
     name: Ultimate Historic Knuckle @
     name_id: IDS_PROPITEM_TXT_008562
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4640,7 +4640,7 @@ items:
   - id: 22394
     name: Ultimate Historic Stick @
     name_id: IDS_PROPITEM_TXT_008564
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4654,7 +4654,7 @@ items:
   - id: 22409
     name: Ultimate Historic Wand @
     name_id: IDS_PROPITEM_TXT_008566
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4668,7 +4668,7 @@ items:
   - id: 22414
     name: Ultimate Historic Staff @
     name_id: IDS_PROPITEM_TXT_008568
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4682,7 +4682,7 @@ items:
   - id: 22399
     name: Ultimate Historic Bow @
     name_id: IDS_PROPITEM_TXT_008570
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4696,7 +4696,7 @@ items:
   - id: 22404
     name: Ultimate Historic Yo-Yo @
     name_id: IDS_PROPITEM_TXT_008572
-    weight: 100
+    weight: 1
     price: 400000
     sell_price: 100000
     tradeable: true
@@ -4710,7 +4710,7 @@ items:
   - id: 22370
     name: Ultimate Angel Sword @
     name_id: IDS_PROPITEM_TXT_008574
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4724,7 +4724,7 @@ items:
   - id: 22375
     name: Ultimate Angel Big Sword @
     name_id: IDS_PROPITEM_TXT_008576
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4738,7 +4738,7 @@ items:
   - id: 22380
     name: Ultimate Angel Axe @
     name_id: IDS_PROPITEM_TXT_008578
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4752,7 +4752,7 @@ items:
   - id: 22385
     name: Ultimate Angel Two-Handed Axe @
     name_id: IDS_PROPITEM_TXT_008580
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4766,7 +4766,7 @@ items:
   - id: 22390
     name: Ultimate Angel Glove @
     name_id: IDS_PROPITEM_TXT_008582
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4780,7 +4780,7 @@ items:
   - id: 22395
     name: Ultimate Angel Stick @
     name_id: IDS_PROPITEM_TXT_008584
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4794,7 +4794,7 @@ items:
   - id: 22410
     name: Ultimate Angel Wand @
     name_id: IDS_PROPITEM_TXT_008586
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4808,7 +4808,7 @@ items:
   - id: 22415
     name: Ultimate Angel Staff @
     name_id: IDS_PROPITEM_TXT_008588
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4822,7 +4822,7 @@ items:
   - id: 22400
     name: Ultimate Angel Bow @
     name_id: IDS_PROPITEM_TXT_008590
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4836,7 +4836,7 @@ items:
   - id: 22405
     name: Ultimate Angel Yo-Yo @
     name_id: IDS_PROPITEM_TXT_008592
-    weight: 100
+    weight: 1
     price: 600000
     sell_price: 150000
     tradeable: true
@@ -4850,7 +4850,7 @@ items:
   - id: 22371
     name: Ultimate Legendary Golden Sword @
     name_id: IDS_PROPITEM_TXT_008594
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4864,7 +4864,7 @@ items:
   - id: 22376
     name: Ultimate Legendary Golden Big Sword @
     name_id: IDS_PROPITEM_TXT_008596
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4878,7 +4878,7 @@ items:
   - id: 22381
     name: Ultimate Legendary Golden Axe @
     name_id: IDS_PROPITEM_TXT_008598
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4892,7 +4892,7 @@ items:
   - id: 22386
     name: Ultimate Legendary Big Golden Axe @
     name_id: IDS_PROPITEM_TXT_008600
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4906,7 +4906,7 @@ items:
   - id: 22391
     name: Ultimate Legendary Golden Gloves @
     name_id: IDS_PROPITEM_TXT_008602
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4920,7 +4920,7 @@ items:
   - id: 22396
     name: Ultimate Legendary Golden Stick @
     name_id: IDS_PROPITEM_TXT_008604
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4934,7 +4934,7 @@ items:
   - id: 22411
     name: Ultimate Legendary Golden Wand @
     name_id: IDS_PROPITEM_TXT_008606
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4948,7 +4948,7 @@ items:
   - id: 22416
     name: Ultimate Legendary Golden Staff @
     name_id: IDS_PROPITEM_TXT_008608
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4962,7 +4962,7 @@ items:
   - id: 22401
     name: Ultimate Legendary Golden Bow @
     name_id: IDS_PROPITEM_TXT_008610
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4976,7 +4976,7 @@ items:
   - id: 22406
     name: Ultimate Legendary Golden Yo-Yo @
     name_id: IDS_PROPITEM_TXT_008612
-    weight: 100
+    weight: 1
     price: 800000
     sell_price: 200000
     tradeable: true
@@ -4990,7 +4990,7 @@ items:
   - id: 22372
     name: Ultimate Bloody Sword @
     name_id: IDS_PROPITEM_TXT_008614
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5004,7 +5004,7 @@ items:
   - id: 22377
     name: Ultimate Bloody Slayer @
     name_id: IDS_PROPITEM_TXT_008616
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5018,7 +5018,7 @@ items:
   - id: 22382
     name: Ultimate Bloody Axe @
     name_id: IDS_PROPITEM_TXT_008618
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5032,7 +5032,7 @@ items:
   - id: 22387
     name: Ultimate Bloody Two-hand Axe @
     name_id: IDS_PROPITEM_TXT_008620
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5046,7 +5046,7 @@ items:
   - id: 22392
     name: Ultimate Bloody Knuckle @
     name_id: IDS_PROPITEM_TXT_008622
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5060,7 +5060,7 @@ items:
   - id: 22397
     name: Ultimate Bloody Stick @
     name_id: IDS_PROPITEM_TXT_008624
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5074,7 +5074,7 @@ items:
   - id: 22412
     name: Ultimate Bloody Wand @
     name_id: IDS_PROPITEM_TXT_008626
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5088,7 +5088,7 @@ items:
   - id: 22417
     name: Ultimate Bloody Staff @
     name_id: IDS_PROPITEM_TXT_008628
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5102,7 +5102,7 @@ items:
   - id: 22402
     name: Ultimate Bloody Bow @
     name_id: IDS_PROPITEM_TXT_008630
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5116,7 +5116,7 @@ items:
   - id: 22407
     name: Ultimate Bloody Yo-Yo @
     name_id: IDS_PROPITEM_TXT_008632
-    weight: 100
+    weight: 1
     price: 1000000
     sell_price: 250000
     tradeable: true
@@ -5130,7 +5130,7 @@ items:
   - id: 22364
     name: Pieceslayer
     name_id: IDS_PROPITEM_TXT_008090
-    weight: 100
+    weight: 1
     price: 4470000
     sell_price: 1117500
     tradeable: true
@@ -5144,7 +5144,7 @@ items:
   - id: 22365
     name: Lasterslayer
     name_id: IDS_PROPITEM_TXT_008092
-    weight: 100
+    weight: 1
     price: 5240000
     sell_price: 1310000
     tradeable: true
@@ -5158,7 +5158,7 @@ items:
   - id: 22366
     name: Piecenition
     name_id: IDS_PROPITEM_TXT_008094
-    weight: 100
+    weight: 1
     price: 4470000
     sell_price: 1117500
     tradeable: true
@@ -5172,7 +5172,7 @@ items:
   - id: 22367
     name: Lasternition
     name_id: IDS_PROPITEM_TXT_008096
-    weight: 100
+    weight: 1
     price: 5240000
     sell_price: 1310000
     tradeable: true
@@ -5186,7 +5186,7 @@ items:
   - id: 18145
     name: Entanale Sword
     name_id: IDS_PROPITEM_TXT_005556
-    weight: 100
+    weight: 1
     price: 3120
     sell_price: 780
     tradeable: true
@@ -5200,7 +5200,7 @@ items:
   - id: 10408
     name: Qurion Sword
     name_id: IDS_PROPITEM_TXT_005788
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5214,7 +5214,7 @@ items:
   - id: 10409
     name: Qurion Axe
     name_id: IDS_PROPITEM_TXT_005790
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5228,7 +5228,7 @@ items:
   - id: 10411
     name: Qurion Knucle
     name_id: IDS_PROPITEM_TXT_005792
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5242,7 +5242,7 @@ items:
   - id: 10410
     name: Qurion Stick
     name_id: IDS_PROPITEM_TXT_005794
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5256,7 +5256,7 @@ items:
   - id: 10412
     name: Qurion Wand
     name_id: IDS_PROPITEM_TXT_005796
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5270,7 +5270,7 @@ items:
   - id: 10439
     name: Qurion Yoyo
     name_id: IDS_PROPITEM_TXT_005798
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5284,7 +5284,7 @@ items:
   - id: 10440
     name: Qurion Bow
     name_id: IDS_PROPITEM_TXT_005800
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5298,7 +5298,7 @@ items:
   - id: 10413
     name: Qurion Staff
     name_id: IDS_PROPITEM_TXT_005802
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -5312,7 +5312,7 @@ items:
   - id: 6500
     name: Kehin Sword
     name_id: IDS_PROPITEM_TXT_005846
-    weight: 100
+    weight: 1
     price: 4500
     sell_price: 1125
     tradeable: true
@@ -5326,7 +5326,7 @@ items:
   - id: 6501
     name: Arkon Sword
     name_id: IDS_PROPITEM_TXT_005848
-    weight: 100
+    weight: 1
     price: 10100
     sell_price: 2525
     tradeable: true
@@ -5340,7 +5340,7 @@ items:
   - id: 6502
     name: Zirkan Sword
     name_id: IDS_PROPITEM_TXT_005850
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -5354,7 +5354,7 @@ items:
   - id: 6503
     name: Strad Sword
     name_id: IDS_PROPITEM_TXT_005852
-    weight: 100
+    weight: 1
     price: 78000
     sell_price: 19500
     tradeable: true
@@ -5368,7 +5368,7 @@ items:
   - id: 6504
     name: Sibak Sword
     name_id: IDS_PROPITEM_TXT_005854
-    weight: 100
+    weight: 1
     price: 90000
     sell_price: 22500
     tradeable: true
@@ -5382,7 +5382,7 @@ items:
   - id: 6505
     name: Flam Sword
     name_id: IDS_PROPITEM_TXT_005856
-    weight: 100
+    weight: 1
     price: 236000
     sell_price: 59000
     tradeable: true
@@ -5396,7 +5396,7 @@ items:
   - id: 6506
     name: Karmel Sword
     name_id: IDS_PROPITEM_TXT_005858
-    weight: 100
+    weight: 1
     price: 294000
     sell_price: 73500
     tradeable: true
@@ -5410,7 +5410,7 @@ items:
   - id: 6507
     name: Sparkling Sword
     name_id: IDS_PROPITEM_TXT_005860
-    weight: 100
+    weight: 1
     price: 511000
     sell_price: 127750
     tradeable: true
@@ -5424,7 +5424,7 @@ items:
   - id: 6550
     name: Meryl Stick
     name_id: IDS_PROPITEM_TXT_005862
-    weight: 100
+    weight: 1
     price: 4500
     sell_price: 1125
     tradeable: true
@@ -5438,7 +5438,7 @@ items:
   - id: 6551
     name: Grim Stick
     name_id: IDS_PROPITEM_TXT_005864
-    weight: 100
+    weight: 1
     price: 9800
     sell_price: 2450
     tradeable: true
@@ -5452,7 +5452,7 @@ items:
   - id: 6552
     name: PaPang Stick
     name_id: IDS_PROPITEM_TXT_005866
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -5466,7 +5466,7 @@ items:
   - id: 6553
     name: Dain Stick
     name_id: IDS_PROPITEM_TXT_005868
-    weight: 100
+    weight: 1
     price: 78000
     sell_price: 19500
     tradeable: true
@@ -5480,7 +5480,7 @@ items:
   - id: 6554
     name: Sephy Stick
     name_id: IDS_PROPITEM_TXT_005870
-    weight: 100
+    weight: 1
     price: 90000
     sell_price: 22500
     tradeable: true
@@ -5494,7 +5494,7 @@ items:
   - id: 6555
     name: Barem Stick
     name_id: IDS_PROPITEM_TXT_005872
-    weight: 100
+    weight: 1
     price: 228000
     sell_price: 57000
     tradeable: true
@@ -5508,7 +5508,7 @@ items:
   - id: 6556
     name: Bosl Stick
     name_id: IDS_PROPITEM_TXT_005874
-    weight: 100
+    weight: 1
     price: 294000
     sell_price: 73500
     tradeable: true
@@ -5522,7 +5522,7 @@ items:
   - id: 6557
     name: Hyper Stick
     name_id: IDS_PROPITEM_TXT_005876
-    weight: 100
+    weight: 1
     price: 495000
     sell_price: 123750
     tradeable: true
@@ -5536,7 +5536,7 @@ items:
   - id: 6600
     name: Nefume Wand
     name_id: IDS_PROPITEM_TXT_005878
-    weight: 100
+    weight: 1
     price: 4500
     sell_price: 1125
     tradeable: true
@@ -5550,7 +5550,7 @@ items:
   - id: 6601
     name: Dia Wand
     name_id: IDS_PROPITEM_TXT_005880
-    weight: 100
+    weight: 1
     price: 8800
     sell_price: 2200
     tradeable: true
@@ -5564,7 +5564,7 @@ items:
   - id: 6602
     name: Dazzle Wand
     name_id: IDS_PROPITEM_TXT_005882
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -5578,7 +5578,7 @@ items:
   - id: 6603
     name: Peny Wand
     name_id: IDS_PROPITEM_TXT_005884
-    weight: 100
+    weight: 1
     price: 78000
     sell_price: 19500
     tradeable: true
@@ -5592,7 +5592,7 @@ items:
   - id: 6604
     name: Eclipse Wand
     name_id: IDS_PROPITEM_TXT_005886
-    weight: 100
+    weight: 1
     price: 90000
     sell_price: 22500
     tradeable: true
@@ -5606,7 +5606,7 @@ items:
   - id: 6605
     name: Fire Wand
     name_id: IDS_PROPITEM_TXT_005888
-    weight: 100
+    weight: 1
     price: 204000
     sell_price: 51000
     tradeable: true
@@ -5620,7 +5620,7 @@ items:
   - id: 6606
     name: Saint Wand
     name_id: IDS_PROPITEM_TXT_005890
-    weight: 100
+    weight: 1
     price: 294000
     sell_price: 73500
     tradeable: true
@@ -5634,7 +5634,7 @@ items:
   - id: 6607
     name: Rune Wand
     name_id: IDS_PROPITEM_TXT_005892
-    weight: 100
+    weight: 1
     price: 443000
     sell_price: 110750
     tradeable: true
@@ -5648,7 +5648,7 @@ items:
   - id: 6700
     name: Shuprim Staff
     name_id: IDS_PROPITEM_TXT_005894
-    weight: 100
+    weight: 1
     price: 4500
     sell_price: 1125
     tradeable: true
@@ -5662,7 +5662,7 @@ items:
   - id: 6701
     name: Vega Staff
     name_id: IDS_PROPITEM_TXT_005896
-    weight: 100
+    weight: 1
     price: 10100
     sell_price: 2525
     tradeable: true
@@ -5676,7 +5676,7 @@ items:
   - id: 6702
     name: Papanew Staff
     name_id: IDS_PROPITEM_TXT_005898
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -5690,7 +5690,7 @@ items:
   - id: 6703
     name: Pinsi Staff
     name_id: IDS_PROPITEM_TXT_005900
-    weight: 100
+    weight: 1
     price: 78000
     sell_price: 19500
     tradeable: true
@@ -5704,7 +5704,7 @@ items:
   - id: 6704
     name: Leafgale Staff
     name_id: IDS_PROPITEM_TXT_005902
-    weight: 100
+    weight: 1
     price: 90000
     sell_price: 22500
     tradeable: true
@@ -5718,7 +5718,7 @@ items:
   - id: 6705
     name: Flam Staff
     name_id: IDS_PROPITEM_TXT_005904
-    weight: 100
+    weight: 1
     price: 236000
     sell_price: 59000
     tradeable: true
@@ -5732,7 +5732,7 @@ items:
   - id: 6706
     name: Venhill Staff
     name_id: IDS_PROPITEM_TXT_005906
-    weight: 100
+    weight: 1
     price: 294000
     sell_price: 73500
     tradeable: true
@@ -5746,7 +5746,7 @@ items:
   - id: 6707
     name: Sege Staff
     name_id: IDS_PROPITEM_TXT_005908
-    weight: 100
+    weight: 1
     price: 511000
     sell_price: 127750
     tradeable: true
@@ -5760,7 +5760,7 @@ items:
   - id: 6800
     name: Pazion Knuckle
     name_id: IDS_PROPITEM_TXT_005910
-    weight: 100
+    weight: 1
     price: 4500
     sell_price: 1125
     tradeable: true
@@ -5774,7 +5774,7 @@ items:
   - id: 6801
     name: Babil Knuckle
     name_id: IDS_PROPITEM_TXT_005912
-    weight: 100
+    weight: 1
     price: 9800
     sell_price: 2450
     tradeable: true
@@ -5788,7 +5788,7 @@ items:
   - id: 6802
     name: Prenil Knuckle
     name_id: IDS_PROPITEM_TXT_005914
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -5802,7 +5802,7 @@ items:
   - id: 6803
     name: Salamander Knuckle
     name_id: IDS_PROPITEM_TXT_005916
-    weight: 100
+    weight: 1
     price: 78000
     sell_price: 19500
     tradeable: true
@@ -5816,7 +5816,7 @@ items:
   - id: 6804
     name: Gigaton Knuckle
     name_id: IDS_PROPITEM_TXT_005918
-    weight: 100
+    weight: 1
     price: 90000
     sell_price: 22500
     tradeable: true
@@ -5830,7 +5830,7 @@ items:
   - id: 6805
     name: Paipol Knuckle
     name_id: IDS_PROPITEM_TXT_005920
-    weight: 100
+    weight: 1
     price: 228000
     sell_price: 57000
     tradeable: true
@@ -5844,7 +5844,7 @@ items:
   - id: 6806
     name: Appel Knuckle
     name_id: IDS_PROPITEM_TXT_005922
-    weight: 100
+    weight: 1
     price: 294000
     sell_price: 73500
     tradeable: true
@@ -5858,7 +5858,7 @@ items:
   - id: 6807
     name: Zikmoon Knuckle
     name_id: IDS_PROPITEM_TXT_005924
-    weight: 100
+    weight: 1
     price: 495000
     sell_price: 123750
     tradeable: true
@@ -5872,7 +5872,7 @@ items:
   - id: 6900
     name: Grabber Axe
     name_id: IDS_PROPITEM_TXT_005926
-    weight: 100
+    weight: 1
     price: 4900
     sell_price: 1225
     tradeable: true
@@ -5886,7 +5886,7 @@ items:
   - id: 6901
     name: Karhem Axe
     name_id: IDS_PROPITEM_TXT_005928
-    weight: 100
+    weight: 1
     price: 9600
     sell_price: 2400
     tradeable: true
@@ -5900,7 +5900,7 @@ items:
   - id: 6902
     name: Crest Axe
     name_id: IDS_PROPITEM_TXT_005930
-    weight: 100
+    weight: 1
     price: 25000
     sell_price: 6250
     tradeable: true
@@ -5914,7 +5914,7 @@ items:
   - id: 6903
     name: Canine Axe
     name_id: IDS_PROPITEM_TXT_005932
-    weight: 100
+    weight: 1
     price: 85000
     sell_price: 21250
     tradeable: true
@@ -5928,7 +5928,7 @@ items:
   - id: 6904
     name: Crawler Axe
     name_id: IDS_PROPITEM_TXT_005934
-    weight: 100
+    weight: 1
     price: 99000
     sell_price: 24750
     tradeable: true
@@ -5942,7 +5942,7 @@ items:
   - id: 6905
     name: Drakhan Axe
     name_id: IDS_PROPITEM_TXT_005936
-    weight: 100
+    weight: 1
     price: 224000
     sell_price: 56000
     tradeable: true
@@ -5956,7 +5956,7 @@ items:
   - id: 6906
     name: Frenetic Axe
     name_id: IDS_PROPITEM_TXT_005938
-    weight: 100
+    weight: 1
     price: 323000
     sell_price: 80750
     tradeable: true
@@ -5970,7 +5970,7 @@ items:
   - id: 6907
     name: Critin Axe
     name_id: IDS_PROPITEM_TXT_005940
-    weight: 100
+    weight: 1
     price: 487000
     sell_price: 121750
     tradeable: true
@@ -5984,7 +5984,7 @@ items:
   - id: 8000
     name: Penel Sword
     name_id: IDS_PROPITEM_TXT_005954
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -5998,7 +5998,7 @@ items:
   - id: 8001
     name: Crimson Sword
     name_id: IDS_PROPITEM_TXT_005956
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -6012,7 +6012,7 @@ items:
   - id: 8002
     name: Broad Sword
     name_id: IDS_PROPITEM_TXT_005958
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -6026,7 +6026,7 @@ items:
   - id: 8003
     name: Sirain Sword
     name_id: IDS_PROPITEM_TXT_005960
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -6040,7 +6040,7 @@ items:
   - id: 8004
     name: Crimson Sword
     name_id: IDS_PROPITEM_TXT_005962
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -6054,7 +6054,7 @@ items:
   - id: 8005
     name: Karlim Sword
     name_id: IDS_PROPITEM_TXT_005964
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -6068,7 +6068,7 @@ items:
   - id: 8006
     name: Gemini Sword
     name_id: IDS_PROPITEM_TXT_005966
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -6082,7 +6082,7 @@ items:
   - id: 8007
     name: Gore Sword
     name_id: IDS_PROPITEM_TXT_005968
-    weight: 100
+    weight: 1
     price: 162000
     sell_price: 40500
     tradeable: true
@@ -6096,7 +6096,7 @@ items:
   - id: 8008
     name: Bravery Sword
     name_id: IDS_PROPITEM_TXT_005970
-    weight: 100
+    weight: 1
     price: 3600
     sell_price: 900
     tradeable: true
@@ -6110,7 +6110,7 @@ items:
   - id: 8010
     name: Cheer Stick Devotion
     name_id: IDS_PROPITEM_TXT_005972
-    weight: 100
+    weight: 1
     price: 3600
     sell_price: 900
     tradeable: true
@@ -6124,7 +6124,7 @@ items:
   - id: 8011
     name: Mule Wand
     name_id: IDS_PROPITEM_TXT_005974
-    weight: 100
+    weight: 1
     price: 3600
     sell_price: 900
     tradeable: true
@@ -6138,7 +6138,7 @@ items:
   - id: 8013
     name: Sewal Sword
     name_id: IDS_PROPITEM_TXT_005976
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -6152,7 +6152,7 @@ items:
   - id: 8014
     name: Mangchi Sword
     name_id: IDS_PROPITEM_TXT_005978
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -6166,7 +6166,7 @@ items:
   - id: 8015
     name: Pinocchio  Sword
     name_id: IDS_PROPITEM_TXT_005980
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -6180,7 +6180,7 @@ items:
   - id: 8016
     name: Emperor Sword
     name_id: IDS_PROPITEM_TXT_005982
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -6194,7 +6194,7 @@ items:
   - id: 8017
     name: Sniperrin Sword
     name_id: IDS_PROPITEM_TXT_005984
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -6208,7 +6208,7 @@ items:
   - id: 8018
     name: Nightmare Stick
     name_id: IDS_PROPITEM_TXT_005986
-    weight: 100
+    weight: 1
     price: 23000
     sell_price: 5750
     tradeable: true
@@ -6222,7 +6222,7 @@ items:
   - id: 10255
     name: Pre-BastardSword
     name_id: IDS_PROPITEM_TXT_005996
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -6236,7 +6236,7 @@ items:
   - id: 10256
     name: Pre-Shyer Sword
     name_id: IDS_PROPITEM_TXT_005998
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -6250,7 +6250,7 @@ items:
   - id: 10257
     name: Pre-Necrynzi Knuckle
     name_id: IDS_PROPITEM_TXT_006000
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -6264,7 +6264,7 @@ items:
   - id: 10258
     name: Pre-Shabere Stick
     name_id: IDS_PROPITEM_TXT_006002
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -6278,7 +6278,7 @@ items:
   - id: 10259
     name: Pre-Neplus Wand
     name_id: IDS_PROPITEM_TXT_006004
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -6292,7 +6292,7 @@ items:
   - id: 10260
     name: Pre-Birdin Staff
     name_id: IDS_PROPITEM_TXT_006006
-    weight: 100
+    weight: 1
     price: 0
     sell_price: 0
     tradeable: true
@@ -6306,7 +6306,7 @@ items:
   - id: 6320
     name: Heart Stone
     name_id: IDS_PROPITEM_TXT_006014
-    weight: 100
+    weight: 1
     price: 4
     sell_price: 1
     tradeable: true
@@ -6320,7 +6320,7 @@ items:
   - id: 6323
     name: Bruce Lee Fist
     name_id: IDS_PROPITEM_TXT_006020
-    weight: 100
+    weight: 1
     price: 4
     sell_price: 1
     tradeable: true
@@ -6334,7 +6334,7 @@ items:
   - id: 9000
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006354
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6348,7 +6348,7 @@ items:
   - id: 9001
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006356
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6362,7 +6362,7 @@ items:
   - id: 9002
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006358
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6376,7 +6376,7 @@ items:
   - id: 9003
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006360
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6390,7 +6390,7 @@ items:
   - id: 9004
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006362
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6404,7 +6404,7 @@ items:
   - id: 9005
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006364
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6418,7 +6418,7 @@ items:
   - id: 9006
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006366
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6432,7 +6432,7 @@ items:
   - id: 9007
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006368
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6446,7 +6446,7 @@ items:
   - id: 9008
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006370
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6460,7 +6460,7 @@ items:
   - id: 9009
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006372
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6474,7 +6474,7 @@ items:
   - id: 9010
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006374
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6488,7 +6488,7 @@ items:
   - id: 9011
     name: "Mob Weapon: Aibatt"
     name_id: IDS_PROPITEM_TXT_006376
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6502,7 +6502,7 @@ items:
   - id: 9012
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006378
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6516,7 +6516,7 @@ items:
   - id: 9013
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006380
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6530,7 +6530,7 @@ items:
   - id: 9014
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006382
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6544,7 +6544,7 @@ items:
   - id: 9015
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006384
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6558,7 +6558,7 @@ items:
   - id: 9016
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006386
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6572,7 +6572,7 @@ items:
   - id: 9017
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006388
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6586,7 +6586,7 @@ items:
   - id: 9018
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006390
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6600,7 +6600,7 @@ items:
   - id: 9019
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006392
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6614,7 +6614,7 @@ items:
   - id: 9020
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006394
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6628,7 +6628,7 @@ items:
   - id: 9021
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006396
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6642,7 +6642,7 @@ items:
   - id: 9022
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006398
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6656,7 +6656,7 @@ items:
   - id: 9023
     name: "Mob Weapon: Mushpang"
     name_id: IDS_PROPITEM_TXT_006400
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6670,7 +6670,7 @@ items:
   - id: 9024
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006402
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6684,7 +6684,7 @@ items:
   - id: 9025
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006404
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6698,7 +6698,7 @@ items:
   - id: 9026
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006406
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6712,7 +6712,7 @@ items:
   - id: 9027
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006408
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6726,7 +6726,7 @@ items:
   - id: 9028
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006410
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6740,7 +6740,7 @@ items:
   - id: 9029
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006412
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6754,7 +6754,7 @@ items:
   - id: 9030
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006414
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6768,7 +6768,7 @@ items:
   - id: 9031
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006416
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6782,7 +6782,7 @@ items:
   - id: 9032
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006418
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6796,7 +6796,7 @@ items:
   - id: 9033
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006420
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6810,7 +6810,7 @@ items:
   - id: 9034
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006422
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6824,7 +6824,7 @@ items:
   - id: 9035
     name: "Mob Weapon: Burudeng"
     name_id: IDS_PROPITEM_TXT_006424
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6838,7 +6838,7 @@ items:
   - id: 9036
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006426
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6852,7 +6852,7 @@ items:
   - id: 9037
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006428
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6866,7 +6866,7 @@ items:
   - id: 9038
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006430
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6880,7 +6880,7 @@ items:
   - id: 9039
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006432
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6894,7 +6894,7 @@ items:
   - id: 9040
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006434
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6908,7 +6908,7 @@ items:
   - id: 9041
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006436
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6922,7 +6922,7 @@ items:
   - id: 9042
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006438
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6936,7 +6936,7 @@ items:
   - id: 9043
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006440
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6950,7 +6950,7 @@ items:
   - id: 9044
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006442
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6964,7 +6964,7 @@ items:
   - id: 9045
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006444
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6978,7 +6978,7 @@ items:
   - id: 9046
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006446
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -6992,7 +6992,7 @@ items:
   - id: 9047
     name: "Mob Weapon: Pukepuke"
     name_id: IDS_PROPITEM_TXT_006448
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7006,7 +7006,7 @@ items:
   - id: 9048
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006450
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7020,7 +7020,7 @@ items:
   - id: 9049
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006452
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7034,7 +7034,7 @@ items:
   - id: 9050
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006454
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7048,7 +7048,7 @@ items:
   - id: 9051
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006456
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7062,7 +7062,7 @@ items:
   - id: 9052
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006458
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7076,7 +7076,7 @@ items:
   - id: 9053
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006460
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7090,7 +7090,7 @@ items:
   - id: 9054
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006462
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7104,7 +7104,7 @@ items:
   - id: 9055
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006464
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7118,7 +7118,7 @@ items:
   - id: 9056
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006466
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7132,7 +7132,7 @@ items:
   - id: 9057
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006468
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7146,7 +7146,7 @@ items:
   - id: 9058
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006470
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7160,7 +7160,7 @@ items:
   - id: 9059
     name: "Mob Weapon: Demian"
     name_id: IDS_PROPITEM_TXT_006472
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7174,7 +7174,7 @@ items:
   - id: 9060
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006474
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7188,7 +7188,7 @@ items:
   - id: 9061
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006476
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7202,7 +7202,7 @@ items:
   - id: 9062
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006478
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7216,7 +7216,7 @@ items:
   - id: 9063
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006480
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7230,7 +7230,7 @@ items:
   - id: 9064
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006482
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7244,7 +7244,7 @@ items:
   - id: 9065
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006484
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7258,7 +7258,7 @@ items:
   - id: 9066
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006486
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7272,7 +7272,7 @@ items:
   - id: 9067
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006488
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7286,7 +7286,7 @@ items:
   - id: 9068
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006490
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7300,7 +7300,7 @@ items:
   - id: 9069
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006492
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7314,7 +7314,7 @@ items:
   - id: 9070
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006494
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7328,7 +7328,7 @@ items:
   - id: 9071
     name: "Mob Weapon: Doridoma"
     name_id: IDS_PROPITEM_TXT_006496
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7342,7 +7342,7 @@ items:
   - id: 9072
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006498
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7356,7 +7356,7 @@ items:
   - id: 9073
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006500
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7370,7 +7370,7 @@ items:
   - id: 9074
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006502
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7384,7 +7384,7 @@ items:
   - id: 9075
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006504
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7398,7 +7398,7 @@ items:
   - id: 9076
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006506
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7412,7 +7412,7 @@ items:
   - id: 9077
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006508
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7426,7 +7426,7 @@ items:
   - id: 9078
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006510
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7440,7 +7440,7 @@ items:
   - id: 9079
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006512
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7454,7 +7454,7 @@ items:
   - id: 9080
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006514
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7468,7 +7468,7 @@ items:
   - id: 9081
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006516
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7482,7 +7482,7 @@ items:
   - id: 9082
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006518
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7496,7 +7496,7 @@ items:
   - id: 9083
     name: "Mob Weapon: Lawolf"
     name_id: IDS_PROPITEM_TXT_006520
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7510,7 +7510,7 @@ items:
   - id: 9084
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006522
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7524,7 +7524,7 @@ items:
   - id: 9085
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006524
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7538,7 +7538,7 @@ items:
   - id: 9086
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006526
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7552,7 +7552,7 @@ items:
   - id: 9087
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006528
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7566,7 +7566,7 @@ items:
   - id: 9088
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006530
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7580,7 +7580,7 @@ items:
   - id: 9089
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006532
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7594,7 +7594,7 @@ items:
   - id: 9090
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006534
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7608,7 +7608,7 @@ items:
   - id: 9091
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006536
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7622,7 +7622,7 @@ items:
   - id: 9092
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006538
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7636,7 +7636,7 @@ items:
   - id: 9093
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006540
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7650,7 +7650,7 @@ items:
   - id: 9094
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006542
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7664,7 +7664,7 @@ items:
   - id: 9095
     name: "Mob Weapon: Fefern"
     name_id: IDS_PROPITEM_TXT_006544
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7678,7 +7678,7 @@ items:
   - id: 9096
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006546
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7692,7 +7692,7 @@ items:
   - id: 9097
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006548
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7706,7 +7706,7 @@ items:
   - id: 9098
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006550
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7720,7 +7720,7 @@ items:
   - id: 9099
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006552
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7734,7 +7734,7 @@ items:
   - id: 9100
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006554
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7748,7 +7748,7 @@ items:
   - id: 9101
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006556
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7762,7 +7762,7 @@ items:
   - id: 9102
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006558
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7776,7 +7776,7 @@ items:
   - id: 9103
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006560
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7790,7 +7790,7 @@ items:
   - id: 9104
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006562
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7804,7 +7804,7 @@ items:
   - id: 9105
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006564
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7818,7 +7818,7 @@ items:
   - id: 9106
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006566
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7832,7 +7832,7 @@ items:
   - id: 9107
     name: "Mob Weapon: Nyang Nyang"
     name_id: IDS_PROPITEM_TXT_006568
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7846,7 +7846,7 @@ items:
   - id: 9108
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006570
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7860,7 +7860,7 @@ items:
   - id: 9109
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006572
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7874,7 +7874,7 @@ items:
   - id: 9110
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006574
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7888,7 +7888,7 @@ items:
   - id: 9111
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006576
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7902,7 +7902,7 @@ items:
   - id: 9112
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006578
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7916,7 +7916,7 @@ items:
   - id: 9113
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006580
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7930,7 +7930,7 @@ items:
   - id: 9114
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006582
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7944,7 +7944,7 @@ items:
   - id: 9115
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006584
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7958,7 +7958,7 @@ items:
   - id: 9116
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006586
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7972,7 +7972,7 @@ items:
   - id: 9117
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006588
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -7986,7 +7986,7 @@ items:
   - id: 9118
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006590
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8000,7 +8000,7 @@ items:
   - id: 9119
     name: "Mob Weapon: Bang"
     name_id: IDS_PROPITEM_TXT_006592
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8014,7 +8014,7 @@ items:
   - id: 9120
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006594
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8028,7 +8028,7 @@ items:
   - id: 9121
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006596
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8042,7 +8042,7 @@ items:
   - id: 9122
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006598
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8056,7 +8056,7 @@ items:
   - id: 9123
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006600
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8070,7 +8070,7 @@ items:
   - id: 9124
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006602
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8084,7 +8084,7 @@ items:
   - id: 9125
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006604
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8098,7 +8098,7 @@ items:
   - id: 9126
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006606
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8112,7 +8112,7 @@ items:
   - id: 9127
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006608
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8126,7 +8126,7 @@ items:
   - id: 9128
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006610
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8140,7 +8140,7 @@ items:
   - id: 9129
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006612
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8154,7 +8154,7 @@ items:
   - id: 9130
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006614
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8168,7 +8168,7 @@ items:
   - id: 9131
     name: "Mob Weapon: Wagsaac"
     name_id: IDS_PROPITEM_TXT_006616
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8182,7 +8182,7 @@ items:
   - id: 9132
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006618
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8196,7 +8196,7 @@ items:
   - id: 9133
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006620
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8210,7 +8210,7 @@ items:
   - id: 9134
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006622
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8224,7 +8224,7 @@ items:
   - id: 9135
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006624
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8238,7 +8238,7 @@ items:
   - id: 9136
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006626
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8252,7 +8252,7 @@ items:
   - id: 9137
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006628
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8266,7 +8266,7 @@ items:
   - id: 9138
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006630
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8280,7 +8280,7 @@ items:
   - id: 9139
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006632
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8294,7 +8294,7 @@ items:
   - id: 9140
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006634
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8308,7 +8308,7 @@ items:
   - id: 9141
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006636
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8322,7 +8322,7 @@ items:
   - id: 9142
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006638
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8336,7 +8336,7 @@ items:
   - id: 9143
     name: "Mob Weapon: Red Mantis"
     name_id: IDS_PROPITEM_TXT_006640
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8350,7 +8350,7 @@ items:
   - id: 9144
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006642
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8364,7 +8364,7 @@ items:
   - id: 9145
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006644
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8378,7 +8378,7 @@ items:
   - id: 9146
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006646
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8392,7 +8392,7 @@ items:
   - id: 9147
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006648
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8406,7 +8406,7 @@ items:
   - id: 9148
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006650
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8420,7 +8420,7 @@ items:
   - id: 9149
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006652
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8434,7 +8434,7 @@ items:
   - id: 9150
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006654
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8448,7 +8448,7 @@ items:
   - id: 9151
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006656
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8462,7 +8462,7 @@ items:
   - id: 9152
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006658
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8476,7 +8476,7 @@ items:
   - id: 9153
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006660
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8490,7 +8490,7 @@ items:
   - id: 9154
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006662
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8504,7 +8504,7 @@ items:
   - id: 9155
     name: "Mob Weapon: Mr. Pumpkin"
     name_id: IDS_PROPITEM_TXT_006664
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8518,7 +8518,7 @@ items:
   - id: 9156
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006666
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8532,7 +8532,7 @@ items:
   - id: 9157
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006668
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8546,7 +8546,7 @@ items:
   - id: 9158
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006670
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8560,7 +8560,7 @@ items:
   - id: 9159
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006672
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8574,7 +8574,7 @@ items:
   - id: 9160
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006674
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8588,7 +8588,7 @@ items:
   - id: 9161
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006676
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8602,7 +8602,7 @@ items:
   - id: 9162
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006678
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8616,7 +8616,7 @@ items:
   - id: 9163
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006680
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8630,7 +8630,7 @@ items:
   - id: 9164
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006682
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8644,7 +8644,7 @@ items:
   - id: 9165
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006684
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8658,7 +8658,7 @@ items:
   - id: 9166
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006686
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8672,7 +8672,7 @@ items:
   - id: 9167
     name: "Mob Weapon: Rock Muscle"
     name_id: IDS_PROPITEM_TXT_006688
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8686,7 +8686,7 @@ items:
   - id: 9168
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006690
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8700,7 +8700,7 @@ items:
   - id: 9169
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006692
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8714,7 +8714,7 @@ items:
   - id: 9170
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006694
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8728,7 +8728,7 @@ items:
   - id: 9171
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006696
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8742,7 +8742,7 @@ items:
   - id: 9172
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006698
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8756,7 +8756,7 @@ items:
   - id: 9173
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006700
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8770,7 +8770,7 @@ items:
   - id: 9174
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006702
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8784,7 +8784,7 @@ items:
   - id: 9175
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006704
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8798,7 +8798,7 @@ items:
   - id: 9176
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006706
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8812,7 +8812,7 @@ items:
   - id: 9177
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006708
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8826,7 +8826,7 @@ items:
   - id: 9178
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006710
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8840,7 +8840,7 @@ items:
   - id: 9179
     name: "Mob Weapon: Totemia"
     name_id: IDS_PROPITEM_TXT_006712
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8854,7 +8854,7 @@ items:
   - id: 9180
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006714
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8868,7 +8868,7 @@ items:
   - id: 9181
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006716
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8882,7 +8882,7 @@ items:
   - id: 9182
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006718
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8896,7 +8896,7 @@ items:
   - id: 9183
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006720
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8910,7 +8910,7 @@ items:
   - id: 9184
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006722
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8924,7 +8924,7 @@ items:
   - id: 9185
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006724
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8938,7 +8938,7 @@ items:
   - id: 9186
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006726
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8952,7 +8952,7 @@ items:
   - id: 9187
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006728
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8966,7 +8966,7 @@ items:
   - id: 9188
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006730
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8980,7 +8980,7 @@ items:
   - id: 9189
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006732
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -8994,7 +8994,7 @@ items:
   - id: 9190
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006734
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9008,7 +9008,7 @@ items:
   - id: 9191
     name: "Mob Weapon: Basque"
     name_id: IDS_PROPITEM_TXT_006736
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9022,7 +9022,7 @@ items:
   - id: 9192
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006738
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9036,7 +9036,7 @@ items:
   - id: 9193
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006740
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9050,7 +9050,7 @@ items:
   - id: 9194
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006742
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9064,7 +9064,7 @@ items:
   - id: 9195
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006744
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9078,7 +9078,7 @@ items:
   - id: 9196
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006746
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9092,7 +9092,7 @@ items:
   - id: 9197
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006748
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9106,7 +9106,7 @@ items:
   - id: 9198
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006750
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9120,7 +9120,7 @@ items:
   - id: 9199
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006752
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9134,7 +9134,7 @@ items:
   - id: 9200
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006754
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9148,7 +9148,7 @@ items:
   - id: 9201
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006756
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9162,7 +9162,7 @@ items:
   - id: 9202
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006758
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9176,7 +9176,7 @@ items:
   - id: 9203
     name: "Mob Weapon: Prankster"
     name_id: IDS_PROPITEM_TXT_006760
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9190,7 +9190,7 @@ items:
   - id: 9204
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006762
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9204,7 +9204,7 @@ items:
   - id: 9205
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006764
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9218,7 +9218,7 @@ items:
   - id: 9206
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006766
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9232,7 +9232,7 @@ items:
   - id: 9207
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006768
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9246,7 +9246,7 @@ items:
   - id: 9208
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006770
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9260,7 +9260,7 @@ items:
   - id: 9209
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006772
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9274,7 +9274,7 @@ items:
   - id: 9210
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006774
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9288,7 +9288,7 @@ items:
   - id: 9211
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006776
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9302,7 +9302,7 @@ items:
   - id: 9212
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006778
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9316,7 +9316,7 @@ items:
   - id: 9213
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006780
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9330,7 +9330,7 @@ items:
   - id: 9214
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006782
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9344,7 +9344,7 @@ items:
   - id: 9215
     name: "Mob Weapon: Wheelem"
     name_id: IDS_PROPITEM_TXT_006784
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9358,7 +9358,7 @@ items:
   - id: 9216
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006786
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9372,7 +9372,7 @@ items:
   - id: 9217
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006788
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9386,7 +9386,7 @@ items:
   - id: 9218
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006790
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9400,7 +9400,7 @@ items:
   - id: 9219
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006792
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9414,7 +9414,7 @@ items:
   - id: 9220
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006794
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9428,7 +9428,7 @@ items:
   - id: 9221
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006796
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9442,7 +9442,7 @@ items:
   - id: 9222
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006798
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9456,7 +9456,7 @@ items:
   - id: 9223
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006800
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9470,7 +9470,7 @@ items:
   - id: 9224
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006802
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9484,7 +9484,7 @@ items:
   - id: 9225
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006804
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9498,7 +9498,7 @@ items:
   - id: 9226
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006806
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9512,7 +9512,7 @@ items:
   - id: 9227
     name: "Mob Weapon: Card Puppet"
     name_id: IDS_PROPITEM_TXT_006808
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9526,7 +9526,7 @@ items:
   - id: 9228
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006810
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9540,7 +9540,7 @@ items:
   - id: 9229
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006812
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9554,7 +9554,7 @@ items:
   - id: 9230
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006814
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9568,7 +9568,7 @@ items:
   - id: 9231
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006816
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9582,7 +9582,7 @@ items:
   - id: 9232
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006818
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9596,7 +9596,7 @@ items:
   - id: 9233
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006820
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9610,7 +9610,7 @@ items:
   - id: 9234
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006822
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9624,7 +9624,7 @@ items:
   - id: 9235
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006824
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9638,7 +9638,7 @@ items:
   - id: 9236
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006826
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9652,7 +9652,7 @@ items:
   - id: 9237
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006828
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9666,7 +9666,7 @@ items:
   - id: 9238
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006830
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9680,7 +9680,7 @@ items:
   - id: 9239
     name: "Mob Weapon: Tombstone"
     name_id: IDS_PROPITEM_TXT_006832
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9694,7 +9694,7 @@ items:
   - id: 9240
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006834
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9708,7 +9708,7 @@ items:
   - id: 9241
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006836
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9722,7 +9722,7 @@ items:
   - id: 9242
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006838
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9736,7 +9736,7 @@ items:
   - id: 9243
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006840
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9750,7 +9750,7 @@ items:
   - id: 9244
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006842
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9764,7 +9764,7 @@ items:
   - id: 9245
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006844
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9778,7 +9778,7 @@ items:
   - id: 9246
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006846
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9792,7 +9792,7 @@ items:
   - id: 9247
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006848
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9806,7 +9806,7 @@ items:
   - id: 9248
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006850
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9820,7 +9820,7 @@ items:
   - id: 9249
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006852
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9834,7 +9834,7 @@ items:
   - id: 9250
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006854
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9848,7 +9848,7 @@ items:
   - id: 9251
     name: "Mob Weapon: Steamwalker"
     name_id: IDS_PROPITEM_TXT_006856
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9862,7 +9862,7 @@ items:
   - id: 9252
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006858
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9876,7 +9876,7 @@ items:
   - id: 9253
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006860
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9890,7 +9890,7 @@ items:
   - id: 9254
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006862
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9904,7 +9904,7 @@ items:
   - id: 9255
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006864
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9918,7 +9918,7 @@ items:
   - id: 9256
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006866
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9932,7 +9932,7 @@ items:
   - id: 9257
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006868
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9946,7 +9946,7 @@ items:
   - id: 9258
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006870
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9960,7 +9960,7 @@ items:
   - id: 9259
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006872
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9974,7 +9974,7 @@ items:
   - id: 9260
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006874
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -9988,7 +9988,7 @@ items:
   - id: 9261
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006876
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10002,7 +10002,7 @@ items:
   - id: 9262
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006878
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10016,7 +10016,7 @@ items:
   - id: 9263
     name: Mob Weapon
     name_id: IDS_PROPITEM_TXT_006880
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10030,7 +10030,7 @@ items:
   - id: 9264
     name: "Mob Weapon: Clockworks"
     name_id: IDS_PROPITEM_TXT_006882
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10044,7 +10044,7 @@ items:
   - id: 9265
     name: "Mob Weapon: Clockworks"
     name_id: IDS_PROPITEM_TXT_006884
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10058,7 +10058,7 @@ items:
   - id: 9266
     name: "Mob Weapon: Clockworks"
     name_id: IDS_PROPITEM_TXT_006886
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10072,7 +10072,7 @@ items:
   - id: 9267
     name: "Mob Weapon: Clockworks"
     name_id: IDS_PROPITEM_TXT_006888
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10086,7 +10086,7 @@ items:
   - id: 9268
     name: II_WEA_MOB_METEONYKER_ATK1
     name_id: IDS_PROPITEM_TXT_008672
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10100,7 +10100,7 @@ items:
   - id: 9269
     name: II_WEA_MOB_METEONYKER_ATK2
     name_id: IDS_PROPITEM_TXT_008674
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10114,7 +10114,7 @@ items:
   - id: 9270
     name: II_WEA_MOB_METEONYKER_ATK3
     name_id: IDS_PROPITEM_TXT_008676
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10128,7 +10128,7 @@ items:
   - id: 9271
     name: II_WEA_MOB_METEONYKER_ATK4
     name_id: IDS_PROPITEM_TXT_008678
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10142,7 +10142,7 @@ items:
   - id: 9272
     name: Skelton General Weapon 1
     name_id: IDS_PROPITEM_TXT_011688
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10156,7 +10156,7 @@ items:
   - id: 9273
     name: Skelton General Weapon 2
     name_id: IDS_PROPITEM_TXT_011690
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10170,7 +10170,7 @@ items:
   - id: 9274
     name: Skelton General Weapon 3
     name_id: IDS_PROPITEM_TXT_011692
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10184,7 +10184,7 @@ items:
   - id: 9275
     name: Skelton Devil Weapon 1
     name_id: IDS_PROPITEM_TXT_011694
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10198,7 +10198,7 @@ items:
   - id: 9276
     name: Skelton Devil Weapon 2
     name_id: IDS_PROPITEM_TXT_011696
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10212,7 +10212,7 @@ items:
   - id: 9277
     name: Skelton Devil Weapon 3
     name_id: IDS_PROPITEM_TXT_011698
-    weight: 100
+    weight: 1
     price: 1
     sell_price: 0
     tradeable: true
@@ -10226,7 +10226,7 @@ items:
   - id: 76
     name: Police Club
     name_id: IDS_PROPITEM_TXT_006982
-    weight: 100
+    weight: 1
     price: 4
     sell_price: 1
     tradeable: true
@@ -10240,7 +10240,7 @@ items:
   - id: 26234
     name: Sword of Ivillines
     name_id: IDS_PROPITEM_TXT_007272
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10254,7 +10254,7 @@ items:
   - id: 26235
     name: Great Sword of Ivillines
     name_id: IDS_PROPITEM_TXT_007274
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10268,7 +10268,7 @@ items:
   - id: 26236
     name: Axe of Ivillines
     name_id: IDS_PROPITEM_TXT_007276
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10282,7 +10282,7 @@ items:
   - id: 26237
     name: Great Axe of Ivillines
     name_id: IDS_PROPITEM_TXT_007278
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10296,7 +10296,7 @@ items:
   - id: 26238
     name: Gloves of Ivillines
     name_id: IDS_PROPITEM_TXT_007280
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10310,7 +10310,7 @@ items:
   - id: 26239
     name: Stick of Ivillines
     name_id: IDS_PROPITEM_TXT_007282
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10324,7 +10324,7 @@ items:
   - id: 26240
     name: Wand of Ivillines
     name_id: IDS_PROPITEM_TXT_007284
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10338,7 +10338,7 @@ items:
   - id: 26241
     name: Staff of Ivillines
     name_id: IDS_PROPITEM_TXT_007286
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10352,7 +10352,7 @@ items:
   - id: 26242
     name: Bow of Ivillines
     name_id: IDS_PROPITEM_TXT_007288
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10366,7 +10366,7 @@ items:
   - id: 26243
     name: Yo-Yo of Ivillines
     name_id: IDS_PROPITEM_TXT_007290
-    weight: 100
+    weight: 1
     price: 300000
     sell_price: 75000
     tradeable: true
@@ -10380,7 +10380,7 @@ items:
   - id: 26644
     name: Apple Wheat-Gluten
     name_id: IDS_PROPITEM_TXT_009786
-    weight: 100
+    weight: 1
     price: 4
     sell_price: 1
     tradeable: true
@@ -10394,7 +10394,7 @@ items:
   - id: 26645
     name: Bamboo Stick
     name_id: IDS_PROPITEM_TXT_009788
-    weight: 100
+    weight: 1
     price: 4
     sell_price: 1
     tradeable: true
@@ -10408,7 +10408,7 @@ items:
   - id: 26665
     name: Blood Red Umbrella
     name_id: IDS_PROPITEM_TXT_009962
-    weight: 100
+    weight: 1
     price: 4
     sell_price: 1
     tradeable: true
@@ -10422,7 +10422,7 @@ items:
   - id: 20091
     name: Pink Parasol
     name_id: IDS_PROPITEM_TXT_011088
-    weight: 100
+    weight: 1
     price: 4
     sell_price: 1
     tradeable: true
@@ -10436,7 +10436,7 @@ items:
   - id: 20148
     name: Lusaka's Sword
     name_id: IDS_PROPITEM_TXT_011432
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10450,7 +10450,7 @@ items:
   - id: 20149
     name: Lusaka's Heavy Sword
     name_id: IDS_PROPITEM_TXT_011436
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10464,7 +10464,7 @@ items:
   - id: 20150
     name: Lusaka's Axe
     name_id: IDS_PROPITEM_TXT_011434
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10478,7 +10478,7 @@ items:
   - id: 20151
     name: Lusaka's Heavy Axe
     name_id: IDS_PROPITEM_TXT_011438
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10492,7 +10492,7 @@ items:
   - id: 20152
     name: Lusaka's Fist
     name_id: IDS_PROPITEM_TXT_011440
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10506,7 +10506,7 @@ items:
   - id: 20153
     name: Lusaka's Stick
     name_id: IDS_PROPITEM_TXT_011442
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10520,7 +10520,7 @@ items:
   - id: 20154
     name: Lusaka's Wand
     name_id: IDS_PROPITEM_TXT_011444
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10534,7 +10534,7 @@ items:
   - id: 20155
     name: Lusaka's Staff
     name_id: IDS_PROPITEM_TXT_011446
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10548,7 +10548,7 @@ items:
   - id: 20156
     name: Lusaka's Bow
     name_id: IDS_PROPITEM_TXT_011448
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10562,7 +10562,7 @@ items:
   - id: 20157
     name: Lusaka's Yo-Yo
     name_id: IDS_PROPITEM_TXT_011450
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10576,7 +10576,7 @@ items:
   - id: 20158
     name: Lusaka's Crystal Sword
     name_id: IDS_PROPITEM_TXT_011452
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10588,7 +10588,7 @@ items:
   - id: 20159
     name: Lusaka's Heavy Crystal Sword
     name_id: IDS_PROPITEM_TXT_011456
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10600,7 +10600,7 @@ items:
   - id: 20160
     name: Lusaka's Crystal Axe
     name_id: IDS_PROPITEM_TXT_011454
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10612,7 +10612,7 @@ items:
   - id: 20161
     name: Lusaka's Heavy Crystal Axe
     name_id: IDS_PROPITEM_TXT_011458
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10624,7 +10624,7 @@ items:
   - id: 20162
     name: Lusaka's Crystal Fist
     name_id: IDS_PROPITEM_TXT_011460
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10636,7 +10636,7 @@ items:
   - id: 20163
     name: Lusaka's Crystal Stick
     name_id: IDS_PROPITEM_TXT_011462
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10648,7 +10648,7 @@ items:
   - id: 20164
     name: Lusaka's Crystal Wand
     name_id: IDS_PROPITEM_TXT_011464
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10660,7 +10660,7 @@ items:
   - id: 20165
     name: Lusaka's Crystal Staff
     name_id: IDS_PROPITEM_TXT_011466
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10672,7 +10672,7 @@ items:
   - id: 20166
     name: Lusaka's Crystal Bow
     name_id: IDS_PROPITEM_TXT_011468
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true
@@ -10684,7 +10684,7 @@ items:
   - id: 20167
     name: Lusaka's Crystal Yo-Yo
     name_id: IDS_PROPITEM_TXT_011470
-    weight: 100
+    weight: 1
     price: 200000
     sell_price: 50000
     tradeable: true

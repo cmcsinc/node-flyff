@@ -1,0 +1,34 @@
+_version: "1.0"
+prefix: masa_queercollector
+states:
+  "0":
+    speak:
+      - 803
+    timer: 15
+    source: "Speak( NpcId(), 803 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 804
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 805
+  "10":
+    speak:
+      - 806
+    exit: true
+    source: "Speak( NpcId(), 806 );\r\n\tExit();"

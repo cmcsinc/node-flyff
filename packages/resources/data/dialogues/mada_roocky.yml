@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_roocky
+states:
+  "0":
+    speak:
+      - 357
+    timer: 15
+    source: "Speak( NpcId(), 357 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 358
+  "4":
+    say:
+      - 359
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 360
+  "10":
+    speak:
+      - 361
+    exit: true
+    source: "Speak( NpcId(), 361 );\r\n\tExit();"

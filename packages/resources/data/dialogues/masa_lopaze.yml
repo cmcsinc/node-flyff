@@ -1,0 +1,54 @@
+_version: "1.0"
+prefix: masa_lopaze
+states:
+  "0":
+    speak:
+      - 782
+    timer: 15
+    source: "Speak( NpcId(), 782 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 783
+  "5": {}
+  "6": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_VOCMAG_TRN3) == QS_END && GetPlayerJob() == 0
+      && GetPlayerLvl() == 15 )\r
+
+      \t{\r
+
+      \t\tChangeJob(4);\r
+
+      \t\tInitStat();\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 784
+  "10":
+    speak:
+      - 785
+    exit: true
+    source: "Speak( NpcId(), 785 );\r\n\tExit();"

@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_losha
+states:
+  "0":
+    speak:
+      - 609
+    timer: 15
+    source: "Speak( NpcId(), 609 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 610
+  "4":
+    say:
+      - 611
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 612
+  "10":
+    speak:
+      - 613
+    exit: true
+    source: "Speak( NpcId(), 613 );\r\n\tExit();"

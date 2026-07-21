@@ -1,0 +1,24 @@
+_version: "1.0"
+prefix: kepe_shun
+states:
+  "0":
+    speak:
+      - 76
+    timer: 15
+    source: "Speak( NpcId(), 76 );\r
+
+      \t\tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 77
+    keys:
+      - label: 9
+      - label: 10
+  "9":
+    say:
+      - 78
+  "10":
+    speak:
+      - 79
+    exit: true
+    source: "Speak( NpcId(), 79 );\r\n\t\tExit();"

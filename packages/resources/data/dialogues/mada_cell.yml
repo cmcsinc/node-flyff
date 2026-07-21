@@ -1,0 +1,49 @@
+_version: "1.0"
+prefix: mada_cell
+states:
+  "0":
+    speak:
+      - 134
+    timer: 15
+    source: "Speak( NpcId(), 134 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 12
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 135
+  "5": {}
+  "6": {}
+  "7": {}
+  "8":
+    source: RemoveAllItem(II_SYS_SYS_QUE_LETTERRANKASHU);
+  "10":
+    say:
+      - 137
+    exit: true
+  "12":
+    say:
+      - 136
+    keys:
+      - label: 17
+  "17":
+    say:
+      - 138
+      - 139
+      - 140
+    launch_quest: true
+    source: "Say( 138 );\r
+
+      \tSay( 139 );\r
+
+      \tSay( 140 );\r
+
+      \tRemoveKey( 17 );\r
+
+      \t//LaunchQuest();"

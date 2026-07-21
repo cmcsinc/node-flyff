@@ -1,0 +1,52 @@
+_version: "1.0"
+prefix: masa_tina
+states:
+  "0":
+    speak:
+      - 815
+    timer: 15
+    source: "Speak( NpcId(), 815 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 40
+      - label: 41
+      - label: 10
+  "3":
+    say:
+      - 816
+  "4":
+    say:
+      - 817
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 818
+  "10":
+    speak:
+      - 819
+    exit: true
+    source: "Speak( NpcId(), 819 );\r\n\tExit();"
+  "40":
+    say:
+      - 452
+      - 453
+      - 454
+      - 455
+      - 456
+      - 457
+  "41":
+    say:
+      - 458
+      - 459
+      - 460
+      - 461
+      - 462
+      - 463
+      - 464

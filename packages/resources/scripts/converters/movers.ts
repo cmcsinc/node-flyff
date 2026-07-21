@@ -17,6 +17,27 @@ import { parsePropTable, parseDefines, parseTxtTxt, readSource, num, type Row } 
 /** Skip the C++ template row — not a real mover. */
 const SKIP = new Set(['MI_DEFAULT']);
 
+/**
+ * propMover.txt `dwBelligerence` text → numeric (defineAttribute.h:203-215).
+ * The client's attack cursor is gated by `BELLI_PEACEFUL` (1), so the real
+ * value must flow end-to-end instead of a hardcoded 0.
+ */
+const BELLI_TEXT_TO_NUM: Record<string, number> = {
+  BELLI_PEACEFUL: 1,
+  BELLI_CAUTIOUSATTACK: 2,
+  BELLI_ACTIVEATTACK: 3,
+  BELLI_ALLIANCE: 4,
+  BELLI_ACTIVEATTACK_MELEE2X: 5,
+  BELLI_ACTIVEATTACK_MELEE: 6,
+  BELLI_ACTIVEATTACK_RANGE: 7,
+  BELLI_CAUTIOUSATTACK_MELEE2X: 8,
+  BELLI_CAUTIOUSATTACK_MELEE: 9,
+  BELLI_CAUTIOUSATTACK_RANGE: 10,
+  BELLI_MELEE2X: 11,
+  BELLI_MELEE: 12,
+  BELLI_RANGE: 13,
+};
+
 /** dwAI → schema type. */
 function classifyType(dwAi: string): 'monster' | 'npc' | 'player' {
   if (dwAi === 'AII_MONSTER') return 'monster';
@@ -66,6 +87,8 @@ function rowToMover(row: Row, id: number, name: string): Record<string, unknown>
     giant,
     raid: false,
     attackable: type === 'monster' ? row.bKillable !== '0' : false,
+    guard: row.dwClass === 'RANK_GUARD',
+    belligerence: BELLI_TEXT_TO_NUM[row.dwBelligerence] ?? 0,
   };
 }
 

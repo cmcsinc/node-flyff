@@ -1,0 +1,139 @@
+_version: "1.0"
+id: 34
+symbol: QUEST_27
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 37
+      - type: num
+        value: 130
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 37
+      - type: num
+        value: 150
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaSa_Bozman
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6055
+      - type: num
+        value: 1
+  - cmd: SetEndCondState
+    args:
+      - type: num
+        value: 4
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6005
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000260
+    cond: IDS_PROPQUEST_INC_000261
+    status: IDS_PROPQUEST_INC_000262
+  "1":
+    desc: IDS_PROPQUEST_INC_000263
+    cond: IDS_PROPQUEST_INC_000264
+    status: IDS_PROPQUEST_INC_000265
+  "2":
+    desc: IDS_PROPQUEST_INC_000266
+    cond: IDS_PROPQUEST_INC_000267
+    status: IDS_PROPQUEST_INC_000268
+  "3":
+    desc: IDS_PROPQUEST_INC_000269
+    cond: IDS_PROPQUEST_INC_000270
+    status: IDS_PROPQUEST_INC_000271
+  "4":
+    desc: IDS_PROPQUEST_INC_000272
+    cond: IDS_PROPQUEST_INC_000273
+    status: IDS_PROPQUEST_INC_000274
+  "14":
+    desc: IDS_PROPQUEST_INC_000275
+    cond: IDS_PROPQUEST_INC_000276
+    status: IDS_PROPQUEST_INC_000277
+quest_items: []
+title: IDS_PROPQUEST_INC_000259

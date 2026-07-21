@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_tomba
+states:
+  "0":
+    speak:
+      - 695
+    timer: 15
+    source: "Speak( NpcId(), 695 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 696
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 697
+  "10":
+    speak:
+      - 698
+    exit: true
+    source: "Speak( NpcId(), 698 );\r\n\tExit();"

@@ -1,0 +1,44 @@
+_version: "1.0"
+prefix: kepe_heron
+states:
+  "0":
+    speak:
+      - 66
+    timer: 15
+    source: "Speak( NpcId(), 66 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+      - label: 13
+    source: "//AddKey( \"ÁË »çÇÔ\" );\r
+
+      \tAddKey( 9 );\r
+
+      \tAddKey( 10 );\r
+
+      \tAddKey( 13 );"
+  "3":
+    say:
+      - 67
+  "4":
+    say:
+      - 68
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 69
+  "10":
+    say:
+      - 71
+    exit: true
+  "13":
+    say:
+      - 70

@@ -1,0 +1,52 @@
+_version: "1.0"
+prefix: mada_shyniff
+states:
+  "0":
+    speak:
+      - 370
+    timer: 15
+    source: "Speak( NpcId(), 370 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 371
+  "5": {}
+  "6": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_HEROPSY_TRN5) == QS_END && GetPlayerJob() == 4
+      && GetPlayerLvl() == 60 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 12 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 372
+  "10":
+    speak:
+      - 373
+    exit: true
+    source: "Speak( NpcId(), 373 );\r\n\tExit();"

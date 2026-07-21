@@ -1,0 +1,187 @@
+_version: "1.0"
+prefix: masa_daz
+states:
+  "0":
+    speak:
+      - 877
+    timer: 15
+    source: "Speak( NpcId(), 877 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 871
+      - 871
+      - 872
+      - 873
+      - 870
+      - 869
+      - 868
+    keys:
+      - label: 10
+      - label: 10
+      - label: 10
+      - label: 10
+      - label: 10
+      - label: 10
+      - label: 10
+    source: "if( GetPlayerLvl() >= 40 )\r
+
+      \t{\r
+
+      \t\tif( IsSetQuest( QUEST_INTHEDARK ) == TRUE && GetQuestState(
+      QUEST_INTHEDARK ) == QS_END )\r
+
+      \t\t{\r
+
+      \t\t\t\tif( IsParty() == TRUE )\r
+
+      \t\t\t\t{\r
+
+      \t\t\t\t\tif( GetItemNum( II_SYS_SYS_QUE_RUBY01 ) >= 1 && GetItemNum(
+      II_SYS_SYS_QUE_RUBY02 ) >= 1 && GetItemNum( II_SYS_SYS_QUE_RUBY03 ) >=1
+      )\r
+
+      \t\t\t\t\t{\r
+
+      \t\t\t\t\t\tif( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) ==
+      FALSE )\r
+
+      \t\t\t\t\t\t{\r
+
+      \t\t\t\t\t\t\tSay( 871 );\r
+
+      \t\t\t\t\t\t\tAddKey( 10 );\r
+
+      \t\t\t\t\t\t}\r
+
+      \t\t\t\t\t\telse\r
+
+      \t\t\t\t\t\t{\r
+
+      \t\t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY01, 1 );\r
+
+      \t\t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY02, 1 );\r
+
+      \t\t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY03, 1 );\r
+
+      \t\t\t\t\t\t}\r
+
+      \t\t\t\t\t\t\t\t\t\t\t\r
+
+      \t\t\t\t\t\t/*\r
+
+      \t\t\t\t\t\tif( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) ==
+      FALSE )\r
+
+      \t\t\t\t\t\t{\r
+
+      \t\t\t\t\t\t\tSay( 871 );\r
+
+      \t\t\t\t\t\t\tAddKey( 10 );\r
+
+      \t\t\t\t\t\t}\r
+
+      \t\t\t\t\t\t\t\t\t\t\t\r
+
+      \t\t\t\t\t\telse if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1
+      ) == TRUE )\r
+
+      \t\t\t\t\t\t{\r
+
+      \t\t\t\t\t\t\t\r
+
+      \t\t\t\t\t\t}\r
+
+      \t\t\t\t\t\t\r
+
+      \t\t\t\t\t\telse\r
+
+      \t\t\t\t\t\t{\r
+
+      \t\t\t\t\t\t\tSay( 872 );\r
+
+      \t\t\t\t\t\t\tAddKey( 10 );\t\r
+
+      \t\t\t\t\t\t}\r
+
+      \t\t\t\t\t\t*/\r
+
+      \t\t\t\t\t}\r
+
+      \r
+
+      \t\t\t\t\telse\r
+
+      \t\t\t\t\t{\r
+
+      \t\t\t\t    \tSay( 873 );\r
+
+      \t\t\t\t\t\tAddKey( 10 );\r
+
+      \t\t\t\t\t}\r
+
+      \t\t\t\t}\t\r
+
+      \t\t\t\t\r
+
+      \t\t\t\telse\r
+
+      \t\t\t\t{\r
+
+      \t\t\t\t\tSay( 870 );\t\r
+
+      \t\t\t\t\tAddKey( 10 );\r
+
+      \t\t\t\t}\r
+
+      \t\t\t\t\r
+
+      \t\t}\t\r
+
+      \t\t\t\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tSay( 869);\r
+
+      \t\t\tAddKey( 10 );\r
+
+      \t\t}\r
+
+      \t}\r
+
+      \t\r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tSay( 868 );\t\r
+
+      \t\tAddKey( 10 );\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 874
+  "4":
+    say:
+      - 875
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 876
+  "10":
+    speak:
+      - 877
+    exit: true
+    source: "Speak( NpcId(), 877 );\r\n\tExit();"

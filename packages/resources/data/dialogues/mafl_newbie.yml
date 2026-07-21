@@ -1,0 +1,34 @@
+_version: "1.0"
+prefix: mafl_newbie
+states:
+  "0":
+    speak:
+      - 1241
+    timer: 15
+    source: "Speak( NpcId(), 1241 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1242
+  "4":
+    say:
+      - 1243
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1244
+  "10":
+    speak:
+      - 1245
+    exit: true
+    source: "Speak( NpcId(), 1245 );\r\n\tExit();"

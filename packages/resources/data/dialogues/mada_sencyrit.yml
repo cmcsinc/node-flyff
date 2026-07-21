@@ -1,0 +1,52 @@
+_version: "1.0"
+prefix: mada_sencyrit
+states:
+  "0":
+    speak:
+      - 366
+    timer: 15
+    source: "Speak( NpcId(), 366 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 367
+  "5": {}
+  "6": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_HEROBLA_TRN5) == QS_END && GetPlayerJob() == 1
+      && GetPlayerLvl() == 60 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 7 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 368
+  "10":
+    speak:
+      - 369
+    exit: true
+    source: "Speak( NpcId(), 369 );\r\n\tExit();"

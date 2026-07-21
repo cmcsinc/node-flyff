@@ -1,0 +1,54 @@
+_version: "1.0"
+prefix: mafl_hyuit
+states:
+  "0":
+    speak:
+      - 531
+    timer: 15
+    source: "Speak( NpcId(), 531 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 532
+  "5": {}
+  "6": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_VOCMER_TRN3) == QS_END && GetPlayerJob() == 0
+      && GetPlayerLvl() == 15 )\r
+
+      \t{\r
+
+      \t\tChangeJob(1);\r
+
+      \t\tInitStat();\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 533
+  "10":
+    speak:
+      - 534
+    exit: true
+    source: "Speak( NpcId(), 534 );\r\n\tExit();"

@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_jeff
+states:
+  "0":
+    speak:
+      - 579
+    timer: 15
+    source: "Speak( NpcId(), 579 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 580
+  "4":
+    say:
+      - 581
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 582
+  "10":
+    speak:
+      - 583
+    exit: true
+    source: "Speak( NpcId(), 583 );\r\n\tExit();"

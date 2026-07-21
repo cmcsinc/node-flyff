@@ -1,0 +1,10 @@
+_version: "1.0"
+id: 0
+symbol: "0"
+commands:
+  - cmd: SetDesc
+    args:
+      - type: sym
+        value: IDS_PROPQUEST_INC_002823
+states: {}
+quest_items: []

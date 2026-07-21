@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_jeperdy
+states:
+  "0":
+    speak:
+      - 262
+    timer: 15
+    source: "Speak( NpcId(), 262 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 263
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 264
+  "10":
+    speak:
+      - 265
+    exit: true
+    source: "Speak( NpcId(), 265 );\r\n\tExit();"

@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_heedan
+states:
+  "0":
+    speak:
+      - 239
+    timer: 15
+    source: "Speak( NpcId(), 239 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 240
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 241
+  "10":
+    speak:
+      - 242
+    exit: true
+    source: "Speak( NpcId(), 242 );\r\n\tExit();"

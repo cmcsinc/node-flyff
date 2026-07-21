@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_loyah
+states:
+  "0":
+    speak:
+      - 614
+    timer: 15
+    source: "Speak( NpcId(), 614 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 615
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 616
+  "10":
+    speak:
+      - 617
+    exit: true
+    source: "Speak( NpcId(), 617 );\r\n\tExit();"

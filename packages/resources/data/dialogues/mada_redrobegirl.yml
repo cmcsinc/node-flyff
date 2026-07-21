@@ -1,0 +1,265 @@
+_version: "1.0"
+prefix: mada_redrobegirl
+states:
+  "0":
+    speak:
+      - 970
+    timer: 15
+    source: "Speak( NpcId(), 970 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 971
+  "4":
+    say:
+      - 971
+  "5": {}
+  "6": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 6 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 16 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 7 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 17 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 8 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 18 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 9 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 19 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 10
+      && GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 20 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 11
+      && GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 21 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 12
+      && GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 22 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_MASTER) == QS_END && GetPlayerJob() == 13
+      && GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 23 );\r
+
+      \t\tInitStat();\r
+
+      \t\tSetLevel(60);\r
+
+      \t\tAddGPPoint( -120 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 16 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 24 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 17 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 25 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 18 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 26 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 19 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 27 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 20 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 28 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 21 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 29 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 22 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 30 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse if( GetQuestState(QUEST_HERO) == QS_END && GetPlayerJob() == 23 &&
+      GetPlayerLvl() == 120 &&  GetPlayerExpPercent() == 9999 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 31 );\r
+
+      \t\tSetLevel(121);\r
+
+      \t\tAddGPPoint( 15 );\r
+
+      \t}\r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 972
+  "10":
+    speak:
+      - 973
+    exit: true
+    source: "Speak( NpcId(), 973 );\r\n\tExit();"

@@ -1,0 +1,52 @@
+_version: "1.0"
+prefix: mafl_dior
+states:
+  "0":
+    speak:
+      - 448
+    timer: 15
+    source: "Speak( NpcId(), 448 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 40
+      - label: 41
+      - label: 10
+  "3":
+    say:
+      - 449
+  "4":
+    say:
+      - 450
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 451
+  "10":
+    speak:
+      - 465
+    exit: true
+    source: "Speak( NpcId(), 465 );\r\n\tExit();"
+  "40":
+    say:
+      - 452
+      - 453
+      - 454
+      - 455
+      - 456
+      - 457
+  "41":
+    say:
+      - 458
+      - 459
+      - 460
+      - 461
+      - 462
+      - 463
+      - 464

@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: masa_karin
+states:
+  "0":
+    speak:
+      - 772
+    timer: 15
+    source: "Speak( NpcId(), 772 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 773
+  "4":
+    say:
+      - 774
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 775
+  "10":
+    speak:
+      - 776
+    exit: true
+    source: "Speak( NpcId(), 776 );\r\n\tExit();"

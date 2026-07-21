@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_achaben
+states:
+  "0":
+    speak:
+      - 83
+    timer: 15
+    source: "Speak( NpcId(), 83 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 84
+  "4":
+    say:
+      - 85
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 86
+  "10":
+    speak:
+      - 87
+    exit: true
+    source: "Speak( NpcId(), 87 );\r\n\tExit();"

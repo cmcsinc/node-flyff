@@ -1,0 +1,17 @@
+_version: "1.0"
+id: 6004
+symbol: "6004"
+commands:
+  - cmd: Setting
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: SetHeadQuest
+      - type: num
+        value: 0
+      - type: num
+        value: 6001
+states: {}
+quest_items: []
+title: IDS_PROPQUEST_INC_002608

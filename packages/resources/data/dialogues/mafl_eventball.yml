@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_eventball
+states:
+  "0":
+    speak:
+      - 1098
+    timer: 15
+    source: "Speak( NpcId(), 1098 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1099
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1100
+  "10":
+    speak:
+      - 1101
+    exit: true
+    source: "Speak( NpcId(), 1101 );\r\n\tExit();"

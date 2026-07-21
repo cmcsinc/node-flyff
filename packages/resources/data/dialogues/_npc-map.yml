@@ -1,0 +1,863 @@
+_version: "1.0"
+npcs:
+  MaFl_Mikyel:
+    dialog_file: MaFl_Mikyel.txt
+    sz_npc: mafl_mikyel
+  MaFl_Benku:
+    dialog_file: MaFl_Benku.txt
+    sz_npc: mafl_benku
+  MaFl_Macus:
+    dialog_file: MaFl_Macus.txt
+    sz_npc: mafl_macus
+  MaFl_Zaikun:
+    dialog_file: MaFl_Zaikun.txt
+    sz_npc: mafl_zaikun
+  MaFl_Roji:
+    dialog_file: MaFl_Roji.txt
+    sz_npc: mafl_roji
+  MaFl_Noier:
+    dialog_file: MaFl_Noier.txt
+    sz_npc: mafl_noier
+  MaFl_Herney:
+    dialog_file: MaFl_Herney.txt
+    sz_npc: mafl_herney
+  MaFl_Geron:
+    dialog_file: MaFl_Geron.txt
+    sz_npc: mafl_geron
+  MaFl_SgRadion:
+    dialog_file: MaFl_SgRadion.txt
+    sz_npc: mafl_sgradion
+  MaFl_Pheeby:
+    dialog_file: MaFl_Pheeby.txt
+    sz_npc: mafl_pheeby
+  MaFl_Boboku:
+    dialog_file: MaFl_Boboku.txt
+    sz_npc: mafl_boboku
+  MaFl_Boboko:
+    dialog_file: MaFl_Boboko.txt
+    sz_npc: mafl_boboko
+  MaFl_Luda:
+    dialog_file: MaFl_Luda.txt
+    sz_npc: mafl_luda
+  MaFl_Lui:
+    dialog_file: MaFl_Lui.txt
+    sz_npc: mafl_lui
+  MaFl_Losha:
+    dialog_file: MaFl_Losha.txt
+    sz_npc: mafl_losha
+  MaFl_Marche:
+    dialog_file: MaFl_Marche.txt
+    sz_npc: mafl_marche
+  MaFl_Juria:
+    dialog_file: MaFl_Juria.txt
+    sz_npc: mafl_juria
+  MaFl_Dior:
+    dialog_file: MaFl_Dior.txt
+    sz_npc: mafl_dior
+  MaFl_Is:
+    dialog_file: MaFl_Is.txt
+    sz_npc: mafl_is
+  MaFl_HairShop:
+    dialog_file: MaFl_HairShop.txt
+    sz_npc: mafl_hairshop
+  MaFl_FaceOff:
+    dialog_file: MaFl_FaceOff.txt
+    sz_npc: mafl_faceoff
+  MaFl_Ispim:
+    dialog_file: MaFl_Ispim.txt
+    sz_npc: mafl_ispim
+  MaFl_Isruel:
+    dialog_file: MaFl_Isruel.txt
+    sz_npc: mafl_isruel
+  MaFl_Ismeralda:
+    dialog_file: MaFl_Ismeralda.txt
+    sz_npc: mafl_ismeralda
+  MaFl_Mule:
+    dialog_file: MaFl_Mule.txt
+    sz_npc: mafl_mule
+  MaFl_Valin:
+    dialog_file: MaFl_Valin.txt
+    sz_npc: mafl_valin
+  MaFl_Rooney:
+    dialog_file: MaFl_Rooney.txt
+    sz_npc: mafl_rooney
+  MaFl_LodeLight:
+    dialog_file: MaFl_LodeLight.txt
+    sz_npc: mafl_lodelight
+  MaFL_Paul:
+    dialog_file: MaFL_Paul.txt
+    sz_npc: mafl_paul
+  MaFl_Dunkan:
+    dialog_file: MaFl_Dunkan.txt
+    sz_npc: mafl_dunkan
+  MaFl_Stin:
+    dialog_file: MaFl_Stin.txt
+    sz_npc: mafl_stin
+  MaFl_Jeff:
+    dialog_file: MaFl_Jeff.txt
+    sz_npc: mafl_jeff
+  MaFl_Tommy:
+    dialog_file: MaFl_Tommy.txt
+    sz_npc: mafl_tommy
+  MaFl_Masa:
+    dialog_file: MaFl_Masa.txt
+    sz_npc: mafl_masa
+  MaFl_Demian:
+    dialog_file: MaFl_Demian.txt
+    sz_npc: mafl_demian
+  MaFl_Tucani:
+    dialog_file: MaFl_Tucani.txt
+    sz_npc: mafl_tucani
+  MaFl_Radyon:
+    dialog_file: MaFl_Radyon.txt
+    sz_npc: mafl_radyon
+  MaFl_Kimel:
+    dialog_file: MaFl_Kimel.txt
+    sz_npc: mafl_kimel
+  MaFl_Leily:
+    dialog_file: MaFl_Leily.txt
+    sz_npc: mafl_leily
+  MaSa_Molang:
+    dialog_file: MaSa_Molang.txt
+    sz_npc: masa_molang
+  MaSa_Neidan:
+    dialog_file: MaSa_Neidan.txt
+    sz_npc: masa_neidan
+  MaSa_Brodeay:
+    dialog_file: MaSa_Brodeay.txt
+    sz_npc: masa_brodeay
+  MaSa_Troupemember1:
+    dialog_file: MaSa_Troupemember1.txt
+    sz_npc: masa_troupemember1
+  MaSa_Troupemember2:
+    dialog_file: MaSa_Troupemember2.txt
+    sz_npc: masa_troupemember2
+  MaSa_Troupemember3:
+    dialog_file: MaSa_Troupemember3.txt
+    sz_npc: masa_troupemember3
+  MaSa_Troupemember4:
+    dialog_file: MaSa_Troupemember4.txt
+    sz_npc: masa_troupemember4
+  MaSa_Troupemember5:
+    dialog_file: MaSa_Troupemember5.txt
+    sz_npc: masa_troupemember5
+  MaSa_Kheymerhan:
+    dialog_file: MaSa_Kheymerhan.txt
+    sz_npc: masa_kheymerhan
+  MaSa_Lancomi:
+    dialog_file: MaSa_Lancomi.txt
+    sz_npc: masa_lancomi
+  MaSa_Helena:
+    dialog_file: MaSa_Helena.txt
+    sz_npc: masa_helena
+  MaSa_Martin:
+    dialog_file: MaSa_Martin.txt
+    sz_npc: masa_martin
+  MaSa_Bill:
+    dialog_file: MaSa_Bill.txt
+    sz_npc: masa_bill
+  MaSa_Tina:
+    dialog_file: MaSa_Tina.txt
+    sz_npc: masa_tina
+  MaSa_Bulrox:
+    dialog_file: MaSa_Bulrox.txt
+    sz_npc: masa_bulrox
+  MaSa_Bozman:
+    dialog_file: MaSa_Bozman.txt
+    sz_npc: masa_bozman
+  MaSa_Colack:
+    dialog_file: MaSa_Colack.txt
+    sz_npc: masa_colack
+  MaSa_Karin:
+    dialog_file: MaSa_Karin.txt
+    sz_npc: masa_karin
+  MaSa_Leann:
+    dialog_file: MaSa_Leann.txt
+    sz_npc: masa_leann
+  MaSa_Ann:
+    dialog_file: MaSa_Ann.txt
+    sz_npc: masa_ann
+  MaSa_Herth:
+    dialog_file: MaSa_Herth.txt
+    sz_npc: masa_herth
+  MaSa_Janne:
+    dialog_file: MaSa_Janne.txt
+    sz_npc: masa_janne
+  MaSa_Kimberley:
+    dialog_file: MaSa_Kimberley.txt
+    sz_npc: masa_kimberley
+  MaSa_Masa:
+    dialog_file: MaSa_Masa.txt
+    sz_npc: masa_masa
+  MaSa_Maki:
+    dialog_file: MaSa_Maki.txt
+    sz_npc: masa_maki
+  MaSa_LodeLight:
+    dialog_file: MaSa_LodeLight.txt
+    sz_npc: masa_lodelight
+  MaFl_IspimEve1:
+    dialog_file: MaFl_IspimEve1.txt
+    sz_npc: mafl_ispimeve1
+  MaDa_Adin:
+    dialog_file: MaDa_Adin.txt
+    sz_npc: mada_adin
+  MaDa_Kerhi:
+    dialog_file: MaDa_Kerhi.txt
+    sz_npc: mada_kerhi
+  MaDa_PstVenken:
+    dialog_file: MaDa_PstVenken.txt
+    sz_npc: mada_pstvenken
+  MaDa_PstLuellui:
+    dialog_file: MaDa_PstLuellui.txt
+    sz_npc: mada_pstluellui
+  MaDa_PstDien:
+    dialog_file: MaDa_PstDien.txt
+    sz_npc: mada_pstdien
+  MaMa_Ancimys:
+    dialog_file: MaMa_Ancimys.txt
+    sz_npc: mama_ancimys
+  MaDa_ClrTubearto:
+    dialog_file: MaDa_ClrTubearto.txt
+    sz_npc: mada_clrtubearto
+  MaDa_ClrFebeitoe:
+    dialog_file: MaDa_ClrFebeitoe.txt
+    sz_npc: mada_clrfebeitoe
+  MaDa_ClrShyrilepe:
+    dialog_file: MaDa_ClrShyrilepe.txt
+    sz_npc: mada_clrshyrilepe
+  MaDa_ClrRuenpharel:
+    dialog_file: MaDa_ClrRuenpharel.txt
+    sz_npc: mada_clrruenpharel
+  MaDa_ClrPasteil:
+    dialog_file: MaDa_ClrPasteil.txt
+    sz_npc: mada_clrpasteil
+  MaDa_ClrHondurel:
+    dialog_file: MaDa_ClrHondurel.txt
+    sz_npc: mada_clrhondurel
+  MaDa_Guardian01:
+    dialog_file: MaDa_Guardian01.txt
+    sz_npc: mada_guardian01
+  MaDa_Guardian02:
+    dialog_file: MaDa_Guardian02.txt
+    sz_npc: mada_guardian02
+  MaDa_Guardian03:
+    dialog_file: MaDa_Guardian03.txt
+    sz_npc: mada_guardian03
+  MaDa_Guardian04:
+    dialog_file: MaDa_Guardian04.txt
+    sz_npc: mada_guardian04
+  MaDa_Guardian05:
+    dialog_file: MaDa_Guardian05.txt
+    sz_npc: mada_guardian05
+  MaDa_Guardian06:
+    dialog_file: MaDa_Guardian06.txt
+    sz_npc: mada_guardian06
+  MaDa_Lurif:
+    dialog_file: MaDa_Lurif.txt
+    sz_npc: mada_lurif
+  MaDa_LodeLight:
+    dialog_file: MaDa_LodeLight.txt
+    sz_npc: mada_lodelight
+  MaDa_Stima:
+    dialog_file: MaDa_Stima.txt
+    sz_npc: mada_stima
+  MaDa_Phacham:
+    dialog_file: MaDa_Phacham.txt
+    sz_npc: mada_phacham
+  MaDa_DwarpetRedy:
+    dialog_file: MaDa_DwarpetRedy.txt
+    sz_npc: mada_dwarpetredy
+  MaDa_DwarpetRedyJunior:
+    dialog_file: MaDa_DwarpetRedyJunior.txt
+    sz_npc: mada_dwarpetredyjunior
+  MaDa_DwarpetDodo:
+    dialog_file: MaDa_DwarpetDodo.txt
+    sz_npc: mada_dwarpetdodo
+  MaDa_DwarpetKenny:
+    dialog_file: MaDa_DwarpetKenny.txt
+    sz_npc: mada_dwarpetkenny
+  MaDa_DwarpetJodan:
+    dialog_file: MaDa_DwarpetJodan.txt
+    sz_npc: mada_dwarpetjodan
+  MaDa_DwarpetDig:
+    dialog_file: MaDa_DwarpetDig.txt
+    sz_npc: mada_dwarpetdig
+  MaDa_DwarpetFlick:
+    dialog_file: MaDa_DwarpetFlick.txt
+    sz_npc: mada_dwarpetflick
+  MaDa_DwarpetMine:
+    dialog_file: MaDa_DwarpetMine.txt
+    sz_npc: mada_dwarpetmine
+  MaDa_DwarpetActo:
+    dialog_file: MaDa_DwarpetActo.txt
+    sz_npc: mada_dwarpetacto
+  MaDa_Achaben:
+    dialog_file: MaDa_Achaben.txt
+    sz_npc: mada_achaben
+  MaDa_Almani:
+    dialog_file: MaDa_Almani.txt
+    sz_npc: mada_almani
+  MaDa_Bolpor:
+    dialog_file: MaDa_Bolpor.txt
+    sz_npc: mada_bolpor
+  MaDa_Chitller:
+    dialog_file: MaDa_Chitller.txt
+    sz_npc: mada_chitller
+  MaDa_Eshylop:
+    dialog_file: MaDa_Eshylop.txt
+    sz_npc: mada_eshylop
+  MaDa_CloneEshylop:
+    dialog_file: MaDa_CloneEshylop.txt
+    sz_npc: mada_cloneeshylop
+  MaDa_Haven:
+    dialog_file: MaDa_Haven.txt
+    sz_npc: mada_haven
+  MaDa_Ollien:
+    dialog_file: MaDa_Ollien.txt
+    sz_npc: mada_ollien
+  MaDa_Roocky:
+    dialog_file: MaDa_Roocky.txt
+    sz_npc: mada_roocky
+  MaDa_Remine:
+    dialog_file: MaDa_Remine.txt
+    sz_npc: mada_remine
+  MaDa_Krinton:
+    dialog_file: MaDa_Krinton.txt
+    sz_npc: mada_krinton
+  MaDa_DrEst:
+    dialog_file: MaDa_DrEst.txt
+    sz_npc: mada_drest
+  MaFl_DrEstly:
+    dialog_file: MaFl_DrEstly.txt
+    sz_npc: mafl_drestly
+  MaFl_DrEstern:
+    dialog_file: MaFl_DrEstern.txt
+    sz_npc: mafl_drestern
+  MaDa_LodeLight2:
+    dialog_file: MaDa_LodeLight2.txt
+    sz_npc: mada_lodelight2
+  MaDa_Kablloc:
+    dialog_file: MaDa_Kablloc.txt
+    sz_npc: mada_kablloc
+  MaDa_Chenbing:
+    dialog_file: MaDa_Chenbing.txt
+    sz_npc: mada_chenbing
+  MaDa_Jinitte:
+    dialog_file: MaDa_Jinitte.txt
+    sz_npc: mada_jinitte
+  MaDa_Tandy:
+    dialog_file: MaDa_Tandy.txt
+    sz_npc: mada_tandy
+  MaDa_Hent:
+    dialog_file: MaDa_Hent.txt
+    sz_npc: mada_hent
+  MaDa_Pyre:
+    dialog_file: MaDa_Pyre.txt
+    sz_npc: mada_pyre
+  MaDa_Tailer:
+    dialog_file: MaDa_Tailer.txt
+    sz_npc: mada_tailer
+  MaDa_Lorein:
+    dialog_file: MaDa_Lorein.txt
+    sz_npc: mada_lorein
+  MaDa_Homeit:
+    dialog_file: MaDa_Homeit.txt
+    sz_npc: mada_homeit
+  MaDa_Heingard:
+    dialog_file: MaDa_Heingard.txt
+    sz_npc: mada_heingard
+  MaDa_Eliff:
+    dialog_file: MaDa_Eliff.txt
+    sz_npc: mada_eliff
+  MaDa_Liekyen:
+    dialog_file: MaDa_Liekyen.txt
+    sz_npc: mada_liekyen
+  MaDa_Rupim:
+    dialog_file: MaDa_Rupim.txt
+    sz_npc: mada_rupim
+  MaDa_Kailreard:
+    dialog_file: MaDa_Kailreard.txt
+    sz_npc: mada_kailreard
+  MaFl_Santa:
+    dialog_file: MaFl_Santa.txt
+    sz_npc: mafl_santa
+  MaFl_Prist:
+    dialog_file: MaFl_Prist.txt
+    sz_npc: mafl_prist
+  MaFl_Hans:
+    dialog_file: MaFl_Hans.txt
+    sz_npc: mafl_hans
+  Npc_Reward:
+    dialog_file: Npc_Reward.txt
+    sz_npc: npc_reward
+  MaFl_PuPang:
+    dialog_file: MaFl_PuPang.txt
+    sz_npc: mafl_pupang
+  KePe_Shun:
+    dialog_file: KePe_Shun.txt
+    sz_npc: kepe_shun
+  KePe_Rocbin:
+    dialog_file: KePe_Rocbin.txt
+    sz_npc: kepe_rocbin
+  KePe_Ciel:
+    dialog_file: KePe_Ciel.txt
+    sz_npc: kepe_ciel
+  KePe_Yuna:
+    dialog_file: KePe_Yuna.txt
+    sz_npc: kepe_yuna
+  KePe_Heron:
+    dialog_file: KePe_Heron.txt
+    sz_npc: kepe_heron
+  MaDa_Cell:
+    dialog_file: MaDa_Cell.txt
+    sz_npc: mada_cell
+  MaDa_Rankashu:
+    dialog_file: MaDa_Rankashu.txt
+    sz_npc: mada_rankashu
+  DuDk_Drian:
+    dialog_file: DuDk_Drian.txt
+    sz_npc: dudk_drian
+  DuDk_CTRL:
+    dialog_file: DuDk_CTRL.txt
+    sz_npc: dudk_ctrl
+  DuDk_Nevil:
+    dialog_file: DuDk_Nevil.txt
+    sz_npc: dudk_nevil
+  MaDa_Bernard:
+    dialog_file: MaDa_Bernard.txt
+    sz_npc: mada_bernard
+  DuDk_Kazen:
+    dialog_file: DuDk_Kazen.txt
+    sz_npc: dudk_kazen
+  MaDa_Andre:
+    dialog_file: MaDa_Andre.txt
+    sz_npc: mada_andre
+  MaDa_Nein:
+    dialog_file: MaDa_Nein.txt
+    sz_npc: mada_nein
+  MaFl_Jeffo:
+    dialog_file: MaFl_Jeffo.txt
+    sz_npc: mafl_jeffo
+  MaFl_InstantBank:
+    dialog_file: MaFl_InstantBank.txt
+    sz_npc: mafl_instantbank
+  MaFl_Furan:
+    dialog_file: MaFl_Furan.txt
+    sz_npc: mafl_furan
+  MaSa_Furan:
+    dialog_file: MaSa_Furan.txt
+    sz_npc: masa_furan
+  MaDa_Furan:
+    dialog_file: MaDa_Furan.txt
+    sz_npc: mada_furan
+  MaSa_Flraness:
+    dialog_file: MaSa_Flraness.txt
+    sz_npc: masa_flraness
+  MaFl_GuildWar:
+    dialog_file: MaFl_GuildWar.txt
+    sz_npc: mafl_guildwar
+  MaFl_Donaris:
+    dialog_file: MaFl_Donaris.txt
+    sz_npc: mafl_donaris
+  MaFl_Buruto:
+    dialog_file: MaFl_Buruto.txt
+    sz_npc: mafl_buruto
+  MaFl_Aramy:
+    dialog_file: MaFl_Aramy.txt
+    sz_npc: mafl_aramy
+  MaFl_Atto:
+    dialog_file: MaFl_Atto.txt
+    sz_npc: mafl_atto
+  MaFl_Juglin:
+    dialog_file: MaFl_Juglin.txt
+    sz_npc: mafl_juglin
+  MaFl_Chorus1:
+    dialog_file: MaFl_Chorus1.txt
+    sz_npc: mafl_chorus1
+  MaFl_Chorus2:
+    dialog_file: MaFl_Chorus2.txt
+    sz_npc: mafl_chorus2
+  MaFl_Chorus3:
+    dialog_file: MaFl_Chorus3.txt
+    sz_npc: mafl_chorus3
+  MaFl_Chorus4:
+    dialog_file: MaFl_Chorus4.txt
+    sz_npc: mafl_chorus4
+  MaDa_Hachal:
+    dialog_file: MaDa_Hachal.txt
+    sz_npc: mada_hachal
+  MaDa_CloneHachal:
+    dialog_file: MaDa_CloneHachal.txt
+    sz_npc: mada_clonehachal
+  MaDa_Laloa:
+    dialog_file: MaDa_Laloa.txt
+    sz_npc: mada_laloa
+  MaFl_Himadel:
+    dialog_file: MaFl_Himadel.txt
+    sz_npc: mafl_himadel
+  MaFl_Gornus:
+    dialog_file: MaFl_Gornus.txt
+    sz_npc: mafl_gornus
+  MaFl_Kanane:
+    dialog_file: MaFl_Kanane.txt
+    sz_npc: mafl_kanane
+  MaFl_Mustang:
+    dialog_file: MaFl_Mustang.txt
+    sz_npc: mafl_mustang
+  MaFl_Andy:
+    dialog_file: MaFl_Andy.txt
+    sz_npc: mafl_andy
+  MaFl_Langdrong:
+    dialog_file: MaFl_Langdrong.txt
+    sz_npc: mafl_langdrong
+  MaFl_Hyuit:
+    dialog_file: MaFl_Hyuit.txt
+    sz_npc: mafl_hyuit
+  MaFl_Elic:
+    dialog_file: MaFl_Elic.txt
+    sz_npc: mafl_elic
+  MaFl_Maki:
+    dialog_file: MaFl_Maki.txt
+    sz_npc: mafl_maki
+  MaFl_Goripeg:
+    dialog_file: MaFl_Goripeg.txt
+    sz_npc: mafl_goripeg
+  MaFl_Kidmen:
+    dialog_file: MaFl_Kidmen.txt
+    sz_npc: mafl_kidmen
+  MaFl_Hastan:
+    dialog_file: MaFl_Hastan.txt
+    sz_npc: mafl_hastan
+  MaFl_Rudvihil:
+    dialog_file: MaFl_Rudvihil.txt
+    sz_npc: mafl_rudvihil
+  MaFl_Ancimys:
+    dialog_file: MaFl_Ancimys.txt
+    sz_npc: mafl_ancimys
+  MaFl_Martinyc:
+    dialog_file: MaFl_Martinyc.txt
+    sz_npc: mafl_martinyc
+  MaFl_FlaMayor:
+    dialog_file: MaFl_FlaMayor.txt
+    sz_npc: mafl_flamayor
+  MaFl_Official:
+    dialog_file: MaFl_Official.txt
+    sz_npc: mafl_official
+  MaFl_Gergantes:
+    dialog_file: MaFl_Gergantes.txt
+    sz_npc: mafl_gergantes
+  MaSa_Wingyei:
+    dialog_file: MaSa_Wingyei.txt
+    sz_npc: masa_wingyei
+  MaSa_Hee:
+    dialog_file: MaSa_Hee.txt
+    sz_npc: masa_hee
+  MaSa_Lopaze:
+    dialog_file: MaSa_Lopaze.txt
+    sz_npc: masa_lopaze
+  MaSa_Helgar:
+    dialog_file: MaSa_Helgar.txt
+    sz_npc: masa_helgar
+  MaSa_Heltung:
+    dialog_file: MaSa_Heltung.txt
+    sz_npc: masa_heltung
+  MaSa_QueerCollector:
+    dialog_file: MaSa_QueerCollector.txt
+    sz_npc: masa_queercollector
+  MaSa_Bowler:
+    dialog_file: MaSa_Bowler.txt
+    sz_npc: masa_bowler
+  MaSa_JeongHwa:
+    dialog_file: MaSa_JeongHwa.txt
+    sz_npc: masa_jeonghwa
+  MaSa_Porgo:
+    dialog_file: MaSa_Porgo.txt
+    sz_npc: masa_porgo
+  MaSa_SainMayor:
+    dialog_file: MaSa_SainMayor.txt
+    sz_npc: masa_sainmayor
+  MaSa_Gothante:
+    dialog_file: MaSa_Gothante.txt
+    sz_npc: masa_gothante
+  MaSa_Rovanett:
+    dialog_file: MaSa_Rovanett.txt
+    sz_npc: masa_rovanett
+  MaDa_Colar:
+    dialog_file: MaDa_Colar.txt
+    sz_npc: mada_colar
+  MaDa_Amadolka:
+    dialog_file: MaDa_Amadolka.txt
+    sz_npc: mada_amadolka
+  MaFl_Nina:
+    dialog_file: MaFl_Nina.txt
+    sz_npc: mafl_nina
+  MaFl_ChiChi:
+    dialog_file: MaFl_ChiChi.txt
+    sz_npc: mafl_chichi
+  MaFl_PiPi:
+    dialog_file: MaFl_PiPi.txt
+    sz_npc: mafl_pipi
+  MaFl_Loyah:
+    dialog_file: MaFl_Loyah.txt
+    sz_npc: mafl_loyah
+  MaSa_MaYun:
+    dialog_file: MaSa_MaYun.txt
+    sz_npc: masa_mayun
+  MaFl_SsoTta:
+    dialog_file: MaFl_SsoTta.txt
+    sz_npc: mafl_ssotta
+  MaDa_Karanduru:
+    dialog_file: MaDa_Karanduru.txt
+    sz_npc: mada_karanduru
+  MaFl_Hormes:
+    dialog_file: MaFl_Hormes.txt
+    sz_npc: mafl_hormes
+  MaFl_Kurumin:
+    dialog_file: MaFl_Kurumin.txt
+    sz_npc: mafl_kurumin
+  MaDa_Lobiet:
+    dialog_file: MaDa_Lobiet.txt
+    sz_npc: mada_lobiet
+  MaDa_Boneper:
+    dialog_file: MaDa_Boneper.txt
+    sz_npc: mada_boneper
+  MaDa_Corel:
+    dialog_file: MaDa_Corel.txt
+    sz_npc: mada_corel
+  MaFl_Guabrill:
+    dialog_file: MaFl_Guabrill.txt
+    sz_npc: mafl_guabrill
+  MaFl_Ata:
+    dialog_file: MaFl_Ata.txt
+    sz_npc: mafl_ata
+  MaDa_Jeperdy:
+    dialog_file: MaDa_Jeperdy.txt
+    sz_npc: mada_jeperdy
+  MaDa_Sencyrit:
+    dialog_file: MaDa_Sencyrit.txt
+    sz_npc: mada_sencyrit
+  MaDa_Ride:
+    dialog_file: MaDa_Ride.txt
+    sz_npc: mada_ride
+  MaFl_Domek:
+    dialog_file: MaFl_Domek.txt
+    sz_npc: mafl_domek
+  MaFl_Segho:
+    dialog_file: MaFl_Segho.txt
+    sz_npc: mafl_segho
+  MaDa_Fera:
+    dialog_file: MaDa_Fera.txt
+    sz_npc: mada_fera
+  MaDa_Capafe:
+    dialog_file: MaDa_Capafe.txt
+    sz_npc: mada_capafe
+  MaDa_Ellend:
+    dialog_file: MaDa_Ellend.txt
+    sz_npc: mada_ellend
+  MaFl_Clamb:
+    dialog_file: MaFl_Clamb.txt
+    sz_npc: mafl_clamb
+  MaFl_Teshar:
+    dialog_file: MaFl_Teshar.txt
+    sz_npc: mafl_teshar
+  MaDa_Heedan:
+    dialog_file: MaDa_Heedan.txt
+    sz_npc: mada_heedan
+  MaDa_Romvoette:
+    dialog_file: MaDa_Romvoette.txt
+    sz_npc: mada_romvoette
+  MaDa_Cylor:
+    dialog_file: MaDa_Cylor.txt
+    sz_npc: mada_cylor
+  MaFl_Cuarine:
+    dialog_file: MaFl_Cuarine.txt
+    sz_npc: mafl_cuarine
+  MaFl_Ryupang:
+    dialog_file: MaFl_Ryupang.txt
+    sz_npc: mafl_ryupang
+  MaDa_Pereb:
+    dialog_file: MaDa_Pereb.txt
+    sz_npc: mada_pereb
+  MaDa_Shyniff:
+    dialog_file: MaDa_Shyniff.txt
+    sz_npc: mada_shyniff
+  MaDa_Horison:
+    dialog_file: MaDa_Horison.txt
+    sz_npc: mada_horison
+  MaFl_Cuzrill:
+    dialog_file: MaFl_Cuzrill.txt
+    sz_npc: mafl_cuzrill
+  MaSa_Parine:
+    dialog_file: MaSa_Parine.txt
+    sz_npc: masa_parine
+  MaDa_Condram:
+    dialog_file: MaDa_Condram.txt
+    sz_npc: mada_condram
+  MaDa_Wendien:
+    dialog_file: MaDa_Wendien.txt
+    sz_npc: mada_wendien
+  MaFl_Tomba:
+    dialog_file: MaFl_Tomba.txt
+    sz_npc: mafl_tomba
+  MaFl_Eoners:
+    dialog_file: MaFl_Eoners.txt
+    sz_npc: mafl_eoners
+  MaFl_Ghalade:
+    dialog_file: MaFl_Ghalade.txt
+    sz_npc: mafl_ghalade
+  MaFl_Phoho:
+    dialog_file: MaFl_Phoho.txt
+    sz_npc: mafl_phoho
+  MaDa_DarMayor:
+    dialog_file: MaDa_DarMayor.txt
+    sz_npc: mada_darmayor
+  MaSa_Daz:
+    dialog_file: MaSa_Daz.txt
+    sz_npc: masa_daz
+  MaFl_Iblis01:
+    dialog_file: MaFl_Iblis01.txt
+    sz_npc: mafl_iblis01
+  MaFl_Iblis02:
+    dialog_file: MaFl_Iblis02.txt
+    sz_npc: mafl_iblis02
+  MaFl_Iblis03:
+    dialog_file: MaFl_Iblis03.txt
+    sz_npc: mafl_iblis03
+  MaFl_Iblis04:
+    dialog_file: MaFl_Iblis04.txt
+    sz_npc: mafl_iblis04
+  MaFl_Iblis05:
+    dialog_file: MaFl_Iblis05.txt
+    sz_npc: mafl_iblis05
+  MaFl_Colabear:
+    dialog_file: MaFl_Colabear.txt
+    sz_npc: mafl_colabear
+  MaFl_AutumnEvent01:
+    dialog_file: MaFl_AutumnEvent01.txt
+    sz_npc: mafl_autumnevent01
+  MaFl_AutumnEvent02:
+    dialog_file: MaFl_AutumnEvent02.txt
+    sz_npc: mafl_autumnevent02
+  MaFl_AutumnEvent03:
+    dialog_file: MaFl_AutumnEvent03.txt
+    sz_npc: mafl_autumnevent03
+  MaFl_AutumnEvent04:
+    dialog_file: MaFl_AutumnEvent04.txt
+    sz_npc: mafl_autumnevent04
+  MaMa_PKNPC01:
+    dialog_file: MaMa_PKNPC01.txt
+    sz_npc: mama_pknpc01
+  MaFl_Postbox:
+    dialog_file: MaFl_Postbox.txt
+    sz_npc: mafl_postbox
+  MaFl_Teacher01:
+    dialog_file: MaFl_Teacher01.txt
+    sz_npc: mafl_teacher01
+  MaFl_Teacher02:
+    dialog_file: MaFl_Teacher02.txt
+    sz_npc: mafl_teacher02
+  MaFl_Teacher03:
+    dialog_file: MaFl_Teacher03.txt
+    sz_npc: mafl_teacher03
+  MaFl_Cooker01:
+    dialog_file: MaFl_Cooker01.txt
+    sz_npc: mafl_cooker01
+  MaFl_Cooker02:
+    dialog_file: MaFl_Cooker02.txt
+    sz_npc: mafl_cooker02
+  MaFl_Pet:
+    dialog_file: MaFl_Pet.txt
+    sz_npc: mafl_pet
+  MaFl_Bobochan:
+    dialog_file: MaFl_Bobochan.txt
+    sz_npc: mafl_bobochan
+  MaFl_Santa01:
+    dialog_file: MaFl_Santa01.txt
+    sz_npc: mafl_santa01
+  MaFl_Helper:
+    dialog_file: MaFl_Helper.txt
+    sz_npc: mafl_helper
+  MaFl_Harold:
+    dialog_file: MaFl_Harold.txt
+    sz_npc: mafl_harold
+  MaFl_Dick:
+    dialog_file: MaFl_Dick.txt
+    sz_npc: mafl_dick
+  MaFl_Happy_TWN:
+    dialog_file: MaFl_Happy_TWN.txt
+    sz_npc: mafl_happy_twn
+  MaFl_Ray:
+    dialog_file: MaFl_Ray.txt
+    sz_npc: mafl_ray
+  MaFl_Happy_USA:
+    dialog_file: MaFl_Happy_USA.txt
+    sz_npc: mafl_happy_usa
+  MaFl_ForestManager:
+    dialog_file: MaFl_ForestManager.txt
+    sz_npc: mafl_forestmanager
+  MaFl_CollectorManager:
+    dialog_file: MaFl_CollectorManager.txt
+    sz_npc: mafl_collectormanager
+  MaSa_Karin_EVENT:
+    dialog_file: MaSa_Karin_EVENT.txt
+    sz_npc: masa_karin_event
+  MaFl_Demian_EVENT:
+    dialog_file: MaFl_Demian_EVENT.txt
+    sz_npc: mafl_demian_event
+  MaFl_SecretRoom_EAST:
+    dialog_file: MaFl_SecretRoom_EAST.txt
+    sz_npc: mafl_secretroom_east
+  MaDa_SecretRoom_WEST:
+    dialog_file: MaDa_SecretRoom_WEST.txt
+    sz_npc: mada_secretroom_west
+  MaFl_ForestManager02:
+    dialog_file: MaFl_ForestManager02.txt
+    sz_npc: mafl_forestmanager02
+  MaFl_PrepaidCard:
+    dialog_file: MaFl_PrepaidCard.txt
+    sz_npc: mafl_prepaidcard
+  MaFl_Helper_ver12:
+    dialog_file: MaFl_Helper_ver12.txt
+    sz_npc: mafl_helper_ver12
+  MaFl_Snowman01:
+    dialog_file: MaFl_Snowman01.txt
+    sz_npc: mafl_snowman01
+  MaFl_Snowman02:
+    dialog_file: MaFl_Snowman02.txt
+    sz_npc: mafl_snowman02
+  MaFl_Grahoo:
+    dialog_file: MaFl_Grahoo.txt
+    sz_npc: mafl_grahoo
+  MaFl_Aberoo:
+    dialog_file: MaFl_Aberoo.txt
+    sz_npc: mafl_aberoo
+  MaFl_Cook01:
+    dialog_file: MaFl_Cook01.txt
+    sz_npc: mafl_cook01
+  MaFl_Alice:
+    dialog_file: MaFl_Alice.txt
+    sz_npc: mafl_alice
+  MaFl_Oasis:
+    dialog_file: MaFl_Oasis.txt
+    sz_npc: mafl_oasis
+  MaFl_Karin:
+    dialog_file: MaFl_Karin.txt
+    sz_npc: mafl_karin
+  MaFl_BuffPet:
+    dialog_file: MaFl_BuffPet.txt
+    sz_npc: mafl_buffpet
+  MaFl_GUILDHOUSESALE:
+    dialog_file: MaFl_GUILDHOUSESALE.txt
+    sz_npc: mafl_guildhousesale
+  MaFl_COMMONER03:
+    dialog_file: MaFl_COMMONER03.txt
+    sz_npc: mafl_commoner03
+  MaFl_Leprechaun:
+    dialog_file: MaFl_Leprechaun.txt
+    sz_npc: mafl_leprechaun
+  MaFl_Cupid02:
+    dialog_file: MaFl_Cupid02.txt
+    sz_npc: mafl_cupid02
+  MaFl_Babario:
+    dialog_file: MaFl_Babario.txt
+    sz_npc: mafl_babario

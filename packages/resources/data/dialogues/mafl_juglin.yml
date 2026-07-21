@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_juglin
+states:
+  "0":
+    speak:
+      - 584
+    timer: 15
+    source: "Speak( NpcId(), 584 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 585
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 586
+  "10":
+    speak:
+      - 587
+    exit: true
+    source: "Speak( NpcId(), 587 );\r\n\tExit();"

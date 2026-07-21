@@ -1,0 +1,17 @@
+_version: "1.0"
+id: 6050
+symbol: "6050"
+commands:
+  - cmd: Setting
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: SetHeadQuest
+      - type: num
+        value: 0
+      - type: num
+        value: 6003
+states: {}
+quest_items: []
+title: IDS_PROPQUEST_INC_002615

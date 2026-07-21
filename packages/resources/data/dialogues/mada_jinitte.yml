@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_jinitte
+states:
+  "0":
+    speak:
+      - 266
+    timer: 15
+    source: "Speak( NpcId(), 266 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 142
+  "4":
+    say:
+      - 267
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 268
+  "10":
+    speak:
+      - 145
+    exit: true
+    source: "Speak( NpcId(), 145 );\r\n\tExit();"

@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_krinton
+states:
+  "0":
+    speak:
+      - 279
+    timer: 15
+    source: "Speak( NpcId(), 279 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 280
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 281
+    source: "Say( 281 );\r\n\tAddAnswer( 10 );"
+  "10":
+    speak:
+      - 282
+    exit: true
+    source: "Speak( NpcId(), 282 );\r\n\tExit();"

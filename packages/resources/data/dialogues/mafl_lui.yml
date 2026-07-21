@@ -1,0 +1,58 @@
+_version: "1.0"
+prefix: mafl_lui
+states:
+  "0":
+    speak:
+      - 622
+    timer: 15
+    source: "Speak( NpcId(), 622 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+    source: "switch( Random( 3 ) )\r
+
+      \t{\r
+
+      \t\tcase 0:\tPlaySound( 1036 ); break;\r
+
+      \t\tcase 1:\tPlaySound( 1037 ); break;\r
+
+      \t\tcase 2:\tPlaySound( 1038 ); break;\r
+
+      \t}\r
+
+      \tLaunchQuest();"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 623
+  "4":
+    say:
+      - 624
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 625
+  "10":
+    speak:
+      - 626
+    exit: true
+    source: "switch( Random( 2 ) )\r
+
+      \t{\r
+
+      \t\tcase 0:\tPlaySound( 1039 ); break;\r
+
+      \t\tcase 1:\tPlaySound( 1040 ); break;\r
+
+      \t}\r
+
+      \tSpeak( NpcId(), 626 );\r
+
+      \tExit();"

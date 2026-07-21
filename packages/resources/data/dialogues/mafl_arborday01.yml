@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mafl_arborday01
+states:
+  "0":
+    speak:
+      - 944
+    timer: 15
+    source: "Speak( NpcId(), 944);\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 945
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 946
+  "10":
+    speak:
+      - 947
+    exit: true
+    source: "Speak( NpcId(), 947);\r\n\tExit();"

@@ -1,0 +1,80 @@
+_version: "1.0"
+prefix: mafl_ispim
+states:
+  "0":
+    speak:
+      - 535
+    timer: 15
+    source: "Speak( NpcId(), 535 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+    source: "switch( Random( 3 ) )\r
+
+      \t{\r
+
+      \t\tcase 0:\tPlaySound( 567 ); break;\r
+
+      \t\tcase 1:\tPlaySound( 568 ); break;\r
+
+      \t\tcase 2:\tPlaySound( 569 ); break;\r
+
+      \t}\r
+
+      \r
+
+      \tLaunchQuest();"
+  "2":
+    keys:
+      - label: 9
+      - label: 26
+      - label: 42
+      - label: 43
+      - label: 10
+  "3":
+    say:
+      - 539
+  "4":
+    say:
+      - 540
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 570
+      - 542
+      - 543
+  "10":
+    speak:
+      - 554
+    exit: true
+    source: "switch( Random( 2 ) )\r
+
+      \t{\r
+
+      \t\tcase 0:\tPlaySound( 571 ); break;\r
+
+      \t\tcase 1:\tPlaySound( 572 ); break;\r
+
+      \t}\r
+
+      \tSpeak( NpcId(), 554 );\r
+
+      \tExit();"
+  "26":
+    say:
+      - 544
+      - 545
+  "42":
+    say:
+      - 546
+      - 547
+      - 548
+  "43":
+    say:
+      - 549
+      - 550
+      - 551

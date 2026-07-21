@@ -1,0 +1,97 @@
+_version: "1.0"
+id: 22
+symbol: QUEST_15
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 1
+      - type: num
+        value: 15
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 1
+      - type: num
+        value: 150
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6031
+      - type: num
+        value: 1
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6032
+      - type: num
+        value: 1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 4801
+      - type: num
+        value: 1
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaFl_Masa
+  - cmd: SetEndCondState
+    args:
+      - type: num
+        value: 1
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6004
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000155
+    cond: IDS_PROPQUEST_INC_000156
+    status: IDS_PROPQUEST_INC_000157
+  "1":
+    desc: IDS_PROPQUEST_INC_000158
+    cond: IDS_PROPQUEST_INC_000159
+    status: IDS_PROPQUEST_INC_000160
+  "14":
+    desc: IDS_PROPQUEST_INC_000161
+    cond: IDS_PROPQUEST_INC_000162
+    status: IDS_PROPQUEST_INC_000163
+quest_items: []
+title: IDS_PROPQUEST_INC_000154

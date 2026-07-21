@@ -1,0 +1,645 @@
+_version: "1.0"
+id: 82
+symbol: QUEST_JAPEVE_BOZDA
+commands:
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 1992
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaDa_Furan
+  - cmd: SetRepeat
+    args:
+      - type: num
+        value: 1
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 1
+      - type: num
+        value: 129
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 18098
+      - type: num
+        value: 20
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 18098
+      - type: num
+        value: -1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 18101
+      - type: num
+        value: 1
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_000657
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_000658
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_000659
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 3
+      - type: sym
+        value: IDS_PROPQUEST_INC_000660
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 4
+      - type: sym
+        value: IDS_PROPQUEST_INC_000661
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_000662
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_000663
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_000664
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 8
+      - type: sym
+        value: IDS_PROPQUEST_INC_000665
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_000666
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 11
+      - type: sym
+        value: IDS_PROPQUEST_INC_000667
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000668
+  "14":
+    desc: IDS_PROPQUEST_INC_000669
+quest_items:
+  - mover: 540
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 541
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 542
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 543
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 107
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 108
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 109
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 110
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 508
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 509
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 510
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 511
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 548
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 549
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 550
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 551
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 504
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 505
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 506
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 507
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 112
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 113
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 114
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 115
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 512
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 513
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 514
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 515
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 404
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 405
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 406
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 407
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 516
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 517
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 518
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 519
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 568
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 569
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 570
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 571
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 500
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 501
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 502
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 503
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 536
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 537
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 538
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 539
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 560
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 561
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 562
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 563
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 564
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 565
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 566
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 567
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 572
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 573
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 575
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 576
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 622
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 623
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 624
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 625
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 646
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 647
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 648
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 649
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 618
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 619
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 620
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 621
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 602
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 603
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 604
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 605
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 638
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 639
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 640
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 641
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 630
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 631
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 632
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 633
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 598
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 599
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 600
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 601
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 594
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 595
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 596
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 597
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 626
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 627
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 628
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 629
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 606
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 607
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 608
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 609
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 642
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 643
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 644
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 645
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 614
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 615
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 616
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 617
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 650
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 651
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 652
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 653
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 610
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 611
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 612
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 613
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 589
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 590
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 591
+    item: 18098
+    prob: 750000000
+    num: 1
+  - mover: 592
+    item: 18098
+    prob: 750000000
+    num: 1
+title: IDS_PROPQUEST_INC_000656

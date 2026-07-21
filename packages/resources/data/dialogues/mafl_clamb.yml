@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_clamb
+states:
+  "0":
+    speak:
+      - 436
+    timer: 15
+    source: "Speak( NpcId(), 436 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 107
+  "4":
+    say:
+      - 437
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 438
+  "10":
+    speak:
+      - 439
+    exit: true
+    source: "Speak( NpcId(), 439 );\r\n\tExit();"

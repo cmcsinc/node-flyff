@@ -1,0 +1,1079 @@
+_version: "1.0"
+id: 51
+symbol: QUEST_VALENTINE
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaFl_Prist
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6004
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000462
+    cond: IDS_PROPQUEST_INC_000463
+    status: IDS_PROPQUEST_INC_000464
+quest_items:
+  - mover: 20
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 21
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 22
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 23
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 96
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 97
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 98
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 99
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 24
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 25
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 26
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 27
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 28
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 29
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 30
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 31
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 524
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 525
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 526
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 527
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 88
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 89
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 90
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 91
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 32
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 33
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 34
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 35
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 36
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 37
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 38
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 39
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 60
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 61
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 62
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 63
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 40
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 41
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 42
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 43
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 44
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 45
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 46
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 47
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 48
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 49
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 50
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 51
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 120
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 121
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 122
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 123
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 68
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 69
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 70
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 71
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 64
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 65
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 66
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 67
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 552
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 553
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 554
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 555
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 400
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 401
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 402
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 403
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 92
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 93
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 94
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 95
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 528
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 529
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 530
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 531
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 544
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 545
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 546
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 547
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 103
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 104
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 105
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 106
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 84
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 85
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 86
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 87
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 56
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 57
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 58
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 59
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 72
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 73
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 74
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 75
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 80
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 81
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 82
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 83
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 52
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 53
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 54
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 55
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 540
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 541
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 542
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 543
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 107
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 108
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 109
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 110
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 508
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 509
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 510
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 511
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 548
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 549
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 550
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 551
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 504
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 505
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 506
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 507
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 112
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 113
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 114
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 115
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 512
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 513
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 514
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 515
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 404
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 405
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 406
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 407
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 516
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 517
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 518
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 519
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 304
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 305
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 306
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 307
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 300
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 301
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 302
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 303
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 308
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 309
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 310
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 311
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 500
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 501
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 502
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 503
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 536
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 537
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 538
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 539
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 164
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 560
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 561
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 562
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 563
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 568
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 569
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 570
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 571
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 564
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 565
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 566
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 567
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 572
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 573
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 575
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 576
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 577
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 578
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 579
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 580
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 581
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 582
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 583
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 584
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 585
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 586
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 587
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 588
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 589
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 590
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 591
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 592
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 622
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 623
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 624
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 625
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 646
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 647
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 648
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 649
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 618
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 619
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 620
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 621
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 602
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 603
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 604
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 605
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 638
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 639
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 640
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 641
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 630
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 631
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 632
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 633
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 598
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 599
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 600
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 601
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 594
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 595
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 596
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 597
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 626
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 627
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 628
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 629
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 606
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 607
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 608
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 609
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 642
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 643
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 644
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 645
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 614
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 615
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 616
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 617
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 650
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 651
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 652
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 653
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 610
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 611
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 612
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 613
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 634
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 635
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 636
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 637
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 654
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 655
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 656
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 657
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 658
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 659
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 660
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 661
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 662
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 664
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 665
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 666
+    item: 6317
+    prob: 750000000
+    num: 1
+title: IDS_PROPQUEST_INC_000461

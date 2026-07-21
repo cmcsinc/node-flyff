@@ -1,0 +1,31 @@
+_version: "1.0"
+prefix: mafl_autumnevent03
+states:
+  "0":
+    speak:
+      - 912
+    timer: 15
+    source: "Speak( NpcId(), 912 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 913
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 914
+  "10":
+    speak:
+      - 915
+    exit: true
+    source: "Speak( NpcId(), 915 );\r\n\tExit();"

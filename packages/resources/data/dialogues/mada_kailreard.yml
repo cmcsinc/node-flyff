@@ -1,0 +1,71 @@
+_version: "1.0"
+prefix: mada_kailreard
+states:
+  "0":
+    speak:
+      - 271
+    timer: 15
+    source: "Speak( NpcId(), 271 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 244
+  "4":
+    say:
+      - 272
+    source: "if( GetQuestState( QUEST_HERORAN_TRN5 ) == QS_END && GetPlayerJob() ==
+      2 && GetPlayerLvl() == 60  )\r
+
+      \t{\r
+
+      \t\tChangeJob( 9 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tSay ( 272 );\r
+
+      \t}"
+  "5": {}
+  "6": {}
+  "7": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState( QUEST_HERORAN_TRN5 ) == QS_END && GetPlayerJob() ==
+      2 && GetPlayerLvl() == 60  )\r
+
+      \t{\r
+
+      \t\tChangeJob( 9 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 273
+  "10":
+    speak:
+      - 274
+    exit: true
+    source: "Speak( NpcId(), 274 );\r\n\tExit();"

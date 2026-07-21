@@ -1,0 +1,58 @@
+_version: "1.0"
+prefix: masa_bulrox
+states:
+  "0":
+    speak:
+      - 729
+    timer: 15
+    source: "Speak( NpcId(), 729 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+    source: "switch( Random( 3 ) )\r
+
+      \t{\r
+
+      \t\tcase 0:\tPlaySound( 1041 ); break;\r
+
+      \t\tcase 1:\tPlaySound( 1042 ); break;\r
+
+      \t\tcase 2:\tPlaySound( 1043 ); break;\r
+
+      \t}\r
+
+      \tLaunchQuest();"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 730
+  "4":
+    say:
+      - 731
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 732
+  "10":
+    speak:
+      - 733
+    exit: true
+    source: "switch( Random( 2 ) )\r
+
+      \t{\r
+
+      \t\tcase 0:\tPlaySound( 1044 ); break;\r
+
+      \t\tcase 1:\tPlaySound( 1045 ); break;\r
+
+      \t}\r
+
+      \tSpeak( NpcId(), 733 );\r
+
+      \tExit();"

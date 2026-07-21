@@ -1,0 +1,24 @@
+_version: "1.0"
+prefix: kepe_rocbin
+states:
+  "0":
+    speak:
+      - 72
+    timer: 15
+    source: "Speak( NpcId(), 72 );\r
+
+      \t\tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 73
+    keys:
+      - label: 9
+      - label: 10
+  "9":
+    say:
+      - 74
+  "10":
+    speak:
+      - 75
+    exit: true
+    source: "Speak( NpcId(), 75 );\r\n\t\tExit();"

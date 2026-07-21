@@ -1,0 +1,110 @@
+_version: "1.0"
+prefix: mada_rankashu
+states:
+  "0":
+    speak:
+      - 335
+    timer: 15
+    source: "Speak( NpcId(), 335 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 12
+      - label: 10
+      - label: 38
+    source: "AddKey( 12 );\r
+
+      \tif(GetItemNum(II_SYS_SYS_QUE_LETTERRANKASHU) == 0)\r
+
+      \t{\r
+
+      \tAddCondKey( 336,39 );\r
+
+      \t}\r
+
+      \tAddKey( 10 );\r
+
+      \tAddKey( 38 );"
+  "3":
+    say:
+      - 337
+  "4":
+    say:
+      - 338
+      - 339
+    source: "if(GetQuestState(QUEST_DUDK_VOL1) == QS_END)\r
+
+      \t{\r
+
+      \tSay ( 338 );\r
+
+      \t}\r
+
+      \telse\r
+
+      \t{\r
+
+      \tSay ( 339 );\r
+
+      \t}"
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "10":
+    say:
+      - 342
+    exit: true
+  "12":
+    say:
+      - 340
+  "38":
+    say:
+      - 341
+  "39":
+    say:
+      - 343
+    exit: true
+    source: "Say( 343 );\r
+
+      \tif( GetEmptyInventoryNum() < 1 )\r
+
+      \t{\r
+
+      \t\tPrintSystemMessage(TID_GAME_LACKSPACE);\r
+
+      \t\tExit();\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tif( GetQuestState(QUEST_DUDK_VOL1) == QS_BEGIN && GetPlayerLvl() >= 70
+      )\r
+
+      \t\t{\r
+
+      \t\t\tCreateItem( II_SYS_SYS_QUE_LETTERRANKASHU, 1 );\r
+
+      \t\t\tRemoveKey(39);\r
+
+      \t\t}\r
+
+      \r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tExit();\r
+
+      \t\t}\r
+
+      \t}"

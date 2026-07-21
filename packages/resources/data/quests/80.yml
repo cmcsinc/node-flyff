@@ -1,0 +1,341 @@
+_version: "1.0"
+id: 80
+symbol: QUEST_JAPEVE_BOZFL
+commands:
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 1992
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaFl_Furan
+  - cmd: SetRepeat
+    args:
+      - type: num
+        value: 1
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 1
+      - type: num
+        value: 129
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 18096
+      - type: num
+        value: 20
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 18096
+      - type: num
+        value: -1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 18099
+      - type: num
+        value: 1
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_000629
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_000630
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_000631
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 3
+      - type: sym
+        value: IDS_PROPQUEST_INC_000632
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 4
+      - type: sym
+        value: IDS_PROPQUEST_INC_000633
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_000634
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_000635
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_000636
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 8
+      - type: sym
+        value: IDS_PROPQUEST_INC_000637
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_000638
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 11
+      - type: sym
+        value: IDS_PROPQUEST_INC_000639
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000640
+  "14":
+    desc: IDS_PROPQUEST_INC_000641
+quest_items:
+  - mover: 20
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 21
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 22
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 23
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 96
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 97
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 98
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 99
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 24
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 25
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 26
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 27
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 28
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 29
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 30
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 31
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 524
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 525
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 526
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 527
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 88
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 89
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 90
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 91
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 32
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 33
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 34
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 35
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 36
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 37
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 38
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 39
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 60
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 61
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 62
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 63
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 40
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 41
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 42
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 43
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 44
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 45
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 46
+    item: 18096
+    prob: 750000000
+    num: 1
+  - mover: 47
+    item: 18096
+    prob: 750000000
+    num: 1
+title: IDS_PROPQUEST_INC_000628

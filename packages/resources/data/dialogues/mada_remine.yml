@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mada_remine
+states:
+  "0":
+    speak:
+      - 344
+    timer: 15
+    source: "Speak( NpcId(), 344 );\t\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 345
+  "4":
+    say:
+      - 346
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 347
+  "10":
+    speak:
+      - 348
+    exit: true
+    source: "Speak( NpcId(), 348 );\r\n\tExit();"

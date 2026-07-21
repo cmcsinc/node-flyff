@@ -1,0 +1,24 @@
+_version: "1.0"
+prefix: kepe_yuna
+states:
+  "0":
+    speak:
+      - 80
+    timer: 15
+    source: "Speak( NpcId(), 80 );\r
+
+      \t\tSetScriptTimer( 15 );"
+  "1":
+    say:
+      - 81
+    keys:
+      - label: 9
+      - label: 10
+  "9":
+    say:
+      - 82
+  "10":
+    speak:
+      - 65
+    exit: true
+    source: "Speak( NpcId(), 65 );\r\n\t\tExit();"

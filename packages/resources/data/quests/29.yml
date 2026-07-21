@@ -1,0 +1,129 @@
+_version: "1.0"
+id: 29
+symbol: QUEST_22
+commands:
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 20
+      - type: num
+        value: 130
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 20
+      - type: num
+        value: 150
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 6046
+      - type: num
+        value: 1
+  - cmd: SetEndCondState
+    args:
+      - type: num
+        value: 1
+  - cmd: SetEndRewardGold
+    args:
+      - type: num
+        value: 1500
+      - type: num
+        value: 1500
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6004
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_000207
+    cond: IDS_PROPQUEST_INC_000208
+    status: IDS_PROPQUEST_INC_000209
+  "1":
+    desc: IDS_PROPQUEST_INC_000210
+    cond: IDS_PROPQUEST_INC_000211
+    status: IDS_PROPQUEST_INC_000212
+  "14":
+    desc: IDS_PROPQUEST_INC_000213
+    cond: IDS_PROPQUEST_INC_000214
+    status: IDS_PROPQUEST_INC_000215
+quest_items: []
+title: IDS_PROPQUEST_INC_000206
