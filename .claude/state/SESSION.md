@@ -2,7 +2,7 @@
 
 - **Goal**: Implement quest system (full engine) — check old client C++ for references
 - **Branch**: master
-- **Status**: 🔄 Phase 1 + 2 DONE. Phases 3–7 pending.
+- **Status**: 🔄 Phase 1 + 2 + 3 DONE. Phases 4–7 pending.
 - **Plan**: `C:\Users\Cyan\.claude\plans\delegated-skipping-cloud.md`
 
 ## Phase 1 shipped ✅ (tests green, tsc clean)
@@ -46,15 +46,24 @@
 ## Pre-existing (not regressions)
 - core js-yaml TS7016 (PROGRESS.md known blocker).
 
-## Next: Phase 3 — begin/complete condition + reward engine
-- `services/questConditions.ts` — canBegin/isComplete evaluating all Set*Begin/Set*End commands positionally from QuestDef.commands. Inject inventory/party/guild deps (stubs OK, ponytail).
-- `services/questRewards.ts` — applyBeginSet/applyEnd: SetEndReward{Item/Gold/Exp/PK/Teleport/Hide/PetLevelup}, SetEndRemove{Item/Gold/Quest}, sex/job filter. WAL journal item/gold/exp (rule 03/04).
-- `services/quest.service.ts` — extend: beginQuest/setQuestState/endQuest with dupe guard, persist via questRepo, emit buildSetQuest (service returns frame; handler writes).
-- Tests: each condition branch, reward grant, QUEST_1 worked example (vagrant lvl5-15, hand 20 teeth → 500 gold).
+## Phase 3 shipped ✅ (world-server 177/177 tests green, tsc clean)
+- `services/questConditions.ts` (NEW, pure) — `canBegin`/`isComplete` evaluating Set*Begin/Set*End positionally from `QuestDef.commands`, mirrors `__IsBeginQuestCondition`/`__IsEndQuestCondition` (`_Common/Mover.cpp:7108/7393`). AND-semantics; sex/job item filter (`Mover.cpp:7308`); party/guild stubbed permissive (ponytail). `InventoryOps` interface (count/emptySlots).
+- `services/questRewards.ts` (NEW) — `applyBeginSet`/`applyEnd`: SetEndReward{Item/Gold/Exp}, SetEndRemove{Item/Gold/Quest}, SetBeginSetAdd{Gold/Item}. Sex/job filter on reward items. `RewardSink` (inventory + journal). WAL-journals GOLD_CHANGE/EXP_CHANGE/ITEM_ADD/ITEM_REMOVE (rule 03/04). SetEndRemoveItem count<0 = remove-all (QUEST_1 teeth turn-in).
+- `services/quest.service.ts` (extend) — `beginQuest`/`setQuestState`/`endQuest`/`cancelQuest`. Dupe guard via `CPlayer.setQuest`; persist via questRepo; audit log (QUEST_LOG_ACTION 10/20/30); returns outbound frames (buildSetQuest/buildRemoveQuest) for handler to write.
+- `entities/player.ts` — added `m_nGold`/`m_nExp` (ponytail: no gold DB column yet; exp not hydrated from row).
+- `compose.ts` — QuestService wired with `resources.quests` + `journal` (inventory left permissive stub).
+- Tests: questConditions (13 branches), questRewards (6 grants/filters), quest.service QUEST_1 worked example (vagrant lvl10, 20 teeth → begin → end → 500 gold + teeth removed + completed; refuses under-level / under-teeth; cancel; WAL journal asserts).
+
+## Next: Phase 4 — C→S quest handlers
+- `handlers/removeQuest.handler.ts` — PACKETTYPE_REMOVEQUEST (DWORD questId), 400ms rate limit (m_tickScript, DPSrvr.cpp:1107), questService.cancelQuest → write frame.
+- `handlers/questCheck.handler.ts` — PACKETTYPE_QUEST_CHECK (int questId, BOOL bCheck), update m_aCheckedQuest (cap 5), buildCheckedQuest.
+- `handlers/questHelper.handler.ts` — PACKETTYPE_QUESTHELPER_REQNPCPOS (String charKey), resolve NPC pos via spawnManager, buildNpcPos or TID fail.
+- `compose.ts` + dispatcher wiring (3 handlers).
+- Companion tests per handler.
 
 ## Technical Context
 
 - **Current Branch**: `master`
 - **Branch**: master
 - **Last**: Phase 2 green. world-server 148/148, database 96/96, resources convert+tsc clean.
-- **Tasks**: #2 ✅ #3 ✅ #6 ✅. Next #7 (Phase 3).
+- **Tasks**: #2 ✅ #3 ✅ #6 ✅ #7 ✅. Next #8 (Phase 4).
