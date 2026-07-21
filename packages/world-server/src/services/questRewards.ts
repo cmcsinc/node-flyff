@@ -17,7 +17,7 @@ import type { QuestArg, QuestDef } from '@flyff/resources';
 import type { JournalEntry } from '@flyff/database';
 import type { CPlayer } from '../entities/player.js';
 import type { InventoryOps } from './questConditions.js';
-import { addExp } from '../combat/formulas.js';
+import { addExp, cumulativeExp } from '../combat/formulas.js';
 
 /** Sink the grantors mutate through. `inventory` covers count/add/remove. */
 export interface RewardSink {

@@ -1,6 +1,7 @@
 export * from './cache/index.js';
 export * from './config/index.js';
 export * from './constants/opcodes.js';
+export * from './constants/limits.js';
 export * from './constants/objectTypes.js';
 export * from './constants/quest.js';
 export * from './constants/sessionState.js';

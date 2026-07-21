@@ -15,6 +15,14 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { sendPacket } from '@flyff/core/net/dispatcher.js';
 import type { CharHandler } from './handlers/char.handler.js';
 
+/**
+ * FILETIME epoch bias — 100-ns ticks between 1601-01-01 (FILETIME/Windows
+ * epoch) and 1970-01-01 (Unix epoch). `g_TickCount.GetTickCount()` is a
+ * FILETIME-derived 100-ns value (`tickcount.h:50`), so the reply must be in
+ * the same units for the client's clock re-seed to land correctly.
+ */
+const FILETIME_EPOCH_BIAS = 116444736000000000n;
+
 export interface ClusterClientServerDeps {
   charHandler: CharHandler;
   logger?: DispatcherLogger;
@@ -35,6 +43,19 @@ export function buildClusterClientServer(deps: ClusterClientServerDeps): {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.PING);
     w.writeDword(dwPingTime);
+    sendPacket(s, w.build());
+  });
+  // QUERYTICKCOUNT (0x0b) — server-clock sync. The client fires this once on
+  // every cluster connect (`WndTitle.cpp:1050`, before GETPLAYERLIST), sending
+  // its `timeGetTime()` tick. Server echoes it back alongside the FILETIME-style
+  // `g_TickCount.GetTickCount()` so the client can re-seed its clock with a
+  // half-RTT bias (`DPLoginSrvr.cpp:270-278`, `Neuz/DPLoginClient.cpp:104-116`).
+  dispatcher.register(PACKETTYPE.QUERYTICKCOUNT, (s, r) => {
+    const dwTime = r.readDword();
+    const w = new PacketWriter();
+    w.writeDword(PACKETTYPE.QUERYTICKCOUNT);
+    w.writeDword(dwTime);
+    w.writeQword(BigInt(Date.now()) * 10000n + FILETIME_EPOCH_BIAS);
     sendPacket(s, w.build());
   });
   dispatcher.register(PACKETTYPE.GETPLAYERLIST, (s, r) => h.handleGetPlayerList(s, r));

@@ -73,9 +73,33 @@ describe('JournalReplayer', () => {
     assert.equal(summary.skipped, 1);
     assert.equal(journal.countUnreplayed(), 1, 'unhandled row left unreplayed');
 
+    const warns = logs.filter((l) => l.level === 'warn');
+    assert.equal(warns.length, 1, 'one warn logged for the unhandled type');
+    assert.match((warns[0]!.obj as { type: string }).type, /GOLD_CHANGE/);
+  });
+
+  it('deduplicates the no-handler log to one warn per type across many rows', async () => {
+    journal.clearAll();
+    const { logger, logs } = makeLogger();
+    const r = new JournalReplayer({ journal, logger: logger as never });
+
+    // 29 EXP_GAIN rows (the crash that motivated this) + 1 of another type.
+    for (let i = 0; i < 29; i++) {
+      journal.append({ charId: 5, type: 'EXP_GAIN', payload: { amount: 2 } });
+    }
+    journal.append({ charId: 5, type: 'ITEM_ADD', payload: { itemId: 9 } });
+
+    const summary = await r.recover();
+    assert.equal(summary.replayed, 0);
+    assert.equal(summary.skipped, 30);
+    assert.equal(journal.countUnreplayed(), 30, 'all unhandled rows left unreplayed');
+
+    const warns = logs.filter((l) => l.level === 'warn');
+    assert.equal(warns.length, 2, 'one warn per unhandled type, not per row');
+    const expGain = warns.find((w) => (w.obj as { type: string }).type === 'EXP_GAIN')!;
+    assert.equal((expGain.obj as { count: number }).count, 29);
     const errors = logs.filter((l) => l.level === 'error');
-    assert.ok(errors.length === 1, 'one error logged for the unhandled type');
-    assert.match((errors[0]!.obj as { type: string }).type, /GOLD_CHANGE/);
+    assert.equal(errors.length, 0, 'no per-row error spam');
   });
 
   it('replays events in ascending id order across mixed types', async () => {

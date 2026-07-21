@@ -15,7 +15,7 @@
 
 import type { CharacterRow } from '@flyff/database';
 import { AUTH } from '../constants/authority.js';
-import { NULL_ID } from '../net/snapshot/constants.js';
+import { NULL_ID, INVENTORY_SLOTS } from '../net/snapshot/constants.js';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest.js';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
 
@@ -29,6 +29,16 @@ export interface Vec3 {
   x: number;
   y: number;
   z: number;
+}
+
+/**
+ * One inventory slot (C++ `CItemElem`, vanilla subset). `itemId` is the propItem
+ * id; `count` is `m_nItemNum`. Upgrade fields (refine/durability/stats) are
+ * deferred to the equip story — a picked-up drop carries none of them.
+ */
+export interface InventorySlot {
+  itemId: number;
+  count: number;
 }
 
 /**
@@ -49,6 +59,13 @@ export class CPlayer {
   m_nMp: number;
   m_nMaxHp: number;
   m_nMaxMp: number;
+  /**
+   * Dead flag (C++ `m_dwState & OBJSTA_DIE_ALL` / `IsDie()`). Set true by
+   * `RevivalService.onPlayerDeath` when `m_nHp <= 0`; cleared on revive. Dead
+   * players are skipped as AI targets and rejected by non-dead revive paths.
+   * ponytail: full `m_dwState` bitfield if more state bits are ever needed.
+   */
+  m_bDead: boolean = false;
   m_nStr: number;
   m_nSta: number;
   m_nDex: number;
@@ -92,6 +109,11 @@ export class CPlayer {
    */
   m_idDestObj: number = NULL_ID;
   /**
+   * Walk-to-object arrival range (C++ `CMover::m_fArrivalRange`). Set alongside
+   * `m_idDestObj` by PLAYERSETDESTOBJ; echoed back by QUERYGETDESTOBJ replies.
+   */
+  m_fArrivalRange: number = 0;
+  /**
    * Player-killer / chaotic disposition (C++ `m_dwPKPropensity`, Mover.h:1227 —
    * `IsChaotic()` = `> 0`). Gates guard attackability. ponytail: set on
    * player-kill + persist to a DB column; no source yet, defaults non-PK.
@@ -113,6 +135,15 @@ export class CPlayer {
   m_aQuest: RuntimeQuest[] = [];
   m_aCompleteQuest: number[] = [];
   m_aCheckedQuest: number[] = [];
+  /**
+   * In-memory inventory — one `InventorySlot` per occupied slot, `null` when
+   * empty. Sized `INVENTORY_SLOTS` (73 = 42 main bag + 31 equip parts) to match
+   * the client's `CItemContainer`. Hydrated from `InventoryRepository` on JOIN;
+   * mutated by the pickup path (Phase E) + persisted fire-and-forget per
+   * change (matches the gold/exp write-through pattern — no 30 s flush loop).
+   * Indexes 0..MAX_INVENTORY-1 are the main bag; 42..72 are equip parts.
+   */
+  m_Inventory: (InventorySlot | null)[] = new Array(INVENTORY_SLOTS).fill(null);
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
   readonly _dirty: Set<string> = new Set();
@@ -124,7 +155,7 @@ export class CPlayer {
     this.m_nLevel = row.level;
     this.m_nJob = row.class;
     this.m_nSex = row.gender;
-    this.m_nGold = row.gold;
+    this.m_nGold = row.gold ?? 0;
     this.m_vPos = { x: row.x, y: row.y, z: row.z };
     this.m_nHp = row.hp;
     this.m_nMp = row.mp;

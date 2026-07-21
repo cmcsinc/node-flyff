@@ -16,6 +16,8 @@ export interface CharacterRow {
   skin_color: number;
   level: number;
   exp: bigint;
+  /** Gold (C++ `m_nGold`). Normalized to Number — MAX_GOLD (~2.1B) < 2^53. */
+  gold: number;
   hp: number;
   mp: number;
   max_hp: number;
@@ -38,8 +40,8 @@ export interface CharacterRow {
  */
 export type CharacterCreateData = Omit<
   CharacterRow,
-  'id' | 'created_at' | 'updated_at'
->;
+  'id' | 'created_at' | 'updated_at' | 'gold'
+> & { gold?: number };
 
 /**
  * Character update data (all fields optional).
@@ -65,11 +67,11 @@ export class CharacterRepository {
    */
   private mapRow(row: CharacterRow | undefined): CharacterRow | null {
     if (!row) return null;
-    return { ...row, exp: String(row.exp) as unknown as bigint };
+    return { ...row, exp: String(row.exp) as unknown as bigint, gold: Number(row.gold) };
   }
 
   private mapRows(rows: CharacterRow[]): CharacterRow[] {
-    return rows.map((r) => ({ ...r, exp: String(r.exp) as unknown as bigint }));
+    return rows.map((r) => ({ ...r, exp: String(r.exp) as unknown as bigint, gold: Number(r.gold) }));
   }
 
   /**
@@ -143,6 +145,7 @@ export class CharacterRepository {
     const [row] = await this.db('characters')
       .insert({
         ...data,
+        gold: data.gold ?? 0,
         exp: data.exp.toString(),
         created_at: new Date(),
         updated_at: new Date(),
@@ -208,6 +211,23 @@ export class CharacterRepository {
       .update({
         level,
         exp: exp.toString(),
+        updated_at: new Date(),
+      });
+  }
+
+  /**
+   * Update character gold (C++ `m_nGold`). Fire-and-forget at call sites —
+   * matches the `updateLevelAndExp` cadence; WAL `GOLD_CHANGE` is the
+   * crash-recovery backup.
+   *
+   * @param id - Character ID
+   * @param gold - New gold total
+   */
+  async updateGold(id: number, gold: number): Promise<void> {
+    await this.db('characters')
+      .where({ id })
+      .update({
+        gold,
         updated_at: new Date(),
       });
   }

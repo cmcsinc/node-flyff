@@ -26,7 +26,7 @@
  * @module services/scriptDlg
  */
 
-import type { DialogIndex, QuestDef, QuestIndex } from '@flyff/resources';
+import type { DialogIndex, DialogState, QuestDef, QuestIndex } from '@flyff/resources';
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
 import type { CPlayer } from '../entities/player.js';
 import type { CMover } from '../entities/mover.js';
@@ -34,6 +34,7 @@ import type { QuestService } from './quest.service.js';
 import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
 import { buildSetQuest } from '../net/snapshot/quest.serializer.js';
 import { ChatSerializer } from '../net/snapshot/chat.serializer.js';
+import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer.js';
 
 /** C++ `__QUEST_1208` rate limit (`DPSrvr.cpp:824`). */
 const SCRIPT_DLG_COOLDOWN_MS = 400;
@@ -65,6 +66,8 @@ export interface ScriptDlgDeps {
   questService: QuestService;
   /** Chat serializer for `Speak` broadcast text. Injected for testability. */
   chat?: ChatSerializer;
+  /** RUNSCRIPTFUNC serializer for the per-clicker dialog menu. Testable. */
+  scriptDialog?: ScriptDialogSerializer;
 }
 
 export type ScriptDlgResult =
@@ -97,8 +100,10 @@ function endCondDialog(def: QuestDef): { charKey: string; addKey: string } | und
 
 export class ScriptDlgService {
   private readonly chat: ChatSerializer;
+  private readonly scriptDialog: ScriptDialogSerializer;
   constructor(private deps: ScriptDlgDeps) {
     this.chat = deps.chat ?? new ChatSerializer();
+    this.scriptDialog = deps.scriptDialog ?? new ScriptDialogSerializer();
   }
 
   /**
@@ -128,9 +133,10 @@ export class ScriptDlgService {
   }
 
   /**
-   * Resolve + execute the dialog state for the pressed key. Emits `Speak` lines
-   * as broadcast chat (C++ `ScriptLib.cpp:40` → `AddChat`) and fires
-   * `LaunchQuest` → `questService.beginQuest` when a quest id is present.
+   * Resolve + execute the dialog state for the pressed key. Emits the per-clicker
+   * menu (`Say` body + `AddKey` buttons + `Exit`) as a RUNSCRIPTFUNC frame, the
+   * `Speak` lines as broadcast chat (C++ `ScriptLib.cpp:40` → `AddChat`), and
+   * fires `LaunchQuest` → `questService.beginQuest` when a quest id is present.
    */
   private async runState(
     player: CPlayer, npc: CMover, npcKey: string, key: string, frames: Buffer[],
@@ -141,6 +147,8 @@ export class ScriptDlgService {
     const state = stateForKey(this.deps.dialogs, prefix, keyIdx);
     if (!state) return;
 
+    this.emitMenu(player, state, frames);
+
     for (const n of state.speak ?? []) {
       const text = dialogText(this.deps.dialogs, n);
       if (text !== undefined) frames.push(this.chat.build(npc.m_idMover, text));
@@ -149,6 +157,37 @@ export class ScriptDlgService {
       const res = await this.deps.questService.beginQuest(player, state.launch_quest_id);
       if (res.ok) frames.push(...res.frames);
     }
+  }
+
+  /**
+   * Build the per-user RUNSCRIPTFUNC frame for `state` — the ops a C++
+   * `CNpcScript::<prefix>_<idx>` body queues via `AddRunScriptFunc`
+   * (`User.cpp:6259`). A leading `RemoveAllKeys` clears any prior button set so
+   * each state renders a fresh menu (the client window persists across button
+   * clicks and keeps key buttons until cleared — `WndDialog.cpp:710`). The
+   * `AddKey` routing key is the target state index stringified so the client's
+   * echo round-trips through `keyToIndex`. States with no `say`/`keys`/`exit`
+   * (e.g. `speak`-only or `launch_quest`-only) emit no menu frame — matching
+   * C++, which queues nothing when the script body calls none of these.
+   */
+  private emitMenu(player: CPlayer, state: DialogState, frames: Buffer[]): void {
+    const funcs: ScriptFunc[] = [];
+    for (const n of state.say ?? []) {
+      const text = dialogText(this.deps.dialogs, n);
+      if (text !== undefined) funcs.push({ type: 'say', text });
+    }
+    for (const k of state.keys ?? []) {
+      const word = dialogText(this.deps.dialogs, k.label) ?? '';
+      const addKey: Extract<ScriptFunc, { type: 'addKey' }> = {
+        type: 'addKey', word, key: String(k.key ?? k.label),
+      };
+      if (k.param !== undefined) addKey.param = k.param;
+      funcs.push(addKey);
+    }
+    if (state.exit) funcs.push({ type: 'exit' });
+    if (funcs.length === 0) return;
+    funcs.unshift({ type: 'removeAllKeys' });
+    frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
   }
 
   /**

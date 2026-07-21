@@ -10,3 +10,4 @@ export * from './skill.schema.js';
 export * from './zone.schema.js';
 export * from './dialog.schema.js';
 export * from './quest.schema.js';
+export * from './drop.schema.js';

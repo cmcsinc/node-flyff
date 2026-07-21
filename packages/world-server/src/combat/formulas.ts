@@ -316,6 +316,42 @@ export function addExp(level: number, exp: number, amount: number): ExpGainResul
 }
 
 /**
+ * `CMover::SubDieDecExp` (`_Common/Mover.cpp:7157`) — the death exp penalty,
+ * applied on **revive** (not on death itself). Subtracts a % of the exp needed
+ * for the current level off the within-level `m_nExp`, clamped at 0.
+ *
+ * v15 C++ never de-levels here (`bLvDown` forcibly reset at `Mover.cpp:7189` —
+ * the `__VER < 8` guard is commented out), so the level is unchanged.
+ *
+ * Loss % by level bracket — simplified from `DiePenalty.inc:35-60`
+ * (`DECEXP_PENALTY` table: Lv≤20=0%, Lv≤29=6%, Lv≤59=5%, Lv≤89=4%, Lv≤99=3%,
+ * Lv≤109=2%, Lv≤129=1.5%, Lv≤200=1%). Throws on invalid level.
+ *
+ * ponytail: load the real `DiePenalty.inc` table when the resource converter
+ * exports it; the bracket values then come from data, not code.
+ *
+ * Pure: caller journals + mutates the entity + fires the SETEXPERIENCE packet.
+ */
+export function subDieDecExp(level: number, exp: number): { level: number; exp: number } {
+  const pct = deathExpLossPct(level);
+  if (pct <= 0) return { level, exp: Math.max(0, exp) };
+  const loss = Math.floor(expToNextLevel(level) * pct);
+  return { level, exp: Math.max(0, exp - loss) };
+}
+
+/** `DECEXP_PENALTY` bracket — % of current-level exp lost on town revive. */
+function deathExpLossPct(level: number): number {
+  if (level <= 20) return 0;
+  if (level <= 29) return 0.06;
+  if (level <= 59) return 0.05;
+  if (level <= 89) return 0.04;
+  if (level <= 99) return 0.03;
+  if (level <= 109) return 0.02;
+  if (level <= 129) return 0.015;
+  return 0.01;
+}
+
+/**
  * Within-level exp = cumulative exp − the level's `nExp1` base. Used to convert
  * the cumulative value stored in the DB / sent on the wire into the live
  * within-level `m_nExp`. Clamps ≥ 0 (a malformed row cannot give negative exp).

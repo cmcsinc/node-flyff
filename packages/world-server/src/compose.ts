@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar.js';
 import { ClusterListener } from './ipc/clusterListener.js';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
@@ -9,6 +9,7 @@ import { ZoneManager } from './managers/zone.manager.js';
 import { SpawnManager } from './managers/spawn.manager.js';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer.js';
 import { NpcSnapshotSerializer } from './net/snapshot/npcSnapshot.serializer.js';
+import { DestObjSerializer } from './net/snapshot/destObj.serializer.js';
 import { JoinService } from './services/join.service.js';
 import { QuestService } from './services/quest.service.js';
 import { JoinHandler } from './handlers/join.handler.js';
@@ -35,6 +36,8 @@ import { PlayerMoved2Handler } from './handlers/playerMoved2.handler.js';
 import { PlayerAngleHandler } from './handlers/playerAngle.handler.js';
 import { QueryGetPosService } from './services/queryGetPos.service.js';
 import { QueryGetPosHandler } from './handlers/queryGetPos.handler.js';
+import { QueryGetDestObjService } from './services/queryGetDestObj.service.js';
+import { QueryGetDestObjHandler } from './handlers/queryGetDestObj.handler.js';
 import { GetPosHandler } from './handlers/getPos.handler.js';
 import { ScriptDlgService } from './services/scriptDlg.service.js';
 import { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
@@ -43,6 +46,8 @@ import { NpcSpeechService } from './services/npcSpeech.service.js';
 import { RevivalHandler } from './handlers/revival.handler.js';
 import { MeleeAttackService } from './services/meleeAttack.service.js';
 import { CombatService } from './services/combat.service.js';
+import { DropService } from './services/drop.service.js';
+import { ItemManager } from './managers/item.manager.js';
 import { VISIBILITY_RADIUS } from './net/snapshot/constants.js';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
@@ -91,6 +96,8 @@ export interface WorldComposeResult {
   playerAngleHandler: PlayerAngleHandler;
   queryGetPosService: QueryGetPosService;
   queryGetPosHandler: QueryGetPosHandler;
+  queryGetDestObjService: QueryGetDestObjService;
+  queryGetDestObjHandler: QueryGetDestObjHandler;
   getPosHandler: GetPosHandler;
   scriptDlgService: ScriptDlgService;
   scriptDlgHandler: ScriptDlgHandler;
@@ -98,6 +105,8 @@ export interface WorldComposeResult {
   revivalHandler: RevivalHandler;
   meleeAttackService: MeleeAttackService;
   combatService: CombatService;
+  itemManager: ItemManager;
+  dropService: DropService;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
   removeQuestHandler: RemoveQuestHandler;
@@ -114,7 +123,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const logger = createLogger({ service: 'world-server', serverId: config.server.id });
 
   // Load game resources (items, movers, skills, zones)
-  logger.info('Loading game resources...');
+  logger.info({ phase: 'resources' }, 'Loading game resources');
   const resources = await loadAllResources(config.resources.dataDir);
   logger.info(
     {
@@ -159,6 +168,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const charRepo = new CharacterRepository(db);
   const accountRepo = new AccountRepository(db);
   const questRepo = new QuestRepository(db);
+  const inventoryRepo = new InventoryRepository(db);
 
   // WAL journal — embedded SQLite, opened once per process. Critical mutations
   // (items, gold, exp, level) append here before ack so a crash never dupes or
@@ -210,6 +220,7 @@ export async function compose(): Promise<WorldComposeResult> {
     questRepo,
     quests: resources.quests,
     journal,
+    charRepo,
   });
 
   // Phase 6 — reactive quest tracker (kill/patrol/time). Self-driven 1 s timer
@@ -222,17 +233,27 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   questTracker.start();
 
+  // Revival/death loop — wired before AISystem so the AI tick can hand lethal
+  // player damage to `onPlayerDeath` (flag dead + broadcast + open revive dlg).
+  const revivalService = new RevivalService({
+    charRepo, inventoryRepo, journal, zoneManager, playerManager, zones: resources.zones,
+  });
+
   // Monster idle-wander FSM (C++ CAIMonster::StateIdle). Emits one DESTPOS per
   // new destination; the client walks itself. Monsters only — town NPCs/guards
   // are skipped. Self-driven 1 s timer; `tick(now)` is public for the future
   // unified 50 ms loop. Stopped on shutdown via index.ts (no leaked timer).
-  const aiSystem = new AISystem({ spawnManager, zoneManager });
+  const aiSystem = new AISystem({
+    spawnManager, zoneManager, playerManager,
+    onPlayerDeath: (p, killerObjid) => revivalService.onPlayerDeath(p, killerObjid),
+  });
   aiSystem.start();
 
   const joinService = new JoinService({
     charRepo,
     accountRepo,
     questService,
+    inventoryRepo,
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
@@ -278,16 +299,19 @@ export async function compose(): Promise<WorldComposeResult> {
   const playerAngleHandler = new PlayerAngleHandler(playerManager, movementService);
   const queryGetPosService = new QueryGetPosService();
   const queryGetPosHandler = new QueryGetPosHandler(playerManager, queryGetPosService);
+  const queryGetDestObjService = new QueryGetDestObjService(playerManager, new DestObjSerializer());
+  const queryGetDestObjHandler = new QueryGetDestObjHandler(playerManager, queryGetDestObjService);
   const getPosHandler = new GetPosHandler(playerManager, movementService);
   const scriptDlgService = new ScriptDlgService({
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
-  const revivalService = new RevivalService();
   const revivalHandler = new RevivalHandler(playerManager, revivalService);
 
+  const itemManager = new ItemManager({ zoneManager });
+  const dropService = new DropService({ resources, itemManager });
   const combatService = new CombatService({
-    spawnManager, zoneManager, playerManager, charRepo, journal, questTracker,
+    spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,
   });
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
@@ -338,6 +362,8 @@ export async function compose(): Promise<WorldComposeResult> {
     playerAngleHandler,
     queryGetPosService,
     queryGetPosHandler,
+    queryGetDestObjService,
+    queryGetDestObjHandler,
     getPosHandler,
     scriptDlgService,
     scriptDlgHandler,
@@ -345,6 +371,8 @@ export async function compose(): Promise<WorldComposeResult> {
     revivalHandler,
     meleeAttackService,
     combatService,
+    itemManager,
+    dropService,
     playerSetDestObjHandler,
     meleeAttackHandler,
     removeQuestHandler,

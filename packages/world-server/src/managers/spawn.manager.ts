@@ -100,6 +100,9 @@ export class SpawnManager {
             hr: def.attack_rate,
             er: def.dodge_rate,
             expValue: def.exp ?? 0,
+            speed: def.speed,
+            attackRange: def.attack_range,
+            reAttackDelay: def.attack_speed,
           },
           pos: npcSpawn.position, angle: npcSpawn.angle, zoneId: zone._id_numeric,
           delayMs: 0, // static NPC — never respawns
@@ -131,6 +134,9 @@ export class SpawnManager {
               hr: def.attack_rate,
               er: def.dodge_rate,
               expValue: def.exp ?? 0,
+              speed: def.speed,
+              attackRange: def.attack_range,
+              reAttackDelay: def.attack_speed,
             },
             pos: jitter(spawn.position, spawn.radius, i, count), angle: 0, zoneId: zone._id_numeric,
             delayMs: spawn.delay, // ms until respawn after kill

@@ -12,9 +12,9 @@ import type { Logger } from '@flyff/core';
  *
  * Handlers are registered by services as they come online (inventory service
  * registers `ITEM_ADD` / `ITEM_REMOVE`, etc.). An event type with no handler is
- * left unreplayed and logged at error — it means a newer server build produced
- * an event this build cannot replay, which an operator must investigate rather
- * than silently drop.
+ * left unreplayed and logged once at warn (per type, not per row) — it means a
+ * newer server build produced an event this build cannot replay, which an
+ * operator must investigate rather than silently drop.
  *
  * @module systems/journalReplayer
  */
@@ -59,19 +59,27 @@ export class JournalReplayer {
 
     let replayed = 0;
     let skipped = 0;
+    // Missing handlers are tallied per type and logged once AFTER the loop — N
+    // rows of the same unhandled type are one investigation, not N identical
+    // errors. Rows stay unreplayed so a future build's handler can pick them up.
+    const missing = new Map<string, number>();
     for (const row of rows) {
       const handler = this.handlers.get(row.event_type);
       if (!handler) {
-        this.deps.logger.error(
-          { id: row.id, type: row.event_type, charId: row.char_id },
-          'No replayer registered for journaled event type — leaving unreplayed'
-        );
+        missing.set(row.event_type, (missing.get(row.event_type) ?? 0) + 1);
         skipped++;
         continue;
       }
       await handler(row);
       this.deps.journal.markReplayed(row.id);
       replayed++;
+    }
+
+    for (const [type, count] of missing) {
+      this.deps.logger.warn(
+        { type, count },
+        'No replayer registered for journaled event type — leaving unreplayed'
+      );
     }
 
     this.deps.logger.info({ replayed, skipped }, 'Crash recovery complete');
