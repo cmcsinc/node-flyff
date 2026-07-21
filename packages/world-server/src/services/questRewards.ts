@@ -114,19 +114,18 @@ export function applyEnd(player: CPlayer, def: QuestDef, sink: RewardSink): void
         const gold = num(c.args[0]);
         if (gold > 0) {
           player.m_nGold = Math.max(0, player.m_nGold - gold);
-          journal(player, 'GOLD_CHANGE', { delta: -gold, total: player.m_nGold }, sink);
+          journal(player, 'CHAR_GOLD', { gold: player.m_nGold }, sink);
           sink.flushGold?.(player.m_idPlayer, player.m_nGold);
         }
         break;
       }
       case 'SetEndRemoveQuest':
-        // Turn-in removes the listed quests from the completed log.
+        // Turn-in removes the listed quests from the completed log. Quest state
+        // is write-through persisted by QuestService (removeActive on turn-in),
+        // so there is no crash gap to journal here.
         for (const a of c.args) {
           const id = num(a);
-          if (id !== 0) {
-            player.removeQuest(id);
-            journal(player, 'QUEST_REMOVE', { questId: id }, sink);
-          }
+          if (id !== 0) player.removeQuest(id);
         }
         break;
       // SetEndRewardPKValue/Teleport/Hide/PetLevelup: ponytail — wire when those
@@ -138,7 +137,9 @@ export function applyEnd(player: CPlayer, def: QuestDef, sink: RewardSink): void
 }
 
 function grantGold(player: CPlayer, amount: number, sink: RewardSink): void {
-  journal(player, 'GOLD_CHANGE', { delta: amount, total: player.m_nGold + amount }, sink);
+  // Journal the ABSOLUTE post-state (no clamp here, so total = pre + amount)
+  // before the mutation lands (rule 04). Idempotent on replay.
+  journal(player, 'CHAR_GOLD', { gold: player.m_nGold + amount }, sink);
   player.m_nGold += amount;
   player._dirty.add('m_nGold');
   sink.flushGold?.(player.m_idPlayer, player.m_nGold);
@@ -147,7 +148,13 @@ function grantGold(player: CPlayer, amount: number, sink: RewardSink): void {
 function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
   // m_nExp is within-level; addExp carries excess across level boundaries.
   const gain = addExp(player.m_nLevel, player.m_nExp, amount);
-  journal(player, 'EXP_CHANGE', { delta: amount, levelFrom: player.m_nLevel, levelTo: gain.level, total: gain.exp }, sink);
+  // Journal the ABSOLUTE post-state (cumulative exp) before the mutation (rule
+  // 04). Quest-granted exp has no write-through persist today, so this WAL row
+  // is the ONLY crash recovery for it — idempotent replay on next boot.
+  journal(player, 'CHAR_EXP', {
+    level: gain.level,
+    exp: String(Math.floor(cumulativeExp(gain.level, gain.exp))),
+  }, sink);
   player.m_nExp = gain.exp;
   player.m_nLevel = gain.level;
   player._dirty.add('m_nExp');
@@ -163,7 +170,9 @@ function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
 }
 
 function grantItem(player: CPlayer, item: number, count: number, sink: RewardSink): void {
-  journal(player, 'ITEM_ADD', { itemId: item, count }, sink);
+  // No WAL: QuestService has no real inventory sink today (PERMISSIVE_INV
+  // stub), so there is no DB write to recover. When the inventory system ships
+  // and journals per-slot absolute state, item rewards recover through it.
   sink.inventory.add(item, count);
 }
 
@@ -176,7 +185,7 @@ function removeItem(player: CPlayer, item: number, count: number, sink: RewardSi
   const have = sink.inventory.count(item);
   const remove = count < 0 ? have : Math.min(have, count);
   if (remove <= 0) return;
-  journal(player, 'ITEM_REMOVE', { itemId: item, count: remove }, sink);
+  // No WAL — see grantItem (no inventory persistence behind this path yet).
   sink.inventory.remove(item, remove);
 }
 
