@@ -1,12 +1,18 @@
 /**
  * CHAT handler — `PACKETTYPE_CHAT` (0x00ff0000).
  *
- * `DPSrvr::OnChat` (DPSrvr.cpp:663) reads one DWORD-length-prefixed string,
- * capped at 1024 bytes (packet-level cap `uBufSize > 1031 ⇒ drop`).
+ * `DPSrvr::OnChat` (`DPSrvr.cpp:663`) reads a single field:
+ *   text:String(DWORD-len + chars, ≤1024)
+ * and drops the whole packet when `uBufSize > 1031` (4 + 4 + 1024 - 1).
  *
- * Handler reads + validates the string, delegates broadcast/command to
- * {@link ChatService}. No reply on any path — service broadcasts CHATTEXT
- * to zone peers.
+ * The client sends no authority DWORD — `CDPClient::SendChat` (`Neuz/DPClient.cpp
+ * :9003`) writes ONLY `ar.WriteString(lpszChat)` after the opcode. Reading a
+ * `dwAuth` here eats the string-length DWORD and the next `readString` then
+ * decodes the text bytes as a length → `Buffer overrun` (verified: "test" →
+ * requested=0x74736574). Server-side `m_bAuthority` alone gates commands.
+ *
+ * Handler reads + validates, delegates broadcast/command to `ChatService`. No
+ * reply on any path — the service broadcasts CHATTEXT to zone peers.
  *
  * @module handlers/chat.handler
  */
@@ -52,8 +58,17 @@ export class ChatHandler {
     }
 
     const outcome = this.chatService.chat(player, text);
-    if (!outcome.ok && outcome.reason === 'command_unknown') {
-      logger.debug({ charId: player.m_idPlayer }, 'CHAT unknown command — dropped');
+    logger.info(
+      { charId: player.m_idPlayer, auth: player.m_bAuthority, text, ok: outcome.ok, ...(outcome.ok ? { reached: outcome.reached } : { reason: outcome.reason }) },
+      'CHAT received',
+    );
+    if (!outcome.ok) {
+      if (outcome.reason === 'command_unknown' || outcome.reason === 'command_no_auth') {
+        logger.debug(
+          { charId: player.m_idPlayer, reason: outcome.reason },
+          'CHAT command rejected — dropped',
+        );
+      }
     }
   }
 }

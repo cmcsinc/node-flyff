@@ -88,6 +88,8 @@ async function main(): Promise<void> {
     getPosHandler,
     scriptDlgHandler,
     revivalHandler,
+    playerSetDestObjHandler,
+    meleeAttackHandler,
     journal,
     journalReplayer,
   } = await compose();
@@ -149,6 +151,8 @@ async function main(): Promise<void> {
     getPosHandler,
     scriptDlgHandler,
     revivalHandler,
+    playerSetDestObjHandler,
+    meleeAttackHandler,
     logger,
   });
   server.listen(config.server.port, () => {

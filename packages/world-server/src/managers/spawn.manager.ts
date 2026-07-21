@@ -64,6 +64,9 @@ export class SpawnManager {
           hp: def.hp,
           scale: def.scale,
           outfit: toOutfit(def),
+          attackable: def.attackable,
+          guard: def.guard ?? false,
+          belligerence: def.belligerence ?? 0,
         }, npcSpawn.position, npcSpawn.angle, zone._id_numeric);
       }
 
@@ -82,6 +85,9 @@ export class SpawnManager {
             level: def.level,
             hp: def.hp,
             scale: def.scale,
+            attackable: def.attackable,
+            guard: def.guard ?? false,
+            belligerence: def.belligerence ?? 0,
           }, jitter(spawn.position, spawn.radius), 0, zone._id_numeric);
         }
       }

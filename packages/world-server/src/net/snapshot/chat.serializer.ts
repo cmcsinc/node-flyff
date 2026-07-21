@@ -1,41 +1,33 @@
 /**
- * S→C CHAT broadcast — `SNAPSHOTTYPE_CHATTEXT` (0x00bc) inside a SNAPSHOT frame.
+ * S→C vicinity chat — `SNAPSHOTTYPE_CHAT` (0x0001) inside a SNAPSHOT frame.
  *
- * Mirrors `CUserMng::AddChat` (`WORLDSERVER/User.cpp:2100`):
- *   ar << GETID(pUser) << SNAPSHOTTYPE_CHATTEXT;
- *   ar << (DWORD)pUser->GetJob() << pUser->GetName() << pUser->GetLevel() << sChat;
+ * Mirrors `CUserMng::AddChat` (`WORLDSERVER/User.cpp:2925`):
+ *   ar << GETID(pCtrl) << SNAPSHOTTYPE_CHAT;
+ *   ar.WriteString(szChat);
  *
  * Wire layout (after the outer SNAPSHOT/NULL_ID/count/objid/word preamble):
- *   jobId:DWORD  name:String  level:DWORD  text:String
+ *   text:String
  *
- * Sent to every player within `VISIBILITY_RADIUS` of the speaker.
+ * The speaker's name/level/job are NOT sent — the client resolves them from
+ * the objid it already has from ADD_OBJ. Sent to every player within
+ * `VISIBILITY_RADIUS` of the speaker.
  *
  * @module net/snapshot/chat.serializer
  */
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_CHAT_OUT } from './constants.js';
-
-export interface ChatFrame {
-  speakerName: string;
-  speakerJobId: number;
-  speakerLevel: number;
-  text: string;
-}
+import { NULL_ID, SNAPSHOTTYPE_CHAT } from './constants.js';
 
 export class ChatSerializer {
-  build(speakerObjid: number, frame: ChatFrame): Buffer {
+  build(speakerObjid: number, text: string): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);
     w.writeDword(NULL_ID);
     w.writeWord(1);
     w.writeDword(speakerObjid);
-    w.writeWord(SNAPSHOTTYPE_CHAT_OUT);
-    w.writeDword(frame.speakerJobId);
-    w.writeString(frame.speakerName);
-    w.writeDword(frame.speakerLevel);
-    w.writeString(frame.text);
+    w.writeWord(SNAPSHOTTYPE_CHAT);
+    w.writeString(text);
     return w.build();
   }
 }

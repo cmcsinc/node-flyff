@@ -29,6 +29,7 @@ import type { CPlayer } from '../entities/player.js';
 import {
   MoverBroadcastSerializer, type MovementFrame, type Movement2Frame,
 } from '../net/snapshot/moverBroadcast.serializer.js';
+import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 
 export interface MovementServiceDeps {
@@ -51,6 +52,7 @@ const ANTI_TELEPORT_SQ = 1_000_000;
 
 export class MovementService {
   private readonly serializer = new MoverBroadcastSerializer();
+  private readonly destObjSerializer = new DestObjSerializer();
   constructor(private readonly deps: MovementServiceDeps) {}
 
   /** Apply a PLAYERMOVED frame: anti-teleport, update pos, echo to peers. */
@@ -125,6 +127,21 @@ export class MovementService {
       player._dirty.add('m_fAngle');
     }
     return { ok: true };
+  }
+
+  /**
+   * Apply a PLAYERSETDESTOBJ frame (DPSrvr.cpp:2571 OnPlayerSetDestObj). Server
+   * records the destination obj id + stop range; peer clients run their own
+   * pathfinding to the object (NO position is sent). `__TRAFIC_1223` dedup: a
+   * repeat packet for the already-current destination drops without re-broadcast.
+   */
+  applySetDestObj(player: CPlayer, destObjid: number, fRange: number): MovementOutcome {
+    if (player.m_idDestObj === destObjid) {
+      return { ok: true, reached: 0 };
+    }
+    player.m_idDestObj = destObjid;
+    const packet = this.destObjSerializer.build(player.m_idPlayer, destObjid, fRange);
+    return this.broadcast(player, packet);
   }
 
   private broadcast(player: CPlayer, packet: Buffer): MovementOutcome {

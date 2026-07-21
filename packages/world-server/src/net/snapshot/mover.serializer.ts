@@ -23,6 +23,7 @@ import {
   MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
   MAX_HONOR_TITLE, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
 } from './constants.js';
+import { writeQuestStruct } from './quest.serializer.js';
 
 const NULL_ID = 0xffffffff;
 
@@ -85,7 +86,7 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(0);             // dwUseItemId (0 = none)
   w.writeDword(0);             // m_dwPKTime (__VER>=8)
   w.writeDword(0);             // m_nPKValue
-  w.writeDword(0);             // m_dwPKPropensity
+  w.writeDword(p.m_dwPKPropensity); // m_dwPKPropensity (IsChaotic when >0)
   w.writeDword(0);             // m_dwPKExp
   w.writeDword(0);             // m_nFame
   w.writeByte(0);              // m_nDuel
@@ -108,9 +109,13 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   for (let i = 0; i < MAX_JOB; i++) w.writeDword(0);         // dwJobLv ×32 (always 0)
   w.writeDword(NULL_ID);       // m_idMarkingWorld (gap — C++ writes numeric world ID, Mover.cpp:969)
   w.writeFloat(0); w.writeFloat(0); w.writeFloat(0);         // m_vMarkingPos
-  w.writeByte(0);              // m_nQuestSize (BYTE — Mover.h:714; 0 → no quest array)
-  w.writeByte(0);              // m_nCompleteQuestSize (BYTE — Mover.h:716; 0 → no array)
-  w.writeByte(0);              // m_nCheckedQuestSize (BYTE — Mover.h:719; __VER>=15)
+  // --- Per-player quest arrays (inline after the size bytes — ObjSerializeOpt.cpp:201-207) ---
+  w.writeByte(p.m_aQuest.length);                       // m_nQuestSize (BYTE)
+  for (const q of p.m_aQuest) writeQuestStruct(w, q);   // m_aQuest × size (12B each)
+  w.writeByte(p.m_aCompleteQuest.length);               // m_nCompleteQuestSize (BYTE)
+  for (const id of p.m_aCompleteQuest) w.writeWord(id); // m_aCompleteQuest × size (WORD each)
+  w.writeByte(p.m_aCheckedQuest.length);                // m_nCheckedQuestSize (BYTE)
+  for (const id of p.m_aCheckedQuest) w.writeWord(id);  // m_aCheckedQuest × size (WORD each)
   w.writeDword(NULL_ID);       // m_idMurderer
   w.writeWord(0);              // m_nRemainGP
   w.writeWord(0);              // padding (literal 0)

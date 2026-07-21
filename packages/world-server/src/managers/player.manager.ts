@@ -24,6 +24,20 @@ export class PlayerManager {
   }
 
   /**
+   * Case-insensitive lookup by character name. O(n) — used by chat commands
+   * (whisper/summon/teleport/out) that target a player by name. C++ resolves
+   * these via `CPlayerDataCenter::GetPlayerId(name)`; with one world process
+   * a linear scan of the live set is the equivalent.
+   */
+  getByName(name: string): CPlayer | undefined {
+    const lower = name.toLowerCase();
+    for (const p of this.players.values()) {
+      if (p.m_szName.toLowerCase() === lower) return p;
+    }
+    return undefined;
+  }
+
+  /**
    * Remove a player. Returns true if an entry was cleared.
    * The held socket reference is dropped with the player object.
    */
@@ -39,5 +53,29 @@ export class PlayerManager {
   /** Snapshot of all live players (zone broadcasts iterate this). */
   all(): CPlayer[] {
     return [...this.players.values()];
+  }
+
+  /**
+   * Write `buf` to a single player's socket. Services use this for targeted
+   * chat sends (whisper echo, teleport REPLACE) the same way they use
+   * `ZoneManager.broadcastAround` for vicinity fan-out — the manager owns the
+   * socket sink, services never import `net.Socket` (rule 02).
+   */
+  sendTo(player: CPlayer, buf: Buffer): void {
+    player.socket.write(buf);
+  }
+
+  /**
+   * Write `buf` to every live player regardless of zone. Use for server-wide
+   * chat (shout, `/sys` notice). C++ fans these via the cache server; in this
+   * single-process emulator a straight iteration is the equivalent.
+   */
+  broadcastAll(buf: Buffer): number {
+    let n = 0;
+    for (const p of this.players.values()) {
+      p.socket.write(buf);
+      n++;
+    }
+    return n;
   }
 }

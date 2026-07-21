@@ -29,6 +29,8 @@ import type { QueryGetPosHandler } from './handlers/queryGetPos.handler.js';
 import type { GetPosHandler } from './handlers/getPos.handler.js';
 import type { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
 import type { RevivalHandler } from './handlers/revival.handler.js';
+import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
+import type { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
 
 export interface WorldClientServerDeps {
   joinHandler: JoinHandler;
@@ -48,6 +50,8 @@ export interface WorldClientServerDeps {
   getPosHandler: GetPosHandler;
   scriptDlgHandler: ScriptDlgHandler;
   revivalHandler: RevivalHandler;
+  playerSetDestObjHandler: PlayerSetDestObjHandler;
+  meleeAttackHandler: MeleeAttackHandler;
   logger?: DispatcherLogger;
 }
 
@@ -75,5 +79,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.GETPOS, (s, r) => deps.getPosHandler.handleGetPos(s, r));
   dispatcher.register(PACKETTYPE.SCRIPTDLG, (s, r) => deps.scriptDlgHandler.handleScriptDlg(s, r));
   dispatcher.register(PACKETTYPE.REVIVAL, (s, r) => deps.revivalHandler.handleRevival(s, r));
+  dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r));
+  dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
   return { server, dispatcher };
 }

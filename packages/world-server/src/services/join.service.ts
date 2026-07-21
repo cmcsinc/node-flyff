@@ -15,9 +15,10 @@
  * @module services/join.service
  */
 
-import type { CharacterRepository } from '@flyff/database';
+import type { CharacterRepository, AccountRepository } from '@flyff/database';
 import { CPlayer } from '../entities/player.js';
 import type { PlayerSocket } from '../entities/player.js';
+import { AUTH } from '../constants/authority.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { ZoneManager } from '../managers/zone.manager.js';
 import type { ConsumedHandoff } from '../ipc/clusterListener.js';
@@ -29,6 +30,10 @@ export interface HandoffSource {
 
 export interface JoinServiceDeps {
   charRepo: Pick<CharacterRepository, 'findById'>;
+  /** Account lookup for the GM flag → `m_bAuthority`. Optional: defaults to GENERAL. */
+  accountRepo?: Pick<AccountRepository, 'findById'>;
+  /** Quest state hydration on JOIN. Optional: skips quest load if absent. */
+  questService?: { loadOnJoin(player: CPlayer): Promise<void> };
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   handoffSource: HandoffSource;
@@ -62,7 +67,17 @@ export class JoinService {
     if (!row) return { ok: false, reason: 'not_found' };
     if (row.world_id !== handoff.worldId) return { ok: false, reason: 'world_mismatch' };
 
-    const player = CPlayer.fromRow(row, socket);
+    // Resolve GM rank from the account row. C++ populates `m_dwAuthorization`
+    // from `prj.CheckStaff(name)` (DPDatabaseClient.cpp:490); we collapse the
+    // boolean `gm` flag to GENERAL vs ADMINISTRATOR until a tiered column ships.
+    let authority: number = AUTH.GENERAL;
+    if (this.deps.accountRepo) {
+      const account = await this.deps.accountRepo.findById(row.account_id);
+      if (account?.gm) authority = AUTH.ADMINISTRATOR;
+    }
+
+    const player = CPlayer.fromRow(row, socket, authority);
+    if (this.deps.questService) await this.deps.questService.loadOnJoin(player);
     this.deps.playerManager.add(player);
     this.deps.zoneManager.place(player);
     return { ok: true, player };
