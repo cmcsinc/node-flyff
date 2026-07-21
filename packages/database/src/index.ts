@@ -27,6 +27,14 @@ export {
   type InventoryCreateData,
 } from './repositories/inventory.repo.js';
 
+export {
+  QuestRepository,
+  type CharacterQuestRow,
+  type CompletedQuestRow,
+  type PlayerQuestState,
+  type ActiveQuestPayload,
+} from './repositories/quest.repo.js';
+
 // WAL journal — embedded SQLite crash-recovery log
 export {
   Journal,
