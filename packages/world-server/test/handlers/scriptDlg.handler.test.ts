@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
+import { framePacket } from '@flyff/core/net/PacketBuffer.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { ScriptDlgHandler } from '../../src/handlers/scriptDlg.handler.js';
 import type { ScriptDlgService, ScriptDlgResult } from '../../src/services/scriptDlg.service.js';
@@ -53,7 +54,8 @@ describe('ScriptDlgHandler', () => {
     const sock = mockSocket();
     await new ScriptDlgHandler(fakePm(player), fakeSvc({ ok: true, frames: [a, b] }))
       .handleScriptDlg(sock as never, new PacketReader(payload(1, 'k', 0, 0, 0, 0)));
-    assert.deepEqual(sock._written, [a, b]);
+    // sendPacket wraps each raw payload in the 0x5E wire frame before write.
+    assert.deepEqual(sock._written, [framePacket(a), framePacket(b)]);
   });
 
   it('destroys when not IN_WORLD', async () => {

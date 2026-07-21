@@ -10,6 +10,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 12000000
     job_req:
       - acrobat
@@ -22,6 +25,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 12000000
     job_req:
       - acrobat
@@ -34,6 +40,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 12000000
     job_req:
       - acrobat
@@ -46,6 +55,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 4500000
     job_req:
       - acrobat
@@ -58,6 +70,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 4500000
     job_req:
       - acrobat
@@ -70,6 +85,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 4500000
     job_req:
       - acrobat
@@ -82,6 +100,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 4500000
     job_req:
       - acrobat
@@ -94,6 +115,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 4500000
     job_req:
       - acrobat
@@ -106,6 +130,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 50000
     job_req:
       - vagrant
@@ -118,6 +145,9 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
+    stack_size: 99
+    item_kind2: IK2_MAGIC
+    item_kind3: IK3_MAGICTRICK
     durability: 50000
     job_req:
       - vagrant

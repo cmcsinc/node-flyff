@@ -10,7 +10,7 @@
  */
 
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
+import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { Validate } from '@flyff/core/utils/validate.js';
 import { PacketError } from '@flyff/core/errors.js';
@@ -49,6 +49,6 @@ export class QuestCheckHandler {
     }
 
     const frame = await this.questService.setChecked(player, questId, bCheck !== 0);
-    socket.write(frame);
+    sendPacket(socket, frame);
   }
 }

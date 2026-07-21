@@ -8,7 +8,7 @@ import { CMover } from '../../src/entities/mover.js';
 function makeResources(): ResourceIndex {
   const movers = new Map<number, any>();
   movers.set(1006, {
-    id: 1006, name: 'Homeit', name_id: 'NPC_HOMEIT', model: 'mdl_npc_homeit.o3d',
+    id: 1006, key: 'MI_MADA_HOMEIT', name: 'Homeit', name_id: 'NPC_HOMEIT', model: 'mdl_npc_homeit.o3d',
     dwObjIndex: 12, scale: 1.0, type: 'npc', level: 1, hp: 1000, mp: 1000, fp: 1000,
     attack: 0, defense: 0, attack_rate: 0, dodge_rate: 0, speed: 0, attack_speed: 0,
     flyable: false, boss: false, giant: false, raid: false, attackable: false, guard: false,
@@ -51,6 +51,30 @@ function makeResources(): ResourceIndex {
     movers: { movers, byName: new Map(), byType: new Map() },
     skills: { skills: new Map(), byName: new Map(), byJob: new Map() },
     zones,
+    characterInc: {
+      byKey: new Map([['MaDa_Homeit', {
+        key: 'MaDa_Homeit',
+        menus: [0, 2],
+        hasDialog: true,
+        outfit: {
+          characterKey: 'MaDa_Homeit', hairMesh: 1, hairColor: 0xff0000ff, headMesh: 3,
+          equip: [{ parts: 0, itemId: 1029 }],
+        },
+        dialogFile: 'MaDa_Homeit.txt',
+        vendorSlotCount: 0,
+      }]]),
+      byStem: new Map([['mada_homeit', {
+        key: 'MaDa_Homeit',
+        menus: [0, 2],
+        hasDialog: true,
+        outfit: {
+          characterKey: 'MaDa_Homeit', hairMesh: 1, hairColor: 0xff0000ff, headMesh: 3,
+          equip: [{ parts: 0, itemId: 1029 }],
+        },
+        dialogFile: 'MaDa_Homeit.txt',
+        vendorSlotCount: 0,
+      }]]),
+    },
   } as unknown as ResourceIndex;
 }
 
@@ -64,6 +88,22 @@ describe('SpawnManager', () => {
     const flaris = mgr.inZone(1);
     assert.equal(flaris.length, 3);
     assert.ok(flaris.every((m) => m.m_nZoneId === 1));
+  });
+
+  it('skips monster spawns inside the town exclusion radius around revival', () => {
+    const resources = makeResources();
+    const flaris = resources.zones.zones.get('flaris') as never as {
+      spawns: Array<{ id: number; mover_id: number; position: { x: number; y: number; z: number }; radius: number; count: number; delay: number }>;
+    };
+    // Fixture revival sits at (0,0,0). Add a spawn 500u away — inside the
+    // 1000u TOWN_EXCLUSION_RADIUS — with count=3. The original guard spawn at
+    // (6900,3300) is ~7651u away, outside the radius, so it still materializes.
+    flaris.spawns.push({ id: 99, mover_id: 1, position: { x: 500, y: 0, z: 0 }, radius: 5, count: 3, delay: 5000 });
+    const mgr = new SpawnManager({ resources });
+    mgr.bootstrap();
+
+    const guards = mgr.inZone(1).filter((m) => m.m_dwIndex === 20);
+    assert.equal(guards.length, 2, 'far spawn materializes (count=2); town spawn (count=3) skipped');
   });
 
   it('assigns ascending objids from 0x40000000, disjoint from player char ids', () => {
@@ -82,7 +122,18 @@ describe('SpawnManager', () => {
     assert.ok(homeit, 'equipped NPC spawned');
     assert.equal(homeit!.outfit?.characterKey, 'MaDa_Homeit');
     assert.equal(homeit!.outfit?.hairColor, 0xff0000ff);
-    assert.deepEqual(homeit!.outfit?.equip, [{ parts: 2, itemId: 1029 }]);
+    // character.inc outfit (parts=0) overrides the mover-yml fixture (parts=2)
+    // — canonical source wins per `toOutfit(def, charBlock)`.
+    assert.deepEqual(homeit!.outfit?.equip, [{ parts: 0, itemId: 1029 }]);
+  });
+
+  it('propagates m_abMoverMenu from the character.inc block (MMI_DIALOG etc.)', () => {
+    const mgr = new SpawnManager({ resources: makeResources() });
+    mgr.bootstrap();
+
+    const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12);
+    assert.ok(homeit);
+    assert.deepEqual([...homeit!.m_abMoverMenu], [0, 2], 'MMI_DIALOG + MMI_TRADE propagated');
   });
 
   it('monsters spawn naked (no outfit)', () => {

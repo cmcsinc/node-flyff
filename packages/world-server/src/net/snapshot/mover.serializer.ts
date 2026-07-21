@@ -21,22 +21,43 @@ import type { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import type { CPlayer } from '../../entities/player.js';
 import {
   MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
-  MAX_HONOR_TITLE, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
+  MAX_HONOR_TITLE, MAX_INVENTORY, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
 } from './constants.js';
 import { writeQuestStruct } from './quest.serializer.js';
+import { writeCItemElemBody } from './itemElemBody.serializer.js';
+import type { InventorySlot } from '../../entities/player.js';
 
 const NULL_ID = 0xffffffff;
 
 /**
- * Empty CItemContainer<CItemElem> — `slots`-wide. `slots` MUST match the
- * client's `m_dwItemMax`: inventory = `INVENTORY_SLOTS` (73), bank tab =
- * `BANK_SLOTS` (42). See `constants.ts` for why these differ from the bare
- * `MAX_INVENTORY` / `MAX_BANK` defines.
+ * CItemContainer<CItemElem> — `slots`-wide, populated or empty. `slots` MUST
+ * match the client's `m_dwItemMax`: inventory = `INVENTORY_SLOTS` (73), bank
+ * tab = `BANK_SLOTS` (42). Format from `_Common/Item.h:892`
+ * `CItemContainer<T>::Serialize` (storing):
+ *   `[m_apIndex: DWORD×slots][BYTE chSize][per occupied: BYTE slot + CItemElem
+ *    body][adwObjIndex: DWORD×slots]`. Inv elem objid = slot index (stable,
+ *   <256, fits BYTE on S→C). All-null `contents` reproduces the empty container
+ *   the JOIN serializer previously wrote.
  */
-export function writeEmptyItemContainer(w: PacketWriter, slots: number): void {
-  for (let i = 0; i < slots; i++) w.writeDword(NULL_ID); // m_apIndex[]
-  w.writeByte(0);                                        // chSize
-  for (let i = 0; i < slots; i++) w.writeDword(NULL_ID); // adwObjIndex[]
+export function writeItemContainer(
+  w: PacketWriter,
+  slots: number,
+  contents: readonly (InventorySlot | null)[],
+): void {
+  const occupied: number[] = [];
+  for (let i = 0; i < slots; i++) {
+    const s = contents[i] ?? null;
+    w.writeDword(s ? i : NULL_ID);            // m_apIndex[i]
+    if (s) occupied.push(i);
+  }
+  w.writeByte(occupied.length & 0xff);         // chSize
+  for (const i of occupied) {
+    w.writeByte(i & 0xff);                     // slot index
+    writeCItemElemBody(w, i, contents[i]!);
+  }
+  for (let i = 0; i < slots; i++) {            // adwObjIndex
+    w.writeDword(contents[i] ? i : NULL_ID);
+  }
 }
 
 /** Empty CPocketController — 3 absent pocket tabs. */
@@ -86,7 +107,7 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   // makes the client silently drop every GM command (/sys /te /su /lv) locally —
   // no PACKETTYPE_CHAT ever reaches the server. Must mirror the server-side rank.
   w.writeByte(p.m_bAuthority);
-  w.writeDword(0);             // m_dwMode
+  w.writeDword(p.m_dwMode);    // m_dwMode (live — late-arriving peers see current GM mode)
   w.writeDword(0);             // m_dwStateMode
   w.writeDword(0);             // dwUseItemId (0 = none)
   w.writeDword(0);             // m_dwPKTime (__VER>=8)
@@ -96,16 +117,19 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(0);             // m_nFame
   w.writeByte(0);              // m_nDuel
   w.writeDword(0);             // m_nHonor (__VER>=13)
-  for (let i = 0; i < MAX_HUMAN_PARTS; i++) w.writeDword(0); // equipInfo[].nOption ×31
+  for (let i = 0; i < MAX_HUMAN_PARTS; i++) { // equipInfo[].nOption ×31 (refine<<4)
+    const eq = p.m_Inventory[MAX_INVENTORY + i];
+    w.writeDword(eq ? (eq.refine ?? 0) << 4 : 0);
+  }
   w.writeDword(0);             // m_nGuildCombatState
   for (let j = 0; j < SM_MAX; j++) w.writeDword(0);          // m_dwSMTime ×26
 
   // --- METHOD_NONE branch ---
   w.writeWord(p.m_nMp);        // m_nManaPoint
-  w.writeWord(0);              // m_nFatiguePoint
+  w.writeWord(p.m_nFp);        // m_nFatiguePoint
   w.writeDword(0);             // m_nTutorialState (__VER>=12)
   w.writeDword(0);             // m_nFxp
-  w.writeDword(0);             // dwGold
+  w.writeDword(p.m_nGold);     // dwGold
   w.writeQword(0);             // m_nExp1 (EXPINTEGER __int64, 8 bytes)
   w.writeDword(0);             // m_nSkillLevel
   w.writeDword(0);             // m_nSkillPoint
@@ -124,12 +148,15 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(NULL_ID);       // m_idMurderer
   w.writeWord(0);              // m_nRemainGP
   w.writeWord(0);              // padding (literal 0)
-  for (let i = 0; i < MAX_HUMAN_PARTS; i++) w.writeDword(0); // equipInfo[].dwId ×31
+  for (let i = 0; i < MAX_HUMAN_PARTS; i++) { // equipInfo[].dwId ×31 (propItem id)
+    const eq = p.m_Inventory[MAX_INVENTORY + i];
+    w.writeDword(eq ? eq.itemId : 0);
+  }
   for (let i = 0; i < MAX_SKILL_JOB * SKILL_SIZE; i++) w.writeByte(0); // m_aJobSkill raw
   w.writeByte(0);              // m_nCheerPoint
   w.writeDword(0);             // m_dwTickCheer - GetTickCount()
   w.writeByte(0);              // m_nSlot
-  for (let k = 0; k < 3; k++) w.writeDword(0);               // m_dwGoldBank ×3
+  for (let k = 0; k < 3; k++) w.writeDword(p.m_BankGold[k] ?? 0); // m_dwGoldBank ×3
   for (let k = 0; k < 3; k++) w.writeDword(0);               // m_idPlayerBank ×3
   w.writeDword(0);             // m_nPlusMaxHitPoint (LONG)
   w.writeByte(0);              // m_nAttackResistLeft (BYTE — Mover.h:618)
@@ -139,8 +166,8 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(0);             // m_nAngelLevel
 
   // --- containers ---
-  writeEmptyItemContainer(w, INVENTORY_SLOTS);              // m_Inventory (73 = MAX_INVENTORY + MAX_HUMAN_PARTS)
-  for (let k = 0; k < MAX_BANK_TABS; k++) writeEmptyItemContainer(w, BANK_SLOTS); // m_Bank ×3 (42 each)
+  writeItemContainer(w, INVENTORY_SLOTS, p.m_Inventory);              // m_Inventory (73 = MAX_INVENTORY + MAX_HUMAN_PARTS)
+  for (let k = 0; k < MAX_BANK_TABS; k++) writeItemContainer(w, BANK_SLOTS, p.m_Bank[k] ?? []); // m_Bank ×3 (42 each)
   w.writeDword(0);             // GetPetId (__VER>=9)
   writeEmptyPocketController(w);                       // m_Pocket (__VER>=11)
   w.writeDword(0);             // m_dwMute (#ifdef __JEFF_9_20 — defined in VersionCommon.h:112)

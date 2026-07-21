@@ -21,6 +21,7 @@ import { createDb, AccountRepository, CharacterRepository } from '@flyff/databas
 import { up as migrationUp001 } from '@flyff/database/migrations/001_initial';
 import { up as migrationUp002 } from '@flyff/database/migrations/002_quests';
 import { up as migrationUp003 } from '@flyff/database/migrations/003_character_gold';
+import { up as migrationUp004 } from '@flyff/database/migrations/004_bank_tab';
 import { hashPassword } from '@flyff/core/utils/password.js';
 
 /**
@@ -36,6 +37,7 @@ const MIGRATIONS = [
   { marker: 'accounts', up: migrationUp001 },
   { marker: 'character_quests', up: migrationUp002 },
   { column: ['characters', 'gold'], up: migrationUp003 },
+  { column: ['bank', 'tab'], up: migrationUp004 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';

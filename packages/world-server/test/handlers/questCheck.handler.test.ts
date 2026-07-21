@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
+import { framePacket } from '@flyff/core/net/PacketBuffer.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { QuestCheckHandler } from '../../src/handlers/questCheck.handler.js';
 import type { QuestService } from '../../src/services/quest.service.js';
@@ -36,7 +37,7 @@ describe('QuestCheckHandler', () => {
     const sock = mockSocket();
     await new QuestCheckHandler(fakePm(player), svc).handleQuestCheck(sock as never, new PacketReader(payload(7, 1)));
     assert.deepEqual(got, { id: 7, check: true });
-    assert.deepEqual(sock._written, [frame]);
+    assert.deepEqual(sock._written, [framePacket(frame)]);
   });
 
   it('passes bCheck=0 as check=false', async () => {

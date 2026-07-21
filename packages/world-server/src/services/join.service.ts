@@ -15,7 +15,7 @@
  * @module services/join.service
  */
 
-import type { CharacterRepository, AccountRepository, InventoryRepository } from '@flyff/database';
+import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository } from '@flyff/database';
 import { createLogger } from '@flyff/core/logger.js';
 import { CPlayer } from '../entities/player.js';
 import type { PlayerSocket } from '../entities/player.js';
@@ -40,6 +40,8 @@ export interface JoinServiceDeps {
   questService?: { loadOnJoin(player: CPlayer): Promise<void> };
   /** Inventory hydration on JOIN. Optional: empty bag if absent. */
   inventoryRepo?: Pick<InventoryRepository, 'findByCharacterId'>;
+  /** Bank hydration on JOIN. Optional: empty bank if absent. */
+  bankRepo?: Pick<BankRepository, 'findByAccountId' | 'getGold'>;
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   handoffSource: HandoffSource;
@@ -91,6 +93,7 @@ export class JoinService {
     );
     if (this.deps.questService) await this.deps.questService.loadOnJoin(player);
     await this.loadInventory(player);
+    await this.loadBank(player);
     this.deps.playerManager.add(player);
     this.deps.zoneManager.place(player);
     return { ok: true, player };
@@ -108,6 +111,24 @@ export class JoinService {
       if (r.slot < 0 || r.slot >= player.m_Inventory.length) continue;
       player.m_Inventory[r.slot] = { itemId: r.item_id, count: r.quantity };
     }
+  }
+
+  /**
+   * Hydrate `m_Bank` (3 tabs) + `m_BankGold` from the DB. Bank is account-shared
+   * (Flyff lore) — all characters on the account see the same tabs. Gold lives
+   * in tab 0 of `m_BankGold` (single account column); tabs 1/2 stay 0 until
+   * per-tab gold separation is needed.
+   */
+  private async loadBank(player: CPlayer): Promise<void> {
+    if (!this.deps.bankRepo) return;
+    const rows = await this.deps.bankRepo.findByAccountId(player.m_accountId);
+    for (const r of rows) {
+      if (r.tab < 0 || r.tab >= player.m_Bank.length) continue;
+      const tab = player.m_Bank[r.tab]!;
+      if (r.slot < 0 || r.slot >= tab.length) continue;
+      tab[r.slot] = { itemId: r.item_id, count: r.quantity, flags: r.flags, refine: r.refine, durability: r.durability };
+    }
+    player.m_BankGold[0] = await this.deps.bankRepo.getGold(player.m_accountId);
   }
 
   /** Disconnect cleanup — drop from both managers (rule 05 — explicit removal). */

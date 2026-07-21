@@ -77,8 +77,17 @@ export const ItemDefinitionSchema = z.object({
   model: z.string().endsWith('.o3d').optional(),
 
   // Stats
-  /** Attack power (weapons only) */
+  /** Attack power (weapons only) — average of min/max for back-compat */
   attack: z.number().int().min(0).optional(),
+
+  /** Raw min attack (propItem dwAbilityMin) — weapons/armor ability floor */
+  attack_min: z.number().int().min(0).optional(),
+
+  /** Raw max attack (propItem dwAbilityMax) — weapons only */
+  attack_max: z.number().int().min(0).optional(),
+
+  /** Raw attack speed (propItem dwAttackSpeed) — feeds combat atkSpeed table */
+  attack_speed: z.number().int().min(0).optional(),
 
   /** Defense rating (armor only) */
   defense: z.number().int().min(0).optional(),
@@ -116,6 +125,21 @@ export const ItemDefinitionSchema = z.object({
 
   /** Weight in inventory */
   weight: z.number().int().min(0).default(1),
+
+  /** Max stack per slot (propItem dwPackMax) — 1 = non-stacking. */
+  stack_size: z.number().int().min(1).default(1),
+
+  /** Equip slot / parts index (propItem dwParts, PARTS_*) — undefined = not equippable. */
+  equip_slot: z.number().int().min(0).optional(),
+
+  /** Weapon type (propItem dwWeaponType, WT_*) — swords/axes/wands/bows/etc. */
+  weapon_type: z.number().int().min(0).optional(),
+
+  /** Raw item kind 2 (propItem dwItemKind2, IK2_*) — potion/food/buff/skill/warp/text routing. */
+  item_kind2: z.string().optional(),
+
+  /** Raw item kind 3 (propItem dwItemKind3, IK3_*) — fine category. */
+  item_kind3: z.string().optional(),
 
   // Requirements
   /** Required level to equip */

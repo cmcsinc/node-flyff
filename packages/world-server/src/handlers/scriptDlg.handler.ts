@@ -10,6 +10,7 @@
  */
 
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
+import { sendPacket } from '@flyff/core/net/dispatcher.js';
 import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { Validate } from '@flyff/core/utils/validate.js';
@@ -62,6 +63,8 @@ export class ScriptDlgHandler {
         logger.debug({ charId: player.m_idPlayer }, 'SCRIPTDLG rate-limited');
       return;
     }
-    for (const buf of outcome.frames) socket.write(buf);
+    // Frames are raw payloads (PacketWriter.build); sendPacket adds the 0x5E
+    // wire frame. Raw socket.write here = unframed bytes the client drops.
+    for (const buf of outcome.frames) sendPacket(socket, buf);
   }
 }

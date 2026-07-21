@@ -28,6 +28,12 @@ export {
 } from './repositories/inventory.repo.js';
 
 export {
+  BankRepository,
+  type BankRow,
+  type BankCreateData,
+} from './repositories/bank.repo.js';
+
+export {
   QuestRepository,
   type CharacterQuestRow,
   type CompletedQuestRow,

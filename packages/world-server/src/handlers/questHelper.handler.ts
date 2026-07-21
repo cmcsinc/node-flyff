@@ -11,7 +11,7 @@
  */
 
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
+import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { Validate } from '@flyff/core/utils/validate.js';
 import { PacketError } from '@flyff/core/errors.js';
@@ -56,6 +56,6 @@ export class QuestHelperHandler {
       logger.debug({ charId: player.m_idPlayer, charKey }, 'QUESTHELPER NPC not spawned');
       return;
     }
-    socket.write(buildNpcPos(player.m_idPlayer, npc.m_vPos));
+    sendPacket(socket, buildNpcPos(player.m_idPlayer, npc.m_vPos));
   }
 }

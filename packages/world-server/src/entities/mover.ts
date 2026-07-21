@@ -60,6 +60,8 @@ export interface MoverSpawnSource {
   readonly scale?: number | undefined;
   /** Human-NPC outfit (character.inc SetFigure/SetEquip). Omit for monsters. */
   readonly outfit?: MoverOutfit | undefined;
+  /** character.inc AddMenu ids (MMI_*). Empty for monsters (no block). */
+  readonly menus?: readonly number[] | undefined;
   /** C++ `bKillable` + peaceful flag collapsed — may be targeted for attack. */
   readonly attackable?: boolean | undefined;
   /** C++ `RANK_GUARD` — town guard; PK-gated attackability. */
@@ -152,6 +154,8 @@ export class CMover {
   m_bGuard: boolean;
   /** Human-NPC outfit (character.inc). Undefined for monsters → naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
+  /** character.inc AddMenu ids (MMI_*). Carries dialog/trade/bank capability. */
+  readonly menus?: readonly number[] | undefined;
   /** NPC attack min/max (propMover `dwAtkMin/Max`). */
   m_nAtkMin: number;
   m_nAtkMax: number;
@@ -209,6 +213,13 @@ export class CMover {
    * v1: single-attacker (no party grouping). ponytail: full HIT_INFO + party.
    */
   readonly m_idEnemies = new Map<number, number>();
+  /**
+   * character.inc `m_abMoverMenu` (Project.cpp:3024) — MMI_* ids enabled via
+   * `AddMenu`/`AddMenuLang`. `MMI_DIALOG = 0` presence gates the right-click
+   * "Dialog" option → SCRIPTDLG. Empty for monsters (no character.inc block).
+   * Source: `defineNeuz.h:92-314`.
+   */
+  readonly m_abMoverMenu: readonly number[] = [];
 
   private constructor(
     id: number,
@@ -237,6 +248,7 @@ export class CMover {
     this.m_bAttackable = src.attackable ?? true;
     this.m_bGuard = src.guard ?? false;
     this.outfit = src.outfit;
+    this.m_abMoverMenu = src.menus ?? [];
     this.m_nAtkMin = src.atkMin ?? 0;
     this.m_nAtkMax = src.atkMax ?? src.atkMin ?? 0;
     this.m_nArmor = src.armor ?? 0;

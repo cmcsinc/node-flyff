@@ -53,6 +53,14 @@ import { VISIBILITY_RADIUS } from './net/snapshot/constants.js';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
 import { ActMsgHandler } from './handlers/actMsg.handler.js';
+import { MoveItemHandler } from './handlers/moveItem.handler.js';
+import { DropItemHandler } from './handlers/dropItem.handler.js';
+import { DropGoldHandler } from './handlers/dropGold.handler.js';
+import { DoEquipHandler } from './handlers/doEquip.handler.js';
+import { EquipService } from './services/equip.service.js';
+import { ConsumableService } from './services/consumable.service.js';
+import { UseItemService } from './services/useItem.service.js';
+import { DoUseItemHandler } from './handlers/doUseItem.handler.js';
 import { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import { QuestHelperHandler } from './handlers/questHelper.handler.js';
@@ -113,6 +121,11 @@ export interface WorldComposeResult {
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
   actMsgHandler: ActMsgHandler;
+  moveItemHandler: MoveItemHandler;
+  dropItemHandler: DropItemHandler;
+  dropGoldHandler: DropGoldHandler;
+  doEquipHandler: DoEquipHandler;
+  doUseItemHandler: DoUseItemHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -293,7 +306,10 @@ export async function compose(): Promise<WorldComposeResult> {
   // Phase 6 — remaining v15 C→S handlers (chat, motion, target, movement
   // variants, query/getpos, script dialog, revival). See PROGRESS.md for
   // the audit that scoped these.
-  const inventoryService = new InventoryService({ inventoryRepo, charRepo, journal });
+  const inventoryService = new InventoryService({
+    inventoryRepo, charRepo, journal,
+    getStackSize: (id: number) => resources.items.items.get(id)?.stack_size ?? 1,
+  });
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
     inventoryService, charRepo,
@@ -323,12 +339,33 @@ export async function compose(): Promise<WorldComposeResult> {
   const dropService = new DropService({ resources, itemManager });
   const combatService = new CombatService({
     spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,
+    getItem: (id: number) => resources.items.items.get(id),
   });
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
   // Phase E — ground-item pickup (PACKETTYPE_ACTMSG / OBJMSG_PICKUP).
   const actMsgHandler = new ActMsgHandler({ playerManager, itemManager, inventoryService });
+
+  // Inventory ops — move (swap) / drop item / drop gold.
+  const moveItemHandler = new MoveItemHandler({ playerManager, inventoryService });
+  const dropItemHandler = new DropItemHandler({ playerManager, itemManager, inventoryService });
+  const dropGoldHandler = new DropGoldHandler({ playerManager, itemManager, inventoryService });
+
+  // Equipment — equip/unequip + stat fold into combat.
+  const equipService = new EquipService({
+    inventoryRepo, journal,
+    getItem: (id: number) => resources.items.items.get(id),
+  });
+  const doEquipHandler = new DoEquipHandler({ playerManager, zoneManager, equipService });
+
+  // Use-item — DOUSEITEM router (equip / potion+food / buff-skill-warp-text).
+  const consumableService = new ConsumableService(inventoryService);
+  const useItemService = new UseItemService({
+    equipService, consumableService, inventoryService,
+    getItem: (id: number) => resources.items.items.get(id),
+  });
+  const doUseItemHandler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
 
   // Phase 4 — C→S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
   const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
@@ -389,6 +426,11 @@ export async function compose(): Promise<WorldComposeResult> {
     playerSetDestObjHandler,
     meleeAttackHandler,
     actMsgHandler,
+    moveItemHandler,
+    dropItemHandler,
+    dropGoldHandler,
+    doEquipHandler,
+    doUseItemHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,

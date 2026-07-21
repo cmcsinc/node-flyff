@@ -22,11 +22,12 @@ server-side edits don't touch the client's files.
 | `propSkill.txt` + `propSkill.txt.txt` + `defineSkill.h` | UTF-16LE | `data/skills/<job>.yml` |
 | `WorldDialog.txt` | UTF-8 | `data/dialogues/_strings.yml` |
 | `character.inc` | UTF-16LE | `data/dialogues/_npc-map.yml` (block key → `szNpc` prefix) |
+| `character.inc` + `defineItem.h` + `defineNeuz.h` | UTF-16LE | loaded directly by `loaders/characterInc.loader.ts` (outfit + menus + dialogFile) |
 | `NpcScript.cpp` | UTF-8 | `data/dialogues/<prefix>.yml` per NPC (2845 states / 271 files) |
 
-Neighbor files (`propMotion.txt`, `propCtrl.txt`, `character.inc`, `mdlDyna.inc`,
+Neighbor files (`propMotion.txt`, `propCtrl.txt`, `mdlDyna.inc`,
 `propJob.inc`, `World.inc`, remaining `define*.h`) are staged for future
-converters (NPC outfits, control objects, jobs, zones) — not yet wired.
+converters (control objects, jobs, zones) — not yet wired.
 
 ## Gaps (TODO)
 

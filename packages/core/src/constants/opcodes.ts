@@ -21,6 +21,7 @@ export const PACKETTYPE = Object.freeze({
   PRE_JOIN:             0x0000ff05,
 
   CHAT:                 0x00ff0000,
+  ACTMSG:               0x00ff0001, // MsgHdr.h:112 — OnActMsg: DWORD dwMsg | int nParam1 | int nParam2 (OBJMSG_*; pickup=11)
   ADDOBJ:               0x00ff0002,
   REMOVEOBJ:            0x00ff0003,
   CONTROL:              0x00ff0004,
@@ -52,6 +53,16 @@ export const PACKETTYPE = Object.freeze({
   DEFINEDTEXT:          0x00ff00ec,
   SCRIPTDLG:            0x00ff00b0,
   BUYITEM:              0x00ff00b3,
+  // v15 bank window — `WORLDSERVER/DPSrvr.cpp:152-167`. OPENBANKWND dwId=NULL_ID
+  // → NPC bank; PUT/GET ITEMBACK nSlot=bank tab(0..2), nId=inv slot; PUT/GET
+  // GOLDBACK nSlot=tab, dwGold=amount. MOVEBANKITEM (0xffffff46) is an empty C++
+  // stub — not registered.
+  OPENBANKWND:          0xffffff40,
+  CLOSEBANKWND:         0xffffff41,
+  PUTITEMBACK:          0xffffff42,
+  PUTGOLDBACK:          0xffffff43,
+  GETITEMBACK:          0xffffff44,
+  GETGOLDBACK:          0xffffff45,
   // v15 client → world quest handlers (`WORLDSERVER/DPSrvr.cpp`, msghdr.h)
   REMOVEQUEST:          0x00ff0026, // OnRemoveQuest — DWORD dwQuestCancelID
   QUESTHELPER_REQNPCPOS: 0x70005000, // OnReqQuestNPCPos — String szCharKey
@@ -123,6 +134,13 @@ export const SNAPSHOTTYPE = Object.freeze({
   SETFAME:        0x0040,
   SETSTATE:       0x006a,
   SETSCALE:       0x0039,
+  // v15 bank S→C sub-types — `_Network/MsgHdr.h:956-964` (`CUser::AddPutItemBank`
+  // etc.). Bodies confirmed against `WORLDSERVER/User.cpp` at implement time.
+  PUTITEMBANK:    0x0050,
+  GETITEMBANK:    0x0051,
+  PUTGOLDBANK:    0x0052,
+  UPDATE_BANKITEM: 0x0054,
+  BANKWINDOW:     0x0056,
 } as const);
 
 export type SnapshotType = typeof SNAPSHOTTYPE[keyof typeof SNAPSHOTTYPE];
