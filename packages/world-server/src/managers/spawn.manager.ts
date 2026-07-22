@@ -94,7 +94,15 @@ export class SpawnManager {
           logger.warn({ moverId: npcSpawn.mover_id, zone: zone._id }, 'NPC placement resolves to monster-type mover -- skipping');
           continue;
         }
-        const charBlock = blockForMover(this.resources.characterInc, def.key);
+        // Resolve the character.inc block by the placement's character_key when
+        // present -- multiple NPCs can share one mover model (e.g. Boboku /
+        // Boboko / Bobochan all MI 211) yet have distinct shop stock, dialog,
+        // and menus. C++ CMover::GetCharacter looks up by m_szCharacterKey, not
+        // by model. Fall back to the mover MI key for placements the .dyo did
+        // not tag with a character_key.
+        const charBlock = (npcSpawn.character_key
+          && this.resources.characterInc.byKey.get(npcSpawn.character_key))
+          || blockForMover(this.resources.characterInc, def.key);
         this.materialize({
           src: {
             modelIndex: def.dwObjIndex,

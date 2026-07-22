@@ -1,5 +1,5 @@
 # worlds/zones/flaris.yml
-# Flaris (Zone 1) — GENERATED from WdMadrigal.dyo + .rgn by scripts/extractFlaris.ts.
+# Flaris (Zone 1) -- GENERATED from WdMadrigal.dyo + .rgn by scripts/extractFlaris.ts.
 # Edit placement via the extractor (or raw/ world files), not by hand.
 _version: "1.0"
 _id: flaris
@@ -7784,6 +7784,7 @@ spawns:
 npcs:
   - id: 1
     mover_id: 220
+    character_key: MaFl_DrEstern
     position:
       x: 7940.799
       y: 159.076
@@ -7792,6 +7793,7 @@ npcs:
     functions: []
   - id: 2
     mover_id: 212
+    character_key: MaFl_Juria
     position:
       x: 6958.434
       y: 100
@@ -7800,6 +7802,7 @@ npcs:
     functions: []
   - id: 3
     mover_id: 213
+    character_key: MaFl_Lui
     position:
       x: 6975.657
       y: 100
@@ -7808,6 +7811,7 @@ npcs:
     functions: []
   - id: 4
     mover_id: 216
+    character_key: MaFl_Dior
     position:
       x: 6957.963
       y: 100
@@ -7816,6 +7820,7 @@ npcs:
     functions: []
   - id: 5
     mover_id: 212
+    character_key: MaFl_Is
     position:
       x: 6960.071
       y: 100
@@ -7824,6 +7829,7 @@ npcs:
     functions: []
   - id: 6
     mover_id: 212
+    character_key: MaFl_Ismeralda
     position:
       x: 7042.263
       y: 99.494
@@ -7832,6 +7838,7 @@ npcs:
     functions: []
   - id: 7
     mover_id: 212
+    character_key: MaFl_Ispim
     position:
       x: 7160.067
       y: 100
@@ -7840,6 +7847,7 @@ npcs:
     functions: []
   - id: 8
     mover_id: 212
+    character_key: MaFl_Isruel
     position:
       x: 6937.835
       y: 100
@@ -7848,6 +7856,7 @@ npcs:
     functions: []
   - id: 9
     mover_id: 211
+    character_key: MaFl_Boboku
     position:
       x: 6926.101
       y: 100
@@ -7856,6 +7865,7 @@ npcs:
     functions: []
   - id: 10
     mover_id: 211
+    character_key: MaFl_Boboko
     position:
       x: 6926.547
       y: 100
@@ -7864,6 +7874,7 @@ npcs:
     functions: []
   - id: 11
     mover_id: 219
+    character_key: MaFl_Jeff
     position:
       x: 6954.721
       y: 100
@@ -7872,6 +7883,7 @@ npcs:
     functions: []
   - id: 12
     mover_id: 233
+    character_key: MaFl_Mikyel
     position:
       x: 7129.189
       y: 99.958
@@ -7880,6 +7892,7 @@ npcs:
     functions: []
   - id: 13
     mover_id: 218
+    character_key: MaFl_Noier
     position:
       x: 6703.289
       y: 135.965
@@ -7888,6 +7901,7 @@ npcs:
     functions: []
   - id: 14
     mover_id: 215
+    character_key: MaFl_Luda
     position:
       x: 6927.303
       y: 100
@@ -7896,6 +7910,7 @@ npcs:
     functions: []
   - id: 15
     mover_id: 218
+    character_key: MaFl_Andy
     position:
       x: 6929.957
       y: 100.3
@@ -7904,6 +7919,7 @@ npcs:
     functions: []
   - id: 16
     mover_id: 226
+    character_key: MaFl_Mustang
     position:
       x: 7153.918
       y: 99.999
@@ -7912,6 +7928,7 @@ npcs:
     functions: []
   - id: 17
     mover_id: 226
+    character_key: MaFl_Elic
     position:
       x: 7155.717
       y: 99.999
@@ -7920,6 +7937,7 @@ npcs:
     functions: []
   - id: 18
     mover_id: 214
+    character_key: MaFl_Hyuit
     position:
       x: 7152.513
       y: 99.999
@@ -7928,6 +7946,7 @@ npcs:
     functions: []
   - id: 19
     mover_id: 214
+    character_key: MaFl_Kidmen
     position:
       x: 7156.194
       y: 100
@@ -7936,6 +7955,7 @@ npcs:
     functions: []
   - id: 20
     mover_id: 218
+    character_key: MaFl_Maki
     position:
       x: 6930.361
       y: 100.3
@@ -7944,6 +7964,7 @@ npcs:
     functions: []
   - id: 21
     mover_id: 220
+    character_key: MaFl_Official
     position:
       x: 6960.414
       y: 100
@@ -7952,6 +7973,7 @@ npcs:
     functions: []
   - id: 22
     mover_id: 233
+    character_key: MaFl_Martinyc
     position:
       x: 6998.787
       y: 100
@@ -7960,6 +7982,7 @@ npcs:
     functions: []
   - id: 23
     mover_id: 232
+    character_key: MaFl_Himadel
     position:
       x: 6835.973
       y: 108.616
@@ -7968,6 +7991,7 @@ npcs:
     functions: []
   - id: 24
     mover_id: 1024
+    character_key: MaFl_Amos
     position:
       x: 6988.322
       y: 100
@@ -7976,6 +8000,7 @@ npcs:
     functions: []
   - id: 25
     mover_id: 1025
+    character_key: MaFl_Annie
     position:
       x: 6988.117
       y: 100
@@ -7984,6 +8009,7 @@ npcs:
     functions: []
   - id: 26
     mover_id: 226
+    character_key: MaFl_Gergantes
     position:
       x: 6960.132
       y: 100
@@ -7992,6 +8018,7 @@ npcs:
     functions: []
   - id: 27
     mover_id: 219
+    character_key: MaFl_Ata
     position:
       x: 6703.564
       y: 136.085
@@ -8000,6 +8027,7 @@ npcs:
     functions: []
   - id: 28
     mover_id: 873
+    character_key: MaFl_Postbox
     position:
       x: 6957.511
       y: 100
@@ -8008,6 +8036,7 @@ npcs:
     functions: []
   - id: 29
     mover_id: 880
+    character_key: MaFl_PetTamer
     position:
       x: 6989.561
       y: 100
@@ -8016,6 +8045,7 @@ npcs:
     functions: []
   - id: 30
     mover_id: 879
+    character_key: MaFl_FaceOff
     position:
       x: 6961.313
       y: 100
@@ -8024,6 +8054,7 @@ npcs:
     functions: []
   - id: 31
     mover_id: 878
+    character_key: MaFl_HairShop
     position:
       x: 6958.221
       y: 100
@@ -8032,6 +8063,7 @@ npcs:
     functions: []
   - id: 32
     mover_id: 211
+    character_key: MaFl_Bobochan
     position:
       x: 6927.54
       y: 100
@@ -8040,6 +8072,7 @@ npcs:
     functions: []
   - id: 33
     mover_id: 1026
+    character_key: MaFl_Ray
     position:
       x: 6932.14
       y: 100
@@ -8048,6 +8081,7 @@ npcs:
     functions: []
   - id: 34
     mover_id: 910
+    character_key: MaFl_Waforu
     position:
       x: 6982.488
       y: 100
@@ -8056,6 +8090,7 @@ npcs:
     functions: []
   - id: 35
     mover_id: 913
+    character_key: MaFl_COLINSE
     position:
       x: 6943.974
       y: 100.138
@@ -8064,6 +8099,7 @@ npcs:
     functions: []
   - id: 36
     mover_id: 1028
+    character_key: Mafl_Charlie
     position:
       x: 6989.697
       y: 100
@@ -8072,6 +8108,7 @@ npcs:
     functions: []
   - id: 37
     mover_id: 877
+    character_key: MaFl_CardMaster
     position:
       x: 7130.349
       y: 99.955
@@ -8080,6 +8117,7 @@ npcs:
     functions: []
   - id: 38
     mover_id: 231
+    character_key: MaFl_Peach
     position:
       x: 6930.677
       y: 100
@@ -8088,6 +8126,7 @@ npcs:
     functions: []
   - id: 39
     mover_id: 200
+    character_key: MaFl_Helper_ver12
     position:
       x: 6971.151
       y: 100
@@ -8096,6 +8135,7 @@ npcs:
     functions: []
   - id: 40
     mover_id: 983
+    character_key: MaFl_KINGAIDE
     position:
       x: 6981.303
       y: 100
@@ -8104,6 +8144,7 @@ npcs:
     functions: []
   - id: 41
     mover_id: 982
+    character_key: MaFl_HEAVENMAN
     position:
       x: 6982.605
       y: 100
@@ -8112,6 +8153,7 @@ npcs:
     functions: []
   - id: 42
     mover_id: 981
+    character_key: MaFl_SecretRoom_EAST
     position:
       x: 6960.913
       y: 100
@@ -8120,6 +8162,7 @@ npcs:
     functions: []
   - id: 43
     mover_id: 1022
+    character_key: MaFl_GuildWar
     position:
       x: 6988.44
       y: 100
@@ -8128,6 +8171,7 @@ npcs:
     functions: []
   - id: 44
     mover_id: 1023
+    character_key: MaFl_Donaris
     position:
       x: 6988.448
       y: 100
@@ -8136,6 +8180,7 @@ npcs:
     functions: []
   - id: 45
     mover_id: 1027
+    character_key: MaFl_FlaMayor
     position:
       x: 6960.532
       y: 100
@@ -8144,6 +8189,7 @@ npcs:
     functions: []
   - id: 46
     mover_id: 984
+    character_key: MaFl_Alice
     position:
       x: 6953.646
       y: 100
@@ -8152,6 +8198,7 @@ npcs:
     functions: []
   - id: 47
     mover_id: 1027
+    character_key: MaFl_Cupid02
     position:
       x: 7160.808
       y: 100
@@ -8160,6 +8207,7 @@ npcs:
     functions: []
   - id: 48
     mover_id: 217
+    character_key: MaSa_Karin_EVENT
     position:
       x: 6961.198
       y: 100
@@ -8168,6 +8216,7 @@ npcs:
     functions: []
   - id: 49
     mover_id: 221
+    character_key: MaFl_CHRISTMAS_JULIET
     position:
       x: 6953.808
       y: 100
@@ -8176,6 +8225,7 @@ npcs:
     functions: []
   - id: 50
     mover_id: 88
+    character_key: MaFl_Demian_EVENT
     position:
       x: 6965.74
       y: 100
@@ -8184,6 +8234,7 @@ npcs:
     functions: []
   - id: 51
     mover_id: 1025
+    character_key: MaFl_GUILDHOUSESALE
     position:
       x: 6947.594
       y: 100
@@ -8192,6 +8243,7 @@ npcs:
     functions: []
   - id: 52
     mover_id: 218
+    character_key: MaFl_EVENT_MASTER
     position:
       x: 6942.959
       y: 100
@@ -8200,6 +8252,7 @@ npcs:
     functions: []
   - id: 53
     mover_id: 228
+    character_key: MaDa_Hachal
     position:
       x: 5535.894
       y: 97
@@ -8208,6 +8261,7 @@ npcs:
     functions: []
   - id: 54
     mover_id: 235
+    character_key: MaMa_Ancimys
     position:
       x: 8638.007
       y: 100
@@ -8216,6 +8270,7 @@ npcs:
     functions: []
   - id: 55
     mover_id: 229
+    character_key: MaSa_Heltung
     position:
       x: 8447.493
       y: 100
@@ -8224,6 +8279,7 @@ npcs:
     functions: []
   - id: 56
     mover_id: 233
+    character_key: MaSa_Rovanett
     position:
       x: 8439.945
       y: 100.025
@@ -8232,6 +8288,7 @@ npcs:
     functions: []
   - id: 57
     mover_id: 201
+    character_key: MaDa_Rankashu
     position:
       x: 5072.615
       y: 55
@@ -8240,6 +8297,7 @@ npcs:
     functions: []
   - id: 58
     mover_id: 212
+    character_key: MaSa_Helena
     position:
       x: 8463.478
       y: 100
@@ -8248,6 +8306,7 @@ npcs:
     functions: []
   - id: 59
     mover_id: 212
+    character_key: MaSa_Leann
     position:
       x: 8478.097
       y: 100
@@ -8256,6 +8315,7 @@ npcs:
     functions: []
   - id: 60
     mover_id: 217
+    character_key: MaSa_Karin
     position:
       x: 8359.337
       y: 100
@@ -8264,6 +8324,7 @@ npcs:
     functions: []
   - id: 61
     mover_id: 212
+    character_key: MaSa_Janne
     position:
       x: 8536.5
       y: 100
@@ -8272,6 +8333,7 @@ npcs:
     functions: []
   - id: 62
     mover_id: 212
+    character_key: MaSa_Kimberley
     position:
       x: 8374.658
       y: 100
@@ -8280,6 +8342,7 @@ npcs:
     functions: []
   - id: 63
     mover_id: 211
+    character_key: MaSa_Bozman
     position:
       x: 8375.102
       y: 100
@@ -8288,6 +8351,7 @@ npcs:
     functions: []
   - id: 64
     mover_id: 215
+    character_key: MaSa_Bulrox
     position:
       x: 8372.59
       y: 100
@@ -8296,6 +8360,7 @@ npcs:
     functions: []
   - id: 65
     mover_id: 212
+    character_key: MaSa_Ann
     position:
       x: 8461.95
       y: 100
@@ -8304,6 +8369,7 @@ npcs:
     functions: []
   - id: 66
     mover_id: 212
+    character_key: MaSa_Herth
     position:
       x: 8360.62
       y: 100
@@ -8312,6 +8378,7 @@ npcs:
     functions: []
   - id: 67
     mover_id: 216
+    character_key: MaSa_Tina
     position:
       x: 8412.976
       y: 140.249
@@ -8320,6 +8387,7 @@ npcs:
     functions: []
   - id: 68
     mover_id: 218
+    character_key: MaSa_Martin
     position:
       x: 8315.521
       y: 100
@@ -8328,6 +8396,7 @@ npcs:
     functions: []
   - id: 69
     mover_id: 219
+    character_key: MaSa_Bill
     position:
       x: 8410.16
       y: 100
@@ -8336,6 +8405,7 @@ npcs:
     functions: []
   - id: 70
     mover_id: 222
+    character_key: MaSa_Brodeay
     position:
       x: 8403.951
       y: 100
@@ -8344,6 +8414,7 @@ npcs:
     functions: []
   - id: 71
     mover_id: 201
+    character_key: MaSa_Troupemember1
     position:
       x: 8386.912
       y: 100
@@ -8352,6 +8423,7 @@ npcs:
     functions: []
   - id: 72
     mover_id: 220
+    character_key: MaSa_Troupemember2
     position:
       x: 8396.128
       y: 100.2
@@ -8360,6 +8432,7 @@ npcs:
     functions: []
   - id: 73
     mover_id: 225
+    character_key: MaSa_Troupemember3
     position:
       x: 8398.086
       y: 100.1
@@ -8368,6 +8441,7 @@ npcs:
     functions: []
   - id: 74
     mover_id: 230
+    character_key: MaSa_Troupemember4
     position:
       x: 8396.88
       y: 100.1
@@ -8376,6 +8450,7 @@ npcs:
     functions: []
   - id: 75
     mover_id: 219
+    character_key: MaSa_Troupemember5
     position:
       x: 8385.096
       y: 100
@@ -8384,6 +8459,7 @@ npcs:
     functions: []
   - id: 76
     mover_id: 233
+    character_key: MaSa_Lancomi
     position:
       x: 8480.749
       y: 100
@@ -8392,6 +8468,7 @@ npcs:
     functions: []
   - id: 77
     mover_id: 215
+    character_key: MaSa_Colack
     position:
       x: 8369.506
       y: 100
@@ -8400,6 +8477,7 @@ npcs:
     functions: []
   - id: 78
     mover_id: 233
+    character_key: MaSa_Hee
     position:
       x: 8341.125
       y: 100.6
@@ -8408,6 +8486,7 @@ npcs:
     functions: []
   - id: 79
     mover_id: 225
+    character_key: MaSa_Wingyei
     position:
       x: 8483.716
       y: 100.6
@@ -8416,6 +8495,7 @@ npcs:
     functions: []
   - id: 80
     mover_id: 214
+    character_key: MaSa_Lopaze
     position:
       x: 8481.515
       y: 100
@@ -8424,6 +8504,7 @@ npcs:
     functions: []
   - id: 81
     mover_id: 223
+    character_key: MaSa_Helgar
     position:
       x: 8449.088
       y: 100
@@ -8432,6 +8513,7 @@ npcs:
     functions: []
   - id: 82
     mover_id: 691
+    character_key: MaSa_QueerCollector
     position:
       x: 8383.202
       y: 145
@@ -8440,6 +8522,7 @@ npcs:
     functions: []
   - id: 83
     mover_id: 225
+    character_key: MaSa_JeongHwa
     position:
       x: 8334.948
       y: 100
@@ -8448,6 +8531,7 @@ npcs:
     functions: []
   - id: 84
     mover_id: 213
+    character_key: MaSa_Porgo
     position:
       x: 8532.436
       y: 100
@@ -8456,6 +8540,7 @@ npcs:
     functions: []
   - id: 85
     mover_id: 228
+    character_key: MaSa_Gothante
     position:
       x: 8353.016
       y: 99.775
@@ -8464,6 +8549,7 @@ npcs:
     functions: []
   - id: 86
     mover_id: 221
+    character_key: MaSa_Parine
     position:
       x: 8414.342
       y: 140.141
@@ -8472,6 +8558,7 @@ npcs:
     functions: []
   - id: 87
     mover_id: 873
+    character_key: MaFl_Postbox
     position:
       x: 8462.629
       y: 100
@@ -8480,6 +8567,7 @@ npcs:
     functions: []
   - id: 88
     mover_id: 880
+    character_key: MaFl_PetTamer
     position:
       x: 8465.417
       y: 100
@@ -8488,6 +8576,7 @@ npcs:
     functions: []
   - id: 89
     mover_id: 913
+    character_key: MaFl_COLINSE
     position:
       x: 8636.335
       y: 100.195
@@ -8496,6 +8585,7 @@ npcs:
     functions: []
   - id: 90
     mover_id: 1026
+    character_key: MaFl_Ray
     position:
       x: 8437.869
       y: 100
@@ -8504,6 +8594,7 @@ npcs:
     functions: []
   - id: 91
     mover_id: 200
+    character_key: MaFl_Helper_ver12
     position:
       x: 8444.201
       y: 100
@@ -8512,6 +8603,7 @@ npcs:
     functions: []
   - id: 92
     mover_id: 1027
+    character_key: MaSa_SainMayor
     position:
       x: 8464.083
       y: 100
@@ -8520,6 +8612,7 @@ npcs:
     functions: []
   - id: 93
     mover_id: 984
+    character_key: MaFl_Alice
     position:
       x: 8484.061
       y: 100
@@ -8528,6 +8621,7 @@ npcs:
     functions: []
   - id: 94
     mover_id: 983
+    character_key: MaFl_VANHARLEN
     position:
       x: 8395.563
       y: 100
@@ -8536,6 +8630,7 @@ npcs:
     functions: []
   - id: 95
     mover_id: 1153
+    character_key: MaFl_Leprechaun
     position:
       x: 8484.063
       y: 100
@@ -8544,6 +8639,7 @@ npcs:
     functions: []
   - id: 96
     mover_id: 232
+    character_key: MaDa_Eshylop
     position:
       x: 3890.031
       y: 58.841
@@ -8552,6 +8648,7 @@ npcs:
     functions: []
   - id: 97
     mover_id: 231
+    character_key: MaDa_Remine
     position:
       x: 3748.583
       y: 59
@@ -8560,6 +8657,7 @@ npcs:
     functions: []
   - id: 98
     mover_id: 224
+    character_key: MaDa_Ollien
     position:
       x: 3829.779
       y: 59.1
@@ -8568,6 +8666,7 @@ npcs:
     functions: []
   - id: 99
     mover_id: 228
+    character_key: MaDa_Almani
     position:
       x: 3846.71
       y: 59
@@ -8576,6 +8675,7 @@ npcs:
     functions: []
   - id: 100
     mover_id: 229
+    character_key: MaDa_Achaben
     position:
       x: 3879.864
       y: 59
@@ -8584,6 +8684,7 @@ npcs:
     functions: []
   - id: 101
     mover_id: 225
+    character_key: MaDa_Haven
     position:
       x: 3908.938
       y: 59
@@ -8592,6 +8693,7 @@ npcs:
     functions: []
   - id: 102
     mover_id: 227
+    character_key: MaDa_Bolpor
     position:
       x: 3831.705
       y: 59
@@ -8600,6 +8702,7 @@ npcs:
     functions: []
   - id: 103
     mover_id: 233
+    character_key: MaDa_Lurif
     position:
       x: 3841.457
       y: 59
@@ -8608,6 +8711,7 @@ npcs:
     functions: []
   - id: 104
     mover_id: 223
+    character_key: MaDa_Krinton
     position:
       x: 3742.223
       y: 59
@@ -8616,6 +8720,7 @@ npcs:
     functions: []
   - id: 105
     mover_id: 226
+    character_key: MaDa_Hent
     position:
       x: 3931.297
       y: 59.007
@@ -8624,6 +8729,7 @@ npcs:
     functions: []
   - id: 106
     mover_id: 214
+    character_key: MaDa_Tailer
     position:
       x: 3931.982
       y: 59.021
@@ -8632,6 +8738,7 @@ npcs:
     functions: []
   - id: 107
     mover_id: 218
+    character_key: MaDa_Pyre
     position:
       x: 3850.12
       y: 59
@@ -8640,6 +8747,7 @@ npcs:
     functions: []
   - id: 108
     mover_id: 201
+    character_key: MaDa_Liekyen
     position:
       x: 3733.891
       y: 59
@@ -8648,6 +8756,7 @@ npcs:
     functions: []
   - id: 109
     mover_id: 213
+    character_key: MaDa_Bernard
     position:
       x: 3827.019
       y: 59
@@ -8656,6 +8765,7 @@ npcs:
     functions: []
   - id: 110
     mover_id: 1027
+    character_key: MaDa_DarMayor
     position:
       x: 3831.669
       y: 59
@@ -8664,6 +8774,7 @@ npcs:
     functions: []
   - id: 111
     mover_id: 873
+    character_key: MaFl_Postbox
     position:
       x: 3834.107
       y: 59
@@ -8672,6 +8783,7 @@ npcs:
     functions: []
   - id: 112
     mover_id: 223
+    character_key: MaDa_Roocky
     position:
       x: 3742.822
       y: 59
@@ -8680,6 +8792,7 @@ npcs:
     functions: []
   - id: 113
     mover_id: 880
+    character_key: MaFl_PetTamer
     position:
       x: 3824.431
       y: 59
@@ -8688,6 +8801,7 @@ npcs:
     functions: []
   - id: 114
     mover_id: 1026
+    character_key: MaFl_Ray
     position:
       x: 3801.5
       y: 59
@@ -8696,6 +8810,7 @@ npcs:
     functions: []
   - id: 115
     mover_id: 981
+    character_key: MaDa_SecretRoom_WEST
     position:
       x: 3827.025
       y: 59
@@ -8704,6 +8819,7 @@ npcs:
     functions: []
   - id: 116
     mover_id: 200
+    character_key: MaFl_Helper_ver12
     position:
       x: 3793.978
       y: 59
@@ -8712,6 +8828,7 @@ npcs:
     functions: []
   - id: 117
     mover_id: 992
+    character_key: MaFl_RainbowStart
     position:
       x: 3832.407
       y: 60
@@ -8720,6 +8837,7 @@ npcs:
     functions: []
   - id: 118
     mover_id: 984
+    character_key: MaFl_Alice
     position:
       x: 3835.305
       y: 59
@@ -8728,6 +8846,7 @@ npcs:
     functions: []
   - id: 119
     mover_id: 877
+    character_key: MaFl_Oasis
     position:
       x: 3806.893
       y: 59
@@ -8736,6 +8855,7 @@ npcs:
     functions: []
   - id: 120
     mover_id: 231
+    character_key: MaDa_Laydian
     position:
       x: 3743.44
       y: 59
@@ -8744,6 +8864,7 @@ npcs:
     functions: []
   - id: 121
     mover_id: 1105
+    character_key: MaDa_Icinis
     position:
       x: 3804.733
       y: 59
@@ -8752,6 +8873,7 @@ npcs:
     functions: []
   - id: 122
     mover_id: 220
+    character_key: MaDa_DrEst
     position:
       x: 5541.337
       y: 71.62
@@ -8760,6 +8882,7 @@ npcs:
     functions: []
   - id: 123
     mover_id: 891
+    character_key: MaMa_PKNPC01
     position:
       x: 5482.891
       y: 71.351
@@ -8768,6 +8891,7 @@ npcs:
     functions: []
   - id: 124
     mover_id: 891
+    character_key: MaMa_PKNPC01
     position:
       x: 8247.269
       y: 95.585
@@ -8776,6 +8900,7 @@ npcs:
     functions: []
   - id: 125
     mover_id: 219
+    character_key: MaSa_MaYun
     position:
       x: 8197.681
       y: 84.793
@@ -8784,6 +8909,7 @@ npcs:
     functions: []
   - id: 126
     mover_id: 200
+    character_key: MaFl_Helper
     position:
       x: 8279
       y: 81.204
@@ -8792,6 +8918,7 @@ npcs:
     functions: []
   - id: 127
     mover_id: 200
+    character_key: MaFl_Helper_ver12
     position:
       x: 8279.326
       y: 81.118
@@ -8800,6 +8927,7 @@ npcs:
     functions: []
   - id: 128
     mover_id: 214
+    character_key: MaFl_Marche
     position:
       x: 7169.168
       y: 100
@@ -8808,6 +8936,7 @@ npcs:
     functions: []
   - id: 129
     mover_id: 210
+    character_key: MaFl_Losha
     position:
       x: 7172.419
       y: 100
@@ -8816,6 +8945,7 @@ npcs:
     functions: []
   - id: 130
     mover_id: 228
+    character_key: MaFl_Rudvihil
     position:
       x: 7219.015
       y: 108.631
@@ -8824,6 +8954,7 @@ npcs:
     functions: []
   - id: 131
     mover_id: 210
+    character_key: MaFl_Loyah
     position:
       x: 7169.417
       y: 100
@@ -8832,6 +8963,7 @@ npcs:
     functions: []
   - id: 132
     mover_id: 227
+    character_key: MaFl_SsoTta
     position:
       x: 7179.42
       y: 100
@@ -8840,6 +8972,7 @@ npcs:
     functions: []
   - id: 133
     mover_id: 216
+    character_key: MaFl_Teshar
     position:
       x: 7202.364
       y: 100
@@ -8848,6 +8981,7 @@ npcs:
     functions: []
   - id: 134
     mover_id: 231
+    character_key: MaFl_Ghalade
     position:
       x: 7204.369
       y: 100
@@ -8856,6 +8990,7 @@ npcs:
     functions: []
   - id: 135
     mover_id: 227
+    character_key: MaFl_Phoho
     position:
       x: 7204.204
       y: 100
@@ -8864,6 +8999,7 @@ npcs:
     functions: []
   - id: 136
     mover_id: 225
+    character_key: MaFl_Eoners
     position:
       x: 7204.647
       y: 100
@@ -8872,6 +9008,7 @@ npcs:
     functions: []
   - id: 137
     mover_id: 223
+    character_key: MaFl_Tomba
     position:
       x: 7203.204
       y: 100
@@ -8880,6 +9017,7 @@ npcs:
     functions: []
   - id: 138
     mover_id: 228
+    character_key: MaDa_CloneHachal
     position:
       x: 6552.239
       y: 108.244
@@ -8888,6 +9026,7 @@ npcs:
     functions: []
   - id: 139
     mover_id: 891
+    character_key: MaMa_PKNPC01
     position:
       x: 6589.828
       y: 100.1
@@ -8896,6 +9035,7 @@ npcs:
     functions: []
   - id: 140
     mover_id: 235
+    character_key: MaMa_Ancimys
     position:
       x: 6955.456
       y: 149.134
@@ -8904,6 +9044,7 @@ npcs:
     functions: []
   - id: 141
     mover_id: 201
+    character_key: MaFl_Tucani
     position:
       x: 6995.009
       y: 125.335
@@ -8912,6 +9053,7 @@ npcs:
     functions: []
   - id: 142
     mover_id: 201
+    character_key: MaFl_Langdrong
     position:
       x: 6998.488
       y: 125.05
@@ -8920,6 +9062,7 @@ npcs:
     functions: []
   - id: 143
     mover_id: 201
+    character_key: MaFl_Goripeg
     position:
       x: 6991.909
       y: 124.603
@@ -8928,6 +9071,7 @@ npcs:
     functions: []
   - id: 144
     mover_id: 201
+    character_key: MaFl_Hastan
     position:
       x: 7002.028
       y: 124.395
@@ -8936,6 +9080,7 @@ npcs:
     functions: []
   - id: 145
     mover_id: 235
+    character_key: MaFl_Ancimys
     position:
       x: 7036.381
       y: 118.339
@@ -8944,6 +9089,7 @@ npcs:
     functions: []
   - id: 146
     mover_id: 233
+    character_key: MaFl_Kurumin
     position:
       x: 6691.423
       y: 120.054
@@ -8952,6 +9098,7 @@ npcs:
     functions: []
   - id: 147
     mover_id: 220
+    character_key: MaFl_DrEstly
     position:
       x: 7186.78
       y: 156.2
@@ -8960,6 +9107,7 @@ npcs:
     functions: []
   - id: 148
     mover_id: 232
+    character_key: MaFl_Gornus
     position:
       x: 7453.871
       y: 130.719
@@ -8968,6 +9116,7 @@ npcs:
     functions: []
   - id: 149
     mover_id: 220
+    character_key: MaFl_Ryupang
     position:
       x: 7214.24
       y: 109.498
@@ -8976,6 +9125,7 @@ npcs:
     functions: []
   - id: 150
     mover_id: 200
+    character_key: MaFl_Helper
     position:
       x: 7351.099
       y: 155.903
@@ -8984,6 +9134,7 @@ npcs:
     functions: []
   - id: 151
     mover_id: 200
+    character_key: MaFl_Helper_ver12
     position:
       x: 7340.922
       y: 155.977
@@ -8992,6 +9143,7 @@ npcs:
     functions: []
   - id: 152
     mover_id: 232
+    character_key: MaFl_Kanane
     position:
       x: 7741.04
       y: 95.515
@@ -9000,6 +9152,7 @@ npcs:
     functions: []
   - id: 153
     mover_id: 201
+    character_key: MaSa_Bowler
     position:
       x: 9560.335
       y: 90.535
@@ -9008,6 +9161,7 @@ npcs:
     functions: []
   - id: 154
     mover_id: 219
+    character_key: MaDa_Colar
     position:
       x: 6133.405
       y: 100
@@ -9016,6 +9170,7 @@ npcs:
     functions: []
   - id: 155
     mover_id: 237
+    character_key: MaDa_Esof
     position:
       x: 5852.805
       y: 200.176
@@ -9024,6 +9179,7 @@ npcs:
     functions: []
   - id: 156
     mover_id: 218
+    character_key: MaFl_SgRadion
     position:
       x: 7640.476
       y: 175.12
@@ -9032,6 +9188,7 @@ npcs:
     functions: []
   - id: 157
     mover_id: 218
+    character_key: MaFl_Radyon
     position:
       x: 7635.972
       y: 169.02
@@ -9040,6 +9197,7 @@ npcs:
     functions: []
   - id: 158
     mover_id: 218
+    character_key: MaFl_Kimel
     position:
       x: 7636.031
       y: 168.84
@@ -9048,6 +9206,7 @@ npcs:
     functions: []
   - id: 159
     mover_id: 218
+    character_key: MaFl_Hormes
     position:
       x: 7677.743
       y: 179.378
@@ -9056,6 +9215,7 @@ npcs:
     functions: []
   - id: 160
     mover_id: 218
+    character_key: MaFl_Guabrill
     position:
       x: 7678.735
       y: 179.091
@@ -9064,6 +9224,7 @@ npcs:
     functions: []
   - id: 161
     mover_id: 218
+    character_key: MaFl_Cuzrill
     position:
       x: 7655.598
       y: 161.675
@@ -9072,6 +9233,7 @@ npcs:
     functions: []
   - id: 162
     mover_id: 218
+    character_key: MaFl_Cuarine
     position:
       x: 7657.554
       y: 161.695
@@ -9080,6 +9242,7 @@ npcs:
     functions: []
   - id: 163
     mover_id: 222
+    character_key: MaFl_Segho
     position:
       x: 7644.777
       y: 236.285
@@ -9088,6 +9251,7 @@ npcs:
     functions: []
   - id: 164
     mover_id: 218
+    character_key: MaFl_Domek
     position:
       x: 7693.445
       y: 170.711
@@ -9096,6 +9260,7 @@ npcs:
     functions: []
   - id: 165
     mover_id: 218
+    character_key: MaFl_Clamb
     position:
       x: 7693.286
       y: 170.203
@@ -9104,6 +9269,7 @@ npcs:
     functions: []
   - id: 166
     mover_id: 223
+    character_key: MaDa_Nein
     position:
       x: 3947.286
       y: 117.651
@@ -9112,6 +9278,7 @@ npcs:
     functions: []
   - id: 167
     mover_id: 232
+    character_key: MaDa_CloneEshylop
     position:
       x: 3889.866
       y: 59
@@ -9120,6 +9287,7 @@ npcs:
     functions: []
   - id: 168
     mover_id: 221
+    character_key: MaDa_Stima
     position:
       x: 5572.357
       y: 75
@@ -9128,6 +9296,7 @@ npcs:
     functions: []
   - id: 169
     mover_id: 222
+    character_key: MaDa_Phacham
     position:
       x: 5580.702
       y: 75
@@ -9136,6 +9305,7 @@ npcs:
     functions: []
   - id: 170
     mover_id: 235
+    character_key: MaMa_Ancimys
     position:
       x: 5370.744
       y: 75
@@ -9144,6 +9314,7 @@ npcs:
     functions: []
   - id: 171
     mover_id: 215
+    character_key: MaDa_Cell
     position:
       x: 5561.092
       y: 75.029
@@ -9152,6 +9323,7 @@ npcs:
     functions: []
   - id: 172
     mover_id: 213
+    character_key: MaDa_Amadolka
     position:
       x: 5600.739
       y: 75
@@ -9160,6 +9332,7 @@ npcs:
     functions: []
   - id: 173
     mover_id: 880
+    character_key: MaFl_PetTamer
     position:
       x: 5569.151
       y: 75.019
@@ -9168,6 +9341,7 @@ npcs:
     functions: []
   - id: 174
     mover_id: 200
+    character_key: MaFl_Helper_ver12
     position:
       x: 5576.784
       y: 75.002
@@ -9176,6 +9350,7 @@ npcs:
     functions: []
   - id: 175
     mover_id: 913
+    character_key: MaFl_COLINSE
     position:
       x: 3851.173
       y: 94.769
@@ -9184,6 +9359,7 @@ npcs:
     functions: []
   - id: 176
     mover_id: 1090
+    character_key: MaHa_Jano
     position:
       x: 5961.892
       y: 100.392
@@ -9192,6 +9368,7 @@ npcs:
     functions: []
   - id: 177
     mover_id: 1091
+    character_key: MaHa_Vespu
     position:
       x: 5959.499
       y: 100.392
@@ -9200,6 +9377,7 @@ npcs:
     functions: []
   - id: 178
     mover_id: 1092
+    character_key: MaHa_Luca
     position:
       x: 5937.609
       y: 100.392
@@ -9208,6 +9386,7 @@ npcs:
     functions: []
   - id: 179
     mover_id: 873
+    character_key: MaFl_Postbox
     position:
       x: 5960.862
       y: 100.395
@@ -9216,6 +9395,7 @@ npcs:
     functions: []
   - id: 180
     mover_id: 1093
+    character_key: MaHa_Lasa
     position:
       x: 5987.453
       y: 100.555
@@ -9224,6 +9404,7 @@ npcs:
     functions: []
   - id: 181
     mover_id: 1094
+    character_key: MaHa_Ryan
     position:
       x: 6025.444
       y: 100.434
@@ -9232,6 +9413,7 @@ npcs:
     functions: []
   - id: 182
     mover_id: 222
+    character_key: MaDa_Chenbing
     position:
       x: 3238.182
       y: 11.651
@@ -9240,6 +9422,7 @@ npcs:
     functions: []
   - id: 183
     mover_id: 222
+    character_key: MaDa_Kablloc
     position:
       x: 3239.983
       y: 11.651
@@ -9248,6 +9431,7 @@ npcs:
     functions: []
   - id: 184
     mover_id: 222
+    character_key: MaDa_Tandy
     position:
       x: 3202.744
       y: 10.069
@@ -9256,6 +9440,7 @@ npcs:
     functions: []
   - id: 185
     mover_id: 222
+    character_key: MaDa_Jinitte
     position:
       x: 3208.391
       y: 10.155
@@ -9264,6 +9449,7 @@ npcs:
     functions: []
   - id: 186
     mover_id: 226
+    character_key: MaDa_Andre
     position:
       x: 2991.348
       y: 56.731
@@ -9272,6 +9458,7 @@ npcs:
     functions: []
   - id: 187
     mover_id: 234
+    character_key: MaDa_Boneper
     position:
       x: 3344.027
       y: 146.956
@@ -9280,6 +9467,7 @@ npcs:
     functions: []
   - id: 188
     mover_id: 234
+    character_key: MaDa_Sencyrit
     position:
       x: 3344.047
       y: 146.952
@@ -9288,6 +9476,7 @@ npcs:
     functions: []
   - id: 189
     mover_id: 234
+    character_key: MaDa_Shyniff
     position:
       x: 3348.991
       y: 146.967
@@ -9296,6 +9485,7 @@ npcs:
     functions: []
   - id: 190
     mover_id: 234
+    character_key: MaDa_Romvoette
     position:
       x: 3339.078
       y: 146.882
@@ -9304,6 +9494,7 @@ npcs:
     functions: []
   - id: 191
     mover_id: 234
+    character_key: MaDa_Wendien
     position:
       x: 3348.821
       y: 146.927
@@ -9312,6 +9503,7 @@ npcs:
     functions: []
   - id: 192
     mover_id: 234
+    character_key: MaDa_Capafe
     position:
       x: 3339.107
       y: 146.917
@@ -9320,6 +9512,7 @@ npcs:
     functions: []
   - id: 193
     mover_id: 234
+    character_key: MaDa_Heingard
     position:
       x: 3336.709
       y: 146.9
@@ -9328,6 +9521,7 @@ npcs:
     functions: []
   - id: 194
     mover_id: 234
+    character_key: MaDa_Kailreard
     position:
       x: 3351.367
       y: 146.986
@@ -9336,6 +9530,7 @@ npcs:
     functions: []
   - id: 195
     mover_id: 875
+    character_key: MaDa_RedRobeMan
     position:
       x: 3343.95
       y: 114.628

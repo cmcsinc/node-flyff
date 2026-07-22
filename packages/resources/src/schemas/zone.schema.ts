@@ -100,6 +100,15 @@ export const NpcSchema = z.object({
   /** Mover ID (from movers/ index) */
   mover_id: z.number().int().positive(),
 
+  /**
+   * Original character.inc block key (e.g. `MaFl_Boboku`) from the placed
+   * mover's `m_szCharacterKey` in the .dyo. Authoritative for shop stock,
+   * dialog, outfit, and menus when multiple NPCs share one mover model
+   * (C++ `CMover::GetCharacter` -> `prj.GetCharacter(m_szCharacterKey)`).
+   * Absent for placements the .dyo did not tag.
+   */
+  character_key: z.string().optional(),
+
   /** NPC position */
   position: Vector3Schema,
 

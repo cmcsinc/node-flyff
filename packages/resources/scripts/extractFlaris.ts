@@ -205,13 +205,16 @@ async function main(): Promise<void> {
   // validation (loaders.test "validate cross-references").
   const rawNpcs = decodeMovers(dyoBuf).filter((n) => knownMIs.has(n.mover_id));
   const rawSpawns = decodeSpawns(rgnText).filter((s) => knownMIs.has(s.mover_id));
-  // Renumber contiguously after filtering so ids have no gaps.
-  const npcs = rawNpcs.map(({ character_key: _ck, ...n }, i) => ({ ...n, id: i + 1 }));
+  // Renumber contiguously after filtering so ids have no gaps. `character_key`
+  // is kept -- it is the authoritative link to the character.inc block (shop
+  // stock / dialog / outfit) for NPCs that share a mover model.
+  const npcs = rawNpcs.map((n, i) => ({ ...n, id: i + 1 }));
   const spawns = rawSpawns.map((s, i) => ({ ...s, id: i + 1 }));
 
-  // ponytail: NPC dialogue/shop functions are intentionally empty here -- the
-  // canonical .dyo only carries model + placement. Re-link shop_id / dialogue_id
-  // (character_key -> dialog prefix via data/dialogues/_npc-map.yml) in a follow-up.
+  // ponytail: NPC functions[] is intentionally empty -- the canonical .dyo only
+  // carries model + placement + character_key. Per-block shop stock / menus come
+  // from character.inc at load, not from this file. Re-linking explicit shop_id /
+  // dialogue_id overrides is a follow-up.
   const next: ZoneDefinition = {
     ...zone,
     npcs,
