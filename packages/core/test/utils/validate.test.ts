@@ -23,7 +23,7 @@ describe('Validate', () => {
     it('rejects non-alphanumeric characters', () => {
       assert.throws(() => Validate.name('Hero!'), PacketError);
       assert.throws(() => Validate.name('Hero Hero'), PacketError);
-      assert.throws(() => Validate.name('Héro'), PacketError);
+      assert.throws(() => Validate.name('H@ro'), PacketError);
     });
 
     it('honors custom length bounds', () => {

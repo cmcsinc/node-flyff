@@ -1,9 +1,9 @@
 /**
- * ItemManager test — spawn broadcasts ADD_OBJ, 3-min decay fires DEL_OBJ,
+ * ItemManager test -- spawn broadcasts ADD_OBJ, 3-min decay fires DEL_OBJ,
  * looted remove clears the timer (no double DEL_OBJ).
  *
  * Uses the per-test `t.mock.timers` (not the shared `mock` import) so each test
- * gets its own MockTimers that auto-cleans — re-enabling the shared singleton
+ * gets its own MockTimers that auto-cleans -- re-enabling the shared singleton
  * throws "MockTimers is already enabled".
  */
 
@@ -13,7 +13,7 @@ import { ItemManager } from '../../src/managers/item.manager.js';
 import { FIRST_ITEM_ID } from '../../src/entities/item.js';
 
 function snapshotSubtype(payload: Buffer): number {
-  // [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2] → offset 14.
+  // [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2] -> offset 14.
   return payload.readUInt16LE(14);
 }
 
@@ -58,7 +58,7 @@ describe('ItemManager', () => {
     assert.equal(broadcasts.length, 2); // DEL_OBJ from remove
 
     t.mock.timers.tick(3 * 60_000 + 1);
-    assert.equal(broadcasts.length, 2); // timer cleared — no second DEL_OBJ
+    assert.equal(broadcasts.length, 2); // timer cleared -- no second DEL_OBJ
   });
 
   it('shutdown clears all timers + items', (t) => {
@@ -70,6 +70,6 @@ describe('ItemManager', () => {
     mgr.shutdown();
     assert.equal(mgr.get(id), undefined);
     t.mock.timers.tick(3 * 60_000 + 1);
-    assert.equal(broadcasts.length, 1); // only the spawn ADD_OBJ — no decay DEL_OBJ
+    assert.equal(broadcasts.length, 1); // only the spawn ADD_OBJ -- no decay DEL_OBJ
   });
 });

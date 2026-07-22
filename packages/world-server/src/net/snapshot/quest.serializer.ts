@@ -1,8 +1,8 @@
 /**
- * S→C quest snapshot serializers.
+ * S->C quest snapshot serializers.
  *
  * Each frame is one per-user snapshot wrapped in `PACKETTYPE_SNAPSHOT`
- * (`objid | NULL_ID | WORD 1 | OBJID | WORD subtype | payload`) — mirrors
+ * (`objid | NULL_ID | WORD 1 | OBJID | WORD subtype | payload`) -- mirrors
  * `CUser::AddSetQuest` / `AddCancelQuest` / `AddCheckedQuest` / `AddQuestTextTime`
  * / `AddNPCPos` (`WORLDSERVER/User.cpp:1367/1819/5127/5807/5973`).
  *
@@ -20,7 +20,7 @@
  *  offset 11  pad              0x00
  * ```
  *
- * Padding bytes go on the wire — do NOT pack.
+ * Padding bytes go on the wire -- do NOT pack.
  *
  * @module net/snapshot/quest.serializer
  */
@@ -67,7 +67,7 @@ export function writeQuestStruct(w: PacketWriter, q: RuntimeQuest): void {
   w.writeByte(0);                           // offset 11 pad
 }
 
-/** `SNAPSHOTTYPE_SETQUEST` (0x00b0) — push one quest state change. */
+/** `SNAPSHOTTYPE_SETQUEST` (0x00b0) -- push one quest state change. */
 export function buildSetQuest(objid: number, q: RuntimeQuest): Buffer {
   const w = frame(objid, SNAPSHOTTYPE_SETQUEST, new PacketWriter());
   writeQuestStruct(w, q);
@@ -75,7 +75,7 @@ export function buildSetQuest(objid: number, q: RuntimeQuest): Buffer {
 }
 
 /**
- * `SNAPSHOTTYPE_QUEST_REMOVE` (0x003a) — `int nRemoveType, DWORD dwQuestCancelID`.
+ * `SNAPSHOTTYPE_QUEST_REMOVE` (0x003a) -- `int nRemoveType, DWORD dwQuestCancelID`.
  * `type` is a REMOVEQUEST_TYPE value (-1 cancel / 0 silent / 1 all / 2 clear-completed).
  */
 export function buildRemoveQuest(objid: number, type: number, questId: number): Buffer {
@@ -85,7 +85,7 @@ export function buildRemoveQuest(objid: number, type: number, questId: number): 
   return w.build();
 }
 
-/** `SNAPSHOTTYPE_QUEST_CHECKED` (0x8820) — `BYTE size, size×WORD` (full replace). */
+/** `SNAPSHOTTYPE_QUEST_CHECKED` (0x8820) -- `BYTE size, size*WORD` (full replace). */
 export function buildCheckedQuest(objid: number, questIds: number[]): Buffer {
   const w = frame(objid, SNAPSHOTTYPE_QUEST_CHECKED, new PacketWriter());
   w.writeByte(questIds.length & 0xff);
@@ -93,7 +93,7 @@ export function buildCheckedQuest(objid: number, questIds: number[]): Buffer {
   return w.build();
 }
 
-/** `SNAPSHOTTYPE_QUEST_TEXT_TIME` (0x00ba) — `BOOL(4B), int nState, DWORD dwTime`. */
+/** `SNAPSHOTTYPE_QUEST_TEXT_TIME` (0x00ba) -- `BOOL(4B), int nState, DWORD dwTime`. */
 export function buildQuestTextTime(objid: number, flag: boolean, state: number, time: number): Buffer {
   const w = frame(objid, SNAPSHOTTYPE_QUEST_TEXT_TIME, new PacketWriter());
   w.writeDword(flag ? 1 : 0);
@@ -102,7 +102,7 @@ export function buildQuestTextTime(objid: number, flag: boolean, state: number, 
   return w.build();
 }
 
-/** `SNAPSHOTTYPE_QUESTHELPER_NPCPOS` (0x9400) — `D3DVECTOR` (3× float). */
+/** `SNAPSHOTTYPE_QUESTHELPER_NPCPOS` (0x9400) -- `D3DVECTOR` (3* float). */
 export function buildNpcPos(objid: number, pos: { x: number; y: number; z: number }): Buffer {
   const w = frame(objid, SNAPSHOTTYPE_QUESTHELPER_NPCPOS, new PacketWriter());
   w.writeFloat(pos.x);

@@ -1,12 +1,12 @@
 /**
- * ItemManager — owns live {@link GroundItem}s + their decay timers.
+ * ItemManager -- owns live {@link GroundItem}s + their decay timers.
  *
  * `spawn(init)` allocates an objid, registers the pile, broadcasts its ADD_OBJ
  * to the zone, and arms a 3-min decay timer (C++ `CItem::Process`,
- * `Item.cpp:515-556` → `MIN(3)`). On expiry the pile is removed + DEL_OBJ is
+ * `Item.cpp:515-556` -> `MIN(3)`). On expiry the pile is removed + DEL_OBJ is
  * broadcast. `remove(id)` (called by the pickup handler) clears the timer so a
  * looted pile never also fires decay. All timers are tracked + cleared on
- * `shutdown()` (rule 05 — no leaked timers).
+ * `shutdown()` (rule 05 -- no leaked timers).
  *
  * Manager holds in-memory state only (rule 02); broadcasts go through the
  * injected {@link ZoneManager} + serializer. No DB, no packet parsing.
@@ -23,7 +23,7 @@ import { createLogger } from '@flyff/core/logger.js';
 
 const logger = createLogger({ module: 'item-manager' });
 
-/** Ground-item lifetime — `CItem::Process` deletes at `MIN(3)` (Item.cpp:550). */
+/** Ground-item lifetime -- `CItem::Process` deletes at `MIN(3)` (Item.cpp:550). */
 const DECAY_MS = 3 * 60_000;
 
 export interface ItemManagerDeps {
@@ -81,7 +81,7 @@ export class ItemManager {
     this.items.clear();
   }
 
-  /** Decay fired — the pile timed out. */
+  /** Decay fired -- the pile timed out. */
   private expire(id: number): void {
     this.timers.delete(id);
     const item = this.items.get(id);

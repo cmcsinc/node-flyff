@@ -1,5 +1,5 @@
 /**
- * propMover.txt → data/movers/*.yml converter.
+ * propMover.txt -> data/movers/*.yml converter.
  *
  * Source columns (subset we care about): dwID (MI_*), szName (IDS_PROPMOVER_*),
  * dwAI, dwStr/dwSta/dwDex/dwInt, dwHR/dwER, dwBelligerence, dwLevel, dwClass,
@@ -14,11 +14,11 @@ import { resolve } from 'node:path';
 import { stringify } from 'yaml';
 import { parsePropTable, parseDefines, parseTxtTxt, readSource, num, type Row } from './parse.js';
 
-/** Skip the C++ template row — not a real mover. */
+/** Skip the C++ template row -- not a real mover. */
 const SKIP = new Set(['MI_DEFAULT']);
 
 /**
- * propMover.txt `dwBelligerence` text → numeric (defineAttribute.h:203-215).
+ * propMover.txt `dwBelligerence` text -> numeric (defineAttribute.h:203-215).
  * The client's attack cursor is gated by `BELLI_PEACEFUL` (1), so the real
  * value must flow end-to-end instead of a hardcoded 0.
  */
@@ -38,14 +38,14 @@ const BELLI_TEXT_TO_NUM: Record<string, number> = {
   BELLI_RANGE: 13,
 };
 
-/** dwAI → schema type. */
+/** dwAI -> schema type. */
 function classifyType(dwAi: string): 'monster' | 'npc' | 'player' {
   if (dwAi === 'AII_MONSTER') return 'monster';
   if (dwAi === 'AII_MOVER') return 'player'; // MI_MALE/MI_FEMALE + generic movers
   return 'npc';
 }
 
-/** dwClass rank → boss/giant flags + type override. */
+/** dwClass rank -> boss/giant flags + type override. */
 function rank(dwClass: string): { boss: boolean; giant: boolean } {
   return {
     boss: dwClass === 'RANK_BOSS',
@@ -66,8 +66,8 @@ function rowToMover(row: Row, id: number, name: string): Record<string, unknown>
 
   return {
     id,
-    // Persist the symbolic MI_* name so loaders can link NPC → dialog prefix
-    // (prefixForNpc strips `MI_` + lowercases → `mafl_boboku` dialog file).
+    // Persist the symbolic MI_* name so loaders can link NPC -> dialog prefix
+    // (prefixForNpc strips `MI_` + lowercases -> `mafl_boboku` dialog file).
     key: row.dwID,
     name,
     name_id: row.szName,
@@ -130,8 +130,8 @@ export async function convertMovers(rawDir: string, dataDir: string): Promise<vo
   const moversOut = resolve(dataDir, 'movers');
   await mkdir(moversOut, { recursive: true });
   await writeFile(resolve(moversOut, 'monsters.yml'), stringify(monsters));
-  await writeFile(resolve(moversOut, 'npcs.yml'), header('# NPC / generic mover definitions — generated from propMover.txt') + stringify(npcs));
-  await writeFile(resolve(moversOut, 'player.yml'), header('# Player base stats — generated from propMover.txt') + stringify(players));
+  await writeFile(resolve(moversOut, 'npcs.yml'), header('# NPC / generic mover definitions -- generated from propMover.txt') + stringify(npcs));
+  await writeFile(resolve(moversOut, 'player.yml'), header('# Player base stats -- generated from propMover.txt') + stringify(players));
 
   console.log(`  movers: ${used} written (${monsters.movers.length} monsters, ${npcs.movers.length} npcs, ${players.movers.length} player), ${dropped} without MI_ id dropped`);
 }

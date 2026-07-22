@@ -104,7 +104,7 @@ export class PacketWriter {
   /**
    * Appends a single byte (BYTE) to the packet.
    *
-   * @param value - Byte value (0–255). Values outside range are clamped.
+   * @param value - Byte value (0-255). Values outside range are clamped.
    * @returns This writer for chaining.
    */
   writeByte(value: number): this {
@@ -115,7 +115,7 @@ export class PacketWriter {
   /**
    * Appends a 16-bit Little-Endian integer (WORD) to the packet.
    *
-   * @param value - Word value (0–65535). Values outside range are clamped.
+   * @param value - Word value (0-65535). Values outside range are clamped.
    * @returns This writer for chaining.
    */
   writeWord(value: number): this {
@@ -128,7 +128,7 @@ export class PacketWriter {
   /**
    * Appends a 32-bit Little-Endian integer (DWORD) to the packet.
    *
-   * @param value - Dword value (0–4294967295).
+   * @param value - Dword value (0-4294967295).
    * @returns This writer for chaining.
    */
   writeDword(value: number): this {
@@ -141,10 +141,10 @@ export class PacketWriter {
   /**
    * Appends a 64-bit Little-Endian unsigned integer (Qword) to the packet.
    *
-   * Flyff serializes `EXPINTEGER` (`__int64`) fields — `m_nExp1`, `m_nDeathExp`,
-   * `m_nAngelExp` — as 8 bytes in `CMover::Serialize` (`ObjSerializeOpt.cpp`).
+   * Flyff serializes `EXPINTEGER` (`__int64`) fields -- `m_nExp1`, `m_nDeathExp`,
+   * `m_nAngelExp` -- as 8 bytes in `CMover::Serialize` (`ObjSerializeOpt.cpp`).
    * Writing these as DWORDs desyncs the stream and crashes the client in
-   * `CItemContainer::Serialize` (garbage `chSize` → OOB `m_apItem[ch]`).
+   * `CItemContainer::Serialize` (garbage `chSize` -> OOB `m_apItem[ch]`).
    *
    * @param value - Qword value. `number` is precise up to 2^53; pass a `bigint`
    *   for the full 64-bit range (late-game exp).
@@ -173,7 +173,7 @@ export class PacketWriter {
   /**
    * Appends a signed 32-bit Little-Endian integer (long) to the packet.
    *
-   * @param value - Long value (-2147483648–2147483647).
+   * @param value - Long value (-2147483648-2147483647).
    * @returns This writer for chaining.
    */
   writeLong(value: number): this {
@@ -231,7 +231,7 @@ export class PacketWriter {
    * Builds and returns the final packet as a Buffer.
    *
    * Concatenates all chunks into a single Buffer. This writer can
-   * continue to be used after calling `build()` — more data will be
+   * continue to be used after calling `build()` -- more data will be
    * appended to the existing chunks.
    *
    * @returns The complete packet as a Buffer.

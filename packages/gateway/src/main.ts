@@ -119,7 +119,7 @@ async function main(): Promise<void> {
 
   await gateway.start();
 
-  logger.info({ port, account: 'admin', password: 'admin' }, 'Gateway ready — connect via WebSocket');
+  logger.info({ port, account: 'admin', password: 'admin' }, 'Gateway ready -- connect via WebSocket');
 
   process.on('SIGINT', async () => {
     logger.info('Shutting down...');

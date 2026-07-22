@@ -1,5 +1,5 @@
 /**
- * DROPGOLD handler — `PACKETTYPE_DROPGOLD` (0x00ff0008).
+ * DROPGOLD handler -- `PACKETTYPE_DROPGOLD` (0x00ff0008).
  *
  * `CDPSrvr::OnDropGold` (`DPSrvr.cpp:841`): `DWORD dwGold, D3DXVECTOR3 vPos`.
  * Removes the penya from `m_nGold` (rejects over-spend) and spawns a gold pile

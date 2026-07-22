@@ -7,7 +7,7 @@
  * the socket level so one bad client can never crash the server (rule 03).
  *
  * Handlers receive a `ClientSocket` (raw `net.Socket` with a `session` attached)
- * and a `PacketReader` positioned AFTER the opcode DWORD — matching the
+ * and a `PacketReader` positioned AFTER the opcode DWORD -- matching the
  * `Handler` layer contract (dispatcher strips frame + opcode; handler reads
  * fields, replies via `sendPacket()`).
  *
@@ -25,7 +25,7 @@ export interface ClientSession {
   state: SessionStateValue;
   accountId?: number;
   charId?: number;
-  /** v15 `__CRC` frame mode (certifier/login path). False ⇒ 5-byte plain frame. */
+  /** v15 `__CRC` frame mode (certifier/login path). False => 5-byte plain frame. */
   crc?: boolean;
   /** Per-connection protocolId negotiated via the 8-byte hello (CRC mode). */
   protocolId?: number;
@@ -54,7 +54,7 @@ export interface DispatcherLogger {
  * ALWAYS the plain 5-byte frame. The v15 certifier/login path is a `crcRead`
  * server: it READS 13-byte `__CRC` frames from the client but WRITES plain
  * 5-byte frames back (its send buffer has no crc, `serversock.cpp`). The frame
- * direction is asymmetric — do not CRC outbound.
+ * direction is asymmetric -- do not CRC outbound.
  */
 export function sendPacket(socket: Socket, payload: Buffer): boolean {
   return socket.write(framePacket(payload));
@@ -78,6 +78,15 @@ export interface PacketDispatcherDeps {
    * (`BEFORESEND`) does not. Default false.
    */
   leadsWithDpid?: boolean;
+  /**
+   * Called once when a connection closes (graceful LEAVE, alt-F4, TCP reset,
+   * CRC drop). Fires inside the socket 'close' handler AFTER buffers are
+   * cleared, so `socket.session` is still readable. The world server uses it
+   * to flush player state to the DB before the player object is released
+   * (C++ `CDPSrvr::OnRemoveUser` save-on-exit). Optional + try/catch-guarded
+   * so a hook throw can never crash the server or block buffer cleanup.
+   */
+  onDisconnect?: (socket: ClientSocket) => void;
 }
 
 export class PacketDispatcher {
@@ -87,11 +96,13 @@ export class PacketDispatcher {
   private readonly log: DispatcherLogger | undefined;
   private readonly crc: boolean;
   private readonly leadsWithDpid: boolean;
+  private readonly onDisconnect: ((socket: ClientSocket) => void) | undefined;
 
   constructor(deps: PacketDispatcherDeps = {}) {
     this.log = deps.logger;
     this.crc = deps.crc ?? false;
     this.leadsWithDpid = deps.leadsWithDpid ?? false;
+    this.onDisconnect = deps.onDisconnect;
   }
 
   /** Monotonic source for per-connection protocolId (C++ uses GetTickCount). */
@@ -123,8 +134,8 @@ export class PacketDispatcher {
     socket.session = { state: SessionState.CONNECTED, crc: this.crc, protocolId: 0 };
     if (!this.crc) this.buffers.set(raw, new PacketBuffer());
     this.log?.info({ ip: socket.remoteAddress, crc: this.crc }, 'Client connected');
-    // v15 CRC path: the server is `crcRead` — it must SEND the protocolId hello
-    // FIRST (plain-framed, server→client). The client blocks in
+    // v15 CRC path: the server is `crcRead` -- it must SEND the protocolId hello
+    // FIRST (plain-framed, server->client). The client blocks in
     // WaitForSingleObject(10s) waiting for it, then disconnects on timeout.
     // Hello payload = [DWORD 0][DWORD protocolId]; protocolId must be non-zero.
     if (this.crc) {
@@ -142,6 +153,15 @@ export class PacketDispatcher {
     socket.on('close', () => {
       this.buffers.delete(raw);
       this.crcBuf.delete(raw);
+      // Fire the lifecycle hook before logging so a thrown hook is reported but
+      // never blocks cleanup or crashes the server (rule 03 -- socket-safe).
+      if (this.onDisconnect) {
+        try {
+          this.onDisconnect(socket);
+        } catch (err) {
+          this.log?.error({ err, ip: socket.remoteAddress }, 'onDisconnect hook threw');
+        }
+      }
       this.log?.info({ ip: socket.remoteAddress }, 'Client disconnected');
     });
   }
@@ -164,7 +184,7 @@ export class PacketDispatcher {
   /**
    * v15 `__CRC` reassembly: verify each inbound frame against the
    * server-generated `session.protocolId` (sent in the hello on accept) and
-   * dispatch. The client never sends a hello — it adopts ours.
+   * dispatch. The client never sends a hello -- it adopts ours.
    */
   private onCrcData(socket: ClientSocket, chunk: Buffer): void {
     const prev = this.crcBuf.get(socket) ?? Buffer.alloc(0);
@@ -177,13 +197,13 @@ export class PacketDispatcher {
         buf = buf.subarray(dec.bytesConsumed);
         continue;
       }
-      // No decode. If a full frame is buffered but failed verification ⇒ CRC
+      // No decode. If a full frame is buffered but failed verification => CRC
       // failure (C++ drops the socket, `clientsock.cpp:388-392`). Otherwise
-      // it's just an incomplete frame — keep buffering.
+      // it's just an incomplete frame -- keep buffering.
       if (buf.length >= CRC_HEADER_SIZE && buf[0] === CRC_HEADERMARK) {
         const sizeDword = buf.readUInt32LE(5);
         if (sizeDword <= CRC_MAX_BUFFER && buf.length >= CRC_HEADER_SIZE + sizeDword) {
-          this.log?.warn({ pid }, 'CRC frame verification failed — dropping socket');
+          this.log?.warn({ pid }, 'CRC frame verification failed -- dropping socket');
           socket.destroy();
           this.crcBuf.set(socket, Buffer.alloc(0));
           return;
@@ -197,7 +217,7 @@ export class PacketDispatcher {
   private async dispatch(socket: ClientSocket, payload: Buffer): Promise<void> {
     const off = this.leadsWithDpid ? 4 : 0; // skip the leading DPID DWORD (BEFORESENDSOLE)
     if (payload.length < off + 4) {
-      this.log?.warn({ len: payload.length }, 'Undersized payload — dropping');
+      this.log?.warn({ len: payload.length }, 'Undersized payload -- dropping');
       return;
     }
     const opcode = payload.readUInt32LE(off);
@@ -207,7 +227,7 @@ export class PacketDispatcher {
     );
     const handler = this.handlers.get(opcode);
     if (!handler) {
-      this.log?.warn({ opcode: `0x${opcode.toString(16)}` }, 'Unknown opcode — dropping');
+      this.log?.warn({ opcode: `0x${opcode.toString(16)}` }, 'Unknown opcode -- dropping');
       return;
     }
     try {
@@ -223,7 +243,7 @@ export class PacketDispatcher {
  * Create a client-facing TCP server with a dispatcher attached. Register opcode
  * handlers on the returned `dispatcher`, then `server.listen(port)`.
  */
-export function createClientServer(deps: { logger?: DispatcherLogger; crc?: boolean; leadsWithDpid?: boolean } = {}): {
+export function createClientServer(deps: { logger?: DispatcherLogger; crc?: boolean; leadsWithDpid?: boolean; onDisconnect?: (socket: ClientSocket) => void } = {}): {
   server: Server;
   dispatcher: PacketDispatcher;
 } {
@@ -231,6 +251,7 @@ export function createClientServer(deps: { logger?: DispatcherLogger; crc?: bool
   if (deps.logger !== undefined) dd.logger = deps.logger;
   if (deps.crc) dd.crc = true;
   if (deps.leadsWithDpid) dd.leadsWithDpid = true;
+  if (deps.onDisconnect) dd.onDisconnect = deps.onDisconnect;
   const dispatcher = new PacketDispatcher(dd);
   const server = net.createServer();
   dispatcher.attach(server);

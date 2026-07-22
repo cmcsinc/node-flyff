@@ -1,13 +1,13 @@
 /**
- * S→C ACTMSG snapshot — generic state/motion message (`SNAPSHOTTYPE_ACTMSG`,
+ * S->C ACTMSG snapshot -- generic state/motion message (`SNAPSHOTTYPE_ACTMSG`,
  * 0x0002). Mirrors `CUserMng::AddActMsg` (`WORLDSERVER/User.cpp`). Used in
  * `DoDie` (`_Common/Mover.cpp:5204-5205`) to send `OBJMSG_STOP` (halt) and
  * `OBJMSG_DIE` (open revive dialog) to the dying player.
  *
  * Wire (after the SNAPSHOT frame prefix):
- *  dwMsg:DWORD  — the `OBJMSG_*` enum value
- *  dwParam:DWORD  — context-dependent (0 for simple messages)
- *  idAttacker:DWORD  — mover that caused the message (or 0)
+ *  dwMsg:DWORD  -- the `OBJMSG_*` enum value
+ *  dwParam:DWORD  -- context-dependent (0 for simple messages)
+ *  idAttacker:DWORD  -- mover that caused the message (or 0)
  *
  * @module net/snapshot/actMsg.serializer
  */

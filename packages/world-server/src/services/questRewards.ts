@@ -1,12 +1,12 @@
 /**
- * Quest reward grantors + removers — pure functions side-effecting via deps.
+ * Quest reward grantors + removers -- pure functions side-effecting via deps.
  *
  * Mirrors the C++ reward-grant path invoked from `CUser::OnEndQuest`-style
  * handlers (`WORLDSERVER/User.cpp`): `SetBeginSetAdd*` apply at quest start;
  * `SetEndReward*` / `SetEndRemove*` apply at completion. Signatures follow
  * `_Common/PROJECT.CPP:2031-2159`.
  *
- * Rule 03/04 — gold/exp mutations are WAL-journaled through the injected sink
+ * Rule 03/04 -- gold/exp mutations are WAL-journaled through the injected sink
  * BEFORE the mutation lands, recording the ABSOLUTE post-state so the boot
  * replayer can idempotently re-apply them. Item mutations are not journaled
  * here: QuestService has no real inventory sink yet, so there is no DB write to
@@ -28,7 +28,7 @@ export interface RewardSink {
     add(itemId: number, count: number): void;
     remove(itemId: number, count: number): void;
   };
-  /** WAL journal — appended before any gold/exp/item mutation (rule 04). */
+  /** WAL journal -- appended before any gold/exp/item mutation (rule 04). */
   journal?: (entry: JournalEntry) => void;
   /**
    * Fire-and-forget gold persist (migration 003). Called after the WAL append
@@ -43,7 +43,7 @@ function num(arg: QuestArg | undefined, fallback = 0): number {
 }
 
 /**
- * Resolve a min/max reward pair to a concrete amount. min==max → that value
+ * Resolve a min/max reward pair to a concrete amount. min==max -> that value
  * (deterministic for tests); otherwise uniform in [min, max]. Mirrors C++
  * `Random(min, max)` in the gold/exp grant paths.
  */
@@ -66,7 +66,7 @@ function passesSexJob(
 }
 
 /**
- * `SetBeginSetAdd*` — granted on quest accept. Gold (`SetBeginSetAddGold`) and
+ * `SetBeginSetAdd*` -- granted on quest accept. Gold (`SetBeginSetAddGold`) and
  * up to 4 `SetBeginSetAddItem(idx, item, num)` slots (`PROJECT.CPP:1707-1725`).
  */
 export function applyBeginSet(player: CPlayer, def: QuestDef, sink: RewardSink): void {
@@ -83,7 +83,7 @@ export function applyBeginSet(player: CPlayer, def: QuestDef, sink: RewardSink):
 }
 
 /**
- * `SetEndReward*` + `SetEndRemove*` — granted on quest completion
+ * `SetEndReward*` + `SetEndRemove*` -- granted on quest completion
  * (`PROJECT.CPP:2031-2159`). Rewards grant first, removes after, matching the
  * C++ turn-in order.
  */
@@ -131,7 +131,7 @@ export function applyEnd(player: CPlayer, def: QuestDef, sink: RewardSink): void
           if (id !== 0) player.removeQuest(id);
         }
         break;
-      // SetEndRewardPKValue/Teleport/Hide/PetLevelup: ponytail — wire when those
+      // SetEndRewardPKValue/Teleport/Hide/PetLevelup: ponytail -- wire when those
       // systems (PK, teleport, pet, hide state) land. No-op for now.
       default:
         break;
@@ -153,7 +153,7 @@ function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
   const gain = addExp(player.m_nLevel, player.m_nExp, amount);
   // Journal the ABSOLUTE post-state (cumulative exp) before the mutation (rule
   // 04). Quest-granted exp has no write-through persist today, so this WAL row
-  // is the ONLY crash recovery for it — idempotent replay on next boot.
+  // is the ONLY crash recovery for it -- idempotent replay on next boot.
   journal(player, 'CHAR_EXP', {
     level: gain.level,
     exp: String(Math.floor(cumulativeExp(gain.level, gain.exp))),
@@ -167,7 +167,7 @@ function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
     player._dirty.add('m_nLevel');
     player._dirty.add('m_nHp');
     player._dirty.add('m_nMp');
-    // ponytail: no SETEXPERIENCE/SETLEVEL broadcast here — quest reward path has
+    // ponytail: no SETEXPERIENCE/SETLEVEL broadcast here -- quest reward path has
     // no serializer/manager access; next exp gain or a dedicated flush broadcasts.
   }
 }
@@ -188,7 +188,7 @@ function removeItem(player: CPlayer, item: number, count: number, sink: RewardSi
   const have = sink.inventory.count(item);
   const remove = count < 0 ? have : Math.min(have, count);
   if (remove <= 0) return;
-  // No WAL — see grantItem (no inventory persistence behind this path yet).
+  // No WAL -- see grantItem (no inventory persistence behind this path yet).
   sink.inventory.remove(item, remove);
 }
 

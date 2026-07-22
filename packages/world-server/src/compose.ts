@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar.js';
 import { ClusterListener } from './ipc/clusterListener.js';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
@@ -10,6 +10,7 @@ import { SpawnManager } from './managers/spawn.manager.js';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer.js';
 import { NpcSnapshotSerializer } from './net/snapshot/npcSnapshot.serializer.js';
 import { DestObjSerializer } from './net/snapshot/destObj.serializer.js';
+import { CreateItemSnapshotSerializer } from './net/snapshot/createItem.serializer.js';
 import { JoinService } from './services/join.service.js';
 import { QuestService } from './services/quest.service.js';
 import { JoinHandler } from './handlers/join.handler.js';
@@ -52,6 +53,9 @@ import { ItemManager } from './managers/item.manager.js';
 import { VISIBILITY_RADIUS } from './net/snapshot/constants.js';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
+import { SkillService } from './services/skill.service.js';
+import { UseSkillHandler } from './handlers/useSkill.handler.js';
+import { DoUseSkillPointHandler } from './handlers/doUseSkillPoint.handler.js';
 import { ActMsgHandler } from './handlers/actMsg.handler.js';
 import { MoveItemHandler } from './handlers/moveItem.handler.js';
 import { DropItemHandler } from './handlers/dropItem.handler.js';
@@ -63,6 +67,8 @@ import { UseItemService } from './services/useItem.service.js';
 import { DoUseItemHandler } from './handlers/doUseItem.handler.js';
 import { BankService } from './services/bank.service.js';
 import { BankHandler } from './handlers/bank.handler.js';
+import { ShopService } from './services/shop.service.js';
+import { ShopHandler } from './handlers/shop.handler.js';
 import { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import { QuestHelperHandler } from './handlers/questHelper.handler.js';
@@ -70,6 +76,7 @@ import { JournalReplayer } from './systems/journalReplayer.js';
 import { registerReplayers } from './systems/journalReplayers.js';
 import { QuestTrackerSystem } from './systems/questTracker.system.js';
 import { AISystem } from './systems/ai.system.js';
+import { CheckpointSystem } from './systems/checkpoint.system.js';
 
 export interface WorldComposeResult {
   config: WorldServerConfig;
@@ -122,6 +129,9 @@ export interface WorldComposeResult {
   dropService: DropService;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
+  skillService: SkillService;
+  useSkillHandler: UseSkillHandler;
+  doUseSkillPointHandler: DoUseSkillPointHandler;
   actMsgHandler: ActMsgHandler;
   moveItemHandler: MoveItemHandler;
   dropItemHandler: DropItemHandler;
@@ -129,6 +139,7 @@ export interface WorldComposeResult {
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
   bankHandler: BankHandler;
+  shopHandler: ShopHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -136,6 +147,7 @@ export interface WorldComposeResult {
   journalReplayer: JournalReplayer;
   questTracker: QuestTrackerSystem;
   aiSystem: AISystem;
+  checkpointSystem: CheckpointSystem;
 }
 
 export async function compose(): Promise<WorldComposeResult> {
@@ -190,8 +202,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const questRepo = new QuestRepository(db);
   const inventoryRepo = new InventoryRepository(db);
   const bankRepo = new BankRepository(db);
+  const skillRepo = new SkillRepository(db);
 
-  // WAL journal — embedded SQLite, opened once per process. Critical mutations
+  // WAL journal -- embedded SQLite, opened once per process. Critical mutations
   // (items, gold, exp, level) append here before ack so a crash never dupes or
   // rolls back. Closed on shutdown via index.ts. See rule `04-persistence.md`.
   const journal = new Journal({ path: config.wal.journalPath, logger });
@@ -227,7 +240,7 @@ export async function compose(): Promise<WorldComposeResult> {
     'Spawn table bootstrapped',
   );
 
-  // Ambient NPC speech bubbles — scans spawned NPCs for state-0 `speak`
+  // Ambient NPC speech bubbles -- scans spawned NPCs for state-0 `speak`
   // greetings and broadcasts them on the vanilla `CNpcProperty` cadence.
   const npcSpeechService = new NpcSpeechService({
     spawnManager,
@@ -236,33 +249,45 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   npcSpeechService.start();
 
-  // ponytail: `inventory` left permissive-stubbed (no inventory system yet).
-  // Item quests stay uncompletable until it lands; non-item quests work today.
+  // Inventory service -- constructed early so the quest tracker can grant
+  // quest-item drops on kill AND questService can evaluate/grant item
+  // conditions + rewards through the real bag (questInventory adapter).
+  const inventoryService = new InventoryService({
+    inventoryRepo, charRepo, journal,
+    getStackSize: (id: number) => resources.items.items.get(id)?.stack_size ?? 1,
+  });
+  const createItemSerializer = new CreateItemSnapshotSerializer();
+
   const questService = new QuestService({
     questRepo,
     quests: resources.quests,
+    inventoryService,
+    createItemSerializer,
     journal,
     charRepo,
   });
 
-  // Phase 6 — reactive quest tracker (kill/patrol/time). Self-driven 1 s timer
-  // for the time-limit countdown; `onKill`/`onPlayerMoved` are hooks the combat
-  // and movement services call (wired in Phase 7 integration).
+  // Phase 6 -- reactive quest tracker (kill/patrol/time + quest-item drops).
+  // Self-driven 1 s timer for the time-limit countdown; `onKill`/
+  // `onPlayerMoved` are hooks the combat and movement services call
+  // (wired in Phase 7 integration).
   const questTracker = new QuestTrackerSystem({
     quests: resources.quests,
     playerManager,
     questRepo,
+    inventoryService,
+    createItemSerializer,
   });
   questTracker.start();
 
-  // Revival/death loop — wired before AISystem so the AI tick can hand lethal
+  // Revival/death loop -- wired before AISystem so the AI tick can hand lethal
   // player damage to `onPlayerDeath` (flag dead + broadcast + open revive dlg).
   const revivalService = new RevivalService({
     charRepo, inventoryRepo, journal, zoneManager, playerManager, zones: resources.zones,
   });
 
   // Monster idle-wander FSM (C++ CAIMonster::StateIdle). Emits one DESTPOS per
-  // new destination; the client walks itself. Monsters only — town NPCs/guards
+  // new destination; the client walks itself. Monsters only -- town NPCs/guards
   // are skipped. Self-driven 1 s timer; `tick(now)` is public for the future
   // unified 50 ms loop. Stopped on shutdown via index.ts (no leaked timer).
   const aiSystem = new AISystem({
@@ -277,6 +302,7 @@ export async function compose(): Promise<WorldComposeResult> {
     questService,
     inventoryRepo,
     bankRepo,
+    skillRepo,
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
@@ -285,6 +311,15 @@ export async function compose(): Promise<WorldComposeResult> {
     joinService,
     snapshotSerializer,
   );
+
+  // Periodic checkpoint -- flush live player position/angle/vitals/stats every
+  // 30 s so a hard crash (no graceful logout) loses at most one interval.
+  // Graceful disconnect is covered by JoinService.disconnectByCharId. Wired
+  // after joinService exists so the closure captures a bound reference.
+  const checkpointSystem = new CheckpointSystem({
+    flush: () => joinService.flushAll(),
+  });
+  checkpointSystem.start();
 
   const mapKeyService = new MapKeyService({ playerManager });
   const vicinityService = new VicinityService({
@@ -306,13 +341,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const playerMovedHandler = new PlayerMovedHandler(playerManager, movementService);
   const playerBehaviorHandler = new PlayerBehaviorHandler(playerManager, movementService);
 
-  // Phase 6 — remaining v15 C→S handlers (chat, motion, target, movement
+  // Phase 6 -- remaining v15 C->S handlers (chat, motion, target, movement
   // variants, query/getpos, script dialog, revival). See PROGRESS.md for
   // the audit that scoped these.
-  const inventoryService = new InventoryService({
-    inventoryRepo, charRepo, journal,
-    getStackSize: (id: number) => resources.items.items.get(id)?.stack_size ?? 1,
-  });
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
     inventoryService, charRepo,
@@ -347,22 +378,30 @@ export async function compose(): Promise<WorldComposeResult> {
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
-  // Phase E — ground-item pickup (PACKETTYPE_ACTMSG / OBJMSG_PICKUP).
+  // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v15 damage-skill MVP).
+  const skillService = new SkillService({
+    skills: resources.skills,
+    spawnManager, zoneManager, playerManager, combatService,
+    skillRepo, charRepo,
+  });
+  const useSkillHandler = new UseSkillHandler(playerManager, skillService);
+  const doUseSkillPointHandler = new DoUseSkillPointHandler(playerManager, skillService);
+  // Phase E -- ground-item pickup (PACKETTYPE_ACTMSG / OBJMSG_PICKUP).
   const actMsgHandler = new ActMsgHandler({ playerManager, itemManager, inventoryService });
 
-  // Inventory ops — move (swap) / drop item / drop gold.
+  // Inventory ops -- move (swap) / drop item / drop gold.
   const moveItemHandler = new MoveItemHandler({ playerManager, inventoryService });
   const dropItemHandler = new DropItemHandler({ playerManager, itemManager, inventoryService });
   const dropGoldHandler = new DropGoldHandler({ playerManager, itemManager, inventoryService });
 
-  // Equipment — equip/unequip + stat fold into combat.
+  // Equipment -- equip/unequip + stat fold into combat.
   const equipService = new EquipService({
     inventoryRepo, journal,
     getItem: (id: number) => resources.items.items.get(id),
   });
   const doEquipHandler = new DoEquipHandler({ playerManager, zoneManager, equipService });
 
-  // Use-item — DOUSEITEM router (equip / potion+food / buff-skill-warp-text).
+  // Use-item -- DOUSEITEM router (equip / potion+food / buff-skill-warp-text).
   const consumableService = new ConsumableService(inventoryService);
   const useItemService = new UseItemService({
     equipService, consumableService, inventoryService,
@@ -370,11 +409,15 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const doUseItemHandler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
 
-  // Bank — open + deposit/withdraw item & gold (account-shared).
-  const bankService = new BankService({ bankRepo, inventoryRepo, journal });
+  // Bank -- open + deposit/withdraw item & gold (account-shared).
+  const bankService = new BankService({ bankRepo, inventoryRepo, characterRepo: charRepo, journal });
   const bankHandler = new BankHandler({ playerManager, bankService });
 
-  // Phase 4 — C→S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
+  // NPC vendor shop -- open/close (empty-window until stock expansion ships).
+  const shopService = new ShopService({ spawnManager });
+  const shopHandler = new ShopHandler({ playerManager, shopService });
+
+  // Phase 4 -- C->S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
   const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
   const questCheckHandler = new QuestCheckHandler(playerManager, questService);
   const questHelperHandler = new QuestHelperHandler(playerManager, spawnManager);
@@ -391,6 +434,7 @@ export async function compose(): Promise<WorldComposeResult> {
     npcSpeechService,
     questTracker,
     aiSystem,
+    checkpointSystem,
     snapshotSerializer,
     npcSnapshotSerializer,
     joinService,
@@ -432,6 +476,9 @@ export async function compose(): Promise<WorldComposeResult> {
     dropService,
     playerSetDestObjHandler,
     meleeAttackHandler,
+    skillService,
+    useSkillHandler,
+    doUseSkillPointHandler,
     actMsgHandler,
     moveItemHandler,
     dropItemHandler,
@@ -439,6 +486,7 @@ export async function compose(): Promise<WorldComposeResult> {
     doEquipHandler,
     doUseItemHandler,
     bankHandler,
+    shopHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,

@@ -1,29 +1,29 @@
 /**
- * AISystem — monster FSM: idle wander + aggro + pursue (RAGE) + return-home.
+ * AISystem -- monster FSM: idle wander + aggro + pursue (RAGE) + return-home.
  *
  * Ports `CAIMonster` (`_AIInterface/AIMonster.cpp`) state-by-state. The world
  * has no central 50 ms tick yet, so {@link start} runs its own 100 ms timer
- * (C++ ticks at 67 ms — close enough for movement/attack cadence); {@link tick}
+ * (C++ ticks at 67 ms -- close enough for movement/attack cadence); {@link tick}
  * is public for the future unified loop and tests.
  *
  * **States** (per `AIMonster.cpp:30-56`):
- *   - **Idle** (no target, not leashing): wander every 5–6 s within the 30 m
- *     `RANGE_MOVE` leash, OR sight-acquire a player if `BELLI ∈ ACTIVE_BELLI`.
+ *   - **Idle** (no target, not leashing): wander every 5-6 s within the 30 m
+ *     `RANGE_MOVE` leash, OR sight-acquire a player if `BELLI in ACTIVE_BELLI`.
  *   - **RAGE** (has `m_idTarget`): step toward the player server-side; swing on
  *     `REATTACK_DELAY_MS` cadence when within `MELEE_ATTACK_RANGE`. Leash at
- *     150 m from spawn OR 120 m from `m_vPosDamage` → return home.
- *   - **Return** (`m_bReturnToBegin`): run home at 2.66×; restore HP + clear
+ *     150 m from spawn OR 120 m from `m_vPosDamage` -> return home.
+ *   - **Return** (`m_bReturnToBegin`): run home at 2.66*; restore HP + clear
  *     target on arrival.
  *
  * **Wire model** (research `User.cpp:4705`, `AIMonster.cpp:145-171`): the server
- * emits ONE destination packet per state change — `DESTPOS` (0xc1) for idle /
+ * emits ONE destination packet per state change -- `DESTPOS` (0xc1) for idle /
  * return-home, `MOVERSETDESTOBJ` (0xc2) on aggro acquire (the client then walks
  * the monster to FOLLOW the moving player objid). Server `m_vPos` is stepped
  * each tick so attack-range + leash gates see a faithful position.
  *
- * Offense: `AISystem` owns NPC swings now (C++ `OnActTimer` cadence) —
+ * Offense: `AISystem` owns NPC swings now (C++ `OnActTimer` cadence) --
  * `CombatService.triggerRage` only sets the target on a player's hit. No `await`
- * in tick (rule 05); no socket refs (rule 02) — egress via `ZoneManager`.
+ * in tick (rule 05); no socket refs (rule 02) -- egress via `ZoneManager`.
  *
  * ponytail: full aggro table (currently single-slot), `dwReAttackDelay` per
  * mover, ranged/healer AI, flight, collision-aware stuck teleport.
@@ -71,7 +71,7 @@ export interface AISystemDeps {
   playerManager: Pick<PlayerManager, 'get'>;
   /**
    * Zone revival-position lookup by numeric zone id (resources `byNumericId`).
-   * Drives the town safe-zone guard (`combat/safeZone`). Optional — when absent
+   * Drives the town safe-zone guard (`combat/safeZone`). Optional -- when absent
    * (tests), no safe-zone guard applies and combat is lethal everywhere.
    */
   readonly zones?: { byNumericId: Map<number, { revival: { position: Vec3 } }> };
@@ -146,7 +146,7 @@ export class AISystem {
    * Eligible = alive AND visible AND within `AGGRO_LEVEL_BAND` levels above the
    * mob. The level cap is a CUSTOM deviation (ponytail in `aiConstants.ts`);
    * vanilla `ScanTarget` aggros any level. The TRANSPARENT skip mirrors C++
-   * `ScanTarget` (`AIMonster.cpp:344-432`) — invisible players (`/inv`) are
+   * `ScanTarget` (`AIMonster.cpp:344-432`) -- invisible players (`/inv`) are
    * never acquired.
    */
   private acquireBySight(m: CMover, now: number): boolean {
@@ -188,13 +188,13 @@ export class AISystem {
     if (target === undefined || target.m_nHp <= 0 || target.m_bDead || isHidden(target)
       || this.inSafeZone(target)) {
       // Target gone, dead, vanished (`/inv` mid-fight), or reached a town
-      // safe-zone → release + go home. The safe-zone drop is the no-combat
+      // safe-zone -> release + go home. The safe-zone drop is the no-combat
       // guard: a monster chasing a player into town stops at the edge and
       // never lands a swing inside the revival radius (`combat/safeZone`).
       this.startReturn(m, now);
       return;
     }
-    // Spawn-anchor (150 m) OR damage-pos (120 m) leash → go home.
+    // Spawn-anchor (150 m) OR damage-pos (120 m) leash -> go home.
     if (distSq2(m.m_vPos, m.m_vPosBegin) > RAGE_LEASH * RAGE_LEASH
       || distSq2(m.m_vPos, m.m_vPosDamage) > RANGE_RETURN_TO_BEGIN * RANGE_RETURN_TO_BEGIN) {
       this.startReturn(m, now);
@@ -215,11 +215,11 @@ export class AISystem {
   }
 
   /**
-   * NPC → player swing — broadcasts the attack animation
+   * NPC -> player swing -- broadcasts the attack animation
    * (`SNAPSHOTTYPE_MELEE_ATTACK` or `SNAPSHOTTYPE_RANGE_ATTACK`) so peers see
    * the monster wind up, then resolves `resolveMelee` (same formula either
-   * way) and broadcasts DAMAGE. Mirrors C++ `DoAttack`/`DoAttackRange` →
-   * `AddMeleeAttack`/`AddRangeAttack` → damage round-trip.
+   * way) and broadcasts DAMAGE. Mirrors C++ `DoAttack`/`DoAttackRange` ->
+   * `AddMeleeAttack`/`AddRangeAttack` -> damage round-trip.
    */
   private monsterSwing(m: CMover, target: CPlayer): void {
     const animPkt = m.m_bRangeAttack
@@ -228,7 +228,7 @@ export class AISystem {
     this.deps.zoneManager.broadcastAround(m.m_vPos, m.m_nZoneId, VISIBILITY_RADIUS, animPkt);
 
     const result = resolveMelee(moverCombatant(m), playerCombatant(target), this.rng);
-    // MATCHLESS (undying `/undying`) → invincible: swing anim + DAMAGE still
+    // MATCHLESS (undying `/undying`) -> invincible: swing anim + DAMAGE still
     // broadcast (hit=0) so the client sees the monster wind up, but no HP is
     // subtracted. Mirrors C++ `IsMode(MATCHLESS_MODE)` gating MinusHP.
     const invincible = (target.m_dwMode & MODE.MATCHLESS) !== 0
@@ -251,7 +251,7 @@ export class AISystem {
 
   // --- Acquire + Return home -----------------------------------------------
 
-  /** `STATE_RAGE` entry — set target, leash origin, pursue speed, follow packet. */
+  /** `STATE_RAGE` entry -- set target, leash origin, pursue speed, follow packet. */
   private acquire(m: CMover, target: CPlayer, now: number): void {
     m.m_idTarget = target.m_idPlayer;
     m.m_vPosDamage = { ...m.m_vPos };
@@ -263,7 +263,7 @@ export class AISystem {
     this.deps.zoneManager.broadcastAround(m.m_vPos, m.m_nZoneId, VISIBILITY_RADIUS, pkt);
   }
 
-  /** `DoReturnToBegin(TRUE)` — drop target, run home at 2.66×. */
+  /** `DoReturnToBegin(TRUE)` -- drop target, run home at 2.66*. */
   private startReturn(m: CMover, now: number): void {
     m.m_idTarget = NULL_ID;
     m.m_bReturnToBegin = true;
@@ -272,7 +272,7 @@ export class AISystem {
     this.moveTo(m, m.m_vPosBegin, now, false);
   }
 
-  /** Step home; on arrival restore HP + reset. 20 s stuck-cap → snap home. */
+  /** Step home; on arrival restore HP + reset. 20 s stuck-cap -> snap home. */
   private stepReturnHome(m: CMover, now: number, dtMs: number): void {
     if (distSq2(m.m_vPos, m.m_vPosBegin) <= HOME_ARRIVAL * HOME_ARRIVAL
       || now - m.m_tmReturnToBegin > RETURN_STUCK_MS) {
@@ -301,7 +301,7 @@ export class AISystem {
 
 // --- helpers ----------------------------------------------------------------
 
-/** Step `m.m_vPos` toward `dest` on the ground plane by `speedFactor·fSpeed·dt`. */
+/** Step `m.m_vPos` toward `dest` on the ground plane by `speedFactor*fSpeed*dt`. */
 function stepToward(m: CMover, dest: Vec3, speedFactor: number, fSpeed: number, dtMs: number): void {
   if (fSpeed <= 0) return;
   const dx = dest.x - m.m_vPos.x;
@@ -321,7 +321,7 @@ function randInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/** 5–6 s stop interval — `SEC(5) + xRandom(SEC(1))`. */
+/** 5-6 s stop interval -- `SEC(5) + xRandom(SEC(1))`. */
 function stopInterval(): number {
   return STOP_MIN_MS + Math.floor(Math.random() * STOP_JITTER_MS);
 }
@@ -334,7 +334,7 @@ function distSq2(a: Vec3, b: Vec3): number {
 }
 
 /**
- * Is `player` hidden from monster aggro? `TRANSPARENT_MODE` (`/inv`) — mirrors
+ * Is `player` hidden from monster aggro? `TRANSPARENT_MODE` (`/inv`) -- mirrors
  * the C++ `ScanTarget` filter (`AIMonster.cpp:344-432`). MATCHLESS (undying) is
  * NOT hidden: monsters still swing, the damage gate in `monsterSwing` blocks HP
  * loss. ponytail: add `IK3_TEXT_DISGUISE` buff check when buffs ship.

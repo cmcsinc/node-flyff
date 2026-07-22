@@ -1,5 +1,5 @@
 /**
- * S→C MOVER_DEATH snapshot — `SNAPSHOTTYPE_MOVERDEATH` (0x00c7).
+ * S->C MOVER_DEATH snapshot -- `SNAPSHOTTYPE_MOVERDEATH` (0x00c7).
  *
  * Mirrors `CUserMng::AddMoverDeath` (`WORLDSERVER/User.cpp:4488`):
  *   ar << GETID(pMover) << SNAPSHOTTYPE_MOVER_DEATH;

@@ -3,8 +3,8 @@
  *
  * Loads the per-quest YAML files emitted by `scripts/converters/quests.ts` and
  * builds the lookup tables the runtime needs:
- *  - `byId`     — numeric quest id → definition (the condition/reward engine)
- *  - `drops`    — monster MI_* → quest-item generators (the drop system)
+ *  - `byId`     -- numeric quest id -> definition (the condition/reward engine)
+ *  - `drops`    -- monster MI_* -> quest-item generators (the drop system)
  *
  * @module loaders/quest
  */
@@ -22,11 +22,23 @@ import {
 
 const logger = createResourceLogger('quest.loader');
 
+/**
+ * A `QuestItem` drop generator enriched with the owning quest id.
+ *
+ * The persisted yml `quest_items` rows don't carry their quest id (they live
+ * inside the quest file), but the drop system must know which quest a generator
+ * belongs to so it only fires for players with that quest active. The loader
+ * stamps `questId` while aggregating.
+ */
+export interface QuestDrop extends QuestItem {
+  questId: number;
+}
+
 export interface QuestIndex {
-  /** Quest id → definition. */
+  /** Quest id -> definition. */
   byId: Map<number, QuestDef>;
-  /** Monster MI_* → quest items that monster drops (aggregated across quests). */
-  drops: Map<number, QuestItem[]>;
+  /** Monster MI_* -> quest items that monster drops (aggregated across quests). */
+  drops: Map<number, QuestDrop[]>;
 }
 
 /** Look up a quest definition by numeric id. */
@@ -35,7 +47,7 @@ export function questById(index: QuestIndex, id: number): QuestDef | undefined {
 }
 
 /** All quest-item generators for a slain monster (may belong to several quests). */
-export function dropsFor(index: QuestIndex, moverId: number): QuestItem[] {
+export function dropsFor(index: QuestIndex, moverId: number): QuestDrop[] {
   return index.drops.get(moverId) ?? [];
 }
 
@@ -58,13 +70,14 @@ export async function loadQuests(dataDir: string): Promise<QuestIndex> {
     }
   }
 
-  // Aggregate quest-item drops by monster.
-  const dropsMap = new Map<number, QuestItem[]>();
+  // Aggregate quest-item drops by monster, stamped with the owning quest id.
+  const dropsMap = new Map<number, QuestDrop[]>();
   for (const def of byId.values()) {
     for (const qi of def.quest_items) {
+      const drop: QuestDrop = { ...qi, questId: def.id };
       const list = dropsMap.get(qi.mover);
-      if (list) list.push(qi);
-      else dropsMap.set(qi.mover, [qi]);
+      if (list) list.push(drop);
+      else dropsMap.set(qi.mover, [drop]);
       drops++;
     }
   }

@@ -10,7 +10,7 @@ import type { ScriptFunc } from '../../src/net/snapshot/scriptDialog.serializer.
 
 const NPC_ID = 0x40000001;
 
-/** Minimal CPlayer stand-in — only the fields `dialog()` touches. */
+/** Minimal CPlayer stand-in -- only the fields `dialog()` touches. */
 function mkPlayer(overrides: Partial<CPlayer> = {}): CPlayer {
   return {
     m_idPlayer: 99,
@@ -128,7 +128,7 @@ describe('ScriptDlgService.dialog', () => {
       dialogs: mkDialogs(), quests: mkQuests([]), questService: svc, chat: fakeChat as never,
     });
     const out = await s.dialog(mkPlayer({ m_vPos: { x: 0, y: 0, z: 0 } }), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
-    assert.equal(out.ok, false); // 100² = 10000 > 1024
+    assert.equal(out.ok, false); // 100^2 = 10000 > 1024
     if (!out.ok) assert.equal(out.reason, 'too_far');
   });
 
@@ -145,7 +145,7 @@ describe('ScriptDlgService.dialog', () => {
     });
     const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
     assert.equal(out.ok, true);
-    // Speak→chat frame is emitted alongside the synthesized #init menu frame.
+    // Speak->chat frame is emitted alongside the synthesized #init menu frame.
     if (out.ok) assert.ok(out.frames.some((f) => f.equals(Buffer.from([0xc0, NPC_ID & 0xff]))));
   });
 
@@ -248,12 +248,12 @@ describe('ScriptDlgService.dialog', () => {
     const f = calls[0]!;
     assert.equal(f[0]!.type, 'removeAllKeys');
     assert.deepEqual(f[1], { type: 'say', text: 'hello' });
-    assert.deepEqual(f[2], { type: 'addKey', word: 'hello', key: '2' }); // label 2, no key → routes to 2
-    assert.deepEqual(f[3], { type: 'addKey', word: '', key: '7', param: 3 }); // label 5 unresolved → ''
+    assert.deepEqual(f[2], { type: 'addKey', word: 'hello', key: '2' }); // label 2, no key -> routes to 2
+    assert.deepEqual(f[3], { type: 'addKey', word: '', key: '7', param: 3 }); // label 5 unresolved -> ''
     assert.equal(f[4]!.type, 'exit');
   });
 
-  it('synthesizes a #init menu (greeting SAY + Exit) for a speak-only state 0', async () => {
+  it('synthesizes a #init menu (greeting SAY, no Exit) for a speak-only state 0', async () => {
     const { svc } = fakeQuestService();
     const { serializer, calls } = fakeScriptDialog();
     const dialogs = mkDialogs(['', '', '', '', '', 'hi']);
@@ -272,7 +272,9 @@ describe('ScriptDlgService.dialog', () => {
     const funcs = calls[0];
     assert.equal(funcs[0].type, 'removeAllKeys');
     assert.deepEqual(funcs.filter((f) => f.type === 'say'), [{ type: 'say', text: 'hi' }]);
-    assert.equal(funcs[funcs.length - 1].type, 'exit');
+    // No Exit: FUNCTYPE_EXIT destroys the client CWndDialog, so the synth #init
+    // batch must not queue one (the player closes via the window close box / ESC).
+    assert.equal(funcs.filter((f) => f.type === 'exit').length, 0);
     assert.ok(out.frames.some((f) => f.equals(Buffer.from([0xc0, NPC_ID & 0xff])))); // Speak chat too
   });
 });

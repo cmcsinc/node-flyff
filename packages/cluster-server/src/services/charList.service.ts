@@ -1,5 +1,5 @@
 /**
- * Character list service — resolves an account name to its character roster.
+ * Character list service -- resolves an account name to its character roster.
  *
  * @module services/charList.service
  */

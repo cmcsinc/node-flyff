@@ -11,7 +11,7 @@ describe('v15 password crypto (AES-128-CBC, key dldhsvmflvm)', () => {
     assert.equal(MAX_PASSWORD, 42);
   });
 
-  it('round-trips encrypt → decrypt', () => {
+  it('round-trips encrypt -> decrypt', () => {
     const pw = 'kikugalanet-md5-placeholder-32-hex!!';
     assert.equal(decryptV15Password(encryptV15Password(pw)), pw);
   });

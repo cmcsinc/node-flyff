@@ -12,7 +12,7 @@ function makeResources(): ResourceIndex {
     dwObjIndex: 12, scale: 1.0, type: 'npc', level: 1, hp: 1000, mp: 1000, fp: 1000,
     attack: 0, defense: 0, attack_rate: 0, dodge_rate: 0, speed: 0, attack_speed: 0,
     flyable: false, boss: false, giant: false, raid: false, attackable: false, guard: false,
-    belligerence: 1, // BELLI_PEACEFUL — suppresses client attack cursor
+    belligerence: 1, // BELLI_PEACEFUL -- suppresses client attack cursor
     outfit: {
       characterKey: 'MaDa_Homeit', hairMesh: 1, hairColor: 0xff0000ff, headMesh: 3,
       equip: [{ parts: 2, itemId: 1029 }],
@@ -24,7 +24,7 @@ function makeResources(): ResourceIndex {
     attack: 7000, defense: 300, attack_rate: 150, dodge_rate: 10, speed: 1, attack_speed: 1500,
     attack_range: 5,
     flyable: false, boss: false, giant: false, raid: false, attackable: true, guard: true,
-    belligerence: 12, // BELLI_MELEE — aggressive
+    belligerence: 12, // BELLI_MELEE -- aggressive
   });
 
   const flaris = {
@@ -47,7 +47,7 @@ function makeResources(): ResourceIndex {
     byWorld: new Map([['madrigal', [flaris as never]]]),
   };
   return {
-    items: { items: new Map(), byName: new Map(), byKind: new Map() },
+    items: { items: new Map(), byName: new Map(), byKind: new Map(), byKind3: new Map(), definedIds: new Set([81, 83, 413]) },
     movers: { movers, byName: new Map(), byType: new Map() },
     skills: { skills: new Map(), byName: new Map(), byJob: new Map() },
     zones,
@@ -98,20 +98,19 @@ describe('SpawnManager', () => {
     assert.ok(flaris.every((m) => m.m_nZoneId === 1));
   });
 
-  it('skips monster spawns inside the town exclusion radius around revival', () => {
+  it('skips NPC placements that resolve to a monster-type mover (MaFl_Demian case)', () => {
     const resources = makeResources();
     const flaris = resources.zones.zones.get('flaris') as never as {
-      spawns: Array<{ id: number; mover_id: number; position: { x: number; y: number; z: number }; radius: number; count: number; delay: number }>;
+      npcs: Array<{ id: number; mover_id: number; position: { x: number; y: number; z: number }; angle: number; functions: never[] }>;
     };
-    // Fixture revival sits at (0,0,0). Add a spawn 500u away — inside the
-    // 1000u TOWN_EXCLUSION_RADIUS — with count=3. The original guard spawn at
-    // (6900,3300) is ~7651u away, outside the radius, so it still materializes.
-    flaris.spawns.push({ id: 99, mover_id: 1, position: { x: 500, y: 0, z: 0 }, radius: 5, count: 3, delay: 5000 });
+    // mover_id 1 is type 'monster'. As an NPC placement this is the MaFl_Demian
+    // pattern (quest NPC reusing a monster model); it must NOT materialize as
+    // an attackable monster in town. Baseline fixture is 1 NPC + 2 monsters = 3.
+    flaris.npcs.push({ id: 2, mover_id: 1, position: { x: 7100, y: 100, z: 3300 }, angle: 0, functions: [] });
     const mgr = new SpawnManager({ resources });
     mgr.bootstrap();
 
-    const guards = mgr.inZone(1).filter((m) => m.m_dwIndex === 20);
-    assert.equal(guards.length, 2, 'far spawn materializes (count=2); town spawn (count=3) skipped');
+    assert.equal(mgr.size, 3, 'monster-type NPC placement contributes 0, not 1');
   });
 
   it('assigns ascending objids from 0x40000000, disjoint from player char ids', () => {
@@ -131,7 +130,7 @@ describe('SpawnManager', () => {
     assert.equal(homeit!.outfit?.characterKey, 'MaDa_Homeit');
     assert.equal(homeit!.outfit?.hairColor, 0xff0000ff);
     // character.inc outfit (parts=0) overrides the mover-yml fixture (parts=2)
-    // — canonical source wins per `toOutfit(def, charBlock)`.
+    // -- canonical source wins per `toOutfit(def, charBlock)`.
     assert.deepEqual(homeit!.outfit?.equip, [{ parts: 0, itemId: 1029 }]);
   });
 
@@ -142,7 +141,7 @@ describe('SpawnManager', () => {
     const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12);
     assert.ok(homeit);
     assert.deepEqual([...homeit!.m_abMoverMenu], [0, 2], 'MMI_DIALOG + MMI_TRADE propagated');
-    // characterKey decoupled from outfit — the client needs it to resolve
+    // characterKey decoupled from outfit -- the client needs it to resolve
     // m_abMoverMenu even when SetFigure/SetEquip are absent.
     assert.equal(homeit!.m_szCharacterKey, 'MaDa_Homeit', 'characterKey propagated for client CNpcProperty lookup');
   });
@@ -154,6 +153,45 @@ describe('SpawnManager', () => {
     const aibat = mgr.inZone(1).find((m) => m.m_dwIndex === 20);
     assert.ok(aibat, 'monster spawned');
     assert.equal(aibat!.outfit, undefined);
+  });
+
+  it('resolves vendor stock onto the mover from character.inc + item index', () => {
+    const resources = makeResources();
+    // Two IK3_AXE weapons -- intentionally unsorted so the resolver's level_req
+    // ascending sort is exercised (id 83 has the higher level_req).
+    (resources.items.items as Map<number, { id: number; level_req: number }>).set(81, { id: 81, level_req: 1 });
+    (resources.items.items as Map<number, { id: number; level_req: number }>).set(83, { id: 83, level_req: 5 });
+    (resources.items.byKind3 as Map<string, Array<{ id: number; level_req: number }>>).set('IK3_AXE', [
+      { id: 83, level_req: 5 },
+      { id: 81, level_req: 1 },
+    ]);
+    for (const [k, map] of [['MaDa_Homeit', resources.characterInc.byKey], ['mada_homeit', resources.characterInc.byStem]] as const) {
+      const blk = (map as Map<string, { vendorItems: unknown[]; vendorItemIds: unknown[] }>).get(k)!;
+      blk.vendorItems = [
+        { slot: 0, itemKind3Symbol: 'IK3_AXE', totalNum: 2 },
+      ];
+      blk.vendorItemIds = [{ slot: 1, itemId: 413 }];
+    }
+    const mgr = new SpawnManager({ resources });
+    mgr.bootstrap();
+
+    const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12)!;
+    assert.ok(homeit, 'vendor NPC spawned');
+    // Tab 0: category expansion -- sorted by level_req asc, capped at totalNum(2).
+    assert.equal(homeit.m_vendorStock[0]![0]!.itemId, 81, 'lowest-level IK3_AXE first');
+    assert.equal(homeit.m_vendorStock[0]![1]!.itemId, 83, 'next IK3_AXE');
+    // Tab 1: explicit AddVendorItem2 id placed directly.
+    assert.equal(homeit.m_vendorStock[1]![0]!.itemId, 413, 'explicit id in tab 1');
+    // Tabs 2-3 left empty (all null).
+    assert.equal(homeit.m_vendorStock[2]!.every((s) => s === null), true, 'tab 2 empty');
+  });
+
+  it('defaults a vendor-less NPC to the empty vendor stock', () => {
+    const mgr = new SpawnManager({ resources: makeResources() });
+    mgr.bootstrap();
+    const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12)!;
+    assert.equal(homeit.m_vendorStock.length, 4, '4 tabs');
+    assert.equal(homeit.m_vendorStock[0]!.every((s) => s === null), true, 'tab 0 empty');
   });
 
   it('propagates attackable + guard flags from the mover definition', () => {
@@ -183,8 +221,8 @@ describe('SpawnManager', () => {
         { modelIndex: 99, name: 'R', level: 1, hp: 10, attackable: true, belligerence: belli, attackRange },
         { x: 0, y: 0, z: 0 }, 1,
       );
-      assert.equal(m.m_bRangeAttack, true, `belli ${belli} → ranged`);
-      assert.equal(m.m_nAttackRange, attackRange, `belli ${belli} → attack range ${attackRange}`);
+      assert.equal(m.m_bRangeAttack, true, `belli ${belli} -> ranged`);
+      assert.equal(m.m_nAttackRange, attackRange, `belli ${belli} -> attack range ${attackRange}`);
     }
     // Default range distance when attack_range omitted = AR_RANGE (10 m).
     const defaulted = CMover.spawn(
@@ -227,7 +265,7 @@ describe('SpawnManager', () => {
     assert.equal(guards.length, 8);
     const positions = new Set(guards.map((m) => `${m.m_vPos.x.toFixed(3)},${m.m_vPos.z.toFixed(3)}`));
     assert.equal(positions.size, 8, 'each monster on a distinct position');
-    // Every offset within the spawn radius (sunflower keeps r ≤ radius*0.5).
+    // Every offset within the spawn radius (sunflower keeps r <= radius*0.5).
     const { x, z } = flaris.spawns[0]!.position;
     for (const m of guards) {
       const dx = m.m_vPos.x - x;
@@ -240,7 +278,7 @@ describe('SpawnManager', () => {
     const mgr = new SpawnManager({ resources: makeResources() });
     mgr.bootstrap();
     const before = mgr.size;
-    // Kill the peaceful NPC (delayMs=0) → no respawn scheduled, mover gone now.
+    // Kill the peaceful NPC (delayMs=0) -> no respawn scheduled, mover gone now.
     const homeit = mgr.inZone(1).find((m) => m.m_dwIndex === 12)!;
     assert.equal(mgr.kill(homeit.m_idMover), true);
     assert.equal(mgr.get(homeit.m_idMover), undefined);
@@ -266,7 +304,7 @@ describe('SpawnManager', () => {
 
     assert.equal(mgr.kill(victim.m_idMover), true);
     assert.equal(mgr.get(originalId), undefined);
-    assert.equal(spawned.length, 0); // not yet — timer pending
+    assert.equal(spawned.length, 0); // not yet -- timer pending
 
     mock.timers.tick(5001);
 

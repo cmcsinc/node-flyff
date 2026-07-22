@@ -16,7 +16,7 @@ import { sendPacket } from '@flyff/core/net/dispatcher.js';
 import type { CharHandler } from './handlers/char.handler.js';
 
 /**
- * FILETIME epoch bias — 100-ns ticks between 1601-01-01 (FILETIME/Windows
+ * FILETIME epoch bias -- 100-ns ticks between 1601-01-01 (FILETIME/Windows
  * epoch) and 1970-01-01 (Unix epoch). `g_TickCount.GetTickCount()` is a
  * FILETIME-derived 100-ns value (`tickcount.h:50`), so the reply must be in
  * the same units for the client's clock re-seed to land correctly.
@@ -36,7 +36,7 @@ export function buildClusterClientServer(deps: ClusterClientServerDeps): {
   if (deps.logger !== undefined) dd.logger = deps.logger;
   const { server, dispatcher } = createClientServer(dd);
   const h = deps.charHandler;
-  // PING (0x14) — echo the client's dwPingTime back (`DPLoginSrvr.cpp:264-265`).
+  // PING (0x14) -- echo the client's dwPingTime back (`DPLoginSrvr.cpp:264-265`).
   // The client pings after the welcome hello and waits for this echo.
   dispatcher.register(PACKETTYPE.PING, (s, r) => {
     const dwPingTime = r.readDword();
@@ -45,7 +45,7 @@ export function buildClusterClientServer(deps: ClusterClientServerDeps): {
     w.writeDword(dwPingTime);
     sendPacket(s, w.build());
   });
-  // QUERYTICKCOUNT (0x0b) — server-clock sync. The client fires this once on
+  // QUERYTICKCOUNT (0x0b) -- server-clock sync. The client fires this once on
   // every cluster connect (`WndTitle.cpp:1050`, before GETPLAYERLIST), sending
   // its `timeGetTime()` tick. Server echoes it back alongside the FILETIME-style
   // `g_TickCount.GetTickCount()` so the client can re-seed its clock with a

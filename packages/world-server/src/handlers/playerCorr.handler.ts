@@ -1,8 +1,8 @@
 /**
- * PLAYERCORR handler — `PACKETTYPE_PLAYERCORR` (0xffffff05).
+ * PLAYERCORR handler -- `PACKETTYPE_PLAYERCORR` (0xffffff05).
  *
  * Same 60-byte body as PLAYERMOVED (DPSrvr.cpp:2651 OnPlayerCorr). Delegates to
- * {@link MovementService.applyCorr} — anti-teleport + echo MOVERCORR.
+ * {@link MovementService.applyCorr} -- anti-teleport + echo MOVERCORR.
  *
  * @module handlers/playerCorr.handler
  */

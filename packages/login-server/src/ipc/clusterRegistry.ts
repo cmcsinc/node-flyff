@@ -1,13 +1,13 @@
 /**
- * ClusterRegistry — Login Server side of the Cluster registration handshake.
+ * ClusterRegistry -- Login Server side of the Cluster registration handshake.
  *
- * Mirrors `WorldRegistry` (cluster accepts worlds) but for the login→cluster
+ * Mirrors `WorldRegistry` (cluster accepts worlds) but for the login->cluster
  * direction. This module:
  *  1. Binds a TCP server on `registration.internalPort` (default 29001)
  *  2. Accepts connections from Cluster Servers
  *  3. Validates REGISTER_CLUSTER: HMAC token + allowlist + duplicate check
  *  4. Sends REGISTER_CLUSTER_ACK
- *  5. Expects periodic CLUSTER_HEARTBEAT — marks cluster offline on timeout
+ *  5. Expects periodic CLUSTER_HEARTBEAT -- marks cluster offline on timeout
  *  6. The heartbeat carries live world channel data which enriches the
  *     SNSP_SERVER_LIST packet shown to game clients
  *  7. Emits events so `ServerListService` always has up-to-date state
@@ -50,7 +50,7 @@ export interface ClusterEntry {
   readonly publicPort: number;
   players: number;
   maxPlayers: number;
-  /** Live channel list — updated every heartbeat. */
+  /** Live channel list -- updated every heartbeat. */
   worlds: WorldChannelInfo[];
   status: 'online' | 'offline';
   readonly registeredAt: Date;
@@ -111,9 +111,9 @@ class FrameParser {
 // ---------------------------------------------------------------------------
 
 /**
- * @fires ClusterRegistry#clusterRegistered   — (entry: ClusterEntry)
- * @fires ClusterRegistry#clusterUnregistered — (serverId: string)
- * @fires ClusterRegistry#clusterUpdated      — (entry: ClusterEntry)
+ * @fires ClusterRegistry#clusterRegistered   -- (entry: ClusterEntry)
+ * @fires ClusterRegistry#clusterUnregistered -- (serverId: string)
+ * @fires ClusterRegistry#clusterUpdated      -- (entry: ClusterEntry)
  */
 export class ClusterRegistry extends EventEmitter {
   readonly #deps: ClusterRegistryDeps;
@@ -200,7 +200,7 @@ export class ClusterRegistry extends EventEmitter {
     socket.on('close', () => {
       const serverId = this.#socketMap.get(socket) ?? registeredServerId;
       if (serverId) {
-        this.#log.warn({ serverId }, 'Cluster Server socket closed — marking offline');
+        this.#log.warn({ serverId }, 'Cluster Server socket closed -- marking offline');
         this.#markOffline(serverId, 'TCP connection closed');
         this.#socketMap.delete(socket);
       }
@@ -279,7 +279,7 @@ export class ClusterRegistry extends EventEmitter {
       return null;
     }
 
-    // 3. HMAC token verification — timing-safe
+    // 3. HMAC token verification -- timing-safe
     const tokenValid = verifyRegistrationToken(
       this.#deps.ipcSecret,
       req.serverId,
@@ -376,7 +376,7 @@ export class ClusterRegistry extends EventEmitter {
         if (elapsed > this.#deps.heartbeatTimeoutMs) {
           this.#log.warn(
             { serverId, elapsedMs: elapsed },
-            'Cluster Server heartbeat timeout — marking offline',
+            'Cluster Server heartbeat timeout -- marking offline',
           );
           entry.socket.destroy();
           this.#markOffline(serverId, 'Heartbeat timeout');

@@ -1,5 +1,5 @@
 /**
- * S→C whisper error reply — `SNAPSHOTTYPE_RETURNSAY` (0x00a9).
+ * S->C whisper error reply -- `SNAPSHOTTYPE_RETURNSAY` (0x00a9).
  *
  * Mirrors `CUser::AddReturnSay` (`WORLDSERVER/User.cpp:1123`):
  *   m_Snapshot.ar << GetId();              // recipient objid

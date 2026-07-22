@@ -1,5 +1,5 @@
 /**
- * PLAYERANGLE handler — `PACKETTYPE_PLAYERANGLE` (0xffffff29).
+ * PLAYERANGLE handler -- `PACKETTYPE_PLAYERANGLE` (0xffffff29).
  *
  * 45-byte body (DPSrvr.cpp:2513 OnPlayerAngle):
  *   v:Vec3  vd:Vec3  f:float  fAngleX:float  fAccPower:float  fTurnAngle:float
@@ -36,7 +36,7 @@ export class PlayerAngleHandler {
     if (!player) { socket.destroy(); return; }
 
     try {
-      // Skip the 45-byte body — see module doc for field layout.
+      // Skip the 45-byte body -- see module doc for field layout.
       readAngleFrame(reader);
       this.movementService.applyAngle(player, Date.now());
     } catch (error) {
@@ -49,7 +49,7 @@ export class PlayerAngleHandler {
   }
 }
 
-/** Read + validate the 45-byte PLAYERANGLE body (values discarded — see module doc). */
+/** Read + validate the 45-byte PLAYERANGLE body (values discarded -- see module doc). */
 function readAngleFrame(reader: PacketReader): void {
   reader.readFloat(); reader.readFloat(); reader.readFloat(); // v
   reader.readFloat(); reader.readFloat(); reader.readFloat(); // vd

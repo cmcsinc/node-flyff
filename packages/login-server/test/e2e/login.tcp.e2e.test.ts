@@ -25,12 +25,12 @@ type LoginSuccess = [{ accountId: number; socket: unknown; handoffToken: string 
  *   1. server SENDS the 8-byte protocolId hello (plain-framed) on accept
  *   2. client reads the hello, adopts the id, uses it to CRC all its frames
  *   3. client sends CRC-framed CERTIFY: [str ver][str acct][672B rijndael blob]
- *   4. server decrypts the blob → md5hex → argon2-verifies → ERROR or login:success
+ *   4. server decrypts the blob -> md5hex -> argon2-verifies -> ERROR or login:success
  *
  * The certifier is a `crcRead` server: READS 13-byte CRC frames from the client,
  * WRITES plain 5-byte frames back. Framing is asymmetric.
  *
- * Account is seeded with argon2(md5("kikugalanet"+pwd)) — exactly what the
+ * Account is seeded with argon2(md5("kikugalanet"+pwd)) -- exactly what the
  * decrypted md5hex is verified against.
  */
 
@@ -152,7 +152,7 @@ describe('Login v15 TCP smoke (CRC frame + hello + rijndael CERTIFY)', () => {
   it('drops the connection when a frame is CRC-framed with the wrong protocolId', async () => {
     const { sock, protocolId } = await handshake();
     // Frame CERTIFY with a DIFFERENT protocolId than the server issued in its
-    // hello — server CRC-verify fails on a fully-buffered frame → drop.
+    // hello -- server CRC-verify fails on a fully-buffered frame -> drop.
     sock.write(certifyFrame(ACCOUNT, VALID_MD5, protocolId ^ 0xdeadbeef));
     const closed = await new Promise<boolean>((resolve) => {
       sock.on('close', () => resolve(true));

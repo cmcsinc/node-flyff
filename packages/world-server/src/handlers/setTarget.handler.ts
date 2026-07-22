@@ -1,5 +1,5 @@
 /**
- * SETTARGET handler — `PACKETTYPE_SETTARGET` (0x00ff0023).
+ * SETTARGET handler -- `PACKETTYPE_SETTARGET` (0x00ff0023).
  *
  * `DPSrvr::OnSetTarget` (DPSrvr.cpp:4295) reads `OBJID idTarget, BYTE bClear`.
  * bClear: 0=claim, 1=release, 2=set_objective.

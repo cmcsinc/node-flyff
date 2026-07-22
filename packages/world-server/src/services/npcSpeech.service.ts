@@ -1,5 +1,5 @@
 /**
- * NpcSpeechService — ambient NPC speech bubbles, no player interaction.
+ * NpcSpeechService -- ambient NPC speech bubbles, no player interaction.
  *
  * Every spawned NPC with a `character.inc` key (`outfit.characterKey`, mirroring
  * the C++ `m_szCharacterKey`) that resolves to a dialog prefix periodically
@@ -7,25 +7,25 @@
  *
  * Protocol (verified against the v15 C++ source):
  *   - Bubble = `SNAPSHOTTYPE_CHAT` (0x0001) snapshot attributed to the NPC's
- *     objid. `Speak(npcId, n)` → `CUserMng::AddChat((CCtrl*)pMover, str)`
- *     (`WORLDSERVER/User.cpp:4309`) → `ar << GETID(pCtrl) << SNAPSHOTTYPE_CHAT;
+ *     objid. `Speak(npcId, n)` -> `CUserMng::AddChat((CCtrl*)pMover, str)`
+ *     (`WORLDSERVER/User.cpp:4309`) -> `ar << GETID(pCtrl) << SNAPSHOTTYPE_CHAT;
  *     WriteString(szChat)`, broadcast via `FOR_VISIBILITYRANGE`. Rendered as a
  *     balloon by `CDPClient::OnChat` (`Neuz/DPClient.cpp:1425`). This is the
  *     exact packet `ChatSerializer` already builds.
- *   - `Say(n)` is NOT a bubble — it is a private dialog line to the clicker
+ *   - `Say(n)` is NOT a bubble -- it is a private dialog line to the clicker
  *     (`FUNCTYPE_SAY`). Only `speak` lines are broadcast here.
  *
  * Cadence mirrors `CNpcProperty` (`_Common/NpcProperty.cpp:9-29`): first fire
- * 60–90s after boot, re-arm 15–25s, per-NPC random so the population doesn't
+ * 60-90s after boot, re-arm 15-25s, per-NPC random so the population doesn't
  * speak in unison. (`SetScriptTimer` is a no-op in this source tree, so the
  * per-state `timer` field is decorative and intentionally unused.)
  *
  * Custom feature: vanilla `CMover::ProcessScript` (`Mover.cpp:1315`) dispatches
- * `#auto` → `<prefix>_auto()`, but zero `_auto` functions exist in
- * `NpcScript.cpp` — vanilla NPCs are silent ambiently. This service adds the
+ * `#auto` -> `<prefix>_auto()`, but zero `_auto` functions exist in
+ * `NpcScript.cpp` -- vanilla NPCs are silent ambiently. This service adds the
  * ambient speech the user asked for, using the faithful packet + timer.
  *
- * Performance: `tick()` is sync (no `await` — rule 05), iterates a fixed
+ * Performance: `tick()` is sync (no `await` -- rule 05), iterates a fixed
  * schedule, and builds a packet only when a timer fires. Zone-scoped broadcast.
  *
  * @module services/npcSpeech.service
@@ -42,14 +42,14 @@ import { createLogger } from '@flyff/core/logger.js';
 
 const logger = createLogger({ module: 'npc-speech' });
 
-/** Schedule poll resolution — speech timers are 15+ s, so 1 s is precise enough. */
+/** Schedule poll resolution -- speech timers are 15+ s, so 1 s is precise enough. */
 const POLL_MS = 1_000;
-/** First-fire window after boot (`NpcProperty.cpp:13` — `MIN(1)+xRandom(SEC(30))`). */
+/** First-fire window after boot (`NpcProperty.cpp:13` -- `MIN(1)+xRandom(SEC(30))`). */
 const FIRST_FIRE_MIN_MS = 60_000;
-const FIRST_FIRE_RANGE_MS = 30_000; // 60–90 s
-/** Re-arm window (`NpcProperty.cpp:27` — `SEC(15)+xRandom(SEC(10))`). */
+const FIRST_FIRE_RANGE_MS = 30_000; // 60-90 s
+/** Re-arm window (`NpcProperty.cpp:27` -- `SEC(15)+xRandom(SEC(10))`). */
 const REARM_MIN_MS = 15_000;
-const REARM_RANGE_MS = 10_000; // 15–25 s
+const REARM_RANGE_MS = 10_000; // 15-25 s
 
 export interface NpcSpeechDeps {
   spawnManager: SpawnManager;
@@ -68,12 +68,12 @@ interface SpeechEntry {
   nextAt: number;
 }
 
-/** Next fire time for a fresh entry (60–90 s from `now`). */
+/** Next fire time for a fresh entry (60-90 s from `now`). */
 function firstFireAt(now: number, random: () => number): number {
   return now + FIRST_FIRE_MIN_MS + Math.floor(random() * FIRST_FIRE_RANGE_MS);
 }
 
-/** Next fire time after an emission (15–25 s from `now`). */
+/** Next fire time after an emission (15-25 s from `now`). */
 function reArmAt(now: number, random: () => number): number {
   return now + REARM_MIN_MS + Math.floor(random() * REARM_RANGE_MS);
 }
@@ -102,7 +102,7 @@ export class NpcSpeechService {
     this.timer = setInterval(() => this.tick(), POLL_MS);
   }
 
-  /** Stop polling (shutdown wiring — rule 05 timers must be cleared). */
+  /** Stop polling (shutdown wiring -- rule 05 timers must be cleared). */
   stop(): void {
     if (this.timer !== null) {
       clearInterval(this.timer);
@@ -143,13 +143,13 @@ export class NpcSpeechService {
     return lines;
   }
 
-  /** Emit due speeches and re-arm. Sync — no `await` (rule 05). */
+  /** Emit due speeches and re-arm. Sync -- no `await` (rule 05). */
   tick(): void {
     const now = this.now();
     for (const entry of this.schedule) {
       if (entry.nextAt > now) continue;
       const text = entry.lines[entry.lineIdx % entry.lines.length];
-      if (text === undefined) continue; // unreachable: entries always carry ≥1 line
+      if (text === undefined) continue; // unreachable: entries always carry >=1 line
       entry.lineIdx++;
       const packet = this.serializer.build(entry.mover.m_idMover, text);
       this.zoneManager.broadcastAround(

@@ -94,7 +94,12 @@ describe('AuthService', () => {
 
       assert.ok(hash);
       assert.notEqual(hash, password);
-      assert.ok(hash.startsWith('$argon2id$'));
+      // argon2id when the native binding is available, else the documented
+      // scrypt fallback (see core/utils/password.ts) -- both are valid.
+      assert.ok(
+        hash.startsWith('$argon2id$') || hash.startsWith('$scrypt$'),
+        `unexpected hash format: ${hash}`,
+      );
     });
 
     it('should generate different hashes for the same password', async () => {

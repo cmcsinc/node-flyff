@@ -1,7 +1,7 @@
 /**
  * World client-facing TCP server.
  *
- * Binds client→world opcodes to their handlers. `JOIN` writes the self-spawn
+ * Binds client->world opcodes to their handlers. `JOIN` writes the self-spawn
  * snapshot; the in-world handlers (MAP_KEY, QUERY_PLAYER_DATA, SNAPSHOT,
  * PLAYERMOVED, PLAYERBEHAVIOR) validate + delegate to their services. `index.ts`
  * calls `server.listen(config.server.port)`.
@@ -10,7 +10,7 @@
  */
 
 import type { Server } from 'node:net';
-import { createClientServer, type PacketDispatcher, type DispatcherLogger } from '@flyff/core/net';
+import { createClientServer, type PacketDispatcher, type DispatcherLogger, type ClientSocket } from '@flyff/core/net';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import type { JoinHandler } from './handlers/join.handler.js';
 import type { MapKeyHandler } from './handlers/mapKey.handler.js';
@@ -32,6 +32,8 @@ import type { ScriptDlgHandler } from './handlers/scriptDlg.handler.js';
 import type { RevivalHandler } from './handlers/revival.handler.js';
 import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler.js';
 import type { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
+import type { UseSkillHandler } from './handlers/useSkill.handler.js';
+import type { DoUseSkillPointHandler } from './handlers/doUseSkillPoint.handler.js';
 import type { ActMsgHandler } from './handlers/actMsg.handler.js';
 import type { MoveItemHandler } from './handlers/moveItem.handler.js';
 import type { DropItemHandler } from './handlers/dropItem.handler.js';
@@ -39,6 +41,7 @@ import type { DropGoldHandler } from './handlers/dropGold.handler.js';
 import type { DoEquipHandler } from './handlers/doEquip.handler.js';
 import type { DoUseItemHandler } from './handlers/doUseItem.handler.js';
 import type { BankHandler } from './handlers/bank.handler.js';
+import type { ShopHandler } from './handlers/shop.handler.js';
 import type { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import type { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import type { QuestHelperHandler } from './handlers/questHelper.handler.js';
@@ -64,6 +67,8 @@ export interface WorldClientServerDeps {
   revivalHandler: RevivalHandler;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
+  useSkillHandler: UseSkillHandler;
+  doUseSkillPointHandler: DoUseSkillPointHandler;
   actMsgHandler: ActMsgHandler;
   moveItemHandler: MoveItemHandler;
   dropItemHandler: DropItemHandler;
@@ -71,9 +76,16 @@ export interface WorldClientServerDeps {
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
   bankHandler: BankHandler;
+  shopHandler: ShopHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
+  /**
+   * Connection-close lifecycle hook. The dispatcher fires this on every
+   * disconnect (LEAVE, alt-F4, reset); the world uses it to flush the live
+   * player's checkpoint state to the DB before release. Optional only in tests.
+   */
+  onDisconnect?: (socket: ClientSocket) => void;
   logger?: DispatcherLogger;
 }
 
@@ -81,8 +93,9 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   server: Server;
   dispatcher: PacketDispatcher;
 } {
-  const dd: { logger?: DispatcherLogger; crc: true; leadsWithDpid: true } = { crc: true, leadsWithDpid: true };
+  const dd: { logger?: DispatcherLogger; crc: true; leadsWithDpid: true; onDisconnect?: (socket: ClientSocket) => void } = { crc: true, leadsWithDpid: true };
   if (deps.logger !== undefined) dd.logger = deps.logger;
+  if (deps.onDisconnect) dd.onDisconnect = deps.onDisconnect;
   const { server, dispatcher } = createClientServer(dd);
   dispatcher.register(PACKETTYPE.JOIN, (s, r) => deps.joinHandler.handleJoin(s, r));
   dispatcher.register(PACKETTYPE.MAP_KEY, (s, r) => deps.mapKeyHandler.handleMapKey(s, r));
@@ -106,6 +119,8 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.REVIVAL_TO_LODELIGHT, (s, r) => deps.revivalHandler.handleRevivalLodelight(s, r));
   dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r));
   dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
+  dispatcher.register(PACKETTYPE.USESKILL, (s, r) => deps.useSkillHandler.handleUseSkill(s, r));
+  dispatcher.register(PACKETTYPE.DOUSESKILLPOINT, (s, r) => deps.doUseSkillPointHandler.handleDoUseSkillPoint(s, r));
   dispatcher.register(PACKETTYPE.ACTMSG, (s, r) => deps.actMsgHandler.handleActMsg(s, r));
   dispatcher.register(PACKETTYPE.MOVEITEM, (s, r) => deps.moveItemHandler.handleMoveItem(s, r));
   dispatcher.register(PACKETTYPE.DROPITEM, (s, r) => deps.dropItemHandler.handleDropItem(s, r));
@@ -118,6 +133,10 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.GETITEMBACK, (s, r) => deps.bankHandler.handleWithdraw(s, r));
   dispatcher.register(PACKETTYPE.PUTGOLDBACK, (s, r) => deps.bankHandler.handleDepositGold(s, r));
   dispatcher.register(PACKETTYPE.GETGOLDBACK, (s, r) => deps.bankHandler.handleWithdrawGold(s, r));
+  dispatcher.register(PACKETTYPE.CONFIRMBANK, (s, r) => deps.bankHandler.handleConfirmBankPass(s, r));
+  dispatcher.register(PACKETTYPE.CHANGEBANKPASS, (s, r) => deps.bankHandler.handleChangeBankPass(s, r));
+  dispatcher.register(PACKETTYPE.OPENSHOPWND, (s, r) => deps.shopHandler.handleOpen(s, r));
+  dispatcher.register(PACKETTYPE.CLOSESHOPWND, (s, r) => deps.shopHandler.handleClose(s, r));
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
   dispatcher.register(PACKETTYPE.QUEST_CHECK, (s, r) => deps.questCheckHandler.handleQuestCheck(s, r));
   dispatcher.register(PACKETTYPE.QUESTHELPER_REQNPCPOS, (s, r) => deps.questHelperHandler.handleQuestHelper(s, r));

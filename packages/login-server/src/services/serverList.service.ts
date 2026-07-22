@@ -1,15 +1,15 @@
 /**
- * ServerListService — Login Server query layer for the live cluster/server list.
+ * ServerListService -- Login Server query layer for the live cluster/server list.
  *
  * Merges two sources of truth:
- *  1. **Static config** (`serverList` from `login-server.json`) — always present,
+ *  1. **Static config** (`serverList` from `login-server.json`) -- always present,
  *     acts as a fallback if no cluster has dynamically registered yet.
- *  2. **Dynamic registry** (`ClusterRegistry`) — live online clusters with real
+ *  2. **Dynamic registry** (`ClusterRegistry`) -- live online clusters with real
  *     player counts and channel data, updated every heartbeat.
  *
  * Dynamic entries always win over static config entries for the same `serverId`.
  * Static entries are shown with `players: 0` and `status: 'offline'` when no
- * live cluster matches — this allows the server list to show "offline" rather
+ * live cluster matches -- this allows the server list to show "offline" rather
  * than disappearing entirely during a cluster restart.
  *
  * Used by `LoginServer`'s `SNSP_SERVER_LIST` packet builder to populate the
@@ -57,7 +57,7 @@ export interface ServerListEntry {
 export interface ServerListServiceDeps {
   /** Dynamic cluster registry populated by live registrations. */
   clusterRegistry: ClusterRegistry;
-  /** Static cluster list from config — used as fallback / placeholder. */
+  /** Static cluster list from config -- used as fallback / placeholder. */
   staticServerList: StaticClusterEntry[];
 }
 
@@ -73,7 +73,7 @@ export interface ServerListServiceDeps {
  * ```ts
  * // In LoginServer SNSP_LOGIN_WORLD handler:
  * const list = serverListService.getServerList();
- * // → serialize to SNSP_SERVER_LIST packet
+ * // -> serialize to SNSP_SERVER_LIST packet
  * ```
  */
 export class ServerListService {

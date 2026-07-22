@@ -1,5 +1,5 @@
 /**
- * InventoryService — bag mutations (pickup, move, drop, consume) + gold.
+ * InventoryService -- bag mutations (pickup, move, drop, consume) + gold.
  *
  * Ports the `CInventory` mutation surface used by the loot / MOVEITEM / DROPITEM
  * / DROPGOLD / DOUSEITEM handlers (`_Common/MoverActEvent.cpp:2575`,
@@ -7,7 +7,7 @@
  * WAL + fire-and-forget persist; the handler owns wire framing (CREATEITEM /
  * UPDATE_ITEM / DEL_OBJ / SETPOINTPARAM).
  *
- * Ordering (rule 03/04 — WAL before ack): validate → journal → mutate →
+ * Ordering (rule 03/04 -- WAL before ack): validate -> journal -> mutate ->
  * fire-and-forget persist. Handlers send the success snapshot only after an
  * `{ ok: true }` return.
  *
@@ -37,7 +37,7 @@ export interface InventoryServiceDeps {
   charRepo: Pick<CharacterRepository, 'updateGold'>;
   /** Stack-size lookup (propItem dwPackMax via resources). Default 1 if absent. */
   getStackSize?: (itemId: number) => number;
-  /** WAL journal — optional so tests can omit it. */
+  /** WAL journal -- optional so tests can omit it. */
   journal?: Journal;
 }
 
@@ -62,8 +62,8 @@ export class InventoryService {
 
   /**
    * Place `count` of `itemId`. Stacking-aware: if a partial stack of the same
-   * id+flags exists below `stack_size`, merge into it (isNew=false → handler
-   * sends UPDATE_ITEM); otherwise claim a fresh empty slot (isNew=true →
+   * id+flags exists below `stack_size`, merge into it (isNew=false -> handler
+   * sends UPDATE_ITEM); otherwise claim a fresh empty slot (isNew=true ->
    * CREATEITEM). Returns `bag_full` so the handler can leave the pile lootable.
    */
   addItem(player: CPlayer, itemId: number, count: number): AddItemResult {
@@ -142,7 +142,7 @@ export class InventoryService {
     return { ok: true, amount, pos };
   }
 
-  /** Credit `amount` penya, clamped to MAX_GOLD (rule 03 — gold overflow). */
+  /** Credit `amount` penya, clamped to MAX_GOLD (rule 03 -- gold overflow). */
   addGold(player: CPlayer, amount: number): void {
     if (amount <= 0) return;
     const before = player.m_nGold;

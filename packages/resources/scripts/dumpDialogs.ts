@@ -1,11 +1,11 @@
 #!/usr/bin/env tsx
 /**
- * dumpDialogs — render every NPC dialog into one human-readable text file.
+ * dumpDialogs -- render every NPC dialog into one human-readable text file.
  *
  * Reads the structured dialog data produced by `convert:dialogs` and resolves
  * every `Say(n)` / `Speak(n)` against `_strings.yml`, so you can browse all
  * 271 NPCs / ~2845 states without a YAML parser. Advanced states that the
- * converter could not reduce to data are marked `[source-only C++]` — their
+ * converter could not reduce to data are marked `[source-only C++]` -- their
  * raw C++ body lives in each `<prefix>.yml` under `source:`.
  *
  * Output: `data/dialogues/_ALL.txt` (regenerable; not consumed at runtime).
@@ -93,7 +93,7 @@ function renderNpc(
 function main(): void {
   const strings = loadYaml<{ strings: string[] }>('_strings.yml').strings;
   const npcMap = loadYaml<NpcMap>('_npc-map.yml').npcs;
-  // sz_npc (prefix) → characterKey for readable headers (e.g. MaFl_Boboku).
+  // sz_npc (prefix) -> characterKey for readable headers (e.g. MaFl_Boboku).
   const prefixToName = new Map<string, string>();
   for (const [key, entry] of Object.entries(npcMap)) {
     prefixToName.set(entry.sz_npc, key);
@@ -126,7 +126,7 @@ function main(): void {
     `# Regenerate: pnpm --filter @flyff/resources dump:dialogs\n`;
   writeFileSync(OUT_FILE, header + out.join('\n') + '\n');
 
-  console.log(`✅ Wrote ${OUT_FILE}`);
+  console.log(`[OK] Wrote ${OUT_FILE}`);
   console.log(`   ${npcCount} NPCs | ${stateCount} states | ${textCount} text lines | ${srcCount} source-only`);
 }
 

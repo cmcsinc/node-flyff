@@ -1,19 +1,19 @@
 /**
- * ChatService — `PACKETTYPE_CHAT` (0x00ff0000) business logic.
+ * ChatService -- `PACKETTYPE_CHAT` (0x00ff0000) business logic.
  *
  * `DPSrvr::OnChat` (`DPSrvr.cpp:650`):
  *   1. Drop if `uBufSize > 1031` (4 + 4 + 1024 - 1).
  *   2. Read `DWORD dwAuth` (client-claimed authority) + the chat string.
  *   3. Replace literal `\n` / `@` / `@@` with space.
- *   4. If `text[0] == '/'` and `ParsingCommand` accepts → command path.
- *   5. Else `g_UserMng.AddChat(pUser, strChat)` → S→C vicinity chat.
+ *   4. If `text[0] == '/'` and `ParsingCommand` accepts -> command path.
+ *   5. Else `g_UserMng.AddChat(pUser, strChat)` -> S->C vicinity chat.
  *
- * The `dwAuth` anti-cheat (mismatch ⇒ boot) is enforced in the handler, which
- * owns the socket — the service only sees the trusted `CPlayer`. TALK_MODE /
+ * The `dwAuth` anti-cheat (mismatch => boot) is enforced in the handler, which
+ * owns the socket -- the service only sees the trusted `CPlayer`. TALK_MODE /
  * mute checks omitted (no buff/mute system yet).
  *
- * The sender's name is trusted from the session's player entity — never from
- * the packet (rule 03). No WAL (rule 04 — chat is not journaled).
+ * The sender's name is trusted from the session's player entity -- never from
+ * the packet (rule 03). No WAL (rule 04 -- chat is not journaled).
  *
  * @module services/chat.service
  */
@@ -33,7 +33,7 @@ export type ChatOutcome =
   | { ok: true; reached: number }
   | { ok: false; reason: 'empty' | 'too_long' | 'command_unknown' | 'command_no_auth' };
 
-/** Byte cap on chat text — `uBufSize > 1031 ⇒ drop` (DPSrvr.cpp:653). */
+/** Byte cap on chat text -- `uBufSize > 1031 => drop` (DPSrvr.cpp:653). */
 export const MAX_CHAT_LEN = 1024;
 
 export class ChatService {

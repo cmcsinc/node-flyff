@@ -15,7 +15,7 @@ function readSnapshotHeader(buf: Buffer, r: PacketReader) {
 }
 
 describe('ChatSerializer (SNAPSHOTTYPE_CHAT 0x0001)', () => {
-  it('writes objid + text only — no name/job/level', () => {
+  it('writes objid + text only -- no name/job/level', () => {
     const buf = new ChatSerializer().build(42, 'hi');
     const r = new PacketReader(buf);
     const h = readSnapshotHeader(buf, r);

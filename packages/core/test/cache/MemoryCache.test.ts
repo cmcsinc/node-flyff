@@ -10,10 +10,10 @@ import * as assert from 'node:assert/strict';
 import { MemoryCache } from '../../src/cache/MemoryCache.js';
 
 // ---------------------------------------------------------------------------
-// get / set / del — basic behaviour
+// get / set / del -- basic behaviour
 // ---------------------------------------------------------------------------
 
-describe('MemoryCache — basic operations', () => {
+describe('MemoryCache -- basic operations', () => {
   let cache: MemoryCache;
 
   before(() => {
@@ -54,7 +54,7 @@ describe('MemoryCache — basic operations', () => {
 // TTL behaviour (uses mock.timers to control Date.now())
 // ---------------------------------------------------------------------------
 
-describe('MemoryCache — TTL expiry', () => {
+describe('MemoryCache -- TTL expiry', () => {
   let cache: MemoryCache;
 
   before(() => {
@@ -69,7 +69,7 @@ describe('MemoryCache — TTL expiry', () => {
 
   it('returns value before expiry', async () => {
     await cache.set('ephemeral', 'alive', 10);
-    // Advance by 5 seconds — still within TTL
+    // Advance by 5 seconds -- still within TTL
     mock.timers.tick(5_000);
     const result = await cache.get('ephemeral');
     assert.equal(result, 'alive');
@@ -77,7 +77,7 @@ describe('MemoryCache — TTL expiry', () => {
 
   it('returns null after expiry', async () => {
     await cache.set('short-lived', 'value', 5);
-    // Advance by 6 seconds — past the 5s TTL
+    // Advance by 6 seconds -- past the 5s TTL
     mock.timers.tick(6_000);
     const result = await cache.get('short-lived');
     assert.equal(result, null);

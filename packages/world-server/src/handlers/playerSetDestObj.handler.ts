@@ -1,5 +1,5 @@
 /**
- * PLAYERSETDESTOBJ handler — `PACKETTYPE_PLAYERSETDESTOBJ` (0xffffff07).
+ * PLAYERSETDESTOBJ handler -- `PACKETTYPE_PLAYERSETDESTOBJ` (0xffffff07).
  *
  * `DPSrvr::OnPlayerSetDestObj` (DPSrvr.cpp:2571) reads `OBJID objid, float
  * fRange` (8-byte body). Server records the destination obj; peer clients run

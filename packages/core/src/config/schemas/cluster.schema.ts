@@ -40,7 +40,7 @@ export const CharacterDefaultsSchema = z.object({
 });
 
 // ---------------------------------------------------------------------------
-// Registration sub-schema (Cluster ↔ World + Cluster → Login)
+// Registration sub-schema (Cluster <-> World + Cluster -> Login)
 // ---------------------------------------------------------------------------
 
 /**
@@ -70,7 +70,7 @@ export const ClusterRegistrationConfigSchema = z.object({
   heartbeatIntervalMs: z.number().int().min(1000).default(5000),
   /**
    * How long (ms) to wait without a WORLD_HEARTBEAT before declaring a
-   * World Server dead. Should be at least 2× the world's heartbeatIntervalMs.
+   * World Server dead. Should be at least 2* the world's heartbeatIntervalMs.
    */
   worldHeartbeatTimeoutMs: z.number().int().min(5000).default(15000),
 });

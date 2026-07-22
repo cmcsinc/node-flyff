@@ -1,16 +1,16 @@
 /**
- * propMoverEx.inc → data/drops.yml converter.
+ * propMoverEx.inc -> data/drops.yml converter.
  *
  * Source: one `MI_<name> { ... }` block per mover. Drop-relevant lines:
  *   Maxitem = N;                         // max simultaneous drops
  *   DropGold(min, max);                  // penya pile
  *   DropItem(II_..., prob, level, count); // 1 slot, prob is DWORD / 3,000,000,000
- *   QuestItem(...) / DropKind(...)       // ponytail — skipped in v1
+ *   QuestItem(...) / DropKind(...)       // ponytail -- skipped in v1
  *   AI { ... } / SetCallHelper(...)      // ignored (AI is a separate system)
  *
  * `II_*` item symbols resolve to numeric ids via defineItem.h; `MI_*` resolves
- * to the numeric model index (dwObjIndex) via defineObj.h — the same map the
- * mover converter uses — so the loader can key drops by `m_dwIndex` for O(1)
+ * to the numeric model index (dwObjIndex) via defineObj.h -- the same map the
+ * mover converter uses -- so the loader can key drops by `m_dwIndex` for O(1)
  * lookup at death.
  *
  * @module scripts/converters/drops
@@ -21,7 +21,7 @@ import { resolve } from 'node:path';
 import { stringify } from 'yaml';
 import { parseDefines, readSource } from './parse.js';
 
-/** Per-slot roll denominator — `DropItem` probability is DWORD out of this. */
+/** Per-slot roll denominator -- `DropItem` probability is DWORD out of this. */
 export const DROP_TOTAL = 3_000_000_000;
 
 /** Probability scalar (researcher: propMoverEx probabilities are /3,000,000,000). */
@@ -74,10 +74,10 @@ export function parseDropTables(
     // Collect block body until the next top-level `MI_` header. DropItem /
     // DropGold / Maxitem are always direct children of the MI block (never
     // inside its `AI {}` sub-block), so the next header is the correct boundary.
-    // Do NOT delimit by brace counting — propMoverEx.inc has at least one block
+    // Do NOT delimit by brace counting -- propMoverEx.inc has at least one block
     // with unbalanced braces (MI_GRRR4: 6 `{` vs 5 `}`), which made the scan
     // overrun and swallow every subsequent table's items. That ballooned
-    // drops.yml 604KB→89MB and OOM'd the world server before it could register
+    // drops.yml 604KB->89MB and OOM'd the world server before it could register
     // with the cluster (so the client server-select showed no channels).
     let maxItem = 0;
     let gold: { min: number; max: number } | null = null;
@@ -105,7 +105,7 @@ export function parseDropTables(
         });
         continue;
       }
-      // QuestItem / DropKind / AI / SetCallHelper — intentionally ignored (v1).
+      // QuestItem / DropKind / AI / SetCallHelper -- intentionally ignored (v1).
     }
 
     if (maxItem === 0 && !gold && items.length === 0) continue; // empty block
@@ -136,7 +136,7 @@ export async function convertDrops(rawDir: string, dataDir: string): Promise<voi
   };
   await writeFile(
     resolve(out, 'drops.yml'),
-    '# Drop tables — generated from propMoverEx.inc\n' + stringify(doc),
+    '# Drop tables -- generated from propMoverEx.inc\n' + stringify(doc),
   );
 
   console.log(

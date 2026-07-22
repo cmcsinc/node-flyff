@@ -39,27 +39,27 @@ export const MoverDefinitionSchema = z.object({
   /** Unique mover ID */
   id: z.number().int().positive(),
 
-  /** Symbolic `MI_*` name from defineObj.h (e.g. `MI_MAFL_BOBOKU`). Links mover → dialog prefix. */
+  /** Symbolic `MI_*` name from defineObj.h (e.g. `MI_MAFL_BOBOKU`). Links mover -> dialog prefix. */
   key: z.string().optional(),
 
   /** Display name */
   name: z.string().max(64),
 
-  /** Localization key — symbolic (`MOVER_*`/`NPC_*`) or raw Flyff text ID (`IDS_PROPMOVER_*`) */
+  /** Localization key -- symbolic (`MOVER_*`/`NPC_*`) or raw Flyff text ID (`IDS_PROPMOVER_*`) */
   name_id: z.string().refine(
     (s) => s.startsWith('MOVER_') || s.startsWith('NPC_') || s.startsWith('IDS_PROPMOVER_'),
     { message: "must start with 'MOVER_', 'NPC_', or 'IDS_PROPMOVER_'" },
   ),
 
-  /** 3D model filename (server-side reference; client resolves via dwObjIndex). Optional — real propMover has none. */
+  /** 3D model filename (server-side reference; client resolves via dwObjIndex). Optional -- real propMover has none. */
   model: z.string().endsWith('.o3d').optional(),
 
   /**
    * Numeric model index sent on the wire as ADD_OBJ `dwObjIndex` /
-   * CObj `m_dwIndex` — a `MI_*` value from `resource/defineObj.h`
+   * CObj `m_dwIndex` -- a `MI_*` value from `resource/defineObj.h`
    * (e.g. MI_MALE=11, MI_FEMALE=12, MI_AIBATT1=20). The client loads the
-   * mover's mesh + motions from propMover via this index. Required — without
-   * it the client cannot resolve the model (`CreateObj` → `SetIndex`).
+   * mover's mesh + motions from propMover via this index. Required -- without
+   * it the client cannot resolve the model (`CreateObj` -> `SetIndex`).
    */
   dwObjIndex: z.number().int().nonnegative(),
 
@@ -70,23 +70,23 @@ export const MoverDefinitionSchema = z.object({
   type: MoverTypeEnum.optional(),
 
   /**
-   * Outfit for human-type NPCs — mirrors C++ `character.inc` `SetFigure` +
+   * Outfit for human-type NPCs -- mirrors C++ `character.inc` `SetFigure` +
    * `SetEquip` (parsed at `_Common/Project.cpp:2928-2968`). Serialized in the
    * NPC branch of `CMover::Serialize` (`ObjSerializeOpt.cpp:319-352`).
-   * Omit for monsters / model-only NPCs (IsEquipableNPC() == FALSE → empty
+   * Omit for monsters / model-only NPCs (IsEquipableNPC() == FALSE -> empty
    * parts array, uSize=0).
    */
   outfit: z.object({
-    /** `m_szCharacterKey` — e.g. "MaDa_Homeit". DWORD-len-prefixed on the wire, max 31 chars. */
+    /** `m_szCharacterKey` -- e.g. "MaDa_Homeit". DWORD-len-prefixed on the wire, max 31 chars. */
     characterKey: z.string().min(1).max(31),
-    /** `m_dwHairMesh` (u_char) — SetFigure arg 2. */
+    /** `m_dwHairMesh` (u_char) -- SetFigure arg 2. */
     hairMesh: z.number().int().min(0).max(255),
-    /** `m_dwHairColor` (DWORD) — SetFigure arg 3 (ARGB, e.g. 0xff0000ff). */
+    /** `m_dwHairColor` (DWORD) -- SetFigure arg 3 (ARGB, e.g. 0xff0000ff). */
     hairColor: z.number().int().nonnegative(),
-    /** `m_dwHeadMesh` (u_char) — SetFigure arg 4. */
+    /** `m_dwHeadMesh` (u_char) -- SetFigure arg 4. */
     headMesh: z.number().int().min(0).max(255),
     /**
-     * Equipped parts — mirrors C++ `m_Inventory.GetEquip(uParts)` iteration.
+     * Equipped parts -- mirrors C++ `m_Inventory.GetEquip(uParts)` iteration.
      * Each entry is `{ uParts:BYTE slot, m_dwItemId:u_short }` on the wire.
      * `itemId` is the propItem id (low 16 bits; e.g. II_ARM_F_RIN_SUIT06=1029).
      */
@@ -180,14 +180,14 @@ export const MoverDefinitionSchema = z.object({
   attackable: z.boolean().default(true),
 
   /**
-   * Town guard — `RANK_GUARD` in propMover.txt `dwClass` (e.g. MI_GUARDIAN,
+   * Town guard -- `RANK_GUARD` in propMover.txt `dwClass` (e.g. MI_GUARDIAN,
    * MI_MAFL_PATROL). PK-gated: only chaotic/player-killer attackers may target
    * it. Mirrors C++ `CMover::IsAttackAbleNPC` (Mover.cpp:6572).
    */
   guard: z.boolean().default(false),
 
   /**
-   * Aggressiveness — C++ `m_dwBelligerence` from propMover.txt
+   * Aggressiveness -- C++ `m_dwBelligerence` from propMover.txt
    * (`defineAttribute.h:203-215`). The client's attack cursor is gated by
    * `CMover::IsAttackAbleNPC` (Mover.cpp:6572): `BELLI_PEACEFUL` (1) suppresses
    * it, so peaceful town NPCs must send their real value rather than 0.

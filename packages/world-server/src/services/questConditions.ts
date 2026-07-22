@@ -1,17 +1,17 @@
 /**
- * Begin/end quest condition evaluators — pure functions.
+ * Begin/end quest condition evaluators -- pure functions.
  *
  * Mirrors C++ `__IsBeginQuestCondition` / `__IsEndQuestCondition`
  * (`_Common/Mover.cpp:7108` / `:7393`). The C++ loaders
  * (`_Common/PROJECT.CPP:1586+`) read each `Set*Cond*` call into typed fields on
  * `QuestProp`; our converter keeps the calls verbatim as `{ cmd, args }`, so we
- * interpret them positionally here — same AND-semantics: every set condition
+ * interpret them positionally here -- same AND-semantics: every set condition
  * must pass (unset ones auto-pass, matching the C++ `nResult` accumulator).
  *
  * Item conditions apply the C++ sex/job filter
- * (`Mover.cpp:7308` — `m_nSex == -1 || == GetSex()`, type 0 → job filter).
+ * (`Mover.cpp:7308` -- `m_nSex == -1 || == GetSex()`, type 0 -> job filter).
  *
- * Party/guild checks are stubbed permissive — those systems aren't landed yet
+ * Party/guild checks are stubbed permissive -- those systems aren't landed yet
  * (`ponytail`); the contract is the function signature, not the absence.
  *
  * @module services/questConditions
@@ -24,7 +24,7 @@ import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
 
 /**
  * Inventory operations the evaluators need. Stubbed in `compose.ts` until the
- * inventory system lands — a permissive stub (count 0, plenty of empty slots)
+ * inventory system lands -- a permissive stub (count 0, plenty of empty slots)
  * keeps non-item quests playable; item quests simply stay uncompletable.
  */
 export interface InventoryOps {
@@ -60,7 +60,7 @@ function num(arg: QuestArg | undefined, fallback = 0): number {
 
 /**
  * C++ sex/job gate shared by every item condition/reward
- * (`Mover.cpp:7308` — `m_nSex == -1 || == GetSex()`; type 0 → job filter on
+ * (`Mover.cpp:7308` -- `m_nSex == -1 || == GetSex()`; type 0 -> job filter on
  * `m_nJobOrItem`). type 1 gates on *having* item `m_nJobOrItem` instead.
  */
 function passesSexJob(
@@ -75,16 +75,16 @@ function passesSexJob(
   return nJobOrItem === -1 || inv.count(nJobOrItem) > 0;
 }
 
-/** `SetBeginCondJob( j1, j2, … )` — any-of (`Mover.cpp:7464`). */
+/** `SetBeginCondJob( j1, j2, ... )` -- any-of (`Mover.cpp:7464`). */
 function matchesJob(player: CPlayer, jobs: QuestArg[]): boolean {
   if (jobs.length === 0) return true;
   return jobs.some((j) => num(j) === player.m_nJob);
 }
 
 /**
- * `__IsBeginQuestCondition` — true if the player may start `def`.
- * Order mirrors C++: already-active/complete guard → inventory space for
- * begin-set items → each SetBeginCond* command.
+ * `__IsBeginQuestCondition` -- true if the player may start `def`.
+ * Order mirrors C++: already-active/complete guard -> inventory space for
+ * begin-set items -> each SetBeginCond* command.
  */
 export function canBegin(
   player: CPlayer,
@@ -141,7 +141,7 @@ export function canBegin(
 }
 
 /**
- * `__IsEndQuestCondition` — true if the active quest `q` meets every end
+ * `__IsEndQuestCondition` -- true if the active quest `q` meets every end
  * condition of `def`. The runtime record `q` supplies live kill counts, the
  * limit-time remaining, and the patrol/dialog flags.
  */
@@ -201,7 +201,7 @@ export function isComplete(
   return { ok: true };
 }
 
-/** `SetBeginCondPreviousQuest(type, q1, …q6)` — `Mover.cpp:7420`. */
+/** `SetBeginCondPreviousQuest(type, q1, ...q6)` -- `Mover.cpp:7420`. */
 function passesPreviousQuest(player: CPlayer, args: QuestArg[]): boolean {
   const type = num(args[0]);
   const ids = args.slice(1).map((a) => num(a)).filter((id) => id !== 0);
@@ -215,7 +215,7 @@ function passesPreviousQuest(player: CPlayer, args: QuestArg[]): boolean {
   return true;
 }
 
-/** `SetBeginCondExclusiveQuest(q1, …q6)` — must have neither active nor complete. */
+/** `SetBeginCondExclusiveQuest(q1, ...q6)` -- must have neither active nor complete. */
 function passesExclusiveQuest(player: CPlayer, args: QuestArg[]): boolean {
   const ids = args.map((a) => num(a)).filter((id) => id !== 0);
   if (ids.length === 0) return true;

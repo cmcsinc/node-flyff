@@ -43,7 +43,7 @@ describe('PlayerSnapshotSerializer', () => {
     assert.equal(buf.readUInt32LE(32), 42);           // entry objid
     assert.equal(buf.readUInt16LE(36), SNAPSHOTTYPE_ADD_OBJ);
     assert.equal(buf.readUInt8(38), OT_MOVER);
-    assert.equal(buf.readUInt32LE(39), MI_MALE);      // sex 0 → male model
+    assert.equal(buf.readUInt32LE(39), MI_MALE);      // sex 0 -> male model
   });
 
   it('writes the CObj duplicate type/index + scale + pos + angle', () => {
@@ -62,7 +62,7 @@ describe('PlayerSnapshotSerializer', () => {
     assert.equal(buf.readUInt16LE(68), 0);            // m_dwMotion
     assert.equal(buf.readUInt8(70), 1);               // m_bPlayer
     assert.equal(buf.readUInt32LE(71), 100);          // m_nHitPoint (hp)
-    // ... state(4)+stateFlag(4)+belligerence(1)+sfx(4)=13 → name at 68+2+1+4+13=88
+    // ... state(4)+stateFlag(4)+belligerence(1)+sfx(4)=13 -> name at 68+2+1+4+13=88
     assert.equal(buf.readUInt32LE(88), 4);            // name length
     assert.equal(buf.subarray(92, 96).toString('ascii'), 'Hero');
     assert.equal(buf.readUInt8(96), 0);               // GetSex (gender 0)
@@ -72,11 +72,11 @@ describe('PlayerSnapshotSerializer', () => {
   });
 
   it('produces the byte-exact total length (3350 + nameLen)', () => {
-    // fresh-spawn fixed budget + dynamic name; "Hero"=4 → 3354.
+    // fresh-spawn fixed budget + dynamic name; "Hero"=4 -> 3354.
     // Base 3350 = 3328 (CMover blob) + 22 (WORLD_READINFO sub-record:
     // objid 4 + hdr 2 + dwWorldId 4 + vPos 12). CMover base 3328 = 3086
-    // + 248 (inventory 42→73 slots) + 12 (3 EXPINTEGER exp fields 4→8)
-    // − 9 (3 resist BYTE not DWORD) − 9 (3 quest-size BYTE not DWORD).
+    // + 248 (inventory 42->73 slots) + 12 (3 EXPINTEGER exp fields 4->8)
+    // - 9 (3 resist BYTE not DWORD) - 9 (3 quest-size BYTE not DWORD).
     assert.equal(buf.length, 3350 + 4);
 
     const p2 = CPlayer.fromRow(makeRow({ name: 'X' }), { write: () => true });
@@ -89,14 +89,14 @@ describe('PlayerSnapshotSerializer', () => {
   it('includes the empty inventory + 3 bank tabs (NULL_ID framing)', () => {
     const containers =
       emptyItemContainerSize(INVENTORY_SLOTS) + // m_Inventory: 73 slots
-      3 * emptyItemContainerSize(BANK_SLOTS);   // m_Bank ×3: 42 slots each
+      3 * emptyItemContainerSize(BANK_SLOTS);   // m_Bank *3: 42 slots each
     assert.ok(containers > 0);
     assert.equal(buf.length, 3350 + 4);
     // verify the NULL_ID pattern appears (empty index slots)
     assert.ok(buf.includes(Buffer.from([0xff, 0xff, 0xff, 0xff])));
   });
 
-  it('uses the female model index for gender ≠ 0', () => {
+  it('uses the female model index for gender != 0', () => {
     const f = CPlayer.fromRow(makeRow({ gender: 1 }), { write: () => true });
     const fb = serializer.build(f);
     assert.equal(fb.readUInt32LE(39), 12); // MI_FEMALE (ADD_OBJ dwObjIndex, +22 for WORLD_READINFO)

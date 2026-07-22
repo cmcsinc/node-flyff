@@ -1,7 +1,7 @@
 /**
  * Dialog resource loader.
  *
- * Loads the WorldDialog string table, the character.inc NPC→prefix map, and the
+ * Loads the WorldDialog string table, the character.inc NPC->prefix map, and the
  * per-NPC dialog state files emitted by `scripts/converters/dialogs.ts`.
  *
  * @module loaders/dialog.loader
@@ -25,9 +25,9 @@ const logger = createResourceLogger('dialog.loader');
 export interface DialogIndex {
   /** WorldDialog.txt strings; `strings[n]` resolves `Say(n)` / `Speak(n)`. */
   strings: string[];
-  /** character.inc block key (e.g. `MaFl_Marche`) → `szNpc` prefix. */
+  /** character.inc block key (e.g. `MaFl_Marche`) -> `szNpc` prefix. */
   npcToPrefix: Map<string, string>;
-  /** szNpc prefix → dialog file (states keyed by dialog key index). */
+  /** szNpc prefix -> dialog file (states keyed by dialog key index). */
   byPrefix: Map<string, DialogFile>;
 }
 

@@ -1,5 +1,5 @@
 /**
- * SetPosSerializer wire-frame test — SNAPSHOT/SETPOS (0x0010) same-world teleport.
+ * SetPosSerializer wire-frame test -- SNAPSHOT/SETPOS (0x0010) same-world teleport.
  * Frame: [SNAPSHOT][NULL_ID][cb=1][objid][0x0010][x f32][y f32][z f32].
  */
 

@@ -1,10 +1,10 @@
 /**
- * MOVEITEM handler — `PACKETTYPE_MOVEITEM` (0x00ff0006).
+ * MOVEITEM handler -- `PACKETTYPE_MOVEITEM` (0x00ff0006).
  *
  * `CDPSrvr::OnMoveItem` (`DPSrvr.cpp:787`): `BYTE nItemType, BYTE nSrcIndex,
  * BYTE nDstIndex`. v15 is a pure slot swap (no split opcode). The client moves
  * the item optimistically on drag; the server validates bounds + persists. No
- * reply snapshot — the client already shows the new order, and the JOIN
+ * reply snapshot -- the client already shows the new order, and the JOIN
  * serializer reflects it on relog. Bounds reject is logged + dropped.
  *
  * ponytail: server-authoritative echo (`AddMoveItem`) if anti-cheat or peer-bag
@@ -39,7 +39,7 @@ export class MoveItemHandler {
     if (!player) { socket.destroy(); return; }
 
     try {
-      reader.readByte();                 // nItemType — unused
+      reader.readByte();                 // nItemType -- unused
       const nSrc = reader.readByte();
       const nDst = reader.readByte();
       Validate.slot(nSrc, MAX_INVENTORY);

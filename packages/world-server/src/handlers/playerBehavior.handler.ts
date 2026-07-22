@@ -1,9 +1,9 @@
 /**
- * PLAYERBEHAVIOR handler — client→world `PACKETTYPE_PLAYERBEHAVIOR` (0xffffff02).
+ * PLAYERBEHAVIOR handler -- client->world `PACKETTYPE_PLAYERBEHAVIOR` (0xffffff02).
  *
  * Identical 60-byte body to PLAYERMOVED (DPSrvr.cpp:2349 OnPlayerBehavior).
  * Reuses `readMovementFrame` + `MovementService.applyBehavior` (which echoes a
- * MOVERBEHAVIOR broadcast without mutating position — see movement.service).
+ * MOVERBEHAVIOR broadcast without mutating position -- see movement.service).
  *
  * @module handlers/playerBehavior.handler
  */

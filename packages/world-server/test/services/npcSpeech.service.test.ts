@@ -2,7 +2,7 @@
  * Tests for {@link NpcSpeechService}.
  *
  * Core logic is tested deterministically via injected `now`/`random` (no
- * `mock.timers` needed — `bootstrap()` + `tick()` are called directly, the real
+ * `mock.timers` needed -- `bootstrap()` + `tick()` are called directly, the real
  * `setInterval` from `start()` is only exercised by the trivial `stop()` check).
  *
  * @module test/services/npcSpeech.service
@@ -16,7 +16,7 @@ import type { SpawnManager } from '../../src/managers/spawn.manager.js';
 import type { ZoneManager } from '../../src/managers/zone.manager.js';
 import type { DialogIndex } from '@flyff/resources';
 
-/** Minimal mover stub — only the fields NpcSpeechService reads. */
+/** Minimal mover stub -- only the fields NpcSpeechService reads. */
 function mover(id: number, characterKey: string | undefined, key?: string): CMover {
   return {
     m_idMover: id,
@@ -43,7 +43,7 @@ function mockZoneManager(): { zone: ZoneManager; calls: Array<{ objid: number; t
       // First DWORD of the ChatSerializer payload is PACKETTYPE.SNAPSHOT; the
       // mover objid + text are encoded further in. Rather than decode wire
       // bytes here, the per-case assertions drive `text` through the serializer
-      // indirectly — we only assert reach count + call count + zoneId.
+      // indirectly -- we only assert reach count + call count + zoneId.
       calls.push({ objid: -1, text: '', zoneId });
       return 1;
     },
@@ -51,7 +51,7 @@ function mockZoneManager(): { zone: ZoneManager; calls: Array<{ objid: number; t
   return { zone, calls };
 }
 
-/** Build a DialogIndex mapping `characterKey` → prefix → state-0 speak strings. */
+/** Build a DialogIndex mapping `characterKey` -> prefix -> state-0 speak strings. */
 function mockDialogs(spec: Array<{ key: string; prefix: string; speak?: string[]; say?: string[] }>): DialogIndex {
   const strings: string[] = [];
   const npcToPrefix = new Map<string, string>();
@@ -72,11 +72,11 @@ describe('NpcSpeechService', () => {
   it('schedules NPCs whose state 0 has speak lines; skips the rest', () => {
     const movers = [
       // Real-world path: spawned NPC carries its MI_* name on m_szKey.
-      mover(1, undefined, 'MI_MAFL_BOBOKU'),  // speak greeting → scheduled
-      mover(2, 'MaFl_SayOnly'),     // only `say` → skipped (not a bubble)
-      mover(3, undefined),          // no characterKey (monster) → skipped
-      mover(4, 'MaFl_Unknown'),     // prefix unresolved → skipped
-      mover(5, 'MaFl_NoState0'),    // state 0 has no speak → skipped
+      mover(1, undefined, 'MI_MAFL_BOBOKU'),  // speak greeting -> scheduled
+      mover(2, 'MaFl_SayOnly'),     // only `say` -> skipped (not a bubble)
+      mover(3, undefined),          // no characterKey (monster) -> skipped
+      mover(4, 'MaFl_Unknown'),     // prefix unresolved -> skipped
+      mover(5, 'MaFl_NoState0'),    // state 0 has no speak -> skipped
     ];
     const spawn = mockSpawnManager(movers);
     let fired = 0;
@@ -91,7 +91,7 @@ describe('NpcSpeechService', () => {
     ]);
 
     const svc = new NpcSpeechService({ spawnManager: spawn, zoneManager: zone, dialogs, now: () => 0, random: () => 0.5 });
-    // firstFireAt at t=0, random=0.5 → 60000 + 15000 = 75000. Re-arm → 15 + 5 = 20 s.
+    // firstFireAt at t=0, random=0.5 -> 60000 + 15000 = 75000. Re-arm -> 15 + 5 = 20 s.
     const setNow = (t: number) => { (svc as unknown as { now: () => number }).now = () => t; };
 
     svc.bootstrap();
@@ -122,7 +122,7 @@ describe('NpcSpeechService', () => {
     const svc = new NpcSpeechService({ spawnManager: spawn, zoneManager: zone, dialogs, now: () => 0, random: () => 0 });
 
     svc.bootstrap();
-    (svc as unknown as { now: () => number }).now = () => 90_000; // past 60–90 s first fire (random 0 → 60 s)
+    (svc as unknown as { now: () => number }).now = () => 90_000; // past 60-90 s first fire (random 0 -> 60 s)
     svc.tick();
 
     assert.ok(received, 'broadcast occurred');
@@ -141,9 +141,9 @@ describe('NpcSpeechService', () => {
 
     svc.bootstrap();
     const fireAt = (t: number) => { (svc as unknown as { now: () => number }).now = () => t; svc.tick(); };
-    fireAt(60_000);   // first → 'first'
-    fireAt(75_000);   // re-arm 15 s (random 0) → 75_000
-    fireAt(90_000);   // second → 'second'
+    fireAt(60_000);   // first -> 'first'
+    fireAt(75_000);   // re-arm 15 s (random 0) -> 75_000
+    fireAt(90_000);   // second -> 'second'
     assert.ok(texts[0].includes('first'), 'first emission is line 0');
     assert.ok(texts[1].includes('second'), 'second emission cycles to line 1');
   });
@@ -155,7 +155,7 @@ describe('NpcSpeechService', () => {
     const svc = new NpcSpeechService({ spawnManager: spawn, zoneManager: zone, dialogs, now: () => 0, random: () => 0 });
 
     svc.start();
-    svc.stop(); // clears the real interval — must not throw
+    svc.stop(); // clears the real interval -- must not throw
     svc.stop(); // idempotent
     // tick() still works post-stop (schedule logic independent of the timer).
     assert.doesNotThrow(() => svc.tick());

@@ -1,5 +1,5 @@
 /**
- * EquipService — equip/unequip slot moves + validation.
+ * EquipService -- equip/unequip slot moves + validation.
  *
  * Ports `CUser::DoUseEquipmentItem` / `CMover::EquipItem` (`_Common/MoverEquip.
  * cpp:2557/2587`) + `CItemContainer::UnEquip` (`Item.h:571`). Equipping an item
@@ -7,7 +7,7 @@
  * unequipping reverses into the first empty main-bag slot. Both journal +
  * persist before the handler sends the DOEQUIP snapshot.
  *
- * Stat recompute is implicit — `playerCombatant` reads the equip slots every
+ * Stat recompute is implicit -- `playerCombatant` reads the equip slots every
  * swing via `sumEquipStats`, so no cache invalidation (rule 05).
  *
  * ponytail: refine option encoding, jewelry HR/ER, two-handed offhand block,
@@ -23,7 +23,7 @@ import type { CPlayer, InventorySlot } from '../entities/player.js';
 import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '../net/snapshot/constants.js';
 
 const logger = createLogger({ module: 'equip-service' });
-const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot — reject for now
+const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot -- reject for now
 
 export interface EquipServiceDeps {
   inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem'>;
@@ -44,7 +44,7 @@ export class EquipService {
 
   /**
    * Equip the item in main-bag `invSlot`. `parts` comes from the client
-   * (DOEQUIP nPart) — it MUST match the item's own `equip_slot`, else reject
+   * (DOEQUIP nPart) -- it MUST match the item's own `equip_slot`, else reject
    * (anti-cheat). Swaps the equipped item back into `invSlot` if the slot was
    * occupied. Returns the parts for the DOEQUIP broadcast.
    */

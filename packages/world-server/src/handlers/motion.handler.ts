@@ -1,5 +1,5 @@
 /**
- * MOTION handler — `PACKETTYPE_MOTION` (0x00ff0016).
+ * MOTION handler -- `PACKETTYPE_MOTION` (0x00ff0016).
  *
  * `DPSrvr::OnMotion` (DPSrvr.cpp:4827) reads `DWORD dwMsg` and broadcasts.
  *

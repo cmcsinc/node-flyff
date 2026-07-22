@@ -1,5 +1,5 @@
 /**
- * Smoke test for scripts/extractFlaris.ts — verifies the canonical .dyo/.rgn
+ * Smoke test for scripts/extractFlaris.ts -- verifies the canonical .dyo/.rgn
  * port landed in data/worlds/zones/flaris.yml with sane NPC/spawn counts.
  *
  * @module test/extractFlaris.test
@@ -37,7 +37,7 @@ describe('extractFlaris canonical port', () => {
     const resources = await loadAllResources(DATA_DIR);
     const flaris = resources.zones.zones.get('flaris')!;
     for (const s of flaris.spawns) {
-      assert.ok(resources.movers.movers.has(s.mover_id), `spawn ${s.id} → MI ${s.mover_id}`);
+      assert.ok(resources.movers.movers.has(s.mover_id), `spawn ${s.id} -> MI ${s.mover_id}`);
     }
   });
 });

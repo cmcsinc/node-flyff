@@ -1,15 +1,15 @@
 /**
- * DropService — rolls a dead mover's drop table + spawns ground piles.
+ * DropService -- rolls a dead mover's drop table + spawns ground piles.
  *
  * Ports `CMover::DropItem` (`Mover.cpp:7260`, loop `7707-7851`):
  *   - looter = first-hitter (top of `m_idEnemies`) or the killer fallback;
- *   - level-diff gate: d = killer.level − mover.level buckets
- *     {≤1:1.0, ≤2:0.8, ≤4:0.6, ≤7:0.3, else 0.1};
- *   - per `DropItem` slot: `rng.int(probScale) < prob` → spawn a pile;
+ *   - level-diff gate: d = killer.level - mover.level buckets
+ *     {<=1:1.0, <=2:0.8, <=4:0.6, <=7:0.3, else 0.1};
+ *   - per `DropItem` slot: `rng.int(probScale) < prob` -> spawn a pile;
  *   - gold (`DROPTYPE_SEED`): a single pile within `[min..max]`.
  *
  * Server-authoritative + Rng-injected (rule 03 / testable). Drops are NOT
- * WAL-journaled — a pile is not owned until pickup; the journal happens there.
+ * WAL-journaled -- a pile is not owned until pickup; the journal happens there.
  *
  * ponytail: QuestItem / DropKind, party loot-share, RANK_SUPER FFA, flying-mob
  * direct-createItem. v1 = ground drops only, owner = first-hitter.
@@ -30,7 +30,7 @@ export interface DropServiceDeps {
   rng?: Rng;
 }
 
-/** `xRandom(scale)` analogue — `[0, scale)`. Reuses the combat `Rng` shape. */
+/** `xRandom(scale)` analogue -- `[0, scale)`. Reuses the combat `Rng` shape. */
 function dropRoll(rng: Rng, scale: number): number {
   return rng.int(scale);
 }
@@ -84,7 +84,7 @@ export class DropService {
       }
     }
 
-    // Gold pile — single, only if the table defines a range.
+    // Gold pile -- single, only if the table defines a range.
     if (table.gold && table.maxItem > dropped) {
       const gold = this.goldAmount(table.gold.min, table.gold.max);
       if (gold > 0) {
@@ -119,7 +119,7 @@ export class DropService {
 }
 
 /**
- * Gold-pile propItem ids — `II_GOLD_SEED1..4` (defineItem.h:26-29). The v15
+ * Gold-pile propItem ids -- `II_GOLD_SEED1..4` (defineItem.h:26-29). The v15
  * client renders ground penya as one of four seed items chosen by amount.
  */
 const II_GOLD_SEED1 = 12;
@@ -131,7 +131,7 @@ const II_GOLD_SEED4 = 15;
  * Pick the gold-pile propItem id by amount tier. Ports `CMover::DropItem`
  * (Mover.cpp:7883-7890), which selects the seed via each propItem's
  * `dwAbilityMax` (20 / 50 / 100 / 1000). A pile with `m_dwItemId == 0`
- * null-derefs `GetProp()` in `CItemBase::SetTexture` → client crash on kill.
+ * null-derefs `GetProp()` in `CItemBase::SetTexture` -> client crash on kill.
  */
 export function goldSeedId(amount: number): number {
   if (amount <= 20) return II_GOLD_SEED1;

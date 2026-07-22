@@ -40,7 +40,7 @@ function fakeSink(counts: Record<number, number> = {}) {
   return { sink, log, store };
 }
 
-describe('questRewards — applyEnd', () => {
+describe('questRewards -- applyEnd', () => {
   it('grants gold (min==max deterministic) and journals CHAR_GOLD (absolute)', () => {
     const { sink, log } = fakeSink();
     const p = player();
@@ -89,14 +89,14 @@ describe('questRewards — applyEnd', () => {
 
   it('resets within-level exp to 0 at an exact level boundary (no carryover)', () => {
     const { sink } = fakeSink();
-    const p = player(); // L1, exp 0 — L1→L2 needs 14 cumulative
+    const p = player(); // L1, exp 0 -- L1->L2 needs 14 cumulative
     applyEnd(p, def([cmd('SetEndRewardExp', 14, 14)]), sink);
     assert.equal(p.m_nLevel, 2);
     assert.equal(p.m_nExp, 0);
   });
 });
 
-describe('questRewards — applyBeginSet', () => {
+describe('questRewards -- applyBeginSet', () => {
   it('grants SetBeginSetAddGold + SetBeginSetAddItem on accept', () => {
     const { sink, store } = fakeSink();
     const p = player();

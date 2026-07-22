@@ -1,5 +1,5 @@
 /**
- * Unit tests for LocalBus — dev-only localhost TCP pub/sub.
+ * Unit tests for LocalBus -- dev-only localhost TCP pub/sub.
  *
  * Covers the two real topologies: single-process (broker is also the
  * subscriber/publisher) and two-process (one broker, one remote client). All
@@ -30,7 +30,7 @@ function freePort(): Promise<number> {
   });
 }
 
-/** Resolve on the next macrotask batch — gives frames time to cross TCP. */
+/** Resolve on the next macrotask batch -- gives frames time to cross TCP. */
 const flush = (ms = 25): Promise<void> => new Promise((r) => setTimeout(r, ms));
 
 const instances: LocalBus[] = [];
@@ -67,7 +67,7 @@ describe('LocalBus', () => {
     await broker.subscribe('player:handoff');
     await flush();
 
-    // Published from the *other* instance — proves cross-process fan-out.
+    // Published from the *other* instance -- proves cross-process fan-out.
     await client.publish('player:handoff', JSON.stringify({ charId: 99 }));
     await flush();
 

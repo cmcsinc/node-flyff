@@ -1,12 +1,12 @@
 /**
- * S→C DAMAGE snapshot — `SNAPSHOTTYPE_DAMAGE` (0x0013).
+ * S->C DAMAGE snapshot -- `SNAPSHOTTYPE_DAMAGE` (0x0013).
  *
  * Mirrors `CUserMng::AddDamage` (`WORLDSERVER/User.cpp:4435`):
  *   ar << GETID(pMover) << SNAPSHOTTYPE_DAMAGE;
  *   ar << objidAttacker << dwHit << dwAtkFlags;
- *   if (dwAtkFlags & AF_FLYING) ar << pos(3×float) << angle;
+ *   if (dwAtkFlags & AF_FLYING) ar << pos(3*float) << angle;
  *
- * This IS the per-mover HP sync — there is no dedicated HP packet. All nearby
+ * This IS the per-mover HP sync -- there is no dedicated HP packet. All nearby
  * clients `IncHitPoint(-dwHit)` locally; the red monster bar updates purely
  * from this broadcast (`DPClient.cpp:1724 OnDamage`).
  *
@@ -39,7 +39,7 @@ export class DamageSerializer {
     w.writeDword(f.hit);
     w.writeDword(f.atkFlags);
     if (f.atkFlags & AF_FLYING) {
-      // pos (3× float) + angle — appended only on knock-up. v1 never hits this.
+      // pos (3* float) + angle -- appended only on knock-up. v1 never hits this.
       w.writeFloat(0).writeFloat(0).writeFloat(0).writeFloat(0);
     }
     return w.build();

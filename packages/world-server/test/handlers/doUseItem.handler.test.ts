@@ -1,9 +1,9 @@
 /**
- * DoUseItemHandler test — DOUSEITEM (0x00ff0021).
+ * DoUseItemHandler test -- DOUSEITEM (0x00ff0021).
  *
  * Body: `DWORD dwData, OBJID objid, int nPart[, FLOAT fVal]`. The slot is
- * HIWORD(dwData). Routes via UseItemService: equip → DOEQUIP snapshots;
- * consumable → SETPOINTPARAM(DST_HP/MP/FP) per restored pool.
+ * HIWORD(dwData). Routes via UseItemService: equip -> DOEQUIP snapshots;
+ * consumable -> SETPOINTPARAM(DST_HP/MP/FP) per restored pool.
  */
 
 import { describe, it } from 'node:test';
@@ -26,7 +26,7 @@ function mockSocket() {
 function body(slot: number, nPart: number): Buffer {
   const w = new PacketWriter();
   w.writeDword((slot << 16) >>> 0); // dwData = HIWORD(slot)
-  w.writeDword(0);                  // objid — focus target, unused
+  w.writeDword(0);                  // objid -- focus target, unused
   w.writeDword(nPart);
   return w.build();
 }

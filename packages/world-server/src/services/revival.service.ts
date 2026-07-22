@@ -1,18 +1,18 @@
 /**
- * RevivalService — death→revival loop (`DPSrvr::OnRevival*`,
+ * RevivalService -- death->revival loop (`DPSrvr::OnRevival*`,
  * `_Common/Mover.cpp::DoDie/SubDieDecExp`).
  *
  * Two entry points:
  *  - {@link onPlayerDeath}: called by `AISystem` on lethal damage. Flags dead,
  *    broadcasts `MOVERDEATH` to vicinity, sends `ACTMSG STOP+DIE` to the dying
  *    client (opens `CWndRevival`).
- *  - {@link revive}: called by `RevivalHandler` for the 3 C→S opcodes.
- *    `SCROLL` (`REVIVAL`) — consume resurrection scroll, in-place revive, no
- *    exp penalty (non-chaotic). `LODESTAR` (`REVIVAL_TO_LODESTAR`) — town revive,
- *    exp penalty + teleport to zone revival pos. `LODELIGHT` — C++ stubs this
+ *  - {@link revive}: called by `RevivalHandler` for the 3 C->S opcodes.
+ *    `SCROLL` (`REVIVAL`) -- consume resurrection scroll, in-place revive, no
+ *    exp penalty (non-chaotic). `LODESTAR` (`REVIVAL_TO_LODESTAR`) -- town revive,
+ *    exp penalty + teleport to zone revival pos. `LODELIGHT` -- C++ stubs this
  *    empty; rejected.
  *
- * HP restore rate 0.2 × max (v15 non-chaotic v9+ default). Exp penalty is the
+ * HP restore rate 0.2 * max (v15 non-chaotic v9+ default). Exp penalty is the
  * bracket table in `combat/formulas.subDieDecExp`.
  *
  * WAL: scroll consume + exp loss are journaled before the ack (rule 04).
@@ -74,7 +74,7 @@ export class RevivalService {
   constructor(private readonly deps: RevivalServiceDeps) {}
 
   /**
-   * `CMover::DoDie` player path. Idempotent — the `m_bDead` guard stops
+   * `CMover::DoDie` player path. Idempotent -- the `m_bDead` guard stops
    * double-trigger on multi-hit ticks that both cross HP=0.
    */
   onPlayerDeath(player: CPlayer, killerObjid: number): void {
@@ -102,14 +102,14 @@ export class RevivalService {
     return this.reviveLodestar(player);
   }
 
-  /** `OnRevival` (0x00ff00c0) — scroll revive in place. */
+  /** `OnRevival` (0x00ff00c0) -- scroll revive in place. */
   private reviveScroll(player: CPlayer): RevivalOutcome {
     const slot = this.findScrollSlot(player);
     if (slot < 0) return { ok: false, reason: 'no_scroll' };
     const stack = player.m_Inventory[slot]!;
 
     // WAL journal the slot's ABSOLUTE post-state before the client ack (rule
-    // 04): either decremented stack or cleared slot. Idempotent — the boot
+    // 04): either decremented stack or cleared slot. Idempotent -- the boot
     // replayer re-applies this exact slot contents if the consume persist lost
     // the race with a crash.
     const remaining = stack.count - 1;
@@ -130,7 +130,7 @@ export class RevivalService {
     return { ok: true };
   }
 
-  /** `OnRevivalLodestar` (0x00ff00c1) — town revive + exp penalty + teleport. */
+  /** `OnRevivalLodestar` (0x00ff00c1) -- town revive + exp penalty + teleport. */
   private reviveLodestar(player: CPlayer): RevivalOutcome {
     this.clearDeadState(player);
 
@@ -141,7 +141,7 @@ export class RevivalService {
       player.m_nExp = pen.exp;
       player._dirty.add('m_nExp');
       // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
-      // Idempotent — the boot replayer re-applies (level, exp) if the
+      // Idempotent -- the boot replayer re-applies (level, exp) if the
       // fire-and-forget persist below lost the race with a crash.
       const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
       this.deps.journal?.append({
@@ -173,7 +173,7 @@ export class RevivalService {
     // ponytail: ClearState buffs when the buff system lands.
   }
 
-  /** HP/MP to 0.2 × max (v15 non-chaotic default). */
+  /** HP/MP to 0.2 * max (v15 non-chaotic default). */
   private restoreVitals(player: CPlayer): void {
     const hp = Math.floor(player.m_nMaxHp * REVIVE_HP_RATE);
     const mp = Math.floor(player.m_nMaxMp * REVIVE_HP_RATE);
@@ -182,13 +182,13 @@ export class RevivalService {
   }
 
   /**
-   * Same-world teleport to the zone's revival position via `SETPOS` — the C++
+   * Same-world teleport to the zone's revival position via `SETPOS` -- the C++
    * `_replace` same-world branch (`World.cpp:1589-1604`). The client's `OnSetPos`
    * relocates the local player (ReadWorld + SetPos) WITHOUT nulling `g_pPlayer`,
    * so ticking UI windows stay safe.
    *
-   * `REPLACE` would null `g_pPlayer` (`DPClient.cpp:2352`) and — since we don't
-   * re-send the player's own ADD_OBJ — leave it null, crashing the first window
+   * `REPLACE` would null `g_pPlayer` (`DPClient.cpp:2352`) and -- since we don't
+   * re-send the player's own ADD_OBJ -- leave it null, crashing the first window
    * to deref it (`CWndQuestQuickInfo::Process:259`).
    * ponytail: cross-world teleports need REPLACE followed by self `AddAddObj`
    * to restore `g_pPlayer`; plus real `GetNearRevivalPos` nearest-point tables.

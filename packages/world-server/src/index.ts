@@ -7,11 +7,11 @@ import { buildWorldClientServer } from './clientServer.js';
  *
  * Two transports, picked by `cacheAdapter`:
  *   - `redis` (production): `ioredis` loaded dynamically.
- *   - anything else (dev): `LocalBus` — localhost TCP pub/sub, same redis-like
+ *   - anything else (dev): `LocalBus` -- localhost TCP pub/sub, same redis-like
  *     shape. Lets cluster + world exchange `player:handoff` with no Redis.
  *
  * `ioredis` is loaded dynamically so the server still boots in `memory` cache
- * mode. Bus setup is best-effort — a failure logs a warning and the world keeps
+ * mode. Bus setup is best-effort -- a failure logs a warning and the world keeps
  * running without the `player:handoff` listener (joins rejected until recovered).
  */
 async function startClusterListener(
@@ -31,7 +31,7 @@ async function startClusterListener(
     if (cfg.cacheAdapter === 'redis') {
       // ioredis ships as `export = Redis` (CJS); the dynamic-import default needs
       // a construct-signature cast for tsc. Runtime shape matches IpcBus's
-      // IpcRedis (on/publish/subscribe/unsubscribe/quit) — see @flyff/ipc tests.
+      // IpcRedis (on/publish/subscribe/unsubscribe/quit) -- see @flyff/ipc tests.
       type IpcRedisLike = {
         on(event: 'message', h: (channel: string, data: string) => void): void;
         publish(channel: string, data: string): Promise<number>;
@@ -45,7 +45,7 @@ async function startClusterListener(
       const bus = new IpcBus(redis, cfg.ipcSecret, cfg.serverId);
       setBus(bus);
       await start();
-      log.info({ serverId: cfg.serverId }, 'IPC bus connected (redis) — listening for player:handoff');
+      log.info({ serverId: cfg.serverId }, 'IPC bus connected (redis) -- listening for player:handoff');
     } else {
       const localBus = await createLocalBus({
         host: cfg.localBusHost,
@@ -57,11 +57,11 @@ async function startClusterListener(
       await start();
       log.info(
         { serverId: cfg.serverId, host: cfg.localBusHost, port: cfg.localBusPort },
-        'IPC bus connected (local) — listening for player:handoff',
+        'IPC bus connected (local) -- listening for player:handoff',
       );
     }
   } catch (err) {
-    log.warn({ err }, 'IPC bus setup failed — player:handoff listener not started');
+    log.warn({ err }, 'IPC bus setup failed -- player:handoff listener not started');
   }
 }
 
@@ -71,6 +71,7 @@ async function main(): Promise<void> {
     logger,
     clusterRegistrar,
     clusterListener,
+    joinService,
     joinHandler,
     mapKeyHandler,
     queryPlayerDataHandler,
@@ -98,15 +99,19 @@ async function main(): Promise<void> {
     doEquipHandler,
     doUseItemHandler,
     bankHandler,
+    shopHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,
+    useSkillHandler,
+    doUseSkillPointHandler,
     journal,
     journalReplayer,
     npcSpeechService,
     questTracker,
     spawnManager,
     aiSystem,
+    checkpointSystem,
     itemManager,
   } = await compose();
 
@@ -131,6 +136,7 @@ async function main(): Promise<void> {
     npcSpeechService.stop();
     questTracker.stop();
     aiSystem.stop();
+    checkpointSystem.stop();
     spawnManager.shutdown();
     itemManager.shutdown();
     journal.close();
@@ -182,9 +188,18 @@ async function main(): Promise<void> {
     doEquipHandler,
     doUseItemHandler,
     bankHandler,
+    shopHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,
+    useSkillHandler,
+    doUseSkillPointHandler,
+    onDisconnect: (socket) => {
+      // Flush player state (position, vitals, stats, bank gold) + drop from
+      // managers. disconnectByCharId swallows its own errors so this never
+      // rejects; the dispatcher also guards the hook with try/catch.
+      void joinService.disconnectByCharId(socket.session?.charId);
+    },
     logger,
   });
   server.listen(config.server.port, () => {

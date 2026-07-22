@@ -1,5 +1,5 @@
 /**
- * CPlayer — live in-world player entity.
+ * CPlayer -- live in-world player entity.
  *
  * Mirrors the C++ `CPlayer` (extends `CMover`) naming: `m_` prefix and
  * Hungarian notation so fields cross-reference the original source. Only the
@@ -8,20 +8,20 @@
  *
  * The entity holds a weakly-typed socket reference (`{ write }`) so the zone
  * manager can broadcast to it without this module depending on `node:net`
- * (rule 02 — entities carry no packet logic; they only expose the sink).
+ * (rule 02 -- entities carry no packet logic; they only expose the sink).
  *
  * @module entities/player
  */
 
 import type { CharacterRow } from '@flyff/database';
 import { AUTH } from '../constants/authority.js';
-import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS } from '../net/snapshot/constants.js';
+import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB } from '../net/snapshot/constants.js';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest.js';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
 
 /**
  * Minimal write-capable socket view a player holds for broadcasts.
- * `destroy` is optional — only the live `net.Socket` provides it; tests/mocks
+ * `destroy` is optional -- only the live `net.Socket` provides it; tests/mocks
  * omit it. `/out` uses it to force-disconnect a named target.
  */
 export interface PlayerSocket {
@@ -29,11 +29,28 @@ export interface PlayerSocket {
   destroy?(): void;
 }
 
-/** D3DVECTOR stand-in — C++ `m_vPos`. */
+/** D3DVECTOR stand-in -- C++ `m_vPos`. */
 export interface Vec3 {
   x: number;
   y: number;
   z: number;
+}
+
+/**
+ * One `m_aJobSkill[45]` slot (C++ `SKILL` struct, sizeof=8). Empty slots use
+ * `skillId = NULL_ID` (0xffffffff) -- the C++ sentinel for "no skill".
+ * See `_Common/Item.h:308`, docs `skills-research.md` #5.
+ */
+export interface SkillSlot {
+  /** Resolved SI_* skill id. NULL_ID (0xffffffff) = empty slot. */
+  skillId: number;
+  /** Learned skill level (1..dwExpertMax). 0 = empty slot. */
+  level: number;
+}
+
+/** Build an empty skill-slot array (45 slots, all NULL_ID/0). */
+function emptySkillSlots(): SkillSlot[] {
+  return Array.from({ length: MAX_SKILL_JOB }, () => ({ skillId: NULL_ID, level: 0 }));
 }
 
 /**
@@ -50,6 +67,10 @@ export interface InventorySlot {
   refine?: number;
   /** Durability / m_nHitPoint. -1 = indestructible. */
   durability?: number;
+  /** Element type (CItemElem m_bItemResist; NO_PROP=0, FIRE=1...EARTH=5). Instance upgrade state. */
+  element?: number;
+  /** Element level (CItemElem m_nResistAbilityOption). Instance upgrade state. */
+  element_level?: number;
 }
 
 /**
@@ -109,8 +130,8 @@ export class CPlayer {
   m_bAuthority: number = AUTH.GENERAL;
   /**
    * Runtime mode bitmask (C++ `CMover::m_dwMode`, authorization.h:18). Holds GM
-   * toggles — `MATCHLESS_MODE` (`/undying`, invincible), `TRANSPARENT_MODE`
-   * (`/inv`, invisible). See `constants/mode.ts`. Transient — not persisted,
+   * toggles -- `MATCHLESS_MODE` (`/undying`, invincible), `TRANSPARENT_MODE`
+   * (`/inv`, invisible). See `constants/mode.ts`. Transient -- not persisted,
    * resets each session (matches C++). Mutated by `/cmd` and broadcast via
    * `SNAPSHOTTYPE_MODIFYMODE`. MATCHLESS is honored by `AISystem.monsterSwing`
    * (skip HP subtraction). ponytail: add a `mode` column + JOIN hydration if a
@@ -126,14 +147,14 @@ export class CPlayer {
   m_dwDisguise: number = 0;
   /** Y-axis rotation (C++ `m_fAngle`). Updated by GETPOS/PLAYERANGLE. */
   m_fAngle: number = 0;
-  /** Per-player target lock (C++ `m_idTarget`) — set by SETTARGET, consumed by combat. */
+  /** Per-player target lock (C++ `m_idTarget`) -- set by SETTARGET, consumed by combat. */
   m_idTarget: number = NULL_ID;
-  /** Objective target id (C++ `m_idSetTarget`) — SETTARGET with bClear=2. */
+  /** Objective target id (C++ `m_idSetTarget`) -- SETTARGET with bClear=2. */
   m_idSetTarget: number = NULL_ID;
   /**
    * Walk-to-object destination (C++ `GetDestId()` / `SetDestObj`). Set by
    * PLAYERSETDESTOBJ; consumed by the pathfinding tick (not yet implemented).
-   * Used now for `__TRAFIC_1223` dedup — repeat packets for the same obj drop.
+   * Used now for `__TRAFIC_1223` dedup -- repeat packets for the same obj drop.
    */
   m_idDestObj: number = NULL_ID;
   /**
@@ -142,12 +163,12 @@ export class CPlayer {
    */
   m_fArrivalRange: number = 0;
   /**
-   * Player-killer / chaotic disposition (C++ `m_dwPKPropensity`, Mover.h:1227 —
+   * Player-killer / chaotic disposition (C++ `m_dwPKPropensity`, Mover.h:1227 --
    * `IsChaotic()` = `> 0`). Gates guard attackability. ponytail: set on
    * player-kill + persist to a DB column; no source yet, defaults non-PK.
    */
   m_dwPKPropensity: number = 0;
-  /** Last SCRIPTDLG tick (C++ `m_tickScript`) — 400ms rate limit (DPSrvr.cpp:903). */
+  /** Last SCRIPTDLG tick (C++ `m_tickScript`) -- 400ms rate limit (DPSrvr.cpp:903). */
   m_tickScript: number = 0;
   /**
    * One-shot: the zone's NPC/monster ADD_OBJ snapshot has been sent for this
@@ -156,7 +177,7 @@ export class CPlayer {
    */
   m_vicinitySent: boolean = false;
   /**
-   * Per-player quest state — in-memory mirror of the C++ per-mover arrays
+   * Per-player quest state -- in-memory mirror of the C++ per-mover arrays
    * (`_Common/Mover.h:702-709`). Loaded from the DB on JOIN; mutated by the
    * quest service; persisted via dirty-flag flush + `QuestRepository`.
    */
@@ -164,11 +185,11 @@ export class CPlayer {
   m_aCompleteQuest: number[] = [];
   m_aCheckedQuest: number[] = [];
   /**
-   * In-memory inventory — one `InventorySlot` per occupied slot, `null` when
+   * In-memory inventory -- one `InventorySlot` per occupied slot, `null` when
    * empty. Sized `INVENTORY_SLOTS` (73 = 42 main bag + 31 equip parts) to match
    * the client's `CItemContainer`. Hydrated from `InventoryRepository` on JOIN;
    * mutated by the pickup path (Phase E) + persisted fire-and-forget per
-   * change (matches the gold/exp write-through pattern — no 30 s flush loop).
+   * change (matches the gold/exp write-through pattern -- no 30 s flush loop).
    * Indexes 0..MAX_INVENTORY-1 are the main bag; 42..72 are equip parts.
    */
   m_Inventory: (InventorySlot | null)[] = new Array(INVENTORY_SLOTS).fill(null);
@@ -186,11 +207,48 @@ export class CPlayer {
   /** True while the bank window is open (NPC range / instant-bank). */
   m_bBankOpen: boolean = false;
   /**
+   * Bank password (C++ `m_szBankPass`, char[5]). `'0000'` = no password set
+   * (bank opens directly); any other value prompts CONFIRMBANK. Max 4 chars,
+   * changed via CHANGEBANKPASS. Hydrated from `characters.bank_pass`.
+   */
+  m_szBankPass: string = '0000';
+  /**
+   * The vendor NPC objid the player is currently interacting with
+   * (C++ `m_vtInfo.GetOther()` / `SetOther()`). Set by OPENSHOPWND, cleared by
+   * CLOSESHOPWND / LEAVE. Future BUYITEM/SELLITEM handlers gate on this.
+   */
+  m_idOther: number | null = null;
+  /**
    * Fatigue point pool (C++ `m_nFatiguePoint`). Consumables (food/potion) restore
    * it; most skills spend it. ponytail: real FP regen + skill spend once skills ship.
    */
   m_nFp: number = 0;
   m_nMaxFp: number = 0;
+  /**
+   * Per-slot learned skills (C++ `m_aJobSkill[45]`, sizeof 8 each). Slot ranges:
+   * 0-2 vagrant, 3-22 expert, 23-42 pro, 43 master, 44 hero. Empty slots carry
+   * `skillId = NULL_ID`. Hydrated from `SkillRepository` on JOIN; mutated by the
+   * learn handler (DOUSESKILLPOINT). ponytail: persist via skill repo on learn.
+   */
+  m_aJobSkill: SkillSlot[] = emptySkillSlots();
+  /**
+   * Total skill points earned (C++ `m_nSkillLevel`). Persisted on
+   * `characters.skill_level` (migration 005). Earned on level-up via
+   * `((level-1)/20)+2` (MoverParam.cpp:1434). Never decremented.
+   */
+  m_nSkillLevel: number = 0;
+  /**
+   * Unspent skill points (C++ `m_nSkillPoint`). Persisted on
+   * `characters.skill_point` (migration 005). Decremented by the learn handler
+   * (DOUSESKILLPOINT) at the per-tier cost: vagrant 1, expert 2, pro/master/hero 3.
+   */
+  m_nSkillPoint: number = 0;
+  /**
+   * Per-slot cooldown timestamps (C++ `m_tmReUseDelay[45]`). Set to
+   * `Date.now() + cooldownMs` on cast; `0` = ready. Indexed by slot, NOT skill id.
+   * ponytail: persisted only on graceful disconnect (transient state).
+   */
+  m_tmReUseDelay: number[] = new Array(MAX_SKILL_JOB).fill(0);
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
   readonly _dirty: Set<string> = new Set();
@@ -204,6 +262,7 @@ export class CPlayer {
     this.m_nSex = row.gender;
     this.m_nGold = row.gold ?? 0;
     this.m_vPos = { x: row.x, y: row.y, z: row.z };
+    this.m_fAngle = row.angle ?? 0;
     this.m_nHp = row.hp;
     this.m_nMp = row.mp;
     this.m_nMaxHp = row.max_hp;
@@ -219,6 +278,9 @@ export class CPlayer {
     this.m_worldId = row.world_id;
     this.m_nZoneId = row.zone_id;
     this.m_bAuthority = authority;
+    this.m_nSkillPoint = row.skill_point ?? 0;
+    this.m_nSkillLevel = row.skill_level ?? 0;
+    this.m_szBankPass = row.bank_pass ?? '0000';
     this.socket = socket;
   }
 
@@ -227,25 +289,52 @@ export class CPlayer {
     return new CPlayer(row, socket, authority);
   }
 
-  /** C++ `IsChaotic()` (Mover.h:1227) — player-killer state (PK). */
+  /**
+   * Hydrate `m_aJobSkill` from a list of learned skills (C++ `OnDoUseSkillPoint`
+   * stores by slot index). Empty slots keep the NULL_ID sentinel. Caller is
+   * `JoinService.loadSkills` after the DB row resolves.
+   */
+  hydrateSkills(slots: ReadonlyArray<{ slot: number; skillId: number; level: number }>): void {
+    for (const s of slots) {
+      if (s.slot < 0 || s.slot >= this.m_aJobSkill.length) continue;
+      if (s.skillId === NULL_ID || s.skillId === 0) continue;
+      this.m_aJobSkill[s.slot] = { skillId: s.skillId, level: s.level };
+    }
+  }
+
+  /**
+   * Seed a fresh Vagrant's job-skill roster (3 slots pre-filled at level 0).
+   * C++ seeds `SI_VAG_ONE_CLEANHIT` (1), `SI_VAG_ONE_BRANDISH` (2),
+   * `SI_VAG_ONE_OVERCUT` (3) at slot 0/1/2 on character creation. Use after
+   * creating a brand-new character -- no-op for existing characters.
+   */
+  seedVagrantRoster(): void {
+    const VAGRANT_ROSTER = [1, 2, 3]; // SI_VAG_ONE_CLEANHIT/BRANDISH/OVERCUT
+    for (let i = 0; i < VAGRANT_ROSTER.length && i < this.m_aJobSkill.length; i++) {
+      this.m_aJobSkill[i] = { skillId: VAGRANT_ROSTER[i]!, level: 0 };
+    }
+    this._dirty.add('m_aJobSkill');
+  }
+
+  /** C++ `IsChaotic()` (Mover.h:1227) -- player-killer state (PK). */
   isChaotic(): boolean {
     return this.m_dwPKPropensity > 0;
   }
 
   // --- Quest state helpers (mirror `_Common/MoverParam.cpp`) ---
 
-  /** `CMover::FindQuest` — linear scan of the active list by id. */
+  /** `CMover::FindQuest` -- linear scan of the active list by id. */
   findQuest(questId: number): RuntimeQuest | undefined {
     return this.m_aQuest.find((q) => q.id === questId);
   }
 
-  /** `CMover::IsCompleteQuest` — true if id is in the completed list. */
+  /** `CMover::IsCompleteQuest` -- true if id is in the completed list. */
   isCompleteQuest(questId: number): boolean {
     return this.m_aCompleteQuest.includes(questId);
   }
 
   /**
-   * `CMover::SetQuest` — upsert an active quest. Refuses if already complete.
+   * `CMover::SetQuest` -- upsert an active quest. Refuses if already complete.
    * At `QS_END` the quest moves to the completed list (mirrors `__SetQuest`).
    * Returns the active record, or a synthesized completed record on QS_END.
    */
@@ -267,7 +356,7 @@ export class CPlayer {
     return this.findQuest(q.id) ?? q;
   }
 
-  /** `CMover::RemoveQuest` — drop from active + completed + checked lists. */
+  /** `CMover::RemoveQuest` -- drop from active + completed + checked lists. */
   removeQuest(questId: number): void {
     this.m_aQuest = this.m_aQuest.filter((q) => q.id !== questId);
     this.m_aCompleteQuest = this.m_aCompleteQuest.filter((id) => id !== questId);
@@ -276,7 +365,7 @@ export class CPlayer {
   }
 
   /**
-   * `CMover::AddCheckedQuest` — toggle a quest in the "checked" (tracked) list
+   * `CMover::AddCheckedQuest` -- toggle a quest in the "checked" (tracked) list
    * (cap `MAX_CHECKED_QUEST`, newest-first). Returns the resulting list. Driven
    * by `PACKETTYPE_QUEST_CHECK`; persisted by `QuestService.setChecked`.
    */

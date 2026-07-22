@@ -93,7 +93,7 @@ describe('migrate.ts', () => {
     });
 
     it('should return "none" if no migrations applied', async () => {
-      // Isolated db — the rollback tests above may leave state behind when the
+      // Isolated db -- the rollback tests above may leave state behind when the
       // env can't roll back ALTER migrations, so the shared `db` isn't clean.
       const fresh = knex({
         client: 'better-sqlite3',

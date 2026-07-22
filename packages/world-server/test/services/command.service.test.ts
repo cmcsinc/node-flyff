@@ -34,7 +34,7 @@ function makePlayer(id: number, name: string, authority = AUTH.GENERAL): CPlayer
   return p;
 }
 
-/** Minimal SpawnManager stub — `get`/`kill`/`size` over a Map. */
+/** Minimal SpawnManager stub -- `get`/`kill`/`size` over a Map. */
 function makeSpawnManager(movers = new Map<number, { m_idMover: number }>()) {
   return {
     get: (id: number) => movers.get(id),
@@ -71,7 +71,7 @@ function setup() {
   return { playerManager, commandService };
 }
 
-describe('CommandService — routing', () => {
+describe('CommandService -- routing', () => {
   it('returns unknown for a bare slash', () => {
     const { commandService } = setup();
     const p = makePlayer(1, 'Alice');
@@ -91,7 +91,7 @@ describe('CommandService — routing', () => {
   });
 });
 
-describe('CommandService — whisper', () => {
+describe('CommandService -- whisper', () => {
   it('delivers a whisper to both sender and target', () => {
     const { playerManager, commandService } = setup();
     const alice = makePlayer(1, 'Alice');
@@ -128,7 +128,7 @@ describe('CommandService — whisper', () => {
   });
 });
 
-describe('CommandService — shout', () => {
+describe('CommandService -- shout', () => {
   it('broadcasts a shout to every live player', () => {
     const { playerManager, commandService } = setup();
     const a = makePlayer(1, 'A');
@@ -143,7 +143,7 @@ describe('CommandService — shout', () => {
   });
 });
 
-describe('CommandService — teleport', () => {
+describe('CommandService -- teleport', () => {
   it('moves the player to given coords and sends SETPOS', () => {
     const { playerManager, commandService } = setup();
     const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
@@ -181,7 +181,7 @@ describe('CommandService — teleport', () => {
   });
 });
 
-describe('CommandService — summon', () => {
+describe('CommandService -- summon', () => {
   it('moves the target to the caller\'s position', () => {
     const { playerManager, commandService } = setup();
     const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
@@ -198,7 +198,7 @@ describe('CommandService — summon', () => {
   });
 });
 
-describe('CommandService — system + level', () => {
+describe('CommandService -- system + level', () => {
   it('broadcasts a /sys notice to every live player (GM2 only)', () => {
     const { playerManager, commandService } = setup();
     const admin = makePlayer(1, 'Admin', AUTH.GAMEMASTER2);
@@ -215,8 +215,8 @@ describe('CommandService — system + level', () => {
   it('NoticeSerializer emits the TEXT_GENERAL state byte (Florist __S_SERVER_UNIFY)', () => {
     // OnText (DPClient.cpp:1341) reads BYTE nState before the string when
     // __S_SERVER_UNIFY is defined (it is, in Florist). Omit the byte and the
-    // string-length DWORD shifts → silent drop. Layout after the subtype WORD:
-    //   [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2][TEXT_GENERAL:1]…
+    // string-length DWORD shifts -> silent drop. Layout after the subtype WORD:
+    //   [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2][TEXT_GENERAL:1]...
     const buf = new NoticeSerializer().build('hi');
     assert.equal(buf[16], TEXT_GENERAL, 'TEXT_GENERAL byte must precede the string');
   });
@@ -241,15 +241,17 @@ describe('CommandService — system + level', () => {
   });
 });
 
-describe('CommandService — gold (/gg)', () => {
-  it('adds gold, WAL-journals, and sends a SetPointParam snapshot to self', () => {
+describe('CommandService -- gold (/gg)', () => {
+  it('adds gold, WAL-journals, persists live, and sends SetPointParam to self', () => {
     const playerManager = new PlayerManager();
     const journaled: Array<{ charId: number; type: string; payload: unknown }> = [];
+    const goldSaved: number[] = [];
     const commandService = new CommandService({
       playerManager,
       spawnManager: makeSpawnManager(),
       questService: makeQuestService().svc,
       journal: { append: (e) => { journaled.push(e); } },
+      charRepo: { updateGold: async (_id: number, gold: number) => { goldSaved.push(gold); } } as never,
     });
     const admin = makePlayer(1, 'Admin', AUTH.ADMINISTRATOR);
     playerManager.add(admin);
@@ -260,6 +262,7 @@ describe('CommandService — gold (/gg)', () => {
     assert.equal(journaled.length, 1);
     assert.equal(journaled[0]!.type, 'CHAR_GOLD');
     assert.equal((journaled[0]!.payload as { gold: number }).gold, 1000);
+    assert.deepEqual(goldSaved, [1000], 'live updateGold write fires with the new total');
     assert.equal((admin.socket as unknown as SpySocket)._sent.length, 1, 'SetPointParam sent to self');
   });
 
@@ -274,7 +277,7 @@ describe('CommandService — gold (/gg)', () => {
     admin.m_nGold = 500;
     playerManager.add(admin);
 
-    commandService.route(admin, '/gg -1000');   // would underflow → clamped to 0
+    commandService.route(admin, '/gg -1000');   // would underflow -> clamped to 0
     assert.equal(admin.m_nGold, 0);
   });
 
@@ -285,12 +288,12 @@ describe('CommandService — gold (/gg)', () => {
   });
 });
 
-describe('CommandService — undying (/undying /ud /noundying /noud)', () => {
+describe('CommandService -- undying (/undying /ud /noundying /noud)', () => {
   it('sets MATCHLESS and clears MATCHLESS2 on /undying, broadcasting MODIFYMODE', () => {
     const { playerManager, commandService } = setup();
     const admin = makePlayer(1, 'Admin', AUTH.ADMINISTRATOR);
     const watcher = makePlayer(2, 'Watcher');
-    admin.m_dwMode = MODE.MATCHLESS2; // pre-set tier-2 — enable must clear it
+    admin.m_dwMode = MODE.MATCHLESS2; // pre-set tier-2 -- enable must clear it
     playerManager.add(admin);
     playerManager.add(watcher);
 
@@ -331,7 +334,7 @@ describe('CommandService — undying (/undying /ud /noundying /noud)', () => {
   });
 });
 
-describe('CommandService — invisible (/inv)', () => {
+describe('CommandService -- invisible (/inv)', () => {
   it('sets TRANSPARENT + broadcasts MODIFYMODE; /noinv clears it', () => {
     const { playerManager, commandService } = setup();
     const gm = makePlayer(1, 'Gm', AUTH.GAMEMASTER);
@@ -352,7 +355,7 @@ describe('CommandService — invisible (/inv)', () => {
   });
 });
 
-describe('CommandService — count (/cnt)', () => {
+describe('CommandService -- count (/cnt)', () => {
   it('sends a TEXT frame with player + monster counts to self', () => {
     const playerManager = new PlayerManager();
     const spawn = makeSpawnManager(new Map([[1, { m_idMover: 1 }], [2, { m_idMover: 2 }]]));
@@ -372,13 +375,15 @@ describe('CommandService — count (/cnt)', () => {
   });
 });
 
-describe('CommandService — removeTotalGold (/rtg)', () => {
-  it('removes gold, WAL-journals the new total, sends SetPointParam', () => {
+describe('CommandService -- removeTotalGold (/rtg)', () => {
+  it('removes gold, WAL-journals the new total, persists live, sends SetPointParam', () => {
     const playerManager = new PlayerManager();
     const journaled: Array<{ charId: number; type: string; payload: unknown }> = [];
+    const goldSaved: number[] = [];
     const commandService = new CommandService({
       playerManager, spawnManager: makeSpawnManager(), questService: makeQuestService().svc,
       journal: { append: (e) => { journaled.push(e); } },
+      charRepo: { updateGold: async (_id: number, gold: number) => { goldSaved.push(gold); } } as never,
     });
     const admin = makePlayer(1, 'Admin', AUTH.ADMINISTRATOR);
     admin.m_nGold = 500;
@@ -388,6 +393,7 @@ describe('CommandService — removeTotalGold (/rtg)', () => {
     assert.equal(admin.m_nGold, 300);
     assert.equal(journaled[0]!.type, 'CHAR_GOLD');
     assert.equal((journaled[0]!.payload as { gold: number }).gold, 300);
+    assert.deepEqual(goldSaved, [300], 'live updateGold write fires with the new total');
   });
 
   it('prints the current total when amount exceeds balance (no mutation)', () => {
@@ -406,7 +412,7 @@ describe('CommandService — removeTotalGold (/rtg)', () => {
   });
 });
 
-describe('CommandService — removeNpc (/rn)', () => {
+describe('CommandService -- removeNpc (/rn)', () => {
   it('kills the mover + broadcasts DEL_OBJ', () => {
     const playerManager = new PlayerManager();
     const movers = new Map([[0x40000001, { m_idMover: 0x40000001 }]]);
@@ -435,7 +441,7 @@ describe('CommandService — removeNpc (/rn)', () => {
   });
 });
 
-describe('CommandService — disguise (/dis)', () => {
+describe('CommandService -- disguise (/dis)', () => {
   it('sets m_dwDisguise + broadcasts DISGUISE; /nodis clears', () => {
     const { playerManager, commandService } = setup();
     const admin = makePlayer(1, 'Admin', AUTH.ADMINISTRATOR);
@@ -458,7 +464,7 @@ describe('CommandService — disguise (/dis)', () => {
   });
 });
 
-describe('CommandService — quest admin (/bq /eq /qs /rq /raq /rcq)', () => {
+describe('CommandService -- quest admin (/bq /eq /qs /rq /raq /rcq)', () => {
   it('routes each variant to the matching QuestService method + forwards the frame', async () => {
     const playerManager = new PlayerManager();
     const { svc, calls } = makeQuestService();
@@ -510,7 +516,7 @@ describe('CommandService — quest admin (/bq /eq /qs /rq /raq /rcq)', () => {
 
 // --- new ports: self-mode toggles -------------------------------------------
 
-describe('CommandService — mode toggles', () => {
+describe('CommandService -- mode toggles', () => {
   /** MODIFYMODE snapshot payload: objid + WORD 0x00d3 + DWORD mode (LE). */
   function readMode(buf: Buffer, objid: number): number {
     const idx = buf.indexOf(objid & 0xff, 0);
@@ -569,7 +575,7 @@ describe('CommandService — mode toggles', () => {
 
 // --- /out (disconnect) ------------------------------------------------------
 
-describe('CommandService — out (/out)', () => {
+describe('CommandService -- out (/out)', () => {
   it('destroys the target socket + removes it from the manager', () => {
     const { playerManager, commandService } = setup();
     const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER2);
@@ -624,7 +630,7 @@ function makeZoneSpawnManager(movers: MoverStub[]) {
   } as unknown as import('../../src/managers/spawn.manager.js').SpawnManager;
 }
 
-describe('CommandService — aroundKill (/ak)', () => {
+describe('CommandService -- aroundKill (/ak)', () => {
   it('kills every live monster within 64m in the same zone + broadcasts one DEL_OBJ', () => {
     const playerManager = new PlayerManager();
     const movers: MoverStub[] = [
@@ -650,7 +656,7 @@ describe('CommandService — aroundKill (/ak)', () => {
     const sent = (gm.socket as unknown as SpySocket)._sent;
     assert.equal(sent.length, 1, 'one batched DEL_OBJ broadcast');
     // Framed buffer = 0x5E + 4B size + payload; cb WORD sits at payload offset 8
-    // → framed offset 13. Should be 2 (two slain monsters in the zone).
+    // -> framed offset 13. Should be 2 (two slain monsters in the zone).
     assert.equal(sent[0]!.readUInt16LE(13), 2, 'cb=2 sub-records');
   });
 
@@ -675,7 +681,7 @@ describe('CommandService — aroundKill (/ak)', () => {
 
 // --- /ci (create item) ------------------------------------------------------
 
-describe('CommandService — createItem (/ci)', () => {
+describe('CommandService -- createItem (/ci)', () => {
   it('adds the item to the bag + sends CREATEITEM', async () => {
     const playerManager = new PlayerManager();
     const added: Array<{ itemId: number; count: number; slot: number }> = [];
@@ -736,7 +742,7 @@ describe('CommandService — createItem (/ci)', () => {
 
 // --- /ul (user list) + /stat ------------------------------------------------
 
-describe('CommandService — userList (/ul) + stat (/stat)', () => {
+describe('CommandService -- userList (/ul) + stat (/stat)', () => {
   it('/ul sends a TEXT notice listing live player names', () => {
     const { playerManager, commandService } = setup();
     const gm = makePlayer(1, 'GM', AUTH.ADMINISTRATOR);

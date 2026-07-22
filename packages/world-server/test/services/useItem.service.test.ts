@@ -1,10 +1,10 @@
 /**
- * UseItemService test — DOUSEITEM router.
+ * UseItemService test -- DOUSEITEM router.
  *
  * `nId = HIWORD(dwData)`. Routes by prop fields:
- *   equip_slot set → EquipService.equip
- *   item_kind2 IK2_POTION/FOOD → ConsumableService.apply
- *   item_kind2 IK2_BUFF/BUF2/SKILL/TEXT/WARP → consume charge (effect ponytail)
+ *   equip_slot set -> EquipService.equip
+ *   item_kind2 IK2_POTION/FOOD -> ConsumableService.apply
+ *   item_kind2 IK2_BUFF/BUF2/SKILL/TEXT/WARP -> consume charge (effect ponytail)
  *   else reject
  */
 

@@ -23,13 +23,13 @@ const logger = createResourceLogger('mover.loader');
  * Loaded mover index structure.
  */
 export interface MoverIndex {
-  /** Map of mover ID → definition */
+  /** Map of mover ID -> definition */
   movers: Map<number, import('../schemas/mover.schema.js').MoverDefinition>;
 
-  /** Map of mover name → definition */
+  /** Map of mover name -> definition */
   byName: Map<string, import('../schemas/mover.schema.js').MoverDefinition>;
 
-  /** Map of type → array of definitions */
+  /** Map of type -> array of definitions */
   byType: Map<string, import('../schemas/mover.schema.js').MoverDefinition[]>;
 }
 

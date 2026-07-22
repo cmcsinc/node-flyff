@@ -21,13 +21,13 @@ const logger = createResourceLogger('zone.loader');
  * Loaded zone index structure.
  */
 export interface ZoneIndex {
-  /** Map of zone ID → definition */
+  /** Map of zone ID -> definition */
   zones: Map<string, import('../schemas/zone.schema.js').ZoneDefinition>;
 
-  /** Map of numeric ID → definition */
+  /** Map of numeric ID -> definition */
   byNumericId: Map<number, import('../schemas/zone.schema.js').ZoneDefinition>;
 
-  /** Map of world ID → array of zones */
+  /** Map of world ID -> array of zones */
   byWorld: Map<string, import('../schemas/zone.schema.js').ZoneDefinition[]>;
 }
 

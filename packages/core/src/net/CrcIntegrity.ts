@@ -3,7 +3,7 @@
  *
  * The C++ source uses a modified CRC32 concatenated with an ELF hash,
  * both keyed with magic constants, then XOR'd with a per-connection
- * protocol ID and bitwise-NOT'd. This is NOT encryption — payload
+ * protocol ID and bitwise-NOT'd. This is NOT encryption -- payload
  * bytes travel plaintext. Only two DWORDs in the header are obfuscated.
  *
  * Algorithm (per header DWORD):

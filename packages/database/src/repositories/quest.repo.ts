@@ -1,6 +1,6 @@
 import type { Knex } from '../types.js';
 
-/** Active-quest row — one per entry in the C++ `m_aQuest[]` array. */
+/** Active-quest row -- one per entry in the C++ `m_aQuest[]` array. */
 export interface CharacterQuestRow {
   id: number;
   character_id: number;
@@ -35,7 +35,7 @@ export type ActiveQuestPayload = Omit<CharacterQuestRow, 'id' | 'character_id' |
  *
  * All methods use the Knex query builder (no raw SQL). Mirrors the C++ per-mover
  * arrays (`_Common/Mover.h:702-709`). Quest definitions themselves live in
- * `@flyff/resources` — this repo only holds player state + the audit log.
+ * `@flyff/resources` -- this repo only holds player state + the audit log.
  */
 export class QuestRepository {
   constructor(private db: Knex) {}
@@ -96,7 +96,7 @@ export class QuestRepository {
     });
   }
 
-  /** Audit row — mirrors `CalluspLoggingQuest(playerId, questId, action)`. */
+  /** Audit row -- mirrors `CalluspLoggingQuest(playerId, questId, action)`. */
   async insertLog(characterId: number, questId: number, action: number): Promise<void> {
     await this.db('quest_log')
       .insert({ character_id: characterId, quest_id: questId, action, ts: new Date() });

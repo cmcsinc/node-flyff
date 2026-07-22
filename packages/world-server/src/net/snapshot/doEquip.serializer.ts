@@ -1,5 +1,5 @@
 /**
- * DOEQUIP S→C snapshots — equip-change confirm (self) + vicinity render.
+ * DOEQUIP S->C snapshots -- equip-change confirm (self) + vicinity render.
  *
  * Self (`CUser::AddDoEquip`, `User.cpp:1197`):
  *   `[objid][SNAPSHOTTYPE_DOEQUIP=0x0006][BYTE nId][DWORD dwItemId][BYTE fEquip]`
@@ -8,7 +8,7 @@
  *    [EQUIP_INFO 12B raw: DWORD dwId, int nOption, BYTE byFlag + 3B MSVC pad]
  *    [int nPart]`
  *
- * EQUIP_INFO is `{DWORD,int,BYTE}` = 9 bytes but MSVC pads the struct to 12 —
+ * EQUIP_INFO is `{DWORD,int,BYTE}` = 9 bytes but MSVC pads the struct to 12 --
  * the 3 trailing pad bytes are written literal zero. Omitting them desyncs the
  * stream (nPart reads garbage) and crashes Neuz. #1 equip wire risk.
  *
@@ -25,7 +25,7 @@ import { NULL_ID } from './constants.js';
 export interface EquipInfoBody {
   /** propItem id (CItemElem.m_dwItemId). */
   dwId: number;
-  /** Ability option — refine<<4 (CItemElem.m_nAbilityOption). */
+  /** Ability option -- refine<<4 (CItemElem.m_nAbilityOption). */
   nOption: number;
   /** Item flag (CItemElem.m_byFlag). */
   byFlag: number;
@@ -60,9 +60,9 @@ export function buildDoEquipVicinity(
   w.writeDword(objid);
   w.writeWord(SNAPSHOTTYPE.DOEQUIP);
   w.writeByte(nId & 0xff);
-  w.writeDword(0);            // idGuild (hardcoded 0 in this build — User.cpp:4518)
+  w.writeDword(0);            // idGuild (hardcoded 0 in this build -- User.cpp:4518)
   w.writeByte(fEquip ? 1 : 0);
-  // EQUIP_INFO — 12 bytes raw (MSVC pads {DWORD,int,BYTE} to 12).
+  // EQUIP_INFO -- 12 bytes raw (MSVC pads {DWORD,int,BYTE} to 12).
   w.writeDword(info.dwId);    // DWORD dwId
   w.writeDword(info.nOption); // int nOption
   w.writeByte(info.byFlag);   // BYTE byFlag

@@ -1,12 +1,12 @@
 /**
- * S→C MOVERSETDESTOBJ broadcast — "player is walking toward object X" echo.
+ * S->C MOVERSETDESTOBJ broadcast -- "player is walking toward object X" echo.
  *
  * Mirrors `CUserMng::AddMoverSetDestObj` (`WORLDSERVER/User.cpp:4754-4767`):
  *   ar << GETID( pMover ) << SNAPSHOTTYPE_MOVERSETDESTOBJ;
  *   ar << objid << fRange;
  *
  * Peer clients run their own pathfinding to the object (`CDPClient::OnMoverSetDestObj`
- * → `CMover::SetDestObj`, Neuz/DPClient.cpp:8431) — the server sends NO position,
+ * -> `CMover::SetDestObj`, Neuz/DPClient.cpp:8431) -- the server sends NO position,
  * only the destination obj id + stop range. Sender is excluded by `fTransferToMe=FALSE`.
  *
  * @module net/snapshot/destObj.serializer
@@ -21,9 +21,9 @@ export class DestObjSerializer {
   build(senderObjid: number, destObjid: number, fRange: number): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);        // 0xffffff00
-    w.writeDword(NULL_ID);                    // objidPlayer — unused client-side
+    w.writeDword(NULL_ID);                    // objidPlayer -- unused client-side
     w.writeWord(1);                           // cb = 1 entry
-    w.writeDword(senderObjid);                // GETID(pMover) — the walking player
+    w.writeDword(senderObjid);                // GETID(pMover) -- the walking player
     w.writeWord(SNAPSHOTTYPE_MOVERSETDESTOBJ);// 0x00c2
     w.writeDword(destObjid);                  // destination object id
     w.writeFloat(fRange);                     // stop-range
@@ -39,7 +39,7 @@ export class DestObjSerializer {
   buildGetDestObj(queriedObjid: number, destObjid: number, fRange: number): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);      // 0xffffff00
-    w.writeDword(NULL_ID);                  // objidPlayer — unused client-side
+    w.writeDword(NULL_ID);                  // objidPlayer -- unused client-side
     w.writeWord(1);                         // cb = 1 entry
     w.writeDword(queriedObjid);             // the mover being asked about
     w.writeWord(SNAPSHOTTYPE_GETDESTOBJ);   // 0x004a

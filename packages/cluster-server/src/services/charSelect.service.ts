@@ -5,7 +5,7 @@
  * real "select char and enter world" packet is `PACKETTYPE_PRE_JOIN (0xff05)`.
  * On a valid select, the cluster issues a single-use world handoff token and
  * publishes `player:handoff` over IPC so the world server accepts the
- * incoming connection (rule 07 — HMAC-signed at the bus layer).
+ * incoming connection (rule 07 -- HMAC-signed at the bus layer).
  *
  * @module services/charSelect.service
  */
@@ -17,7 +17,7 @@ export interface HandoffPublisher {
   publish(charId: number, token: string, worldId: string): Promise<void>;
 }
 
-/** Issues single-use cluster→world handoff tokens. */
+/** Issues single-use cluster->world handoff tokens. */
 export interface WorldTokenService {
   generateWorldHandoffToken(charId: number): Promise<string>;
 }

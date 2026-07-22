@@ -40,7 +40,7 @@ describe('SessionState constants', () => {
   it('Object.freeze prevents mutation in strict mode', () => {
     assert.throws(() => {
       'use strict';
-      // @ts-expect-error — intentionally testing runtime freeze behaviour
+      // @ts-expect-error -- intentionally testing runtime freeze behaviour
       SessionState['IN_WORLD'] = 99;
     });
   });

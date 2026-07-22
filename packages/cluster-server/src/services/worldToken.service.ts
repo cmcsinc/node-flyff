@@ -1,8 +1,8 @@
 /**
- * Cluster→World handoff token service.
+ * Cluster->World handoff token service.
  *
  * Issues single-use HMAC-signed tokens so the world server can authenticate a
- * client that just selected a character. Mirrors the login→cluster
+ * client that just selected a character. Mirrors the login->cluster
  * `TokenService` pattern but keyed on `charId`. The token is cached briefly so
  * the world side can confirm it has not already been consumed.
  *

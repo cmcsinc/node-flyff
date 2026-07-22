@@ -1,16 +1,16 @@
 /**
- * v15 `__CRC` packet frame — the 13-byte header every real Flyff v15 client uses.
+ * v15 `__CRC` packet frame -- the 13-byte header every real Flyff v15 client uses.
  *
  * Layout (`_Network/Net/Include/buffer.h:13-23`, build `_Network/Net/Src/buffer.cpp:
  * 147-174`, verify `_Network/Net/Src/clientsock.cpp:378-393,450-457`):
  *
  * ```
- * [1B 0x5E][4B sizeCRC][4B size LE][4B dataCRC][payload…]
+ * [1B 0x5E][4B sizeCRC][4B size LE][4B dataCRC][payload...]
  *   sizeCRC = ~( crc32(size_LE_4bytes) ^ protocolId )
  *   dataCRC = ~( crc32(payload)        ^ protocolId )
  * ```
  *
- * The CRC is the C++ `CRC32` class (`_Network/Net/Src/crc.cpp:163-222`) — **not**
+ * The CRC is the C++ `CRC32` class (`_Network/Net/Src/crc.cpp:163-222`) -- **not**
  * plain CRC-32: a two-pass ELF-hash + CRC-32 mix keyed by `ELF_KEY`/`CRC32_KEY`.
  * The reader recomputes + compares; mismatch drops the socket. `protocolId` is
  * per-connection, established by an 8-byte hello (opcode DWORD 0 + id DWORD) the
@@ -22,7 +22,7 @@
 const ELF_KEY = 0x15779231;
 const CRC32_KEY = 0x13393917;
 
-/** Standard reflected CRC-32 table (poly 0xEDB88320) — matches `crc.cpp:46-98`. */
+/** Standard reflected CRC-32 table (poly 0xEDB88320) -- matches `crc.cpp:46-98`. */
 const TABLE: Uint32Array = (() => {
   const t = new Uint32Array(256);
   for (let i = 0; i < 256; i++) {
@@ -46,7 +46,7 @@ export const CRC_MAX_BUFFER = 8192;
  */
 export function crc32Flyff(input: Buffer): number {
   let m = 0xffffffff;
-  // Pass A — ELF hash.
+  // Pass A -- ELF hash.
   m = (m ^ ELF_KEY) >>> 0;
   for (let i = 0; i < input.length; i++) {
     m = (((m << 4) >>> 0) + input[i]!) >>> 0;
@@ -55,7 +55,7 @@ export function crc32Flyff(input: Buffer): number {
     m = (m & (~x >>> 0)) >>> 0;
   }
   m = (m ^ ELF_KEY) >>> 0;
-  // Pass B — CRC-32 (keyed).
+  // Pass B -- CRC-32 (keyed).
   m = (m ^ CRC32_KEY) >>> 0;
   let c = m >>> 0;
   for (let i = 0; i < input.length; i++) {
@@ -92,8 +92,8 @@ export interface CrcFrameDecode {
 /**
  * Verify + strip one CRC frame from the front of `chunk`.
  * Returns `null` on marker mismatch, CRC mismatch, or an incomplete frame (need
- * more bytes). Mirrors the C++ reader's recompute-and-compare (mismatch ⇒ the
- * caller drops the socket — `clientsock.cpp:388-392`).
+ * more bytes). Mirrors the C++ reader's recompute-and-compare (mismatch => the
+ * caller drops the socket -- `clientsock.cpp:388-392`).
  */
 export function tryDecodeCrcFrame(chunk: Buffer, protocolId: number): CrcFrameDecode | null {
   if (chunk.length < CRC_HEADER_SIZE) return null;

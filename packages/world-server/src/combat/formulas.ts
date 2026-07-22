@@ -1,14 +1,14 @@
 /**
- * v15 combat math — pure port of the `CAttackArbiter` damage pipeline.
+ * v15 combat math -- pure port of the `CAttackArbiter` damage pipeline.
  *
- * Source: `docs/combat-research.md` §A/§B (canonical). All C++ function names
+ * Source: `docs/combat-research.md` #A/#B (canonical). All C++ function names
  * preserved as comments. Pure functions over {@link Combatant} views so the
  * math is unit-testable with hand-computed expected outputs.
  *
- * v1 scope: **player attacker → NPC defender, normal melee (ATK_GENERIC)**.
+ * v1 scope: **player attacker -> NPC defender, normal melee (ATK_GENERIC)**.
  * Stubbed (`ponytail`): skills, stealHP, party-link, berserk, charge/range,
  * force/reflect, NPC-attacker + player-defender paths (monsters don't swing
- * yet — lands with the AI system).
+ * yet -- lands with the AI system).
  *
  * @module combat/formulas
  */
@@ -30,7 +30,7 @@ export interface WeaponStats {
   readonly max: number;
   /** `WT_*` weapon type (drives STR scaling). */
   readonly type: number;
-  /** propItem `fAttackSpeed` (0–1 scale; bare-hand ≈ 0.4). */
+  /** propItem `fAttackSpeed` (0-1 scale; bare-hand ~= 0.4). */
   readonly atkSpeed: number;
   /** `abilityOption` (upgrade level; 0 = no bonus). */
   readonly option: number;
@@ -61,15 +61,21 @@ export interface Combatant {
   readonly npcER: number;
   /** Mover element (`eElementType`). */
   readonly element: number;
+  /** Summed equip DEF (player armor; NPC = 0 -- uses `npcArmor`). */
+  readonly equipDef: number;
+  /** Flat hit-rate % from DST_ADJ_HITRATE (player jewelry/buffs; NPC = 0). */
+  readonly adjHitRate: number;
+  /** Evasion from DST_PARRY (player jewelry/buffs; NPC = 0). */
+  readonly parry: number;
 }
 
-/** `xRandom` (MoverAttack.cpp) — `[0,n)` / `[a,b)` int. Injectable for tests. */
+/** `xRandom` (MoverAttack.cpp) -- `[0,n)` / `[a,b)` int. Injectable for tests. */
 export interface Rng {
   int(max: number): number;
   range(min: number, max: number): number;
 }
 
-/** Default rng — `Math.random`-backed, matches `xRandom` semantics. */
+/** Default rng -- `Math.random`-backed, matches `xRandom` semantics. */
 export const xRandomRng: Rng = {
   int: (n) => Math.floor(Math.random() * n),
   range: (a, b) => a + Math.floor(Math.random() * (b - a)),
@@ -81,9 +87,9 @@ export interface MeleeResult {
   readonly atkFlags: number;
 }
 
-// --- stat getters (§A) -------------------------------------------------------
+// --- stat getters (#A) -------------------------------------------------------
 
-/** `GetWeaponATK` (MoverAttack.cpp:371) — STR/level scaling per weapon type. */
+/** `GetWeaponATK` (MoverAttack.cpp:371) -- STR/level scaling per weapon type. */
 export function getWeaponATK(c: Combatant): number {
   const job = getJobProps(c.job);
   const LVL = c.level, STR = c.str, INT = c.int;
@@ -96,11 +102,11 @@ export function getWeaponATK(c: Combatant): number {
     case WT_MAGIC_WAND:    return (INT - 10) * job.fMagicWAND + LVL * 1.2;
     case WT_MELEE_YOYO:    return (STR - 12) * job.fMeleeYOYO + LVL * 1.1;
     case WT_RANGE_BOW:     return ((c.dex - 14) * 4.0 + LVL * 1.3 + STR * 0.2) * 0.7;
-    default:               return (STR - 12) * job.fMeleeSWD + LVL * 1.1; // bare-hand → sword curve
+    default:               return (STR - 12) * job.fMeleeSWD + LVL * 1.1; // bare-hand -> sword curve
   }
 }
 
-/** `GetHitMinMax` (MoverAttack.cpp:412) — final pre-roll min/max. */
+/** `GetHitMinMax` (MoverAttack.cpp:412) -- final pre-roll min/max. */
 export function getHitMinMax(c: Combatant): { min: number; max: number } {
   if (c.kind === 'npc') {
     return { min: c.npcAtkMin, max: c.npcAtkMax || c.npcAtkMin };
@@ -118,26 +124,26 @@ export function getHitMinMax(c: Combatant): { min: number; max: number } {
   return { min: Math.floor(nMin), max: Math.floor(nMax) };
 }
 
-/** `GetHR` (MoverAttack.cpp:233) — DEX (player) / `dwHR` (NPC). */
+/** `GetHR` (MoverAttack.cpp:233) -- DEX (player) / `dwHR` (NPC). */
 export function getHR(c: Combatant): number {
   return c.kind === 'player' ? c.dex : c.npcHR;
 }
 
-/** `GetParrying` (MoverParam.cpp:506) — DEX/2 (player) / `dwER` (NPC). */
+/** `GetParrying` (MoverParam.cpp:506) -- DEX/2 + DST_PARRY (player) / `dwER` (NPC). */
 export function getParrying(c: Combatant): number {
-  return c.kind === 'player' ? Math.floor(c.dex * 0.5) : c.npcER;
+  return c.kind === 'player' ? Math.floor(c.dex * 0.5) + c.parry : c.npcER;
 }
 
-/** `GetCriticalProb` (MoverAttack.cpp:609) — `(DEX/10) * job.fCritical`. */
+/** `GetCriticalProb` (MoverAttack.cpp:609) -- `(DEX/10) * job.fCritical`. */
 export function getCriticalProb(c: Combatant): number {
   return Math.floor((c.dex / 10) * getJobProps(c.job).fCritical);
 }
 
-// --- damage pipeline (§B) ----------------------------------------------------
+// --- damage pipeline (#B) ----------------------------------------------------
 
 /**
- * `GetAttackResult` (MoverAttack.cpp:241) — server-authoritative hit roll.
- * Player→NPC branch. Clamp `[MIN_HR, MAX_HR]`; `hit = xRandom(100) < nHitRate`.
+ * `GetAttackResult` (MoverAttack.cpp:241) -- server-authoritative hit roll.
+ * Player->NPC branch. Clamp `[MIN_HR, MAX_HR]`; `hit = xRandom(100) < nHitRate`.
  */
 export function getAttackResult(attacker: Combatant, defender: Combatant): number {
   const HR = getHR(attacker);
@@ -151,21 +157,22 @@ export function getAttackResult(attacker: Combatant, defender: Combatant): numbe
   } else { // PvP
     rate = (HR * 1.6 / (HR + parry)) * 1.2 * (LVL * 1.2 / (LVL + defLVL)) * 100;
   }
+  rate += attacker.adjHitRate; // nHitRate += GetAdjHitRate() (MoverAttack.cpp:273)
   return clamp(Math.floor(rate), MIN_HR, MAX_HR);
 }
 
-/** `CalcDefenseCore` (MoverAttack.cpp:573) — NPC melee: `dwNaturalArmor/7 + 1`. */
+/** `CalcDefenseCore` (MoverAttack.cpp:573) -- NPC melee: `dwNaturalArmor/7 + 1`. */
 export function calcDefense(defender: Combatant): number {
   if (defender.kind === 'npc') {
     return Math.floor(defender.npcArmor / 7.0) + 1;
   }
-  // Player defender (CalcDefensePlayer melee) — unused until monsters swing.
+  // Player defender (CalcDefensePlayer melee) -- equip DEF + refine + STA/DEX/level.
   const job = getJobProps(defender.job);
-  const byItem = 0; // no equip DEF model yet
+  const byItem = defender.equipDef; // SumEquipDefenseAbility (armor DEF + refine bonus)
   return Math.floor((byItem + 0) * 2.3 + (defender.level + defender.sta / 2 + defender.dex) / 2.8 - 4 + defender.level * 2 + job.fFactorDef);
 }
 
-/** `GetDamageMultiplier` (MoverAttack.cpp:828) — final multipliers. */
+/** `GetDamageMultiplier` (MoverAttack.cpp:828) -- final multipliers. */
 export function getDamageMultiplier(attacker: Combatant, defender: Combatant): number {
   let factor = 1.0;
   if (defender.kind === 'player' && attacker.kind === 'player') factor *= 0.60; // PvP
@@ -180,17 +187,17 @@ export function getDamageMultiplier(attacker: Combatant, defender: Combatant): n
   return factor;
 }
 
-/** `MinusHP` (AttackArbiter.cpp:687) — returns {newHp, damageActuallyDealt}. */
+/** `MinusHP` (AttackArbiter.cpp:687) -- returns {newHp, damageActuallyDealt}. */
 export function minusHP(currentHp: number, damage: number): { hp: number; dealt: number } {
   const hp = Math.max(0, currentHp - damage);
   return { hp, dealt: currentHp - hp };
 }
 
 /**
- * `CAttackArbiter::OnDamageMsgW` melee path — the v1 entry point.
+ * `CAttackArbiter::OnDamageMsgW` melee path -- the v1 entry point.
  *
- * Flow: hit-roll → (miss ⇒ AF_MISS) → CalcATK (GetHitPower w/ crit + element)
- * → PostCalcGeneric (DEF subtract + block) → GetDamageMultiplier → MinusHP.
+ * Flow: hit-roll -> (miss => AF_MISS) -> CalcATK (GetHitPower w/ crit + element)
+ * -> PostCalcGeneric (DEF subtract + block) -> GetDamageMultiplier -> MinusHP.
  */
 export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng): MeleeResult {
   let atkFlags = AF_GENERIC;
@@ -199,7 +206,7 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
     return { hit: false, damage: 0, atkFlags: atkFlags | AF_MISS };
   }
 
-  // CalcATK → GetHitPower (normal melee roll).
+  // CalcATK -> GetHitPower (normal melee roll).
   const { min, max } = getHitMinMax(attacker);
   const lo = Math.min(min, max);
   const hi = Math.max(min, max);
@@ -209,7 +216,7 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
   const ef = elementFactor(attacker.weapon.element || attacker.element, defender.element);
   nATK = Math.floor((nATK * ef.atkFactor) / 10000);
 
-  // Crit (IsCriticalAttack → AF_CRITICAL1, flat 2.3× for v1).
+  // Crit (IsCriticalAttack -> AF_CRITICAL1, flat 2.3* for v1).
   if (rng.int(100) < getCriticalProb(attacker)) {
     atkFlags |= AF_CRITICAL1;
     nATK = Math.floor(nATK * 2.3);
@@ -238,7 +245,7 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
   return { hit: true, damage: nDamage, atkFlags };
 }
 
-/** `GetBlockFactor` (MoverAttack.cpp:731) — NPC defender branch. */
+/** `GetBlockFactor` (MoverAttack.cpp:731) -- NPC defender branch. */
 function getBlockFactor(defender: Combatant, attacker: Combatant, rng: Rng): number {
   if (defender.kind === 'npc') {
     const r = rng.int(100);
@@ -247,7 +254,7 @@ function getBlockFactor(defender: Combatant, attacker: Combatant, rng: Rng): num
     const nBR = Math.max(0, (defender.npcER - attacker.level) * 0.5);
     return nBR > r ? 0.2 : 1.0;
   }
-  // Player defender branch — unused until monsters swing.
+  // Player defender branch -- unused until monsters swing.
   const r = rng.int(80);
   if (r <= 5) return 1.0;
   if (r >= 75) return 0.1;
@@ -260,11 +267,11 @@ function clamp(n: number, lo: number, hi: number): number {
   return n < lo ? lo : n > hi ? hi : n;
 }
 
-// --- exp / level (§D) --------------------------------------------------------
+// --- exp / level (#D) --------------------------------------------------------
 
 /**
  * `AddExperienceSolo` level-diff multiplier (Mover.cpp:6085).
- * `playerLevel − monsterLevel`: ≤0→1.0, 1-2→0.7, 3-4→0.4, ≥5→0.1.
+ * `playerLevel - monsterLevel`: <=0->1.0, 1-2->0.7, 3-4->0.4, >=5->0.1.
  */
 export function expLevelDiffMult(playerLevel: number, monsterLevel: number): number {
   const delta = playerLevel - monsterLevel;
@@ -297,7 +304,7 @@ export interface ExpGainResult {
 /**
  * `AddExperienceSolo` + `LevelUp` cascade. `exp` is **within-level** (progress
  * toward the next level, 0 at each boundary). Adds `amount`, then while enough
- * exp remains to advance, subtracts the per-level cost and levels up — carrying
+ * exp remains to advance, subtracts the per-level cost and levels up -- carrying
  * any excess into the next level. Caps at {@link MAX_LEVEL}.
  *
  * Pure: caller mutates the entity + fires side effects (HP/MP refill, packets,
@@ -316,16 +323,16 @@ export function addExp(level: number, exp: number, amount: number): ExpGainResul
 }
 
 /**
- * `CMover::SubDieDecExp` (`_Common/Mover.cpp:7157`) — the death exp penalty,
+ * `CMover::SubDieDecExp` (`_Common/Mover.cpp:7157`) -- the death exp penalty,
  * applied on **revive** (not on death itself). Subtracts a % of the exp needed
  * for the current level off the within-level `m_nExp`, clamped at 0.
  *
- * v15 C++ never de-levels here (`bLvDown` forcibly reset at `Mover.cpp:7189` —
+ * v15 C++ never de-levels here (`bLvDown` forcibly reset at `Mover.cpp:7189` --
  * the `__VER < 8` guard is commented out), so the level is unchanged.
  *
- * Loss % by level bracket — simplified from `DiePenalty.inc:35-60`
- * (`DECEXP_PENALTY` table: Lv≤20=0%, Lv≤29=6%, Lv≤59=5%, Lv≤89=4%, Lv≤99=3%,
- * Lv≤109=2%, Lv≤129=1.5%, Lv≤200=1%). Throws on invalid level.
+ * Loss % by level bracket -- simplified from `DiePenalty.inc:35-60`
+ * (`DECEXP_PENALTY` table: Lv<=20=0%, Lv<=29=6%, Lv<=59=5%, Lv<=89=4%, Lv<=99=3%,
+ * Lv<=109=2%, Lv<=129=1.5%, Lv<=200=1%). Throws on invalid level.
  *
  * ponytail: load the real `DiePenalty.inc` table when the resource converter
  * exports it; the bracket values then come from data, not code.
@@ -339,7 +346,7 @@ export function subDieDecExp(level: number, exp: number): { level: number; exp: 
   return { level, exp: Math.max(0, exp - loss) };
 }
 
-/** `DECEXP_PENALTY` bracket — % of current-level exp lost on town revive. */
+/** `DECEXP_PENALTY` bracket -- % of current-level exp lost on town revive. */
 function deathExpLossPct(level: number): number {
   if (level <= 20) return 0;
   if (level <= 29) return 0.06;
@@ -352,9 +359,9 @@ function deathExpLossPct(level: number): number {
 }
 
 /**
- * Within-level exp = cumulative exp − the level's `nExp1` base. Used to convert
+ * Within-level exp = cumulative exp - the level's `nExp1` base. Used to convert
  * the cumulative value stored in the DB / sent on the wire into the live
- * within-level `m_nExp`. Clamps ≥ 0 (a malformed row cannot give negative exp).
+ * within-level `m_nExp`. Clamps >= 0 (a malformed row cannot give negative exp).
  */
 export function withinLevelExp(cumulativeExp: number, level: number): number {
   const base = EXP_TABLE[level]?.nExp1 ?? 0;

@@ -1,10 +1,10 @@
 /**
- * CommandService — `/cmd` router for `PACKETTYPE_CHAT`.
+ * CommandService -- `/cmd` router for `PACKETTYPE_CHAT`.
  *
  * Mirrors `ParsingCommand` (`_Interface/FuncTextCmd.cpp:4458`): tokenize the
  * slash-line, match the command name case-insensitively, gate on authority
  * (`cmd.auth <= player.m_bAuthority`), dispatch. Unknown / no-auth lines are
- * dropped silently — stock v15 sends no error reply.
+ * dropped silently -- stock v15 sends no error reply.
  *
  * Implemented commands (subset that works without inventory/combat/party):
  *   `/w <name> <msg>`     GENERAL       whisper (both peers receive)
@@ -41,7 +41,7 @@
  * bit effects (damage short-circuit / exp early-out) hook into combat once
  * wired. Quest admin + disguise + stat are self-target only until a named-
  *
- * No WAL (rule 04 — chat/commands are not journaled; level is, but the level
+ * No WAL (rule 04 -- chat/commands are not journaled; level is, but the level
  * system owns its own journaling when it ships).
  *
  * @module services/command.service
@@ -72,23 +72,26 @@ import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer.js';
 import { DisguiseSerializer } from '../net/snapshot/disguise.serializer.js';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
 import { MODE } from '../constants/mode.js';
+import { createLogger } from '@flyff/core/logger.js';
 
-/** Minimal WAL-journal sink — gold mutations must be journaled before ack (rule 04). */
+const logger = createLogger({ module: 'command-service' });
+
+/** Minimal WAL-journal sink -- gold mutations must be journaled before ack (rule 04). */
 export interface CommandJournal {
   append(entry: { charId: number; type: string; payload: unknown }): void;
 }
 
 export interface CommandServiceDeps {
   playerManager: PlayerManager;
-  /** Spawn manager — `/rn` (despawn) + `/cnt` (monster count) + `/ak` (radius kill). */
+  /** Spawn manager -- `/rn` (despawn) + `/cnt` (monster count) + `/ak` (radius kill). */
   spawnManager: SpawnManager;
-  /** Quest service — `/bq /eq /qs /rq /raq /rcq` admin. */
+  /** Quest service -- `/bq /eq /qs /rq /raq /rcq` admin. */
   questService: QuestService;
-  /** Inventory service — `/ci` (create item into main bag). */
+  /** Inventory service -- `/ci` (create item into main bag). */
   inventoryService?: InventoryService;
-  /** Character repo — `/stat` persists STR/STA/DEX/INT. */
-  charRepo?: Pick<CharacterRepository, 'updateStats'>;
-  /** WAL journal — appended before any gold mutation (rule 04). Optional: no-op if absent. */
+  /** Character repo -- `/stat` persists STR/STA/DEX/INT; `/gg`/`/rtg` persist gold. */
+  charRepo?: Pick<CharacterRepository, 'updateStats' | 'updateGold'>;
+  /** WAL journal -- appended before any gold mutation (rule 04). Optional: no-op if absent. */
   journal?: CommandJournal;
 }
 
@@ -114,9 +117,9 @@ const MAX_SHOUT_LEN = 1024;
 const MAX_NOTICE_LEN = 512;
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 150;
-/** `TextCmd_AroundKill` radius (FuncTextCmd.cpp:373 — `SendDamageAround(...,64.0f)`). */
+/** `TextCmd_AroundKill` radius (FuncTextCmd.cpp:373 -- `SendDamageAround(...,64.0f)`). */
 const AROUND_KILL_RADIUS = 64.0;
-/** Single-stat ceiling for `/stat` — C++ clamps via the broader stat pipeline. */
+/** Single-stat ceiling for `/stat` -- C++ clamps via the broader stat pipeline. */
 const MAX_STAT = 999;
 
 export class CommandService {
@@ -195,7 +198,7 @@ export class CommandService {
 
   // --- commands -------------------------------------------------------------
 
-  /** `/w <name> <msg>` — TextCmd_whisper (FuncTextCmd.cpp:1229). */
+  /** `/w <name> <msg>` -- TextCmd_whisper (FuncTextCmd.cpp:1229). */
   private whisper({ args, player }: CommandCtx): void {
     const split = splitTargetMessage(args);
     if (!split) return;
@@ -221,7 +224,7 @@ export class CommandService {
     this.deps.playerManager.sendTo(target, buf);
   }
 
-  /** `/s <msg>` — TextCmd_shout (FuncTextCmd.cpp:1510). Server-wide fan-out. */
+  /** `/s <msg>` -- TextCmd_shout (FuncTextCmd.cpp:1510). Server-wide fan-out. */
   private shout({ args, player }: CommandCtx): void {
     const text = args.slice(0, MAX_SHOUT_LEN);
     if (text.length === 0) return;
@@ -233,7 +236,7 @@ export class CommandService {
     this.deps.playerManager.broadcastAll(buf);
   }
 
-  /** `/te <name>` or `/te <x> <z>` — TextCmd_Teleport (FuncTextCmd.cpp:1873). */
+  /** `/te <name>` or `/te <x> <z>` -- TextCmd_Teleport (FuncTextCmd.cpp:1873). */
   private teleport({ args, player }: CommandCtx): void {
     const tokens = args.split(/\s+/).filter(Boolean);
     if (tokens.length === 0) return;
@@ -252,7 +255,7 @@ export class CommandService {
     this.applyReplace(player, { ...target.m_vPos });
   }
 
-  /** `/su <name>` — TextCmd_Summon (FuncTextCmd.cpp:1689). Move target to caller. */
+  /** `/su <name>` -- TextCmd_Summon (FuncTextCmd.cpp:1689). Move target to caller. */
   private summon({ args, player }: CommandCtx): void {
     const name = args.split(/\s+/)[0];
     if (!name) return;
@@ -271,12 +274,12 @@ export class CommandService {
     target._dirty.add('y');
     target._dirty.add('z');
     // SETPOS (not REPLACE): same-world teleport must not null g_pPlayer
-    // (OnReplace DPClient.cpp:2352 → CWndQuestQuickInfo::Process:259 crash).
+    // (OnReplace DPClient.cpp:2352 -> CWndQuestQuickInfo::Process:259 crash).
     const buf = this.setPosSer.build(target.m_idPlayer, pos);
     this.deps.playerManager.sendTo(target, buf);
   }
 
-  /** `/sys <msg>` — TextCmd_System (FuncTextCmd.cpp:2840). Yellow notice to all. */
+  /** `/sys <msg>` -- TextCmd_System (FuncTextCmd.cpp:2840). Yellow notice to all. */
   private system({ args }: CommandCtx): void {
     const text = args.slice(0, MAX_NOTICE_LEN);
     if (text.length === 0) return;
@@ -284,7 +287,7 @@ export class CommandService {
     this.deps.playerManager.broadcastAll(buf);
   }
 
-  /** `/lv <level>` — TextCmd_Level (FuncTextCmd.cpp:833). Sets own level. */
+  /** `/lv <level>` -- TextCmd_Level (FuncTextCmd.cpp:833). Sets own level. */
   private level({ args, player }: CommandCtx): void {
     const n = Number.parseInt(args.split(/\s+/)[0] ?? '', 10);
     if (!Number.isInteger(n) || n < MIN_LEVEL || n > MAX_LEVEL) return;
@@ -295,8 +298,8 @@ export class CommandService {
   }
 
   /**
-   * `/gg <amount>` — TextCmd_GetGold (FuncTextCmd.cpp:2579). Adds (or removes,
-   * if negative) gold, clamped to `[0, MAX_GOLD]` — mirrors `CMover::AddGold`
+   * `/gg <amount>` -- TextCmd_GetGold (FuncTextCmd.cpp:2579). Adds (or removes,
+   * if negative) gold, clamped to `[0, MAX_GOLD]` -- mirrors `CMover::AddGold`
    * (Mover.cpp:607). WAL-journals the absolute total before ack (rule 04), then
    * notifies the client via SetPointParam(DST_GOLD) so the balance updates live.
    */
@@ -311,23 +314,25 @@ export class CommandService {
       type: 'CHAR_GOLD',
       payload: { gold: total },
     });
+    this.deps.charRepo?.updateGold(player.m_idPlayer, total)
+      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/gg gold persist failed'));
     this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_GOLD, total));
   }
 
   /**
-   * `/undying` / `/noundying` — `TextCmd_Undying` / `TextCmd_NoUndying`
+   * `/undying` / `/noundying` -- `TextCmd_Undying` / `TextCmd_NoUndying`
    * (FuncTextCmd.cpp:3105 / 2977). Toggles the `MATCHLESS_MODE` bit in
-   * `m_dwMode` (authorization.h:20) — C++ sets MATCHLESS and clears the
+   * `m_dwMode` (authorization.h:20) -- C++ sets MATCHLESS and clears the
    * tier-2 MATCHLESS2 on enable, clears both on disable. Broadcasts
    * `SNAPSHOTTYPE_MODIFYMODE` so peers re-render the mover.
    *
    * Auth is `AUTH_GAMEMASTER3` in C++ ('N'); collapsed to ADMINISTRATOR here
    * until intermediate authority tiers ship (see constants/authority.ts). No
-   * WAL — `m_dwMode` is transient.
-   * MATCHLESS effect lives in `AISystem.monsterSwing` — the invincible check
+   * WAL -- `m_dwMode` is transient.
+   * MATCHLESS effect lives in `AISystem.monsterSwing` -- the invincible check
    * there skips HP subtraction while keeping the swing anim + DAMAGE broadcast.
    * ONEKILL (the `/ok` sibling) is honored in `CombatService.resolveAttack`
-   * (combat.service.ts) — a ONEKILL attacker's swing is forced lethal.
+   * (combat.service.ts) -- a ONEKILL attacker's swing is forced lethal.
    */
   private undying({ player }: CommandCtx, enable: boolean): void {
     if (enable) {
@@ -340,11 +345,11 @@ export class CommandService {
   }
 
   /**
-   * `/invisible` `/inv` / `/noinvisible` `/noinv` — `TextCmd_Invisible` /
+   * `/invisible` `/inv` / `/noinvisible` `/noinv` -- `TextCmd_Invisible` /
    * `TextCmd_NoInvisible` (FuncTextCmd.cpp:2959 / 2968). Toggles the
    * `TRANSPARENT_MODE` bit in `m_dwMode` (authorization.h:21) and broadcasts
    * `MODIFYMODE`. Self-render is unaffected; peers stop drawing the mover.
-   * No WAL — `m_dwMode` is transient.
+   * No WAL -- `m_dwMode` is transient.
    */
   private invisible({ player }: CommandCtx, enable: boolean): void {
     player.m_dwMode = enable
@@ -355,7 +360,7 @@ export class CommandService {
   }
 
   /**
-   * `/count` `/cnt` — `TextCmd_count` (FuncTextCmd.cpp:3631). Reports live player
+   * `/count` `/cnt` -- `TextCmd_count` (FuncTextCmd.cpp:3631). Reports live player
    * + monster counts to the caller via `AddText` (per-user TEXT snapshot). C++
    * also fires a cluster `GetPlayerCount` query; we only have the local world
    * count (ponytail: fan out cross-server when IPC player-count ships).
@@ -366,10 +371,10 @@ export class CommandService {
   }
 
   /**
-   * `/rtg <amount>` — `TextCmd_RemoveTotalGold` (FuncTextCmd.cpp:4517). Removes
+   * `/rtg <amount>` -- `TextCmd_RemoveTotalGold` (FuncTextCmd.cpp:4517). Removes
    * `amount` from gold (clamped at 0). Mirrors `/gg` in reverse: WAL-journal the
    * new total (rule 04) + SetPointParam(DST_GOLD). If `amount > total`, C++ just
-   * prints the current total — we do the same via AddText.
+   * prints the current total -- we do the same via AddText.
    */
   private removeTotalGold({ args, player }: CommandCtx): void {
     const n = Number.parseInt(args.split(/\s+/)[0] ?? '', 10);
@@ -382,14 +387,16 @@ export class CommandService {
     player.m_nGold = total;
     player._dirty.add('m_nGold');
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: total } });
+    this.deps.charRepo?.updateGold(player.m_idPlayer, total)
+      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/rtg gold persist failed'));
     this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_GOLD, total));
   }
 
   /**
-   * `/rn <objid>` — `TextCmd_RemoveNpc` (FuncTextCmd.cpp:2479). Despawns an NPC
+   * `/rn <objid>` -- `TextCmd_RemoveNpc` (FuncTextCmd.cpp:2479). Despawns an NPC
    * by objid (`pMover->Delete()`): `spawnManager.kill` drops it + cancels any
    * respawn, then `DEL_OBJ` broadcasts the removal. C++ gates on `IsNPC()`; we
-   * accept any spawned mover (monsters included) — the GM picks the target.
+   * accept any spawned mover (monsters included) -- the GM picks the target.
    */
   private removeNpc({ args, player }: CommandCtx): void {
     const objid = Number.parseInt(args.split(/\s+/)[0] ?? '', 10);
@@ -401,7 +408,7 @@ export class CommandService {
   }
 
   /**
-   * `/disguise <id>` `/dis` / `/nodisguise` `/nodis` — `TextCmd_Disguise` /
+   * `/disguise <id>` `/dis` / `/nodisguise` `/nodis` -- `TextCmd_Disguise` /
    * `TextCmd_NoDisguise` (FuncTextCmd.cpp:3159 / 3139). Sets/clears the disguise
    * propMover index + broadcasts DISGUISE/NODISGUISE. C++ resolves the mover by
    * name OR id; we take a numeric id only (ponytail: propMover name lookup).
@@ -419,11 +426,11 @@ export class CommandService {
   }
 
   /**
-   * Quest admin batch — `/bq /eq /qs /rq /raq /rcq` (FuncTextCmd.cpp:3959+).
+   * Quest admin batch -- `/bq /eq /qs /rq /raq /rcq` (FuncTextCmd.cpp:3959+).
    * Each is `AUTH_GAMEMASTER3` in C++ ('N'); collapsed to ADMINISTRATOR here.
    * Self-targeting (C++ also supports a trailing player name; ponytail). All
    * mutate via QuestService (which persists + audit-logs) and forward the
-   * returned snapshot frames to the caller. Silent on failure — stock v15 sends
+   * returned snapshot frames to the caller. Silent on failure -- stock v15 sends
    * no error reply for most quest-admin branches.
    */
   private async questCmd(
@@ -452,11 +459,11 @@ export class CommandService {
   }
 
   /**
-   * `/onekill` `/ok` / `/noonekill` `/nook` — `TextCmd_Onekill` /
+   * `/onekill` `/ok` / `/noonekill` `/nook` -- `TextCmd_Onekill` /
    * `TextCmd_NoOnekill` (FuncTextCmd.cpp:3541 / 3567). Toggles the
    * `ONEKILL_MODE` bit (authorization.h:22) + broadcasts MODIFYMODE. C++ gates
    * at `AUTH_GAMEMASTER3`; collapsed to ADMINISTRATOR. The one-shot kill effect
-   * is honored in `CombatService.resolveAttack` — an ONEKILL attacker's swing
+   * is honored in `CombatService.resolveAttack` -- an ONEKILL attacker's swing
    * is forced to the mover's full current HP (lethal regardless of the roll).
    */
   private onekill(ctx: CommandCtx, enable: boolean): void {
@@ -464,8 +471,8 @@ export class CommandService {
   }
 
   /**
-   * `/expupstop` `/es` — `TextCmd_ExpUpStop` (FuncTextCmd.cpp:2989). TOGGLES
-   * `MODE_EXPUP_STOP` (no /no pair — C++ flips on each call). Exp grant should
+   * `/expupstop` `/es` -- `TextCmd_ExpUpStop` (FuncTextCmd.cpp:2989). TOGGLES
+   * `MODE_EXPUP_STOP` (no /no pair -- C++ flips on each call). Exp grant should
    * early-out while set (ponytail: honored once `CombatService.grantExp`
    * checks the bit; today the bit flips + re-renders only).
    */
@@ -477,12 +484,12 @@ export class CommandService {
   }
 
   /**
-   * Generic self-mode toggle — `/gmitem` `/gmnotitem` (ITEM_MODE),
+   * Generic self-mode toggle -- `/gmitem` `/gmnotitem` (ITEM_MODE),
    * `/gmattck` `/gmnotattck` (NO_ATTACK_MODE), `/gmcommunity` `/gmnotcommunity`
    * (COMMUNITY_MODE), `/gmobserve` `/gmnotobserve` (OBSERVE composite).
    * `TextCmd_ItemMode`/`AttackMode`/`CommunityMode`/`ObserveMode`
    * (FuncTextCmd.cpp:3424/3444/3501/3521) each just OR/AND-and the bit and
-   * `AddModifyMode`. `OBSERVE_MODE` is a composite (ITEM|NO_ATTACK|…) so the
+   * `AddModifyMode`. `OBSERVE_MODE` is a composite (ITEM|NO_ATTACK|...) so the
    * clear path AND-ns the whole mask.
    */
   private modeToggle({ player }: CommandCtx, bits: number, enable: boolean): void {
@@ -493,11 +500,11 @@ export class CommandService {
   }
 
   /**
-   * `/out <name>` — `TextCmd_Out` (FuncTextCmd.cpp:2449). Disconnect a named
-   * peer: C++ routes via `g_DPCoreClient.SendKillPlayer` (cluster→world); in
+   * `/out <name>` -- `TextCmd_Out` (FuncTextCmd.cpp:2449). Disconnect a named
+   * peer: C++ routes via `g_DPCoreClient.SendKillPlayer` (cluster->world); in
    * this single-process emulator we destroy the target's socket directly +
    * drop it from the manager so cleanup runs the same path as a natural
-   * disconnect. Self-target → ReturnSay flag 2 (consistent with `/su`/`/te`).
+   * disconnect. Self-target -> ReturnSay flag 2 (consistent with `/su`/`/te`).
    */
   private out({ args, player }: CommandCtx): void {
     const name = args.split(/\s+/)[0];
@@ -516,13 +523,13 @@ export class CommandService {
   }
 
   /**
-   * `/ak` — `TextCmd_AroundKill` (FuncTextCmd.cpp:364). C++ calls
-   * `SendDamageAround(AF_MAGICSKILL, ..., OBJTYPE_MONSTER, 1, 64.0f, …)` — a
+   * `/ak` -- `TextCmd_AroundKill` (FuncTextCmd.cpp:364). C++ calls
+   * `SendDamageAround(AF_MAGICSKILL, ..., OBJTYPE_MONSTER, 1, 64.0f, ...)` -- a
    * 64m AoE that rolls lethal damage. We collapse to an authoritative sweep:
    * every monster in the caller's zone within 64m is killed + DEL_OBJ
    * broadcast. Exp/drops are NOT granted (ponytail: route through
    * `CombatService` per-mover if GM-exp credit is wanted). C++ requires an
-   * equipped weapon (`GetWeaponItem() == NULL ⇒ return`); we skip that gate
+   * equipped weapon (`GetWeaponItem() == NULL => return`); we skip that gate
    * (no inventory-equip model yet).
    */
   private aroundKill({ player }: CommandCtx): void {
@@ -541,12 +548,12 @@ export class CommandService {
   }
 
   /**
-   * `/ci <itemId> [count]` — `TextCmd_CreateItem` (FuncTextCmd.cpp:2522). C++
+   * `/ci <itemId> [count]` -- `TextCmd_CreateItem` (FuncTextCmd.cpp:2522). C++
    * resolves the item by name OR id, validates non-IK3_VIRTUAL, then
    * `CreateItem` into the first free slot. We take a numeric `itemId` only
    * (ponytail: propItem name lookup) and delegate to `InventoryService.addItem`
    * (WAL + persist + state), then send the CREATEITEM snapshot on success. Bag
-   * full → silent (stock v15 prints `TID_GAME_LACKSPACE` via AddDefinedText;
+   * full -> silent (stock v15 prints `TID_GAME_LACKSPACE` via AddDefinedText;
    * omitted until a defined-text channel ships).
    */
   private createItem({ args, player }: CommandCtx): void {
@@ -563,10 +570,10 @@ export class CommandService {
   }
 
   /**
-   * `/userlist` `/ul` — `TextCmd_userlist` (FuncTextCmd.cpp:3622). C++ forwards
+   * `/userlist` `/ul` -- `TextCmd_userlist` (FuncTextCmd.cpp:3622). C++ forwards
    * to the cluster for a cross-server list; we only have the local world, so
    * emit the live player names to the caller via TEXT/notice. `AddText` cap is
-   * 512B (TEXT_GENERAL) — names are joined comma-separated and sliced.
+   * 512B (TEXT_GENERAL) -- names are joined comma-separated and sliced.
    */
   private userList({ player }: CommandCtx): void {
     const names = this.deps.playerManager.all().map((p) => p.m_szName).join(', ');
@@ -575,7 +582,7 @@ export class CommandService {
   }
 
   /**
-   * `/stat <str|sta|dex|int|all> <n>` — `TextCmd_stat` (FuncTextCmd.cpp:912).
+   * `/stat <str|sta|dex|int|all> <n>` -- `TextCmd_stat` (FuncTextCmd.cpp:912).
    * Sets the named attribute, clamped to `[0, MAX_STAT]`, persists via
    * `charRepo.updateStats`, and marks the field dirty. C++ then sends
    * `AddSetState` (the SETSTATE snapshot) + recomputes derived stats; we omit
@@ -623,7 +630,7 @@ export class CommandService {
     try {
       Validate.name(name);
     } catch (error) {
-      // Bad charset/length → behave as "not found" rather than throwing.
+      // Bad charset/length -> behave as "not found" rather than throwing.
       if (error instanceof PacketError) return undefined;
       throw error;
     }
@@ -636,7 +643,7 @@ export class CommandService {
   }
 }
 
-/** Tokenize `/cmd  rest of line` → `{ name, args }`. Returns null if bare `/`. */
+/** Tokenize `/cmd  rest of line` -> `{ name, args }`. Returns null if bare `/`. */
 function parseCommand(text: string): { name: string; args: string } | null {
   const body = text.slice(1).trimStart();
   if (!body) return null;
@@ -645,7 +652,7 @@ function parseCommand(text: string): { name: string; args: string } | null {
   return { name: match[1]!.toLowerCase(), args: match[2] ?? '' };
 }
 
-/** Split `"name rest of message"` → `{ target, message }`. Null if no message. */
+/** Split `"name rest of message"` -> `{ target, message }`. Null if no message. */
 function splitTargetMessage(args: string): { target: string; message: string } | null {
   const match = args.match(/^(\S+)\s+(.*)$/s);
   if (!match) return null;
@@ -657,7 +664,7 @@ function isSelf(player: CPlayer, name: string): boolean {
 }
 
 /**
- * `SNAPSHOTTYPE_SETPOINTPARAM` (0x001e) — `objid | SETPOINTPARAM | paramId:DWORD |
+ * `SNAPSHOTTYPE_SETPOINTPARAM` (0x001e) -- `objid | SETPOINTPARAM | paramId:DWORD |
  * value:DWORD` (`CUserMng::AddSetPointParam`, User.cpp:3169). Used for the gold
  * balance (DST_GOLD) and other live stat updates.
  */
@@ -674,7 +681,7 @@ function buildSetPointParam(objid: number, paramId: number, value: number): Buff
 }
 
 /**
- * `SNAPSHOTTYPE_DEL_OBJ` (0x00f1) — `CUser::AddRemoveObj` (User.cpp): bodyless
+ * `SNAPSHOTTYPE_DEL_OBJ` (0x00f1) -- `CUser::AddRemoveObj` (User.cpp): bodyless
  * `objid | DEL_OBJ`. Tells clients to drop the mover from their scene; used by
  * `/rn` (despawn) so peers see the NPC vanish.
  */
@@ -689,7 +696,7 @@ function buildRemoveObj(objid: number): Buffer {
 }
 
 /**
- * Batched `DEL_OBJ` — one snapshot frame with N bodyless `objid | DEL_OBJ`
+ * Batched `DEL_OBJ` -- one snapshot frame with N bodyless `objid | DEL_OBJ`
  * sub-entries (cb=N). Used by `/ak` so a single broadcast carries every slain
  * monster instead of N separate frames. Mirrors `CUserMng::AddRemoveObj`
  * fan-out pattern (one snapshot, multiple sub-records via the `cb` WORD).
@@ -706,7 +713,7 @@ function buildRemoveObjs(objids: readonly number[]): Buffer {
   return w.build();
 }
 
-/** Squared 2D (x,z) distance — `/ak` radius check skips Y (flat AoE, matches C++ `IsRangeObj`). */
+/** Squared 2D (x,z) distance -- `/ak` radius check skips Y (flat AoE, matches C++ `IsRangeObj`). */
 function distSq(a: Vec3, b: Vec3): number {
   const dx = a.x - b.x;
   const dz = a.z - b.z;

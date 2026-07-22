@@ -1,5 +1,5 @@
 /**
- * Unit tests for circuit.ts — CircuitBreaker pattern.
+ * Unit tests for circuit.ts -- CircuitBreaker pattern.
  */
 
 import { describe, it, mock } from 'node:test';

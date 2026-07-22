@@ -202,7 +202,7 @@ export class IpcBus {
         envelope.from,
         envelope.ts
       )) {
-        return; // Invalid signature or stale message — drop silently
+        return; // Invalid signature or stale message -- drop silently
       }
 
       // Dispatch to handler (catch errors to prevent crashing the bus)
@@ -212,7 +212,7 @@ export class IpcBus {
         console.error(`Error in IPC handler for channel ${channel}:`, err);
       });
     } catch {
-      // Malformed JSON or other parsing error — drop silently
+      // Malformed JSON or other parsing error -- drop silently
     }
   }
 
@@ -220,7 +220,7 @@ export class IpcBus {
    * Close the bus and clean up resources.
    *
    * Unsubscribes from all channels and clears the handler map.
-   * Does NOT close the Redis connection — that's the caller's responsibility.
+   * Does NOT close the Redis connection -- that's the caller's responsibility.
    */
   async close(): Promise<void> {
     // Unsubscribe from all channels

@@ -21,7 +21,7 @@ import { BaseConfigSchema } from './base.schema.js';
 
 /** Core world-server simulation and rate settings. */
 export const WorldSimConfigSchema = z.object({
-  /** Game loop tick interval in milliseconds. Target: ≤10 ms processing per tick. */
+  /** Game loop tick interval in milliseconds. Target: <=10 ms processing per tick. */
   tickRateMs: z.number().int().min(10).max(500).default(50),
   /** Maximum simultaneous player connections this world server accepts. */
   maxPlayers: z.number().int().min(1).default(500),
@@ -49,13 +49,13 @@ export const ZoneConfigSchema = z.object({
   /**
    * How often (ms) dirty player state is flushed from memory to the main DB.
    * Critical changes (level-up, items) are written to the WAL journal
-   * immediately — this interval only covers low-priority dirty fields.
+   * immediately -- this interval only covers low-priority dirty fields.
    */
   persistIntervalMs: z.number().int().min(5000).default(30_000),
 });
 
 // ---------------------------------------------------------------------------
-// Registration sub-schema (World → Cluster connection)
+// Registration sub-schema (World -> Cluster connection)
 // ---------------------------------------------------------------------------
 
 /**

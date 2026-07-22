@@ -1,5 +1,5 @@
 /**
- * ItemDefinitionSchema test — parses the new Phase 0A fields.
+ * ItemDefinitionSchema test -- parses the new Phase 0A fields.
  *
  * `stack_size` defaults to 1 (non-stacking); `equip_slot`/`weapon_type`/
  * `item_kind2`/`item_kind3` are optional routing keys; `attack_min`/`attack_max`
@@ -16,7 +16,7 @@ const BASE = {
   name_id: 'IDS_PROPITEM_SWORD',
 } as const;
 
-describe('ItemDefinitionSchema — Phase 0A fields', () => {
+describe('ItemDefinitionSchema -- Phase 0A fields', () => {
   it('fills stack_size=1 when omitted', () => {
     const item = ItemDefinitionSchema.parse(BASE);
     assert.equal(item.stack_size, 1);
@@ -59,6 +59,14 @@ describe('ItemDefinitionSchema — Phase 0A fields', () => {
     assert.equal(item.hp_restore, 150);
     assert.equal(item.mp_restore, 60);
     assert.equal(item.fp_restore, 30);
+  });
+
+  it('parses jewelry HR/ER fields (nAdjHitRate / dwParry)', () => {
+    const item = ItemDefinitionSchema.parse({
+      ...BASE, hit_rate: 12, parry: 8,
+    });
+    assert.equal(item.hit_rate, 12);
+    assert.equal(item.parry, 8);
   });
 
   it('rejects a non-positive id', () => {

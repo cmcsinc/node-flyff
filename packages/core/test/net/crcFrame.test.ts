@@ -14,7 +14,7 @@ describe('v15 CRC frame codec', () => {
     assert.equal(crc32Flyff(Buffer.from([1, 2, 3, 4])), crc32Flyff(Buffer.from([1, 2, 3, 4])));
   });
 
-  it('round-trips frame → decode with the same protocolId', () => {
+  it('round-trips frame -> decode with the same protocolId', () => {
     const payload = Buffer.from([0xfc, 0, 0, 0, 0xaa, 0xbb, 0xcc]);
     const protocolId = 0x12345678;
     const frame = framePacketCrc(payload, protocolId);

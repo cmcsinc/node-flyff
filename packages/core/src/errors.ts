@@ -54,7 +54,7 @@ export class PacketError extends FlyffError {
 }
 
 /**
- * Thrown when authentication fails — invalid credentials, expired token,
+ * Thrown when authentication fails -- invalid credentials, expired token,
  * session mismatch, or wrong session state for the requested operation.
  */
 export class AuthError extends FlyffError {
@@ -64,7 +64,7 @@ export class AuthError extends FlyffError {
 }
 
 /**
- * Thrown when a game logic rule is violated — insufficient gold, invalid
+ * Thrown when a game logic rule is violated -- insufficient gold, invalid
  * inventory operation, anti-cheat rejection, etc.
  */
 export class GameError extends FlyffError {

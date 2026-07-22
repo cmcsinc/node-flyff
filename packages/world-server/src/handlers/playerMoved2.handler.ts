@@ -1,5 +1,5 @@
 /**
- * PLAYERMOVED2 handler — `PACKETTYPE_PLAYERMOVED2` (0xffffff03).
+ * PLAYERMOVED2 handler -- `PACKETTYPE_PLAYERMOVED2` (0xffffff03).
  *
  * 73-byte body (DPSrvr.cpp:2397 OnPlayerMoved2): adds 3 floats + a trailing
  * BYTE vs PLAYERMOVED. C++ only acts when flying; we always process (no flight

@@ -1,5 +1,5 @@
 /**
- * Unit tests for IpcServer — Internal TLS TCP server.
+ * Unit tests for IpcServer -- Internal TLS TCP server.
  */
 
 import { describe, it } from 'node:test';

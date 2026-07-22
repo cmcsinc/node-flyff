@@ -16,7 +16,7 @@ export interface CharacterRow {
   skin_color: number;
   level: number;
   exp: bigint;
-  /** Gold (C++ `m_nGold`). Normalized to Number — MAX_GOLD (~2.1B) < 2^53. */
+  /** Gold (C++ `m_nGold`). Normalized to Number -- MAX_GOLD (~2.1B) < 2^53. */
   gold: number;
   hp: number;
   mp: number;
@@ -29,19 +29,43 @@ export interface CharacterRow {
   x: number;
   y: number;
   z: number;
+  /**
+   * Facing angle (C++ `m_fAngle`, y-axis rotation). Added by migration 007.
+   * Optional in the type so test fakes/legacy rows omit it safely; CPlayer
+   * falls back to 0. Always present on real DB rows (column default 0).
+   */
+  angle?: number;
   world_id: string;
   zone_id: number;
+  /**
+   * Unspent skill points (C++ `m_nSkillPoint`). Added by migration 005.
+   * Earned on level-up, spent by `DOUSESKILLPOINT`.
+   */
+  skill_point: number;
+  /**
+   * Total skill points earned (C++ `m_nSkillLevel`). Added by migration 005.
+   * Lifetime counter -- never decremented.
+   */
+  skill_level: number;
+  /**
+   * Bank password (C++ `m_szBankPass`, char[5]). Added by migration 006.
+   * Sentinel `'0000'` = no password set. Max 4 chars. Plaintext (mirrors the
+   * original protocol -- the client sends and compares it in the clear).
+   */
+  bank_pass: string;
   created_at: Date;
   updated_at: Date;
 }
 
 /**
  * Character creation data (excludes auto-generated fields).
+ * `skill_point`/`skill_level` default to 0 at the DB layer (migration 005),
+ * so callers omit them for a fresh character.
  */
 export type CharacterCreateData = Omit<
   CharacterRow,
-  'id' | 'created_at' | 'updated_at' | 'gold'
-> & { gold?: number };
+  'id' | 'created_at' | 'updated_at' | 'gold' | 'skill_point' | 'skill_level' | 'bank_pass'
+> & { gold?: number; skill_point?: number; skill_level?: number; bank_pass?: string };
 
 /**
  * Character update data (all fields optional).
@@ -62,7 +86,7 @@ export class CharacterRepository {
 
   /**
    * Coerces raw DB row to match CharacterRow typing.
-   * `exp` is a bigInteger column — better-sqlite3 may return it as Number;
+   * `exp` is a bigInteger column -- better-sqlite3 may return it as Number;
    * normalize to string so comparisons are stable across drivers.
    */
   private mapRow(row: CharacterRow | undefined): CharacterRow | null {
@@ -216,7 +240,7 @@ export class CharacterRepository {
   }
 
   /**
-   * Update character gold (C++ `m_nGold`). Fire-and-forget at call sites —
+   * Update character gold (C++ `m_nGold`). Fire-and-forget at call sites --
    * matches the `updateLevelAndExp` cadence; WAL `GOLD_CHANGE` is the
    * crash-recovery backup.
    *
@@ -255,6 +279,45 @@ export class CharacterRepository {
       .where({ id })
       .update({
         ...stats,
+        updated_at: new Date(),
+      });
+  }
+
+  /**
+   * Update character skill points (C++ `m_nSkillPoint`/`m_nSkillLevel`).
+   * Fire-and-forget at call sites -- WAL `CHAR_SKILL_POINT` is the crash-recovery
+   * backup (event type to be wired when skill learning ships).
+   *
+   * @param id - Character ID
+   * @param skillPoint - New unspent SP (C++ `m_nSkillPoint`)
+   * @param skillLevel - New total SP earned (C++ `m_nSkillLevel`)
+   */
+  async updateSkillPoints(
+    id: number,
+    skillPoint: number,
+    skillLevel: number,
+  ): Promise<void> {
+    await this.db('characters')
+      .where({ id })
+      .update({
+        skill_point: skillPoint,
+        skill_level: skillLevel,
+        updated_at: new Date(),
+      });
+  }
+
+  /**
+   * Update the bank password (C++ `m_szBankPass`). Persisted immediately on
+   * CHANGEBANKPASS (mirrors `SendChangeBankPass`, DPDatabaseClient.cpp:2131).
+   *
+   * @param id - Character ID
+   * @param bankPass - New bank password ('0000' = cleared). Max 4 chars.
+   */
+  async updateBankPass(id: number, bankPass: string): Promise<void> {
+    await this.db('characters')
+      .where({ id })
+      .update({
+        bank_pass: bankPass,
         updated_at: new Date(),
       });
   }

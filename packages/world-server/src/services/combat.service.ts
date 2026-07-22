@@ -1,5 +1,5 @@
 /**
- * CombatService — runs the v15 melee damage pipeline on a player→mover swing.
+ * CombatService -- runs the v15 melee damage pipeline on a player->mover swing.
  *
  * Wires the pure {@link resolveMelee} math to live state: resolves the target
  * via `SpawnManager`, applies `MinusHP` to the mover, broadcasts the DAMAGE
@@ -8,17 +8,18 @@
  * mover. Exp + level are WAL-journaled before the ack (rule 04).
  *
  * Server-authoritative (rule 03): the client's `dwAtkFlags`/`nParam3` never
- * enter the damage math — hit/miss, crit, damage are all recomputed from
+ * enter the damage math -- hit/miss, crit, damage are all recomputed from
  * `CPlayer`/`CMover` stats via the injected `Rng`.
  *
  * ponytail: drops (propMoverEx.inc), respawn queue, equipped-weapon model,
- * hit-share party grouping, stealHP/skills — see `docs/combat-plan.md`.
+ * hit-share party grouping, stealHP/skills -- see `docs/combat-plan.md`.
  *
  * @module services/combat
  */
 
 import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
+import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import type { CPlayer } from '../entities/player.js';
 import type { CMover } from '../entities/mover.js';
 import type { SpawnManager } from '../managers/spawn.manager.js';
@@ -28,6 +29,7 @@ import {
   resolveMelee, xRandomRng, expLevelDiffMult, addExp, cumulativeExp,
   type Rng, type MeleeResult,
 } from '../combat/formulas.js';
+import { resolveSkillCast } from '../combat/skillFormulas.js';
 import { EXP_TABLE } from '../combat/expTable.js';
 import { AF_MISS } from '../combat/tables.js';
 import { playerCombatant, moverCombatant } from '../combat/combatants.js';
@@ -41,6 +43,7 @@ import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer.js';
 import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
 import { SetLevelSerializer } from '../net/snapshot/setLevel.serializer.js';
 import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
+import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 import { createLogger } from '@flyff/core/logger.js';
 
@@ -50,18 +53,18 @@ export interface CombatServiceDeps {
   spawnManager: SpawnManager;
   zoneManager: ZoneManager;
   playerManager: PlayerManager;
-  charRepo: Pick<CharacterRepository, 'updateLevelAndExp'>;
+  charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateSkillPoints'>;
   journal?: Journal;
   rng?: Rng;
   /**
-   * Optional kill hook (Phase 7 — wired to `QuestTrackerSystem.onKill`). Called
+   * Optional kill hook (Phase 7 -- wired to `QuestTrackerSystem.onKill`). Called
    * with the slain mover's `m_dwIndex` (MI_*) so active quests can increment
    * matching `SetEndCondKillNPC` slots.
    */
   questTracker?: { onKill(killer: CPlayer, victimModelIdx: number): void };
-  /** Optional drop-roller (Phase A–C). Spawns ground piles for the kill. */
+  /** Optional drop-roller (Phase A-C). Spawns ground piles for the kill. */
   dropService?: DropService;
-  /** Optional item-definition lookup — folds equipped weapon/armor into ATK/DEF. */
+  /** Optional item-definition lookup -- folds equipped weapon/armor into ATK/DEF. */
   getItem?: ItemLookup;
 }
 
@@ -75,6 +78,7 @@ export class CombatService {
   private readonly setExp = new SetExperienceSerializer();
   private readonly setLevel = new SetLevelSerializer();
   private readonly destObj = new DestObjSerializer();
+  private readonly douseSkillPoint = new DoUseSkillPointSerializer();
   private readonly rng: Rng;
   constructor(private readonly deps: CombatServiceDeps) {
     this.rng = deps.rng ?? xRandomRng;
@@ -82,32 +86,64 @@ export class CombatService {
 
   /** Resolve a melee swing from `player` onto `targetObjid`. */
   resolveAttack(player: CPlayer, targetObjid: number): CombatOutcome {
+    const t = this.resolveTarget(player, targetObjid);
+    if (!t.ok) return t;
+    const result = resolveMelee(playerCombatant(player, this.deps.getItem), moverCombatant(t.mover), this.rng);
+    return this.applyHit(player, t.mover, this.withOneKill(player, t.mover, result));
+  }
+
+  /**
+   * Resolve a skill cast's damage from `player` onto `targetObjid`. Same target
+   * validation + DAMAGE broadcast + death/exp/rage tail as `resolveAttack`; only
+   * the ATK source differs (`resolveSkillCast` from `skillFormulas.ts`).
+   */
+  resolveSkill(
+    player: CPlayer,
+    targetObjid: number,
+    skill: SkillDefinition,
+    level: SkillLevel,
+  ): CombatOutcome {
+    const t = this.resolveTarget(player, targetObjid);
+    if (!t.ok) return t;
+    const result = resolveSkillCast({
+      attacker: playerCombatant(player, this.deps.getItem),
+      defender: moverCombatant(t.mover),
+      skill, level, rng: this.rng,
+    });
+    return this.applyHit(player, t.mover, this.withOneKill(player, t.mover, result));
+  }
+
+  /** Shared target validation for melee + skill swings. */
+  private resolveTarget(
+    player: CPlayer,
+    targetObjid: number,
+  ): { ok: true; mover: CMover } | { ok: false; reason: 'invalid_target' | 'target_dead' | 'target_not_attackable' } {
     const mover = this.deps.spawnManager.get(targetObjid);
     if (mover === undefined) return { ok: false, reason: 'invalid_target' };
     if (mover.m_bDead) return { ok: false, reason: 'target_dead' };
     if (!isMoverAttackableBy(player, mover)) return { ok: false, reason: 'target_not_attackable' };
+    return { ok: true, mover };
+  }
 
-    const result: MeleeResult = resolveMelee(playerCombatant(player, this.deps.getItem), moverCombatant(mover), this.rng);
+  /** `/ok` ONEKILL_MODE override -- GM one-shot forces lethal damage. */
+  private withOneKill(player: CPlayer, mover: CMover, result: MeleeResult): MeleeResult {
+    if ((player.m_dwMode & MODE.ONEKILL) === 0) return result;
+    return { hit: true, damage: mover.m_nHitPoint, atkFlags: result.atkFlags & ~AF_MISS };
+  }
 
-    // `/ok` ONEKILL_MODE (authorization.h:22) — GM one-shot override: force a
-    // guaranteed lethal hit (full current HP) regardless of the rolled result.
-    // Mirrors C++ `IsMode(ONEKILL_MODE)` forcing lethal damage on the attacker's swing.
-    const eff: MeleeResult = (player.m_dwMode & MODE.ONEKILL) !== 0
-      ? { hit: true, damage: mover.m_nHitPoint, atkFlags: result.atkFlags & ~AF_MISS }
-      : result;
-
-    // Apply MinusHP + record hit-share even on a miss (0 damage).
+  /**
+   * Shared damage tail: apply MinusHP, record hit-share, broadcast DAMAGE
+   * (per-mover HP sync), then grant exp + broadcast death if lethal, else rage.
+   */
+  private applyHit(player: CPlayer, mover: CMover, eff: MeleeResult): CombatOutcome {
     const dealt = applyDamage(mover, eff);
     recordHit(mover, player.m_idPlayer, dealt);
-
-    // Broadcast DAMAGE (vicinity) — the per-mover HP sync. dwHit=0 + AF_MISS on miss.
     const packet = this.damage.build(mover.m_idMover, {
       attackerObjid: player.m_idPlayer,
       hit: dealt,
       atkFlags: eff.atkFlags,
     });
     this.deps.zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, packet);
-
     const killed = mover.m_nHitPoint <= 0;
     if (killed) this.onDeath(player, mover);
     else this.triggerRage(mover, player);
@@ -115,11 +151,11 @@ export class CombatService {
   }
 
   /**
-   * `AIMSG_DAMAGE` (`AIMonster.cpp:485-500`) — being hit makes the monster rage
+   * `AIMSG_DAMAGE` (`AIMonster.cpp:485-500`) -- being hit makes the monster rage
    * on its attacker. Sets the aggro target + damage-pos leash origin + pursue
    * speed + one `MOVERSETDESTOBJ` broadcast so peer clients walk the monster
    * toward the player. The actual swing runs on the `AISystem` tick (the C++
-   * `OnActTimer` cadence), NOT here — combat no longer retaliates inline.
+   * `OnActTimer` cadence), NOT here -- combat no longer retaliates inline.
    *
    * No-op if the monster is already chasing a target (C++ `MoveToDst(objid)`
    * early-outs on target-repeat, `AIMonster.cpp:159`). Any hit attackable
@@ -144,14 +180,14 @@ export class CombatService {
     this.grantExp(killer, mover);
     // Roll drops while the mover still holds its pos + hit-share table.
     this.deps.dropService?.roll(mover, killer);
-    // Phase 7 — increment SetEndCondKillNPC slots before the mover leaves scope.
+    // Phase 7 -- increment SetEndCondKillNPC slots before the mover leaves scope.
     this.deps.questTracker?.onKill(killer, mover.m_dwIndex);
     this.deps.spawnManager.kill(mover.m_idMover);
   }
 
   /**
-   * `SubExperience` → `AddExperienceSolo` (Mover.cpp:5992/6085).
-   * base = nExpValue × level-diff mult; cap = min(base, LimitExp); journal
+   * `SubExperience` -> `AddExperienceSolo` (Mover.cpp:5992/6085).
+   * base = nExpValue * level-diff mult; cap = min(base, LimitExp); journal
    * before ack; cascade level-ups (within-level exp resets to 0, excess carries
    * over); persist async.
    */
@@ -161,6 +197,7 @@ export class CombatService {
     if (cap <= 0) return;
 
     // m_nExp is within-level (resets at each boundary); addExp carries excess.
+    const prevLevel = player.m_nLevel;
     const gain = addExp(player.m_nLevel, player.m_nExp, cap);
     player.m_nExp = gain.exp;
     player.m_nLevel = gain.level;
@@ -172,10 +209,11 @@ export class CombatService {
       player._dirty.add('m_nLevel');
       player._dirty.add('m_nHp');
       player._dirty.add('m_nMp');
+      this.grantSkillPoints(player, prevLevel);
     }
 
     // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
-    // Idempotent — the boot replayer re-applies this exact (level, exp) if the
+    // Idempotent -- the boot replayer re-applies this exact (level, exp) if the
     // fire-and-forget persist below lost the race with a crash. Stored as a
     // JSON-safe string so BigInt precision survives the round-trip.
     const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
@@ -184,11 +222,11 @@ export class CombatService {
       payload: { level: player.m_nLevel, exp: cumulative },
     });
 
-    // SETEXPERIENCE → self only (wire expects cumulative nExp1).
+    // SETEXPERIENCE -> self only (wire expects cumulative nExp1).
     this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
       exp: cumulativeExp(player.m_nLevel, player.m_nExp), level: player.m_nLevel,
     }));
-    // SETLEVEL → vicinity, skips self (only if leveled).
+    // SETLEVEL -> vicinity, skips self (only if leveled).
     if (gain.levelsGained > 0) {
       this.deps.zoneManager.broadcastAround(
         player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
@@ -197,12 +235,38 @@ export class CombatService {
       );
     }
 
-    // Persist async — fire-and-forget (rule 02: service calls repo, no SQL).
+    // Persist async -- fire-and-forget (rule 02: service calls repo, no SQL).
     // DB stores cumulative (matches C++ m_nExp1 column semantics). The WAL row
     // above is the crash-recovery backup for this write.
     this.deps.charRepo.updateLevelAndExp(
       player.m_idPlayer, player.m_nLevel, BigInt(cumulative),
     ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
+  }
+
+  /**
+   * Level-up SP grant -- `((level-1)/20)+2` per level reached
+   * (`MoverParam.cpp:1434`). Adds to both `m_nSkillLevel` (total earned) and
+   * `m_nSkillPoint` (unspent). Notifies the client via the DOUSESKILLPOINT
+   * snapshot (carries the unchanged roster + the new SP), then persists
+   * fire-and-forget. ponytail: WAL `SKILL_LEARN` type + replayer for crash
+   * recovery; job-match check on learn.
+   */
+  private grantSkillPoints(player: CPlayer, prevLevel: number): void {
+    let spGain = 0;
+    for (let lvl = prevLevel + 1; lvl <= player.m_nLevel; lvl++) {
+      spGain += Math.floor((lvl - 1) / 20) + 2;
+    }
+    if (spGain <= 0) return;
+    player.m_nSkillLevel += spGain;
+    player.m_nSkillPoint += spGain;
+    player._dirty.add('m_nSkillPoint');
+    this.deps.playerManager.sendTo(
+      player,
+      this.douseSkillPoint.build(player.m_idPlayer, player.m_aJobSkill, player.m_nSkillPoint),
+    );
+    this.deps.charRepo.updateSkillPoints(
+      player.m_idPlayer, player.m_nSkillPoint, player.m_nSkillLevel,
+    ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'skill-point persist failed'));
   }
 }
 

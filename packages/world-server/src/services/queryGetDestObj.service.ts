@@ -1,13 +1,13 @@
 /**
- * QueryGetDestObjService — `PACKETTYPE_QUERYGETDESTOBJ` (0xffffff72).
+ * QueryGetDestObjService -- `PACKETTYPE_QUERYGETDESTOBJ` (0xffffff72).
  *
  * `DPSrvr::OnQueryGetDestObj` (DPSrvr.cpp:1355) reads `OBJID objid`, resolves
- * the mover via `prj.GetMover(objid)`, and — if the mover has a destination
- * (`!IsEmptyDestObj()`) — replies with `AddGetDestObj(objid, GetDestId(),
+ * the mover via `prj.GetMover(objid)`, and -- if the mover has a destination
+ * (`!IsEmptyDestObj()`) -- replies with `AddGetDestObj(objid, GetDestId(),
  * m_fArrivalRange)` (User.cpp:2337), a SNAPSHOT/GETDESTOBJ frame sent back to
  * the requester so its client can sync the remote mover's pathfinding target.
  *
- * No reply when the mover is unknown or has no destination — matches C++.
+ * No reply when the mover is unknown or has no destination -- matches C++.
  *
  * ponytail: `prj.GetMover` resolves ANY mover (player/NPC/monster); we only
  * track players (`PlayerManager`) today, so non-player objids silently no-op

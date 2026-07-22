@@ -1,5 +1,5 @@
 /**
- * S→C SETEXPERIENCE snapshot — `SNAPSHOTTYPE_SETEXPERIENCE` (0x0012).
+ * S->C SETEXPERIENCE snapshot -- `SNAPSHOTTYPE_SETEXPERIENCE` (0x0012).
  *
  * Mirrors `CUser::AddSetExperience` (`WORLDSERVER/User.cpp:1115`):
  *   ar << GETID(pPlayer) << SNAPSHOTTYPE_SETEXPERIENCE;
@@ -37,8 +37,8 @@ export class SetExperienceSerializer {
     w.writeWord(f.level & 0xffff);                  // wLevel
     w.writeDword(f.skillLevel ?? 0);                // nSkillLevel
     w.writeDword(f.skillPoint ?? 0);                // nSkillPoint
-    w.writeQword(0);                                // nDeathExp (__int64) — death penalty; v1: 0
-    w.writeWord(0);                                 // wDeathLevel — v1: 0
+    w.writeQword(0);                                // nDeathExp (__int64) -- death penalty; v1: 0
+    w.writeWord(0);                                 // wDeathLevel -- v1: 0
     return w.build();
   }
 }

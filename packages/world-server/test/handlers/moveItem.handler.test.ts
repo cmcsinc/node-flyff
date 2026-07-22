@@ -1,8 +1,8 @@
 /**
- * MoveItemHandler test — MOVEITEM (0x00ff0006) slot swap.
+ * MoveItemHandler test -- MOVEITEM (0x00ff0006) slot swap.
  *
  * Body: `BYTE nItemType, BYTE nSrc, BYTE nDst`. The handler validates both slots
- * against MAX_INVENTORY and delegates to InventoryService.moveItem. No reply —
+ * against MAX_INVENTORY and delegates to InventoryService.moveItem. No reply --
  * the client moves optimistically; JOIN reflects the new order on relog.
  */
 
@@ -22,7 +22,7 @@ function mockSocket() {
 
 function body(nSrc: number, nDst: number): Buffer {
   const w = new PacketWriter();
-  w.writeByte(0);       // nItemType — unused
+  w.writeByte(0);       // nItemType -- unused
   w.writeByte(nSrc);
   w.writeByte(nDst);
   return w.build();

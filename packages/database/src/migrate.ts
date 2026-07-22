@@ -39,6 +39,6 @@ export async function rollbackMigrations(db: Knex, step?: number): Promise<void>
 export async function getCurrentMigration(db: Knex): Promise<string> {
   // Knex 3.x migrate.currentVersion() returns the version string directly
   // (not a [version, migrations] tuple). Destructuring it would yield the
-  // first character — e.g. 'n' from 'none'.
+  // first character -- e.g. 'n' from 'none'.
   return db.migrate.currentVersion();
 }

@@ -47,8 +47,8 @@ describe('MapKeyHandler', () => {
 
   it('sends the vicinity ADD_OBJ snapshot on the first accepted MAP_KEY', () => {
     // The client finished loading the world (g_pWorld/g_pPlayer set) once it
-    // sends MAP_KEY — this is the safe point to stream zone movers. JOIN was
-    // too early (raced world load → OnAddObj null-deref at DPClient.cpp:1160).
+    // sends MAP_KEY -- this is the safe point to stream zone movers. JOIN was
+    // too early (raced world load -> OnAddObj null-deref at DPClient.cpp:1160).
     const snap = Buffer.from([0xfe, 0xff, 0xff, 0xff, 0x2b, 0x00]); // fake SNAPSHOT head + cb=43
     const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVicinity({ snapshot: snap }));
     const sock = mockSocket();

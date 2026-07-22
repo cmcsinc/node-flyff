@@ -1,9 +1,9 @@
 /**
- * ClusterListener — World side of the cluster→world player handoff.
+ * ClusterListener -- World side of the cluster->world player handoff.
  *
  * Subscribes to the `player:handoff` channel on the shared `IpcBus`. The bus
  * verifies the HMAC signature and 30s freshness (rule 07) before this listener
- * ever sees the payload — so by the time `onHandoff` runs, the message is
+ * ever sees the payload -- so by the time `onHandoff` runs, the message is
  * authenticated. Here we only validate the payload *shape* and stash the
  * pending handoff for single-use consumption when the player's JOIN arrives.
  *
@@ -15,16 +15,16 @@
 
 import { createLogger } from '@flyff/core/logger.js';
 
-/** IPC channel carrying the cluster→world handoff (rule 07 naming `<domain>:<action>`). */
+/** IPC channel carrying the cluster->world handoff (rule 07 naming `<domain>:<action>`). */
 export const PLAYER_HANDOFF_CHANNEL = 'player:handoff';
 
-/** Minimal bus port the listener needs — `IpcBus` satisfies it. */
+/** Minimal bus port the listener needs -- `IpcBus` satisfies it. */
 export interface ClusterBusPort {
   subscribe<T>(channel: string, handler: (payload: T, from: string) => void | Promise<void>): Promise<void>;
   unsubscribe(channel: string): void;
 }
 
-/** Handoff payload contract — matches `CharSelectService.prejoin`. */
+/** Handoff payload contract -- matches `CharSelectService.prejoin`. */
 export interface PlayerHandoff {
   charId: number;
   token: string;
@@ -42,7 +42,7 @@ interface PendingEntry {
   expiresAt: number;
 }
 
-/** Default handoff TTL — must be ≥ the cluster-side token cache TTL (60s). */
+/** Default handoff TTL -- must be >= the cluster-side token cache TTL (60s). */
 const DEFAULT_HANDOFF_TTL_MS = 90_000;
 
 function isHandoff(p: unknown): p is PlayerHandoff {
@@ -83,7 +83,7 @@ export class ClusterListener {
   /** Subscribe to the handoff channel. Call once on world startup. */
   async start(): Promise<void> {
     if (!this.bus) {
-      this.log.warn('No IPC bus — player:handoff listener not started');
+      this.log.warn('No IPC bus -- player:handoff listener not started');
       return;
     }
     await this.bus.subscribe<PlayerHandoff>(PLAYER_HANDOFF_CHANNEL, (payload, from) =>
@@ -98,10 +98,10 @@ export class ClusterListener {
     this.pending.clear();
   }
 
-  /** Bus callback — shape-validate and stash. HMAC already verified by the bus. */
+  /** Bus callback -- shape-validate and stash. HMAC already verified by the bus. */
   private onHandoff(payload: unknown, from: string): void {
     if (!isHandoff(payload)) {
-      this.log.warn({ from }, 'Malformed player:handoff payload — dropping');
+      this.log.warn({ from }, 'Malformed player:handoff payload -- dropping');
       return;
     }
     this.pending.set(payload.charId, {
@@ -112,7 +112,7 @@ export class ClusterListener {
   }
 
   /**
-   * Redeem the handoff for a character. Single-use — the entry is deleted on
+   * Redeem the handoff for a character. Single-use -- the entry is deleted on
    * read so the same character cannot join twice on one handoff. The client
    * carries no token (matches the C++ JOIN flow where trust is the cache
    * relay, not a client credential); the signed IPC publish is the auth.

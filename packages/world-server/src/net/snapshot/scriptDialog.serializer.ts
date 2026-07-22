@@ -1,12 +1,12 @@
 /**
- * S→C NPC dialog menu — `SNAPSHOTTYPE_RUNSCRIPTFUNC` (0x0024) entries.
+ * S->C NPC dialog menu -- `SNAPSHOTTYPE_RUNSCRIPTFUNC` (0x0024) entries.
  *
  * Mirrors `CUser::AddRunScriptFunc` (`WORLDSERVER/User.cpp:6259`): each
  * `Say`/`AddKey`/`Exit` the dialog script emits becomes one RUNSCRIPTFUNC
  * entry. Entries are batched into a single `PACKETTYPE_SNAPSHOT` frame and
  * applied client-side by `CDPClient::OnRunScriptFunc` (`Neuz/DPClient.cpp:14127`)
  * to the `CWndDialog` the client already opened on click
- * (`_Interface/WndWorld.cpp:5163`). The server sends no "open dialog" packet —
+ * (`_Interface/WndWorld.cpp:5163`). The server sends no "open dialog" packet --
  * it only populates and closes.
  *
  * Per-entry wire layout (after the outer `SNAPSHOT | NULL_ID | cb` preamble):
@@ -14,7 +14,7 @@
  *
  * The C++ sender writes `GetId()` (the clicker) as `objid`; the client ignores
  * it for SAY/ADDKEY/EXIT (it uses the `m_idMover` set on click), so the value
- * is decorative — we pass the player objid to stay faithful.
+ * is decorative -- we pass the player objid to stay faithful.
  *
  * @module net/snapshot/scriptDialog.serializer
  */
@@ -45,7 +45,7 @@ export class ScriptDialogSerializer {
   /**
    * Build one `SNAPSHOT` frame containing `funcs.length` RUNSCRIPTFUNC entries,
    * attributed to `playerObjid` (the clicker). Empty `funcs` returns a frame
-   * with `cb=0` — callers should skip emitting when there is nothing to say.
+   * with `cb=0` -- callers should skip emitting when there is nothing to say.
    */
   build(playerObjid: number, funcs: readonly ScriptFunc[]): Buffer {
     const w = new PacketWriter();

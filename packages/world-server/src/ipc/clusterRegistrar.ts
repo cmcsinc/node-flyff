@@ -1,10 +1,10 @@
 /**
- * ClusterRegistrar — World Server side of the registration handshake.
+ * ClusterRegistrar -- World Server side of the registration handshake.
  *
  * On startup this module:
  *  1. TCP-connects to the Cluster Server's internal IpcServer port
  *  2. Sends REGISTER_WORLD with a HMAC-derived registration token
- *  3. Waits for REGISTER_WORLD_ACK — aborts if rejected
+ *  3. Waits for REGISTER_WORLD_ACK -- aborts if rejected
  *  4. Drives a periodic WORLD_HEARTBEAT to keep the slot alive
  *  5. Auto-reconnects with exponential backoff if the connection drops
  *  6. Sends UNREGISTER_WORLD before intentional shutdown
@@ -40,7 +40,7 @@ export interface ClusterRegistrarDeps {
   publicIp: string;
   publicPort: number;
   maxPlayers: number;
-  /** IPC shared secret — used to derive the registration token. */
+  /** IPC shared secret -- used to derive the registration token. */
   ipcSecret: string;
   /** Cluster server internal connection details. */
   clusterHost: string;
@@ -49,7 +49,7 @@ export interface ClusterRegistrarDeps {
   reconnectIntervalMs: number;
   /** Milliseconds between heartbeat pings. */
   heartbeatIntervalMs: number;
-  /** Live player count callback — called each heartbeat to get current count. */
+  /** Live player count callback -- called each heartbeat to get current count. */
   getPlayerCount: () => number;
   logger: Logger;
 }
@@ -107,9 +107,9 @@ class FrameParser {
 /**
  * Manages the World Server's persistent connection to the Cluster Server.
  *
- * @fires ClusterRegistrar#registered  — when registration is accepted
- * @fires ClusterRegistrar#unregistered — when gracefully unregistered or connection lost
- * @fires ClusterRegistrar#reconnecting — when starting a reconnect attempt
+ * @fires ClusterRegistrar#registered  -- when registration is accepted
+ * @fires ClusterRegistrar#unregistered -- when gracefully unregistered or connection lost
+ * @fires ClusterRegistrar#reconnecting -- when starting a reconnect attempt
  */
 export class ClusterRegistrar extends EventEmitter {
   readonly #deps: ClusterRegistrarDeps;
@@ -177,7 +177,7 @@ export class ClusterRegistrar extends EventEmitter {
 
     this.#log.info(
       { host: clusterHost, port: clusterInternalPort, attempt: this.#reconnectAttempts + 1 },
-      'Connecting to Cluster Server internal port…',
+      'Connecting to Cluster Server internal port...',
     );
 
     this.#parser = new FrameParser();
@@ -203,7 +203,7 @@ export class ClusterRegistrar extends EventEmitter {
       this.#clearTimers();
 
       if (!this.#destroyed) {
-        this.#log.warn('Connection to Cluster Server closed — scheduling reconnect');
+        this.#log.warn('Connection to Cluster Server closed -- scheduling reconnect');
         if (wasRegistered) this.emit('unregistered');
         this.#scheduleReconnect();
       }
@@ -234,7 +234,7 @@ export class ClusterRegistrar extends EventEmitter {
       registrationToken: token,
     };
 
-    this.#log.info({ serverId, channelId }, 'Sending REGISTER_WORLD…');
+    this.#log.info({ serverId, channelId }, 'Sending REGISTER_WORLD...');
     this.#send(IPC_OP.REGISTER_WORLD, request);
     // ACK is handled in #handleFrame
   }
@@ -259,7 +259,7 @@ export class ClusterRegistrar extends EventEmitter {
   #onRegisterAck(data: unknown): void {
     const result = RegisterWorldAckSchema.safeParse(data);
     if (!result.success) {
-      this.#log.error({ errors: result.error.errors }, 'Malformed REGISTER_WORLD_ACK — disconnecting');
+      this.#log.error({ errors: result.error.errors }, 'Malformed REGISTER_WORLD_ACK -- disconnecting');
       this.#socket?.destroy();
       return;
     }
@@ -269,7 +269,7 @@ export class ClusterRegistrar extends EventEmitter {
     if (!ack.success) {
       this.#log.error(
         { reason: ack.reason },
-        'REGISTER_WORLD rejected by Cluster Server — will not reconnect',
+        'REGISTER_WORLD rejected by Cluster Server -- will not reconnect',
       );
       // Rejected by policy (unknown ID, invalid token). Operator must fix config.
       // Destroy without scheduling reconnect.
@@ -326,7 +326,7 @@ export class ClusterRegistrar extends EventEmitter {
     const delay = Math.min(base * 2 ** this.#reconnectAttempts, 60_000);
     this.#reconnectAttempts++;
 
-    this.#log.info({ delay, attempt: this.#reconnectAttempts }, 'Reconnecting to Cluster Server…');
+    this.#log.info({ delay, attempt: this.#reconnectAttempts }, 'Reconnecting to Cluster Server...');
     this.emit('reconnecting');
 
     this.#reconnectTimer = setTimeout(() => {

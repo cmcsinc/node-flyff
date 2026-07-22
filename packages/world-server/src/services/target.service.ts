@@ -1,10 +1,10 @@
 /**
- * TargetService — `PACKETTYPE_SETTARGET` (0x00ff0023).
+ * TargetService -- `PACKETTYPE_SETTARGET` (0x00ff0023).
  *
  * `DPSrvr::OnSetTarget` (DPSrvr.cpp:4295) reads `OBJID idTarget, BYTE bClear`:
- *   - `bClear == 2` → `m_idSetTarget = idTarget` (objective marker).
- *   - `bClear == 0` → claim target's `m_idTargeter` if free.
- *   - `bClear == 1` → release target's `m_idTargeter` if we own it.
+ *   - `bClear == 2` -> `m_idSetTarget = idTarget` (objective marker).
+ *   - `bClear == 0` -> claim target's `m_idTargeter` if free.
+ *   - `bClear == 1` -> release target's `m_idTargeter` if we own it.
  *
  * The claim/release branches mutate the TARGET's `m_idTargeter`, not ours. The
  * full claim/release bookkeeping lands with `MoverManager`; today we record the
@@ -59,7 +59,7 @@ export class TargetService {
     if (bClear === 0) {
       // Claim: refuse if the target is a non-attackable mover (peaceful NPC, or
       // a guard while this player is not PK). Player-char targets fall through
-      // unchanged — PvP targeting is out of scope here.
+      // unchanged -- PvP targeting is out of scope here.
       const mover = this.spawnManager.get(idTarget);
       if (mover !== undefined && !isMoverAttackableBy(player, mover)) {
         return { ok: false, reason: 'target_not_attackable' };

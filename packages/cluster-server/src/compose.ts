@@ -100,7 +100,7 @@ export async function compose(): Promise<ClusterComposeResult> {
   const accountConnections = new AccountConnectionManager();
 
   // CACHE_ADDR source: the public IP of the first online world server (what the
-  // client dials on :5400). Null when none registered → handler falls back to
+  // client dials on :5400). Null when none registered -> handler falls back to
   // 127.0.0.1 for single-box dev.
   const cacheAddrSource = {
     getCacheAddr: (): string | null => worldRegistry.getOnlineWorlds()[0]?.publicIp ?? null,

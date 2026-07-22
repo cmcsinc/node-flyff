@@ -90,4 +90,47 @@ describe('CPlayer entity', () => {
     p.socket.write(buf);
     assert.equal(sock._written[0], buf);
   });
+
+  it('starts with a 45-slot skill roster of NULL_ID/0', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    assert.equal(p.m_aJobSkill.length, 45);
+    assert.equal(p.m_aJobSkill[0]!.skillId, 0xffffffff, 'empty slot sentinel');
+    assert.equal(p.m_aJobSkill[0]!.level, 0);
+    assert.equal(p.m_aJobSkill[44]!.skillId, 0xffffffff);
+    assert.equal(p.m_nSkillPoint, 0, 'SP defaults to 0');
+    assert.equal(p.m_nSkillLevel, 0, 'total SP defaults to 0');
+    assert.equal(p.m_tmReUseDelay.length, 45);
+    assert.equal(p.m_tmReUseDelay[0], 0, 'cooldowns start ready');
+  });
+
+  it('hydrates m_nSkillPoint/m_nSkillLevel from the row', () => {
+    const p = CPlayer.fromRow(makeRow({ skill_point: 12, skill_level: 35 } as Partial<CharacterRow>), makeSocket());
+    assert.equal(p.m_nSkillPoint, 12);
+    assert.equal(p.m_nSkillLevel, 35);
+  });
+
+  it('hydrateSkills writes learned slots and drops empty/invalid ones', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.hydrateSkills([
+      { slot: 0, skillId: 1, level: 5 },
+      { slot: 1, skillId: 2, level: 3 },
+      { slot: 2, skillId: 0xffffffff, level: 0 }, // NULL_ID -> drop
+      { slot: 3, skillId: 0, level: 0 },          // 0 -> drop
+      { slot: 99, skillId: 100, level: 1 },       // OOB -> drop
+    ]);
+    assert.deepEqual(p.m_aJobSkill[0], { skillId: 1, level: 5 });
+    assert.deepEqual(p.m_aJobSkill[1], { skillId: 2, level: 3 });
+    assert.equal(p.m_aJobSkill[2]!.skillId, 0xffffffff, 'NULL_ID stays empty');
+    assert.equal(p.m_aJobSkill[3]!.skillId, 0xffffffff, '0-id stays empty');
+  });
+
+  it('seedVagrantRoster fills slots 0-2 with SI_VAG_ONE_* at level 0', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.seedVagrantRoster();
+    assert.deepEqual(p.m_aJobSkill[0], { skillId: 1, level: 0 }); // SI_VAG_ONE_CLEANHIT
+    assert.deepEqual(p.m_aJobSkill[1], { skillId: 2, level: 0 }); // SI_VAG_ONE_BRANDISH
+    assert.deepEqual(p.m_aJobSkill[2], { skillId: 3, level: 0 }); // SI_VAG_ONE_OVERCUT
+    assert.equal(p.m_aJobSkill[3]!.skillId, 0xffffffff, 'slot 3 still empty');
+    assert.ok(p._dirty.has('m_aJobSkill'), 'dirty flag set');
+  });
 });

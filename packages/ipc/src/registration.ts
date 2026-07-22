@@ -3,14 +3,14 @@
  *
  * Mirrors the role of the shared key (`SNSP_CERTIFY` payload in C++ Flyff) but
  * uses HMAC-SHA256 instead of a plaintext password. Both the registering server
- * and the receiving server independently compute the same token — the registering
+ * and the receiving server independently compute the same token -- the registering
  * server sends it, the receiver verifies it with `timingSafeEqual` to prevent
  * timing-attack-based forgery.
  *
  * ## Why not a separate secret?
  * The `IPC_SECRET` already protects all IPC messages via HMAC signing. Adding a
  * second secret would only provide real value if `IPC_SECRET` were compromised but
- * the second secret were not — an unlikely split scenario. Instead, we derive a
+ * the second secret were not -- an unlikely split scenario. Instead, we derive a
  * *purpose-scoped* token: `HMAC(IPC_SECRET, "registration:<serverId>:<serverType>")`.
  * This ensures the registration token is different from every other HMAC in the
  * system, and cannot be reused across server types.
@@ -30,7 +30,7 @@ export type ServerType = 'world' | 'cluster' | 'login';
  * encoded as a lowercase hex string.
  *
  * Both sides (registrar and registry) call this function independently with the
- * same `ipcSecret` from their environment — they must match or registration is
+ * same `ipcSecret` from their environment -- they must match or registration is
  * rejected.
  *
  * @param ipcSecret - The shared `IPC_SECRET` value from environment / config.
@@ -84,7 +84,7 @@ export function verifyRegistrationToken(
 ): boolean {
   const expected = computeRegistrationToken(ipcSecret, serverId, serverType);
 
-  // Ensure both buffers have the same byte length before comparing —
+  // Ensure both buffers have the same byte length before comparing --
   // timingSafeEqual throws if lengths differ, which would leak info.
   if (expected.length !== receivedToken.length) return false;
 

@@ -112,7 +112,7 @@ describe('createEventBus', () => {
   });
 
   it('EventBus type is assignable to a typed variable', () => {
-    // This is a compile-time check — if it compiles, the type is correct.
+    // This is a compile-time check -- if it compiles, the type is correct.
     const bus: EventBus<TestEvents> = createEventBus<TestEvents>();
     assert.ok(bus !== null);
   });

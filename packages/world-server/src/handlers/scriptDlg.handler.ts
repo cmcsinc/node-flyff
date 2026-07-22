@@ -1,5 +1,5 @@
 /**
- * SCRIPTDLG handler — `PACKETTYPE_SCRIPTDLG` (0x00ff00b0).
+ * SCRIPTDLG handler -- `PACKETTYPE_SCRIPTDLG` (0x00ff00b0).
  *
  * `DPSrvr::OnScriptDialogReq` (DPSrvr.cpp:887) reads:
  *   OBJID objid   String key(256)   int nGlobal1..nGlobal4

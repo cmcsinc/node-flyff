@@ -1,8 +1,8 @@
 /**
- * Bank handlers — OPEN/CLOSE bank + item/gold deposit & withdraw.
+ * Bank handlers -- OPEN/CLOSE bank + item/gold deposit & withdraw.
  *
  * `WORLDSERVER/DPSrvr.cpp`:
- *   OPENBANKWND   0xffffff40 (:3200): `DWORD dwId, DWORD dwItemId` (dwId=NULL_ID ⇒ NPC bank)
+ *   OPENBANKWND   0xffffff40 (:3200): `DWORD dwId, DWORD dwItemId` (dwId=NULL_ID => NPC bank)
  *   CLOSEBANKWND  0xffffff41 (:3255): bodyless
  *   PUTITEMBACK   0xffffff42 (:3430): `BYTE nSlot(tab), BYTE nId(inv slot), short nItemNum`
  *   GETITEMBACK   0xffffff44 (:3791): `BYTE nSlot(tab), BYTE nId(bank slot), short nItemNum`
@@ -24,6 +24,7 @@ import type { PlayerManager } from '../managers/player.manager.js';
 import type { BankService } from '../services/bank.service.js';
 import {
   buildPutItemBank, buildGetItemBank, buildPutGoldBank, buildGetGoldBank, buildBankWindow,
+  buildConfirmBankPass, buildChangeBankPass,
 } from '../net/snapshot/bank.serializer.js';
 
 const logger = createLogger({ module: 'bank-handler' });
@@ -40,11 +41,42 @@ export class BankHandler {
     const dwId = r.readDword();
     const dwItemId = r.readDword();
     Validate.dword(dwId);
-    this.deps.bankService.open(p);
-    this.deps.playerManager.sendTo(p, buildBankWindow(p.m_idPlayer, 1, dwId, dwItemId));
+    // nMode from BankService.open: 0 = no pin (set-pin dialog), 1 = pin set
+    // (enter-pin dialog). Matches C++ OnOpenBankWnd/AddBankWindow (DPSrvr.cpp:3218).
+    const nMode = this.deps.bankService.open(p);
+    this.deps.playerManager.sendTo(p, buildBankWindow(p.m_idPlayer, nMode, dwId, dwItemId));
   }); }
 
-  handleClose(socket: ClientSocket, _reader: PacketReader): void { this.run(socket, null, (p) => {
+  /**
+   * CONFIRMBANK (0xffffff48) -- `OnConfirmBank:3991`. Body:
+   * `String szPass(10), DWORD dwId, DWORD dwItemId`. Ack CONFIRMBANKPASS with
+   * nMode 1 (accepted, open bank) or 0 (wrong, re-prompt).
+   */
+  handleConfirmBankPass(socket: ClientSocket, reader: PacketReader): void { this.run(socket, reader, (p, r) => {
+    const szPass = r.readString();
+    const dwId = r.readDword();
+    const dwItemId = r.readDword();
+    Validate.dword(dwId);
+    const res = this.deps.bankService.confirmBankPass(p, szPass, dwId, dwItemId);
+    this.deps.playerManager.sendTo(p, buildConfirmBankPass(p.m_idPlayer, res.ok ? 1 : 0, res.dwId, res.dwItemId));
+  }); }
+
+  /**
+   * CHANGEBANKPASS (0xffffff47) -- `OnChangeBankPass:3955`. Body:
+   * `String szLastPass, String szNewPass, DWORD dwId, DWORD dwItemId`. Acks
+   * CHANGEBANKPASS with nMode 1 (old matched, new saved) or 0 (rejected).
+   */
+  handleChangeBankPass(socket: ClientSocket, reader: PacketReader): void { this.run(socket, reader, (p, r) => {
+    const szLastPass = r.readString();
+    const szNewPass = r.readString();
+    const dwId = r.readDword();
+    const dwItemId = r.readDword();
+    Validate.dword(dwId);
+    const res = this.deps.bankService.changeBankPass(p, szLastPass, szNewPass, dwId, dwItemId);
+    this.deps.playerManager.sendTo(p, buildChangeBankPass(p.m_idPlayer, res.ok ? 1 : 0, res.dwId, res.dwItemId));
+  }); }
+
+  handleClose(socket: ClientSocket, reader: PacketReader): void { this.run(socket, reader, (p) => {
     this.deps.bankService.close(p);
   }); }
 
@@ -89,14 +121,14 @@ export class BankHandler {
   /** Shared session/player guard + PacketError swallow. */
   private run(
     socket: ClientSocket,
-    reader: PacketReader | null,
+    reader: PacketReader,
     body: (player: NonNullable<ReturnType<PlayerManager['get']>>, reader: PacketReader) => void,
   ): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
     const player = this.deps.playerManager.get(socket.session.charId!);
     if (!player) { socket.destroy(); return; }
     try {
-      body(player, reader ?? new PacketReader(Buffer.alloc(0)));
+      body(player, reader);
     } catch (error) {
       if (error instanceof PacketError) {
         logger.warn({ err: error, charId: player.m_idPlayer }, 'bank parse failed');

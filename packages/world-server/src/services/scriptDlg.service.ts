@@ -1,5 +1,5 @@
 /**
- * ScriptDlgService — `PACKETTYPE_SCRIPTDLG` (0x00ff00b0).
+ * ScriptDlgService -- `PACKETTYPE_SCRIPTDLG` (0x00ff00b0).
  *
  * `DPSrvr::OnScriptDialogReq` (DPSrvr.cpp:807-879) reads:
  *   OBJID objid   String key(256)   int nGlobal1..nGlobal4
@@ -8,20 +8,20 @@
  *   1. Resolve the NPC (`prj.GetMover(objid)`) + distance gate
  *      (`MAX_LEN_MOVER_MENU = 1024` squared, npchecker.h:4).
  *   2. Run the NPC's dialog script for the pressed key. The simple subset
- *      (`Speak` → broadcast chat; `LaunchQuest` → begin quest) is executed here;
+ *      (`Speak` -> broadcast chat; `LaunchQuest` -> begin quest) is executed here;
  *      advanced states (`source` bodies with `EndQuest`/`SetQuestState`/item
- *      ops) are not yet ported — `ponytail`.
+ *      ops) are not yet ported -- `ponytail`.
  *   3. Post-dialog sweep (DPSrvr.cpp:859-875): scan `m_aQuest` for an active
  *      quest whose `SetEndCondDialog` (PROJECT.CPP:1974) charKey matches the
- *      NPC and addKey matches the pressed key → set `m_bDialog` → SETQUEST.
+ *      NPC and addKey matches the pressed key -> set `m_bDialog` -> SETQUEST.
  *
  * v15 note: propQuest.inc uses `SetEndCondCharacter` (the "meet NPC" UI hint),
  * not `SetEndCondDialog` (the sweep trigger), so the sweep is dormant on v15
- * data — but it is the C++ spec, cheap, and future-proofs the engine. The real
+ * data -- but it is the C++ spec, cheap, and future-proofs the engine. The real
  * quest trigger is the dialog script calling `EndQuest`/`BeginQuest`, blocked
  * on porting the `source` bodies.
  *
- * The service owns no socket bytes (rule 02) — handlers write returned frames.
+ * The service owns no socket bytes (rule 02) -- handlers write returned frames.
  *
  * @module services/scriptDlg
  */
@@ -42,10 +42,10 @@ const logger = createLogger({ module: 'scriptDlg-service' });
 /** C++ `__QUEST_1208` rate limit (`DPSrvr.cpp:824`). */
 const SCRIPT_DLG_COOLDOWN_MS = 400;
 
-/** C++ reads `lpKey[256]` — wire string can be up to 255 chars. */
+/** C++ reads `lpKey[256]` -- wire string can be up to 255 chars. */
 const MAX_SCRIPT_KEY = 255;
 
-/** C++ `MAX_LEN_MOVER_MENU` (npchecker.h:4) — squared distance gate. */
+/** C++ `MAX_LEN_MOVER_MENU` (npchecker.h:4) -- squared distance gate. */
 const MAX_LEN_MOVER_MENU_SQ = 1024;
 
 export interface ScriptDlgFrame {
@@ -77,7 +77,7 @@ export type ScriptDlgResult =
   | { ok: true; frames: Buffer[] }
   | { ok: false; reason: 'rate_limited' | 'invalid_target' | 'key_too_long' | 'too_far' };
 
-/** Squared 3D distance — matches C++ `D3DXVec3LengthSq`. */
+/** Squared 3D distance -- matches C++ `D3DXVec3LengthSq`. */
 function distSq(a: { x: number; y: number; z: number }, b: { x: number; y: number; z: number }): number {
   const dx = a.x - b.x;
   const dy = a.y - b.y;
@@ -88,7 +88,7 @@ function distSq(a: { x: number; y: number; z: number }, b: { x: number; y: numbe
 /**
  * Extract the `(charKey, addKey)` pair from a quest's `SetEndCondDialog` call
  * (PROJECT.CPP:1978/1981). Returns `undefined` when the quest has no such
- * condition — the sweep skips it.
+ * condition -- the sweep skips it.
  */
 function endCondDialog(def: QuestDef): { charKey: string; addKey: string } | undefined {
   for (const c of def.commands) {
@@ -110,7 +110,7 @@ export class ScriptDlgService {
   }
 
   /**
-   * `DPSrvr::OnScriptDialogReq` — rate-limit + distance gate, run the simple
+   * `DPSrvr::OnScriptDialogReq` -- rate-limit + distance gate, run the simple
    * dialog subset, then the post-dialog sweep. Returns outbound frames for the
    * handler to write. `Date.now()` is injected by the handler (testable).
    */
@@ -128,7 +128,7 @@ export class ScriptDlgService {
 
     player.m_tickScript = now;
     const frames: Buffer[] = [];
-    // Dialog prefix is resolved from the propMover key (`MI_MAFL_BOBOKU` →
+    // Dialog prefix is resolved from the propMover key (`MI_MAFL_BOBOKU` ->
     // `mafl_boboku`). C++ keys `CNpcProperty` by the character.inc block, but
     // those outfit blocks aren't parsed yet (raw/README.md); `m_szKey` carries
     // the same identity in MI_* form, which `prefixForNpc` strips + lowercases.
@@ -146,8 +146,8 @@ export class ScriptDlgService {
   /**
    * Resolve + execute the dialog state for the pressed key. Emits the per-clicker
    * menu (`Say` body + `AddKey` buttons + `Exit`) as a RUNSCRIPTFUNC frame, the
-   * `Speak` lines as broadcast chat (C++ `ScriptLib.cpp:40` → `AddChat`), and
-   * fires `LaunchQuest` → `questService.beginQuest` when a quest id is present.
+   * `Speak` lines as broadcast chat (C++ `ScriptLib.cpp:40` -> `AddChat`), and
+   * fires `LaunchQuest` -> `questService.beginQuest` when a quest id is present.
    */
   private async runState(
     player: CPlayer, npc: CMover, npcKey: string, key: string, frames: Buffer[],
@@ -161,7 +161,7 @@ export class ScriptDlgService {
 
     this.emitMenu(player, state, frames);
     // v15 `#init` (state 0) buttons are generated by the compiled WorldDialog.dll,
-    // which we don't ship — the extracted state-0 body only carries `Speak` (chat
+    // which we don't ship -- the extracted state-0 body only carries `Speak` (chat
     // bubble), so without synthesis the dialog window opens empty for every NPC.
     // When state 0 has no menu ops of its own, synthesize a visible menu from the
     // data we have: greeting as SAY + this NPC's menu-bearing states flattened to
@@ -181,10 +181,16 @@ export class ScriptDlgService {
 
   /**
    * Synthesize a visible `#init` menu when state 0 produced no ops of its own.
-   * Emits the greeting as a SAY (so the window isn't blank), flattens each
+   * Emits the greeting as a SAY (so the window isn't blank) and flattens each
    * menu-bearing child state's `AddKey` buttons into the initial menu (capped +
-   * deduped by label), and appends an Exit. No-op when state 0 already has
-   * `say`/`keys`/`exit`. See {@link runState} for the `ponytail` note.
+   * deduped by label). No-op when state 0 already has `say`/`keys`/`exit`. See
+   * {@link runState} for the `ponytail` note.
+   *
+   * No `Exit` here: FUNCTYPE_EXIT calls `CWndDialog::Destroy()` on the client
+   * (DPClient.cpp:14219), so an unconditional Exit in the #init batch closes the
+   * window the client just opened -- the dialog flashes and disappears. The
+   * player closes the dialog via the window's close box / ESC; a state may still
+   * queue a data-driven Exit (see {@link emitMenu}) when its script body calls it.
    */
   private synthInitialMenu(
     player: CPlayer, state: DialogState, file: DialogFile | undefined, frames: Buffer[],
@@ -201,7 +207,7 @@ export class ScriptDlgService {
       const indices = Object.keys(file.states)
         .map((n) => Number(n)).filter((n) => !Number.isNaN(n)).sort((a, b) => a - b);
       for (const idx of indices) {
-        if (funcs.length >= 9) break; // greeting + ≤8 buttons + Exit fits the CWndDialog layout
+        if (funcs.length >= 9) break; // greeting + <=8 buttons fits the CWndDialog layout
         const st = file.states[String(idx)];
         if (!st) continue;
         for (const k of st.keys ?? []) {
@@ -213,20 +219,19 @@ export class ScriptDlgService {
         }
       }
     }
-    funcs.push({ type: 'exit' });
     funcs.unshift({ type: 'removeAllKeys' });
     frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
   }
 
   /**
-   * Build the per-user RUNSCRIPTFUNC frame for `state` — the ops a C++
+   * Build the per-user RUNSCRIPTFUNC frame for `state` -- the ops a C++
    * `CNpcScript::<prefix>_<idx>` body queues via `AddRunScriptFunc`
    * (`User.cpp:6259`). A leading `RemoveAllKeys` clears any prior button set so
    * each state renders a fresh menu (the client window persists across button
-   * clicks and keeps key buttons until cleared — `WndDialog.cpp:710`). The
+   * clicks and keeps key buttons until cleared -- `WndDialog.cpp:710`). The
    * `AddKey` routing key is the target state index stringified so the client's
    * echo round-trips through `keyToIndex`. States with no `say`/`keys`/`exit`
-   * (e.g. `speak`-only or `launch_quest`-only) emit no menu frame — matching
+   * (e.g. `speak`-only or `launch_quest`-only) emit no menu frame -- matching
    * C++, which queues nothing when the script body calls none of these.
    */
   private emitMenu(player: CPlayer, state: DialogState, frames: Buffer[]): void {
@@ -250,7 +255,7 @@ export class ScriptDlgService {
   }
 
   /**
-   * DPSrvr.cpp:859-875 — mark the dialog-condition flag on the active quest
+   * DPSrvr.cpp:859-875 -- mark the dialog-condition flag on the active quest
    * whose `SetEndCondDialog` matches the talked-to NPC + pressed key. Emits a
    * SETQUEST frame per match so the client quest tracker updates.
    */
@@ -271,7 +276,7 @@ export class ScriptDlgService {
 }
 
 /**
- * Dialog states are keyed by stringified index (`"0"`, `"9"`, …). Empty key or
+ * Dialog states are keyed by stringified index (`"0"`, `"9"`, ...). Empty key or
  * `#init` (DPSrvr.cpp:850) routes to state 0; otherwise parse the leading int.
  */
 function keyToIndex(key: string): number {

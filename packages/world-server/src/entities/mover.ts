@@ -1,5 +1,5 @@
 /**
- * CMover — live in-world NPC/monster entity.
+ * CMover -- live in-world NPC/monster entity.
  *
  * Mirrors the C++ `CMover` (NPC branch) naming: `m_` prefix + Hungarian
  * notation so fields cross-reference `_Common/ObjSerializeOpt.cpp:319` (the
@@ -17,25 +17,25 @@
  * @module entities/mover
  */
 
-import type { Vec3 } from './player.js';
+import type { Vec3, InventorySlot } from './player.js';
 import {
   MELEE_ATTACK_RANGE, RANGE_ATTACK_RANGE, REATTACK_DELAY_MS, BELLI_RANGE_KEYS,
   ACTIVE_BELLI,
 } from '../combat/aiConstants.js';
 
-/** `NULL_ID` (`_Network/MsgHdr.h` = 0xffffffff) — "no target" sentinel for `m_idTarget`. */
+/** `NULL_ID` (`_Network/MsgHdr.h` = 0xffffffff) -- "no target" sentinel for `m_idTarget`. */
 const NULL_ID = 0xffffffff;
 
-/** One equipped part — C++ `m_Inventory.GetEquip(uParts)` iteration output. */
+/** One equipped part -- C++ `m_Inventory.GetEquip(uParts)` iteration output. */
 export interface MoverEquipPart {
-  /** `uParts` (u_char) — body slot, PARTS_* from defineNeuz.h:26-35. */
+  /** `uParts` (u_char) -- body slot, PARTS_* from defineNeuz.h:26-35. */
   readonly parts: number;
-  /** `m_dwItemId` (u_short) — propItem id (low 16 bits). */
+  /** `m_dwItemId` (u_short) -- propItem id (low 16 bits). */
   readonly itemId: number;
 }
 
 /**
- * Human-NPC outfit — C++ `character.inc` `SetFigure` + `SetEquip`
+ * Human-NPC outfit -- C++ `character.inc` `SetFigure` + `SetEquip`
  * (`_Common/Project.cpp:2928-2968`). Serialized in the NPC branch of
  * `CMover::Serialize` (`ObjSerializeOpt.cpp:319-352`). Undefined for monsters.
  */
@@ -47,14 +47,29 @@ export interface MoverOutfit {
   readonly equip: readonly MoverEquipPart[];
 }
 
+/**
+ * Resolved NPC vendor shop stock -- 4 tabs (`MAX_VENDOR_INVENTORY_TAB`), each a
+ * 100-wide slot array (`MAX_VENDOR_INVENTORY`) passed straight to the shop
+ * `CItemContainer<CItemElem>` serializer. Built once per NPC at boot from the
+ * `character.inc` block's `AddVendorItem`/`AddVendorItem2` entries; an all-null
+ * tab serializes identically to the empty container. Slot shape reuses
+ * {@link InventorySlot} (each entry `count: 1`; NPC shops are infinite).
+ */
+export type VendorStock = readonly (readonly (InventorySlot | null)[])[];
+
+/** 4 tabs of 100 nulls -- the default for monsters/NPCs with no vendor block. */
+export const EMPTY_VENDOR_STOCK: VendorStock = Object.freeze(
+  Array.from({ length: 4 }, () => Object.freeze(Array.from({ length: 100 }, () => null))),
+) as VendorStock;
+
 /** Fields required to spawn a monster instance (from a spawn definition). */
 export interface MoverSpawnSource {
-  /** propMover row index (MI_* define) → `dwObjIndex` / `m_dwIndex`. */
+  /** propMover row index (MI_* define) -> `dwObjIndex` / `m_dwIndex`. */
   readonly modelIndex: number;
-  /** Symbolic `MI_*` name (defineObj.h) → resolves NPC dialog prefix. Omit for monsters. */
+  /** Symbolic `MI_*` name (defineObj.h) -> resolves NPC dialog prefix. Omit for monsters. */
   readonly key?: string | undefined;
   /**
-   * character.inc block key (e.g. `MaFl_Marche`) → sent as `m_szCharacterKey` so
+   * character.inc block key (e.g. `MaFl_Marche`) -> sent as `m_szCharacterKey` so
    * the client resolves its own `CNpcProperty` (which carries `m_abMoverMenu`
    * from AddMenu). Decoupled from {@link outfit}: an NPC may have AddMenu but no
    * SetFigure/SetEquip. Omit for monsters.
@@ -69,9 +84,14 @@ export interface MoverSpawnSource {
   readonly outfit?: MoverOutfit | undefined;
   /** character.inc AddMenu ids (MMI_*). Empty for monsters (no block). */
   readonly menus?: readonly number[] | undefined;
-  /** C++ `bKillable` + peaceful flag collapsed — may be targeted for attack. */
+  /**
+   * Resolved vendor shop stock (4 tabs). Built by `SpawnManager` from the
+   * character.inc block; defaults to {@link EMPTY_VENDOR_STOCK} when absent.
+   */
+  readonly vendorStock?: VendorStock | undefined;
+  /** C++ `bKillable` + peaceful flag collapsed -- may be targeted for attack. */
   readonly attackable?: boolean | undefined;
-  /** C++ `RANK_GUARD` — town guard; PK-gated attackability. */
+  /** C++ `RANK_GUARD` -- town guard; PK-gated attackability. */
   readonly guard?: boolean | undefined;
   /**
    * C++ `m_dwBelligerence` (defineAttribute.h:203-215). 1 = BELLI_PEACEFUL
@@ -80,29 +100,29 @@ export interface MoverSpawnSource {
   readonly belligerence?: number | undefined;
   /**
    * Combat stats (propMover cols). Populated by `SpawnManager` from the mover
-   * definition. ponytail: yml `attack` is a single field — split into raw
+   * definition. ponytail: yml `attack` is a single field -- split into raw
    * `dwAtkMin/Max` when the resources converter exports them separately.
    */
   readonly atkMin?: number | undefined;
   readonly atkMax?: number | undefined;
-  /** `dwNaturalArmor` (propMover col 35) — NPC melee DEF source. */
+  /** `dwNaturalArmor` (propMover col 35) -- NPC melee DEF source. */
   readonly armor?: number | undefined;
-  /** `dwHR` (col 6) — NPC hit rate. */
+  /** `dwHR` (col 6) -- NPC hit rate. */
   readonly hr?: number | undefined;
-  /** `dwER` (col 7) — NPC parrying / evasion. */
+  /** `dwER` (col 7) -- NPC parrying / evasion. */
   readonly er?: number | undefined;
-  /** `nExpValue` (col 58) — base exp granted on kill. */
+  /** `nExpValue` (col 58) -- base exp granted on kill. */
   readonly expValue?: number | undefined;
-  /** propMover `fSpeed` (col 44) — per-sub-step walk distance; 0 = stationary. */
+  /** propMover `fSpeed` (col 44) -- per-sub-step walk distance; 0 = stationary. */
   readonly speed?: number | undefined;
   /**
-   * Attack distance (m) — yml `attack_range`. Melee contact when omitted; ranged
+   * Attack distance (m) -- yml `attack_range`. Melee contact when omitted; ranged
    * monsters (belli `*_RANGE`) shoot from here. C++ derives this from the weapon
    * `dwAttackRange` enum (`MoverMsg.cpp:140-166`); we take the yml value directly.
    */
   readonly attackRange?: number | undefined;
   /**
-   * Re-attack delay (ms) — yml `attack_speed` (propMover `dwReAttackDelay`,
+   * Re-attack delay (ms) -- yml `attack_speed` (propMover `dwReAttackDelay`,
    * col 31). Base cooldown between melee swings; ranged uses a fixed 3 s.
    */
   readonly reAttackDelay?: number | undefined;
@@ -122,7 +142,7 @@ export class CMover {
   /**
    * character.inc block key (e.g. `MaFl_Marche`). Serialized as
    * `m_szCharacterKey` in the NPC ADD_OBJ branch so the client can look up its
-   * own `CNpcProperty` → `m_abMoverMenu` (AddMenu flags). Empty for monsters.
+   * own `CNpcProperty` -> `m_abMoverMenu` (AddMenu flags). Empty for monsters.
    * Distinct from {@link m_szKey} (which is the `MI_*` form).
    */
   m_szCharacterKey: string;
@@ -133,7 +153,7 @@ export class CMover {
   m_nMaxHitPoint: number;
   m_vPos: Vec3;
   /**
-   * Spawn anchor — C++ `CAIMonster::m_vPosBegin` (`AIMonster.cpp:127-132`), set
+   * Spawn anchor -- C++ `CAIMonster::m_vPosBegin` (`AIMonster.cpp:127-132`), set
    * once at materialize from the spawn position. The idle-wander AI leashes
    * within `RANGE_MOVE` (30 m) of this point and returns here on evade.
    */
@@ -146,7 +166,7 @@ export class CMover {
   /** Aggressiveness (C++ `m_dwBelligerence`); 0 = peaceful. */
   m_dwBelligerence: number;
   /**
-   * Aggro-on-sight flag (C++ `m_bActiveAttack`) — the red-name gate.
+   * Aggro-on-sight flag (C++ `m_bActiveAttack`) -- the red-name gate.
    * `AIMonster.cpp:429` sight-acquires only when this is set, and
    * `MoverRender.cpp:1448` renders the name red when `!IsPeaceful() && this`.
    * Derived from belli at spawn; ponytail: propMover has no column for it, so a
@@ -162,11 +182,11 @@ export class CMover {
    * ponytail: replaced by the AI tick (`CMover::OnActTimer`) when it lands.
    */
   m_nextAttackTick: number = 0;
-  /** C++ `bKillable` + peaceful flag collapsed — may be targeted for attack. */
+  /** C++ `bKillable` + peaceful flag collapsed -- may be targeted for attack. */
   m_bAttackable: boolean;
-  /** C++ `RANK_GUARD` — town guard; only chaotic/PK players may attack. */
+  /** C++ `RANK_GUARD` -- town guard; only chaotic/PK players may attack. */
   m_bGuard: boolean;
-  /** Human-NPC outfit (character.inc). Undefined for monsters → naked spawn. */
+  /** Human-NPC outfit (character.inc). Undefined for monsters -> naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
   /** character.inc AddMenu ids (MMI_*). Carries dialog/trade/bank capability. */
   readonly menus?: readonly number[] | undefined;
@@ -183,57 +203,63 @@ export class CMover {
   /** Mover element (propMover `eElementType`); 0 = NO_PROP. */
   m_nElement: number;
   /**
-   * Attack distance (m) — the gate radius for the AI swing check. Melee contact
+   * Attack distance (m) -- the gate radius for the AI swing check. Melee contact
    * (~3 m) or ranged (`attack_range`, default `AR_RANGE` 10 m). C++ source is
    * the weapon `dwAttackRange` enum (`MoverMsg.cpp:140-166`).
    */
   m_nAttackRange: number;
-  /** Base melee re-attack delay (ms) — propMover `dwReAttackDelay` (col 31). */
+  /** Base melee re-attack delay (ms) -- propMover `dwReAttackDelay` (col 31). */
   m_nReAttackDelay: number;
   /**
-   * Ranged attacker — derived from belligerence `*_RANGE` (7/10/13). Such
+   * Ranged attacker -- derived from belligerence `*_RANGE` (7/10/13). Such
    * monsters shoot from `m_nAttackRange` on a fixed 3 s cadence and broadcast
    * `SNAPSHOTTYPE_RANGE_ATTACK` instead of `MELEE_ATTACK`.
    */
   m_bRangeAttack: boolean;
-  /** Combat death flag — set on lethal damage; swept from the spawn map on tick. */
+  /** Combat death flag -- set on lethal damage; swept from the spawn map on tick. */
   m_bDead: boolean = false;
   /**
    * Timestamp (ms, `Date.now()`) when this mover next picks an idle-wander
-   * destination. `0` = uninitialized → the AI stagger-seeds it on first tick.
+   * destination. `0` = uninitialized -> the AI stagger-seeds it on first tick.
    * C++ drives this from `m_tmMove` + `SEC(5)+xRandom(SEC(1))` on arrival.
    */
   m_tmNextWander: number = 0;
   /**
    * Current aggro target objid (C++ `CAIMonster::m_dwIdTarget`, `AIMonster.h:37`).
    * `NULL_ID` = idle. Set on sight (active BELLI) or on damage (`AIMSG_DAMAGE`,
-   * `AIMonster.cpp:485`). Single slot — no aggro list (ponytail: full table).
+   * `AIMonster.cpp:485`). Single slot -- no aggro list (ponytail: full table).
    */
   m_idTarget: number = NULL_ID;
-  /** Position when first damaged (C++ `m_vPosDamage`) — 120 m pursuit leash origin. */
+  /** Position when first damaged (C++ `m_vPosDamage`) -- 120 m pursuit leash origin. */
   m_vPosDamage: Vec3;
-  /** Current walk destination (C++ `GetDestPos()`) — idle pick, pursue target, or home. */
+  /** Current walk destination (C++ `GetDestPos()`) -- idle pick, pursue target, or home. */
   m_vDestPos: Vec3;
-  /** propMover `fSpeed` — per-sub-step distance; the AI stepper scales it into u/s. */
+  /** propMover `fSpeed` -- per-sub-step distance; the AI stepper scales it into u/s. */
   m_fSpeedBase: number;
-  /** Leashing home (C++ `m_bReturnToBegin`) — run to anchor at 2.66×, restore HP, drop target. */
+  /** Leashing home (C++ `m_bReturnToBegin`) -- run to anchor at 2.66*, restore HP, drop target. */
   m_bReturnToBegin: boolean = false;
-  /** Timestamp (ms) the current return-home began — feeds the stuck-teleport gate. */
+  /** Timestamp (ms) the current return-home began -- feeds the stuck-teleport gate. */
   m_tmReturnToBegin: number = 0;
-  /** Chase-window expiry (C++ `m_tmAttack`, `s_tmAttack = SEC(15)`) — anti-stuck gate. */
+  /** Chase-window expiry (C++ `m_tmAttack`, `s_tmAttack = SEC(15)`) -- anti-stuck gate. */
   m_tmAttack: number = 0;
   /**
-   * Hit-share table for kill exp (`m_idEnemies`). OBJID → cumulative damage.
+   * Hit-share table for kill exp (`m_idEnemies`). OBJID -> cumulative damage.
    * v1: single-attacker (no party grouping). ponytail: full HIT_INFO + party.
    */
   readonly m_idEnemies = new Map<number, number>();
   /**
-   * character.inc `m_abMoverMenu` (Project.cpp:3024) — MMI_* ids enabled via
+   * character.inc `m_abMoverMenu` (Project.cpp:3024) -- MMI_* ids enabled via
    * `AddMenu`/`AddMenuLang`. `MMI_DIALOG = 0` presence gates the right-click
-   * "Dialog" option → SCRIPTDLG. Empty for monsters (no character.inc block).
+   * "Dialog" option -> SCRIPTDLG. Empty for monsters (no character.inc block).
    * Source: `defineNeuz.h:92-314`.
    */
   readonly m_abMoverMenu: readonly number[] = [];
+  /**
+   * Resolved vendor shop stock (character.inc `AddVendorItem`/`AddVendorItem2`).
+   * 4 tabs of 100 slots; read by `ShopService.open` and serialized by
+   * `buildOpenShopWnd`. Defaults to {@link EMPTY_VENDOR_STOCK} for monsters.
+   */
+  readonly m_vendorStock: VendorStock = EMPTY_VENDOR_STOCK;
 
   private constructor(
     id: number,
@@ -264,6 +290,7 @@ export class CMover {
     this.m_bGuard = src.guard ?? false;
     this.outfit = src.outfit;
     this.m_abMoverMenu = src.menus ?? [];
+    this.m_vendorStock = src.vendorStock ?? EMPTY_VENDOR_STOCK;
     this.m_nAtkMin = src.atkMin ?? 0;
     this.m_nAtkMax = src.atkMax ?? src.atkMin ?? 0;
     this.m_nArmor = src.armor ?? 0;

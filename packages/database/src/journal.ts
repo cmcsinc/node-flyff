@@ -12,12 +12,12 @@ export interface JournalLogger {
 }
 
 /**
- * Hybrid WAL journal — embedded SQLite write-ahead log for crash recovery.
+ * Hybrid WAL journal -- embedded SQLite write-ahead log for crash recovery.
  *
  * Critical state changes (inventory mutations, gold, exp, level-up) are appended
  * here synchronously BEFORE the success packet is sent to the client. If the
  * world server crashes, {@link JournalReplayer} replays unprocessed entries into
- * the main Knex DB before the TCP listener reopens — preventing item dupes and
+ * the main Knex DB before the TCP listener reopens -- preventing item dupes and
  * gold rollbacks.
  *
  * This class is persistence-only: it holds no game logic. Dispatch of replayed
@@ -37,7 +37,7 @@ export interface JournalEntry {
   readonly charId: number;
   /** Discriminator used by the replayer registry (e.g. `ITEM_ADD`, `GOLD_CHANGE`). */
   readonly type: string;
-  /** Arbitrary JSON-serialisable context — must contain enough to replay without the main DB. */
+  /** Arbitrary JSON-serialisable context -- must contain enough to replay without the main DB. */
   readonly payload: unknown;
 }
 
@@ -137,7 +137,7 @@ export class Journal {
   }
 
   /**
-   * Wipe the journal. Tests / explicit operator reset only — never call this on
+   * Wipe the journal. Tests / explicit operator reset only -- never call this on
    * a production server unless you accept the data-loss window before the next
    * main-DB flush.
    */

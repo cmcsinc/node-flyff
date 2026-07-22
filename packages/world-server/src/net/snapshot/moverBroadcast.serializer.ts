@@ -1,15 +1,15 @@
 /**
- * S→C MOVERMOVED / MOVERBEHAVIOR broadcasts — movement + motion echo to peers.
+ * S->C MOVERMOVED / MOVERBEHAVIOR broadcasts -- movement + motion echo to peers.
  *
  * Mirrors `CUserMng::AddMoverMoved` (`User.cpp:4839`) and `AddMoverBehavior`
- * (`User.cpp:4857`) — byte-identical 60-byte bodies; only the sub-type differs:
+ * (`User.cpp:4857`) -- byte-identical 60-byte bodies; only the sub-type differs:
  *   ar << GETID( pMover ) << SNAPSHOTTYPE_MOVERMOVED|MOVERBEHAVIOR;
  *   ar << v << vd << f;
  *   ar << dwState << dwStateFlag << dwMotion << nMotionEx;
  *   ar << nLoop << dwMotionOption << nTickCount;
  *
  * Wrapped in a SNAPSHOT packet like all peer broadcasts (see destPos.serializer
- * for the outer-frame note — `objidPlayer` is unused client-side, shared packet).
+ * for the outer-frame note -- `objidPlayer` is unused client-side, shared packet).
  *
  * @module net/snapshot/moverBroadcast.serializer
  */
@@ -25,7 +25,7 @@ import {
 /**
  * Parsed 60-byte PLAYERMOVED/PLAYERBEHAVIOR body (DPSrvr.cpp:2271 OnPlayerMoved).
  * Field widths/types match the C++ `ar >>` reads exactly. `nTickCount` is an
- * `__int64` echoed verbatim — `bigint` to preserve the full 64-bit pattern.
+ * `__int64` echoed verbatim -- `bigint` to preserve the full 64-bit pattern.
  */
 export interface MovementFrame {
   v: Vec3;                 // position (Vec3, 12B)
@@ -37,7 +37,7 @@ export interface MovementFrame {
   nMotionEx: number;       // int32 (signed)
   nLoop: number;           // int32 (signed)
   dwMotionOption: number;  // DWORD
-  nTickCount: bigint;      // __int64 (8B) — echo bit pattern
+  nTickCount: bigint;      // __int64 (8B) -- echo bit pattern
 }
 
 export class MoverBroadcastSerializer {

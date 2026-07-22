@@ -192,7 +192,7 @@ export class IpcClient {
     timeoutMs: number = 5000
   ): Promise<T> {
     if (this.socket === null) {
-      throw new Error('Not connected — call connect() first');
+      throw new Error('Not connected -- call connect() first');
     }
 
     const ts = Date.now();

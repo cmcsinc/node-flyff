@@ -20,9 +20,9 @@ const logger = createLogger({ module: 'auth-handler' });
 const DEFAULT_PROTOCOL_VERSION = '20100412';
 
 /**
- * Login certification handler — `PACKETTYPE_CERTIFY` (0xfc).
+ * Login certification handler -- `PACKETTYPE_CERTIFY` (0xfc).
  *
- * v15 client→certifier payload (after opcode, `Neuz/DPCertified.cpp:122-165`):
+ * v15 client->certifier payload (after opcode, `Neuz/DPCertified.cpp:122-165`):
  *   [string protocolVersion][string account][672-byte Rijndael-CBC password blob]
  * The blob decrypts to the 32-char `md5("kikugalanet"+pwd)` lowercase hex; the
  * service argon2-verifies that digest against the stored hash.

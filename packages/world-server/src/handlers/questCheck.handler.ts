@@ -1,8 +1,8 @@
 /**
- * QUEST_CHECK handler — `PACKETTYPE_QUEST_CHECK` (0x88100110).
+ * QUEST_CHECK handler -- `PACKETTYPE_QUEST_CHECK` (0x88100110).
  *
  * `DPSrvr::OnQuestCheck` reads `int nQuestId, BOOL(4B) bCheck` and toggles the
- * quest in the player's "checked" (tracked) list — cap `MAX_CHECKED_QUEST`.
+ * quest in the player's "checked" (tracked) list -- cap `MAX_CHECKED_QUEST`.
  * Delegates to {@link QuestService.setChecked}, which returns the QUEST_CHECKED
  * frame (full replace) to write back.
  *

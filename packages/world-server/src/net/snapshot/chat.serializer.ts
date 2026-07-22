@@ -1,5 +1,5 @@
 /**
- * S→C vicinity chat — `SNAPSHOTTYPE_CHAT` (0x0001) inside a SNAPSHOT frame.
+ * S->C vicinity chat -- `SNAPSHOTTYPE_CHAT` (0x0001) inside a SNAPSHOT frame.
  *
  * Mirrors `CUserMng::AddChat` (`WORLDSERVER/User.cpp:2925`):
  *   ar << GETID(pCtrl) << SNAPSHOTTYPE_CHAT;
@@ -8,7 +8,7 @@
  * Wire layout (after the outer SNAPSHOT/NULL_ID/count/objid/word preamble):
  *   text:String
  *
- * The speaker's name/level/job are NOT sent — the client resolves them from
+ * The speaker's name/level/job are NOT sent -- the client resolves them from
  * the objid it already has from ADD_OBJ. Sent to every player within
  * `VISIBILITY_RADIUS` of the speaker.
  *

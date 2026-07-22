@@ -27,7 +27,7 @@
  * Per-connection LSFR cipher for packet encryption.
  *
  * The cipher mutates buffers in-place for performance. Call `transform()`
- * on both outgoing and incoming packets — the cipher is symmetric.
+ * on both outgoing and incoming packets -- the cipher is symmetric.
  */
 export class LSFRCipher {
   private _key: number;

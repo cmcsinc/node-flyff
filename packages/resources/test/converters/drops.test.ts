@@ -1,9 +1,9 @@
 /**
- * Drop converter tests — guards the block-boundary logic in `parseDropTables`.
+ * Drop converter tests -- guards the block-boundary logic in `parseDropTables`.
  *
  * History: the inner scan used to delimit blocks by brace counting starting at
  * depth=1, which double-counted the opener `{` and made every table swallow all
- * subsequent tables' DropItems (604KB source → 89MB drops.yml → world OOM).
+ * subsequent tables' DropItems (604KB source -> 89MB drops.yml -> world OOM).
  * These checks pin the boundary at the next top-level `MI_` header so a
  * malformed block (unbalanced braces) cannot start an overrun again.
  *
@@ -55,7 +55,7 @@ describe('parseDropTables', () => {
 
   it('does not overrun when a block has unbalanced braces', () => {
     // Reproduces MI_GRRR4 from propMoverEx.inc: 6 `{` vs 5 `}`. Brace-count
-    // delimited the block end here → every later table's items were appended
+    // delimited the block end here -> every later table's items were appended
     // to GRRR4. The next `MI_` header must terminate the scan instead.
     const src = [
       'MI_GRRR4',

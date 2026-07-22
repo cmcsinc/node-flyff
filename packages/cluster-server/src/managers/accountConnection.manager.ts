@@ -1,11 +1,11 @@
 /**
- * AccountConnectionManager — live account → client-socket table.
+ * AccountConnectionManager -- live account -> client-socket table.
  *
  * Mirrors the C++ cluster's `g_UserMng` lifecycle
  * (`LOGINSERVER/DPLoginSrvr.cpp` `AddUser` / `OnRemoveConnection`): an account
  * may hold at most one live cluster connection. When the same account connects
  * again (client "went back" without the old socket closing yet), the stale
- * socket is destroyed so the new one wins — otherwise the account is wedged
+ * socket is destroyed so the new one wins -- otherwise the account is wedged
  * until the client process is killed.
  *
  * Cleanup is automatic: `bind()` attaches a one-shot `close` listener that
@@ -35,7 +35,7 @@ export class AccountConnectionManager {
     if (!this.bound.has(socket)) {
       this.bound.add(socket);
       socket.once('close', () => {
-        // Only clear if we still own the slot — a newer connect may have
+        // Only clear if we still own the slot -- a newer connect may have
         // already replaced us (in which case the newer socket must survive).
         if (this.byAccount.get(account) === socket) this.byAccount.delete(account);
       });

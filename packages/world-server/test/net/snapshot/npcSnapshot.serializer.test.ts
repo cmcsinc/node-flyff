@@ -7,7 +7,7 @@ import {
   SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, MI_SMALL_MUSHPOIE, NULL_ID,
 } from '../../../src/net/snapshot/constants.js';
 
-/** Monster — no outfit → empty characterKey, uSize=0. */
+/** Monster -- no outfit -> empty characterKey, uSize=0. */
 function makeMonster(id: number, hp: number): CMover {
   return CMover.spawn(
     id,
@@ -42,7 +42,7 @@ function makeEquippedNpc(id: number): CMover {
 /**
  * Dialog-only NPC (Mikyel): AddMenu(MMI_DIALOG) but NO SetFigure/SetEquip.
  * `characterKey` is set standalone (decoupled from outfit) so the client can
- * resolve its `m_abMoverMenu` → right-click "Dialog" option.
+ * resolve its `m_abMoverMenu` -> right-click "Dialog" option.
  */
 function makeDialogNpc(id: number): CMover {
   return CMover.spawn(
@@ -96,21 +96,21 @@ describe('NpcSnapshotSerializer', () => {
 
     // CMover prefix: motion(46)+bPlayer(48)+hp(49)
     assert.equal(buf.readUInt16LE(46), 0);
-    assert.equal(buf.readUInt8(48), 0); // m_bPlayer → NPC branch
+    assert.equal(buf.readUInt8(48), 0); // m_bPlayer -> NPC branch
     assert.equal(buf.readUInt32LE(49), 77);
   });
 
   it('serializes a human NPC outfit: characterKey + equip parts', () => {
     const buf = serializer.build([makeEquippedNpc(0x40000001)]);
     // Frame(10) + entry(102) = 112. Entry delta vs monster (82):
-    //   characterKey "MaDa_Homeit" = 11 chars → +11 vs empty key
-    //   equip 3 × {parts1 + itemId2} = +9
-    //   → 82 + 11 + 9 = 102. Total = 112.
+    //   characterKey "MaDa_Homeit" = 11 chars -> +11 vs empty key
+    //   equip 3 * {parts1 + itemId2} = +9
+    //   -> 82 + 11 + 9 = 102. Total = 112.
     assert.equal(buf.length, 112);
     assert.equal(buf.readUInt16LE(8), 1);
 
     // Layout: frame(10) + ADD_OBJ(11)=21 + CObj(21)=42 + CCtrl(4)=46
-    //   + CMover prefix(20)=66 → NPC branch:
+    //   + CMover prefix(20)=66 -> NPC branch:
     //   hairMesh(66) hairColor(67) headMesh(71) keyLen(72) key(76..86)
     //   uSize(87) equip0(88..90) equip1(91..93) equip2(94..96)
     //   activeAttack(97) movePattern(98) moveEvent(99) moveEventCnt(100) speed(104) buffs(108)
@@ -142,7 +142,7 @@ describe('NpcSnapshotSerializer', () => {
 
   it('emits characterKey for a dialog-only NPC with no outfit (menu fix)', () => {
     const buf = serializer.build([makeDialogNpc(0x40000002)]);
-    // Frame(10) + entry: monster base 82 + 11 chars "MaFl_Mikyel" = 93 → 103.
+    // Frame(10) + entry: monster base 82 + 11 chars "MaFl_Mikyel" = 93 -> 103.
     assert.equal(buf.length, 103);
     // Same NPC-branch layout as the equipped case up to uSize; key present,
     // hair/head zeroed, equip empty.
@@ -151,6 +151,6 @@ describe('NpcSnapshotSerializer', () => {
     assert.equal(buf.readUInt8(71), 0);                  // headMesh
     assert.equal(buf.readUInt32LE(72), 11);              // strlen "MaFl_Mikyel"
     assert.equal(buf.subarray(76, 87).toString('ascii'), 'MaFl_Mikyel');
-    assert.equal(buf.readUInt8(87), 0);                  // uSize — no equip parts
+    assert.equal(buf.readUInt8(87), 0);                  // uSize -- no equip parts
   });
 });

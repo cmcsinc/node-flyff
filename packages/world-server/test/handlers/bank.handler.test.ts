@@ -1,5 +1,5 @@
 /**
- * BankHandler test — OPEN/CLOSE bank + item/gold deposit & withdraw acks.
+ * BankHandler test -- OPEN/CLOSE bank + item/gold deposit & withdraw acks.
  *
  * PUTITEMBACK body: `BYTE nSlot(tab), BYTE nId(inv slot), short nItemNum`.
  * Each ack sends the matching Add*Bank snapshot subtype (0x0050/0x0051/0x0052/
@@ -35,8 +35,10 @@ function makeHandler(stub: {
   const player = { m_idPlayer: 0xcccc } as unknown as CPlayer;
   const playerManager = { get: () => player, sendTo: (_p: CPlayer, b: Buffer) => { sent.push(b); } } as unknown as PlayerManager;
   const bankService = {
-    open: () => true,
+    open: () => 1,
     close: () => {},
+    confirmBankPass: (_p: CPlayer, _pass: string, dwId: number, dwItemId: number) => ({ ok: true, dwId, dwItemId }),
+    changeBankPass: (_p: CPlayer, _last: string, _next: string, dwId: number, dwItemId: number) => ({ ok: true, dwId, dwItemId }),
     deposit: () => stub.deposit,
     withdraw: () => stub.withdraw,
     depositGold: () => stub.depositGold,
@@ -88,19 +90,39 @@ describe('BankHandler', () => {
     assert.equal(subtype(sent[0]!), SNAPSHOTTYPE.PUTGOLDBANK);
   });
 
-  it('handleOpen acks BANKWINDOW (nMode=1)', () => {
+  it('handleOpen acks BANKWINDOW, forwarding the nMode from BankService.open', () => {
     const w = new PacketWriter();
     w.writeDword(0xffffffff); w.writeDword(0); // dwId=NULL_ID, dwItemId=0
     const { handler, sent } = makeHandler({});
     handler.handleOpen(mockSocket(), new PacketReader(w.build()));
     assert.equal(sent.length, 1);
     assert.equal(subtype(sent[0]!), SNAPSHOTTYPE.BANKWINDOW);
-    assert.equal(sent[0]!.readUInt32LE(16), 1, 'nMode = open');
+    assert.equal(sent[0]!.readUInt32LE(16), 1, 'forwards service nMode (1 = pin set)');
+  });
+
+  it('handleConfirmBankPass acks CONFIRMBANKPASS (nMode=1 accepted)', () => {
+    const w = new PacketWriter();
+    w.writeString('0000'); w.writeDword(0xffffffff); w.writeDword(0);
+    const { handler, sent } = makeHandler({});
+    handler.handleConfirmBankPass(mockSocket(), new PacketReader(w.build()));
+    assert.equal(sent.length, 1);
+    assert.equal(subtype(sent[0]!), SNAPSHOTTYPE.CONFIRMBANKPASS);
+    assert.equal(sent[0]!.readUInt32LE(16), 1, 'nMode = accepted');
   });
 
   it('handleClose sends no snapshot (bodyless ack)', () => {
     const { handler, sent } = makeHandler({});
     handler.handleClose(mockSocket(), new PacketReader(Buffer.alloc(1)));
     assert.equal(sent.length, 0);
+  });
+
+  it('handleChangeBankPass acks CHANGEBANKPASS (nMode=1 on match)', () => {
+    const w = new PacketWriter();
+    w.writeString('1234'); w.writeString('4321'); w.writeDword(0xffffffff); w.writeDword(0);
+    const { handler, sent } = makeHandler({});
+    handler.handleChangeBankPass(mockSocket(), new PacketReader(w.build()));
+    assert.equal(sent.length, 1);
+    assert.equal(subtype(sent[0]!), SNAPSHOTTYPE.CHANGEBANKPASS);
+    assert.equal(sent[0]!.readUInt32LE(16), 1, 'nMode = old matched, saved');
   });
 });

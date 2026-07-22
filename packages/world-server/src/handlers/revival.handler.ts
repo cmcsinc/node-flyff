@@ -2,7 +2,7 @@
  * REVIVAL / REVIVAL_TO_LODESTAR / REVIVAL_TO_LODELIGHT handlers.
  *
  * Mirror `DPSrvr::OnRevival` / `OnRevivalLodestar` / `OnRevivalLodelight`
- * (DPSrvr.cpp:960/1061/1188). All three read no body — the opcode alone selects
+ * (DPSrvr.cpp:960/1061/1188). All three read no body -- the opcode alone selects
  * the revival branch. Lodelight is a C++ empty stub; rejected with a warn.
  *
  * @module handlers/revival.handler
@@ -23,7 +23,7 @@ export class RevivalHandler {
     private revivalService: RevivalService,
   ) {}
 
-  /** Dispatch helper — guards session + player existence, forwards to the service. */
+  /** Dispatch helper -- guards session + player existence, forwards to the service. */
   private revive(socket: ClientSocket, type: RevivalType): void {
     if (socket.session.state !== SessionState.IN_WORLD) {
       socket.destroy();
@@ -38,17 +38,17 @@ export class RevivalHandler {
     }
   }
 
-  /** `OnRevival` (0x00ff00c0) — scroll revive in place. */
+  /** `OnRevival` (0x00ff00c0) -- scroll revive in place. */
   handleRevival(socket: ClientSocket, _reader: PacketReader): void {
     this.revive(socket, 'SCROLL');
   }
 
-  /** `OnRevivalLodestar` (0x00ff00c1) — town revive with exp penalty + teleport. */
+  /** `OnRevivalLodestar` (0x00ff00c1) -- town revive with exp penalty + teleport. */
   handleRevivalLodestar(socket: ClientSocket, _reader: PacketReader): void {
     this.revive(socket, 'LODESTAR');
   }
 
-  /** `OnRevivalLodelight` (0x00ff00c2) — C++ empty stub. Rejected. */
+  /** `OnRevivalLodelight` (0x00ff00c2) -- C++ empty stub. Rejected. */
   handleRevivalLodelight(socket: ClientSocket, _reader: PacketReader): void {
     this.revive(socket, 'LODELIGHT');
   }

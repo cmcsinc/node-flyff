@@ -1,8 +1,8 @@
 /**
- * Combatant builders — pure projections of {@link CPlayer}/{@link CMover} onto
+ * Combatant builders -- pure projections of {@link CPlayer}/{@link CMover} onto
  * the {@link Combatant} shape the melee formula (`formulas.ts`) consumes.
  *
- * Shared by `CombatService` (player→NPC swings) and `AISystem` (NPC→player
+ * Shared by `CombatService` (player->NPC swings) and `AISystem` (NPC->player
  * swings) so both sides use identical stats. Bare-hand profiles until the
  * equipped-weapon model lands (`combat-plan.md` ponytail).
  *
@@ -21,19 +21,25 @@ export const BARE_HAND: WeaponStats = { min: 1, max: 3, type: WT_MELEE_SWD, atkS
 /** Bare-hand stub for NPC (NPCs use raw propMover cols, not the weapon curve). */
 export const FIST_NPC: WeaponStats = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 
+/** No-gear equip fold (NPC->player path lacks resource access -- ponytail). */
+const BARE_EQUIP = { weapon: BARE_HAND, armorDef: 0, adjHitRate: 0, parry: 0, element: NO_PROP };
+
 /**
  * Project a live player onto the melee-formula combatant shape. When `getItem`
- * is supplied, the equipped weapon + armor fold into `weapon` / `npcArmor`;
- * otherwise bare hands (NPC→player path that lacks resource access — ponytail).
+ * is supplied, equipped weapon/armor/jewelry fold in via `sumEquipStats`;
+ * otherwise bare hands + 0 DEF.
  */
 export function playerCombatant(p: CPlayer, getItem?: ItemLookup): Combatant {
-  const eq = getItem ? sumEquipStats(p, getItem) : { weapon: BARE_HAND, armorDef: 0 };
+  const eq = getItem ? sumEquipStats(p, getItem) : BARE_EQUIP;
   return {
     kind: 'player', level: p.m_nLevel, job: p.m_nJob,
     str: p.m_nStr, sta: p.m_nSta, dex: p.m_nDex, int: p.m_nInt,
     weapon: eq.weapon,
-    npcAtkMin: 0, npcAtkMax: 0, npcArmor: eq.armorDef, npcResisMagic: 0, npcHR: 0, npcER: 0,
-    element: NO_PROP,
+    npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0, npcHR: 0, npcER: 0,
+    element: eq.element,
+    equipDef: eq.armorDef,
+    adjHitRate: eq.adjHitRate,
+    parry: eq.parry,
   };
 }
 
@@ -45,5 +51,6 @@ export function moverCombatant(m: CMover): Combatant {
     weapon: FIST_NPC,
     npcAtkMin: m.m_nAtkMin, npcAtkMax: m.m_nAtkMax, npcArmor: m.m_nArmor,
     npcResisMagic: 0, npcHR: m.m_nHR, npcER: m.m_nER, element: m.m_nElement,
+    equipDef: 0, adjHitRate: 0, parry: 0,
   };
 }

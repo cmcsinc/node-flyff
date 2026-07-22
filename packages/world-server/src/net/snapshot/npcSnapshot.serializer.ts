@@ -1,5 +1,5 @@
 /**
- * NPC ADD_OBJ snapshot — `METHOD_EXCLUDE_ITEM` non-player spawn frame.
+ * NPC ADD_OBJ snapshot -- `METHOD_EXCLUDE_ITEM` non-player spawn frame.
  *
  * Wire layout (one SNAPSHOT packet wrapping N ADD_OBJ entries; the dispatcher
  * adds the 0x5E + size framing around the built payload):
@@ -10,18 +10,18 @@
  *     [objid:DWORD]                    pCtrl->GetId()
  *     [hdr:WORD] = SNAPSHOTTYPE_ADD_OBJ
  *     [dwObjType:BYTE] = OT_MOVER      (BYTE)pCtrl->GetType()
- *     [dwObjIndex:DWORD]               pCtrl->GetIndex()  — MI_* propMover row
+ *     [dwObjIndex:DWORD]               pCtrl->GetIndex()  -- MI_* propMover row
  *     CObj::Serialize (ObjSerializeOpt.cpp:18):
  *       [m_dwType:BYTE] = OT_MOVER     deliberate duplicate of prefix byte
  *       [m_dwIndex:DWORD]              duplicate of dwObjIndex
  *       [m_vScale.x*100:WORD] = 100    scale 1.0
- *       [m_vPos:3×float]
+ *       [m_vPos:3*float]
  *       [m_fAngle*10:short]
  *     CCtrl::Serialize (ObjSerialize.cpp:15):
  *       [m_objid:DWORD]                == entry objid
  *     CMover::Serialize prefix (ObjSerializeOpt.cpp:104-112, always written):
  *       [m_dwMotion:WORD] = 0
- *       [m_bPlayer:BYTE] = 0           → routes to the NPC `else` branch
+ *       [m_bPlayer:BYTE] = 0           -> routes to the NPC `else` branch
  *       [m_nHitPoint:DWORD]
  *       [GetState():DWORD] = 0
  *       [GetStateFlag():DWORD] = 0
@@ -30,7 +30,7 @@
  *     CMover::Serialize NPC branch (ObjSerializeOpt.cpp:319-352):
  *       [m_dwHairMesh:BYTE][m_dwHairColor:DWORD][m_dwHeadMesh:BYTE]
  *       [m_szCharacterKey:String]      DWORD len + bytes (empty for monsters)
- *       [uSize:BYTE] = 0               equipment part count (no equip → 0)
+ *       [uSize:BYTE] = 0               equipment part count (no equip -> 0)
  *       [m_bActiveAttack:BYTE]
  *       [m_nMovePattern:BYTE] = 0
  *       [m_nMoveEvent:BYTE] = 0
@@ -61,7 +61,7 @@ export class NpcSnapshotSerializer {
   build(movers: readonly CMover[]): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);   // dwHdr
-    w.writeDword(NULL_ID);               // objidPlayer — unused
+    w.writeDword(NULL_ID);               // objidPlayer -- unused
     w.writeWord(movers.length);          // cb
 
     for (const m of movers) {
@@ -92,26 +92,26 @@ export class NpcSnapshotSerializer {
 
     // CMover::Serialize prefix (always written)
     w.writeWord(0);                      // m_dwMotion
-    w.writeByte(0);                      // m_bPlayer (0 → NPC branch)
+    w.writeByte(0);                      // m_bPlayer (0 -> NPC branch)
     w.writeDword(m.m_nHitPoint);         // m_nHitPoint
     w.writeDword(0);                     // GetState()
     w.writeDword(0);                     // GetStateFlag()
     w.writeByte(m.m_dwBelligerence);     // m_dwBelligerence
     w.writeDword(0);                     // m_dwMoverSfxId (__VER>=15)
 
-    // NPC branch (m_bPlayer == 0) — ObjSerializeOpt.cpp:319-352
+    // NPC branch (m_bPlayer == 0) -- ObjSerializeOpt.cpp:319-352
     const outfit = m.outfit;
     w.writeByte(outfit?.hairMesh ?? 0);  // m_dwHairMesh (u_char)
     w.writeDword(outfit?.hairColor ?? 0); // m_dwHairColor
     w.writeByte(outfit?.headMesh ?? 0);  // m_dwHeadMesh (u_char)
-    // m_szCharacterKey — the character.inc block key (e.g. "MaFl_Marche"). The
-    // client uses it to look up CNpcProperty → m_abMoverMenu (AddMenu flags) AND
+    // m_szCharacterKey -- the character.inc block key (e.g. "MaFl_Marche"). The
+    // client uses it to look up CNpcProperty -> m_abMoverMenu (AddMenu flags) AND
     // the appearance. MUST be sent even when the NPC has no outfit (SetFigure/
     // SetEquip): an AddMenu-only NPC still needs its key or the right-click
     // "Dialog" option never appears. Monsters send an empty string.
     w.writeString(m.m_szCharacterKey || outfit?.characterKey || '');
 
-    // Equipment parts: uSize then uSize × { uParts:BYTE, m_dwItemId:WORD }
+    // Equipment parts: uSize then uSize * { uParts:BYTE, m_dwItemId:WORD }
     const equip = outfit?.equip ?? EMPTY_EQUIP;
     w.writeByte(equip.length);           // uSize
     for (const part of equip) {

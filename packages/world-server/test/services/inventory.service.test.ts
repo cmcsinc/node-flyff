@@ -1,5 +1,5 @@
 /**
- * InventoryService test — addItem slotting + bag-full, addGold clamp, and the
+ * InventoryService test -- addItem slotting + bag-full, addGold clamp, and the
  * WAL-before-persist ordering (rule 03/04).
  */
 
@@ -140,7 +140,7 @@ function makeFullDeps(stackSizeFor: (id: number) => number = () => 1) {
   return { deps, setItem, removed, moved, gold, journal };
 }
 
-describe('InventoryService — stacking', () => {
+describe('InventoryService -- stacking', () => {
   it('merges onto an existing partial stack (isNew=false)', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_Inventory[0] = { itemId: 2001, count: 40 };
@@ -171,7 +171,7 @@ describe('InventoryService — stacking', () => {
   });
 });
 
-describe('InventoryService — moveItem / dropItem / dropGold', () => {
+describe('InventoryService -- moveItem / dropItem / dropGold', () => {
   it('moveItem swaps two main-bag slots', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_Inventory[1] = { itemId: 100, count: 1 };

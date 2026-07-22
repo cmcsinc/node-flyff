@@ -60,7 +60,7 @@ describe('quest.serializer.ts', () => {
     assert.equal(b.length, 16 + 8);
   });
 
-  it('buildCheckedQuest writes BYTE size + size×WORD', () => {
+  it('buildCheckedQuest writes BYTE size + size*WORD', () => {
     const b = buildCheckedQuest(0x100, [7, 8, 9]);
     assert.equal(b.readUInt16LE(14), SNAPSHOTTYPE_QUEST_CHECKED);
     assert.equal(b[16], 3);

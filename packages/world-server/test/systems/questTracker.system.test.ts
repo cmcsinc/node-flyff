@@ -3,10 +3,12 @@ import * as assert from 'node:assert/strict';
 import { QuestTrackerSystem } from '../../src/systems/questTracker.system.js';
 import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
 import type { CPlayer } from '../../src/entities/player.js';
-import type { QuestDef, QuestIndex } from '@flyff/resources';
+import type { QuestDef, QuestIndex, QuestDrop } from '@flyff/resources';
+import type { AddItemResult, InventoryService } from '../../src/services/inventory.service.js';
+import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer.js';
 import type { PlayerManager } from '../../src/managers/player.manager.js';
 
-/** Capturing PlayerManager stub — records every sendTo by charId. */
+/** Capturing PlayerManager stub -- records every sendTo by charId. */
 function fakePm(players: CPlayer[]): { pm: PlayerManager; sent: Map<number, Buffer[]> } {
   const sent = new Map<number, Buffer[]>();
   for (const p of players) sent.set(p.m_idPlayer, []);
@@ -22,14 +24,50 @@ function fakePm(players: CPlayer[]): { pm: PlayerManager; sent: Map<number, Buff
 }
 
 function mkPlayer(overrides: Partial<CPlayer> = {}): CPlayer {
-  return {
-    m_idPlayer: 1, m_vPos: { x: 0, y: 0, z: 0 }, m_aQuest: [], _dirty: new Set<string>(),
-    ...overrides,
-  } as unknown as CPlayer;
+  const base = {
+    m_idPlayer: 1,
+    m_vPos: { x: 0, y: 0, z: 0 },
+    m_aQuest: [] as unknown[],
+    m_Inventory: new Array(73).fill(null),
+    _dirty: new Set<string>(),
+    findQuest(id: number) {
+      return (this.m_aQuest as Array<{ id: number }>).find((q) => q.id === id);
+    },
+  };
+  return { ...base, ...overrides } as unknown as CPlayer;
 }
 
-function mkQuests(defs: QuestDef[]): QuestIndex {
-  return { byId: new Map(defs.map((d) => [d.id, d])), drops: new Map() } as unknown as QuestIndex;
+function mkQuests(defs: QuestDef[], drops: Map<number, QuestDrop[]> = new Map()): QuestIndex {
+  return { byId: new Map(defs.map((d) => [d.id, d])), drops } as unknown as QuestIndex;
+}
+
+/** `SetEndCondItem(sex,type,jobOrItem,item,need)` + a `QuestItem` generator on `monster`. */
+function itemQuest(
+  id: number, monster: number, item: number, need: number, prob: number, num = 1,
+): { def: QuestDef; drop: QuestDrop } {
+  const def: QuestDef = {
+    _version: '1.0', id, symbol: `Q${id}`, states: {}, quest_items: [],
+    commands: [{ cmd: 'SetEndCondItem', args: [
+      { type: 'num', value: -1 }, { type: 'num', value: 0 }, { type: 'num', value: -1 },
+      { type: 'sym', value: item }, { type: 'num', value: need },
+    ] }],
+  } as unknown as QuestDef;
+  return { def, drop: { mover: monster, item, prob, num, questId: id } };
+}
+
+/** Capturing InventoryService stub -- records addItem calls, returns a fixed result. */
+function fakeInv(result: AddItemResult): {
+  inv: Pick<InventoryService, 'addItem'>;
+  calls: Array<{ itemId: number; count: number }>;
+} {
+  const calls: Array<{ itemId: number; count: number }> = [];
+  const inv = {
+    addItem: (_p: CPlayer, itemId: number, count: number): AddItemResult => {
+      calls.push({ itemId, count });
+      return result;
+    },
+  };
+  return { inv, calls };
 }
 
 const killQuest = (id: number, monster: number, need: number): QuestDef => ({
@@ -70,7 +108,7 @@ describe('QuestTrackerSystem', () => {
     const { pm, sent } = fakePm([player]);
     new QuestTrackerSystem({ quests: mkQuests([def]), playerManager: pm }).onKill(player, 38);
     assert.equal(player.m_aQuest[0].killNpcNum[0], 2); // unchanged
-    assert.equal(sent.get(1)!.length, 0); // no frame — already at cap
+    assert.equal(sent.get(1)!.length, 0); // no frame -- already at cap
   });
 
   it('onKill ignores a non-matching monster', () => {
@@ -114,12 +152,12 @@ describe('QuestTrackerSystem', () => {
     const { pm, sent } = fakePm([player]);
     const tracker = new QuestTrackerSystem({ quests: mkQuests([def]), playerManager: pm });
 
-    tracker.tick(1000); // 2 → 1
+    tracker.tick(1000); // 2 -> 1
     assert.equal(player.m_aQuest[0].time, 1);
     let frames = sent.get(1)!;
-    assert.equal(frames.length, 1); // QUEST_TEXT_TIME only (not expired → no SETQUEST)
+    assert.equal(frames.length, 1); // QUEST_TEXT_TIME only (not expired -> no SETQUEST)
 
-    tracker.tick(1000); // 1 → 0 → bit15
+    tracker.tick(1000); // 1 -> 0 -> bit15
     assert.equal(player.m_aQuest[0].time, 0x8000);
     frames = sent.get(1)!;
     // accumulated: QUEST_TEXT_TIME (tick1) + QUEST_TEXT_TIME + SETQUEST (tick2 expiry)
@@ -151,5 +189,110 @@ describe('QuestTrackerSystem', () => {
     await new Promise((r) => setImmediate(r));
     assert.equal(upserts.length, 1);
     assert.deepEqual((upserts[0] as { charId: number; row: { kill_npc_num_0: number } }).row.kill_npc_num_0, 1);
+  });
+
+  // --- Quest-item drops (onKill -> roll -> addItem -> CREATEITEM/UPDATE_ITEM) ---
+
+  it('onKill drops a quest item on a successful roll and notifies CREATEITEM', () => {
+    const { def, drop } = itemQuest(7, 38, 6001, 5, 1_500_000_000); // 50% roll
+    const player = mkPlayer({
+      m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
+    });
+    const { pm, sent } = fakePm([player]);
+    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
+    new QuestTrackerSystem({
+      quests: mkQuests([def], drops), playerManager: pm,
+      inventoryService: inv, createItemSerializer: new CreateItemSnapshotSerializer(),
+      rng: { int: () => 0 }, // 0 < prob -> always succeed
+    }).onKill(player, 38);
+    assert.equal(calls.length, 1);
+    assert.deepEqual(calls[0], { itemId: 6001, count: 1 });
+    assert.equal(sent.get(1)!.length, 1); // CREATEITEM frame
+  });
+
+  it('onKill skips the quest-item drop when the roll fails', () => {
+    const { def, drop } = itemQuest(7, 38, 6001, 5, 1_500_000_000);
+    const player = mkPlayer({
+      m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
+    });
+    const { pm, sent } = fakePm([player]);
+    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
+    new QuestTrackerSystem({
+      quests: mkQuests([def], drops), playerManager: pm,
+      inventoryService: inv, createItemSerializer: new CreateItemSnapshotSerializer(),
+      rng: { int: () => Number.MAX_SAFE_INTEGER }, // >= prob -> always fail
+    }).onKill(player, 38);
+    assert.equal(calls.length, 0);
+    assert.equal(sent.get(1)!.length, 0);
+  });
+
+  it('onKill caps the grant at the SetEndCondItem need and stops at objective', () => {
+    // need 2, player already holds 1 -> grant min(num=5, 2-1)=1
+    const { def, drop } = itemQuest(7, 38, 6001, 2, 3_000_000_000, 5); // 100%, num 5
+    const player = mkPlayer({
+      m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
+      m_Inventory: Object.assign(new Array(73).fill(null), { 0: { itemId: 6001, count: 1 } }),
+    });
+    const { pm } = fakePm([player]);
+    const { inv, calls } = fakeInv({ ok: true, slot: 1, itemId: 6001, count: 1, isNew: true });
+    const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
+    new QuestTrackerSystem({
+      quests: mkQuests([def], drops), playerManager: pm,
+      inventoryService: inv, createItemSerializer: new CreateItemSnapshotSerializer(),
+      rng: { int: () => 0 },
+    }).onKill(player, 38);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].count, 1); // granted 1, not 5
+  });
+
+  it('onKill drops nothing once the player already meets the item objective', () => {
+    const { def, drop } = itemQuest(7, 38, 6001, 2, 3_000_000_000);
+    const player = mkPlayer({
+      m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
+      m_Inventory: Object.assign(new Array(73).fill(null), { 0: { itemId: 6001, count: 2 } }), // == need
+    });
+    const { pm, sent } = fakePm([player]);
+    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
+    new QuestTrackerSystem({
+      quests: mkQuests([def], drops), playerManager: pm,
+      inventoryService: inv, createItemSerializer: new CreateItemSnapshotSerializer(),
+      rng: { int: () => 0 },
+    }).onKill(player, 38);
+    assert.equal(calls.length, 0);
+    assert.equal(sent.get(1)!.length, 0);
+  });
+
+  it('onKill skips quest-item generators for quests the player does not have', () => {
+    const { def, drop } = itemQuest(7, 38, 6001, 5, 3_000_000_000);
+    const player = mkPlayer({ m_aQuest: [] }); // no active quest
+    const { pm, sent } = fakePm([player]);
+    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
+    new QuestTrackerSystem({
+      quests: mkQuests([def], drops), playerManager: pm,
+      inventoryService: inv, createItemSerializer: new CreateItemSnapshotSerializer(),
+      rng: { int: () => 0 },
+    }).onKill(player, 38);
+    assert.equal(calls.length, 0);
+    assert.equal(sent.get(1)!.length, 0);
+  });
+
+  it('onKill notifies UPDATE_ITEM when the drop stacks onto an existing slot', () => {
+    const { def, drop } = itemQuest(7, 38, 6001, 5, 3_000_000_000);
+    const player = mkPlayer({
+      m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
+    });
+    const { pm, sent } = fakePm([player]);
+    const { inv } = fakeInv({ ok: true, slot: 3, itemId: 6001, count: 2, isNew: false });
+    const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
+    new QuestTrackerSystem({
+      quests: mkQuests([def], drops), playerManager: pm,
+      inventoryService: inv, createItemSerializer: new CreateItemSnapshotSerializer(),
+      rng: { int: () => 0 },
+    }).onKill(player, 38);
+    assert.equal(sent.get(1)!.length, 1); // UPDATE_ITEM frame
   });
 });

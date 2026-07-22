@@ -1,7 +1,7 @@
 /**
- * QUERYGETDESTOBJ handler — `PACKETTYPE_QUERYGETDESTOBJ` (0xffffff72).
+ * QUERYGETDESTOBJ handler -- `PACKETTYPE_QUERYGETDESTOBJ` (0xffffff72).
  *
- * `DPSrvr::OnQueryGetDestObj` (DPSrvr.cpp:1355) reads `OBJID objid` — the
+ * `DPSrvr::OnQueryGetDestObj` (DPSrvr.cpp:1355) reads `OBJID objid` -- the
  * mover whose walk-to-object destination the client wants. Delegates to
  * {@link QueryGetDestObjService.query}, which returns a SNAPSHOT/GETDESTOBJ
  * frame when the mover has a destination; the handler frames + writes it back.

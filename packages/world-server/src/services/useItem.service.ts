@@ -1,9 +1,9 @@
 /**
- * UseItemService — `DOUSEITEM` router (`PACKETTYPE_DOUSEITEM` 0x00ff0021).
+ * UseItemService -- `DOUSEITEM` router (`PACKETTYPE_DOUSEITEM` 0x00ff0021).
  *
  * Ports `CMover::DoUseItem` (`_Common/MoverSkill.cpp:1275`): unpacks the slot
  * from `HIWORD(dwData)`, resolves the item, then routes by `dwParts`/`dwItemKind2`
- * — equip (dwParts set) / potion+food / buff / skill / text / warp. Returns a
+ * -- equip (dwParts set) / potion+food / buff / skill / text / warp. Returns a
  * discriminated result the handler turns into snapshots (DOEQUIP for equip,
  * SETPOINTPARAM for vitals). Buff/skill/warp/text consume the charge and log;
  * their effect subsystems land later (ponytail).
@@ -24,7 +24,7 @@ const logger = createLogger({ module: 'useItem-service' });
 export type UseResult =
   | { kind: 'equip'; equip: EquipResult }
   | { kind: 'consumable'; nId: number; hp?: number; mp?: number; fp?: number }
-  | { kind: 'consumed'; nId: number } // buff/skill/warp/text — charge spent, effect ponytail
+  | { kind: 'consumed'; nId: number } // buff/skill/warp/text -- charge spent, effect ponytail
   | { kind: 'reject' };
 
 export interface UseItemServiceDeps {

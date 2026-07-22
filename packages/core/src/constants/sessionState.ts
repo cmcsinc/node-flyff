@@ -16,9 +16,9 @@
  * Frozen map of all client session states.
  */
 export const SessionState = Object.freeze({
-  /** TCP connection established — client has not yet sent credentials. */
+  /** TCP connection established -- client has not yet sent credentials. */
   CONNECTED:     0,
-  /** Credentials accepted by the Login server — session token issued. */
+  /** Credentials accepted by the Login server -- session token issued. */
   AUTHENTICATED: 1,
   /** Client has connected to the Cluster server and may select a character. */
   IN_CLUSTER:    2,

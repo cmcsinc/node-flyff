@@ -1,9 +1,9 @@
 /**
- * DOEQUIP handler — `PACKETTYPE_DOEQUIP` (0x00ff000b).
+ * DOEQUIP handler -- `PACKETTYPE_DOEQUIP` (0x00ff000b).
  *
  * `CDPSrvr::OnDoEquip` (`DPSrvr.cpp:735`): `DWORD nId, int nPart[, FLOAT fVal]`.
  * `nId` is the inventory elem objid (our slot index); `nPart` is the equip slot
- * (1..30) to equip into, or — when `nId` already points at an equipped slot —
+ * (1..30) to equip into, or -- when `nId` already points at an equipped slot --
  * the implicit unequip. A trailing FLOAT is sent only for `PARTS_RIDE(13)`
  * items (`__HACK_1023` board-speed anti-cheat); RIDE is rejected, the float is
  * still consumed to keep the stream aligned.
@@ -49,9 +49,9 @@ export class DoEquipHandler {
       const nPart = reader.readDword();
       Validate.dword(nId);
       Validate.dword(nPart);
-      if (nPart === PARTS_RIDE) reader.readFloat(); // __HACK_1023 trailing float — consume + reject below
+      if (nPart === PARTS_RIDE) reader.readFloat(); // __HACK_1023 trailing float -- consume + reject below
 
-      // nId in the equip range ⇒ unequip that part; main-bag nId ⇒ equip into nPart.
+      // nId in the equip range => unequip that part; main-bag nId => equip into nPart.
       if (nId >= MAX_INVENTORY) {
         const r = this.deps.equipService.unequip(player, nId - MAX_INVENTORY);
         if (!r.ok) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP unequip rejected'); return; }

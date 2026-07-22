@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * generateIndexes — scan domain `.yml` files and emit `_index.yml` per domain.
+ * generateIndexes -- scan domain `.yml` files and emit `_index.yml` per domain.
  *
  * Each `_index.yml` is a `Record<id, { file, name }>` consumed by the loaders in
  * `src/loaders/`. With an index present the loader reads only the referenced
@@ -8,7 +8,7 @@
  * the scan (and logs a warn). This script regenerates indexes after the
  * underlying data files change.
  *
- * Workflow: edit a file under `data/` → `pnpm generate:indexes` → indexes refreshed.
+ * Workflow: edit a file under `data/` -> `pnpm generate:indexes` -> indexes refreshed.
  *
  * Usage: pnpm generate:indexes
  *
@@ -24,7 +24,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(__dirname, '..');
 const DATA_DIR = resolve(PKG_ROOT, 'data');
 
-/** Domain → wrapper key that holds the entity array. */
+/** Domain -> wrapper key that holds the entity array. */
 const DOMAINS = [
   { dir: 'items', key: 'items' },
   { dir: 'movers', key: 'movers' },
@@ -34,7 +34,7 @@ const DOMAINS = [
 type Entity = { id: number; name: string };
 type IndexEntry = { file: string; name: string };
 
-/** Scan one domain dir and build a stable, numerically-sorted id→entry map. */
+/** Scan one domain dir and build a stable, numerically-sorted id->entry map. */
 async function buildIndex(dirPath: string, key: string): Promise<Record<string, IndexEntry>> {
   const files = (await readdir(dirPath))
     .filter((f) => f.endsWith('.yml') && f !== '_index.yml')
@@ -57,7 +57,7 @@ async function buildIndex(dirPath: string, key: string): Promise<Record<string, 
 }
 
 async function main(): Promise<void> {
-  console.log('🔄 Generating _index.yml files');
+  console.log('[reload] Generating _index.yml files');
 
   for (const { dir, key } of DOMAINS) {
     const dirPath = resolve(DATA_DIR, dir);
@@ -66,10 +66,10 @@ async function main(): Promise<void> {
     console.log(`   ${dir}/_index.yml: ${Object.keys(entries).length} entries`);
   }
 
-  console.log('✅ Index generation complete');
+  console.log('[OK] Index generation complete');
 }
 
 main().catch((err) => {
-  console.error('❌ Index generation failed:', err);
+  console.error('[FAIL] Index generation failed:', err);
   process.exit(1);
 });

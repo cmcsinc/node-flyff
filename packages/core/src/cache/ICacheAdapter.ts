@@ -1,9 +1,9 @@
 /**
- * ICacheAdapter — cache abstraction used by all Flyff servers.
+ * ICacheAdapter -- cache abstraction used by all Flyff servers.
  *
  * Concrete implementations:
- *  - {@link MemoryCache} — in-process Map, for tests and single-process dev
- *  - {@link RedisCache}  — ioredis backed, for multi-process production
+ *  - {@link MemoryCache} -- in-process Map, for tests and single-process dev
+ *  - {@link RedisCache}  -- ioredis backed, for multi-process production
  *
  * Usage keys follow the pattern `<domain>:<identifier>`, e.g.:
  *  - `token:{token}` (TTL 30s)
@@ -35,13 +35,13 @@ export interface ICacheAdapter {
 
   /**
    * Publishes `message` to `channel`.
-   * Optional — only Redis / Cloudflare KV support pub/sub.
+   * Optional -- only Redis / Cloudflare KV support pub/sub.
    */
   publish?(channel: string, message: string): Promise<void>;
 
   /**
    * Subscribes `fn` to messages on `channel`.
-   * Optional — only Redis / Cloudflare KV support pub/sub.
+   * Optional -- only Redis / Cloudflare KV support pub/sub.
    */
   subscribe?(channel: string, fn: (msg: string) => void): Promise<void>;
 }
