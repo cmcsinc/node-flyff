@@ -103,9 +103,11 @@ export class CPlayer {
   m_nDex: number;
   m_nInt: number;
   /**
-   * Gold (C++ `m_nGold`). Persisted on the `characters.gold` column (migration
-   * 003); hydrated on JOIN, fire-and-forget flushed by `QuestService.flushGold`
-   * on reward grant. WAL `CHAR_GOLD` is the crash-recovery backup.
+   * Gold (C++ `m_nGold`). Persisted on the `inventory` container row's `gold`
+   * column (migration 008 -- gold is a container attribute, not a character
+   * one). Hydrated on JOIN via `InventoryRepository.getGold`; fire-and-forget
+   * flushed by the inventory/quest/bank/command services. WAL `CHAR_GOLD` is
+   * the crash-recovery backup.
    */
   m_nGold: number = 0;
   /**
@@ -209,7 +211,8 @@ export class CPlayer {
   /**
    * Bank password (C++ `m_szBankPass`, char[5]). `'0000'` = no password set
    * (bank opens directly); any other value prompts CONFIRMBANK. Max 4 chars,
-   * changed via CHANGEBANKPASS. Hydrated from `characters.bank_pass`.
+   * changed via CHANGEBANKPASS. Account-wide (one pin per account) -- hydrated
+   * on JOIN from the `bank` container row (`BankRepository.getBankPass`).
    */
   m_szBankPass: string = '0000';
   /**
@@ -260,7 +263,6 @@ export class CPlayer {
     this.m_nLevel = row.level;
     this.m_nJob = row.class;
     this.m_nSex = row.gender;
-    this.m_nGold = row.gold ?? 0;
     this.m_vPos = { x: row.x, y: row.y, z: row.z };
     this.m_fAngle = row.angle ?? 0;
     this.m_nHp = row.hp;
@@ -280,7 +282,6 @@ export class CPlayer {
     this.m_bAuthority = authority;
     this.m_nSkillPoint = row.skill_point ?? 0;
     this.m_nSkillLevel = row.skill_level ?? 0;
-    this.m_szBankPass = row.bank_pass ?? '0000';
     this.socket = socket;
   }
 

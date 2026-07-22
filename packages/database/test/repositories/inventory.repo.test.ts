@@ -4,6 +4,7 @@ import * as knexModule from 'knex';
 import type { Knex } from '../../src/types.js';
 import { InventoryRepository } from '../../src/repositories/inventory.repo.js';
 import { up, down } from '../../src/migrations/001_initial.js';
+import { applyAllMigrations } from '../migrateAll.js';
 
 const knex = (knexModule as any).default || knexModule;
 
@@ -19,7 +20,7 @@ describe('inventory.repo.ts', () => {
       useNullAsDefault: true,
     });
 
-    await up(db);
+    await applyAllMigrations(db);
     repo = new InventoryRepository(db);
 
     // Create test account and character
@@ -379,6 +380,27 @@ describe('inventory.repo.ts', () => {
 
       const occupied = await repo.slotOccupied(testCharacterId, 110);
       assert.equal(occupied, true);
+    });
+  });
+
+  describe('getGold() / setGold()', () => {
+    it('defaults to 0 when no container row exists', async () => {
+      const [acc] = await db('accounts').insert({ username: 'goldless', password_hash: 'h' }).returning('id');
+      const [chr] = await db('characters').insert({
+        account_id: acc.id, name: 'Goldless', slot: 0, class: 0, gender: 0,
+        hair_style: 1, hair_color: 1, face_style: 1, skin_color: 1, level: 1,
+        exp: 0, hp: 100, mp: 50, max_hp: 100, max_mp: 50,
+        strength: 15, stamina: 15, dexterity: 15, intelligence: 15,
+        x: 0, y: 0, z: 0, world_id: 'world1', zone_id: 1,
+      }).returning('id');
+      assert.equal(await repo.getGold(chr.id), 0, 'no row -> 0');
+    });
+
+    it('upserts gold on the inventory container row', async () => {
+      await repo.setGold(testCharacterId, 12345);
+      assert.equal(await repo.getGold(testCharacterId), 12345);
+      await repo.setGold(testCharacterId, 999);
+      assert.equal(await repo.getGold(testCharacterId), 999, 'upsert overwrites');
     });
   });
 });

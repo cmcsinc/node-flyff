@@ -11,6 +11,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 10
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 12000000
@@ -26,6 +27,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 10
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 12000000
@@ -41,6 +43,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 10
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 12000000
@@ -56,6 +59,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 5
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -71,6 +75,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 5
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -86,6 +91,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 5
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -101,6 +107,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 5
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -116,6 +123,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 5
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -131,6 +139,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 13
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 50000
@@ -146,6 +155,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    equip_slot: 13
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 50000

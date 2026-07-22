@@ -12,20 +12,19 @@ import { registerReplayers } from '../../src/systems/journalReplayers.js';
 interface ExpCall { id: number; level: number; exp: bigint; }
 interface GoldCall { id: number; gold: number; }
 interface SlotCall { id: number; slot: number; itemId?: number; count?: number; op: 'set' | 'remove'; }
+interface PassCall { accountId: number; bankPass: string; }
 
 function makeRepos() {
   const expCalls: ExpCall[] = [];
   const goldCalls: GoldCall[] = [];
   const slotCalls: SlotCall[] = [];
+  const passCalls: PassCall[] = [];
   const logs: string[] = [];
   return {
-    expCalls, goldCalls, slotCalls, logs,
+    expCalls, goldCalls, slotCalls, passCalls, logs,
     charRepo: {
       updateLevelAndExp: async (id: number, level: number, exp: bigint) => {
         expCalls.push({ id, level, exp });
-      },
-      updateGold: async (id: number, gold: number) => {
-        goldCalls.push({ id, gold });
       },
     },
     inventoryRepo: {
@@ -34,6 +33,14 @@ function makeRepos() {
       },
       removeItem: async (id: number, slot: number) => {
         slotCalls.push({ id, slot, op: 'remove' });
+      },
+      setGold: async (id: number, gold: number) => {
+        goldCalls.push({ id, gold });
+      },
+    },
+    bankRepo: {
+      setBankPass: async (accountId: number, bankPass: string) => {
+        passCalls.push({ accountId, bankPass });
       },
     },
     logger: {
@@ -49,7 +56,7 @@ describe('registerReplayers', () => {
     const journal = new Journal({ path: ':memory:' });
     const r = new JournalReplayer({ journal, logger: makeRepos().logger as never });
     const repos = makeRepos();
-    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, logger: repos.logger as never });
 
     // Two absolute exp snapshots for char 7 -- replay applies both in order;
     // final DB write is the later one, no dupe (additive deltas would dup).
@@ -68,7 +75,7 @@ describe('registerReplayers', () => {
     const journal = new Journal({ path: ':memory:' });
     const repos = makeRepos();
     const r = new JournalReplayer({ journal, logger: repos.logger as never });
-    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, logger: repos.logger as never });
 
     journal.append({ charId: 3, type: 'CHAR_GOLD', payload: { gold: 999 } });
     await r.recover();
@@ -76,11 +83,23 @@ describe('registerReplayers', () => {
     journal.close();
   });
 
+  it('BANK_PASS replays the account-wide pin via bankRepo', async () => {
+    const journal = new Journal({ path: ':memory:' });
+    const repos = makeRepos();
+    const r = new JournalReplayer({ journal, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, logger: repos.logger as never });
+
+    journal.append({ charId: 3, type: 'BANK_PASS', payload: { accountId: 42, bankPass: '4321' } });
+    await r.recover();
+    assert.deepEqual(repos.passCalls, [{ accountId: 42, bankPass: '4321' }]);
+    journal.close();
+  });
+
   it('INVENTORY_SLOT set vs remove (itemId===0 => removeItem)', async () => {
     const journal = new Journal({ path: ':memory:' });
     const repos = makeRepos();
     const r = new JournalReplayer({ journal, logger: repos.logger as never });
-    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, logger: repos.logger as never });
 
     journal.append({ charId: 9, type: 'INVENTORY_SLOT', payload: { slot: 4, itemId: 6005, count: 3 } });
     journal.append({ charId: 9, type: 'INVENTORY_SLOT', payload: { slot: 4, itemId: 0, count: 0 } });
@@ -97,7 +116,7 @@ describe('registerReplayers', () => {
     const journal = new Journal({ path: ':memory:' });
     const repos = makeRepos();
     const r = new JournalReplayer({ journal, logger: repos.logger as never });
-    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, logger: repos.logger as never });
 
     // Value > 2^32 but < 2^53 -- must survive Number->String->BigInt.
     const big = '9007199254740991'; // Number.MAX_SAFE_INTEGER

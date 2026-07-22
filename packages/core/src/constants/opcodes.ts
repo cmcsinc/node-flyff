@@ -29,6 +29,9 @@ export const PACKETTYPE = Object.freeze({
   MOVEITEM:             0x00ff0006,
   DROPITEM:             0x00ff0007,
   DROPGOLD:             0x00ff0008,
+  // MsgHdr.h:145 -- OnRemoveInvenItem (DPSrvr.cpp:8350): `DWORD dwId, int nNum`.
+  // Right-click "Delete" / drag-to-trash -- destroys count, no ground pile.
+  REMOVEINVENITEM:      0x00ff0019,
   DOEQUIP:              0x00ff000b,
   DAMAGE:               0x00ff000c,
   SETEXPERIENCE:        0x00ff000d,
@@ -63,6 +66,7 @@ export const PACKETTYPE = Object.freeze({
   OPENSHOPWND:          0x00ff00b1,
   CLOSESHOPWND:         0x00ff00b2,
   BUYITEM:              0x00ff00b3,
+  SELLITEM:             0x00ff00b4,
   // v15 bank window -- `WORLDSERVER/DPSrvr.cpp:152-167`. OPENBANKWND dwId=NULL_ID
   // -> NPC bank; PUT/GET ITEMBACK nSlot=bank tab(0..2), nId=inv slot; PUT/GET
   // GOLDBACK nSlot=tab, dwGold=amount. MOVEBANKITEM (0xffffff46) is an empty C++

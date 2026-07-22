@@ -32,25 +32,24 @@ function makeSvc() {
   const invRemove: number[] = [];
   const invSet: Array<{ slot: number; itemId: number; qty: number }> = [];
   const passSet: string[] = [];
-  const goldUpdates: number[] = [];
+  const invGold: number[] = [];
   const svc = new BankService({
     bankRepo: {
       setItem: async (_a: number, tab: number, slot: number, itemId: number, qty: number) => bankSet.push({ tab, slot, itemId, qty }),
       removeItem: async (_a: number, tab: number, slot: number) => bankRemove.push({ tab, slot }),
       getGold: async () => 0,
       setGold: async (_a: number, amount: number) => goldSet.push(amount),
+      getBankPass: async () => '0000',
+      setBankPass: async (_a: number, bankPass: string) => { passSet.push(bankPass); },
     },
     inventoryRepo: {
       removeItem: async (_c: number, slot: number) => invRemove.push(slot),
       setItem: async (_c: number, slot: number, itemId: number, qty: number) => invSet.push({ slot, itemId, qty }),
-    },
-    characterRepo: {
-      updateBankPass: async (_id: number, bankPass: string) => { passSet.push(bankPass); },
-      updateGold: async (_id: number, gold: number) => { goldUpdates.push(gold); },
+      setGold: async (_c: number, gold: number) => { invGold.push(gold); },
     },
     journal: { append: (e: { type: string }) => { journalCalls.push(e); } } as never,
   });
-  return { svc, journalCalls, bankSet, bankRemove, goldSet, invRemove, invSet, passSet, goldUpdates };
+  return { svc, journalCalls, bankSet, bankRemove, goldSet, invRemove, invSet, passSet, invGold };
 }
 
 describe('BankService.deposit', () => {
@@ -141,7 +140,7 @@ describe('BankService gold', () => {
   it('depositGold moves penya from inv to bank tab 0 + persists both sides', async () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_nGold = 1000;
-    const { svc, goldSet, goldUpdates, journalCalls } = makeSvc();
+    const { svc, goldSet, invGold, journalCalls } = makeSvc();
     const r = svc.depositGold(player, 400);
     assert.equal(r.ok, true);
     assert.equal(player.m_nGold, 600);
@@ -150,21 +149,21 @@ describe('BankService gold', () => {
     assert.deepEqual((journalCalls[0] as { payload: { gold: number } }).payload, { gold: 600 });
     await Promise.resolve();
     assert.equal(goldSet[0], 400, 'bank gold persisted');
-    assert.equal(goldUpdates[0], 600, 'inv gold persisted -- prevents relog dupe');
+    assert.equal(invGold[0], 600, 'inv gold persisted -- prevents relog dupe');
   });
 
   it('withdrawGold moves penya from bank to inv + persists both sides', async () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_nGold = 100;
     player.m_BankGold[0] = 500;
-    const { svc, goldSet, goldUpdates } = makeSvc();
+    const { svc, goldSet, invGold } = makeSvc();
     const r = svc.withdrawGold(player, 200);
     assert.equal(r.ok, true);
     assert.equal(player.m_nGold, 300);
     assert.equal(player.m_BankGold[0], 300);
     await Promise.resolve();
     assert.equal(goldSet[0], 300, 'bank gold persisted');
-    assert.equal(goldUpdates[0], 300, 'inv gold persisted');
+    assert.equal(invGold[0], 300, 'inv gold persisted');
   });
 
   it('withdrawGold rejects over-spend', () => {
@@ -188,7 +187,7 @@ describe('BankService.changeBankPass', () => {
     assert.equal(r.ok, true);
     assert.equal(player.m_szBankPass, '4321');
     assert.equal(journalCalls[0]!.type, 'BANK_PASS', 'journal before persist');
-    assert.deepEqual((journalCalls[0] as { payload: { bankPass: string } }).payload, { bankPass: '4321' });
+    assert.deepEqual((journalCalls[0] as { payload: { accountId: number; bankPass: string } }).payload, { accountId: 42, bankPass: '4321' });
     await Promise.resolve();
     assert.equal(passSet[0], '4321', 'password persisted');
   });
@@ -263,7 +262,8 @@ describe('BankService.open', () => {
   });
 
   it('returns nMode 1 (enter-pin dialog) when a password is set', () => {
-    const player = CPlayer.fromRow(makeRow({ bank_pass: '1234' }), { write: () => true });
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_szBankPass = '1234';
     const { svc } = makeSvc();
     assert.equal(svc.open(player), 1);
   });

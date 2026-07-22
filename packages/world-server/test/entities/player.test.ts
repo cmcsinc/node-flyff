@@ -17,7 +17,6 @@ function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
     skin_color: 1,
     level: 15,
     exp: 0n,
-    gold: 0,
     hp: 100,
     mp: 50,
     max_hp: 100,
@@ -71,8 +70,13 @@ describe('CPlayer entity', () => {
     assert.equal(p._dirty.size, 0);
   });
 
-  it('hydrates m_nGold from the row (migration 003)', () => {
-    const p = CPlayer.fromRow(makeRow({ gold: 4500 }), makeSocket());
+  it('defaults m_nGold to 0 until JOIN hydrates the inventory container', () => {
+    // Gold is a container attribute (migration 008): the entity no longer reads
+    // it from the character row. It is loaded into m_nGold by JoinService via
+    // InventoryRepository.getGold after fromRow. The field defaults to 0 here.
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    assert.equal(p.m_nGold, 0);
+    p.m_nGold = 4500;
     assert.equal(p.m_nGold, 4500);
   });
 

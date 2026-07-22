@@ -154,12 +154,16 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\combat\\skillFormulas.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\shop.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\shop.handler.test.ts": "fail",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\skill.service.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\skill.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\useSkill.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\doUseSkillPoint.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\core\\test\\net\\dispatcher.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\join.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\checkpoint.system.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\login-server\\test\\handlers\\serverList.handler.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\shop.serializer.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\shop.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\removeItem.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\repositories\\inventory.repo.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\repositories\\bank.repo.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\journalReplayers.test.ts": "pass"
 }

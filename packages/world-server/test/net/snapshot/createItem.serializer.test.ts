@@ -33,8 +33,10 @@ describe('CreateItemSnapshotSerializer', () => {
     assert.equal(buf.readUInt16LE(14), SNAPSHOTTYPE_CREATEITEM, 'subtype 0x0003');
     assert.equal(buf[16], 0x00, 'literal BYTE 0');
 
-    // CItemBase (16B): objId + itemId + serial(DWORD) + text-len
-    assert.equal(buf.readUInt32LE(17), 0, 'm_dwObjId = 0 (fresh inventory item)');
+    // CItemBase (16B): objId + itemId + serial(DWORD) + text-len. m_dwObjId is
+    // the destination slot index (matches JOIN's container) -- the client
+    // CWndInventory will not render an elem whose m_dwObjId is 0.
+    assert.equal(buf.readUInt32LE(17), 5, 'm_dwObjId = slot index');
     assert.equal(buf.readUInt32LE(21), 2950, 'm_dwItemId');
     assert.equal(buf.readUInt32LE(25), 0, 'm_liSerialNumber (DWORD)');
     assert.equal(buf.readUInt32LE(29), 0, 'm_szItemText empty string length');

@@ -66,7 +66,7 @@ function recordingCharRepo(row: CharacterRow): {
 
 /** Recording bank repo -- captures setGold calls. */
 function recordingBankRepo(gold = 0): {
-  repo: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold'>;
+  repo: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold' | 'getBankPass'>;
   setGoldCalls: Array<{ accountId: number; amount: number }>;
 } {
   const setGoldCalls: Array<{ accountId: number; amount: number }> = [];
@@ -77,6 +77,7 @@ function recordingBankRepo(gold = 0): {
       setGold: async (accountId: number, amount: number) => {
         setGoldCalls.push({ accountId, amount });
       },
+      getBankPass: async () => '0000',
     },
     setGoldCalls,
   };
