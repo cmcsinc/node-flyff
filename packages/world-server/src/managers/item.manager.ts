@@ -52,6 +52,10 @@ export class ItemManager {
     this.items.set(id, item);
 
     this.broadcast(item.m_vPos, item.m_nZoneId, this.serializer.build([item]));
+    logger.info(
+      { objid: id, itemId: item.m_dwItemId, count: item.m_nItemNum, pos: item.m_vPos, zoneId: item.m_nZoneId },
+      'ground item spawned + ADD_OBJ broadcast',
+    );
 
     const timer = setTimeout(() => this.expire(id), DECAY_MS);
     this.timers.set(id, timer);
