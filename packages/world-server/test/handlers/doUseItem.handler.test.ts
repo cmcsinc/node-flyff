@@ -60,15 +60,17 @@ describe('DoUseItemHandler', () => {
     assert.equal(sent[0]!.readUInt32LE(16), DST_HP);
   });
 
-  it('equip: sends self DOEQUIP + vicinity broadcast', () => {
+  it('equip: one vicinity DOEQUIP broadcast to self + peers', () => {
     const { handler, sent, broadcasts } = makeHandler({
       kind: 'equip',
-      equip: { ok: true, parts: 9, itemId: 5000, invSlot: 4 },
+      equip: { ok: true, parts: 9, itemId: 5000, invSlot: 4, objid: 4 },
     });
     handler.handleDoUseItem(mockSocket(), new PacketReader(body(4, 9)));
-    assert.equal(sent.length, 1);
-    assert.equal(sent[0]!.readUInt16LE(14), SNAPSHOTTYPE.DOEQUIP);
+    assert.equal(sent.length, 0, 'no separate self packet -- self rides the broadcast');
     assert.equal(broadcasts.length, 1);
+    assert.equal(broadcasts[0]!.readUInt16LE(14), SNAPSHOTTYPE.DOEQUIP);
+    assert.equal(broadcasts[0]![16], 4, 'wire nId = bag slot');
+    assert.equal(broadcasts[0]![21], 1, 'fEquip = 1');
   });
 
   it('reject: sends nothing', () => {

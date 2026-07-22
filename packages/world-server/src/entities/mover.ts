@@ -169,8 +169,10 @@ export class CMover {
    * Aggro-on-sight flag (C++ `m_bActiveAttack`) -- the red-name gate.
    * `AIMonster.cpp:429` sight-acquires only when this is set, and
    * `MoverRender.cpp:1448` renders the name red when `!IsPeaceful() && this`.
-   * Derived from belli at spawn; ponytail: propMover has no column for it, so a
-   * passive `BELLI_MELEE` mob can't be distinguished from an active one.
+   * Derived from belli: true only for the `ACTIVEATTACK*` bells {3,5,6,7}
+   * (`ACTIVE_BELLI`). `BELLI_MELEE2X/MELEE/RANGE` (11/12/13) are cautious-type
+   * (counterattack WHEN attacked) -> NOT red, NOT sight-aggro -- they retaliate
+   * via `triggerRage` on the damage path instead.
    */
   m_bActiveAttack: number;
   /** AI speed multiplier (C++ `m_fSpeedFactor`); 1.0 = propMover speed. */

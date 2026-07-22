@@ -51,7 +51,6 @@ import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
 import { DamageSerializer } from '../net/snapshot/damage.serializer.js';
 import { MeleeAttackSerializer } from '../net/snapshot/meleeAttack.serializer.js';
 import { RangeAttackSerializer } from '../net/snapshot/rangeAttack.serializer.js';
-import { isInSafeZone } from '../combat/safeZone.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 import { MODE } from '../constants/mode.js';
 import { createLogger } from '@flyff/core/logger.js';
@@ -69,12 +68,6 @@ export interface AISystemDeps {
   spawnManager: SpawnManager;
   zoneManager: ZoneManager;
   playerManager: Pick<PlayerManager, 'get'>;
-  /**
-   * Zone revival-position lookup by numeric zone id (resources `byNumericId`).
-   * Drives the town safe-zone guard (`combat/safeZone`). Optional -- when absent
-   * (tests), no safe-zone guard applies and combat is lethal everywhere.
-   */
-  readonly zones?: { byNumericId: Map<number, { revival: { position: Vec3 } }> };
   rng?: Rng;
   /** Called when a player's HP reaches 0 from a monster swing. */
   onPlayerDeath?: (player: CPlayer, killerObjid: number) => void;
@@ -135,12 +128,6 @@ export class AISystem {
     this.wander(m, now);
   }
 
-  /** True if `player` is within the town safe-zone of their current zone. */
-  private inSafeZone(player: CPlayer): boolean {
-    const r = this.deps.zones?.byNumericId.get(player.m_nZoneId)?.revival.position;
-    return isInSafeZone(player.m_vPos, r);
-  }
-
   /**
    * Sight-scan `SIGHT_RANGE` for the nearest eligible player; acquire if found.
    * Eligible = alive AND visible AND within `AGGRO_LEVEL_BAND` levels above the
@@ -148,10 +135,16 @@ export class AISystem {
    * vanilla `ScanTarget` aggros any level. The TRANSPARENT skip mirrors C++
    * `ScanTarget` (`AIMonster.cpp:344-432`) -- invisible players (`/inv`) are
    * never acquired.
+   *
+   * No town safe-zone filter: vanilla Flyff gates town safety on the `RA_SAFETY`
+   * region attribute (loaded from the world's region data), NOT a revival-radius
+   * bubble, and even that check is commented out on the sight-scan
+   * (`AIMonster.cpp:429`). We don't load `RA_SAFETY` regions, so there is no
+   * town-safety gate here -- the distance leash is the only anchor.
    */
   private acquireBySight(m: CMover, now: number): boolean {
     const players = this.deps.zoneManager.playersNear(m.m_vPos, m.m_nZoneId, SIGHT_RANGE)
-      .filter((p) => !p.m_bDead && !isHidden(p) && !this.inSafeZone(p)
+      .filter((p) => !p.m_bDead && !isHidden(p)
         && p.m_nLevel <= m.m_nLevel + AGGRO_LEVEL_BAND);
     if (players.length === 0) return false;
     let nearest = players[0]!;
@@ -185,12 +178,16 @@ export class AISystem {
 
   private pursue(m: CMover, now: number, dtMs: number): void {
     const target = this.deps.playerManager.get(m.m_idTarget);
-    if (target === undefined || target.m_nHp <= 0 || target.m_bDead || isHidden(target)
-      || this.inSafeZone(target)) {
-      // Target gone, dead, vanished (`/inv` mid-fight), or reached a town
-      // safe-zone -> release + go home. The safe-zone drop is the no-combat
-      // guard: a monster chasing a player into town stops at the edge and
-      // never lands a swing inside the revival radius (`combat/safeZone`).
+    if (target === undefined || target.m_nHp <= 0 || target.m_bDead || isHidden(target)) {
+      // Target gone, dead, or vanished (`/inv` mid-fight) -> release + go home.
+      // NOTE: no town safe-zone gate here -- C++ `AIMSG_DAMAGE` retaliation
+      // (`AIMonster.cpp:1972`) has no safety check (the only such check, on
+      // sight-scan, is commented out at `AIMonster.cpp:429`). Our revival-radius
+      // bubble (`TOWN_EXCLUSION_RADIUS` 1000) covered legitimate near-town
+      // spawns (Mushpang field is ~210 u from Flaris revival), so gating
+      // retaliation on it made every nearby mob acquire-then-instant-le home
+      // -> "monster won't fight back". The distance leash below keeps mobs
+      // anchored to their spawn instead.
       this.startReturn(m, now);
       return;
     }
@@ -208,7 +205,7 @@ export class AISystem {
       if (distSq2(m.m_vPos, target.m_vPos) > rangeSq) return; // still closing
     }
     if (now < m.m_nextAttackTick) return;
-    this.monsterSwing(m, target);
+    this.monsterSwing(m, target, now);
     m.m_nextAttackTick = now + (m.m_bRangeAttack
       ? RANGE_REATTACK_DELAY_MS
       : m.m_nReAttackDelay + randInt(0, REATTACK_JITTER_MS));
@@ -221,7 +218,7 @@ export class AISystem {
    * way) and broadcasts DAMAGE. Mirrors C++ `DoAttack`/`DoAttackRange` ->
    * `AddMeleeAttack`/`AddRangeAttack` -> damage round-trip.
    */
-  private monsterSwing(m: CMover, target: CPlayer): void {
+  private monsterSwing(m: CMover, target: CPlayer, now: number): void {
     const animPkt = m.m_bRangeAttack
       ? this.rangeAttack.build(m.m_idMover, { dwAtkMsg: OBJMSG_ATK_RANGE1, objid: target.m_idPlayer, nParam2: 0, nParam3: 0, idSfxHit: 0 })
       : this.meleeAttack.build(m.m_idMover, { dwAtkMsg: OBJMSG_ATK1, objid: target.m_idPlayer, nParam2: 0, nParam3: 0 });
@@ -239,7 +236,17 @@ export class AISystem {
       target.m_nHp = Math.max(0, before - result.damage);
       dealt = before - target.m_nHp;
       target._dirty.add('m_nHp');
+      // Stamp the combat-state cursor so stand regen pauses for 10 s
+      // (C++ `m_nAtkCnt = 1` on `OnDamaged`, gates `IsAttackMode`).
+      target.m_tmLastDamage = now;
     }
+    // Debug: per-swing retaliation detail. Pairs with the info "monster
+    // retaliated" log in CombatService.triggerRage -- if that fires but these
+    // never do, the mob acquired but never closed to swing (movement/range bug).
+    logger.debug(
+      { moverId: m.m_idMover, target: target.m_idPlayer, hit: result.hit, damage: dealt, targetHp: target.m_nHp },
+      'monster swing',
+    );
     this.deps.zoneManager.broadcastAround(
       target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS,
       this.damage.build(target.m_idPlayer, { attackerObjid: m.m_idMover, hit: dealt, atkFlags: result.atkFlags }),
@@ -272,7 +279,7 @@ export class AISystem {
     this.moveTo(m, m.m_vPosBegin, now, false);
   }
 
-  /** Step home; on arrival restore HP + reset. 20 s stuck-cap -> snap home. */
+  /** Step home; on arrival reset speed + re-arm wander. 20 s stuck-cap -> snap home. */
   private stepReturnHome(m: CMover, now: number, dtMs: number): void {
     if (distSq2(m.m_vPos, m.m_vPosBegin) <= HOME_ARRIVAL * HOME_ARRIVAL
       || now - m.m_tmReturnToBegin > RETURN_STUCK_MS) {
@@ -280,7 +287,15 @@ export class AISystem {
       m.m_vDestPos = { ...m.m_vPosBegin };
       m.m_bReturnToBegin = false;
       m.m_fSpeedFactor = 1.0;
-      m.m_nHitPoint = m.m_nMaxHitPoint;
+      // ponytail: C++ `StateReturn` restores m_nHitPoint to max here, but we
+      // intentionally DO NOT. There is no S->C monster-HP-sync packet -- DAMAGE
+      // only subtracts (`IncHitPoint(-dwHit)`) and ADD_OBJ only fires on zone
+      // enter. Healing server-side without telling the client desyncs the bars:
+      // the client keeps the drained sliver while the server is full again, so
+      // the monster becomes unkillable from the player's view (server HP never
+      // reaches 0 because it keeps getting reset). Re-add the heal only once a
+      // real HP-sync snapshot (or a DEL_OBJ + fresh ADD_OBJ re-broadcast on
+      // heal) ships. Keeping the monster damaged is the lesser evil.
       m.m_tmNextWander = now + stopInterval();
       return;
     }

@@ -20,6 +20,7 @@ import {
   WT_MELEE_STAFF, WT_MAGIC_WAND, WT_MELEE_YOYO, WT_RANGE_BOW,
   MIN_HR, MAX_HR, NO_PROP,
 } from './tables.js';
+import type { JobProps } from './tables.js';
 import { EXP_TABLE, MAX_LEVEL } from './expTable.js';
 
 /** Equipped-weapon view. `CombatService` supplies this; unarmed = bare-hand. */
@@ -375,6 +376,45 @@ export function withinLevelExp(cumulativeExp: number, level: number): number {
  */
 export function cumulativeExp(level: number, exp: number): number {
   return (EXP_TABLE[level]?.nExp1 ?? 0) + exp;
+}
+
+// --- vitals recovery (#E) ----------------------------------------------------
+
+/**
+ * `CMover::GetMaxFatiguePoint` player base (`MoverParam.cpp:2910/2932`):
+ *   `((level*2 + sta*6) * fFactorMaxFP) + (sta * fFactorMaxFP)`
+ * FP has no DB column, so the live `m_nMaxFp` is derived from this each tick
+ * (cheap, idempotent) -- which also keeps it correct after a level-up without
+ * a separate mutation hook. HP/MP maxes stay DB-backed (`max_hp`/`max_mp`).
+ */
+export function maxFatiguePoint(level: number, sta: number, fFactorMaxFP: number): number {
+  const lv = Math.max(1, level);
+  return Math.floor((lv * 2.0 + sta * 6.0) * fFactorMaxFP + sta * fFactorMaxFP);
+}
+
+/**
+ * Stand regen amounts per 3 s tick (`ProcessRecovery` stand branch,
+ * `Mover.cpp:8381`, formulas `MoverParam.cpp:2972/2989/3006`). The v9+ `__RECOVERY10`
+ * `-10%` is baked in via the trailing `* 0.9`. `level` is clamped `>= 1` to guard
+ * the `/ (500*level)` term. Pure: the caller mutates the entity + sends the
+ * SETPOINTPARAM sync (`RecoverySystem`). Negatives clamp to 0.
+ */
+export interface RecoveryAmount { readonly hp: number; readonly mp: number; readonly fp: number; }
+
+export function standRecovery(
+  level: number,
+  sta: number,
+  int_: number,
+  maxHp: number,
+  maxMp: number,
+  maxFp: number,
+  job: JobProps,
+): RecoveryAmount {
+  const lv = Math.max(1, level);
+  const hp = Math.floor(((lv / 3) + maxHp / (500 * lv) + sta * job.fFactorHPRec) * 0.9);
+  const mp = Math.floor(((lv * 1.5 + maxMp / (500 * lv) + int_ * job.fFactorMPRec) * 0.2) * 0.9);
+  const fp = Math.floor(((lv * 2 + maxFp / (500 * lv) + sta * job.fFactorFPRec) * 0.2) * 0.9);
+  return { hp: Math.max(0, hp), mp: Math.max(0, mp), fp: Math.max(0, fp) };
 }
 
 void NO_PROP;

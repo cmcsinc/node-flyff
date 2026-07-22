@@ -11,6 +11,8 @@ import { SpawnManager } from '../../src/managers/spawn.manager.js';
 import { JoinService } from '../../src/services/join.service.js';
 import { JoinHandler } from '../../src/handlers/join.handler.js';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer.js';
+import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer.js';
+import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer.js';
 import { NpcSnapshotSerializer } from '../../src/net/snapshot/npcSnapshot.serializer.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
@@ -128,6 +130,8 @@ describe('E2E: cluster handoff -> world JOIN -> self-spawn snapshot', () => {
     handler = new JoinHandler(
       joinService,
       new PlayerSnapshotSerializer(),
+      new SetExperienceSerializer(),
+      new TaskBarSnapshotSerializer(),
     );
     await listener.start();
   });
@@ -151,8 +155,8 @@ describe('E2E: cluster handoff -> world JOIN -> self-spawn snapshot', () => {
 
     await handler.handleJoin(socket as never, new PacketReader(joinPayload(42)));
 
-    // 3. snapshot landed on the socket
-    assert.equal(written.length, 1);
+    // 3. snapshot landed on the socket (self-spawn + SETEXPERIENCE + taskbar repush)
+    assert.equal(written.length, 3);
     const snap = written[0]!;
     assert.equal(snap.readUInt32LE(0), PACKETTYPE.JOIN);
     assert.equal(snap.length, 3354); // WORLD_READINFO + "Hero" blob (3350 base + 4)

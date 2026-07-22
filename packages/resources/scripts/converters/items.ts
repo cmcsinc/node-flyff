@@ -24,6 +24,13 @@ const KIND_BUCKETS: Record<string, { file: string; kind: string }> = {
 };
 
 /** IK2_WEAPON_DIRECT etc. are sub-kinds; bucket still keyed by IK1. */
+/** propItem `dwDestParam*` -> YAML restore field (consumables only). */
+const RESTORE_DST: Record<string, 'hp_restore' | 'mp_restore' | 'fp_restore'> = {
+  DST_HP: 'hp_restore',
+  DST_MP: 'mp_restore',
+  DST_FP: 'fp_restore',
+};
+
 const JOB_MAP: Record<string, string> = {
   JOB_VAGRANT: 'vagrant',
   JOB_MERCENARY: 'mercenary',
@@ -91,16 +98,37 @@ function rowToItem(
     stack_size: Math.max(1, num(row, 'dwPackMax', 1)),
   };
 
-  // Equip slot / weapon type / kind routing -- raw propItem columns.
-  // `dwParts` is a `PARTS_*` symbol (defineNeuz.h), not a raw int -- resolve via map,
-  // else EquipService rejects every equip with `not_equippable` (client sends numeric nPart).
-  const partsSym = row.dwParts;
-  const parts = (partsSym && partsMap.get(partsSym)) ?? num(row, 'dwParts', 0);
-  if (parts > 0) item.equip_slot = parts;
-  const weaponType = num(row, 'dwWeaponType', 0);
-  if (weaponType > 0) item.weapon_type = weaponType;
+  // Kind routing -- read before equip_slot so consumables can be excluded.
   if (row.dwItemKind2) item.item_kind2 = row.dwItemKind2;
   if (row.dwItemKind3) item.item_kind3 = row.dwItemKind3;
+
+  // Equip slot / weapon type -- raw propItem columns.
+  // `dwParts` is a `PARTS_*` symbol (defineNeuz.h), not a raw int -- resolve via map,
+  // else EquipService rejects every equip with `not_equippable` (client sends numeric nPart).
+  // Gate to real gear: weapons/armors/accessories. Consumables carry a stale dwParts too --
+  // copying it makes UseItemService route them through EquipService (equip_slot check fires
+  // before the IK2_POTION branch) and silently drop the consume.
+  const kind3 = row.dwItemKind3 ?? '';
+  const isEquippable =
+    kind1 === 'IK1_WEAPON' || kind1 === 'IK1_ARMOR' ||
+    kind3 === 'IK3_RING' || kind3 === 'IK3_EARRING' || kind3 === 'IK3_NECKLACE';
+  if (isEquippable) {
+    const partsSym = row.dwParts;
+    const parts = (partsSym && partsMap.get(partsSym)) ?? num(row, 'dwParts', 0);
+    if (parts > 0) item.equip_slot = parts;
+  }
+  const weaponType = num(row, 'dwWeaponType', 0);
+  if (weaponType > 0) item.weapon_type = weaponType;
+
+  // Consumable vitals -- propItem dwDestParam{1-3} (DST_HP/MP/FP) + nAdjParamVal{1-3}.
+  // Without these, ConsumableService heals 0 and the charge is wasted.
+  for (let i = 1; i <= 3; i++) {
+    const field = RESTORE_DST[row[`dwDestParam${i}`]];
+    if (field) {
+      const val = num(row, `nAdjParamVal${i}`, 0);
+      if (val > 0) item[field] = val;
+    }
+  }
 
   // Jewelry HR/ER columns (propItem nAdjHitRate + dwParry). Zero for non-jewelry;
   // the combat stat-fold reads these once accessory data lands in the index.

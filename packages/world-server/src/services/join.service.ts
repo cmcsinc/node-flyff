@@ -21,6 +21,7 @@ import { CPlayer } from '../entities/player.js';
 import type { PlayerSocket } from '../entities/player.js';
 import { AUTH } from '../constants/authority.js';
 import { withinLevelExp } from '../combat/formulas.js';
+import { decodeTaskBar } from './taskbar.service.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { ZoneManager } from '../managers/zone.manager.js';
 import type { ConsumedHandoff } from '../ipc/clusterListener.js';
@@ -98,6 +99,7 @@ export class JoinService {
     await this.loadInventory(player);
     await this.loadBank(player);
     await this.loadSkills(player);
+    this.loadTaskBar(player, row.taskbar);
     this.deps.playerManager.add(player);
     this.deps.zoneManager.place(player);
     return { ok: true, player };
@@ -116,6 +118,7 @@ export class JoinService {
     for (const r of rows) {
       if (r.slot < 0 || r.slot >= player.m_Inventory.length) continue;
       player.m_Inventory[r.slot] = {
+        objid: r.slot,
         itemId: r.item_id, count: r.quantity,
         flags: r.flags, refine: r.refine, durability: r.durability,
       };
@@ -246,5 +249,15 @@ export class JoinService {
     if (!this.deps.skillRepo) return;
     const slots = await this.deps.skillRepo.loadByCharacter(player.m_idPlayer);
     player.hydrateSkills(slots);
+  }
+
+  /**
+   * Hydrate the taskbar grid (`m_aSlotItem`) from `characters.taskbar`. A null
+   * / empty column leaves the seeded all-empty grid (fresh character). Mirrors
+   * C++ `GetTaskBar` (`DbManagerFun.cpp:984`); the grid is later pushed to the
+   * client via `SNAPSHOTTYPE_TASKBAR` in the join handler.
+   */
+  private loadTaskBar(player: CPlayer, json: string | null | undefined): void {
+    player.m_aSlotItem = decodeTaskBar(json);
   }
 }

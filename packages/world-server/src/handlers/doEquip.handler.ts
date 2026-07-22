@@ -2,14 +2,19 @@
  * DOEQUIP handler -- `PACKETTYPE_DOEQUIP` (0x00ff000b).
  *
  * `CDPSrvr::OnDoEquip` (`DPSrvr.cpp:735`): `DWORD nId, int nPart[, FLOAT fVal]`.
- * `nId` is the inventory elem objid (our slot index); `nPart` is the equip slot
- * (1..30) to equip into, or -- when `nId` already points at an equipped slot --
- * the implicit unequip. A trailing FLOAT is sent only for `PARTS_RIDE(13)`
- * items (`__HACK_1023` board-speed anti-cheat); RIDE is rejected, the float is
- * still consumed to keep the stream aligned.
+ * `nId` is the item's STABLE `m_dwObjId` (client `SendDoEquip`, DPClient.cpp:9201);
+ * `nPart` is the equip slot (1..30), or -1 (client default for double-click /
+ * drag-drop) meaning "resolve from the item's own dwParts". Equip-vs-unequip is decided
+ * like C++ `IsEquip(nId)` (Item.h:599) -- by whether the item currently sits in
+ * an equip slot -- NOT by the nId value, because the objid is stable and does
+ * not change when the item moves between bag and equip slots. A trailing FLOAT
+ * is sent only for `PARTS_RIDE(13)` items (`__HACK_1023` board-speed anti-cheat);
+ * RIDE is rejected, the float is still consumed to keep the stream aligned.
  *
- * On success: self-confirm DOEQUIP to the equipper + vicinity DOEQUIP so peers
- * render the weapon/armor on the body.
+ * On success: one vicinity DOEQUIP (6-field) broadcast to self + peers. Self
+ * needs it to move the item client-side (`OnDoEquip` IsActiveMover path does
+ * `GetAtId(nId)` then the `DoEquip` worker relocates the item); peers render
+ * the weapon/armor on the body.
  *
  * @module handlers/doEquip
  */
@@ -23,8 +28,9 @@ import { createLogger } from '@flyff/core/logger.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { ZoneManager } from '../managers/zone.manager.js';
 import type { EquipService } from '../services/equip.service.js';
-import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
-import { buildDoEquipSelf, buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
+import type { CPlayer } from '../entities/player.js';
+import { INVENTORY_SLOTS, MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
+import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
 
 const logger = createLogger({ module: 'doEquip-handler' });
 const PARTS_RIDE = 13;
@@ -46,29 +52,42 @@ export class DoEquipHandler {
 
     try {
       const nId = reader.readDword();
-      const nPart = reader.readDword();
+      const nPartRaw = reader.readDword();
       Validate.dword(nId);
-      Validate.dword(nPart);
+      Validate.dword(nPartRaw);
+      // `int nPart` on the wire (DPClient.cpp:9202). 0xffffffff == -1 == the client's
+      // default arg for the normal equip UX (double-click / drag-drop). The server
+      // resolves the target slot from the item prop in that case (EquipService.equip,
+      // mirroring C++ DoUseEquipmentItem). Coerce to signed int32 so -1 is detectable.
+      const nPart = nPartRaw | 0;
       if (nPart === PARTS_RIDE) reader.readFloat(); // __HACK_1023 trailing float -- consume + reject below
 
-      // nId in the equip range => unequip that part; main-bag nId => equip into nPart.
-      if (nId >= MAX_INVENTORY) {
-        const r = this.deps.equipService.unequip(player, nId - MAX_INVENTORY);
+      // Client sends the item's STABLE m_dwObjId (DPClient.cpp:9201 SendDoEquip).
+      // It does not change across equip/unequip/move (C++ UnEquip only remaps
+      // m_apIndex/m_dwObjIndex, Item.h:571). Our flat array relocates items on
+      // equip, so resolve the objid -> current slot, then discriminate by slot
+      // range like C++ IsEquip(nId) (Item.h:599: m_dwObjIndex >= MAX_INVENTORY).
+      // Discriminating by nId>=MAX_INVENTORY breaks for session-equipped items:
+      // their objid is the original BAG slot, so the client sends nId<MAX_INVENTORY
+      // for an equipped item and we'd misroute to equip + reject (nothing happens).
+      const idx = this.locateByObjId(player, nId);
+      if (idx < 0) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP item not found by objid'); return; }
+
+      // Wire nId = the stable objid (echo nId). OnDoEquip's self-path resolves the
+      // item via GetAtId(nId) then its DoEquip worker relocates it client-side.
+      if (idx >= MAX_INVENTORY) {
+        const r = this.deps.equipService.unequip(player, idx - MAX_INVENTORY);
         if (!r.ok) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP unequip rejected'); return; }
-        this.deps.playerManager.sendTo(player, buildDoEquipSelf(player.m_idPlayer, r.invSlot, r.itemId, false));
         this.deps.zoneManager.broadcastAround(
           player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
-          buildDoEquipVicinity(player.m_idPlayer, r.invSlot, false, { dwId: 0, nOption: 0, byFlag: 0 }, r.parts),
-          player,
+          buildDoEquipVicinity(player.m_idPlayer, nId, false, { dwId: r.itemId, nOption: 0, byFlag: 0 }, r.parts),
         );
       } else {
-        const r = this.deps.equipService.equip(player, nId, nPart);
+        const r = this.deps.equipService.equip(player, idx, nPart);
         if (!r.ok) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP equip rejected'); return; }
-        this.deps.playerManager.sendTo(player, buildDoEquipSelf(player.m_idPlayer, r.invSlot, r.itemId, true));
         this.deps.zoneManager.broadcastAround(
           player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
-          buildDoEquipVicinity(player.m_idPlayer, r.invSlot, true, { dwId: r.itemId, nOption: 0, byFlag: 0 }, r.parts),
-          player,
+          buildDoEquipVicinity(player.m_idPlayer, nId, true, { dwId: r.itemId, nOption: 0, byFlag: 0 }, r.parts),
         );
       }
     } catch (error) {
@@ -78,5 +97,16 @@ export class DoEquipHandler {
       }
       throw error;
     }
+  }
+
+  /** Find the current slot of the item whose stable objid == `objid`. Falls back
+   *  to treating `objid` as a slot for items without a tracked objid (fixtures). */
+  private locateByObjId(player: CPlayer, objid: number): number {
+    for (let i = 0; i < INVENTORY_SLOTS; i++) {
+      const s = player.m_Inventory[i];
+      if (s && s.objid === objid) return i;
+    }
+    if (objid >= 0 && objid < INVENTORY_SLOTS && player.m_Inventory[objid]) return objid;
+    return -1;
   }
 }

@@ -32,11 +32,11 @@ export interface EquipServiceDeps {
 }
 
 export type EquipResult =
-  | { ok: true; parts: number; itemId: number; invSlot: number }
+  | { ok: true; parts: number; itemId: number; invSlot: number; objid: number }
   | { ok: false; reason: 'invalid' | 'not_equippable' | 'bag_full' | 'restricted' };
 
 export type UnequipResult =
-  | { ok: true; parts: number; itemId: number; invSlot: number }
+  | { ok: true; parts: number; itemId: number; invSlot: number; objid: number }
   | { ok: false; reason: 'invalid' | 'bag_full' | 'not_equipped' };
 
 export class EquipService {
@@ -49,25 +49,37 @@ export class EquipService {
    * occupied. Returns the parts for the DOEQUIP broadcast.
    */
   equip(player: CPlayer, invSlot: number, parts: number): EquipResult {
-    if (!this.inMainBag(invSlot) || parts <= 0 || parts >= MAX_HUMAN_PARTS) return { ok: false, reason: 'invalid' };
-    if (parts === PARTS_RIDE) return { ok: false, reason: 'restricted' };
+    if (!this.inMainBag(invSlot)) return { ok: false, reason: 'invalid' };
     const item = player.m_Inventory[invSlot];
     if (!item) return { ok: false, reason: 'invalid' };
     const prop = this.deps.getItem(item.itemId);
     const equipSlot = prop?.equip_slot;
-    if (!equipSlot || equipSlot !== parts) return { ok: false, reason: 'not_equippable' };
+    if (!equipSlot || equipSlot < 0 || equipSlot >= MAX_HUMAN_PARTS) return { ok: false, reason: 'not_equippable' };
+    // Client sends nPart = -1 for the normal equip UX (double-click / drag-drop;
+    // `SendDoEquip` default arg, DPClient.cpp:9141). C++ `DoUseEquipmentItem`
+    // resolves the slot from `pItemProp->dwParts` when nPart == -1 (MoverEquip.cpp
+    // :2599). Any explicit nPart must equal the item's own slot (anti-cheat).
+    if (parts !== -1 && parts !== equipSlot) return { ok: false, reason: 'not_equippable' };
+    if (equipSlot === PARTS_RIDE) return { ok: false, reason: 'restricted' };
     if (prop.level_req && player.m_nLevel < prop.level_req) return { ok: false, reason: 'restricted' };
 
-    const equipIdx = MAX_INVENTORY + parts;
+    const equipIdx = MAX_INVENTORY + equipSlot;
     const prev = player.m_Inventory[equipIdx] ?? null;
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'ITEM_EQUIP', payload: { invSlot, equipIdx, itemId: item.itemId } });
+    // Journal BOTH slots as canonical INVENTORY_SLOT (absolute end-state) so boot
+    // recovery replays them. The old non-canonical ITEM_EQUIP type had no
+    // replayer, so on crash the source slot's earlier INVENTORY_SLOT buy row
+    // replayed and resurrected the bag copy while the equip slot stayed put --
+    // item dupe (memory: wal-crash-recovery-absolute-state / bank-gold-persist-
+    // both-sides). itemId 0 => slot cleared.
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: equipIdx, itemId: item.itemId, count: item.count } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: invSlot, itemId: prev?.itemId ?? 0, count: prev?.count ?? 0 } });
     player.m_Inventory[equipIdx] = item;
     player.m_Inventory[invSlot] = prev;
     player._dirty.add('m_Inventory');
     this.persistSlot(player, equipIdx, item);
     if (prev) this.persistSlot(player, invSlot, prev);
     else this.deps.inventoryRepo.removeItem(player.m_idPlayer, invSlot).catch((e: unknown) => logger.warn({ err: e }, 'equip removeItem failed'));
-    return { ok: true, parts, itemId: item.itemId, invSlot };
+    return { ok: true, parts: equipSlot, itemId: item.itemId, invSlot, objid: item.objid ?? invSlot };
   }
 
   /** Unequip `parts` back into the first empty main-bag slot. */
@@ -79,13 +91,16 @@ export class EquipService {
     const dst = this.findEmpty(player);
     if (dst === -1) return { ok: false, reason: 'bag_full' };
 
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'ITEM_UNEQUIP', payload: { equipIdx, invSlot: dst, itemId: item.itemId } });
+    // Canonical INVENTORY_SLOT for both slots (see equip() note). equip slot
+    // cleared, item lands in the first empty bag slot.
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: equipIdx, itemId: 0, count: 0 } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: item.itemId, count: item.count } });
     player.m_Inventory[equipIdx] = null;
     player.m_Inventory[dst] = item;
     player._dirty.add('m_Inventory');
     this.deps.inventoryRepo.removeItem(player.m_idPlayer, equipIdx).catch((e: unknown) => logger.warn({ err: e }, 'unequip remove equipSlot failed'));
     this.persistSlot(player, dst, item);
-    return { ok: true, parts, itemId: item.itemId, invSlot: dst };
+    return { ok: true, parts, itemId: item.itemId, invSlot: dst, objid: item.objid ?? equipIdx };
   }
 
   private inMainBag(slot: number): boolean {

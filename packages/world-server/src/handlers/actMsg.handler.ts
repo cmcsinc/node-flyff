@@ -31,13 +31,14 @@ import { PacketError } from '@flyff/core/errors.js';
 import { createLogger } from '@flyff/core/logger.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { ItemManager } from '../managers/item.manager.js';
+import type { GroundItem } from '../entities/item.js';
 import type { InventoryService } from '../services/inventory.service.js';
 import type { CPlayer } from '../entities/player.js';
 import { isGoldSeed } from '../services/drop.service.js';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
 import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
 import { buildSetPointParam, DST_GOLD } from '../net/snapshot/pointParam.serializer.js';
-import { NULL_ID } from '../net/snapshot/constants.js';
+import { NULL_ID, LOOT_FFA_MS } from '../net/snapshot/constants.js';
 
 const logger = createLogger({ module: 'actMsg-handler' });
 
@@ -50,12 +51,16 @@ export interface ActMsgHandlerDeps {
   inventoryService: InventoryService;
   /** Injector seam for tests. */
   createItemSerializer?: CreateItemSnapshotSerializer;
+  /** Injector seam for tests; defaults to `Date.now`. */
+  now?: () => number;
 }
 
 export class ActMsgHandler {
   private readonly createItemSerializer: CreateItemSnapshotSerializer;
+  private readonly now: () => number;
   constructor(private readonly deps: ActMsgHandlerDeps) {
     this.createItemSerializer = deps.createItemSerializer ?? new CreateItemSnapshotSerializer();
+    this.now = deps.now ?? Date.now;
   }
 
   handleActMsg(socket: ClientSocket, reader: PacketReader): void {
@@ -85,9 +90,7 @@ export class ActMsgHandler {
   private pickup(player: CPlayer, objid: number): void {
     const item = this.deps.itemManager.get(objid);
     if (!item) return;
-
-    // Ownership: FFA (NULL_ID) or the recorded owner. ponytail: party-share + 7 s FFA timeout.
-    if (item.m_idOwn !== NULL_ID && item.m_idOwn !== player.m_idPlayer) return;
+    if (!this.isLoot(player, item)) return;
 
     if (isGoldSeed(item.m_dwItemId)) {
       this.deps.inventoryService.addGold(player, item.m_nItemNum);
@@ -110,5 +113,20 @@ export class ActMsgHandler {
         : buildUpdateItemCount(player.m_idPlayer, r.slot, r.count),
     );
     this.deps.itemManager.remove(objid);
+  }
+
+  /**
+   * `CMover::IsLoot` (`_Common/MoverActEvent.cpp:2193-2255`). A pile is lootable
+   * by `player` when:
+   *   - it has no owner (`m_idOwn == NULL_ID`) -> free-for-all, or
+   *   - `player` IS the recorded owner, or
+   *   - {@link LOOT_FFA_MS} has elapsed since `m_dwDropTime` -> free-for-all
+   *     (the anti-loot-steal window: owner-locked for 7 s, then anyone).
+   * ponytail: same-`m_idparty` share + invalid-owner FFA (C++ lines 2206-2211)
+   * -- add when a party system ships.
+   */
+  private isLoot(player: CPlayer, item: GroundItem): boolean {
+    if (item.m_idOwn === NULL_ID || item.m_idOwn === player.m_idPlayer) return true;
+    return this.now() - item.m_dwDropTime >= LOOT_FFA_MS;
   }
 }

@@ -43,9 +43,10 @@ describe('buildOpenShopWnd', () => {
 
   it('serializes the populated tab 0 container', () => {
     const tab0 = 16;
-    // m_apIndex: slot 0 occupied (index 0), rest NULL_ID
-    assert.equal(buf.readUInt32LE(tab0 + 0), 0, 'm_apIndex[0] = slot 0');
-    assert.equal(buf.readUInt32LE(tab0 + 4), NULL_ID, 'm_apIndex[1] = NULL_ID');
+    // m_apIndex is identity for every slot (vendor tab is a pure bag container);
+    // occupancy is encoded in the item body, not in m_apIndex.
+    assert.equal(buf.readUInt32LE(tab0 + 0), 0, 'm_apIndex[0] = identity 0');
+    assert.equal(buf.readUInt32LE(tab0 + 4), 1, 'm_apIndex[1] = identity 1 (empty)');
 
     const mApEnd = tab0 + 4 * MAX_VENDOR_INVENTORY; // after 100 DWORDs
     assert.equal(buf[mApEnd], 1, 'chSize = 1 occupied slot');
@@ -57,16 +58,16 @@ describe('buildOpenShopWnd', () => {
     assert.equal(buf.readUInt32LE(body + 4), 81, 'm_dwItemId = 81');
     assert.equal(buf.readUInt32LE(body + 8), 0, 'm_liSerialNumber (DWORD)');
     assert.equal(buf.readInt16LE(body + 16), 1, 'm_nItemNum = count 1');
-    // 78 B body -> adwObjIndex follows at body + 78
-    assert.equal(buf.readUInt32LE(body + 78 + 0), 0, 'adwObjIndex[0] = slot 0');
-    assert.equal(buf.readUInt32LE(body + 78 + 4), NULL_ID, 'adwObjIndex[1] = NULL_ID');
+    // 78 B body -> adwObjIndex follows at body + 78 (identity for every slot)
+    assert.equal(buf.readUInt32LE(body + 78 + 0), 0, 'adwObjIndex[0] = identity 0');
+    assert.equal(buf.readUInt32LE(body + 78 + 4), 1, 'adwObjIndex[1] = identity 1');
   });
 
-  it('serializes an empty tab identically to the empty container', () => {
+  it('serializes an empty tab as identity m_apIndex + chSize 0', () => {
     // Tab 1 starts after tab 0 (880 B): 16 + 880 = 896.
     const tab1 = 16 + 880;
     for (let i = 0; i < MAX_VENDOR_INVENTORY; i++) {
-      assert.equal(buf.readUInt32LE(tab1 + i * 4), NULL_ID, `tab1 m_apIndex[${i}] = NULL_ID`);
+      assert.equal(buf.readUInt32LE(tab1 + i * 4), i, `tab1 m_apIndex[${i}] = identity`);
     }
     assert.equal(buf[tab1 + 4 * MAX_VENDOR_INVENTORY], 0, 'tab1 chSize = 0');
   });

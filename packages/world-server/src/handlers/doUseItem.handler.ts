@@ -21,7 +21,7 @@ import type { PlayerManager } from '../managers/player.manager.js';
 import type { ZoneManager } from '../managers/zone.manager.js';
 import type { UseItemService } from '../services/useItem.service.js';
 import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
-import { buildDoEquipSelf, buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
+import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer.js';
 
 const logger = createLogger({ module: 'doUseItem-handler' });
@@ -53,17 +53,21 @@ export class DoUseItemHandler {
       const r = this.deps.useItemService.use(player, dwData, nPart);
       if (r.kind === 'equip') {
         const e = r.equip;
-        if (!e.ok) return;
-        this.deps.playerManager.sendTo(player, buildDoEquipSelf(player.m_idPlayer, e.invSlot, e.itemId, true));
+        if (!e.ok) { logger.debug({ charId: player.m_idPlayer, nId: (dwData >>> 16) & 0xffff, nPart, reason: e.reason }, 'DOUSEITEM equip rejected'); return; }
+        // 6-field vicinity format, sent to self + peers alike (C++ g_UserMng::
+        // AddDoEquip broadcasts to m_2pc incl self -- User.cpp:4515). The 3-field
+        // self variant is dead C++ (CUser::AddDoEquip) whose layout desyncs
+        // OnDoEquip's 6-field reader.
         this.deps.zoneManager.broadcastAround(
           player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
-          buildDoEquipVicinity(player.m_idPlayer, e.invSlot, true, { dwId: e.itemId, nOption: 0, byFlag: 0 }, e.parts),
-          player,
+          buildDoEquipVicinity(player.m_idPlayer, e.objid, true, { dwId: e.itemId, nOption: 0, byFlag: 0 }, e.parts),
         );
       } else if (r.kind === 'consumable') {
         if (r.hp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, r.hp));
         if (r.mp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, r.mp));
         if (r.fp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, r.fp));
+      } else if (r.kind === 'reject') {
+        logger.debug({ charId: player.m_idPlayer, nId: (dwData >>> 16) & 0xffff, nPart }, 'DOUSEITEM rejected (no equip_slot / unknown kind)');
       }
     } catch (error) {
       if (error instanceof PacketError) {

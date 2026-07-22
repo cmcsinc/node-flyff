@@ -35,6 +35,8 @@ import { SpawnManager } from '../../src/managers/spawn.manager.js';
 import { JoinService } from '../../src/services/join.service.js';
 import { JoinHandler } from '../../src/handlers/join.handler.js';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer.js';
+import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer.js';
+import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer.js';
 import { NpcSnapshotSerializer } from '../../src/net/snapshot/npcSnapshot.serializer.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import type { ResourceIndex, ZoneIndex } from '@flyff/resources';
@@ -224,6 +226,8 @@ describe('E2E byte chain: login CERTIFY -> cluster PRE_JOIN -> world JOIN snapsh
     const joinHandler = new JoinHandler(
       joinService,
       new PlayerSnapshotSerializer(),
+      new SetExperienceSerializer(),
+      new TaskBarSnapshotSerializer(),
     );
     await listener.start();
 

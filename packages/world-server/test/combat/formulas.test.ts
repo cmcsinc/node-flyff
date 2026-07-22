@@ -12,9 +12,10 @@ import * as assert from 'node:assert/strict';
 import {
   resolveMelee, getHitMinMax, getAttackResult, getParrying, calcDefense, expLevelDiffMult,
   addExp, expToNextLevel, withinLevelExp, cumulativeExp, subDieDecExp,
+  maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
 } from '../../src/combat/formulas.js';
-import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1 } from '../../src/combat/tables.js';
+import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables.js';
 
 const FIST = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 const BARE_HAND = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
@@ -234,5 +235,43 @@ describe('combat subDieDecExp (death penalty)', () => {
 
   it('never changes the level', () => {
     assert.equal(subDieDecExp(30, 100000).level, 30);
+  });
+});
+
+describe('vitals recovery (maxFatiguePoint / standRecovery)', () => {
+  // L1 VAGRANT (STA/INT=15), maxHP=100, maxMP=50. VAGRANT job factors:
+  // fFactorMaxFP=0.3, fFactorHPRec=1.2, fFactorMPRec=0.5, fFactorFPRec=0.5.
+  const vagrant = getJobProps(0);
+
+  it('maxFatiguePoint matches the C++ GetMaxFatiguePoint formula', () => {
+    // ((1*2 + 15*6)*0.3) + (15*0.3) = 27.6 + 4.5 = 32.1 -> 32
+    assert.equal(maxFatiguePoint(1, 15, vagrant.fFactorMaxFP), 32);
+    // ((10*2 + 15*6)*0.3) + 4.5 = (20+90)*0.3+4.5 = 33+4.5 = 37.5 -> 37
+    assert.equal(maxFatiguePoint(10, 15, vagrant.fFactorMaxFP), 37);
+  });
+
+  it('maxFatiguePoint guards divide-by-zero at level 0', () => {
+    // level clamps to 1 inside the formula; this just asserts no NaN/Infinity.
+    const v = maxFatiguePoint(0, 15, vagrant.fFactorMaxFP);
+    assert.equal(Number.isFinite(v), true);
+    assert.equal(v, 32); // clamps lv=1 -> same as the L1 case
+  });
+
+  it('standRecovery hand-computed for L1 VAGRANT (v9+ 0.9 factor baked in)', () => {
+    const maxFp = maxFatiguePoint(1, 15, vagrant.fFactorMaxFP);
+    const r = standRecovery(1, 15, 15, 100, 50, maxFp, vagrant);
+    // HP: ((1/3) + 100/500 + 15*1.2) * 0.9 = (0.333+0.2+18)*0.9 = 16.68 -> 16
+    assert.equal(r.hp, 16);
+    // MP: ((1.5 + 50/500 + 15*0.5) * 0.2) * 0.9 = (9.1*0.2)*0.9 = 1.638 -> 1
+    assert.equal(r.mp, 1);
+    // FP: ((2 + 32/500 + 15*0.5) * 0.2) * 0.9 = (9.564*0.2)*0.9 = 1.72 -> 1
+    assert.equal(r.fp, 1);
+  });
+
+  it('standRecovery clamps negatives to 0 (never drains)', () => {
+    const r = standRecovery(1, 0, 0, 0, 0, 0, vagrant);
+    assert.equal(r.hp, 0);
+    assert.equal(r.mp, 0);
+    assert.equal(r.fp, 0);
   });
 });

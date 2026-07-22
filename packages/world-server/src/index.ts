@@ -101,11 +101,13 @@ async function main(): Promise<void> {
     doUseItemHandler,
     bankHandler,
     shopHandler,
+    taskbarHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,
     useSkillHandler,
     doUseSkillPointHandler,
+    modifyStatusHandler,
     journal,
     journalReplayer,
     npcSpeechService,
@@ -113,6 +115,7 @@ async function main(): Promise<void> {
     spawnManager,
     aiSystem,
     checkpointSystem,
+    recoverySystem,
     itemManager,
   } = await compose();
 
@@ -138,6 +141,7 @@ async function main(): Promise<void> {
     questTracker.stop();
     aiSystem.stop();
     checkpointSystem.stop();
+    recoverySystem.stop();
     spawnManager.shutdown();
     itemManager.shutdown();
     journal.close();
@@ -191,11 +195,13 @@ async function main(): Promise<void> {
     doUseItemHandler,
     bankHandler,
     shopHandler,
+    taskbarHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,
     useSkillHandler,
     doUseSkillPointHandler,
+    modifyStatusHandler,
     onDisconnect: (socket) => {
       // Flush player state (position, vitals, stats, bank gold) + drop from
       // managers. disconnectByCharId swallows its own errors so this never

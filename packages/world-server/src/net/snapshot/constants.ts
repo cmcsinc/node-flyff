@@ -133,6 +133,14 @@ export const SNAPSHOTTYPE_SETEXPERIENCE = 0x0012;    // MsgHdr.h -- AddSetExperi
 export const SNAPSHOTTYPE_SETLEVEL = 0x0011;         // MsgHdr.h -- AddSetLevel vicinity (skips self)
 export const SNAPSHOTTYPE_MOVERDEATH = 0x00c7;       // MsgHdr.h -- AddMoverDeath vicinity
 export const SNAPSHOTTYPE_SETPOINTPARAM = 0x001e;    // MsgHdr.h -- AddSetPointParam: int param(DST_*) | int value
+/**
+ * `SNAPSHOTTYPE_SETSTATE` (MsgHdr.h:986) -- `CUser::AddSetState`
+ * (`WORLDSERVER/User.cpp:2407`): `OBJID | SETSTATE | nStr:DWORD | nSta:DWORD |
+ * nDex:DWORD | nInt:DWORD | nRemainLP:DWORD(0) | nRemainGP:DWORD`. Self-only,
+ * sent after a stat allocation (`OnModifyStatus`) so the client refreshes its
+ * stat window + recomputes derived HP/MP/FP (DPClient.cpp:13376 OnSetState).
+ */
+export const SNAPSHOTTYPE_SETSTATE = 0x006a;
 
 // --- Skill S->C snapshot sub-types (`_Network/MsgHdr.h`) -----------------------
 // USESKILL (MsgHdr.h:884) -- `CUserMng::AddUseSkill` (User.cpp:4501):
@@ -247,12 +255,43 @@ export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
 /** `NULL_ID` (`_Network/MsgHdr.h`) -- "no object" sentinel. */
 export const NULL_ID = 0xffffffff;
 
+/**
+ * Anti-loot-steal FFA window. A dropped pile is locked to its owner (the
+ * first-hitter / killer) for this long; afterwards anyone may loot it.
+ * Ports `CMover::IsLoot` (`_Common/MoverActEvent.cpp:2234`): after `SEC(7)`
+ * since `m_dwDropTime` the pile goes free-for-all. (Pre-`__S_9` builds used
+ * 40 s; v15 ships the 7 s gate.)
+ */
+export const LOOT_FFA_MS = 7_000;
+
 // --- SetPointParam S->C (`_Network/MsgHdr.h` / `resource/defineAttribute.h`) ----
 // Generic per-mover stat update: `objid | SETPOINTPARAM | paramId:DWORD | value:DWORD`
 // (`CUserMng::AddSetPointParam`, User.cpp:3169). `CMover::AddGold` (Mover.cpp:638)
 // notifies the client of a gold-balance change via AddSetPointParam(self, DST_GOLD, total).
 // (SNAPSHOTTYPE_SETPOINTPARAM is defined with the combat snapshots above.)
 export const DST_GOLD = 10000;                       // defineAttribute.h:352
+
+// --- Taskbar hotkey grid (`_Common/ProjectCmn.h:901-923`) ----------------------
+// m_playTaskBar.m_aSlotItem[nSlotIndex][nIndex] -- the player's bound hotkey
+// shortcuts (items/skills/emotes/chat macros). Drives ADDITEMTASKBAR /
+// REMOVEITEMTASKBAR (DPSrvr.cpp:2203/2251).
+export const MAX_SLOT_ITEM_COUNT = 8;   // ProjectCmn.h:904 -- taskbar pages (rows)
+export const MAX_SLOT_ITEM = 9;         // ProjectCmn.h:901 -- slots per page
+export const MAX_SHORTCUT_STRING = 128; // _Common/DefineCommon.h:9 -- chat-macro text cap
+/**
+ * `m_dwShortcut` discriminant (`ProjectCmn.h:910-923`) -- selects how the
+ * client interprets the rest of the SHORTCUT struct. NONE = empty slot.
+ */
+export const SHORTCUT = Object.freeze({
+  NONE:      0,
+  OBJECT:    7,   // inventory item
+  CHAT:      8,   // chat macro (carries m_szString; capped at 10/player)
+  SKILLFUN:  9,   // skill
+  EMOTICON:  10,
+  LORDSKILL: 11,
+} as const);
+/** Per-player cap on chat-macro shortcuts (`OnAddItemTaskBar:2231` rejects >9). */
+export const MAX_SHORTCUT_CHAT = 9;
 
 /**
  * Circular ground-plane broadcast radius approximating the v15 `CLinkMap`

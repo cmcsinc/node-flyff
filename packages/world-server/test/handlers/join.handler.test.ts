@@ -6,6 +6,8 @@ import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
 import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { JoinHandler } from '../../src/handlers/join.handler.js';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer.js';
+import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer.js';
+import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer.js';
 import type { JoinService, JoinOutcome } from '../../src/services/join.service.js';
 import { CPlayer } from '../../src/entities/player.js';
 import type { CharacterRow } from '@flyff/database';
@@ -57,31 +59,36 @@ function fakeJoinService(outcome: JoinOutcome): JoinService {
 
 describe('JoinHandler', () => {
   const snapshotSerializer = new PlayerSnapshotSerializer();
+  const setExperienceSerializer = new SetExperienceSerializer();
+  const taskbarSerializer = new TaskBarSnapshotSerializer();
 
   it('writes the self-spawn snapshot on a successful join', async () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
-    const handler = new JoinHandler(fakeJoinService({ ok: true, player }), snapshotSerializer);
+    const handler = new JoinHandler(fakeJoinService({ ok: true, player }), snapshotSerializer, setExperienceSerializer, taskbarSerializer);
     const sock = mockSocket();
 
     await handler.handleJoin(sock as unknown as never, new PacketReader(joinPayload(42, 0)));
 
-    assert.equal(sock._written.length, 1);
+    // self-spawn, SETEXPERIENCE (loaded exp), then TASKBAR grid repush -- 3 packets total.
+    assert.equal(sock._written.length, 3);
     assert.equal(sock._written[0]!.length, 3354); // WORLD_READINFO + "Hero" snapshot (3350 base + 4)
     assert.equal(sock._destroyed, false);
   });
 
-  it('sends only the self-spawn -- NPC/monster spawns are decoupled to MAP_KEY vicinity', async () => {
+  it('sends only the self-spawn + experience + taskbar -- NPC/monster spawns are decoupled to MAP_KEY vicinity', async () => {
     // JOIN must not touch SpawnManager. Server-side spawns materialize at boot;
     // client notification is the MAP_KEY-triggered vicinity burst (see
     // VicinityService). Bolting ADD_OBJ onto JOIN races the client world load
-    // and null-derefs OnAddObj (DPClient.cpp:1160).
+    // and null-derefs OnAddObj (DPClient.cpp:1160). The SETEXPERIENCE +
+    // TASKBAR repush are safe -- they only sync exp + fill the hotkey grid,
+    // independent of world load.
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
-    const handler = new JoinHandler(fakeJoinService({ ok: true, player }), snapshotSerializer);
+    const handler = new JoinHandler(fakeJoinService({ ok: true, player }), snapshotSerializer, setExperienceSerializer, taskbarSerializer);
     const sock = mockSocket();
 
     await handler.handleJoin(sock as unknown as never, new PacketReader(joinPayload(42, 0)));
 
-    assert.equal(sock._written.length, 1); // self-spawn only -- never an NPC snapshot
+    assert.equal(sock._written.length, 3); // self-spawn + experience + taskbar -- never an NPC snapshot
     assert.equal(sock._destroyed, false);
   });
 
@@ -89,6 +96,8 @@ describe('JoinHandler', () => {
     const handler = new JoinHandler(
       fakeJoinService({ ok: false, reason: 'bad_token' }),
       snapshotSerializer,
+      setExperienceSerializer,
+      taskbarSerializer,
     );
     const sock = mockSocket();
 
@@ -103,7 +112,7 @@ describe('JoinHandler', () => {
     const svc = {
       join: async () => { called = true; return { ok: false, reason: 'bad_token' as const }; },
     } as unknown as JoinService;
-    const handler = new JoinHandler(svc, snapshotSerializer);
+    const handler = new JoinHandler(svc, snapshotSerializer, setExperienceSerializer, taskbarSerializer);
     const sock = mockSocket();
 
     await handler.handleJoin(sock as unknown as never, new PacketReader(joinPayload(42, 5)));
