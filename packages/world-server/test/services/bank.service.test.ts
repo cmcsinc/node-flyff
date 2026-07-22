@@ -1,5 +1,5 @@
 /**
- * BankService test — account-shared bank item/gold deposit & withdraw.
+ * BankService test -- account-shared bank item/gold deposit & withdraw.
  *
  * Deposit moves an item from the main bag into the first empty bank tab slot;
  * withdraw reverses it. Gold moves between `m_nGold` and `m_BankGold[0]`. Each
@@ -31,6 +31,8 @@ function makeSvc() {
   const goldSet: number[] = [];
   const invRemove: number[] = [];
   const invSet: Array<{ slot: number; itemId: number; qty: number }> = [];
+  const passSet: string[] = [];
+  const goldUpdates: number[] = [];
   const svc = new BankService({
     bankRepo: {
       setItem: async (_a: number, tab: number, slot: number, itemId: number, qty: number) => bankSet.push({ tab, slot, itemId, qty }),
@@ -42,9 +44,13 @@ function makeSvc() {
       removeItem: async (_c: number, slot: number) => invRemove.push(slot),
       setItem: async (_c: number, slot: number, itemId: number, qty: number) => invSet.push({ slot, itemId, qty }),
     },
+    characterRepo: {
+      updateBankPass: async (_id: number, bankPass: string) => { passSet.push(bankPass); },
+      updateGold: async (_id: number, gold: number) => { goldUpdates.push(gold); },
+    },
     journal: { append: (e: { type: string }) => { journalCalls.push(e); } } as never,
   });
-  return { svc, journalCalls, bankSet, bankRemove, goldSet, invRemove, invSet };
+  return { svc, journalCalls, bankSet, bankRemove, goldSet, invRemove, invSet, passSet, goldUpdates };
 }
 
 describe('BankService.deposit', () => {
@@ -132,17 +138,33 @@ describe('BankService.withdraw', () => {
 });
 
 describe('BankService gold', () => {
-  it('depositGold moves penya from inv to bank tab 0', async () => {
+  it('depositGold moves penya from inv to bank tab 0 + persists both sides', async () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_nGold = 1000;
-    const { svc, goldSet, journalCalls } = makeSvc();
+    const { svc, goldSet, goldUpdates, journalCalls } = makeSvc();
     const r = svc.depositGold(player, 400);
     assert.equal(r.ok, true);
     assert.equal(player.m_nGold, 600);
     assert.equal(player.m_BankGold[0], 400);
-    assert.equal(journalCalls[0]!.type, 'BANK_GOLD_IN');
+    assert.equal(journalCalls[0]!.type, 'CHAR_GOLD');
+    assert.deepEqual((journalCalls[0] as { payload: { gold: number } }).payload, { gold: 600 });
     await Promise.resolve();
     assert.equal(goldSet[0], 400, 'bank gold persisted');
+    assert.equal(goldUpdates[0], 600, 'inv gold persisted -- prevents relog dupe');
+  });
+
+  it('withdrawGold moves penya from bank to inv + persists both sides', async () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = 100;
+    player.m_BankGold[0] = 500;
+    const { svc, goldSet, goldUpdates } = makeSvc();
+    const r = svc.withdrawGold(player, 200);
+    assert.equal(r.ok, true);
+    assert.equal(player.m_nGold, 300);
+    assert.equal(player.m_BankGold[0], 300);
+    await Promise.resolve();
+    assert.equal(goldSet[0], 300, 'bank gold persisted');
+    assert.equal(goldUpdates[0], 300, 'inv gold persisted');
   });
 
   it('withdrawGold rejects over-spend', () => {
@@ -152,5 +174,97 @@ describe('BankService gold', () => {
     const r = svc.withdrawGold(player, 500);
     assert.equal(r.ok, false);
     assert.equal(player.m_BankGold[0], 100, 'unchanged on reject');
+  });
+});
+
+describe('BankService.changeBankPass', () => {
+  it('saves the new password + journals + persists when the old one matches', async () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_szBankPass = '1234';
+    const { svc, journalCalls, passSet } = makeSvc();
+
+    const r = svc.changeBankPass(player, '1234', '4321', 0xffffffff, 0);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_szBankPass, '4321');
+    assert.equal(journalCalls[0]!.type, 'BANK_PASS', 'journal before persist');
+    assert.deepEqual((journalCalls[0] as { payload: { bankPass: string } }).payload, { bankPass: '4321' });
+    await Promise.resolve();
+    assert.equal(passSet[0], '4321', 'password persisted');
+  });
+
+  it('rejects (nMode=0) when the old password does not match', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_szBankPass = '1234';
+    const { svc, journalCalls, passSet } = makeSvc();
+
+    const r = svc.changeBankPass(player, 'wrong', '4321', 0xffffffff, 0);
+
+    assert.equal(r.ok, false);
+    assert.equal(player.m_szBankPass, '1234', 'password unchanged');
+    assert.equal(journalCalls.length, 0, 'nothing journaled');
+    assert.equal(passSet.length, 0, 'nothing persisted');
+  });
+
+  it('rejects a password longer than 4 chars (OnChangeBankPass:3965)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_szBankPass = '1234';
+    const { svc } = makeSvc();
+    assert.equal(svc.changeBankPass(player, '1234', '12345', 0xffffffff, 0).ok, false, 'new too long');
+    assert.equal(svc.changeBankPass(player, '12345', '9999', 0xffffffff, 0).ok, false, 'old too long');
+    assert.equal(player.m_szBankPass, '1234', 'unchanged on over-length reject');
+  });
+
+  it('clears to the no-password sentinel when the new pass is empty', async () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_szBankPass = '1234';
+    const { svc, passSet } = makeSvc();
+    const r = svc.changeBankPass(player, '1234', '', 0xffffffff, 0);
+    assert.equal(r.ok, true);
+    assert.equal(player.m_szBankPass, '0000');
+    await Promise.resolve();
+    assert.equal(passSet[0], '0000');
+  });
+});
+
+describe('BankService.confirmBankPass', () => {
+  it('opens the bank when the password matches', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_szBankPass = '1234';
+    const { svc } = makeSvc();
+    const r = svc.confirmBankPass(player, '1234', 0xffffffff, 0);
+    assert.equal(r.ok, true);
+    assert.equal(player.m_bBankOpen, true);
+  });
+
+  it('re-prompts (nMode=0) and stays closed on a mismatch', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_szBankPass = '1234';
+    const { svc } = makeSvc();
+    const r = svc.confirmBankPass(player, 'wrong', 0xffffffff, 0);
+    assert.equal(r.ok, false);
+    assert.equal(player.m_bBankOpen, false);
+  });
+
+  it('accepts any password on a password-less bank (0000 sentinel)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const { svc } = makeSvc();
+    const r = svc.confirmBankPass(player, '0000', 0xffffffff, 0);
+    assert.equal(r.ok, true);
+  });
+});
+
+describe('BankService.open', () => {
+  it('returns nMode 0 (set-pin dialog) when no password is set', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const { svc } = makeSvc();
+    assert.equal(svc.open(player), 0);
+    assert.equal(player.m_bBankOpen, true);
+  });
+
+  it('returns nMode 1 (enter-pin dialog) when a password is set', () => {
+    const player = CPlayer.fromRow(makeRow({ bank_pass: '1234' }), { write: () => true });
+    const { svc } = makeSvc();
+    assert.equal(svc.open(player), 1);
   });
 });

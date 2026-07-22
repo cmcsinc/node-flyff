@@ -1,9 +1,9 @@
 /**
- * BankService — bank open + item/gold deposit & withdraw.
+ * BankService -- bank open + item/gold deposit & withdraw.
  *
  * Ports `CDPSrvr::OnPutItemBank` / `OnGetItemBank` / `OnPutGoldBank` /
  * `OnGetGoldBank` (`WORLDSERVER/DPSrvr.cpp:3430/3791/3848/3900`). Bank is
- * account-shared (3 tabs × BANK_SLOTS). Moves items between the main bag and
+ * account-shared (3 tabs * BANK_SLOTS). Moves items between the main bag and
  * `m_Bank[tab]`, gold between `m_nGold` and `m_BankGold[0]`. Each journals +
  * persists before the handler acks (PUTITEMBANK / GETITEMBANK / PUTGOLDBANK).
  *
@@ -11,12 +11,12 @@
  * state. Inventory-side changes the client applies locally (same model as
  * MOVEITEM).
  *
- * ponytail: per-tab gold (tabs 1/2), bank password, bank-to-bank transfer.
+ * ponytail: per-tab gold (tabs 1/2), bank-to-bank transfer.
  *
  * @module services/bank
  */
 
-import type { BankRepository, InventoryRepository, Journal } from '@flyff/database';
+import type { BankRepository, InventoryRepository, CharacterRepository, Journal } from '@flyff/database';
 import { createLogger } from '@flyff/core/logger.js';
 import type { CPlayer, InventorySlot } from '../entities/player.js';
 import { MAX_INVENTORY, BANK_SLOTS, MAX_BANK_TABS } from '../net/snapshot/constants.js';
@@ -26,8 +26,16 @@ const logger = createLogger({ module: 'bank-service' });
 export interface BankServiceDeps {
   bankRepo: Pick<BankRepository, 'setItem' | 'removeItem' | 'getGold' | 'setGold'>;
   inventoryRepo: Pick<InventoryRepository, 'removeItem' | 'setItem'>;
+  characterRepo?: Pick<CharacterRepository, 'updateBankPass' | 'updateGold'>;
   journal?: Journal;
 }
+
+/** Max bank-password length (C++ `OnChangeBankPass:3965` rejects `strlen > 4`). */
+const MAX_BANK_PASS_LEN = 4;
+/** Sentinel for "no password set" (C++ `OnOpenBankWnd:3218`). */
+const NO_BANK_PASS = '0000';
+
+export type ChangeBankPassResult = { ok: boolean; dwId: number; dwItemId: number };
 
 export type DepositResult =
   | { ok: true; tab: number; bankSlot: number; item: InventorySlot }
@@ -44,14 +52,55 @@ export type GoldMoveResult =
 export class BankService {
   constructor(private readonly deps: BankServiceDeps) {}
 
-  /** Open the bank window for an NPC bank (dwId == NULL_ID). */
-  open(player: CPlayer): boolean {
+  /**
+   * Open the bank window for an NPC bank (dwId == NULL_ID). Mirrors
+   * `OnOpenBankWnd` (DPSrvr.cpp:3218): returns the `AddBankWindow` nMode that
+   * tells the client which dialog to open. Per the client's `OnBankWindow`
+   * (DPClient.cpp:2969) `if( nMode )` routes to `CWndConfirmBank` (enter-pin),
+   * else `CWndBankPassword` (set/change-pin). So:
+   *   `'0000'` (no password) -> nMode 0 -> set-pin dialog
+   *   any set password       -> nMode 1 -> enter-pin dialog (then CONFIRMBANK)
+   */
+  open(player: CPlayer): number {
     player.m_bBankOpen = true;
-    return true;
+    return player.m_szBankPass === NO_BANK_PASS ? 0 : 1;
   }
 
   close(player: CPlayer): void {
     player.m_bBankOpen = false;
+  }
+
+  /**
+   * CONFIRMBANK password check -- `OnConfirmBank:4017`. Body is
+   * `szPass(10), dwId, dwItemId`. Compares against the character's real
+   * `m_szBankPass`: on match the bank opens (nMode=1); on mismatch the client
+   * re-prompts (nMode=0). A password-less bank (`'0000'`) always matches.
+   */
+  confirmBankPass(player: CPlayer, szPass: string, dwId: number, dwItemId: number): ChangeBankPassResult {
+    const ok = szPass === player.m_szBankPass;
+    if (ok) player.m_bBankOpen = true;
+    return { ok, dwId, dwItemId };
+  }
+
+  /**
+   * CHANGEBANKPASS -- `OnChangeBankPass:3955`. Body is
+   * `szLastPass(<=4), szNewPass(<=4), dwId, dwItemId`. Rejects (silently, ack
+   * nMode=0) if either password exceeds 4 chars or the old one does not match
+   * the current `m_szBankPass`. On success the new password is set in memory,
+   * journaled, and persisted (mirrors `SendChangeBankPass`).
+   */
+  changeBankPass(player: CPlayer, szLastPass: string, szNewPass: string, dwId: number, dwItemId: number): ChangeBankPassResult {
+    if (szLastPass.length > MAX_BANK_PASS_LEN || szNewPass.length > MAX_BANK_PASS_LEN) {
+      return { ok: false, dwId, dwItemId };
+    }
+    if (szLastPass !== player.m_szBankPass) {
+      return { ok: false, dwId, dwItemId };
+    }
+    const newPass = szNewPass.length === 0 ? NO_BANK_PASS : szNewPass;
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_PASS', payload: { bankPass: newPass } });
+    player.m_szBankPass = newPass;
+    this.deps.characterRepo?.updateBankPass(player.m_idPlayer, newPass).catch((e: unknown) => logger.warn({ err: e }, 'bank pass persist failed'));
+    return { ok: true, dwId, dwItemId };
   }
 
   /** Move `count` from inv `invSlot` into the first empty slot of bank `tab`. */
@@ -107,9 +156,12 @@ export class BankService {
   /** Move `amount` gold from inv into bank (tab 0 account gold). */
   depositGold(player: CPlayer, amount: number): GoldMoveResult {
     if (amount <= 0 || amount > player.m_nGold) return { ok: false, reason: 'invalid' };
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_GOLD_IN', payload: { amount } });
     player.m_nGold -= amount;
     player.m_BankGold[0] += amount;
+    // Canonical CHAR_GOLD carries the absolute post-mutation m_nGold so WAL
+    // replay restores the inventory side too -- without this the characters.gold
+    // column keeps the pre-deposit value and a relog dupes the penya back.
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
     this.persistGold(player);
     return { ok: true, tab: 0, invGold: player.m_nGold, bankGold: player.m_BankGold[0] };
   }
@@ -117,15 +169,17 @@ export class BankService {
   /** Move `amount` gold from bank into inv. */
   withdrawGold(player: CPlayer, amount: number): GoldMoveResult {
     if (amount <= 0 || amount > player.m_BankGold[0]) return { ok: false, reason: 'invalid' };
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_GOLD_OUT', payload: { amount } });
     player.m_BankGold[0] -= amount;
     player.m_nGold += amount;
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
     this.persistGold(player);
     return { ok: true, tab: 0, invGold: player.m_nGold, bankGold: player.m_BankGold[0] };
   }
 
   private persistGold(player: CPlayer): void {
     player._dirty.add('m_nGold');
+    this.deps.characterRepo?.updateGold(player.m_idPlayer, player.m_nGold)
+      .catch((e: unknown) => logger.warn({ err: e }, 'inv gold persist failed'));
     this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[0]).catch((e: unknown) => logger.warn({ err: e }, 'bank setGold failed'));
   }
 
