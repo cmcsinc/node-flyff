@@ -41,6 +41,10 @@ export class PlayerSetDestObjHandler {
       if (!Number.isFinite(fRange)) {
         throw new PacketError('fRange must be finite');
       }
+      logger.info(
+        { charId: player.m_idPlayer, objid, fRange, from: player.m_vPos },
+        'PLAYERSETDESTOBJ received',
+      );
       this.movementService.applySetDestObj(player, objid, fRange);
     } catch (error) {
       if (error instanceof PacketError) {

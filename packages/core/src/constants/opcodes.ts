@@ -86,6 +86,14 @@ export const PACKETTYPE = Object.freeze({
   // SNAPSHOTTYPE_CONFIRMBANKPASS with nMode 1 (open) / 0 (re-prompt). Fires when
   // OPENBANKWND sent nMode=1 (bank has a password set).
   CONFIRMBANK:          0xffffff48,
+  // v15 taskbar hotkey binding -- `WORLDSERVER/DPSrvr.cpp:2203/2251`.
+  // OnAddItemTaskBar: `BYTE nSlotIndex, BYTE nIndex, DWORD dwShortcut, DWORD
+  // dwId, DWORD dwType, DWORD dwIndex, DWORD dwUserId, DWORD dwData` (+ String
+  // szString when dwShortcut==SHORTCUT_CHAT). OnRemoveItemTaskBar: `BYTE nSlotIndex,
+  // BYTE nIndex`. Server stores the binding into m_playTaskBar.m_aSlotItem in
+  // memory (no DB write in the C++ handler). Rejected paths send nothing.
+  ADDITEMTASKBAR:        0xffffff0c,
+  REMOVEITEMTASKBAR:     0xffffff0d,
   // v15 client -> world quest handlers (`WORLDSERVER/DPSrvr.cpp`, msghdr.h)
   REMOVEQUEST:          0x00ff0026, // OnRemoveQuest -- DWORD dwQuestCancelID
   QUESTHELPER_REQNPCPOS: 0x70005000, // OnReqQuestNPCPos -- String szCharKey
@@ -115,6 +123,7 @@ export const PACKETTYPE = Object.freeze({
   // v15 client -> world -- `WORLDSERVER/DPSrvr.cpp` handlers.
   MAP_KEY:              0xfffff000, // OnMapKey -- per-.wld checksum as client loads the world
   QUERY_PLAYER_DATA:    0xf000f802, // OnQueryPlayerData -- peer data when client cache stale
+  MODIFY_STATUS:        0xf000f501, // OnModifyStatus -- allocate STR/STA/DEX/INT from m_nRemainGP (DPSrvr.cpp:10345)
 } as const);
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];
@@ -142,6 +151,11 @@ export type LoginError = typeof LOGIN_ERROR[keyof typeof LOGIN_ERROR];
 export const SNAPSHOTTYPE = Object.freeze({
   CHAT:           0x0001,
   ACTMSG:         0x0002,
+  // MsgHdr.h:860 -- `CUser::AddMoveItem` (User.cpp:741):
+  // `[objid][0x0004][BYTE nItemType][BYTE nSrcIndex][BYTE nDestIndex]`. Echoes
+  // a bag slot swap -- the client does NOT swap optimistically; `OnMoveItem`
+  // (DPClient.cpp:2141) performs the `m_Inventory.Swap` on receipt.
+  MOVEITEM:       0x0004,
   DOEQUIP:        0x0006,
   SETPOS:         0x0010,
   SETLEVEL:       0x0011,
@@ -176,6 +190,17 @@ export const SNAPSHOTTYPE = Object.freeze({
   // `[objid][0x0014][CItemContainer x MAX_VENDOR_INVENTORY_TAB]`. The vendor's
   // 4 shop tabs serialized back-to-back.
   OPENSHOPWND:    0x0014,
+  // MsgHdr.h:1033 -- taskbar hotkey grid. Body is `CUserTaskBar::Serialize`
+  // (UserTaskBar.cpp:61): `[appletCount][...][itemCount][i,j,6 DWORDs,+chat]
+  // [queueCount][...][actionPoint]`. Sent on JOIN so saved F1-F9 bindings
+  // (items/skills/emotes/chat macros) repopulate; client `OnTaskBar`
+  // (DPClient.cpp:4215) -> `CWndTaskBar::Serialize`.
+  TASKBAR:        0x0097,
+  // MsgHdr.h:1034 -- `CUserMng::AddMotion` (User.cpp:4392):
+  // `[objid][0x0098][DWORD dwMsg]`. Broadcast to the visibility range (incl self)
+  // for motion/animation cues. Client `OnMotion` (DPClient.cpp:9813) re-dispatches
+  // `dwMsg` as `SendActMsg` -- e.g. OBJMSG_PICKUP(11) plays the pickup anim+sound.
+  MOTION:         0x0098,
 } as const);
 
 export type SnapshotType = typeof SNAPSHOTTYPE[keyof typeof SNAPSHOTTYPE];

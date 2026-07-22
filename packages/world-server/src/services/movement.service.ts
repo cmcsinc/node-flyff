@@ -31,6 +31,7 @@ import {
 } from '../net/snapshot/moverBroadcast.serializer.js';
 import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
+import type { LootService } from './loot.service.js';
 
 export interface MovementServiceDeps {
   zoneManager: ZoneManager;
@@ -41,6 +42,13 @@ export interface MovementServiceDeps {
    * the new position against their patrol rects.
    */
   onMoved?: (player: CPlayer) => void;
+  /**
+   * Ground-item pickup trigger. v15 has no pickup packet: the client walks to a
+   * pile via `PLAYERSETDESTOBJ` and the server loots on arrival. Hooked here so
+   * every accepted position update re-checks `m_idDestObj` range. Optional so
+   * tests/standalone movement can omit it.
+   */
+  lootService?: LootService;
 }
 
 export type MovementOutcome =
@@ -70,6 +78,7 @@ export class MovementService {
     player.m_vPos = { ...frame.v };
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
+    this.deps.lootService?.checkArrival(player);
     return this.broadcast(player, this.serializer.buildMoved(player.m_idPlayer, frame));
   }
 
@@ -90,6 +99,7 @@ export class MovementService {
     player.m_vPos = { ...frame.v };
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
+    this.deps.lootService?.checkArrival(player);
     return this.broadcast(player, this.serializer.buildCorr(player.m_idPlayer, frame));
   }
 
@@ -105,6 +115,7 @@ export class MovementService {
     player.m_vPos = { ...frame.v };
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
+    this.deps.lootService?.checkArrival(player);
     return this.broadcast(player, this.serializer.buildMoved2(player.m_idPlayer, frame));
   }
 
@@ -135,6 +146,7 @@ export class MovementService {
       player.m_fAngle = fAngle;
       player._dirty.add('m_vPos');
       player._dirty.add('m_fAngle');
+      this.deps.lootService?.checkArrival(player);
     }
     return { ok: true };
   }
@@ -146,11 +158,19 @@ export class MovementService {
    * repeat packet for the already-current destination drops without re-broadcast.
    */
   applySetDestObj(player: CPlayer, destObjid: number, fRange: number): MovementOutcome {
-    if (player.m_idDestObj === destObjid) {
+    const isReTarget = player.m_idDestObj === destObjid;
+    if (!isReTarget) {
+      player.m_idDestObj = destObjid;
+      player.m_fArrivalRange = fRange;
+    }
+    // v15 pickup has no packet -- check immediately in case the player is already
+    // on the pile (click a drop at your feet); otherwise the arrival check fires
+    // on the next accepted position update.
+    this.deps.lootService?.checkArrival(player);
+    if (isReTarget || player.m_idDestObj === NULL_ID) {
+      // __TRAFIC_1223 dedup, or the pile was looted on contact -- no peer broadcast.
       return { ok: true, reached: 0 };
     }
-    player.m_idDestObj = destObjid;
-    player.m_fArrivalRange = fRange;
     const packet = this.destObjSerializer.build(player.m_idPlayer, destObjid, fRange);
     return this.broadcast(player, packet);
   }
