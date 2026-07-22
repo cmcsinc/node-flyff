@@ -186,6 +186,51 @@ describe('SpawnManager', () => {
     assert.equal(homeit.m_vendorStock[2]!.every((s) => s === null), true, 'tab 2 empty');
   });
 
+  it('resolves the character.inc block by placement character_key, not mover MI (shared-model NPCs)', () => {
+    // Boboku (weapons) + Boboko (armor) share mover model MI 211 but are distinct
+    // character.inc blocks. The .dyo tags each placement with m_szCharacterKey;
+    // C++ CMover::GetCharacter looks up by that key (Mover.cpp:962), not model.
+    const resources = makeResources();
+    (resources.movers.movers as Map<number, unknown>).set(211, {
+      id: 211, key: 'MI_MAFL_BOBOKU', name: 'Boboku', name_id: 'NPC_BOBOKU',
+      dwObjIndex: 211, scale: 1.0, type: 'npc', level: 1, hp: 1000, mp: 0, fp: 0,
+      attack: 0, defense: 0, attack_rate: 0, dodge_rate: 0, speed: 0, attack_speed: 0,
+      flyable: false, boss: false, giant: false, raid: false, attackable: false, guard: false,
+      belligerence: 1,
+    });
+    (resources.items.items as Map<number, { id: number; level_req: number }>).set(700, { id: 700, level_req: 15 });
+    (resources.items.items as Map<number, { id: number; level_req: number }>).set(900, { id: 900, level_req: 15 });
+    (resources.items.definedIds as Set<number>).add(700);
+    (resources.items.definedIds as Set<number>).add(900);
+    (resources.items.byKind3 as Map<string, Array<{ id: number; level_req: number }>>).set('IK3_SWD', [{ id: 700, level_req: 15 }]);
+    (resources.items.byKind3 as Map<string, Array<{ id: number; level_req: number }>>).set('IK3_SUIT', [{ id: 900, level_req: 15 }]);
+    const block = (key: string, ik3: string): unknown => ({
+      key, menus: [0, 2], hasDialog: true, outfit: undefined, dialogFile: `${key}.txt`,
+      vendorTabs: [], vendorItems: [{ slot: 0, itemKind3Symbol: ik3, totalNum: 1 }],
+      vendorItemIds: [], venderType: undefined, vendorSlotCount: 0,
+    });
+    (resources.characterInc.byKey as Map<string, unknown>).set('MaFl_Boboku', block('MaFl_Boboku', 'IK3_SWD'));
+    (resources.characterInc.byKey as Map<string, unknown>).set('MaFl_Boboko', block('MaFl_Boboko', 'IK3_SUIT'));
+    // byStem intentionally NOT set for these keys -- proves resolution used the
+    // character_key (byKey), not the MI-key fallback (which would hit byStem).
+    const flaris = resources.zones.zones.get('flaris') as never as {
+      npcs: Array<{ id: number; mover_id: number; character_key?: string; position: { x: number; y: number; z: number }; angle: number; functions: never[] }>;
+    };
+    flaris.npcs.push({ id: 50, mover_id: 211, character_key: 'MaFl_Boboku', position: { x: 6926, y: 100, z: 3232 }, angle: 0, functions: [] });
+    flaris.npcs.push({ id: 51, mover_id: 211, character_key: 'MaFl_Boboko', position: { x: 6927, y: 100, z: 3228 }, angle: 0, functions: [] });
+
+    const mgr = new SpawnManager({ resources });
+    mgr.bootstrap();
+
+    const boboku = mgr.inZone(1).find((m) => m.m_szCharacterKey === 'MaFl_Boboku');
+    const boboko = mgr.inZone(1).find((m) => m.m_szCharacterKey === 'MaFl_Boboko');
+    assert.ok(boboku, 'Boboku spawned under its own character_key');
+    assert.ok(boboko, 'Boboko spawned under its own character_key');
+    assert.equal(boboku!.m_vendorStock[0]![0]!.itemId, 700, 'Boboku tab 0 = IK3_SWD weapon');
+    assert.equal(boboko!.m_vendorStock[0]![0]!.itemId, 900, 'Boboko tab 0 = IK3_SUIT armor, not weapons');
+    assert.notEqual(boboku!.m_idMover, boboko!.m_idMover, 'two distinct movers');
+  });
+
   it('defaults a vendor-less NPC to the empty vendor stock', () => {
     const mgr = new SpawnManager({ resources: makeResources() });
     mgr.bootstrap();
