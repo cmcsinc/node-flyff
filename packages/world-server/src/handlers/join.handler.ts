@@ -28,6 +28,9 @@ import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { createLogger } from '@flyff/core/logger.js';
 import type { JoinService } from '../services/join.service.js';
 import type { PlayerSnapshotSerializer } from '../net/snapshot/playerSnapshot.serializer.js';
+import type { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
+import type { TaskBarSnapshotSerializer } from '../net/snapshot/taskbar.serializer.js';
+import { cumulativeExp } from '../combat/formulas.js';
 
 const logger = createLogger({ module: 'join-handler' });
 
@@ -35,6 +38,8 @@ export class JoinHandler {
   constructor(
     private joinService: JoinService,
     private snapshotSerializer: PlayerSnapshotSerializer,
+    private setExperienceSerializer: SetExperienceSerializer,
+    private taskbarSerializer: TaskBarSnapshotSerializer,
   ) {}
 
   async handleJoin(socket: ClientSocket, reader: PacketReader): Promise<void> {
@@ -78,6 +83,21 @@ export class JoinHandler {
     socket.session.charId = outcome.player.m_idPlayer;
 
     sendPacket(socket, this.snapshotSerializer.build(outcome.player));
+
+    // Push the loaded within-level exp so the bar reflects saved progress on
+    // relog. The ADD_OBJ mover frame writes m_nExp1=0; without this self-only
+    // SETEXPERIENCE the client shows 0 exp until the next kill/revive.
+    sendPacket(socket, this.setExperienceSerializer.build(outcome.player.m_idPlayer, {
+      exp: cumulativeExp(outcome.player.m_nLevel, outcome.player.m_nExp),
+      level: outcome.player.m_nLevel,
+      skillLevel: outcome.player.m_nSkillLevel,
+      skillPoint: outcome.player.m_nSkillPoint,
+    }));
+
+    // Repush saved taskbar bindings (items/skills/emotes/chat macros) so the
+    // F1-F9 grid repopulates. `SNAPSHOTTYPE_TASKBAR` (0x0097) is independent of
+    // world load -- `CWndTaskBar::Serialize` (client) just fills the grid.
+    sendPacket(socket, this.taskbarSerializer.build(outcome.player.m_idPlayer, outcome.player.m_aSlotItem));
 
     // NOTE: zone NPCs/monsters are NOT sent here. Their server-side spawn lives
     // in SpawnManager.bootstrap() (run once at world-server boot, compose.ts) --

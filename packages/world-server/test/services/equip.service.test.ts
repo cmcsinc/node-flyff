@@ -41,6 +41,22 @@ function makeSvc(getItem: (id: number) => ItemDefinition | undefined) {
 }
 
 describe('EquipService.equip', () => {
+  it('resolves the equip slot from the item prop when nPart=-1 (client double-click default)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 5000, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 9 }],
+    ]);
+    const { svc } = makeSvc((id) => table.get(id));
+
+    // Client sends nPart = -1 (SendDoEquip default arg) for double-click / drag-drop.
+    const r = svc.equip(player, 0, -1);
+
+    assert.equal(r.ok, true);
+    if (r.ok) assert.equal(r.parts, 9, 'parts resolved from prop.equip_slot');
+    assert.equal(player.m_Inventory[MAX_INVENTORY + 9]!.itemId, 5000, 'weapon equipped via auto-resolved slot');
+  });
+
   it('moves the item into the LWEAPON equip slot + journals before persist', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_Inventory[0] = { itemId: 5000, count: 1 };
@@ -59,7 +75,11 @@ describe('EquipService.equip', () => {
     assert.deepEqual(player.m_Inventory[0], null, 'main-bag slot cleared');
     assert.equal(player.m_Inventory[MAX_INVENTORY + 9]!.itemId, 5000, 'weapon in LWEAPON slot');
     assert.ok(player._dirty.has('m_Inventory'));
-    assert.equal(journalCalls[0]!.type, 'ITEM_EQUIP', 'journal before persist');
+    assert.deepEqual(
+      journalCalls.map((j) => j.type),
+      ['INVENTORY_SLOT', 'INVENTORY_SLOT'],
+      'canonical INVENTORY_SLOT journaled for both touched slots',
+    );
   });
 
   it('swaps a previously-equipped item back into the inv slot', () => {
@@ -82,7 +102,10 @@ describe('EquipService.equip', () => {
   it('rejects RIDE(13) parts as restricted', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_Inventory[0] = { itemId: 9000, count: 1 };
-    const { svc } = makeSvc(() => undefined);
+    const table = new Map<number, ItemDefinition>([
+      [9000, { id: 9000, name: 'Board', name_id: 'ITEM_B', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 13 }],
+    ]);
+    const { svc } = makeSvc((id) => table.get(id));
     const r = svc.equip(player, 0, 13);
     assert.equal(r.ok, false);
     if (!r.ok) assert.equal(r.reason, 'restricted');

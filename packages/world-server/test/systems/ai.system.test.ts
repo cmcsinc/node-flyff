@@ -34,7 +34,7 @@ interface Cast {
 function monsterSrc(): MoverSpawnSource {
   return {
     modelIndex: 20, name: 'Aibatt', level: 1, hp: 100,
-    attackable: true, guard: false, belligerence: 12,
+    attackable: true, guard: false, belligerence: 6,
   };
 }
 
@@ -211,21 +211,29 @@ describe('AISystem (idle wander)', () => {
     assert.equal(subtypeOf(casts[0]!.packet), 0x00c2, 'MOVERSETDESTOBJ');
   });
 
-  it('derives m_bActiveAttack from belli (red-name gate): aggressive=1, cautious=0', () => {
-    const aggressive = CMover.spawn(
+  it('derives m_bActiveAttack from belli (red-name gate): only ACTIVEATTACK* bells are active', () => {
+    // BELLI_ACTIVEATTACK_MELEE (6) -> sight-aggressive -> red name.
+    const active = CMover.spawn(
       0x40000050,
+      { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: true, belligerence: 6 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    assert.equal(active.m_bActiveAttack, 1, 'BELLI_ACTIVEATTACK_MELEE(6) -> red-name (active)');
+    // BELLI_MELEE (12) is cautious-type ("counterattack WHEN attacked") -> NOT active.
+    const melee = CMover.spawn(
+      0x40000051,
       { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: true, belligerence: 12 },
       { x: 0, y: 0, z: 0 }, 1,
     );
-    assert.equal(aggressive.m_bActiveAttack, 1, 'BELLI_MELEE -> red-name (active)');
+    assert.equal(melee.m_bActiveAttack, 0, 'BELLI_MELEE(12) -> not red-name (cautious-type)');
     const cautious = CMover.spawn(
-      0x40000051,
+      0x40000052,
       { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: true, belligerence: 2 },
       { x: 0, y: 0, z: 0 }, 1,
     );
     assert.equal(cautious.m_bActiveAttack, 0, 'BELLI_CAUTIOUSATTACK -> not red-name');
     const peaceful = CMover.spawn(
-      0x40000052,
+      0x40000053,
       { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: false, belligerence: 1 },
       { x: 0, y: 0, z: 0 }, 1,
     );
@@ -239,7 +247,7 @@ describe('AISystem (idle wander)', () => {
     player.m_vPos = { x: 1003, y: 0, z: 1000 }; // ~3 m away, in SIGHT_RANGE
     const m = CMover.spawn(
       0x40000053,
-      { modelIndex: 20, name: 'Low Mob', level: 5, hp: 100, attackable: true, belligerence: 12 },
+      { modelIndex: 20, name: 'Low Mob', level: 5, hp: 100, attackable: true, belligerence: 6 },
       { x: 1000, y: 0, z: 1000 }, 1,
     );
     m.m_tmNextWander = 100_000; // suppress idle wander so casts stay clean
@@ -261,7 +269,7 @@ describe('AISystem (idle wander)', () => {
     player.m_vPos = { x: 1003, y: 0, z: 1000 };
     const m = CMover.spawn(
       0x40000054,
-      { modelIndex: 20, name: 'Mob', level: 5, hp: 100, attackable: true, belligerence: 12 },
+      { modelIndex: 20, name: 'Mob', level: 5, hp: 100, attackable: true, belligerence: 6 },
       { x: 1000, y: 0, z: 1000 }, 1,
     );
     m.m_tmNextWander = 100_000;
@@ -283,7 +291,7 @@ describe('AISystem (idle wander)', () => {
     player.m_dwMode = MODE.TRANSPARENT; // /inv active
     const m = CMover.spawn(
       0x40000060,
-      { modelIndex: 20, name: 'Mob', level: 5, hp: 100, attackable: true, belligerence: 12 },
+      { modelIndex: 20, name: 'Mob', level: 5, hp: 100, attackable: true, belligerence: 6 },
       { x: 1000, y: 0, z: 1000 }, 1,
     );
     m.m_tmNextWander = 100_000; // suppress wander so casts stay clean
@@ -476,7 +484,7 @@ describe('AISystem (idle wander)', () => {
     assert.equal(m.m_fSpeedFactor, 2.66, 'return speed');
   });
 
-  it('drops the target and restores HP once it arrives home', () => {
+  it('drops the target on arrival home; HP is NOT reset (no heal-sync packet)', () => {
     const casts: Cast[] = [];
     const m = makeMover(0x40000023, { x: 500, y: 0, z: 500 });
     m.m_fSpeedBase = 0.075;
@@ -492,60 +500,41 @@ describe('AISystem (idle wander)', () => {
     ai.tick(1000);
     assert.equal(m.m_bReturnToBegin, false, 'arrived');
     assert.equal(m.m_fSpeedFactor, 1.0, 'speed reset');
-    assert.equal(m.m_nHitPoint, m.m_nMaxHitPoint, 'HP restored');
+    // C++ StateReturn heals to max, but we omit it: there is no S->C packet to
+    // sync a monster HP heal, so healing desyncs client/server and makes leashed
+    // monsters appear unkillable. Server HP stays where it was -- still killable.
+    assert.equal(m.m_nHitPoint, 10, 'HP unchanged on return home (no unsyncable heal)');
   });
 });
 
-/** Zones stub with zone 1 revival point at `town`. */
-function makeZones(town: Vec3): { byNumericId: Map<number, { revival: { position: Vec3 } }> } {
-  return { byNumericId: new Map([[1, { revival: { position: town } }]]) };
-}
-
-describe('AISystem (town safe-zone)', () => {
-  it('does NOT sight-acquire a player standing in town', () => {
+describe('AISystem (retaliation)', () => {
+  it('a mob with a target swings back at the player (no position-based gate)', () => {
+    // Regression: pursue() previously dropped the target whenever the player
+    // was within a 1000-unit "town safe zone" of the zone revival. Real spawns
+    // sat inside that bubble (Mushpang field ~210 u from Flaris revival), so
+    // every near-town mob acquired-then-instant-leashed and never swung back.
+    // C++ AIMSG_DAMAGE retaliation has NO safety gate (the only such check, on
+    // sight-scan, is commented out at AIMonster.cpp:429) -- the distance leash
+    // alone anchors the mob. Vanilla town safety is the RA_SAFETY region attr,
+    // not a revival-radius bubble (which we do not load).
     const casts: Cast[] = [];
-    const TOWN: Vec3 = { x: 6978, y: 100, z: 3329 };
-    const player = CPlayer.fromRow(makeRow({ id: 5, hp: 200, max_hp: 200 }), { write: () => true } as never);
-    player.m_nZoneId = 1;
-    player.m_vPos = { ...TOWN }; // inside the 1000-unit safe zone
-    const m = makeMover(0x40000040, { x: TOWN.x + 20, y: 0, z: TOWN.z }); // within SIGHT_RANGE
-    m.m_tmNextWander = 1000;
-    const ai = new AISystem({
-      spawnManager: makeSpawn([m]),
-      zoneManager: makeZone(casts, [player]),
-      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
-      zones: makeZones(TOWN),
-    });
-    ai.tick(1000);
-    assert.equal(m.m_idTarget, 0xffffffff, 'town player not aggrod');
-    // The mob may still wander (DESTPOS), but it must NOT emit an acquire
-    // (MOVERSETDESTOBJ 0x00c2) against the town player.
-    const acquire = casts.find((c) => subtypeOf(c.packet) === 0x00c2);
-    assert.equal(acquire, undefined, 'no acquire broadcast in town');
-  });
-
-  it('releases an acquired target and deals no damage once it reaches town', () => {
-    const casts: Cast[] = [];
-    const TOWN: Vec3 = { x: 6978, y: 100, z: 3329 };
     const player = CPlayer.fromRow(makeRow({ id: 6, hp: 200, max_hp: 200 }), { write: () => true } as never);
     player.m_nZoneId = 1;
-    player.m_vPos = { ...TOWN }; // fled into town mid-fight
-    const m = makeMover(0x40000041, { x: TOWN.x + 5, y: 0, z: TOWN.z });
+    player.m_vPos = { x: 1000, y: 0, z: 1000 };
+    const m = makeMover(0x40000041, { x: 1002, y: 0, z: 1000 }); // within melee range
     m.m_fSpeedBase = 0.075;
     m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
-    m.m_idTarget = player.m_idPlayer; // already raged before the player reached town
+    m.m_idTarget = player.m_idPlayer; // already raged
     m.m_nextAttackTick = 0; // ready to swing
     const ai = new AISystem({
       spawnManager: makeSpawn([m]),
       zoneManager: makeZone(casts),
       playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
-      zones: makeZones(TOWN),
     });
     ai.tick(1000);
-    assert.equal(m.m_idTarget, 0xffffffff, 'town target released');
-    assert.equal(m.m_bReturnToBegin, true, 'monster turns back');
-    const dmg = casts.find((c) => subtypeOf(c.packet) === 0x0013);
-    assert.equal(dmg, undefined, 'no DAMAGE landed in town');
+    assert.equal(m.m_idTarget, player.m_idPlayer, 'target retained');
+    assert.equal(m.m_bReturnToBegin, false, 'monster does NOT leash home');
+    assert.ok(player.m_nHp < 200, 'monster swung back (player took damage)');
   });
 });
 

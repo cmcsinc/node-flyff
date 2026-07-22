@@ -15,7 +15,7 @@
 
 import type { CharacterRow } from '@flyff/database';
 import { AUTH } from '../constants/authority.js';
-import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB } from '../net/snapshot/constants.js';
+import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT } from '../net/snapshot/constants.js';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest.js';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
 
@@ -54,6 +54,31 @@ function emptySkillSlots(): SkillSlot[] {
 }
 
 /**
+ * One taskbar hotkey slot (C++ `SHORTCUT`, `_Common/ProjectCmn.h:939-948`).
+ * `dwShortcut` is the SHORTCUT_* discriminant (NONE=0 = empty). `szString` is
+ * only carried when `dwShortcut === SHORTCUT_CHAT`. Mirrors the ADDITEMTASKBAR
+ * body (`DPClient.cpp:10880`). Persisted to `characters.taskbar` (migration
+ * 009) and hydrated on JOIN via `decodeTaskBar`; repushed to the client as
+ * `SNAPSHOTTYPE_TASKBAR`.
+ */
+export interface Shortcut {
+  dwShortcut: number;
+  dwId: number;
+  dwType: number;
+  dwIndex: number;
+  dwUserId: number;
+  dwData: number;
+  szString?: string;
+}
+
+/** Build an empty taskbar grid (`MAX_SLOT_ITEM_COUNT` x `MAX_SLOT_ITEM`). */
+function emptyTaskBar(): Shortcut[][] {
+  return Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>
+    Array.from({ length: MAX_SLOT_ITEM }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 })),
+  );
+}
+
+/**
  * One inventory slot (C++ `CItemElem`, vanilla subset). `itemId` is the propItem
  * id; `count` is `m_nItemNum`. Upgrade fields carry refine/flag/durability so
  * equipped items serialize correctly on JOIN; defaults are 0 (vanilla drop).
@@ -61,6 +86,16 @@ function emptySkillSlots(): SkillSlot[] {
 export interface InventorySlot {
   itemId: number;
   count: number;
+  /**
+   * Stable per-item id (v15 `CItemElem::m_dwObjId`). Assigned ONCE at creation
+   * (JOIN: the slot index; pickup/CREATEITEM: the slot index) and NEVER changed
+   * by equip/unequip/move -- the client addresses items by this id (`OnDoEquip`
+   * `GetAtId`, `IsEquip`, Item.h:599). Our flat array moves items between slots
+   * on equip/unequip, so without this field we lose the client's stable handle
+   * and can't resolve an unequip of a session-equipped item. Optional only so
+   * bare test fixtures compile; production always sets it.
+   */
+  objid?: number;
   /** CItemElem m_byFlag (elemental/rarity bits). 0 = plain. */
   flags?: number;
   /** Refine level (+0..+20). Shifted into nOption on the wire. */
@@ -102,6 +137,13 @@ export class CPlayer {
   m_nSta: number;
   m_nDex: number;
   m_nInt: number;
+  /**
+   * Unspent stat points (C++ `m_nRemainGP`, "growth points"). Granted on
+   * level-up from `EXPCHARACTER.dwLPPoint` (`Mover.cpp:1601`), spent 1:1 into
+   * STR/STA/DEX/INT via `PACKETTYPE_MODIFY_STATUS`. Persisted on the
+   * `characters.remain_gp` column (migration 010); hydrated on JOIN.
+   */
+  m_nRemainGP: number = 0;
   /**
    * Gold (C++ `m_nGold`). Persisted on the `inventory` container row's `gold`
    * column (migration 008 -- gold is a container attribute, not a character
@@ -206,6 +248,13 @@ export class CPlayer {
   ];
   /** Per-tab bank gold (C++ `m_dwGoldBank[3]`). */
   m_BankGold: [number, number, number] = [0, 0, 0];
+  /**
+   * Taskbar hotkey bindings (C++ `m_playTaskBar.m_aSlotItem[8][9]`). Mutated by
+   * ADDITEMTASKBAR / REMOVEITEMTASKBAR; in-memory only (matches the C++ handler
+   * which does not persist here). ponytail: save on disconnect when relog-
+   * retention is needed.
+   */
+  m_aSlotItem: Shortcut[][] = emptyTaskBar();
   /** True while the bank window is open (NPC range / instant-bank). */
   m_bBankOpen: boolean = false;
   /**
@@ -227,6 +276,18 @@ export class CPlayer {
    */
   m_nFp: number = 0;
   m_nMaxFp: number = 0;
+  /**
+   * Wall-clock of the last damage-taken event (`Date.now()`). Gates stand regen
+   * -- C++ `IsAttackMode()` (`m_nAtkCnt < SEC1*10`) blocks `ProcessRecovery` for
+   * 10 s after the last hit. Set by `AISystem.monsterSwing` on damage dealt;
+   * 0 = never hit (regen immediate). Transient -- not persisted.
+   */
+  m_tmLastDamage: number = 0;
+  /**
+   * Next stand-regen tick (`Date.now()`). C++ `m_dwTickRecoveryStand` advances
+   * by `NEXT_TICK_RECOVERYSTAND` (3 s) each fire. Transient -- not persisted.
+   */
+  m_tmNextRecovery: number = 0;
   /**
    * Per-slot learned skills (C++ `m_aJobSkill[45]`, sizeof 8 each). Slot ranges:
    * 0-2 vagrant, 3-22 expert, 23-42 pro, 43 master, 44 hero. Empty slots carry
@@ -273,6 +334,7 @@ export class CPlayer {
     this.m_nSta = row.stamina;
     this.m_nDex = row.dexterity;
     this.m_nInt = row.intelligence;
+    this.m_nRemainGP = row.remain_gp ?? 0;
     this.m_dwSkin = row.skin_color;
     this.m_nHairMesh = row.hair_style;
     this.m_dwHairColor = row.hair_color;

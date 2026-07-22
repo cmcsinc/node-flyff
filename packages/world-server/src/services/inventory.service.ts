@@ -89,7 +89,7 @@ export class InventoryService {
 
     const slot = this.findEmpty(player);
     if (slot === -1) return { ok: false, reason: 'bag_full' };
-    const placed: InventorySlot = { itemId, count: Math.min(count, Math.max(1, stackSize)) };
+    const placed: InventorySlot = { objid: slot, itemId, count: Math.min(count, Math.max(1, stackSize)) };
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId, count: placed.count } });
     player.m_Inventory[slot] = placed;
     player._dirty.add('m_Inventory');

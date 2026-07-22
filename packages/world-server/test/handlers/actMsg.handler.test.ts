@@ -36,9 +36,16 @@ function subtype(buf: Buffer): number {
   return buf.readUInt16LE(14);
 }
 
-/** Fake ground item shape consumed by the handler. */
-function groundItem(itemId: number, count: number, owner: number) {
-  return { m_dwItemId: itemId, m_nItemNum: count, m_idOwn: owner, m_vPos: { x: 0, y: 0, z: 0 }, m_nZoneId: 1 };
+/** Fake ground item shape consumed by the handler. `dropTime` defaults to now. */
+function groundItem(itemId: number, count: number, owner: number, dropTime: number = Date.now()) {
+  return {
+    m_dwItemId: itemId,
+    m_nItemNum: count,
+    m_idOwn: owner,
+    m_dwDropTime: dropTime,
+    m_vPos: { x: 0, y: 0, z: 0 },
+    m_nZoneId: 1,
+  };
 }
 
 function makeHandler(opts: {
@@ -95,16 +102,29 @@ describe('ActMsgHandler', () => {
     assert.equal(removed, true, 'pile removed (DEL_OBJ broadcast)');
   });
 
-  it('rejects pickup when another player owns the pile', () => {
+  it('rejects pickup when another player owns the pile (within the 7s lock)', () => {
     let removed = false;
     const { handler, sent } = makeHandler({
-      item: groundItem(2950, 1, 99), // owned by char 99, not 42
+      item: groundItem(2950, 1, 99, Date.now()), // owned by char 99, fresh drop -- locked
       addItemResult: { ok: true, slot: 0, itemId: 2950, count: 1 },
       onRemove: () => { removed = true; },
     });
     handler.handleActMsg(mockSocket(), new PacketReader(body(OBJMSG_PICKUP, 0x80000002)));
-    assert.equal(sent.length, 0, 'no snapshot -- not ours');
+    assert.equal(sent.length, 0, 'no snapshot -- anti-loot-steal lock holds');
     assert.equal(removed, false, 'pile left in world');
+  });
+
+  it('anti-loot-steal FFA: non-owner can loot after the 7s window', () => {
+    let removed = false;
+    const { handler, sent } = makeHandler({
+      // owned by char 99, but dropped 8s ago -- past the LOOT_FFA_MS gate
+      item: groundItem(2950, 1, 99, Date.now() - 8_000),
+      addItemResult: { ok: true, slot: 0, itemId: 2950, count: 1 },
+      onRemove: () => { removed = true; },
+    });
+    handler.handleActMsg(mockSocket(), new PacketReader(body(OBJMSG_PICKUP, 0x80000002)));
+    assert.equal(sent.length, 1, 'FFA after 7s -- non-owner loots');
+    assert.equal(removed, true, 'pile removed');
   });
 
   it('bag-full: no CREATEITEM, pile left lootable', () => {

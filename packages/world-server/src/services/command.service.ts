@@ -71,6 +71,7 @@ import { NoticeSerializer } from '../net/snapshot/notice.serializer.js';
 import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer.js';
 import { DisguiseSerializer } from '../net/snapshot/disguise.serializer.js';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
+import { SetStateSerializer } from '../net/snapshot/setState.serializer.js';
 import { MODE } from '../constants/mode.js';
 import { createLogger } from '@flyff/core/logger.js';
 
@@ -133,6 +134,7 @@ export class CommandService {
   private readonly modifyModeSer = new ModifyModeSerializer();
   private readonly disguiseSer = new DisguiseSerializer();
   private readonly createItemSer = new CreateItemSnapshotSerializer();
+  private readonly setStateSer = new SetStateSerializer();
 
   private readonly commands: CommandEntry[];
 
@@ -599,10 +601,10 @@ export class CommandService {
   /**
    * `/stat <str|sta|dex|int|all> <n>` -- `TextCmd_stat` (FuncTextCmd.cpp:912).
    * Sets the named attribute, clamped to `[0, MAX_STAT]`, persists via
-   * `charRepo.updateStats`, and marks the field dirty. C++ then sends
-   * `AddSetState` (the SETSTATE snapshot) + recomputes derived stats; we omit
-   * both (ponytail: SETSTATE snapshot + stat-recompute hook when the stat
-   * system lands). `restate`/`gp` branches skipped (no restate/gp pipeline).
+   * `charRepo.updateStats`, marks the field dirty, and echoes `AddSetState`
+   * (SETSTATE snapshot) so the client refreshes its stat window + recomputes
+   * derived HP/MP/FP (matching the C++ tail at `FuncTextCmd.cpp:979`).
+   * `restate`/`gp` branches skipped (no restate/gp pipeline).
    */
   private async stat({ args, player }: CommandCtx): Promise<void> {
     const tokens = args.split(/\s+/).filter(Boolean);
@@ -621,6 +623,14 @@ export class CommandService {
     }
     player._dirty.add('strength'); player._dirty.add('stamina');
     player._dirty.add('dexterity'); player._dirty.add('intelligence');
+    this.deps.playerManager.sendTo(
+      player,
+      this.setStateSer.build(player.m_idPlayer, {
+        str: player.m_nStr, sta: player.m_nSta,
+        dex: player.m_nDex, int: player.m_nInt,
+        remainGP: player.m_nRemainGP,
+      }),
+    );
     await this.deps.charRepo?.updateStats(player.m_idPlayer, set);
   }
 

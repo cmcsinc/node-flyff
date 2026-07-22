@@ -67,7 +67,7 @@ describe('InventoryService', () => {
       assert.equal(r.slot, 0, 'first empty slot');
       assert.equal(r.itemId, 2950);
     }
-    assert.deepEqual(player.m_Inventory[0], { itemId: 2950, count: 1 });
+    assert.deepEqual(player.m_Inventory[0], { objid: 0, itemId: 2950, count: 1 });
     assert.ok(player._dirty.has('m_Inventory'));
 
     // setItem is fire-and-forget; flush its microtask then assert ordering.

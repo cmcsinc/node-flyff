@@ -24,6 +24,12 @@ export interface CharacterRow {
   stamina: number;
   dexterity: number;
   intelligence: number;
+  /**
+   * Unspent stat points (C++ `m_nRemainGP`, "growth points"). Added by
+   * migration 010. Granted on level-up from `EXPCHARACTER.dwLPPoint`, spent
+   * 1:1 into STR/STA/DEX/INT via `PACKETTYPE_MODIFY_STATUS`.
+   */
+  remain_gp: number;
   x: number;
   y: number;
   z: number;
@@ -45,6 +51,12 @@ export interface CharacterRow {
    * Lifetime counter -- never decremented.
    */
   skill_level: number;
+  /**
+   * Taskbar hotkey grid (C++ `m_aSlotItem`), JSON of non-empty slots. Added by
+   * migration 009. Nullable: a fresh character has no bindings (null -> empty
+   * grid on JOIN). See `taskbar.service.encodeTaskBar` for the shape.
+   */
+  taskbar?: string | null;
   created_at: Date;
   updated_at: Date;
 }
@@ -56,8 +68,8 @@ export interface CharacterRow {
  */
 export type CharacterCreateData = Omit<
   CharacterRow,
-  'id' | 'created_at' | 'updated_at' | 'skill_point' | 'skill_level'
-> & { skill_point?: number; skill_level?: number };
+  'id' | 'created_at' | 'updated_at' | 'skill_point' | 'skill_level' | 'remain_gp'
+> & { skill_point?: number; skill_level?: number; remain_gp?: number };
 
 /**
  * Character update data (all fields optional).
@@ -231,7 +243,7 @@ export class CharacterRepository {
   }
 
   /**
-   * Update character stats (HP, MP, attributes).
+   * Update character stats (HP, MP, attributes, unspent stat points).
    *
    * @param id - Character ID
    * @param stats - Stats to update
@@ -247,6 +259,7 @@ export class CharacterRepository {
       stamina: number;
       dexterity: number;
       intelligence: number;
+      remain_gp: number;
     }>
   ): Promise<void> {
     await this.db('characters')

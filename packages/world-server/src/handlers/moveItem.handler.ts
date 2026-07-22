@@ -2,13 +2,13 @@
  * MOVEITEM handler -- `PACKETTYPE_MOVEITEM` (0x00ff0006).
  *
  * `CDPSrvr::OnMoveItem` (`DPSrvr.cpp:787`): `BYTE nItemType, BYTE nSrcIndex,
- * BYTE nDstIndex`. v15 is a pure slot swap (no split opcode). The client moves
- * the item optimistically on drag; the server validates bounds + persists. No
- * reply snapshot -- the client already shows the new order, and the JOIN
- * serializer reflects it on relog. Bounds reject is logged + dropped.
- *
- * ponytail: server-authoritative echo (`AddMoveItem`) if anti-cheat or peer-bag
- * sync ever needs it.
+ * BYTE nDstIndex`. v15 is a pure slot swap (no split opcode). The client does
+ * NOT swap optimistically -- `OnDropIcon` sends `SendMoveItem` and waits; the
+ * server validates bounds + persists, then echoes `AddMoveItem`
+ * (`SNAPSHOTTYPE_MOVEITEM`), which is the only thing that triggers the
+ * client-side `m_Inventory.Swap` (`DPClient.cpp:2141`). A rejected move sends
+ * no echo, so the item stays put client-side (matches C++ which only echoes on
+ * success).
  *
  * @module handlers/moveItem
  */
@@ -22,6 +22,7 @@ import { createLogger } from '@flyff/core/logger.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { InventoryService } from '../services/inventory.service.js';
 import { MAX_INVENTORY } from '../net/snapshot/constants.js';
+import { buildMoveItem } from '../net/snapshot/moveItem.serializer.js';
 
 const logger = createLogger({ module: 'moveItem-handler' });
 
@@ -45,7 +46,11 @@ export class MoveItemHandler {
       Validate.slot(nSrc, MAX_INVENTORY);
       Validate.slot(nDst, MAX_INVENTORY);
       const r = this.deps.inventoryService.moveItem(player, nSrc, nDst);
-      if (!r.ok) logger.debug({ charId: player.m_idPlayer, nSrc, nDst }, 'MOVEITEM rejected');
+      if (!r.ok) {
+        logger.debug({ charId: player.m_idPlayer, nSrc, nDst }, 'MOVEITEM rejected');
+        return;
+      }
+      this.deps.playerManager.sendTo(player, buildMoveItem(player.m_idPlayer, nSrc, nDst));
     } catch (error) {
       if (error instanceof PacketError) {
         logger.warn({ err: error, charId: player.m_idPlayer }, 'MOVEITEM parse failed');

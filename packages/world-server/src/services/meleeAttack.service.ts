@@ -29,6 +29,9 @@ import {
 } from '../net/snapshot/meleeAttack.serializer.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 import type { CombatService } from './combat.service.js';
+import { createLogger } from '@flyff/core/logger.js';
+
+const logger = createLogger({ module: 'meleeAttack-service' });
 
 export interface MeleeAttackServiceDeps {
   zoneManager: ZoneManager;
@@ -58,7 +61,26 @@ export class MeleeAttackService {
       player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet,
     );
     // Run the damage round-trip (DAMAGE broadcast + death/exp if lethal).
-    this.deps.combatService.resolveAttack(player, frame.objid);
+    const res = this.deps.combatService.resolveAttack(player, frame.objid);
+    if (!res.ok) {
+      // Visible at default `info` level -- a rejected swing is the #1 "can't
+      // kill" symptom (stale objid, peaceful NPC, dead target). Prints the
+      // exact reason so a live failure is self-diagnosing.
+      logger.warn(
+        { charId: player.m_idPlayer, objid: frame.objid, reason: res.reason },
+        'melee attack rejected',
+      );
+    } else if (res.killed) {
+      logger.info(
+        { charId: player.m_idPlayer, objid: frame.objid, damage: res.damage },
+        'melee swing killed mover',
+      );
+    } else {
+      logger.debug(
+        { charId: player.m_idPlayer, objid: frame.objid, hit: res.hit, damage: res.damage },
+        'melee swing resolved',
+      );
+    }
     return { ok: true, reached };
   }
 }

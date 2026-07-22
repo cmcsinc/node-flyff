@@ -44,6 +44,7 @@ import { SetExperienceSerializer } from '../net/snapshot/setExperience.serialize
 import { SetLevelSerializer } from '../net/snapshot/setLevel.serializer.js';
 import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
 import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer.js';
+import { SetStateSerializer } from '../net/snapshot/setState.serializer.js';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 import { createLogger } from '@flyff/core/logger.js';
 
@@ -53,7 +54,7 @@ export interface CombatServiceDeps {
   spawnManager: SpawnManager;
   zoneManager: ZoneManager;
   playerManager: PlayerManager;
-  charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateSkillPoints'>;
+  charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateSkillPoints' | 'updateStats'>;
   journal?: Journal;
   rng?: Rng;
   /**
@@ -79,6 +80,7 @@ export class CombatService {
   private readonly setLevel = new SetLevelSerializer();
   private readonly destObj = new DestObjSerializer();
   private readonly douseSkillPoint = new DoUseSkillPointSerializer();
+  private readonly setState = new SetStateSerializer();
   private readonly rng: Rng;
   constructor(private readonly deps: CombatServiceDeps) {
     this.rng = deps.rng ?? xRandomRng;
@@ -168,6 +170,13 @@ export class CombatService {
     mover.m_tmAttack = Date.now() + CHASE_WINDOW_MS;
     mover.m_fSpeedFactor = PURSUE_SPEED_FACTOR;
     mover.m_nextAttackTick = 0; // ready to swing as soon as in range
+    // Info-level: this is the "passive mob fought back" signal (cautious/MELEE
+    // bells retaliate via this path, not sight). If a hit lands and this never
+    // fires, the mob isn't retaliating -- the #1 "not aggro when attacked" clue.
+    logger.info(
+      { moverId: mover.m_idMover, mi: mover.m_dwIndex, target: player.m_idPlayer },
+      'monster retaliated (acquired attacker)',
+    );
     const pkt = this.destObj.build(mover.m_idMover, player.m_idPlayer, mover.m_nAttackRange);
     this.deps.zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, pkt);
   }
@@ -194,7 +203,20 @@ export class CombatService {
   private grantExp(player: CPlayer, mover: CMover): void {
     const base = Math.floor(mover.m_nExpValue * expLevelDiffMult(player.m_nLevel, mover.m_nLevel));
     const cap = Math.min(base, EXP_TABLE[player.m_nLevel]?.nLimitExp ?? base);
-    if (cap <= 0) return;
+    if (cap <= 0) {
+      // Debug (LOG_LEVEL=debug): explains "killed but no exp" -- either the
+      // monster's nExpValue is 0 or the player out-levels it (mult floors 0).
+      logger.debug(
+        {
+          charId: player.m_idPlayer,
+          monsterExp: mover.m_nExpValue,
+          monsterLevel: mover.m_nLevel,
+          playerLevel: player.m_nLevel,
+        },
+        'no exp granted (cap 0)',
+      );
+      return;
+    }
 
     // m_nExp is within-level (resets at each boundary); addExp carries excess.
     const prevLevel = player.m_nLevel;
@@ -210,6 +232,7 @@ export class CombatService {
       player._dirty.add('m_nHp');
       player._dirty.add('m_nMp');
       this.grantSkillPoints(player, prevLevel);
+      this.grantGrowthPoints(player, prevLevel);
     }
 
     // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
@@ -267,6 +290,36 @@ export class CombatService {
     this.deps.charRepo.updateSkillPoints(
       player.m_idPlayer, player.m_nSkillPoint, player.m_nSkillLevel,
     ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'skill-point persist failed'));
+  }
+
+  /**
+   * Level-up stat-point (GP) grant -- `EXPCHARACTER.dwLPPoint` per level
+   * reached (`_Common/Mover.cpp:1601`). Adds to spendable `m_nRemainGP` and
+   * notifies the client via SETSTATE (carries unchanged STR/STA/DEX/INT + the
+   * new GP total). Persisted fire-and-forget; the WAL `CHAR_EXP` row above
+   * already pins level, so only `remain_gp` needs the cold write here.
+   */
+  private grantGrowthPoints(player: CPlayer, prevLevel: number): void {
+    let gpGain = 0;
+    for (let lvl = prevLevel + 1; lvl <= player.m_nLevel; lvl++) {
+      gpGain += EXP_TABLE[lvl]?.dwLPPoint ?? 0;
+    }
+    if (gpGain <= 0) return;
+    player.m_nRemainGP += gpGain;
+    player._dirty.add('remain_gp');
+    this.deps.playerManager.sendTo(
+      player,
+      this.setState.build(player.m_idPlayer, {
+        str: player.m_nStr, sta: player.m_nSta,
+        dex: player.m_nDex, int: player.m_nInt,
+        remainGP: player.m_nRemainGP,
+      }),
+    );
+    this.deps.charRepo.updateStats(player.m_idPlayer, {
+      strength: player.m_nStr, stamina: player.m_nSta,
+      dexterity: player.m_nDex, intelligence: player.m_nInt,
+      remain_gp: player.m_nRemainGP,
+    }).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'growth-point persist failed'));
   }
 }
 

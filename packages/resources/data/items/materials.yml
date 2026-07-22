@@ -11,9 +11,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 25
     durability: 12000000
     job_req:
       - knight
@@ -27,9 +27,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 50
     durability: 12000000
     job_req:
       - knight
@@ -43,9 +43,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 75
     durability: 12000000
     job_req:
       - knight
@@ -59,9 +59,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 100
     durability: 12000000
     job_req:
       - knight
@@ -75,9 +75,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 125
     durability: 12000000
     job_req:
       - knight
@@ -91,9 +91,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 150
     durability: 12000000
     job_req:
       - knight
@@ -107,9 +107,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 175
     durability: 12000000
     job_req:
       - knight
@@ -123,9 +123,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 200
     durability: 12000000
     job_req:
       - knight
@@ -139,9 +139,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 225
     durability: 12000000
     job_req:
       - knight
@@ -155,9 +155,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
+    mp_restore: 250
     durability: 12000000
     job_req:
       - knight
@@ -171,7 +171,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -187,7 +186,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -203,7 +201,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -219,7 +216,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -235,9 +231,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 30
     durability: 12000000
     job_req:
       - knight
@@ -251,9 +247,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 60
     durability: 12000000
     job_req:
       - knight
@@ -267,9 +263,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 90
     durability: 12000000
     job_req:
       - knight
@@ -283,9 +279,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 120
     durability: 12000000
     job_req:
       - knight
@@ -299,9 +295,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 150
     durability: 12000000
     job_req:
       - knight
@@ -315,9 +311,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 170
     durability: 12000000
     job_req:
       - knight
@@ -331,9 +327,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 195
     durability: 12000000
     job_req:
       - knight
@@ -347,9 +343,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 220
     durability: 12000000
     job_req:
       - knight
@@ -363,9 +359,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 250
     durability: 12000000
     job_req:
       - knight
@@ -379,7 +375,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -395,9 +390,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -411,9 +406,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -427,9 +422,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -443,9 +438,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -459,9 +454,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -475,9 +470,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -491,9 +486,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -507,9 +502,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -523,9 +518,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -539,9 +534,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -555,9 +550,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -571,9 +566,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -587,9 +582,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -603,9 +598,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -619,9 +614,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -635,9 +630,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -651,9 +646,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -667,9 +662,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -683,9 +678,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -699,9 +694,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -715,9 +710,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -731,9 +726,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -747,9 +742,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -763,9 +758,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -779,9 +774,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -795,9 +790,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -811,9 +806,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -827,9 +822,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -843,9 +838,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -859,9 +854,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -875,9 +870,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -891,9 +886,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -907,9 +902,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -923,9 +918,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -939,9 +934,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - knight
@@ -955,9 +950,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -971,9 +966,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -987,9 +982,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1003,9 +998,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1019,9 +1014,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1035,9 +1030,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1051,9 +1046,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1067,9 +1062,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1083,9 +1078,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1099,9 +1094,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1115,9 +1110,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1131,9 +1126,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1147,9 +1142,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1163,9 +1158,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1179,9 +1174,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1195,9 +1190,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1211,9 +1206,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1227,9 +1222,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1243,9 +1238,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1259,9 +1254,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1275,9 +1270,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1291,9 +1286,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1307,9 +1302,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1323,9 +1318,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1339,9 +1334,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1355,9 +1350,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1371,9 +1366,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1387,9 +1382,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1403,9 +1398,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1419,9 +1414,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1435,9 +1430,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1451,9 +1446,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - knight
@@ -1467,9 +1462,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -1483,9 +1478,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -1499,9 +1494,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -1515,9 +1510,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -1531,9 +1526,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -1547,9 +1542,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - knight
@@ -1563,9 +1558,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - vagrant
@@ -1579,9 +1574,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - vagrant
@@ -1595,9 +1590,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 12000000
     job_req:
       - vagrant
@@ -1611,9 +1606,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1627,9 +1622,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1643,9 +1638,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1659,9 +1654,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1675,9 +1670,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1691,9 +1686,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1707,9 +1702,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1723,9 +1718,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1739,9 +1734,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 12000000
     job_req:
       - vagrant
@@ -1755,9 +1750,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1771,9 +1766,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1787,9 +1782,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1803,9 +1798,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1819,9 +1814,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1835,9 +1830,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1851,9 +1846,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1867,9 +1862,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1883,9 +1878,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1899,9 +1894,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1915,9 +1910,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 12000000
     job_req:
       - vagrant
@@ -1931,9 +1926,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 70
     durability: 12000000
     job_req:
       - vagrant
@@ -1947,9 +1942,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 140
     durability: 12000000
     job_req:
       - vagrant
@@ -1963,9 +1958,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 200
     durability: 12000000
     job_req:
       - vagrant
@@ -1979,9 +1974,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 260
     durability: 12000000
     job_req:
       - vagrant
@@ -1995,9 +1990,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 330
     durability: 12000000
     job_req:
       - vagrant
@@ -2011,9 +2006,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 429
     durability: 12000000
     job_req:
       - vagrant
@@ -2027,7 +2022,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     durability: 12000000
@@ -2043,9 +2037,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 552
     durability: 12000000
     job_req:
       - vagrant
@@ -2059,9 +2053,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 676
     durability: 12000000
     job_req:
       - vagrant
@@ -2075,9 +2069,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 812
     durability: 12000000
     job_req:
       - vagrant
@@ -2091,9 +2085,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 975
     durability: 12000000
     job_req:
       - vagrant
@@ -2107,9 +2101,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 120
     durability: 12000000
     job_req:
       - vagrant
@@ -2123,9 +2117,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 160
     durability: 12000000
     job_req:
       - vagrant
@@ -2139,9 +2133,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 230
     durability: 12000000
     job_req:
       - vagrant
@@ -2155,9 +2149,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 300
     durability: 12000000
     job_req:
       - vagrant
@@ -2171,9 +2165,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 370
     durability: 12000000
     job_req:
       - vagrant
@@ -2187,9 +2181,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 514
     durability: 12000000
     job_req:
       - vagrant
@@ -2203,9 +2197,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 670
     durability: 12000000
     job_req:
       - vagrant
@@ -2219,9 +2213,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 860
     durability: 12000000
     job_req:
       - vagrant
@@ -2235,9 +2229,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 1075
     durability: 12000000
     job_req:
       - vagrant
@@ -2251,9 +2245,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 1313
     durability: 12000000
     job_req:
       - vagrant
@@ -2267,9 +2261,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 60
     durability: 12000000
     job_req:
       - vagrant
@@ -2283,9 +2277,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 110
     durability: 12000000
     job_req:
       - vagrant
@@ -2299,9 +2293,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 160
     durability: 12000000
     job_req:
       - vagrant
@@ -2315,9 +2309,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 210
     durability: 12000000
     job_req:
       - vagrant
@@ -2331,9 +2325,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 260
     durability: 12000000
     job_req:
       - vagrant
@@ -2347,9 +2341,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 334
     durability: 12000000
     job_req:
       - vagrant
@@ -2363,9 +2357,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 417
     durability: 12000000
     job_req:
       - vagrant
@@ -2379,9 +2373,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 508
     durability: 12000000
     job_req:
       - vagrant
@@ -2395,9 +2389,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 607
     durability: 12000000
     job_req:
       - vagrant
@@ -2411,9 +2405,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 714
     durability: 12000000
     job_req:
       - vagrant
@@ -2427,9 +2421,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
+    hp_restore: 975
     durability: 12000000
     job_req:
       - vagrant
@@ -2443,9 +2437,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
+    hp_restore: 1200
     durability: 12000000
     job_req:
       - vagrant
@@ -2459,9 +2453,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
+    hp_restore: 2000
     durability: 12000000
     job_req:
       - vagrant
@@ -2475,9 +2469,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
+    hp_restore: 4000
     durability: 12000000
     job_req:
       - vagrant
@@ -2491,9 +2485,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
+    hp_restore: 8000
     durability: 12000000
     job_req:
       - vagrant
@@ -2507,9 +2501,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
+    hp_restore: 12000
     durability: 12000000
     job_req:
       - vagrant
@@ -2523,9 +2517,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2539,9 +2533,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    fp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2555,9 +2549,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2571,9 +2565,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2587,9 +2581,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2603,9 +2597,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2619,9 +2613,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2635,9 +2629,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2651,9 +2645,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ENCHANT
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2667,9 +2661,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ENCHANT
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2683,9 +2677,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2699,9 +2693,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ENCHANT
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2715,9 +2709,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2731,9 +2725,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2747,9 +2741,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2763,9 +2757,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2779,9 +2773,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2795,9 +2789,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2811,9 +2805,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2827,9 +2821,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2843,9 +2837,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2859,9 +2853,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2875,9 +2869,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2891,9 +2885,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2907,9 +2901,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2923,9 +2917,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2939,9 +2933,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2955,9 +2949,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2971,9 +2965,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -2987,9 +2981,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3003,9 +2997,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3019,9 +3013,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3035,9 +3029,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3051,9 +3045,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3067,9 +3061,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3083,9 +3077,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3099,9 +3093,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3115,9 +3109,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3131,9 +3125,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3147,9 +3141,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3163,9 +3157,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3179,9 +3173,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3195,9 +3189,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3211,9 +3205,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3227,9 +3221,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3243,9 +3237,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3259,9 +3253,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3275,9 +3269,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3291,9 +3285,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3307,9 +3301,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3323,9 +3317,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3339,9 +3333,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3355,9 +3349,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3371,9 +3365,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3387,9 +3381,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3403,9 +3397,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3419,9 +3413,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3435,9 +3429,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3451,9 +3445,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3467,9 +3461,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3483,9 +3477,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3499,9 +3493,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3515,9 +3509,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3531,9 +3525,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3547,9 +3541,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3563,9 +3557,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3579,9 +3573,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3595,9 +3589,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3611,9 +3605,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3627,9 +3621,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3643,9 +3637,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3659,9 +3653,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3675,9 +3669,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3691,9 +3685,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3707,9 +3701,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3723,9 +3717,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3739,9 +3733,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3755,9 +3749,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3771,9 +3765,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3787,9 +3781,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3803,9 +3797,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3819,9 +3813,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3835,9 +3829,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3851,9 +3845,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3867,9 +3861,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3883,9 +3877,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3899,9 +3893,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3915,9 +3909,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3931,9 +3925,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3947,9 +3941,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3963,9 +3957,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3979,9 +3973,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -3995,9 +3989,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4011,9 +4005,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4027,9 +4021,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4043,9 +4037,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4059,9 +4053,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4075,9 +4069,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4091,9 +4085,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4107,9 +4101,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4123,9 +4117,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4139,9 +4133,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4155,9 +4149,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4171,9 +4165,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4187,9 +4181,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4203,9 +4197,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4219,9 +4213,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4235,9 +4229,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4251,9 +4245,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4267,9 +4261,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4283,9 +4277,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4299,9 +4293,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4315,9 +4309,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4331,9 +4325,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4347,9 +4341,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4363,9 +4357,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4379,9 +4373,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4395,9 +4389,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4411,9 +4405,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4427,9 +4421,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4443,9 +4437,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4459,9 +4453,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4475,9 +4469,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4491,9 +4485,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4507,9 +4501,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4523,9 +4517,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4539,9 +4533,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4555,9 +4549,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4571,9 +4565,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4587,9 +4581,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4603,9 +4597,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4619,9 +4613,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4635,9 +4629,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4651,9 +4645,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4667,9 +4661,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4683,9 +4677,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4699,9 +4693,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4715,9 +4709,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4731,9 +4725,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4747,9 +4741,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4763,9 +4757,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4779,9 +4773,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4795,9 +4789,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4811,9 +4805,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4827,9 +4821,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4843,9 +4837,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4859,9 +4853,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4875,9 +4869,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4891,9 +4885,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4907,9 +4901,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4923,9 +4917,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4939,9 +4933,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4955,9 +4949,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4971,9 +4965,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -4987,9 +4981,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5003,9 +4997,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5019,9 +5013,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5035,9 +5029,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5051,9 +5045,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5067,9 +5061,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5083,9 +5077,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5099,9 +5093,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5115,9 +5109,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5131,9 +5125,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5147,9 +5141,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5163,9 +5157,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5179,9 +5173,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5195,9 +5189,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5211,9 +5205,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5227,9 +5221,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 20
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - vagrant
@@ -5243,9 +5237,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
-    equip_slot: 25
     item_kind2: IK2_CHARM
     item_kind3: IK3_BCHARM
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - billposter
@@ -5259,9 +5253,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
-    equip_slot: 25
     item_kind2: IK2_CHARM
     item_kind3: IK3_RCHARM
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - ringmaster
@@ -5275,9 +5269,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
-    equip_slot: 25
     item_kind2: IK2_BULLET
     item_kind3: IK3_ARROW
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5291,9 +5285,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5307,9 +5301,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5323,9 +5317,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5339,9 +5333,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5355,9 +5349,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5371,9 +5365,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5387,9 +5381,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_SCROLL
+    mp_restore: 9999
     durability: 12000000
     job_req:
       - acrobat
@@ -5403,7 +5397,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5419,7 +5412,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5435,7 +5427,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5451,7 +5442,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5467,7 +5457,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5483,7 +5472,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5499,7 +5487,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5515,7 +5502,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5531,7 +5517,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5547,7 +5532,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5563,7 +5547,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5579,7 +5562,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5595,7 +5577,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5611,7 +5592,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5627,7 +5607,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5643,7 +5622,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5659,7 +5637,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5675,7 +5652,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5691,7 +5667,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5707,7 +5682,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5723,7 +5697,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5739,7 +5712,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5755,7 +5727,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5771,7 +5742,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5787,7 +5757,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5803,7 +5772,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5819,7 +5787,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5835,7 +5802,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5851,7 +5817,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5867,7 +5832,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5883,7 +5847,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5899,7 +5862,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5915,7 +5877,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5931,7 +5892,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5947,7 +5907,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5963,7 +5922,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5979,7 +5937,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5995,7 +5952,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6011,7 +5967,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6027,7 +5982,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6043,7 +5997,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6059,7 +6012,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6075,7 +6027,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6091,7 +6042,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6107,7 +6057,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6123,7 +6072,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6139,7 +6087,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6155,7 +6102,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6171,7 +6117,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6187,7 +6132,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6203,7 +6147,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6219,7 +6162,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6235,7 +6177,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6251,7 +6192,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6267,7 +6207,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6283,7 +6222,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6299,7 +6237,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6315,7 +6252,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6331,7 +6267,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6347,7 +6282,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6363,7 +6297,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6379,7 +6312,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6395,7 +6327,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6411,7 +6342,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6427,7 +6357,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6443,7 +6372,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6459,7 +6387,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6475,7 +6402,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6491,7 +6417,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6507,7 +6432,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6523,7 +6447,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6539,7 +6462,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6555,7 +6477,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6571,7 +6492,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6587,7 +6507,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6603,7 +6522,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6619,7 +6537,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6635,7 +6552,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6651,7 +6567,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6667,7 +6582,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6683,7 +6597,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6699,7 +6612,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6715,7 +6627,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6731,7 +6642,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6747,7 +6657,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6763,7 +6672,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6779,7 +6687,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6795,7 +6702,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6811,7 +6717,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6827,7 +6732,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6843,7 +6747,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6859,7 +6762,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6875,7 +6777,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6891,7 +6792,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6907,7 +6807,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6923,7 +6822,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6939,7 +6837,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6955,7 +6852,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6971,7 +6867,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6987,7 +6882,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7003,7 +6897,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7019,7 +6912,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7035,7 +6927,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7051,7 +6942,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7067,7 +6957,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7083,7 +6972,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7099,7 +6987,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7115,7 +7002,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7131,7 +7017,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7147,7 +7032,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7163,7 +7047,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7179,7 +7062,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7195,7 +7077,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7211,7 +7092,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7227,7 +7107,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7243,7 +7122,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7259,7 +7137,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7275,7 +7152,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7291,7 +7167,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7307,7 +7182,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7323,7 +7197,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7339,7 +7212,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7355,7 +7227,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7371,7 +7242,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7387,7 +7257,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7403,7 +7272,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7419,7 +7287,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7435,7 +7302,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7451,7 +7317,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7467,7 +7332,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7483,7 +7347,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7499,7 +7362,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7515,7 +7377,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7531,9 +7392,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 265
     durability: 3200000
     job_req:
       - mercenary
@@ -7547,7 +7408,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 13
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7563,7 +7423,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 13
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7579,7 +7438,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 13
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7595,7 +7453,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 13
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7611,7 +7468,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 13
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7627,9 +7483,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 3200000
     job_req:
       - vagrant
@@ -7643,9 +7499,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 280000
     job_req:
       - magician
@@ -7659,7 +7515,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7675,7 +7530,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7691,7 +7545,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7707,7 +7560,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7723,7 +7575,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7739,7 +7590,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7755,7 +7605,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7771,7 +7620,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7787,7 +7635,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7803,7 +7650,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7819,7 +7665,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7835,7 +7680,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 19
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -7851,9 +7695,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
-    equip_slot: 5
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 126
     durability: 4500000
     job_req:
       - vagrant
@@ -7867,9 +7711,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
-    equip_slot: 5
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 202
     durability: 4500000
     job_req:
       - vagrant
@@ -7883,9 +7727,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
-    equip_slot: 5
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 270
     durability: 4500000
     job_req:
       - vagrant
@@ -7899,9 +7743,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
-    equip_slot: 5
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 507
     durability: 4500000
     job_req:
       - vagrant
@@ -7915,9 +7759,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
-    equip_slot: 5
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -7931,9 +7775,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -7947,9 +7791,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -7963,9 +7807,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -7979,9 +7823,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -7995,9 +7839,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8011,9 +7855,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8027,9 +7871,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8043,9 +7887,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8059,9 +7903,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8075,9 +7919,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8091,9 +7935,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8107,9 +7951,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8123,9 +7967,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8139,9 +7983,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8155,9 +7999,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8171,9 +8015,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8187,9 +8031,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8203,9 +8047,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8219,9 +8063,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8235,9 +8079,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8251,9 +8095,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8267,9 +8111,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8283,9 +8127,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8299,9 +8143,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8315,9 +8159,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8331,9 +8175,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8347,9 +8191,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8363,9 +8207,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8379,9 +8223,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8395,9 +8239,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8411,9 +8255,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8427,9 +8271,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8443,9 +8287,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8459,9 +8303,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8475,9 +8319,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8491,9 +8335,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8507,9 +8351,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8523,9 +8367,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8539,9 +8383,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8555,9 +8399,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_WARP
     item_kind3: IK3_EVENTSUB
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8571,9 +8415,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 5
     item_kind2: IK2_WARP
     item_kind3: IK3_EVENTSUB
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8587,9 +8431,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 5
     item_kind2: IK2_SKILL
     item_kind3: IK3_GENERAL
+    hp_restore: 747
     durability: 4500000
     job_req:
       - vagrant
@@ -8603,9 +8447,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 11
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    hp_restore: 1000
     durability: 6570000
     job_req:
       - vagrant
@@ -8619,9 +8463,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 11
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
+    mp_restore: 1000
     durability: 6570000
     job_req:
       - vagrant
@@ -8635,9 +8479,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 11
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 9999
     durability: 6570000
     job_req:
       - vagrant
@@ -8651,9 +8495,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 11
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    mp_restore: 9999
     durability: 6570000
     job_req:
       - vagrant
@@ -8667,9 +8511,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 11
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    fp_restore: 9999
     durability: 6570000
     job_req:
       - vagrant
@@ -8683,9 +8527,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 26
     item_kind2: IK2_WARP
     item_kind3: IK3_EVENTSUB
+    fp_restore: 9999
     durability: 3600000
     job_req:
       - vagrant
@@ -8699,9 +8543,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 26
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 110
     durability: 3600000
     job_req:
       - vagrant
@@ -8715,9 +8559,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 12
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 9999
     durability: 50000
     job_req:
       - vagrant
@@ -8731,9 +8575,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 29
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 9999
     durability: 4500000
     job_req:
       - vagrant
@@ -8747,9 +8591,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 29
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 5000
     durability: 4500000
     job_req:
       - vagrant
@@ -8763,7 +8607,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8779,7 +8622,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8795,7 +8637,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8811,7 +8652,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8827,7 +8667,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8843,7 +8682,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8859,7 +8697,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8875,7 +8712,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -8891,7 +8727,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
-    equip_slot: 13
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     durability: 50000
@@ -8907,9 +8742,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
+    hp_restore: 508
     durability: 8800000
     job_req:
       - vagrant
@@ -8923,9 +8758,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 2000
     durability: 8800000
     job_req:
       - vagrant
@@ -8939,9 +8774,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
+    mp_restore: 2000
     durability: 8800000
     job_req:
       - vagrant
@@ -8955,9 +8790,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
+    mp_restore: 2000
     durability: 8800000
     job_req:
       - vagrant
@@ -8971,9 +8806,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 2000
     durability: 8800000
     job_req:
       - vagrant
@@ -8987,9 +8822,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    fp_restore: 2000
     durability: 8800000
     job_req:
       - vagrant
@@ -9003,7 +8838,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     durability: 8800000
@@ -9019,9 +8853,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
+    hp_restore: 2000
     durability: 8800000
     job_req:
       - vagrant
@@ -9035,9 +8869,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
+    mp_restore: 2000
     durability: 8800000
     job_req:
       - vagrant
@@ -9051,9 +8885,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 29
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    hp_restore: 2000
     durability: 4500000
     job_req:
       - vagrant
@@ -9067,9 +8901,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 29
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    mp_restore: 2000
     durability: 4500000
     job_req:
       - vagrant
@@ -9083,7 +8917,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9099,7 +8932,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 7200000
@@ -9115,7 +8947,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 6
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 50000
@@ -9131,7 +8962,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     durability: 7200000
@@ -9145,9 +8975,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 10
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 9999
     durability: 7200000
   - id: 20186
     name: Mini Santa
@@ -9159,9 +8989,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 9999
     durability: 7200000
   - id: 20187
     name: Mini Snowman
@@ -9173,9 +9003,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 9999
     durability: 7200000
   - id: 21081
     name: Little Lykan
@@ -9187,7 +9017,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 10
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 7200000
@@ -9201,9 +9030,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 7200000
   - id: 20212
     name: Defender's Ring
@@ -9215,9 +9044,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 7200000
   - id: 20213
     name: Adept's Ring
@@ -9229,9 +9058,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 7200000
   - id: 20214
     name: Marksman's Ring
@@ -9243,9 +9072,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 20
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
+    equip_slot: 20
     durability: 7200000
   - id: 20215
     name: Champion's Demol Earring
@@ -9257,9 +9086,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 7200000
   - id: 20216
     name: Defender's Plug Earring
@@ -9271,9 +9100,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 7200000
   - id: 20221
     name: Adept's Earring of Power
@@ -9285,9 +9114,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 7200000
   - id: 20222
     name: Marksman's Earring of Power
@@ -9299,9 +9128,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 22
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
+    equip_slot: 22
     durability: 7200000
   - id: 20217
     name: Champion's Gore Necklace
@@ -9313,9 +9142,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 7200000
   - id: 20218
     name: Adept's Mental Necklace
@@ -9327,9 +9156,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 7200000
   - id: 20219
     name: Marksman's Peision Necklace
@@ -9341,9 +9170,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 7200000
   - id: 20220
     name: Defender's Necklace of Protection
@@ -9355,9 +9184,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 19
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
+    equip_slot: 19
     durability: 7200000
   - id: 26905
     name: Sardine Roll
@@ -9369,9 +9198,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 8
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 2000
     durability: 50000
   - id: 26906
     name: Watermelon Drink
@@ -9383,9 +9212,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 8
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
+    mp_restore: 2000
     durability: 50000
   - id: 26954
     name: Lost lucky bag
@@ -9397,9 +9226,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
-    equip_slot: 8
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
+    hp_restore: 2000
     durability: 50000
   - id: 21082
     name: Joey
@@ -9411,9 +9240,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 2000
     durability: 4500000
   - id: 21083
     name: Spike
@@ -9425,9 +9254,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 2000
     durability: 4500000
   - id: 21084
     name: Lumia
@@ -9439,9 +9268,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 2000
     durability: 4500000
   - id: 21085
     name: Inspector Koko
@@ -9453,9 +9282,9 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    hp_restore: 2000
     durability: 4500000
   - id: 21086
     name: Cheshire Cat
@@ -9467,7 +9296,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9481,7 +9309,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9495,7 +9322,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 29
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9509,7 +9335,6 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
-    equip_slot: 8
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 50000

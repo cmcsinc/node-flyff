@@ -25,7 +25,7 @@ import type { Logger } from '@flyff/core';
 import type { JournalReplayer } from './journalReplayer.js';
 
 export interface ReplayerRegistryDeps {
-  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp'>;
+  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats'>;
   readonly inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem' | 'setGold'>;
   readonly bankRepo: Pick<BankRepository, 'setBankPass'>;
   readonly logger: Logger;
@@ -72,5 +72,14 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     await deps.bankRepo.setBankPass(p.accountId, p.bankPass);
   });
 
-  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS'] }, 'Journal replay handlers registered');
+  // Absolute stat block + unspent stat points (C++ m_nStr/Sta/Dex/Int/RemainGP).
+  // Emitted by StatService on allocation; absolute so replay is idempotent.
+  r.register('CHAR_STATS', async (row) => {
+    const p = payload<{
+      strength: number; stamina: number; dexterity: number; intelligence: number; remain_gp: number;
+    }>(row);
+    await deps.charRepo.updateStats(row.char_id, p);
+  });
+
+  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS'] }, 'Journal replay handlers registered');
 }

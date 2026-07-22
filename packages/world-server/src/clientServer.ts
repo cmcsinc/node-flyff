@@ -34,6 +34,7 @@ import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handle
 import type { MeleeAttackHandler } from './handlers/meleeAttack.handler.js';
 import type { UseSkillHandler } from './handlers/useSkill.handler.js';
 import type { DoUseSkillPointHandler } from './handlers/doUseSkillPoint.handler.js';
+import type { ModifyStatusHandler } from './handlers/modifyStatus.handler.js';
 import type { ActMsgHandler } from './handlers/actMsg.handler.js';
 import type { MoveItemHandler } from './handlers/moveItem.handler.js';
 import type { DropItemHandler } from './handlers/dropItem.handler.js';
@@ -43,6 +44,7 @@ import type { DoEquipHandler } from './handlers/doEquip.handler.js';
 import type { DoUseItemHandler } from './handlers/doUseItem.handler.js';
 import type { BankHandler } from './handlers/bank.handler.js';
 import type { ShopHandler } from './handlers/shop.handler.js';
+import type { TaskBarHandler } from './handlers/taskbar.handler.js';
 import type { RemoveQuestHandler } from './handlers/removeQuest.handler.js';
 import type { QuestCheckHandler } from './handlers/questCheck.handler.js';
 import type { QuestHelperHandler } from './handlers/questHelper.handler.js';
@@ -70,6 +72,7 @@ export interface WorldClientServerDeps {
   meleeAttackHandler: MeleeAttackHandler;
   useSkillHandler: UseSkillHandler;
   doUseSkillPointHandler: DoUseSkillPointHandler;
+  modifyStatusHandler: ModifyStatusHandler;
   actMsgHandler: ActMsgHandler;
   moveItemHandler: MoveItemHandler;
   dropItemHandler: DropItemHandler;
@@ -79,6 +82,7 @@ export interface WorldClientServerDeps {
   doUseItemHandler: DoUseItemHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
+  taskbarHandler: TaskBarHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -123,6 +127,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
   dispatcher.register(PACKETTYPE.USESKILL, (s, r) => deps.useSkillHandler.handleUseSkill(s, r));
   dispatcher.register(PACKETTYPE.DOUSESKILLPOINT, (s, r) => deps.doUseSkillPointHandler.handleDoUseSkillPoint(s, r));
+  dispatcher.register(PACKETTYPE.MODIFY_STATUS, (s, r) => deps.modifyStatusHandler.handleModifyStatus(s, r));
   dispatcher.register(PACKETTYPE.ACTMSG, (s, r) => deps.actMsgHandler.handleActMsg(s, r));
   dispatcher.register(PACKETTYPE.MOVEITEM, (s, r) => deps.moveItemHandler.handleMoveItem(s, r));
   dispatcher.register(PACKETTYPE.DROPITEM, (s, r) => deps.dropItemHandler.handleDropItem(s, r));
@@ -142,6 +147,8 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.CLOSESHOPWND, (s, r) => deps.shopHandler.handleClose(s, r));
   dispatcher.register(PACKETTYPE.BUYITEM, (s, r) => deps.shopHandler.handleBuy(s, r));
   dispatcher.register(PACKETTYPE.SELLITEM, (s, r) => deps.shopHandler.handleSell(s, r));
+  dispatcher.register(PACKETTYPE.ADDITEMTASKBAR, (s, r) => deps.taskbarHandler.handleAddItem(s, r));
+  dispatcher.register(PACKETTYPE.REMOVEITEMTASKBAR, (s, r) => deps.taskbarHandler.handleRemoveItem(s, r));
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
   dispatcher.register(PACKETTYPE.QUEST_CHECK, (s, r) => deps.questCheckHandler.handleQuestCheck(s, r));
   dispatcher.register(PACKETTYPE.QUESTHELPER_REQNPCPOS, (s, r) => deps.questHelperHandler.handleQuestHelper(s, r));

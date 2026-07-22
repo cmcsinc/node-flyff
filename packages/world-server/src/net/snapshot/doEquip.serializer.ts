@@ -1,10 +1,11 @@
 /**
- * DOEQUIP S->C snapshots -- equip-change confirm (self) + vicinity render.
+ * DOEQUIP S->C snapshot -- equip-change confirm. One format, sent to self AND
+ * vicinity peers (`CUserMng::AddDoEquip`, `User.cpp:4515`, broadcast over
+ * `m_2pc` which includes the originator). Self needs it: `CDPClient::OnDoEquip`
+ * (`DPClient.cpp:2387`) resolves the item via `m_Inventory.GetAtId(nId)` on the
+ * IsActiveMover path, then its `DoEquip` worker relocates the item client-side.
  *
- * Self (`CUser::AddDoEquip`, `User.cpp:1197`):
- *   `[objid][SNAPSHOTTYPE_DOEQUIP=0x0006][BYTE nId][DWORD dwItemId][BYTE fEquip]`
- * Vicinity (`CUserMng::AddDoEquip`, `User.cpp:4515`):
- *   `[objid][0x0006][BYTE nId][DWORD idGuild][BYTE fEquip]
+ *   `[objid][SNAPSHOTTYPE_DOEQUIP=0x0006][BYTE nId][DWORD idGuild][BYTE fEquip]
  *    [EQUIP_INFO 12B raw: DWORD dwId, int nOption, BYTE byFlag + 3B MSVC pad]
  *    [int nPart]`
  *
@@ -12,8 +13,13 @@
  * the 3 trailing pad bytes are written literal zero. Omitting them desyncs the
  * stream (nPart reads garbage) and crashes Neuz. #1 equip wire risk.
  *
- * `nId` is the inventory elem objid; in our model the slot index (BYTE-truncated,
- * matches the C++ cast at User.cpp:4522). `fEquip` = 1 equip / 0 unequip.
+ * `nId` is the slot the client currently holds the item at (our slot=objid
+ * model, `itemElemBody.serializer.ts:43`): the bag slot for equip, the equip
+ * slot (`MAX_INVENTORY+parts`) for unequip -- NOT the post-move destination.
+ * `fEquip` = 1 equip / 0 unequip.
+ *
+ * The dead `CUser::AddDoEquip` (`User.cpp:1197`, 3-field `[nId][dwItemId][fEquip]`)
+ * is NOT emitted -- its layout desyncs OnDoEquip's 6-field reader.
  *
  * @module net/snapshot/doEquip
  */
@@ -31,21 +37,8 @@ export interface EquipInfoBody {
   byFlag: number;
 }
 
-/** Self-confirm: sent only to the equipper. */
-export function buildDoEquipSelf(objid: number, nId: number, dwItemId: number, fEquip: boolean): Buffer {
-  const w = new PacketWriter();
-  w.writeDword(PACKETTYPE.SNAPSHOT);
-  w.writeDword(NULL_ID);
-  w.writeWord(1);
-  w.writeDword(objid);
-  w.writeWord(SNAPSHOTTYPE.DOEQUIP);
-  w.writeByte(nId & 0xff);
-  w.writeDword(dwItemId);
-  w.writeByte(fEquip ? 1 : 0);
-  return w.build();
-}
-
-/** Vicinity broadcast: sent to peers so they render the weapon/armor on the body. */
+/** Vicinity broadcast: sent to self + peers so the item is equipped/unequipped
+ *  on the body. Self uses it to relocate the item in its own inventory. */
 export function buildDoEquipVicinity(
   objid: number,
   nId: number,

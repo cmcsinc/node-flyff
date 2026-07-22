@@ -43,11 +43,24 @@ export function writeItemContainer(
   w: PacketWriter,
   slots: number,
   contents: readonly (InventorySlot | null)[],
+  /**
+   * `m_dwIndexNum` -- the visible bag-slot count. `m_apIndex[i] = i` (identity)
+   * for `i < indexNum`, matching `CItemContainer::Clear()` (Item.h:480). Defaults
+   * to `slots` (bank/vendor tabs carry no equip extension). Pass `MAX_INVENTORY`
+   * for the player inventory so equip-part slots (>= indexNum) stay NULL_ID.
+   */
+  indexNum = slots,
 ): void {
   const occupied: number[] = [];
   for (let i = 0; i < slots; i++) {
     const s = contents[i] ?? null;
-    w.writeDword(s ? i : NULL_ID);            // m_apIndex[i]
+    // m_apIndex[i]: identity for the visible bag range. Empty bag slots MUST be
+    // `i`, not NULL_ID -- the bag grid renders each slot via GetAt(i) =
+    // m_apItem[m_apIndex[i]] (Item.h:818), which returns NULL when m_apIndex[i]
+    // is NULL_ID. With NULL_ID, a SetAtId-placed item (buy/pickup CREATEITEM
+    // writes m_apItem but never m_apIndex) is invisible until a relog re-sends
+    // the identity table.
+    w.writeDword(i < indexNum ? i : (s ? i : NULL_ID));   // m_apIndex[i]
     if (s) occupied.push(i);
   }
   w.writeByte(occupied.length & 0xff);         // chSize
@@ -55,8 +68,8 @@ export function writeItemContainer(
     w.writeByte(i & 0xff);                     // slot index
     writeCItemElemBody(w, i, contents[i]!);
   }
-  for (let i = 0; i < slots; i++) {            // adwObjIndex
-    w.writeDword(contents[i] ? i : NULL_ID);
+  for (let i = 0; i < slots; i++) {            // adwObjIndex -- same identity rule
+    w.writeDword(i < indexNum ? i : (contents[i] ? i : NULL_ID));
   }
 }
 
@@ -146,7 +159,7 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeByte(p.m_aCheckedQuest.length);                // m_nCheckedQuestSize (BYTE)
   for (const id of p.m_aCheckedQuest) w.writeWord(id);  // m_aCheckedQuest * size (WORD each)
   w.writeDword(NULL_ID);       // m_idMurderer
-  w.writeWord(0);              // m_nRemainGP
+  w.writeWord(p.m_nRemainGP);  // m_nRemainGP (unspent stat points)
   w.writeWord(0);              // padding (literal 0)
   for (let i = 0; i < MAX_HUMAN_PARTS; i++) { // equipInfo[].dwId *31 (propItem id)
     const eq = p.m_Inventory[MAX_INVENTORY + i];
@@ -172,7 +185,7 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(0);             // m_nAngelLevel
 
   // --- containers ---
-  writeItemContainer(w, INVENTORY_SLOTS, p.m_Inventory);              // m_Inventory (73 = MAX_INVENTORY + MAX_HUMAN_PARTS)
+  writeItemContainer(w, INVENTORY_SLOTS, p.m_Inventory, MAX_INVENTORY); // m_Inventory (73 = MAX_INVENTORY bag + MAX_HUMAN_PARTS equip)
   for (let k = 0; k < MAX_BANK_TABS; k++) writeItemContainer(w, BANK_SLOTS, p.m_Bank[k] ?? []); // m_Bank *3 (42 each)
   w.writeDword(0);             // GetPetId (__VER>=9)
   writeEmptyPocketController(w);                       // m_Pocket (__VER>=11)

@@ -87,8 +87,24 @@ export const OBJMSG_DIE = 40;
  */
 export const II_SYS_SYS_SCR_RESURRECTION = 10431;
 
-/** BELLI values with `m_bActiveAttack == TRUE` (sight-aggro, `defineAttribute.h:203`). */
-export const ACTIVE_BELLI: ReadonlySet<number> = new Set([3, 5, 6, 7, 11, 12, 13]);
+/**
+ * BELLI values meaning "attacks first" (sight-aggro) -> `m_bActiveAttack = 1`
+ * (`defineAttribute.h:203-215`). Only the four `ACTIVEATTACK*` bells qualify:
+ * ACTIVEATTACK(3), ACTIVEATTACK_MELEE2X(5), ACTIVEATTACK_MELEE(6),
+ * ACTIVEATTACK_RANGE(7). The `BELLI_MELEE2X/MELEE/RANGE` (11/12/13) values are
+ * "counterattack **when attacked**" (cautious-type) -- they retaliate via the
+ * damage path (`triggerRage`), NEVER via `ScanTarget`. 1/2/8/9/10 likewise
+ * never sight-aggro. The v15 Flaris field set is entirely 11/12/13, so with
+ * this set zero mobs get a red name -- correct (none are sight-aggressive).
+ *
+ * C++ fidelity note: `m_bActiveAttack` is really a PER-SPAWN flag (the
+ * `CreateMover(.., bActAttack)` arg, `ScriptLib.cpp:1708`, default FALSE per
+ * `Mover.cpp:429`) -- INDEPENDENT of belli. We don't extract that spawn flag,
+ * so belli is our proxy; {3,5,6,7} is the faithful proxy until a `.dyo`/`.rgn`
+ * `bActAttack` extractor ships. The client takes the value from our wire byte
+ * (`ObjSerializeOpt.cpp:737`) -- it does NOT recompute from its own propMover.
+ */
+export const ACTIVE_BELLI: ReadonlySet<number> = new Set([3, 5, 6, 7]);
 
 /**
  * Sight-aggro level band -- a red-name mob auto-acquires only players within
