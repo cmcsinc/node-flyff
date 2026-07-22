@@ -2,7 +2,7 @@ import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import net, { type Server, type Socket } from 'node:net';
 
-import { createDb, AccountRepository, CharacterRepository } from '@flyff/database';
+import { createDb, AccountRepository, CharacterRepository, InventoryRepository } from '@flyff/database';
 import { up, down } from '@flyff/database/migrations/001_initial';
 import { up as upGold } from '@flyff/database/migrations/003_character_gold';
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
@@ -69,8 +69,13 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
     db = createDb({ client: 'better-sqlite3', connection: ':memory:' });
     await up(db);
     await upGold(db);
+    // 008 renames `inventory` -> `inventory_item`; the e2e only needs the item
+    // table for the equip-id query, so apply just that rename (full 008 pulls in
+    // bank_pass/bank_gold columns the minimal e2e schema doesn't carry).
+    await db.schema.renameTable('inventory', 'inventory_item');
     const accountRepo = new AccountRepository(db);
     const charRepo = new CharacterRepository(db);
+    const inventoryRepo = new InventoryRepository(db);
     const accountId = await accountRepo.create({
       username: ACCOUNT, password_hash: 'x', email: 'c@e.com',
       banned: false, banned_until: null,
@@ -83,7 +88,7 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
       x: 0, y: 0, z: 0, world_id: 'W1', zone_id: 1,
     });
 
-    const charList = new CharListService(accountRepo, charRepo);
+    const charList = new CharListService(accountRepo, charRepo, inventoryRepo);
     const stub = new Proxy({}, { get: () => async () => ({ ok: false }) }) as never;
     const charHandler = new CharHandler(
       charList, stub, stub, new PlayerListSerializer(),

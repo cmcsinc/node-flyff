@@ -72,6 +72,22 @@ export class InventoryRepository {
   }
 
   /**
+   * Equipped item IDs for a character (slots >= `minEquipSlot`, i.e.
+   * `MAX_INVENTORY + parts`). Used by the cluster PLAYER_LIST to render the
+   * character-select preview (C++ `SendPlayerList` reads `m_aEquipInfo`).
+   *
+   * @param minEquipSlot - First equip slot index (MAX_INVENTORY, 42 in v15).
+   */
+  async findEquippedItemIds(characterId: number, minEquipSlot: number): Promise<number[]> {
+    const rows = await this.db('inventory_item')
+      .where({ character_id: characterId })
+      .andWhere('slot', '>=', minEquipSlot)
+      .orderBy('slot', 'asc')
+      .select('item_id');
+    return rows.map((r: { item_id: number }) => Number(r.item_id));
+  }
+
+  /**
    * Find item in specific slot.
    *
    * @param characterId - Character ID

@@ -1,7 +1,7 @@
 import { describe, it, before } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CharListService } from '../../src/services/charList.service.js';
-import type { AccountRepository } from '@flyff/database';
+import type { AccountRepository, InventoryRepository } from '@flyff/database';
 import type { CharacterRepository, CharacterRow } from '@flyff/database';
 
 function makeChar(id: number, name: string): CharacterRow {
@@ -19,6 +19,7 @@ describe('CharListService', () => {
   let service: CharListService;
   let mockAccountRepo: AccountRepository;
   let mockCharRepo: CharacterRepository;
+  let mockInventoryRepo: InventoryRepository;
 
   before(() => {
     mockAccountRepo = {
@@ -29,13 +30,19 @@ describe('CharListService', () => {
       findByAccountId: async (id: number) =>
         id === 10 ? [makeChar(1, 'A'), makeChar(2, 'B')] : [],
     } as unknown as CharacterRepository;
-    service = new CharListService(mockAccountRepo, mockCharRepo);
+    mockInventoryRepo = {
+      findEquippedItemIds: async (charId: number) =>
+        charId === 1 ? [2104] : [],
+    } as unknown as InventoryRepository;
+    service = new CharListService(mockAccountRepo, mockCharRepo, mockInventoryRepo);
   });
 
-  it('returns characters for a known account', async () => {
+  it('returns characters with equipped item IDs for a known account', async () => {
     const chars = await service.listByAccount('alice');
     assert.equal(chars.length, 2);
     assert.equal(chars[0].name, 'A');
+    assert.deepEqual(chars[0].equippedItemIds, [2104]);
+    assert.deepEqual(chars[1].equippedItemIds, []);
   });
 
   it('returns empty list for unknown account', async () => {

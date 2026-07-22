@@ -11,7 +11,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CharacterRow } from '@flyff/database';
+import type { CharacterWithEquip } from '../services/charList.service.js';
 
 // v15 canonical constants (referenced by C++ but defined outside game/source/).
 const MI_MALE = 11;
@@ -32,7 +32,7 @@ export class PlayerListSerializer {
    * @param chars - Characters to include.
    * @returns Packet buffer (opcode DWORD already written).
    */
-  build(dwAuthKey: number, chars: readonly CharacterRow[]): Buffer {
+  build(dwAuthKey: number, chars: readonly CharacterWithEquip[]): Buffer {
     const writer = new PacketWriter();
     writer.writeDword(PACKETTYPE.PLAYER_LIST);
     writer.writeDword(dwAuthKey >>> 0);
@@ -50,7 +50,7 @@ export class PlayerListSerializer {
   /**
    * Write a single per-character struct in canonical field order.
    */
-  private writeChar(writer: PacketWriter, c: CharacterRow): void {
+  private writeChar(writer: PacketWriter, c: CharacterWithEquip): void {
     writer.writeDword(c.slot);                       // islot (int, 4 bytes)
     writer.writeDword(CHARACTER_BLOCK_USABLE);       // m_nCharacterBlock: 1 = usable
     writer.writeDword(WI_WORLD_MADRIGAL);            // dwWorldID
@@ -76,6 +76,12 @@ export class PlayerListSerializer {
     writer.writeDword(c.dexterity);                  // m_nDex
     writer.writeDword(c.intelligence);               // m_nInt
     writer.writeDword(0);                            // m_dwMode
-    writer.writeDword(0);                            // equipCount (no equip in slice)
+
+    // Equipment preview: CountEquip (int) + that many equipped item-ID DWORDs.
+    // Client derives the part slot from each item's own prop (DPLoginClient.cpp:472-494).
+    writer.writeDword(c.equippedItemIds.length);     // CountEquip
+    for (const itemId of c.equippedItemIds) {
+      writer.writeDword(itemId >>> 0);               // m_aEquipInfo[nParts].dwId
+    }
   }
 }
