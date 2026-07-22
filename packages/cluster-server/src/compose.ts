@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type ClusterServerConfig, MemoryCache } from '@flyff/core';
 import { ClusterServerConfigSchema } from '@flyff/core/config/schemas/cluster';
-import { createDb, type DbConfig, AccountRepository, CharacterRepository } from '@flyff/database';
+import { createDb, type DbConfig, AccountRepository, CharacterRepository, InventoryRepository } from '@flyff/database';
 import { LoginRegistrar } from './ipc/loginRegistrar.js';
 import { WorldRegistry } from './ipc/worldRegistry.js';
 import { ClusterHandoffPublisher } from './ipc/handoffPublisher.js';
@@ -48,6 +48,7 @@ export async function compose(): Promise<ClusterComposeResult> {
   const db = createDb(dbConfig);
   const accountRepo = new AccountRepository(db);
   const charRepo = new CharacterRepository(db);
+  const inventoryRepo = new InventoryRepository(db);
 
   // Cache for handoff tokens.
   const cache = new MemoryCache();
@@ -80,7 +81,7 @@ export async function compose(): Promise<ClusterComposeResult> {
 
   // Character select/create/delete/enter-world stack.
   const playerListSerializer = new PlayerListSerializer();
-  const charListService = new CharListService(accountRepo, charRepo);
+  const charListService = new CharListService(accountRepo, charRepo, inventoryRepo);
   const charCreateService = new CharCreateService(accountRepo, charRepo, {
     maxPerAccount: config.character.maxPerAccount,
     startMap: config.character.startMap,

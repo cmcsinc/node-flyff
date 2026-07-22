@@ -3,9 +3,9 @@ import * as assert from 'node:assert/strict';
 import { PlayerListSerializer } from '../../src/net/playerList.serializer.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { CharacterRow } from '@flyff/database';
+import type { CharacterWithEquip } from '../../src/services/charList.service.js';
 
-function makeChar(overrides: Partial<CharacterRow> = {}): CharacterRow {
+function makeChar(overrides: Partial<CharacterWithEquip> = {}): CharacterWithEquip {
   return {
     id: 1,
     account_id: 10,
@@ -34,8 +34,9 @@ function makeChar(overrides: Partial<CharacterRow> = {}): CharacterRow {
     zone_id: 1,
     created_at: new Date(),
     updated_at: new Date(),
+    equippedItemIds: [],
     ...overrides,
-  } as unknown as CharacterRow;
+  } as unknown as CharacterWithEquip;
 }
 
 describe('PlayerListSerializer', () => {
@@ -100,6 +101,41 @@ describe('PlayerListSerializer', () => {
       assert.equal(reader.readDword(), 0);   // equipCount
 
       assert.equal(reader.readDword(), 0);   // countMessenger trailer
+    });
+
+    it('writes CountEquip then the equipped item-ID DWORDs', () => {
+      const buf = serializer.build(7, [makeChar({ equippedItemIds: [2104, 3104] })]);
+      const reader = new PacketReader(buf);
+      reader.readDword(); // opcode
+      reader.readDword(); // authKey
+      reader.readDword(); // count
+      reader.readDword(); // slot
+      reader.readDword(); // block
+      reader.readDword(); // worldID
+      reader.readDword(); // m_dwIndex
+      reader.readString();   // m_szName
+      reader.readFloat(); reader.readFloat(); reader.readFloat(); // pos
+      reader.readDword(); // idPlayer
+      reader.readDword(); // idparty
+      reader.readDword(); // idGuild
+      reader.readDword(); // idWar
+      reader.readDword(); // skinSet
+      reader.readDword(); // hairMesh
+      reader.readDword(); // hairColor
+      reader.readDword(); // headMesh
+      reader.readByte();  // sex (BYTE -- sits before job in the struct)
+      reader.readDword(); // job
+      reader.readDword(); // level
+      reader.readDword(); // jobLv
+      reader.readDword(); // str
+      reader.readDword(); // sta
+      reader.readDword(); // dex
+      reader.readDword(); // int
+      reader.readDword(); // m_dwMode
+      assert.equal(reader.readDword(), 2);     // CountEquip
+      assert.equal(reader.readDword(), 2104);  // equip itemId[0]
+      assert.equal(reader.readDword(), 3104);  // equip itemId[1]
+      assert.equal(reader.readDword(), 0);     // countMessenger trailer
     });
 
     it('uses MI_FEMALE (12) for gender=1', () => {
