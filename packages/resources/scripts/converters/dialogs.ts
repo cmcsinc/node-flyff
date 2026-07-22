@@ -1,10 +1,10 @@
 /**
- * WorldDialog.txt + character.inc + NpcScript.cpp → data/dialogues/*.yml converter.
+ * WorldDialog.txt + character.inc + NpcScript.cpp -> data/dialogues/*.yml converter.
  *
  * Three outputs:
- *  - `_strings.yml`  — WorldDialog.txt flat string table (`Say(n)`/`Speak(n)` resolve here).
- *  - `_npc-map.yml`  — character.inc `m_szDialog` → `szNpc` prefix lookup.
- *  - `<prefix>.yml`  — one file per NpcScript.cpp function group (`mafl_marche`, …).
+ *  - `_strings.yml`  -- WorldDialog.txt flat string table (`Say(n)`/`Speak(n)` resolve here).
+ *  - `_npc-map.yml`  -- character.inc `m_szDialog` -> `szNpc` prefix lookup.
+ *  - `<prefix>.yml`  -- one file per NpcScript.cpp function group (`mafl_marche`, ...).
  *
  * The simple call subset is parsed into structured fields; complex bodies are
  * kept verbatim in `source` so nothing is lost (ported later). See
@@ -18,7 +18,7 @@ import { resolve } from 'node:path';
 import { stringify } from 'yaml';
 import { readSource } from './parse.js';
 
-/** Read WorldDialog.txt → array where index N = file line (N+1). */
+/** Read WorldDialog.txt -> array where index N = file line (N+1). */
 async function convertStrings(rawDir: string, outDir: string): Promise<number> {
   const content = await readSource(resolve(rawDir, 'WorldDialog.txt'));
   const strings = content.split(/\r?\n/);
@@ -29,7 +29,7 @@ async function convertStrings(rawDir: string, outDir: string): Promise<number> {
 }
 
 /**
- * Parse character.inc blocks → { characterKey → { dialog_file, sz_npc } }.
+ * Parse character.inc blocks -> { characterKey -> { dialog_file, sz_npc } }.
  *
  * character.inc format: block header `<Key>\n{` (e.g. `MaFl_Marche`), no
  * `SetSkin`/`m_szDialog` field. The dialog prefix is the lowercased key.
@@ -39,7 +39,7 @@ async function convertNpcMap(rawDir: string, outDir: string): Promise<number> {
   const npcs: Record<string, { dialog_file: string; sz_npc: string }> = {};
 
   // `<Key>` on its own line immediately followed by `{`. Restrict to character
-  // block prefixes (Ma/Mi/Md… + capital) to skip C++-style identifiers.
+  // block prefixes (Ma/Mi/Md... + capital) to skip C++-style identifiers.
   const headerRe = /^([A-Z][A-Za-z0-9_]*)\s*\{\s*$/gm;
   let hm: RegExpExecArray | null;
   while ((hm = headerRe.exec(content)) !== null) {
@@ -65,7 +65,7 @@ const LAUNCH_RE = /\bLaunchQuest\s*\(\s*\)/;
  */
 const SIMPLE_BODY = /^(?:\s*(?:Say|Speak|AddKey|Exit|SetScriptTimer|LaunchQuest|NpcId)\s*\([^)]*\)\s*;?|[\s();{}0-9])*$/;
 
-/** Convert one function body string → DialogState. */
+/** Convert one function body string -> DialogState. */
 function parseState(body: string): Record<string, unknown> {
   const state: Record<string, unknown> = {};
 
@@ -93,12 +93,12 @@ function parseState(body: string): Record<string, unknown> {
   if (LAUNCH_RE.test(body)) state.launch_quest = true;
 
   // Source-escape: if the body uses calls/conditionals outside the simple subset
-  // (if/for, GetQuestState, BeginQuest, ChangeJob, CreateItem, …), keep it raw.
+  // (if/for, GetQuestState, BeginQuest, ChangeJob, CreateItem, ...), keep it raw.
   if (!SIMPLE_BODY.test(body)) state.source = body.trim();
   return state;
 }
 
-/** Parse NpcScript.cpp → one DialogFile per `<prefix>` (e.g. mafl_marche). */
+/** Parse NpcScript.cpp -> one DialogFile per `<prefix>` (e.g. mafl_marche). */
 async function convertScripts(rawDir: string, outDir: string): Promise<{ files: number; states: number; raw: number }> {
   const content = await readSource(resolve(rawDir, 'NpcScript.cpp'));
   const sigRe = /void\s+CNpcScript::([A-Za-z_][A-Za-z0-9_]*)_(\d+)\s*\(\s*\)/g;
@@ -108,7 +108,7 @@ async function convertScripts(rawDir: string, outDir: string): Promise<{ files: 
 
   let sig: RegExpExecArray | null;
   while ((sig = sigRe.exec(content)) !== null) {
-    const fullName = sig[1]; // e.g. mafl_marche — already lowercase per C++ convention
+    const fullName = sig[1]; // e.g. mafl_marche -- already lowercase per C++ convention
     const keyIdx = sig[2];
     // Body = from the `{` after the signature to its matching `}`.
     let depth = 0;
@@ -156,6 +156,6 @@ export async function convertDialogs(rawDir: string, dataDir: string): Promise<v
   ]);
 
   console.log(
-    `  dialogs: ${strN} strings, ${npcN} npc→prefix links, ${scripts.states} states across ${scripts.files} npc files (${scripts.raw} kept as raw source — advanced subset TODO)`,
+    `  dialogs: ${strN} strings, ${npcN} npc->prefix links, ${scripts.states} states across ${scripts.files} npc files (${scripts.raw} kept as raw source -- advanced subset TODO)`,
   );
 }

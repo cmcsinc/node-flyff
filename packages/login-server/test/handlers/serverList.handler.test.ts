@@ -24,20 +24,30 @@ const ENTRY: ServerListEntry = {
   channelCount: 1, status: 'online', channels: [],
 };
 
-describe('ServerListHandler — v15 SRVR_LIST layout', () => {
-  it('writes [dwAuthKey][cbAccountFlag][count] + per-server 7 fields', async () => {
+describe('ServerListHandler -- v15 SRVR_LIST layout', () => {
+  // szBak: the handler echoes the account name right after cbAccountFlag
+  // (REQUIRED by the __EUROPE_0514 client build, see handler doc). Parsed as a
+  // DWORD-length-prefixed string, so the test reads it at a moving offset
+  // rather than hard-coding byte positions.
+  const ACCOUNT = 'test';
+
+  it('writes [dwAuthKey][cbAccountFlag][szBak][count] + per-server 7 fields', async () => {
     const handler = new ServerListHandler(fakeService([ENTRY]));
     const sock = mockSocket();
-    await handler.sendServerList(sock, 1);
+    await handler.sendServerList(sock, 1, ACCOUNT);
 
     const buf = sock._written[0]!;
     assert.equal(buf.readUInt32LE(0), PACKETTYPE.SRVR_LIST);
     assert.ok(buf.readUInt32LE(4) > 0, 'dwAuthKey must be non-zero');
     assert.equal(buf.readUInt8(8), 0);            // cbAccountFlag
-    assert.equal(buf.readUInt32LE(9), 1);         // dwSizeofServerset
 
-    let o = 13;
-    assert.equal(buf.readUInt32LE(o), 0); o += 4;  // dwParent
+    let o = 9;
+    assert.equal(buf.readUInt32LE(o), ACCOUNT.length); o += 4; // szBak length
+    assert.equal(buf.subarray(o, o + ACCOUNT.length).toString('ascii'), ACCOUNT);
+    o += ACCOUNT.length;
+    assert.equal(buf.readUInt32LE(o), 1); o += 4;  // dwSizeofServerset
+
+    assert.equal(buf.readUInt32LE(o), 0xffffffff); o += 4;  // dwParent = NULL_ID (top-level)
     assert.equal(buf.readUInt32LE(o), 1); o += 4;  // dwID
     assert.equal(buf.readUInt32LE(o), 7); o += 4;  // name length
     assert.equal(buf.subarray(o, o + 7).toString('ascii'), 'Glaphan'); o += 7;
@@ -53,12 +63,15 @@ describe('ServerListHandler — v15 SRVR_LIST layout', () => {
   it('emits zero servers cleanly (count=0, no per-server block)', async () => {
     const handler = new ServerListHandler(fakeService([]));
     const sock = mockSocket();
-    await handler.sendServerList(sock, 1);
+    await handler.sendServerList(sock, 1, ACCOUNT);
     const buf = sock._written[0]!;
     assert.equal(buf.readUInt32LE(0), PACKETTYPE.SRVR_LIST);
     assert.ok(buf.readUInt32LE(4) > 0);
-    assert.equal(buf.readUInt8(8), 0);
-    assert.equal(buf.readUInt32LE(9), 0);
-    assert.equal(buf.length, 13);
+    assert.equal(buf.readUInt8(8), 0); // cbAccountFlag
+    let o = 9;
+    const acctLen = buf.readUInt32LE(o); o += 4 + acctLen; // skip szBak
+    assert.equal(buf.readUInt32LE(o), 0); // count
+    o += 4;
+    assert.equal(o, buf.length, 'no per-server block');
   });
 });

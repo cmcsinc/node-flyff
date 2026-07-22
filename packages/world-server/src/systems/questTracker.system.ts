@@ -1,15 +1,15 @@
 /**
- * QuestTrackerSystem — reactive quest-condition engine (kill / patrol / time).
+ * QuestTrackerSystem -- reactive quest-condition engine (kill / patrol / time).
  *
  * Three concerns, each cheap, mirroring the C++ per-mover update paths:
- *   - **Kill** (`CMover::OnDied` → quest `SetEndCondKillNPC`): combat calls
+ *   - **Kill** (`CMover::OnDied` -> quest `SetEndCondKillNPC`): combat calls
  *     {@link onKill}; matching active quests increment `m_nKillNPCNum[slot]`
- *     (capped at the target count) → SETQUEST.
+ *     (capped at the target count) -> SETQUEST.
  *   - **Patrol** (`SetEndCondPatrolZone` rect): movement calls
- *     {@link onPlayerMoved}; entering the rect sets `QUEST_FLAG.PATROL` → SETQUEST.
+ *     {@link onPlayerMoved}; entering the rect sets `QUEST_FLAG.PATROL` -> SETQUEST.
  *   - **Time limit** (`SetEndCondLimitTime` countdown): {@link tick} decrements
  *     `m_wTime` each second; at 0 it sets bit15 (expired, `DPClient.cpp:5971`)
- *     → QUEST_TEXT_TIME + SETQUEST.
+ *     -> QUEST_TEXT_TIME + SETQUEST.
  *
  * The system is the C++ per-tick counterpart but the emulator has no central
  * 50 ms loop yet, so {@link start} runs its own 1 s timer (like
@@ -17,18 +17,24 @@
  * tests. `onKill`/`onPlayerMoved` are reactive hooks the combat and movement
  * services call (contract; `ponytail` until those wire in).
  *
- * Egress is `playerManager.sendTo` (the sanctioned write abstraction — same
+ * Egress is `playerManager.sendTo` (the sanctioned write abstraction -- same
  * pattern as `CombatService`); the system holds no socket references.
  *
  * @module systems/questTracker
  */
 
 import type { QuestArg, QuestDef, QuestIndex } from '@flyff/resources';
+import { dropsFor } from '@flyff/resources';
 import type { QuestRepository } from '@flyff/database';
 import type { CPlayer } from '../entities/player.js';
 import type { PlayerManager } from '../managers/player.manager.js';
+import type { InventoryService } from '../services/inventory.service.js';
+import type { Rng } from '../combat/formulas.js';
+import { xRandomRng } from '../combat/formulas.js';
 import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
 import { buildSetQuest, buildQuestTextTime } from '../net/snapshot/quest.serializer.js';
+import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
 import { createLogger } from '@flyff/core/logger.js';
 
 const logger = createLogger({ module: 'quest-tracker' });
@@ -55,11 +61,24 @@ export interface QuestTrackerDeps {
   playerManager: Pick<PlayerManager, 'all' | 'sendTo'>;
   /** Persist kill/patrol/time mutations. Optional for tests. */
   questRepo?: Pick<QuestRepository, 'upsertActive'>;
+  /**
+   * Inventory mutation surface for quest-item drops (`addItem`). Optional --
+   * until the inventory system is wired, quest-item generators are indexed but
+   * never rolled (`ponytail`).
+   */
+  inventoryService?: Pick<InventoryService, 'addItem'>;
+  /** CREATEITEM serializer for quest-item-drop notifications. Optional for tests. */
+  createItemSerializer?: CreateItemSnapshotSerializer;
+  /** Drop-probability RNG (defaults to `Math.random`). */
+  rng?: Rng;
 }
 
 export class QuestTrackerSystem {
   private timer: ReturnType<typeof setInterval> | null = null;
-  constructor(private readonly deps: QuestTrackerDeps) {}
+  private readonly rng: Rng;
+  constructor(private readonly deps: QuestTrackerDeps) {
+    this.rng = deps.rng ?? xRandomRng;
+  }
 
   /** Begin the time-limit countdown loop (idempotent). */
   start(): void {
@@ -74,7 +93,7 @@ export class QuestTrackerSystem {
   }
 
   /**
-   * Combat `OnDied` hook — increment `m_nKillNPCNum[slot]` for each active quest
+   * Combat `OnDied` hook -- increment `m_nKillNPCNum[slot]` for each active quest
    * whose `SetEndCondKillNPC(slot, MI, need)` targets the slain monster, capped
    * at `need`. Emits one SETQUEST per changed quest.
    */
@@ -93,13 +112,50 @@ export class QuestTrackerSystem {
       }
     }
     if (mutated) this.flush(killer);
+    this.rollQuestDrops(killer, victimModelIdx);
   }
 
   /**
-   * Movement hook — set `QUEST_FLAG.PATROL` on each active quest whose
+   * Quest-item drop roll -- for each `QuestItem` generator on the slain monster
+   * whose owning quest the killer has active, cap the grant at the quest's
+   * `SetEndCondItem` need, roll `rng.int(QUEST_DROP_SCALE) < prob`, and on
+   * success grant the item via `InventoryService.addItem` + notify (CREATEITEM
+   * for a new slot, UPDATE_ITEM for a stack-merge). Quest items only drop for
+   * players on the quest and stop once the objective count is met -- matching
+   * the C++ per-kill quest-drop intent.
+   */
+  private rollQuestDrops(killer: CPlayer, victimModelIdx: number): void {
+    const inv = this.deps.inventoryService;
+    const createItem = this.deps.createItemSerializer;
+    if (!inv || !createItem) return; // inventory not wired -- ponytail
+    const drops = dropsFor(this.deps.quests, victimModelIdx);
+    if (drops.length === 0) return;
+    for (const d of drops) {
+      if (!killer.findQuest(d.questId)) continue; // only active quest holders
+      const def = this.deps.quests.byId.get(d.questId);
+      if (!def) continue;
+      const need = itemNeed(def, d.item);
+      if (need <= 0) continue; // not a collection target -- ponytail
+      const have = countItem(killer, d.item);
+      if (have >= need) continue; // objective already satisfied
+      if (this.rng.int(QUEST_DROP_SCALE) >= d.prob) continue;
+      const grant = Math.min(Math.max(1, d.num), need - have);
+      const r = inv.addItem(killer, d.item, grant);
+      if (!r.ok) continue; // bag full -- drop silently skipped
+      this.deps.playerManager.sendTo(
+        killer,
+        r.isNew
+          ? createItem.buildOne(killer.m_idPlayer, r.itemId, r.count, r.slot)
+          : buildUpdateItemCount(killer.m_idPlayer, r.slot, r.count),
+      );
+    }
+  }
+
+  /**
+   * Movement hook -- set `QUEST_FLAG.PATROL` on each active quest whose
    * `SetEndCondPatrolZone(world, l, t, r, b)` rect contains the player. Emits
    * one SETQUEST per newly-satisfied quest. The world id is not gated here
-   * (zone→world index map pending); the rect is world-specific so a cross-world
+   * (zone->world index map pending); the rect is world-specific so a cross-world
    * player won't coincidentally satisfy it.
    */
   onPlayerMoved(player: CPlayer): void {
@@ -161,6 +217,29 @@ export class QuestTrackerSystem {
 function num(arg: QuestArg | undefined, fallback = 0): number {
   if (!arg) return fallback;
   return typeof arg.value === 'number' ? arg.value : fallback;
+}
+
+/**
+ * Drop-probability denominator -- C++ rolls `xRandom(3_000_000_000)` for item
+ * drops (propQuest.inc `QuestItem(MI,II,prob,num)` `prob` is a DWORD out of
+ * 3e9, e.g. 1_500_000_000 = 50%). Matches the propMoverEx drop scale.
+ */
+const QUEST_DROP_SCALE = 3_000_000_000;
+
+/** `SetEndCondItem(sex,type,jobOrItem,item,need)` -- need for `itemId`, 0 if not a target. */
+function itemNeed(def: QuestDef, itemId: number): number {
+  for (const c of def.commands) {
+    if (c.cmd !== 'SetEndCondItem') continue;
+    if (num(c.args[3]) === itemId) return num(c.args[4], 1);
+  }
+  return 0;
+}
+
+/** Total count of `itemId` across the player's main-bag slots. */
+function countItem(player: CPlayer, itemId: number): number {
+  let n = 0;
+  for (const s of player.m_Inventory) if (s && s.itemId === itemId) n += s.count;
+  return n;
 }
 
 /** All `SetEndCondKillNPC(slot, MI, need)` conditions on `def`. */

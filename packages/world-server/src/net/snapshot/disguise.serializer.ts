@@ -1,5 +1,5 @@
 /**
- * S→C disguise transform — `SNAPSHOTTYPE_DISGUISE` (0x00f5) / `NODISGUISE` (0x00f6).
+ * S->C disguise transform -- `SNAPSHOTTYPE_DISGUISE` (0x00f5) / `NODISGUISE` (0x00f6).
  *
  * Mirrors `CUserMng::AddDisguise` / `AddNoDisguise` (`WORLDSERVER/User.cpp:4455`
  * / 4466):
@@ -18,7 +18,7 @@ import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import { NULL_ID, SNAPSHOTTYPE_DISGUISE, SNAPSHOTTYPE_NODISGUISE } from './constants.js';
 
 export class DisguiseSerializer {
-  /** `AddDisguise` — render the mover as propMover `dwMoverIdx`. */
+  /** `AddDisguise` -- render the mover as propMover `dwMoverIdx`. */
   build(objid: number, dwMoverIdx: number): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);
@@ -30,7 +30,7 @@ export class DisguiseSerializer {
     return w.build();
   }
 
-  /** `AddNoDisguise` — clear a prior disguise (bodyless). */
+  /** `AddNoDisguise` -- clear a prior disguise (bodyless). */
   buildClear(objid: number): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);

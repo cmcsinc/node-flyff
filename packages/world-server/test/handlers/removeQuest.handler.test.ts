@@ -45,7 +45,7 @@ describe('RemoveQuestHandler', () => {
     const p = { m_idPlayer: 42, m_tickScript: Date.now() - 100 } as unknown as CPlayer;
     const sock = mockSocket();
     await new RemoveQuestHandler(fakePm(p), svc).handleRemoveQuest(sock as never, new PacketReader(payload(7)));
-    assert.equal(calls, 0); // 100ms < 400ms → dropped
+    assert.equal(calls, 0); // 100ms < 400ms -> dropped
   });
 
   it('destroys when not IN_WORLD', async () => {

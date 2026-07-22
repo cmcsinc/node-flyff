@@ -1,7 +1,7 @@
 /**
  * Player self-spawn frame: JOIN (0xff00) wrapping one SNAPSHOT ADD_OBJ entry.
  *
- * Wire layout (payload — the dispatcher adds the 0x5E + size framing):
+ * Wire layout (payload -- the dispatcher adds the 0x5E + size framing):
  *   [JOIN:DWORD]                       dwHdr
  *   [objidPlayer:DWORD]                recipient's own objid
  *   [cb:WORD] = 1                      one snapshot entry
@@ -10,7 +10,7 @@
  *     [hdr:WORD] = SNAPSHOTTYPE_ADD_OBJ
  *     [dwObjType:BYTE] = OT_MOVER      (AddAddObj explicit)
  *     [dwObjIndex:DWORD]               gender model index (MI_MALE/FEMALE)
- *     CObj::Serialize: [m_dwType:BYTE][m_dwIndex:DWORD][scale:WORD][pos:3×f][angle:WORD]
+ *     CObj::Serialize: [m_dwType:BYTE][m_dwIndex:DWORD][scale:WORD][pos:3*f][angle:WORD]
  *     CCtrl::Serialize: [m_objid:DWORD]
  *     CMover::Serialize (mover.serializer)
  *
@@ -42,8 +42,8 @@ export class PlayerSnapshotSerializer {
     w.writeDword(player.m_idPlayer);   // objidPlayer
     w.writeWord(2);                    // cb = 2 sub-records (WORLD_READINFO + ADD_OBJ)
 
-    // WORLD_READINFO — loads the .wld + sets g_pWorld client-side. MUST precede
-    // ADD_OBJ or OnAddObj→OpenField derefs a null CWorld (User.cpp:317).
+    // WORLD_READINFO -- loads the .wld + sets g_pWorld client-side. MUST precede
+    // ADD_OBJ or OnAddObj->OpenField derefs a null CWorld (User.cpp:317).
     w.writeDword(player.m_idPlayer);         // objid (GetId)
     w.writeWord(SNAPSHOTTYPE_WORLD_READINFO); // hdr
     w.writeDword(WI_WORLD_MADRIGAL);         // dwWorldId
@@ -57,7 +57,7 @@ export class PlayerSnapshotSerializer {
     w.writeByte(OT_MOVER);             // dwObjType (AddAddObj)
     w.writeDword(modelIndex);          // dwObjIndex
 
-    // CObj::Serialize — m_dwType/m_dwIndex duplicate the ADD_OBJ prefix
+    // CObj::Serialize -- m_dwType/m_dwIndex duplicate the ADD_OBJ prefix
     w.writeByte(OT_MOVER);             // m_dwType
     w.writeDword(modelIndex);          // m_dwIndex
     w.writeWord(100);                  // m_vScale.x * 100 (scale 1.0)

@@ -1,5 +1,5 @@
 /**
- * QUERY_PLAYER_DATA handler — `PACKETTYPE_QUERY_PLAYER_DATA` (0xf000f802).
+ * QUERY_PLAYER_DATA handler -- `PACKETTYPE_QUERY_PLAYER_DATA` (0xf000f802).
  *
  * Read order fixed by `WORLDSERVER/DPSrvr.cpp:1647` `OnQueryPlayerData`:
  *
@@ -8,7 +8,7 @@
  * v15 Neuz sends this when opening guild/friend/party windows whose cached
  * `sPlayerData` is stale (`Neuz/DPClient.cpp:13340` `SendQueryPlayerData`). The
  * service stub returns no reply; the client keeps its existing cache. No rate
- * limiter yet (rule 03 flags it as repeatable — add when the real reply ships).
+ * limiter yet (rule 03 flags it as repeatable -- add when the real reply ships).
  *
  * @module handlers/queryPlayerData.handler
  */
@@ -32,7 +32,7 @@ export class QueryPlayerDataHandler {
     let charId: number;
     try {
       if (socket.session.state !== SessionState.IN_WORLD) {
-        logger.warn({ state: socket.session.state }, 'QUERY_PLAYER_DATA before IN_WORLD — dropping');
+        logger.warn({ state: socket.session.state }, 'QUERY_PLAYER_DATA before IN_WORLD -- dropping');
         socket.destroy();
         return;
       }

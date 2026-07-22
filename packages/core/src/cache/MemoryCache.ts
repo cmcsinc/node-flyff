@@ -1,8 +1,8 @@
 /**
- * MemoryCache — in-process ICacheAdapter backed by a plain Map.
+ * MemoryCache -- in-process ICacheAdapter backed by a plain Map.
  *
  * Intended for unit tests and single-process local development.
- * Does NOT support pub/sub — publish/subscribe are intentionally absent.
+ * Does NOT support pub/sub -- publish/subscribe are intentionally absent.
  *
  * TTL is enforced lazily: expired entries are detected and removed on
  * the next {@link get} call for that key. No background sweep timer is

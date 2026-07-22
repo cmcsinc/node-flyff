@@ -1,5 +1,5 @@
 /**
- * S→C same-world teleport — `SNAPSHOTTYPE_SETPOS` (0x0010).
+ * S->C same-world teleport -- `SNAPSHOTTYPE_SETPOS` (0x0010).
  *
  * Mirrors `CUserMng::AddSetPos` (`WORLDSERVER/User.cpp:4640`):
  *   ar << GETID( pCtrl ) << SNAPSHOTTYPE_SETPOS;
@@ -7,7 +7,7 @@
  *
  * Client `CDPClient::OnSetPos` (`Neuz/DPClient.cpp:2152`) relocates the active
  * obj (the local player): `ReadWorld(vPos, TRUE)` + `SetPos` + `AddObj` + camera
- * move — it NEVER nulls `g_pPlayer`. This is the C++ same-world teleport path
+ * move -- it NEVER nulls `g_pPlayer`. This is the C++ same-world teleport path
  * (`CWorld::_replace`, `World.cpp:1589-1604`), used in lieu of REPLACE for
  * in-world revivals.
  *
@@ -34,7 +34,7 @@ export class SetPosSerializer {
   build(objid: number, pos: Vec3): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);       // 0xffffff00
-    w.writeDword(NULL_ID);                    // objidPlayer — unused client-side
+    w.writeDword(NULL_ID);                    // objidPlayer -- unused client-side
     w.writeWord(1);                           // cb = 1 entry
     w.writeDword(objid);                      // GETID(pCtrl)
     w.writeWord(SNAPSHOTTYPE_SETPOS);         // 0x0010

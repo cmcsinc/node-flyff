@@ -1,13 +1,13 @@
 /**
- * Experience table — `Server/Resource/expTable.inc` `expCharacter` block.
+ * Experience table -- `Server/Resource/expTable.inc` `expCharacter` block.
  *
- * 200 rows (levels 0–199). Struct `EXPCHARACTER { nExp1, nPxp, dwLPPoint,
+ * 200 rows (levels 0-199). Struct `EXPCHARACTER { nExp1, nPxp, dwLPPoint,
  * nLimitExp }` (`Project.cpp:3251`). We keep `nExp1` (cumulative exp to reach
  * level N), `nLimitExp` (per-source gain cap), and `dwLPPoint` (skill points
- * granted on leveling into N+1). `nPxp` is legacy PXP — unused.
+ * granted on leveling into N+1). `nPxp` is legacy PXP -- unused.
  *
  * `nExp1` exceeds 2^31 past L80, so this is `number` (float64, exact to 2^53).
- * The DB `exp` column MUST be BIGINT — see ponytail in `join.service`.
+ * The DB `exp` column MUST be BIGINT -- see ponytail in `join.service`.
  *
  * @module combat/expTable
  */
@@ -25,7 +25,7 @@ function r(nExp1: number, dwLPPoint: number, nLimitExp: number): ExpRow {
   return { nExp1, dwLPPoint, nLimitExp };
 }
 
-/** Levels 0–149 (150 rows). Level 0 is the sentinel. */
+/** Levels 0-149 (150 rows). Level 0 is the sentinel. */
 const BASE: readonly ExpRow[] = [
   r(0, 0, 0), // 0 (sentinel)
   r(0, 0, 16), r(14, 2, 18), r(20, 2, 21), r(36, 2, 25), r(90, 2, 30),
@@ -60,11 +60,11 @@ const BASE: readonly ExpRow[] = [
   r(251153350660, 2, 6917446347), r(276670531087, 2, 7620463430), r(304780257046, 2, 8394603185), r(335745931162, 2, 9247607972),
 ];
 
-/** v15 ships no progression past L150 — 150–199 all share the cap row. */
+/** v15 ships no progression past L150 -- 150-199 all share the cap row. */
 const CAP_ROW: ExpRow = r(369857717768, 2, 10187103688);
 const TAIL: ExpRow[] = Array.from({ length: 50 }, () => CAP_ROW);
 
-/** Levels 0–199. Index = level. */
+/** Levels 0-199. Index = level. */
 export const EXP_TABLE: readonly ExpRow[] = [...BASE, ...TAIL];
 
 /** Hard level cap (max reachable). */

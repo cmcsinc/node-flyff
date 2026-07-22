@@ -30,7 +30,7 @@ describe('buildClusterClientServer', () => {
     const written: Buffer[] = [];
     const socket = { write: (b: Buffer) => { written.push(b); return true; } } as never;
 
-    // DPID(4) + opcode(4) + dwTime(4) — cluster server packets lead with DPID.
+    // DPID(4) + opcode(4) + dwTime(4) -- cluster server packets lead with DPID.
     const body = Buffer.alloc(12);
     body.writeUInt32LE(0, 0);                          // DPID_UNKNOWN
     body.writeUInt32LE(PACKETTYPE.QUERYTICKCOUNT, 4);  // opcode

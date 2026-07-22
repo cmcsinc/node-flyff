@@ -49,7 +49,7 @@ describe('ClusterListener', () => {
     assert.equal(got?.charId, 42);
     assert.equal(got?.worldId, 'W1');
 
-    // single-use — second consume returns null
+    // single-use -- second consume returns null
     assert.equal(listener.consumeByCharId(42), null);
   });
 

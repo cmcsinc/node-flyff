@@ -32,7 +32,7 @@ export interface LoginComposeResult {
 /**
  * Compose the login server dependency graph.
  *
- * This is the composition root — all singletons are wired here.
+ * This is the composition root -- all singletons are wired here.
  *
  * @returns Wired dependencies
  */

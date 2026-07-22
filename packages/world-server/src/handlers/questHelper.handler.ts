@@ -1,11 +1,11 @@
 /**
- * QUESTHELPER_REQNPCPOS handler — `PACKETTYPE_QUESTHELPER_REQNPCPOS` (0x70005000).
+ * QUESTHELPER_REQNPCPOS handler -- `PACKETTYPE_QUESTHELPER_REQNPCPOS` (0x70005000).
  *
  * Client asks "where is NPC `<charKey>`" for the quest-tracker map marker.
  * Resolves the placed NPC via {@link SpawnManager.findByCharacterKey} and writes
  * back `SNAPSHOTTYPE_QUESTHELPER_NPCPOS` (its world position). If the NPC isn't
  * spawned (e.g. in another world), C++ sends `TID_GAME_QUESTINFO_FAIL`; here we
- * silently drop — the defined-text frame ships with the dialog bridge (Phase 5).
+ * silently drop -- the defined-text frame ships with the dialog bridge (Phase 5).
  *
  * @module handlers/questHelper.handler
  */

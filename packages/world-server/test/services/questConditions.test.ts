@@ -28,7 +28,7 @@ function inv(counts: Record<number, number> = {}, empty = 32): InventoryOps {
   return { count: (id) => counts[id] ?? 0, emptySlots: () => empty };
 }
 
-describe('questConditions — canBegin', () => {
+describe('questConditions -- canBegin', () => {
   it('passes when no conditions are set', () => {
     assert.equal(canBegin(player(), def(1, []), inv()).ok, true);
   });
@@ -76,7 +76,7 @@ describe('questConditions — canBegin', () => {
   });
 });
 
-describe('questConditions — isComplete', () => {
+describe('questConditions -- isComplete', () => {
   const rt = (over: Partial<{ state: number; time: number; id: number; k: [number, number]; flags: number }> = {}) => ({
     state: over.state ?? 0, time: over.time ?? 0, id: 1,
     killNpcNum: over.k ?? [0, 0], flags: over.flags ?? 0,

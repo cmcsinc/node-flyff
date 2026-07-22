@@ -1,5 +1,5 @@
 /**
- * CREATEITEM S→C snapshot — notify one or more new inventory slots.
+ * CREATEITEM S->C snapshot -- notify one or more new inventory slots.
  *
  * `CUser::AddCreateItem` (`WORLDSERVER/User.cpp:727`):
  * ```
@@ -13,11 +13,11 @@
  * ar.Write( pnNum, sizeof(short) * nCount );  // per-slot counts
  * ```
  *
- * `pItemBase->Serialize` is virtual → `CItemElem::Serialize` (ObjSerialize.cpp
+ * `pItemBase->Serialize` is virtual -> `CItemElem::Serialize` (ObjSerialize.cpp
  * :48) which calls `CItemBase::Serialize` (:31) first. So the body is the SAME
  * 75 B the OT_ITEM ground item writes (CItemBase 20 + CItemElem 55), without
  * the CObj/CCtrl object frame. Per-call a single pItemBase is serialized, then
- * `nCount` (slot, count) pairs fan it into N slots — used when a drop stacks
+ * `nCount` (slot, count) pairs fan it into N slots -- used when a drop stacks
  * across several slots. For a single pickup nCount=1.
  *
  * @module net/snapshot/createItem
@@ -26,6 +26,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
 import { NULL_ID, SNAPSHOTTYPE_CREATEITEM } from './constants.js';
+import { writeCItemElemBody } from './itemElemBody.serializer.js';
 
 /** One slot this snapshot announces. */
 export interface CreateItemEntry {
@@ -38,7 +39,7 @@ export interface CreateItemEntry {
 export class CreateItemSnapshotSerializer {
   /**
    * Build a CREATEITEM snapshot for one item landing in `slot`. The common
-   * case (single pickup into one slot) — wraps a single sub-snapshot.
+   * case (single pickup into one slot) -- wraps a single sub-snapshot.
    */
   buildOne(playerObjid: number, itemId: number, count: number, slot: number): Buffer {
     return this.build(playerObjid, [{ itemId, count, slot }]);
@@ -48,7 +49,7 @@ export class CreateItemSnapshotSerializer {
    * Build a CREATEITEM snapshot. All entries share one pItemBase body only when
    * they describe the same itemId fanned across slots; callers picking up a
    * single stack should pass one entry. Distinct itemIds in one call is not a
-   * real C++ path — emit one snapshot per distinct item.
+   * real C++ path -- emit one snapshot per distinct item.
    */
   build(playerObjid: number, entries: readonly CreateItemEntry[]): Buffer {
     if (entries.length === 0) throw new Error('CREATEITEM requires at least one entry');
@@ -56,7 +57,7 @@ export class CreateItemSnapshotSerializer {
 
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);   // dwHdr
-    w.writeDword(NULL_ID);               // objidPlayer — unused
+    w.writeDword(NULL_ID);               // objidPlayer -- unused
     w.writeWord(entries.length);         // cb (one sub-snapshot per entry)
 
     for (const e of entries) this.writeOne(w, playerObjid, first.itemId, e);
@@ -69,37 +70,14 @@ export class CreateItemSnapshotSerializer {
     w.writeWord(SNAPSHOTTYPE_CREATEITEM);  // 0x0003
     w.writeByte(0);                        // the literal (BYTE)0
 
-    // CItemBase (20B) — m_dwObjId=0 for a fresh inventory item (no world objid),
-    // m_dwItemId = the item, serial 0, empty name string.
-    w.writeDword(0);                       // m_dwObjId
-    w.writeDword(bodyItemId);             // m_dwItemId
-    w.writeQword(0);                      // m_liSerialNumber
-    w.writeDword(0);                      // m_szItemText length (empty String)
+    // Shared CItemBase + CItemElem body (72 B) -- m_dwObjId=0 for a fresh
+    // inventory item. Single source of truth with the JOIN inventory/bank
+    // containers + OT_ITEM ground item (itemElemBody.serializer.ts).
+    writeCItemElemBody(w, 0, { itemId: bodyItemId, count: e.count });
 
-    // CItemElem (55B) — vanilla drop: count + all upgrade fields zeroed. Mirrors
-    // the OT_ITEM ground-item elem block exactly (itemSnapshot.serializer.ts).
-    w.writeWord(e.count);                 // m_nItemNum
-    w.writeWord(0);                       // m_nRepairNumber
-    w.writeDword(0);                      // m_nHitPoint
-    w.writeWord(0);                       // m_nRepair
-    w.writeByte(0);                       // m_byFlag
-    w.writeDword(0);                      // m_nAbilityOption
-    w.writeDword(0);                      // m_idGuild
-    w.writeByte(0);                       // m_bItemResist
-    w.writeDword(0);                      // m_nResistAbilityOption
-    w.writeDword(0);                      // m_nResistSMItemId
-    w.writeDword(0);                      // piercing size
-    w.writeDword(0);                      // ultimate piercing size
-    w.writeDword(0);                      // pet vis keep-time size
-    w.writeByte(0);                       // m_bCharged
-    w.writeQword(0);                      // m_iRandomOptItemId
-    w.writeDword(0);                      // m_dwKeepTime
-    w.writeByte(0);                       // bPet
-    w.writeByte(0);                       // m_bTranformVisPet
-
-    // Trailer — per-slot fan-out.
+    // Trailer -- per-slot fan-out.
     w.writeByte(1);                       // nCount = 1 (this sub-snapshot covers one slot)
-    w.writeByte(e.slot & 0xff);           // pnId[0] — slot id
-    w.writeWord(e.count & 0xffff);        // pnNum[0] — count
+    w.writeByte(e.slot & 0xff);           // pnId[0] -- slot id
+    w.writeWord(e.count & 0xffff);        // pnNum[0] -- count
   }
 }

@@ -28,7 +28,7 @@ const validBase = {
 
 describe('WorldServerConfigSchema', () => {
   // -------------------------------------------------------------------------
-  // Happy path — valid minimal config
+  // Happy path -- valid minimal config
   // -------------------------------------------------------------------------
 
   it('parses a valid minimal config and applies all defaults', () => {
@@ -215,7 +215,7 @@ describe('WorldServerConfigSchema', () => {
 });
 
 // ---------------------------------------------------------------------------
-// WorldSimConfigSchema — isolated unit tests
+// WorldSimConfigSchema -- isolated unit tests
 // ---------------------------------------------------------------------------
 
 describe('WorldSimConfigSchema', () => {
@@ -265,7 +265,7 @@ describe('WorldSimConfigSchema', () => {
 });
 
 // ---------------------------------------------------------------------------
-// ZoneConfigSchema — isolated unit tests
+// ZoneConfigSchema -- isolated unit tests
 // ---------------------------------------------------------------------------
 
 describe('ZoneConfigSchema', () => {
@@ -297,7 +297,7 @@ describe('ZoneConfigSchema', () => {
 });
 
 // ---------------------------------------------------------------------------
-// WalConfigSchema — isolated unit tests
+// WalConfigSchema -- isolated unit tests
 // ---------------------------------------------------------------------------
 
 describe('WalConfigSchema', () => {
@@ -325,7 +325,7 @@ describe('WalConfigSchema', () => {
 });
 
 // ---------------------------------------------------------------------------
-// WorldRegistrationConfigSchema — isolated unit tests
+// WorldRegistrationConfigSchema -- isolated unit tests
 // ---------------------------------------------------------------------------
 
 describe('WorldRegistrationConfigSchema', () => {

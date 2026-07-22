@@ -9,7 +9,7 @@ import { createLogger } from '@flyff/core/logger.js';
 const logger = createLogger({ module: 'serverlist-handler' });
 
 /**
- * `NULL_ID` — Flyff sentinel for "no id / no parent" (`NULL_ID = 0xffffffff`,
+ * `NULL_ID` -- Flyff sentinel for "no id / no parent" (`NULL_ID = 0xffffffff`,
  * `_Network/Misc/Include/Misc.h:20`, `SERVER_DESC` default ctor). The client's
  * server-select dialog (`WndTitle.cpp:691`) adds a server to the list box ONLY
  * when `dwParent == NULL_ID`; sending `dwParent = 0` yields a silently empty
@@ -19,7 +19,7 @@ const logger = createLogger({ module: 'serverlist-handler' });
 const NULL_ID = 0xffffffff;
 
 /**
- * Server list handler — sends `PACKETTYPE_SRVR_LIST` (0xfd).
+ * Server list handler -- sends `PACKETTYPE_SRVR_LIST` (0xfd).
  *
  * Byte layout mirrors what the v15 client parses (`Neuz/DPCertified.cpp:204-270`
  * `CDPCertified::OnSvrList`, server send at `CERTIFIER/DPCertifier.cpp:154-196`):
@@ -44,7 +44,7 @@ export class ServerListHandler {
       const servers = this.serverListService.getServerList();
       const dwAuthKey = randomInt(1, 0x100000000); // non-zero DWORD
 
-      // Flatten the server→channel tree into the SERVER_DESC array the v15
+      // Flatten the server->channel tree into the SERVER_DESC array the v15
       // client expects (WndTitle.cpp:685-747): top-level servers have
       // dwParent=NULL_ID (0xffffffff) and populate the server list box; channels
       // have dwParent=<server.dwID> and populate the channel list box. With no
@@ -66,14 +66,14 @@ export class ServerListHandler {
         if (server.channels.length === 0 && server.status === 'online') {
           logger.warn(
             { server: server.name },
-            'Online server has no channels — client cannot select a channel. '
+            'Online server has no channels -- client cannot select a channel. '
               + 'Ensure the world server is registered with the cluster.',
           );
         }
         for (const ch of server.channels) {
           entries.push({
             parent: serverId, id: nextId++, name: ch.name,
-            // Channel lpAddr is cosmetic — the client connects on the parent
+            // Channel lpAddr is cosmetic -- the client connects on the parent
             // server's addr (WndTitle.cpp:1019-1034 walks to the parent).
             addr: server.ip,
             count: ch.players,
@@ -87,11 +87,11 @@ export class ServerListHandler {
       writer.writeDword(PACKETTYPE.SRVR_LIST);
       writer.writeDword(dwAuthKey);        // dwAuthKey
       writer.writeByte(0);                 // cbAccountFlag
-      // szBak (account-name echo) — REQUIRED by the client's __EUROPE_0514 build
+      // szBak (account-name echo) -- REQUIRED by the client's __EUROPE_0514 build
       // (Neuz/VersionCommon.h:169). OnSvrList reads this string right after
       // cbAccountFlag and hard-exits on mismatch (DPCertified.cpp:224-231).
       // Without it the client reads our count DWORD as the string length,
-      // then 3 bytes of dwParent as the account, lstrcmp != "test" → exit(0).
+      // then 3 bytes of dwParent as the account, lstrcmp != "test" -> exit(0).
       // Confirmed empirically: removing this line brings the crash back.
       writer.writeString(account);         // szBak
       writer.writeDword(entries.length);   // dwSizeofServerset (servers + channels)

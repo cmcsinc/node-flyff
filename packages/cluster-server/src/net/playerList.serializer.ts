@@ -18,7 +18,7 @@ const MI_MALE = 11;
 const MI_FEMALE = 12;
 const WI_WORLD_MADRIGAL = 1;
 // Client reads this as g_Neuz.m_nCharacterBlock[slot] (DPLoginClient.cpp:429).
-// 0 = blocked → "You cannot use this character", 1 = usable, 2 = empty slot.
+// 0 = blocked -> "You cannot use this character", 1 = usable, 2 = empty slot.
 const CHARACTER_BLOCK_USABLE = 1;
 
 /**
@@ -42,7 +42,7 @@ export class PlayerListSerializer {
       this.writeChar(writer, c);
     }
 
-    // countMessenger — slice has no messenger blocks.
+    // countMessenger -- slice has no messenger blocks.
     writer.writeDword(0);
     return writer.build();
   }

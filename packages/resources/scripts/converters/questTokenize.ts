@@ -1,5 +1,5 @@
 /**
- * Tokenizer for the Flyff `.inc` resource format (propQuest.inc, propJob.inc, …).
+ * Tokenizer for the Flyff `.inc` resource format (propQuest.inc, propJob.inc, ...).
  *
  * The format is whitespace-heavy and command calls split freely across lines:
  *   SetTitle\n  (\n    IDS_X\n  );
@@ -18,7 +18,7 @@ export type Token =
 
 const TOKEN_RE = /("(?:[^"\\]|\\.)*")|([A-Za-z_]\w*)|(-?\d+(?:\.\d+)?)|([{}(),;])/g;
 
-/** Strip `//…` line comments and `/* … *​/` block comments (never inside strings here). */
+/** Strip line comments and block comments (never inside strings here). */
 function stripComments(src: string): string {
   let out = '';
   let i = 0;
@@ -29,7 +29,7 @@ function stripComments(src: string): string {
       out += ch;
       i++;
       while (i < src.length && src[i] !== '"') out += src[i++];
-      out += src[i] ?? '';
+      if (i < src.length) out += src[i]!;
       i++;
       continue;
     }

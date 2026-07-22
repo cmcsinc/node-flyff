@@ -1,5 +1,5 @@
 /**
- * Drop table loader — reads `data/drops/drops.yml` into a model-index index.
+ * Drop table loader -- reads `data/drops/drops.yml` into a model-index index.
  *
  * Keyed by `modelIdx` (== `CMover.m_dwIndex`) so the death roll is an O(1)
  * lookup. The probability scale is read from the file's `_prob_scale` and
@@ -17,7 +17,7 @@ import { DropFileSchema, type DropTable } from '../schemas/drop.schema.js';
 const logger = createResourceLogger('drop.loader');
 
 export interface DropIndex {
-  /** modelIdx (== CMover.m_dwIndex) → drop table. */
+  /** modelIdx (== CMover.m_dwIndex) -> drop table. */
   drops: Map<number, DropTable>;
   /** Probability denominator from the file (`_prob_scale`). */
   probScale: number;
@@ -25,7 +25,7 @@ export interface DropIndex {
 
 /**
  * Load all drop tables from `dataDir/drops/drops.yml`.
- * Missing file → empty index (drops are optional; servers still boot).
+ * Missing file -> empty index (drops are optional; servers still boot).
  */
 export async function loadDrops(dataDir: string): Promise<DropIndex> {
   const filePath = resolve(dataDir, 'drops', 'drops.yml');
@@ -35,7 +35,7 @@ export async function loadDrops(dataDir: string): Promise<DropIndex> {
   try {
     content = await readFile(filePath, 'utf-8');
   } catch {
-    logger.warn({ filePath }, 'No drops.yml found — drops disabled');
+    logger.warn({ filePath }, 'No drops.yml found -- drops disabled');
     return { drops, probScale: 3_000_000_000 };
   }
 

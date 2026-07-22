@@ -1,5 +1,5 @@
 /**
- * CombatService integration test — proves the wiring: a swing broadcasts
+ * CombatService integration test -- proves the wiring: a swing broadcasts
  * DAMAGE, a lethal blow broadcasts MOVERDEATH + grants exp (WAL-journaled) +
  * removes the mover. Uses a deterministic `Rng` (always-hit, fixed damage) and
  * in-memory mock managers.
@@ -35,7 +35,7 @@ const fixedRng: Rng = {
 
 /** Read the snapshot subtype (WORD) from an UNFRAMED serializer payload. */
 function snapshotSubtype(payload: Buffer): number {
-  // [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2] → subtype at offset 14.
+  // [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2] -> subtype at offset 14.
   return payload.readUInt16LE(14);
 }
 
@@ -46,7 +46,7 @@ function snapshotVictim(payload: Buffer): number {
 }
 
 describe('CombatService.resolveAttack', () => {
-  it('broadcasts DAMAGE per swing; lethal blow → MOVERDEATH + exp + WAL + remove', () => {
+  it('broadcasts DAMAGE per swing; lethal blow -> MOVERDEATH + exp + WAL + remove', () => {
     const writes: Buffer[] = [];
     const socket = { write: (b: Buffer) => { writes.push(b); return true; } };
     const player = CPlayer.fromRow(makeRow(), socket);
@@ -82,11 +82,11 @@ describe('CombatService.resolveAttack', () => {
     const journal = { append: (e: { charId: number; type: string; payload: unknown }) => { journalCalls.push(e); } };
 
     const combat = new CombatService({
-      // @ts-expect-error — mock managers satisfy only the read surface
+      // @ts-expect-error -- mock managers satisfy only the read surface
       spawnManager, zoneManager, playerManager, charRepo, journal, rng: fixedRng,
     });
 
-    // Swing 1: mover 30 → 15 HP (not dead); monster rages on the player.
+    // Swing 1: mover 30 -> 15 HP (not dead); monster rages on the player.
     const r1 = combat.resolveAttack(player, mover.m_idMover);
     assert.equal(r1.ok && r1.hit, true);
     assert.equal(r1.ok && r1.killed, false);
@@ -99,9 +99,9 @@ describe('CombatService.resolveAttack', () => {
     // Monster acquired the player as target (no inline counter-swing).
     assert.equal(mover.m_idTarget, player.m_idPlayer);
     assert.equal(mover.m_fSpeedFactor, 2.0);
-    assert.equal(player.m_nHp, 200); // untouched — AI tick swings, not combat
+    assert.equal(player.m_nHp, 200); // untouched -- AI tick swings, not combat
 
-    // Swing 2: mover 15 → 0 HP, dead (no re-rage — mover is dead).
+    // Swing 2: mover 15 -> 0 HP, dead (no re-rage -- mover is dead).
     const r2 = combat.resolveAttack(player, mover.m_idMover);
     assert.equal(r2.ok && r2.killed, true);
     assert.equal(mover.m_bDead, true);
@@ -110,7 +110,7 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(broadcasts.length, 4);
     assert.equal(snapshotSubtype(broadcasts[3]), 0x00c7); // SNAPSHOTTYPE_MOVERDEATH
 
-    // Exp granted (2 × 1.0 mult), WAL-journaled (absolute CHAR_EXP) before ack, persisted.
+    // Exp granted (2 * 1.0 mult), WAL-journaled (absolute CHAR_EXP) before ack, persisted.
     assert.equal(player.m_nExp, 2);
     assert.equal(journalCalls.length, 1);
     assert.equal(journalCalls[0].type, 'CHAR_EXP');
@@ -140,7 +140,7 @@ describe('CombatService.resolveAttack', () => {
     const playerManager = { sendTo: () => {} };
     const charRepo = { updateLevelAndExp: async () => {} };
     const combat = new CombatService({
-      // @ts-expect-error — mock managers satisfy only the read surface
+      // @ts-expect-error -- mock managers satisfy only the read surface
       spawnManager, zoneManager, playerManager, charRepo, rng: fixedRng,
     });
     const r = combat.resolveAttack(player, guard.m_idMover);
@@ -157,7 +157,7 @@ describe('CombatService.resolveAttack', () => {
       { modelIndex: 20, name: 'Aibatt', level: 1, hp: 30, atkMin: 16, atkMax: 16, armor: 3, hr: 40, er: 3, expValue: 0 },
       { x: 0, y: 0, z: 0 }, 1,
     );
-    // Already chasing someone else → triggerRage early-outs.
+    // Already chasing someone else -> triggerRage early-outs.
     mover.m_idTarget = 0x7fffffff;
     const spawnManager = { get: () => mover, kill: () => {} };
     const broadcasts: Buffer[] = [];
@@ -165,12 +165,12 @@ describe('CombatService.resolveAttack', () => {
     const playerManager = { sendTo: () => {} };
     const charRepo = { updateLevelAndExp: async () => {} };
     const combat = new CombatService({
-      // @ts-expect-error — mock managers satisfy only the read surface
+      // @ts-expect-error -- mock managers satisfy only the read surface
       spawnManager, zoneManager, playerManager, charRepo, rng: fixedRng,
     });
 
     combat.resolveAttack(player, mover.m_idMover);
-    // Only the mover DAMAGE — no MOVERSETDESTOBJ (already had a target).
+    // Only the mover DAMAGE -- no MOVERSETDESTOBJ (already had a target).
     assert.equal(broadcasts.length, 1);
     assert.equal(snapshotSubtype(broadcasts[0]), 0x0013);
     assert.equal(snapshotVictim(broadcasts[0]), mover.m_idMover);
@@ -198,7 +198,7 @@ describe('CombatService.resolveAttack', () => {
     const charRepo = { updateLevelAndExp: async () => {} };
     const journal = { append: () => {} };
     const combat = new CombatService({
-      // @ts-expect-error — mock managers satisfy only the read surface
+      // @ts-expect-error -- mock managers satisfy only the read surface
       spawnManager, zoneManager, playerManager, charRepo, journal, rng: fixedRng,
     });
 

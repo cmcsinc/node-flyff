@@ -1,7 +1,7 @@
 /**
  * Deep-merges a series of plain objects left-to-right.
  * Later sources win on scalar conflicts; objects are merged recursively.
- * Arrays are replaced (not concatenated) — intentional: config arrays
+ * Arrays are replaced (not concatenated) -- intentional: config arrays
  * like `serverList` should be fully overridden, not appended to.
  *
  * @module config/merge

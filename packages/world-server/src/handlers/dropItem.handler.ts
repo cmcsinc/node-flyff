@@ -1,9 +1,9 @@
 /**
- * DROPITEM handler — `PACKETTYPE_DROPITEM` (0x00ff0007).
+ * DROPITEM handler -- `PACKETTYPE_DROPITEM` (0x00ff0007).
  *
  * `CDPSrvr::OnDropItem` (`DPSrvr.cpp:813`): `DWORD dwItemType, DWORD dwItemId,
  * short nDropNum, D3DXVECTOR3 vPos(3 floats)`. `dwItemId` is the inventory
- * elem's objid — in our model the elem objid IS its slot index. Removes the
+ * elem's objid -- in our model the elem objid IS its slot index. Removes the
  * count from the bag and spawns a ground pile at `vPos` (ADD_OBJ vicinity).
  * The client drops optimistically; the pile broadcast reaches the dropper too.
  *
@@ -37,7 +37,7 @@ export class DropItemHandler {
     if (!player) { socket.destroy(); return; }
 
     try {
-      reader.readDword();                        // dwItemType — unused
+      reader.readDword();                        // dwItemType -- unused
       const dwItemId = reader.readDword();       // inv elem objid (= slot index)
       const nDropNum = reader.readWord();
       const x = reader.readFloat();

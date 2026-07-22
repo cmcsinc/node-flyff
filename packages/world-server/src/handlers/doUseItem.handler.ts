@@ -1,11 +1,11 @@
 /**
- * DOUSEITEM handler — `PACKETTYPE_DOUSEITEM` (0x00ff0021).
+ * DOUSEITEM handler -- `PACKETTYPE_DOUSEITEM` (0x00ff0021).
  *
  * `CDPSrvr::OnDoUseItem` (`DPSrvr.cpp:2601`): `DWORD dwData, OBJID objid,
  * int nPart[, FLOAT fVal]`. The slot is `HIWORD(dwData)`; `objid` is the focus
  * target (NPC for scrolls); a trailing FLOAT rides in only for `PARTS_RIDE`
- * (`__HACK_1023`). Routes via `UseItemService`: equip → DOEQUIP snapshots;
- * potion/food → SETPOINTPARAM(DST_HP/MP/FP); buff/skill/warp/text consume the
+ * (`__HACK_1023`). Routes via `UseItemService`: equip -> DOEQUIP snapshots;
+ * potion/food -> SETPOINTPARAM(DST_HP/MP/FP); buff/skill/warp/text consume the
  * charge (effect ponytail).
  *
  * @module handlers/doUseItem
@@ -44,7 +44,7 @@ export class DoUseItemHandler {
 
     try {
       const dwData = reader.readDword();
-      reader.readDword();                        // objid — focus target, unused here
+      reader.readDword();                        // objid -- focus target, unused here
       const nPart = reader.readDword();
       Validate.dword(dwData);
       Validate.dword(nPart);

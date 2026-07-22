@@ -1,5 +1,5 @@
 /**
- * SNAPSHOT handler — client→world `PACKETTYPE_SNAPSHOT` (0xffffff00) multiplexer.
+ * SNAPSHOT handler -- client->world `PACKETTYPE_SNAPSHOT` (0xffffff00) multiplexer.
  *
  * `DPSrvr::OnSnapshot` (DPSrvr.cpp:4338) reads `c:BYTE` entries, then per entry
  * a `wHdr:WORD` switch. v15 sends ONLY `SNAPSHOTTYPE_DESTPOS` (click-to-move):
@@ -7,14 +7,14 @@
  *
  * The trailing `objidIAObj:DWORD` is only read `#ifdef __IAOBJ0622`
  * (DPSrvr.cpp:4377). That macro is NOT defined in this v15 build, so the
- * wire body is Vec3(12)+fForward(1) = 13 bytes — no ship-objid field.
+ * wire body is Vec3(12)+fForward(1) = 13 bytes -- no ship-objid field.
  *
- * Other sub-types hit the C++ `default: ASSERT(0)` — treated as a protocol error
+ * Other sub-types hit the C++ `default: ASSERT(0)` -- treated as a protocol error
  * here (log + drop the whole frame). `c` is capped at 16 (a legitimate client
  * never batches more than a handful per packet).
  *
- * Handler reads + validates → one `SnapshotService.destPos` call per DESTPOS
- * entry. No reply on any path (rule 02 — service broadcasts to peers).
+ * Handler reads + validates -> one `SnapshotService.destPos` call per DESTPOS
+ * entry. No reply on any path (rule 02 -- service broadcasts to peers).
  *
  * @module handlers/snapshot.handler
  */
@@ -33,7 +33,7 @@ const logger = createLogger({ module: 'snapshot-handler' });
 /** Upper bound on entries per SNAPSHOT packet (anti-amplification). */
 const MAX_SNAPSHOT_ENTRIES = 16;
 
-/** `SNAPSHOTTYPE_DESTPOS` (MsgHdr.h:1086) — the only sub-type v15 sends here. */
+/** `SNAPSHOTTYPE_DESTPOS` (MsgHdr.h:1086) -- the only sub-type v15 sends here. */
 const SNAPSHOTTYPE_DESTPOS_IN = 0x00c1;
 
 export class SnapshotHandler {
@@ -57,13 +57,13 @@ export class SnapshotHandler {
     try {
       count = reader.readByte();
       if (count === 0 || count > MAX_SNAPSHOT_ENTRIES) {
-        logger.warn({ count, charId: player.m_idPlayer }, 'SNAPSHOT bad entry count — dropping');
+        logger.warn({ count, charId: player.m_idPlayer }, 'SNAPSHOT bad entry count -- dropping');
         return;
       }
       for (let i = 0; i < count; i++) {
         const wHdr = reader.readWord();
         if (wHdr !== SNAPSHOTTYPE_DESTPOS_IN) {
-          logger.warn({ wHdr: `0x${wHdr.toString(16)}` }, 'SNAPSHOT unknown sub-type — dropping frame');
+          logger.warn({ wHdr: `0x${wHdr.toString(16)}` }, 'SNAPSHOT unknown sub-type -- dropping frame');
           return;
         }
         const vPos = readVec3(reader);
@@ -72,7 +72,7 @@ export class SnapshotHandler {
 
         const outcome = this.snapshotService.destPos(player, { vPos, fForward });
         if (!outcome.ok) {
-          // Anti-teleport drop — silent in C++; log at debug for diagnostics.
+          // Anti-teleport drop -- silent in C++; log at debug for diagnostics.
           logger.debug({ charId: player.m_idPlayer }, 'DESTPOS dropped (anti-teleport)');
         }
       }
@@ -86,7 +86,7 @@ export class SnapshotHandler {
   }
 }
 
-/** Read a Vec3 (3 LE floats) — matches C++ `ar >> D3DXVECTOR3`. */
+/** Read a Vec3 (3 LE floats) -- matches C++ `ar >> D3DXVECTOR3`. */
 function readVec3(reader: PacketReader) {
   const x = reader.readFloat();
   const y = reader.readFloat();

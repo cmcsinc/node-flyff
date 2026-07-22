@@ -117,16 +117,16 @@ export function validateReferences(resources: ResourceIndex): void {
 export function validateAndLog(resources: ResourceIndex): boolean {
   try {
     validateReferences(resources);
-    console.log('✅ Resource validation passed');
+    console.log('[OK] Resource validation passed');
     return true;
   } catch (err) {
     if (err instanceof ValidationError) {
-      console.error('❌ Resource validation failed:');
+      console.error('[FAIL] Resource validation failed:');
       for (const error of err.errors) {
         console.error(`   ${error}`);
       }
     } else {
-      console.error('❌ Unexpected validation error:', err);
+      console.error('[FAIL] Unexpected validation error:', err);
     }
     return false;
   }

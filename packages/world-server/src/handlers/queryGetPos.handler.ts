@@ -1,8 +1,8 @@
 /**
- * QUERYGETPOS handler — `PACKETTYPE_QUERYGETPOS` (0xffffff08).
+ * QUERYGETPOS handler -- `PACKETTYPE_QUERYGETPOS` (0xffffff08).
  *
  * `DPSrvr::OnQueryGetPos` (DPSrvr.cpp:1393) reads `OBJID objid` and replies
- * with the target mover's authoritative position. No `MoverManager` yet —
+ * with the target mover's authoritative position. No `MoverManager` yet --
  * service logs and drops.
  *
  * @module handlers/queryGetPos.handler

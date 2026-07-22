@@ -1,10 +1,10 @@
 /**
- * VicinityService — sends a player the live NPC/monster movers for their zone.
+ * VicinityService -- sends a player the live NPC/monster movers for their zone.
  *
  * Server-side spawns materialize once at world-server boot (`SpawnManager.
  * bootstrap()` in `compose.ts`) and are independent of any player. The client
  * is NOTIFIED about the movers in its vicinity only after it has finished
- * loading the world — triggered by `MAP_KEY` (the first packet Neuz sends
+ * loading the world -- triggered by `MAP_KEY` (the first packet Neuz sends
  * after `WORLD_READINFO`/`ReadWorld`, so `g_pWorld` + `g_pPlayer` are set and
  * `CDPClient::OnAddObj` can create the mover models without racing the load).
  *
@@ -17,7 +17,7 @@
  * write.
  *
  * ponytail: real v15 uses a `CLinkLink`/`CLinkMap` visibility grid and streams
- * AddObj entries as movers enter/leave a player's view radius — not the whole
+ * AddObj entries as movers enter/leave a player's view radius -- not the whole
  * zone at once. Swap `inZone(zoneId)` for a `withinRadius(pos, r)` query when
  * zones grow large enough that a 43-entry burst is a problem.
  *
@@ -40,8 +40,8 @@ export class VicinityService {
   /**
    * Build the ADD_OBJ snapshot for every live mover in the player's zone.
    * Returns `null` when the zone is empty OR the vicinity was already sent
-   * (one-shot — caller skips the write), `{ ok:false }` when the player is
-   * unknown (session desync — caller drops).
+   * (one-shot -- caller skips the write), `{ ok:false }` when the player is
+   * unknown (session desync -- caller drops).
    */
   enterZone(charId: number): { snapshot: Buffer } | { ok: false; reason: 'no_player' } | null {
     const player = this.deps.playerManager.get(charId);

@@ -1,5 +1,5 @@
 /**
- * ConsumableService test — potion/food HP/MP/FP restore + charge consume.
+ * ConsumableService test -- potion/food HP/MP/FP restore + charge consume.
  *
  * Restore amounts come from the item prop (`hp_restore`/`mp_restore`/`fp_restore`);
  * each pool clamps at its max. One charge is consumed via `InventoryService.consume`.
@@ -77,7 +77,7 @@ describe('ConsumableService.apply', () => {
     };
     const r = svc.apply(player, prop, 0);
     assert.equal(r.hp, 60);
-    assert.equal(r.mp, undefined, 'no MP restore field → omitted');
+    assert.equal(r.mp, undefined, 'no MP restore field -> omitted');
     assert.equal(r.fp, undefined);
   });
 });

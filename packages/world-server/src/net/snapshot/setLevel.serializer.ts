@@ -1,11 +1,11 @@
 /**
- * S→C SETLEVEL snapshot — `SNAPSHOTTYPE_SETLEVEL` (0x0011).
+ * S->C SETLEVEL snapshot -- `SNAPSHOTTYPE_SETLEVEL` (0x0011).
  *
  * Mirrors `CUser::AddSetLevel` (`WORLDSERVER/User.cpp:4655`):
  *   ar << GETID(pMover) << SNAPSHOTTYPE_SETLEVEL;
  *   ar << wLevel;
  *
- * Vicinity broadcast, **skips self** — the leveling player gets their new level
+ * Vicinity broadcast, **skips self** -- the leveling player gets their new level
  * via SETEXPERIENCE instead. Peers play the level-up SFX + HP/MP refill
  * (`DPClient.cpp:3273`).
  *

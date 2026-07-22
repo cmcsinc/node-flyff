@@ -45,7 +45,7 @@ describe('deepMerge', () => {
     const a = { server: { host: '0.0.0.0', port: 23000 } };
     const b = { server: { port: 9999 } };
     const result = deepMerge(a, b);
-    // host must survive — it was not overridden
+    // host must survive -- it was not overridden
     assert.deepEqual(result, { server: { host: '0.0.0.0', port: 9999 } });
   });
 
@@ -92,7 +92,7 @@ describe('deepMerge', () => {
     const a = { name: 'flyff' };
     const b = { name: null };
     const result = deepMerge(a, b);
-    // null is not undefined — it IS a value and should win
+    // null is not undefined -- it IS a value and should win
     assert.equal(result['name'], null);
   });
 
@@ -150,7 +150,7 @@ describe('deepMerge', () => {
   });
 
   it('treats class instances in source as plain scalars (replaces, not merges)', () => {
-    // Date objects have prototype !== Object.prototype — they should be replaced
+    // Date objects have prototype !== Object.prototype -- they should be replaced
     const d = new Date('2026-01-01');
     const a = { ts: { year: 2025 } };
     const b = { ts: d };

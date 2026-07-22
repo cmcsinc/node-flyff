@@ -1,15 +1,15 @@
 /**
- * QueryGetPosService — `PACKETTYPE_QUERYGETPOS` (0xffffff08).
+ * QueryGetPosService -- `PACKETTYPE_QUERYGETPOS` (0xffffff08).
  *
  * `DPSrvr::OnQueryGetPos` (DPSrvr.cpp:1393) reads `OBJID objid` and replies:
- *   - If target is not a player → `AddGetPos(objid, pMover->GetPos(), angle)`
- *     (a S→C GETPOS snapshot with the mover's authoritative position).
- *   - If target IS a player → `AddQueryGetPos(pUser->GetId())` (asks the target
+ *   - If target is not a player -> `AddGetPos(objid, pMover->GetPos(), angle)`
+ *     (a S->C GETPOS snapshot with the mover's authoritative position).
+ *   - If target IS a player -> `AddQueryGetPos(pUser->GetId())` (asks the target
  *     client to broadcast its own position).
  *
  * No reply to the requester when target is unknown.
  *
- * We have no `MoverManager` yet — both branches log and drop. ponytail: wire
+ * We have no `MoverManager` yet -- both branches log and drop. ponytail: wire
  * reply once `MoverManager` + `GetPosSerializer` land.
  *
  * No WAL (pure query, no state mutation).

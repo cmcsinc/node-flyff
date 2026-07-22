@@ -1,18 +1,18 @@
 /**
- * WorldRegistry — Cluster Server side of the World registration handshake.
+ * WorldRegistry -- Cluster Server side of the World registration handshake.
  *
  * This module:
  *  1. Binds a TCP server on `registration.internalPort`
  *  2. Accepts connections from World Servers
  *  3. Validates REGISTER_WORLD: HMAC token + allowlist + duplicate check
  *  4. Sends REGISTER_WORLD_ACK (success or rejection with reason)
- *  5. Expects periodic WORLD_HEARTBEAT — marks world offline on timeout
+ *  5. Expects periodic WORLD_HEARTBEAT -- marks world offline on timeout
  *  6. Emits events so the LoginRegistrar can push updated counts to Login
  *  7. Handles UNREGISTER_WORLD for graceful shutdown
  *  8. Detects TCP socket close immediately (no TTL gap vs Redis approach)
  *
  * The in-memory `WorldEntry` map is the authoritative live state for
- * "which worlds are online" — used by `WorldListService` to serve
+ * "which worlds are online" -- used by `WorldListService` to serve
  * character-select and player-handoff requests.
  *
  * @module cluster-server/ipc/worldRegistry
@@ -49,7 +49,7 @@ export interface WorldEntry {
   readonly maxPlayers: number;
   /** Channel index within this cluster (1-based). */
   readonly channelId: number;
-  /** Current online player count — updated via heartbeat. */
+  /** Current online player count -- updated via heartbeat. */
   players: number;
   /** Online/offline state. */
   status: 'online' | 'offline';
@@ -57,7 +57,7 @@ export interface WorldEntry {
   readonly registeredAt: Date;
   /** Unix ms of the last received heartbeat. */
   lastHeartbeatMs: number;
-  /** The raw TCP socket — close event = immediate offline detection. */
+  /** The raw TCP socket -- close event = immediate offline detection. */
   readonly socket: net.Socket;
 }
 
@@ -119,18 +119,18 @@ class FrameParser {
 // ---------------------------------------------------------------------------
 
 /**
- * @fires WorldRegistry#worldRegistered   — when a world is accepted: (entry: WorldEntry)
- * @fires WorldRegistry#worldUnregistered — when a world goes offline: (serverId: string)
- * @fires WorldRegistry#worldUpdated      — when heartbeat updates player count: (entry: WorldEntry)
+ * @fires WorldRegistry#worldRegistered   -- when a world is accepted: (entry: WorldEntry)
+ * @fires WorldRegistry#worldUnregistered -- when a world goes offline: (serverId: string)
+ * @fires WorldRegistry#worldUpdated      -- when heartbeat updates player count: (entry: WorldEntry)
  */
 export class WorldRegistry extends EventEmitter {
   readonly #deps: WorldRegistryDeps;
   readonly #log: Logger;
 
-  /** serverId → WorldEntry for all currently registered worlds. */
+  /** serverId -> WorldEntry for all currently registered worlds. */
   readonly #worlds = new Map<string, WorldEntry>();
 
-  /** socket → serverId mapping for fast close-event lookup. */
+  /** socket -> serverId mapping for fast close-event lookup. */
   readonly #socketMap = new Map<net.Socket, string>();
 
   #server: net.Server | null = null;
@@ -223,7 +223,7 @@ export class WorldRegistry extends EventEmitter {
     socket.on('close', () => {
       const serverId = this.#socketMap.get(socket) ?? registeredServerId;
       if (serverId) {
-        this.#log.warn({ serverId }, 'World Server socket closed — marking offline');
+        this.#log.warn({ serverId }, 'World Server socket closed -- marking offline');
         this.#markOffline(serverId, 'TCP connection closed');
         this.#socketMap.delete(socket);
       } else {
@@ -314,7 +314,7 @@ export class WorldRegistry extends EventEmitter {
       return null;
     }
 
-    // 3. HMAC token verification — timing-safe
+    // 3. HMAC token verification -- timing-safe
     const tokenValid = verifyRegistrationToken(
       this.#deps.ipcSecret,
       req.serverId,
@@ -330,7 +330,7 @@ export class WorldRegistry extends EventEmitter {
       return null;
     }
 
-    // All checks passed — register the world
+    // All checks passed -- register the world
     const channelIndex = req.channelId - 1; // 0-based
     const entry: WorldEntry = {
       serverId: req.serverId,
@@ -377,7 +377,7 @@ export class WorldRegistry extends EventEmitter {
     const entry = this.#worlds.get(hb.serverId);
 
     if (!entry) {
-      this.#log.warn({ serverId: hb.serverId }, 'WORLD_HEARTBEAT from unregistered world — ignoring');
+      this.#log.warn({ serverId: hb.serverId }, 'WORLD_HEARTBEAT from unregistered world -- ignoring');
       return;
     }
 
@@ -405,13 +405,13 @@ export class WorldRegistry extends EventEmitter {
     this.#log.warn({ serverId, reason }, 'World Server marked offline');
     this.emit('worldUnregistered', serverId);
 
-    // Remove from live map — they must re-register on reconnect
+    // Remove from live map -- they must re-register on reconnect
     this.#worlds.delete(serverId);
   }
 
   /**
    * Periodically check all registered worlds for heartbeat timeout.
-   * This is a belt-and-suspenders guard — the TCP 'close' event handles
+   * This is a belt-and-suspenders guard -- the TCP 'close' event handles
    * most cases, but silent network drops can delay the close event.
    */
   #startTimeoutMonitor(): void {
@@ -423,7 +423,7 @@ export class WorldRegistry extends EventEmitter {
         if (elapsed > this.#deps.heartbeatTimeoutMs) {
           this.#log.warn(
             { serverId, elapsedMs: elapsed, timeoutMs: this.#deps.heartbeatTimeoutMs },
-            'World Server heartbeat timeout — marking offline',
+            'World Server heartbeat timeout -- marking offline',
           );
           entry.socket.destroy();
           this.#markOffline(serverId, 'Heartbeat timeout');

@@ -90,7 +90,7 @@ describe('AISystem (idle wander)', () => {
     assert.ok(m.m_tmNextWander > 10_000 && m.m_tmNextWander <= 10_000 + 5000);
   });
 
-  it('picks a dest within the ±10 wander box and broadcasts DESTPOS', () => {
+  it('picks a dest within the +/-10 wander box and broadcasts DESTPOS', () => {
     const casts: Cast[] = [];
     const m = makeMover(0x40000001, { x: 1000, y: 0, z: 1000 });
     m.m_tmNextWander = 1000; // due now
@@ -99,9 +99,9 @@ describe('AISystem (idle wander)', () => {
     assert.equal(casts.length, 1);
     const d = parseDest(casts[0]!.packet);
     assert.equal(d.objid, m.m_idMover);
-    assert.ok(d.x >= 990 && d.x <= 1010, `x=${d.x} inside ±10 box`);
-    assert.ok(d.z >= 990 && d.z <= 1010, `z=${d.z} inside ±10 box`);
-    // 5–6 s until next pick.
+    assert.ok(d.x >= 990 && d.x <= 1010, `x=${d.x} inside +/-10 box`);
+    assert.ok(d.z >= 990 && d.z <= 1010, `z=${d.z} inside +/-10 box`);
+    // 5-6 s until next pick.
     assert.ok(m.m_tmNextWander >= 1000 + 5000 && m.m_tmNextWander <= 1000 + 6000);
     // Server logical pos snapped to the broadcast dest.
     assert.equal(m.m_vPos.x, d.x);
@@ -129,7 +129,7 @@ describe('AISystem (idle wander)', () => {
     const casts: Cast[] = [];
     const anchor: Vec3 = { x: 500, y: 0, z: 500 };
     const m = makeMover(0x40000003, anchor);
-    m.m_vPos = { x: 600, y: 0, z: 600 }; // 141 m from anchor — well outside
+    m.m_vPos = { x: 600, y: 0, z: 600 }; // 141 m from anchor -- well outside
     m.m_tmNextWander = 1000;
     const ai = new AISystem({ spawnManager: makeSpawn([m]), zoneManager: makeZone(casts), playerManager: makePlayers(new Map()) });
     ai.tick(1000);
@@ -198,7 +198,7 @@ describe('AISystem (idle wander)', () => {
     player.m_nZoneId = 1;
     player.m_vPos = { x: 1003, y: 0, z: 1000 }; // ~3 m from monster
     const m = makeMover(0x40000020, { x: 1000, y: 0, z: 1000 });
-    m.m_tmNextWander = 1; // past — due
+    m.m_tmNextWander = 1; // past -- due
     const ai = new AISystem({
       spawnManager: makeSpawn([m]),
       zoneManager: makeZone(casts, [player]),
@@ -217,19 +217,19 @@ describe('AISystem (idle wander)', () => {
       { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: true, belligerence: 12 },
       { x: 0, y: 0, z: 0 }, 1,
     );
-    assert.equal(aggressive.m_bActiveAttack, 1, 'BELLI_MELEE → red-name (active)');
+    assert.equal(aggressive.m_bActiveAttack, 1, 'BELLI_MELEE -> red-name (active)');
     const cautious = CMover.spawn(
       0x40000051,
       { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: true, belligerence: 2 },
       { x: 0, y: 0, z: 0 }, 1,
     );
-    assert.equal(cautious.m_bActiveAttack, 0, 'BELLI_CAUTIOUSATTACK → not red-name');
+    assert.equal(cautious.m_bActiveAttack, 0, 'BELLI_CAUTIOUSATTACK -> not red-name');
     const peaceful = CMover.spawn(
       0x40000052,
       { modelIndex: 20, name: 'M', level: 1, hp: 10, attackable: false, belligerence: 1 },
       { x: 0, y: 0, z: 0 }, 1,
     );
-    assert.equal(peaceful.m_bActiveAttack, 0, 'BELLI_PEACEFUL → not red-name');
+    assert.equal(peaceful.m_bActiveAttack, 0, 'BELLI_PEACEFUL -> not red-name');
   });
 
   it('red-name mob does NOT sight-acquire a player beyond AGGRO_LEVEL_BAND above it', () => {
@@ -255,7 +255,7 @@ describe('AISystem (idle wander)', () => {
 
   it('red-name mob sight-acquires a player within AGGRO_LEVEL_BAND', () => {
     const casts: Cast[] = [];
-    // mob level 5, player level 14 → 14 <= 5+9 → eligible.
+    // mob level 5, player level 14 -> 14 <= 5+9 -> eligible.
     const player = CPlayer.fromRow(makeRow({ id: 61, level: 14 }), { write: () => true } as never);
     player.m_nZoneId = 1;
     player.m_vPos = { x: 1003, y: 0, z: 1000 };
@@ -307,7 +307,7 @@ describe('AISystem (idle wander)', () => {
       { modelIndex: 20, name: 'Cautious', level: 1, hp: 100, attackable: true, belligerence: 2 },
       { x: 1000, y: 0, z: 1000 }, 1,
     );
-    assert.equal(m.m_bActiveAttack, 0, 'cautious belli → not red-name');
+    assert.equal(m.m_bActiveAttack, 0, 'cautious belli -> not red-name');
     m.m_tmNextWander = 100_000;
     const ai = new AISystem({
       spawnManager: makeSpawn([m]),
@@ -336,7 +336,7 @@ describe('AISystem (idle wander)', () => {
       rng: { int: (() => { const s = [0, 99, 50]; let i = 0; return () => s[i++ % s.length]; })(), range: () => 16 } as never,
     });
     ai.tick(1000);
-    // monsterSwing → DAMAGE on the player.
+    // monsterSwing -> DAMAGE on the player.
     const dmg = casts.find((c) => subtypeOf(c.packet) === 0x0013);
     assert.ok(dmg, 'player DAMAGE broadcast');
     assert.equal(dmg!.packet.readUInt32LE(10), player.m_idPlayer, 'victim = player');
@@ -366,7 +366,7 @@ describe('AISystem (idle wander)', () => {
     const dmg = casts.find((c) => subtypeOf(c.packet) === 0x0013);
     assert.ok(dmg, 'player DAMAGE broadcast (swing still animates)');
     assert.equal(player.m_nHp, 200, 'MATCHLESS player lost no HP');
-    assert.ok(!player._dirty.has('m_nHp'), 'no dirty flag — HP not mutated');
+    assert.ok(!player._dirty.has('m_nHp'), 'no dirty flag -- HP not mutated');
   });
 
   it('monster drops a acquired target that goes TRANSPARENT (/inv) mid-fight', () => {
@@ -396,13 +396,13 @@ describe('AISystem (idle wander)', () => {
     const player = CPlayer.fromRow(makeRow({ id: 8, hp: 200, max_hp: 200 }), { write: () => true } as never);
     player.m_nZoneId = 1;
     player.m_vPos = { x: 8, y: 0, z: 0 }; // within 10 m range, beyond 3 m melee
-    // BELLI_RANGE (13) → constructor flags ranged + m_nAttackRange defaults to 10.
+    // BELLI_RANGE (13) -> constructor flags ranged + m_nAttackRange defaults to 10.
     const m = CMover.spawn(
       0x40000030,
       { modelIndex: 20, name: 'Ranger Mob', level: 1, hp: 100, attackable: true, belligerence: 13 },
       { x: 0, y: 0, z: 0 }, 1,
     );
-    assert.equal(m.m_bRangeAttack, true, 'belli 13 → ranged');
+    assert.equal(m.m_bRangeAttack, true, 'belli 13 -> ranged');
     assert.equal(m.m_nAttackRange, 10, 'default range distance');
     m.m_fSpeedBase = 0.075;
     m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
@@ -424,7 +424,7 @@ describe('AISystem (idle wander)', () => {
     const dmg = casts.find((c) => subtypeOf(c.packet) === 0x0013);
     assert.ok(dmg, 'player DAMAGE broadcast');
     assert.ok(player.m_nHp < 200, 'player took damage');
-    // Held at range — did NOT step toward the player (already within 10 m).
+    // Held at range -- did NOT step toward the player (already within 10 m).
     assert.equal(m.m_vPos.x, startX, 'ranged monster holds position');
     // Range cadence = fixed 3 s.
     assert.equal(m.m_nextAttackTick, 1000 + 3000, 'range re-attack cadence');
@@ -450,8 +450,8 @@ describe('AISystem (idle wander)', () => {
       playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
       rng: { int: () => 0, range: () => 16 } as never,
     });
-    ai.tick(1000); // dt 100 ms — step toward but not yet in range
-    // No swing yet (still out of range) — no DAMAGE, no RANGE_ATTACK.
+    ai.tick(1000); // dt 100 ms -- step toward but not yet in range
+    // No swing yet (still out of range) -- no DAMAGE, no RANGE_ATTACK.
     assert.ok(!casts.find((c) => subtypeOf(c.packet) === 0x0013), 'no DAMAGE while closing');
     assert.ok(m.m_vPos.x > 0, 'stepped toward the player');
   });
@@ -463,7 +463,7 @@ describe('AISystem (idle wander)', () => {
     player.m_vPos = { x: 200, y: 0, z: 0 };
     const m = makeMover(0x40000022, { x: 0, y: 0, z: 0 }); // anchor at origin
     m.m_fSpeedBase = 0.075;
-    m.m_vPos = { x: 160, y: 0, z: 0 }; // > 150 m from anchor → leashed
+    m.m_vPos = { x: 160, y: 0, z: 0 }; // > 150 m from anchor -> leashed
     m.m_idTarget = player.m_idPlayer;
     const ai = new AISystem({
       spawnManager: makeSpawn([m]),

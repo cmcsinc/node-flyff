@@ -1,5 +1,5 @@
 /**
- * QueryPlayerDataService — `PACKETTYPE_QUERY_PLAYER_DATA` (0xf000f802).
+ * QueryPlayerDataService -- `PACKETTYPE_QUERY_PLAYER_DATA` (0xf000f802).
  *
  * v15 Neuz sends this when its local cache of another player's `sPlayerData` is
  * stale (guild/friend/party windows). C++ `CDPSrvr::OnQueryPlayerData`
@@ -14,7 +14,7 @@
  *   nJob:BYTE  nLevel:BYTE  nSex:BYTE  pad:BYTE  nVer:int32  uLogin:BYTE  pad:3B
  *
  * STUB: logs the query and returns `{ reply: null }` (no reply). The client
- * tolerates a missing reply — it keeps its existing cache
+ * tolerates a missing reply -- it keeps its existing cache
  * (`Neuz/DPClient.cpp:13445`). Build the reply in `query()` once the live
  * `nVer`/`szPlayer` are tracked on `CPlayer`.
  *
@@ -45,8 +45,8 @@ export class QueryPlayerDataService {
   query(_charId: number, idPlayer: number, _nVer: number): QueryPlayerDataResult {
     const target = this.deps.playerManager.get(idPlayer);
     // ponytail: real reply needs sPlayerData layout + per-player nVer tracking.
-    // Until then no-op — client keeps its cache. When ready: if target &&
-    // target.m_nDataVer !== nVer → build 0x0141 reply: NULL_ID + wHdr + idPlayer
+    // Until then no-op -- client keeps its cache. When ready: if target &&
+    // target.m_nDataVer !== nVer -> build 0x0141 reply: NULL_ID + wHdr + idPlayer
     // + WriteString(name) + 12B sPlayerData.
     void target;
     return { reply: null };

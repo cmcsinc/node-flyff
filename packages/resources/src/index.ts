@@ -56,7 +56,7 @@ export interface ResourceIndex {
   /** Quest definitions */
   quests: QuestIndex;
 
-  /** Drop tables (propMoverEx.inc) — keyed by mover model index. */
+  /** Drop tables (propMoverEx.inc) -- keyed by mover model index. */
   drops: DropIndex;
 
   /** character.inc NPC outfits + AddMenu capability + dialog file. */
@@ -80,7 +80,7 @@ export async function loadAllResources(
   logger.info({ dataDir, rawDir }, 'Loading all resources...');
 
   const [items, movers, skills, zones, dialogs, quests, drops, characterInc] = await Promise.all([
-    loadItems(dataDir),
+    loadItems(dataDir, rawDir),
     loadMovers(dataDir),
     loadSkills(dataDir),
     loadZones(dataDir),
@@ -156,7 +156,8 @@ export async function reloadResources(
 // Re-export types for convenience
 export type { ItemDefinition } from './schemas/item.schema.js';
 export type { MoverDefinition } from './schemas/mover.schema.js';
-export type { SkillDefinition } from './schemas/skill.schema.js';
+export type { SkillDefinition, SkillLevel } from './schemas/skill.schema.js';
+export { loadSkills, type SkillIndex } from './loaders/skill.loader.js';
 export type { ZoneDefinition } from './schemas/zone.schema.js';
 export type { DialogFile, DialogState, DialogKey } from './schemas/dialog.schema.js';
 export type { QuestDef, QuestCommand, QuestArg, QuestItem, QuestState } from './schemas/quest.schema.js';
@@ -173,12 +174,14 @@ export {
   questById,
   dropsFor,
   type QuestIndex,
+  type QuestDrop,
 } from './loaders/quest.loader.js';
 export {
   loadCharacterInc,
   parseCharacterInc,
   blockForMover,
   MMI_DIALOG,
+  MMI_TRADE,
   type CharacterIncIndex,
   type CharacterIncBlock,
   type CharacterIncOutfit,

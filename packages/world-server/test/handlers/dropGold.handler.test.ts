@@ -1,5 +1,5 @@
 /**
- * DropGoldHandler test — DROPGOLD (0x00ff0008).
+ * DropGoldHandler test -- DROPGOLD (0x00ff0008).
  *
  * Body: `DWORD dwGold, D3DXVECTOR3`. On success spawns a gold pile whose itemId
  * is picked by `goldSeedId(amount)`. Over-spend is rejected by the service and

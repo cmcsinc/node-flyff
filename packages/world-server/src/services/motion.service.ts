@@ -1,5 +1,5 @@
 /**
- * MotionService — `PACKETTYPE_MOTION` (0x00ff0016).
+ * MotionService -- `PACKETTYPE_MOTION` (0x00ff0016).
  *
  * `DPSrvr::OnMotion` (DPSrvr.cpp:4827) reads `DWORD dwMsg` and calls
  * `pUser->SendActMsg((OBJMSG)dwMsg)`. On success it clears destination/angle
@@ -10,7 +10,7 @@
  * packets are broadcast verbatim. ponytail: validate `dwMsg` against the
  * `OBJMSG_*` enum once `objmsg.ts` lands; reject invalid with motion error.
  *
- * No WAL (rule 04 — not in the journal list).
+ * No WAL (rule 04 -- not in the journal list).
  *
  * @module services/motion.service
  */

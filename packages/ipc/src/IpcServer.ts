@@ -234,7 +234,7 @@ export class IpcServer {
         envelope.from,
         envelope.ts
       )) {
-        // Invalid signature — destroy the connection
+        // Invalid signature -- destroy the connection
         socket.destroy();
         return;
       }

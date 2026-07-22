@@ -1,5 +1,5 @@
 /**
- * ZoneManager — zone-scoped spatial broadcast.
+ * ZoneManager -- zone-scoped spatial broadcast.
  *
  * Rule 05 forbids iterating every connected player. This manager buckets
  * players by `m_nZoneId` and broadcasts only within a bucket, optionally
@@ -13,7 +13,7 @@ import type { CPlayer, Vec3 } from '../entities/player.js';
 import { framePacket } from '@flyff/core/net/PacketBuffer.js';
 
 export class ZoneManager {
-  /** zoneId → live players in that zone. */
+  /** zoneId -> live players in that zone. */
   private readonly zones = new Map<number, Set<CPlayer>>();
 
   /** Register a player into their current zone bucket. */
@@ -34,7 +34,7 @@ export class ZoneManager {
 
   /**
    * Broadcast `packet` to every player in `zoneId` whose ground-plane distance
-   * from `pos` is ≤ `radius`. Returns the number of players reached.
+   * from `pos` is <= `radius`. Returns the number of players reached.
    *
    * @param pos   - Origin of the broadcast.
    * @param zoneId - Zone to broadcast in (cross-zone never happens).
@@ -52,7 +52,7 @@ export class ZoneManager {
     const bucket = this.zones.get(zoneId);
     if (!bucket) return 0;
 
-    // Frame once, reuse for every write — serializers build raw payloads
+    // Frame once, reuse for every write -- serializers build raw payloads
     // (opcode + fields); the 0x5E wire frame is added here at the write
     // boundary, same as `sendPacket()` does for direct replies. Writing raw
     // would send unframed garbage the client silently drops.
@@ -85,7 +85,7 @@ export class ZoneManager {
 
   /**
    * Live players in `zoneId` within `radius` (ground-plane x/z) of `pos`.
-   * Zone-scoped (rule 05 — never iterate all players) for AI aggro scans + the
+   * Zone-scoped (rule 05 -- never iterate all players) for AI aggro scans + the
    * future central tick. Optional `except` skips one player (e.g. self).
    */
   playersNear(pos: Vec3, zoneId: number, radius: number, except?: CPlayer): CPlayer[] {

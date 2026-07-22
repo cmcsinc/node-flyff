@@ -4,10 +4,10 @@ import type { Knex } from '../types.js';
  * Per-player quest state + audit log.
  *
  * Mirrors the C++ per-mover arrays (`_Common/Mover.h:702-709`):
- *   m_aQuest[100]            → character_quests (one row per active quest)
- *   m_aCompleteQuest[300]    → character_completed_quests
- *   m_aCheckedQuest[5]       → character_checked_quests
- * Plus `quest_log` — the `CalluspLoggingQuest` audit trail (actions 10/20/30).
+ *   m_aQuest[100]            -> character_quests (one row per active quest)
+ *   m_aCompleteQuest[300]    -> character_completed_quests
+ *   m_aCheckedQuest[5]       -> character_checked_quests
+ * Plus `quest_log` -- the `CalluspLoggingQuest` audit trail (actions 10/20/30).
  *
  * The wire QUEST struct fields map to columns directly; `flags` packs the
  * `m_bPatrol`/`m_bDialog` bitfield (see `core/constants/quest.ts` QUEST_FLAG).
@@ -43,7 +43,7 @@ export async function up(db: Knex): Promise<void> {
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
     table.integer('quest_id').unsigned().notNullable();
-    table.integer('slot').unsigned().notNullable();        // 0–4 (MAX_CHECKED_QUEST)
+    table.integer('slot').unsigned().notNullable();        // 0-4 (MAX_CHECKED_QUEST)
     table.unique(['character_id', 'slot']);
     table.unique(['character_id', 'quest_id']);
   });

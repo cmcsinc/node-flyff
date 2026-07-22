@@ -1,4 +1,4 @@
-# Drop tables — generated from propMoverEx.inc
+# Drop tables -- generated from propMoverEx.inc
 _version: "1.0"
 _prob_scale: 3000000000
 drops:

@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import net, { type Socket, type Server } from 'node:net';
-import { PacketDispatcher, sendPacket, type DispatcherLogger } from '../../src/net/dispatcher.js';
+import { PacketDispatcher, sendPacket, type DispatcherLogger, type ClientSocket } from '../../src/net/dispatcher.js';
 import { PacketWriter } from '../../src/net/PacketWriter.js';
 import { PacketBuffer, framePacket } from '../../src/net/PacketBuffer.js';
 import { PACKETTYPE } from '../../src/constants/opcodes.js';
@@ -10,7 +10,7 @@ import { SessionState } from '../../src/constants/sessionState.js';
 /**
  * Real loopback TCP exercise of the dispatcher: frame reassembly across split
  * chunks, multi-frame batches, unknown-opcode drop, handler-throw containment,
- * session attach, and framed replies. No mocks — actual net.Server + sockets.
+ * session attach, and framed replies. No mocks -- actual net.Server + sockets.
  */
 
 const TEST_TIMEOUT = 8000;
@@ -42,8 +42,8 @@ interface Harness {
   close: () => Promise<void>;
 }
 
-async function withHarness(logger: DispatcherLogger = silentLogger(), opts: { leadsWithDpid?: boolean; crc?: boolean } = {}): Promise<Harness> {
-  const dispatcher = new PacketDispatcher({ logger, leadsWithDpid: opts.leadsWithDpid, crc: opts.crc });
+async function withHarness(logger: DispatcherLogger = silentLogger(), opts: { leadsWithDpid?: boolean; crc?: boolean; onDisconnect?: (socket: ClientSocket) => void } = {}): Promise<Harness> {
+  const dispatcher = new PacketDispatcher({ logger, leadsWithDpid: opts.leadsWithDpid, crc: opts.crc, onDisconnect: opts.onDisconnect });
   const server: Server = net.createServer();
   dispatcher.attach(server);
   await new Promise<void>((r) => server.listen(0, '127.0.0.1', r));
@@ -120,7 +120,7 @@ describe('PacketDispatcher', () => {
     await h.close();
   });
 
-  it('contains a handler throw — subsequent frames still dispatch, error logged', { timeout: TEST_TIMEOUT }, async () => {
+  it('contains a handler throw -- subsequent frames still dispatch, error logged', { timeout: TEST_TIMEOUT }, async () => {
     const { log, calls } = captureLogger();
     const h = await withHarness(log);
     h.dispatcher.register(PACKETTYPE.GETPLAYERLIST, () => { throw new Error('boom'); });
@@ -192,6 +192,42 @@ describe('PacketDispatcher', () => {
     // Handler registered under the real opcode (not 0), proving the DPID was skipped.
     assert.equal(seen, 0xabcdef);
     sock.destroy();
+    await h.close();
+  });
+
+  it('fires onDisconnect with the session attached when a client closes', { timeout: TEST_TIMEOUT }, async () => {
+    let fired = false;
+    let sessionState = -1;
+    let charId: number | undefined = 999;
+    const h = await withHarness(silentLogger(), {
+      onDisconnect: (socket) => {
+        fired = true;
+        sessionState = socket.session.state;
+        charId = socket.session.charId;
+      },
+    });
+    const sock = await connect(h.port);
+    sock.destroy();
+    for (let i = 0; i < 50 && !fired; i++) await tick(10);
+    assert.equal(fired, true, 'onDisconnect fired after close');
+    assert.equal(sessionState, SessionState.CONNECTED, 'session still readable in the hook');
+    assert.equal(charId, undefined, 'no JOIN ran, so charId is unset');
+    await h.close();
+  });
+
+  it('contains an onDisconnect throw -- cleanup proceeds, error logged', { timeout: TEST_TIMEOUT }, async () => {
+    const { log, calls } = captureLogger();
+    const h = await withHarness(log, {
+      onDisconnect: () => { throw new Error('hook boom'); },
+    });
+    const sock = await connect(h.port);
+    sock.destroy();
+    let saw = false;
+    for (let i = 0; i < 50 && !saw; i++) {
+      await tick(10);
+      saw = calls.some((c) => c[0] === 'error' && /onDisconnect hook threw/.test(c[1]));
+    }
+    assert.equal(saw, true, 'hook throw was logged as an error');
     await h.close();
   });
 });

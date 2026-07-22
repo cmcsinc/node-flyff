@@ -1,12 +1,12 @@
 /**
- * PLAYERMOVED handler — client→world `PACKETTYPE_PLAYERMOVED` (0xffffff01).
+ * PLAYERMOVED handler -- client->world `PACKETTYPE_PLAYERMOVED` (0xffffff01).
  *
  * 60-byte body (DPSrvr.cpp:2271 OnPlayerMoved):
  *   v:Vec3  vd:Vec3  f:float(angle)
  *   dwState:DWORD  dwStateFlag:DWORD  dwMotion:DWORD
  *   nMotionEx:int32  nLoop:int32  dwMotionOption:DWORD  nTickCount:__int64
  *
- * Handler reads + validates → one `MovementService.applyMovement` call. No reply
+ * Handler reads + validates -> one `MovementService.applyMovement` call. No reply
  * (service broadcasts MOVERMOVED to peers).
  *
  * @module handlers/playerMoved.handler

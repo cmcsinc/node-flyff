@@ -1,4 +1,4 @@
-# NPC / generic mover definitions — generated from propMover.txt
+# NPC / generic mover definitions -- generated from propMover.txt
 _version: "1.0"
 movers:
   - id: 164

@@ -1,8 +1,8 @@
 /**
- * PlayerManager — O(1) lookup table for live in-world players.
+ * PlayerManager -- O(1) lookup table for live in-world players.
  *
  * Holds `CPlayer` instances keyed by character id. Per rule 05, entries are
- * removed on disconnect — the manager never relies on GC to clean its Map, and
+ * removed on disconnect -- the manager never relies on GC to clean its Map, and
  * callers must `remove()` to release the socket reference a player holds.
  *
  * @module managers/player.manager
@@ -25,7 +25,7 @@ export class PlayerManager {
   }
 
   /**
-   * Case-insensitive lookup by character name. O(n) — used by chat commands
+   * Case-insensitive lookup by character name. O(n) -- used by chat commands
    * (whisper/summon/teleport/out) that target a player by name. C++ resolves
    * these via `CPlayerDataCenter::GetPlayerId(name)`; with one world process
    * a linear scan of the live set is the equivalent.
@@ -59,11 +59,11 @@ export class PlayerManager {
   /**
    * Write `buf` to a single player's socket. Services use this for targeted
    * chat sends (whisper echo, teleport REPLACE) the same way they use
-   * `ZoneManager.broadcastAround` for vicinity fan-out — the manager owns the
+   * `ZoneManager.broadcastAround` for vicinity fan-out -- the manager owns the
    * socket sink, services never import `net.Socket` (rule 02).
    */
   sendTo(player: CPlayer, buf: Buffer): void {
-    // Frame here — serializers build raw payloads; the 0x5E frame is added at
+    // Frame here -- serializers build raw payloads; the 0x5E frame is added at
     // the write boundary (mirrors `sendPacket()`). Raw writes are silent drops.
     player.socket.write(framePacket(buf));
   }

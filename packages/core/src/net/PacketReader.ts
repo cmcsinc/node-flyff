@@ -96,7 +96,7 @@ export class PacketReader {
   /**
    * Reads an unsigned 8-bit integer (BYTE).
    *
-   * @returns The byte value (0–255).
+   * @returns The byte value (0-255).
    */
   readByte(): Byte {
     this.checkBounds(1, 'readByte');
@@ -108,7 +108,7 @@ export class PacketReader {
   /**
    * Reads an unsigned 16-bit Little-Endian integer (WORD).
    *
-   * @returns The word value (0–65535).
+   * @returns The word value (0-65535).
    */
   readWord(): Word {
     this.checkBounds(2, 'readWord');
@@ -120,7 +120,7 @@ export class PacketReader {
   /**
    * Reads an unsigned 32-bit Little-Endian integer (DWORD).
    *
-   * @returns The dword value (0–4294967295).
+   * @returns The dword value (0-4294967295).
    */
   readDword(): Dword {
     this.checkBounds(4, 'readDword');
@@ -144,7 +144,7 @@ export class PacketReader {
   /**
    * Reads a signed 32-bit Little-Endian integer (int/long).
    *
-   * @returns The long value (-2147483648–2147483647).
+   * @returns The long value (-2147483648-2147483647).
    */
   readLong(): Long {
     this.checkBounds(4, 'readLong');
@@ -156,7 +156,7 @@ export class PacketReader {
   /**
    * Reads an unsigned 64-bit Little-Endian integer (Qword / C++ `__int64`).
    *
-   * Pairs with {@link PacketWriter.writeQword} — the bit pattern is preserved
+   * Pairs with {@link PacketWriter.writeQword} -- the bit pattern is preserved
    * exactly, which is what echo fields like PLAYERMOVED's `nTickCount` need
    * (semantically signed `__int64`, but only echoed, never interpreted).
    * `bigint` because `number` loses precision past 2^53.

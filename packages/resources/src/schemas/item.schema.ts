@@ -65,7 +65,7 @@ export const ItemDefinitionSchema = z.object({
   /** Display name */
   name: z.string().max(64),
 
-  /** Localization key — symbolic (`ITEM_*`) or raw Flyff text ID (`IDS_PROPITEM_*`) */
+  /** Localization key -- symbolic (`ITEM_*`) or raw Flyff text ID (`IDS_PROPITEM_*`) */
   name_id: z.string().refine((s) => s.startsWith('ITEM_') || s.startsWith('IDS_PROPITEM_'), {
     message: "must start with 'ITEM_' or 'IDS_PROPITEM_'",
   }),
@@ -77,16 +77,16 @@ export const ItemDefinitionSchema = z.object({
   model: z.string().endsWith('.o3d').optional(),
 
   // Stats
-  /** Attack power (weapons only) — average of min/max for back-compat */
+  /** Attack power (weapons only) -- average of min/max for back-compat */
   attack: z.number().int().min(0).optional(),
 
-  /** Raw min attack (propItem dwAbilityMin) — weapons/armor ability floor */
+  /** Raw min attack (propItem dwAbilityMin) -- weapons/armor ability floor */
   attack_min: z.number().int().min(0).optional(),
 
-  /** Raw max attack (propItem dwAbilityMax) — weapons only */
+  /** Raw max attack (propItem dwAbilityMax) -- weapons only */
   attack_max: z.number().int().min(0).optional(),
 
-  /** Raw attack speed (propItem dwAttackSpeed) — fractional multiplier, feeds combat atkSpeed table */
+  /** Raw attack speed (propItem dwAttackSpeed) -- fractional multiplier, feeds combat atkSpeed table */
   attack_speed: z.number().min(0).optional(),
 
   /** Defense rating (armor only) */
@@ -126,20 +126,26 @@ export const ItemDefinitionSchema = z.object({
   /** Weight in inventory */
   weight: z.number().int().min(0).default(1),
 
-  /** Max stack per slot (propItem dwPackMax) — 1 = non-stacking. */
+  /** Max stack per slot (propItem dwPackMax) -- 1 = non-stacking. */
   stack_size: z.number().int().min(1).default(1),
 
-  /** Equip slot / parts index (propItem dwParts, PARTS_*) — undefined = not equippable. */
+  /** Equip slot / parts index (propItem dwParts, PARTS_*) -- undefined = not equippable. */
   equip_slot: z.number().int().min(0).optional(),
 
-  /** Weapon type (propItem dwWeaponType, WT_*) — swords/axes/wands/bows/etc. */
+  /** Weapon type (propItem dwWeaponType, WT_*) -- swords/axes/wands/bows/etc. */
   weapon_type: z.number().int().min(0).optional(),
 
-  /** Raw item kind 2 (propItem dwItemKind2, IK2_*) — potion/food/buff/skill/warp/text routing. */
+  /** Raw item kind 2 (propItem dwItemKind2, IK2_*) -- potion/food/buff/skill/warp/text routing. */
   item_kind2: z.string().optional(),
 
-  /** Raw item kind 3 (propItem dwItemKind3, IK3_*) — fine category. */
+  /** Raw item kind 3 (propItem dwItemKind3, IK3_*) -- fine category. */
   item_kind3: z.string().optional(),
+
+  /** Flat hit-rate bonus % (propItem `nAdjHitRate`) -- jewelry DST_ADJ_HITRATE. */
+  hit_rate: z.number().int().optional(),
+
+  /** Evasion/parry bonus (propItem `dwParry`) -- jewelry DST_PARRY. */
+  parry: z.number().int().optional(),
 
   // Requirements
   /** Required level to equip */

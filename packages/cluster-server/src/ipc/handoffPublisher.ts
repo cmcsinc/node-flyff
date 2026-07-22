@@ -1,10 +1,10 @@
 /**
- * Cluster→World player handoff publisher.
+ * Cluster->World player handoff publisher.
  *
  * Implements the `HandoffPublisher` port consumed by `CharSelectService`. On
  * PRE_JOIN success the cluster publishes a signed `player:handoff` envelope on
  * the shared `IpcBus`; the world-side `ClusterListener` redeems it when the
- * client's JOIN arrives (rule 07 — HMAC + 30 s freshness enforced by the bus).
+ * client's JOIN arrives (rule 07 -- HMAC + 30 s freshness enforced by the bus).
  *
  * The bus is optional at construction (mirrors the world-side `ClusterListener`
  * pattern): if Redis is not configured the publish is a logged no-op so the
@@ -17,10 +17,10 @@
 import { createLogger } from '@flyff/core/logger.js';
 import type { HandoffPublisher } from '../services/charSelect.service.js';
 
-/** IPC channel carrying the cluster→world handoff (rule 07 `<domain>:<action>`). */
+/** IPC channel carrying the cluster->world handoff (rule 07 `<domain>:<action>`). */
 export const PLAYER_HANDOFF_CHANNEL = 'player:handoff';
 
-/** Minimal bus port the publisher needs — `IpcBus` satisfies it. */
+/** Minimal bus port the publisher needs -- `IpcBus` satisfies it. */
 export interface PublisherBusPort {
   publish<T>(channel: string, payload: T): Promise<void>;
 }
@@ -43,7 +43,7 @@ export class ClusterHandoffPublisher implements HandoffPublisher {
     if (!this.bus) {
       logger.warn(
         { charId, worldId },
-        'player:handoff dropped (no IPC bus — cache adapter ≠ redis)',
+        'player:handoff dropped (no IPC bus -- cache adapter != redis)',
       );
       return;
     }

@@ -26,7 +26,7 @@ const validBase = {
 
 describe('ClusterServerConfigSchema', () => {
   // -------------------------------------------------------------------------
-  // Happy path — valid minimal config
+  // Happy path -- valid minimal config
   // -------------------------------------------------------------------------
 
   it('parses a valid minimal config and applies all defaults', () => {
@@ -193,7 +193,7 @@ describe('ClusterServerConfigSchema', () => {
 });
 
 // ---------------------------------------------------------------------------
-// CharacterDefaultsSchema — isolated unit tests
+// CharacterDefaultsSchema -- isolated unit tests
 // ---------------------------------------------------------------------------
 
 describe('CharacterDefaultsSchema', () => {
@@ -239,7 +239,7 @@ describe('CharacterDefaultsSchema', () => {
 });
 
 // ---------------------------------------------------------------------------
-// ClusterRegistrationConfigSchema — isolated unit tests
+// ClusterRegistrationConfigSchema -- isolated unit tests
 // ---------------------------------------------------------------------------
 
 describe('ClusterRegistrationConfigSchema', () => {

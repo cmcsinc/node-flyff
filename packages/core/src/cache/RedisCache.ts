@@ -1,5 +1,5 @@
 /**
- * RedisCache — ICacheAdapter backed by ioredis.
+ * RedisCache -- ICacheAdapter backed by ioredis.
  *
  * The constructor accepts an existing `Redis` instance (dependency-injected
  * from the composition root). It never calls `new Redis()` internally.

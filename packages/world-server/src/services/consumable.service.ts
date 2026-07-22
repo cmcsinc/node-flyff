@@ -1,5 +1,5 @@
 /**
- * ConsumableService — potion/food HP/MP/FP restore.
+ * ConsumableService -- potion/food HP/MP/FP restore.
  *
  * Ports `CMover::DoUseItemFood` (`_Common/MoverSkill.cpp:3054`): reads the
  * restore amounts from the item prop (`hp_restore`/`mp_restore`/`fp_restore` =
@@ -7,7 +7,7 @@
  * clamped at max, then consumes one charge via `InventoryService.consume`.
  *
  * Service mutates vitals + consumes; the handler sends SETPOINTPARAM snapshots
- * for the changed pools (rule 02 — no socket writes here).
+ * for the changed pools (rule 02 -- no socket writes here).
  *
  * ponytail: over-cap 30 % heal rule (DoUseItemFood:3091), buff-grant items,
  * skill-scroll activation, food SFX.

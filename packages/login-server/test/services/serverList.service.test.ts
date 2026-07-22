@@ -19,7 +19,7 @@ import type { ClusterEntry } from '../../src/ipc/clusterRegistry.js';
 
 /**
  * Creates a minimal ClusterRegistry mock.
- * Only `getOnlineClusters` is used by ServerListService — all other methods
+ * Only `getOnlineClusters` is used by ServerListService -- all other methods
  * are absent and will throw if accidentally called.
  */
 function makeRegistryMock(onlineClusters: ClusterEntry[]) {
@@ -52,7 +52,7 @@ function makeClusterEntry(overrides: Partial<ClusterEntry> = {}): ClusterEntry {
     status: 'online',
     registeredAt: new Date('2026-01-01'),
     lastHeartbeatMs: Date.now(),
-    // Tests that need `socket` can override — the service never touches it
+    // Tests that need `socket` can override -- the service never touches it
     socket: null as unknown as import('node:net').Socket,
     ...overrides,
   };
@@ -142,7 +142,7 @@ describe('ServerListService.getServerList()', () => {
     const svc = makeService([live], [staticMadrigal]);
     const list = svc.getServerList();
 
-    // Only one entry for Madrigal — not two
+    // Only one entry for Madrigal -- not two
     const madrigalEntries = list.filter(e => e.name === 'Madrigal');
     assert.equal(madrigalEntries.length, 1);
 
@@ -153,7 +153,7 @@ describe('ServerListService.getServerList()', () => {
 
   it('shows static-only entries alongside live entries when names differ', () => {
     const live = makeClusterEntry({ name: 'Madrigal', players: 50 });
-    // Aqualia has no live cluster — should appear as offline
+    // Aqualia has no live cluster -- should appear as offline
     const svc = makeService([live], [staticMadrigal, staticAqualia]);
     const list = svc.getServerList();
 

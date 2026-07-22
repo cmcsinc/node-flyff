@@ -1,5 +1,5 @@
 /**
- * @flyff/ipc — Public API
+ * @flyff/ipc -- Public API
  *
  * Secure inter-server IPC framework for the Flyff emulator:
  *   - Internal IPC opcode constants (`IPC_OP`)
@@ -25,16 +25,16 @@ export {
 export type { ServerType } from './registration.js';
 
 // ---------------------------------------------------------------------------
-// Zod schemas — registration & handshake messages
+// Zod schemas -- registration & handshake messages
 // ---------------------------------------------------------------------------
 export {
-  // World ↔ Cluster
+  // World <-> Cluster
   RegisterWorldRequestSchema,
   RegisterWorldAckSchema,
   WorldHeartbeatSchema,
   WorldHeartbeatAckSchema,
   UnregisterWorldSchema,
-  // Cluster ↔ Login
+  // Cluster <-> Login
   RegisterClusterRequestSchema,
   RegisterClusterAckSchema,
   ClusterHeartbeatSchema,

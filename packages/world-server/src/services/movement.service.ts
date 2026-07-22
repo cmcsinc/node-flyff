@@ -1,15 +1,15 @@
 /**
- * MovementService — PLAYERMOVED + PLAYERBEHAVIOR (60-byte movement/motion frame).
+ * MovementService -- PLAYERMOVED + PLAYERBEHAVIOR (60-byte movement/motion frame).
  *
  * Both packets share an identical wire body (`DPSrvr.cpp:2271 OnPlayerMoved`,
  * `DPSrvr.cpp:2349 OnPlayerBehavior`): `v, vd, f, dwState, dwStateFlag, dwMotion,
  * nMotionEx, nLoop, dwMotionOption, nTickCount(__int64)`.
  *
  * `applyMovement` runs the verified anti-teleport guard
- * (`D3DXVec3LengthSq(GetPos() - v) > 1e6` ⇒ drop, same threshold as DESTPOS),
+ * (`D3DXVec3LengthSq(GetPos() - v) > 1e6` => drop, same threshold as DESTPOS),
  * updates `m_vPos`, and echoes a `SNAPSHOTTYPE_MOVERMOVED` broadcast to peers.
  *
- * `applyBehavior` only echoes a `SNAPSHOTTYPE_MOVERBEHAVIOR` broadcast — it does
+ * `applyBehavior` only echoes a `SNAPSHOTTYPE_MOVERBEHAVIOR` broadcast -- it does
  * NOT mutate server-side position. Behavior frames (sit/stand/cast) carry a
  * position for the client animation, but authoritative position is owned by
  * PLAYERMOVED/DESTPOS; mutating here would snap players on every motion packet.
@@ -17,7 +17,7 @@
  *
  * No WAL (position checkpoints every 30s, rule 04). No sender reply.
  *
- * ponytail: add a dead/CC'd mover guard (`m_nHp <= 0` ⇒ drop) + per-socket
+ * ponytail: add a dead/CC'd mover guard (`m_nHp <= 0` => drop) + per-socket
  * 30 Hz rate-limit once `rateLimit.ts` lands (rule 03).
  *
  * @module services/movement.service
@@ -35,7 +35,7 @@ import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
 export interface MovementServiceDeps {
   zoneManager: ZoneManager;
   /**
-   * Optional position-change hook (Phase 7 — wired to
+   * Optional position-change hook (Phase 7 -- wired to
    * `QuestTrackerSystem.onPlayerMoved` for `SetEndCondPatrolZone`). Invoked
    * after every accepted pos mutation so reactive quest conditions can test
    * the new position against their patrol rects.
@@ -51,10 +51,10 @@ export type GetPosOutcome =
   | { ok: true }
   | { ok: false; reason: 'too_far' | 'nan_angle' };
 
-/** `D3DXVec3LengthSq > 1_000_000` ⇒ drop (OnPlayerMoved, same as DESTPOS). */
+/** `D3DXVec3LengthSq > 1_000_000` => drop (OnPlayerMoved, same as DESTPOS). */
 const ANTI_TELEPORT_SQ = 1_000_000;
 
-/** C++ `MAX_CORR_SIZE_150`-style frame cap for PLAYERMOVED2 — not enforced today. */
+/** C++ `MAX_CORR_SIZE_150`-style frame cap for PLAYERMOVED2 -- not enforced today. */
 // const MAX_CORR_SIZE_150 = 150;
 
 export class MovementService {
@@ -109,9 +109,9 @@ export class MovementService {
   }
 
   /**
-   * Apply a PLAYERANGLE frame (DPSrvr.cpp:2513 OnPlayerAngle). 45-byte body —
+   * Apply a PLAYERANGLE frame (DPSrvr.cpp:2513 OnPlayerAngle). 45-byte body --
    * `v, vd, f, fAngleX, fAccPower, fTurnAngle, nTickCount`. C++ only acts when
-   * flying. No `g_UserMng.Add*` call in the source — server-side state only.
+   * flying. No `g_UserMng.Add*` call in the source -- server-side state only.
    * We accept + log without broadcast (no peer-visible effect documented).
    */
   applyAngle(_player: CPlayer, _now: number): MovementOutcome {
@@ -120,7 +120,7 @@ export class MovementService {
   }
 
   /**
-   * Apply a GETPOS frame (DPSrvr.cpp:1416 OnGetPos) — authoritative position
+   * Apply a GETPOS frame (DPSrvr.cpp:1416 OnGetPos) -- authoritative position
    * report from client. NaN guard on `fAngle`, anti-teleport on `vPos`, then
    * store on player. When `objid == NULL_ID`, C++ accepts the position as the
    * player's own (the only path v15 uses).

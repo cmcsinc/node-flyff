@@ -1,5 +1,5 @@
 /**
- * Base Zod configuration schema — shared by ALL servers.
+ * Base Zod configuration schema -- shared by ALL servers.
  *
  * Every server-specific schema extends this via `BaseConfigSchema.merge(...)`.
  * Fields that are secret / environment-specific (passwords, IPC_SECRET) are
@@ -23,7 +23,7 @@ export const ServerNetworkSchema = z.object({
   host: z.string().default('0.0.0.0'),
   /**
    * Public IP advertised to clients via the server/channel list (what they
-   * connect TO). Must differ from `host` when binding 0.0.0.0 — advertising
+   * connect TO). Must differ from `host` when binding 0.0.0.0 -- advertising
    * 0.0.0.0 makes the client dial an unreachable target after login.
    */
   publicHost: z.string().default('127.0.0.1'),
@@ -50,7 +50,7 @@ export const DatabaseConfigSchema = z.object({
   /**
    * PostgreSQL / MySQL connection URL (pg / mysql2 adapters).
    * Leave empty for SQLite.
-   * **LOAD FROM ENV — never commit to config files.**
+   * **LOAD FROM ENV -- never commit to config files.**
    */
   url: z.string().default(''),
   /** Knex connection pool sizes. */
@@ -68,7 +68,7 @@ export const CacheConfigSchema = z.object({
   adapter: z.enum(['redis', 'memory', 'cloudflare']).default('memory'),
   /**
    * Redis connection URL.
-   * **LOAD FROM ENV — never commit credentials to config files.**
+   * **LOAD FROM ENV -- never commit credentials to config files.**
    */
   redisUrl: z.string().default('redis://localhost:6379'),
 });
@@ -77,14 +77,14 @@ export const CacheConfigSchema = z.object({
 export const IpcConfigSchema = z.object({
   /**
    * HMAC-SHA256 shared secret for signing all IPC messages.
-   * **MUST be loaded from `process.env.IPC_SECRET` — never committed.**
+   * **MUST be loaded from `process.env.IPC_SECRET` -- never committed.**
    */
   secret: z.string().min(16),
   /** Internal TLS TCP port this server binds (if it acts as an IpcServer). */
   internalPort: z.number().int().min(1024).max(65535).default(29000),
   /**
    * LocalBus (dev-only no-Redis pub/sub) bind target. Used only when
-   * `cache.adapter === 'memory'` — the first process to bind becomes the
+   * `cache.adapter === 'memory'` -- the first process to bind becomes the
    * broker; cluster + world exchange `player:handoff` over localhost TCP.
    * Production uses Redis (`cache.adapter === 'redis'`); this is unused there.
    */

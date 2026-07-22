@@ -41,7 +41,7 @@ export class CharHandler {
     private cacheAddrSource: CacheAddrSource,
   ) {}
 
-  /** PACKETTYPE_GETPLAYERLIST (0xf6) → replies PLAYER_LIST. */
+  /** PACKETTYPE_GETPLAYERLIST (0xf6) -> replies PLAYER_LIST. */
   async handleGetPlayerList(socket: Socket, reader: PacketReader): Promise<void> {
     try {
       const _version = reader.readString();
@@ -52,7 +52,7 @@ export class CharHandler {
 
       // C++ destroys the connection when dwAuthKey == 0 (DPLoginSrvr.cpp:145).
       if (authKey === 0) {
-        logger.warn({ account }, 'GETPLAYERLIST with zero auth key — dropping');
+        logger.warn({ account }, 'GETPLAYERLIST with zero auth key -- dropping');
         return;
       }
 
@@ -73,7 +73,7 @@ export class CharHandler {
     }
   }
 
-  /** PACKETTYPE_CREATE_PLAYER (0xf4) → PLAYER_LIST on success, ERROR on failure. */
+  /** PACKETTYPE_CREATE_PLAYER (0xf4) -> PLAYER_LIST on success, ERROR on failure. */
   async handleCreatePlayer(socket: Socket, reader: PacketReader): Promise<void> {
     try {
       const account = reader.readString();
@@ -106,7 +106,7 @@ export class CharHandler {
     }
   }
 
-  /** PACKETTYPE_DEL_PLAYER (0xf5) → PLAYER_LIST on success, ERROR on failure. */
+  /** PACKETTYPE_DEL_PLAYER (0xf5) -> PLAYER_LIST on success, ERROR on failure. */
   async handleDeletePlayer(socket: Socket, reader: PacketReader): Promise<void> {
     try {
       const account = reader.readString();
@@ -129,7 +129,7 @@ export class CharHandler {
   }
 
   /**
-   * PACKETTYPE_PRE_JOIN (0xff05) — select char to enter world.
+   * PACKETTYPE_PRE_JOIN (0xff05) -- select char to enter world.
    * Reply is a bare PRE_JOIN opcode (no payload), matching C++ SendHdr.
    * SEL_PLAYER (0xf7) is dead code in the C++ source.
    */

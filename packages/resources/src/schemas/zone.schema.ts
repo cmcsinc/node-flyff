@@ -103,7 +103,7 @@ export const NpcSchema = z.object({
   /** NPC position */
   position: Vector3Schema,
 
-  /** Rotation angle in radians (0-2π) */
+  /** Rotation angle in radians (0-2pi) */
   angle: z.number().min(0).max(2 * Math.PI),
 
   /** Available NPC functions */

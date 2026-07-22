@@ -1,23 +1,23 @@
 #!/usr/bin/env tsx
 /**
- * extractFlaris — port every Flaris NPC + monster spawn from the canonical
+ * extractFlaris -- port every Flaris NPC + monster spawn from the canonical
  * binary world files into `data/worlds/zones/flaris.yml`.
  *
  * Sources (no text form of the .dyo exists; .rgn is UTF-16LE text):
- *   game/resource/World/WdMadrigal/WdMadrigal.dyo  — every placed object
- *   game/resource/World/WdMadrigal/WdMadrigal.rgn  — monster respawn regions
+ *   game/resource/World/WdMadrigal/WdMadrigal.dyo  -- every placed object
+ *   game/resource/World/WdMadrigal/WdMadrigal.rgn  -- monster respawn regions
  *
  * The runtime `CMover::Read` (Mover.cpp:2896) does NOT match the layout the
  * WorldEditor wrote, so the .dyo is parsed empirically. Two invariants hold:
  *   1. Every record is padded to a fixed 200 bytes (one OT_CTRL record is 500;
  *      it does not match the mover invariant and is skipped).
  *   2. CObj sets `m_dwType = dwObjType` in CreateObj (CreateObj.cpp:628), so a
- *      mover record satisfies DWORD(o) == 5 && DWORD(o + 44) == 5 — this locates
+ *      mover record satisfies DWORD(o) == 5 && DWORD(o + 44) == 5 -- this locates
  *      records regardless of where the non-mover padding falls.
  *
  * Per OT_MOVER record (offsets within the 200-byte slot, from CObj::Read in
  * Obj.cpp:471 + the editor's extra fields):
- *     4   float  m_fAngle   (editor stores degrees → converted to radians)
+ *     4   float  m_fAngle   (editor stores degrees -> converted to radians)
  *     20  float  m_vPos.x   (world = raw * OLD_MPU; OLD_MPU = 4, Obj.cpp:522)
  *     24  float  m_vPos.y   (vertical, unchanged)
  *     28  float  m_vPos.z   (world = raw * OLD_MPU)
@@ -51,7 +51,7 @@ const FLARIS_YML = resolve(PKG_ROOT, 'data/worlds/zones/flaris.yml');
 
 /** Object types (CreateObj.cpp dispatch order; OT_MOVER empirically confirmed). */
 const OT_MOVER = 5;
-/** Obj.cpp:522 — only x and z are scaled by OLD_MPU; y is unchanged. */
+/** Obj.cpp:522 -- only x and z are scaled by OLD_MPU; y is unchanged. */
 const OLD_MPU = 4;
 /** Editor record slot size (empirical; every mover sits on a 200-byte grid). */
 const RECORD_SIZE = 200;
@@ -62,7 +62,7 @@ const M_DWINDEX_OFF = 48;
 /** Offset of the `m_szCharacterKey` C-string (character.inc key). */
 const M_CHARKEY_OFF = 160;
 
-/** Player-template MIs (defineObj.h:961-963) — not placeable town NPCs. */
+/** Player-template MIs (defineObj.h:961-963) -- not placeable town NPCs. */
 const SKIP_MI = new Set([10, 11, 12]); // MI_DEFAULT, MI_MALE, MI_FEMALE
 
 interface Vec3 { readonly x: number; readonly y: number; readonly z: number; }
@@ -176,7 +176,7 @@ async function readText(path: string): Promise<string> {
   return buf.toString('utf8');
 }
 
-/** Load the set of MI ids the converter emitted (propMover ∩ defineObj). */
+/** Load the set of MI ids the converter emitted (propMover & defineObj). */
 async function loadKnownMoverIds(): Promise<Set<number>> {
   const ids = new Set<number>();
   for (const f of ['monsters.yml', 'npcs.yml', 'player.yml']) {
@@ -200,7 +200,7 @@ async function main(): Promise<void> {
 
   const zone = parse(existingYml) as ZoneDefinition;
 
-  // Drop placements whose MI never made it into propMover.txt — SpawnManager
+  // Drop placements whose MI never made it into propMover.txt -- SpawnManager
   // would skip them at boot anyway; keeping them fails the zone's referential
   // validation (loaders.test "validate cross-references").
   const rawNpcs = decodeMovers(dyoBuf).filter((n) => knownMIs.has(n.mover_id));
@@ -209,9 +209,9 @@ async function main(): Promise<void> {
   const npcs = rawNpcs.map(({ character_key: _ck, ...n }, i) => ({ ...n, id: i + 1 }));
   const spawns = rawSpawns.map((s, i) => ({ ...s, id: i + 1 }));
 
-  // ponytail: NPC dialogue/shop functions are intentionally empty here — the
+  // ponytail: NPC dialogue/shop functions are intentionally empty here -- the
   // canonical .dyo only carries model + placement. Re-link shop_id / dialogue_id
-  // (character_key → dialog prefix via data/dialogues/_npc-map.yml) in a follow-up.
+  // (character_key -> dialog prefix via data/dialogues/_npc-map.yml) in a follow-up.
   const next: ZoneDefinition = {
     ...zone,
     npcs,
@@ -222,7 +222,7 @@ async function main(): Promise<void> {
 
   const header =
     '# worlds/zones/flaris.yml\n' +
-    '# Flaris (Zone 1) — GENERATED from WdMadrigal.dyo + .rgn by scripts/extractFlaris.ts.\n' +
+    '# Flaris (Zone 1) -- GENERATED from WdMadrigal.dyo + .rgn by scripts/extractFlaris.ts.\n' +
     '# Edit placement via the extractor (or raw/ world files), not by hand.\n';
   await writeFile(FLARIS_YML, header + stringify(validated));
 

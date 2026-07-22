@@ -5,6 +5,9 @@ import { CPlayer } from '../../src/entities/player.js';
 import { QS_BEGIN, QS_END, QUEST_FLAG } from '@flyff/core/constants/quest.js';
 import type { CharacterRow, JournalEntry } from '@flyff/database';
 import type { QuestCommand, QuestDef, QuestIndex } from '@flyff/resources';
+import { InventoryService } from '../../src/services/inventory.service.js';
+import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer.js';
+import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST } from '../../src/net/snapshot/constants.js';
 
 const baseRow = {
   id: 1, account_id: 1, name: 'Tester', slot: 0, class: 0, gender: 0,
@@ -64,7 +67,7 @@ describe('quest.service.ts + CPlayer quest helpers', () => {
     p.setQuest({ state: QS_END, time: 0, id: 9, killNpcNum: [3, 0], flags: 0 });
     assert.equal(p.findQuest(9), undefined);
     assert.equal(p.isCompleteQuest(9), true);
-    // already complete → re-add is a no-op
+    // already complete -> re-add is a no-op
     p.setQuest({ state: QS_BEGIN, time: 0, id: 9, killNpcNum: [0, 0], flags: 0 });
     assert.equal(p.findQuest(9), undefined);
   });
@@ -72,7 +75,7 @@ describe('quest.service.ts + CPlayer quest helpers', () => {
 
 // --- Phase 3: begin/end engine + QUEST_1 worked example ---
 
-/** QUEST_1 definition as converted from propQuest.inc (vagrant, lvl5-15, 20 teeth → 500 gold). */
+/** QUEST_1 definition as converted from propQuest.inc (vagrant, lvl5-15, 20 teeth -> 500 gold). */
 function quest1Def(): QuestDef {
   const num = (value: number): QuestCommand['args'][number] => ({ type: 'num', value });
   const sym = (value: number): QuestCommand['args'][number] => ({ type: 'sym', value });
@@ -110,7 +113,7 @@ function questIndex(def: QuestDef): QuestIndex {
   return { byId: new Map([[def.id, def]]), drops: new Map() };
 }
 
-describe('quest.service — begin/end engine (QUEST_1 worked example)', () => {
+describe('quest.service -- begin/end engine (QUEST_1 worked example)', () => {
   function makeService(inv: QuestInventory, def: QuestDef) {
     const log: JournalEntry[] = [];
     const repo = {
@@ -142,7 +145,7 @@ describe('quest.service — begin/end engine (QUEST_1 worked example)', () => {
     if (!res.ok) assert.equal(res.reason, 'level');
   });
 
-  it('begins QUEST_1 at vagrant lvl5-15, then completes on 20 teeth → 500 gold', async () => {
+  it('begins QUEST_1 at vagrant lvl5-15, then completes on 20 teeth -> 500 gold', async () => {
     const def = quest1Def();
     const inv = fakeInv({ 6005: 20 });
     const { svc } = makeService(inv, def);
@@ -152,7 +155,7 @@ describe('quest.service — begin/end engine (QUEST_1 worked example)', () => {
     assert.equal(begin.ok, true);
     assert.equal(p.findQuest(7)?.state, QS_BEGIN);
 
-    // Teeth in inventory → isComplete passes.
+    // Teeth in inventory -> isComplete passes.
     const end = await svc.endQuest(p, 7);
     assert.equal(end.ok, true);
     assert.equal(p.findQuest(7), undefined);        // moved out of active
@@ -217,8 +220,131 @@ describe('quest.service — begin/end engine (QUEST_1 worked example)', () => {
     await svc.endQuest(p, 7);
     const types = log.map((e) => e.type).sort();
     assert.ok(types.includes('CHAR_GOLD'), 'gold reward journaled as absolute CHAR_GOLD');
-    // Item removal is no longer journaled (no inventory persistence behind the
-    // quest path today); gold/exp WAL coverage is the crash-recovery surface.
+    // Item removal is no longer journaled via a quest-private type; it now flows
+    // through InventoryService (INVENTORY_SLOT/ITEM_CONSUME) when the real bag is
+    // wired. Gold/exp WAL coverage remains the crash-recovery surface here.
     assert.equal(types.includes('ITEM_REMOVE'), false);
+  });
+});
+
+// --- Real InventoryService adapter (questInventory.adapter) ---
+
+const UPDATE_ITEM_SUBTYPE = 0x0018;
+const numArg = (value: number): QuestCommand['args'][number] => ({ type: 'num', value });
+const symArg = (value: number): QuestCommand['args'][number] => ({ type: 'sym', value });
+
+/** Read the SNAPSHOT sub-type word (offset 14) to discriminate frame bodies. */
+function subtype(buf: Buffer): number {
+  return buf.readUInt16LE(14);
+}
+
+function countInBag(p: CPlayer, itemId: number): number {
+  let n = 0;
+  for (const s of p.m_Inventory) if (s && s.itemId === itemId) n += s.count;
+  return n;
+}
+
+function fakeInventoryRepo() {
+  return {
+    setItem: async () => {},
+    removeItem: async () => {},
+    updateQuantity: async () => {},
+    moveItem: async () => {},
+  };
+}
+
+function makeRealService(def: QuestDef) {
+  const inventoryService = new InventoryService({
+    inventoryRepo: fakeInventoryRepo() as never,
+    charRepo: { updateGold: async () => {} } as never,
+    getStackSize: () => 999, // merge onto one partial stack
+  });
+  const log: JournalEntry[] = [];
+  const repo = {
+    loadState: async () => ({ active: [], completed: [], checked: [] }),
+    upsertActive: async () => {},
+    removeActive: async () => {},
+    addCompleted: async () => {},
+    removeCompleted: async () => {},
+    clearCompleted: async () => {},
+    setChecked: async () => {},
+    insertLog: async () => {},
+  };
+  const svc = new QuestService({
+    questRepo: repo as never,
+    quests: questIndex(def),
+    inventoryService,
+    createItemSerializer: new CreateItemSnapshotSerializer(),
+    journal: { append: (e) => { log.push(e); return 1; } },
+  });
+  return { svc, log };
+}
+
+describe('quest.service -- real InventoryService adapter', () => {
+  it('beginQuest grants SetBeginSetAddItem into the bag + emits CREATEITEM', async () => {
+    const def: QuestDef = {
+      _version: '1.0', id: 7, symbol: 'Q7', states: {}, quest_items: [],
+      commands: [
+        { cmd: 'SetBeginCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetBeginSetAddItem', args: [numArg(0), symArg(7000), numArg(2)] },
+      ],
+    } as unknown as QuestDef;
+    const { svc } = makeRealService(def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10 }, { write: () => true }, 0);
+
+    const res = await svc.beginQuest(p, 7);
+    assert.equal(res.ok, true);
+    if (res.ok) {
+      assert.equal(res.frames.length, 2);
+      assert.equal(subtype(res.frames[0]!), SNAPSHOTTYPE_SETQUEST);
+      assert.equal(subtype(res.frames[1]!), SNAPSHOTTYPE_CREATEITEM);
+    }
+    assert.equal(countInBag(p, 7000), 2);
+  });
+
+  it('endQuest grants SetEndRewardItem into the bag + emits CREATEITEM', async () => {
+    const def: QuestDef = {
+      _version: '1.0', id: 7, symbol: 'Q7', states: {}, quest_items: [],
+      commands: [
+        { cmd: 'SetBeginCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetEndCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetEndRewardItem', args: [numArg(-1), numArg(0), numArg(-1), symArg(7100), numArg(3)] },
+      ],
+    } as unknown as QuestDef;
+    const { svc } = makeRealService(def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 7);
+
+    const res = await svc.endQuest(p, 7);
+    assert.equal(res.ok, true);
+    if (res.ok) {
+      const reward = res.frames.find((f) => subtype(f) === SNAPSHOTTYPE_CREATEITEM);
+      assert.ok(reward, 'CREATEITEM reward frame emitted');
+    }
+    assert.equal(countInBag(p, 7100), 3);
+  });
+
+  it('endQuest removes SetEndRemoveItem from the bag + emits UPDATE_ITEM', async () => {
+    const def: QuestDef = {
+      _version: '1.0', id: 7, symbol: 'Q7', states: {}, quest_items: [],
+      commands: [
+        { cmd: 'SetBeginCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetEndCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetEndCondItem', args: [numArg(-1), numArg(0), numArg(-1), symArg(6005), numArg(5)] },
+        { cmd: 'SetEndRemoveItem', args: [numArg(0), symArg(6005), numArg(5)] },
+      ],
+    } as unknown as QuestDef;
+    const { svc } = makeRealService(def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10 }, { write: () => true }, 0);
+    p.m_Inventory[0] = { itemId: 6005, count: 5 };
+    await svc.beginQuest(p, 7);
+
+    const res = await svc.endQuest(p, 7);
+    assert.equal(res.ok, true);
+    assert.equal(countInBag(p, 6005), 0);
+    if (res.ok) {
+      const update = res.frames.find((f) => subtype(f) === UPDATE_ITEM_SUBTYPE);
+      assert.ok(update, 'UPDATE_ITEM removal frame emitted');
+    }
   });
 });

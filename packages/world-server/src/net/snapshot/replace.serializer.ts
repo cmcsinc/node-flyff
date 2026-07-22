@@ -1,5 +1,5 @@
 /**
- * S→C teleport notify — `SNAPSHOTTYPE_REPLACE` (0x00f2).
+ * S->C teleport notify -- `SNAPSHOTTYPE_REPLACE` (0x00f2).
  *
  * Mirrors `CUser::AddReplace` (`WORLDSERVER/User.cpp:697`):
  *   m_Snapshot.ar << NULL_ID;

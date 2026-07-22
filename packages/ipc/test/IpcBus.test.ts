@@ -1,5 +1,5 @@
 /**
- * Unit tests for IpcBus — Redis pub/sub with HMAC signing.
+ * Unit tests for IpcBus -- Redis pub/sub with HMAC signing.
  */
 
 import { describe, it, before, after } from 'node:test';

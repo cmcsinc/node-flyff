@@ -8,12 +8,12 @@
  * `_Common/Project.cpp:2928-3069`.
  *
  * **MMI enum source**: `game/resource/defineNeuz.h:92-314`. Critical value
- * `MMI_DIALOG = 0` gates the right-click "Dialog" option → SCRIPTDLG
+ * `MMI_DIALOG = 0` gates the right-click "Dialog" option -> SCRIPTDLG
  * (`Project.cpp:3024` does `lpCharacter->m_abMoverMenu[ nMMI ] = TRUE`).
  * `MAX_MOVER_MENU = 175` (`defineNeuz.h:314`).
  *
  * Linkage: character.inc block keys (`MaFl_Marche`) align with propMover
- * `MI_*` keys via strip + lowercase — same collapse as
+ * `MI_*` keys via strip + lowercase -- same collapse as
  * `dialog.loader.ts:prefixForNpc`.
  *
  * @module loaders/characterInc
@@ -43,19 +43,22 @@ const MMI_FALLBACK: Record<string, number> = {
   MMI_GUILDBANKING: 15,
 };
 
-/** `MMI_DIALOG` (`defineNeuz.h:92`) — gates the right-click Dialog option. */
+/** `MMI_DIALOG` (`defineNeuz.h:92`) -- gates the right-click Dialog option. */
 export const MMI_DIALOG = 0;
 
-/** One equipped part — C++ `m_adwEquip[ nEquipNum++ ]` (Project.cpp:2937). */
+/** `MMI_TRADE` (`defineNeuz.h:94`) -- gates the right-click Shop option -> OPENSHOPWND. */
+export const MMI_TRADE = 2;
+
+/** One equipped part -- C++ `m_adwEquip[ nEquipNum++ ]` (Project.cpp:2937). */
 export interface CharacterIncEquipPart {
-  /** Slot index (PARTS_* from defineNeuz.h:26-35) — derived from equip order. */
+  /** Slot index (PARTS_* from defineNeuz.h:26-35) -- derived from equip order. */
   readonly parts: number;
-  /** Resolved propItem id (II_* → defineItem.h). */
+  /** Resolved propItem id (II_* -> defineItem.h). */
   readonly itemId: number;
 }
 
 /**
- * One shop tab — C++ `AddVendorSlot( nSlot, IDS_* )` → `m_venderSlot[nSlot]`
+ * One shop tab -- C++ `AddVendorSlot( nSlot, IDS_* )` -> `m_venderSlot[nSlot]`
  * (Project.cpp:3047-3053). The label is a client string-table id (resolved from
  * the client's own resources); the server stores the raw token verbatim.
  */
@@ -66,27 +69,34 @@ export interface CharacterIncVendorTab {
 }
 
 /**
- * One category-based shop entry — C++ `AddVendorItem` → `VENDOR_ITEM` pushed to
+ * One category-based shop entry -- C++ `AddVendorItem` -> `VENDOR_ITEM` pushed to
  * `m_venderItemAry[nSlot]` (Project.cpp:3095-3112). The server expands the
  * category + sex/level range into concrete propItem ids when a future shop-open
  * handler needs the stock list.
  */
 export interface CharacterIncVendorItem {
   readonly slot: number;
-  /** `m_nItemkind3` — IK3_* (defineItemkind.h) resolved to its number. */
+  /** `m_nItemkind3` -- IK3_* (defineItemkind.h) resolved to its number. */
   readonly itemKind3: number;
-  /** `m_nItemJob` — sex/job filter (raw arg 3; -1 = any). */
+  /**
+   * Original IK3_* symbol verbatim from `AddVendorItem` (e.g. `IK3_SWD`). The
+   * shop stock resolver matches this against `ItemIndex.byKind3` (symbol key) so
+   * no second `defineItemkind.h` parse is needed and symbol/number drift is
+   * impossible. Empty string when the token was a bare numeric literal.
+   */
+  readonly itemKind3Symbol: string;
+  /** `m_nItemJob` -- sex/job filter (raw arg 3; -1 = any). */
   readonly itemJob: number;
-  /** `m_nUniqueMin` — min item level/grade bound. */
+  /** `m_nUniqueMin` -- min item level/grade bound. */
   readonly uniqueMin: number;
-  /** `m_nUniqueMax` — max item level/grade bound. */
+  /** `m_nUniqueMax` -- max item level/grade bound. */
   readonly uniqueMax: number;
-  /** `m_nTotalNum` — stock count / density. */
+  /** `m_nTotalNum` -- stock count / density. */
   readonly totalNum: number;
 }
 
 /**
- * One explicit-id shop entry — C++ `AddVendorItem2( nSlot, dwId )` →
+ * One explicit-id shop entry -- C++ `AddVendorItem2( nSlot, dwId )` ->
  * `m_venderItemAry2[nSlot]` (Project.cpp:3114-3123). `dwId` is a concrete
  * propItem id (II_* value), no category expansion needed.
  */
@@ -95,26 +105,26 @@ export interface CharacterIncVendorItemId {
   readonly itemId: number;
 }
 
-/** Outfit fields — C++ `SetFigure` (Project.cpp:2959) + `SetEquip` (:2928). */
+/** Outfit fields -- C++ `SetFigure` (Project.cpp:2959) + `SetEquip` (:2928). */
 export interface CharacterIncOutfit {
   readonly characterKey: string;
-  /** `m_dwHairMesh` (u_char) — SetFigure arg 2. */
+  /** `m_dwHairMesh` (u_char) -- SetFigure arg 2. */
   readonly hairMesh: number;
-  /** `m_dwHairColor` (DWORD) — SetFigure arg 3 (ARGB). */
+  /** `m_dwHairColor` (DWORD) -- SetFigure arg 3 (ARGB). */
   readonly hairColor: number;
-  /** `m_dwHeadMesh` (u_char) — SetFigure arg 4. */
+  /** `m_dwHeadMesh` (u_char) -- SetFigure arg 4. */
   readonly headMesh: number;
   readonly equip: readonly CharacterIncEquipPart[];
 }
 
-/** Parsed character.inc block — one per `MaFl_*` / `MaDa_*` / … header. */
+/** Parsed character.inc block -- one per `MaFl_*` / `MaDa_*` / ... header. */
 export interface CharacterIncBlock {
   readonly key: string;
   /** MMI_* ids from AddMenu/AddMenuLang, deduped + ascending. */
   readonly menus: readonly number[];
   /** `true` when `AddMenu( MMI_DIALOG )` fired. */
   readonly hasDialog: boolean;
-  /** Outfit from SetFigure/SetEquip — `undefined` when neither is present. */
+  /** Outfit from SetFigure/SetEquip -- `undefined` when neither is present. */
   readonly outfit: CharacterIncOutfit | undefined;
   /** `m_szDialog` filename (e.g. `MaFl_Marche.txt`). */
   readonly dialogFile: string | undefined;
@@ -131,16 +141,16 @@ export interface CharacterIncBlock {
 }
 
 export interface CharacterIncIndex {
-  /** Block key (e.g. `MaFl_Marche`) → block. Case-sensitive exact match. */
+  /** Block key (e.g. `MaFl_Marche`) -> block. Case-sensitive exact match. */
   readonly byKey: Map<string, CharacterIncBlock>;
-  /** Lowercased stem (e.g. `mafl_marche`) → block. */
+  /** Lowercased stem (e.g. `mafl_marche`) -> block. */
   readonly byStem: Map<string, CharacterIncBlock>;
 }
 
 /**
  * Resolve a character.inc block for a propMover `MI_*` key.
  *
- * Strips `MI_`, lowercases, and looks up the stem — so `MI_MAFL_MARCHE` finds
+ * Strips `MI_`, lowercases, and looks up the stem -- so `MI_MAFL_MARCHE` finds
  * the `MaFl_Marche` block. Returns `undefined` for monsters / unmatched.
  */
 export function blockForMover(
@@ -176,7 +186,7 @@ function stripComments(content: string): string {
 
 /**
  * Parse a single outer `<Key> { ... }` body. Token-scanned (not brace-nested)
- * because the C++ scanner walks tokens regardless of nesting — `setting {…}`
+ * because the C++ scanner walks tokens regardless of nesting -- `setting {...}`
  * is not a separate scope for token recognition (Project.cpp:2928-3069).
  */
 function parseBlock(
@@ -244,9 +254,9 @@ function parseBlock(
 }
 
 /**
- * `AddVendorSlot( nSlot, IDS_* )` → `m_venderSlot[nSlot]` (Project.cpp:3047).
+ * `AddVendorSlot( nSlot, IDS_* )` -> `m_venderSlot[nSlot]` (Project.cpp:3047).
  * Accepts the C++ `AddVenderSlot` misspelling too. The label token is captured
- * verbatim — it's a client string-table id the server never resolves.
+ * verbatim -- it's a client string-table id the server never resolves.
  */
 function parseVendorTabs(body: string): CharacterIncVendorTab[] {
   const re = /\bAddVend[oe]rSlot\s*\(\s*(\d+)\s*,\s*([A-Za-z0-9_]+)\s*\)/g;
@@ -260,7 +270,7 @@ function parseVendorTabs(body: string): CharacterIncVendorTab[] {
 }
 
 /**
- * `AddVendorItem( nSlot, IK3_*, nJob, nUniqueMin, nUniqueMax, nTotalNum )` →
+ * `AddVendorItem( nSlot, IK3_*, nJob, nUniqueMin, nUniqueMax, nTotalNum )` ->
  * `m_venderItemAry[nSlot]` (Project.cpp:3095). IK3_* resolved via
  * `defineItemkind.h`; a bare numeric literal is accepted too. `AddVendorItem2`
  * is excluded by the trailing `\b\s*\)` boundary (the `2` has no word boundary
@@ -277,6 +287,7 @@ function parseVendorItems(body: string, ik3Ids: Map<string, number>): CharacterI
     out.push({
       slot: parseInt(slotRaw, 10),
       itemKind3,
+      itemKind3Symbol: /^IK3_/.test(kindTok) ? kindTok : '',
       itemJob: parseInt(jobRaw, 10),
       uniqueMin: parseInt(minRaw, 10),
       uniqueMax: parseInt(maxRaw, 10),
@@ -287,7 +298,7 @@ function parseVendorItems(body: string, ik3Ids: Map<string, number>): CharacterI
 }
 
 /**
- * `AddVendorItem2( nSlot, dwId )` → `m_venderItemAry2[nSlot]`
+ * `AddVendorItem2( nSlot, dwId )` -> `m_venderItemAry2[nSlot]`
  * (Project.cpp:3114). `dwId` is a concrete propItem id. Distinct from
  * `AddVendorItem` by the explicit `2` before the paren.
  */
@@ -308,7 +319,7 @@ function parseHex(s: string): number {
     : parseInt(s, 10) >>> 0;
 }
 
-/** Pure parser — exported for tests. */
+/** Pure parser -- exported for tests. */
 export function parseCharacterInc(
   content: string,
   iiIds: Map<string, number>,
@@ -342,7 +353,7 @@ export function parseCharacterInc(
 /**
  * Load + index `rawDir/character.inc`. Reads `defineItem.h` (II_*) and
  * `defineNeuz.h` (MMI_*) alongside so symbolic names resolve to numbers.
- * Missing files → empty index (servers still boot, outfits disabled).
+ * Missing files -> empty index (servers still boot, outfits disabled).
  */
 export async function loadCharacterInc(rawDir: string): Promise<CharacterIncIndex> {
   const incPath = resolve(rawDir, 'character.inc');
@@ -350,7 +361,7 @@ export async function loadCharacterInc(rawDir: string): Promise<CharacterIncInde
   try {
     buf = await readFile(incPath);
   } catch {
-    logger.warn({ incPath }, 'character.inc not found — NPC outfits/menus disabled');
+    logger.warn({ incPath }, 'character.inc not found -- NPC outfits/menus disabled');
     return { byKey: new Map(), byStem: new Map() };
   }
 

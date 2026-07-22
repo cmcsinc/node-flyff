@@ -48,7 +48,7 @@ describe('Resource Loaders', () => {
 
   it('should load item with correct properties', async () => {
     const resources = await loadAllResources(DATA_DIR);
-    // II_WEA_AXE_RODNEY=81 → "Rodney Axe"
+    // II_WEA_AXE_RODNEY=81 -> "Rodney Axe"
     const rodney = resources.items.items.get(81);
 
     assert.ok(rodney, 'Rodney Axe should exist');
@@ -57,9 +57,20 @@ describe('Resource Loaders', () => {
     assert.equal(rodney!.level_req, 1);
   });
 
+  it('indexes items by IK3 symbol for NPC shop stock expansion', async () => {
+    const resources = await loadAllResources(DATA_DIR);
+    // Rodney Axe (id 81) is IK3_AXE in weapons.yml -- AddVendorItem(IK3_AXE...)
+    // must resolve to it via byKind3.
+    const axes = resources.items.byKind3.get('IK3_AXE');
+    assert.ok(axes, 'IK3_AXE group present');
+    assert.ok(axes!.some((i) => i.id === 81), 'Rodney Axe in IK3_AXE group');
+    // Items without item_kind3 are skipped, not crash.
+    assert.ok(resources.items.byKind3.size > 0, 'byKind3 populated');
+  });
+
   it('should load monster with correct properties', async () => {
     const resources = await loadAllResources(DATA_DIR);
-    // MI_AIBATT1=20 → "Small Aibatt"
+    // MI_AIBATT1=20 -> "Small Aibatt"
     const aibatt = resources.movers.movers.get(20);
 
     assert.ok(aibatt, 'Small Aibatt should exist');

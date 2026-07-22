@@ -22,10 +22,13 @@ import { up as migrationUp001 } from '@flyff/database/migrations/001_initial';
 import { up as migrationUp002 } from '@flyff/database/migrations/002_quests';
 import { up as migrationUp003 } from '@flyff/database/migrations/003_character_gold';
 import { up as migrationUp004 } from '@flyff/database/migrations/004_bank_tab';
+import { up as migrationUp005 } from '@flyff/database/migrations/005_skills_slot';
+import { up as migrationUp006 } from '@flyff/database/migrations/006_bank_pass';
+import { up as migrationUp007 } from '@flyff/database/migrations/007_character_angle';
 import { hashPassword } from '@flyff/core/utils/password.js';
 
 /**
- * Ordered migration list — each `up()` is gated so re-running seed is
+ * Ordered migration list -- each `up()` is gated so re-running seed is
  * idempotent and brings an existing dev DB up to head. Without this, a new
  * migration file is never applied to the dev DB and the first query against it
  * throws SQLITE_ERROR at runtime (missing column/table).
@@ -38,6 +41,9 @@ const MIGRATIONS = [
   { marker: 'character_quests', up: migrationUp002 },
   { column: ['characters', 'gold'], up: migrationUp003 },
   { column: ['bank', 'tab'], up: migrationUp004 },
+  { column: ['skills', 'slot'], up: migrationUp005 },
+  { column: ['characters', 'bank_pass'], up: migrationUp006 },
+  { column: ['characters', 'angle'], up: migrationUp007 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';
@@ -55,7 +61,7 @@ async function main(): Promise<void> {
         : await db.schema.hasTable(m.marker);
       if (done) continue;
       const label = 'column' in m ? `${m.column[0]}.${m.column[1]}` : m.marker;
-      console.log(`[seed] ${label} missing — running migration up()`);
+      console.log(`[seed] ${label} missing -- running migration up()`);
       await m.up(db);
     }
     const accountRepo = new AccountRepository(db);
@@ -65,7 +71,7 @@ async function main(): Promise<void> {
     let accountId: number;
     if (existing) {
       accountId = existing.id;
-      console.log(`[seed] account "${ACCOUNT}" already exists (id=${accountId}) — leaving as-is`);
+      console.log(`[seed] account "${ACCOUNT}" already exists (id=${accountId}) -- leaving as-is`);
     } else {
       const md5hex = createHash('md5').update(SALT + PASSWORD).digest('hex');
       const passwordHash = await hashPassword(md5hex);
@@ -87,7 +93,7 @@ async function main(): Promise<void> {
       });
       console.log(`[seed] created character "Tester" for account ${accountId}`);
     } else {
-      console.log(`[seed] account ${accountId} already has ${chars.length} character(s) — skipping`);
+      console.log(`[seed] account ${accountId} already has ${chars.length} character(s) -- skipping`);
     }
   } finally {
     await db.destroy();

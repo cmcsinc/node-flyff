@@ -1,5 +1,5 @@
 /**
- * WorldListService — Cluster Server query layer for live world state.
+ * WorldListService -- Cluster Server query layer for live world state.
  *
  * Provides the Cluster Server's handlers and game logic with a clean,
  * typed API over the raw `WorldRegistry` map. Used when:
@@ -16,7 +16,7 @@ import type { WorldRegistry, WorldEntry } from '../ipc/worldRegistry.js';
 // Types
 // ---------------------------------------------------------------------------
 
-/** Summarised, serialisable view of a world channel — safe to send over IPC. */
+/** Summarised, serialisable view of a world channel -- safe to send over IPC. */
 export interface WorldChannelView {
   readonly serverId: string;
   readonly name: string;
@@ -40,20 +40,20 @@ export interface WorldListServiceDeps {
 /**
  * Query service for the live world channel list maintained by `WorldRegistry`.
  *
- * All methods are synchronous — the `WorldRegistry` maintains the in-memory
+ * All methods are synchronous -- the `WorldRegistry` maintains the in-memory
  * state; no async DB or Redis calls are needed here.
  *
  * @example
  * ```ts
  * // In a packet handler:
  * const worlds = worldListService.getAvailableChannels();
- * // → build SNSP_CHAR_SELECT_RESP with world IP/port
+ * // -> build SNSP_CHAR_SELECT_RESP with world IP/port
  * ```
  */
 export class WorldListService {
   #deps!: WorldListServiceDeps;
 
-  /** Dependency injection — call once from compose.ts. */
+  /** Dependency injection -- call once from compose.ts. */
   init(deps: WorldListServiceDeps): void {
     this.#deps = deps;
   }

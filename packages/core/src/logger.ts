@@ -8,7 +8,7 @@
  *
  * `NO_COLOR` (any value) forces JSON regardless of TTY. The pretty stream runs
  * **in-process** (not as a transport worker) so a function `messageFormat`
- * works — the module/service tag is rendered inline with each message.
+ * works -- the module/service tag is rendered inline with each message.
  *
  * ## Usage
  * ```ts
@@ -16,7 +16,7 @@
  *
  * const logger = createLogger({ module: 'combat-service' });
  * logger.info({ charId: 5, exp: 2 }, 'EXP granted');
- * // → 12:34:56.789 INFO [combat-service] EXP granted
+ * // -> 12:34:56.789 INFO [combat-service] EXP granted
  * //     charId: 5
  * //     exp: 2
  * ```
@@ -31,7 +31,7 @@ import pretty from 'pino-pretty';
 // Types
 // ---------------------------------------------------------------------------
 
-/** A pino Logger instance — re-exported so callers need not import pino directly. */
+/** A pino Logger instance -- re-exported so callers need not import pino directly. */
 export type { Logger } from 'pino';
 
 // ---------------------------------------------------------------------------
@@ -80,10 +80,10 @@ export function createLogger(context: Record<string, unknown>): pino.Logger {
 // Pretty stream
 // ---------------------------------------------------------------------------
 
-/** Level → colorette color. Explicit for stability across pino-pretty versions. */
+/** Level -> colorette color. Explicit for stability across pino-pretty versions. */
 const LEVEL_COLORS = 'trace:gray,debug:blue,info:green,warn:yellow,error:red,fatal:magentaBright';
 
-/** pino-pretty options — colors, compact timestamp, no pid/hostname noise. */
+/** pino-pretty options -- colors, compact timestamp, no pid/hostname noise. */
 function prettyStream(): ReturnType<typeof pretty> {
   return pretty({
     colorize: true,

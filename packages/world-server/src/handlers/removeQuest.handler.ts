@@ -1,5 +1,5 @@
 /**
- * REMOVEQUEST handler — `PACKETTYPE_REMOVEQUEST` (0x00ff0026).
+ * REMOVEQUEST handler -- `PACKETTYPE_REMOVEQUEST` (0x00ff0026).
  *
  * `DPSrvr::OnRemoveQuest` (DPSrvr.cpp:1107) reads `DWORD dwQuestCancelID` and
  * is 400ms rate-limited via `m_tickScript`. Delegates to

@@ -41,7 +41,13 @@ export {
   type ActiveQuestPayload,
 } from './repositories/quest.repo.js';
 
-// WAL journal — embedded SQLite crash-recovery log
+export {
+  SkillRepository,
+  type LearnedSkill,
+  type SkillRow,
+} from './repositories/skill.repo.js';
+
+// WAL journal -- embedded SQLite crash-recovery log
 export {
   Journal,
   type JournalEntry,

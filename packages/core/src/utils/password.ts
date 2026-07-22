@@ -6,8 +6,8 @@
  * used when the native argon2 binding is unavailable (e.g. Windows without
  * node-gyp). The fallback MUST be deterministic and embed its salt in the hash
  * string so a hash written by the seed process verifies inside the login
- * process — a process-local Map does NOT work (seed and login are separate
- * processes, so the Map is empty on verify → every login fails).
+ * process -- a process-local Map does NOT work (seed and login are separate
+ * processes, so the Map is empty on verify -> every login fails).
  *
  * Supports both plain passwords and MD5 digests from v15 clients: the server
  * stores argon2(md5) / scrypt(md5) so both flows work identically.
@@ -41,12 +41,12 @@ function getArgon2(): Argon2Exports {
     argon2 = mod;
     return mod;
   } catch {
-    // Deterministic scrypt fallback — see module doc.
+    // Deterministic scrypt fallback -- see module doc.
     return scryptFallback;
   }
 }
 
-/** scrypt KDF params (N=2^14, r=8, p=1, 32-byte key) — OWASP-recommended. */
+/** scrypt KDF params (N=2^14, r=8, p=1, 32-byte key) -- OWASP-recommended. */
 const SCRYPT_N = 16384;
 const SCRYPT_R = 8;
 const SCRYPT_P = 1;
@@ -61,7 +61,7 @@ const scryptFallback: Argon2Exports = {
     return `$scrypt$${SCRYPT_N}$${SCRYPT_R}$${SCRYPT_P}$${salt.toString('base64')}$${key.toString('base64')}`;
   },
   async verify(hash: string, password: string): Promise<boolean> {
-    // `$scrypt$N$r$p$saltB64$keyB64` → ['', 'scrypt', N, r, p, saltB64, keyB64]
+    // `$scrypt$N$r$p$saltB64$keyB64` -> ['', 'scrypt', N, r, p, saltB64, keyB64]
     const parts = hash.split('$');
     if (parts.length !== 7 || parts[1] !== 'scrypt') return false;
     const N = Number(parts[2]);

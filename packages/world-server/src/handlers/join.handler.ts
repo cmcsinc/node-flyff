@@ -1,7 +1,7 @@
 /**
- * JOIN handler — client enter-world packet (`PACKETTYPE_JOIN`).
+ * JOIN handler -- client enter-world packet (`PACKETTYPE_JOIN`).
  *
- * This is the **client → cache/world** JOIN sent by Neuz
+ * This is the **client -> cache/world** JOIN sent by Neuz
  * (`Neuz/DPClient.cpp:8959` `CDPClient::SendJoin`), whose read order is fixed
  * by `CACHESERVER/Player.cpp:35` `CPlayer::Join`:
  *
@@ -10,14 +10,14 @@
  *   name:String      account:String  password:String  [messenger block]
  *
  * Note: `WORLDSERVER/DPSrvr.cpp:612` `OnAddUser` reads a *different*
- * (cache→world internal) layout. In v15 the CacheServer re-serializes the
+ * (cache->world internal) layout. In v15 the CacheServer re-serializes the
  * packet before forwarding. This emulator has no separate cache layer, so the
  * world's client-facing port receives the Neuz-format packet directly.
  *
  * `nSlot >= 3` is rejected (C++ `OnAddUser` line 628). On a valid handoff +
  * character the handler delegates to `JoinService` and writes the JOIN
  * self-spawn snapshot back to the socket. On any failure the connection is
- * dropped (C++ destroys the ghost) — no error packet on this path.
+ * dropped (C++ destroys the ghost) -- no error packet on this path.
  *
  * @module handlers/join.handler
  */
@@ -53,7 +53,7 @@ export class JoinHandler {
       const _password = reader.readString();
 
       if (nSlot >= 3) {
-        logger.warn({ idPlayer, nSlot }, 'JOIN rejected — slot out of range');
+        logger.warn({ idPlayer, nSlot }, 'JOIN rejected -- slot out of range');
         socket.destroy();
         return;
       }
@@ -71,7 +71,7 @@ export class JoinHandler {
       return;
     }
 
-    // Promote the session BEFORE the snapshot goes out — the client reacts to
+    // Promote the session BEFORE the snapshot goes out -- the client reacts to
     // the JOIN reply by sending MAP_KEY / movement / behavior, and every in-world
     // handler's session guard requires IN_WORLD (rule 03).
     socket.session.state = SessionState.IN_WORLD;
@@ -80,13 +80,13 @@ export class JoinHandler {
     sendPacket(socket, this.snapshotSerializer.build(outcome.player));
 
     // NOTE: zone NPCs/monsters are NOT sent here. Their server-side spawn lives
-    // in SpawnManager.bootstrap() (run once at world-server boot, compose.ts) —
+    // in SpawnManager.bootstrap() (run once at world-server boot, compose.ts) --
     // the materialization is decoupled from any player. Client notification of
     // nearby movers belongs in a vicinity/zone-enter broadcast (CLinkLink
     // equivalent), triggered after the client has finished loading the world
     // from WORLD_READINFO. Bolting the ADD_OBJ snapshot onto JOIN races the
     // client's world load and desyncs the stream (neuz OnAddObj null-deref).
-    // ponytail: implement ZoneManager.broadcastEnter(player) → NpcSnapshotSerializer
+    // ponytail: implement ZoneManager.broadcastEnter(player) -> NpcSnapshotSerializer
     // once a vicinity subscribe/zone-enter hook lands, and send per-zone there.
 
     logger.info({ idPlayer: outcome.player.m_idPlayer }, 'Player entered world');

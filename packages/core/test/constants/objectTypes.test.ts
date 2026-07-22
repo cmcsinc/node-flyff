@@ -29,7 +29,7 @@ describe('ObjectType constants', () => {
   it('Object.freeze prevents mutation in strict mode', () => {
     assert.throws(() => {
       'use strict';
-      // @ts-expect-error — intentionally testing runtime freeze behaviour
+      // @ts-expect-error -- intentionally testing runtime freeze behaviour
       ObjectType['MOVER'] = 99;
     });
   });

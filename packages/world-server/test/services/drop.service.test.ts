@@ -1,5 +1,5 @@
 /**
- * DropService test — deterministic rng asserts per-slot hit/miss, level-diff
+ * DropService test -- deterministic rng asserts per-slot hit/miss, level-diff
  * gating, gold pile, and looter = first-hitter.
  */
 
@@ -51,15 +51,15 @@ describe('DropService', () => {
     assert.equal(goldSeedId(100), 14);  // SEED3 boundary
     assert.equal(goldSeedId(101), 15);  // SEED4
     assert.equal(goldSeedId(9999), 15); // SEED4
-    // itemId 0 null-derefs CItemBase::SetTexture in the v15 client — never emit it.
+    // itemId 0 null-derefs CItemBase::SetTexture in the v15 client -- never emit it.
     assert.ok(goldSeedId(1) !== 0 && goldSeedId(9999) !== 0);
   });
 
   it('rolls a hit when rng < prob, spawns the item with first-hitter as owner', () => {
-    // prob 300M / scale 3B = 10%. int(3e9)=0 → 0 < 300M*1.0 → hit.
+    // prob 300M / scale 3B = 10%. int(3e9)=0 -> 0 < 300M*1.0 -> hit.
     const mover = CMover.spawn(0x40000000, { modelIndex: 20, name: 'Aibatt', level: 1, hp: 30, expValue: 2 }, { x: 5, y: 0, z: 5 }, 1);
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
-    // First-hitter is player (id 1) — record 30 damage.
+    // First-hitter is player (id 1) -- record 30 damage.
     mover.m_idEnemies.set(1, 30);
 
     const spawns: Array<{ itemId: number; count: number; ownerId: number }> = [];
@@ -81,15 +81,15 @@ describe('DropService', () => {
     assert.equal(spawns.length, 2); // twinklestone + gold
     assert.equal(spawns[0]!.itemId, 2950);
     assert.equal(spawns[0]!.ownerId, 1, 'owner = first-hitter');
-    // scripted rng.range returns 100 → 100 penya lands in the SEED3 tier (≤100).
+    // scripted rng.range returns 100 -> 100 penya lands in the SEED3 tier (<=100).
     assert.equal(spawns[1]!.itemId, goldSeedId(100));
-    assert.equal(spawns[1]!.itemId, 14, '100 penya → II_GOLD_SEED3');
+    assert.equal(spawns[1]!.itemId, 14, '100 penya -> II_GOLD_SEED3');
     assert.ok(spawns[1]!.count >= 82 && spawns[1]!.count <= 119, 'gold within range');
   });
 
   it('misses when rng >= prob*factor; high level diff suppresses the drop', () => {
     const mover = CMover.spawn(0x40000001, { modelIndex: 21, name: 'Aibatt', level: 1, hp: 10, expValue: 1 }, { x: 0, y: 0, z: 0 }, 1);
-    const player = CPlayer.fromRow(makeRow({ level: 50 }), { write: () => true }); // d=49 → factor 0.1
+    const player = CPlayer.fromRow(makeRow({ level: 50 }), { write: () => true }); // d=49 -> factor 0.1
     mover.m_idEnemies.set(1, 10);
 
     const spawns: Array<{ itemId: number; count: number; ownerId: number }> = [];
@@ -104,7 +104,7 @@ describe('DropService', () => {
       },
     } as unknown as Pick<ResourceIndex, 'drops'>;
 
-    // int(3e9)=2.9e9; prob*factor = 300M*0.1 = 30M → 2.9e9 >= 30M → miss.
+    // int(3e9)=2.9e9; prob*factor = 300M*0.1 = 30M -> 2.9e9 >= 30M -> miss.
     const svc = new DropService({ resources, itemManager: itemManager as never, rng: scriptedRng([2_900_000_000], [0]) });
     svc.roll(mover, player);
     assert.equal(spawns.length, 0);

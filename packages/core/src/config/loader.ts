@@ -1,11 +1,11 @@
 /**
- * ConfigLoader — loads, merges, and validates server configuration.
+ * ConfigLoader -- loads, merges, and validates server configuration.
  *
- * ## Resolution order (lowest → highest priority)
- * 1. `config/default.json` or `config/default.yml`   — committed safe defaults
- * 2. `config/<serverName>.json` or `.yml`            — per-server committed overrides
- * 3. `config/<serverName>.local.json` or `.local.yml`— local machine overrides (gitignored)
- * 4. `process.env` overrides                         — secrets / 12-factor / Docker
+ * ## Resolution order (lowest -> highest priority)
+ * 1. `config/default.json` or `config/default.yml`   -- committed safe defaults
+ * 2. `config/<serverName>.json` or `.yml`            -- per-server committed overrides
+ * 3. `config/<serverName>.local.json` or `.local.yml`-- local machine overrides (gitignored)
+ * 4. `process.env` overrides                         -- secrets / 12-factor / Docker
  *
  * ## Config file wins for all non-secret fields.
  * Environment variables only override these specific secret/infra fields:
@@ -29,11 +29,11 @@ import { deepMerge } from './merge.js';
 type PlainObject = Record<string, unknown>;
 
 // ---------------------------------------------------------------------------
-// YAML support (optional — loaded lazily so JSON-only users pay zero cost)
+// YAML support (optional -- loaded lazily so JSON-only users pay zero cost)
 // ---------------------------------------------------------------------------
 
 /**
- * Lazily loads js-yaml. If it is not installed (should not happen — it is a
+ * Lazily loads js-yaml. If it is not installed (should not happen -- it is a
  * declared dep) we throw a descriptive error so the operator knows what to do.
  */
 async function parseYaml(source: string): Promise<PlainObject> {
@@ -82,12 +82,12 @@ async function readConfigFile(filePath: string): Promise<PlainObject | null> {
 }
 
 // ---------------------------------------------------------------------------
-// Env → config path mapping
+// Env -> config path mapping
 // ---------------------------------------------------------------------------
 
 /**
  * Maps environment variable values onto the nested config object.
- * Only a whitelist of secret / infra fields can be overridden this way —
+ * Only a whitelist of secret / infra fields can be overridden this way --
  * everything else is controlled by config files.
  *
  * Env vars that are undefined or empty string are silently skipped.
@@ -180,7 +180,7 @@ function discoverConfigRoot(start: string): string {
 /**
  * Minimal stdlib `.env` loader (no new dependency). Parses `KEY=VALUE` lines
  * from `<repoRoot>/.env` and populates `process.env` for keys not already set
- * — real environment wins, file only fills gaps. Runs once at config load so
+ * -- real environment wins, file only fills gaps. Runs once at config load so
  * `IPC_SECRET` / `DATABASE_URL` etc. reach the env-override layer below.
  */
 function loadDotenv(repoRoot: string): void {
@@ -194,7 +194,7 @@ function loadDotenv(repoRoot: string): void {
     if (eq <= 0) continue;
     const key = line.slice(0, eq).trim();
     let value = line.slice(eq + 1).trim();
-    // Strip surrounding quotes: KEY="v" / KEY='v' → v
+    // Strip surrounding quotes: KEY="v" / KEY='v' -> v
     if (
       (value.startsWith('"') && value.endsWith('"')) ||
       (value.startsWith("'") && value.endsWith("'"))
@@ -208,7 +208,7 @@ function loadDotenv(repoRoot: string): void {
 /**
  * Loads, merges, and validates configuration for a named server.
  *
- * This function is **synchronous-friendly via a thin async wrapper** — call it
+ * This function is **synchronous-friendly via a thin async wrapper** -- call it
  * once at startup (before `net.createServer()`). Never call it inside the
  * game loop.
  *
@@ -304,7 +304,7 @@ export function loadConfigSync<T extends ZodTypeAny>(
     if (!fs.existsSync(filePath)) continue;
     const ext = path.extname(filePath).toLowerCase();
     if (ext !== '.json') {
-      // YAML requires async — skip in sync mode
+      // YAML requires async -- skip in sync mode
       process.stderr.write(
         `[ConfigLoader] Skipping YAML file in sync mode: ${filePath}\n`,
       );

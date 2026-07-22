@@ -1,5 +1,5 @@
 /**
- * propItem.txt → data/items/*.yml converter.
+ * propItem.txt -> data/items/*.yml converter.
  *
  * Symbolic `II_*` ids (column `dwID`) resolve to numerics via defineItem.h.
  * Display names come from propItem.txt.txt via `szName` (IDS_PROPITEM_*).
@@ -13,12 +13,14 @@ import { resolve } from 'node:path';
 import { stringify } from 'yaml';
 import { parsePropTable, parseDefines, parseTxtTxt, readSource, num, type Row } from './parse.js';
 
-/** Flyff IK1_ kind → output filename + schema `_kind`. null = skip row. */
+/** Flyff IK1_ kind -> output filename + schema `_kind`. null = skip row. */
 const KIND_BUCKETS: Record<string, { file: string; kind: string }> = {
   IK1_WEAPON: { file: 'weapons', kind: 'weapon' },
   IK1_ARMOR: { file: 'armors', kind: 'armor' },
   IK1_MAGIC: { file: 'consumables', kind: 'consumable' }, // spellbooks/consumable magic
   IK1_GENERAL: { file: 'materials', kind: 'material' },
+  // Accessories share no IK1 -- routed by IK3 in bucketFor.
+  _JEWELRY: { file: 'jewelry', kind: 'jewelry' },
 };
 
 /** IK2_WEAPON_DIRECT etc. are sub-kinds; bucket still keyed by IK1. */
@@ -46,11 +48,15 @@ interface ItemYml {
 
 const buckets = new Map<string, ItemYml>();
 
-function bucketFor(kind1: string, kind2: string): ItemYml | null {
+function bucketFor(kind1: string, kind2: string, kind3: string): ItemYml | null {
   // Refined kind from IK2 for weapons/armors, else IK1 bucket.
   let key = kind1;
   if (kind2 === 'IK2_MAGIC') key = 'IK1_MAGIC';
-  const b = KIND_BUCKETS[key];
+  let b = KIND_BUCKETS[key];
+  // Accessories (ring/earring/necklace) share no IK1 -- route by IK3.
+  if (!b && (kind3 === 'IK3_RING' || kind3 === 'IK3_EARRING' || kind3 === 'IK3_NECKLACE')) {
+    b = KIND_BUCKETS._JEWELRY;
+  }
   if (!b) return null;
   let yml = buckets.get(b.file);
   if (!yml) {
@@ -79,13 +85,20 @@ function rowToItem(row: Row, id: number, name: string, kind1: string): Record<st
     stack_size: Math.max(1, num(row, 'dwPackMax', 1)),
   };
 
-  // Equip slot / weapon type / kind routing — raw propItem columns.
+  // Equip slot / weapon type / kind routing -- raw propItem columns.
   const parts = num(row, 'dwParts', 0);
   if (parts > 0) item.equip_slot = parts;
   const weaponType = num(row, 'dwWeaponType', 0);
   if (weaponType > 0) item.weapon_type = weaponType;
   if (row.dwItemKind2) item.item_kind2 = row.dwItemKind2;
   if (row.dwItemKind3) item.item_kind3 = row.dwItemKind3;
+
+  // Jewelry HR/ER columns (propItem nAdjHitRate + dwParry). Zero for non-jewelry;
+  // the combat stat-fold reads these once accessory data lands in the index.
+  const hr = num(row, 'nAdjHitRate', 0);
+  if (hr > 0) item.hit_rate = hr;
+  const parry = num(row, 'dwParry', 0);
+  if (parry > 0) item.parry = parry;
 
   if (isWeapon) {
     item.attack = Math.round((abilMin + abilMax) / 2);
@@ -131,7 +144,8 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
 
     const kind1 = row.dwItemKind1;
     const kind2 = row.dwItemKind2 ?? '';
-    const bucket = bucketFor(kind1, kind2);
+    const kind3 = row.dwItemKind3 ?? '';
+    const bucket = bucketFor(kind1, kind2, kind3);
     if (!bucket) { noBucket++; continue; }
 
     const name = names.get(row.szName) ?? row.dwID;

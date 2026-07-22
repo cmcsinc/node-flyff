@@ -20,7 +20,7 @@ describe('ShoutSerializer (SNAPSHOTTYPE_SHOUT 0x00d0)', () => {
     assert.equal(r.readDword(), PACKETTYPE.SNAPSHOT);
     assert.equal(r.readDword(), NULL_ID);
     assert.equal(r.readWord(), 1);
-    assert.equal(r.readDword(), NULL_ID); // header objid — broadcast
+    assert.equal(r.readDword(), NULL_ID); // header objid -- broadcast
     assert.equal(r.readWord(), SNAPSHOTTYPE_SHOUT);
     assert.equal(r.readDword(), 7);
     assert.equal(r.readString(), 'Bob');

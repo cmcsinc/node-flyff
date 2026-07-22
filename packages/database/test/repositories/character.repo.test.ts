@@ -5,6 +5,7 @@ import type { Knex } from '../../src/types.js';
 import { CharacterRepository } from '../../src/repositories/character.repo.js';
 import { up, down } from '../../src/migrations/001_initial.js';
 import { up as upGold } from '../../src/migrations/003_character_gold.js';
+import { up as upBankPass } from '../../src/migrations/006_bank_pass.js';
 
 const knex = (knexModule as any).default || knexModule;
 
@@ -12,7 +13,7 @@ describe('character.repo.ts', () => {
   let db: Knex;
   let repo: CharacterRepository;
   let testAccountId: number;
-  // Unique slot/name per character — better-sqlite3 enforces the
+  // Unique slot/name per character -- better-sqlite3 enforces the
   // (account_id, slot) and name UNIQUE constraints strictly.
   let _seq = 0;
   const nextSlot = (): number => ++_seq;
@@ -27,6 +28,7 @@ describe('character.repo.ts', () => {
 
     await up(db);
     await upGold(db);
+    await upBankPass(db);
     repo = new CharacterRepository(db);
 
     // Create test account
@@ -395,6 +397,34 @@ describe('character.repo.ts', () => {
       const c2 = await repo.findById(charId);
       assert.ok(c2);
       assert.equal(Number(c2.gold), 0);
+    });
+  });
+
+  describe('updateBankPass()', () => {
+    it('defaults to 0000 and round-trips a new password', async () => {
+      const charId = await repo.create({
+        account_id: testAccountId,
+        name: nextName('Vault'),
+        slot: nextSlot(),
+        class: 0, gender: 0, hair_style: 1, hair_color: 1, face_style: 1, skin_color: 1,
+        level: 1, exp: BigInt(0), hp: 100, mp: 50, max_hp: 100, max_mp: 50,
+        strength: 15, stamina: 15, dexterity: 15, intelligence: 15,
+        x: 0, y: 0, z: 0, world_id: 'world1', zone_id: 1,
+      });
+
+      const c0 = await repo.findById(charId);
+      assert.ok(c0);
+      assert.equal(c0!.bank_pass, '0000', 'default no-password sentinel');
+
+      await repo.updateBankPass(charId, '4321');
+      const c1 = await repo.findById(charId);
+      assert.ok(c1);
+      assert.equal(c1!.bank_pass, '4321');
+
+      await repo.updateBankPass(charId, '0000');
+      const c2 = await repo.findById(charId);
+      assert.ok(c2);
+      assert.equal(c2!.bank_pass, '0000', 'cleared back to sentinel');
     });
   });
 

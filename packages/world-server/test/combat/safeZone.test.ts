@@ -32,7 +32,7 @@ describe('safeZone', () => {
     assert.equal(isInSafeZone(high, TOWN), true);
   });
 
-  it('undefined revival position ⇒ not safe (no revival data for zone)', () => {
+  it('undefined revival position => not safe (no revival data for zone)', () => {
     assert.equal(isInSafeZone(TOWN, undefined), false);
   });
 });

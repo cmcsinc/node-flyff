@@ -11,7 +11,7 @@
 
 import { readFile } from 'node:fs/promises';
 
-/** Flyff `=` cell means "same value as the previous row" — resolve it. */
+/** Flyff `=` cell means "same value as the previous row" -- resolve it. */
 const INHERIT = '=';
 
 export type Row = Record<string, string>;
@@ -75,8 +75,8 @@ export function parsePropTable(content: string): Row[] {
 }
 
 /**
- * Parse a `define*.h` header into `SYM → numeric value`.
- * e.g. `#define MI_AIBATT1   20` → { 'MI_AIBATT1': 20 }
+ * Parse a `define*.h` header into `SYM -> numeric value`.
+ * e.g. `#define MI_AIBATT1   20` -> { 'MI_AIBATT1': 20 }
  *
  * @param prefix - only capture symbols starting with this (e.g. `MI_`, `II_`, `SI_`)
  */
@@ -90,7 +90,7 @@ export function parseDefines(content: string, prefix: string): Map<string, numbe
 }
 
 /**
- * Parse a `*.txt.txt` display-name table (UTF-16LE-decoded) into `IDS_KEY → display name`.
+ * Parse a `*.txt.txt` display-name table (UTF-16LE-decoded) into `IDS_KEY -> display name`.
  * Lines look like `IDS_PROPITEM_TXT_000002\tHand`. Empty display names are skipped.
  */
 export function parseTxtTxt(content: string): Map<string, string> {
@@ -113,7 +113,7 @@ export function num(row: Row, col: string, fallback = 0): number {
   return Number.isFinite(n) ? n : fallback;
 }
 
-/** Shrink a Flyff symbol for use as a YAML id slug (`MI_AIBATT1` → `aibatt1`). */
+/** Shrink a Flyff symbol for use as a YAML id slug (`MI_AIBATT1` -> `aibatt1`). */
 export function slug(symbol: string, dropPrefix: string): string {
   return symbol.replace(dropPrefix, '').toLowerCase();
 }

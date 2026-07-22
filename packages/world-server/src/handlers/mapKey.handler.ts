@@ -1,5 +1,5 @@
 /**
- * MAP_KEY handler — `PACKETTYPE_MAP_KEY` (0xfffff000).
+ * MAP_KEY handler -- `PACKETTYPE_MAP_KEY` (0xfffff000).
  *
  * Read order is fixed by `WORLDSERVER/DPSrvr.cpp:12022` `OnMapKey`:
  *
@@ -39,7 +39,7 @@ export class MapKeyHandler {
     let charId: number;
     try {
       if (socket.session.state !== SessionState.IN_WORLD) {
-        logger.warn({ state: socket.session.state }, 'MAP_KEY before IN_WORLD — dropping');
+        logger.warn({ state: socket.session.state }, 'MAP_KEY before IN_WORLD -- dropping');
         socket.destroy();
         return;
       }
@@ -56,12 +56,12 @@ export class MapKeyHandler {
 
     const outcome = this.mapKeyService.check(charId, fileName, mapKey);
     if (!outcome.ok && outcome.reason === 'mismatch') {
-      logger.warn({ charId, fileName }, 'MAP_KEY mismatch — disconnecting');
+      logger.warn({ charId, fileName }, 'MAP_KEY mismatch -- disconnecting');
       socket.destroy();
       return;
     }
     if (!outcome.ok) {
-      // not_in_world — session desync; drop.
+      // not_in_world -- session desync; drop.
       socket.destroy();
       return;
     }
@@ -70,16 +70,16 @@ export class MapKeyHandler {
 
     // First MAP_KEY = client finished loading the world (g_pWorld + g_pPlayer
     // set). This is the earliest safe point to stream the zone's NPC/monster
-    // ADD_OBJ snapshot — JOIN was too early (raced the world load, desync,
+    // ADD_OBJ snapshot -- JOIN was too early (raced the world load, desync,
     // OnAddObj null-deref). Fire once per player; MAP_KEY repeats per .wld.
     this.maybeSendVicinity(socket, charId);
   }
 
   private maybeSendVicinity(socket: ClientSocket, charId: number): void {
     const result = this.vicinityService.enterZone(charId);
-    if (result === null) return; // empty zone — nothing to send
+    if (result === null) return; // empty zone -- nothing to send
     if ('ok' in result) {
-      logger.warn({ charId, reason: result.reason }, 'vicinity lookup failed — dropping');
+      logger.warn({ charId, reason: result.reason }, 'vicinity lookup failed -- dropping');
       socket.destroy();
       return;
     }

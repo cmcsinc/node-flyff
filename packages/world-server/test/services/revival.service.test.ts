@@ -1,5 +1,5 @@
 /**
- * RevivalService unit tests — death flag/broadcast + the 3 revive branches.
+ * RevivalService unit tests -- death flag/broadcast + the 3 revive branches.
  * Mock managers capture broadcasts + self-sends; snapshot subtypes verified.
  */
 
@@ -121,7 +121,7 @@ describe('RevivalService', () => {
     assert.equal(p.m_Inventory[0]?.count, 2); // decremented, not removed
     assert.equal(p.m_bDead, false);
     assert.equal(p.m_nHp, 40); // floor(200 * 0.2)
-    assert.equal(p.m_nExp, 100); // unchanged — no penalty on scroll revive
+    assert.equal(p.m_nExp, 100); // unchanged -- no penalty on scroll revive
     assert.equal(journal[0].type, 'INVENTORY_SLOT');
     assert.deepEqual(journal[0].payload, { slot: 0, itemId: II_SYS_SYS_SCR_RESURRECTION, count: 2 });
     assert.equal(snapshotSubtype(broadcasts[0]), 0x00a1); // SNAPSHOTTYPE_REVIVAL
@@ -163,7 +163,7 @@ describe('RevivalService', () => {
     assert.equal(snapshotSubtype(broadcasts[0]), 0x00a2); // SNAPSHOTTYPE_REVIVAL_TO_LODESTAR
   });
 
-  it('revive LODESTAR skips exp penalty at level ≤ 20', () => {
+  it('revive LODESTAR skips exp penalty at level <= 20', () => {
     const { deps, journal } = makeDeps();
     const svc = new RevivalService(deps);
     const p = CPlayer.fromRow(makeRow({ level: 15 }), { write: () => true });

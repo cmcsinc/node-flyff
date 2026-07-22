@@ -1,8 +1,8 @@
 /**
- * DoEquipHandler test — DOEQUIP (0x00ff000b).
+ * DoEquipHandler test -- DOEQUIP (0x00ff000b).
  *
  * Body: `DWORD nId, int nPart[, FLOAT fVal if nPart==13]`. nId in the equip
- * range (≥ MAX_INVENTORY) ⇒ unequip that part; main-bag nId ⇒ equip into nPart.
+ * range (>= MAX_INVENTORY) => unequip that part; main-bag nId => equip into nPart.
  * On success: self DOEQUIP + vicinity broadcast so peers render the gear.
  */
 
@@ -49,7 +49,7 @@ function makeHandler(equipStub: { equip: unknown; unequip: unknown }) {
 }
 
 describe('DoEquipHandler', () => {
-  it('main-bag nId → equip: self + vicinity DOEQUIP', () => {
+  it('main-bag nId -> equip: self + vicinity DOEQUIP', () => {
     const { handler, sent, broadcasts } = makeHandler({
       equip: { ok: true, parts: 9, itemId: 5000, invSlot: 4 },
       unequip: { ok: false, reason: 'invalid' },
@@ -60,7 +60,7 @@ describe('DoEquipHandler', () => {
     assert.equal(broadcasts.length, 1, 'vicinity broadcast sent');
   });
 
-  it('equip-range nId → unequip: self + vicinity DOEQUIP (fEquip=0)', () => {
+  it('equip-range nId -> unequip: self + vicinity DOEQUIP (fEquip=0)', () => {
     const { handler, sent, broadcasts } = makeHandler({
       equip: { ok: false, reason: 'invalid' },
       unequip: { ok: true, parts: 9, itemId: 5000, invSlot: 3 },

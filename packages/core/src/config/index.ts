@@ -1,5 +1,5 @@
 /**
- * @flyff/core — Config subsystem public API.
+ * @flyff/core -- Config subsystem public API.
  *
  * ## Usage
  * ```ts
@@ -10,7 +10,7 @@
  * ```
  *
  * ## What lives here
- * - {@link loadConfig} / {@link loadConfigSync} — config file loader + env merge
+ * - {@link loadConfig} / {@link loadConfigSync} -- config file loader + env merge
  * - Zod schemas for every server type
  * - TypeScript inferred config types
  *

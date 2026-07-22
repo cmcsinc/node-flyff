@@ -50,12 +50,12 @@ function fixtureResources(): ResourceIndex {
 /**
  * End-to-end integration of the enter-world path:
  *   cluster IpcBus.publish('player:handoff')
- *     → real IpcBus HMAC verify
- *     → ClusterListener.consumeByCharId
- *     → JoinService (fake char repo)
- *     → JoinHandler
- *     → PlayerSnapshotSerializer
- *     → mock socket receives the JOIN/ADD_OBJ snapshot.
+ *     -> real IpcBus HMAC verify
+ *     -> ClusterListener.consumeByCharId
+ *     -> JoinService (fake char repo)
+ *     -> JoinHandler
+ *     -> PlayerSnapshotSerializer
+ *     -> mock socket receives the JOIN/ADD_OBJ snapshot.
  *
  * No layer is mocked between publish and socket write except the DB (covered
  * by @flyff/database tests). This is the byte-level proof for the slice.
@@ -105,7 +105,7 @@ function joinPayload(idPlayer: number): Buffer {
   return w.build();
 }
 
-describe('E2E: cluster handoff → world JOIN → self-spawn snapshot', () => {
+describe('E2E: cluster handoff -> world JOIN -> self-spawn snapshot', () => {
   let handler: JoinHandler;
   let players: PlayerManager;
   let worldBus: IpcBus;

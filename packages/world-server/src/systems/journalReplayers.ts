@@ -1,5 +1,5 @@
 /**
- * Boot-time replay handlers for the WAL journal — the other half of
+ * Boot-time replay handlers for the WAL journal -- the other half of
  * {@link JournalReplayer}. One handler per DB write surface, registered in
  * `compose.ts` before the TCP listener opens.
  *
@@ -7,13 +7,13 @@
  * end-state of the field it mutates (level+exp, gold total, per-slot item),
  * never a delta. Replaying N rows for the same char/field in id order just
  * overwrites with progressively newer absolute values, so the final DB state
- * equals the last row — re-applying the same journal cannot dupe or roll back.
+ * equals the last row -- re-applying the same journal cannot dupe or roll back.
  * This is what makes fire-and-forget persists safe: a crash between the journal
  * append and the DB write loses nothing (the row replayed on next boot), and a
  * crash AFTER the DB write is a redundant overwrite (same absolute value).
  *
  * Payloads are internal (written by our own services) and JSON-encoded in the
- * journal row; handlers parse with `JSON.parse` and let a corrupt row throw —
+ * journal row; handlers parse with `JSON.parse` and let a corrupt row throw --
  * {@link JournalReplayer.recover} aborts on throw so an operator investigates
  * rather than silently dropping the row.
  *
@@ -25,7 +25,7 @@ import type { Logger } from '@flyff/core';
 import type { JournalReplayer } from './journalReplayer.js';
 
 export interface ReplayerRegistryDeps {
-  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateGold'>;
+  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateGold' | 'updateBankPass'>;
   readonly inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem'>;
   readonly logger: Logger;
 }
@@ -52,7 +52,7 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     await deps.charRepo.updateGold(row.char_id, p.gold);
   });
 
-  // One inventory slot's absolute contents. `itemId: 0` ⇒ slot cleared.
+  // One inventory slot's absolute contents. `itemId: 0` => slot cleared.
   r.register('INVENTORY_SLOT', async (row) => {
     const p = payload<{ slot: number; itemId: number; count: number }>(row);
     if (p.itemId === 0) {
@@ -62,5 +62,11 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     }
   });
 
-  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT'] }, 'Journal replay handlers registered');
+  // Bank password (C++ `m_szBankPass`). Absolute new value; '0000' = cleared.
+  r.register('BANK_PASS', async (row) => {
+    const p = payload<{ bankPass: string }>(row);
+    await deps.charRepo.updateBankPass(row.char_id, p.bankPass);
+  });
+
+  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS'] }, 'Journal replay handlers registered');
 }

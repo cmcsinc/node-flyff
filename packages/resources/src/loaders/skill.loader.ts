@@ -1,7 +1,10 @@
 /**
  * Skill resource loader.
  *
- * Loads and indexes skill definitions from YAML files.
+ * Loads and indexes skill definitions from YAML files produced by the
+ * `converters/skills.ts` converter (propSkill.txt + propSkillAdd.csv merge).
+ * One yml per job bucket (`vagrant.yml`, `magician.yml`, ...) is read; skills
+ * are indexed by id, name, and job bucket.
  *
  * @module loaders/skill.loader
  */
@@ -12,9 +15,9 @@ import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
 import { createResourceLogger } from '../logger.js';
 import {
-  SkillDefinitionSchema,
   SkillFileSchema,
   SkillIndexSchema,
+  type SkillDefinition,
 } from '../schemas/skill.schema.js';
 
 const logger = createResourceLogger('skill.loader');
@@ -23,14 +26,12 @@ const logger = createResourceLogger('skill.loader');
  * Loaded skill index structure.
  */
 export interface SkillIndex {
-  /** Map of skill ID → definition */
-  skills: Map<number, import('../schemas/skill.schema.js').SkillDefinition>;
-
-  /** Map of skill name → definition */
-  byName: Map<string, import('../schemas/skill.schema.js').SkillDefinition>;
-
-  /** Map of job → array of skills */
-  byJob: Map<string, import('../schemas/skill.schema.js').SkillDefinition[]>;
+  /** Map of skill ID -> definition */
+  skills: Map<number, SkillDefinition>;
+  /** Map of skill name -> definition */
+  byName: Map<string, SkillDefinition>;
+  /** Map of job -> array of skills */
+  byJob: Map<string, SkillDefinition[]>;
 }
 
 /**
@@ -58,9 +59,9 @@ export async function loadSkills(dataDir: string): Promise<SkillIndex> {
   const indexData = parse(indexContent);
   const index = SkillIndexSchema.parse(indexData);
 
-  const skills = new Map<number, import('../schemas/skill.schema.js').SkillDefinition>();
-  const byName = new Map<string, import('../schemas/skill.schema.js').SkillDefinition>();
-  const byJob = new Map<string, import('../schemas/skill.schema.js').SkillDefinition[]>();
+  const skills = new Map<number, SkillDefinition>();
+  const byName = new Map<string, SkillDefinition>();
+  const byJob = new Map<string, SkillDefinition[]>();
 
   const loadedFiles = new Set<string>();
 
@@ -107,14 +108,14 @@ export async function loadSkills(dataDir: string): Promise<SkillIndex> {
  * @returns Skill index
  */
 async function loadSkillsWithoutIndex(
-  skillsDir: string
+  skillsDir: string,
 ): Promise<SkillIndex> {
   const files = await readdir(skillsDir);
   const ymlFiles = files.filter((f) => f.endsWith('.yml') && f !== '_index.yml');
 
-  const skills = new Map<number, import('../schemas/skill.schema.js').SkillDefinition>();
-  const byName = new Map<string, import('../schemas/skill.schema.js').SkillDefinition>();
-  const byJob = new Map<string, import('../schemas/skill.schema.js').SkillDefinition[]>();
+  const skills = new Map<number, SkillDefinition>();
+  const byName = new Map<string, SkillDefinition>();
+  const byJob = new Map<string, SkillDefinition[]>();
 
   for (const file of ymlFiles) {
     const filePath = resolve(skillsDir, file);

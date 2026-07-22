@@ -4,9 +4,9 @@
  * Pins the exact wire width + field offsets against the C++ source
  * (`CUser::AddCreateItem`, User.cpp:727). A one-slot add is:
  *   SNAPSHOT hdr (10) + sub-snapshot:
- *     objid(4) + 0x0003(2) + BYTE0(1) + CItemBase(20) + CItemElem(55)
- *     + nCount(1) + slot(1) + count(2)  = 86
- *   → 96 B total.
+ *     objid(4) + 0x0003(2) + BYTE0(1) + CItemBase(16) + CItemElem(62)
+ *     + nCount(1) + slot(1) + count(2)  = 89
+ *   -> 99 B total.
  */
 
 import { describe, it } from 'node:test';
@@ -18,10 +18,10 @@ import { NULL_ID, SNAPSHOTTYPE_CREATEITEM } from '../../../src/net/snapshot/cons
 describe('CreateItemSnapshotSerializer', () => {
   const serializer = new CreateItemSnapshotSerializer();
 
-  it('buildOne produces a 96 B frame with the C++ AddCreateItem layout', () => {
+  it('buildOne produces a 99 B frame with the C++ AddCreateItem layout', () => {
     const buf = serializer.buildOne(0x00001234, 2950, 3, 5);
 
-    assert.equal(buf.length, 96, 'one-slot CREATEITEM = 96 bytes');
+    assert.equal(buf.length, 99, 'one-slot CREATEITEM = 99 bytes');
 
     // SNAPSHOT header
     assert.equal(buf.readUInt32LE(0), PACKETTYPE.SNAPSHOT);
@@ -33,21 +33,19 @@ describe('CreateItemSnapshotSerializer', () => {
     assert.equal(buf.readUInt16LE(14), SNAPSHOTTYPE_CREATEITEM, 'subtype 0x0003');
     assert.equal(buf[16], 0x00, 'literal BYTE 0');
 
-    // CItemBase
+    // CItemBase (16B): objId + itemId + serial(DWORD) + text-len
     assert.equal(buf.readUInt32LE(17), 0, 'm_dwObjId = 0 (fresh inventory item)');
     assert.equal(buf.readUInt32LE(21), 2950, 'm_dwItemId');
-    // bytes 25..32 = m_liSerialNumber QWORD (0) — spot-check low + high DWORDs
-    assert.equal(buf.readUInt32LE(25), 0);
-    assert.equal(buf.readUInt32LE(29), 0);
-    assert.equal(buf.readUInt32LE(33), 0, 'm_szItemText empty string length');
+    assert.equal(buf.readUInt32LE(25), 0, 'm_liSerialNumber (DWORD)');
+    assert.equal(buf.readUInt32LE(29), 0, 'm_szItemText empty string length');
 
-    // CItemElem — first field is m_nItemNum (the count)
-    assert.equal(buf.readInt16LE(37), 3, 'm_nItemNum = count');
+    // CItemElem (62B) -- first field is m_nItemNum (the count)
+    assert.equal(buf.readInt16LE(33), 3, 'm_nItemNum = count');
 
     // Trailer (last 4 bytes): nCount(1) + slot(1) + count(2)
-    assert.equal(buf[92], 1, 'nCount = 1');
-    assert.equal(buf[93], 5, 'slot id');
-    assert.equal(buf.readInt16LE(94), 3, 'per-slot count');
+    assert.equal(buf[95], 1, 'nCount = 1');
+    assert.equal(buf[96], 5, 'slot id');
+    assert.equal(buf.readInt16LE(97), 3, 'per-slot count');
   });
 
   it('rejects an empty entry list', () => {

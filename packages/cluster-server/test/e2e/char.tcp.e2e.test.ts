@@ -126,7 +126,7 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
     });
     sock.destroy();
 
-    // First frame is CACHE_ADDR (0xf2), second is PLAYER_LIST — mirrors C++
+    // First frame is CACHE_ADDR (0xf2), second is PLAYER_LIST -- mirrors C++
     // DPLoginSrvr.cpp:167 which sends the cache address before the player list.
     assert.ok(replies.length >= 2, 'cluster must reply with CACHE_ADDR then PLAYER_LIST');
     assert.equal(replies[0]!.readUInt32LE(0), PACKETTYPE.CACHE_ADDR);

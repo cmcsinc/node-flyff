@@ -90,7 +90,7 @@ describe('password utility', () => {
   });
 
   describe('integration', () => {
-    it('should support v15 client flow: MD5 → argon2id', async () => {
+    it('should support v15 client flow: MD5 -> argon2id', async () => {
       // Simulate v15 client sending MD5 password
       const clientMd5 = '5d41402abc4b2a76b9719d911017c592';
 
@@ -102,7 +102,7 @@ describe('password utility', () => {
       assert.equal(isValid, true);
     });
 
-    it('should support modern client flow: plain → argon2id', async () => {
+    it('should support modern client flow: plain -> argon2id', async () => {
       // Modern client sends plain password (already hashed client-side or over TLS)
       const plainPassword = 'modernSecurePassword123!';
 

@@ -1,24 +1,24 @@
 /**
- * LocalBus — dev-only localhost TCP pub/sub, no Redis required.
+ * LocalBus -- dev-only localhost TCP pub/sub, no Redis required.
  *
  * Implements the minimal redis-like interface that `IpcBus` wraps (`on('message')`,
  * `publish`, `subscribe`, `unsubscribe`, `quit`). Because `IpcBus` does all the
  * HMAC-SHA256 signing + 30 s freshness checks itself, this class is a pure byte
- * pipe — dropping it in keeps the same security envelope as the Redis path.
+ * pipe -- dropping it in keeps the same security envelope as the Redis path.
  *
  * Topology: the **first** process to bind `host:port` becomes the broker; every
  * other process (and the broker process itself) connects as a client. The broker
  * routes `pub` frames to every connection subscribed to that channel. This lets
- * cluster + world — running as separate processes on one dev box — exchange
+ * cluster + world -- running as separate processes on one dev box -- exchange
  * `player:handoff` without Redis.
  *
  * Production still uses Redis (`IpcBus` over `ioredis`); this is the
  * `cache.adapter === 'memory'` fallback only.
  *
- * Wire format — newline-delimited JSON, one object per line:
- *   {"op":"sub","ch":"player:handoff"}                    client → broker
- *   {"op":"pub","ch":"player:handoff","data":"{...}"}     client → broker
- *   {"op":"msg","ch":"player:handoff","data":"{...}"}     broker → client
+ * Wire format -- newline-delimited JSON, one object per line:
+ *   {"op":"sub","ch":"player:handoff"}                    client -> broker
+ *   {"op":"pub","ch":"player:handoff","data":"{...}"}     client -> broker
+ *   {"op":"msg","ch":"player:handoff","data":"{...}"}     broker -> client
  *
  * @module ipc/localBus
  */
@@ -37,7 +37,7 @@ export interface LocalBusLike {
   quit(): Promise<void>;
 }
 
-/** Structural logger — `@flyff/core` pino or a plain object in tests. */
+/** Structural logger -- `@flyff/core` pino or a plain object in tests. */
 interface BusLogger {
   info: (obj: unknown, msg: string) => void;
   warn: (obj: unknown, msg: string) => void;
@@ -45,7 +45,7 @@ interface BusLogger {
   debug?: (obj: unknown, msg: string) => void;
 }
 
-/** Noop default — used when no logger is injected (keeps @flyff/ipc core-free). */
+/** Noop default -- used when no logger is injected (keeps @flyff/ipc core-free). */
 const NOOP_LOGGER: BusLogger = {
   info: () => {},
   warn: () => {},
@@ -69,7 +69,7 @@ type Frame =
 /**
  * Newline-delimited JSON codec. Each socket owns one codec; `feed()` accumulates
  * chunks and yields complete frames (split on `\n`). Frames exceeding
- * `MAX_FRAME_BYTES` throw — the caller drops the socket.
+ * `MAX_FRAME_BYTES` throw -- the caller drops the socket.
  */
 class LineCodec {
   private buf = '';
@@ -144,8 +144,8 @@ export class LocalBus implements LocalBusLike {
     return new Promise((resolve) => {
       const server = net.createServer((sock) => this.onBrokerConnection(sock));
       server.on('error', (err) => {
-        // EADDRINUSE → another process is the broker; we are a client.
-        this.log.debug?.({ err: String(err) }, 'broker bind failed — acting as client');
+        // EADDRINUSE -> another process is the broker; we are a client.
+        this.log.debug?.({ err: String(err) }, 'broker bind failed -- acting as client');
         resolve();
       });
       server.listen(this.opts.port, this.opts.host, () => {
@@ -166,7 +166,7 @@ export class LocalBus implements LocalBusLike {
       try {
         lines = codec.feed(chunk.toString('utf8'));
       } catch {
-        this.log.warn({ ip: sock.remoteAddress }, 'oversize frame — dropping connection');
+        this.log.warn({ ip: sock.remoteAddress }, 'oversize frame -- dropping connection');
         sock.destroy();
         return;
       }
@@ -182,7 +182,7 @@ export class LocalBus implements LocalBusLike {
     try {
       frame = JSON.parse(line) as Frame;
     } catch {
-      return; // malformed — ignore
+      return; // malformed -- ignore
     }
     if (frame.op === 'sub') {
       subs.add(frame.ch);
@@ -194,12 +194,12 @@ export class LocalBus implements LocalBusLike {
         if (peer === sock || peer.destroyed || !peerSubs.has(frame.ch)) continue;
         writeFrame(peer, { op: 'msg', ch: frame.ch, data: frame.data });
       }
-      // If THIS process is also subscribed, deliver locally — the publisher
+      // If THIS process is also subscribed, deliver locally -- the publisher
       // socket is skipped above, so there's no double delivery.
       if (this.localSubs.has(frame.ch)) this.deliverLocal(frame.ch, frame.data);
       return;
     }
-    // 'msg' from a client is nonsensical on the broker — ignore.
+    // 'msg' from a client is nonsensical on the broker -- ignore.
   }
 
   /** Client: open (and auto-reconnect) the socket to host:port. */
@@ -220,7 +220,7 @@ export class LocalBus implements LocalBusLike {
         try {
           lines = codec.feed(chunk.toString('utf8'));
         } catch {
-          this.log.warn({}, 'client oversize frame — reconnecting');
+          this.log.warn({}, 'client oversize frame -- reconnecting');
           sock.destroy();
           return;
         }
@@ -278,9 +278,9 @@ export class LocalBus implements LocalBusLike {
 
   async publish(channel: string, data: string): Promise<number> {
     if (!this.client || !this.clientReady) {
-      // No client yet — broker may still be starting or this node lost the
+      // No client yet -- broker may still be starting or this node lost the
       // race and hasn't connected. Dev-only; drop + warn rather than block.
-      this.log.warn({ channel }, 'publish before client connected — dropped');
+      this.log.warn({ channel }, 'publish before client connected -- dropped');
       return 0;
     }
     writeFrame(this.client, { op: 'pub', ch: channel, data });
@@ -294,7 +294,7 @@ export class LocalBus implements LocalBusLike {
 
   async unsubscribe(channel: string): Promise<void> {
     this.localSubs.delete(channel);
-    // ponytail: no `unsub` op — broker drops the sub on next reconnect.
+    // ponytail: no `unsub` op -- broker drops the sub on next reconnect.
     // Dev-only, low traffic; acceptable. Add an `unsub` op when prod care arises.
   }
 
@@ -302,7 +302,7 @@ export class LocalBus implements LocalBusLike {
     this.closed = true;
     this.client?.destroy();
     this.client = undefined;
-    // Force-drop any live broker connections first — otherwise server.close()
+    // Force-drop any live broker connections first -- otherwise server.close()
     // blocks until every peer disconnects on its own and quit() never resolves.
     for (const peer of this.remoteSubs.keys()) peer.destroy();
     this.remoteSubs.clear();

@@ -1,5 +1,5 @@
 /**
- * DropItemHandler test — DROPITEM (0x00ff0007).
+ * DropItemHandler test -- DROPITEM (0x00ff0007).
  *
  * Body: `DWORD dwItemType, DWORD dwItemId(=slot), short nDropNum, D3DXVECTOR3`.
  * On a successful drop the service returns the item/count and the handler
@@ -23,7 +23,7 @@ function mockSocket() {
 
 function body(slot: number, count: number): Buffer {
   const w = new PacketWriter();
-  w.writeDword(0);            // dwItemType — unused
+  w.writeDword(0);            // dwItemType -- unused
   w.writeDword(slot);         // dwItemId = inv slot objid
   w.writeWord(count);         // nDropNum
   w.writeFloat(1); w.writeFloat(2); w.writeFloat(3);

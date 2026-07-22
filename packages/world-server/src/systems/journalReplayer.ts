@@ -12,7 +12,7 @@ import type { Logger } from '@flyff/core';
  *
  * Handlers are registered by services as they come online (inventory service
  * registers `ITEM_ADD` / `ITEM_REMOVE`, etc.). An event type with no handler is
- * left unreplayed and logged once at warn (per type, not per row) — it means a
+ * left unreplayed and logged once at warn (per type, not per row) -- it means a
  * newer server build produced an event this build cannot replay, which an
  * operator must investigate rather than silently drop.
  *
@@ -46,7 +46,7 @@ export class JournalReplayer {
    * Replay every unprocessed journal row, in insertion order, then mark each
    * replayed. Resolves only when the queue is drained (or a handler throws).
    *
-   * A throwing handler aborts recovery — the row stays unreplayed and the
+   * A throwing handler aborts recovery -- the row stays unreplayed and the
    * process should exit rather than open the listener on partial state.
    */
   async recover(): Promise<RecoverySummary> {
@@ -59,7 +59,7 @@ export class JournalReplayer {
 
     let replayed = 0;
     let skipped = 0;
-    // Missing handlers are tallied per type and logged once AFTER the loop — N
+    // Missing handlers are tallied per type and logged once AFTER the loop -- N
     // rows of the same unhandled type are one investigation, not N identical
     // errors. Rows stay unreplayed so a future build's handler can pick them up.
     const missing = new Map<string, number>();
@@ -78,7 +78,7 @@ export class JournalReplayer {
     for (const [type, count] of missing) {
       this.deps.logger.warn(
         { type, count },
-        'No replayer registered for journaled event type — leaving unreplayed'
+        'No replayer registered for journaled event type -- leaving unreplayed'
       );
     }
 

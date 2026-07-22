@@ -12,7 +12,7 @@
 import { z } from 'zod';
 
 // ---------------------------------------------------------------------------
-// World → Cluster registration
+// World -> Cluster registration
 // ---------------------------------------------------------------------------
 
 /**
@@ -20,7 +20,7 @@ import { z } from 'zod';
  * internal IpcServer port. Mirrors `SNSP_CERTIFY` + server metadata from C++.
  */
 export const RegisterWorldRequestSchema = z.object({
-  /** Unique server identifier — must match an entry in cluster's allowedWorlds list. */
+  /** Unique server identifier -- must match an entry in cluster's allowedWorlds list. */
   serverId: z.string().min(1).max(64),
   /** Human-readable display name shown in the channel selector. */
   name: z.string().min(1).max(64),
@@ -43,7 +43,7 @@ export type RegisterWorldRequest = z.infer<typeof RegisterWorldRequestSchema>;
 
 /**
  * ACK sent by the Cluster Server after validating a REGISTER_WORLD request.
- * If `success` is false, `reason` explains why (for server logs — never shown to players).
+ * If `success` is false, `reason` explains why (for server logs -- never shown to players).
  */
 export const RegisterWorldAckSchema = z.object({
   success: z.boolean(),
@@ -55,7 +55,7 @@ export const RegisterWorldAckSchema = z.object({
 export type RegisterWorldAck = z.infer<typeof RegisterWorldAckSchema>;
 
 // ---------------------------------------------------------------------------
-// World → Cluster heartbeat
+// World -> Cluster heartbeat
 // ---------------------------------------------------------------------------
 
 /**
@@ -78,7 +78,7 @@ export const WorldHeartbeatAckSchema = z.object({
 export type WorldHeartbeatAck = z.infer<typeof WorldHeartbeatAckSchema>;
 
 // ---------------------------------------------------------------------------
-// World → Cluster graceful shutdown
+// World -> Cluster graceful shutdown
 // ---------------------------------------------------------------------------
 
 /** Sent by the World Server before intentional shutdown so the Cluster can react instantly. */
@@ -90,7 +90,7 @@ export const UnregisterWorldSchema = z.object({
 export type UnregisterWorld = z.infer<typeof UnregisterWorldSchema>;
 
 // ---------------------------------------------------------------------------
-// Cluster → Login registration
+// Cluster -> Login registration
 // ---------------------------------------------------------------------------
 
 /**
@@ -125,7 +125,7 @@ export const RegisterClusterRequestSchema = z.object({
   channelCount: z.number().int().min(0),
   /**
    * World channels currently online under this cluster. Sent at registration so
-   * the Login Server's server list has channel children immediately — the v15
+   * the Login Server's server list has channel children immediately -- the v15
    * client requires a server + a channel to proceed past server-select.
    */
   worlds: z.array(WorldChannelSchema).default([]),
@@ -151,7 +151,7 @@ export const RegisterClusterAckSchema = z.object({
 export type RegisterClusterAck = z.infer<typeof RegisterClusterAckSchema>;
 
 // ---------------------------------------------------------------------------
-// Cluster → Login heartbeat
+// Cluster -> Login heartbeat
 // ---------------------------------------------------------------------------
 
 /**
@@ -174,7 +174,7 @@ export const ClusterHeartbeatAckSchema = z.object({
 export type ClusterHeartbeatAck = z.infer<typeof ClusterHeartbeatAckSchema>;
 
 // ---------------------------------------------------------------------------
-// Cluster → Login graceful shutdown
+// Cluster -> Login graceful shutdown
 // ---------------------------------------------------------------------------
 
 export const UnregisterClusterSchema = z.object({
@@ -184,7 +184,7 @@ export const UnregisterClusterSchema = z.object({
 export type UnregisterCluster = z.infer<typeof UnregisterClusterSchema>;
 
 // ---------------------------------------------------------------------------
-// Cluster → World player handoff
+// Cluster -> World player handoff
 // ---------------------------------------------------------------------------
 
 /**
@@ -197,7 +197,7 @@ export const PlayerEnterWorldSchema = z.object({
   sessionToken: z.string().uuid(),
   accountId: z.number().int().positive(),
   characterId: z.number().int().positive(),
-  /** Unix timestamp (ms) the token was issued — world rejects if > tokenTtlMs old. */
+  /** Unix timestamp (ms) the token was issued -- world rejects if > tokenTtlMs old. */
   issuedAt: z.number().int(),
 });
 export type PlayerEnterWorld = z.infer<typeof PlayerEnterWorldSchema>;

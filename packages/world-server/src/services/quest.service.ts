@@ -1,14 +1,14 @@
 /**
- * QuestService — per-player quest lifecycle orchestrator.
+ * QuestService -- per-player quest lifecycle orchestrator.
  *
  * Phase 2: hydrate quest state from the DB on JOIN (`loadOnJoin`).
- * Phase 3: the begin/complete engine — `beginQuest` / `setQuestState` /
+ * Phase 3: the begin/complete engine -- `beginQuest` / `setQuestState` /
  * `endQuest` / `cancelQuest`. Each runs the matching pure evaluator
  * (`questConditions`) + reward grantor (`questRewards`), persists the new state
  * via {@link QuestRepository}, writes the WAL audit row, and returns the
  * outbound snapshot frames for the handler to write.
  *
- * The service owns no socket bytes (rule 02) — handlers write returned frames.
+ * The service owns no socket bytes (rule 02) -- handlers write returned frames.
  *
  * @module services/quest
  */
@@ -25,28 +25,39 @@ import {
 } from '../net/snapshot/quest.serializer.js';
 import { REMOVEQUEST_TYPE } from '@flyff/core/constants/quest.js';
 import { createLogger } from '@flyff/core/logger.js';
-import type { InventoryOps, QuestFailReason } from './questConditions.js';
+import type { QuestFailReason } from './questConditions.js';
 import { canBegin, isComplete } from './questConditions.js';
 import type { RewardSink } from './questRewards.js';
 import { applyBeginSet, applyEnd } from './questRewards.js';
+import type { InventoryService } from './inventory.service.js';
+import type { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
+import { bindQuestInventory, type QuestInventory } from './questInventory.adapter.js';
+
+export type { QuestInventory };
+
+const EMPTY_FRAMES: Buffer[] = [];
 
 const logger = createLogger({ module: 'quest-service' });
-
-/** Inventory the service needs: evaluator reads + reward grantor writes. */
-export type QuestInventory = InventoryOps & {
-  add(itemId: number, count: number): void;
-  remove(itemId: number, count: number): void;
-};
 
 export interface QuestServiceDeps {
   questRepo: QuestRepository;
   quests: QuestIndex;
-  /** Inventory ops. Optional — a permissive stub keeps non-item quests playable. */
+  /**
+   * Test override -- a fully-shaped QuestInventory. Takes precedence over the
+   * real inventory service (used by the begin/end unit tests).
+   */
   inventory?: QuestInventory;
+  /**
+   * Real inventory backend + serializer. Used unless `inventory` is overridden.
+   * Captures CREATEITEM/UPDATE_ITEM frames for item rewards and turn-in removals
+   * so the handler notifies the client alongside the SETQUEST frame.
+   */
+  inventoryService?: InventoryService;
+  createItemSerializer?: CreateItemSnapshotSerializer;
   /** WAL journal for reward audit (rule 03/04). Optional for tests. */
   journal?: { append(entry: JournalEntry): number };
   /**
-   * Character repo for gold persistence (migration 003). Optional — gold still
+   * Character repo for gold persistence (migration 003). Optional -- gold still
    * mutates in-memory + WAL without it; only the cold DB flush is skipped.
    */
   charRepo?: Pick<CharacterRepository, 'updateGold'>;
@@ -56,7 +67,7 @@ export type QuestOpResult =
   | { ok: true; frames: Buffer[] }
   | { ok: false; reason: QuestFailReason };
 
-/** Permissive fallback inventory (no inventory system yet — ponytail). */
+/** Permissive fallback inventory (no inventory system yet -- ponytail). */
 const PERMISSIVE_INV: QuestInventory = {
   count: () => 0,
   emptySlots: () => Number.MAX_SAFE_INTEGER,
@@ -64,7 +75,7 @@ const PERMISSIVE_INV: QuestInventory = {
   remove: () => {},
 };
 
-/** Map a persisted active-quest row → the in-memory `RuntimeQuest` mirror. */
+/** Map a persisted active-quest row -> the in-memory `RuntimeQuest` mirror. */
 function rowToRuntime(row: {
   quest_id: number; state: number; time: number;
   kill_npc_num_0: number; kill_npc_num_1: number; flags: number;
@@ -92,14 +103,23 @@ function limitTimeOf(def: QuestDef): number {
 export class QuestService {
   constructor(private deps: QuestServiceDeps) {}
 
-  private get inv(): QuestInventory {
-    return this.deps.inventory ?? PERMISSIVE_INV;
-  }
+  /**
+   * Per-call evaluator + reward sink for `player`. Binds the real
+   * InventoryService (capturing CREATEITEM/UPDATE_ITEM reward + removal frames)
+   * when wired and not overridden; falls back to the `inventory` test override
+   * or the permissive stub. Captured frames are spread after SETQUEST on return.
+   */
+  private context(player: CPlayer): { inv: QuestInventory; sink: RewardSink; frames: Buffer[] } {
+    const override = this.deps.inventory;
+    const svc = this.deps.inventoryService;
+    const ser = this.deps.createItemSerializer;
+    const bound = !override && svc && ser
+      ? bindQuestInventory(player, { inventoryService: svc, createItemSerializer: ser })
+      : null;
+    const inv: QuestInventory = override ?? bound?.inventory ?? PERMISSIVE_INV;
 
-  private get sink(): RewardSink {
-    const sink: RewardSink = { inventory: this.inv };
-    const journal = this.deps.journal;
-    if (journal) sink.journal = (entry) => { journal.append(entry); };
+    const sink: RewardSink = { inventory: inv };
+    if (this.deps.journal) sink.journal = (entry) => { this.deps.journal!.append(entry); };
     const charRepo = this.deps.charRepo;
     if (charRepo) {
       // Fire-and-forget gold flush (mirrors combat's updateLevelAndExp pattern).
@@ -109,7 +129,7 @@ export class QuestService {
         );
       };
     }
-    return sink;
+    return { inv, sink, frames: bound?.frames ?? EMPTY_FRAMES };
   }
 
   /**
@@ -125,16 +145,17 @@ export class QuestService {
   }
 
   /**
-   * Begin a quest: `canBegin` → grant `SetBeginSetAdd*` → insert active at
-   * `QS_BEGIN` → persist + audit log (action 10). Returns the SETQUEST frame.
+   * Begin a quest: `canBegin` -> grant `SetBeginSetAdd*` -> insert active at
+   * `QS_BEGIN` -> persist + audit log (action 10). Returns the SETQUEST frame.
    */
   async beginQuest(player: CPlayer, questId: number): Promise<QuestOpResult> {
     const def = this.deps.quests.byId.get(questId);
     if (!def) return { ok: false, reason: 'not_found' };
-    const check = canBegin(player, def, this.inv);
+    const { inv, sink, frames } = this.context(player);
+    const check = canBegin(player, def, inv);
     if (!check.ok) return check;
 
-    applyBeginSet(player, def, this.sink);
+    applyBeginSet(player, def, sink);
     const rt: RuntimeQuest = {
       state: QS_BEGIN, time: limitTimeOf(def), id: questId,
       killNpcNum: [0, 0], flags: 0,
@@ -142,7 +163,7 @@ export class QuestService {
     player.setQuest(rt);
     await this.persist(player, rt);
     await this.deps.questRepo.insertLog(player.m_idPlayer, questId, QUEST_LOG_ACTION.START);
-    return { ok: true, frames: [buildSetQuest(player.m_idPlayer, rt)] };
+    return { ok: true, frames: [buildSetQuest(player.m_idPlayer, rt), ...frames] };
   }
 
   /** Update an active quest's state (e.g. dialog advance). Persists + emits. */
@@ -156,8 +177,8 @@ export class QuestService {
   }
 
   /**
-   * Complete a quest: `isComplete` → grant `SetEndReward*` / apply
-   * `SetEndRemove*` → move to completed at `QS_END` → persist + audit log
+   * Complete a quest: `isComplete` -> grant `SetEndReward*` / apply
+   * `SetEndRemove*` -> move to completed at `QS_END` -> persist + audit log
    * (action 20). Refuses if the active record is missing or conditions fail.
    */
   async endQuest(player: CPlayer, questId: number): Promise<QuestOpResult> {
@@ -166,16 +187,17 @@ export class QuestService {
     const rt = player.findQuest(questId);
     if (!rt) return { ok: false, reason: 'not_found' };
 
-    const check = isComplete(player, rt, def, this.inv);
+    const { inv, sink, frames } = this.context(player);
+    const check = isComplete(player, rt, def, inv);
     if (!check.ok) return check;
 
-    applyEnd(player, def, this.sink);
+    applyEnd(player, def, sink);
     const done: RuntimeQuest = { ...rt, state: QS_END };
     player.setQuest(done);
     await this.deps.questRepo.removeActive(player.m_idPlayer, questId);
     await this.deps.questRepo.addCompleted(player.m_idPlayer, questId);
     await this.deps.questRepo.insertLog(player.m_idPlayer, questId, QUEST_LOG_ACTION.END);
-    return { ok: true, frames: [buildSetQuest(player.m_idPlayer, done)] };
+    return { ok: true, frames: [buildSetQuest(player.m_idPlayer, done), ...frames] };
   }
 
   /**
@@ -192,7 +214,7 @@ export class QuestService {
   }
 
   /**
-   * `/raq` — `TextCmd_RemoveAllQuest` (FuncTextCmd.cpp:4020). Clears the entire
+   * `/raq` -- `TextCmd_RemoveAllQuest` (FuncTextCmd.cpp:4020). Clears the entire
    * active quest list: drops every record from `m_aQuest`, removes each from the
    * active repo table, returns one `REMOVEQUEST_TYPE.ALL` frame (questId 0).
    */
@@ -205,7 +227,7 @@ export class QuestService {
   }
 
   /**
-   * `/rcq` — `TextCmd_RemoveCompleteQuest` (FuncTextCmd.cpp:4031). Clears the
+   * `/rcq` -- `TextCmd_RemoveCompleteQuest` (FuncTextCmd.cpp:4031). Clears the
    * completed-quest ledger only (active list untouched); returns one
    * `REMOVEQUEST_TYPE.CLEAR_COMPLETED` frame.
    */
@@ -218,7 +240,7 @@ export class QuestService {
   }
 
   /**
-   * Toggle a quest in the checked (tracked) list — `PACKETTYPE_QUEST_CHECK`.
+   * Toggle a quest in the checked (tracked) list -- `PACKETTYPE_QUEST_CHECK`.
    * Mutates the CPlayer array, persists the full replacement, returns the
    * QUEST_CHECKED frame for the handler to write.
    */

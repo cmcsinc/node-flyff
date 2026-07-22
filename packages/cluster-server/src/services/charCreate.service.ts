@@ -1,5 +1,5 @@
 /**
- * Character create/delete service — vertical-slice lifecycle mutations.
+ * Character create/delete service -- vertical-slice lifecycle mutations.
  *
  * Mirrors the C++ `CDbManager::CreatePlayer` / `RemovePlayer` guards
  * (`game/source/_Database/DbManager.cpp:133-394`) at the service layer:
@@ -23,7 +23,7 @@ import { PacketError } from '@flyff/core/errors.js';
 const ERR_DUPLICATE_SLOT = 105;
 const ERR_SLOT_OUTOFRANGE = 106;
 const ERR_INVALID_NAME_CHARACTER = 111;
-const ERR_USER_EXISTS = 113; // referenced by client; not in MsgHdr.h — best-effort.
+const ERR_USER_EXISTS = 113; // referenced by client; not in MsgHdr.h -- best-effort.
 
 /** New-character defaults (sourced from `ClusterServerConfig.character`). */
 export interface CharDefaults {

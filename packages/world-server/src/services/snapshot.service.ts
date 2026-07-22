@@ -1,5 +1,5 @@
 /**
- * SnapshotService — handles inbound SNAPSHOT/DESTPOS (click-to-move).
+ * SnapshotService -- handles inbound SNAPSHOT/DESTPOS (click-to-move).
  *
  * `DPSrvr::OnSnapshot` (DPSrvr.cpp:4338) multiplexes `c:BYTE` entries by
  * `wHdr:WORD`; v15 sends only `SNAPSHOTTYPE_DESTPOS`, whose body
@@ -8,12 +8,12 @@
  * NOT defined in this v15 build.)
  *
  * Server-side anti-teleport (`OnPlayerDestPos:4371`):
- *   D3DXVec3LengthSq( GetPos() - vPos ) > 1000000.0f  ⇒ silent drop.
- * That is `distSq > 1e6` (1000 linear units, full 3-D) — NOT the `MAX_SPEED*1.2`
+ *   D3DXVec3LengthSq( GetPos() - vPos ) > 1000000.0f  => silent drop.
+ * That is `distSq > 1e6` (1000 linear units, full 3-D) -- NOT the `MAX_SPEED*1.2`
  * phrasing in CLAUDE.md (aspirational, not the real C++ check).
  *
  * On pass: update `m_vPos` (dirty), broadcast a SNAPSHOT/DESTPOS echo to zone
- * peers via `ZoneManager.broadcastAround`. No WAL — position is checkpoint-saved
+ * peers via `ZoneManager.broadcastAround`. No WAL -- position is checkpoint-saved
  * every 30s (rule 04). No sender reply.
  *
  * @module services/snapshot.service
@@ -35,7 +35,7 @@ export type DestPosOutcome =
   | { ok: true; reached: number }
   | { ok: false; reason: 'too_far' };
 
-/** `D3DXVec3LengthSq > 1_000_000` ⇒ drop (OnPlayerDestPos:4371). */
+/** `D3DXVec3LengthSq > 1_000_000` => drop (OnPlayerDestPos:4371). */
 const ANTI_TELEPORT_SQ = 1_000_000;
 
 export class SnapshotService {

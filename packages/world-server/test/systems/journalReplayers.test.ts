@@ -1,5 +1,5 @@
 /**
- * registerReplayers — the replay handlers must call the right repo method with
+ * registerReplayers -- the replay handlers must call the right repo method with
  * the parsed ABSOLUTE payload, and be idempotent (re-applying is harmless).
  */
 
@@ -51,7 +51,7 @@ describe('registerReplayers', () => {
     const repos = makeRepos();
     registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, logger: repos.logger as never });
 
-    // Two absolute exp snapshots for char 7 — replay applies both in order;
+    // Two absolute exp snapshots for char 7 -- replay applies both in order;
     // final DB write is the later one, no dupe (additive deltas would dup).
     journal.append({ charId: 7, type: 'CHAR_EXP', payload: { level: 5, exp: '100' } });
     journal.append({ charId: 7, type: 'CHAR_EXP', payload: { level: 5, exp: '250' } });
@@ -76,7 +76,7 @@ describe('registerReplayers', () => {
     journal.close();
   });
 
-  it('INVENTORY_SLOT set vs remove (itemId===0 ⇒ removeItem)', async () => {
+  it('INVENTORY_SLOT set vs remove (itemId===0 => removeItem)', async () => {
     const journal = new Journal({ path: ':memory:' });
     const repos = makeRepos();
     const r = new JournalReplayer({ journal, logger: repos.logger as never });
@@ -99,7 +99,7 @@ describe('registerReplayers', () => {
     const r = new JournalReplayer({ journal, logger: repos.logger as never });
     registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, logger: repos.logger as never });
 
-    // Value > 2^32 but < 2^53 — must survive Number→String→BigInt.
+    // Value > 2^32 but < 2^53 -- must survive Number->String->BigInt.
     const big = '9007199254740991'; // Number.MAX_SAFE_INTEGER
     journal.append({ charId: 1, type: 'CHAR_EXP', payload: { level: 120, exp: big } });
     await r.recover();

@@ -1,5 +1,5 @@
 /**
- * v15 CERTIFY password crypto — AES-128-CBC, matching the C++ `g_xRijndael`.
+ * v15 CERTIFY password crypto -- AES-128-CBC, matching the C++ `g_xRijndael`.
  *
  * The default v15 client (`__ENCRYPT_PASSWORD`, `Neuz/VersionCommon.h:235`) sends
  * the CERTIFY password as a fixed **672-byte** (`16 * MAX_PASSWORD`) Rijndael-CBC
@@ -7,7 +7,7 @@
  * (`_Common/Rijndael.cpp:939`); IV is 16 zero bytes (`sm_chain0`,
  * `Rijndael.cpp:926`); AES-128 (10 rounds). Node's OpenSSL `aes-128-cbc` matches
  * the C++ byte-for-byte. On top of CBC the client applies
- * `md5("kikugalanet" + pwd)` lowercase hex — so the 42-byte plaintext region
+ * `md5("kikugalanet" + pwd)` lowercase hex -- so the 42-byte plaintext region
  * holds that 32-char digest (plus NULs).
  *
  * @module utils/v15Password
@@ -23,7 +23,7 @@ export const V15_PASSWORD_BLOB_SIZE = 16 * MAX_PASSWORD; // 672
 const KEY = Buffer.from('dldhsvmflvm\0\0\0\0\0', 'latin1'); // 16 bytes
 const IV = Buffer.alloc(16, 0);
 
-/** Decrypt the 672-byte CERTIFY blob → first 42 bytes as a UTF-8 C-string. */
+/** Decrypt the 672-byte CERTIFY blob -> first 42 bytes as a UTF-8 C-string. */
 export function decryptV15Password(enc: Buffer): string {
   if (enc.length !== V15_PASSWORD_BLOB_SIZE) {
     throw new Error(`v15 password blob must be ${V15_PASSWORD_BLOB_SIZE} bytes (got ${enc.length})`);

@@ -1,0 +1,57 @@
+import { describe, it } from 'node:test';
+import * as assert from 'node:assert/strict';
+import { PacketReader } from '@flyff/core/net/PacketReader.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
+import { SessionState } from '@flyff/core/constants/sessionState.js';
+import { DoUseSkillPointHandler } from '../../src/handlers/doUseSkillPoint.handler.js';
+import type { SkillService, LearnOutcome } from '../../src/services/skill.service.js';
+import type { PlayerManager } from '../../src/managers/player.manager.js';
+import type { CPlayer } from '../../src/entities/player.js';
+
+function mockSocket(state = SessionState.IN_WORLD) {
+  let destroyed = false;
+  return {
+    session: { state, charId: 42 },
+    write: () => true,
+    destroy: () => { destroyed = true; },
+    get _destroyed() { return destroyed; },
+  };
+}
+
+/** DOUSESKILLPOINT body: 45x (DWORD dwSkill, DWORD dwLevel), no count prefix. */
+const payload = (slot: number, skillId: number, level: number): Buffer => {
+  const w = new PacketWriter();
+  for (let i = 0; i < 45; i++) {
+    w.writeDword(i === slot ? skillId : 0xffffffff);
+    w.writeDword(i === slot ? level : 0);
+  }
+  return w.build();
+};
+
+const fakePm = (p?: CPlayer): PlayerManager => ({ get: () => p }) as unknown as PlayerManager;
+const player = { m_idPlayer: 42 } as unknown as CPlayer;
+
+describe('DoUseSkillPointHandler', () => {
+  it('reads 45 (skill,level) pairs and delegates the roster to SkillService.learnSkills', () => {
+    let got: Array<{ skillId: number; level: number }> | null = null;
+    const svc = {
+      learnSkills: (_p: CPlayer, req: Array<{ skillId: number; level: number }>) => {
+        got = req;
+        return { ok: true, spent: 3, skillPoint: 7 } satisfies LearnOutcome;
+      },
+    } as unknown as SkillService;
+    const handler = new DoUseSkillPointHandler(fakePm(player), svc);
+    handler.handleDoUseSkillPoint(mockSocket() as never, new PacketReader(payload(3, 100, 3)));
+    assert.equal(got!.length, 45);
+    assert.deepEqual(got![3], { skillId: 100, level: 3 });
+    assert.equal(got![0]!.skillId, 0xffffffff, 'empty slots carry NULL_ID');
+  });
+
+  it('destroys when not IN_WORLD', () => {
+    const svc = { learnSkills: () => ({ ok: true, spent: 0, skillPoint: 0 } as LearnOutcome) } as unknown as SkillService;
+    const handler = new DoUseSkillPointHandler(fakePm(player), svc);
+    const sock = mockSocket(SessionState.CONNECTED);
+    handler.handleDoUseSkillPoint(sock as never, new PacketReader(payload(0, 1, 1)));
+    assert.equal(sock._destroyed, true);
+  });
+});

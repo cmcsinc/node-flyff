@@ -1,5 +1,5 @@
 /**
- * S→C shout — `SNAPSHOTTYPE_SHOUT` (0x00d0) inside a SNAPSHOT frame.
+ * S->C shout -- `SNAPSHOTTYPE_SHOUT` (0x00d0) inside a SNAPSHOT frame.
  *
  * Mirrors the local-build path of `TextCmd_shout` (`FuncTextCmd.cpp:1549`):
  *   arBlock << NULL_ID << SNAPSHOTTYPE_SHOUT;
@@ -11,7 +11,7 @@
  * Wire layout (after the outer SNAPSHOT/NULL_ID/count preamble):
  *   headerObjid(NULL_ID) | SHOUT | senderObjid:DWORD | senderName:String | msg:String | color:DWORD
  *
- * Shout is server-wide — distribute via `PlayerManager.all()`, not zone radius.
+ * Shout is server-wide -- distribute via `PlayerManager.all()`, not zone radius.
  *
  * @module net/snapshot/shout.serializer
  */
@@ -33,7 +33,7 @@ export class ShoutSerializer {
     w.writeDword(PACKETTYPE.SNAPSHOT);
     w.writeDword(NULL_ID);
     w.writeWord(1);
-    w.writeDword(NULL_ID); // header objid — shout is a broadcast, not tied to a receiver obj
+    w.writeDword(NULL_ID); // header objid -- shout is a broadcast, not tied to a receiver obj
     w.writeWord(SNAPSHOTTYPE_SHOUT);
     w.writeDword(frame.senderObjid);
     w.writeString(frame.senderName);

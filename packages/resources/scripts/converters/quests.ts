@@ -1,13 +1,13 @@
 /**
- * propQuest.inc → data/quests/*.yml converter.
+ * propQuest.inc -> data/quests/*.yml converter.
  *
  * Uses {@link tokenize} (recursive-descent; the `.inc` grammar is whitespace-
  * heavy and multi-line, so regex-per-line parsing is insufficient). Each quest
- * block becomes one `QuestDef` file; an `_index.yml` lists id→symbol→title.
+ * block becomes one `QuestDef` file; an `_index.yml` lists id->symbol->title.
  *
  * Symbols (`MI_*`/`II_*`/`JOB_*`/`QT_*`) resolve against the merged
  * `define*.h` table; unresolved ones stay as strings. Command argument lists
- * are preserved verbatim — the Phase 3 condition/reward engine interprets them
+ * are preserved verbatim -- the Phase 3 condition/reward engine interprets them
  * positionally, exactly as `CProject::LoadPropQuest` does.
  *
  * @module scripts/converters/quests
@@ -51,7 +51,7 @@ class QuestParser {
   private i = 0;
   constructor(private toks: Token[], private defines: Map<string, number>) {}
 
-  /** Parse the whole file → QuestDef records (id resolved via defines). */
+  /** Parse the whole file -> QuestDef records (id resolved via defines). */
   parseAll(): QuestDef[] {
     const out: QuestDef[] = [];
     while (this.i < this.toks.length) {
@@ -88,8 +88,8 @@ class QuestParser {
     return def;
   }
 
-  /** Read a `{ … }` body until its closing brace (consumes the `}`). `setting`
-   *  is a scope keyword — recurse so its `}` does not close the quest. */
+  /** Read a `{ ... }` body until its closing brace (consumes the `}`). `setting`
+   *  is a scope keyword -- recurse so its `}` does not close the quest. */
   private parseBody(acc: ParseAcc): void {
     while (this.i < this.toks.length) {
       const tok = this.toks[this.i];
@@ -98,7 +98,7 @@ class QuestParser {
       if (tok.t === 'ident' && tok.v === 'setting') {
         this.i++; // consume 'setting'
         if (this.toks[this.i]?.t === 'punct' && this.toks[this.i].v === '{') this.i++;
-        this.parseBody(acc); // recurse — inner commands merge into the quest
+        this.parseBody(acc); // recurse -- inner commands merge into the quest
         continue;
       }
       if (tok.t === 'ident' && tok.v === 'state') {
@@ -114,7 +114,7 @@ class QuestParser {
     }
   }
 
-  /** `state N { … }` body — routes SetDesc/Cond/Status + QuestItem. */
+  /** `state N { ... }` body -- routes SetDesc/Cond/Status + QuestItem. */
   private parseState(acc: ParseAcc, key: string): void {
     const st: QuestDef['states'][string] = {};
     while (this.i < this.toks.length) {
@@ -133,7 +133,7 @@ class QuestParser {
     acc.states[key] = st;
   }
 
-  /** One `SetX(args)` / `QuestItem(args)` call — routes special cmds, else stores raw. */
+  /** One `SetX(args)` / `QuestItem(args)` call -- routes special cmds, else stores raw. */
   private parseCommand(cmd: string, acc: ParseAcc): void {
     if (cmd === 'QuestItem') { this.readQuestItem(acc); return; }
     this.i++; // past cmd ident
@@ -147,7 +147,7 @@ class QuestParser {
     acc.commands.push({ cmd, args });
   }
 
-  /** Read `( v, v, … )` — consumes the parens; handles missing-`(` tolerantly. */
+  /** Read `( v, v, ... )` -- consumes the parens; handles missing-`(` tolerantly. */
   private readArgs(): QuestArg[] {
     const args: QuestArg[] = [];
     if (this.toks[this.i]?.t === 'punct' && this.toks[this.i].v === '(') this.i++;
@@ -163,14 +163,14 @@ class QuestParser {
     return args;
   }
 
-  /** `( IDS_X )` → the string value (for SetDesc/SetCond/SetStatus). */
+  /** `( IDS_X )` -> the string value (for SetDesc/SetCond/SetStatus). */
   private readCallString(): string | undefined {
     this.i++; // past cmd
     const args = this.readArgs();
     return asString(args[0]);
   }
 
-  /** `QuestItem( MI, II, prob, num )` → push to acc.questItems. */
+  /** `QuestItem( MI, II, prob, num )` -> push to acc.questItems. */
   private readQuestItem(acc: ParseAcc): void {
     this.i++; // past QuestItem
     const a = this.readArgs();

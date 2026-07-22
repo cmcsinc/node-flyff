@@ -1,9 +1,9 @@
 /**
- * MELEE_ATTACK handler — `PACKETTYPE_MELEE_ATTACK` (0x00ff0010).
+ * MELEE_ATTACK handler -- `PACKETTYPE_MELEE_ATTACK` (0x00ff0010).
  *
  * `DPSrvr::OnMeleeAttack` (DPSrvr.cpp:4131) reads `DWORD dwAtkMsg, OBJID objid,
  * int nParam2, int nParam3` + a trailing `float fVal` under `__HACK_1023`
- * (active in v15 — anti-cheat echo of the weapon's fAttackSpeed). `fVal` is
+ * (active in v15 -- anti-cheat echo of the weapon's fAttackSpeed). `fVal` is
  * consumed to keep the stream aligned but otherwise ignored until the inventory
  * system ships.
  *
@@ -44,7 +44,7 @@ export class MeleeAttackHandler {
       const objid = reader.readDword();
       const nParam2 = reader.readLong();
       const nParam3 = reader.readLong();
-      reader.readFloat(); // fVal — __HACK_1023 anti-cheat; unused until inventory ships
+      reader.readFloat(); // fVal -- __HACK_1023 anti-cheat; unused until inventory ships
       Validate.dword(dwAtkMsg);
       Validate.dword(objid);
       const frame: MeleeAttackFrame = { dwAtkMsg, objid, nParam2, nParam3 };

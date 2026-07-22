@@ -74,11 +74,11 @@ function fixtureResources(): ResourceIndex {
  * SQLite (so the account/char login + cluster read is the same row world loads
  * on JOIN). No layer is mocked between CERTIFY and the JOIN snapshot except the
  * TCP sockets (mocked) and Redis (FakeRedis). Proves the Phase 1.F publisher
- * wiring actually relays the handoff cluster→world.
+ * wiring actually relays the handoff cluster->world.
  *
- *   login CERTIFY ─► login:success (handoffToken)
- *   cluster PRE_JOIN ─► ClusterHandoffPublisher ─► IpcBus (HMAC-signed)
- *   world ClusterListener ─► JoinHandler ─► JOIN/ADD_OBJ snapshot
+ *   login CERTIFY -> login:success (handoffToken)
+ *   cluster PRE_JOIN -> ClusterHandoffPublisher -> IpcBus (HMAC-signed)
+ *   world ClusterListener -> JoinHandler -> JOIN/ADD_OBJ snapshot
  */
 
 class FakeRedis {
@@ -149,7 +149,7 @@ function joinPacket(charId: number): Buffer {
   return w.build();
 }
 
-describe('E2E byte chain: login CERTIFY → cluster PRE_JOIN → world JOIN snapshot', () => {
+describe('E2E byte chain: login CERTIFY -> cluster PRE_JOIN -> world JOIN snapshot', () => {
   let db: ReturnType<typeof createDb>;
   let loginSocket: ReturnType<typeof mockSocket>;
   let clusterSocket: ReturnType<typeof mockSocket>;
@@ -230,7 +230,7 @@ describe('E2E byte chain: login CERTIFY → cluster PRE_JOIN → world JOIN snap
     clusterSocket = mockSocket();
     await charHandler.handlePreJoin(clusterSocket as never, new PacketReader(preJoinPacket(charId)));
 
-    // Bus callback is async — let it stash the handoff before JOIN.
+    // Bus callback is async -- let it stash the handoff before JOIN.
     await new Promise((r) => setTimeout(r, 10));
 
     worldSocket = mockSocket();

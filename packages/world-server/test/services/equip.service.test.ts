@@ -1,5 +1,5 @@
 /**
- * EquipService test — equip/unequip slot moves + validation branches.
+ * EquipService test -- equip/unequip slot moves + validation branches.
  *
  * Equip moves an item from main-bag `invSlot` to `m_Inventory[MAX_INVENTORY+parts]`,
  * swapping any previously-equipped item back into `invSlot`. `parts` must match

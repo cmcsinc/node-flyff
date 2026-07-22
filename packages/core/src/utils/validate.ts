@@ -2,7 +2,7 @@
  * Input validation helpers for untrusted packet fields.
  *
  * Every field read from a {@link PacketReader} must pass one of these before
- * use (rule 03 — never trust the client). Each helper throws {@link PacketError}
+ * use (rule 03 -- never trust the client). Each helper throws {@link PacketError}
  * on failure so handlers can let the dispatcher catch uniformly.
  *
  * @module utils/validate
@@ -30,7 +30,7 @@ export const Validate = {
   /**
    * Validate a name field (account or character).
    *
-   * Default bounds are 3–16 alphanumeric characters, matching the Flyff v15
+   * Default bounds are 3-16 alphanumeric characters, matching the Flyff v15
    * account-name contract. Character names may override via {@link NameOptions}.
    *
    * @throws PacketError if length or charset is invalid.
@@ -47,10 +47,10 @@ export const Validate = {
   },
 
   /**
-   * Validate an arbitrary length-bounded string (file paths, map keys, chat…).
+   * Validate an arbitrary length-bounded string (file paths, map keys, chat...).
    *
-   * Unlike {@link name}, no charset restriction — only length. Use this for
-   * non-name free-text fields the client sends (rule 03 — every string length-
+   * Unlike {@link name}, no charset restriction -- only length. Use this for
+   * non-name free-text fields the client sends (rule 03 -- every string length-
    * bounded).
    *
    * @throws PacketError if not a string or length outside `[min, max]`.
@@ -88,7 +88,7 @@ export const Validate = {
   /**
    * Validate that all three position coordinates are finite numbers.
    *
-   * @throws PacketError if any coordinate is NaN or ±Infinity.
+   * @throws PacketError if any coordinate is NaN or +/-Infinity.
    */
   pos(x: number, y: number, z: number): void {
     if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {

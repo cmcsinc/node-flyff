@@ -4,135 +4,3446 @@ skills:
   - id: 4
     name: Slash
     name_id: IDS_PROPSKILL_TXT_000006
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 1
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 15
+    prereqs:
+      - skill: 2
+        level: 3
+    exeTarget: 17
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 15
+      - 0
+    subDefine: 35
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 8
+        abilityMax: 9
+        abilityMinPvp: 8
+        abilityMaxPvp: 9
+        reqFp: 20
+      - level: 2
+        abilityMin: 8
+        abilityMax: 9
+        abilityMinPvp: 8
+        abilityMaxPvp: 9
+        reqFp: 20
+      - level: 3
+        abilityMin: 8
+        abilityMax: 9
+        abilityMinPvp: 8
+        abilityMaxPvp: 9
+        reqFp: 23
+      - level: 4
+        abilityMin: 8
+        abilityMax: 9
+        abilityMinPvp: 8
+        abilityMaxPvp: 9
+        reqFp: 23
+      - level: 5
+        abilityMin: 8
+        abilityMax: 9
+        abilityMinPvp: 8
+        abilityMaxPvp: 9
+        reqFp: 26
+      - level: 6
+        abilityMin: 9
+        abilityMax: 10
+        abilityMinPvp: 9
+        abilityMaxPvp: 10
+        reqFp: 26
+      - level: 7
+        abilityMin: 9
+        abilityMax: 10
+        abilityMinPvp: 9
+        abilityMaxPvp: 10
+        reqFp: 30
+      - level: 8
+        abilityMin: 9
+        abilityMax: 10
+        abilityMinPvp: 9
+        abilityMaxPvp: 10
+        reqFp: 30
+      - level: 9
+        abilityMin: 9
+        abilityMax: 10
+        abilityMinPvp: 9
+        abilityMaxPvp: 10
+        reqFp: 33
+      - level: 10
+        abilityMin: 9
+        abilityMax: 10
+        abilityMinPvp: 9
+        abilityMaxPvp: 10
+        reqFp: 33
+      - level: 11
+        abilityMin: 10
+        abilityMax: 11
+        abilityMinPvp: 10
+        abilityMaxPvp: 11
+        reqFp: 36
+      - level: 12
+        abilityMin: 10
+        abilityMax: 11
+        abilityMinPvp: 10
+        abilityMaxPvp: 11
+        reqFp: 36
+      - level: 13
+        abilityMin: 10
+        abilityMax: 11
+        abilityMinPvp: 10
+        abilityMaxPvp: 11
+        reqFp: 40
+      - level: 14
+        abilityMin: 10
+        abilityMax: 11
+        abilityMinPvp: 10
+        abilityMaxPvp: 11
+        reqFp: 40
+      - level: 15
+        abilityMin: 10
+        abilityMax: 11
+        abilityMinPvp: 10
+        abilityMaxPvp: 11
+        reqFp: 43
+      - level: 16
+        abilityMin: 11
+        abilityMax: 12
+        abilityMinPvp: 11
+        abilityMaxPvp: 12
+        reqFp: 43
+      - level: 17
+        abilityMin: 11
+        abilityMax: 12
+        abilityMinPvp: 11
+        abilityMaxPvp: 12
+        reqFp: 46
+      - level: 18
+        abilityMin: 11
+        abilityMax: 12
+        abilityMinPvp: 11
+        abilityMaxPvp: 12
+        reqFp: 46
+      - level: 19
+        abilityMin: 11
+        abilityMax: 12
+        abilityMinPvp: 11
+        abilityMaxPvp: 12
+        reqFp: 50
+      - level: 20
+        abilityMin: 11
+        abilityMax: 12
+        abilityMinPvp: 11
+        abilityMaxPvp: 12
+        reqFp: 50
   - id: 5
     name: Keenwheel
     name_id: IDS_PROPSKILL_TXT_000008
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 1
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 18
+    prereqs:
+      - skill: 4
+        level: 4
+    exeTarget: 17
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 15
+      - 0
+    subDefine: 55
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 4
+        abilityMax: 5
+        abilityMinPvp: 4
+        abilityMaxPvp: 5
+        reqFp: 25
+      - level: 2
+        abilityMin: 4
+        abilityMax: 5
+        abilityMinPvp: 4
+        abilityMaxPvp: 5
+        reqFp: 25
+      - level: 3
+        abilityMin: 4
+        abilityMax: 5
+        abilityMinPvp: 4
+        abilityMaxPvp: 5
+        reqFp: 26
+      - level: 4
+        abilityMin: 4
+        abilityMax: 5
+        abilityMinPvp: 4
+        abilityMaxPvp: 5
+        reqFp: 26
+      - level: 5
+        abilityMin: 4
+        abilityMax: 5
+        abilityMinPvp: 4
+        abilityMaxPvp: 5
+        reqFp: 30
+      - level: 6
+        abilityMin: 5
+        abilityMax: 6
+        abilityMinPvp: 5
+        abilityMaxPvp: 6
+        reqFp: 30
+      - level: 7
+        abilityMin: 5
+        abilityMax: 6
+        abilityMinPvp: 5
+        abilityMaxPvp: 6
+        reqFp: 33
+      - level: 8
+        abilityMin: 5
+        abilityMax: 6
+        abilityMinPvp: 5
+        abilityMaxPvp: 6
+        reqFp: 33
+      - level: 9
+        abilityMin: 5
+        abilityMax: 6
+        abilityMinPvp: 5
+        abilityMaxPvp: 6
+        reqFp: 37
+      - level: 10
+        abilityMin: 5
+        abilityMax: 6
+        abilityMinPvp: 5
+        abilityMaxPvp: 6
+        reqFp: 37
+      - level: 11
+        abilityMin: 6
+        abilityMax: 7
+        abilityMinPvp: 6
+        abilityMaxPvp: 7
+        reqFp: 41
+      - level: 12
+        abilityMin: 6
+        abilityMax: 7
+        abilityMinPvp: 6
+        abilityMaxPvp: 7
+        reqFp: 41
+      - level: 13
+        abilityMin: 6
+        abilityMax: 7
+        abilityMinPvp: 6
+        abilityMaxPvp: 7
+        reqFp: 45
+      - level: 14
+        abilityMin: 6
+        abilityMax: 7
+        abilityMinPvp: 6
+        abilityMaxPvp: 7
+        reqFp: 45
+      - level: 15
+        abilityMin: 6
+        abilityMax: 7
+        abilityMinPvp: 6
+        abilityMaxPvp: 7
+        reqFp: 49
+      - level: 16
+        abilityMin: 7
+        abilityMax: 8
+        abilityMinPvp: 7
+        abilityMaxPvp: 8
+        reqFp: 49
+      - level: 17
+        abilityMin: 7
+        abilityMax: 8
+        abilityMinPvp: 7
+        abilityMaxPvp: 8
+        reqFp: 54
+      - level: 18
+        abilityMin: 7
+        abilityMax: 8
+        abilityMinPvp: 7
+        abilityMaxPvp: 8
+        reqFp: 54
+      - level: 19
+        abilityMin: 7
+        abilityMax: 8
+        abilityMinPvp: 7
+        abilityMaxPvp: 8
+        reqFp: 60
+      - level: 20
+        abilityMin: 7
+        abilityMax: 8
+        abilityMinPvp: 7
+        abilityMaxPvp: 8
+        reqFp: 60
   - id: 6
     name: Blindside
     name_id: IDS_PROPSKILL_TXT_000010
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 1
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 24
+    prereqs:
+      - skill: 5
+        level: 6
+    exeTarget: 17
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 20
+      - 0
+    subDefine: 75
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 35
+        abilityMax: 36
+        abilityMinPvp: 35
+        abilityMaxPvp: 36
+        reqFp: 26
+      - level: 2
+        abilityMin: 35
+        abilityMax: 36
+        abilityMinPvp: 35
+        abilityMaxPvp: 36
+        reqFp: 28
+      - level: 3
+        abilityMin: 36
+        abilityMax: 37
+        abilityMinPvp: 36
+        abilityMaxPvp: 37
+        reqFp: 28
+      - level: 4
+        abilityMin: 36
+        abilityMax: 37
+        abilityMinPvp: 36
+        abilityMaxPvp: 37
+        reqFp: 30
+      - level: 5
+        abilityMin: 37
+        abilityMax: 38
+        abilityMinPvp: 37
+        abilityMaxPvp: 38
+        reqFp: 30
+      - level: 6
+        abilityMin: 37
+        abilityMax: 38
+        abilityMinPvp: 37
+        abilityMaxPvp: 38
+        reqFp: 30
+      - level: 7
+        abilityMin: 38
+        abilityMax: 39
+        abilityMinPvp: 38
+        abilityMaxPvp: 39
+        reqFp: 33
+      - level: 8
+        abilityMin: 38
+        abilityMax: 39
+        abilityMinPvp: 38
+        abilityMaxPvp: 39
+        reqFp: 33
+      - level: 9
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        reqFp: 37
+      - level: 10
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        reqFp: 37
+      - level: 11
+        abilityMin: 40
+        abilityMax: 41
+        abilityMinPvp: 40
+        abilityMaxPvp: 41
+        reqFp: 41
+      - level: 12
+        abilityMin: 40
+        abilityMax: 41
+        abilityMinPvp: 40
+        abilityMaxPvp: 41
+        reqFp: 41
+      - level: 13
+        abilityMin: 41
+        abilityMax: 42
+        abilityMinPvp: 41
+        abilityMaxPvp: 42
+        reqFp: 43
+      - level: 14
+        abilityMin: 41
+        abilityMax: 42
+        abilityMinPvp: 41
+        abilityMaxPvp: 42
+        reqFp: 43
+      - level: 15
+        abilityMin: 42
+        abilityMax: 43
+        abilityMinPvp: 42
+        abilityMaxPvp: 43
+        reqFp: 46
+      - level: 16
+        abilityMin: 42
+        abilityMax: 43
+        abilityMinPvp: 42
+        abilityMaxPvp: 43
+        reqFp: 46
+      - level: 17
+        abilityMin: 43
+        abilityMax: 44
+        abilityMinPvp: 43
+        abilityMaxPvp: 44
+        reqFp: 50
+      - level: 18
+        abilityMin: 43
+        abilityMax: 44
+        abilityMinPvp: 43
+        abilityMaxPvp: 44
+        reqFp: 50
+      - level: 19
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        reqFp: 58
+      - level: 20
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        reqFp: 58
   - id: 9
     name: Protection
     name_id: IDS_PROPSKILL_TXT_000012
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 8
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 15
+    prereqs:
+      - skill: 5
+        level: 6
+    cooldownType: 1
+    exeTarget: 1
+    useChance: 1
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 4
+      - 0
+    referTargets:
+      - 2
+      - 0
+    referValues:
+      - 20000
+      - 0
+    subDefine: 135
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 1
+        reqFp: 45
+        castingTime: 1250
+        skillTime: 90000
+      - level: 2
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 2
+        reqFp: 42
+        castingTime: 1250
+        skillTime: 120000
+      - level: 3
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 3
+        reqFp: 45
+        castingTime: 1250
+        skillTime: 90000
+      - level: 4
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 4
+        reqFp: 42
+        castingTime: 1250
+        skillTime: 120000
+      - level: 5
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 5
+        reqFp: 47
+        castingTime: 1250
+        skillTime: 90000
+      - level: 6
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 6
+        reqFp: 45
+        castingTime: 1250
+        skillTime: 120000
+      - level: 7
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 7
+        reqFp: 47
+        castingTime: 1250
+        skillTime: 90000
+      - level: 8
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 8
+        reqFp: 45
+        castingTime: 1250
+        skillTime: 120000
+      - level: 9
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 9
+        reqFp: 49
+        castingTime: 1250
+        skillTime: 90000
+      - level: 10
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 10
+        reqFp: 45
+        castingTime: 1250
+        skillTime: 120000
+      - level: 11
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 11
+        reqFp: 49
+        castingTime: 1250
+        skillTime: 120000
+      - level: 12
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 12
+        reqFp: 45
+        castingTime: 1250
+        skillTime: 150000
+      - level: 13
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 13
+        reqFp: 51
+        castingTime: 1250
+        skillTime: 120000
+      - level: 14
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 14
+        reqFp: 49
+        castingTime: 1250
+        skillTime: 150000
+      - level: 15
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 15
+        reqFp: 51
+        castingTime: 1250
+        skillTime: 120000
+      - level: 16
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 16
+        reqFp: 49
+        castingTime: 1250
+        skillTime: 150000
+      - level: 17
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 17
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 120000
+      - level: 18
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 18
+        reqFp: 52
+        castingTime: 1250
+        skillTime: 150000
+      - level: 19
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 19
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 150000
+      - level: 20
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 20
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 200000
   - id: 10
     name: Pan Barrier
     name_id: IDS_PROPSKILL_TXT_000014
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 8
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 18
+    prereqs:
+      - skill: 9
+        level: 3
+    cooldownType: 1
+    exeTarget: 1
+    useChance: 1
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 2
+      - 0
+    referValues:
+      - 20000
+      - 0
+    subDefine: 155
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 2
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 90000
+      - level: 2
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 4
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 95000
+      - level: 3
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 6
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 100000
+      - level: 4
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 8
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 105000
+      - level: 5
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 10
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 110000
+      - level: 6
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 12
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 115000
+      - level: 7
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 14
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 120000
+      - level: 8
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 16
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 125000
+      - level: 9
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 18
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 130000
+      - level: 10
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 20
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 135000
+      - level: 11
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 22
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 140000
+      - level: 12
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 24
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 145000
+      - level: 13
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 26
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 150000
+      - level: 14
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 28
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 155000
+      - level: 15
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 30
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 160000
+      - level: 16
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 32
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 165000
+      - level: 17
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 34
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 170000
+      - level: 18
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 36
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 175000
+      - level: 19
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 38
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 180000
+      - level: 20
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 40
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 200000
   - id: 108
     name: Blazing Sword
     name_id: IDS_PROPSKILL_TXT_000016
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 23
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 25
+    prereqs:
+      - skill: 111
+        level: 4
+    cooldownType: 2
+    exeTarget: 1
+    useChance: 1
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 2
+      - 0
+    referValues:
+      - 20000
+      - 0
+    subDefine: 2115
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 2
+          - 1
+        reqFp: 30
+        castingTime: 1250
+        skillTime: 300000
+      - level: 2
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 4
+          - 1
+        reqFp: 31
+        castingTime: 1250
+        skillTime: 345000
+      - level: 3
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 6
+          - 2
+        reqFp: 31
+        castingTime: 1250
+        skillTime: 390000
+      - level: 4
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 8
+          - 2
+        reqFp: 35
+        castingTime: 1250
+        skillTime: 435000
+      - level: 5
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 10
+          - 3
+        reqFp: 35
+        castingTime: 1250
+        skillTime: 480000
+      - level: 6
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 12
+          - 3
+        reqFp: 38
+        castingTime: 1250
+        skillTime: 525000
+      - level: 7
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 16
+          - 4
+        reqFp: 38
+        castingTime: 1250
+        skillTime: 570000
+      - level: 8
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 18
+          - 4
+        reqFp: 42
+        castingTime: 1250
+        skillTime: 615000
+      - level: 9
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 20
+          - 5
+        reqFp: 42
+        castingTime: 1250
+        skillTime: 660000
+      - level: 10
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 22
+          - 5
+        reqFp: 46
+        castingTime: 1250
+        skillTime: 705000
+      - level: 11
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 24
+          - 6
+        reqFp: 46
+        castingTime: 1250
+        skillTime: 750000
+      - level: 12
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 26
+          - 6
+        reqFp: 50
+        castingTime: 1250
+        skillTime: 795000
+      - level: 13
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 28
+          - 7
+        reqFp: 50
+        castingTime: 1250
+        skillTime: 840000
+      - level: 14
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 30
+          - 7
+        reqFp: 54
+        castingTime: 1250
+        skillTime: 885000
+      - level: 15
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 32
+          - 8
+        reqFp: 54
+        castingTime: 1250
+        skillTime: 930000
+      - level: 16
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 34
+          - 8
+        reqFp: 59
+        castingTime: 1250
+        skillTime: 975000
+      - level: 17
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 36
+          - 9
+        reqFp: 59
+        castingTime: 1250
+        skillTime: 1020000
+      - level: 18
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 40
+          - 9
+        reqFp: 65
+        castingTime: 1250
+        skillTime: 1065000
+      - level: 19
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 45
+          - 10
+        reqFp: 65
+        castingTime: 1250
+        skillTime: 1110000
+      - level: 20
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 50
+          - 10
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 1170000
   - id: 109
     name: Smite Axe
     name_id: IDS_PROPSKILL_TXT_000018
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 23
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 25
+    prereqs:
+      - skill: 111
+        level: 4
+    cooldownType: 2
+    exeTarget: 1
+    useChance: 1
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 2
+      - 0
+    referValues:
+      - 20000
+      - 0
+    subDefine: 2135
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 2
+          - 2
+        reqFp: 30
+        castingTime: 1250
+        skillTime: 300000
+      - level: 2
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 4
+          - 3
+        reqFp: 31
+        castingTime: 1250
+        skillTime: 345000
+      - level: 3
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 6
+          - 4
+        reqFp: 31
+        castingTime: 1250
+        skillTime: 390000
+      - level: 4
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 8
+          - 5
+        reqFp: 35
+        castingTime: 1250
+        skillTime: 435000
+      - level: 5
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 10
+          - 6
+        reqFp: 35
+        castingTime: 1250
+        skillTime: 480000
+      - level: 6
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 12
+          - 7
+        reqFp: 38
+        castingTime: 1250
+        skillTime: 525000
+      - level: 7
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 16
+          - 8
+        reqFp: 38
+        castingTime: 1250
+        skillTime: 570000
+      - level: 8
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 18
+          - 9
+        reqFp: 42
+        castingTime: 1250
+        skillTime: 615000
+      - level: 9
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 20
+          - 10
+        reqFp: 42
+        castingTime: 1250
+        skillTime: 660000
+      - level: 10
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 22
+          - 11
+        reqFp: 46
+        castingTime: 1250
+        skillTime: 705000
+      - level: 11
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 24
+          - 12
+        reqFp: 46
+        castingTime: 1250
+        skillTime: 750000
+      - level: 12
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 26
+          - 13
+        reqFp: 50
+        castingTime: 1250
+        skillTime: 795000
+      - level: 13
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 28
+          - 14
+        reqFp: 50
+        castingTime: 1250
+        skillTime: 840000
+      - level: 14
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 30
+          - 15
+        reqFp: 54
+        castingTime: 1250
+        skillTime: 885000
+      - level: 15
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 32
+          - 16
+        reqFp: 54
+        castingTime: 1250
+        skillTime: 930000
+      - level: 16
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 34
+          - 17
+        reqFp: 59
+        castingTime: 1250
+        skillTime: 975000
+      - level: 17
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 36
+          - 18
+        reqFp: 59
+        castingTime: 1250
+        skillTime: 1020000
+      - level: 18
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 40
+          - 19
+        reqFp: 65
+        castingTime: 1250
+        skillTime: 1065000
+      - level: 19
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 45
+          - 20
+        reqFp: 65
+        castingTime: 1250
+        skillTime: 1110000
+      - level: 20
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 50
+          - 25
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 1170000
   - id: 111
     name: Empower Weapon
     name_id: IDS_PROPSKILL_TXT_000020
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 23
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 20
+    prereqs:
+      - skill: 9
+        level: 5
+    cooldownType: 2
+    exeTarget: 1
+    useChance: 1
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 2
+      - 0
+    referValues:
+      - 20000
+      - 0
+    subDefine: 2175
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 1
+          - 25
+        reqFp: 20
+        castingTime: 1250
+        skillTime: 120000
+      - level: 2
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 2
+          - 25
+        reqFp: 20
+        castingTime: 1250
+        skillTime: 140000
+      - level: 3
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 2
+          - 25
+        reqFp: 23
+        castingTime: 1250
+        skillTime: 160000
+      - level: 4
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 3
+          - 25
+        reqFp: 23
+        castingTime: 1250
+        skillTime: 180000
+      - level: 5
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 3
+          - 25
+        reqFp: 26
+        castingTime: 1250
+        skillTime: 200000
+      - level: 6
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 4
+          - 25
+        reqFp: 26
+        castingTime: 1250
+        skillTime: 220000
+      - level: 7
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 4
+          - 25
+        reqFp: 30
+        castingTime: 1250
+        skillTime: 240000
+      - level: 8
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 5
+          - 25
+        reqFp: 30
+        castingTime: 1250
+        skillTime: 260000
+      - level: 9
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 5
+          - 25
+        reqFp: 33
+        castingTime: 1250
+        skillTime: 280000
+      - level: 10
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 6
+          - 25
+        reqFp: 33
+        castingTime: 1250
+        skillTime: 300000
+      - level: 11
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 6
+          - 25
+        reqFp: 36
+        castingTime: 1250
+        skillTime: 320000
+      - level: 12
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 7
+          - 25
+        reqFp: 36
+        castingTime: 1250
+        skillTime: 340000
+      - level: 13
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 7
+          - 25
+        reqFp: 40
+        castingTime: 1250
+        skillTime: 360000
+      - level: 14
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 8
+          - 25
+        reqFp: 40
+        castingTime: 1250
+        skillTime: 380000
+      - level: 15
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 8
+          - 25
+        reqFp: 43
+        castingTime: 1250
+        skillTime: 400000
+      - level: 16
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 9
+          - 25
+        reqFp: 43
+        castingTime: 1250
+        skillTime: 420000
+      - level: 17
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 9
+          - 25
+        reqFp: 46
+        castingTime: 1250
+        skillTime: 440000
+      - level: 18
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 10
+          - 25
+        reqFp: 46
+        castingTime: 1250
+        skillTime: 460000
+      - level: 19
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 10
+          - 25
+        reqFp: 50
+        castingTime: 1250
+        skillTime: 480000
+      - level: 20
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 11
+          - 25
+        reqFp: 50
+        castingTime: 1250
+        skillTime: 510000
   - id: 112
     name: Bloody Strike
     name_id: IDS_PROPSKILL_TXT_000022
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 1
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 20
+    prereqs:
+      - skill: 4
+        level: 3
+    cooldownType: 1
+    exeTarget: 17
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 10
+      - 0
+    subDefine: 2195
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 30
+        abilityMax: 31
+        abilityMinPvp: 30
+        abilityMaxPvp: 31
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 10
+          - 25
+        reqFp: 30
+        castingTime: 1250
+        skillTime: 510000
+      - level: 2
+        abilityMin: 30
+        abilityMax: 31
+        abilityMinPvp: 30
+        abilityMaxPvp: 31
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 15
+          - 25
+        reqFp: 32
+        castingTime: 1250
+        skillTime: 510000
+      - level: 3
+        abilityMin: 31
+        abilityMax: 32
+        abilityMinPvp: 31
+        abilityMaxPvp: 32
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 15
+          - 25
+        reqFp: 32
+        castingTime: 1250
+        skillTime: 510000
+      - level: 4
+        abilityMin: 31
+        abilityMax: 32
+        abilityMinPvp: 31
+        abilityMaxPvp: 32
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 20
+          - 25
+        reqFp: 34
+        castingTime: 1250
+        skillTime: 510000
+      - level: 5
+        abilityMin: 32
+        abilityMax: 33
+        abilityMinPvp: 32
+        abilityMaxPvp: 33
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 20
+          - 25
+        reqFp: 34
+        castingTime: 1250
+        skillTime: 510000
+      - level: 6
+        abilityMin: 32
+        abilityMax: 33
+        abilityMinPvp: 32
+        abilityMaxPvp: 33
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 25
+          - 25
+        reqFp: 37
+        castingTime: 1250
+        skillTime: 510000
+      - level: 7
+        abilityMin: 33
+        abilityMax: 34
+        abilityMinPvp: 33
+        abilityMaxPvp: 34
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 25
+          - 25
+        reqFp: 37
+        castingTime: 1250
+        skillTime: 510000
+      - level: 8
+        abilityMin: 33
+        abilityMax: 34
+        abilityMinPvp: 33
+        abilityMaxPvp: 34
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 30
+          - 25
+        reqFp: 40
+        castingTime: 1250
+        skillTime: 510000
+      - level: 9
+        abilityMin: 34
+        abilityMax: 35
+        abilityMinPvp: 34
+        abilityMaxPvp: 35
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 30
+          - 25
+        reqFp: 40
+        castingTime: 1250
+        skillTime: 510000
+      - level: 10
+        abilityMin: 34
+        abilityMax: 35
+        abilityMinPvp: 34
+        abilityMaxPvp: 35
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 35
+          - 25
+        reqFp: 44
+        castingTime: 1250
+        skillTime: 510000
+      - level: 11
+        abilityMin: 35
+        abilityMax: 36
+        abilityMinPvp: 35
+        abilityMaxPvp: 36
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 35
+          - 25
+        reqFp: 44
+        castingTime: 1250
+        skillTime: 510000
+      - level: 12
+        abilityMin: 35
+        abilityMax: 36
+        abilityMinPvp: 35
+        abilityMaxPvp: 36
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 40
+          - 25
+        reqFp: 48
+        castingTime: 1250
+        skillTime: 510000
+      - level: 13
+        abilityMin: 36
+        abilityMax: 37
+        abilityMinPvp: 36
+        abilityMaxPvp: 37
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 40
+          - 25
+        reqFp: 48
+        castingTime: 1250
+        skillTime: 510000
+      - level: 14
+        abilityMin: 36
+        abilityMax: 37
+        abilityMinPvp: 36
+        abilityMaxPvp: 37
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 45
+          - 25
+        reqFp: 53
+        castingTime: 1250
+        skillTime: 510000
+      - level: 15
+        abilityMin: 37
+        abilityMax: 38
+        abilityMinPvp: 37
+        abilityMaxPvp: 38
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 45
+          - 25
+        reqFp: 53
+        castingTime: 1250
+        skillTime: 510000
+      - level: 16
+        abilityMin: 37
+        abilityMax: 38
+        abilityMinPvp: 37
+        abilityMaxPvp: 38
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 50
+          - 25
+        reqFp: 58
+        castingTime: 1250
+        skillTime: 510000
+      - level: 17
+        abilityMin: 38
+        abilityMax: 39
+        abilityMinPvp: 38
+        abilityMaxPvp: 39
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 50
+          - 25
+        reqFp: 58
+        castingTime: 1250
+        skillTime: 510000
+      - level: 18
+        abilityMin: 38
+        abilityMax: 39
+        abilityMinPvp: 38
+        abilityMaxPvp: 39
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 55
+          - 25
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 510000
+      - level: 19
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 55
+          - 25
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 510000
+      - level: 20
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        adjParamVals:
+          - 60
+          - 25
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 510000
   - id: 7
     name: Sword Mastery
     name_id: IDS_PROPSKILL_TXT_000024
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 23
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 30
+    prereqs:
+      - skill: 108
+        level: 9
+    cooldownType: 2
+    exeTarget: 1
+    useChance: 1
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 10
+      - 0
+    subDefine: 3045
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 5
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 100000
+      - level: 2
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 10
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 105000
+      - level: 3
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 15
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 110000
+      - level: 4
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 20
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 115000
+      - level: 5
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 25
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 120000
+      - level: 6
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 30
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 125000
+      - level: 7
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 35
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 130000
+      - level: 8
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 40
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 135000
+      - level: 9
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 45
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 140000
+      - level: 10
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 50
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 150000
+      - level: 11
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 55
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 160000
+      - level: 12
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 60
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 170000
+      - level: 13
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 65
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 180000
+      - level: 14
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 70
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 190000
+      - level: 15
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 75
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 200000
+      - level: 16
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 80
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 210000
+      - level: 17
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 85
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 220000
+      - level: 18
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 90
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 230000
+      - level: 19
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 95
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 240000
+      - level: 20
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 600000
   - id: 8
     name: Axe Mastery
     name_id: IDS_PROPSKILL_TXT_000026
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 23
+    weaponType: 13
+    handed: 1
+    attackRange: 1
+    reqLevel: 30
+    prereqs:
+      - skill: 109
+        level: 9
+    cooldownType: 2
+    exeTarget: 1
+    useChance: 1
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 10
+      - 0
+    subDefine: 3065
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 5
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 100000
+      - level: 2
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 10
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 105000
+      - level: 3
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 15
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 110000
+      - level: 4
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 20
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 115000
+      - level: 5
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 25
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 120000
+      - level: 6
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 30
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 125000
+      - level: 7
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 35
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 130000
+      - level: 8
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 40
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 135000
+      - level: 9
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 45
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 140000
+      - level: 10
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 50
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 150000
+      - level: 11
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 55
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 160000
+      - level: 12
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 60
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 170000
+      - level: 13
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 65
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 180000
+      - level: 14
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 70
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 190000
+      - level: 15
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 75
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 200000
+      - level: 16
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 80
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 210000
+      - level: 17
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 85
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 220000
+      - level: 18
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 90
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 230000
+      - level: 19
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 95
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 240000
+      - level: 20
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 600000
   - id: 11
     name: Special Hit
     name_id: IDS_PROPSKILL_TXT_000028
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 1
+    weaponType: 13
+    handed: 1
+    attackRange: 3
+    reqLevel: 30
+    prereqs:
+      - skill: 6
+        level: 8
+    cooldownType: 1
+    exeTarget: 17
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 18
+      - 0
+    subDefine: 3085
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 35
+        abilityMax: 36
+        abilityMinPvp: 35
+        abilityMaxPvp: 36
+        adjParamVals:
+          - 100
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 600000
+      - level: 2
+        abilityMin: 36
+        abilityMax: 37
+        abilityMinPvp: 36
+        abilityMaxPvp: 37
+        adjParamVals:
+          - 100
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 600000
+      - level: 3
+        abilityMin: 37
+        abilityMax: 38
+        abilityMinPvp: 37
+        abilityMaxPvp: 38
+        adjParamVals:
+          - 100
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 600000
+      - level: 4
+        abilityMin: 38
+        abilityMax: 39
+        abilityMinPvp: 38
+        abilityMaxPvp: 39
+        adjParamVals:
+          - 100
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 600000
+      - level: 5
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        adjParamVals:
+          - 100
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 600000
+      - level: 6
+        abilityMin: 40
+        abilityMax: 41
+        abilityMinPvp: 40
+        abilityMaxPvp: 41
+        adjParamVals:
+          - 100
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 600000
+      - level: 7
+        abilityMin: 41
+        abilityMax: 42
+        abilityMinPvp: 41
+        abilityMaxPvp: 42
+        adjParamVals:
+          - 100
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 600000
+      - level: 8
+        abilityMin: 42
+        abilityMax: 43
+        abilityMinPvp: 42
+        abilityMaxPvp: 43
+        adjParamVals:
+          - 100
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 600000
+      - level: 9
+        abilityMin: 43
+        abilityMax: 44
+        abilityMinPvp: 43
+        abilityMaxPvp: 44
+        adjParamVals:
+          - 100
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 600000
+      - level: 10
+        abilityMin: 44
+        abilityMax: 45
+        abilityMinPvp: 44
+        abilityMaxPvp: 45
+        adjParamVals:
+          - 100
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 600000
+      - level: 11
+        abilityMin: 45
+        abilityMax: 46
+        abilityMinPvp: 45
+        abilityMaxPvp: 46
+        adjParamVals:
+          - 100
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 600000
+      - level: 12
+        abilityMin: 46
+        abilityMax: 47
+        abilityMinPvp: 46
+        abilityMaxPvp: 47
+        adjParamVals:
+          - 100
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 600000
+      - level: 13
+        abilityMin: 47
+        abilityMax: 48
+        abilityMinPvp: 47
+        abilityMaxPvp: 48
+        adjParamVals:
+          - 100
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 600000
+      - level: 14
+        abilityMin: 48
+        abilityMax: 49
+        abilityMinPvp: 48
+        abilityMaxPvp: 49
+        adjParamVals:
+          - 100
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 600000
+      - level: 15
+        abilityMin: 49
+        abilityMax: 50
+        abilityMinPvp: 49
+        abilityMaxPvp: 50
+        adjParamVals:
+          - 100
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 600000
+      - level: 16
+        abilityMin: 50
+        abilityMax: 51
+        abilityMinPvp: 50
+        abilityMaxPvp: 51
+        adjParamVals:
+          - 100
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 600000
+      - level: 17
+        abilityMin: 51
+        abilityMax: 52
+        abilityMinPvp: 51
+        abilityMaxPvp: 52
+        adjParamVals:
+          - 100
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 600000
+      - level: 18
+        abilityMin: 52
+        abilityMax: 53
+        abilityMinPvp: 52
+        abilityMaxPvp: 53
+        adjParamVals:
+          - 100
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 600000
+      - level: 19
+        abilityMin: 53
+        abilityMax: 54
+        abilityMinPvp: 53
+        abilityMaxPvp: 54
+        adjParamVals:
+          - 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 600000
+      - level: 20
+        abilityMin: 54
+        abilityMax: 55
+        abilityMinPvp: 54
+        abilityMaxPvp: 55
+        adjParamVals:
+          - 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 600000
   - id: 12
     name: Guillotine
     name_id: IDS_PROPSKILL_TXT_000030
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 1
+    weaponType: 13
+    handed: 1
+    attackRange: 3
+    reqLevel: 30
+    prereqs:
+      - skill: 14
+        level: 10
+    cooldownType: 1
+    exeTarget: 14
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 18
+      - 0
+    subDefine: 3105
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 45
+        abilityMax: 46
+        abilityMinPvp: 45
+        abilityMaxPvp: 46
+        adjParamVals:
+          - 100
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 600000
+      - level: 2
+        abilityMin: 46
+        abilityMax: 47
+        abilityMinPvp: 46
+        abilityMaxPvp: 47
+        adjParamVals:
+          - 100
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 600000
+      - level: 3
+        abilityMin: 47
+        abilityMax: 48
+        abilityMinPvp: 47
+        abilityMaxPvp: 48
+        adjParamVals:
+          - 100
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 600000
+      - level: 4
+        abilityMin: 48
+        abilityMax: 49
+        abilityMinPvp: 48
+        abilityMaxPvp: 49
+        adjParamVals:
+          - 100
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 600000
+      - level: 5
+        abilityMin: 49
+        abilityMax: 50
+        abilityMinPvp: 49
+        abilityMaxPvp: 50
+        adjParamVals:
+          - 100
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 600000
+      - level: 6
+        abilityMin: 50
+        abilityMax: 51
+        abilityMinPvp: 50
+        abilityMaxPvp: 51
+        adjParamVals:
+          - 100
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 600000
+      - level: 7
+        abilityMin: 51
+        abilityMax: 52
+        abilityMinPvp: 51
+        abilityMaxPvp: 52
+        adjParamVals:
+          - 100
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 600000
+      - level: 8
+        abilityMin: 52
+        abilityMax: 53
+        abilityMinPvp: 52
+        abilityMaxPvp: 53
+        adjParamVals:
+          - 100
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 600000
+      - level: 9
+        abilityMin: 53
+        abilityMax: 54
+        abilityMinPvp: 53
+        abilityMaxPvp: 54
+        adjParamVals:
+          - 100
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 600000
+      - level: 10
+        abilityMin: 54
+        abilityMax: 55
+        abilityMinPvp: 54
+        abilityMaxPvp: 55
+        adjParamVals:
+          - 100
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 600000
+      - level: 11
+        abilityMin: 55
+        abilityMax: 56
+        abilityMinPvp: 55
+        abilityMaxPvp: 56
+        adjParamVals:
+          - 100
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 600000
+      - level: 12
+        abilityMin: 56
+        abilityMax: 57
+        abilityMinPvp: 56
+        abilityMaxPvp: 57
+        adjParamVals:
+          - 100
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 600000
+      - level: 13
+        abilityMin: 57
+        abilityMax: 58
+        abilityMinPvp: 57
+        abilityMaxPvp: 58
+        adjParamVals:
+          - 100
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 600000
+      - level: 14
+        abilityMin: 58
+        abilityMax: 59
+        abilityMinPvp: 58
+        abilityMaxPvp: 59
+        adjParamVals:
+          - 100
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 600000
+      - level: 15
+        abilityMin: 59
+        abilityMax: 60
+        abilityMinPvp: 59
+        abilityMaxPvp: 60
+        adjParamVals:
+          - 100
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 600000
+      - level: 16
+        abilityMin: 60
+        abilityMax: 61
+        abilityMinPvp: 60
+        abilityMaxPvp: 61
+        adjParamVals:
+          - 100
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 600000
+      - level: 17
+        abilityMin: 61
+        abilityMax: 62
+        abilityMinPvp: 61
+        abilityMaxPvp: 62
+        adjParamVals:
+          - 100
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 600000
+      - level: 18
+        abilityMin: 62
+        abilityMax: 63
+        abilityMinPvp: 62
+        abilityMaxPvp: 63
+        adjParamVals:
+          - 100
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 600000
+      - level: 19
+        abilityMin: 63
+        abilityMax: 64
+        abilityMinPvp: 63
+        abilityMaxPvp: 64
+        adjParamVals:
+          - 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 600000
+      - level: 20
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        adjParamVals:
+          - 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 600000
   - id: 13
     name: Sneaker
     name_id: IDS_PROPSKILL_TXT_000032
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 23
+    weaponType: 13
+    handed: 1
+    attackRange: 4
+    reqLevel: 20
+    prereqs:
+      - skill: 10
+        level: 10
+    cooldownType: 2
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 18
+      - 0
+    subDefine: 3125
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 20
+        probabilityPvp: 20
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 10000
+      - level: 2
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 25
+        probabilityPvp: 25
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 12000
+      - level: 3
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 30
+        probabilityPvp: 30
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 14000
+      - level: 4
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 35
+        probabilityPvp: 35
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 16000
+      - level: 5
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 40
+        probabilityPvp: 40
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 18000
+      - level: 6
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 45
+        probabilityPvp: 45
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 20000
+      - level: 7
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 50
+        probabilityPvp: 50
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 22000
+      - level: 8
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 60
+        probabilityPvp: 60
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 24000
+      - level: 9
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 70
+        probabilityPvp: 70
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 26000
+      - level: 10
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 80
+        probabilityPvp: 80
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 28000
+      - level: 11
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 82
+        probabilityPvp: 82
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 30000
+      - level: 12
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 84
+        probabilityPvp: 84
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 32000
+      - level: 13
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 86
+        probabilityPvp: 86
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 34000
+      - level: 14
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 88
+        probabilityPvp: 88
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 36000
+      - level: 15
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 90
+        probabilityPvp: 90
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 38000
+      - level: 16
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 92
+        probabilityPvp: 92
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 40000
+      - level: 17
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 94
+        probabilityPvp: 94
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 42000
+      - level: 18
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 96
+        probabilityPvp: 96
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 44000
+      - level: 19
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 98
+        probabilityPvp: 98
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 46000
+      - level: 20
+        abilityMin: 64
+        abilityMax: 65
+        abilityMinPvp: 64
+        abilityMaxPvp: 65
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 48000
   - id: 14
     name: Hit Reflect
     name_id: IDS_PROPSKILL_TXT_000034
-    type: active
-    level_req: 1
-    skill_points: 1
-    max_level: 1
+    tier: 1
+    job: 1
+    discipline: 1
+    weaponType: 13
+    handed: 1
+    attackRange: 4
+    reqLevel: 25
+    prereqs:
+      - skill: 112
+        level: 8
+    cooldownType: 1
+    exeTarget: 17
+    useChance: 4
+    spellRegion: 1
+    resourceType: 2
+    referStats:
+      - 1
+      - 0
+    referTargets:
+      - 1
+      - 0
+    referValues:
+      - 20
+      - 0
+    subDefine: 3145
+    maxLevel: 20
     levels:
       - level: 1
+        abilityMin: 30
+        abilityMax: 31
+        abilityMinPvp: 30
+        abilityMaxPvp: 31
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 48000
+      - level: 2
+        abilityMin: 30
+        abilityMax: 31
+        abilityMinPvp: 30
+        abilityMaxPvp: 31
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 55
+        castingTime: 1250
+        skillTime: 48000
+      - level: 3
+        abilityMin: 31
+        abilityMax: 32
+        abilityMinPvp: 31
+        abilityMaxPvp: 32
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 48000
+      - level: 4
+        abilityMin: 31
+        abilityMax: 32
+        abilityMinPvp: 31
+        abilityMaxPvp: 32
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 57
+        castingTime: 1250
+        skillTime: 48000
+      - level: 5
+        abilityMin: 32
+        abilityMax: 33
+        abilityMinPvp: 32
+        abilityMaxPvp: 33
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 48000
+      - level: 6
+        abilityMin: 32
+        abilityMax: 33
+        abilityMinPvp: 32
+        abilityMaxPvp: 33
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 60
+        castingTime: 1250
+        skillTime: 48000
+      - level: 7
+        abilityMin: 33
+        abilityMax: 34
+        abilityMinPvp: 33
+        abilityMaxPvp: 34
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 48000
+      - level: 8
+        abilityMin: 33
+        abilityMax: 34
+        abilityMinPvp: 33
+        abilityMaxPvp: 34
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 62
+        castingTime: 1250
+        skillTime: 48000
+      - level: 9
+        abilityMin: 34
+        abilityMax: 35
+        abilityMinPvp: 34
+        abilityMaxPvp: 35
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 48000
+      - level: 10
+        abilityMin: 34
+        abilityMax: 35
+        abilityMinPvp: 34
+        abilityMaxPvp: 35
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 64
+        castingTime: 1250
+        skillTime: 48000
+      - level: 11
+        abilityMin: 35
+        abilityMax: 36
+        abilityMinPvp: 35
+        abilityMaxPvp: 36
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 48000
+      - level: 12
+        abilityMin: 35
+        abilityMax: 36
+        abilityMinPvp: 35
+        abilityMaxPvp: 36
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 66
+        castingTime: 1250
+        skillTime: 48000
+      - level: 13
+        abilityMin: 36
+        abilityMax: 37
+        abilityMinPvp: 36
+        abilityMaxPvp: 37
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 48000
+      - level: 14
+        abilityMin: 36
+        abilityMax: 37
+        abilityMinPvp: 36
+        abilityMaxPvp: 37
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 68
+        castingTime: 1250
+        skillTime: 48000
+      - level: 15
+        abilityMin: 37
+        abilityMax: 38
+        abilityMinPvp: 37
+        abilityMaxPvp: 38
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 48000
+      - level: 16
+        abilityMin: 37
+        abilityMax: 38
+        abilityMinPvp: 37
+        abilityMaxPvp: 38
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 70
+        castingTime: 1250
+        skillTime: 48000
+      - level: 17
+        abilityMin: 38
+        abilityMax: 39
+        abilityMinPvp: 38
+        abilityMaxPvp: 39
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 48000
+      - level: 18
+        abilityMin: 38
+        abilityMax: 39
+        abilityMinPvp: 38
+        abilityMaxPvp: 39
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 75
+        castingTime: 1250
+        skillTime: 48000
+      - level: 19
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 48000
+      - level: 20
+        abilityMin: 39
+        abilityMax: 40
+        abilityMinPvp: 39
+        abilityMaxPvp: 40
+        probability: 100
+        probabilityPvp: 100
+        reqFp: 80
+        castingTime: 1250
+        skillTime: 48000

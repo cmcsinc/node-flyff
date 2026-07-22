@@ -1,5 +1,5 @@
 /**
- * @flyff/core — Cache subsystem public API.
+ * @flyff/core -- Cache subsystem public API.
  *
  * ## Usage
  * ```ts

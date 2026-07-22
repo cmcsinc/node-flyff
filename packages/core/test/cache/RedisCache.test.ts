@@ -98,13 +98,13 @@ function makeMockRedis(): MockRedis {
 // get / set / del tests
 // ---------------------------------------------------------------------------
 
-describe('RedisCache — get / set / del', () => {
+describe('RedisCache -- get / set / del', () => {
   let mockRedis: MockRedis;
   let cache: RedisCache;
 
   before(() => {
     mockRedis = makeMockRedis();
-    // RedisCache expects a Redis instance — mock satisfies the duck-type shape
+    // RedisCache expects a Redis instance -- mock satisfies the duck-type shape
     cache = new RedisCache(mockRedis as unknown as import('ioredis').Redis);
   });
 
@@ -137,7 +137,7 @@ describe('RedisCache — get / set / del', () => {
 // publish tests
 // ---------------------------------------------------------------------------
 
-describe('RedisCache — publish', () => {
+describe('RedisCache -- publish', () => {
   let mockRedis: MockRedis;
   let cache: RedisCache;
 
@@ -166,7 +166,7 @@ describe('RedisCache — publish', () => {
 // subscribe tests
 // ---------------------------------------------------------------------------
 
-describe('RedisCache — subscribe', () => {
+describe('RedisCache -- subscribe', () => {
   let cache: RedisCache;
   let subscriberMock: MockRedis;
 

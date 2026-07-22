@@ -19,7 +19,7 @@ function sock() {
 }
 
 describe('PlayerManager', () => {
-  it('add → get returns the same player (O(1) Map lookup)', () => {
+  it('add -> get returns the same player (O(1) Map lookup)', () => {
     const mgr = new PlayerManager();
     const p = CPlayer.fromRow(makeRow(5), sock());
     mgr.add(p);

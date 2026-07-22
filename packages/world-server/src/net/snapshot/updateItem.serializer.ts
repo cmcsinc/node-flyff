@@ -1,13 +1,13 @@
 /**
- * UPDATE_ITEM S→C snapshot — count/field delta on an EXISTING inventory slot.
+ * UPDATE_ITEM S->C snapshot -- count/field delta on an EXISTING inventory slot.
  *
  * `CUser::AddUpdateItem` (`WORLDSERVER/User.cpp:1089`):
  * `[objid][SNAPSHOTTYPE_UPDATE_ITEM=0x0018][BYTE cType][BYTE nId][CHAR cParam]
  * [DWORD dwValue][DWORD dwTime]`. Used for stack-count changes on an occupied
- * slot (merge/consume/drop-partial) — a CREATEITEM is only for a NEW slot.
+ * slot (merge/consume/drop-partial) -- a CREATEITEM is only for a NEW slot.
  *
  * `cType` selects the container (0 = main inventory slot); `nId` is the slot
- * index; `cParam` is the `UI_*` field (Mover.h:62) — `UI_NUM=0` = stack count;
+ * index; `cParam` is the `UI_*` field (Mover.h:62) -- `UI_NUM=0` = stack count;
  * `dwValue` the new value; `dwTime` v15 trailing field (0 here).
  *
  * @module net/snapshot/updateItem

@@ -179,6 +179,11 @@ describe('parseCharacterInc', () => {
       'IK3_* resolved to defineItemkind.h numbers',
     );
     assert.deepEqual(
+      m.vendorItems.map((v) => v.itemKind3Symbol),
+      ['IK3_SWD', 'IK3_AXE', 'IK3_SUIT'],
+      'original IK3_* symbol retained verbatim for the shop stock resolver',
+    );
+    assert.deepEqual(
       m.vendorItemIds.map((v) => [v.slot, v.itemId]),
       [[2, 1234]],
       'AddVendorItem2 captures concrete item id',

@@ -34,7 +34,7 @@ function mockSocket() {
   };
 }
 
-/** Build a client→cache JOIN payload (Neuz/DPClient.cpp:8959 field order). */
+/** Build a client->cache JOIN payload (Neuz/DPClient.cpp:8959 field order). */
 function joinPayload(idPlayer: number, nSlot: number): Buffer {
   const w = new PacketWriter();
   w.writeDword(1);                // dwWorldId
@@ -70,7 +70,7 @@ describe('JoinHandler', () => {
     assert.equal(sock._destroyed, false);
   });
 
-  it('sends only the self-spawn — NPC/monster spawns are decoupled to MAP_KEY vicinity', async () => {
+  it('sends only the self-spawn -- NPC/monster spawns are decoupled to MAP_KEY vicinity', async () => {
     // JOIN must not touch SpawnManager. Server-side spawns materialize at boot;
     // client notification is the MAP_KEY-triggered vicinity burst (see
     // VicinityService). Bolting ADD_OBJ onto JOIN races the client world load
@@ -81,7 +81,7 @@ describe('JoinHandler', () => {
 
     await handler.handleJoin(sock as unknown as never, new PacketReader(joinPayload(42, 0)));
 
-    assert.equal(sock._written.length, 1); // self-spawn only — never an NPC snapshot
+    assert.equal(sock._written.length, 1); // self-spawn only -- never an NPC snapshot
     assert.equal(sock._destroyed, false);
   });
 

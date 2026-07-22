@@ -1,11 +1,11 @@
 #!/usr/bin/env tsx
 /**
- * txt → yml resource converter.
+ * txt -> yml resource converter.
  *
  * Reads the original Flyff resource files from `raw/` (an editable snapshot of
  * `game/resource/`) and regenerates the YAML under `data/`.
  *
- * Workflow: edit a file in `raw/` → run `pnpm convert` → `data/*.yml` refreshed.
+ * Workflow: edit a file in `raw/` -> run `pnpm convert` -> `data/*.yml` refreshed.
  * The client keeps reading the originals from `game/resource/` untouched.
  *
  * Usage: pnpm convert
@@ -28,7 +28,7 @@ const RAW_DIR = resolve(PKG_ROOT, 'raw');
 const DATA_DIR = resolve(PKG_ROOT, 'data');
 
 async function main(): Promise<void> {
-  console.log('🔄 Converting raw/ → data/');
+  console.log('[reload] Converting raw/ -> data/');
   console.log(`   raw:  ${RAW_DIR}`);
   console.log(`   data: ${DATA_DIR}`);
 
@@ -41,10 +41,10 @@ async function main(): Promise<void> {
     convertDrops(RAW_DIR, DATA_DIR),
   ]);
 
-  console.log('✅ Conversion complete');
+  console.log('[OK] Conversion complete');
 }
 
 main().catch((err) => {
-  console.error('❌ Conversion failed:', err);
+  console.error('[FAIL] Conversion failed:', err);
   process.exit(1);
 });

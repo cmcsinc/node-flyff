@@ -1,5 +1,5 @@
 /**
- * S→C MOTION broadcast — `SNAPSHOTTYPE_MOTION` (0x0098) inside a SNAPSHOT frame.
+ * S->C MOTION broadcast -- `SNAPSHOTTYPE_MOTION` (0x0098) inside a SNAPSHOT frame.
  *
  * Mirrors `CUserMng::AddMotion` (`WORLDSERVER/User.cpp`):
  *   ar << GETID(pUser) << SNAPSHOTTYPE_MOTION << dwMsg;
@@ -7,7 +7,7 @@
  * Wire layout (after the outer SNAPSHOT/NULL_ID/count/objid/word preamble):
  *   dwMsg:DWORD
  *
- * `dwMsg` is an `OBJMSG_*` enum value (stand up, sit down, etc.) — see
+ * `dwMsg` is an `OBJMSG_*` enum value (stand up, sit down, etc.) -- see
  * `_Common/Obj.h`. The server echoes it verbatim; client plays the animation.
  *
  * @module net/snapshot/motion.serializer

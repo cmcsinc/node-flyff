@@ -1,5 +1,5 @@
 /**
- * Unit tests for CrcIntegrity — Flyff packet validation.
+ * Unit tests for CrcIntegrity -- Flyff packet validation.
  */
 
 import { describe, it } from 'node:test';

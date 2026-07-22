@@ -3,11 +3,11 @@
  *
  * Pins the two equip-confirm snapshots. The #1 equip wire risk is EQUIP_INFO:
  * `{DWORD dwId, int nOption, BYTE byFlag}` is 9 logical bytes but MSVC pads the
- * struct to 12 — the 3 trailing pad bytes must be written literal zero or the
+ * struct to 12 -- the 3 trailing pad bytes must be written literal zero or the
  * vicinity stream desyncs (nPart reads garbage) and Neuz crashes.
  *
- * Self (`User.cpp:1197`):     22 B — objid + 0x0006 + nId + dwItemId + fEquip
- * Vicinity (`User.cpp:4515`): 38 B — adds idGuild + EQUIP_INFO(12) + nPart
+ * Self (`User.cpp:1197`):     22 B -- objid + 0x0006 + nId + dwItemId + fEquip
+ * Vicinity (`User.cpp:4515`): 38 B -- adds idGuild + EQUIP_INFO(12) + nPart
  */
 
 import { describe, it } from 'node:test';
@@ -63,7 +63,7 @@ describe('buildDoEquipVicinity', () => {
     assert.equal(buf.readUInt32LE(22), 2950, 'EQUIP_INFO.dwId');
     assert.equal(buf.readInt32LE(26), 0x50, 'EQUIP_INFO.nOption (signed int)');
     assert.equal(buf[30], 0x01, 'EQUIP_INFO.byFlag');
-    // The 3 MSVC pad bytes — the regression that crashes Neuz if omitted.
+    // The 3 MSVC pad bytes -- the regression that crashes Neuz if omitted.
     assert.equal(buf[31], 0, 'pad byte 1');
     assert.equal(buf[32], 0, 'pad byte 2');
     assert.equal(buf[33], 0, 'pad byte 3');

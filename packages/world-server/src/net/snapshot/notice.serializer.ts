@@ -1,11 +1,11 @@
 /**
- * S→C per-user text — `SNAPSHOTTYPE_TEXT` (0x00a0).
+ * S->C per-user text -- `SNAPSHOTTYPE_TEXT` (0x00a0).
  *
  * Mirrors `CUser::AddText` (`WORLDSERVER/User.cpp:653`). Florist defines
  * `__S_SERVER_UNIFY` (`VersionCommon.h:30`), so AddText writes a `TEXT_GENERAL`
- * BYTE between the sub-type and the string — the client's `OnText`
+ * BYTE between the sub-type and the string -- the client's `OnText`
  * (`DPClient.cpp:1341`) reads it as `nState` before the string. Omit it and the
- * string-length DWORD shifts → garbled text → silent drop.
+ * string-length DWORD shifts -> garbled text -> silent drop.
  *   m_Snapshot.ar << NULL_ID;
  *   m_Snapshot.ar << SNAPSHOTTYPE_TEXT;
  *   m_Snapshot.ar << TEXT_GENERAL;       // __S_SERVER_UNIFY

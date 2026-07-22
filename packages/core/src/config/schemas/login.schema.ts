@@ -74,7 +74,7 @@ export const LoginRegistrationConfigSchema = z.object({
   /**
    * How long (ms) to wait without a CLUSTER_HEARTBEAT before declaring a
    * Cluster Server dead and hiding it from the server list.
-   * Should be at least 2× the cluster's heartbeatIntervalMs.
+   * Should be at least 2* the cluster's heartbeatIntervalMs.
    */
   heartbeatTimeoutMs: z.number().int().min(5000).default(15000),
 });

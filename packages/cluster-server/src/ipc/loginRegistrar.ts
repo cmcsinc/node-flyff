@@ -1,7 +1,7 @@
 /**
- * LoginRegistrar — Cluster Server side of the Login registration handshake.
+ * LoginRegistrar -- Cluster Server side of the Login registration handshake.
  *
- * Mirrors `ClusterRegistrar` (world→cluster) but in the cluster→login direction.
+ * Mirrors `ClusterRegistrar` (world->cluster) but in the cluster->login direction.
  * On startup this module:
  *  1. TCP-connects to the Login Server's internal IpcServer port
  *  2. Sends REGISTER_CLUSTER with a HMAC-derived registration token
@@ -42,7 +42,7 @@ export interface LoginRegistrarDeps {
   loginInternalPort: number;
   reconnectIntervalMs: number;
   heartbeatIntervalMs: number;
-  /** WorldRegistry reference — used to build the live channel list in heartbeats. */
+  /** WorldRegistry reference -- used to build the live channel list in heartbeats. */
   worldRegistry: WorldRegistry;
   logger: Logger;
 }
@@ -148,7 +148,7 @@ export class LoginRegistrar extends EventEmitter {
     const { loginHost, loginInternalPort } = this.#deps;
     this.#log.info(
       { host: loginHost, port: loginInternalPort, attempt: this.#reconnectAttempts + 1 },
-      'Connecting to Login Server internal port…',
+      'Connecting to Login Server internal port...',
     );
 
     this.#parser = new FrameParser();
@@ -174,7 +174,7 @@ export class LoginRegistrar extends EventEmitter {
       this.#clearTimers();
 
       if (!this.#destroyed) {
-        this.#log.warn('Connection to Login Server closed — scheduling reconnect');
+        this.#log.warn('Connection to Login Server closed -- scheduling reconnect');
         if (wasRegistered) this.emit('unregistered');
         this.#scheduleReconnect();
       }
@@ -204,7 +204,7 @@ export class LoginRegistrar extends EventEmitter {
       publicPort,
       channelCount: worlds.length,
       // Send the live channel list at registration so the Login Server's
-      // server list has channel children immediately — the v15 client cannot
+      // server list has channel children immediately -- the v15 client cannot
       // proceed past server-select without a channel, and the first heartbeat
       // only fires after heartbeatIntervalMs.
       worlds: worlds.map(w => ({
@@ -219,7 +219,7 @@ export class LoginRegistrar extends EventEmitter {
       registrationToken: token,
     };
 
-    this.#log.info({ serverId, channelCount: worlds.length }, 'Sending REGISTER_CLUSTER…');
+    this.#log.info({ serverId, channelCount: worlds.length }, 'Sending REGISTER_CLUSTER...');
     this.#send(IPC_OP.REGISTER_CLUSTER, request);
   }
 
@@ -270,7 +270,7 @@ export class LoginRegistrar extends EventEmitter {
   }
 
   // ---------------------------------------------------------------------------
-  // Heartbeat — carries live world channel list
+  // Heartbeat -- carries live world channel list
   // ---------------------------------------------------------------------------
 
   #startHeartbeat(): void {
@@ -303,7 +303,7 @@ export class LoginRegistrar extends EventEmitter {
     const base = this.#deps.reconnectIntervalMs;
     const delay = Math.min(base * 2 ** this.#reconnectAttempts, 60_000);
     this.#reconnectAttempts++;
-    this.#log.info({ delay, attempt: this.#reconnectAttempts }, 'Reconnecting to Login Server…');
+    this.#log.info({ delay, attempt: this.#reconnectAttempts }, 'Reconnecting to Login Server...');
     this.emit('reconnecting');
     this.#reconnectTimer = setTimeout(() => this.#connect(), delay);
   }

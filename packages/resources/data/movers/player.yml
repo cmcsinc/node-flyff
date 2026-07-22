@@ -1,4 +1,4 @@
-# Player base stats — generated from propMover.txt
+# Player base stats -- generated from propMover.txt
 _version: "1.0"
 movers:
   - id: 11

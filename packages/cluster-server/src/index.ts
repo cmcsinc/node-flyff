@@ -9,12 +9,12 @@ import { buildClusterClientServer } from './clientServer.js';
  * Two transports, picked by `cacheAdapter`:
  *   - `redis` (production): `ioredis` loaded dynamically. HMAC-signed pub/sub
  *     over Redis; HMAC + 30 s freshness enforced by `IpcBus`.
- *   - anything else (dev): `LocalBus` — a localhost TCP pub/sub with the same
+ *   - anything else (dev): `LocalBus` -- a localhost TCP pub/sub with the same
  *     redis-like shape, so cluster + world exchange `player:handoff` with no
  *     Redis dependency. First process to bind `localBusPort` becomes the broker.
  *
  * `ioredis` is loaded dynamically so the cluster still boots in `memory` cache
- * mode. Bus setup is best-effort — a failure logs a warning and char-select
+ * mode. Bus setup is best-effort -- a failure logs a warning and char-select
  * keeps working (PRE_JOIN will log-and-drop the handoff instead of publishing).
  */
 async function startHandoffPublisher(
@@ -42,7 +42,7 @@ async function startHandoffPublisher(
         new (url: string, opts?: Record<string, unknown>) => IpcRedisLike;
       const redis = new Redis(cfg.redisUrl, { maxRetriesPerRequest: null });
       setBus(new IpcBus(redis, cfg.ipcSecret, cfg.serverId));
-      log.info({ serverId: cfg.serverId }, 'IPC bus connected (redis) — publishing player:handoff');
+      log.info({ serverId: cfg.serverId }, 'IPC bus connected (redis) -- publishing player:handoff');
     } else {
       const localBus = await createLocalBus({
         host: cfg.localBusHost,
@@ -52,11 +52,11 @@ async function startHandoffPublisher(
       setBus(new IpcBus(localBus, cfg.ipcSecret, cfg.serverId));
       log.info(
         { serverId: cfg.serverId, host: cfg.localBusHost, port: cfg.localBusPort },
-        'IPC bus connected (local) — publishing player:handoff',
+        'IPC bus connected (local) -- publishing player:handoff',
       );
     }
   } catch (err) {
-    log.warn({ err }, 'IPC bus setup failed — player:handoff will not be published');
+    log.warn({ err }, 'IPC bus setup failed -- player:handoff will not be published');
   }
 }
 

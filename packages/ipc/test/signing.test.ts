@@ -1,5 +1,5 @@
 /**
- * Unit tests for signing.ts — HMAC-SHA256 message signing and verification.
+ * Unit tests for signing.ts -- HMAC-SHA256 message signing and verification.
  */
 
 import { describe, it } from 'node:test';

@@ -1,10 +1,10 @@
 /**
- * Bank S→C serializer byte-layout test.
+ * Bank S->C serializer byte-layout test.
  *
  * Pins `CUser::AddPutItemBank` / `AddGetItemBank` / `AddPutGoldBank` /
  * `AddBankWindow` (`User.cpp:965-1034`). All wrap a per-user snapshot frame
  * (SNAPSHOT + NULL_ID + cb=1 + objid + subtype) then the type-specific fields.
- * Item acks reuse the 75-byte CItemElem body.
+ * Item acks reuse the 78-byte CItemElem body.
  */
 
 import { describe, it } from 'node:test';
@@ -22,9 +22,9 @@ import {
 const HDR = PACKETTYPE.SNAPSHOT;
 
 describe('buildPutItemBank', () => {
-  it('produces a 92 B frame: frame(16) + tab(1) + CItemElem body(75)', () => {
+  it('produces a 95 B frame: frame(16) + tab(1) + CItemElem body(78)', () => {
     const buf = buildPutItemBank(0x0000cccc, 1, 3, { itemId: 2950, count: 2 });
-    assert.equal(buf.length, 92);
+    assert.equal(buf.length, 95);
     assert.equal(buf.readUInt32LE(0), HDR);
     assert.equal(buf.readUInt32LE(4), NULL_ID);
     assert.equal(buf.readUInt16LE(8), 1, 'cb = 1');
@@ -34,14 +34,14 @@ describe('buildPutItemBank', () => {
     // CItemElem body follows: objId(=bankSlot) then itemId.
     assert.equal(buf.readUInt32LE(17), 3, 'body m_dwObjId = bankSlot');
     assert.equal(buf.readUInt32LE(21), 2950, 'body m_dwItemId');
-    assert.equal(buf.readInt16LE(37), 2, 'body m_nItemNum = count');
+    assert.equal(buf.readInt16LE(33), 2, 'body m_nItemNum = count');
   });
 });
 
 describe('buildGetItemBank', () => {
-  it('produces a 91 B frame: frame(16) + CItemElem body(75) (no tab byte)', () => {
+  it('produces a 94 B frame: frame(16) + CItemElem body(78) (no tab byte)', () => {
     const buf = buildGetItemBank(0x0000dddd, 7, { itemId: 1234, count: 1 });
-    assert.equal(buf.length, 91);
+    assert.equal(buf.length, 94);
     assert.equal(buf.readUInt16LE(14), SNAPSHOTTYPE.GETITEMBANK, '0x0051');
     assert.equal(buf.readUInt32LE(16), 7, 'body m_dwObjId = invSlot');
     assert.equal(buf.readUInt32LE(20), 1234, 'body m_dwItemId');

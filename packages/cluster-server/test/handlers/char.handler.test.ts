@@ -46,7 +46,7 @@ describe('CharHandler', () => {
       w.writeString('pw');    // password
       w.writeDword(0);        // dwId
       await handler.handleGetPlayerList(socket, new PacketReader(w.build()));
-      // CACHE_ADDR (0xf2) first, then PLAYER_LIST — mirrors C++ DPLoginSrvr.cpp:167.
+      // CACHE_ADDR (0xf2) first, then PLAYER_LIST -- mirrors C++ DPLoginSrvr.cpp:167.
       assert.equal(socket._written.length, 2);
       const cacheReader = new PacketReader(socket._written[0]!);
       assert.equal(cacheReader.readDword(), PACKETTYPE.CACHE_ADDR);

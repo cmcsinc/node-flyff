@@ -1,5 +1,5 @@
 /**
- * BankRepository test — account-shared bank CRUD + gold.
+ * BankRepository test -- account-shared bank CRUD + gold.
  *
  * Runs migration 001 (creates `bank` + `accounts`) then 004 (adds the `tab` axis
  * + `accounts.bank_gold`). Bank rows are keyed by `(account_id, tab, slot)`; the
@@ -37,7 +37,7 @@ describe('bank.repo.ts', () => {
 
   it('setItem inserts then upserts on (account_id, tab, slot)', async () => {
     await repo.setItem(accountId, 0, 5, 2950, 10);
-    await repo.setItem(accountId, 0, 5, 2950, 25); // same key → merge
+    await repo.setItem(accountId, 0, 5, 2950, 25); // same key -> merge
     const item = await repo.getItem(accountId, 0, 5);
     assert.ok(item);
     assert.equal(item!.item_id, 2950);

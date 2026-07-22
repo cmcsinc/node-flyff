@@ -1,5 +1,5 @@
 /**
- * Quest engine constants — mirrors the v15 C++ defines.
+ * Quest engine constants -- mirrors the v15 C++ defines.
  *
  * Sources:
  *   QS_BEGIN           resource/defineNeuz.h:86
@@ -31,10 +31,10 @@ export const MAX_QUESTREMOVE = 12;
 
 /**
  * `SNAPSHOTTYPE_REMOVEQUEST` `nRemoveType` (`User.cpp:1367-1399`).
- * - `CANCEL`         (-1) AddCancelQuest — show "quest removed" chat text
- * - `SILENT`         (0)  AddRemoveQuest — silent remove one
- * - `ALL`            (1)  AddRemoveAllQuest — clear active list
- * - `CLEAR_COMPLETE` (2)  AddRemoveCompleteQuest — clear completed list
+ * - `CANCEL`         (-1) AddCancelQuest -- show "quest removed" chat text
+ * - `SILENT`         (0)  AddRemoveQuest -- silent remove one
+ * - `ALL`            (1)  AddRemoveAllQuest -- clear active list
+ * - `CLEAR_COMPLETE` (2)  AddRemoveCompleteQuest -- clear completed list
  */
 export const REMOVEQUEST_TYPE = Object.freeze({
   CANCEL: -1,

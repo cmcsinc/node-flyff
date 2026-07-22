@@ -1,5 +1,5 @@
 /**
- * ActMsgHandler test — pickup happy path (item + gold), bag-full, wrong-owner
+ * ActMsgHandler test -- pickup happy path (item + gold), bag-full, wrong-owner
  * reject, and unknown-objid no-op.
  */
 
@@ -22,7 +22,7 @@ function mockSocket() {
   return { session: { state: SessionState.IN_WORLD, charId: 42 }, write: () => true, destroy: () => {} } as never;
 }
 
-/** ACTMSG body: dwMsg | nParam1 | nParam2 (3× DWORD). */
+/** ACTMSG body: dwMsg | nParam1 | nParam2 (3* DWORD). */
 const body = (dwMsg: number, nParam1: number, nParam2 = 0): Buffer => {
   const w = new PacketWriter();
   w.writeDword(dwMsg);
@@ -103,7 +103,7 @@ describe('ActMsgHandler', () => {
       onRemove: () => { removed = true; },
     });
     handler.handleActMsg(mockSocket(), new PacketReader(body(OBJMSG_PICKUP, 0x80000002)));
-    assert.equal(sent.length, 0, 'no snapshot — not ours');
+    assert.equal(sent.length, 0, 'no snapshot -- not ours');
     assert.equal(removed, false, 'pile left in world');
   });
 
@@ -126,7 +126,7 @@ describe('ActMsgHandler', () => {
   });
 
   it('parses objids >= 0x80000000 without sign issues', () => {
-    // Item objids start at FIRST_ITEM_ID 0x80000000 — readDword must yield the unsigned value.
+    // Item objids start at FIRST_ITEM_ID 0x80000000 -- readDword must yield the unsigned value.
     let seenObjid = 0;
     const player = { m_idPlayer: 42, m_nGold: 0 } as unknown as CPlayer;
     const playerManager = { get: () => player, sendTo: () => {} } as unknown as PlayerManager;

@@ -1,22 +1,22 @@
 /**
- * MeleeAttackService — `PACKETTYPE_MELEE_ATTACK` (0x00ff0010).
+ * MeleeAttackService -- `PACKETTYPE_MELEE_ATTACK` (0x00ff0010).
  *
  * `DPSrvr::OnMeleeAttack` (DPSrvr.cpp:4131) reads `dwAtkMsg, objid, nParam2,
  * nParam3, fVal` (the last only under `__HACK_1023`, active in v15) and echoes a
  * peer-broadcast swing animation via `g_UserMng.AddMeleeAttack`. `fVal` is an
- * anti-cheat echo of the weapon's `fAttackSpeed` — verified server-side against
+ * anti-cheat echo of the weapon's `fAttackSpeed` -- verified server-side against
  * the equipped weapon, never re-broadcast.
  *
  * This service is **motion-only**: it validates the target id and broadcasts the
  * swing so peers see the attacker animate. Damage, HP deduction, hit SFX, and
  * death are deferred to the combat system (Tier 0 blocker, PROGRESS.md). The
- * `__HACK_1023` speed check is likewise deferred — it needs the equipped weapon
+ * `__HACK_1023` speed check is likewise deferred -- it needs the equipped weapon
  * prop, which arrives with the inventory/stats systems.
  *
- * No WAL (rule 04 — attacks are not in the journal list until damage lands).
+ * No WAL (rule 04 -- attacks are not in the journal list until damage lands).
  *
  * ponytail: once combat + stats ship, replace this with the real
- * `SendActMsg` → `ACTMSG` queue → damage round-trip, gate target validity via
+ * `SendActMsg` -> `ACTMSG` queue -> damage round-trip, gate target validity via
  * `prj.GetMover(objid)`, and enforce the `fVal == fAttackSpeed` anti-cheat.
  *
  * @module services/meleeAttack

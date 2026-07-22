@@ -1,5 +1,5 @@
 /**
- * GETPOS handler — `PACKETTYPE_GETPOS` (0xffffff09).
+ * GETPOS handler -- `PACKETTYPE_GETPOS` (0xffffff09).
  *
  * `DPSrvr::OnGetPos` (DPSrvr.cpp:1416) reads `Vec3 vPos, float fAngle, OBJID objid`.
  * NaN guard on `fAngle`, anti-teleport on `vPos`, then `SetPos`/`SetAngle`.

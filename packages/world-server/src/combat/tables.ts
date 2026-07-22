@@ -1,19 +1,19 @@
 /**
- * Fixed combat data tables + enums — ported from v15 C++ source.
+ * Fixed combat data tables + enums -- ported from v15 C++ source.
  *
- * - `JOB_TABLE`: `Server/Resource/propJob.inc` (32 rows × 17 floats, indexed by
- *   job id 0–31; 0–15 base, 16–23 master, 24–31 hero). Mirrors
+ * - `JOB_TABLE`: `Server/Resource/propJob.inc` (32 rows * 17 floats, indexed by
+ *   job id 0-31; 0-15 base, 16-23 master, 24-31 hero). Mirrors
  *   `_Common/MoverParam.cpp` `GetJobProp()`.
  * - `ATK_SPEED_PLUS`: `MoverAttack.cpp:71`.
- * - `ELEMENT_MATCH`: `MoverAttack.cpp:1275` (atk-row × def-col → factor code).
+ * - `ELEMENT_MATCH`: `MoverAttack.cpp:1275` (atk-row * def-col -> factor code).
  * - `AF_*`: `ActionMover.h:27`. `WT_*`: weapon types. `ATK_*`: attack types.
  *
- * Frozen — game data. Loaded once, shared across all combat calls.
+ * Frozen -- game data. Loaded once, shared across all combat calls.
  *
  * @module combat/tables
  */
 
-/** One `propJob.inc` row — 17 floats in source column order. */
+/** One `propJob.inc` row -- 17 floats in source column order. */
 export interface JobProps {
   readonly fAttackSpeed: number;
   readonly fFactorMaxHP: number;
@@ -48,7 +48,7 @@ function job(
   };
 }
 
-/** Standalone VAGRANT row — the fallback for out-of-range job ids + NPCs. */
+/** Standalone VAGRANT row -- the fallback for out-of-range job ids + NPCs. */
 const JOB_VAGRANT: JobProps = job(75, 0.9, 0.3, 0.3, 1.0, 1.2, 0.5, 0.5, 4.5, 5.5, 0.8, 3.0, 5.0, 6.0, 0.2, 4.2, 1.0);
 
 /**
@@ -90,7 +90,7 @@ export const JOB_TABLE: readonly JobProps[] = [
   job(70, 1.5, 2.0, 0.4, 1.3, 1.2, 2.0, 0.5, 4.5, 5.5, 0.8, 3.0, 5.0, 6.0, 0.3, 4.2, 1.0), // 31 ELEMENTOR_HERO
 ];
 
-/** `GetJobProp(job)` — NPCs + out-of-range → VAGRANT (job 0). */
+/** `GetJobProp(job)` -- NPCs + out-of-range -> VAGRANT (job 0). */
 export function getJobProps(jobId: number): JobProps {
   return JOB_TABLE[jobId] ?? JOB_VAGRANT;
 }
@@ -112,13 +112,13 @@ export const ELECTRICITY = 3;
 export const WIND = 4;
 export const EARTH = 5;
 
-/** Factor codes from the 6×6 element match table. */
+/** Factor codes from the 6*6 element match table. */
 const EL_NONE = 0, EL_NORMAL = 1, EL_DEF_STRONG = 2, EL_ATK_STRONG = 3;
 
 /**
  * `ELEMENT_MATCH[atk][def]` (`MoverAttack.cpp:1275`). Translated to
- * `{ atkFactor, defFactor }` via `GetDamagePropertyFactor`: neutral → 10000/10000,
- * atk-strong → 15000/5000, def-strong → 5000/15000.
+ * `{ atkFactor, defFactor }` via `GetDamagePropertyFactor`: neutral -> 10000/10000,
+ * atk-strong -> 15000/5000, def-strong -> 5000/15000.
  */
 export const ELEMENT_MATCH: readonly (readonly number[])[] = [
   [EL_NONE, EL_NONE, EL_NONE, EL_NONE, EL_NONE, EL_NONE], // NO_PROP
@@ -129,7 +129,7 @@ export const ELEMENT_MATCH: readonly (readonly number[])[] = [
   [EL_NONE, EL_NONE, EL_NONE, EL_ATK_STRONG, EL_DEF_STRONG, EL_NORMAL], // EARTH
 ];
 
-/** Resolve an element match to the ATK/DEF multiplier pair (×10000). */
+/** Resolve an element match to the ATK/DEF multiplier pair (*10000). */
 export function elementFactor(atk: number, def: number): { atkFactor: number; defFactor: number } {
   const code = ELEMENT_MATCH[atk]?.[def] ?? EL_NONE;
   switch (code) {
@@ -146,8 +146,8 @@ export const AF_MISS = 0x0002;
 export const AF_MAGIC = 0x0008;
 export const AF_MELEESKILL = 0x0010;
 export const AF_MAGICSKILL = 0x0020;
-export const AF_CRITICAL1 = 0x0040; // 2.3× normal
-export const AF_CRITICAL2 = 0x0080; // 2.6× ATK4
+export const AF_CRITICAL1 = 0x0040; // 2.3* normal
+export const AF_CRITICAL2 = 0x0080; // 2.6* ATK4
 export const AF_CRITICAL = AF_CRITICAL1 | AF_CRITICAL2; // 0xC0 mask
 export const AF_PUSH = 0x0100;
 export const AF_PARRY = 0x0200;
