@@ -21,7 +21,7 @@
  * @module services/inventory
  */
 
-import type { InventoryRepository, CharacterRepository, Journal } from '@flyff/database';
+import type { InventoryRepository, Journal } from '@flyff/database';
 import { MAX_GOLD } from '@flyff/core';
 import { createLogger } from '@flyff/core/logger.js';
 import type { CPlayer, InventorySlot, Vec3 } from '../entities/player.js';
@@ -32,9 +32,8 @@ const logger = createLogger({ module: 'inventory-service' });
 export interface InventoryServiceDeps {
   inventoryRepo: Pick<
     InventoryRepository,
-    'setItem' | 'removeItem' | 'updateQuantity' | 'moveItem'
+    'setItem' | 'removeItem' | 'updateQuantity' | 'moveItem' | 'setGold'
   >;
-  charRepo: Pick<CharacterRepository, 'updateGold'>;
   /** Stack-size lookup (propItem dwPackMax via resources). Default 1 if absent. */
   getStackSize?: (itemId: number) => number;
   /** WAL journal -- optional so tests can omit it. */
@@ -55,6 +54,10 @@ export type DropItemResult =
 
 export type DropGoldResult =
   | { ok: true; amount: number; pos: Vec3 }
+  | { ok: false; reason: 'invalid' };
+
+export type RemoveItemResult =
+  | { ok: true; slot: number; itemId: number; remaining: number }
   | { ok: false; reason: 'invalid' };
 
 export class InventoryService {
@@ -130,16 +133,65 @@ export class InventoryService {
     return { ok: true, itemId: s.itemId, count: take, pos };
   }
 
+  /**
+   * Destroy `count` from main-bag `slot` (v15 REMOVEINVENITEM -- right-click
+   * "Delete" / drag-to-trash). No ground pile; the item ceases to exist.
+   * Mirrors `CDPSrvr::OnRemoveInvenItem` (`DPSrvr.cpp:8350`): non-positive
+   * count, equipped slot, and insufficient stack are rejected silently.
+   * Journal is canonical `INVENTORY_SLOT` absolute end-state (itemId 0 =>
+   * cleared) so crash recovery is idempotent. ponytail: `IsUndestructable` +
+   * `IsUsing` gates (item flags / in-use state not tracked yet) and the
+   * DEFINEDTEXT success text -- add when propItem flags + the text frame ship.
+   */
+  removeItem(player: CPlayer, slot: number, count: number): RemoveItemResult {
+    if (!this.inMainBag(slot)) return { ok: false, reason: 'invalid' };
+    const s = player.m_Inventory[slot];
+    if (!s || count <= 0 || count > s.count) return { ok: false, reason: 'invalid' };
+    const itemId = s.itemId;
+    const remaining = s.count - count;
+    if (remaining <= 0) {
+      this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId: 0, count: 0 } });
+      player.m_Inventory[slot] = null;
+      this.deps.inventoryRepo
+        .removeItem(player.m_idPlayer, slot)
+        .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory removeItem failed'));
+    } else {
+      s.count = remaining;
+      this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId, count: remaining } });
+      this.persist(player, slot, s);
+    }
+    player._dirty.add('m_Inventory');
+    return { ok: true, slot, itemId, remaining: Math.max(0, remaining) };
+  }
+
   /** Remove `amount` gold for a ground penya drop. Rejects over-spend. */
   dropGold(player: CPlayer, amount: number, pos: Vec3): DropGoldResult {
     if (amount <= 0 || amount > player.m_nGold) return { ok: false, reason: 'invalid' };
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'GOLD_DROP', payload: { amount } });
     player.m_nGold -= amount;
     player._dirty.add('m_nGold');
-    this.deps.charRepo
-      .updateGold(player.m_idPlayer, player.m_nGold)
+    this.deps.inventoryRepo
+      .setGold(player.m_idPlayer, player.m_nGold)
       .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'));
     return { ok: true, amount, pos };
+  }
+
+  /**
+   * Debit `amount` penya. Returns false if `amount` is non-positive or exceeds
+   * the current balance (no mutation). Mirrors {@link addGold}'s WAL + persist;
+   * used by NPC shop buy. Callers MUST pre-check gold when they need atomic
+   * "no item if no gold" ordering (add the item only after this returns true,
+   * or check the balance read-only before addItem to avoid a stranded item).
+   */
+  spendGold(player: CPlayer, amount: number): boolean {
+    if (amount <= 0 || amount > player.m_nGold) return false;
+    player.m_nGold -= amount;
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
+    player._dirty.add('m_nGold');
+    this.deps.inventoryRepo
+      .setGold(player.m_idPlayer, player.m_nGold)
+      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'));
+    return true;
   }
 
   /** Credit `amount` penya, clamped to MAX_GOLD (rule 03 -- gold overflow). */
@@ -149,8 +201,8 @@ export class InventoryService {
     player.m_nGold = Math.min(MAX_GOLD, before + amount);
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
     player._dirty.add('m_nGold');
-    this.deps.charRepo
-      .updateGold(player.m_idPlayer, player.m_nGold)
+    this.deps.inventoryRepo
+      .setGold(player.m_idPlayer, player.m_nGold)
       .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'));
   }
 

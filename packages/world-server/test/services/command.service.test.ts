@@ -172,6 +172,27 @@ describe('CommandService -- teleport', () => {
     assert.equal(gm.m_vPos.z, 666);
   });
 
+  it('3-arg Navigator form `/teleport <worldId> <x> <z>` skips worldId (not eaten as x)', () => {
+    const { playerManager, commandService } = setup();
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    playerManager.add(gm);
+    // Client sends `/teleport 1 6971 3336` (WndField.cpp:10049). Old parser
+    // read worldId(1) as x -> landed at (1, -9.67) off terrain.
+    commandService.route(gm, '/teleport 1 6971 3336');
+    assert.equal(gm.m_vPos.x, 6971);
+    assert.equal(gm.m_vPos.z, 3336);
+  });
+
+  it('rejects non-positive coords (C++ VecInWorld guard)', () => {
+    const { playerManager, commandService } = setup();
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    gm.m_vPos = { x: 100, y: 0, z: 100 };
+    playerManager.add(gm);
+    commandService.route(gm, '/te 100 -5');
+    assert.equal(gm.m_vPos.x, 100, 'position untouched when z <= 0');
+    assert.equal(gm.m_vPos.z, 100);
+  });
+
   it('refuses non-numeric, non-player token with not-found reply', () => {
     const { playerManager, commandService } = setup();
     const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
@@ -251,7 +272,7 @@ describe('CommandService -- gold (/gg)', () => {
       spawnManager: makeSpawnManager(),
       questService: makeQuestService().svc,
       journal: { append: (e) => { journaled.push(e); } },
-      charRepo: { updateGold: async (_id: number, gold: number) => { goldSaved.push(gold); } } as never,
+      inventoryRepo: { setGold: async (_id: number, gold: number) => { goldSaved.push(gold); } } as never,
     });
     const admin = makePlayer(1, 'Admin', AUTH.ADMINISTRATOR);
     playerManager.add(admin);
@@ -262,7 +283,7 @@ describe('CommandService -- gold (/gg)', () => {
     assert.equal(journaled.length, 1);
     assert.equal(journaled[0]!.type, 'CHAR_GOLD');
     assert.equal((journaled[0]!.payload as { gold: number }).gold, 1000);
-    assert.deepEqual(goldSaved, [1000], 'live updateGold write fires with the new total');
+    assert.deepEqual(goldSaved, [1000], 'live setGold write fires with the new total');
     assert.equal((admin.socket as unknown as SpySocket)._sent.length, 1, 'SetPointParam sent to self');
   });
 
@@ -383,7 +404,7 @@ describe('CommandService -- removeTotalGold (/rtg)', () => {
     const commandService = new CommandService({
       playerManager, spawnManager: makeSpawnManager(), questService: makeQuestService().svc,
       journal: { append: (e) => { journaled.push(e); } },
-      charRepo: { updateGold: async (_id: number, gold: number) => { goldSaved.push(gold); } } as never,
+      inventoryRepo: { setGold: async (_id: number, gold: number) => { goldSaved.push(gold); } } as never,
     });
     const admin = makePlayer(1, 'Admin', AUTH.ADMINISTRATOR);
     admin.m_nGold = 500;
@@ -393,7 +414,7 @@ describe('CommandService -- removeTotalGold (/rtg)', () => {
     assert.equal(admin.m_nGold, 300);
     assert.equal(journaled[0]!.type, 'CHAR_GOLD');
     assert.equal((journaled[0]!.payload as { gold: number }).gold, 300);
-    assert.deepEqual(goldSaved, [300], 'live updateGold write fires with the new total');
+    assert.deepEqual(goldSaved, [300], 'live setGold write fires with the new total');
   });
 
   it('prints the current total when amount exceeds balance (no mutation)', () => {

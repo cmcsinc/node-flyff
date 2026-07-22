@@ -13,7 +13,7 @@
  * @module services/quest
  */
 
-import type { JournalEntry, QuestRepository, CharacterRepository } from '@flyff/database';
+import type { JournalEntry, QuestRepository, InventoryRepository } from '@flyff/database';
 import type { QuestDef, QuestIndex } from '@flyff/resources';
 import type { CPlayer } from '../entities/player.js';
 import { QUEST_LOG_ACTION, QS_BEGIN, QS_END } from '@flyff/core/constants/quest.js';
@@ -57,10 +57,11 @@ export interface QuestServiceDeps {
   /** WAL journal for reward audit (rule 03/04). Optional for tests. */
   journal?: { append(entry: JournalEntry): number };
   /**
-   * Character repo for gold persistence (migration 003). Optional -- gold still
-   * mutates in-memory + WAL without it; only the cold DB flush is skipped.
+   * Inventory container repo for gold persistence (migration 008 -- gold is a
+   * container attribute). Optional -- gold still mutates in-memory + WAL
+   * without it; only the cold DB flush is skipped.
    */
-  charRepo?: Pick<CharacterRepository, 'updateGold'>;
+  inventoryRepo?: Pick<InventoryRepository, 'setGold'>;
 }
 
 export type QuestOpResult =
@@ -120,11 +121,11 @@ export class QuestService {
 
     const sink: RewardSink = { inventory: inv };
     if (this.deps.journal) sink.journal = (entry) => { this.deps.journal!.append(entry); };
-    const charRepo = this.deps.charRepo;
-    if (charRepo) {
-      // Fire-and-forget gold flush (mirrors combat's updateLevelAndExp pattern).
+    const inventoryRepo = this.deps.inventoryRepo;
+    if (inventoryRepo) {
+      // Fire-and-forget gold flush to the inventory container (migration 008).
       sink.flushGold = (charId, gold) => {
-        charRepo.updateGold(charId, gold).catch((err: unknown) =>
+        inventoryRepo.setGold(charId, gold).catch((err: unknown) =>
           logger.error({ err, charId, gold }, 'gold persist failed'),
         );
       };

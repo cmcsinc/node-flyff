@@ -16,8 +16,6 @@ export interface CharacterRow {
   skin_color: number;
   level: number;
   exp: bigint;
-  /** Gold (C++ `m_nGold`). Normalized to Number -- MAX_GOLD (~2.1B) < 2^53. */
-  gold: number;
   hp: number;
   mp: number;
   max_hp: number;
@@ -47,12 +45,6 @@ export interface CharacterRow {
    * Lifetime counter -- never decremented.
    */
   skill_level: number;
-  /**
-   * Bank password (C++ `m_szBankPass`, char[5]). Added by migration 006.
-   * Sentinel `'0000'` = no password set. Max 4 chars. Plaintext (mirrors the
-   * original protocol -- the client sends and compares it in the clear).
-   */
-  bank_pass: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -64,8 +56,8 @@ export interface CharacterRow {
  */
 export type CharacterCreateData = Omit<
   CharacterRow,
-  'id' | 'created_at' | 'updated_at' | 'gold' | 'skill_point' | 'skill_level' | 'bank_pass'
-> & { gold?: number; skill_point?: number; skill_level?: number; bank_pass?: string };
+  'id' | 'created_at' | 'updated_at' | 'skill_point' | 'skill_level'
+> & { skill_point?: number; skill_level?: number };
 
 /**
  * Character update data (all fields optional).
@@ -91,11 +83,11 @@ export class CharacterRepository {
    */
   private mapRow(row: CharacterRow | undefined): CharacterRow | null {
     if (!row) return null;
-    return { ...row, exp: String(row.exp) as unknown as bigint, gold: Number(row.gold) };
+    return { ...row, exp: String(row.exp) as unknown as bigint };
   }
 
   private mapRows(rows: CharacterRow[]): CharacterRow[] {
-    return rows.map((r) => ({ ...r, exp: String(r.exp) as unknown as bigint, gold: Number(r.gold) }));
+    return rows.map((r) => ({ ...r, exp: String(r.exp) as unknown as bigint }));
   }
 
   /**
@@ -169,7 +161,6 @@ export class CharacterRepository {
     const [row] = await this.db('characters')
       .insert({
         ...data,
-        gold: data.gold ?? 0,
         exp: data.exp.toString(),
         created_at: new Date(),
         updated_at: new Date(),
@@ -240,23 +231,6 @@ export class CharacterRepository {
   }
 
   /**
-   * Update character gold (C++ `m_nGold`). Fire-and-forget at call sites --
-   * matches the `updateLevelAndExp` cadence; WAL `GOLD_CHANGE` is the
-   * crash-recovery backup.
-   *
-   * @param id - Character ID
-   * @param gold - New gold total
-   */
-  async updateGold(id: number, gold: number): Promise<void> {
-    await this.db('characters')
-      .where({ id })
-      .update({
-        gold,
-        updated_at: new Date(),
-      });
-  }
-
-  /**
    * Update character stats (HP, MP, attributes).
    *
    * @param id - Character ID
@@ -302,22 +276,6 @@ export class CharacterRepository {
       .update({
         skill_point: skillPoint,
         skill_level: skillLevel,
-        updated_at: new Date(),
-      });
-  }
-
-  /**
-   * Update the bank password (C++ `m_szBankPass`). Persisted immediately on
-   * CHANGEBANKPASS (mirrors `SendChangeBankPass`, DPDatabaseClient.cpp:2131).
-   *
-   * @param id - Character ID
-   * @param bankPass - New bank password ('0000' = cleared). Max 4 chars.
-   */
-  async updateBankPass(id: number, bankPass: string): Promise<void> {
-    await this.db('characters')
-      .where({ id })
-      .update({
-        bank_pass: bankPass,
         updated_at: new Date(),
       });
   }

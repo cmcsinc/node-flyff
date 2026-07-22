@@ -36,10 +36,8 @@ function makeDeps() {
           order.push('setItem');
           setItemCalls.push({ charId, slot, itemId, quantity });
         },
-      },
-      charRepo: {
-        updateGold: async (charId: number, gold: number) => {
-          order.push('updateGold');
+        setGold: async (_charId: number, gold: number) => {
+          order.push('setGold');
           goldCalls.push(gold);
         },
       },
@@ -104,7 +102,8 @@ describe('InventoryService', () => {
   });
 
   it('addGold clamps to MAX_GOLD + journals CHAR_GOLD (absolute) before persist', async () => {
-    const player = CPlayer.fromRow(makeRow({ gold: MAX_GOLD - 100 }), { write: () => true });
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = MAX_GOLD - 100;
     const ctx = makeDeps();
     const svc = new InventoryService(ctx.deps);
 
@@ -113,7 +112,7 @@ describe('InventoryService', () => {
     assert.equal(player.m_nGold, MAX_GOLD, 'clamped, no overflow');
     assert.ok(player._dirty.has('m_nGold'));
     await Promise.resolve();
-    assert.deepEqual(ctx.order, ['journal:CHAR_GOLD', 'updateGold']);
+    assert.deepEqual(ctx.order, ['journal:CHAR_GOLD', 'setGold']);
     assert.equal(ctx.goldCalls[0], MAX_GOLD);
     assert.equal(ctx.journalCalls[0]!.payload.gold, MAX_GOLD, 'absolute gold total in payload');
   });
@@ -132,8 +131,8 @@ function makeFullDeps(stackSizeFor: (id: number) => number = () => 1) {
       removeItem: async (_c: number, slot: number) => removed.push(slot),
       updateQuantity: async () => {},
       moveItem: async (_c: number, src: number, dst: number) => moved.push({ src, dst }),
+      setGold: async (_c: number, g: number) => gold.push(g),
     },
-    charRepo: { updateGold: async (_c: number, g: number) => gold.push(g) },
     journal: { append: (e: { type: string; payload: Record<string, unknown> }) => journal.push(e) },
     getStackSize: stackSizeFor,
   };
@@ -225,7 +224,8 @@ describe('InventoryService -- moveItem / dropItem / dropGold', () => {
   });
 
   it('dropGold subtracts and rejects over-spend', () => {
-    const player = CPlayer.fromRow(makeRow({ gold: 500 }), { write: () => true });
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = 500;
     const ctx = makeFullDeps();
     const svc = new InventoryService(ctx.deps);
 
@@ -235,5 +235,65 @@ describe('InventoryService -- moveItem / dropItem / dropGold', () => {
 
     const bad = svc.dropGold(player, 999, { x: 0, y: 0, z: 0 });
     assert.equal(bad.ok, false, 'rejects more than held');
+  });
+});
+
+describe('InventoryService -- removeItem (REMOVEINVENITEM)', () => {
+  it('partial-remove decrements the stack + journals absolute end-state', async () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 10 };
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.removeItem(player, 0, 4);
+
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.slot, 0);
+      assert.equal(r.itemId, 2001);
+      assert.equal(r.remaining, 6);
+    }
+    assert.equal(player.m_Inventory[0]!.count, 6, 'remainder stays in bag');
+    assert.ok(player._dirty.has('m_Inventory'));
+    await Promise.resolve();
+    assert.deepEqual(
+      ctx.journal[0],
+      { charId: 1, type: 'INVENTORY_SLOT', payload: { slot: 0, itemId: 2001, count: 6 } },
+      'canonical absolute end-state (itemId nonzero)',
+    );
+    assert.deepEqual(ctx.setItem[0], { slot: 0, itemId: 2001, quantity: 6 });
+    assert.equal(ctx.removed.length, 0, 'no row delete on partial');
+  });
+
+  it('full-remove clears the slot + journals itemId 0 (clear signal)', async () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 3 };
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.removeItem(player, 0, 3);
+
+    assert.equal(r.ok, true);
+    if (r.ok) assert.equal(r.remaining, 0);
+    assert.equal(player.m_Inventory[0], null, 'slot nulled in memory');
+    await Promise.resolve();
+    assert.equal(ctx.journal[0]!.payload.itemId, 0, 'itemId 0 => replayer removes row');
+    assert.equal(ctx.removed[0], 0, 'row deleted from DB');
+  });
+
+  it('rejects non-positive count, over-count, empty slot, and equip-range slot', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 10 };
+    const ctx = makeFullDeps();
+    const svc = new InventoryService(ctx.deps);
+
+    assert.equal(svc.removeItem(player, 0, 0).ok, false, 'nNum <= 0');
+    assert.equal(svc.removeItem(player, 0, 99).ok, false, 'nNum > stack');
+    assert.equal(svc.removeItem(player, 5, 1).ok, false, 'empty slot');
+    assert.equal(svc.removeItem(player, MAX_INVENTORY, 1).ok, false, 'equip-range slot (IsEquip gate)');
+    assert.equal(ctx.removed.length, 0, 'no mutation on any reject');
+    assert.equal(ctx.setItem.length, 0);
+    assert.equal(ctx.journal.length, 0, 'no WAL on rejected paths');
+    assert.equal(player.m_Inventory[0]!.count, 10, 'stack untouched');
   });
 });

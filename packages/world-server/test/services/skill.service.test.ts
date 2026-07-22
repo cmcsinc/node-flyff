@@ -11,7 +11,7 @@ function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {
     id: 42, account_id: 7, name: 'TestHero', slot: 0, class: 1, gender: 0,
     hair_style: 2, hair_color: 0, face_style: 3, skin_color: 1,
-    level: 15, exp: 0n, gold: 0, hp: 100, mp: 50, max_hp: 100, max_mp: 50,
+    level: 15, exp: 0n, hp: 100, mp: 50, max_hp: 100, max_mp: 50,
     strength: 15, stamina: 15, dexterity: 15, intelligence: 15,
     x: 0, y: 0, z: 0, world_id: 'MADRIGAL', zone_id: 1,
     created_at: new Date(), updated_at: new Date(), ...over,

@@ -16,7 +16,7 @@
  * @module services/bank
  */
 
-import type { BankRepository, InventoryRepository, CharacterRepository, Journal } from '@flyff/database';
+import type { BankRepository, InventoryRepository, Journal } from '@flyff/database';
 import { createLogger } from '@flyff/core/logger.js';
 import type { CPlayer, InventorySlot } from '../entities/player.js';
 import { MAX_INVENTORY, BANK_SLOTS, MAX_BANK_TABS } from '../net/snapshot/constants.js';
@@ -24,9 +24,8 @@ import { MAX_INVENTORY, BANK_SLOTS, MAX_BANK_TABS } from '../net/snapshot/consta
 const logger = createLogger({ module: 'bank-service' });
 
 export interface BankServiceDeps {
-  bankRepo: Pick<BankRepository, 'setItem' | 'removeItem' | 'getGold' | 'setGold'>;
-  inventoryRepo: Pick<InventoryRepository, 'removeItem' | 'setItem'>;
-  characterRepo?: Pick<CharacterRepository, 'updateBankPass' | 'updateGold'>;
+  bankRepo: Pick<BankRepository, 'setItem' | 'removeItem' | 'getGold' | 'setGold' | 'getBankPass' | 'setBankPass'>;
+  inventoryRepo: Pick<InventoryRepository, 'removeItem' | 'setItem' | 'setGold'>;
   journal?: Journal;
 }
 
@@ -97,9 +96,11 @@ export class BankService {
       return { ok: false, dwId, dwItemId };
     }
     const newPass = szNewPass.length === 0 ? NO_BANK_PASS : szNewPass;
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_PASS', payload: { bankPass: newPass } });
+    // Account-wide pin (migration 008): journal carries accountId so the WAL
+    // replayer addresses the bank container, not a character row.
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_PASS', payload: { accountId: player.m_accountId, bankPass: newPass } });
     player.m_szBankPass = newPass;
-    this.deps.characterRepo?.updateBankPass(player.m_idPlayer, newPass).catch((e: unknown) => logger.warn({ err: e }, 'bank pass persist failed'));
+    this.deps.bankRepo.setBankPass(player.m_accountId, newPass).catch((e: unknown) => logger.warn({ err: e }, 'bank pass persist failed'));
     return { ok: true, dwId, dwItemId };
   }
 
@@ -159,8 +160,8 @@ export class BankService {
     player.m_nGold -= amount;
     player.m_BankGold[0] += amount;
     // Canonical CHAR_GOLD carries the absolute post-mutation m_nGold so WAL
-    // replay restores the inventory side too -- without this the characters.gold
-    // column keeps the pre-deposit value and a relog dupes the penya back.
+    // replay restores the inventory side too -- without this the inventory
+    // container keeps the pre-deposit value and a relog dupes the penya back.
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
     this.persistGold(player);
     return { ok: true, tab: 0, invGold: player.m_nGold, bankGold: player.m_BankGold[0] };
@@ -178,7 +179,7 @@ export class BankService {
 
   private persistGold(player: CPlayer): void {
     player._dirty.add('m_nGold');
-    this.deps.characterRepo?.updateGold(player.m_idPlayer, player.m_nGold)
+    this.deps.inventoryRepo.setGold(player.m_idPlayer, player.m_nGold)
       .catch((e: unknown) => logger.warn({ err: e }, 'inv gold persist failed'));
     this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[0]).catch((e: unknown) => logger.warn({ err: e }, 'bank setGold failed'));
   }

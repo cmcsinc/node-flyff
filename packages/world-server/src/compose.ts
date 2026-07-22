@@ -60,6 +60,7 @@ import { ActMsgHandler } from './handlers/actMsg.handler.js';
 import { MoveItemHandler } from './handlers/moveItem.handler.js';
 import { DropItemHandler } from './handlers/dropItem.handler.js';
 import { DropGoldHandler } from './handlers/dropGold.handler.js';
+import { RemoveItemHandler } from './handlers/removeItem.handler.js';
 import { DoEquipHandler } from './handlers/doEquip.handler.js';
 import { EquipService } from './services/equip.service.js';
 import { ConsumableService } from './services/consumable.service.js';
@@ -136,6 +137,7 @@ export interface WorldComposeResult {
   moveItemHandler: MoveItemHandler;
   dropItemHandler: DropItemHandler;
   dropGoldHandler: DropGoldHandler;
+  removeItemHandler: RemoveItemHandler;
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
   bankHandler: BankHandler;
@@ -212,7 +214,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // Register idempotent replay handlers for every WAL event type the services
   // emit (CHAR_EXP / CHAR_GOLD / INVENTORY_SLOT). Payloads are absolute
   // end-state, so recover() can re-apply them on the next boot without dupes.
-  registerReplayers(journalReplayer, { charRepo, inventoryRepo, logger });
+  registerReplayers(journalReplayer, { charRepo, inventoryRepo, bankRepo, logger });
 
   // In-memory world state + enter-world stack.
   const playerManager = new PlayerManager();
@@ -253,7 +255,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // quest-item drops on kill AND questService can evaluate/grant item
   // conditions + rewards through the real bag (questInventory adapter).
   const inventoryService = new InventoryService({
-    inventoryRepo, charRepo, journal,
+    inventoryRepo, journal,
     getStackSize: (id: number) => resources.items.items.get(id)?.stack_size ?? 1,
   });
   const createItemSerializer = new CreateItemSnapshotSerializer();
@@ -264,7 +266,7 @@ export async function compose(): Promise<WorldComposeResult> {
     inventoryService,
     createItemSerializer,
     journal,
-    charRepo,
+    inventoryRepo,
   });
 
   // Phase 6 -- reactive quest tracker (kill/patrol/time + quest-item drops).
@@ -346,7 +348,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // the audit that scoped these.
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
-    inventoryService, charRepo,
+    inventoryService, charRepo, inventoryRepo,
   });
   const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
@@ -393,6 +395,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const moveItemHandler = new MoveItemHandler({ playerManager, inventoryService });
   const dropItemHandler = new DropItemHandler({ playerManager, itemManager, inventoryService });
   const dropGoldHandler = new DropGoldHandler({ playerManager, itemManager, inventoryService });
+  const removeItemHandler = new RemoveItemHandler({ playerManager, inventoryService });
 
   // Equipment -- equip/unequip + stat fold into combat.
   const equipService = new EquipService({
@@ -410,12 +413,16 @@ export async function compose(): Promise<WorldComposeResult> {
   const doUseItemHandler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
 
   // Bank -- open + deposit/withdraw item & gold (account-shared).
-  const bankService = new BankService({ bankRepo, inventoryRepo, characterRepo: charRepo, journal });
+  const bankService = new BankService({ bankRepo, inventoryRepo, journal });
   const bankHandler = new BankHandler({ playerManager, bankService });
 
-  // NPC vendor shop -- open/close (empty-window until stock expansion ships).
-  const shopService = new ShopService({ spawnManager });
-  const shopHandler = new ShopHandler({ playerManager, shopService });
+  // NPC vendor shop -- open/close + buy/sell.
+  const shopService = new ShopService({
+    spawnManager,
+    inventoryService,
+    getItem: (id: number) => resources.items.items.get(id),
+  });
+  const shopHandler = new ShopHandler({ playerManager, shopService, createItemSerializer });
 
   // Phase 4 -- C->S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
   const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
@@ -483,6 +490,7 @@ export async function compose(): Promise<WorldComposeResult> {
     moveItemHandler,
     dropItemHandler,
     dropGoldHandler,
+    removeItemHandler,
     doEquipHandler,
     doUseItemHandler,
     bankHandler,

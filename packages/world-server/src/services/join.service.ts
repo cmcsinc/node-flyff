@@ -39,10 +39,10 @@ export interface JoinServiceDeps {
   accountRepo?: Pick<AccountRepository, 'findById'>;
   /** Quest state hydration on JOIN. Optional: skips quest load if absent. */
   questService?: { loadOnJoin(player: CPlayer): Promise<void> };
-  /** Inventory hydration on JOIN. Optional: empty bag if absent. */
-  inventoryRepo?: Pick<InventoryRepository, 'findByCharacterId'>;
+  /** Inventory + carried-gold hydration on JOIN. Optional: empty bag / 0 gold if absent. */
+  inventoryRepo?: Pick<InventoryRepository, 'findByCharacterId' | 'getGold'>;
   /** Bank hydration on JOIN + gold flush on disconnect. Optional: empty bank if absent. */
-  bankRepo?: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold'>;
+  bankRepo?: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold' | 'getBankPass'>;
   /** Skill hydration on JOIN. Optional: empty skill roster if absent. */
   skillRepo?: Pick<SkillRepository, 'loadByCharacter'>;
   playerManager: PlayerManager;
@@ -120,12 +120,16 @@ export class JoinService {
         flags: r.flags, refine: r.refine, durability: r.durability,
       };
     }
+    // Carried penya lives on the inventory container row (migration 008), not
+    // the character row -- hydrate it after the slots.
+    player.m_nGold = await this.deps.inventoryRepo.getGold(player.m_idPlayer);
   }
 
   /**
-   * Hydrate `m_Bank` (3 tabs) + `m_BankGold` from the DB. Bank is account-shared
-   * (Flyff lore) -- all characters on the account see the same tabs. Gold lives
-   * in tab 0 of `m_BankGold` (single account column); tabs 1/2 stay 0 until
+   * Hydrate `m_Bank` (3 tabs) + `m_BankGold` + `m_szBankPass` from the DB. Bank
+   * is account-shared (Flyff lore) -- all characters on the account see the
+   * same tabs, gold, and pin. Gold + pin live on the `bank` container row
+   * (migration 008); gold maps to tab 0 of `m_BankGold`, tabs 1/2 stay 0 until
    * per-tab gold separation is needed.
    */
   private async loadBank(player: CPlayer): Promise<void> {
@@ -138,6 +142,8 @@ export class JoinService {
       tab[r.slot] = { itemId: r.item_id, count: r.quantity, flags: r.flags, refine: r.refine, durability: r.durability };
     }
     player.m_BankGold[0] = await this.deps.bankRepo.getGold(player.m_accountId);
+    // Account-wide bank pin lives on the bank container row (migration 008).
+    player.m_szBankPass = await this.deps.bankRepo.getBankPass(player.m_accountId);
   }
 
   /** Disconnect cleanup -- drop from both managers (rule 05 -- explicit removal). */

@@ -25,6 +25,7 @@ import { up as migrationUp004 } from '@flyff/database/migrations/004_bank_tab';
 import { up as migrationUp005 } from '@flyff/database/migrations/005_skills_slot';
 import { up as migrationUp006 } from '@flyff/database/migrations/006_bank_pass';
 import { up as migrationUp007 } from '@flyff/database/migrations/007_character_angle';
+import { up as migrationUp008 } from '@flyff/database/migrations/008_normalize_containers';
 import { hashPassword } from '@flyff/core/utils/password.js';
 
 /**
@@ -44,6 +45,7 @@ const MIGRATIONS = [
   { column: ['skills', 'slot'], up: migrationUp005 },
   { column: ['characters', 'bank_pass'], up: migrationUp006 },
   { column: ['characters', 'angle'], up: migrationUp007 },
+  { column: ['inventory', 'gold'], up: migrationUp008 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';

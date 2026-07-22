@@ -1,9 +1,10 @@
 /**
- * BankRepository test -- account-shared bank CRUD + gold.
+ * BankRepository test -- account-shared bank CRUD + container gold/pin.
  *
- * Runs migration 001 (creates `bank` + `accounts`) then 004 (adds the `tab` axis
- * + `accounts.bank_gold`). Bank rows are keyed by `(account_id, tab, slot)`; the
- * per-account unique over `(tab, slot)` means upserts merge in place.
+ * Runs the full migration chain (001..008): 008 renames `bank`->`bank_item` and
+ * creates the `bank` container that holds gold + bank_pass. Bank item rows are
+ * keyed by `(account_id, tab, slot)`; the per-account unique over `(tab, slot)`
+ * means upserts merge in place.
  */
 
 import { describe, it, before, after } from 'node:test';
@@ -11,8 +12,7 @@ import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
 import type { Knex } from '../../src/types.js';
 import { BankRepository } from '../../src/repositories/bank.repo.js';
-import { up as up001 } from '../../src/migrations/001_initial.js';
-import { up as up004 } from '../../src/migrations/004_bank_tab.js';
+import { applyAllMigrations } from '../migrateAll.js';
 
 const knex = (knexModule as any).default || knexModule;
 
@@ -23,8 +23,7 @@ describe('bank.repo.ts', () => {
 
   before(async () => {
     db = knex({ client: 'better-sqlite3', connection: ':memory:', useNullAsDefault: true });
-    await up001(db);
-    await up004(db);
+    await applyAllMigrations(db);
     repo = new BankRepository(db);
 
     const [row] = await db('accounts').insert({ username: 'bankacc', password_hash: 'h' }).returning('id');
@@ -86,5 +85,14 @@ describe('bank.repo.ts', () => {
     assert.equal(await repo.getGold(accountId), 0, 'default 0');
     await repo.setGold(accountId, 12345);
     assert.equal(await repo.getGold(accountId), 12345);
+  });
+
+  it('getBankPass/setBankPass default to 0000 and round-trip a new pin', async () => {
+    const [acc] = await db('accounts').insert({ username: 'pinacc', password_hash: 'h' }).returning('id');
+    assert.equal(await repo.getBankPass(acc.id), '0000', 'no row -> 0000');
+    await repo.setBankPass(acc.id, '4242');
+    assert.equal(await repo.getBankPass(acc.id), '4242');
+    await repo.setBankPass(acc.id, '0000');
+    assert.equal(await repo.getBankPass(acc.id), '0000', 'upsert overwrites');
   });
 });

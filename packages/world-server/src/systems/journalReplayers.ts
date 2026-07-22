@@ -20,13 +20,14 @@
  * @module systems/journalReplayers
  */
 
-import type { CharacterRepository, InventoryRepository, JournalRow } from '@flyff/database';
+import type { CharacterRepository, InventoryRepository, BankRepository, JournalRow } from '@flyff/database';
 import type { Logger } from '@flyff/core';
 import type { JournalReplayer } from './journalReplayer.js';
 
 export interface ReplayerRegistryDeps {
-  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateGold' | 'updateBankPass'>;
-  readonly inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem'>;
+  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp'>;
+  readonly inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem' | 'setGold'>;
+  readonly bankRepo: Pick<BankRepository, 'setBankPass'>;
   readonly logger: Logger;
 }
 
@@ -46,10 +47,11 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     await deps.charRepo.updateLevelAndExp(row.char_id, p.level, BigInt(p.exp));
   });
 
-  // Character gold total (C++ `m_nGold`).
+  // Character gold total (C++ `m_nGold`) -- stored on the inventory container
+  // row (migration 008), not the character row.
   r.register('CHAR_GOLD', async (row) => {
     const p = payload<{ gold: number }>(row);
-    await deps.charRepo.updateGold(row.char_id, p.gold);
+    await deps.inventoryRepo.setGold(row.char_id, p.gold);
   });
 
   // One inventory slot's absolute contents. `itemId: 0` => slot cleared.
@@ -62,10 +64,12 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     }
   });
 
-  // Bank password (C++ `m_szBankPass`). Absolute new value; '0000' = cleared.
+  // Account-wide bank password (C++ `m_szBankPass`). Stored on the bank
+  // container row (migration 008); payload carries accountId to address it.
+  // '0000' = cleared.
   r.register('BANK_PASS', async (row) => {
-    const p = payload<{ bankPass: string }>(row);
-    await deps.charRepo.updateBankPass(row.char_id, p.bankPass);
+    const p = payload<{ accountId: number; bankPass: string }>(row);
+    await deps.bankRepo.setBankPass(p.accountId, p.bankPass);
   });
 
   deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS'] }, 'Journal replay handlers registered');

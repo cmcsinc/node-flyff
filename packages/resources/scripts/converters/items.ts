@@ -66,7 +66,13 @@ function bucketFor(kind1: string, kind2: string, kind3: string): ItemYml | null 
   return yml;
 }
 
-function rowToItem(row: Row, id: number, name: string, kind1: string): Record<string, unknown> {
+function rowToItem(
+  row: Row,
+  id: number,
+  name: string,
+  kind1: string,
+  partsMap: Map<string, number>,
+): Record<string, unknown> {
   const abilMin = num(row, 'dwAbilityMin', 0);
   const abilMax = num(row, 'dwAbilityMax', 0);
   const isWeapon = kind1 === 'IK1_WEAPON';
@@ -86,7 +92,10 @@ function rowToItem(row: Row, id: number, name: string, kind1: string): Record<st
   };
 
   // Equip slot / weapon type / kind routing -- raw propItem columns.
-  const parts = num(row, 'dwParts', 0);
+  // `dwParts` is a `PARTS_*` symbol (defineNeuz.h), not a raw int -- resolve via map,
+  // else EquipService rejects every equip with `not_equippable` (client sends numeric nPart).
+  const partsSym = row.dwParts;
+  const parts = (partsSym && partsMap.get(partsSym)) ?? num(row, 'dwParts', 0);
   if (parts > 0) item.equip_slot = parts;
   const weaponType = num(row, 'dwWeaponType', 0);
   if (weaponType > 0) item.weapon_type = weaponType;
@@ -125,14 +134,16 @@ function rowToItem(row: Row, id: number, name: string, kind1: string): Record<st
 }
 
 export async function convertItems(rawDir: string, dataDir: string): Promise<void> {
-  const [propItem, defineItem, txtTxt] = await Promise.all([
+  const [propItem, defineItem, defineNeuz, txtTxt] = await Promise.all([
     readSource(resolve(rawDir, 'propItem.txt')),
     readSource(resolve(rawDir, 'defineItem.h')),
+    readSource(resolve(rawDir, 'defineNeuz.h')),
     readSource(resolve(rawDir, 'propItem.txt.txt')),
   ]);
 
   const rows = parsePropTable(propItem);
   const iiIds = parseDefines(defineItem, 'II_');
+  const partsMap = parseDefines(defineNeuz, 'PARTS_');
   const names = parseTxtTxt(txtTxt);
 
   let used = 0;
@@ -149,7 +160,7 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
     if (!bucket) { noBucket++; continue; }
 
     const name = names.get(row.szName) ?? row.dwID;
-    bucket.items.push(rowToItem(row, id, name, kind1));
+    bucket.items.push(rowToItem(row, id, name, kind1, partsMap));
     used++;
   }
 

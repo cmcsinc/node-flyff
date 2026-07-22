@@ -52,7 +52,7 @@ import type { PlayerManager } from '../managers/player.manager.js';
 import type { SpawnManager } from '../managers/spawn.manager.js';
 import type { QuestService } from './quest.service.js';
 import type { InventoryService } from './inventory.service.js';
-import type { CharacterRepository } from '@flyff/database';
+import type { CharacterRepository, InventoryRepository } from '@flyff/database';
 import { AUTH, hasAuthority } from '../constants/authority.js';
 import { Validate } from '@flyff/core/utils/validate.js';
 import { PacketError } from '@flyff/core/errors.js';
@@ -89,8 +89,10 @@ export interface CommandServiceDeps {
   questService: QuestService;
   /** Inventory service -- `/ci` (create item into main bag). */
   inventoryService?: InventoryService;
-  /** Character repo -- `/stat` persists STR/STA/DEX/INT; `/gg`/`/rtg` persist gold. */
-  charRepo?: Pick<CharacterRepository, 'updateStats' | 'updateGold'>;
+  /** Character repo -- `/stat` persists STR/STA/DEX/INT. */
+  charRepo?: Pick<CharacterRepository, 'updateStats'>;
+  /** Inventory container repo -- `/gg`/`/rtg` persist carried gold (migration 008). */
+  inventoryRepo?: Pick<InventoryRepository, 'setGold'>;
   /** WAL journal -- appended before any gold mutation (rule 04). Optional: no-op if absent. */
   journal?: CommandJournal;
 }
@@ -236,14 +238,27 @@ export class CommandService {
     this.deps.playerManager.broadcastAll(buf);
   }
 
-  /** `/te <name>` or `/te <x> <z>` -- TextCmd_Teleport (FuncTextCmd.cpp:1873). */
+  /**
+   * `/te <name>` | `/te <x> <z>` | `/teleport <worldId> <x> <z>` --
+   * TextCmd_Teleport (FuncTextCmd.cpp:2362). The Navigator minimap GM double-
+   * click sends the 3-arg form (`WndField.cpp:10049`: `/teleport <worldId>
+   * x z`); 2-arg is the manual shorthand. First token non-numeric => teleport
+   * to that player. Coords must satisfy `x > 0 && z > 0` (C++ `VecInWorld`
+   * guard, FuncTextCmd.cpp:2439) -- the old parser read `<worldId>` as x and
+   * dropped the real z, landing GMs at (1, ...) off the terrain. `worldId` is
+   * accepted but ignored (single-world Madrigal for now; cross-world REPLACE
+   * ponytail).
+   */
   private teleport({ args, player }: CommandCtx): void {
     const tokens = args.split(/\s+/).filter(Boolean);
     if (tokens.length === 0) return;
     if (/^\d+(\.\d+)?$/.test(tokens[0]!)) {
-      const x = Number.parseFloat(tokens[0] ?? '');
-      const z = Number.parseFloat(tokens[1] ?? '');
-      if (!Number.isFinite(x) || !Number.isFinite(z)) return;
+      // 3 tokens => Navigator client form `<worldId> <x> <z>`; 2 => manual `<x> <z>`.
+      const xIdx = tokens.length >= 3 ? 1 : 0;
+      const zIdx = tokens.length >= 3 ? 2 : 1;
+      const x = Number.parseFloat(tokens[xIdx] ?? '');
+      const z = Number.parseFloat(tokens[zIdx] ?? '');
+      if (!Number.isFinite(x) || !Number.isFinite(z) || x <= 0 || z <= 0) return;
       this.applyReplace(player, { x, y: 0, z });
       return;
     }
@@ -314,7 +329,7 @@ export class CommandService {
       type: 'CHAR_GOLD',
       payload: { gold: total },
     });
-    this.deps.charRepo?.updateGold(player.m_idPlayer, total)
+    this.deps.inventoryRepo?.setGold(player.m_idPlayer, total)
       .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/gg gold persist failed'));
     this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_GOLD, total));
   }
@@ -387,7 +402,7 @@ export class CommandService {
     player.m_nGold = total;
     player._dirty.add('m_nGold');
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: total } });
-    this.deps.charRepo?.updateGold(player.m_idPlayer, total)
+    this.deps.inventoryRepo?.setGold(player.m_idPlayer, total)
       .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/rtg gold persist failed'));
     this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_GOLD, total));
   }

@@ -23,13 +23,13 @@ export {
 
 export {
   InventoryRepository,
-  type InventoryRow,
+  type InventoryItemRow,
   type InventoryCreateData,
 } from './repositories/inventory.repo.js';
 
 export {
   BankRepository,
-  type BankRow,
+  type BankItemRow,
   type BankCreateData,
 } from './repositories/bank.repo.js';
 

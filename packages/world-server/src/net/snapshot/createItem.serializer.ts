@@ -70,10 +70,12 @@ export class CreateItemSnapshotSerializer {
     w.writeWord(SNAPSHOTTYPE_CREATEITEM);  // 0x0003
     w.writeByte(0);                        // the literal (BYTE)0
 
-    // Shared CItemBase + CItemElem body (72 B) -- m_dwObjId=0 for a fresh
-    // inventory item. Single source of truth with the JOIN inventory/bank
-    // containers + OT_ITEM ground item (itemElemBody.serializer.ts).
-    writeCItemElemBody(w, 0, { itemId: bodyItemId, count: e.count });
+    // Shared CItemBase + CItemElem body (72 B). m_dwObjId MUST be the
+    // destination slot index (same as the JOIN inventory container), NOT 0:
+    // the client's CWndInventory renders elems by m_dwObjId and silently skips
+    // a 0 id -- the item lands in the model on OnCreateItem's SetAtId but never
+    // draws until a relog re-blits the whole container.
+    writeCItemElemBody(w, e.slot, { itemId: bodyItemId, count: e.count });
 
     // Trailer -- per-slot fan-out.
     w.writeByte(1);                       // nCount = 1 (this sub-snapshot covers one slot)

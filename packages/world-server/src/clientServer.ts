@@ -38,6 +38,7 @@ import type { ActMsgHandler } from './handlers/actMsg.handler.js';
 import type { MoveItemHandler } from './handlers/moveItem.handler.js';
 import type { DropItemHandler } from './handlers/dropItem.handler.js';
 import type { DropGoldHandler } from './handlers/dropGold.handler.js';
+import type { RemoveItemHandler } from './handlers/removeItem.handler.js';
 import type { DoEquipHandler } from './handlers/doEquip.handler.js';
 import type { DoUseItemHandler } from './handlers/doUseItem.handler.js';
 import type { BankHandler } from './handlers/bank.handler.js';
@@ -73,6 +74,7 @@ export interface WorldClientServerDeps {
   moveItemHandler: MoveItemHandler;
   dropItemHandler: DropItemHandler;
   dropGoldHandler: DropGoldHandler;
+  removeItemHandler: RemoveItemHandler;
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
   bankHandler: BankHandler;
@@ -125,6 +127,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.MOVEITEM, (s, r) => deps.moveItemHandler.handleMoveItem(s, r));
   dispatcher.register(PACKETTYPE.DROPITEM, (s, r) => deps.dropItemHandler.handleDropItem(s, r));
   dispatcher.register(PACKETTYPE.DROPGOLD, (s, r) => deps.dropGoldHandler.handleDropGold(s, r));
+  dispatcher.register(PACKETTYPE.REMOVEINVENITEM, (s, r) => deps.removeItemHandler.handleRemoveItem(s, r));
   dispatcher.register(PACKETTYPE.DOEQUIP, (s, r) => deps.doEquipHandler.handleDoEquip(s, r));
   dispatcher.register(PACKETTYPE.DOUSEITEM, (s, r) => deps.doUseItemHandler.handleDoUseItem(s, r));
   dispatcher.register(PACKETTYPE.OPENBANKWND, (s, r) => deps.bankHandler.handleOpen(s, r));
@@ -137,6 +140,8 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.CHANGEBANKPASS, (s, r) => deps.bankHandler.handleChangeBankPass(s, r));
   dispatcher.register(PACKETTYPE.OPENSHOPWND, (s, r) => deps.shopHandler.handleOpen(s, r));
   dispatcher.register(PACKETTYPE.CLOSESHOPWND, (s, r) => deps.shopHandler.handleClose(s, r));
+  dispatcher.register(PACKETTYPE.BUYITEM, (s, r) => deps.shopHandler.handleBuy(s, r));
+  dispatcher.register(PACKETTYPE.SELLITEM, (s, r) => deps.shopHandler.handleSell(s, r));
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
   dispatcher.register(PACKETTYPE.QUEST_CHECK, (s, r) => deps.questCheckHandler.handleQuestCheck(s, r));
   dispatcher.register(PACKETTYPE.QUESTHELPER_REQNPCPOS, (s, r) => deps.questHelperHandler.handleQuestHelper(s, r));
