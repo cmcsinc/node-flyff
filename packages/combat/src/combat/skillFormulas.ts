@@ -13,7 +13,7 @@
  */
 
 import type { Combatant, Rng, MeleeResult } from './formulas';
-import { calcDefense } from './formulas';
+import { calcDefense, getCriticalProb } from './formulas';
 import { DST } from '@flyff/entities';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import {
@@ -204,6 +204,18 @@ function statForRefer(c: Combatant, dst: number): number {
   }
 }
 
+/**
+ * Skill damage result -- a `MeleeResult` plus `effectProc`, the outcome of the
+ * `nProbability` secondary-effect gate. `effectProc === true` means a debuff /
+ * status (stun/poison/slow) should fire; consumers ignore it until the
+ * buff/status system exists (gap #1). Structurally a `MeleeResult`, so it flows
+ * through the shared damage tail (`applyHit`) unchanged.
+ */
+export interface SkillCastResult extends MeleeResult {
+  /** `nProbability` roll succeeded -- fire the skill's secondary status effect. */
+  readonly effectProc: boolean;
+}
+
 /** Combatant view extended with the skill + level being cast. */
 export interface SkillCastInputs {
   readonly attacker: Combatant;
@@ -222,26 +234,34 @@ export interface SkillCastInputs {
  *   2.EXT_MAGICATKSHOT -> GetMagicSkillPower -> PostCalcMagicSkill (RESIST=0,
  *     element factor applies).
  *
- * Sets `AF_MELEESKILL`/`AF_MAGICSKILL` on `atkFlags` per docs #4. Crit is not
- * rolled here (skill crit uses its own `nProbability` -- ponytail: needs
- * `MoverAttack.cpp` crit-skill branch). Block omitted on NPC defender for v1
- * (matches `resolveMelee`'s NPC branch behavior).
+ * Sets `AF_MELEESKILL`/`AF_MAGICSKILL` on `atkFlags` per docs #4.
+ *
+ * **Crit** (`AF_CRITICAL1`, 2.3×): skill damage reuses melee `CalcDamage`
+ * (docs #4 line 77), so it shares the melee crit branch -- `getCriticalProb`
+ * (DEX/10 × job.fCritical + DST_CHR_CHANCECRITICAL), rolled here and applied to
+ * `nATK` BEFORE defense subtract, exactly as `resolveMelee`. Applies to melee
+ * AND magic skills (both flow through `CalcDamage`).
+ *
+ * **Effect proc** (`effectProc`): `nProbability` (level field) is the
+ * secondary-effect gate -- rolled per-target in C++ `ApplySkill` (docs #4
+ * line 77). It does NOT gate whether damage lands; it gates a debuff/status
+ * (stun/poison/slow). We roll it and surface `effectProc` so the caller can
+ * fire the status once the buff/debuff system exists. No `probability` field =
+ * always proc (a pure-damage skill has no secondary effect to gate).
+ * ponytail: apply the actual status effect (needs gap #1 buff/status system).
+ *
+ * Block omitted on NPC defender for v1 (matches `resolveMelee`'s NPC branch).
  *
  * ponytail: PVP damage vars, multi-hit, heal/buff, AoE, projectile,
  * element mastery (DST_MASTRY_*), DST_RESIST_MAGIC_RATE, GetResist (defender
  * element), DST_ADDMAGIC, dwAddSkillMin/Max from base skill.
  */
-export function resolveSkillCast(input: SkillCastInputs): MeleeResult {
+export function resolveSkillCast(input: SkillCastInputs): SkillCastResult {
   const { attacker, defender, skill, level, rng } = input;
   const ext = skill.exeTarget ?? 0;
   const isMagic = ext === 14; // EXT_MAGICATKSHOT
 
-  const atkFlags = AF_GENERIC | (isMagic ? AF_MAGICSKILL : AF_MELEESKILL);
-
-  // Hit/miss for skills uses `nProbability` (level field) -- v1: skills always
-  // hit. The C++ pipeline rolls per-target in `ApplySkill`; probability gates
-  // secondary effects (stun/poison), not whether damage lands.
-  // ponytail: roll nProbability for hit, gate secondary effects.
+  let atkFlags = AF_GENERIC | (isMagic ? AF_MAGICSKILL : AF_MELEESKILL);
 
   const power = isMagic
     ? getMagicSkillPower(attacker, skill, level)
@@ -251,6 +271,13 @@ export function resolveSkillCast(input: SkillCastInputs): MeleeResult {
   const hi = Math.max(power.min, power.max);
   let nATK = rng.range(lo, hi + 1);
   if (nATK < 0) nATK = 0;
+
+  // Skill crit -- shared melee `CalcDamage` branch (docs #4). 2.3× on nATK
+  // BEFORE the defense subtract, same order as `resolveMelee`.
+  if (rng.int(100) < getCriticalProb(attacker)) {
+    atkFlags |= AF_CRITICAL1;
+    nATK = Math.floor(nATK * 2.3);
+  }
 
   // Standard defense path. Magic uses CalcDefense too (docs #4: nDEF =
   // defender.CalcDefense), then PostCalcMagicSkill applies magic factor.
@@ -262,9 +289,16 @@ export function resolveSkillCast(input: SkillCastInputs): MeleeResult {
     nDamage = Math.max(0, nATK - nDEF);
   }
 
-  // Crit flag is informational for skills (no 2.3x in v1 -- skills don't use
-  // the melee crit branch). ponytail: skill crit.
-  void AF_CRITICAL1;
+  // Zero damage clears the crit flag (matches melee -- no crit banner on a
+  // fully-blocked/absorbed hit).
+  if (nDamage <= 0) {
+    nDamage = 0;
+    atkFlags &= ~AF_CRITICAL1;
+  }
 
-  return { hit: true, damage: nDamage, atkFlags };
+  // Secondary-effect gate: `nProbability` roll. Absent field = always proc.
+  const prob = level.probability;
+  const effectProc = prob === undefined || rng.int(100) < prob;
+
+  return { hit: true, damage: nDamage, atkFlags, effectProc };
 }

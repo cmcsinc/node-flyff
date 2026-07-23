@@ -38,7 +38,7 @@ import {
   resolveSkillCast,
 } from '../../src/combat/skillFormulas';
 import type { Combatant, Rng } from '../../src/combat/formulas';
-import { AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL } from '../../src/combat/tables';
+import { AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1 } from '../../src/combat/tables';
 import type { SkillDefinition } from '@flyff/resources';
 import { loadSkills } from '@flyff/resources';
 import { EMPTY_PARAM_VIEW } from '@flyff/entities';
@@ -93,10 +93,14 @@ function makeNpcDefender(over: Partial<Combatant> = {}): Combatant {
   };
 }
 
-/** Deterministic Rng stub — `range` returns `lo`, `int` returns 0. */
-const minRng: Rng = { int: () => 0, range: (lo: number) => lo };
-/** Deterministic Rng stub — `range` returns `hi-1` (max), `int` returns 0. */
-const maxRng: Rng = { int: () => 0, range: (lo: number, hi: number) => hi - 1 };
+// `int` returns 99 so the 1% crit roll (getCriticalProb=1 at DEX 15, vagrant
+// fCritical=1.0) never fires — these stubs isolate the base damage math.
+/** Deterministic Rng stub — `range` returns `lo`, `int` returns 99 (no crit). */
+const minRng: Rng = { int: () => 99, range: (lo: number) => lo };
+/** Deterministic Rng stub — `range` returns `hi-1` (max), `int` returns 99 (no crit). */
+const maxRng: Rng = { int: () => 99, range: (lo: number, hi: number) => hi - 1 };
+/** Rng that always crits (`int` returns 0 < any positive crit prob). */
+const critRng: Rng = { int: () => 0, range: (lo: number) => lo };
 
 async function loadSkill(id: number): Promise<SkillDefinition> {
   await ensureSkills();
@@ -204,5 +208,98 @@ describe('resolveSkillCast', () => {
     });
     // nATK=281, nDEF=3 → 278; factor 1.1 → 305 (floor)
     assert.equal(result.damage, Math.floor(278 * 1.1));
+  });
+
+  it('Clean Hit: effectProc defaults true when skill has no nProbability', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    assert.equal(level.probability, undefined, 'fixture: Clean Hit has no probability');
+    const result = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender(),
+      skill, level, rng: minRng,
+    });
+    assert.equal(result.effectProc, true, 'absent probability ⇒ always proc');
+  });
+});
+
+describe('resolveSkillCast — skill crit', () => {
+  it('crit sets AF_CRITICAL1 and multiplies nATK by 2.3 before DEF subtract', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    // DEX 15, vagrant fCritical=1.0 → getCriticalProb = floor(1.5) = 1.
+    // critRng.int()=0 < 1 ⇒ crit fires. nATK=39 (min) → floor(39*2.3)=89.
+    // DEF 3 → 89 - 3 = 86.
+    const attacker = makeAttacker({ dex: 15 });
+    assert.equal(attacker.dex, 15);
+    const result = resolveSkillCast({
+      attacker,
+      defender: makeNpcDefender(),
+      skill, level, rng: critRng,
+    });
+    assert.equal(result.atkFlags & AF_CRITICAL1, AF_CRITICAL1, 'crit flag set');
+    assert.equal(result.damage, Math.floor(39 * 2.3) - 3, '2.3× nATK then DEF subtract');
+  });
+
+  it('non-crit (int 99 ≥ prob) leaves AF_CRITICAL1 clear and uses base damage', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    const result = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender(),
+      skill, level, rng: minRng, // int=99, no crit
+    });
+    assert.equal(result.atkFlags & AF_CRITICAL1, 0, 'no crit flag');
+    assert.equal(result.damage, 39 - 3, 'plain base damage');
+  });
+
+  it('crit on a fully-blocked (0) hit clears AF_CRITICAL1', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    // Defender armor huge → DEF ≥ nATK → nDamage 0 → crit flag cleared.
+    const result = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender({ npcArmor: 10_000 }),
+      skill, level, rng: critRng,
+    });
+    assert.equal(result.atkFlags & AF_CRITICAL1, 0, 'crit cleared on 0 damage');
+    assert.equal(result.damage, 0);
+  });
+});
+
+describe('resolveSkillCast — effect gate (nProbability)', () => {
+  it('probability 50 + int 49 < 50 ⇒ effectProc true', async () => {
+    const skill = await loadSkill(1);
+    const level = { ...skill.levels[0]!, probability: 50 };
+    const rng: Rng = { int: () => 49, range: (lo: number) => lo };
+    const result = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender(),
+      skill, level, rng,
+    });
+    assert.equal(result.effectProc, true, '49 < 50 ⇒ proc');
+  });
+
+  it('probability 50 + int 50 ≥ 50 ⇒ effectProc false', async () => {
+    const skill = await loadSkill(1);
+    const level = { ...skill.levels[0]!, probability: 50 };
+    const rng: Rng = { int: () => 50, range: (lo: number) => lo };
+    const result = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender(),
+      skill, level, rng,
+    });
+    assert.equal(result.effectProc, false, '50 ≥ 50 ⇒ no proc');
+  });
+
+  it('probability 0 ⇒ never procs', async () => {
+    const skill = await loadSkill(1);
+    const level = { ...skill.levels[0]!, probability: 0 };
+    const result = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender(),
+      skill, level, rng: critRng, // int 0, but prob 0 ⇒ 0 < 0 false
+    });
+    assert.equal(result.effectProc, false, 'prob 0 never procs');
   });
 });
