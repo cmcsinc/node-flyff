@@ -33,6 +33,20 @@ export const ELECTRICITY = 3;
 export const WIND = 4;
 export const EARTH = 5;
 
+/**
+ * propItem `element` string (item.schema) -> numeric ePropType. Weapons/armor
+ * carry their inherent element as a name; the melee formula wants the enum.
+ * `electric` is the schema spelling of {@link ELECTRICITY}.
+ */
+const ELEMENT_BY_NAME: Readonly<Record<string, number>> = Object.freeze({
+  fire: FIRE, water: WATER, electric: ELECTRICITY, wind: WIND, earth: EARTH,
+});
+
+/** Map a propItem element name to its ePropType (NO_PROP when absent/unknown). */
+export function elementFromName(name: string | undefined): number {
+  return name ? (ELEMENT_BY_NAME[name] ?? NO_PROP) : NO_PROP;
+}
+
 /** Factor codes from the 6*6 element match table. */
 const EL_NONE = 0, EL_NORMAL = 1, EL_DEF_STRONG = 2, EL_ATK_STRONG = 3;
 

@@ -65,6 +65,36 @@ describe('sumEquipStats', () => {
     assert.equal(r.weapon.element, 1, 'weapon element from slot.element');
   });
 
+  it('falls back to the weapon propItem element name when no instance element', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 9] = { itemId: 5000, count: 1 }; // no slot.element
+    const table = new Map<number, ItemDefinition>([
+      [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, attack_min: 1, attack_max: 3, weapon_type: WT_MELEE_SWD, attack_speed: 40, element: 'electric' }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.weapon.element, 3, 'electric name -> ELECTRICITY(3)');
+  });
+
+  it('instance element overrides the propItem element name', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 9] = { itemId: 5000, count: 1, element: 1 /* FIRE */ };
+    const table = new Map<number, ItemDefinition>([
+      [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, attack_min: 1, attack_max: 3, weapon_type: WT_MELEE_SWD, attack_speed: 40, element: 'water' }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.weapon.element, 1, 'slot instance FIRE wins over propItem water');
+  });
+
+  it('falls back to the suit propItem element name for defender element', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 2] = { itemId: 6100, count: 1 }; // no slot.element
+    const table = new Map<number, ItemDefinition>([
+      [6100, { id: 6100, name: 'Suit', name_id: 'ITEM_A', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, defense: 18, element: 'earth' }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.element, 5, 'earth name -> EARTH(5)');
+  });
+
   it('sums defense across all six armor parts', () => {
     const p = CPlayer.fromRow(makeRow(), { write: () => true });
     // UPPER_BODY=2, LOWER_BODY=3, HAND=4, FOOT=5, CAP=6, SHIELD=11

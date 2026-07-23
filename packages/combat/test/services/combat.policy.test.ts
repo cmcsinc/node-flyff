@@ -13,7 +13,7 @@ function fakePlayer(pk = false): CPlayer {
 }
 
 /** Spawn a mover with the given combat flags. */
-function makeMover(opts: { attackable?: boolean; guard?: boolean }): CMover {
+function makeMover(opts: { attackable?: boolean; guard?: boolean; chaoGuard?: boolean }): CMover {
   return CMover.spawn(
     0x40000000,
     {
@@ -23,6 +23,7 @@ function makeMover(opts: { attackable?: boolean; guard?: boolean }): CMover {
       name: 'x',
       attackable: opts.attackable ?? true,
       guard: opts.guard ?? false,
+      chaoGuard: opts.chaoGuard ?? false,
     },
     { x: 0, y: 0, z: 0 },
     1,
@@ -49,5 +50,15 @@ describe('isMoverAttackableBy (combat.policy)', () => {
   it('a guard IS attackable by a player killer (chaotic)', () => {
     const guard = makeMover({ attackable: true, guard: true });
     assert.equal(isMoverAttackableBy(fakePlayer(true), guard), true);
+  });
+
+  it('a chao-guardian IS attackable by a non-chaotic player', () => {
+    const chao = makeMover({ attackable: true, chaoGuard: true });
+    assert.equal(isMoverAttackableBy(fakePlayer(false), chao), true);
+  });
+
+  it('a chao-guardian is NOT attackable by a chaotic (PK) player', () => {
+    const chao = makeMover({ attackable: true, chaoGuard: true });
+    assert.equal(isMoverAttackableBy(fakePlayer(true), chao), false);
   });
 });
