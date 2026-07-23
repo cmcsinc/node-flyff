@@ -105,6 +105,8 @@ describe('CPlayer entity', () => {
     assert.equal(p.m_nSkillLevel, 0, 'total SP defaults to 0');
     assert.equal(p.m_tmReUseDelay.length, 45);
     assert.equal(p.m_tmReUseDelay[0], 0, 'cooldowns start ready');
+    assert.equal(p.m_cooltime.length, 4, '4 consumable cooldown groups');
+    assert.equal(p.m_cooltime[0], 0, 'cooltime groups start ready');
   });
 
   it('hydrates m_nSkillPoint/m_nSkillLevel from the row', () => {

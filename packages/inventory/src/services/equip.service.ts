@@ -20,7 +20,7 @@ import type { InventoryRepository, Journal } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import type { CPlayer, InventorySlot } from '@flyff/entities';
-import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
+import { buildSetPointParam, DST_FP, DST_HP, DST_MP, MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'equip-service' });
 const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot -- reject for now
@@ -28,6 +28,8 @@ const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot -- reject for now
 export interface EquipServiceDeps {
   inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem'>;
   getItem: (itemId: number) => ItemDefinition | undefined;
+  /** Push a framed packet to the player (clamp-on-unequip vital sync). */
+  sendTo: (player: CPlayer, buf: Buffer) => void;
   journal?: Journal;
 }
 
@@ -80,6 +82,13 @@ export class EquipService {
     player.m_Inventory[equipIdx] = item;
     player.m_Inventory[invSlot] = prev;
     player._dirty.add('m_Inventory');
+    // Swap DST effects: remove the previously-equipped item's bonuses, apply the
+    // new item's. Then clamp current vitals to the new maxes (unequipping +HP
+    // gear can lower max below current -- push the clamped value so the client
+    // doesn't sit over-max until the next regen tick).
+    if (prev) this.applyItemEffects(player, prev.itemId, false);
+    this.applyItemEffects(player, item.itemId, true);
+    this.clampVitals(player);
     this.persistSlot(player, equipIdx, item);
     if (prev) this.persistSlot(player, invSlot, prev);
     else this.deps.inventoryRepo.removeItem(player.m_idPlayer, invSlot).catch((e: unknown) => logger.warn({ err: e }, 'equip removeItem failed'));
@@ -102,6 +111,9 @@ export class EquipService {
     player.m_Inventory[equipIdx] = null;
     player.m_Inventory[dst] = item;
     player._dirty.add('m_Inventory');
+    // Remove the item's DST effects BEFORE clamping so the max reflects the loss.
+    this.applyItemEffects(player, item.itemId, false);
+    this.clampVitals(player);
     this.deps.inventoryRepo.removeItem(player.m_idPlayer, equipIdx).catch((e: unknown) => logger.warn({ err: e }, 'unequip remove equipSlot failed'));
     this.persistSlot(player, dst, item);
     return { ok: true, parts, itemId: item.itemId, invSlot: dst, objid: item.objid ?? equipIdx };
@@ -122,5 +134,34 @@ export class EquipService {
     this.deps.inventoryRepo
       .setItem(player.m_idPlayer, slot, s.itemId, s.count, s.flags ?? 0, s.durability ?? -1, s.refine ?? 0)
       .catch((e: unknown) => logger.warn({ err: e, slot }, 'equip setItem failed'));
+  }
+
+  /**
+   * Apply (`add`) or remove an item's DST effects on the wearer's `m_params`
+   * (C++ `SetDestParam` per item, `MoverParam.cpp:2221`). Items without
+   * `effects` (most weapons/armor whose bonuses are intrinsic ATK/DEF, already
+   * folded per-swing by `sumEquipStats`) are a no-op.
+   */
+  private applyItemEffects(player: CPlayer, itemId: number, add: boolean): void {
+    const prop = this.deps.getItem(itemId);
+    const effects = prop?.effects;
+    if (!effects || effects.length === 0) return;
+    if (add) player.m_params.applyEffects(effects);
+    else player.m_params.removeEffects(effects);
+  }
+
+  /**
+   * Clamp current HP/MP/FP to the new derived maxes after an equip swap. Only
+   * pushes `SETPOINTPARAM` for a vital when it was clamped DOWN (current exceeded
+   * the new max -- e.g. unequipping +HP gear). Rising maxes need no sync; the
+   * client recomputes its own displayed max from stats and regen fills upward.
+   */
+  private clampVitals(player: CPlayer): void {
+    const maxHp = player.getMaxHp();
+    const maxMp = player.getMaxMp();
+    const maxFp = player.getMaxFp();
+    if (player.m_nHp > maxHp) { player.m_nHp = maxHp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, maxHp)); }
+    if (player.m_nMp > maxMp) { player.m_nMp = maxMp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, maxMp)); }
+    if (player.m_nFp > maxFp) { player.m_nFp = maxFp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, maxFp)); }
   }
 }

@@ -79,6 +79,7 @@ function rowToItem(
   name: string,
   kind1: string,
   partsMap: Map<string, number>,
+  dstMap: Map<string, number>,
 ): Record<string, unknown> {
   const abilMin = num(row, 'dwAbilityMin', 0);
   const abilMax = num(row, 'dwAbilityMax', 0);
@@ -143,12 +144,45 @@ function rowToItem(
     }
   }
 
+  // Consumable cooldown -- propItem dwSkillReady (= ItemProp::GetCoolTime, ms).
+  // Drives the group cooldown gate in UseItemService (CooltimeMgr.h). Gated by
+  // IK2 kind to match C++ GetGroup: the propItem `=` inherit rule otherwise
+  // leaks dwSkillReady across kind boundaries (cloaks inherit 1500 from an
+  // earlier food row). HP potions carry 0 in the source, so they fall back to
+  // the config default at runtime.
+  const COOLDOWN_KINDS = new Set(['IK2_FOOD', 'IK2_SKILL', 'IK2_POTION']);
+  if (row.dwItemKind2 && COOLDOWN_KINDS.has(row.dwItemKind2)) {
+    const cooltime = num(row, 'dwSkillReady', 0);
+    if (cooltime > 0) item.cooldown_ms = cooltime;
+  }
+
   // Jewelry HR/ER columns (propItem nAdjHitRate + dwParry). Zero for non-jewelry;
   // the combat stat-fold reads these once accessory data lands in the index.
   const hr = num(row, 'nAdjHitRate', 0);
   if (hr > 0) item.hit_rate = hr;
   const parry = num(row, 'dwParry', 0);
   if (parry > 0) item.parry = parry;
+
+  // DST effects from the propItem dwDestParam{1-3}/nAdjParamVal{1-3}/dwChgParamVal{1-3}
+  // triplets -- the ONLY way items carry +STR/+STA/+DEX/+INT/+ADJDEF/+HP_MAX/etc
+  // (no dedicated stat columns exist). Resolved to numeric DST ids via
+  // defineAttribute.h. Equippable only: consumables expose vital restores via
+  // hp_restore/mp_restore/fp_restore above (a different consumer). Applied to
+  // the wearer's ParamModel on equip (C++ SetDestParam per item, MoverParam.cpp:2221).
+  if (isEquippable) {
+    const effects: Array<{ dst: number; adj: number; chg?: number }> = [];
+    for (let i = 1; i <= 3; i++) {
+      const sym = row[`dwDestParam${i}`];
+      if (!sym) continue;
+      const dst = dstMap.get(sym);
+      if (dst === undefined) continue; // unknown / unsupported DST symbol
+      const adj = num(row, `nAdjParamVal${i}`, 0);
+      const chg = num(row, `dwChgParamVal${i}`, 0);
+      if (adj !== 0) effects.push({ dst, adj });
+      else if (chg !== 0) effects.push({ dst, adj: 0, chg });
+    }
+    if (effects.length > 0) item.effects = effects;
+  }
 
   if (isWeapon) {
     item.attack = Math.round((abilMin + abilMax) / 2);
@@ -175,16 +209,18 @@ function rowToItem(
 }
 
 export async function convertItems(rawDir: string, dataDir: string): Promise<void> {
-  const [propItem, defineItem, defineNeuz, txtTxt] = await Promise.all([
+  const [propItem, defineItem, defineNeuz, defineAttr, txtTxt] = await Promise.all([
     readSource(resolve(rawDir, 'propItem.txt')),
     readSource(resolve(rawDir, 'defineItem.h')),
     readSource(resolve(rawDir, 'defineNeuz.h')),
+    readSource(resolve(rawDir, 'defineAttribute.h')),
     readSource(resolve(rawDir, 'propItem.txt.txt')),
   ]);
 
   const rows = parsePropTable(propItem);
   const iiIds = parseDefines(defineItem, 'II_');
   const partsMap = parseDefines(defineNeuz, 'PARTS_');
+  const dstMap = parseDefines(defineAttr, 'DST_');
   const names = parseTxtTxt(txtTxt);
 
   let used = 0;
@@ -201,7 +237,7 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
     if (!bucket) { noBucket++; continue; }
 
     const name = names.get(row.szName) ?? row.dwID;
-    bucket.items.push(rowToItem(row, id, name, kind1, partsMap));
+    bucket.items.push(rowToItem(row, id, name, kind1, partsMap, dstMap));
     used++;
   }
 

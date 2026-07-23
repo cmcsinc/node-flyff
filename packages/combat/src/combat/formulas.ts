@@ -19,7 +19,8 @@ import {
   MIN_HR, MAX_HR,
 } from './tables';
 import { getJobProps } from '@flyff/entities';
-import type { JobProps, Rng } from '@flyff/entities';
+import type { JobProps, Rng, ParamView } from '@flyff/entities';
+import { DST, EMPTY_PARAM_VIEW } from '@flyff/entities';
 
 // exp / vitals / rng moved to @flyff/entities -- re-export for transition.
 export {
@@ -31,8 +32,6 @@ export { maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery } from '@flyf
 export type { RecoveryAmount } from '@flyff/entities';
 export type { Rng } from '@flyff/entities';
 export { xRandomRng } from '@flyff/entities';
-
-void ATK_SPEED_PLUS;
 
 /** Equipped-weapon view. `CombatService` supplies this; unarmed = bare-hand. */
 export interface WeaponStats {
@@ -79,6 +78,12 @@ export interface Combatant {
   readonly adjHitRate: number;
   /** Evasion from DST_PARRY (player jewelry/buffs; NPC = 0). */
   readonly parry: number;
+  /**
+   * DST parameter view (player `m_params`; NPC = `EMPTY_PARAM_VIEW`). Read by
+   * un-stubbed terms: `DST_CHR_DMG`/`DST_ATKPOWER` (ATK), `DST_ADJDEF` (DEF),
+   * `DST_CHR_CHANCECRITICAL` (crit), etc. C++ `GetParam(dst, def)`.
+   */
+  readonly params: ParamView;
 }
 
 export interface MeleeResult {
@@ -113,7 +118,9 @@ export function getHitMinMax(c: Combatant): { min: number; max: number } {
   }
   let nMin = c.weapon.min * 2;
   let nMax = c.weapon.max * 2;
-  const plus = getWeaponATK(c); // GetParam(DST_CHR_DMG,0) = 0 v1
+  // GetWeaponATK + GetParam(DST_CHR_DMG) + GetPlusWeaponATK(refine) -- C++ adds
+  // the CHR_DMG buff to both min/max; refine bonus is the pow(option,1.5) below.
+  const plus = getWeaponATK(c) + c.params.get(DST.CHR_DMG, 0);
   nMin += plus;
   nMax += plus;
   if (c.weapon.option > 0) {
@@ -121,6 +128,11 @@ export function getHitMinMax(c: Combatant): { min: number; max: number } {
     nMin += v;
     nMax += v;
   }
+  // DST_ATKPOWER (flat) + DST_ATKPOWER_RATE (%) -- C++ GetHitMinMax tail.
+  const atkPower = c.params.get(DST.ATKPOWER, 0);
+  if (atkPower !== 0) { nMin += atkPower; nMax += atkPower; }
+  const atkRate = c.params.get(DST.ATKPOWER_RATE, 0);
+  if (atkRate !== 0) { nMin *= 1 + atkRate / 100; nMax *= 1 + atkRate / 100; }
   return { min: Math.floor(nMin), max: Math.floor(nMax) };
 }
 
@@ -134,9 +146,32 @@ export function getParrying(c: Combatant): number {
   return c.kind === 'player' ? Math.floor(c.dex * 0.5) + c.parry : c.npcER;
 }
 
-/** `GetCriticalProb` (MoverAttack.cpp:609) -- `(DEX/10) * job.fCritical`. */
+/** `GetCriticalProb` (MoverAttack.cpp:609) -- `(DEX/10) * job.fCritical` + DST_CHR_CHANCECRITICAL. */
 export function getCriticalProb(c: Combatant): number {
-  return Math.floor((c.dex / 10) * getJobProps(c.job).fCritical);
+  return Math.floor((c.dex / 10) * getJobProps(c.job).fCritical) + c.params.get(DST.CHR_CHANCECRITICAL, 0);
+}
+
+/**
+ * `GetAttackSpeed` (`MoverAttack.cpp:156`) -- animation-speed multiplier in
+ * `[0.1, 2.0]`. Drives CLIENT-side swing animation (`m_fAniSpeed`); the server
+ * does NOT gate cadence by this -- it's ported for correctness, future
+ * `DST_ATTACKSPEED` buff support, and anti-cheat echo validation.
+ *
+ * `A = int( job.fAttackSpeed + weapon.atkSpeed*(4*DEX + LVL/8) - 3 )`, capped at
+ * 187; `fSpeed = (50/(200-A))/2 + ATK_SPEED_PLUS[A/10]`; then flat
+ * `DST_ATTACKSPEED` (/1000) + `% DST_ATTACKSPEED_RATE`.
+ */
+export function getAttackSpeed(c: Combatant): number {
+  const job = getJobProps(c.job);
+  const fItem = c.weapon.atkSpeed;
+  let A = Math.floor(job.fAttackSpeed + (fItem * (4.0 * c.dex + c.level / 8.0)) - 3.0);
+  if (A >= 188) A = 187; // C++ `if (187.5 <= A) A = (int)(187.5)` with A already int
+  const idx = Math.max(0, Math.min(17, Math.floor(A / 10)));
+  let fSpeed = (50.0 / (200 - A)) / 2.0 + (ATK_SPEED_PLUS[idx] ?? 0);
+  fSpeed += c.params.get(DST.ATTACKSPEED, 0) / 1000.0;
+  const rate = c.params.get(DST.ATTACKSPEED_RATE, 0);
+  if (rate > 0) fSpeed += (fSpeed * rate) / 100.0;
+  return Math.max(0.1, Math.min(2.0, fSpeed));
 }
 
 // --- damage pipeline (#B) ----------------------------------------------------
@@ -169,7 +204,8 @@ export function calcDefense(defender: Combatant): number {
   // Player defender (CalcDefensePlayer melee) -- equip DEF + refine + STA/DEX/level.
   const job = getJobProps(defender.job);
   const byItem = defender.equipDef; // SumEquipDefenseAbility (armor DEF + refine bonus)
-  return Math.floor((byItem + 0) * 2.3 + (defender.level + defender.sta / 2 + defender.dex) / 2.8 - 4 + defender.level * 2 + job.fFactorDef);
+  const adjDef = defender.params.get(DST.ADJDEF, 0); // GetParam(DST_ADJDEF) buff
+  return Math.floor((byItem + adjDef) * 2.3 + (defender.level + defender.sta / 2 + defender.dex) / 2.8 - 4 + defender.level * 2 + job.fFactorDef);
 }
 
 /** `GetDamageMultiplier` (MoverAttack.cpp:828) -- final multipliers. */

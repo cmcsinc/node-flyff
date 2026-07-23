@@ -19,12 +19,27 @@ import { NULL_ID } from '@flyff/world-core';
 
 /** Container/slot-field codes (`_Common/Mover.h:62`, `UI_*`). */
 export const UI_NUM = 0; // stack count
+export const UI_COOLTIME = 8; // count + start cooldown sweep (Mover.h:68)
 
 /**
  * Build an UPDATE_ITEM snapshot setting slot `slot`'s count to `count`.
  * `objid` is the player's, `slot` the inventory index.
  */
 export function buildUpdateItemCount(objid: number, slot: number, count: number): Buffer {
+  return buildUpdateItem(objid, slot, UI_NUM, count);
+}
+
+/**
+ * Build an UPDATE_ITEM snapshot that also signals a cooldown on `slot`
+ * (`UpdateItem(..., UI_COOLTIME, newCount)` -- `MoverSkill.cpp:1720`). The
+ * client re-derives the sweep duration from the item's own `dwSkillReady`
+ * (`DPClient.cpp:3154`); `dwTime` is unused for cooldown, stays 0.
+ */
+export function buildUpdateItemCooltime(objid: number, slot: number, count: number): Buffer {
+  return buildUpdateItem(objid, slot, UI_COOLTIME, count);
+}
+
+function buildUpdateItem(objid: number, slot: number, cParam: number, count: number): Buffer {
   const w = new PacketWriter();
   w.writeDword(PACKETTYPE.SNAPSHOT);
   w.writeDword(NULL_ID);
@@ -33,7 +48,7 @@ export function buildUpdateItemCount(objid: number, slot: number, count: number)
   w.writeWord(SNAPSHOTTYPE.UPDATE_ITEM);   // 0x0018
   w.writeByte(0);                          // cType = inventory slot
   w.writeByte(slot & 0xff);                // nId
-  w.writeByte(UI_NUM);                     // cParam = count
+  w.writeByte(cParam);                     // UI_NUM / UI_COOLTIME
   w.writeDword(count);                     // dwValue
   w.writeDword(0);                         // dwTime (v15)
   return w.build();

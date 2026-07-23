@@ -58,7 +58,7 @@ describe('ModifyStatusHandler', () => {
     handler.handleModifyStatus(makeSocket(), new PacketReader(body(2, 0, 0, 0)));
     assert.equal(p.m_nStr, 17);
     assert.equal(p.m_nRemainGP, 3);
-    assert.equal(sent.length, 1, 'SETSTATE echoed');
+    assert.equal(sent.length, 4, 'SETSTATE + 3 SETPOINTPARAM (HP/MP/FP refill to new max)');
   });
 
   it('destroys the socket when not IN_WORLD', () => {

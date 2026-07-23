@@ -29,15 +29,17 @@ function makeSvc(getItem: (id: number) => ItemDefinition | undefined) {
   const setItemCalls: Array<{ slot: number; itemId: number }> = [];
   const removedSlots: number[] = [];
   const journalCalls: Array<{ type: string }> = [];
+  const sent: Buffer[] = [];
   const svc = new EquipService({
     inventoryRepo: {
       setItem: async (_c: number, slot: number, itemId: number) => { setItemCalls.push({ slot, itemId }); },
       removeItem: async (_c: number, slot: number) => { removedSlots.push(slot); },
     },
     getItem,
+    sendTo: (_p, buf: Buffer) => { sent.push(buf); },
     journal: { append: (e: { type: string }) => { journalCalls.push(e); } } as never,
   });
-  return { svc, setItemCalls, removedSlots, journalCalls };
+  return { svc, setItemCalls, removedSlots, journalCalls, sent };
 }
 
 describe('EquipService.equip', () => {

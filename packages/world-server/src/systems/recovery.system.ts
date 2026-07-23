@@ -27,7 +27,7 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
 import { getJobProps } from '@flyff/combat';
-import { maxFatiguePoint, maxHitPoint, maxManaPoint, standRecovery } from '@flyff/combat';
+import { standRecovery } from '@flyff/combat';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'recovery' });
@@ -79,9 +79,12 @@ export class RecoverySystem {
     // a stale ceiling (the DB `max_hp`/`max_mp` columns). Recompute each tick
     // so it tracks level/STA/INT without a level-up hook.
     const job = getJobProps(p.m_nJob);
-    p.m_nMaxHp = maxHitPoint(p.m_nLevel, p.m_nSta, job.fFactorMaxHP);
-    p.m_nMaxMp = maxManaPoint(p.m_nLevel, p.m_nInt, job.fFactorMaxMP);
-    p.m_nMaxFp = maxFatiguePoint(p.m_nLevel, p.m_nSta, job.fFactorMaxFP);
+    // Buffed maxes: getMaxHp/Mp/Fp fold equip + DST bonuses (DST_HP_MAX flat +
+    // DST_HP_MAX_RATE %). Bare `maxHitPoint()` omits them, so a +HP_MAX ring
+    // wouldn't raise the regen ceiling until unequip clamped it.
+    p.m_nMaxHp = p.getMaxHp();
+    p.m_nMaxMp = p.getMaxMp();
+    p.m_nMaxFp = p.getMaxFp();
 
     // Combat gate: in C++ the in-combat branch pushes `m_dwTickRecoveryStand`
     // forward, so regen waits a fresh 3 s after combat clears. Mirror that.

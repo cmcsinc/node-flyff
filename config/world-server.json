@@ -36,5 +36,9 @@
   "wal": {
     "journalPath": "./data/world_journal.sqlite3",
     "syncBatchSize": 100
+  },
+  "consumable": {
+    "_comment": "Potion cooldown group fallback (ms). Items with propItem dwSkillReady use that instead.",
+    "potionCooldownMs": 1000
   }
 }

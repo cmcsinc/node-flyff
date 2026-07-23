@@ -18,13 +18,14 @@ import { MAX_INVENTORY } from '@flyff/world-core';
 import type { EquipService, EquipResult } from './equip.service';
 import type { ConsumableService } from './consumable.service';
 import type { InventoryService } from './inventory.service';
+import { cooltimeGroup } from './cooltime';
 
 const logger = createLogger({ module: 'useItem-service' });
 
 export type UseResult =
   | { kind: 'equip'; equip: EquipResult }
-  | { kind: 'consumable'; nId: number; remaining: number; hp?: number; mp?: number; fp?: number }
-  | { kind: 'consumed'; nId: number; remaining: number } // buff/skill/warp/text -- charge spent, effect ponytail
+  | { kind: 'consumable'; nId: number; remaining: number; hp?: number; mp?: number; fp?: number; cooltime?: boolean }
+  | { kind: 'consumed'; nId: number; remaining: number; cooltime?: boolean } // buff/skill/warp/text -- charge spent, effect ponytail
   | { kind: 'reject' };
 
 export interface UseItemServiceDeps {
@@ -32,6 +33,8 @@ export interface UseItemServiceDeps {
   consumableService: ConsumableService;
   inventoryService: InventoryService;
   getItem: (itemId: number) => ItemDefinition | undefined;
+  /** Potion-group cooldown fallback (ms) when an item carries no `cooldown_ms`. */
+  potionCooldownMs: number;
 }
 
 export class UseItemService {
@@ -49,20 +52,39 @@ export class UseItemService {
       return { kind: 'equip', equip };
     }
 
+    // Cooldown gate (C++ DoUseItem:1335 -- GetGroup + CanUse BEFORE UseItem).
+    // Group 0 = no cooldown; otherwise reject silently if still on cooldown.
+    // Charge is NOT spent on rejection -- mirrors the C++ gate-before-afford order.
+    const cd = cooltimeGroup(prop, this.deps.potionCooldownMs);
+    if (cd.group > 0) {
+      const now = Date.now();
+      if ((player.m_cooltime[cd.group - 1] ?? 0) > now) return { kind: 'reject' };
+    }
+
     const k2 = prop.item_kind2;
     if (k2 === 'IK2_POTION' || k2 === 'IK2_FOOD') {
       const r = this.deps.consumableService.apply(player, prop, slot);
-      const out: { kind: 'consumable'; nId: number; remaining: number; hp?: number; mp?: number; fp?: number } =
+      const out: { kind: 'consumable'; nId: number; remaining: number; hp?: number; mp?: number; fp?: number; cooltime?: boolean } =
         { kind: 'consumable', nId: slot, remaining: Math.max(0, r.consumed?.count ?? 0) };
       if (r.hp !== undefined) out.hp = r.hp;
       if (r.mp !== undefined) out.mp = r.mp;
       if (r.fp !== undefined) out.fp = r.fp;
+      if (cd.group > 0) {
+        player.m_cooltime[cd.group - 1] = Date.now() + cd.ms;
+        out.cooltime = true;
+      }
       return out;
     }
     if (k2 === 'IK2_BUFF' || k2 === 'IK2_BUFF2' || k2 === 'IK2_SKILL' || k2 === 'IK2_TEXT' || k2 === 'IK2_WARP') {
       const consumed = this.deps.inventoryService.consume(player, slot, 1);
       logger.info({ charId: player.m_idPlayer, itemId: invSlot.itemId, k2 }, 'use-item: charge consumed (effect ponytail)');
-      return { kind: 'consumed', nId: slot, remaining: Math.max(0, consumed?.count ?? 0) };
+      const out: { kind: 'consumed'; nId: number; remaining: number; cooltime?: boolean } =
+        { kind: 'consumed', nId: slot, remaining: Math.max(0, consumed?.count ?? 0) };
+      if (cd.group > 0) {
+        player.m_cooltime[cd.group - 1] = Date.now() + cd.ms;
+        out.cooltime = true;
+      }
+      return out;
     }
     return { kind: 'reject' };
   }

@@ -11,6 +11,7 @@
 
 import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
+import { EMPTY_PARAM_VIEW } from '@flyff/entities';
 import { NO_PROP, WT_MELEE_SWD } from './tables';
 import type { Combatant, WeaponStats } from './formulas';
 import { sumEquipStats, type ItemLookup } from './equipStats';
@@ -33,13 +34,16 @@ export function playerCombatant(p: CPlayer, getItem?: ItemLookup): Combatant {
   const eq = getItem ? sumEquipStats(p, getItem) : BARE_EQUIP;
   return {
     kind: 'player', level: p.m_nLevel, job: p.m_nJob,
-    str: p.m_nStr, sta: p.m_nSta, dex: p.m_nDex, int: p.m_nInt,
+    // Primary stats include equip + DST buffs (C++ GetStr/Sta/Dex/Int = m_nX +
+    // GetParam(DST_X)) so a +STR ring raises damage/DEF the moment it's equipped.
+    str: p.getStr(), sta: p.getSta(), dex: p.getDex(), int: p.getInt(),
     weapon: eq.weapon,
     npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0, npcHR: 0, npcER: 0,
     element: eq.element,
     equipDef: eq.armorDef,
     adjHitRate: eq.adjHitRate,
     parry: eq.parry,
+    params: p.m_params,
   };
 }
 
@@ -52,5 +56,6 @@ export function moverCombatant(m: CMover): Combatant {
     npcAtkMin: m.m_nAtkMin, npcAtkMax: m.m_nAtkMax, npcArmor: m.m_nArmor,
     npcResisMagic: 0, npcHR: m.m_nHR, npcER: m.m_nER, element: m.m_nElement,
     equipDef: 0, adjHitRate: 0, parry: 0,
+    params: EMPTY_PARAM_VIEW,
   };
 }

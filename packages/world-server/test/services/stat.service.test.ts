@@ -76,9 +76,9 @@ describe('StatService.applyStatPoints', () => {
     assert.equal(m.updateStatsCalls.length, 1);
     assert.equal(m.updateStatsCalls[0]!.remain_gp, 6);
 
-    // SETSTATE snapshot echoed to self only. build() is unframed: payload
-    // starts at the SNAPSHOT DWORD (PacketWriter.build concatenates raw writes).
-    assert.equal(m.sent.length, 1);
+    // SETSTATE snapshot echoed to self, then 3 SETPOINTPARAM refills (HP/MP/FP
+    // bumped to the new maxes to mirror the client's OnSetState recompute).
+    assert.equal(m.sent.length, 4);
     const snap = m.sent[0]!;
     assert.equal(dwordAt(snap, 0), PACKETTYPE.SNAPSHOT, 'wrapped in SNAPSHOT');
     // [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][SETSTATE:2] then str/sta/dex/int/lp/gp

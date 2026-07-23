@@ -1169,6 +1169,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 41
     attack_rate: 0.0005
     attack_min: 40
@@ -1190,6 +1193,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 51
     attack_rate: 0.0005
     attack_min: 50
@@ -1211,6 +1217,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 55
     attack_rate: 0.0005
     attack_min: 54
@@ -1232,6 +1241,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 67
     attack_rate: 0.0005
     attack_min: 66
@@ -1253,6 +1265,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 81
     attack_rate: 0.0005
     attack_min: 80
@@ -1274,6 +1289,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 91
     attack_rate: 0.0005
     attack_min: 90
@@ -1295,6 +1313,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 121
     attack_rate: 0.0005
     attack_min: 120
@@ -1316,6 +1337,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 133
     attack_rate: 0.0005
     attack_min: 132
@@ -1337,6 +1361,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 147
     attack_rate: 0.0005
     attack_min: 146
@@ -1358,6 +1385,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 151
     attack_rate: 0.0005
     attack_min: 150
@@ -1379,6 +1409,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 165
     attack_rate: 0.0005
     attack_min: 164
@@ -1400,6 +1433,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 169
     attack_rate: 0.0005
     attack_min: 168
@@ -1421,6 +1457,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 201
     attack_rate: 0.0005
     attack_min: 200
@@ -1442,6 +1481,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 219
     attack_rate: 0.0005
     attack_min: 218
@@ -1463,6 +1505,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 235
     attack_rate: 0.0005
     attack_min: 234
@@ -1484,6 +1529,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 263
     attack_rate: 0.0005
     attack_min: 262
@@ -1505,6 +1553,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 267
     attack_rate: 0.0005
     attack_min: 266
@@ -1526,6 +1577,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 281
     attack_rate: 0.0005
     attack_min: 280
@@ -1547,6 +1601,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 288
     attack_rate: 0.0005
     attack_min: 287
@@ -1568,6 +1625,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 305
     attack_rate: 0.0005
     attack_min: 304
@@ -1589,6 +1649,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 315
     attack_rate: 0.0005
     attack_min: 314
@@ -1610,6 +1673,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 325
     attack_rate: 0.0005
     attack_min: 324
@@ -1631,6 +1697,9 @@ items:
     item_kind2: IK2_WEAPON_HAND
     item_kind3: IK3_HAND
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 2
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -1650,6 +1719,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 41
     attack_rate: 0.0007000000000000001
     attack_min: 40
@@ -1671,6 +1743,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 51
     attack_rate: 0.0007000000000000001
     attack_min: 50
@@ -1692,6 +1767,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 55
     attack_rate: 0.0007000000000000001
     attack_min: 54
@@ -1713,6 +1791,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 67
     attack_rate: 0.0007000000000000001
     attack_min: 66
@@ -1734,6 +1815,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 81
     attack_rate: 0.0007000000000000001
     attack_min: 80
@@ -1755,6 +1839,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 91
     attack_rate: 0.0007000000000000001
     attack_min: 90
@@ -1776,6 +1863,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 121
     attack_rate: 0.0007000000000000001
     attack_min: 120
@@ -1797,6 +1887,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 133
     attack_rate: 0.0007000000000000001
     attack_min: 132
@@ -1818,6 +1911,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 147
     attack_rate: 0.0007000000000000001
     attack_min: 146
@@ -1839,6 +1935,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 151
     attack_rate: 0.0007000000000000001
     attack_min: 150
@@ -1860,6 +1959,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 165
     attack_rate: 0.0007000000000000001
     attack_min: 164
@@ -1881,6 +1983,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 169
     attack_rate: 0.0007000000000000001
     attack_min: 168
@@ -1902,6 +2007,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 201
     attack_rate: 0.0007000000000000001
     attack_min: 200
@@ -1923,6 +2031,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 219
     attack_rate: 0.0007000000000000001
     attack_min: 218
@@ -1944,6 +2055,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 235
     attack_rate: 0.0007000000000000001
     attack_min: 234
@@ -1965,6 +2079,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 263
     attack_rate: 0.0007000000000000001
     attack_min: 262
@@ -1986,6 +2103,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 267
     attack_rate: 0.0007000000000000001
     attack_min: 266
@@ -2007,6 +2127,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 281
     attack_rate: 0.0007000000000000001
     attack_min: 280
@@ -2028,6 +2151,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 288
     attack_rate: 0.0007000000000000001
     attack_min: 287
@@ -2049,6 +2175,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 305
     attack_rate: 0.0007000000000000001
     attack_min: 304
@@ -2070,6 +2199,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 315
     attack_rate: 0.0007000000000000001
     attack_min: 314
@@ -2091,6 +2223,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 325
     attack_rate: 0.0007000000000000001
     attack_min: 324
@@ -2112,6 +2247,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 37
     attack_rate: 0.00045
     attack_min: 35
@@ -2133,6 +2271,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 47
     attack_rate: 0.00045
     attack_min: 45
@@ -2154,6 +2295,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 51
     attack_rate: 0.00045
     attack_min: 49
@@ -2175,6 +2319,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 63
     attack_rate: 0.00045
     attack_min: 61
@@ -2196,6 +2343,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 77
     attack_rate: 0.00045
     attack_min: 75
@@ -2217,6 +2367,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 87
     attack_rate: 0.00045
     attack_min: 85
@@ -2238,6 +2391,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 117
     attack_rate: 0.00045
     attack_min: 115
@@ -2259,6 +2415,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 129
     attack_rate: 0.00045
     attack_min: 127
@@ -2280,6 +2439,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 143
     attack_rate: 0.00045
     attack_min: 141
@@ -2301,6 +2463,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 147
     attack_rate: 0.00045
     attack_min: 145
@@ -2322,6 +2487,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 161
     attack_rate: 0.00045
     attack_min: 159
@@ -2343,6 +2511,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 165
     attack_rate: 0.00045
     attack_min: 163
@@ -2364,6 +2535,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 197
     attack_rate: 0.00045
     attack_min: 195
@@ -2385,6 +2559,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 215
     attack_rate: 0.00045
     attack_min: 213
@@ -2406,6 +2583,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 231
     attack_rate: 0.00045
     attack_min: 229
@@ -2427,6 +2607,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 259
     attack_rate: 0.00045
     attack_min: 257
@@ -2448,6 +2631,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 263
     attack_rate: 0.00045
     attack_min: 261
@@ -2469,6 +2655,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 277
     attack_rate: 0.00045
     attack_min: 275
@@ -2490,6 +2679,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 284
     attack_rate: 0.00045
     attack_min: 282
@@ -2511,6 +2703,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 301
     attack_rate: 0.00045
     attack_min: 299
@@ -2532,6 +2727,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 311
     attack_rate: 0.00045
     attack_min: 309
@@ -2553,6 +2751,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
     attack: 321
     attack_rate: 0.00045
     attack_min: 319
@@ -2574,6 +2775,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 4
     attack_rate: 0.0008500000000000001
     attack_min: 3
@@ -2595,6 +2799,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 13
     attack_rate: 0.0008500000000000001
     attack_min: 12
@@ -2616,6 +2823,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 17
     attack_rate: 0.0008500000000000001
     attack_min: 16
@@ -2637,6 +2847,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 30
     attack_rate: 0.0008500000000000001
     attack_min: 29
@@ -2658,6 +2871,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 35
     attack_rate: 0.0008500000000000001
     attack_min: 34
@@ -2679,6 +2895,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 41
     attack_rate: 0.0008500000000000001
     attack_min: 40
@@ -2700,6 +2919,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 51
     attack_rate: 0.0008500000000000001
     attack_min: 50
@@ -2721,6 +2943,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 55
     attack_rate: 0.0008500000000000001
     attack_min: 54
@@ -2742,6 +2967,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 67
     attack_rate: 0.0008500000000000001
     attack_min: 66
@@ -2763,6 +2991,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 81
     attack_rate: 0.0008500000000000001
     attack_min: 80
@@ -2784,6 +3015,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 91
     attack_rate: 0.0008500000000000001
     attack_min: 90
@@ -2805,6 +3039,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 121
     attack_rate: 0.0008500000000000001
     attack_min: 120
@@ -2826,6 +3063,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 133
     attack_rate: 0.0008500000000000001
     attack_min: 132
@@ -2847,6 +3087,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 147
     attack_rate: 0.0008500000000000001
     attack_min: 146
@@ -2868,6 +3111,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 151
     attack_rate: 0.0008500000000000001
     attack_min: 150
@@ -2889,6 +3135,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 165
     attack_rate: 0.0008500000000000001
     attack_min: 164
@@ -2910,6 +3159,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 169
     attack_rate: 0.0008500000000000001
     attack_min: 168
@@ -2931,6 +3183,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 201
     attack_rate: 0.0008500000000000001
     attack_min: 200
@@ -2952,6 +3207,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 219
     attack_rate: 0.0008500000000000001
     attack_min: 218
@@ -2973,6 +3231,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 235
     attack_rate: 0.0008500000000000001
     attack_min: 234
@@ -2994,6 +3255,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 263
     attack_rate: 0.0008500000000000001
     attack_min: 262
@@ -3015,6 +3279,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 267
     attack_rate: 0.0008500000000000001
     attack_min: 266
@@ -3036,6 +3303,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 281
     attack_rate: 0.0008500000000000001
     attack_min: 280
@@ -3057,6 +3327,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 288
     attack_rate: 0.0008500000000000001
     attack_min: 287
@@ -3078,6 +3351,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 305
     attack_rate: 0.0008500000000000001
     attack_min: 304
@@ -3099,6 +3375,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 315
     attack_rate: 0.0008500000000000001
     attack_min: 314
@@ -3120,6 +3399,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 325
     attack_rate: 0.0008500000000000001
     attack_min: 324
@@ -3141,6 +3423,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 246
     attack_rate: 0.00035000000000000005
     attack_min: 244
@@ -3162,6 +3447,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 249
     attack_rate: 0.00035000000000000005
     attack_min: 247
@@ -3183,6 +3471,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 293
     attack_rate: 0.00035000000000000005
     attack_min: 291
@@ -3204,6 +3495,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 295
     attack_rate: 0.00035000000000000005
     attack_min: 294
@@ -3225,6 +3519,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 301
     attack_rate: 0.00035000000000000005
     attack_min: 299
@@ -3246,6 +3543,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 322
     attack_rate: 0.00035000000000000005
     attack_min: 320
@@ -3267,6 +3567,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 325
     attack_rate: 0.00035000000000000005
     attack_min: 323
@@ -3288,6 +3591,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 345
     attack_rate: 0.00035000000000000005
     attack_min: 343
@@ -3309,6 +3615,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 383
     attack_rate: 0.00035000000000000005
     attack_min: 382
@@ -3330,6 +3639,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 41
     attack_rate: 0.00025
     attack_min: 40
@@ -3351,6 +3663,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 51
     attack_rate: 0.00025
     attack_min: 50
@@ -3372,6 +3687,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 55
     attack_rate: 0.00025
     attack_min: 54
@@ -3393,6 +3711,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 67
     attack_rate: 0.00025
     attack_min: 66
@@ -3414,6 +3735,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 81
     attack_rate: 0.00025
     attack_min: 80
@@ -3435,6 +3759,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 91
     attack_rate: 0.00025
     attack_min: 90
@@ -3456,6 +3783,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 121
     attack_rate: 0.00025
     attack_min: 120
@@ -3477,6 +3807,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 133
     attack_rate: 0.00025
     attack_min: 132
@@ -3498,6 +3831,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 147
     attack_rate: 0.00025
     attack_min: 146
@@ -3519,6 +3855,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 151
     attack_rate: 0.00025
     attack_min: 150
@@ -3540,6 +3879,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 165
     attack_rate: 0.00025
     attack_min: 164
@@ -3561,6 +3903,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 169
     attack_rate: 0.00025
     attack_min: 168
@@ -3582,6 +3927,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 201
     attack_rate: 0.00025
     attack_min: 200
@@ -3603,6 +3951,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 219
     attack_rate: 0.00025
     attack_min: 218
@@ -3624,6 +3975,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 235
     attack_rate: 0.00025
     attack_min: 234
@@ -3645,6 +3999,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 263
     attack_rate: 0.00025
     attack_min: 262
@@ -3666,6 +4023,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 267
     attack_rate: 0.00025
     attack_min: 266
@@ -3687,6 +4047,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 281
     attack_rate: 0.00025
     attack_min: 280
@@ -3708,6 +4071,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 288
     attack_rate: 0.00025
     attack_min: 287
@@ -3729,6 +4095,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 305
     attack_rate: 0.00025
     attack_min: 304
@@ -3750,6 +4119,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 315
     attack_rate: 0.00025
     attack_min: 314
@@ -3771,6 +4143,9 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 325
     attack_rate: 0.00025
     attack_min: 324
@@ -3792,6 +4167,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 33
     attack_rate: 0.00075
     attack_min: 32
@@ -3813,6 +4191,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 41
     attack_rate: 0.00075
     attack_min: 40
@@ -3834,6 +4215,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 44
     attack_rate: 0.00075
     attack_min: 43
@@ -3855,6 +4239,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 53
     attack_rate: 0.00075
     attack_min: 52
@@ -3876,6 +4263,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 65
     attack_rate: 0.00075
     attack_min: 64
@@ -3897,6 +4287,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 73
     attack_rate: 0.00075
     attack_min: 72
@@ -3918,6 +4311,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 97
     attack_rate: 0.00075
     attack_min: 96
@@ -3939,6 +4335,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 106
     attack_rate: 0.00075
     attack_min: 105
@@ -3960,6 +4359,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 117
     attack_rate: 0.00075
     attack_min: 116
@@ -3981,6 +4383,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 121
     attack_rate: 0.00075
     attack_min: 120
@@ -4002,6 +4407,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 132
     attack_rate: 0.00075
     attack_min: 131
@@ -4023,6 +4431,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 135
     attack_rate: 0.00075
     attack_min: 134
@@ -4044,6 +4455,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 161
     attack_rate: 0.00075
     attack_min: 160
@@ -4065,6 +4479,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 175
     attack_rate: 0.00075
     attack_min: 174
@@ -4086,6 +4503,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 188
     attack_rate: 0.00075
     attack_min: 187
@@ -4107,6 +4527,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 210
     attack_rate: 0.00075
     attack_min: 209
@@ -4128,6 +4551,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 213
     attack_rate: 0.00075
     attack_min: 212
@@ -4149,6 +4575,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 225
     attack_rate: 0.00075
     attack_min: 224
@@ -4170,6 +4599,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 230
     attack_rate: 0.00075
     attack_min: 229
@@ -4191,6 +4623,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 244
     attack_rate: 0.00075
     attack_min: 243
@@ -4212,6 +4647,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 252
     attack_rate: 0.00075
     attack_min: 251
@@ -4233,6 +4671,9 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 20
     attack: 260
     attack_rate: 0.00075
     attack_min: 259
@@ -4254,6 +4695,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 20
+      - dst: 24
+        adj: 100
     attack: 263
     attack_rate: 0.0008500000000000001
     attack_min: 260
@@ -4275,6 +4721,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 20
+      - dst: 26
+        adj: 20
     attack: 235
     attack_rate: 0.0006
     attack_min: 230
@@ -4296,6 +4747,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 200
+      - dst: 3
+        adj: 4
     attack: 201
     attack_rate: 0.0005
     attack_min: 200
@@ -4317,6 +4773,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 200
+      - dst: 3
+        adj: 4
     attack: 201
     attack_rate: 0.00025
     attack_min: 200
@@ -4338,6 +4799,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 200
+      - dst: 3
+        adj: 4
     attack: 197
     attack_rate: 0.00045
     attack_min: 195
@@ -4359,6 +4825,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 5
+      - dst: 47
+        adj: 20
     attack: 223
     attack_rate: 0.0007000000000000001
     attack_min: 220
@@ -4380,6 +4851,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 47
+        adj: 20
     attack: 81
     attack_rate: 0.0008500000000000001
     attack_min: 80
@@ -4401,6 +4877,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 47
+        adj: 20
     attack: 82
     attack_rate: 0.0006
     attack_min: 78
@@ -4422,6 +4903,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 47
+        adj: 20
     attack: 81
     attack_rate: 0.0005
     attack_min: 80
@@ -4443,6 +4929,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 47
+        adj: 20
     attack: 81
     attack_rate: 0.0007000000000000001
     attack_min: 80
@@ -4464,6 +4955,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 47
+        adj: 20
     attack: 81
     attack_rate: 0.00025
     attack_min: 80
@@ -4485,6 +4981,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 47
+        adj: 20
     attack: 65
     attack_rate: 0.00075
     attack_min: 64
@@ -4506,6 +5007,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 47
+        adj: 20
     attack: 73
     attack_rate: 0.0007000000000000001
     attack_min: 72
@@ -4527,6 +5033,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 47
+        adj: 20
     attack: 77
     attack_rate: 0.00045
     attack_min: 75
@@ -4548,6 +5059,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 50
+      - dst: 47
+        adj: 20
     attack: 55
     attack_rate: 0.0008500000000000001
     attack_min: 54
@@ -4569,6 +5085,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 50
+      - dst: 47
+        adj: 20
     attack: 56
     attack_rate: 0.0006
     attack_min: 52
@@ -4590,6 +5111,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 47
+        adj: 20
     attack: 55
     attack_rate: 0.0005
     attack_min: 54
@@ -4611,6 +5137,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 50
+      - dst: 47
+        adj: 20
     attack: 55
     attack_rate: 0.0007000000000000001
     attack_min: 54
@@ -4632,6 +5163,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 47
+        adj: 20
     attack: 55
     attack_rate: 0.00025
     attack_min: 54
@@ -4653,6 +5189,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 47
+        adj: 20
     attack: 51
     attack_rate: 0.00045
     attack_min: 49
@@ -4674,6 +5215,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 1
+      - dst: 35
+        adj: 50
     attack: 35
     attack_rate: 0.0008500000000000001
     attack_min: 34
@@ -4695,6 +5241,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 1
+      - dst: 47
+        adj: 10
     attack: 38
     attack_rate: 0.0006
     attack_min: 34
@@ -4716,6 +5267,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 2
+        adj: 2
     attack: 60
     attack_rate: 0.0008500000000000001
     attack_min: 59
@@ -4737,6 +5293,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 24
+        adj: 100
     attack: 65
     attack_rate: 0.0006
     attack_min: 61
@@ -4758,6 +5319,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 9
+        adj: 1
     attack: 60
     attack_rate: 0.0007000000000000001
     attack_min: 58
@@ -4779,6 +5345,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 9
+        adj: 1
     attack: 105
     attack_rate: 0.0008500000000000001
     attack_min: 104
@@ -4800,6 +5371,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 47
+        adj: 10
     attack: 155
     attack_rate: 0.0008500000000000001
     attack_min: 154
@@ -4821,6 +5397,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 55
+        adj: 3
     attack: 114
     attack_rate: 0.0006
     attack_min: 110
@@ -4842,6 +5423,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 3
+      - dst: 1
+        adj: 5
     attack: 170
     attack_rate: 0.0006
     attack_min: 166
@@ -4863,6 +5449,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 24
+        adj: 100
     attack: 107
     attack_rate: 0.0007000000000000001
     attack_min: 106
@@ -4884,6 +5475,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 5
+      - dst: 29
+        adj: 10
     attack: 131
     attack_rate: 0.0007000000000000001
     attack_min: 130
@@ -4905,6 +5501,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 2
+      - dst: 24
+        adj: 100
     attack: 56
     attack_rate: 0.00075
     attack_min: 55
@@ -4926,6 +5527,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 10
+      - dst: 9
+        adj: 3
     attack: 91
     attack_rate: 0.00075
     attack_min: 90
@@ -4947,6 +5553,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 55
+        adj: 3
+      - dst: 9
+        adj: 1
     attack: 123
     attack_rate: 0.00075
     attack_min: 122
@@ -4968,6 +5579,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 2
+      - dst: 47
+        adj: 10
     attack: 63
     attack_rate: 0.0007000000000000001
     attack_min: 62
@@ -4989,6 +5605,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 3
+      - dst: 55
+        adj: 2
     attack: 103
     attack_rate: 0.0007000000000000001
     attack_min: 102
@@ -5010,6 +5631,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 20
+      - dst: 9
+        adj: 3
     attack: 153
     attack_rate: 0.0007000000000000001
     attack_min: 152
@@ -5031,6 +5657,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 53
+        adj: 5
     attack: 71
     attack_rate: 0.0005
     attack_min: 70
@@ -5052,6 +5683,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 53
+        adj: 10
     attack: 115
     attack_rate: 0.0005
     attack_min: 114
@@ -5073,6 +5709,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 73
+        adj: 10
     attack: 170
     attack_rate: 0.0005
     attack_min: 169
@@ -5094,6 +5735,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 19
+        adj: 10
     attack: 70
     attack_rate: 0.00025
     attack_min: 69
@@ -5115,6 +5761,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 75
+        adj: 5
     attack: 115
     attack_rate: 0.00025
     attack_min: 114
@@ -5136,6 +5787,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 4
+      - dst: 17
+        adj: 10
     attack: 170
     attack_rate: 0.00025
     attack_min: 169
@@ -5157,6 +5813,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 20
+        adj: 5
     attack: 67
     attack_rate: 0.00045
     attack_min: 65
@@ -5178,6 +5839,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 4
+      - dst: 17
+        adj: 5
     attack: 112
     attack_rate: 0.00045
     attack_min: 110
@@ -5199,6 +5865,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 73
+        adj: 10
+      - dst: 75
+        adj: 10
     attack: 166
     attack_rate: 0.00045
     attack_min: 164
@@ -5220,6 +5891,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 5
+      - dst: 2
+        adj: 5
     attack: 261
     attack_rate: 0.0008500000000000001
     attack_min: 258
@@ -5241,6 +5917,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 200
+      - dst: 26
+        adj: 30
     attack: 307
     attack_rate: 0.00035000000000000005
     attack_min: 305
@@ -5262,6 +5943,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 30
+      - dst: 29
+        adj: 5
     attack: 260
     attack_rate: 0.0006
     attack_min: 240
@@ -5283,6 +5969,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 5
+      - dst: 26
+        adj: 30
     attack: 302
     attack_rate: 0.0003
     attack_min: 300
@@ -5304,6 +5995,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 300
+      - dst: 52
+        adj: 15
     attack: 259
     attack_rate: 0.0007000000000000001
     attack_min: 258
@@ -5325,6 +6021,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 52
+        adj: 15
     attack: 260
     attack_rate: 0.0005
     attack_min: 259
@@ -5346,6 +6047,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 75
+        adj: 10
+      - dst: 26
+        adj: 30
     attack: 260
     attack_rate: 0.00025
     attack_min: 259
@@ -5367,6 +6073,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 200
+      - dst: 36
+        adj: 200
     attack: 256
     attack_rate: 0.00045
     attack_min: 254
@@ -5388,6 +6099,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 9
+        adj: 20
     attack: 234
     attack_rate: 0.0007000000000000001
     attack_min: 233
@@ -5409,6 +6125,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 200
+      - dst: 26
+        adj: 30
     attack: 208
     attack_rate: 0.00075
     attack_min: 207
@@ -5430,6 +6151,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 5
+      - dst: 9
+        adj: 7
     attack: 282
     attack_rate: 0.0008500000000000001
     attack_min: 281
@@ -5451,6 +6177,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
+      - dst: 24
+        adj: 200
     attack: 323
     attack_rate: 0.00035000000000000005
     attack_min: 321
@@ -5472,6 +6203,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 24
+        adj: 140
     attack: 281
     attack_rate: 0.0006
     attack_min: 280
@@ -5493,6 +6229,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 200
+      - dst: 47
+        adj: 20
     attack: 330
     attack_rate: 0.0003
     attack_min: 325
@@ -5514,6 +6255,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 5
+      - dst: 9
+        adj: 13
     attack: 298
     attack_rate: 0.0007000000000000001
     attack_min: 297
@@ -5535,6 +6281,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 53
+        adj: 20
+      - dst: 3
+        adj: 2
     attack: 280
     attack_rate: 0.0005
     attack_min: 279
@@ -5556,6 +6307,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 125
+      - dst: 3
+        adj: 5
     attack: 280
     attack_rate: 0.00025
     attack_min: 279
@@ -5577,6 +6333,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 53
+        adj: 10
+      - dst: 3
+        adj: 5
     attack: 276
     attack_rate: 0.00045
     attack_min: 274
@@ -5598,6 +6359,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 4
+        adj: 4
     attack: 252
     attack_rate: 0.0007000000000000001
     attack_min: 251
@@ -5619,6 +6385,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 7
+      - dst: 77
+        adj: 28
     attack: 224
     attack_rate: 0.00075
     attack_min: 223
@@ -5640,6 +6411,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 24
+        adj: 200
     attack: 311
     attack_rate: 0.0008500000000000001
     attack_min: 310
@@ -5661,6 +6437,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 77
+        adj: 35
     attack: 381
     attack_rate: 0.00035000000000000005
     attack_min: 380
@@ -5682,6 +6463,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 7
+      - dst: 9
+        adj: 20
     attack: 308
     attack_rate: 0.0006
     attack_min: 307
@@ -5703,6 +6489,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 10
+      - dst: 9
+        adj: 15
     attack: 391
     attack_rate: 0.0003
     attack_min: 387
@@ -5724,6 +6515,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 47
+        adj: 20
     attack: 307
     attack_rate: 0.0007000000000000001
     attack_min: 306
@@ -5745,6 +6541,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 4
+      - dst: 52
+        adj: 10
     attack: 309
     attack_rate: 0.0005
     attack_min: 308
@@ -5766,6 +6567,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 53
+        adj: 15
     attack: 309
     attack_rate: 0.00025
     attack_min: 308
@@ -5787,6 +6593,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 10
+      - dst: 3
+        adj: 3
     attack: 305
     attack_rate: 0.00045
     attack_min: 303
@@ -5808,6 +6619,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 47
+        adj: 20
     attack: 279
     attack_rate: 0.0007000000000000001
     attack_min: 278
@@ -5829,6 +6645,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 10
+      - dst: 2
+        adj: 5
     attack: 248
     attack_rate: 0.00075
     attack_min: 247
@@ -5850,6 +6671,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 10
+      - dst: 24
+        adj: 300
     attack: 323
     attack_rate: 0.0008500000000000001
     attack_min: 322
@@ -5871,6 +6697,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 24
+        adj: 360
     attack: 393
     attack_rate: 0.00035000000000000005
     attack_min: 392
@@ -5892,6 +6723,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 9
+        adj: 20
     attack: 321
     attack_rate: 0.0006
     attack_min: 320
@@ -5913,6 +6749,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 18
+      - dst: 1
+        adj: 6
     attack: 405
     attack_rate: 0.0003
     attack_min: 400
@@ -5934,6 +6775,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 38
+      - dst: 24
+        adj: 200
     attack: 323
     attack_rate: 0.0007000000000000001
     attack_min: 322
@@ -5955,6 +6801,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 323
     attack_rate: 0.0005
     attack_min: 322
@@ -5976,6 +6827,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 75
+        adj: 15
+      - dst: 52
+        adj: 10
     attack: 323
     attack_rate: 0.00025
     attack_min: 322
@@ -5997,6 +6853,11 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 75
+        adj: 10
     attack: 319
     attack_rate: 0.00045
     attack_min: 317
@@ -6018,6 +6879,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 24
+        adj: 200
     attack: 293
     attack_rate: 0.0007000000000000001
     attack_min: 292
@@ -6039,6 +6905,11 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 24
+        adj: 200
     attack: 259
     attack_rate: 0.00075
     attack_min: 258
@@ -6060,6 +6931,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 9
+        adj: 20
+      - dst: 24
+        adj: 300
     attack: 339
     attack_rate: 0.0008500000000000001
     attack_min: 338
@@ -6081,6 +6959,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 6
+      - dst: 8
+        adj: 10
+      - dst: 52
+        adj: 20
     attack: 413
     attack_rate: 0.00035000000000000005
     attack_min: 412
@@ -6102,6 +6987,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 10
+      - dst: 26
+        adj: 75
+      - dst: 52
+        adj: 15
     attack: 337
     attack_rate: 0.0006
     attack_min: 336
@@ -6123,6 +7015,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 18
+      - dst: 1
+        adj: 10
+      - dst: 54
+        adj: 10
     attack: 425
     attack_rate: 0.0003
     attack_min: 420
@@ -6144,6 +7043,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 63
+        adj: 250
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 20
     attack: 339
     attack_rate: 0.0007000000000000001
     attack_min: 338
@@ -6165,6 +7071,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 15
+      - dst: 75
+        adj: 20
+      - dst: 53
+        adj: 20
     attack: 339
     attack_rate: 0.0005
     attack_min: 338
@@ -6186,6 +7099,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 10
+      - dst: 75
+        adj: 15
+      - dst: 52
+        adj: 20
     attack: 339
     attack_rate: 0.00025
     attack_min: 338
@@ -6207,6 +7127,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 10
+      - dst: 75
+        adj: 10
+      - dst: 53
+        adj: 20
     attack: 335
     attack_rate: 0.00045
     attack_min: 333
@@ -6228,6 +7155,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 24
+        adj: 200
+      - dst: 53
+        adj: 20
     attack: 308
     attack_rate: 0.0007000000000000001
     attack_min: 307
@@ -6249,6 +7183,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 15
     attack: 272
     attack_rate: 0.00075
     attack_min: 271
@@ -6270,6 +7211,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 30
+      - dst: 77
+        adj: 40
+      - dst: 24
+        adj: 500
     attack: 498
     attack_rate: 0.0008500000000000001
     attack_min: 497
@@ -6289,6 +7237,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 30
+      - dst: 8
+        adj: 30
+      - dst: 14
+        adj: 30
     attack: 649
     attack_rate: 0.00035000000000000005
     attack_min: 648
@@ -6308,6 +7263,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 500
+      - dst: 47
+        adj: 25
+      - dst: 9
+        adj: 25
     attack: 494
     attack_rate: 0.0006
     attack_min: 493
@@ -6327,6 +7289,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 66
+        adj: 10
+      - dst: 4
+        adj: 15
     attack: 663
     attack_rate: 0.0003
     attack_min: 662
@@ -6346,6 +7315,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 23
+      - dst: 72
+        adj: 15
+      - dst: 14
+        adj: 10
     attack: 498
     attack_rate: 0.0007000000000000001
     attack_min: 497
@@ -6365,6 +7341,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 28
+      - dst: 75
+        adj: 28
+      - dst: 53
+        adj: 20
     attack: 559
     attack_rate: 0.0005
     attack_min: 558
@@ -6384,6 +7367,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 27
+      - dst: 75
+        adj: 29
+      - dst: 66
+        adj: 26
     attack: 559
     attack_rate: 0.00025
     attack_min: 558
@@ -6403,6 +7393,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 35
+      - dst: 75
+        adj: 29
+      - dst: 66
+        adj: 36
     attack: 568
     attack_rate: 0.00045
     attack_min: 566
@@ -6422,6 +7419,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 50
+      - dst: 66
+        adj: 22
+      - dst: 65
+        adj: 19
     attack: 527
     attack_rate: 0.0007000000000000001
     attack_min: 525
@@ -6441,6 +7445,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 22
+      - dst: 77
+        adj: 36
+      - dst: 24
+        adj: 440
     attack: 470
     attack_rate: 0.00075
     attack_min: 469
@@ -6460,6 +7471,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 20
+      - dst: 24
+        adj: 400
+      - dst: 9
+        adj: 10
     attack: 460
     attack_rate: 0.0008500000000000001
     attack_min: 459
@@ -6479,6 +7497,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 8
+        adj: 10
+      - dst: 14
+        adj: 10
     attack: 551
     attack_rate: 0.00035000000000000005
     attack_min: 549
@@ -6500,6 +7525,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 20
+      - dst: 77
+        adj: 30
+      - dst: 66
+        adj: 10
     attack: 457
     attack_rate: 0.0006
     attack_min: 456
@@ -6519,6 +7551,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 18
+      - dst: 1
+        adj: 10
+      - dst: 4
+        adj: 10
     attack: 565
     attack_rate: 0.0003
     attack_min: 560
@@ -6540,6 +7579,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 72
+        adj: 10
+      - dst: 8
+        adj: 10
     attack: 460
     attack_rate: 0.0007000000000000001
     attack_min: 459
@@ -6561,6 +7607,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 20
+      - dst: 75
+        adj: 20
+      - dst: 53
+        adj: 20
     attack: 460
     attack_rate: 0.0005
     attack_min: 459
@@ -6582,6 +7635,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 15
+      - dst: 75
+        adj: 17
+      - dst: 66
+        adj: 10
     attack: 460
     attack_rate: 0.00025
     attack_min: 459
@@ -6603,6 +7663,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 15
+      - dst: 75
+        adj: 10
+      - dst: 66
+        adj: 20
     attack: 468
     attack_rate: 0.00045
     attack_min: 465
@@ -6624,6 +7691,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 20
+      - dst: 77
+        adj: 45
+      - dst: 52
+        adj: 20
     attack: 433
     attack_rate: 0.0007000000000000001
     attack_min: 431
@@ -6645,6 +7719,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 10
+      - dst: 77
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 387
     attack_rate: 0.00075
     attack_min: 386
@@ -6666,6 +7747,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 5
+      - dst: 2
+        adj: 5
+      - dst: 24
+        adj: 200
     attack: 354
     attack_rate: 0.0008500000000000001
     attack_min: 350
@@ -6687,6 +7775,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 200
+      - dst: 26
+        adj: 30
+      - dst: 24
+        adj: 200
     attack: 411
     attack_rate: 0.00035000000000000005
     attack_min: 409
@@ -6708,6 +7803,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 30
+      - dst: 29
+        adj: 5
+      - dst: 24
+        adj: 200
     attack: 353
     attack_rate: 0.0006
     attack_min: 328
@@ -6729,6 +7831,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 5
+      - dst: 26
+        adj: 30
+      - dst: 24
+        adj: 200
     attack: 405
     attack_rate: 0.0003
     attack_min: 403
@@ -6750,6 +7859,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 300
+      - dst: 52
+        adj: 15
+      - dst: 24
+        adj: 200
     attack: 352
     attack_rate: 0.0007000000000000001
     attack_min: 350
@@ -6771,6 +7887,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 52
+        adj: 15
+      - dst: 24
+        adj: 200
     attack: 353
     attack_rate: 0.0005
     attack_min: 352
@@ -6792,6 +7915,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 75
+        adj: 10
+      - dst: 26
+        adj: 30
+      - dst: 24
+        adj: 200
     attack: 353
     attack_rate: 0.00025
     attack_min: 352
@@ -6813,6 +7943,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 200
+      - dst: 36
+        adj: 200
+      - dst: 24
+        adj: 200
     attack: 347
     attack_rate: 0.00045
     attack_min: 345
@@ -6834,6 +7971,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 9
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 321
     attack_rate: 0.0007000000000000001
     attack_min: 319
@@ -6855,6 +7999,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 200
+      - dst: 26
+        adj: 30
+      - dst: 24
+        adj: 200
     attack: 289
     attack_rate: 0.00075
     attack_min: 287
@@ -6876,6 +8027,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 5
+      - dst: 9
+        adj: 7
+      - dst: 24
+        adj: 200
     attack: 380
     attack_rate: 0.0008500000000000001
     attack_min: 379
@@ -6897,6 +8055,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
+      - dst: 24
+        adj: 200
+      - dst: 24
+        adj: 200
     attack: 431
     attack_rate: 0.00035000000000000005
     attack_min: 429
@@ -6918,6 +8083,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 24
+        adj: 140
+      - dst: 24
+        adj: 200
     attack: 379
     attack_rate: 0.0006
     attack_min: 378
@@ -6939,6 +8111,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 200
+      - dst: 47
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 440
     attack_rate: 0.0003
     attack_min: 434
@@ -6960,6 +8139,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 5
+      - dst: 9
+        adj: 13
+      - dst: 24
+        adj: 200
     attack: 400
     attack_rate: 0.0007000000000000001
     attack_min: 399
@@ -6981,6 +8167,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 53
+        adj: 20
+      - dst: 3
+        adj: 2
+      - dst: 24
+        adj: 200
     attack: 378
     attack_rate: 0.0005
     attack_min: 376
@@ -7002,6 +8195,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 36
+        adj: 125
+      - dst: 3
+        adj: 5
+      - dst: 24
+        adj: 200
     attack: 378
     attack_rate: 0.00025
     attack_min: 376
@@ -7023,6 +8223,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 53
+        adj: 10
+      - dst: 3
+        adj: 5
+      - dst: 24
+        adj: 200
     attack: 372
     attack_rate: 0.00045
     attack_min: 370
@@ -7044,6 +8251,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 4
+        adj: 4
+      - dst: 24
+        adj: 200
     attack: 343
     attack_rate: 0.0007000000000000001
     attack_min: 342
@@ -7065,6 +8279,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 7
+      - dst: 77
+        adj: 28
+      - dst: 24
+        adj: 200
     attack: 309
     attack_rate: 0.00075
     attack_min: 307
@@ -7086,6 +8307,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 24
+        adj: 200
+      - dst: 24
+        adj: 200
     attack: 416
     attack_rate: 0.0008500000000000001
     attack_min: 415
@@ -7107,6 +8335,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 77
+        adj: 35
+      - dst: 24
+        adj: 200
     attack: 503
     attack_rate: 0.00035000000000000005
     attack_min: 502
@@ -7128,6 +8363,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 7
+      - dst: 9
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 413
     attack_rate: 0.0006
     attack_min: 411
@@ -7149,6 +8391,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 10
+      - dst: 9
+        adj: 15
+      - dst: 24
+        adj: 200
     attack: 515
     attack_rate: 0.0003
     attack_min: 510
@@ -7170,6 +8419,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 47
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 411
     attack_rate: 0.0007000000000000001
     attack_min: 410
@@ -7191,6 +8447,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 4
+      - dst: 52
+        adj: 10
+      - dst: 24
+        adj: 200
     attack: 414
     attack_rate: 0.0005
     attack_min: 412
@@ -7212,6 +8475,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 53
+        adj: 15
+      - dst: 24
+        adj: 200
     attack: 414
     attack_rate: 0.00025
     attack_min: 412
@@ -7233,6 +8503,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 10
+      - dst: 3
+        adj: 3
+      - dst: 24
+        adj: 200
     attack: 408
     attack_rate: 0.00045
     attack_min: 406
@@ -7254,6 +8531,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 47
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 377
     attack_rate: 0.0007000000000000001
     attack_min: 375
@@ -7275,6 +8559,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 10
+      - dst: 2
+        adj: 5
+      - dst: 24
+        adj: 200
     attack: 338
     attack_rate: 0.00075
     attack_min: 337
@@ -7296,6 +8587,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 10
+      - dst: 24
+        adj: 300
+      - dst: 24
+        adj: 200
     attack: 431
     attack_rate: 0.0008500000000000001
     attack_min: 430
@@ -7317,6 +8615,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 24
+        adj: 360
+      - dst: 24
+        adj: 200
     attack: 518
     attack_rate: 0.00035000000000000005
     attack_min: 517
@@ -7338,6 +8643,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 9
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 429
     attack_rate: 0.0006
     attack_min: 427
@@ -7359,6 +8671,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 18
+      - dst: 1
+        adj: 6
+      - dst: 24
+        adj: 200
     attack: 533
     attack_rate: 0.0003
     attack_min: 527
@@ -7380,6 +8699,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 38
+      - dst: 24
+        adj: 200
+      - dst: 24
+        adj: 200
     attack: 431
     attack_rate: 0.0007000000000000001
     attack_min: 430
@@ -7401,6 +8727,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 20
+      - dst: 24
+        adj: 200
+      - dst: 24
+        adj: 200
     attack: 431
     attack_rate: 0.0005
     attack_min: 430
@@ -7422,6 +8755,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 75
+        adj: 15
+      - dst: 52
+        adj: 10
+      - dst: 24
+        adj: 200
     attack: 431
     attack_rate: 0.00025
     attack_min: 430
@@ -7443,6 +8783,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 75
+        adj: 10
+      - dst: 24
+        adj: 200
     attack: 426
     attack_rate: 0.00045
     attack_min: 424
@@ -7464,6 +8811,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 24
+        adj: 200
+      - dst: 24
+        adj: 200
     attack: 394
     attack_rate: 0.0007000000000000001
     attack_min: 393
@@ -7485,6 +8839,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 24
+        adj: 200
+      - dst: 24
+        adj: 200
     attack: 352
     attack_rate: 0.00075
     attack_min: 350
@@ -7506,6 +8867,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 9
+        adj: 20
+      - dst: 24
+        adj: 300
     attack: 451
     attack_rate: 0.0008500000000000001
     attack_min: 450
@@ -7527,6 +8895,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 6
+      - dst: 8
+        adj: 10
+      - dst: 52
+        adj: 20
     attack: 543
     attack_rate: 0.00035000000000000005
     attack_min: 541
@@ -7548,6 +8923,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 10
+      - dst: 26
+        adj: 75
+      - dst: 52
+        adj: 15
     attack: 449
     attack_rate: 0.0006
     attack_min: 447
@@ -7569,6 +8951,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 18
+      - dst: 1
+        adj: 10
+      - dst: 54
+        adj: 10
     attack: 557
     attack_rate: 0.0003
     attack_min: 551
@@ -7590,6 +8979,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 63
+        adj: 250
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 20
     attack: 451
     attack_rate: 0.0007000000000000001
     attack_min: 450
@@ -7611,6 +9007,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 15
+      - dst: 75
+        adj: 20
+      - dst: 53
+        adj: 20
     attack: 451
     attack_rate: 0.0005
     attack_min: 450
@@ -7632,6 +9035,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 10
+      - dst: 75
+        adj: 15
+      - dst: 52
+        adj: 20
     attack: 451
     attack_rate: 0.00025
     attack_min: 450
@@ -7653,6 +9063,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 10
+      - dst: 75
+        adj: 10
+      - dst: 53
+        adj: 20
     attack: 445
     attack_rate: 0.00045
     attack_min: 443
@@ -7674,6 +9091,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 40
+      - dst: 24
+        adj: 200
+      - dst: 53
+        adj: 20
     attack: 413
     attack_rate: 0.0007000000000000001
     attack_min: 411
@@ -7695,6 +9119,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 15
     attack: 368
     attack_rate: 0.00075
     attack_min: 367
@@ -7716,6 +9147,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 15
     attack: 397
     attack_rate: 0.00035000000000000005
     attack_min: 392
@@ -7737,6 +9175,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 15
     attack: 405
     attack_rate: 0.00035000000000000005
     attack_min: 404
@@ -7758,6 +9203,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 15
     attack: 397
     attack_rate: 0.0003
     attack_min: 393
@@ -7779,6 +9231,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 15
     attack: 407
     attack_rate: 0.0003
     attack_min: 403
@@ -7800,6 +9259,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     attack: 127
     attack_rate: 0.0008
     attack_min: 125
@@ -7821,6 +9287,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 70
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 322
     attack_rate: 0.00035000000000000005
     attack_min: 320
@@ -7842,6 +9315,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 70
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 269
     attack_rate: 0.0008500000000000001
     attack_min: 265
@@ -7863,6 +9343,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 70
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 265
     attack_rate: 0.0007000000000000001
     attack_min: 264
@@ -7884,6 +9371,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 70
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 265
     attack_rate: 0.0005
     attack_min: 264
@@ -7905,6 +9399,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 265
     attack_rate: 0.00025
     attack_min: 264
@@ -7926,6 +9427,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 70
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 212
     attack_rate: 0.00075
     attack_min: 211
@@ -7947,6 +9455,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 24
+        adj: 70
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 238
     attack_rate: 0.0007000000000000001
     attack_min: 237
@@ -7968,6 +9483,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 261
     attack_rate: 0.00045
     attack_min: 259
@@ -7989,6 +9511,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 1
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 28
     attack_rate: 0.0008500000000000001
     attack_min: 27
@@ -8010,6 +9539,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 1
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 41
     attack_rate: 0.0008500000000000001
     attack_min: 40
@@ -8031,6 +9567,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 12
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 53
     attack_rate: 0.0008500000000000001
     attack_min: 52
@@ -8052,6 +9595,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 81
     attack_rate: 0.0008500000000000001
     attack_min: 80
@@ -8073,6 +9623,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 91
     attack_rate: 0.0008500000000000001
     attack_min: 90
@@ -8094,6 +9651,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 131
     attack_rate: 0.0008500000000000001
     attack_min: 130
@@ -8115,6 +9679,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 147
     attack_rate: 0.0008500000000000001
     attack_min: 146
@@ -8136,6 +9707,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 20
+      - dst: 1
+        adj: 3
+      - dst: 75
+        adj: 5
     attack: 163
     attack_rate: 0.0008500000000000001
     attack_min: 162
@@ -8157,6 +9735,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 47
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 28
     attack_rate: 0.0005
     attack_min: 27
@@ -8178,6 +9763,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 20
+      - dst: 47
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 41
     attack_rate: 0.0005
     attack_min: 40
@@ -8199,6 +9791,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 47
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 53
     attack_rate: 0.0005
     attack_min: 52
@@ -8220,6 +9819,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 20
+      - dst: 47
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 81
     attack_rate: 0.0005
     attack_min: 80
@@ -8241,6 +9847,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 47
+        adj: 50
+      - dst: 75
+        adj: 5
     attack: 91
     attack_rate: 0.0005
     attack_min: 90
@@ -8262,6 +9875,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 20
+      - dst: 3
+        adj: 2
+      - dst: 75
+        adj: 5
     attack: 131
     attack_rate: 0.0005
     attack_min: 130
@@ -8283,6 +9903,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 147
     attack_rate: 0.0005
     attack_min: 146
@@ -8304,6 +9931,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 163
     attack_rate: 0.0005
     attack_min: 162
@@ -8325,6 +9959,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 1
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 28
     attack_rate: 0.00025
     attack_min: 27
@@ -8346,6 +9987,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 1
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 41
     attack_rate: 0.00025
     attack_min: 40
@@ -8367,6 +10015,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 53
     attack_rate: 0.00025
     attack_min: 52
@@ -8388,6 +10043,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 81
     attack_rate: 0.00025
     attack_min: 80
@@ -8409,6 +10071,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 91
     attack_rate: 0.00025
     attack_min: 90
@@ -8430,6 +10099,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 131
     attack_rate: 0.00025
     attack_min: 130
@@ -8451,6 +10127,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 147
     attack_rate: 0.00025
     attack_min: 146
@@ -8472,6 +10155,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 36
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 163
     attack_rate: 0.00025
     attack_min: 162
@@ -8493,6 +10183,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 1
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 28
     attack_rate: 0.00045
     attack_min: 27
@@ -8514,6 +10211,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 1
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 41
     attack_rate: 0.00045
     attack_min: 40
@@ -8535,6 +10239,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 53
     attack_rate: 0.00045
     attack_min: 52
@@ -8556,6 +10267,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 36
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 81
     attack_rate: 0.00045
     attack_min: 80
@@ -8577,6 +10295,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 36
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 91
     attack_rate: 0.00045
     attack_min: 90
@@ -8598,6 +10323,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 131
     attack_rate: 0.00045
     attack_min: 130
@@ -8619,6 +10351,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 147
     attack_rate: 0.00045
     attack_min: 146
@@ -8640,6 +10379,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 163
     attack_rate: 0.00045
     attack_min: 162
@@ -8661,6 +10407,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 28
     attack_rate: 0.0007000000000000001
     attack_min: 27
@@ -8682,6 +10435,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 41
     attack_rate: 0.0007000000000000001
     attack_min: 40
@@ -8703,6 +10463,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 53
     attack_rate: 0.0007000000000000001
     attack_min: 52
@@ -8724,6 +10491,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 12
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 81
     attack_rate: 0.0007000000000000001
     attack_min: 80
@@ -8745,6 +10519,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 91
     attack_rate: 0.0007000000000000001
     attack_min: 90
@@ -8766,6 +10547,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 2
+      - dst: 47
+        adj: 20
+      - dst: 75
+        adj: 5
     attack: 131
     attack_rate: 0.0007000000000000001
     attack_min: 130
@@ -8787,6 +10575,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 37
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 147
     attack_rate: 0.0007000000000000001
     attack_min: 146
@@ -8808,6 +10603,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 37
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 163
     attack_rate: 0.0007000000000000001
     attack_min: 162
@@ -8829,6 +10631,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 37
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 20
     attack_rate: 0.0006
     attack_min: 12
@@ -8850,6 +10659,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 37
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 45
     attack_rate: 0.0006
     attack_min: 40
@@ -8871,6 +10687,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 12
+      - dst: 37
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 57
     attack_rate: 0.0006
     attack_min: 53
@@ -8892,6 +10715,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 37
+        adj: 100
+      - dst: 75
+        adj: 5
     attack: 87
     attack_rate: 0.0006
     attack_min: 82
@@ -8913,6 +10743,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 4
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 97
     attack_rate: 0.0006
     attack_min: 93
@@ -8934,6 +10771,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 139
     attack_rate: 0.0006
     attack_min: 135
@@ -8955,6 +10799,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 156
     attack_rate: 0.0006
     attack_min: 152
@@ -8976,6 +10827,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 173
     attack_rate: 0.0006
     attack_min: 169
@@ -8997,6 +10855,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 53
     attack_rate: 0.0008500000000000001
     attack_min: 52
@@ -9018,6 +10883,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 55
     attack_rate: 0.0008500000000000001
     attack_min: 54
@@ -9039,6 +10911,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 65
     attack_rate: 0.0008500000000000001
     attack_min: 64
@@ -9060,6 +10939,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 67
     attack_rate: 0.0008500000000000001
     attack_min: 66
@@ -9081,6 +10967,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 69
     attack_rate: 0.0008500000000000001
     attack_min: 68
@@ -9102,6 +10995,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 81
     attack_rate: 0.0008500000000000001
     attack_min: 80
@@ -9123,6 +11023,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 83
     attack_rate: 0.0008500000000000001
     attack_min: 82
@@ -9144,6 +11051,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 91
     attack_rate: 0.0008500000000000001
     attack_min: 90
@@ -9165,6 +11079,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 37
     attack_rate: 0.0008500000000000001
     attack_min: 36
@@ -9186,6 +11107,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 37
     attack_rate: 0.0005
     attack_min: 36
@@ -9207,6 +11135,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 37
     attack_rate: 0.00025
     attack_min: 36
@@ -9228,6 +11163,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 5
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 65
     attack_rate: 0.0008500000000000001
     attack_min: 64
@@ -9249,6 +11191,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 5
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 65
     attack_rate: 0.0008500000000000001
     attack_min: 64
@@ -9270,6 +11219,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 5
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 65
     attack_rate: 0.0008500000000000001
     attack_min: 64
@@ -9291,6 +11247,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 5
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 65
     attack_rate: 0.0008500000000000001
     attack_min: 64
@@ -9312,6 +11275,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 5
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 65
     attack_rate: 0.0008500000000000001
     attack_min: 64
@@ -9333,6 +11303,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 65
     attack_rate: 0.0005
     attack_min: 64
@@ -9354,6 +11331,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 234
     attack_rate: 0.00035000000000000005
     attack_min: 232
@@ -9375,6 +11359,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 167
     attack_rate: 0.0008500000000000001
     attack_min: 166
@@ -9396,6 +11387,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 35
+        adj: 100
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 167
     attack_rate: 0.0007000000000000001
     attack_min: 166
@@ -9417,6 +11415,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 10
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 167
     attack_rate: 0.0005
     attack_min: 166
@@ -9438,6 +11443,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 10
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 167
     attack_rate: 0.00025
     attack_min: 166
@@ -9459,6 +11471,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 163
     attack_rate: 0.00045
     attack_min: 161
@@ -9480,6 +11499,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 47
+        adj: 15
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0008500000000000001
     attack_min: 1
@@ -9501,6 +11527,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 63
+        adj: 10
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9523,6 +11556,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9545,6 +11585,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -9567,6 +11614,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -9589,6 +11643,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9611,6 +11672,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -9633,6 +11701,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -9655,6 +11730,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9677,6 +11759,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -9699,6 +11788,13 @@ items:
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
     hp_restore: 747
+    effects:
+      - dst: 38
+        adj: 747
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -9720,6 +11816,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9741,6 +11842,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 9
     attack_rate: 0.0007000000000000001
     attack_min: 8
@@ -9762,6 +11868,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -9783,6 +11894,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9804,6 +11920,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -9825,6 +11946,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -9846,6 +11972,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9867,6 +11998,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -9888,6 +12024,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -9909,6 +12050,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9930,6 +12076,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -9951,6 +12102,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -9972,6 +12128,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -9993,6 +12154,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 9
     attack_rate: 0.0007000000000000001
     attack_min: 8
@@ -10014,6 +12180,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -10035,6 +12206,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10056,6 +12232,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10077,6 +12258,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10098,6 +12284,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10119,6 +12310,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10140,6 +12336,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10161,6 +12362,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10182,6 +12388,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10203,6 +12414,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10224,6 +12440,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10245,6 +12466,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 9
     attack_rate: 0.0007000000000000001
     attack_min: 8
@@ -10266,6 +12492,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -10287,6 +12518,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10308,6 +12544,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10329,6 +12570,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10350,6 +12596,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10371,6 +12622,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10392,6 +12648,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10413,6 +12674,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10434,6 +12700,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10455,6 +12726,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10476,6 +12752,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10497,6 +12778,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 9
     attack_rate: 0.0007000000000000001
     attack_min: 8
@@ -10518,6 +12804,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -10539,6 +12830,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10560,6 +12856,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10581,6 +12882,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10602,6 +12908,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10623,6 +12934,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10644,6 +12960,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10665,6 +12986,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10686,6 +13012,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10707,6 +13038,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10728,6 +13064,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10749,6 +13090,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 9
     attack_rate: 0.0007000000000000001
     attack_min: 8
@@ -10770,6 +13116,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -10791,6 +13142,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10812,6 +13168,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10833,6 +13194,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -10854,6 +13220,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10875,6 +13246,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10896,6 +13272,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -10917,6 +13298,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10938,6 +13324,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -10959,6 +13350,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -10980,6 +13376,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11001,6 +13402,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11022,6 +13428,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -11043,6 +13454,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11064,6 +13480,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11085,6 +13506,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11106,6 +13532,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11127,6 +13558,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11148,6 +13584,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11169,6 +13610,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11190,6 +13636,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11211,6 +13662,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11232,6 +13688,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11253,6 +13714,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 9
     attack_rate: 0.0007000000000000001
     attack_min: 8
@@ -11274,6 +13740,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -11295,6 +13766,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11316,6 +13792,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11337,6 +13818,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11358,6 +13844,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11379,6 +13870,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11400,6 +13896,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11421,6 +13922,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11442,6 +13948,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11463,6 +13974,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -11484,6 +14000,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11505,6 +14026,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11526,6 +14052,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -11547,6 +14078,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11568,6 +14104,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11589,6 +14130,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11610,6 +14156,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11631,6 +14182,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11652,6 +14208,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11673,6 +14234,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11694,6 +14260,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11715,6 +14286,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -11736,6 +14312,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11757,6 +14338,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11778,6 +14364,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -11799,6 +14390,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11820,6 +14416,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11841,6 +14442,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11862,6 +14468,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11883,6 +14494,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11904,6 +14520,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11925,6 +14546,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -11946,6 +14572,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -11967,6 +14598,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -11988,6 +14624,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12009,6 +14650,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 9
     attack_rate: 0.0007000000000000001
     attack_min: 8
@@ -12030,6 +14676,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -12051,6 +14702,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12072,6 +14728,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12093,6 +14754,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -12114,6 +14780,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12135,6 +14806,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12156,6 +14832,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -12177,6 +14858,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12198,6 +14884,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12219,6 +14910,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -12240,6 +14936,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12261,6 +14962,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12282,6 +14988,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -12303,6 +15014,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12324,6 +15040,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12345,6 +15066,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -12366,6 +15092,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12387,6 +15118,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12408,6 +15144,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -12429,6 +15170,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12450,6 +15196,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12471,6 +15222,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -12492,6 +15248,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12513,6 +15274,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12534,6 +15300,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -12555,6 +15326,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12576,6 +15352,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12597,6 +15378,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -12618,6 +15404,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12639,6 +15430,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12660,6 +15456,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -12681,6 +15482,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12702,6 +15508,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12723,6 +15534,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -12744,6 +15560,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12765,6 +15586,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12786,6 +15612,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -12807,6 +15638,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12828,6 +15664,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12849,6 +15690,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -12870,6 +15716,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12891,6 +15742,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12912,6 +15768,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -12933,6 +15794,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12954,6 +15820,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -12975,6 +15846,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -12996,6 +15872,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13017,6 +15898,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13038,6 +15924,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -13059,6 +15950,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13080,6 +15976,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13101,6 +16002,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -13122,6 +16028,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13143,6 +16054,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13164,6 +16080,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -13185,6 +16106,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13206,6 +16132,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13227,6 +16158,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -13248,6 +16184,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13269,6 +16210,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13290,6 +16236,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -13311,6 +16262,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13332,6 +16288,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13353,6 +16314,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -13374,6 +16340,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13395,6 +16366,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13416,6 +16392,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -13437,6 +16418,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13458,6 +16444,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13479,6 +16470,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -13500,6 +16496,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13521,6 +16522,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13542,6 +16548,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -13563,6 +16574,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13584,6 +16600,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13605,6 +16626,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -13626,6 +16652,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13647,6 +16678,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13668,6 +16704,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -13689,6 +16730,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13710,6 +16756,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13731,6 +16782,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -13752,6 +16808,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13773,6 +16834,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13794,6 +16860,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -13815,6 +16886,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13836,6 +16912,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13857,6 +16938,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -13878,6 +16964,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13899,6 +16990,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13920,6 +17016,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -13941,6 +17042,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13962,6 +17068,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -13983,6 +17094,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -14004,6 +17120,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14025,6 +17146,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14046,6 +17172,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -14067,6 +17198,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14088,6 +17224,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14109,6 +17250,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -14130,6 +17276,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14151,6 +17302,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14172,6 +17328,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -14193,6 +17354,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14214,6 +17380,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14235,6 +17406,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -14256,6 +17432,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14277,6 +17458,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14298,6 +17484,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -14319,6 +17510,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14340,6 +17536,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14361,6 +17562,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -14382,6 +17588,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14403,6 +17614,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14424,6 +17640,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -14445,6 +17666,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14466,6 +17692,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14487,6 +17718,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -14508,6 +17744,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14529,6 +17770,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14550,6 +17796,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -14571,6 +17822,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14592,6 +17848,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14613,6 +17874,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -14634,6 +17900,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14655,6 +17926,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14676,6 +17952,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -14697,6 +17978,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14718,6 +18004,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14739,6 +18030,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -14760,6 +18056,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14781,6 +18082,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14802,6 +18108,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -14823,6 +18134,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14844,6 +18160,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14865,6 +18186,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -14886,6 +18212,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14907,6 +18238,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14928,6 +18264,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 6
     attack_rate: 0.0007000000000000001
     attack_min: 5
@@ -14949,6 +18290,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14970,6 +18316,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -14991,6 +18342,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 10
     attack_rate: 0.0007000000000000001
     attack_min: 9
@@ -15012,6 +18368,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15033,6 +18394,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 310
     attack_rate: 0.0007000000000000001
     attack_min: 300
@@ -15054,6 +18420,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 14
     attack_rate: 0.0007000000000000001
     attack_min: 13
@@ -15075,6 +18446,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15096,6 +18472,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15117,6 +18498,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15138,6 +18524,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15159,6 +18550,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4000
     attack_rate: 0.0007000000000000001
     attack_min: 3000
@@ -15180,6 +18576,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 2700
     attack_rate: 0.0007000000000000001
     attack_min: 2700
@@ -15201,6 +18602,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 12500
     attack_rate: 0.0007000000000000001
     attack_min: 10000
@@ -15222,6 +18628,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 7500
     attack_rate: 0.0007000000000000001
     attack_min: 5000
@@ -15243,6 +18654,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15264,6 +18680,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15285,6 +18706,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -15306,6 +18732,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15327,6 +18758,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0007000000000000001
     attack_min: 1
@@ -15348,6 +18784,11 @@ items:
     item_kind2: IK2_MOB
     item_kind3: IK3_VIRTUAL
     equip_slot: 29
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 4
     attack_rate: 0.0007000000000000001
     attack_min: 3
@@ -15369,6 +18810,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 64
+        adj: 1
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0008500000000000001
     attack_min: 1
@@ -15390,6 +18838,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 2
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 261
     attack_rate: 0.0008500000000000001
     attack_min: 260
@@ -15411,6 +18866,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 301
     attack_rate: 0.00035000000000000005
     attack_min: 299
@@ -15432,6 +18894,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 2
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 265
     attack_rate: 0.0006
     attack_min: 261
@@ -15453,6 +18922,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 306
     attack_rate: 0.0003
     attack_min: 303
@@ -15474,6 +18950,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 2
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 261
     attack_rate: 0.0007000000000000001
     attack_min: 260
@@ -15495,6 +18978,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 261
     attack_rate: 0.0005
     attack_min: 260
@@ -15516,6 +19006,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 2
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 261
     attack_rate: 0.00025
     attack_min: 260
@@ -15537,6 +19034,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 257
     attack_rate: 0.00045
     attack_min: 255
@@ -15558,6 +19062,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 235
     attack_rate: 0.0007000000000000001
     attack_min: 234
@@ -15579,6 +19090,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     attack: 209
     attack_rate: 0.00075
     attack_min: 208
@@ -15600,6 +19118,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 11
+        adj: 20
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0008500000000000001
     attack_min: 1
@@ -15621,6 +19146,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 11
+        adj: 20
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0008500000000000001
     attack_min: 1
@@ -15642,6 +19174,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 11
+        adj: 30
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
     attack: 1
     attack_rate: 0.0008500000000000001
     attack_min: 1
@@ -15663,6 +19202,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 2
+        adj: 5
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
     attack: 1
     attack_rate: 0.0008500000000000001
     attack_min: 1
@@ -15684,6 +19230,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 10
+      - dst: 24
+        adj: 200
+      - dst: 67
+        adj: 10
     attack: 399
     attack_rate: 0.0008500000000000001
     attack_min: 398
@@ -15705,6 +19258,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 14
+        adj: 10
+      - dst: 26
+        adj: 100
+      - dst: 67
+        adj: 10
     attack: 477
     attack_rate: 0.00035000000000000005
     attack_min: 476
@@ -15726,6 +19286,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 15
+      - dst: 26
+        adj: 50
+      - dst: 67
+        adj: 10
     attack: 396
     attack_rate: 0.0006
     attack_min: 395
@@ -15747,6 +19314,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 1
+        adj: 10
+      - dst: 67
+        adj: 10
     attack: 490
     attack_rate: 0.0003
     attack_min: 485
@@ -15768,6 +19342,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 10
+      - dst: 1
+        adj: 10
+      - dst: 67
+        adj: 10
     attack: 399
     attack_rate: 0.0007000000000000001
     attack_min: 398
@@ -15789,6 +19370,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 26
+        adj: 100
+      - dst: 3
+        adj: 10
+      - dst: 67
+        adj: 10
     attack: 399
     attack_rate: 0.0005
     attack_min: 398
@@ -15810,6 +19398,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 75
+        adj: 10
+      - dst: 3
+        adj: 10
+      - dst: 67
+        adj: 10
     attack: 399
     attack_rate: 0.00025
     attack_min: 398
@@ -15831,6 +19426,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 53
+        adj: 15
+      - dst: 3
+        adj: 10
+      - dst: 67
+        adj: 10
     attack: 405
     attack_rate: 0.00045
     attack_min: 403
@@ -15852,6 +19454,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 2
+        adj: 10
+      - dst: 67
+        adj: 10
     attack: 375
     attack_rate: 0.0007000000000000001
     attack_min: 373
@@ -15873,6 +19482,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 77
+        adj: 20
+      - dst: 2
+        adj: 10
+      - dst: 67
+        adj: 10
     attack: 323
     attack_rate: 0.00075
     attack_min: 322
@@ -15894,6 +19510,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 10
+      - dst: 47
+        adj: 20
+      - dst: 24
+        adj: 400
     attack: 460
     attack_rate: 0.0008500000000000001
     attack_min: 459
@@ -15913,6 +19536,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 8
+        adj: 10
+      - dst: 14
+        adj: 10
     attack: 551
     attack_rate: 0.00035000000000000005
     attack_min: 549
@@ -15932,6 +19562,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 20
+      - dst: 77
+        adj: 30
+      - dst: 66
+        adj: 10
     attack: 457
     attack_rate: 0.0006
     attack_min: 456
@@ -15951,6 +19588,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 18
+      - dst: 1
+        adj: 10
+      - dst: 4
+        adj: 10
     attack: 565
     attack_rate: 0.0003
     attack_min: 560
@@ -15970,6 +19614,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
+    effects:
+      - dst: 52
+        adj: 20
+      - dst: 72
+        adj: 10
+      - dst: 14
+        adj: 10
     attack: 460
     attack_rate: 0.0007000000000000001
     attack_min: 459
@@ -15989,6 +19640,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 20
+      - dst: 75
+        adj: 20
+      - dst: 53
+        adj: 20
     attack: 460
     attack_rate: 0.0005
     attack_min: 459
@@ -16008,6 +19666,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 15
+      - dst: 75
+        adj: 17
+      - dst: 66
+        adj: 10
     attack: 460
     attack_rate: 0.00025
     attack_min: 459
@@ -16027,6 +19692,13 @@ items:
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
+    effects:
+      - dst: 3
+        adj: 15
+      - dst: 75
+        adj: 10
+      - dst: 66
+        adj: 20
     attack: 468
     attack_rate: 0.00045
     attack_min: 465
@@ -16046,6 +19718,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 20
+      - dst: 77
+        adj: 45
+      - dst: 52
+        adj: 20
     attack: 433
     attack_rate: 0.0007000000000000001
     attack_min: 431
@@ -16065,6 +19744,13 @@ items:
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
+    effects:
+      - dst: 9
+        adj: 10
+      - dst: 77
+        adj: 20
+      - dst: 24
+        adj: 200
     attack: 387
     attack_rate: 0.00075
     attack_min: 386

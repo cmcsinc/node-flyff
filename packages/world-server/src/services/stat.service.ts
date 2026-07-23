@@ -19,6 +19,7 @@ import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
+import { buildSetPointParam, DST_FP, DST_HP, DST_MP } from '@flyff/world-core';
 import { SetStateSerializer } from '@flyff/combat';
 import { createLogger } from '@flyff/core/logger';
 
@@ -86,6 +87,21 @@ export class StatService {
         remainGP: player.m_nRemainGP,
       }),
     );
+
+    // Mirror the client's `OnSetState` (`DPClient.cpp:13376`): it recomputes
+    // GetMaxHitPoint/Mana/Fatigue from the new stats AND refills current to
+    // max. If the server keeps the old current value, the next regen tick pushes
+    // a lower SETPOINTPARAM and the client's HP visibly drops after allocating
+    // STA. Refill server-side to stay in sync.
+    player.m_nMaxHp = player.getMaxHp();
+    player.m_nMaxMp = player.getMaxMp();
+    player.m_nMaxFp = player.getMaxFp();
+    player.m_nHp = player.m_nMaxHp;
+    player.m_nMp = player.m_nMaxMp;
+    player.m_nFp = player.m_nMaxFp;
+    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, player.m_nHp));
+    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp));
+    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp));
 
     this.deps.charRepo.updateStats(player.m_idPlayer, {
       strength: player.m_nStr, stamina: player.m_nSta,

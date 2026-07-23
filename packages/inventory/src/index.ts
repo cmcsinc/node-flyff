@@ -16,6 +16,7 @@ export * from './services/loot.service';
 export * from './services/drop.service';
 export * from './services/equip.service';
 export * from './services/consumable.service';
+export * from './services/cooltime';
 export * from './services/useItem.service';
 export * from './managers/item.manager';
 export * from './entities/item';

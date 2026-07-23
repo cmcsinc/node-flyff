@@ -54,3 +54,15 @@ export const SHORTCUT = Object.freeze({
 
 /** Per-player cap on chat-macro shortcuts (`OnAddItemTaskBar:2231` rejects >9). */
 export const MAX_SHORTCUT_CHAT = 9;
+
+// --- Consumable cooldown groups (`_Common/CooltimeMgr.h`) --------------------
+// Groups are 1-based (C++ dwGroup-1 indexes m_times[]). 1..3 mirror v15
+// CCooltimeMgr::GetGroup (food / pill / skill); 4 = potions (our addition --
+// vanilla comments IK2_POTION out, so HP potions there have no cooldown).
+export const MAX_COOLTIME_GROUP = 4;
+export const COOLTIME_GROUP = Object.freeze({
+  FOOD: 1,
+  PILL: 2,
+  SKILL: 3,
+  POTION: 4,
+} as const);
