@@ -56,7 +56,7 @@ import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { GroundItem } from '../../entities/item';
 import {
   SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_DEL_OBJ, OT_ITEM,
-} from './constants';
+} from '@flyff/world-core';
 import { writeCItemElemBody } from './itemElemBody.serializer';
 
 export class ItemSnapshotSerializer {

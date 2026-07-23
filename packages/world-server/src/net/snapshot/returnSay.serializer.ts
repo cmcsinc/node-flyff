@@ -15,7 +15,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from '@flyff/world-core';
 
 /** C++ ReturnFlag values (TextCmd_whisper:1276, 1284). */
 export const RETURN_SELF_TARGET = 2;

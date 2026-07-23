@@ -14,7 +14,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_SETLEVEL, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_SETLEVEL, NULL_ID } from '@flyff/world-core';
 
 export class SetLevelSerializer {
   build(moverObjid: number, level: number): Buffer {

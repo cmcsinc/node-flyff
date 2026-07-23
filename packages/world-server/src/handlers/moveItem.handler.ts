@@ -21,7 +21,7 @@ import { PacketError } from '@flyff/core/errors';
 import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { InventoryService } from '../services/inventory.service';
-import { MAX_INVENTORY } from '../net/snapshot/constants';
+import { MAX_INVENTORY } from '@flyff/world-core';
 import { buildMoveItem } from '../net/snapshot/moveItem.serializer';
 
 const logger = createLogger({ module: 'moveItem-handler' });

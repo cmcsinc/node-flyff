@@ -33,10 +33,10 @@ import { cumulativeExp, subDieDecExp } from '../combat/formulas';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
 } from '@flyff/entities';
-import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { MAX_INVENTORY, VISIBILITY_RADIUS } from '@flyff/world-core';
 import {
   SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,
-} from '../net/snapshot/constants';
+} from '@flyff/world-core';
 import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';
 import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';
 import { RevivalSerializer } from '../net/snapshot/revival.serializer';

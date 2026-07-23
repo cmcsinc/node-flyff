@@ -10,7 +10,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
 import { BankService } from '../../src/services/bank.service';
-import { BANK_SLOTS, MAX_BANK_TABS } from '../../src/net/snapshot/constants';
+import { BANK_SLOTS, MAX_BANK_TABS } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

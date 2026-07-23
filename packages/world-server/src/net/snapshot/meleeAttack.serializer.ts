@@ -17,7 +17,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_MELEE_ATTACK, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_MELEE_ATTACK, NULL_ID } from '@flyff/world-core';
 
 export interface MeleeAttackFrame {
   /** `OBJMSG_*` (DWORD) -- swing animation id (29-32 = ATK1..ATK4). */

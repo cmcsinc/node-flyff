@@ -7,7 +7,7 @@ import {
   NULL_ID,
   SNAPSHOTTYPE_SHOUT,
   SHOUT_COLOR_DEFAULT,
-} from '../../../src/net/snapshot/constants';
+} from '@flyff/world-core';
 
 describe('ShoutSerializer (SNAPSHOTTYPE_SHOUT 0x00d0)', () => {
   it('writes senderObjid + name + text + color under a NULL_ID header', () => {

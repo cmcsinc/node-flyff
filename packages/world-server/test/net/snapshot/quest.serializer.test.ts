@@ -18,7 +18,7 @@ import {
   SNAPSHOTTYPE_QUEST_TEXT_TIME,
   SNAPSHOTTYPE_QUESTHELPER_NPCPOS,
   NULL_ID,
-} from '../../../src/net/snapshot/constants';
+} from '@flyff/world-core';
 
 const sample: RuntimeQuest = {
   state: 7, time: 300, id: 42, killNpcNum: [3, 5], flags: 0b11,

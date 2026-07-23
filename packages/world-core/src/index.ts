@@ -11,3 +11,9 @@ export { ZoneManager } from './managers/zone.manager';
 export { SpawnManager } from './managers/spawn.manager';
 
 export type { QuestHooks } from './quest-hooks';
+
+// Protocol opcodes + serializer constants (SNAPSHOTTYPE_*/OT_*/METHOD_*/MI_*/...).
+// Moved here from world-server so every domain package's serializers can share
+// them without depending on world-server. Slot-sizing consts are re-exported
+// through here from @flyff/entities for legacy importers.
+export * from './snapshot-constants';

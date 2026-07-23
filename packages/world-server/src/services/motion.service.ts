@@ -18,7 +18,7 @@
 import type { ZoneManager } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
 import { MotionSerializer } from '../net/snapshot/motion.serializer';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS } from '@flyff/world-core';
 
 export interface MotionServiceDeps {
   zoneManager: ZoneManager;

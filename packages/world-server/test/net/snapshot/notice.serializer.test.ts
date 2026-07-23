@@ -8,7 +8,7 @@ import {
   SNAPSHOTTYPE_TEXT,
   TEXT_COLOR_NOTICE,
   TEXT_GENERAL,
-} from '../../../src/net/snapshot/constants';
+} from '@flyff/world-core';
 
 describe('NoticeSerializer (SNAPSHOTTYPE_TEXT 0x00a0)', () => {
   it('writes the TEXT_GENERAL state byte before text + color (__S_SERVER_UNIFY)', () => {

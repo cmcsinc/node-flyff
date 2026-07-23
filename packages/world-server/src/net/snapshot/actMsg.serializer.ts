@@ -14,7 +14,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID } from './constants';
+import { NULL_ID } from '@flyff/world-core';
 
 export class ActMsgSerializer {
   build(objid: number, dwMsg: number, dwParam: number, idAttacker: number): Buffer {

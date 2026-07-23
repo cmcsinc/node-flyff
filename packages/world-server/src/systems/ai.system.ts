@@ -51,7 +51,7 @@ import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
 import { DamageSerializer } from '../net/snapshot/damage.serializer';
 import { MeleeAttackSerializer } from '../net/snapshot/meleeAttack.serializer';
 import { RangeAttackSerializer } from '../net/snapshot/rangeAttack.serializer';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import { MODE } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 

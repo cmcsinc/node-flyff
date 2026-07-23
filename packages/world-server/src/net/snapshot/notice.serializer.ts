@@ -20,7 +20,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_TEXT, TEXT_GENERAL, TEXT_COLOR_NOTICE } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_TEXT, TEXT_GENERAL, TEXT_COLOR_NOTICE } from '@flyff/world-core';
 
 export class NoticeSerializer {
   build(text: string, color?: number): Buffer {

@@ -10,7 +10,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID } from '../../../src/net/snapshot/constants';
+import { NULL_ID } from '@flyff/world-core';
 import {
   buildPutItemBank,
   buildGetItemBank,

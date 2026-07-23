@@ -15,7 +15,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_MOTION } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_MOTION } from '@flyff/world-core';
 
 export class MotionSerializer {
   build(speakerObjid: number, dwMsg: number): Buffer {

@@ -5,7 +5,7 @@ import { CMover } from '@flyff/entities';
 import { NpcSnapshotSerializer } from '../../../src/net/snapshot/npcSnapshot.serializer';
 import {
   SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, MI_SMALL_MUSHPOIE, NULL_ID,
-} from '../../../src/net/snapshot/constants';
+} from '@flyff/world-core';
 
 /** Monster -- no outfit -> empty characterKey, uSize=0. */
 function makeMonster(id: number, hp: number): CMover {

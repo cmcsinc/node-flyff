@@ -14,7 +14,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_MOVERDEATH, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_MOVERDEATH, NULL_ID } from '@flyff/world-core';
 
 export class MoverDeathSerializer {
   build(victimObjid: number, killerObjid: number, dwMsg: number): Buffer {

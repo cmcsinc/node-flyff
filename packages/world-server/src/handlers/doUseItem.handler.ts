@@ -21,7 +21,7 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { UseItemService } from '../services/useItem.service';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer';
 import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';

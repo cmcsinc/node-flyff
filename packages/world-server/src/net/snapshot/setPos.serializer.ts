@@ -27,7 +27,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { Vec3 } from '@flyff/entities';
-import { SNAPSHOTTYPE_SETPOS, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_SETPOS, NULL_ID } from '@flyff/world-core';
 
 export class SetPosSerializer {
   /** Build the SNAPSHOT/SETPOS payload for `objid` teleporting to `pos`. */

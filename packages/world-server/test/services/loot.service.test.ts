@@ -6,7 +6,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { LootService } from '../../src/services/loot.service';
-import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '../../src/net/snapshot/constants';
+import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '@flyff/world-core';
 import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
 import type { CPlayer, Vec3 } from '@flyff/entities';
 import type { ItemManager } from '../../src/managers/item.manager';

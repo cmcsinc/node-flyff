@@ -22,7 +22,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { Vec3 } from '@flyff/entities';
-import { SNAPSHOTTYPE_DESTPOS, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_DESTPOS, NULL_ID } from '@flyff/world-core';
 
 /** Parsed DESTPOS body fields (DPSrvr.cpp:4364 OnPlayerDestPos read order). */
 export interface DestPosFrame {

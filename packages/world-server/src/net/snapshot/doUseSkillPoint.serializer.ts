@@ -18,7 +18,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, MAX_SKILL_JOB, SNAPSHOTTYPE_DOUSESKILLPOINT } from './constants';
+import { NULL_ID, MAX_SKILL_JOB, SNAPSHOTTYPE_DOUSESKILLPOINT } from '@flyff/world-core';
 
 /** Minimal slot view the serializer consumes (CPlayer.m_aJobSkill already matches). */
 export interface DoUseSkillSlot {

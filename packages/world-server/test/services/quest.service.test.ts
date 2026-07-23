@@ -7,7 +7,7 @@ import type { CharacterRow, JournalEntry } from '@flyff/database';
 import type { QuestCommand, QuestDef, QuestIndex } from '@flyff/resources';
 import { InventoryService } from '../../src/services/inventory.service';
 import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer';
-import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST } from '../../src/net/snapshot/constants';
+import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST } from '@flyff/world-core';
 
 const baseRow = {
   id: 1, account_id: 1, name: 'Tester', slot: 0, class: 0, gender: 0,

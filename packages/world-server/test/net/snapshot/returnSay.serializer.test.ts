@@ -7,7 +7,7 @@ import {
   RETURN_SELF_TARGET,
   RETURN_NOT_FOUND,
 } from '../../../src/net/snapshot/returnSay.serializer';
-import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from '../../../src/net/snapshot/constants';
+import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from '@flyff/world-core';
 
 describe('ReturnSaySerializer (SNAPSHOTTYPE_RETURNSAY 0x00a9)', () => {
   it('writes recipient objid + flag + name', () => {

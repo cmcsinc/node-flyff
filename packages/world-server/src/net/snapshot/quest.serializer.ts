@@ -34,7 +34,7 @@ import {
   SNAPSHOTTYPE_QUEST_CHECKED,
   SNAPSHOTTYPE_QUEST_TEXT_TIME,
   SNAPSHOTTYPE_QUESTHELPER_NPCPOS,
-} from './constants';
+} from '@flyff/world-core';
 
 // RuntimeQuest moved to @flyff/entities (shared with CPlayer.m_aQuest) -- re-export
 // so legacy `from './quest.serializer'` importers keep resolving.

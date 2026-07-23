@@ -54,7 +54,7 @@ import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { CMover, MoverEquipPart } from '@flyff/entities';
 import {
   SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, NULL_ID,
-} from './constants';
+} from '@flyff/world-core';
 
 export class NpcSnapshotSerializer {
   /** Build the SNAPSHOT/ADD_OBJ payload for a batch of NPC movers. */

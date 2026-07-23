@@ -19,7 +19,7 @@
 
 import type { CPlayer } from '@flyff/entities';
 import type { ItemDefinition } from '@flyff/resources';
-import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '../net/snapshot/constants';
+import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
 import { NO_PROP, WT_MELEE_SWD } from './tables';
 import type { WeaponStats } from './formulas';
 

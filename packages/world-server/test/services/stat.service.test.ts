@@ -3,7 +3,7 @@ import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
 import { StatService } from '../../src/services/stat.service';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_SETSTATE } from '../../src/net/snapshot/constants';
+import { SNAPSHOTTYPE_SETSTATE } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 
 /** Minimal CharacterRow for CPlayer.fromRow (mirrors player.test.ts). */

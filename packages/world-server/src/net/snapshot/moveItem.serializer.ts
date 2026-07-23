@@ -17,7 +17,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID } from './constants';
+import { NULL_ID } from '@flyff/world-core';
 
 /** Confirm a main-bag swap of `nSrc`<->`nDst` (nItemType is always 0). */
 export function buildMoveItem(objid: number, nSrc: number, nDst: number): Buffer {

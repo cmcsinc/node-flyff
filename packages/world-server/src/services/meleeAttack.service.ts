@@ -27,7 +27,7 @@ import type { CPlayer } from '@flyff/entities';
 import {
   MeleeAttackSerializer, type MeleeAttackFrame,
 } from '../net/snapshot/meleeAttack.serializer';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import type { CombatService } from './combat.service';
 import { createLogger } from '@flyff/core/logger';
 

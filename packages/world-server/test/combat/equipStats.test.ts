@@ -10,7 +10,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
 import { sumEquipStats } from '../../src/combat/equipStats';
-import { MAX_INVENTORY } from '../../src/net/snapshot/constants';
+import { MAX_INVENTORY } from '@flyff/world-core';
 import { NO_PROP, WT_MELEE_SWD } from '../../src/combat/tables';
 import type { CharacterRow } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';

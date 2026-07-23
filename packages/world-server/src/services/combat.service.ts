@@ -45,7 +45,7 @@ import { SetLevelSerializer } from '../net/snapshot/setLevel.serializer';
 import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
 import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer';
 import { SetStateSerializer } from '../net/snapshot/setState.serializer';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'combat-service' });

@@ -17,7 +17,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_SETPOINTPARAM } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_SETPOINTPARAM } from '@flyff/world-core';
 
 /** `DST_GOLD` (`defineAttribute.h:349`) -- the gold-counter point parameter. */
 export const DST_GOLD = 10000;

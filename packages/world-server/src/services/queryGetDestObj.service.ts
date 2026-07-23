@@ -21,7 +21,7 @@
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
 import type { DestObjSerializer } from '../net/snapshot/destObj.serializer';
-import { NULL_ID } from '../net/snapshot/constants';
+import { NULL_ID } from '@flyff/world-core';
 
 export interface QueryGetDestObjOutcome {
   /** SNAPSHOT/GETDESTOBJ frame to write back to the requester, if any. */

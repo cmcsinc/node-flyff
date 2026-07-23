@@ -15,7 +15,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_REPLACE } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_REPLACE } from '@flyff/world-core';
 import type { Vec3 } from '@flyff/entities';
 
 export class ReplaceSerializer {

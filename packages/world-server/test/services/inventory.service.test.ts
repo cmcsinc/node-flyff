@@ -7,7 +7,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { InventoryService } from '../../src/services/inventory.service';
 import { MAX_GOLD } from '@flyff/core';
-import { MAX_INVENTORY } from '../../src/net/snapshot/constants';
+import { MAX_INVENTORY } from '@flyff/world-core';
 import { CPlayer } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 

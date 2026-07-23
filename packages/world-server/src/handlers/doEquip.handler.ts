@@ -28,7 +28,7 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { EquipService } from '../services/equip.service';
-import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { MAX_INVENTORY, VISIBILITY_RADIUS } from '@flyff/world-core';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
 
 const logger = createLogger({ module: 'doEquip-handler' });

@@ -62,7 +62,7 @@ import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   NULL_ID, SNAPSHOTTYPE_SETPOINTPARAM, DST_GOLD,
   SNAPSHOTTYPE_DEL_OBJ,
-} from '../net/snapshot/constants';
+} from '@flyff/world-core';
 import { WhisperSerializer } from '../net/snapshot/whisper.serializer';
 import { ShoutSerializer } from '../net/snapshot/shout.serializer';
 import { ReturnSaySerializer, RETURN_SELF_TARGET, RETURN_NOT_FOUND } from '../net/snapshot/returnSay.serializer';

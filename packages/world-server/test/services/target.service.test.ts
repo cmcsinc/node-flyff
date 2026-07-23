@@ -4,7 +4,7 @@ import { TargetService } from '../../src/services/target.service';
 import type { SpawnManager } from '@flyff/world-core';
 import type { CMover } from '@flyff/entities';
 import type { CPlayer } from '@flyff/entities';
-import { NULL_ID } from '../../src/net/snapshot/constants';
+import { NULL_ID } from '@flyff/world-core';
 
 /** Mutatable player stub with the fields TargetService touches. */
 function fakePlayer(pk = false): CPlayer {

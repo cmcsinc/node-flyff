@@ -10,7 +10,7 @@ import {
   FUNCTYPE_ADDKEY,
   FUNCTYPE_REMOVEALLKEY,
   FUNCTYPE_EXIT,
-} from '../../../src/net/snapshot/constants';
+} from '@flyff/world-core';
 
 const PLAYER = 99;
 

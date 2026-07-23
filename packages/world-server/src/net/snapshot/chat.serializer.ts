@@ -17,7 +17,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_CHAT } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_CHAT } from '@flyff/world-core';
 
 export class ChatSerializer {
   build(speakerObjid: number, text: string): Buffer {

@@ -20,7 +20,7 @@ import type { Vec3 } from '@flyff/entities';
 import {
   SNAPSHOTTYPE_MOVERMOVED, SNAPSHOTTYPE_MOVERBEHAVIOR,
   SNAPSHOTTYPE_MOVERCORR, SNAPSHOTTYPE_MOVERMOVED2, NULL_ID,
-} from './constants';
+} from '@flyff/world-core';
 
 /**
  * Parsed 60-byte PLAYERMOVED/PLAYERBEHAVIOR body (DPSrvr.cpp:2271 OnPlayerMoved).

@@ -28,7 +28,7 @@ import type { CPlayer } from '@flyff/entities';
 import {
   SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_WORLD_READINFO, WI_WORLD_MADRIGAL,
   OT_MOVER, MI_MALE, MI_FEMALE, METHOD_NONE,
-} from './constants';
+} from '@flyff/world-core';
 import { writeMoverSerialize } from './mover.serializer';
 
 export class PlayerSnapshotSerializer {

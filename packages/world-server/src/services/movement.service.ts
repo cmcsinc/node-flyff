@@ -30,7 +30,7 @@ import {
   MoverBroadcastSerializer, type MovementFrame, type Movement2Frame,
 } from '../net/snapshot/moverBroadcast.serializer';
 import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import type { LootService } from './loot.service';
 
 export interface MovementServiceDeps {

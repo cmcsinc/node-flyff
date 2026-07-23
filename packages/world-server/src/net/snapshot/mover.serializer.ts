@@ -22,7 +22,7 @@ import type { CPlayer } from '@flyff/entities';
 import {
   MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
   MAX_HONOR_TITLE, MAX_INVENTORY, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
-} from './constants';
+} from '@flyff/world-core';
 import { writeQuestStruct } from './quest.serializer';
 import { writeCItemElemBody } from './itemElemBody.serializer';
 import type { InventorySlot } from '@flyff/entities';

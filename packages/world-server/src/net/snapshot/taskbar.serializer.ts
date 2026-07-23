@@ -23,7 +23,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { Shortcut } from '@flyff/entities';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, NULL_ID } from './constants';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, NULL_ID } from '@flyff/world-core';
 
 export class TaskBarSnapshotSerializer {
   /** Build the SNAPSHOT/TASKBAR payload for `player`'s bound grid. */

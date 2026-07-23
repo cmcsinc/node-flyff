@@ -53,7 +53,7 @@ import { DropService } from './services/drop.service';
 import { InventoryService } from './services/inventory.service';
 import { LootService } from './services/loot.service';
 import { ItemManager } from './managers/item.manager';
-import { VISIBILITY_RADIUS } from './net/snapshot/constants';
+import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler';
 import { MeleeAttackHandler } from './handlers/meleeAttack.handler';
 import { SkillService } from './services/skill.service';

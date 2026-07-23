@@ -18,7 +18,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID } from './constants';
+import { NULL_ID } from '@flyff/world-core';
 
 export class RevivalSerializer {
   /**
