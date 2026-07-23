@@ -15,6 +15,8 @@
 
 import type { CharacterRow } from '@flyff/database';
 import { AUTH } from '../constants/authority.js';
+import { getJobProps } from '../combat/tables.js';
+import { maxHitPoint, maxManaPoint } from '../combat/formulas.js';
 import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT } from '../net/snapshot/constants.js';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest.js';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
@@ -328,12 +330,18 @@ export class CPlayer {
     this.m_fAngle = row.angle ?? 0;
     this.m_nHp = row.hp;
     this.m_nMp = row.mp;
-    this.m_nMaxHp = row.max_hp;
-    this.m_nMaxMp = row.max_mp;
     this.m_nStr = row.strength;
     this.m_nSta = row.stamina;
     this.m_nDex = row.dexterity;
     this.m_nInt = row.intelligence;
+    // Max HP/MP are formula-derived (C++ `GetMaxOriginHitPoint`/`ManaPoint`),
+    // NOT the DB cache -- the client computes the same formula and shows that
+    // value (e.g. 236), so the server must match or regen clamps against a
+    // stale ceiling. Recomputed each recovery tick too (level-up safe). Must
+    // run after STA/INT/job load.
+    const job = getJobProps(this.m_nJob);
+    this.m_nMaxHp = maxHitPoint(this.m_nLevel, this.m_nSta, job.fFactorMaxHP);
+    this.m_nMaxMp = maxManaPoint(this.m_nLevel, this.m_nInt, job.fFactorMaxMP);
     this.m_nRemainGP = row.remain_gp ?? 0;
     this.m_dwSkin = row.skin_color;
     this.m_nHairMesh = row.hair_style;
@@ -382,6 +390,24 @@ export class CPlayer {
   /** C++ `IsChaotic()` (Mover.h:1227) -- player-killer state (PK). */
   isChaotic(): boolean {
     return this.m_dwPKPropensity > 0;
+  }
+
+  /**
+   * Find the current slot of the inventory item whose stable `objid` matches.
+   * The client addresses items by `m_dwObjId` (stable; set at JOIN = slot index,
+   * preserved across equip/unequip/move). Our flat `m_Inventory` is indexed by
+   * slot, so a moved item's objid != its current slot -- callers must resolve via
+   * this scan, never treat the wire objid as a slot (breaks after first move).
+   * Mirrors C++ `m_apItem[objid]` being the stable array (Item.h:515 GetAtId).
+   * Falls back to treating `objid` as a slot for items without a tracked objid.
+   */
+  findSlotByObjId(objid: number): number {
+    for (let i = 0; i < INVENTORY_SLOTS; i++) {
+      const s = this.m_Inventory[i];
+      if (s && s.objid === objid) return i;
+    }
+    if (objid >= 0 && objid < INVENTORY_SLOTS && this.m_Inventory[objid]) return objid;
+    return -1;
   }
 
   // --- Quest state helpers (mirror `_Common/MoverParam.cpp`) ---

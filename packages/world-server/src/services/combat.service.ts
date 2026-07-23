@@ -139,6 +139,11 @@ export class CombatService {
    */
   private applyHit(player: CPlayer, mover: CMover, eff: MeleeResult): CombatOutcome {
     const dealt = applyDamage(mover, eff);
+    // Stamp the attacker's combat cursor so stand regen pauses for 10 s
+    // (RecoverySystem gate). C++ only flags the defender (`m_nAtkCnt = 1` on
+    // `OnDamaged`), but a player actively fighting is in combat by any common
+    // reading, so we treat dealt damage as combat too.
+    if (dealt > 0) player.m_tmLastDamage = Date.now();
     recordHit(mover, player.m_idPlayer, dealt);
     const packet = this.damage.build(mover.m_idMover, {
       attackerObjid: player.m_idPlayer,

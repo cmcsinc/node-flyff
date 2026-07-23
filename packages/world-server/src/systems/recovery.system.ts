@@ -5,7 +5,9 @@
  * every `NEXT_TICK_RECOVERYSTAND` (3 s) a player NOT in `IsAttackMode()` (no
  * damage taken in the last 10 s) recovers `GetHPRecovery/GetMPRecovery/
  * GetFPRecovery`. Combat (`m_nAtkCnt` in C++) is ported as a wall-clock cursor
- * `m_tmLastDamage` stamped by `AISystem.monsterSwing` on every hit.
+ * `m_tmLastDamage` stamped by `AISystem.monsterSwing` (damage taken) and
+ * `CombatService.applyHit` (damage dealt) -- fighting in either direction
+ * pauses regen for the 10 s window.
  *
  * Sit regen (2 s, party Stretching 1.8x/1.5x) is out of scope -- no sit state or
  * party system yet; ponytail: add a sit branch + multiplier when motion/party
@@ -25,7 +27,7 @@ import { createLogger } from '@flyff/core/logger.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { CPlayer } from '../entities/player.js';
 import { getJobProps } from '../combat/tables.js';
-import { maxFatiguePoint, standRecovery } from '../combat/formulas.js';
+import { maxFatiguePoint, maxHitPoint, maxManaPoint, standRecovery } from '../combat/formulas.js';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer.js';
 
 const logger = createLogger({ module: 'recovery' });
@@ -48,6 +50,7 @@ export class RecoverySystem {
   /** Begin the recovery loop (idempotent). */
   start(): void {
     if (this.timer) return;
+    logger.info({ intervalMs: TICK_INTERVAL_MS }, 'RecoverySystem started');
     this.timer = setInterval(() => {
       try {
         this.tick(Date.now());
@@ -65,17 +68,31 @@ export class RecoverySystem {
   }
 
   private recoverOne(p: CPlayer, now: number): void {
-    if (p.m_bDead || p.m_nHp <= 0) return;
+    if (p.m_bDead || p.m_nHp <= 0) {
+      logger.debug({ charId: p.m_idPlayer, dead: p.m_bDead, hp: p.m_nHp }, 'recover skip dead');
+      return;
+    }
 
-    // FP has no DB column -- derive max from the formula each tick so it tracks
-    // level/STA without a level-up hook.
+    // Player vitals maxes are formula-derived (C++ `GetMaxOriginHitPoint`/
+    // `ManaPoint`/`FatiguePoint`), NOT DB-backed -- the client computes the same
+    // formula and displays it, so the server must match or regen clamps against
+    // a stale ceiling (the DB `max_hp`/`max_mp` columns). Recompute each tick
+    // so it tracks level/STA/INT without a level-up hook.
     const job = getJobProps(p.m_nJob);
+    p.m_nMaxHp = maxHitPoint(p.m_nLevel, p.m_nSta, job.fFactorMaxHP);
+    p.m_nMaxMp = maxManaPoint(p.m_nLevel, p.m_nInt, job.fFactorMaxMP);
     p.m_nMaxFp = maxFatiguePoint(p.m_nLevel, p.m_nSta, job.fFactorMaxFP);
 
     // Combat gate: in C++ the in-combat branch pushes `m_dwTickRecoveryStand`
     // forward, so regen waits a fresh 3 s after combat clears. Mirror that.
     // `m_tmLastDamage === 0` means never hit -- not the same as "hit at t=0".
+    // Stamped both when the player takes damage (`AISystem.monsterSwing`) AND
+    // when they deal it (`CombatService.applyHit`) -- fighting = no regen.
     if (p.m_tmLastDamage !== 0 && now - p.m_tmLastDamage < COMBAT_GATE_MS) {
+      logger.debug(
+        { charId: p.m_idPlayer, sinceDmg: now - p.m_tmLastDamage },
+        'recover gated (combat)',
+      );
       p.m_tmNextRecovery = now + STAND_INTERVAL_MS;
       return;
     }
@@ -86,6 +103,11 @@ export class RecoverySystem {
       p.m_nLevel, p.m_nSta, p.m_nInt,
       p.m_nMaxHp, p.m_nMaxMp, p.m_nMaxFp,
       job,
+    );
+
+    logger.debug(
+      { charId: p.m_idPlayer, hp: p.m_nHp, maxHp: p.m_nMaxHp, mp: p.m_nMp, maxMp: p.m_nMaxMp, fp: p.m_nFp, maxFp: p.m_nMaxFp, rec: { hp: rec.hp, mp: rec.mp, fp: rec.fp } },
+      'recover fire',
     );
 
     const hpBefore = p.m_nHp;

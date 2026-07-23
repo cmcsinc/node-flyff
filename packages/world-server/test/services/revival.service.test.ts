@@ -111,6 +111,7 @@ describe('RevivalService', () => {
     const { deps, broadcasts, journal } = makeDeps();
     const svc = new RevivalService(deps);
     const p = CPlayer.fromRow(makeRow({ level: 30, exp: 5000n }), { write: () => true });
+    p.m_nMaxHp = 200; // formula-derived in fromRow; pin to the test's ceiling
     p.m_bDead = true;
     p.m_nHp = 0;
     p.m_nExp = 100;

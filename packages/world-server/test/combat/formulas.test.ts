@@ -12,7 +12,7 @@ import * as assert from 'node:assert/strict';
 import {
   resolveMelee, getHitMinMax, getAttackResult, getParrying, calcDefense, expLevelDiffMult,
   addExp, expToNextLevel, withinLevelExp, cumulativeExp, subDieDecExp,
-  maxFatiguePoint, standRecovery,
+  maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
 } from '../../src/combat/formulas.js';
 import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables.js';
@@ -238,10 +238,30 @@ describe('combat subDieDecExp (death penalty)', () => {
   });
 });
 
-describe('vitals recovery (maxFatiguePoint / standRecovery)', () => {
+describe('vitals recovery (maxHitPoint / maxManaPoint / maxFatiguePoint / standRecovery)', () => {
   // L1 VAGRANT (STA/INT=15), maxHP=100, maxMP=50. VAGRANT job factors:
   // fFactorMaxFP=0.3, fFactorHPRec=1.2, fFactorMPRec=0.5, fFactorFPRec=0.5.
   const vagrant = getJobProps(0);
+
+  it('maxHitPoint matches the C++ GetMaxOriginHitPoint formula', () => {
+    // a = 0.9*1/2 = 0.45; b = 0.45*(2/4)*(1+15/50) + 15*10 = 0.2925 + 150 = 150.2925
+    // maxHP = floor(150.2925 + 80) = 230
+    assert.equal(maxHitPoint(1, 15, vagrant.fFactorMaxHP), 230);
+    // a = 0.9*10/2 = 4.5; b = 4.5*(11/4)*1.3 + 150 = 16.0875 + 150 = 166.0875 -> 246
+    assert.equal(maxHitPoint(10, 15, vagrant.fFactorMaxHP), 246);
+  });
+
+  it('maxManaPoint matches the C++ GetMaxOriginManaPoint formula', () => {
+    // (((1*2) + 15*8)*0.3) + 22 + 15*0.3 = 36.6 + 22 + 4.5 = 63.1 -> 63
+    assert.equal(maxManaPoint(1, 15, vagrant.fFactorMaxMP), 63);
+    // (((20) + 120)*0.3) + 22 + 4.5 = 42 + 26.5 = 68.5 -> 68
+    assert.equal(maxManaPoint(10, 15, vagrant.fFactorMaxMP), 68);
+  });
+
+  it('maxHitPoint/maxManaPoint guard divide-by-zero at level 0', () => {
+    assert.equal(maxHitPoint(0, 15, vagrant.fFactorMaxHP), 230); // lv clamps to 1
+    assert.equal(maxManaPoint(0, 15, vagrant.fFactorMaxMP), 63);
+  });
 
   it('maxFatiguePoint matches the C++ GetMaxFatiguePoint formula', () => {
     // ((1*2 + 15*6)*0.3) + (15*0.3) = 27.6 + 4.5 = 32.1 -> 32

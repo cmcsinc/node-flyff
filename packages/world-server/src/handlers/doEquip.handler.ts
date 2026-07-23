@@ -28,8 +28,7 @@ import { createLogger } from '@flyff/core/logger.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { ZoneManager } from '../managers/zone.manager.js';
 import type { EquipService } from '../services/equip.service.js';
-import type { CPlayer } from '../entities/player.js';
-import { INVENTORY_SLOTS, MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
+import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
 
 const logger = createLogger({ module: 'doEquip-handler' });
@@ -70,7 +69,7 @@ export class DoEquipHandler {
       // Discriminating by nId>=MAX_INVENTORY breaks for session-equipped items:
       // their objid is the original BAG slot, so the client sends nId<MAX_INVENTORY
       // for an equipped item and we'd misroute to equip + reject (nothing happens).
-      const idx = this.locateByObjId(player, nId);
+      const idx = player.findSlotByObjId(nId);
       if (idx < 0) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP item not found by objid'); return; }
 
       // Wire nId = the stable objid (echo nId). OnDoEquip's self-path resolves the
@@ -97,16 +96,5 @@ export class DoEquipHandler {
       }
       throw error;
     }
-  }
-
-  /** Find the current slot of the item whose stable objid == `objid`. Falls back
-   *  to treating `objid` as a slot for items without a tracked objid (fixtures). */
-  private locateByObjId(player: CPlayer, objid: number): number {
-    for (let i = 0; i < INVENTORY_SLOTS; i++) {
-      const s = player.m_Inventory[i];
-      if (s && s.objid === objid) return i;
-    }
-    if (objid >= 0 && objid < INVENTORY_SLOTS && player.m_Inventory[objid]) return objid;
-    return -1;
   }
 }

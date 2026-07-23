@@ -137,4 +137,27 @@ describe('CPlayer entity', () => {
     assert.equal(p.m_aJobSkill[3]!.skillId, 0xffffffff, 'slot 3 still empty');
     assert.ok(p._dirty.has('m_aJobSkill'), 'dirty flag set');
   });
+
+  describe('findSlotByObjId', () => {
+    it('resolves by stable objid even after the item moved to a different slot', () => {
+      // Item picked up at bag slot 3 (objid=3), then moved to slot 10 by a prior
+      // equip/unequip. Client still addresses it by m_dwObjId=3. A direct
+      // m_Inventory[3] lookup would miss -- the scan must find it at slot 10.
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      p.m_Inventory[10] = { itemId: 5000, count: 1, objid: 3 };
+      assert.equal(p.findSlotByObjId(3), 10);
+    });
+
+    it('returns -1 when no item carries the objid', () => {
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      p.m_Inventory[0] = { itemId: 5000, count: 1, objid: 0 };
+      assert.equal(p.findSlotByObjId(99), -1);
+    });
+
+    it('falls back to treating objid as a slot for items without a tracked objid', () => {
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      p.m_Inventory[5] = { itemId: 5000, count: 1 }; // no objid field
+      assert.equal(p.findSlotByObjId(5), 5);
+    });
+  });
 });

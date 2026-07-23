@@ -381,11 +381,35 @@ export function cumulativeExp(level: number, exp: number): number {
 // --- vitals recovery (#E) ----------------------------------------------------
 
 /**
+ * `CMover::GetMaxOriginHitPoint` player branch (`MoverParam.cpp:2871`):
+ *   a = fFactorMaxHP * level / 2
+ *   b = a * ((level+1)/4) * (1 + sta/50) + sta*10
+ *   maxHP = b + 80
+ * The DB `max_hp`/`max_mp` columns are stale caches -- the client computes this formula
+ * itself and displays the result (e.g. 236 at lvl 1 vagrant), so the server
+ * MUST derive max the same way or regen clamps against a wrong ceiling and
+ * HP/MP/FP never visibly recover. Pure; caller assigns + syncs.
+ */
+export function maxHitPoint(level: number, sta: number, fFactorMaxHP: number): number {
+  const lv = Math.max(1, level);
+  const a = (fFactorMaxHP * lv) / 2.0;
+  const b = a * ((lv + 1.0) / 4.0) * (1.0 + sta / 50.0) + sta * 10.0;
+  return Math.floor(b + 80.0);
+}
+
+/**
+ * `CMover::GetMaxOriginManaPoint` player branch (`MoverParam.cpp:2904`):
+ *   maxMP = (((level*2) + (int*8)) * fFactorMaxMP) + 22 + (int * fFactorMaxMP)
+ * Same reasoning as `maxHitPoint` -- DB `max_mp` is a stale cache, derive live.
+ */
+export function maxManaPoint(level: number, int_: number, fFactorMaxMP: number): number {
+  const lv = Math.max(1, level);
+  return Math.floor((((lv * 2.0) + int_ * 8.0) * fFactorMaxMP) + 22.0 + int_ * fFactorMaxMP);
+}
+
+/**
  * `CMover::GetMaxFatiguePoint` player base (`MoverParam.cpp:2910/2932`):
  *   `((level*2 + sta*6) * fFactorMaxFP) + (sta * fFactorMaxFP)`
- * FP has no DB column, so the live `m_nMaxFp` is derived from this each tick
- * (cheap, idempotent) -- which also keeps it correct after a level-up without
- * a separate mutation hook. HP/MP maxes stay DB-backed (`max_hp`/`max_mp`).
  */
 export function maxFatiguePoint(level: number, sta: number, fFactorMaxFP: number): number {
   const lv = Math.max(1, level);

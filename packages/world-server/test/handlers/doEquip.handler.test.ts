@@ -16,7 +16,8 @@ import { SessionState } from '@flyff/core/constants/sessionState.js';
 import { DoEquipHandler } from '../../src/handlers/doEquip.handler.js';
 import { INVENTORY_SLOTS, MAX_INVENTORY } from '../../src/net/snapshot/constants.js';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CPlayer, InventorySlot } from '../../src/entities/player.js';
+import { CPlayer } from '../../src/entities/player.js';
+import type { InventorySlot } from '../../src/entities/player.js';
 import type { PlayerManager } from '../../src/managers/player.manager.js';
 import type { ZoneManager } from '../../src/managers/zone.manager.js';
 import type { EquipService } from '../../src/services/equip.service.js';
@@ -42,6 +43,7 @@ function makeHandler(equipStub: { equip: unknown; unequip: unknown }, inventory:
   for (const [k, v] of Object.entries(inventory)) m_Inventory[Number(k)] = v;
   const player = {
     m_idPlayer: 0xaaaa, m_vPos: { x: 0, y: 0, z: 0 }, m_nZoneId: 1, m_bDead: false, m_Inventory,
+    findSlotByObjId: CPlayer.prototype.findSlotByObjId,
   } as unknown as CPlayer;
   const playerManager = { get: () => player } as unknown as PlayerManager;
   const zoneManager = { broadcastAround: (_pos: unknown, _z: unknown, _r: unknown, b: Buffer) => { broadcasts.push(b); } } as unknown as ZoneManager;
@@ -81,8 +83,7 @@ describe('DoEquipHandler', () => {
     assert.equal(broadcasts[0]![21], 0, 'fEquip = 0 (unequipping)');
   });
 
-  it('unknown objid -> nothing sent', () => {
-    const { handler, broadcasts } = makeHandler(
+  it('unknown objid -> nothing sent', () => {    const { handler, broadcasts } = makeHandler(
       { equip: { ok: false, reason: 'invalid' }, unequip: { ok: false, reason: 'invalid' } },
       {},
     );

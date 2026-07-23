@@ -100,6 +100,9 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(mover.m_idTarget, player.m_idPlayer);
     assert.equal(mover.m_fSpeedFactor, 2.0);
     assert.equal(player.m_nHp, 200); // untouched -- AI tick swings, not combat
+    // Dealing damage stamps the attacker's combat cursor so stand regen pauses
+    // for 10 s (RecoverySystem gate -- fighting = no regen).
+    assert.ok(player.m_tmLastDamage > 0, 'attacker combat cursor stamped on dealt damage');
 
     // Swing 2: mover 15 -> 0 HP, dead (no re-rage -- mover is dead).
     const r2 = combat.resolveAttack(player, mover.m_idMover);
