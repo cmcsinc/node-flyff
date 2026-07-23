@@ -48,6 +48,7 @@ import { RevivalService } from './services/revival.service';
 import { NpcSpeechService } from '@flyff/npc';
 import { RevivalHandler } from './handlers/revival.handler';
 import { MeleeAttackService } from '@flyff/combat';
+import { RangeAttackService } from '@flyff/combat';
 import { CombatService } from '@flyff/combat';
 import { DropService } from '@flyff/inventory';
 import { InventoryService } from '@flyff/inventory';
@@ -56,6 +57,7 @@ import { ItemManager } from '@flyff/inventory';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler';
 import { MeleeAttackHandler } from '@flyff/combat';
+import { RangeAttackHandler } from '@flyff/combat';
 import { SkillService } from '@flyff/skills';
 import { StatService } from './services/stat.service';
 import { UseSkillHandler } from '@flyff/skills';
@@ -133,11 +135,13 @@ export interface WorldComposeResult {
   revivalService: RevivalService;
   revivalHandler: RevivalHandler;
   meleeAttackService: MeleeAttackService;
+  rangeAttackService: RangeAttackService;
   combatService: CombatService;
   itemManager: ItemManager;
   dropService: DropService;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
+  rangeAttackHandler: RangeAttackHandler;
   skillService: SkillService;
   statService: StatService;
   useSkillHandler: UseSkillHandler;
@@ -406,8 +410,10 @@ export async function compose(): Promise<WorldComposeResult> {
     getItem: (id: number) => resources.items.items.get(id),
   });
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
+  const rangeAttackService = new RangeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
+  const rangeAttackHandler = new RangeAttackHandler(playerManager, rangeAttackService);
   // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v15 damage-skill MVP).
   const skillService = new SkillService({
     skills: resources.skills,
@@ -519,11 +525,13 @@ export async function compose(): Promise<WorldComposeResult> {
     revivalService,
     revivalHandler,
     meleeAttackService,
+    rangeAttackService,
     combatService,
     itemManager,
     dropService,
     playerSetDestObjHandler,
     meleeAttackHandler,
+    rangeAttackHandler,
     skillService,
     statService,
     useSkillHandler,
