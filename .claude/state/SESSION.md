@@ -63,3 +63,21 @@ Tracing each checklist behavior through real code to catch desyncs before user t
 - Allocate DEX → crit/dodge/hit rise; swing anim speeds up (client-side).
 - Unequip +HP gear → HP clamps down (no over-max).
 - Spam HP potion → 2nd use rejected in cooldown window, UI sweep on slot.
+
+## Magic skill crit + effect-proc gate (2026-07-24, branch `feat/magic-skill-crit-debuff-gate`)
+User picked "skill crit + debuff gate" scope. Per docs `skills-research.md` #4:
+skill damage **reuses melee CalcDamage**, so skill crit = the shared melee crit
+branch (not its own nProbability path). nProbability is the secondary-effect
+gate (stun/poison), not crit/hit.
+
+- `resolveSkillCast` now rolls `getCriticalProb` (DEX/10 × job.fCritical +
+  DST_CHR_CHANCECRITICAL); on proc, `AF_CRITICAL1` + nATK×2.3 BEFORE DEF subtract
+  (same order as `resolveMelee`). Zero-damage clears the flag. Melee + magic.
+- `nProbability` roll → new `SkillCastResult.effectProc` (extends MeleeResult,
+  so flows through `applyHit` unchanged). Absent field = always proc. NOT applied
+  yet — needs the buff/status system (gap #1).
+- Tests: combat 109/0 (+10). Existing stubs moved to `int: ()=>99` to isolate
+  base damage from the new 1% crit roll (vagrant fCritical=1.0, DEX 15 → prob 1).
+- Commits: 51cd9ba (crit+gate), d820182 (ranged auto-attack wire — completes the
+  half-committed 1ec6147 ranged path), b5c0615 (user: dispatcher+ranged tests).
+- NOT marked done — awaiting user real-client test.
