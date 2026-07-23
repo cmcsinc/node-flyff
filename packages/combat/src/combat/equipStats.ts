@@ -10,9 +10,10 @@
  * FOOT=5, CAP=6, SHIELD=11 -- all live at `MAX_INVENTORY + part` in the flat
  * inventory array (`_Common/Item.h:545 CItemContainer::DoEquip`).
  *
- * ponytail: element string->enum mapping (items carry `element` as a string; the
- * formula wants the numeric NO_PROP/ELEMENT_*); refine->option encoding; jewelry
- * HR/ER; atkSpeed table is per-weapon-type (uses raw dwAttackSpeed for now).
+ * Element string->enum mapping (`elementFromName`), refine->option decoding, and
+ * jewelry HR/ER are all folded in below. atkSpeed uses the item's raw
+ * `dwAttackSpeed` (propItem's per-item value -- there is no separate per-type
+ * table in C++; the type-specific cadence comes from `job.fAttackSpeed`).
  *
  * @module combat/equipStats
  */
@@ -20,7 +21,7 @@
 import type { CPlayer } from '@flyff/entities';
 import type { ItemDefinition } from '@flyff/resources';
 import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
-import { NO_PROP, WT_MELEE_SWD } from './tables';
+import { NO_PROP, WT_MELEE_SWD, elementFromName } from './tables';
 import type { WeaponStats } from './formulas';
 
 const PARTS_LWEAPON = 9;
@@ -69,7 +70,9 @@ export function sumEquipStats(p: CPlayer, getItem: ItemLookup): EquipStats {
         type: prop.weapon_type ?? WT_MELEE_SWD,
         atkSpeed: prop.attack_speed ? prop.attack_speed / 100 : 0.4,
         option: weaponSlot.refine ?? 0, // raw level -- formula applies pow(option,1.5)
-        element: weaponSlot.element ?? NO_PROP,
+        // Instance upgrade (m_bItemResist) wins; else the weapon's inherent
+        // propItem element (string -> ePropType).
+        element: weaponSlot.element ?? elementFromName(prop.element),
       };
     }
   }
@@ -88,7 +91,7 @@ export function sumEquipStats(p: CPlayer, getItem: ItemLookup): EquipStats {
   }
 
   const suit = p.m_Inventory[MAX_INVENTORY + PARTS_UPPER_BODY];
-  if (suit) element = suit.element ?? NO_PROP;
+  if (suit) element = suit.element ?? elementFromName(getItem(suit.itemId)?.element);
 
   return { weapon, armorDef, adjHitRate, parry, element };
 }

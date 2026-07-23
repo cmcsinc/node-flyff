@@ -94,6 +94,12 @@ export interface MoverSpawnSource {
   /** C++ `RANK_GUARD` -- town guard; PK-gated attackability. */
   readonly guard?: boolean | undefined;
   /**
+   * `MI_CHAOGUARDIAN` inverse guard (propMover `dwKarma == -2000`) -- attackable
+   * only by *non*-chaotic players (opposite of {@link guard}). Rare; omit for all
+   * ordinary movers.
+   */
+  readonly chaoGuard?: boolean | undefined;
+  /**
    * C++ `m_dwBelligerence` (defineAttribute.h:203-215). 1 = BELLI_PEACEFUL
    * (suppresses client attack cursor); 11/12/13 = aggressive. 0 = unspecified.
    */
@@ -188,6 +194,8 @@ export class CMover {
   m_bAttackable: boolean;
   /** C++ `RANK_GUARD` -- town guard; only chaotic/PK players may attack. */
   m_bGuard: boolean;
+  /** `MI_CHAOGUARDIAN` inverse guard -- only NON-chaotic players may attack. */
+  m_bChaoGuard: boolean;
   /** Human-NPC outfit (character.inc). Undefined for monsters -> naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
   /** character.inc AddMenu ids (MMI_*). Carries dialog/trade/bank capability. */
@@ -290,6 +298,7 @@ export class CMover {
     this.m_fSpeedFactor = 1.0;
     this.m_bAttackable = src.attackable ?? true;
     this.m_bGuard = src.guard ?? false;
+    this.m_bChaoGuard = src.chaoGuard ?? false;
     this.outfit = src.outfit;
     this.m_abMoverMenu = src.menus ?? [];
     this.m_vendorStock = src.vendorStock ?? EMPTY_VENDOR_STOCK;
