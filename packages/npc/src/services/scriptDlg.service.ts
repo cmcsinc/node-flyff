@@ -34,7 +34,7 @@ import type { QuestService } from '@flyff/quest';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import { createLogger } from '@flyff/core/logger';
 import { buildSetQuest } from '@flyff/quest';
-import { ChatSerializer } from '../net/snapshot/chat.serializer';
+import { ChatSerializer } from '@flyff/world-core';
 import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer';
 
 const logger = createLogger({ module: 'scriptDlg-service' });

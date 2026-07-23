@@ -21,7 +21,7 @@
 import type { ZoneManager } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
 import type { CommandService } from './command.service';
-import { ChatSerializer } from '../net/snapshot/chat.serializer';
+import { ChatSerializer } from '@flyff/world-core';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 
 export interface ChatServiceDeps {

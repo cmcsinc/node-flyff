@@ -36,7 +36,7 @@ import type { ZoneManager } from '@flyff/world-core';
 import type { CMover } from '@flyff/entities';
 import type { DialogIndex } from '@flyff/resources';
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
-import { ChatSerializer } from '../net/snapshot/chat.serializer';
+import { ChatSerializer } from '@flyff/world-core';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 

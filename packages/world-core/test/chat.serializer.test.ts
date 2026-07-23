@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketReader } from '@flyff/core/net/PacketReader';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { ChatSerializer } from '../../../src/net/snapshot/chat.serializer';
+import { ChatSerializer } from '../src/serializers/chat.serializer';
 import { NULL_ID, SNAPSHOTTYPE_CHAT } from '@flyff/world-core';
 
 function readSnapshotHeader(buf: Buffer, r: PacketReader) {
