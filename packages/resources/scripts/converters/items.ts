@@ -117,6 +117,19 @@ function rowToItem(
     const parts = (partsSym && partsMap.get(partsSym)) ?? num(row, 'dwParts', 0);
     if (parts > 0) item.equip_slot = parts;
   }
+  // Fashion (costume) items live in their own equip window: PARTS_HAT/CLOTH/
+  // GLOVE/BOOTS (26..29) -- the client renders the fashion layer from those slots
+  // (`Mover.cpp:9123` nArryEquip2). Some legacy `_CLO_` rows carry an ARMOR parts
+  // value (PARTS_CAP=6, PARTS_UPPER_BODY=2, ...) which collides with real armor
+  // (user: "fashion helmet equipped on armor helmet slot"). Remap by IK3 so a
+  // costume always lands in the fashion window, regardless of the raw dwParts.
+  const fashionParts: Record<string, number> = {
+    IK3_HAT: 26, IK3_CLOTH: 27, IK3_GLOVE: 28, IK3_BOOTS: 29, IK3_SHOES: 29,
+  };
+  if ((item.item_kind2 === 'IK2_CLOTHETC' || item.item_kind2 === 'IK2_CLOTH') &&
+      item.item_kind3 && fashionParts[item.item_kind3] !== undefined) {
+    item.equip_slot = fashionParts[item.item_kind3];
+  }
   const weaponType = num(row, 'dwWeaponType', 0);
   if (weaponType > 0) item.weapon_type = weaponType;
 
