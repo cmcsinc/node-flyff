@@ -34,7 +34,10 @@ function body(slot: number, nPart: number): Buffer {
 function makeHandler(result: UseResult) {
   const sent: Buffer[] = [];
   const broadcasts: Buffer[] = [];
-  const player = { m_idPlayer: 0xbbbb, m_vPos: { x: 0, y: 0, z: 0 }, m_nZoneId: 1, m_bDead: false } as unknown as CPlayer;
+  const player = {
+    m_idPlayer: 0xbbbb, m_vPos: { x: 0, y: 0, z: 0 }, m_nZoneId: 1, m_bDead: false,
+    findSlotByObjId: () => 0,
+  } as unknown as CPlayer;
   const playerManager = { get: () => player, sendTo: (_p: CPlayer, b: Buffer) => { sent.push(b); } } as unknown as PlayerManager;
   const zoneManager = { broadcastAround: (_pos: unknown, _z: unknown, _r: unknown, b: Buffer) => { broadcasts.push(b); } } as unknown as ZoneManager;
   const useItemService = { use: () => result } as unknown as UseItemService;
@@ -43,21 +46,42 @@ function makeHandler(result: UseResult) {
 }
 
 describe('DoUseItemHandler', () => {
-  it('consumable: sends SETPOINTPARAM for each restored pool (HP/MP/FP)', () => {
-    const { handler, sent } = makeHandler({ kind: 'consumable', nId: 2, hp: 150, mp: 90, fp: 40 });
+  it('consumable: sends SETPOINTPARAM per restored pool + UPDATE_ITEM for the count', () => {
+    const { handler, sent } = makeHandler({ kind: 'consumable', nId: 2, remaining: 4, hp: 150, mp: 90, fp: 40 });
     handler.handleDoUseItem(mockSocket(), new PacketReader(body(2, 0)));
-    assert.equal(sent.length, 3, 'one SETPOINTPARAM per pool');
-    const params = sent.map((b) => b.readUInt32LE(16)).sort((a, b) => a - b);
+    // 3 SETPOINTPARAM (HP/MP/FP) + 1 UPDATE_ITEM
+    const byType = sent.map((b) => b.readUInt16LE(14));
+    const pointParams = sent.filter((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.SETPOINTPARAM);
+    const params = pointParams.map((b) => b.readUInt32LE(16)).sort((a, b) => a - b);
     assert.deepEqual(params, [DST_HP, DST_MP, DST_FP].sort((a, b) => a - b));
-    assert.equal(sent[0]!.readUInt16LE(14), SNAPSHOTTYPE.SETPOINTPARAM);
-    assert.equal(sent[0]!.readUInt32LE(20), 150, 'value = new HP total');
+    assert.equal(pointParams[0]!.readUInt32LE(20), 150, 'value = new HP total');
+    assert.ok(byType.includes(SNAPSHOTTYPE.UPDATE_ITEM), 'UPDATE_ITEM sent for stack decrement');
+    const upd = sent.find((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.UPDATE_ITEM)!;
+    assert.equal(upd.readUInt8(17), 2, 'UPDATE_ITEM nId = slot');
+    assert.equal(upd.readUInt32LE(19), 4, 'UPDATE_ITEM dwValue = remaining count');
   });
 
-  it('consumable: omits pools that were not restored', () => {
-    const { handler, sent } = makeHandler({ kind: 'consumable', nId: 0, hp: 180 });
+  it('consumable: UPDATE_ITEM is sent even with no restored pools (count must drop)', () => {
+    const { handler, sent } = makeHandler({ kind: 'consumable', nId: 0, remaining: 2, hp: 180 });
     handler.handleDoUseItem(mockSocket(), new PacketReader(body(0, 0)));
-    assert.equal(sent.length, 1, 'only HP sent');
-    assert.equal(sent[0]!.readUInt32LE(16), DST_HP);
+    // 1 SETPOINTPARAM (HP) + 1 UPDATE_ITEM
+    assert.equal(sent.filter((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.SETPOINTPARAM).length, 1);
+    const upd = sent.find((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.UPDATE_ITEM)!;
+    assert.equal(upd.readUInt32LE(19), 2, 'remaining count');
+  });
+
+  it('consumable: remaining=0 still sends UPDATE_ITEM (client removes slot)', () => {
+    const { handler, sent } = makeHandler({ kind: 'consumable', nId: 3, remaining: 0 });
+    handler.handleDoUseItem(mockSocket(), new PacketReader(body(3, 0)));
+    const upd = sent.find((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.UPDATE_ITEM)!;
+    assert.equal(upd.readUInt32LE(19), 0, 'count 0 => client clears slot');
+  });
+
+  it('consumed (buff/skill/...): sends UPDATE_ITEM only', () => {
+    const { handler, sent } = makeHandler({ kind: 'consumed', nId: 1, remaining: 0 });
+    handler.handleDoUseItem(mockSocket(), new PacketReader(body(1, 0)));
+    assert.equal(sent.length, 1);
+    assert.equal(sent[0]!.readUInt16LE(14), SNAPSHOTTYPE.UPDATE_ITEM);
   });
 
   it('equip: one vicinity DOEQUIP broadcast to self + peers', () => {

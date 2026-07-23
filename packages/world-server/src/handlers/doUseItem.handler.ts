@@ -6,7 +6,8 @@
  * target (NPC for scrolls); a trailing FLOAT rides in only for `PARTS_RIDE`
  * (`__HACK_1023`). Routes via `UseItemService`: equip -> DOEQUIP snapshots;
  * potion/food -> SETPOINTPARAM(DST_HP/MP/FP); buff/skill/warp/text consume the
- * charge (effect ponytail).
+ * charge (effect ponytail). Every non-equip use also sends UPDATE_ITEM(UI_NUM)
+ * for the new stack count (`DoUseItem` tail, MoverSkill.cpp:1723).
  *
  * @module handlers/doUseItem
  */
@@ -23,6 +24,7 @@ import type { UseItemService } from '../services/useItem.service.js';
 import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer.js';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
 
 const logger = createLogger({ module: 'doUseItem-handler' });
 const PARTS_RIDE = 13;
@@ -50,10 +52,18 @@ export class DoUseItemHandler {
       Validate.dword(nPart);
       if (((dwData >>> 16) & 0xffff) === PARTS_RIDE || nPart === PARTS_RIDE) reader.readFloat();
 
-      const r = this.deps.useItemService.use(player, dwData, nPart);
+      // HIWORD(dwData) is the item's STABLE m_dwObjId (DPClient SendDoUseItem ->
+      // MAKELONG(ITYPE_ITEM, m_dwObjId)), NOT the current slot -- resolve via scan
+      // (mirrors DOEQUIP / C++ GetAtId). Treating it as a slot breaks after the
+      // first equip/unequip when objid != current slot.
+      const objid = (dwData >>> 16) & 0xffff;
+      const slot = player.findSlotByObjId(objid);
+      if (slot < 0) { logger.debug({ charId: player.m_idPlayer, objid, nPart }, 'DOUSEITEM item not found by objid'); return; }
+
+      const r = this.deps.useItemService.use(player, slot, nPart);
       if (r.kind === 'equip') {
         const e = r.equip;
-        if (!e.ok) { logger.debug({ charId: player.m_idPlayer, nId: (dwData >>> 16) & 0xffff, nPart, reason: e.reason }, 'DOUSEITEM equip rejected'); return; }
+        if (!e.ok) { logger.debug({ charId: player.m_idPlayer, slot, nPart, reason: e.reason }, 'DOUSEITEM equip rejected'); return; }
         // 6-field vicinity format, sent to self + peers alike (C++ g_UserMng::
         // AddDoEquip broadcasts to m_2pc incl self -- User.cpp:4515). The 3-field
         // self variant is dead C++ (CUser::AddDoEquip) whose layout desyncs
@@ -66,8 +76,15 @@ export class DoUseItemHandler {
         if (r.hp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, r.hp));
         if (r.mp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, r.mp));
         if (r.fp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, r.fp));
+        // C++ DoUseItem tail: pItemElem->UseItem() then UpdateItem(dwId, UI_NUM,
+        // m_nItemNum) on every non-equip use (MoverSkill.cpp:1710/1723). Without
+        // this the client never sees the stack drop, so a consume looks like
+        // nothing happened. remaining=0 removes the slot client-side.
+        this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining));
+      } else if (r.kind === 'consumed') {
+        this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining));
       } else if (r.kind === 'reject') {
-        logger.debug({ charId: player.m_idPlayer, nId: (dwData >>> 16) & 0xffff, nPart }, 'DOUSEITEM rejected (no equip_slot / unknown kind)');
+        logger.debug({ charId: player.m_idPlayer, slot, nPart }, 'DOUSEITEM rejected (no equip_slot / unknown kind)');
       }
     } catch (error) {
       if (error instanceof PacketError) {

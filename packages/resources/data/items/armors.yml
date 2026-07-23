@@ -20317,7 +20317,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -20335,7 +20335,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20353,7 +20353,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20371,7 +20371,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -20389,7 +20389,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20407,7 +20407,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20425,7 +20425,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -20443,7 +20443,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20461,7 +20461,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20479,7 +20479,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -20497,7 +20497,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20515,7 +20515,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20533,7 +20533,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20551,7 +20551,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20569,7 +20569,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20587,7 +20587,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20605,7 +20605,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20623,7 +20623,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20641,7 +20641,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20659,7 +20659,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20677,7 +20677,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -20695,7 +20695,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20713,7 +20713,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -20731,7 +20731,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20749,7 +20749,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -20767,7 +20767,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20785,7 +20785,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -20803,7 +20803,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -20821,7 +20821,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -20839,7 +20839,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -20857,7 +20857,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -20875,7 +20875,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -21037,7 +21037,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -21055,7 +21055,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -21073,7 +21073,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -21091,7 +21091,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -21109,7 +21109,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -21127,7 +21127,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -21145,7 +21145,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -21163,7 +21163,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -21181,7 +21181,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -21199,7 +21199,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 50000
@@ -21217,7 +21217,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 50000
@@ -21289,7 +21289,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 50000
@@ -21307,7 +21307,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -21325,7 +21325,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -21343,7 +21343,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -21361,7 +21361,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -21379,7 +21379,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -21397,7 +21397,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -21415,7 +21415,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -21433,7 +21433,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -21451,7 +21451,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -21469,7 +21469,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -21487,7 +21487,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -21505,7 +21505,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -21523,7 +21523,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 3600000
@@ -21541,7 +21541,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -21559,7 +21559,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -21577,7 +21577,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -23863,7 +23863,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -23881,7 +23881,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -23899,7 +23899,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -23917,7 +23917,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_GLOVE
-    equip_slot: 4
+    equip_slot: 28
     defense: 1
     attack_min: 1
     durability: 5850000
@@ -23935,7 +23935,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     defense: 1
     attack_min: 1
     durability: 4500000
@@ -23953,7 +23953,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     hp_restore: 747
     defense: 1
     attack_min: 1
@@ -23972,7 +23972,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     hp_restore: 747
     defense: 1
     attack_min: 1
@@ -23991,7 +23991,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 2
+    equip_slot: 27
     hp_restore: 747
     defense: 1
     attack_min: 1
@@ -24010,7 +24010,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_SHOES
-    equip_slot: 5
+    equip_slot: 29
     hp_restore: 747
     defense: 1
     attack_min: 1
@@ -26390,7 +26390,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 50000
@@ -26408,7 +26408,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 50000
@@ -27398,7 +27398,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27434,7 +27434,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27470,7 +27470,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27506,7 +27506,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27542,7 +27542,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27578,7 +27578,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27776,7 +27776,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27812,7 +27812,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27848,7 +27848,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27884,7 +27884,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27920,7 +27920,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -27956,7 +27956,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTH
     item_kind3: IK3_CLOTH
-    equip_slot: 29
+    equip_slot: 27
     defense: 1
     attack_min: 1
     durability: 9000000
@@ -37552,7 +37552,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 50000
@@ -37570,7 +37570,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 50000
@@ -37588,7 +37588,7 @@ items:
     stack_size: 1
     item_kind2: IK2_CLOTHETC
     item_kind3: IK3_HAT
-    equip_slot: 6
+    equip_slot: 26
     defense: 1
     attack_min: 1
     durability: 50000

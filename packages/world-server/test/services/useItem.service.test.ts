@@ -1,7 +1,9 @@
 /**
  * UseItemService test -- DOUSEITEM router.
  *
- * `nId = HIWORD(dwData)`. Routes by prop fields:
+ * Takes the resolved bag `slot` (handler resolves the wire objid -> slot via
+ * `CPlayer.findSlotByObjId`, since the client addresses items by stable m_dwObjId
+ * which drifts from the slot after a move). Routes by prop fields:
  *   equip_slot set -> EquipService.equip
  *   item_kind2 IK2_POTION/FOOD -> ConsumableService.apply
  *   item_kind2 IK2_BUFF/BUF2/SKILL/TEXT/WARP -> consume charge (effect ponytail)
@@ -28,10 +30,6 @@ function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
     x: 0, y: 0, z: 0, world_id: 'flaris', zone_id: 1,
     created_at: new Date(), updated_at: new Date(), ...over,
   };
-}
-
-function dwData(slot: number): number {
-  return (slot << 16) >>> 0;
 }
 
 function makeSvc(opts: {
@@ -64,7 +62,7 @@ describe('UseItemService.use', () => {
     ]);
     const { svc, equipCalled } = makeSvc({ getItem: (id) => table.get(id) });
 
-    const r = svc.use(player, dwData(4), 9);
+    const r = svc.use(player, 4, 9);
 
     assert.equal(r.kind, 'equip');
     assert.equal(equipCalled(), true);
@@ -81,7 +79,7 @@ describe('UseItemService.use', () => {
       consumableResult: { hp: 180, mp: 90, consumed: null },
     });
 
-    const r = svc.use(player, dwData(2), 0);
+    const r = svc.use(player, 2, 0);
 
     assert.equal(r.kind, 'consumable');
     if (r.kind === 'consumable') {
@@ -100,7 +98,7 @@ describe('UseItemService.use', () => {
     ]);
     const { svc, consumeCalled } = makeSvc({ getItem: (id) => table.get(id) });
 
-    const r = svc.use(player, dwData(1), 0);
+    const r = svc.use(player, 1, 0);
 
     assert.equal(r.kind, 'consumed');
     assert.equal(consumeCalled(), true, 'charge consumed');
@@ -109,14 +107,14 @@ describe('UseItemService.use', () => {
   it('rejects when the slot is empty', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     const { svc } = makeSvc({ getItem: () => undefined });
-    const r = svc.use(player, dwData(0), 0);
+    const r = svc.use(player, 0, 0);
     assert.equal(r.kind, 'reject');
   });
 
   it('rejects when nId (HIWORD) is outside the main bag', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     const { svc } = makeSvc({ getItem: () => undefined });
-    const r = svc.use(player, dwData(MAX_INVENTORY), 0);
+    const r = svc.use(player, MAX_INVENTORY, 0);
     assert.equal(r.kind, 'reject');
   });
 });
