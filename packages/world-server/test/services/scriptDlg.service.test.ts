@@ -5,7 +5,7 @@ import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
 import type { DialogIndex, QuestDef, QuestIndex } from '@flyff/resources';
-import type { QuestService } from '../../src/services/quest.service';
+import type { QuestService } from '@flyff/quest';
 import type { ScriptFunc } from '../../src/net/snapshot/scriptDialog.serializer';
 
 const NPC_ID = 0x40000001;

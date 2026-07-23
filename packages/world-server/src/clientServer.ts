@@ -45,9 +45,9 @@ import type { DoUseItemHandler } from '@flyff/inventory';
 import type { BankHandler } from './handlers/bank.handler';
 import type { ShopHandler } from './handlers/shop.handler';
 import type { TaskBarHandler } from './handlers/taskbar.handler';
-import type { RemoveQuestHandler } from './handlers/removeQuest.handler';
-import type { QuestCheckHandler } from './handlers/questCheck.handler';
-import type { QuestHelperHandler } from './handlers/questHelper.handler';
+import type { RemoveQuestHandler } from '@flyff/quest';
+import type { QuestCheckHandler } from '@flyff/quest';
+import type { QuestHelperHandler } from '@flyff/quest';
 
 export interface WorldClientServerDeps {
   joinHandler: JoinHandler;

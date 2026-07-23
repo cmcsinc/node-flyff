@@ -50,7 +50,7 @@
 import type { CPlayer, Vec3 } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
 import type { SpawnManager } from '@flyff/world-core';
-import type { QuestService } from './quest.service';
+import type { QuestService } from '@flyff/quest';
 import type { InventoryService } from '@flyff/inventory';
 import type { CharacterRepository, InventoryRepository } from '@flyff/database';
 import { AUTH, hasAuthority } from '@flyff/entities';

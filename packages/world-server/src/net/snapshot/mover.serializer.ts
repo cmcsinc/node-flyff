@@ -23,7 +23,7 @@ import {
   MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
   MAX_HONOR_TITLE, MAX_INVENTORY, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
 } from '@flyff/world-core';
-import { writeQuestStruct } from './quest.serializer';
+import { writeQuestStruct } from '@flyff/quest';
 import { writeCItemElemBody } from '@flyff/world-core';
 import type { InventorySlot } from '@flyff/entities';
 

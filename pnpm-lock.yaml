@@ -282,6 +282,40 @@ importers:
         specifier: ^5.4.5
         version: 5.9.3
 
+  packages/quest:
+    dependencies:
+      '@flyff/combat':
+        specifier: workspace:*
+        version: link:../combat
+      '@flyff/core':
+        specifier: workspace:*
+        version: link:../core
+      '@flyff/database':
+        specifier: workspace:*
+        version: link:../database
+      '@flyff/entities':
+        specifier: workspace:*
+        version: link:../entities
+      '@flyff/inventory':
+        specifier: workspace:*
+        version: link:../inventory
+      '@flyff/resources':
+        specifier: workspace:*
+        version: link:../resources
+      '@flyff/world-core':
+        specifier: workspace:*
+        version: link:../world-core
+    devDependencies:
+      '@types/node':
+        specifier: ^20.12.7
+        version: 20.19.37
+      tsx:
+        specifier: ^4.7.2
+        version: 4.21.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.9.3
+
   packages/resources:
     dependencies:
       chokidar:
@@ -383,6 +417,9 @@ importers:
       '@flyff/ipc':
         specifier: workspace:*
         version: link:../ipc
+      '@flyff/quest':
+        specifier: workspace:*
+        version: link:../quest
       '@flyff/resources':
         specifier: workspace:*
         version: link:../resources
