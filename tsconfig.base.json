@@ -34,7 +34,9 @@
       "@flyff/skills": ["packages/skills/src/index.ts"],
       "@flyff/skills/*": ["packages/skills/src/*"],
       "@flyff/quest": ["packages/quest/src/index.ts"],
-      "@flyff/quest/*": ["packages/quest/src/*"]
+      "@flyff/quest/*": ["packages/quest/src/*"],
+      "@flyff/npc": ["packages/npc/src/index.ts"],
+      "@flyff/npc/*": ["packages/npc/src/*"]
     }
   }
 }

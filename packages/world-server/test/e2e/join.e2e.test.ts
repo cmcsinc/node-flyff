@@ -13,7 +13,7 @@ import { JoinHandler } from '../../src/handlers/join.handler';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer';
 import { SetExperienceSerializer } from '@flyff/combat';
 import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer';
-import { NpcSnapshotSerializer } from '../../src/net/snapshot/npcSnapshot.serializer';
+import { NpcSnapshotSerializer } from '@flyff/npc';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import type { CharacterRepository, CharacterRow } from '@flyff/database';

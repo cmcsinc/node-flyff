@@ -14,7 +14,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import { NULL_ID, MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB } from '@flyff/world-core';
-import { writeItemContainer } from './mover.serializer';
+import { writeItemContainer } from '@flyff/world-core';
 import type { VendorStock } from '@flyff/entities';
 
 /**

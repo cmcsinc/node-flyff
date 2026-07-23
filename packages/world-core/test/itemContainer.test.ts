@@ -16,7 +16,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
-import { writeItemContainer } from '../../../src/net/snapshot/mover.serializer';
+import { writeItemContainer } from '../src/serializers/itemContainer';
 import { NULL_ID, emptyItemContainerSize } from '@flyff/world-core';
 
 describe('writeItemContainer', () => {
