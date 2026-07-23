@@ -393,6 +393,9 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -409,6 +412,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 8
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -425,6 +433,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 13
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -441,6 +454,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 19
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -457,6 +475,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 22
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -473,6 +496,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 26
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -489,6 +517,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 31
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -505,6 +538,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 31
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -521,6 +559,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 39
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -537,6 +580,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 60
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -553,6 +601,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 80
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -569,6 +622,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 94
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -585,6 +643,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 109
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -601,6 +664,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 128
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -617,6 +685,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 26
+        adj: 128
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -633,6 +706,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 82
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -649,6 +727,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 118
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -665,6 +748,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 166
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -681,6 +769,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 226
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -697,6 +790,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 286
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -713,6 +811,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 358
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -729,6 +832,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 358
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -745,6 +853,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 57
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -761,6 +874,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 79
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -777,6 +895,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 108
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -793,6 +916,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 144
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -809,6 +937,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 180
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -825,6 +958,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 223
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -841,6 +979,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 223
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -857,6 +1000,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 65
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -873,6 +1021,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 84
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -889,6 +1042,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 109
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -905,6 +1063,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 141
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -921,6 +1084,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 173
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -937,6 +1105,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 212
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -953,6 +1126,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 37
+        adj: 212
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -969,6 +1147,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 2
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -985,6 +1168,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1001,6 +1189,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 4
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1017,6 +1210,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 5
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1033,6 +1231,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 6
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1049,6 +1252,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 7
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1065,6 +1273,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 7
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1081,6 +1294,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 2
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1097,6 +1315,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1113,6 +1336,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 4
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1129,6 +1357,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1145,6 +1378,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 6
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1161,6 +1399,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 7
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1177,6 +1420,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 7
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1193,6 +1441,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 2
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1209,6 +1462,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 3
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1225,6 +1483,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 4
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1241,6 +1504,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 5
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1257,6 +1525,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 6
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1273,6 +1546,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 7
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1289,6 +1567,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 7
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1305,6 +1588,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 4
+        adj: 2
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1321,6 +1609,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1337,6 +1630,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 4
+        adj: 4
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1353,6 +1651,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 4
+        adj: 5
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1369,6 +1672,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 4
+        adj: 6
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1385,6 +1693,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 4
+        adj: 7
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1401,6 +1714,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 1
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1417,6 +1735,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 1
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1433,6 +1756,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1449,6 +1777,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 1
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1465,6 +1798,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 100
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1481,6 +1819,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 150
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1497,6 +1840,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 200
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1513,6 +1861,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 100
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1529,6 +1882,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 150
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1545,6 +1903,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 26
+        adj: 200
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - knight
@@ -1561,6 +1924,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 14
+        adj: 3
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1577,6 +1945,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 14
+        adj: 6
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1593,6 +1966,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 14
+        adj: 10
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1609,6 +1987,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 105
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1625,6 +2008,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 120
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1641,6 +2029,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 240
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1657,6 +2050,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 105
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1673,6 +2071,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 120
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1689,6 +2092,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 36
+        adj: 240
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1705,6 +2113,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 50
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1721,6 +2134,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 75
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1737,6 +2155,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 37
+        adj: 90
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1753,6 +2176,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 10
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1769,6 +2197,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 20
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1785,6 +2218,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 30
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1801,6 +2239,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 10
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1817,6 +2260,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 20
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1833,6 +2281,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 3
+        adj: 30
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1849,6 +2302,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 10
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1865,6 +2323,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 20
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1881,6 +2344,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 2
+        adj: 30
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1897,6 +2365,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 10003
+        adj: 1
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1913,6 +2386,11 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 52
+        adj: 15
     durability: 12000000
     job_req:
       - vagrant
@@ -1929,6 +2407,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 70
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -1945,6 +2424,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 140
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -1961,6 +2441,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 200
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -1977,6 +2458,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 260
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -1993,6 +2475,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 330
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -2009,6 +2492,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 429
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -2024,6 +2508,7 @@ items:
     stack_size: 99
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -2040,6 +2525,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 552
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -2056,6 +2542,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 676
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -2072,6 +2559,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 812
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -2088,6 +2576,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 975
+    cooldown_ms: 2500
     durability: 12000000
     job_req:
       - vagrant
@@ -2104,6 +2593,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 120
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2120,6 +2610,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 160
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2136,6 +2627,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 230
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2152,6 +2644,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 300
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2168,6 +2661,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 370
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2184,6 +2678,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 514
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2200,6 +2695,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 670
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2216,6 +2712,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 860
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2232,6 +2729,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 1075
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2248,6 +2746,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 1313
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2264,6 +2763,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 60
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2280,6 +2780,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 110
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2296,6 +2797,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 160
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2312,6 +2814,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 210
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2328,6 +2831,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 260
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2344,6 +2848,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 334
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2360,6 +2865,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 417
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2376,6 +2882,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 508
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2392,6 +2899,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 607
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2408,6 +2916,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 714
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2424,6 +2933,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 975
+    cooldown_ms: 10000
     durability: 12000000
     job_req:
       - vagrant
@@ -2440,6 +2950,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 1200
+    cooldown_ms: 10000
     durability: 12000000
     job_req:
       - vagrant
@@ -2456,6 +2967,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 2000
+    cooldown_ms: 10000
     durability: 12000000
     job_req:
       - vagrant
@@ -2472,6 +2984,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 4000
+    cooldown_ms: 10000
     durability: 12000000
     job_req:
       - vagrant
@@ -2488,6 +3001,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 8000
+    cooldown_ms: 10000
     durability: 12000000
     job_req:
       - vagrant
@@ -2504,6 +3018,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 12000
+    cooldown_ms: 10000
     durability: 12000000
     job_req:
       - vagrant
@@ -2520,6 +3035,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2536,6 +3052,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     fp_restore: 9999
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -2552,6 +3069,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     mp_restore: 9999
+    cooldown_ms: 1500
     durability: 12000000
     job_req:
       - vagrant
@@ -7395,6 +7913,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 265
+    cooldown_ms: 1500
     durability: 3200000
     job_req:
       - mercenary
@@ -7486,6 +8005,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 10003
+        adj: 1
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 3200000
     job_req:
       - vagrant
@@ -7502,6 +8028,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 280000
     job_req:
       - magician
@@ -7698,6 +8231,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 126
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -7714,6 +8248,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 202
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -7730,6 +8265,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 270
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -7746,6 +8282,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 507
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -7762,6 +8299,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 747
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -8434,6 +8972,7 @@ items:
     item_kind2: IK2_SKILL
     item_kind3: IK3_GENERAL
     hp_restore: 747
+    cooldown_ms: 1000
     durability: 4500000
     job_req:
       - vagrant
@@ -8450,6 +8989,7 @@ items:
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     hp_restore: 1000
+    cooldown_ms: 1000
     durability: 6570000
     job_req:
       - vagrant
@@ -8466,6 +9006,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 1000
+    cooldown_ms: 1000
     durability: 6570000
     job_req:
       - vagrant
@@ -8482,6 +9023,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
+    cooldown_ms: 1500
     durability: 6570000
     job_req:
       - vagrant
@@ -8498,6 +9040,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     mp_restore: 9999
+    cooldown_ms: 1500
     durability: 6570000
     job_req:
       - vagrant
@@ -8514,6 +9057,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     fp_restore: 9999
+    cooldown_ms: 1500
     durability: 6570000
     job_req:
       - vagrant
@@ -8546,6 +9090,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 110
+    cooldown_ms: 1500
     durability: 3600000
     job_req:
       - vagrant
@@ -8562,6 +9107,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
+    cooldown_ms: 1500
     durability: 50000
     job_req:
       - vagrant
@@ -8578,6 +9124,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -8594,6 +9141,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 5000
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -8745,6 +9293,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 508
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8761,6 +9310,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8777,6 +9327,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 2000
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8793,6 +9344,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 2000
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8809,6 +9361,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8825,6 +9378,7 @@ items:
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 2000
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8856,6 +9410,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     hp_restore: 2000
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8872,6 +9427,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 2000
+    cooldown_ms: 1500
     durability: 8800000
     job_req:
       - vagrant
@@ -8888,6 +9444,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 2000
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -8904,6 +9461,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     mp_restore: 2000
+    cooldown_ms: 1500
     durability: 4500000
     job_req:
       - vagrant
@@ -8978,6 +9536,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
+    cooldown_ms: 1500
     durability: 7200000
   - id: 20186
     name: Mini Santa
@@ -9033,6 +9592,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20212
     name: Defender's Ring
@@ -9047,6 +9613,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20213
     name: Adept's Ring
@@ -9061,6 +9634,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20214
     name: Marksman's Ring
@@ -9075,6 +9655,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20215
     name: Champion's Demol Earring
@@ -9089,6 +9676,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20216
     name: Defender's Plug Earring
@@ -9103,6 +9697,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20221
     name: Adept's Earring of Power
@@ -9117,6 +9718,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20222
     name: Marksman's Earring of Power
@@ -9131,6 +9739,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20217
     name: Champion's Gore Necklace
@@ -9145,6 +9760,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20218
     name: Adept's Mental Necklace
@@ -9159,6 +9781,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20219
     name: Marksman's Peision Necklace
@@ -9173,6 +9802,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 20220
     name: Defender's Necklace of Protection
@@ -9187,6 +9823,13 @@ items:
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
+    effects:
+      - dst: 24
+        adj: 40
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
     durability: 7200000
   - id: 26905
     name: Sardine Roll
@@ -9201,6 +9844,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
+    cooldown_ms: 1500
     durability: 50000
   - id: 26906
     name: Watermelon Drink
@@ -9215,6 +9859,7 @@ items:
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     mp_restore: 2000
+    cooldown_ms: 1500
     durability: 50000
   - id: 26954
     name: Lost lucky bag
@@ -9229,6 +9874,7 @@ items:
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
+    cooldown_ms: 1500
     durability: 50000
   - id: 21082
     name: Joey

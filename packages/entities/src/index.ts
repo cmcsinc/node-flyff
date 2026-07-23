@@ -34,7 +34,14 @@ export {
   NULL_ID, MAX_HUMAN_PARTS, MAX_SKILL_JOB, MAX_INVENTORY, MAX_BANK, MAX_BANK_TABS,
   INVENTORY_SLOTS, BANK_SLOTS, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM,
   MAX_SHORTCUT_STRING, SHORTCUT, MAX_SHORTCUT_CHAT,
+  MAX_COOLTIME_GROUP, COOLTIME_GROUP,
 } from './constants/slots';
+export { DST, MAX_ADJPARAMARY, CHG_SENTINEL } from './constants/dst';
+export type { DstId } from './constants/dst';
+
+// DST parameter model (equip + future buffs)
+export { ParamModel, EMPTY_PARAM_VIEW } from './params/ParamModel';
+export type { ParamView, DstEffect } from './params/ParamModel';
 
 // Math
 export { EXP_TABLE, MAX_LEVEL } from './math/expTable';

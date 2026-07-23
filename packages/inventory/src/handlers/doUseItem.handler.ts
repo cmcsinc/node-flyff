@@ -24,7 +24,7 @@ import type { UseItemService } from '../services/useItem.service';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '@flyff/world-core';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
+import { buildUpdateItemCount, buildUpdateItemCooltime } from '../net/snapshot/updateItem.serializer';
 
 const logger = createLogger({ module: 'doUseItem-handler' });
 const PARTS_RIDE = 13;
@@ -79,10 +79,22 @@ export class DoUseItemHandler {
         // C++ DoUseItem tail: pItemElem->UseItem() then UpdateItem(dwId, UI_NUM,
         // m_nItemNum) on every non-equip use (MoverSkill.cpp:1710/1723). Without
         // this the client never sees the stack drop, so a consume looks like
-        // nothing happened. remaining=0 removes the slot client-side.
-        this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining));
+        // nothing happened. remaining=0 removes the slot client-side. Grouped
+        // items use UI_COOLTIME instead of UI_NUM so the client starts its
+        // cooldown sweep (MoverSkill.cpp:1720).
+        this.deps.playerManager.sendTo(
+          player,
+          r.cooltime
+            ? buildUpdateItemCooltime(player.m_idPlayer, r.nId, r.remaining)
+            : buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining),
+        );
       } else if (r.kind === 'consumed') {
-        this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining));
+        this.deps.playerManager.sendTo(
+          player,
+          r.cooltime
+            ? buildUpdateItemCooltime(player.m_idPlayer, r.nId, r.remaining)
+            : buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining),
+        );
       } else if (r.kind === 'reject') {
         logger.debug({ charId: player.m_idPlayer, slot, nPart }, 'DOUSEITEM rejected (no equip_slot / unknown kind)');
       }

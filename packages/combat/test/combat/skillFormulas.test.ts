@@ -41,6 +41,7 @@ import type { Combatant, Rng } from '../../src/combat/formulas';
 import { AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL } from '../../src/combat/tables';
 import type { SkillDefinition } from '@flyff/resources';
 import { loadSkills } from '@flyff/resources';
+import { EMPTY_PARAM_VIEW } from '@flyff/entities';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const RESOURCES_DATA = resolve(__dirname, '../../../resources/data');
@@ -69,6 +70,8 @@ function makeAttacker(over: Partial<Combatant> = {}): Combatant {
     npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0,
     npcHR: 0, npcER: 0,
     element: 0,
+    equipDef: 0, adjHitRate: 0, parry: 0,
+    params: EMPTY_PARAM_VIEW,
     ...over,
   };
 }
@@ -84,6 +87,8 @@ function makeNpcDefender(over: Partial<Combatant> = {}): Combatant {
     npcArmor: 20, npcResisMagic: 0,
     npcHR: 0, npcER: 0,
     element: 0,
+    equipDef: 0, adjHitRate: 0, parry: 0,
+    params: EMPTY_PARAM_VIEW,
     ...over,
   };
 }

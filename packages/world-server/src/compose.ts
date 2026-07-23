@@ -319,6 +319,7 @@ export async function compose(): Promise<WorldComposeResult> {
     inventoryRepo,
     bankRepo,
     skillRepo,
+    getItem: (id: number) => resources.items.items.get(id),
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
@@ -431,6 +432,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const equipService = new EquipService({
     inventoryRepo, journal,
     getItem: (id: number) => resources.items.items.get(id),
+    sendTo: (player, buf) => playerManager.sendTo(player, buf),
   });
   const doEquipHandler = new DoEquipHandler({ playerManager, zoneManager, equipService });
 
@@ -439,6 +441,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const useItemService = new UseItemService({
     equipService, consumableService, inventoryService,
     getItem: (id: number) => resources.items.items.get(id),
+    potionCooldownMs: config.consumable.potionCooldownMs,
   });
   const doUseItemHandler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
 

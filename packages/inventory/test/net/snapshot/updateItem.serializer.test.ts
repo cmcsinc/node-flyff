@@ -11,7 +11,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import { NULL_ID } from '@flyff/world-core';
-import { buildUpdateItemCount } from '../../../src/net/snapshot/updateItem.serializer';
+import { buildUpdateItemCount, buildUpdateItemCooltime } from '../../../src/net/snapshot/updateItem.serializer';
 
 describe('buildUpdateItemCount', () => {
   it('produces a 27 B frame with the AddUpdateItem layout', () => {
@@ -32,5 +32,16 @@ describe('buildUpdateItemCount', () => {
     assert.equal(buf[18], 0, 'cParam = UI_NUM (count)');
     assert.equal(buf.readUInt32LE(19), 99, 'dwValue = new count');
     assert.equal(buf.readUInt32LE(23), 0, 'dwTime trailing');
+  });
+});
+
+describe('buildUpdateItemCooltime', () => {
+  it('emits UI_COOLTIME (8) as cParam, otherwise the same layout', () => {
+    const buf = buildUpdateItemCooltime(0x0000dead, 3, 7);
+
+    assert.equal(buf.length, 27);
+    assert.equal(buf[18], 8, 'cParam = UI_COOLTIME');
+    assert.equal(buf[17], 3, 'nId = slot');
+    assert.equal(buf.readUInt32LE(19), 7, 'dwValue = new count');
   });
 });

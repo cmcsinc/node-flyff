@@ -99,6 +99,20 @@ export const ResourcesConfigSchema = z.object({
 });
 
 // ---------------------------------------------------------------------------
+// Consumable sub-schema
+// ---------------------------------------------------------------------------
+
+/**
+ * Consumable item (potion/food) tuning. Source propItem data carries no
+ * `dwSkillReady` on HP potions, so the potion cooldown group falls back to
+ * this default (see `CooltimeMgr` port in `@flyff/inventory`).
+ */
+export const ConsumableConfigSchema = z.object({
+  /** Cooldown (ms) applied to the potion group when an item's `cooldown_ms` is unset. */
+  potionCooldownMs: z.number().int().min(0).default(1000),
+});
+
+// ---------------------------------------------------------------------------
 // WAL persistence sub-schema
 // ---------------------------------------------------------------------------
 
@@ -139,6 +153,7 @@ export const WorldServerConfigSchema = BaseConfigSchema.merge(
     wal: WalConfigSchema.default({}),
     registration: WorldRegistrationConfigSchema.default({}),
     resources: ResourcesConfigSchema.default({}),
+    consumable: ConsumableConfigSchema.default({}),
   }),
 );
 

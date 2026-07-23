@@ -111,6 +111,13 @@ export const ItemDefinitionSchema = z.object({
   /** MP restore amount (consumables) */
   mp_restore: z.number().int().min(0).optional(),
 
+  /**
+   * Cooldown duration in ms (propItem `dwSkillReady` = `ItemProp::GetCoolTime`).
+   * When > 0, using this item locks its cooldown group (food/pill/skill) until
+   * elapsed -- `CooltimeMgr.h` / `MoverSkill.cpp:1335`. Zero/undefined = none.
+   */
+  cooldown_ms: z.number().int().min(0).optional(),
+
   /** Attack bonus (buff consumables) */
   attack_bonus: z.number().int().min(0).optional(),
 
@@ -146,6 +153,20 @@ export const ItemDefinitionSchema = z.object({
 
   /** Evasion/parry bonus (propItem `dwParry`) -- jewelry DST_PARRY. */
   parry: z.number().int().optional(),
+
+  /**
+   * DST destination-parameter effects from the propItem `dwDestParam{1,2,3}` /
+   * `nAdjParamVal{1,2,3}` / `dwChgParamVal{1,2,3}` triplets. Each entry applies
+   * (equip) / removes (unequip) one adjustment on the wearer's `ParamModel`
+   * (C++ `SetDestParam` per item, `MoverParam.cpp:2221`). How rings/earrings/
+   * sets carry +STR/+STA/+DEF/+HP_MAX etc -- there are no dedicated stat columns.
+   * `dst` is a `DST_*` numeric id; `adj` additive; `chg` optional override.
+   */
+  effects: z.array(z.object({
+    dst: z.number().int(),
+    adj: z.number().int(),
+    chg: z.number().int().optional(),
+  })).default([]),
 
   // Requirements
   /** Required level to equip */

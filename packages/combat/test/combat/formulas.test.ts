@@ -10,12 +10,14 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import {
-  resolveMelee, getHitMinMax, getAttackResult, getParrying, calcDefense, expLevelDiffMult,
+  resolveMelee, getHitMinMax, getAttackResult, getParrying, getCriticalProb, getAttackSpeed,
+  calcDefense, expLevelDiffMult,
   addExp, expToNextLevel, withinLevelExp, cumulativeExp, subDieDecExp,
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
 } from '../../src/combat/formulas';
 import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables';
+import { EMPTY_PARAM_VIEW, DST, ParamModel } from '@flyff/entities';
 
 const FIST = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 const BARE_HAND = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
@@ -26,6 +28,7 @@ const player: Combatant = {
   weapon: BARE_HAND,
   npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0, npcHR: 0, npcER: 0, element: NO_PROP,
   equipDef: 0, adjHitRate: 0, parry: 0,
+  params: EMPTY_PARAM_VIEW,
 };
 
 const aibatt: Combatant = {
@@ -34,6 +37,7 @@ const aibatt: Combatant = {
   weapon: FIST,
   npcAtkMin: 16, npcAtkMax: 16, npcArmor: 3, npcResisMagic: 0, npcHR: 40, npcER: 3, element: NO_PROP,
   equipDef: 0, adjHitRate: 0, parry: 0,
+  params: EMPTY_PARAM_VIEW,
 };
 
 /** Scripted rng -- `int()` draws from `ints` in call order; `range()` is fixed. */
@@ -83,6 +87,49 @@ describe('combat getParrying (DST_PARRY)', () => {
     assert.equal(getParrying(player), 7, 'floor(15/2)=7, no jewelry parry');
     const withRing: Combatant = { ...player, parry: 5 };
     assert.equal(getParrying(withRing), 12, '7 + 5 jewelry parry');
+  });
+});
+
+describe('combat DST param un-stubs', () => {
+  it('DST_CHR_DMG raises getHitMinMax on both min and max', () => {
+    const base = getHitMinMax(player);
+    const params = new ParamModel();
+    params.setDestParam(DST.CHR_DMG, 10);
+    const buffed: Combatant = { ...player, params };
+    const withDmg = getHitMinMax(buffed);
+    assert.equal(withDmg.min - base.min, 10, 'CHR_DMG adds flat to min');
+    assert.equal(withDmg.max - base.max, 10, 'CHR_DMG adds flat to max');
+  });
+
+  it('DST_ADJDEF raises calcDefense on a player defender', () => {
+    const base = calcDefense({ ...player, equipDef: 20 });
+    const params = new ParamModel();
+    params.setDestParam(DST.ADJDEF, 30);
+    const buffed: Combatant = { ...player, equipDef: 20, params };
+    assert.ok(calcDefense(buffed) > base, 'ADJDEF buff raises player DEF');
+    assert.equal(calcDefense(buffed) - base, Math.floor(30 * 2.3), 'ADJDEF contributes via *2.3');
+  });
+
+  it('DST_CHR_CHANCECRITICAL raises getCriticalProb', () => {
+    const base = getCriticalProb(player);
+    const params = new ParamModel();
+    params.setDestParam(DST.CHR_CHANCECRITICAL, 8);
+    assert.equal(getCriticalProb({ ...player, params }), base + 8);
+  });
+});
+
+describe('combat getAttackSpeed', () => {
+  it('rises with DEX (all else equal)', () => {
+    const low = getAttackSpeed({ ...player, dex: 15 });
+    const high = getAttackSpeed({ ...player, dex: 200 });
+    assert.ok(high > low, 'more DEX -> faster attack speed');
+  });
+
+  it('clamps to [0.1, 2.0]', () => {
+    const slow = getAttackSpeed({ ...player, dex: 1, level: 1 });
+    assert.ok(slow >= 0.1, 'never below 0.1');
+    const fast = getAttackSpeed({ ...player, dex: 10000, level: 500 });
+    assert.ok(fast <= 2.0, 'never above 2.0');
   });
 });
 

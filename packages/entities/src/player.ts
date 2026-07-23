@@ -16,8 +16,11 @@
 import type { CharacterRow } from '@flyff/database';
 import { AUTH } from './constants/authority';
 import { getJobProps } from './tables/job';
-import { maxHitPoint, maxManaPoint } from './math/vitals';
-import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT } from './constants/slots';
+import type { JobProps } from './tables/job';
+import { maxFatiguePoint, maxHitPoint, maxManaPoint } from './math/vitals';
+import { DST } from './constants/dst';
+import { ParamModel } from './params/ParamModel';
+import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT, MAX_COOLTIME_GROUP } from './constants/slots';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest';
 import type { RuntimeQuest } from './state/quest';
 
@@ -291,6 +294,15 @@ export class CPlayer {
    */
   m_tmNextRecovery: number = 0;
   /**
+   * DST destination-parameter adjustments (C++ `m_adjParamAry`/`m_chgParamAry`,
+   * `MoverParam.cpp`). Holds equip +stat bonuses (ring +STR, armor +DEF, etc)
+   * applied by `EquipService` / `JoinService.SetEquipDstParam`, and (future)
+   * buff effects. Read via `getStr/Sta/Dex/Int` + `getMaxHp/Mp/Fp` -- NOT the
+   * raw `m_nStr` fields (those omit bonuses). Derived from equipped items, so
+   * not persisted; rebuilt on JOIN from the inventory.
+   */
+  readonly m_params: ParamModel = new ParamModel();
+  /**
    * Per-slot learned skills (C++ `m_aJobSkill[45]`, sizeof 8 each). Slot ranges:
    * 0-2 vagrant, 3-22 expert, 23-42 pro, 43 master, 44 hero. Empty slots carry
    * `skillId = NULL_ID`. Hydrated from `SkillRepository` on JOIN; mutated by the
@@ -315,6 +327,13 @@ export class CPlayer {
    * ponytail: persisted only on graceful disconnect (transient state).
    */
   m_tmReUseDelay: number[] = new Array(MAX_SKILL_JOB).fill(0);
+  /**
+   * Per-group consumable cooldown next-allowed timestamps (C++
+   * `CCooltimeMgr::m_times[]`, `CooltimeMgr.h`). 1-based group → index
+   * `group-1`; `0` = ready. Transient (not persisted -- matches C++).
+   * Groups: 1 food, 2 pill, 3 skill, 4 potion (our addition).
+   */
+  m_cooltime: number[] = new Array(MAX_COOLTIME_GROUP).fill(0);
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
   readonly _dirty: Set<string> = new Set();
@@ -334,14 +353,16 @@ export class CPlayer {
     this.m_nSta = row.stamina;
     this.m_nDex = row.dexterity;
     this.m_nInt = row.intelligence;
-    // Max HP/MP are formula-derived (C++ `GetMaxOriginHitPoint`/`ManaPoint`),
-    // NOT the DB cache -- the client computes the same formula and shows that
-    // value (e.g. 236), so the server must match or regen clamps against a
-    // stale ceiling. Recomputed each recovery tick too (level-up safe). Must
-    // run after STA/INT/job load.
+    // Max HP/MP/FP are formula-derived (C++ `GetMaxOriginHitPoint`/`ManaPoint`/
+    // `FatiguePoint`), NOT the DB cache -- the client computes the same formula
+    // and shows that value (e.g. 236), so the server must match or regen clamps
+    // against a stale ceiling. FP included so a pre-tick read (JOIN snapshot)
+    // sees the right ceiling, not 0. Recomputed each recovery tick too
+    // (level-up + equip safe). Must run after STA/INT/job load.
     const job = getJobProps(this.m_nJob);
     this.m_nMaxHp = maxHitPoint(this.m_nLevel, this.m_nSta, job.fFactorMaxHP);
     this.m_nMaxMp = maxManaPoint(this.m_nLevel, this.m_nInt, job.fFactorMaxMP);
+    this.m_nMaxFp = maxFatiguePoint(this.m_nLevel, this.m_nSta, job.fFactorMaxFP);
     this.m_nRemainGP = row.remain_gp ?? 0;
     this.m_dwSkin = row.skin_color;
     this.m_nHairMesh = row.hair_style;
@@ -408,6 +429,50 @@ export class CPlayer {
     }
     if (objid >= 0 && objid < INVENTORY_SLOTS && this.m_Inventory[objid]) return objid;
     return -1;
+  }
+
+  // --- DST-adjusted primary-stat + vital-max readers (`MoverParam.cpp`) ---
+  // Use these wherever equip/buff bonuses must count -- raw `m_nStr` etc omit
+  // the DST adjustments in `m_params`. `getStr()` = `m_nStr + DST_STR`, floored
+  // at 1 (C++ `__JEFF_11`, `MoverParam.cpp:3163`). `getMaxHp()` wraps the origin
+  // formula with `DST_HP_MAX` (flat) + `DST_HP_MAX_RATE` (%) (`GetMaxHitPoint`,
+  // `MoverParam.cpp:2788`).
+
+  /** `CMover::GetStr` (`MoverParam.cpp:3163`). */
+  getStr(): number { return Math.max(1, this.m_nStr + this.m_params.get(DST.STR, 0)); }
+  /** `CMover::GetSta` (`MoverParam.cpp:3226`). */
+  getSta(): number { return Math.max(1, this.m_nSta + this.m_params.get(DST.STA, 0)); }
+  /** `CMover::GetDex` (`MoverParam.cpp:3184`). */
+  getDex(): number { return Math.max(1, this.m_nDex + this.m_params.get(DST.DEX, 0)); }
+  /** `CMover::GetInt` (`MoverParam.cpp:3205`). */
+  getInt(): number { return Math.max(1, this.m_nInt + this.m_params.get(DST.INT, 0)); }
+
+  /** Current job props (`prj.GetJobProp(GetJob())`). */
+  jobProps(): JobProps { return getJobProps(this.m_nJob); }
+
+  /**
+   * `CMover::GetMaxHitPoint` (`MoverParam.cpp:2788`): origin (STA-derived) base,
+   * then `DST_HP_MAX` flat override/add, then `DST_HP_MAX_RATE` % multiplier.
+   * Floors at 1.
+   */
+  getMaxHp(): number {
+    const origin = maxHitPoint(this.m_nLevel, this.getSta(), this.jobProps().fFactorMaxHP);
+    const base = this.m_params.get(DST.HP_MAX, origin);
+    return Math.max(1, Math.floor(base * (1 + this.m_params.get(DST.HP_MAX_RATE, 0) / 100)));
+  }
+
+  /** `CMover::GetMaxManaPoint` (`MoverParam.cpp:2808`). INT-derived. */
+  getMaxMp(): number {
+    const origin = maxManaPoint(this.m_nLevel, this.getInt(), this.jobProps().fFactorMaxMP);
+    const base = this.m_params.get(DST.MP_MAX, origin);
+    return Math.max(1, Math.floor(base * (1 + this.m_params.get(DST.MP_MAX_RATE, 0) / 100)));
+  }
+
+  /** `CMover::GetMaxFatiguePoint` (`MoverParam.cpp:2825`). STA-derived. */
+  getMaxFp(): number {
+    const origin = maxFatiguePoint(this.m_nLevel, this.getSta(), this.jobProps().fFactorMaxFP);
+    const base = this.m_params.get(DST.FP_MAX, origin);
+    return Math.max(1, Math.floor(base * (1 + this.m_params.get(DST.FP_MAX_RATE, 0) / 100)));
   }
 
   // --- Quest state helpers (mirror `_Common/MoverParam.cpp`) ---

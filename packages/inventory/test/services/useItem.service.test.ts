@@ -36,6 +36,7 @@ function makeSvc(opts: {
   getItem: (id: number) => ItemDefinition | undefined;
   equipResult?: EquipResult;
   consumableResult?: ConsumableResult;
+  potionCooldownMs?: number;
 }) {
   let equipCalled = false;
   let consumeCalled = false;
@@ -49,7 +50,11 @@ function makeSvc(opts: {
   const inventoryService = {
     consume: () => { consumeCalled = true; return null; },
   } as unknown as InventoryService;
-  const svc = new UseItemService({ equipService, consumableService, inventoryService, getItem: opts.getItem });
+  const svc = new UseItemService({
+    equipService, consumableService, inventoryService,
+    getItem: opts.getItem,
+    potionCooldownMs: opts.potionCooldownMs ?? 1000,
+  });
   return { svc, equipCalled: () => equipCalled, applyCalled: () => applyCalled, consumeCalled: () => consumeCalled };
 }
 
@@ -116,5 +121,51 @@ describe('UseItemService.use', () => {
     const { svc } = makeSvc({ getItem: () => undefined });
     const r = svc.use(player, MAX_INVENTORY, 0);
     assert.equal(r.kind, 'reject');
+  });
+
+  it('rejects a potion on cooldown WITHOUT spending the charge', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[2] = { itemId: 7000, count: 5 };
+    const table = new Map<number, ItemDefinition>([
+      [7000, { id: 7000, name: 'Potion', name_id: 'ITEM_P', stack_size: 99, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_POTION' }],
+    ]);
+    const { svc, applyCalled } = makeSvc({ getItem: (id) => table.get(id), potionCooldownMs: 5000 });
+    player.m_cooltime[3] = Date.now() + 4000; // potion group locked
+
+    const r = svc.use(player, 2, 0);
+
+    assert.equal(r.kind, 'reject');
+    assert.equal(applyCalled(), false, 'charge not spent on cooldown');
+  });
+
+  it('sets the potion cooldown group + flags cooltime on a successful use', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[2] = { itemId: 7000, count: 5 };
+    const table = new Map<number, ItemDefinition>([
+      [7000, { id: 7000, name: 'Potion', name_id: 'ITEM_P', stack_size: 99, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_POTION' }],
+    ]);
+    const { svc } = makeSvc({ getItem: (id) => table.get(id), potionCooldownMs: 1000 });
+
+    const r = svc.use(player, 2, 0);
+
+    assert.equal(r.kind, 'consumable');
+    if (r.kind === 'consumable') assert.equal(r.cooltime, true);
+    assert.ok(player.m_cooltime[3] > Date.now(), 'potion group locked after use');
+  });
+
+  it('gates food (group 1) by cooldown_ms from the data', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[1] = { itemId: 8000, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [8000, { id: 8000, name: 'Lollipop', name_id: 'ITEM_L', stack_size: 99, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_FOOD', item_kind3: 'IK3_INSTANT', cooldown_ms: 2500 }],
+    ]);
+    const { svc } = makeSvc({ getItem: (id) => table.get(id) });
+
+    const first = svc.use(player, 1, 0);
+    assert.equal(first.kind, 'consumable');
+    assert.ok(player.m_cooltime[0] > Date.now(), 'food group locked');
+
+    const second = svc.use(player, 1, 0);
+    assert.equal(second.kind, 'reject', 'still on cooldown');
   });
 });

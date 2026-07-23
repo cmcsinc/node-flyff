@@ -16,11 +16,13 @@
  */
 
 import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
+import type { ItemDefinition } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
 import { AUTH } from '@flyff/entities';
 import { withinLevelExp } from '@flyff/combat';
+import { MAX_HUMAN_PARTS, MAX_INVENTORY } from '@flyff/world-core';
 import { decodeTaskBar } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
@@ -46,6 +48,13 @@ export interface JoinServiceDeps {
   bankRepo?: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold' | 'getBankPass'>;
   /** Skill hydration on JOIN. Optional: empty skill roster if absent. */
   skillRepo?: Pick<SkillRepository, 'loadByCharacter'>;
+  /**
+   * Item-definition lookup for `SetEquipDstParam` on JOIN -- applies each
+   * equipped item's DST effects (+STR/+STA/+DEF/etc) to `m_params` so the
+   * first swing + regen see buffed stats. Optional: skip if absent (no equip
+   * bonuses until first equip/unequip cycle).
+   */
+  getItem?: (itemId: number) => ItemDefinition | undefined;
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   handoffSource: HandoffSource;
@@ -126,6 +135,29 @@ export class JoinService {
     // Carried penya lives on the inventory container row (migration 008), not
     // the character row -- hydrate it after the slots.
     player.m_nGold = await this.deps.inventoryRepo.getGold(player.m_idPlayer);
+    // Apply equipped items' DST effects (C++ `SetEquipDstParam`, MoverParam.cpp:
+    // 1903) so buffed STR/STA/DEF/HP_MAX/etc count from the first tick. Must
+    // precede the max recompute so JOIN snapshot + regen start from buffed maxes.
+    this.applyEquipDstParams(player);
+    player.m_nMaxHp = player.getMaxHp();
+    player.m_nMaxMp = player.getMaxMp();
+    player.m_nMaxFp = player.getMaxFp();
+  }
+
+  /**
+   * Iterate equipped slots (MAX_INVENTORY..MAX_HUMAN_PARTS-1) and apply each
+   * item's `effects` to `m_params`. Idempotent at JOIN (m_params starts empty);
+   * subsequent equip/unequip go through `EquipService`.
+   */
+  private applyEquipDstParams(player: CPlayer): void {
+    if (!this.deps.getItem) return;
+    for (let part = 0; part < MAX_HUMAN_PARTS; part++) {
+      const slot = player.m_Inventory[MAX_INVENTORY + part];
+      if (!slot) continue;
+      const prop = this.deps.getItem(slot.itemId);
+      const effects = prop?.effects;
+      if (effects && effects.length > 0) player.m_params.applyEffects(effects);
+    }
   }
 
   /**

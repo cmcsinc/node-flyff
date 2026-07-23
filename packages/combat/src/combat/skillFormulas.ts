@@ -13,6 +13,8 @@
  */
 
 import type { Combatant, Rng, MeleeResult } from './formulas';
+import { calcDefense } from './formulas';
+import { DST } from '@flyff/entities';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import {
   AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1,
@@ -123,7 +125,14 @@ export function getMagicSkillPower(
   skill: SkillDefinition,
   level: SkillLevel,
 ): { min: number; max: number } {
-  return getMeleeSkillPower(attacker, skill, level);
+  const base = getMeleeSkillPower(attacker, skill, level);
+  // DST_ADDMAGIC flat bonus + element mastery (DST_MASTRY_<elem>). C++ adds
+  // these on top of GetMeleeSkillPower (MoverAttack.cpp:1025). Mastery is keyed
+  // by the skill's element; ponytail: full mastery table once skills carry
+  // element + level.
+  const addMagic = attacker.params.get(DST.ADDMAGIC, 0);
+  if (addMagic === 0) return base;
+  return { min: base.min + addMagic, max: base.max + addMagic };
 }
 
 /**
@@ -147,15 +156,39 @@ export function postCalcMagicSkill(
   defenderDef: number,
   skillElement: number,
 ): number {
-  // nATK -= nATK * RESIST_MAGIC_RATE/100  -> v1: no-op
-  let a = nATK - defenderDef;
+  // nATK -= nATK * GetParam(DST_RESIST_MAGIC_RATE)/100
+  const resistRate = defender.params.get(DST.RESIST_MAGIC_RATE, 0);
+  let atk = resistRate > 0 ? nATK - nATK * resistRate / 100 : nATK;
+  let a = atk - defenderDef;
   if (a < 0) a = 0;
-  // (1 - GetResist(skillElement)) -> v1: 1.0
+  // (1 - GetResist(skillElement)) -- defender elemental resist via DST_RESIST_<elem>.
+  const elemResist = getResist(defender, skillElement);
+  if (elemResist > 0) a = a * (1 - elemResist / 100);
   const internalElem = ST_TO_INTERNAL.get(skillElement) ?? 0;
   const defInternal = ST_TO_INTERNAL.get(defender.element) ?? 0;
   const factor = internalElem > 0 ? getMagicSkillFactor(internalElem, defInternal) : 1.0;
   return Math.floor(a * factor);
 }
+
+/**
+ * `GetResist(element)` (`MoverParam.cpp`) -- defender elemental resist % from
+ * `DST_RESIST_<elem>` params (0..100). `skillElement` is the ST_* value; mapped
+ * to its DST_RESIST_* id. Returns 0 for NO_PROP/unknown.
+ */
+function getResist(defender: Combatant, skillElement: number): number {
+  const dst = RESIST_DST_BY_ELEMENT.get(skillElement);
+  if (dst === undefined) return 0;
+  return defender.params.get(dst, 0);
+}
+
+/** ST_* resource element value -> DST_RESIST_* id for defender resist lookup. */
+const RESIST_DST_BY_ELEMENT = new Map<number, number>([
+  [5, DST.RESIST_FIRE],   // ST_FIRE
+  [7, DST.RESIST_WATER],  // ST_WATER
+  [4, DST.RESIST_ELECTRICITY], // ST_ELECTRICITY
+  [6, DST.RESIST_WIND],   // ST_WIND
+  [8, DST.RESIST_EARTH],  // ST_EARTH
+]);
 
 /**
  * Resolve the primary stat for a referStat (DST_STR/STA/DEX/INT) -- used by
@@ -221,9 +254,7 @@ export function resolveSkillCast(input: SkillCastInputs): MeleeResult {
 
   // Standard defense path. Magic uses CalcDefense too (docs #4: nDEF =
   // defender.CalcDefense), then PostCalcMagicSkill applies magic factor.
-  // Lazy import via require-style to dodge the cycle with formulas.ts --
-  // formulas.ts has no dep on skillFormulas, so a top-level import is fine.
-  const nDEF = calcDefenseView(defender);
+  const nDEF = calcDefense(defender);
   let nDamage: number;
   if (isMagic) {
     nDamage = postCalcMagicSkill(nATK, defender, nDEF, skill.element ?? 0);
@@ -236,18 +267,4 @@ export function resolveSkillCast(input: SkillCastInputs): MeleeResult {
   void AF_CRITICAL1;
 
   return { hit: true, damage: nDamage, atkFlags };
-}
-
-/**
- * Local copy of `calcDefense` (NPC branch only -- players-as-defender comes
- * later). Avoids a circular import + keeps the helper pure.
- */
-function calcDefenseView(defender: Combatant): number {
-  if (defender.kind === 'npc') {
-    return Math.floor(defender.npcArmor / 7.0) + 1;
-  }
-  // Player defender -- same shape as formulas.calcDefense.
-  // Lazy getJobProps via dynamic import would be cyclic; defer to formulas
-  // via the attacker.weapon.option factor (0 here). ponytail: share table.
-  return Math.floor((0 + 0) * 2.3 + (defender.level + defender.sta / 2 + defender.dex) / 2.8 - 4 + defender.level * 2 + 0);
 }
