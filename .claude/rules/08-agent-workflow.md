@@ -2,6 +2,10 @@
 
 Rules for how sub-agents operate, checkpoint, and hand off work.
 
+## Branch-First is Mandatory
+
+Before touching any file for a task, create a working branch off `master` — **never work on or commit to `master` directly**. When the work is ready, open a PR on GitHub for review; do not self-merge unless the user says so. See [common/git-workflow.md](./common/git-workflow.md) → Branch-First Workflow for the exact commands.
+
 ## Session State is Mandatory
 
 Every agent session **must** begin by reading `.claude/state/SESSION.md` to understand current progress. Every agent session **must** end by ensuring `SESSION.md` reflects what was accomplished.

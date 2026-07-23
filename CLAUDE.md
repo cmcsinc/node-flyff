@@ -339,6 +339,7 @@ This project has context-aware skills in `.claude/skills/`. They are auto-sugges
 
 To ensure a "fully agentic" experience, this project follows a strict checkpointing protocol:
 
+- **Branch-First**: Always create a working branch off `master` **before** touching any file — never commit to `master`. When work is ready, open a GitHub PR (never self-merge unless the user says so). See `.claude/rules/common/git-workflow.md` → Branch-First Workflow.
 - **State File**: `.claude/state/SESSION.md` is the source of truth for the current agent session.
 - **Mandatory Checkpoint**: Agents must update `SESSION.md` or the `TodoWrite` list after every significant change.
 - **Restoration**: When resuming a session, always `Read` `SESSION.md` first and synchronize the active task list.
