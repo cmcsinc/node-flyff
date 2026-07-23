@@ -29,8 +29,8 @@ declares a feature fixed by testing on a real v15 client.
 ### Ranged / bow
 - [x] ✅ Bow damage curve (STR/DEX) — `formulas.ts:109`
 - [ ] 🟡 NPC ranged attack (RANGE_ATTACK emit, re-attack delay) — `ai.system.ts`
-- [ ] ❌ Player ranged auto-attack as a distinct path (currently routes through melee)
-- [ ] ❌ Ammo / arrow consumption
+- [ ] 🟡→impl Player ranged auto-attack distinct path — `RANGE_ATTACK` (0x00ff0012) handler+service added; RANGE snapshot echo (idSfxHit from HIWORD nParam3), damage via shared `resolveAttack` (bow curve already keyed off `WT_RANGE_BOW`). Build+tests green (combat 102/0), awaiting user test — `rangeAttack.handler.ts`, `rangeAttack.service.ts`
+- [x] N/A Ammo / arrow consumption — v15 retail bows are ammo-less; no arrow item kind in propItem. Documented in `rangeAttack.service.ts`, nothing to consume.
 
 ### Magic / skill damage
 - [x] ✅ Single-target skill damage (melee + magic, element, magic-factor) — `skillFormulas.ts`
