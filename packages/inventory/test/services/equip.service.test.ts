@@ -174,4 +174,43 @@ describe('EquipService.unequip', () => {
     assert.equal(r.ok, false);
     if (!r.ok) assert.equal(r.reason, 'not_equipped');
   });
+
+  it('refreshes cached m_nMaxHp on equip so a later potion heals to the buffed max', () => {
+    // A +HP_MAX(35) ring. Cached m_nMaxHp must move up with getMaxHp() -- else a
+    // consumable reading the stale cached max caps below the new bar.
+    const RING = 6000, HP_MAX = 35, EQUIP_SLOT = 10;
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const before = player.m_nMaxHp;
+    player.m_Inventory[0] = { itemId: RING, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [RING, { id: RING, name: 'HP Ring', name_id: 'ITEM_R', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: EQUIP_SLOT, effects: [{ dst: HP_MAX, adj: 500 }] }],
+    ]);
+    const { svc } = makeSvc((id) => table.get(id));
+
+    const r = svc.equip(player, 0, EQUIP_SLOT);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_nMaxHp, player.getMaxHp(), 'cached max tracks derived max');
+    assert.equal(player.m_nMaxHp, before + 500, '+HP_MAX flat bonus reflected in cache');
+  });
+
+  it('lowers cached m_nMaxHp + clamps current HP down on unequip of +HP gear', () => {
+    // Unequip +HP gear: cached max must drop and current HP clamp to it, so a
+    // full-heal before the next recovery tick cannot refill over the new max.
+    const RING = 6000, HP_MAX = 35, EQUIP_SLOT = 10;
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const table = new Map<number, ItemDefinition>([
+      [RING, { id: RING, name: 'HP Ring', name_id: 'ITEM_R', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: EQUIP_SLOT, effects: [{ dst: HP_MAX, adj: 500 }] }],
+    ]);
+    const { svc } = makeSvc((id) => table.get(id));
+    player.m_Inventory[0] = { itemId: RING, count: 1 };
+    svc.equip(player, 0, EQUIP_SLOT);
+    player.m_nHp = player.m_nMaxHp; // full on the buffed bar
+
+    const r = svc.unequip(player, EQUIP_SLOT);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_nMaxHp, player.getMaxHp(), 'cached max tracks derived max after unequip');
+    assert.ok(player.m_nHp <= player.m_nMaxHp, 'current HP clamped to the lowered max');
+  });
 });

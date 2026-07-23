@@ -75,16 +75,23 @@ packages/
       services/
       compose.ts
       index.ts
-  world-server/       ← Gameplay (port 38180)
+  world-server/       ← Gameplay entry point (port 38180) — composes domain packages
     src/
-      handlers/
-      services/
-      managers/       ← zone.manager.ts, object.manager.ts, spawn.manager.ts
-      entities/       ← player.ts, mover.ts, npc.ts, item.ts
-      systems/        ← combat.system.ts, ai.system.ts, movement.system.ts
       ipc/            ← clusterListener.ts
-      compose.ts
+      compose.ts      ← wires @flyff/combat, inventory, skills, quest, npc into the tick
       index.ts
+  gateway/            ← @flyff/gateway — unified WebSocket server (auth+select+world, one process)
+
+  # ── Shared world layers (used by world-server + domain packages) ──
+  entities/           ← @flyff/entities — CPlayer/CMover, slot/exp/vital math, authority constants
+  world-core/         ← @flyff/world-core — Player/Zone/Spawn managers + QuestHooks seam
+
+  # ── Domain packages (carved out of world-server) ──
+  combat/             ← @flyff/combat — damage formulas, melee/skill pipeline, AI FSM, handlers
+  inventory/          ← @flyff/inventory — item/bag/equip/consume/drop/loot, ItemManager, ground items
+  skills/             ← @flyff/skills — skill cast + learn services, handlers
+  quest/              ← @flyff/quest — quest conditions/rewards, QuestTrackerSystem (QuestHooks impl)
+  npc/                ← @flyff/npc — dialog/script/shop/bank/target/vicinity/mapKey services, handlers
   database/           ← @flyff/database
     src/
       repositories/   ← account.repo.ts, character.repo.ts, inventory.repo.ts

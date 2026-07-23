@@ -151,15 +151,26 @@ export class EquipService {
   }
 
   /**
-   * Clamp current HP/MP/FP to the new derived maxes after an equip swap. Only
-   * pushes `SETPOINTPARAM` for a vital when it was clamped DOWN (current exceeded
-   * the new max -- e.g. unequipping +HP gear). Rising maxes need no sync; the
-   * client recomputes its own displayed max from stats and regen fills upward.
+   * Refresh the cached `m_nMax*` vitals from the new DST-adjusted maxes after an
+   * equip swap, then clamp current HP/MP/FP. Only pushes `SETPOINTPARAM` for a
+   * vital when it was clamped DOWN (current exceeded the new max -- e.g.
+   * unequipping +HP gear). Rising maxes need no sync; the client recomputes its
+   * own displayed max from stats and regen fills upward.
+   *
+   * The write-back is load-bearing: consumers that read the CACHED `m_nMaxHp`
+   * (consumable heal, quest/combat full-heal) would otherwise cap against a
+   * stale ceiling until the next recovery tick recomputes it (~3 s window) --
+   * e.g. an HP potion after equipping +HP gear filling only to the old max, or a
+   * full-heal after unequipping +HP gear refilling over the new max. Mirrors
+   * `StatService.applyStatPoints`, which refreshes the same fields on allocate.
    */
   private clampVitals(player: CPlayer): void {
     const maxHp = player.getMaxHp();
     const maxMp = player.getMaxMp();
     const maxFp = player.getMaxFp();
+    player.m_nMaxHp = maxHp;
+    player.m_nMaxMp = maxMp;
+    player.m_nMaxFp = maxFp;
     if (player.m_nHp > maxHp) { player.m_nHp = maxHp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, maxHp)); }
     if (player.m_nMp > maxMp) { player.m_nMp = maxMp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, maxMp)); }
     if (player.m_nFp > maxFp) { player.m_nFp = maxFp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, maxFp)); }

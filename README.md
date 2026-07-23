@@ -18,29 +18,54 @@
 - **Crash-Proof Persistence** — Hybrid WAL pattern: SQLite WAL journal (0-latency) + Knex main DB sync
 - **Multi-Database** — Knex.js supports SQLite3 (dev), PostgreSQL, and MySQL/MariaDB (production)
 - **Clean Architecture** — strict `Handler → Service → Repository` separation
-- **Fully Agentic** — 7 specialized Claude sub-agents and 4 lifecycle hooks for autonomous development
+- **Domain packages** — world gameplay split into independent `@flyff/*` packages (combat, inventory, skills, quest, npc)
+- **Fully Agentic** — specialized Claude sub-agents and lifecycle hooks for autonomous development
 
 ---
 
 ## 📁 Project Structure
 
+The monorepo splits into three tiers: **shared infrastructure**, **domain packages**
+(carved out of the world server), and **server entry points**.
+
 ```text
 packages/
-  core/               @flyff/core     — Shared: packet protocol, constants, cache, logger, errors
-  ipc/                @flyff/ipc      — Secure inter-server IPC (HMAC pub/sub + TLS TCP)
-  database/           @flyff/database — Knex migrations, repositories, WAL journal
+  # ── Shared infrastructure ──────────────────────────────────────────────
+  core/               @flyff/core       — Packet protocol, constants, cache, logger, errors, event bus
+  ipc/                @flyff/ipc        — Secure inter-server IPC (HMAC pub/sub + TLS TCP)
+  database/           @flyff/database   — Knex migrations, repositories, WAL journal
+  resources/          @flyff/resources  — propItem/propMover/propSkill loaders and parsers
+
+  # ── Shared world layers ────────────────────────────────────────────────
+  entities/           @flyff/entities   — CPlayer/CMover, slot/exp/vital math, authority constants
+  world-core/         @flyff/world-core — Player/Zone/Spawn managers + QuestHooks seam
+
+  # ── Domain packages (carved out of world-server) ───────────────────────
+  combat/             @flyff/combat     — Damage formulas, melee/skill pipeline, AI FSM
+  inventory/          @flyff/inventory  — Item/bag/equip/consume/drop/loot, ItemManager, ground items
+  skills/             @flyff/skills     — Skill cast + learn services
+  quest/              @flyff/quest      — Quest conditions/rewards, QuestTrackerSystem
+  npc/                @flyff/npc        — Dialog/script/shop/bank/target/vicinity/mapKey services
+
+  # ── Server entry points ────────────────────────────────────────────────
   login-server/       @flyff/login-server    — Auth + server list (port 23000)
   cluster-server/     @flyff/cluster-server  — Character select/create (port 38100)
-  world-server/       @flyff/world-server    — Gameplay, AI, zones (port 38180)
-resources/            @flyff/resources — propItem/propMover/propSkill loaders and parsers
+  world-server/       @flyff/world-server    — Gameplay loop; composes the domain packages (port 38180)
+  gateway/            @flyff/gateway    — Unified WebSocket server: auth + select + world in one process
 tools/                Dev tools: packet sniffer, resource inspector
 scripts/              Agent and dev helper scripts
 .claude/
-  agents/             7 specialized sub-agents (architect, implementor, researcher, ...)
-  hooks/              4 lifecycle hooks (safety guard, checkpointing, test reminder)
-  skills/             18 context-aware knowledge skills
+  agents/             Specialized sub-agents (architect, implementor, researcher, ...)
+  hooks/              Lifecycle hooks (safety guard, checkpointing, test reminder)
+  skills/             Context-aware knowledge skills
   state/SESSION.md    Persistent agent session checkpoint
 ```
+
+> **Domain-package refactor:** the world server was decomposed from one monolith
+> into focused `@flyff/*` domain packages (`combat`, `inventory`, `skills`,
+> `quest`, `npc`) sitting on shared `entities` + `world-core` layers.
+> `@flyff/world-server` now wires these together via its `compose.ts` root rather
+> than owning the logic directly.
 
 ---
 
@@ -101,6 +126,15 @@ Or with Docker Compose (Redis + PostgreSQL included):
 
 ```bash
 docker compose up
+```
+
+#### Alternative: unified gateway (single process)
+
+`@flyff/gateway` runs auth, character select, and world in **one WebSocket
+process** — handy for local testing without the three-server split or Redis IPC:
+
+```bash
+pnpm --filter @flyff/gateway dev
 ```
 
 ---
