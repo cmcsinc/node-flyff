@@ -28,9 +28,9 @@ import { SessionState } from '@flyff/core/constants/sessionState';
 import { createLogger } from '@flyff/core/logger';
 import type { JoinService } from '../services/join.service';
 import type { PlayerSnapshotSerializer } from '../net/snapshot/playerSnapshot.serializer';
-import type { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer';
+import type { SetExperienceSerializer } from '@flyff/combat';
 import type { TaskBarSnapshotSerializer } from '../net/snapshot/taskbar.serializer';
-import { cumulativeExp } from '../combat/formulas';
+import { cumulativeExp } from '@flyff/combat';
 
 const logger = createLogger({ module: 'join-handler' });
 

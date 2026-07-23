@@ -6,7 +6,7 @@ import { PacketBuffer } from '@flyff/core/net/PacketBuffer';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { JoinHandler } from '../../src/handlers/join.handler';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer';
-import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer';
+import { SetExperienceSerializer } from '@flyff/combat';
 import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer';
 import type { JoinService, JoinOutcome } from '../../src/services/join.service';
 import { CPlayer } from '@flyff/entities';

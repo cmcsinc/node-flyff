@@ -24,7 +24,7 @@ import type { Vec3 } from '@flyff/entities';
 import type { CPlayer } from '@flyff/entities';
 import {
   DestPosSerializer, type DestPosFrame,
-} from '../net/snapshot/destPos.serializer';
+} from '@flyff/combat';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 
 export interface SnapshotServiceDeps {

@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/managers/*.ts', 'src/quest-hooks.ts', 'src/snapshot-constants.ts'],
+  entry: ['src/index.ts', 'src/managers/*.ts', 'src/quest-hooks.ts', 'src/snapshot-constants.ts', 'src/serializers/*.ts'],
   format: ['esm'],
   target: 'node20',
   platform: 'node',

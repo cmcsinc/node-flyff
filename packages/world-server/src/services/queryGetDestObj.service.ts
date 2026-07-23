@@ -20,7 +20,7 @@
 
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
-import type { DestObjSerializer } from '../net/snapshot/destObj.serializer';
+import type { DestObjSerializer } from '@flyff/combat';
 import { NULL_ID } from '@flyff/world-core';
 
 export interface QueryGetDestObjOutcome {

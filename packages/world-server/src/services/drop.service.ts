@@ -21,7 +21,7 @@ import type { ResourceIndex } from '@flyff/resources';
 import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
 import type { ItemManager } from '../managers/item.manager';
-import type { Rng } from '../combat/formulas';
+import type { Rng } from '@flyff/combat';
 import { NULL_ID } from '../entities/item';
 
 export interface DropServiceDeps {

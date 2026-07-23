@@ -31,7 +31,7 @@ import type { GetPosHandler } from './handlers/getPos.handler';
 import type { ScriptDlgHandler } from './handlers/scriptDlg.handler';
 import type { RevivalHandler } from './handlers/revival.handler';
 import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler';
-import type { MeleeAttackHandler } from './handlers/meleeAttack.handler';
+import type { MeleeAttackHandler } from '@flyff/combat';
 import type { UseSkillHandler } from './handlers/useSkill.handler';
 import type { DoUseSkillPointHandler } from './handlers/doUseSkillPoint.handler';
 import type { ModifyStatusHandler } from './handlers/modifyStatus.handler';
