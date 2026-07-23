@@ -23,8 +23,8 @@ declares a feature fixed by testing on a real v15 client.
 - [x] ✅ Block factor (NPC + player defender) — `formulas.ts:285`
 - [x] ✅ DEF subtract, element factor, level-diff falloff — `formulas.ts:200,252,212`
 - [x] ✅ ATK from weapon + DST_CHR_DMG/ATKPOWER/ATKPOWER_RATE + refine — `formulas.ts:115`
-- [ ] 🟡 Equip→stat projection — element string→enum, refine encoding, jewelry HR/ER, per-weapon-type atkSpeed table — `equipStats.ts:13`
-- [ ] 🟡 Targeting policy — `MI_CHAOGUARDIAN` inverse + flying-mismatch branch — `combat.policy.ts:13`
+- [ ] 🟡→impl Equip→stat projection — element string→enum (`elementFromName`) added; refine→option decode, jewelry HR/ER, atkSpeed (raw dwAttackSpeed; no per-type table in C++) already correct. Build+tests green, awaiting user test — `equipStats.ts`
+- [ ] 🟡→impl Targeting policy — `MI_CHAOGUARDIAN` inverse (`m_bChaoGuard`) added alongside `RANK_GUARD`. Build+tests green, awaiting user test. (flying-mismatch deferred — no mount/flight subsystem exists) — `combat.policy.ts`
 
 ### Ranged / bow
 - [x] ✅ Bow damage curve (STR/DEX) — `formulas.ts:109`
