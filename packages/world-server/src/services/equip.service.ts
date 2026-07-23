@@ -43,10 +43,11 @@ export class EquipService {
   constructor(private readonly deps: EquipServiceDeps) {}
 
   /**
-   * Equip the item in main-bag `invSlot`. `parts` comes from the client
-   * (DOEQUIP nPart) -- it MUST match the item's own `equip_slot`, else reject
-   * (anti-cheat). Swaps the equipped item back into `invSlot` if the slot was
-   * occupied. Returns the parts for the DOEQUIP broadcast.
+   * Equip the item in main-bag `invSlot` into its own `equip_slot`
+   * (server-authoritative). `parts` is the client nPart -- advisory only (-1 for
+   * double-click/drag-drop); the server always uses the prop's slot so a lagging
+   * client claim (e.g. fashion dwParts remap) can't misroute the equip. Swaps the
+   * previously-equipped item back into `invSlot` if the slot was occupied.
    */
   equip(player: CPlayer, invSlot: number, parts: number): EquipResult {
     if (!this.inMainBag(invSlot)) return { ok: false, reason: 'invalid' };
@@ -55,11 +56,14 @@ export class EquipService {
     const prop = this.deps.getItem(item.itemId);
     const equipSlot = prop?.equip_slot;
     if (!equipSlot || equipSlot < 0 || equipSlot >= MAX_HUMAN_PARTS) return { ok: false, reason: 'not_equippable' };
-    // Client sends nPart = -1 for the normal equip UX (double-click / drag-drop;
-    // `SendDoEquip` default arg, DPClient.cpp:9141). C++ `DoUseEquipmentItem`
-    // resolves the slot from `pItemProp->dwParts` when nPart == -1 (MoverEquip.cpp
-    // :2599). Any explicit nPart must equal the item's own slot (anti-cheat).
-    if (parts !== -1 && parts !== equipSlot) return { ok: false, reason: 'not_equippable' };
+    // The server is authoritative for the destination slot: always the item's own
+    // `equip_slot` (propItem dwParts). The client `nPart` is advisory -- it is -1
+    // for the normal equip UX (double-click / drag-drop, `SendDoEquip` default
+    // arg, DPClient.cpp:9141) and may lag the server's data for fashion items
+    // whose raw dwParts was remapped to the fashion window (PARTS_HAT=26 etc.).
+    // Treating client nPart as authoritative would reject those equips; the item
+    // always lands in its real (server-defined) slot, which is the anti-cheat.
+    void parts;
     if (equipSlot === PARTS_RIDE) return { ok: false, reason: 'restricted' };
     if (prop.level_req && player.m_nLevel < prop.level_req) return { ok: false, reason: 'restricted' };
 

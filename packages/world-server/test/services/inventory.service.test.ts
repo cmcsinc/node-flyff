@@ -206,6 +206,8 @@ describe('InventoryService -- moveItem / dropItem / dropGold', () => {
     if (r.ok) {
       assert.equal(r.count, 4);
       assert.equal(r.itemId, 2001);
+      assert.equal(r.slot, 0);
+      assert.equal(r.remaining, 6, 'remaining = post-drop stack count');
     }
     assert.equal(player.m_Inventory[0]!.count, 6, 'remainder stays in bag');
   });
@@ -219,6 +221,7 @@ describe('InventoryService -- moveItem / dropItem / dropGold', () => {
     const r = svc.dropItem(player, 0, 3, { x: 0, y: 0, z: 0 });
 
     assert.equal(r.ok, true);
+    if (r.ok) assert.equal(r.remaining, 0, 'full drop leaves 0 behind');
     assert.equal(player.m_Inventory[0], null);
     assert.equal(ctx.removed[0], 0, 'row removed from DB');
   });

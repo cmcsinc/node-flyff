@@ -3,9 +3,14 @@
  *
  * `CDPSrvr::OnDropItem` (`DPSrvr.cpp:813`): `DWORD dwItemType, DWORD dwItemId,
  * short nDropNum, D3DXVECTOR3 vPos(3 floats)`. `dwItemId` is the inventory
- * elem's objid -- in our model the elem objid IS its slot index. Removes the
- * count from the bag and spawns a ground pile at `vPos` (ADD_OBJ vicinity).
- * The client drops optimistically; the pile broadcast reaches the dropper too.
+ * elem's STABLE `m_dwObjId` (set at JOIN/pickup, preserved across move) -- NOT
+ * the current slot, so resolve via `findSlotByObjId` (mirrors DOEQUIP /
+ * DOUSEITEM; treating it as a slot removes the wrong slot after any MOVEITEM).
+ * Removes the count from the bag, spawns a ground pile at `vPos` (ADD_OBJ
+ * vicinity), AND echoes UPDATE_ITEM with the post-drop count so the client
+ * clears the slot -- the client spawns the pile on the ADD_OBJ broadcast but
+ * does NOT remove the inventory item optimistically, so omitting the echo
+ * leaves the slot populated client-side = item dupe.
  *
  * @module handlers/dropItem
  */
@@ -19,6 +24,7 @@ import { createLogger } from '@flyff/core/logger.js';
 import type { PlayerManager } from '../managers/player.manager.js';
 import type { ItemManager } from '../managers/item.manager.js';
 import type { InventoryService } from '../services/inventory.service.js';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
 
 const logger = createLogger({ module: 'dropItem-handler' });
 
@@ -38,7 +44,7 @@ export class DropItemHandler {
 
     try {
       reader.readDword();                        // dwItemType -- unused
-      const dwItemId = reader.readDword();       // inv elem objid (= slot index)
+      const dwItemId = reader.readDword();       // inv elem m_dwObjId (stable)
       const nDropNum = reader.readWord();
       const x = reader.readFloat();
       const y = reader.readFloat();
@@ -46,8 +52,11 @@ export class DropItemHandler {
       Validate.dword(dwItemId);
       Validate.pos(x, y, z);
 
-      const r = this.deps.inventoryService.dropItem(player, dwItemId, nDropNum, { x, y, z });
-      if (!r.ok) { logger.debug({ charId: player.m_idPlayer, dwItemId }, 'DROPITEM rejected'); return; }
+      const slot = player.findSlotByObjId(dwItemId);
+      if (slot < 0) { logger.debug({ charId: player.m_idPlayer, dwItemId }, 'DROPITEM item not found by objid'); return; }
+
+      const r = this.deps.inventoryService.dropItem(player, slot, nDropNum, { x, y, z });
+      if (!r.ok) { logger.debug({ charId: player.m_idPlayer, dwItemId, slot }, 'DROPITEM rejected'); return; }
 
       this.deps.itemManager.spawn({
         itemId: r.itemId,
@@ -56,6 +65,9 @@ export class DropItemHandler {
         pos: r.pos,
         zoneId: player.m_nZoneId,
       });
+      // Echo the post-drop count so the client clears the slot (0 => removed).
+      // Without this the pile spawns but the inventory item stays = dupe.
+      this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, r.slot, r.remaining));
     } catch (error) {
       if (error instanceof PacketError) {
         logger.warn({ err: error, charId: player.m_idPlayer }, 'DROPITEM parse failed');

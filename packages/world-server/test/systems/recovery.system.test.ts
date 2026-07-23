@@ -59,16 +59,19 @@ describe('RecoverySystem', () => {
   });
 
   it('clamps HP/MP/FP at their max (no overheal)', () => {
-    const player = CPlayer.fromRow(makeRow({ hp: 200, mp: 100, max_hp: 200, max_mp: 100 }), { write: () => true });
-    const { mgr, sent } = fakeManager(player);
+    // Max HP/MP are formula-derived (ignores the DB max_hp/max_mp cache).
+    // Start vitals above their ceiling and confirm one tick clamps them down.
+    const player = CPlayer.fromRow(makeRow({ hp: 9999, mp: 9999 }), { write: () => true });
+    player.m_nFp = 9999;
+    const { mgr } = fakeManager(player);
     const sys = new RecoverySystem({ playerManager: mgr });
 
     sys.tick(1000);
 
-    assert.equal(player.m_nHp, 200);
-    assert.equal(player.m_nMp, 100);
-    // Already at max -> no SETPOINTPARAM for HP/MP (FP still rises from 0).
-    assert.ok(sent.every((s) => s.param === DST_FP), 'only FP changed');
+    assert.equal(player.m_nHp, player.m_nMaxHp);
+    assert.equal(player.m_nMp, player.m_nMaxMp);
+    assert.equal(player.m_nFp, player.m_nMaxFp);
+    assert.ok(player.m_nMaxHp > 100, 'max HP is the formula value, not the stale DB cache');
   });
 
   it('does not regenerate within the 10 s combat gate after damage', () => {

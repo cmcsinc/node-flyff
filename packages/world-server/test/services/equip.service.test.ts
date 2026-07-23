@@ -111,16 +111,22 @@ describe('EquipService.equip', () => {
     if (!r.ok) assert.equal(r.reason, 'restricted');
   });
 
-  it('rejects when parts does not match the item equip_slot (anti-cheat)', () => {
+  it('equips at the prop equip_slot regardless of client nPart (server-authoritative)', () => {
+    // Client nPart is advisory -- the server always uses the item's own slot, so
+    // a lagging claim (e.g. fashion dwParts remap PARTS_CAP->PARTS_HAT) can't
+    // misroute or reject the equip. Client claims UPPER_BODY(2); item is LWEAPON.
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_Inventory[0] = { itemId: 5000, count: 1 };
     const table = new Map<number, ItemDefinition>([
       [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 9 }],
     ]);
     const { svc } = makeSvc((id) => table.get(id));
-    const r = svc.equip(player, 0, 2); // claim UPPER_BODY but item is LWEAPON
-    assert.equal(r.ok, false);
-    if (!r.ok) assert.equal(r.reason, 'not_equippable');
+    const r = svc.equip(player, 0, 2);
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.parts, 9, 'equipped at the real slot, not the client claim');
+      assert.equal(player.m_Inventory[MAX_INVENTORY + 9]!.itemId, 5000);
+    }
   });
 
   it('rejects out-of-range invSlot and parts', () => {

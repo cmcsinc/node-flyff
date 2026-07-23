@@ -123,10 +123,22 @@ export class ShopService {
   sell(player: CPlayer, nId: number, nNum: number): SellResult {
     const vendor = this.tradeVendor(player);
     if (!vendor) return { ok: false, reason: 'no_vendor' };
-    if (!Number.isInteger(nId) || nId < 0 || nId >= MAX_INVENTORY || nNum <= 0 || !Number.isInteger(nNum)) {
+    if (!Number.isInteger(nId) || nId < 0 || nNum <= 0 || !Number.isInteger(nNum)) {
       return { ok: false, reason: 'invalid' };
     }
-    const src = player.m_Inventory[nId];
+    // Wire `nId` is the item's STABLE m_dwObjId (client `WndShop.cpp:244` sends
+    // `m_pItemElem->m_dwObjId`), NOT a slot. Items move between slots on
+    // equip/unequip/move, so resolve objid -> current slot via scan -- mirrors
+    // C++ `GetAtId(nId)` over the stable m_apItem[objid] array (Item.h:515).
+    // Treating nId as a slot breaks after the first move/equip (sell rejects
+    // with `empty` on a visible, occupied item). Same trap as DOEQUIP/DOUSEITEM.
+    const slot = player.findSlotByObjId(nId);
+    if (slot < 0) return { ok: false, reason: 'empty' };
+    // C++ blocks equipped items (IsEquip -> TID_GAME_EQUIPTRADE, DPSrvr.cpp:3103).
+    // findSlotByObjId scans the full 73-slot range (bag + equip parts), so gate
+    // equip slots (>= MAX_INVENTORY) here.
+    if (slot >= MAX_INVENTORY) return { ok: false, reason: 'unsellable' };
+    const src = player.m_Inventory[slot]!;
     if (!src) return { ok: false, reason: 'empty' };
 
     const def = this.deps.getItem(src.itemId);
@@ -134,9 +146,9 @@ export class ShopService {
 
     const take = Math.min(nNum, src.count);
     const gain = Math.floor((def?.price ?? 0) / 4) * take;
-    const after = this.deps.inventoryService.consume(player, nId, take);
+    const after = this.deps.inventoryService.consume(player, slot, take);
     this.deps.inventoryService.addGold(player, gain);
-    return { ok: true, slot: nId, itemId: src.itemId, remaining: after?.count ?? 0, gold: player.m_nGold };
+    return { ok: true, slot, itemId: src.itemId, remaining: after?.count ?? 0, gold: player.m_nGold };
   }
 
   /** Resolve + validate the player's current trade vendor (m_idOther). */

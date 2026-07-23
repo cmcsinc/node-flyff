@@ -49,7 +49,7 @@ export type MoveItemResult =
   | { ok: false; reason: 'invalid' };
 
 export type DropItemResult =
-  | { ok: true; itemId: number; count: number; pos: Vec3 }
+  | { ok: true; slot: number; itemId: number; count: number; remaining: number; pos: Vec3 }
   | { ok: false; reason: 'invalid' };
 
 export type DropGoldResult =
@@ -119,6 +119,7 @@ export class InventoryService {
     const s = player.m_Inventory[slot];
     if (!s || count <= 0) return { ok: false, reason: 'invalid' };
     const take = Math.min(count, s.count);
+    const remaining = s.count - take;
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'ITEM_DROP', payload: { slot, itemId: s.itemId, take } });
     if (take >= s.count) {
       player.m_Inventory[slot] = null;
@@ -130,7 +131,7 @@ export class InventoryService {
       this.persist(player, slot, s);
     }
     player._dirty.add('m_Inventory');
-    return { ok: true, itemId: s.itemId, count: take, pos };
+    return { ok: true, slot, itemId: s.itemId, count: take, remaining, pos };
   }
 
   /**

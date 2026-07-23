@@ -244,6 +244,7 @@ describe('SkillService.cast (heal)', () => {
 
   it('clamps heal to maxHp', () => {
     const p = CPlayer.fromRow(makeRow({ hp: 95, max_hp: 100, mp: 50, max_mp: 100 }), makeSocket());
+    p.m_nMaxHp = 100; // formula-derived in fromRow; pin to the test's ceiling
     p.hydrateSkills([{ slot: 0, skillId: 44, level: 1 }]);
     const m = makeService(new Map([[44, healSkill()]]), p);
     m.service.cast(p, { wId: 0, objid: p.m_idPlayer, useType: 0 });

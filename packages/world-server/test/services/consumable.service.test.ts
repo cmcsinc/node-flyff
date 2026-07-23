@@ -35,6 +35,9 @@ function makeSvc() {
 describe('ConsumableService.apply', () => {
   it('restores HP/MP/FP and consumes one charge', () => {
     const player = CPlayer.fromRow(makeRow({ hp: 50, mp: 40 }), { write: () => true });
+    // Max HP/MP are formula-derived in fromRow; pin to the test's ceiling.
+    player.m_nMaxHp = 200;
+    player.m_nMaxMp = 100;
     player.m_nFp = 10;
     player.m_nMaxFp = 100;
     const { svc, getConsumed } = makeSvc();
@@ -59,6 +62,7 @@ describe('ConsumableService.apply', () => {
 
   it('clamps HP at max_hp (no overheal)', () => {
     const player = CPlayer.fromRow(makeRow({ hp: 180, max_hp: 200 }), { write: () => true });
+    player.m_nMaxHp = 200;
     const { svc } = makeSvc();
     const prop: ItemDefinition = {
       id: 1, name: 'Potion', name_id: 'ITEM_P', stack_size: 1, weight: 1,
