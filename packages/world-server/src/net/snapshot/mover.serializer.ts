@@ -24,7 +24,7 @@ import {
   MAX_HONOR_TITLE, MAX_INVENTORY, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
 } from '@flyff/world-core';
 import { writeQuestStruct } from './quest.serializer';
-import { writeCItemElemBody } from './itemElemBody.serializer';
+import { writeCItemElemBody } from '@flyff/world-core';
 import type { InventorySlot } from '@flyff/entities';
 
 const NULL_ID = 0xffffffff;

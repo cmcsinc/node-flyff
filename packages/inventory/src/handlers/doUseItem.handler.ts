@@ -23,7 +23,7 @@ import type { ZoneManager } from '@flyff/world-core';
 import type { UseItemService } from '../services/useItem.service';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
-import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer';
+import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '@flyff/world-core';
 import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
 
 const logger = createLogger({ module: 'doUseItem-handler' });

@@ -16,7 +16,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
-import { writeCItemElemBody } from '../../../src/net/snapshot/itemElemBody.serializer';
+import { writeCItemElemBody } from '../src/serializers/itemElemBody.serializer';
 import type { InventorySlot } from '@flyff/entities';
 
 describe('writeCItemElemBody', () => {

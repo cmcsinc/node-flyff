@@ -28,13 +28,13 @@ import { dropsFor } from '@flyff/resources';
 import type { QuestRepository } from '@flyff/database';
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
-import type { InventoryService } from '../services/inventory.service';
+import type { InventoryService } from '@flyff/inventory';
 import type { Rng } from '@flyff/combat';
 import { xRandomRng } from '@flyff/combat';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import { buildSetQuest, buildQuestTextTime } from '../net/snapshot/quest.serializer';
-import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
+import { CreateItemSnapshotSerializer } from '@flyff/inventory';
+import { buildUpdateItemCount } from '@flyff/inventory';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'quest-tracker' });

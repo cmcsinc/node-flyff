@@ -24,7 +24,7 @@ import type { PlayerManager } from '@flyff/world-core';
 import type { CombatService } from '@flyff/combat';
 import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
 import { DoUseSkillPointSerializer } from '@flyff/world-core';
-import { buildSetPointParam, DST_MP, DST_FP, DST_HP } from '../net/snapshot/pointParam.serializer';
+import { buildSetPointParam, DST_MP, DST_FP, DST_HP } from '@flyff/world-core';
 import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 

@@ -31,7 +31,7 @@ import {
 } from '../net/snapshot/moverBroadcast.serializer';
 import { DestObjSerializer } from '@flyff/combat';
 import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
-import type { LootService } from './loot.service';
+import type { LootService } from '@flyff/inventory';
 
 export interface MovementServiceDeps {
   zoneManager: ZoneManager;

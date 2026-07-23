@@ -18,11 +18,11 @@
  * @module services/questInventory
  */
 
-import type { InventoryService } from './inventory.service';
+import type { InventoryService } from '@flyff/inventory';
 import type { CPlayer } from '@flyff/entities';
 import { MAX_INVENTORY } from '@flyff/world-core';
-import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
+import { CreateItemSnapshotSerializer } from '@flyff/inventory';
+import { buildUpdateItemCount } from '@flyff/inventory';
 import type { InventoryOps } from './questConditions';
 
 /** Quest-side inventory: evaluator reads + reward grantor writes. */

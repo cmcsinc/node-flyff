@@ -28,7 +28,9 @@
       "@flyff/world-core": ["packages/world-core/src/index.ts"],
       "@flyff/world-core/*": ["packages/world-core/src/*"],
       "@flyff/combat": ["packages/combat/src/index.ts"],
-      "@flyff/combat/*": ["packages/combat/src/*"]
+      "@flyff/combat/*": ["packages/combat/src/*"],
+      "@flyff/inventory": ["packages/inventory/src/index.ts"],
+      "@flyff/inventory/*": ["packages/inventory/src/*"]
     }
   }
 }

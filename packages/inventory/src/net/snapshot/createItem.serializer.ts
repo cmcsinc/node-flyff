@@ -26,7 +26,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import { NULL_ID, SNAPSHOTTYPE_CREATEITEM } from '@flyff/world-core';
-import { writeCItemElemBody } from './itemElemBody.serializer';
+import { writeCItemElemBody } from '@flyff/world-core';
 
 /** One slot this snapshot announces. */
 export interface CreateItemEntry {

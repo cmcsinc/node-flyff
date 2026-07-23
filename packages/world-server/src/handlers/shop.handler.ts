@@ -26,9 +26,9 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ShopService } from '../services/shop.service';
 import { buildOpenShopWnd } from '../net/snapshot/shop.serializer';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
-import { buildSetPointParam, DST_GOLD } from '../net/snapshot/pointParam.serializer';
-import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
+import { buildUpdateItemCount } from '@flyff/inventory';
+import { buildSetPointParam, DST_GOLD } from '@flyff/world-core';
+import { CreateItemSnapshotSerializer } from '@flyff/inventory';
 
 const logger = createLogger({ module: 'shop-handler' });
 

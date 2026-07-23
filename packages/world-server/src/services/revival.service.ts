@@ -38,7 +38,7 @@ import {
   SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,
 } from '@flyff/world-core';
 import { MoverDeathSerializer } from '@flyff/combat';
-import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';
+import { ActMsgSerializer } from '@flyff/inventory';
 import { RevivalSerializer } from '../net/snapshot/revival.serializer';
 import { SetExperienceSerializer } from '@flyff/combat';
 import { SetPosSerializer } from '../net/snapshot/setPos.serializer';

@@ -57,7 +57,7 @@ import type { GroundItem } from '../../entities/item';
 import {
   SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_DEL_OBJ, OT_ITEM,
 } from '@flyff/world-core';
-import { writeCItemElemBody } from './itemElemBody.serializer';
+import { writeCItemElemBody } from '@flyff/world-core';
 
 export class ItemSnapshotSerializer {
   /** Build the SNAPSHOT/ADD_OBJ payload for a batch of ground items. */

@@ -46,7 +46,8 @@
     "pino": "^10.3.1",
     "@flyff/entities": "workspace:*",
     "@flyff/world-core": "workspace:*",
-    "@flyff/combat": "workspace:*"
+    "@flyff/combat": "workspace:*",
+    "@flyff/inventory": "workspace:*"
   },
   "devDependencies": {
     "@flyff/cluster-server": "workspace:*",
