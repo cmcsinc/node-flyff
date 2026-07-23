@@ -33,8 +33,10 @@ The Feature Implementation Workflow describes the development pipeline: research
    - Fix MEDIUM issues when possible
 
 4. **Commit & Push**
+   - **Create a branch before any work** — never commit to `master` (see [git-workflow.md](./git-workflow.md) → Branch-First Workflow)
    - Detailed commit messages
    - Follow conventional commits format
+   - Open a PR on GitHub when the work is ready for review
    - See [git-workflow.md](./git-workflow.md) for commit message format and PR process
 
 5. **Pre-Review Checks**
