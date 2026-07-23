@@ -19,8 +19,8 @@
  * @module net/snapshot/scriptDialog.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   NULL_ID,
   SNAPSHOTTYPE_RUNSCRIPTFUNC,
@@ -30,7 +30,7 @@ import {
   FUNCTYPE_REMOVEKEY,
   FUNCTYPE_REMOVEALLKEY,
   FUNCTYPE_EXIT,
-} from './constants.js';
+} from './constants';
 
 /** One queued dialog operation (the TypeScript mirror of a C++ `RunScriptFunc`). */
 export type ScriptFunc =

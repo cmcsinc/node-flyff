@@ -9,9 +9,27 @@
   "exports": {
     ".": "./dist/index.js"
   },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "target": "node20",
+    "platform": "node",
+    "sourcemap": true,
+    "clean": true,
+    "external": [
+      "@flyff/core",
+      "ioredis",
+      "zod",
+      "@flyff/*"
+    ]
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc -p tsconfig.json --watch",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "lint": "eslint src --ext .ts",
     "test": "tsx --test test/**/*.test.ts",
     "clean": "rm -rf dist"

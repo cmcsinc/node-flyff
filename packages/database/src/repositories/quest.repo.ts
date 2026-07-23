@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /** Active-quest row -- one per entry in the C++ `m_aQuest[]` array. */
 export interface CharacterQuestRow {

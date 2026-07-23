@@ -10,9 +10,9 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
-import type { Knex } from '../../src/types.js';
-import { BankRepository } from '../../src/repositories/bank.repo.js';
-import { applyAllMigrations } from '../migrateAll.js';
+import type { Knex } from '../../src/types';
+import { BankRepository } from '../../src/repositories/bank.repo';
+import { applyAllMigrations } from '../migrateAll';
 
 const knex = (knexModule as any).default || knexModule;
 

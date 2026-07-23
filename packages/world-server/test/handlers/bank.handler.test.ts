@@ -8,14 +8,14 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { BankHandler } from '../../src/handlers/bank.handler.js';
-import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { BankService } from '../../src/services/bank.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { BankHandler } from '../../src/handlers/bank.handler';
+import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import type { CPlayer } from '../../src/entities/player';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { BankService } from '../../src/services/bank.service';
 
 function mockSocket() {
   return { session: { state: SessionState.IN_WORLD, charId: 42 }, write: () => true, destroy: () => {} } as never;

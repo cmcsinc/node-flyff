@@ -7,7 +7,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 
-import { deepMerge } from '../../src/config/merge.js';
+import { deepMerge } from '../../src/config/merge';
 
 describe('deepMerge', () => {
   // -------------------------------------------------------------------------

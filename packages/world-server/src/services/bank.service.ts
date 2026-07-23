@@ -17,9 +17,9 @@
  */
 
 import type { BankRepository, InventoryRepository, Journal } from '@flyff/database';
-import { createLogger } from '@flyff/core/logger.js';
-import type { CPlayer, InventorySlot } from '../entities/player.js';
-import { MAX_INVENTORY, BANK_SLOTS, MAX_BANK_TABS } from '../net/snapshot/constants.js';
+import { createLogger } from '@flyff/core/logger';
+import type { CPlayer, InventorySlot } from '../entities/player';
+import { MAX_INVENTORY, BANK_SLOTS, MAX_BANK_TABS } from '../net/snapshot/constants';
 
 const logger = createLogger({ module: 'bank-service' });
 

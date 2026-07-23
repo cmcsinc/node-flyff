@@ -13,7 +13,7 @@
  */
 
 import type { Redis } from 'ioredis';
-import type { ICacheAdapter } from './ICacheAdapter.js';
+import type { ICacheAdapter } from './ICacheAdapter';
 
 export class RedisCache implements ICacheAdapter {
   private readonly redis: Redis;

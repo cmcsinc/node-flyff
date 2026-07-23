@@ -12,16 +12,16 @@
  */
 
 import type { Socket } from 'node:net';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { sendPacket } from '@flyff/core/net/dispatcher.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { CharListService } from '../services/charList.service.js';
-import type { CharCreateService } from '../services/charCreate.service.js';
-import type { CharSelectService } from '../services/charSelect.service.js';
-import type { PlayerListSerializer } from '../net/playerList.serializer.js';
-import type { AccountConnectionManager } from '../managers/accountConnection.manager.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { sendPacket } from '@flyff/core/net/dispatcher';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { createLogger } from '@flyff/core/logger';
+import type { CharListService } from '../services/charList.service';
+import type { CharCreateService } from '../services/charCreate.service';
+import type { CharSelectService } from '../services/charSelect.service';
+import type { PlayerListSerializer } from '../net/playerList.serializer';
+import type { AccountConnectionManager } from '../managers/accountConnection.manager';
 
 const logger = createLogger({ module: 'char-handler' });
 

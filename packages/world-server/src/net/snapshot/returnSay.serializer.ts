@@ -13,9 +13,9 @@
  * @module net/snapshot/returnSay.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from './constants';
 
 /** C++ ReturnFlag values (TextCmd_whisper:1276, 1284). */
 export const RETURN_SELF_TARGET = 2;

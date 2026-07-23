@@ -18,7 +18,7 @@
  * @module login-server/services/serverList.service
  */
 
-import type { ClusterRegistry, ClusterEntry } from '../ipc/clusterRegistry.js';
+import type { ClusterRegistry, ClusterEntry } from '../ipc/clusterRegistry';
 import type { ClusterEntrySchema } from '@flyff/core/config';
 import type { z } from 'zod';
 

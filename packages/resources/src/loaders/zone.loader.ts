@@ -10,10 +10,10 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import { createResourceLogger } from '../logger.js';
+import { createResourceLogger } from '../logger';
 import {
   ZoneDefinitionSchema,
-} from '../schemas/zone.schema.js';
+} from '../schemas/zone.schema';
 
 const logger = createResourceLogger('zone.loader');
 
@@ -22,13 +22,13 @@ const logger = createResourceLogger('zone.loader');
  */
 export interface ZoneIndex {
   /** Map of zone ID -> definition */
-  zones: Map<string, import('../schemas/zone.schema.js').ZoneDefinition>;
+  zones: Map<string, import('../schemas/zone.schema').ZoneDefinition>;
 
   /** Map of numeric ID -> definition */
-  byNumericId: Map<number, import('../schemas/zone.schema.js').ZoneDefinition>;
+  byNumericId: Map<number, import('../schemas/zone.schema').ZoneDefinition>;
 
   /** Map of world ID -> array of zones */
-  byWorld: Map<string, import('../schemas/zone.schema.js').ZoneDefinition[]>;
+  byWorld: Map<string, import('../schemas/zone.schema').ZoneDefinition[]>;
 }
 
 /**
@@ -45,9 +45,9 @@ export async function loadZones(dataDir: string): Promise<ZoneIndex> {
   const files = await readdir(zonesDir);
   const ymlFiles = files.filter((f) => f.endsWith('.yml'));
 
-  const zones = new Map<string, import('../schemas/zone.schema.js').ZoneDefinition>();
-  const byNumericId = new Map<number, import('../schemas/zone.schema.js').ZoneDefinition>();
-  const byWorld = new Map<string, import('../schemas/zone.schema.js').ZoneDefinition[]>();
+  const zones = new Map<string, import('../schemas/zone.schema').ZoneDefinition>();
+  const byNumericId = new Map<number, import('../schemas/zone.schema').ZoneDefinition>();
+  const byWorld = new Map<string, import('../schemas/zone.schema').ZoneDefinition[]>();
 
   for (const file of ymlFiles) {
     const filePath = resolve(zonesDir, file);

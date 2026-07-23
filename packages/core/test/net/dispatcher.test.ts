@@ -1,11 +1,11 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import net, { type Socket, type Server } from 'node:net';
-import { PacketDispatcher, sendPacket, type DispatcherLogger, type ClientSocket } from '../../src/net/dispatcher.js';
-import { PacketWriter } from '../../src/net/PacketWriter.js';
-import { PacketBuffer, framePacket } from '../../src/net/PacketBuffer.js';
-import { PACKETTYPE } from '../../src/constants/opcodes.js';
-import { SessionState } from '../../src/constants/sessionState.js';
+import { PacketDispatcher, sendPacket, type DispatcherLogger, type ClientSocket } from '../../src/net/dispatcher';
+import { PacketWriter } from '../../src/net/PacketWriter';
+import { PacketBuffer, framePacket } from '../../src/net/PacketBuffer';
+import { PACKETTYPE } from '../../src/constants/opcodes';
+import { SessionState } from '../../src/constants/sessionState';
 
 /**
  * Real loopback TCP exercise of the dispatcher: frame reassembly across split

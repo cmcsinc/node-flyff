@@ -23,12 +23,12 @@
  * @module systems/recovery
  */
 
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { CPlayer } from '../entities/player.js';
-import { getJobProps } from '../combat/tables.js';
-import { maxFatiguePoint, maxHitPoint, maxManaPoint, standRecovery } from '../combat/formulas.js';
-import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer.js';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { CPlayer } from '../entities/player';
+import { getJobProps } from '../combat/tables';
+import { maxFatiguePoint, maxHitPoint, maxManaPoint, standRecovery } from '../combat/formulas';
+import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer';
 
 const logger = createLogger({ module: 'recovery' });
 

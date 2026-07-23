@@ -7,10 +7,10 @@
  */
 
 import type { FSWatcher } from 'chokidar';
-import { createResourceLogger } from './logger.js';
+import { createResourceLogger } from './logger';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { reloadResources } from './index.js';
+import { reloadResources } from './index';
 
 const logger = createResourceLogger('hotReload');
 

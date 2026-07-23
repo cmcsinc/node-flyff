@@ -50,7 +50,7 @@ When creating a new test file:
 4. **Write the test with correct imports:**
    ```ts
    // test/handlers/auth.handler.test.ts
-   import { authHandler } from '../../src/handlers/auth.handler.js';
+   import { authHandler } from '../../src/handlers/auth.handler';
    //                    ^^^^^^^^^^^^^^^^
    //                    Import from src/, not ./
    ```
@@ -60,10 +60,10 @@ When creating a new test file:
 Tests must use relative imports to `src/`:
 
 ```
-test/net/PacketWriter.test.ts     → import from ../../src/net/PacketWriter.js
-test/cache/MemoryCache.test.ts    → import from ../../src/cache/MemoryCache.js
-test/handlers/auth.handler.test.ts → import from ../../src/handlers/auth.handler.js
-test/utils/math.test.ts          → import from ../../src/utils/math.js
+test/net/PacketWriter.test.ts     → import from ../../src/net/PacketWriter
+test/cache/MemoryCache.test.ts    → import from ../../src/cache/MemoryCache
+test/handlers/auth.handler.test.ts → import from ../../src/handlers/auth.handler
+test/utils/math.test.ts          → import from ../../src/utils/math
 ```
 
 ## Anti-Patterns (FORBIDDEN)
@@ -71,13 +71,13 @@ test/utils/math.test.ts          → import from ../../src/utils/math.js
 ❌ **NEVER do this:**
 ```ts
 // src/net/PacketWriter.test.ts  ← WRONG! Tests in src/
-import { PacketWriter } from './PacketWriter.js';  ← WRONG! Relative import
+import { PacketWriter } from './PacketWriter';  ← WRONG! Relative import
 ```
 
 ✅ **ALWAYS do this:**
 ```ts
 // test/net/PacketWriter.test.ts  ← CORRECT! Tests in test/
-import { PacketWriter } from '../../src/net/PacketWriter.js';  ← CORRECT! Import from src/
+import { PacketWriter } from '../../src/net/PacketWriter';  ← CORRECT! Import from src/
 ```
 
 ## Enforcement

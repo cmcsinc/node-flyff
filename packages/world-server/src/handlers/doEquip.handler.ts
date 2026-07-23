@@ -19,17 +19,17 @@
  * @module handlers/doEquip
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { EquipService } from '../services/equip.service.js';
-import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
-import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { Validate } from '@flyff/core/utils/validate';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { EquipService } from '../services/equip.service';
+import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
 
 const logger = createLogger({ module: 'doEquip-handler' });
 const PARTS_RIDE = 13;

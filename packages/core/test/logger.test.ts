@@ -4,7 +4,7 @@
 
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { createLogger } from '../src/logger.js';
+import { createLogger } from '../src/logger';
 
 describe('createLogger', () => {
   it('returns an object with info, warn, error methods', () => {

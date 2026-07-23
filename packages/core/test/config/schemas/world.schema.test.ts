@@ -14,7 +14,7 @@ import {
   ZoneConfigSchema,
   WalConfigSchema,
   WorldRegistrationConfigSchema,
-} from '../../src/../../src/../src/config/../../src/config/schemas/world.schema.js';
+} from '../../src/../../src/../src/config/../../src/config/schemas/world.schema';
 
 // ---------------------------------------------------------------------------
 // Minimal valid base fields required by BaseConfigSchema

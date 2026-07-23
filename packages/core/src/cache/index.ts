@@ -11,6 +11,6 @@
  * @module cache
  */
 
-export type { ICacheAdapter } from './ICacheAdapter.js';
-export { MemoryCache } from './MemoryCache.js';
-export { RedisCache } from './RedisCache.js';
+export type { ICacheAdapter } from './ICacheAdapter';
+export { MemoryCache } from './MemoryCache';
+export { RedisCache } from './RedisCache';

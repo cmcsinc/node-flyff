@@ -10,12 +10,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import { createResourceLogger } from '../logger.js';
+import { createResourceLogger } from '../logger';
 import {
   ItemDefinitionSchema,
   ItemFileSchema,
   ItemIndexSchema,
-} from '../schemas/item.schema.js';
+} from '../schemas/item.schema';
 
 const logger = createResourceLogger('item.loader');
 
@@ -24,13 +24,13 @@ const logger = createResourceLogger('item.loader');
  */
 export interface ItemIndex {
   /** Map of item ID -> definition */
-  items: Map<number, import('../schemas/item.schema.js').ItemDefinition>;
+  items: Map<number, import('../schemas/item.schema').ItemDefinition>;
 
   /** Map of item name -> definition */
-  byName: Map<string, import('../schemas/item.schema.js').ItemDefinition>;
+  byName: Map<string, import('../schemas/item.schema').ItemDefinition>;
 
   /** Map of kind -> array of definitions */
-  byKind: Map<string, import('../schemas/item.schema.js').ItemDefinition[]>;
+  byKind: Map<string, import('../schemas/item.schema').ItemDefinition[]>;
 
   /**
    * Map of `item_kind3` symbol (IK3_*, e.g. `IK3_AXE`) -> definitions. Used by
@@ -39,7 +39,7 @@ export interface ItemIndex {
    * skipped. Symbol form (not numeric) so it matches `character.inc` verbatim
    * without a second `defineItemkind.h` parse.
    */
-  byKind3: Map<string, import('../schemas/item.schema.js').ItemDefinition[]>;
+  byKind3: Map<string, import('../schemas/item.schema').ItemDefinition[]>;
 
   /**
    * Set of `II_*` numeric ids declared in `defineItem.h`. The client's
@@ -102,10 +102,10 @@ export async function loadItems(dataDir: string, rawDir: string): Promise<ItemIn
   const indexData = parse(indexContent);
   const index = ItemIndexSchema.parse(indexData);
 
-  const items = new Map<number, import('../schemas/item.schema.js').ItemDefinition>();
-  const byName = new Map<string, import('../schemas/item.schema.js').ItemDefinition>();
-  const byKind = new Map<string, import('../schemas/item.schema.js').ItemDefinition[]>();
-  const byKind3 = new Map<string, import('../schemas/item.schema.js').ItemDefinition[]>();
+  const items = new Map<number, import('../schemas/item.schema').ItemDefinition>();
+  const byName = new Map<string, import('../schemas/item.schema').ItemDefinition>();
+  const byKind = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
+  const byKind3 = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
 
   // Track loaded files to avoid duplicates
   const loadedFiles = new Set<string>();
@@ -166,10 +166,10 @@ async function loadItemsWithoutIndex(
   const files = await readdir(itemsDir);
   const ymlFiles = files.filter((f) => f.endsWith('.yml') && f !== '_index.yml');
 
-  const items = new Map<number, import('../schemas/item.schema.js').ItemDefinition>();
-  const byName = new Map<string, import('../schemas/item.schema.js').ItemDefinition>();
-  const byKind = new Map<string, import('../schemas/item.schema.js').ItemDefinition[]>();
-  const byKind3 = new Map<string, import('../schemas/item.schema.js').ItemDefinition[]>();
+  const items = new Map<number, import('../schemas/item.schema').ItemDefinition>();
+  const byName = new Map<string, import('../schemas/item.schema').ItemDefinition>();
+  const byKind = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
+  const byKind3 = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
 
   for (const file of ymlFiles) {
     const filePath = resolve(itemsDir, file);

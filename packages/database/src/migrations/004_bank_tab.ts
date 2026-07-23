@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /**
  * Adds a `tab` axis to the `bank` table (0..2) and account-wide `bank_gold`.

@@ -1,6 +1,6 @@
 import { PacketReader, PacketWriter, PACKETTYPE, createLogger } from '@flyff/core';
-import type { ClientSession } from '../ClientSession.js';
-import type { Gateway } from '../Gateway.js';
+import type { ClientSession } from '../ClientSession';
+import type { Gateway } from '../Gateway';
 import type { CharacterRepository, AccountRepository } from '@flyff/database';
 import crypto from 'node:crypto';
 

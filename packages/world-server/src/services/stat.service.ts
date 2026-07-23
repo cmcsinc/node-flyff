@@ -17,10 +17,10 @@
 
 import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
-import type { CPlayer } from '../entities/player.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import { SetStateSerializer } from '../net/snapshot/setState.serializer.js';
-import { createLogger } from '@flyff/core/logger.js';
+import type { CPlayer } from '../entities/player';
+import type { PlayerManager } from '../managers/player.manager';
+import { SetStateSerializer } from '../net/snapshot/setState.serializer';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'stat-service' });
 

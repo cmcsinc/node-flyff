@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CMover } from '../../src/entities/mover.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import { isMoverAttackableBy } from '../../src/services/combat.policy.js';
+import { CMover } from '../../src/entities/mover';
+import type { CPlayer } from '../../src/entities/player';
+import { isMoverAttackableBy } from '../../src/services/combat.policy';
 
 /** Minimal PK-aware player stub. */
 function fakePlayer(pk = false): CPlayer {

@@ -1,8 +1,8 @@
 import { describe, it, beforeEach } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { JoinService } from '../../src/services/join.service.js';
-import { PlayerManager } from '../../src/managers/player.manager.js';
-import { ZoneManager } from '../../src/managers/zone.manager.js';
+import { JoinService } from '../../src/services/join.service';
+import { PlayerManager } from '../../src/managers/player.manager';
+import { ZoneManager } from '../../src/managers/zone.manager';
 import type { CharacterRepository, CharacterUpdateData, CharacterRow, BankRepository } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

@@ -24,9 +24,9 @@
  * @module services/vicinity.service
  */
 
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import type { NpcSnapshotSerializer } from '../net/snapshot/npcSnapshot.serializer.js';
+import type { PlayerManager } from '../managers/player.manager';
+import type { SpawnManager } from '../managers/spawn.manager';
+import type { NpcSnapshotSerializer } from '../net/snapshot/npcSnapshot.serializer';
 
 export interface VicinityServiceDeps {
   playerManager: PlayerManager;

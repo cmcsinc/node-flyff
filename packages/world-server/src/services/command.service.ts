@@ -47,33 +47,33 @@
  * @module services/command.service
  */
 
-import type { CPlayer, Vec3 } from '../entities/player.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import type { QuestService } from './quest.service.js';
-import type { InventoryService } from './inventory.service.js';
+import type { CPlayer, Vec3 } from '../entities/player';
+import type { PlayerManager } from '../managers/player.manager';
+import type { SpawnManager } from '../managers/spawn.manager';
+import type { QuestService } from './quest.service';
+import type { InventoryService } from './inventory.service';
 import type { CharacterRepository, InventoryRepository } from '@flyff/database';
-import { AUTH, hasAuthority } from '../constants/authority.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import { PacketError } from '@flyff/core/errors.js';
+import { AUTH, hasAuthority } from '../constants/authority';
+import { Validate } from '@flyff/core/utils/validate';
+import { PacketError } from '@flyff/core/errors';
 import { MAX_GOLD } from '@flyff/core';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   NULL_ID, SNAPSHOTTYPE_SETPOINTPARAM, DST_GOLD,
   SNAPSHOTTYPE_DEL_OBJ,
-} from '../net/snapshot/constants.js';
-import { WhisperSerializer } from '../net/snapshot/whisper.serializer.js';
-import { ShoutSerializer } from '../net/snapshot/shout.serializer.js';
-import { ReturnSaySerializer, RETURN_SELF_TARGET, RETURN_NOT_FOUND } from '../net/snapshot/returnSay.serializer.js';
-import { SetPosSerializer } from '../net/snapshot/setPos.serializer.js';
-import { NoticeSerializer } from '../net/snapshot/notice.serializer.js';
-import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer.js';
-import { DisguiseSerializer } from '../net/snapshot/disguise.serializer.js';
-import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
-import { SetStateSerializer } from '../net/snapshot/setState.serializer.js';
-import { MODE } from '../constants/mode.js';
-import { createLogger } from '@flyff/core/logger.js';
+} from '../net/snapshot/constants';
+import { WhisperSerializer } from '../net/snapshot/whisper.serializer';
+import { ShoutSerializer } from '../net/snapshot/shout.serializer';
+import { ReturnSaySerializer, RETURN_SELF_TARGET, RETURN_NOT_FOUND } from '../net/snapshot/returnSay.serializer';
+import { SetPosSerializer } from '../net/snapshot/setPos.serializer';
+import { NoticeSerializer } from '../net/snapshot/notice.serializer';
+import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer';
+import { DisguiseSerializer } from '../net/snapshot/disguise.serializer';
+import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
+import { SetStateSerializer } from '../net/snapshot/setState.serializer';
+import { MODE } from '../constants/mode';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'command-service' });
 

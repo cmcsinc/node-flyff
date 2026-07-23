@@ -1,14 +1,14 @@
 import { describe, it, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
-import type { SpawnManager } from '../../src/managers/spawn.manager.js';
-import type { ZoneManager } from '../../src/managers/zone.manager.js';
-import { CMover } from '../../src/entities/mover.js';
-import { CPlayer } from '../../src/entities/player.js';
-import type { MoverSpawnSource } from '../../src/entities/mover.js';
-import type { Vec3 } from '../../src/entities/player.js';
+import type { SpawnManager } from '../../src/managers/spawn.manager';
+import type { ZoneManager } from '../../src/managers/zone.manager';
+import { CMover } from '../../src/entities/mover';
+import { CPlayer } from '../../src/entities/player';
+import type { MoverSpawnSource } from '../../src/entities/mover';
+import type { Vec3 } from '../../src/entities/player';
 import type { CharacterRow } from '@flyff/database';
-import { AISystem } from '../../src/systems/ai.system.js';
-import { MODE } from '../../src/constants/mode.js';
+import { AISystem } from '../../src/systems/ai.system';
+import { MODE } from '../../src/constants/mode';
 
 /** Minimal CharacterRow for a live player at `id`. */
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

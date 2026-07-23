@@ -9,9 +9,9 @@
  * @module net/playerList.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CharacterWithEquip } from '../services/charList.service.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { CharacterWithEquip } from '../services/charList.service';
 
 // v15 canonical constants (referenced by C++ but defined outside game/source/).
 const MI_MALE = 11;

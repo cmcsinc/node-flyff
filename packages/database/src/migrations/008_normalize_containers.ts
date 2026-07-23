@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /**
  * Normalize containers: split gold (and the bank password) onto dedicated

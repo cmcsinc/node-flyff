@@ -1,11 +1,11 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { MapKeyHandler } from '../../src/handlers/mapKey.handler.js';
-import type { MapKeyService, MapKeyOutcome } from '../../src/services/mapKey.service.js';
-import type { VicinityService } from '../../src/services/vicinity.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { MapKeyHandler } from '../../src/handlers/mapKey.handler';
+import type { MapKeyService, MapKeyOutcome } from '../../src/services/mapKey.service';
+import type { VicinityService } from '../../src/services/vicinity.service';
 
 function mockSocket(state: number = SessionState.IN_WORLD) {
   let destroyed = false;

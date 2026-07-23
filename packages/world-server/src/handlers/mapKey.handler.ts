@@ -13,14 +13,14 @@
  * @module handlers/mapKey.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import { createLogger } from '@flyff/core/logger.js';
-import { sendPacket } from '@flyff/core/net/dispatcher.js';
-import type { MapKeyService } from '../services/mapKey.service.js';
-import type { VicinityService } from '../services/vicinity.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { Validate } from '@flyff/core/utils/validate';
+import { createLogger } from '@flyff/core/logger';
+import { sendPacket } from '@flyff/core/net/dispatcher';
+import type { MapKeyService } from '../services/mapKey.service';
+import type { VicinityService } from '../services/vicinity.service';
 
 const logger = createLogger({ module: 'mapKey-handler' });
 

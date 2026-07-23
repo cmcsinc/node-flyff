@@ -14,9 +14,9 @@
  * @module net/snapshot/setExperience.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { SNAPSHOTTYPE_SETEXPERIENCE, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { SNAPSHOTTYPE_SETEXPERIENCE, NULL_ID } from './constants';
 
 export interface ExperienceFrame {
   readonly exp: number;

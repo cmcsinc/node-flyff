@@ -11,9 +11,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CreateItemSnapshotSerializer } from '../../../src/net/snapshot/createItem.serializer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_CREATEITEM } from '../../../src/net/snapshot/constants.js';
+import { CreateItemSnapshotSerializer } from '../../../src/net/snapshot/createItem.serializer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_CREATEITEM } from '../../../src/net/snapshot/constants';
 
 describe('CreateItemSnapshotSerializer', () => {
   const serializer = new CreateItemSnapshotSerializer();

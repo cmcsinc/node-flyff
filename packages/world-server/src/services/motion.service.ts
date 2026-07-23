@@ -15,10 +15,10 @@
  * @module services/motion.service
  */
 
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { CPlayer } from '../entities/player.js';
-import { MotionSerializer } from '../net/snapshot/motion.serializer.js';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { CPlayer } from '../entities/player';
+import { MotionSerializer } from '../net/snapshot/motion.serializer';
+import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
 
 export interface MotionServiceDeps {
   zoneManager: ZoneManager;

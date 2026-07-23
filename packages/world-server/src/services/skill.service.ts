@@ -17,16 +17,16 @@
 
 import type { SkillIndex, SkillDefinition, SkillLevel } from '@flyff/resources';
 import type { SkillRepository, CharacterRepository } from '@flyff/database';
-import type { CPlayer } from '../entities/player.js';
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { CombatService } from './combat.service.js';
-import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer.js';
-import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer.js';
-import { buildSetPointParam, DST_MP, DST_FP, DST_HP } from '../net/snapshot/pointParam.serializer.js';
-import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB } from '../net/snapshot/constants.js';
-import { createLogger } from '@flyff/core/logger.js';
+import type { CPlayer } from '../entities/player';
+import type { SpawnManager } from '../managers/spawn.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { PlayerManager } from '../managers/player.manager';
+import type { CombatService } from './combat.service';
+import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
+import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer';
+import { buildSetPointParam, DST_MP, DST_FP, DST_HP } from '../net/snapshot/pointParam.serializer';
+import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB } from '../net/snapshot/constants';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'skill-service' });
 

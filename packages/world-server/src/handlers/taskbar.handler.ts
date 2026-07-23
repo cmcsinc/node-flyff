@@ -14,16 +14,16 @@
  * @module handlers/taskbar
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { TaskBarService } from '../services/taskbar.service.js';
-import type { Shortcut } from '../entities/player.js';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_STRING } from '../net/snapshot/constants.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { Validate } from '@flyff/core/utils/validate';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { TaskBarService } from '../services/taskbar.service';
+import type { Shortcut } from '../entities/player';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_STRING } from '../net/snapshot/constants';
 
 const logger = createLogger({ module: 'taskbar-handler' });
 

@@ -10,8 +10,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { parseCharacterInc, blockForMover, MMI_DIALOG } from '../../src/loaders/characterInc.loader.js';
-import type { CharacterIncIndex } from '../../src/loaders/characterInc.loader.js';
+import { parseCharacterInc, blockForMover, MMI_DIALOG } from '../../src/loaders/characterInc.loader';
+import type { CharacterIncIndex } from '../../src/loaders/characterInc.loader';
 
 const II = new Map<string, number>([
   ['II_ARM_F_RIN_SUIT06', 1029],

@@ -1,10 +1,10 @@
 import type { Socket } from 'node:net';
 import { randomInt } from 'node:crypto';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { sendPacket } from '@flyff/core/net/dispatcher.js';
-import type { ServerListService } from '../services/serverList.service.js';
-import { createLogger } from '@flyff/core/logger.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { sendPacket } from '@flyff/core/net/dispatcher';
+import type { ServerListService } from '../services/serverList.service';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'serverlist-handler' });
 

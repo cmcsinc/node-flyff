@@ -1,8 +1,8 @@
 import crypto from 'node:crypto';
-import { hashPassword, verifyPassword } from '@flyff/core/utils/password.js';
+import { hashPassword, verifyPassword } from '@flyff/core/utils/password';
 import type { ICacheAdapter } from '@flyff/core/cache';
-import type { AccountRepository } from '@flyff/database/repositories/account.repo.js';
-import { createLogger } from '@flyff/core/logger.js';
+import type { AccountRepository } from '@flyff/database/repositories/account.repo';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'auth-service' });
 

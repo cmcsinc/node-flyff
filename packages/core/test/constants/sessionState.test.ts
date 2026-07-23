@@ -4,8 +4,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { SessionState } from '../../src/constants/sessionState.js';
-import type { SessionStateValue } from '../../src/constants/sessionState.js';
+import { SessionState } from '../../src/constants/sessionState';
+import type { SessionStateValue } from '../../src/constants/sessionState';
 
 describe('SessionState constants', () => {
   it('CONNECTED equals 0', () => {

@@ -24,10 +24,10 @@
  * @module net/snapshot/setPos.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { Vec3 } from '../../entities/player.js';
-import { SNAPSHOTTYPE_SETPOS, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { Vec3 } from '../../entities/player';
+import { SNAPSHOTTYPE_SETPOS, NULL_ID } from './constants';
 
 export class SetPosSerializer {
   /** Build the SNAPSHOT/SETPOS payload for `objid` teleporting to `pos`. */

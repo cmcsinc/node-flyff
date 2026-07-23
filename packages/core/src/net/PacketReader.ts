@@ -16,7 +16,7 @@
  * @module net/PacketReader
  */
 
-import { PacketError } from '../errors.js';
+import { PacketError } from '../errors';
 
 // ---------------------------------------------------------------------------
 // Type Aliases

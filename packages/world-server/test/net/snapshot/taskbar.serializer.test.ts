@@ -9,11 +9,11 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { TaskBarSnapshotSerializer } from '../../../src/net/snapshot/taskbar.serializer.js';
-import { NULL_ID, SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../../src/net/snapshot/constants.js';
-import type { Shortcut } from '../../../src/entities/player.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { TaskBarSnapshotSerializer } from '../../../src/net/snapshot/taskbar.serializer';
+import { NULL_ID, SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../../src/net/snapshot/constants';
+import type { Shortcut } from '../../../src/entities/player';
 
 function emptyGrid(): Shortcut[][] {
   return Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>

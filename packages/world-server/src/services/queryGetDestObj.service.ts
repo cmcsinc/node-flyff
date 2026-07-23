@@ -18,10 +18,10 @@
  * @module services/queryGetDestObj.service
  */
 
-import type { CPlayer } from '../entities/player.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
-import { NULL_ID } from '../net/snapshot/constants.js';
+import type { CPlayer } from '../entities/player';
+import type { PlayerManager } from '../managers/player.manager';
+import type { DestObjSerializer } from '../net/snapshot/destObj.serializer';
+import { NULL_ID } from '../net/snapshot/constants';
 
 export interface QueryGetDestObjOutcome {
   /** SNAPSHOT/GETDESTOBJ frame to write back to the requester, if any. */

@@ -4,7 +4,7 @@
 
 import { describe, it, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CircuitBreaker, CircuitOpenError, type CircuitState } from '../src/circuit.js';
+import { CircuitBreaker, CircuitOpenError, type CircuitState } from '../src/circuit';
 
 describe('CircuitBreaker', () => {
   it('should start in CLOSED state', () => {

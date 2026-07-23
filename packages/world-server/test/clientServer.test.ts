@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { buildWorldClientServer } from '../src/clientServer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { JoinHandler } from '../src/handlers/join.handler.js';
+import { buildWorldClientServer } from '../src/clientServer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { JoinHandler } from '../src/handlers/join.handler';
 
 describe('buildWorldClientServer', () => {
   it('registers the JOIN opcode against the join handler', () => {

@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player.js';
-import { PlayerManager } from '../../src/managers/player.manager.js';
-import { CommandService } from '../../src/services/command.service.js';
-import { AUTH } from '../../src/constants/authority.js';
-import { NoticeSerializer } from '../../src/net/snapshot/notice.serializer.js';
-import { TEXT_GENERAL } from '../../src/net/snapshot/constants.js';
-import { MODE } from '../../src/constants/mode.js';
+import { CPlayer } from '../../src/entities/player';
+import { PlayerManager } from '../../src/managers/player.manager';
+import { CommandService } from '../../src/services/command.service';
+import { AUTH } from '../../src/constants/authority';
+import { NoticeSerializer } from '../../src/net/snapshot/notice.serializer';
+import { TEXT_GENERAL } from '../../src/net/snapshot/constants';
+import { MODE } from '../../src/constants/mode';
 import type { CharacterRow } from '@flyff/database';
 
 interface SpySocket {
@@ -40,7 +40,7 @@ function makeSpawnManager(movers = new Map<number, { m_idMover: number }>()) {
     get: (id: number) => movers.get(id),
     kill: (id: number) => movers.delete(id),
     get size() { return movers.size; },
-  } as unknown as import('../../src/managers/spawn.manager.js').SpawnManager;
+  } as unknown as import('../../src/managers/spawn.manager').SpawnManager;
 }
 
 /** Minimal QuestService stub capturing calls + returning canned frames. */
@@ -57,7 +57,7 @@ function makeQuestService() {
       cancelQuest: async (_p: CPlayer, questId: number) => { calls.push({ op: 'cancel', questId }); return ok(); },
       removeAllQuests: async (_p: CPlayer) => { calls.push({ op: 'removeAll' }); return ok(); },
       removeCompleteQuests: async (_p: CPlayer) => { calls.push({ op: 'removeComplete' }); return ok(); },
-    } as unknown as import('../../src/services/quest.service.js').QuestService,
+    } as unknown as import('../../src/services/quest.service').QuestService,
   };
 }
 
@@ -648,7 +648,7 @@ function makeZoneSpawnManager(movers: MoverStub[]) {
     kill: (id: number) => { const i = movers.findIndex((m) => m.m_idMover === id); if (i >= 0) movers.splice(i, 1); return i >= 0; },
     get size() { return movers.length; },
     inZone: (zoneId: number) => movers.filter((m) => m.m_nZoneId === zoneId),
-  } as unknown as import('../../src/managers/spawn.manager.js').SpawnManager;
+  } as unknown as import('../../src/managers/spawn.manager').SpawnManager;
 }
 
 describe('CommandService -- aroundKill (/ak)', () => {
@@ -713,7 +713,7 @@ describe('CommandService -- createItem (/ci)', () => {
         p.m_Inventory[slot] = { itemId, count };
         return { ok: true as const, slot, itemId, count };
       },
-    } as unknown as import('../../src/services/inventory.service.js').InventoryService;
+    } as unknown as import('../../src/services/inventory.service').InventoryService;
     const commandService = new CommandService({
       playerManager, spawnManager: makeSpawnManager(),
       questService: makeQuestService().svc, inventoryService,
@@ -736,7 +736,7 @@ describe('CommandService -- createItem (/ci)', () => {
         p.m_Inventory[0] = { itemId, count };
         return { ok: true as const, slot: 0, itemId, count };
       },
-    } as unknown as import('../../src/services/inventory.service.js').InventoryService;
+    } as unknown as import('../../src/services/inventory.service').InventoryService;
     const commandService = new CommandService({
       playerManager, spawnManager: makeSpawnManager(),
       questService: makeQuestService().svc, inventoryService,

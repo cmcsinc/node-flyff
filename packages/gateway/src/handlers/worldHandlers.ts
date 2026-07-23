@@ -1,9 +1,9 @@
 import { PacketReader, PacketWriter, PACKETTYPE, SNAPSHOTTYPE, framePacket, createLogger } from '@flyff/core';
-import type { ClientSession } from '../ClientSession.js';
-import type { Gateway } from '../Gateway.js';
-import type { World } from '../world/World.js';
+import type { ClientSession } from '../ClientSession';
+import type { Gateway } from '../Gateway';
+import type { World } from '../world/World';
 import type { CharacterRepository } from '@flyff/database';
-import type { Mover } from '../world/Mover.js';
+import type { Mover } from '../world/Mover';
 
 const logger = createLogger({ module: 'world-handler' });
 

@@ -24,19 +24,19 @@
  * @module services/loot
  */
 
-import type { InventoryService } from './inventory.service.js';
-import type { ItemManager } from '../managers/item.manager.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { GroundItem } from '../entities/item.js';
-import type { CPlayer, Vec3 } from '../entities/player.js';
-import { isGoldSeed } from './drop.service.js';
-import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
-import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer.js';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
-import { buildSetPointParam, DST_GOLD } from '../net/snapshot/pointParam.serializer.js';
-import { NULL_ID, LOOT_FFA_MS, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
-import { createLogger } from '@flyff/core/logger.js';
+import type { InventoryService } from './inventory.service';
+import type { ItemManager } from '../managers/item.manager';
+import type { PlayerManager } from '../managers/player.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { GroundItem } from '../entities/item';
+import type { CPlayer, Vec3 } from '../entities/player';
+import { isGoldSeed } from './drop.service';
+import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
+import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
+import { buildSetPointParam, DST_GOLD } from '../net/snapshot/pointParam.serializer';
+import { NULL_ID, LOOT_FFA_MS, VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'loot-service' });
 

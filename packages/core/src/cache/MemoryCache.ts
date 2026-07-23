@@ -11,7 +11,7 @@
  * @module cache/MemoryCache
  */
 
-import type { ICacheAdapter } from './ICacheAdapter.js';
+import type { ICacheAdapter } from './ICacheAdapter';
 
 interface CacheEntry {
   value: string;

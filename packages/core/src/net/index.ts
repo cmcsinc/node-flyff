@@ -1,7 +1,7 @@
-export { PacketReader } from './PacketReader.js';
-export type { Byte, Word, Dword, Long } from './PacketReader.js';
-export { PacketWriter } from './PacketWriter.js';
-export { PacketBuffer, framePacket, HEADERMARK, HEADER_SIZE } from './PacketBuffer.js';
+export { PacketReader } from './PacketReader';
+export type { Byte, Word, Dword, Long } from './PacketReader';
+export { PacketWriter } from './PacketWriter';
+export { PacketBuffer, framePacket, HEADERMARK, HEADER_SIZE } from './PacketBuffer';
 export {
   PacketDispatcher,
   createClientServer,
@@ -11,5 +11,5 @@ export {
   type ClientSession,
   type DispatcherLogger,
   type PacketDispatcherDeps,
-} from './dispatcher.js';
-export { LSFRCipher } from './LSFRCipher.js';
+} from './dispatcher';
+export { LSFRCipher } from './LSFRCipher';

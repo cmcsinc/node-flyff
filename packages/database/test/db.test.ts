@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { createDb, type DbConfig } from '../src/db.js';
+import { createDb, type DbConfig } from '../src/db';
 
 describe('db.ts', () => {
   describe('createDb', () => {

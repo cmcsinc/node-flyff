@@ -18,9 +18,9 @@
  */
 
 import type { QuestArg, QuestDef } from '@flyff/resources';
-import type { CPlayer } from '../entities/player.js';
-import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
-import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
+import type { CPlayer } from '../entities/player';
+import type { RuntimeQuest } from '../net/snapshot/quest.serializer';
+import { QUEST_FLAG } from '@flyff/core/constants/quest';
 
 /**
  * Inventory operations the evaluators need. Stubbed in `compose.ts` until the

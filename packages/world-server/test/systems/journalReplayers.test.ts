@@ -6,8 +6,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { Journal } from '@flyff/database';
-import { JournalReplayer } from '../../src/systems/journalReplayer.js';
-import { registerReplayers } from '../../src/systems/journalReplayers.js';
+import { JournalReplayer } from '../../src/systems/journalReplayer';
+import { registerReplayers } from '../../src/systems/journalReplayers';
 
 interface ExpCall { id: number; level: number; exp: bigint; }
 interface GoldCall { id: number; gold: number; }

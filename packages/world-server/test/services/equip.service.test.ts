@@ -8,9 +8,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player.js';
-import { EquipService } from '../../src/services/equip.service.js';
-import { MAX_INVENTORY } from '../../src/net/snapshot/constants.js';
+import { CPlayer } from '../../src/entities/player';
+import { EquipService } from '../../src/services/equip.service';
+import { MAX_INVENTORY } from '../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 

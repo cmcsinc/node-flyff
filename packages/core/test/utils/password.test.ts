@@ -1,6 +1,6 @@
 import { describe, it, before } from 'node:test';
 import assert from 'node:assert/strict';
-import { hashPassword, verifyPassword } from '../../src/utils/password.js';
+import { hashPassword, verifyPassword } from '../../src/utils/password';
 
 describe('password utility', () => {
   describe('hashPassword', () => {

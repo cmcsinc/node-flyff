@@ -1,9 +1,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { ChatSerializer } from '../../../src/net/snapshot/chat.serializer.js';
-import { NULL_ID, SNAPSHOTTYPE_CHAT } from '../../../src/net/snapshot/constants.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { ChatSerializer } from '../../../src/net/snapshot/chat.serializer';
+import { NULL_ID, SNAPSHOTTYPE_CHAT } from '../../../src/net/snapshot/constants';
 
 function readSnapshotHeader(buf: Buffer, r: PacketReader) {
   const op = r.readDword();

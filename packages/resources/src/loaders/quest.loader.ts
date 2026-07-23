@@ -12,13 +12,13 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parse } from 'yaml';
-import { createResourceLogger } from '../logger.js';
+import { createResourceLogger } from '../logger';
 import {
   QuestDefSchema,
   QuestIndexSchema,
   type QuestDef,
   type QuestItem,
-} from '../schemas/quest.schema.js';
+} from '../schemas/quest.schema';
 
 const logger = createResourceLogger('quest.loader');
 

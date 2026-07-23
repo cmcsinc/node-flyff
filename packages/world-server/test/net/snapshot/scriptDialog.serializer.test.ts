@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { ScriptDialogSerializer } from '../../../src/net/snapshot/scriptDialog.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { ScriptDialogSerializer } from '../../../src/net/snapshot/scriptDialog.serializer';
 import {
   NULL_ID,
   SNAPSHOTTYPE_RUNSCRIPTFUNC,
@@ -10,7 +10,7 @@ import {
   FUNCTYPE_ADDKEY,
   FUNCTYPE_REMOVEALLKEY,
   FUNCTYPE_EXIT,
-} from '../../../src/net/snapshot/constants.js';
+} from '../../../src/net/snapshot/constants';
 
 const PLAYER = 99;
 

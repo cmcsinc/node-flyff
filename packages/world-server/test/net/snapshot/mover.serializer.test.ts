@@ -15,9 +15,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { writeItemContainer } from '../../../src/net/snapshot/mover.serializer.js';
-import { NULL_ID, emptyItemContainerSize } from '../../../src/net/snapshot/constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { writeItemContainer } from '../../../src/net/snapshot/mover.serializer';
+import { NULL_ID, emptyItemContainerSize } from '../../../src/net/snapshot/constants';
 
 describe('writeItemContainer', () => {
   it('empty container = identity m_apIndex + chSize 0 + identity adwObjIndex', () => {

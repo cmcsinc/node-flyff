@@ -19,9 +19,9 @@ import {
   WT_MELEE_SWD, WT_MELEE_AXE, WT_MELEE_STICK, WT_MELEE_KNUCKLE,
   WT_MELEE_STAFF, WT_MAGIC_WAND, WT_MELEE_YOYO, WT_RANGE_BOW,
   MIN_HR, MAX_HR, NO_PROP,
-} from './tables.js';
-import type { JobProps } from './tables.js';
-import { EXP_TABLE, MAX_LEVEL } from './expTable.js';
+} from './tables';
+import type { JobProps } from './tables';
+import { EXP_TABLE, MAX_LEVEL } from './expTable';
 
 /** Equipped-weapon view. `CombatService` supplies this; unarmed = bare-hand. */
 export interface WeaponStats {

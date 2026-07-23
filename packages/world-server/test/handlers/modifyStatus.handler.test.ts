@@ -1,11 +1,11 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { CPlayer } from '../../src/entities/player.js';
-import { ModifyStatusHandler } from '../../src/handlers/modifyStatus.handler.js';
-import { StatService } from '../../src/services/stat.service.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { CPlayer } from '../../src/entities/player';
+import { ModifyStatusHandler } from '../../src/handlers/modifyStatus.handler';
+import { StatService } from '../../src/services/stat.service';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

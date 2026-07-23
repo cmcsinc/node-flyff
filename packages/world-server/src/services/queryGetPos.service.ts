@@ -17,8 +17,8 @@
  * @module services/queryGetPos.service
  */
 
-import type { CPlayer } from '../entities/player.js';
-import { NULL_ID } from '../net/snapshot/constants.js';
+import type { CPlayer } from '../entities/player';
+import { NULL_ID } from '../net/snapshot/constants';
 
 export type QueryGetPosOutcome =
   | { ok: true; replied: false }

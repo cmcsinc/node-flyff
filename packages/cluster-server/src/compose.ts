@@ -1,17 +1,17 @@
 import { createLogger, type Logger, loadConfig, type ClusterServerConfig, MemoryCache } from '@flyff/core';
 import { ClusterServerConfigSchema } from '@flyff/core/config/schemas/cluster';
 import { createDb, type DbConfig, AccountRepository, CharacterRepository, InventoryRepository } from '@flyff/database';
-import { LoginRegistrar } from './ipc/loginRegistrar.js';
-import { WorldRegistry } from './ipc/worldRegistry.js';
-import { ClusterHandoffPublisher } from './ipc/handoffPublisher.js';
-import { WorldListService } from './services/worldList.service.js';
-import { CharListService } from './services/charList.service.js';
-import { CharCreateService } from './services/charCreate.service.js';
-import { CharSelectService } from './services/charSelect.service.js';
-import { WorldHandoffTokenService } from './services/worldToken.service.js';
-import { PlayerListSerializer } from './net/playerList.serializer.js';
-import { CharHandler } from './handlers/char.handler.js';
-import { AccountConnectionManager } from './managers/accountConnection.manager.js';
+import { LoginRegistrar } from './ipc/loginRegistrar';
+import { WorldRegistry } from './ipc/worldRegistry';
+import { ClusterHandoffPublisher } from './ipc/handoffPublisher';
+import { WorldListService } from './services/worldList.service';
+import { CharListService } from './services/charList.service';
+import { CharCreateService } from './services/charCreate.service';
+import { CharSelectService } from './services/charSelect.service';
+import { WorldHandoffTokenService } from './services/worldToken.service';
+import { PlayerListSerializer } from './net/playerList.serializer';
+import { CharHandler } from './handlers/char.handler';
+import { AccountConnectionManager } from './managers/accountConnection.manager';
 
 export interface ClusterComposeResult {
   config: ClusterServerConfig;

@@ -4,10 +4,10 @@
  * @module schemas
  */
 
-export * from './item.schema.js';
-export * from './mover.schema.js';
-export * from './skill.schema.js';
-export * from './zone.schema.js';
-export * from './dialog.schema.js';
-export * from './quest.schema.js';
-export * from './drop.schema.js';
+export * from './item.schema';
+export * from './mover.schema';
+export * from './skill.schema';
+export * from './zone.schema';
+export * from './dialog.schema';
+export * from './quest.schema';
+export * from './drop.schema';

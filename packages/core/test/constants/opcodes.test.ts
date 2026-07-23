@@ -6,7 +6,7 @@ import {
   SNAPSHOTTYPE,
   lookupPacketType,
   lookupSnapshotType,
-} from '../../src/constants/opcodes.js';
+} from '../../src/constants/opcodes';
 
 describe('PACKETTYPE opcodes', () => {
   it('CERTIFY equals 0xFC', () => {

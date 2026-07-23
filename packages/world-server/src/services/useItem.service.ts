@@ -12,12 +12,12 @@
  */
 
 import type { ItemDefinition } from '@flyff/resources';
-import { createLogger } from '@flyff/core/logger.js';
-import type { CPlayer } from '../entities/player.js';
-import { MAX_INVENTORY } from '../net/snapshot/constants.js';
-import type { EquipService, EquipResult } from './equip.service.js';
-import type { ConsumableService } from './consumable.service.js';
-import type { InventoryService } from './inventory.service.js';
+import { createLogger } from '@flyff/core/logger';
+import type { CPlayer } from '../entities/player';
+import { MAX_INVENTORY } from '../net/snapshot/constants';
+import type { EquipService, EquipResult } from './equip.service';
+import type { ConsumableService } from './consumable.service';
+import type { InventoryService } from './inventory.service';
 
 const logger = createLogger({ module: 'useItem-service' });
 

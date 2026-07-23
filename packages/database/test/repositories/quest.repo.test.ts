@@ -1,10 +1,10 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
-import type { Knex } from '../../src/types.js';
-import { QuestRepository } from '../../src/repositories/quest.repo.js';
-import { up as upInitial } from '../../src/migrations/001_initial.js';
-import { up as upQuests, down as downQuests } from '../../src/migrations/002_quests.js';
+import type { Knex } from '../../src/types';
+import { QuestRepository } from '../../src/repositories/quest.repo';
+import { up as upInitial } from '../../src/migrations/001_initial';
+import { up as upQuests, down as downQuests } from '../../src/migrations/002_quests';
 
 const knex = (knexModule as any).default || knexModule;
 

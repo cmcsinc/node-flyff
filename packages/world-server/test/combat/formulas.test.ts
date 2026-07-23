@@ -14,8 +14,8 @@ import {
   addExp, expToNextLevel, withinLevelExp, cumulativeExp, subDieDecExp,
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
-} from '../../src/combat/formulas.js';
-import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables.js';
+} from '../../src/combat/formulas';
+import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables';
 
 const FIST = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 const BARE_HAND = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };

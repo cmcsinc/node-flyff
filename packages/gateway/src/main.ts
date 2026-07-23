@@ -1,9 +1,9 @@
-import { Gateway } from './Gateway.js';
-import { World } from './world/World.js';
-import { createAuthHandlers } from './handlers/authHandlers.js';
-import { createWorldHandlers } from './handlers/worldHandlers.js';
+import { Gateway } from './Gateway';
+import { World } from './world/World';
+import { createAuthHandlers } from './handlers/authHandlers';
+import { createWorldHandlers } from './handlers/worldHandlers';
 import { createLogger } from '@flyff/core';
-import type { PacketHandlerMap } from './types.js';
+import type { PacketHandlerMap } from './types';
 import { AccountRepository, CharacterRepository } from '@flyff/database';
 import crypto from 'node:crypto';
 import { existsSync, mkdirSync } from 'node:fs';

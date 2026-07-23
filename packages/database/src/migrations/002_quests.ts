@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /**
  * Per-player quest state + audit log.

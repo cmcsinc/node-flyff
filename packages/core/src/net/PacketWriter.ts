@@ -18,7 +18,7 @@
  * @module net/PacketWriter
  */
 
-import { PacketError } from '../errors.js';
+import { PacketError } from '../errors';
 
 // ---------------------------------------------------------------------------
 // Object Pool

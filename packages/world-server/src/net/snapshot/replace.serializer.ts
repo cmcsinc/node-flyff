@@ -13,10 +13,10 @@
  * @module net/snapshot/replace.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_REPLACE } from './constants.js';
-import type { Vec3 } from '../../entities/player.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_REPLACE } from './constants';
+import type { Vec3 } from '../../entities/player';
 
 export class ReplaceSerializer {
   build(worldId: number, pos: Vec3): Buffer {

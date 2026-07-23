@@ -18,11 +18,11 @@
  * @module services/chat.service
  */
 
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { CPlayer } from '../entities/player.js';
-import type { CommandService } from './command.service.js';
-import { ChatSerializer } from '../net/snapshot/chat.serializer.js';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { CPlayer } from '../entities/player';
+import type { CommandService } from './command.service';
+import { ChatSerializer } from '../net/snapshot/chat.serializer';
+import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
 
 export interface ChatServiceDeps {
   zoneManager: ZoneManager;

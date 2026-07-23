@@ -15,16 +15,16 @@
  * @module handlers/dropItem
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { ItemManager } from '../managers/item.manager.js';
-import type { InventoryService } from '../services/inventory.service.js';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { Validate } from '@flyff/core/utils/validate';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { ItemManager } from '../managers/item.manager';
+import type { InventoryService } from '../services/inventory.service';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
 
 const logger = createLogger({ module: 'dropItem-handler' });
 

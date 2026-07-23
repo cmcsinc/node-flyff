@@ -12,7 +12,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { parseDropTables } from '../../scripts/converters/drops.js';
+import { parseDropTables } from '../../scripts/converters/drops';
 
 function maps(ii: Record<string, number>, mi: Record<string, number>) {
   return {

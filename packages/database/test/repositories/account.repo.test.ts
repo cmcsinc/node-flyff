@@ -1,9 +1,9 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
-import type { Knex } from '../../src/types.js';
-import { AccountRepository } from '../../src/repositories/account.repo.js';
-import { up, down } from '../../src/migrations/001_initial.js';
+import type { Knex } from '../../src/types';
+import { AccountRepository } from '../../src/repositories/account.repo';
+import { up, down } from '../../src/migrations/001_initial';
 
 const knex = (knexModule as any).default || knexModule;
 

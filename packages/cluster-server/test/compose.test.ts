@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { compose } from '../src/compose.js';
+import { compose } from '../src/compose';
 
 describe('compose', () => {
   it('exports compose function', () => {

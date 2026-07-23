@@ -24,9 +24,9 @@
  * @module net/snapshot/doEquip
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID } from './constants';
 
 export interface EquipInfoBody {
   /** propItem id (CItemElem.m_dwItemId). */

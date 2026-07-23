@@ -14,13 +14,13 @@
  * @module net/snapshot/moverBroadcast.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { Vec3 } from '../../entities/player.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { Vec3 } from '../../entities/player';
 import {
   SNAPSHOTTYPE_MOVERMOVED, SNAPSHOTTYPE_MOVERBEHAVIOR,
   SNAPSHOTTYPE_MOVERCORR, SNAPSHOTTYPE_MOVERMOVED2, NULL_ID,
-} from './constants.js';
+} from './constants';
 
 /**
  * Parsed 60-byte PLAYERMOVED/PLAYERBEHAVIOR body (DPSrvr.cpp:2271 OnPlayerMoved).

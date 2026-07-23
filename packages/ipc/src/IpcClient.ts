@@ -8,7 +8,7 @@
  */
 
 import * as tls from 'node:tls';
-import { signIpcMessage } from './signing.js';
+import { signIpcMessage } from './signing';
 
 /**
  * Request payload structure.

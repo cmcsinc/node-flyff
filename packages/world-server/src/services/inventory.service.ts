@@ -23,9 +23,9 @@
 
 import type { InventoryRepository, Journal } from '@flyff/database';
 import { MAX_GOLD } from '@flyff/core';
-import { createLogger } from '@flyff/core/logger.js';
-import type { CPlayer, InventorySlot, Vec3 } from '../entities/player.js';
-import { MAX_INVENTORY } from '../net/snapshot/constants.js';
+import { createLogger } from '@flyff/core/logger';
+import type { CPlayer, InventorySlot, Vec3 } from '../entities/player';
+import { MAX_INVENTORY } from '../net/snapshot/constants';
 
 const logger = createLogger({ module: 'inventory-service' });
 

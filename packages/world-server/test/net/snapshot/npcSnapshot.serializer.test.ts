@@ -1,11 +1,11 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { CMover } from '../../../src/entities/mover.js';
-import { NpcSnapshotSerializer } from '../../../src/net/snapshot/npcSnapshot.serializer.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { CMover } from '../../../src/entities/mover';
+import { NpcSnapshotSerializer } from '../../../src/net/snapshot/npcSnapshot.serializer';
 import {
   SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, MI_SMALL_MUSHPOIE, NULL_ID,
-} from '../../../src/net/snapshot/constants.js';
+} from '../../../src/net/snapshot/constants';
 
 /** Monster -- no outfit -> empty characterKey, uSize=0. */
 function makeMonster(id: number, hp: number): CMover {

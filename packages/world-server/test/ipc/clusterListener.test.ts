@@ -1,7 +1,7 @@
 import { describe, it, beforeEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { IpcBus, signIpcMessage } from '@flyff/ipc';
-import { ClusterListener, PLAYER_HANDOFF_CHANNEL } from '../../src/ipc/clusterListener.js';
+import { ClusterListener, PLAYER_HANDOFF_CHANNEL } from '../../src/ipc/clusterListener';
 
 /**
  * Minimal Redis double: delivers a published message back to its own

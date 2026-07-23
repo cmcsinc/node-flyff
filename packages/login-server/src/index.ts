@@ -1,5 +1,5 @@
-import { compose } from './compose.js';
-import { buildLoginClientServer } from './clientServer.js';
+import { compose } from './compose';
+import { buildLoginClientServer } from './clientServer';
 
 async function main(): Promise<void> {
   const { config, logger, clusterRegistry, authHandler } = await compose();

@@ -58,7 +58,7 @@ class MockRedis {
 }
 
 // Import after mock definition
-import { IpcBus } from '../src/IpcBus.js';
+import { IpcBus } from '../src/IpcBus';
 
 describe('IpcBus', () => {
   let mockRedis: MockRedis;

@@ -20,33 +20,33 @@
 import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
-import type { CPlayer } from '../entities/player.js';
-import type { CMover } from '../entities/mover.js';
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { PlayerManager } from '../managers/player.manager.js';
+import type { CPlayer } from '../entities/player';
+import type { CMover } from '../entities/mover';
+import type { SpawnManager } from '../managers/spawn.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { PlayerManager } from '../managers/player.manager';
 import {
   resolveMelee, xRandomRng, expLevelDiffMult, addExp, cumulativeExp,
   type Rng, type MeleeResult,
-} from '../combat/formulas.js';
-import { resolveSkillCast } from '../combat/skillFormulas.js';
-import { EXP_TABLE } from '../combat/expTable.js';
-import { AF_MISS } from '../combat/tables.js';
-import { playerCombatant, moverCombatant } from '../combat/combatants.js';
-import type { ItemLookup } from '../combat/equipStats.js';
-import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '../combat/aiConstants.js';
-import { isMoverAttackableBy } from './combat.policy.js';
-import { MODE } from '../constants/mode.js';
-import type { DropService } from './drop.service.js';
-import { DamageSerializer } from '../net/snapshot/damage.serializer.js';
-import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer.js';
-import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
-import { SetLevelSerializer } from '../net/snapshot/setLevel.serializer.js';
-import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
-import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer.js';
-import { SetStateSerializer } from '../net/snapshot/setState.serializer.js';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
-import { createLogger } from '@flyff/core/logger.js';
+} from '../combat/formulas';
+import { resolveSkillCast } from '../combat/skillFormulas';
+import { EXP_TABLE } from '../combat/expTable';
+import { AF_MISS } from '../combat/tables';
+import { playerCombatant, moverCombatant } from '../combat/combatants';
+import type { ItemLookup } from '../combat/equipStats';
+import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '../combat/aiConstants';
+import { isMoverAttackableBy } from './combat.policy';
+import { MODE } from '../constants/mode';
+import type { DropService } from './drop.service';
+import { DamageSerializer } from '../net/snapshot/damage.serializer';
+import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';
+import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer';
+import { SetLevelSerializer } from '../net/snapshot/setLevel.serializer';
+import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
+import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer';
+import { SetStateSerializer } from '../net/snapshot/setState.serializer';
+import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'combat-service' });
 

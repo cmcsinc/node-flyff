@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import { createHmac } from 'node:crypto';
 import type { ICacheAdapter } from '@flyff/core/cache';
-import { createLogger } from '@flyff/core/logger.js';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'token-service' });
 

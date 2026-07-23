@@ -13,9 +13,9 @@
  * @module net/snapshot/updateItem
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID } from './constants';
 
 /** Container/slot-field codes (`_Common/Mover.h:62`, `UI_*`). */
 export const UI_NUM = 0; // stack count

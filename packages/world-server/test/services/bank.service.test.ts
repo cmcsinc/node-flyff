@@ -8,9 +8,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player.js';
-import { BankService } from '../../src/services/bank.service.js';
-import { BANK_SLOTS, MAX_BANK_TABS } from '../../src/net/snapshot/constants.js';
+import { CPlayer } from '../../src/entities/player';
+import { BankService } from '../../src/services/bank.service';
+import { BANK_SLOTS, MAX_BANK_TABS } from '../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

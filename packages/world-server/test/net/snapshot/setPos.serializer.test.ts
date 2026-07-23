@@ -5,8 +5,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { SetPosSerializer } from '../../../src/net/snapshot/setPos.serializer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { SetPosSerializer } from '../../../src/net/snapshot/setPos.serializer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 
 const SNAPSHOT_OFFSET = 4; // [SNAPSHOT:DWORD][objidPlayer:DWORD][cb:WORD] = 10, objid at 10
 // Layout: 0 SNAPSHOT(4) | 4 objidPlayer(4) | 8 cb(2) | 10 objid(4) | 14 hdr(2) | 16 x(4) | 20 y(4) | 24 z(4)

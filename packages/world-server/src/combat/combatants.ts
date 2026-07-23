@@ -9,11 +9,11 @@
  * @module combat/combatants
  */
 
-import type { CPlayer } from '../entities/player.js';
-import type { CMover } from '../entities/mover.js';
-import { NO_PROP, WT_MELEE_SWD } from './tables.js';
-import type { Combatant, WeaponStats } from './formulas.js';
-import { sumEquipStats, type ItemLookup } from './equipStats.js';
+import type { CPlayer } from '../entities/player';
+import type { CMover } from '../entities/mover';
+import { NO_PROP, WT_MELEE_SWD } from './tables';
+import type { Combatant, WeaponStats } from './formulas';
+import { sumEquipStats, type ItemLookup } from './equipStats';
 
 /** Bare-hand profile for an unarmed player. */
 export const BARE_HAND: WeaponStats = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };

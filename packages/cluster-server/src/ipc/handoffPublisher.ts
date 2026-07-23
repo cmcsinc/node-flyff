@@ -14,8 +14,8 @@
  * @module ipc/handoffPublisher
  */
 
-import { createLogger } from '@flyff/core/logger.js';
-import type { HandoffPublisher } from '../services/charSelect.service.js';
+import { createLogger } from '@flyff/core/logger';
+import type { HandoffPublisher } from '../services/charSelect.service';
 
 /** IPC channel carrying the cluster->world handoff (rule 07 `<domain>:<action>`). */
 export const PLAYER_HANDOFF_CHANNEL = 'player:handoff';

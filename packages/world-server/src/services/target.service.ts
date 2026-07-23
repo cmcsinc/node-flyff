@@ -22,10 +22,10 @@
  * @module services/target
  */
 
-import type { CPlayer } from '../entities/player.js';
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import { isMoverAttackableBy } from './combat.policy.js';
-import { NULL_ID } from '../net/snapshot/constants.js';
+import type { CPlayer } from '../entities/player';
+import type { SpawnManager } from '../managers/spawn.manager';
+import { isMoverAttackableBy } from './combat.policy';
+import { NULL_ID } from '../net/snapshot/constants';
 
 export interface TargetServiceDeps {
   spawnManager: SpawnManager;

@@ -1,7 +1,7 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { Journal } from '@flyff/database';
-import { JournalReplayer } from '../../src/systems/journalReplayer.js';
+import { JournalReplayer } from '../../src/systems/journalReplayer';
 import type { JournalRow } from '@flyff/database';
 
 function makeLogger() {

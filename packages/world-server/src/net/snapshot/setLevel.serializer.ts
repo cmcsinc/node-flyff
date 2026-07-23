@@ -12,9 +12,9 @@
  * @module net/snapshot/setLevel.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { SNAPSHOTTYPE_SETLEVEL, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { SNAPSHOTTYPE_SETLEVEL, NULL_ID } from './constants';
 
 export class SetLevelSerializer {
   build(moverObjid: number, level: number): Buffer {

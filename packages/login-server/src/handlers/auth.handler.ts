@@ -1,14 +1,14 @@
 import type { Socket } from 'node:net';
-import { PACKETTYPE, LOGIN_ERROR } from '@flyff/core/constants/opcodes.js';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { sendPacket } from '@flyff/core/net/dispatcher.js';
-import { PacketError, AuthError } from '@flyff/core/errors.js';
-import type { AuthService } from '../services/auth.service.js';
-import type { TokenService } from '../services/token.service.js';
-import type { EventBus } from '@flyff/core/eventBus.js';
-import { createLogger } from '@flyff/core/logger.js';
-import { decryptV15Password, V15_PASSWORD_BLOB_SIZE } from '../utils/v15Password.js';
+import { PACKETTYPE, LOGIN_ERROR } from '@flyff/core/constants/opcodes';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { sendPacket } from '@flyff/core/net/dispatcher';
+import { PacketError, AuthError } from '@flyff/core/errors';
+import type { AuthService } from '../services/auth.service';
+import type { TokenService } from '../services/token.service';
+import type { EventBus } from '@flyff/core/eventBus';
+import { createLogger } from '@flyff/core/logger';
+import { decryptV15Password, V15_PASSWORD_BLOB_SIZE } from '../utils/v15Password';
 
 type LoginEvents = {
   'login:success': [{ accountId: number; account: string; socket: unknown; handoffToken: string }];

@@ -7,7 +7,7 @@
  * @module validators
  */
 
-import type { ResourceIndex } from '../index.js';
+import type { ResourceIndex } from '../index';
 
 /**
  * Validation error.

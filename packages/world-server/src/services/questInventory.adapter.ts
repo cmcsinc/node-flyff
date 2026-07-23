@@ -18,12 +18,12 @@
  * @module services/questInventory
  */
 
-import type { InventoryService } from './inventory.service.js';
-import type { CPlayer } from '../entities/player.js';
-import { MAX_INVENTORY } from '../net/snapshot/constants.js';
-import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
-import type { InventoryOps } from './questConditions.js';
+import type { InventoryService } from './inventory.service';
+import type { CPlayer } from '../entities/player';
+import { MAX_INVENTORY } from '../net/snapshot/constants';
+import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
+import type { InventoryOps } from './questConditions';
 
 /** Quest-side inventory: evaluator reads + reward grantor writes. */
 export type QuestInventory = InventoryOps & {

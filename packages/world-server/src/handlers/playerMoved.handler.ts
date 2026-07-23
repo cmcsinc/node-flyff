@@ -12,15 +12,15 @@
  * @module handlers/playerMoved.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import { type ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { MovementService } from '../services/movement.service.js';
-import type { MovementFrame } from '../net/snapshot/moverBroadcast.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { Validate } from '@flyff/core/utils/validate';
+import { type ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { MovementService } from '../services/movement.service';
+import type { MovementFrame } from '../net/snapshot/moverBroadcast.serializer';
 
 const logger = createLogger({ module: 'playerMoved-handler' });
 

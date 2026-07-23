@@ -18,17 +18,17 @@
  */
 
 import { resolve } from 'node:path';
-import { createResourceLogger } from './logger.js';
+import { createResourceLogger } from './logger';
 
 // Loaders
-import { loadItems, type ItemIndex } from './loaders/item.loader.js';
-import { loadMovers, type MoverIndex } from './loaders/mover.loader.js';
-import { loadSkills, type SkillIndex } from './loaders/skill.loader.js';
-import { loadZones, type ZoneIndex } from './loaders/zone.loader.js';
-import { loadDialogs, type DialogIndex } from './loaders/dialog.loader.js';
-import { loadQuests, type QuestIndex } from './loaders/quest.loader.js';
-import { loadDrops, type DropIndex } from './loaders/drop.loader.js';
-import { loadCharacterInc, type CharacterIncIndex } from './loaders/characterInc.loader.js';
+import { loadItems, type ItemIndex } from './loaders/item.loader';
+import { loadMovers, type MoverIndex } from './loaders/mover.loader';
+import { loadSkills, type SkillIndex } from './loaders/skill.loader';
+import { loadZones, type ZoneIndex } from './loaders/zone.loader';
+import { loadDialogs, type DialogIndex } from './loaders/dialog.loader';
+import { loadQuests, type QuestIndex } from './loaders/quest.loader';
+import { loadDrops, type DropIndex } from './loaders/drop.loader';
+import { loadCharacterInc, type CharacterIncIndex } from './loaders/characterInc.loader';
 
 const logger = createResourceLogger('resources');
 
@@ -154,28 +154,28 @@ export async function reloadResources(
 }
 
 // Re-export types for convenience
-export type { ItemDefinition } from './schemas/item.schema.js';
-export type { MoverDefinition } from './schemas/mover.schema.js';
-export type { SkillDefinition, SkillLevel } from './schemas/skill.schema.js';
-export { loadSkills, type SkillIndex } from './loaders/skill.loader.js';
-export type { ZoneDefinition } from './schemas/zone.schema.js';
-export type { DialogFile, DialogState, DialogKey } from './schemas/dialog.schema.js';
-export type { QuestDef, QuestCommand, QuestArg, QuestItem, QuestState } from './schemas/quest.schema.js';
-export type { DropTable, DropItem } from './schemas/drop.schema.js';
+export type { ItemDefinition } from './schemas/item.schema';
+export type { MoverDefinition } from './schemas/mover.schema';
+export type { SkillDefinition, SkillLevel } from './schemas/skill.schema';
+export { loadSkills, type SkillIndex } from './loaders/skill.loader';
+export type { ZoneDefinition } from './schemas/zone.schema';
+export type { DialogFile, DialogState, DialogKey } from './schemas/dialog.schema';
+export type { QuestDef, QuestCommand, QuestArg, QuestItem, QuestState } from './schemas/quest.schema';
+export type { DropTable, DropItem } from './schemas/drop.schema';
 export {
   loadDialogs,
   prefixForNpc,
   stateForKey,
   dialogText,
   type DialogIndex,
-} from './loaders/dialog.loader.js';
+} from './loaders/dialog.loader';
 export {
   loadQuests,
   questById,
   dropsFor,
   type QuestIndex,
   type QuestDrop,
-} from './loaders/quest.loader.js';
+} from './loaders/quest.loader';
 export {
   loadCharacterInc,
   parseCharacterInc,
@@ -189,13 +189,13 @@ export {
   type CharacterIncVendorTab,
   type CharacterIncVendorItem,
   type CharacterIncVendorItemId,
-} from './loaders/characterInc.loader.js';
+} from './loaders/characterInc.loader';
 
 // Re-export schemas
-export * from './schemas/index.js';
+export * from './schemas/index';
 
 // Re-export validators
-export * from './validators/index.js';
+export * from './validators/index';
 
 // Re-export hot-reload
-export * from './hotReload.js';
+export * from './hotReload';

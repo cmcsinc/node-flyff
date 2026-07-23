@@ -1,6 +1,6 @@
 import { describe, it, before } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CharSelectService } from '../../src/services/charSelect.service.js';
+import { CharSelectService } from '../../src/services/charSelect.service';
 import type { AccountRepository } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
 

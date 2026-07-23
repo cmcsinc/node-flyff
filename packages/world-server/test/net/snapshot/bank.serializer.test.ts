@@ -9,15 +9,15 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID } from '../../../src/net/snapshot/constants.js';
+import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID } from '../../../src/net/snapshot/constants';
 import {
   buildPutItemBank,
   buildGetItemBank,
   buildPutGoldBank,
   buildGetGoldBank,
   buildBankWindow,
-} from '../../../src/net/snapshot/bank.serializer.js';
+} from '../../../src/net/snapshot/bank.serializer';
 
 const HDR = PACKETTYPE.SNAPSHOT;
 

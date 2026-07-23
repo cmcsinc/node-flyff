@@ -1,11 +1,11 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { QueryPlayerDataHandler } from '../../src/handlers/queryPlayerData.handler.js';
-import type { QueryPlayerDataService } from '../../src/services/queryPlayerData.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PacketBuffer } from '@flyff/core/net/PacketBuffer';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { QueryPlayerDataHandler } from '../../src/handlers/queryPlayerData.handler';
+import type { QueryPlayerDataService } from '../../src/services/queryPlayerData.service';
 
 function mockSocket(state: number = SessionState.IN_WORLD) {
   let destroyed = false;

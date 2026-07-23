@@ -6,39 +6,39 @@ import { createDb, AccountRepository, CharacterRepository } from '@flyff/databas
 import { up, down } from '@flyff/database/migrations/001_initial';
 import { up as upGold } from '@flyff/database/migrations/003_character_gold';
 import { MemoryCache, createEventBus } from '@flyff/core';
-import { hashPassword } from '@flyff/core/utils/password.js';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
+import { hashPassword } from '@flyff/core/utils/password';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PacketBuffer } from '@flyff/core/net/PacketBuffer';
+import { SessionState } from '@flyff/core/constants/sessionState';
 import { IpcBus } from '@flyff/ipc';
 
 // Login-server handlers/services (cross-package).
-import { AuthHandler } from '@flyff/login-server/src/handlers/auth.handler.js';
-import { AuthService } from '@flyff/login-server/src/services/auth.service.js';
-import { TokenService } from '@flyff/login-server/src/services/token.service.js';
-import { encryptV15Password } from '@flyff/login-server/src/utils/v15Password.js';
+import { AuthHandler } from '@flyff/login-server/src/handlers/auth.handler';
+import { AuthService } from '@flyff/login-server/src/services/auth.service';
+import { TokenService } from '@flyff/login-server/src/services/token.service';
+import { encryptV15Password } from '@flyff/login-server/src/utils/v15Password';
 // Cluster-server handlers/services (cross-package).
-import { CharHandler } from '@flyff/cluster-server/src/handlers/char.handler.js';
-import { CharListService } from '@flyff/cluster-server/src/services/charList.service.js';
-import { CharCreateService } from '@flyff/cluster-server/src/services/charCreate.service.js';
-import { CharSelectService } from '@flyff/cluster-server/src/services/charSelect.service.js';
-import { WorldHandoffTokenService } from '@flyff/cluster-server/src/services/worldToken.service.js';
-import { PlayerListSerializer } from '@flyff/cluster-server/src/net/playerList.serializer.js';
-import { ClusterHandoffPublisher } from '@flyff/cluster-server/src/ipc/handoffPublisher.js';
-import { AccountConnectionManager } from '@flyff/cluster-server/src/managers/accountConnection.manager.js';
+import { CharHandler } from '@flyff/cluster-server/src/handlers/char.handler';
+import { CharListService } from '@flyff/cluster-server/src/services/charList.service';
+import { CharCreateService } from '@flyff/cluster-server/src/services/charCreate.service';
+import { CharSelectService } from '@flyff/cluster-server/src/services/charSelect.service';
+import { WorldHandoffTokenService } from '@flyff/cluster-server/src/services/worldToken.service';
+import { PlayerListSerializer } from '@flyff/cluster-server/src/net/playerList.serializer';
+import { ClusterHandoffPublisher } from '@flyff/cluster-server/src/ipc/handoffPublisher';
+import { AccountConnectionManager } from '@flyff/cluster-server/src/managers/accountConnection.manager';
 // World-server (this package).
-import { ClusterListener } from '../../src/ipc/clusterListener.js';
-import { PlayerManager } from '../../src/managers/player.manager.js';
-import { ZoneManager } from '../../src/managers/zone.manager.js';
-import { SpawnManager } from '../../src/managers/spawn.manager.js';
-import { JoinService } from '../../src/services/join.service.js';
-import { JoinHandler } from '../../src/handlers/join.handler.js';
-import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer.js';
-import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer.js';
-import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer.js';
-import { NpcSnapshotSerializer } from '../../src/net/snapshot/npcSnapshot.serializer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { ClusterListener } from '../../src/ipc/clusterListener';
+import { PlayerManager } from '../../src/managers/player.manager';
+import { ZoneManager } from '../../src/managers/zone.manager';
+import { SpawnManager } from '../../src/managers/spawn.manager';
+import { JoinService } from '../../src/services/join.service';
+import { JoinHandler } from '../../src/handlers/join.handler';
+import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer';
+import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer';
+import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer';
+import { NpcSnapshotSerializer } from '../../src/net/snapshot/npcSnapshot.serializer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { ResourceIndex, ZoneIndex } from '@flyff/resources';
 
 /** Minimal resource index for e2e: zone 1 with one NPC (no monsters needed). */

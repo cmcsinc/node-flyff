@@ -26,23 +26,23 @@
 
 import type { CharacterRepository, InventoryRepository, Journal } from '@flyff/database';
 import type { ZoneDefinition } from '@flyff/resources';
-import type { CPlayer, Vec3 } from '../entities/player.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import { cumulativeExp, subDieDecExp } from '../combat/formulas.js';
+import type { CPlayer, Vec3 } from '../entities/player';
+import type { PlayerManager } from '../managers/player.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import { cumulativeExp, subDieDecExp } from '../combat/formulas';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
-} from '../combat/aiConstants.js';
-import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
+} from '../combat/aiConstants';
+import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants';
 import {
   SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,
-} from '../net/snapshot/constants.js';
-import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer.js';
-import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer.js';
-import { RevivalSerializer } from '../net/snapshot/revival.serializer.js';
-import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
-import { SetPosSerializer } from '../net/snapshot/setPos.serializer.js';
-import { createLogger } from '@flyff/core/logger.js';
+} from '../net/snapshot/constants';
+import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';
+import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';
+import { RevivalSerializer } from '../net/snapshot/revival.serializer';
+import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer';
+import { SetPosSerializer } from '../net/snapshot/setPos.serializer';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'revival-service' });
 

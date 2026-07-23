@@ -1,10 +1,10 @@
 // Database factory and migration runner
-export { createDb, type DbConfig } from './db.js';
+export { createDb, type DbConfig } from './db';
 export {
   runMigrations,
   rollbackMigrations,
   getCurrentMigration,
-} from './migrate.js';
+} from './migrate';
 
 // Repositories
 export {
@@ -12,26 +12,26 @@ export {
   type AccountRow,
   type AccountCreateData,
   type AccountUpdateData,
-} from './repositories/account.repo.js';
+} from './repositories/account.repo';
 
 export {
   CharacterRepository,
   type CharacterRow,
   type CharacterCreateData,
   type CharacterUpdateData,
-} from './repositories/character.repo.js';
+} from './repositories/character.repo';
 
 export {
   InventoryRepository,
   type InventoryItemRow,
   type InventoryCreateData,
-} from './repositories/inventory.repo.js';
+} from './repositories/inventory.repo';
 
 export {
   BankRepository,
   type BankItemRow,
   type BankCreateData,
-} from './repositories/bank.repo.js';
+} from './repositories/bank.repo';
 
 export {
   QuestRepository,
@@ -39,13 +39,13 @@ export {
   type CompletedQuestRow,
   type PlayerQuestState,
   type ActiveQuestPayload,
-} from './repositories/quest.repo.js';
+} from './repositories/quest.repo';
 
 export {
   SkillRepository,
   type LearnedSkill,
   type SkillRow,
-} from './repositories/skill.repo.js';
+} from './repositories/skill.repo';
 
 // WAL journal -- embedded SQLite crash-recovery log
 export {
@@ -53,4 +53,4 @@ export {
   type JournalEntry,
   type JournalRow,
   type JournalDeps,
-} from './journal.js';
+} from './journal';

@@ -12,11 +12,11 @@
  * @module net/snapshot/bank
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID } from './constants.js';
-import { writeCItemElemBody } from './itemElemBody.serializer.js';
-import type { InventorySlot } from '../../entities/player.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID } from './constants';
+import { writeCItemElemBody } from './itemElemBody.serializer';
+import type { InventorySlot } from '../../entities/player';
 
 function snapshotFrame(objid: number, subtype: number, write: (w: PacketWriter) => void): Buffer {
   const w = new PacketWriter();

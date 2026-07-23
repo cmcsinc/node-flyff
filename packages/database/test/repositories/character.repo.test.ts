@@ -1,11 +1,11 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
-import type { Knex } from '../../src/types.js';
-import { CharacterRepository } from '../../src/repositories/character.repo.js';
-import { up, down } from '../../src/migrations/001_initial.js';
-import { up as upGold } from '../../src/migrations/003_character_gold.js';
-import { up as upBankPass } from '../../src/migrations/006_bank_pass.js';
+import type { Knex } from '../../src/types';
+import { CharacterRepository } from '../../src/repositories/character.repo';
+import { up, down } from '../../src/migrations/001_initial';
+import { up as upGold } from '../../src/migrations/003_character_gold';
+import { up as upBankPass } from '../../src/migrations/006_bank_pass';
 
 const knex = (knexModule as any).default || knexModule;
 

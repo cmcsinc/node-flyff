@@ -8,7 +8,7 @@
  * @module utils/validate
  */
 
-import { PacketError } from '../errors.js';
+import { PacketError } from '../errors';
 
 /** Character / account name length overrides. */
 export interface NameOptions {

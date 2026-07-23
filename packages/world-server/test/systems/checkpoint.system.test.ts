@@ -1,6 +1,6 @@
 import { describe, it, beforeEach, afterEach, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CheckpointSystem } from '../../src/systems/checkpoint.system.js';
+import { CheckpointSystem } from '../../src/systems/checkpoint.system';
 
 /**
  * CheckpointSystem -- exercised with node:test mock.timers so the 30 s cadence

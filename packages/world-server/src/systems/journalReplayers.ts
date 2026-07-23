@@ -22,7 +22,7 @@
 
 import type { CharacterRepository, InventoryRepository, BankRepository, JournalRow } from '@flyff/database';
 import type { Logger } from '@flyff/core';
-import type { JournalReplayer } from './journalReplayer.js';
+import type { JournalReplayer } from './journalReplayer';
 
 export interface ReplayerRegistryDeps {
   readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats'>;

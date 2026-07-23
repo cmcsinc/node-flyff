@@ -28,7 +28,7 @@ import { up as migrationUp007 } from '@flyff/database/migrations/007_character_a
 import { up as migrationUp008 } from '@flyff/database/migrations/008_normalize_containers';
 import { up as migrationUp009 } from '@flyff/database/migrations/009_taskbar';
 import { up as migrationUp010 } from '@flyff/database/migrations/010_character_remain_gp';
-import { hashPassword } from '@flyff/core/utils/password.js';
+import { hashPassword } from '@flyff/core/utils/password';
 
 /**
  * Ordered migration list -- each `up()` is gated so re-running seed is

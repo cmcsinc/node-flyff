@@ -1,6 +1,6 @@
-import { compose } from './compose.js';
+import { compose } from './compose';
 import { IpcBus, createLocalBus } from '@flyff/ipc';
-import { buildWorldClientServer } from './clientServer.js';
+import { buildWorldClientServer } from './clientServer';
 
 /**
  * Connect the ClusterListener to an `IpcBus`.

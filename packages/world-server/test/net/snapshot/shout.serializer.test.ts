@@ -1,13 +1,13 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { ShoutSerializer } from '../../../src/net/snapshot/shout.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { ShoutSerializer } from '../../../src/net/snapshot/shout.serializer';
 import {
   NULL_ID,
   SNAPSHOTTYPE_SHOUT,
   SHOUT_COLOR_DEFAULT,
-} from '../../../src/net/snapshot/constants.js';
+} from '../../../src/net/snapshot/constants';
 
 describe('ShoutSerializer (SNAPSHOTTYPE_SHOUT 0x00d0)', () => {
   it('writes senderObjid + name + text + color under a NULL_ID header', () => {

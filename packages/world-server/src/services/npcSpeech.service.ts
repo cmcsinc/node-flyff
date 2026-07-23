@@ -31,14 +31,14 @@
  * @module services/npcSpeech.service
  */
 
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { CMover } from '../entities/mover.js';
+import type { SpawnManager } from '../managers/spawn.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { CMover } from '../entities/mover';
 import type { DialogIndex } from '@flyff/resources';
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
-import { ChatSerializer } from '../net/snapshot/chat.serializer.js';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
-import { createLogger } from '@flyff/core/logger.js';
+import { ChatSerializer } from '../net/snapshot/chat.serializer';
+import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'npc-speech' });
 

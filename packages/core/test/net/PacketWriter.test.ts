@@ -4,8 +4,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketWriter } from '../../src/net/PacketWriter.js';
-import { PacketError } from '../../src/errors.js';
+import { PacketWriter } from '../../src/net/PacketWriter';
+import { PacketError } from '../../src/errors';
 
 describe('PacketWriter', () => {
   describe('writeByte', () => {
@@ -404,7 +404,7 @@ describe('PacketWriter', () => {
       const packet = writer.build();
 
       // Read it back
-      const { PacketReader } = await import('../../src/net/PacketReader.js');
+      const { PacketReader } = await import('../../src/net/PacketReader');
       const reader = new PacketReader(packet);
 
       assert.equal(reader.readDword(), 0xDEADBEEF);

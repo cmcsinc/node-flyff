@@ -1,10 +1,10 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
-import type { Knex } from '../../src/types.js';
-import { InventoryRepository } from '../../src/repositories/inventory.repo.js';
-import { up, down } from '../../src/migrations/001_initial.js';
-import { applyAllMigrations } from '../migrateAll.js';
+import type { Knex } from '../../src/types';
+import { InventoryRepository } from '../../src/repositories/inventory.repo';
+import { up, down } from '../../src/migrations/001_initial';
+import { applyAllMigrations } from '../migrateAll';
 
 const knex = (knexModule as any).default || knexModule;
 

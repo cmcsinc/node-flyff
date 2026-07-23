@@ -18,11 +18,11 @@
  */
 
 import type { ResourceIndex } from '@flyff/resources';
-import type { CPlayer } from '../entities/player.js';
-import type { CMover } from '../entities/mover.js';
-import type { ItemManager } from '../managers/item.manager.js';
-import type { Rng } from '../combat/formulas.js';
-import { NULL_ID } from '../entities/item.js';
+import type { CPlayer } from '../entities/player';
+import type { CMover } from '../entities/mover';
+import type { ItemManager } from '../managers/item.manager';
+import type { Rng } from '../combat/formulas';
+import { NULL_ID } from '../entities/item';
 
 export interface DropServiceDeps {
   resources: Pick<ResourceIndex, 'drops'>;

@@ -1,13 +1,13 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PlayerSnapshotSerializer } from '../../../src/net/snapshot/playerSnapshot.serializer.js';
-import { CPlayer } from '../../../src/entities/player.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { PlayerSnapshotSerializer } from '../../../src/net/snapshot/playerSnapshot.serializer';
+import { CPlayer } from '../../../src/entities/player';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   OT_MOVER, MI_MALE, SNAPSHOTTYPE_ADD_OBJ,
   SNAPSHOTTYPE_WORLD_READINFO, WI_WORLD_MADRIGAL,
   INVENTORY_SLOTS, BANK_SLOTS, emptyItemContainerSize,
-} from '../../../src/net/snapshot/constants.js';
+} from '../../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

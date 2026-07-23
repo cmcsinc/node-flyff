@@ -1,5 +1,5 @@
-import type { Mover, Vec3 } from './Mover.js';
-import type { ClientSession } from '../ClientSession.js';
+import type { Mover, Vec3 } from './Mover';
+import type { ClientSession } from '../ClientSession';
 import {
   PacketWriter,
   PACKETTYPE,

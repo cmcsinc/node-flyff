@@ -19,13 +19,13 @@
  * @module services/snapshot.service
  */
 
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { Vec3 } from '../entities/player.js';
-import type { CPlayer } from '../entities/player.js';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { Vec3 } from '../entities/player';
+import type { CPlayer } from '../entities/player';
 import {
   DestPosSerializer, type DestPosFrame,
-} from '../net/snapshot/destPos.serializer.js';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
+} from '../net/snapshot/destPos.serializer';
+import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
 
 export interface SnapshotServiceDeps {
   zoneManager: ZoneManager;

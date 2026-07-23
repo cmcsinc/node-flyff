@@ -3,8 +3,8 @@ import * as assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import * as knexModule from 'knex';
-import type { Knex } from '../src/types.js';
-import { runMigrations, rollbackMigrations, getCurrentMigration } from '../src/migrate.js';
+import type { Knex } from '../src/types';
+import { runMigrations, rollbackMigrations, getCurrentMigration } from '../src/migrate';
 
 const knex = (knexModule as any).default || knexModule;
 

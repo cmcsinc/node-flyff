@@ -8,9 +8,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { TaskBarService, encodeTaskBar, decodeTaskBar } from '../../src/services/taskbar.service.js';
-import type { Shortcut } from '../../src/entities/player.js';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../src/net/snapshot/constants.js';
+import { TaskBarService, encodeTaskBar, decodeTaskBar } from '../../src/services/taskbar.service';
+import type { Shortcut } from '../../src/entities/player';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../src/net/snapshot/constants';
 
 function makePlayer(): { m_idPlayer?: number; m_aSlotItem: Shortcut[][] } {
   return {

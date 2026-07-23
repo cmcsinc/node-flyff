@@ -1,13 +1,13 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { QuestService, type QuestInventory } from '../../src/services/quest.service.js';
-import { CPlayer } from '../../src/entities/player.js';
-import { QS_BEGIN, QS_END, QUEST_FLAG } from '@flyff/core/constants/quest.js';
+import { QuestService, type QuestInventory } from '../../src/services/quest.service';
+import { CPlayer } from '../../src/entities/player';
+import { QS_BEGIN, QS_END, QUEST_FLAG } from '@flyff/core/constants/quest';
 import type { CharacterRow, JournalEntry } from '@flyff/database';
 import type { QuestCommand, QuestDef, QuestIndex } from '@flyff/resources';
-import { InventoryService } from '../../src/services/inventory.service.js';
-import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer.js';
-import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST } from '../../src/net/snapshot/constants.js';
+import { InventoryService } from '../../src/services/inventory.service';
+import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer';
+import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST } from '../../src/net/snapshot/constants';
 
 const baseRow = {
   id: 1, account_id: 1, name: 'Tester', slot: 0, class: 0, gender: 0,

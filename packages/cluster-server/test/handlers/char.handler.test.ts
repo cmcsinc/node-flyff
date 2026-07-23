@@ -1,11 +1,11 @@
 import { describe, it, before, beforeEach } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CharHandler } from '../../src/handlers/char.handler.js';
-import { PlayerListSerializer } from '../../src/net/playerList.serializer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
+import { CharHandler } from '../../src/handlers/char.handler';
+import { PlayerListSerializer } from '../../src/net/playerList.serializer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PacketBuffer } from '@flyff/core/net/PacketBuffer';
 import type { Socket } from 'node:net';
 
 function makeMockSocket(): Socket & { _written: Buffer[] } {

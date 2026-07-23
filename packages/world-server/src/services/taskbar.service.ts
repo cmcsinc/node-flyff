@@ -18,9 +18,9 @@
  * @module services/taskbar
  */
 
-import { createLogger } from '@flyff/core/logger.js';
-import type { Shortcut } from '../entities/player.js';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_CHAT } from '../net/snapshot/constants.js';
+import { createLogger } from '@flyff/core/logger';
+import type { Shortcut } from '../entities/player';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_CHAT } from '../net/snapshot/constants';
 
 const logger = createLogger({ module: 'taskbar-service' });
 

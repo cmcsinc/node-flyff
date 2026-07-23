@@ -10,7 +10,7 @@
  * @module cluster-server/services/worldList.service
  */
 
-import type { WorldRegistry, WorldEntry } from '../ipc/worldRegistry.js';
+import type { WorldRegistry, WorldEntry } from '../ipc/worldRegistry';
 
 // ---------------------------------------------------------------------------
 // Types

@@ -10,10 +10,10 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { NpcSpeechService } from '../../src/services/npcSpeech.service.js';
-import type { CMover } from '../../src/entities/mover.js';
-import type { SpawnManager } from '../../src/managers/spawn.manager.js';
-import type { ZoneManager } from '../../src/managers/zone.manager.js';
+import { NpcSpeechService } from '../../src/services/npcSpeech.service';
+import type { CMover } from '../../src/entities/mover';
+import type { SpawnManager } from '../../src/managers/spawn.manager';
+import type { ZoneManager } from '../../src/managers/zone.manager';
 import type { DialogIndex } from '@flyff/resources';
 
 /** Minimal mover stub -- only the fields NpcSpeechService reads. */

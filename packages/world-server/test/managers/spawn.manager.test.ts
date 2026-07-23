@@ -1,8 +1,8 @@
 import { describe, it, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
 import type { ResourceIndex, ZoneIndex } from '@flyff/resources';
-import { SpawnManager } from '../../src/managers/spawn.manager.js';
-import { CMover } from '../../src/entities/mover.js';
+import { SpawnManager } from '../../src/managers/spawn.manager';
+import { CMover } from '../../src/entities/mover';
 
 /** Build a minimal in-memory resource index for spawn-wiring tests. */
 function makeResources(): ResourceIndex {

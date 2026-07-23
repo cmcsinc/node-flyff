@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { RevivalHandler } from '../../src/handlers/revival.handler.js';
-import type { RevivalService, RevivalOutcome, RevivalType } from '../../src/services/revival.service.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { CPlayer } from '../../src/entities/player.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { RevivalHandler } from '../../src/handlers/revival.handler';
+import type { RevivalService, RevivalOutcome, RevivalType } from '../../src/services/revival.service';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { CPlayer } from '../../src/entities/player';
 
 function mockSocket(state = SessionState.IN_WORLD) {
   let destroyed = false;

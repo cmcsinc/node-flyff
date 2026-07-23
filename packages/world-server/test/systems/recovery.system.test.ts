@@ -5,10 +5,10 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import type { CharacterRow } from '@flyff/database';
-import { CPlayer } from '../../src/entities/player.js';
-import { RecoverySystem } from '../../src/systems/recovery.system.js';
-import { DST_HP, DST_MP, DST_FP } from '../../src/net/snapshot/pointParam.serializer.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
+import { CPlayer } from '../../src/entities/player';
+import { RecoverySystem } from '../../src/systems/recovery.system';
+import { DST_HP, DST_MP, DST_FP } from '../../src/net/snapshot/pointParam.serializer';
+import type { PlayerManager } from '../../src/managers/player.manager';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {

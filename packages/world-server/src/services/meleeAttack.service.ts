@@ -22,14 +22,14 @@
  * @module services/meleeAttack
  */
 
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { CPlayer } from '../entities/player.js';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { CPlayer } from '../entities/player';
 import {
   MeleeAttackSerializer, type MeleeAttackFrame,
-} from '../net/snapshot/meleeAttack.serializer.js';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
-import type { CombatService } from './combat.service.js';
-import { createLogger } from '@flyff/core/logger.js';
+} from '../net/snapshot/meleeAttack.serializer';
+import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import type { CombatService } from './combat.service';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'meleeAttack-service' });
 
