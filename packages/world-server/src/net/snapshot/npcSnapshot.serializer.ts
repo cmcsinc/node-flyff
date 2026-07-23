@@ -51,7 +51,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import type { CMover, MoverEquipPart } from '../../entities/mover';
+import type { CMover, MoverEquipPart } from '@flyff/entities';
 import {
   SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, NULL_ID,
 } from './constants';

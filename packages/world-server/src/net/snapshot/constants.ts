@@ -62,34 +62,21 @@ export const MI_SMALL_MUSHPOIE = 168;   // defineObj.h:1161 -- small mushpang, F
 export const BELLI_PEACEFUL = 0;
 
 // --- Raw struct / array sizes (bytes) ---------------------------------------
-export const MAX_HUMAN_PARTS = 31;
+// Slot-sizing consts (NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_HUMAN_PARTS,
+// MAX_SKILL_JOB, MAX_INVENTORY, MAX_BANK, MAX_BANK_TABS, MAX_SLOT_ITEM_*,
+// SHORTCUT) moved to @flyff/entities -- re-exported at the bottom of this file.
 export const MAX_JOB = 32;
-export const MAX_SKILL_JOB = 45;
 export const SKILL_SIZE = 8;            // sizeof(SKILL)
 export const SM_MAX = 26;
 export const MAX_HONOR_TITLE = 150;
-export const MAX_INVENTORY = 42;
-export const MAX_BANK = 42;
-export const MAX_BANK_TABS = 3;
 export const MAX_POCKET_TABS = 3;
 export const QUEST_SIZE = 12;           // sizeof(QUEST)
 
 /**
- * Live slot counts the client's `CItemContainer<CItemElem>` is sized with at
- * `SetItemContainer` time -- these, NOT the bare defines, drive `m_dwItemMax`
- * and thus the array widths on the wire.
- *
- * Inventory: `m_Inventory.SetItemContainer( ITYPE_ITEM, MAX_INVENTORY, MAX_HUMAN_PARTS )`
- * (`_Network/Objects/Obj.cpp:128`); `dwExtra != 0xffffffff` so `m_dwItemMax += MAX_HUMAN_PARTS`
- * (`Obj.h:354-355`) -> 42 + 31 = **73** slots. Writing only 42 here desyncs the stream
- * by 248 bytes and crashes the client in `CItemContainer::Serialize` (garbage `ch` ->
- * `m_apItem[ch]` OOB -> 0xC0000005 reading ~0x8).
- *
- * Bank tabs: `m_Bank[i].SetItemContainer( ITYPE_ITEM, MAX_BANK )` (`Obj.cpp:133`) --
- * `dwExtra` defaults to 0xffffffff -> no add -> 42 slots.
+ * Live slot counts (`INVENTORY_SLOTS` = 73, `BANK_SLOTS` = 42) now live in
+ * `@flyff/entities` -- re-exported at the bottom of this file. See there for
+ * the `CItemContainer` sizing rationale (desync crash if bag written as 42).
  */
-export const INVENTORY_SLOTS = MAX_INVENTORY + MAX_HUMAN_PARTS; // 73
-export const BANK_SLOTS = MAX_BANK;                             // 42
 
 /**
  * Vendor shop container widths -- `_Common/ProjectCmn.h:21-22`. Each NPC shop
@@ -252,8 +239,7 @@ export const TEXT_COLOR_NOTICE = 0xffffff00;
 export const TEXT_GENERAL = 0x01; // PutString (normal notice)
 export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
 
-/** `NULL_ID` (`_Network/MsgHdr.h`) -- "no object" sentinel. */
-export const NULL_ID = 0xffffffff;
+// NULL_ID moved to @flyff/entities -- re-exported at bottom.
 
 /**
  * Anti-loot-steal FFA window. A dropped pile is locked to its owner (the
@@ -271,27 +257,8 @@ export const LOOT_FFA_MS = 7_000;
 // (SNAPSHOTTYPE_SETPOINTPARAM is defined with the combat snapshots above.)
 export const DST_GOLD = 10000;                       // defineAttribute.h:352
 
-// --- Taskbar hotkey grid (`_Common/ProjectCmn.h:901-923`) ----------------------
-// m_playTaskBar.m_aSlotItem[nSlotIndex][nIndex] -- the player's bound hotkey
-// shortcuts (items/skills/emotes/chat macros). Drives ADDITEMTASKBAR /
-// REMOVEITEMTASKBAR (DPSrvr.cpp:2203/2251).
-export const MAX_SLOT_ITEM_COUNT = 8;   // ProjectCmn.h:904 -- taskbar pages (rows)
-export const MAX_SLOT_ITEM = 9;         // ProjectCmn.h:901 -- slots per page
-export const MAX_SHORTCUT_STRING = 128; // _Common/DefineCommon.h:9 -- chat-macro text cap
-/**
- * `m_dwShortcut` discriminant (`ProjectCmn.h:910-923`) -- selects how the
- * client interprets the rest of the SHORTCUT struct. NONE = empty slot.
- */
-export const SHORTCUT = Object.freeze({
-  NONE:      0,
-  OBJECT:    7,   // inventory item
-  CHAT:      8,   // chat macro (carries m_szString; capped at 10/player)
-  SKILLFUN:  9,   // skill
-  EMOTICON:  10,
-  LORDSKILL: 11,
-} as const);
-/** Per-player cap on chat-macro shortcuts (`OnAddItemTaskBar:2231` rejects >9). */
-export const MAX_SHORTCUT_CHAT = 9;
+// --- Taskbar hotkey grid (MAX_SLOT_ITEM_*, SHORTCUT, MAX_SHORTCUT_*) ----------
+// Moved to @flyff/entities -- re-exported at bottom. See entities/constants/slots.ts.
 
 /**
  * Circular ground-plane broadcast radius approximating the v15 `CLinkMap`
@@ -305,3 +272,12 @@ export const MAX_SHORTCUT_CHAT = 9;
  * to a box check if peer pop-in/desync shows up under real load.
  */
 export const VISIBILITY_RADIUS = 200;
+
+// --- Slot sizing + taskbar consts (moved to @flyff/entities) -----------------
+// Re-exported here so legacy `from './constants'` / `from '../net/snapshot/constants'`
+// importers keep resolving during the package split. New code: import from @flyff/entities.
+export {
+  NULL_ID, MAX_HUMAN_PARTS, MAX_SKILL_JOB, MAX_INVENTORY, MAX_BANK, MAX_BANK_TABS,
+  INVENTORY_SLOTS, BANK_SLOTS, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM,
+  MAX_SHORTCUT_STRING, SHORTCUT, MAX_SHORTCUT_CHAT,
+} from '@flyff/entities';

@@ -22,7 +22,11 @@
       "@flyff/database": ["packages/database/src/index.ts"],
       "@flyff/database/*": ["packages/database/src/*"],
       "@flyff/resources": ["packages/resources/src/index.ts"],
-      "@flyff/resources/*": ["packages/resources/src/*"]
+      "@flyff/resources/*": ["packages/resources/src/*"],
+      "@flyff/entities": ["packages/entities/src/index.ts"],
+      "@flyff/entities/*": ["packages/entities/src/*"],
+      "@flyff/world-core": ["packages/world-core/src/index.ts"],
+      "@flyff/world-core/*": ["packages/world-core/src/*"]
     }
   }
 }

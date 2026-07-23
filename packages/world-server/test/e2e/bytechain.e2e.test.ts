@@ -29,9 +29,9 @@ import { ClusterHandoffPublisher } from '@flyff/cluster-server/src/ipc/handoffPu
 import { AccountConnectionManager } from '@flyff/cluster-server/src/managers/accountConnection.manager';
 // World-server (this package).
 import { ClusterListener } from '../../src/ipc/clusterListener';
-import { PlayerManager } from '../../src/managers/player.manager';
-import { ZoneManager } from '../../src/managers/zone.manager';
-import { SpawnManager } from '../../src/managers/spawn.manager';
+import { PlayerManager } from '@flyff/world-core';
+import { ZoneManager } from '@flyff/world-core';
+import { SpawnManager } from '@flyff/world-core';
 import { JoinService } from '../../src/services/join.service';
 import { JoinHandler } from '../../src/handlers/join.handler';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer';

@@ -26,13 +26,13 @@
 
 import type { CharacterRepository, InventoryRepository, Journal } from '@flyff/database';
 import type { ZoneDefinition } from '@flyff/resources';
-import type { CPlayer, Vec3 } from '../entities/player';
-import type { PlayerManager } from '../managers/player.manager';
-import type { ZoneManager } from '../managers/zone.manager';
+import type { CPlayer, Vec3 } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import { cumulativeExp, subDieDecExp } from '../combat/formulas';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
-} from '../combat/aiConstants';
+} from '@flyff/entities';
 import { MAX_INVENTORY, VISIBILITY_RADIUS } from '../net/snapshot/constants';
 import {
   SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,

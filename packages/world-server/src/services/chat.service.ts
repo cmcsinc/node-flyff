@@ -18,8 +18,8 @@
  * @module services/chat.service
  */
 
-import type { ZoneManager } from '../managers/zone.manager';
-import type { CPlayer } from '../entities/player';
+import type { ZoneManager } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
 import type { CommandService } from './command.service';
 import { ChatSerializer } from '../net/snapshot/chat.serializer';
 import { VISIBILITY_RADIUS } from '../net/snapshot/constants';

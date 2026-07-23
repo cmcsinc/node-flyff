@@ -3,7 +3,7 @@ import * as assert from 'node:assert/strict';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PacketReader } from '@flyff/core/net/PacketReader';
 import { SessionState } from '@flyff/core/constants/sessionState';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { ModifyStatusHandler } from '../../src/handlers/modifyStatus.handler';
 import { StatService } from '../../src/services/stat.service';
 import type { CharacterRow } from '@flyff/database';

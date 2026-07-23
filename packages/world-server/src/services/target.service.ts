@@ -22,8 +22,8 @@
  * @module services/target
  */
 
-import type { CPlayer } from '../entities/player';
-import type { SpawnManager } from '../managers/spawn.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { SpawnManager } from '@flyff/world-core';
 import { isMoverAttackableBy } from './combat.policy';
 import { NULL_ID } from '../net/snapshot/constants';
 

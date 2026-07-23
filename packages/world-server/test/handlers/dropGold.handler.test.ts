@@ -13,8 +13,8 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { DropGoldHandler } from '../../src/handlers/dropGold.handler';
 import { goldSeedId } from '../../src/services/drop.service';
-import type { CPlayer } from '../../src/entities/player';
-import type { PlayerManager } from '../../src/managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 import type { ItemManager } from '../../src/managers/item.manager';
 import type { InventoryService } from '../../src/services/inventory.service';
 

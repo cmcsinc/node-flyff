@@ -14,10 +14,10 @@ import { ShopHandler } from '../../src/handlers/shop.handler';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import { MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB, SNAPSHOTTYPE_CREATEITEM } from '../../src/net/snapshot/constants';
 import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
-import { EMPTY_VENDOR_STOCK } from '../../src/entities/mover';
-import type { VendorStock } from '../../src/entities/mover';
-import type { CPlayer } from '../../src/entities/player';
-import type { PlayerManager } from '../../src/managers/player.manager';
+import { EMPTY_VENDOR_STOCK } from '@flyff/entities';
+import type { VendorStock } from '@flyff/entities';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 import type { ShopService } from '../../src/services/shop.service';
 
 function mockSocket() {

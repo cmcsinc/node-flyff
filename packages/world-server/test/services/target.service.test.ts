@@ -1,9 +1,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { TargetService } from '../../src/services/target.service';
-import type { SpawnManager } from '../../src/managers/spawn.manager';
-import type { CMover } from '../../src/entities/mover';
-import type { CPlayer } from '../../src/entities/player';
+import type { SpawnManager } from '@flyff/world-core';
+import type { CMover } from '@flyff/entities';
+import type { CPlayer } from '@flyff/entities';
 import { NULL_ID } from '../../src/net/snapshot/constants';
 
 /** Mutatable player stub with the fields TargetService touches. */

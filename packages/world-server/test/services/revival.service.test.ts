@@ -6,9 +6,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { RevivalService } from '../../src/services/revival.service';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
-import { II_SYS_SYS_SCR_RESURRECTION } from '../../src/combat/aiConstants';
+import { II_SYS_SYS_SCR_RESURRECTION } from '@flyff/entities';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {

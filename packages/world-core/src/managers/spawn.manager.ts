@@ -25,8 +25,8 @@
 
 import type { ResourceIndex } from '@flyff/resources';
 import { blockForMover, type CharacterIncBlock } from '@flyff/resources';
-import type { Vec3, InventorySlot } from '../entities/player';
-import { CMover, type MoverSpawnSource, type MoverOutfit, type VendorStock, EMPTY_VENDOR_STOCK } from '../entities/mover';
+import type { Vec3, InventorySlot } from '@flyff/entities';
+import { CMover, type MoverSpawnSource, type MoverOutfit, type VendorStock, EMPTY_VENDOR_STOCK } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'spawn-manager' });

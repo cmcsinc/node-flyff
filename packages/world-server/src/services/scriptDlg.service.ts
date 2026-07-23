@@ -28,8 +28,8 @@
 
 import type { DialogFile, DialogIndex, DialogState, QuestDef, QuestIndex } from '@flyff/resources';
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
-import type { CPlayer } from '../entities/player';
-import type { CMover } from '../entities/mover';
+import type { CPlayer } from '@flyff/entities';
+import type { CMover } from '@flyff/entities';
 import type { QuestService } from './quest.service';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import { createLogger } from '@flyff/core/logger';

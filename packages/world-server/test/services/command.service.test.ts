@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player';
-import { PlayerManager } from '../../src/managers/player.manager';
+import { CPlayer } from '@flyff/entities';
+import { PlayerManager } from '@flyff/world-core';
 import { CommandService } from '../../src/services/command.service';
-import { AUTH } from '../../src/constants/authority';
+import { AUTH } from '@flyff/entities';
 import { NoticeSerializer } from '../../src/net/snapshot/notice.serializer';
 import { TEXT_GENERAL } from '../../src/net/snapshot/constants';
-import { MODE } from '../../src/constants/mode';
+import { MODE } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 
 interface SpySocket {
@@ -40,7 +40,7 @@ function makeSpawnManager(movers = new Map<number, { m_idMover: number }>()) {
     get: (id: number) => movers.get(id),
     kill: (id: number) => movers.delete(id),
     get size() { return movers.size; },
-  } as unknown as import('../../src/managers/spawn.manager').SpawnManager;
+  } as unknown as import('@flyff/world-core').SpawnManager;
 }
 
 /** Minimal QuestService stub capturing calls + returning canned frames. */
@@ -648,7 +648,7 @@ function makeZoneSpawnManager(movers: MoverStub[]) {
     kill: (id: number) => { const i = movers.findIndex((m) => m.m_idMover === id); if (i >= 0) movers.splice(i, 1); return i >= 0; },
     get size() { return movers.length; },
     inZone: (zoneId: number) => movers.filter((m) => m.m_nZoneId === zoneId),
-  } as unknown as import('../../src/managers/spawn.manager').SpawnManager;
+  } as unknown as import('@flyff/world-core').SpawnManager;
 }
 
 describe('CommandService -- aroundKill (/ak)', () => {

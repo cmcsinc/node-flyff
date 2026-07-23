@@ -36,14 +36,9 @@ import {
   SNAPSHOTTYPE_QUESTHELPER_NPCPOS,
 } from './constants';
 
-/** In-memory mirror of the C++ `QUEST` struct (sans padding). */
-export interface RuntimeQuest {
-  state: number;            // m_nState (QS_*)
-  time: number;             // m_wTime
-  id: number;               // m_wId (quest id)
-  killNpcNum: [number, number]; // m_nKillNPCNum[2]
-  flags: number;            // bit0=patrol, bit1=dialog (QUEST_FLAG)
-}
+// RuntimeQuest moved to @flyff/entities (shared with CPlayer.m_aQuest) -- re-export
+// so legacy `from './quest.serializer'` importers keep resolving.
+export type { RuntimeQuest } from '@flyff/entities';
 
 /** Open a single-snapshot SNAPSHOT frame (`objid | NULL_ID | 1 | objid | subtype`). */
 function frame(objid: number, subtype: number, w: PacketWriter): PacketWriter {

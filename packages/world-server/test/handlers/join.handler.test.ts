@@ -9,7 +9,7 @@ import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.
 import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer';
 import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer';
 import type { JoinService, JoinOutcome } from '../../src/services/join.service';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(): CharacterRow {

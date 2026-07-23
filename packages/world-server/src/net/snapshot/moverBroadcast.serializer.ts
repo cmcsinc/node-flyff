@@ -16,7 +16,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import type { Vec3 } from '../../entities/player';
+import type { Vec3 } from '@flyff/entities';
 import {
   SNAPSHOTTYPE_MOVERMOVED, SNAPSHOTTYPE_MOVERBEHAVIOR,
   SNAPSHOTTYPE_MOVERCORR, SNAPSHOTTYPE_MOVERMOVED2, NULL_ID,

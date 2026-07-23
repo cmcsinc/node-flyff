@@ -26,10 +26,10 @@
 
 import type { InventoryService } from './inventory.service';
 import type { ItemManager } from '../managers/item.manager';
-import type { PlayerManager } from '../managers/player.manager';
-import type { ZoneManager } from '../managers/zone.manager';
+import type { PlayerManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import type { GroundItem } from '../entities/item';
-import type { CPlayer, Vec3 } from '../entities/player';
+import type { CPlayer, Vec3 } from '@flyff/entities';
 import { isGoldSeed } from './drop.service';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
 import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';

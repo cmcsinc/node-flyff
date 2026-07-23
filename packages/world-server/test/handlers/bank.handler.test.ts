@@ -13,8 +13,8 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { BankHandler } from '../../src/handlers/bank.handler';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import type { CPlayer } from '../../src/entities/player';
-import type { PlayerManager } from '../../src/managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 import type { BankService } from '../../src/services/bank.service';
 
 function mockSocket() {

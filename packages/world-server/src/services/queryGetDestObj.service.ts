@@ -18,8 +18,8 @@
  * @module services/queryGetDestObj.service
  */
 
-import type { CPlayer } from '../entities/player';
-import type { PlayerManager } from '../managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 import type { DestObjSerializer } from '../net/snapshot/destObj.serializer';
 import { NULL_ID } from '../net/snapshot/constants';
 

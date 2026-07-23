@@ -16,7 +16,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import { NULL_ID, SNAPSHOTTYPE_REPLACE } from './constants';
-import type { Vec3 } from '../../entities/player';
+import type { Vec3 } from '@flyff/entities';
 
 export class ReplaceSerializer {
   build(worldId: number, pos: Vec3): Buffer {

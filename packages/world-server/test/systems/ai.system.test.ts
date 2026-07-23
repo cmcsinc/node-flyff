@@ -1,14 +1,14 @@
 import { describe, it, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
-import type { SpawnManager } from '../../src/managers/spawn.manager';
-import type { ZoneManager } from '../../src/managers/zone.manager';
-import { CMover } from '../../src/entities/mover';
-import { CPlayer } from '../../src/entities/player';
-import type { MoverSpawnSource } from '../../src/entities/mover';
-import type { Vec3 } from '../../src/entities/player';
+import type { SpawnManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
+import { CMover } from '@flyff/entities';
+import { CPlayer } from '@flyff/entities';
+import type { MoverSpawnSource } from '@flyff/entities';
+import type { Vec3 } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 import { AISystem } from '../../src/systems/ai.system';
-import { MODE } from '../../src/constants/mode';
+import { MODE } from '@flyff/entities';
 
 /** Minimal CharacterRow for a live player at `id`. */
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

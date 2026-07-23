@@ -8,7 +8,7 @@
  * @module managers/player.manager
  */
 
-import type { CPlayer } from '../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import { framePacket } from '@flyff/core/net/PacketBuffer';
 
 export class PlayerManager {

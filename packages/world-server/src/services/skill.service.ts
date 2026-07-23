@@ -17,10 +17,10 @@
 
 import type { SkillIndex, SkillDefinition, SkillLevel } from '@flyff/resources';
 import type { SkillRepository, CharacterRepository } from '@flyff/database';
-import type { CPlayer } from '../entities/player';
-import type { SpawnManager } from '../managers/spawn.manager';
-import type { ZoneManager } from '../managers/zone.manager';
-import type { PlayerManager } from '../managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { SpawnManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
+import type { PlayerManager } from '@flyff/world-core';
 import type { CombatService } from './combat.service';
 import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
 import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer';

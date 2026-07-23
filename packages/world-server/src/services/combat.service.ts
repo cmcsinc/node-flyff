@@ -20,23 +20,23 @@
 import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
-import type { CPlayer } from '../entities/player';
-import type { CMover } from '../entities/mover';
-import type { SpawnManager } from '../managers/spawn.manager';
-import type { ZoneManager } from '../managers/zone.manager';
-import type { PlayerManager } from '../managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { CMover } from '@flyff/entities';
+import type { SpawnManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
+import type { PlayerManager } from '@flyff/world-core';
 import {
   resolveMelee, xRandomRng, expLevelDiffMult, addExp, cumulativeExp,
   type Rng, type MeleeResult,
 } from '../combat/formulas';
 import { resolveSkillCast } from '../combat/skillFormulas';
-import { EXP_TABLE } from '../combat/expTable';
+import { EXP_TABLE } from '@flyff/entities';
 import { AF_MISS } from '../combat/tables';
 import { playerCombatant, moverCombatant } from '../combat/combatants';
 import type { ItemLookup } from '../combat/equipStats';
-import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '../combat/aiConstants';
+import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '@flyff/entities';
 import { isMoverAttackableBy } from './combat.policy';
-import { MODE } from '../constants/mode';
+import { MODE } from '@flyff/entities';
 import type { DropService } from './drop.service';
 import { DamageSerializer } from '../net/snapshot/damage.serializer';
 import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';

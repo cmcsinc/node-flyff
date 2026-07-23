@@ -11,10 +11,10 @@ import { SessionState } from '@flyff/core/constants/sessionState';
 import { ActMsgHandler } from '../../src/handlers/actMsg.handler';
 import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '../../src/net/snapshot/constants';
 import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
-import type { CPlayer } from '../../src/entities/player';
+import type { CPlayer } from '@flyff/entities';
 import type { ItemManager } from '../../src/managers/item.manager';
 import type { InventoryService, AddItemResult } from '../../src/services/inventory.service';
-import type { PlayerManager } from '../../src/managers/player.manager';
+import type { PlayerManager } from '@flyff/world-core';
 
 const OBJMSG_PICKUP = 11;
 

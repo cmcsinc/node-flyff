@@ -16,10 +16,10 @@ import { SessionState } from '@flyff/core/constants/sessionState';
 import { DoEquipHandler } from '../../src/handlers/doEquip.handler';
 import { INVENTORY_SLOTS, MAX_INVENTORY } from '../../src/net/snapshot/constants';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import { CPlayer } from '../../src/entities/player';
-import type { InventorySlot } from '../../src/entities/player';
-import type { PlayerManager } from '../../src/managers/player.manager';
-import type { ZoneManager } from '../../src/managers/zone.manager';
+import { CPlayer } from '@flyff/entities';
+import type { InventorySlot } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import type { EquipService } from '../../src/services/equip.service';
 
 function mockSocket() {

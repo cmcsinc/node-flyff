@@ -22,7 +22,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import type { Shortcut } from '../../entities/player';
+import type { Shortcut } from '@flyff/entities';
 import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, NULL_ID } from './constants';
 
 export class TaskBarSnapshotSerializer {

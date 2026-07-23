@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { StatService } from '../../src/services/stat.service';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import { SNAPSHOTTYPE_SETSTATE } from '../../src/net/snapshot/constants';

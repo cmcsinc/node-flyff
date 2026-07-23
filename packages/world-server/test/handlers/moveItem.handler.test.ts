@@ -14,8 +14,8 @@ import { PacketReader } from '@flyff/core/net/PacketReader';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { MoveItemHandler } from '../../src/handlers/moveItem.handler';
-import type { CPlayer } from '../../src/entities/player';
-import type { PlayerManager } from '../../src/managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 import type { InventoryService } from '../../src/services/inventory.service';
 
 function mockSocket() {

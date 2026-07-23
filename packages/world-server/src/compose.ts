@@ -4,9 +4,9 @@ import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journa
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
-import { PlayerManager } from './managers/player.manager';
-import { ZoneManager } from './managers/zone.manager';
-import { SpawnManager } from './managers/spawn.manager';
+import { PlayerManager } from '@flyff/world-core';
+import { ZoneManager } from '@flyff/world-core';
+import { SpawnManager } from '@flyff/world-core';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer';
 import { SetExperienceSerializer } from './net/snapshot/setExperience.serializer';
 import { TaskBarSnapshotSerializer } from './net/snapshot/taskbar.serializer';

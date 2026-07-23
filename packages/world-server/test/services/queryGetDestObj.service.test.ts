@@ -4,8 +4,8 @@ import { QueryGetDestObjService } from '../../src/services/queryGetDestObj.servi
 import { DestObjSerializer } from '../../src/net/snapshot/destObj.serializer';
 import { SNAPSHOTTYPE_GETDESTOBJ, NULL_ID } from '../../src/net/snapshot/constants';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import type { PlayerManager } from '../../src/managers/player.manager';
-import type { CPlayer } from '../../src/entities/player';
+import type { PlayerManager } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
 
 const requester = { m_idPlayer: 1 } as unknown as CPlayer;
 

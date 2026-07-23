@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { ZoneManager } from '../../src/managers/zone.manager';
-import { CPlayer } from '../../src/entities/player';
+import { ZoneManager } from '@flyff/world-core';
+import { CPlayer } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 
 interface SpySocket {

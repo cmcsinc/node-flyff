@@ -17,7 +17,7 @@
  * @module services/queryGetPos.service
  */
 
-import type { CPlayer } from '../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import { NULL_ID } from '../net/snapshot/constants';
 
 export type QueryGetPosOutcome =

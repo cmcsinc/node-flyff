@@ -19,7 +19,7 @@
  */
 
 import type { InventoryService } from './inventory.service';
-import type { CPlayer } from '../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import { MAX_INVENTORY } from '../net/snapshot/constants';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
 import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';

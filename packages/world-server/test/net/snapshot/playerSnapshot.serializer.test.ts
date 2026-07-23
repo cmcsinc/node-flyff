@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PlayerSnapshotSerializer } from '../../../src/net/snapshot/playerSnapshot.serializer';
-import { CPlayer } from '../../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   OT_MOVER, MI_MALE, SNAPSHOTTYPE_ADD_OBJ,

@@ -23,9 +23,9 @@
  * @module services/movement.service
  */
 
-import type { ZoneManager } from '../managers/zone.manager';
-import type { Vec3 } from '../entities/player';
-import type { CPlayer } from '../entities/player';
+import type { ZoneManager } from '@flyff/world-core';
+import type { Vec3 } from '@flyff/entities';
+import type { CPlayer } from '@flyff/entities';
 import {
   MoverBroadcastSerializer, type MovementFrame, type Movement2Frame,
 } from '../net/snapshot/moverBroadcast.serializer';

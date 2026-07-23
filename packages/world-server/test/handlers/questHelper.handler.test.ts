@@ -4,9 +4,9 @@ import { PacketReader } from '@flyff/core/net/PacketReader';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { QuestHelperHandler } from '../../src/handlers/questHelper.handler';
-import type { SpawnManager } from '../../src/managers/spawn.manager';
-import type { PlayerManager } from '../../src/managers/player.manager';
-import type { CPlayer } from '../../src/entities/player';
+import type { SpawnManager } from '@flyff/world-core';
+import type { PlayerManager } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
 
 function mockSocket() {
   const written: Buffer[] = [];

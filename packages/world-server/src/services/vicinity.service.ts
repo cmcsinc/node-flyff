@@ -24,8 +24,8 @@
  * @module services/vicinity.service
  */
 
-import type { PlayerManager } from '../managers/player.manager';
-import type { SpawnManager } from '../managers/spawn.manager';
+import type { PlayerManager } from '@flyff/world-core';
+import type { SpawnManager } from '@flyff/world-core';
 import type { NpcSnapshotSerializer } from '../net/snapshot/npcSnapshot.serializer';
 
 export interface VicinityServiceDeps {

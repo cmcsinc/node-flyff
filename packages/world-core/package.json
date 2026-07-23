@@ -1,0 +1,29 @@
+{
+  "name": "@flyff/world-core",
+  "version": "1.0.0",
+  "description": "Flyff shared world layer -- Player/Zone/Spawn managers + QuestHooks seam",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./managers/*": "./dist/managers/*.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src --ext .ts",
+    "test": "tsx --test test/**/*.test.ts",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@flyff/core": "workspace:*",
+    "@flyff/entities": "workspace:*",
+    "@flyff/resources": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}

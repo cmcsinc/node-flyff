@@ -16,7 +16,7 @@
  */
 
 import type { ItemDefinition } from '@flyff/resources';
-import type { CPlayer, InventorySlot } from '../entities/player';
+import type { CPlayer, InventorySlot } from '@flyff/entities';
 import type { InventoryService } from './inventory.service';
 
 export interface ConsumableResult {

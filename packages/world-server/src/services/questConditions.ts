@@ -18,7 +18,7 @@
  */
 
 import type { QuestArg, QuestDef } from '@flyff/resources';
-import type { CPlayer } from '../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 

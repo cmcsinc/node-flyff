@@ -17,7 +17,7 @@ import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { PacketError } from '@flyff/core/errors';
 import { createLogger } from '@flyff/core/logger';
-import type { PlayerManager } from '../managers/player.manager';
+import type { PlayerManager } from '@flyff/world-core';
 import type { StatService } from '../services/stat.service';
 
 const logger = createLogger({ module: 'modifyStatus-handler' });

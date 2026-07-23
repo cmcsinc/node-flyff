@@ -11,9 +11,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { NpcSpeechService } from '../../src/services/npcSpeech.service';
-import type { CMover } from '../../src/entities/mover';
-import type { SpawnManager } from '../../src/managers/spawn.manager';
-import type { ZoneManager } from '../../src/managers/zone.manager';
+import type { CMover } from '@flyff/entities';
+import type { SpawnManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import type { DialogIndex } from '@flyff/resources';
 
 /** Minimal mover stub -- only the fields NpcSpeechService reads. */
