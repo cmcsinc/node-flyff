@@ -48,7 +48,8 @@
     "@flyff/world-core": "workspace:*",
     "@flyff/combat": "workspace:*",
     "@flyff/inventory": "workspace:*",
-    "@flyff/skills": "workspace:*"
+    "@flyff/skills": "workspace:*",
+    "@flyff/quest": "workspace:*"
   },
   "devDependencies": {
     "@flyff/cluster-server": "workspace:*",

@@ -32,7 +32,9 @@
       "@flyff/inventory": ["packages/inventory/src/index.ts"],
       "@flyff/inventory/*": ["packages/inventory/src/*"],
       "@flyff/skills": ["packages/skills/src/index.ts"],
-      "@flyff/skills/*": ["packages/skills/src/*"]
+      "@flyff/skills/*": ["packages/skills/src/*"],
+      "@flyff/quest": ["packages/quest/src/index.ts"],
+      "@flyff/quest/*": ["packages/quest/src/*"]
     }
   }
 }

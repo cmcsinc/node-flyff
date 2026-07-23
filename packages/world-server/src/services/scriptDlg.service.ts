@@ -30,10 +30,10 @@ import type { DialogFile, DialogIndex, DialogState, QuestDef, QuestIndex } from 
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
 import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
-import type { QuestService } from './quest.service';
+import type { QuestService } from '@flyff/quest';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import { createLogger } from '@flyff/core/logger';
-import { buildSetQuest } from '../net/snapshot/quest.serializer';
+import { buildSetQuest } from '@flyff/quest';
 import { ChatSerializer } from '../net/snapshot/chat.serializer';
 import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer';
 
