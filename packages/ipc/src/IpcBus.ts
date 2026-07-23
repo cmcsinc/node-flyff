@@ -7,7 +7,7 @@
  * @module IpcBus
  */
 
-import { signIpcMessage, verifyIpcMessage } from './signing.js';
+import { signIpcMessage, verifyIpcMessage } from './signing';
 
 /**
  * Envelope wrapper for all IPC messages published on the bus.

@@ -5,10 +5,10 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { InventoryService } from '../../src/services/inventory.service.js';
+import { InventoryService } from '../../src/services/inventory.service';
 import { MAX_GOLD } from '@flyff/core';
-import { MAX_INVENTORY } from '../../src/net/snapshot/constants.js';
-import { CPlayer } from '../../src/entities/player.js';
+import { MAX_INVENTORY } from '../../src/net/snapshot/constants';
+import { CPlayer } from '../../src/entities/player';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

@@ -14,12 +14,12 @@
  * @module managers/item.manager
  */
 
-import type { Vec3 } from '../entities/player.js';
-import { GroundItem, FIRST_ITEM_ID, type GroundItemInit } from '../entities/item.js';
-import type { ZoneManager } from './zone.manager.js';
-import { ItemSnapshotSerializer } from '../net/snapshot/itemSnapshot.serializer.js';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
-import { createLogger } from '@flyff/core/logger.js';
+import type { Vec3 } from '../entities/player';
+import { GroundItem, FIRST_ITEM_ID, type GroundItemInit } from '../entities/item';
+import type { ZoneManager } from './zone.manager';
+import { ItemSnapshotSerializer } from '../net/snapshot/itemSnapshot.serializer';
+import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'item-manager' });
 

@@ -10,17 +10,17 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { DoEquipHandler } from '../../src/handlers/doEquip.handler.js';
-import { INVENTORY_SLOTS, MAX_INVENTORY } from '../../src/net/snapshot/constants.js';
-import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import { CPlayer } from '../../src/entities/player.js';
-import type { InventorySlot } from '../../src/entities/player.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { ZoneManager } from '../../src/managers/zone.manager.js';
-import type { EquipService } from '../../src/services/equip.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { DoEquipHandler } from '../../src/handlers/doEquip.handler';
+import { INVENTORY_SLOTS, MAX_INVENTORY } from '../../src/net/snapshot/constants';
+import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import { CPlayer } from '../../src/entities/player';
+import type { InventorySlot } from '../../src/entities/player';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { ZoneManager } from '../../src/managers/zone.manager';
+import type { EquipService } from '../../src/services/equip.service';
 
 function mockSocket() {
   return { session: { state: SessionState.IN_WORLD, charId: 42 }, write: () => true, destroy: () => {} } as never;

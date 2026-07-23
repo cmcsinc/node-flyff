@@ -9,12 +9,12 @@
 import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import * as knexModule from 'knex';
-import type { Knex } from '../../src/types.js';
-import { SkillRepository, type LearnedSkill } from '../../src/repositories/skill.repo.js';
-import { CharacterRepository } from '../../src/repositories/character.repo.js';
-import { up as up001 } from '../../src/migrations/001_initial.js';
-import { up as up005 } from '../../src/migrations/005_skills_slot.js';
-import { down as down001 } from '../../src/migrations/001_initial.js';
+import type { Knex } from '../../src/types';
+import { SkillRepository, type LearnedSkill } from '../../src/repositories/skill.repo';
+import { CharacterRepository } from '../../src/repositories/character.repo';
+import { up as up001 } from '../../src/migrations/001_initial';
+import { up as up005 } from '../../src/migrations/005_skills_slot';
+import { down as down001 } from '../../src/migrations/001_initial';
 
 const knex = (knexModule as any).default || knexModule;
 

@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player.js';
-import { SkillService } from '../../src/services/skill.service.js';
-import { NULL_ID } from '../../src/net/snapshot/constants.js';
+import { CPlayer } from '../../src/entities/player';
+import { SkillService } from '../../src/services/skill.service';
+import { NULL_ID } from '../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';
 import type { SkillIndex, SkillDefinition } from '@flyff/resources';
 

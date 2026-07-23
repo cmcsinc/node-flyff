@@ -9,9 +9,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID } from '../../../src/net/snapshot/constants.js';
-import { buildUpdateItemCount } from '../../../src/net/snapshot/updateItem.serializer.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID } from '../../../src/net/snapshot/constants';
+import { buildUpdateItemCount } from '../../../src/net/snapshot/updateItem.serializer';
 
 describe('buildUpdateItemCount', () => {
   it('produces a 27 B frame with the AddUpdateItem layout', () => {

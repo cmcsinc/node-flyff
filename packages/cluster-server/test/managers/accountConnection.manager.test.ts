@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { AccountConnectionManager } from '../../src/managers/accountConnection.manager.js';
+import { AccountConnectionManager } from '../../src/managers/accountConnection.manager';
 
 /** Minimal net.Socket stub: just the close-event surface `bind()` touches. */
 function makeSocket(): any {

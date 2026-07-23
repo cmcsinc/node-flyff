@@ -7,8 +7,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player.js';
-import { ConsumableService } from '../../src/services/consumable.service.js';
+import { CPlayer } from '../../src/entities/player';
+import { ConsumableService } from '../../src/services/consumable.service';
 import type { CharacterRow } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 

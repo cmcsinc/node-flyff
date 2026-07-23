@@ -4,8 +4,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { ObjectType } from '../../src/constants/objectTypes.js';
-import type { ObjectTypeValue } from '../../src/constants/objectTypes.js';
+import { ObjectType } from '../../src/constants/objectTypes';
+import type { ObjectTypeValue } from '../../src/constants/objectTypes';
 
 describe('ObjectType constants', () => {
   it('matches the C++ OT_* enum (sequential from 0)', () => {

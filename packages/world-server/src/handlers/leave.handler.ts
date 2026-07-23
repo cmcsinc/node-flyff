@@ -9,8 +9,8 @@
  * @module handlers/leave.handler
  */
 
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { createLogger } from '@flyff/core/logger.js';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'leave-handler' });
 

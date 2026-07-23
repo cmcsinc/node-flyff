@@ -8,7 +8,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { ItemDefinitionSchema } from '../../src/schemas/item.schema.js';
+import { ItemDefinitionSchema } from '../../src/schemas/item.schema';
 
 const BASE = {
   id: 2950,

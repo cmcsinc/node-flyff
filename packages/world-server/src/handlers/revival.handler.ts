@@ -8,12 +8,12 @@
  * @module handlers/revival.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { RevivalService, RevivalType } from '../services/revival.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { RevivalService, RevivalType } from '../services/revival.service';
 
 const logger = createLogger({ module: 'revival-handler' });
 

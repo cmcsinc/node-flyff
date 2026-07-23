@@ -16,10 +16,10 @@
  * @module net/snapshot/damage.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { SNAPSHOTTYPE_DAMAGE, NULL_ID } from './constants.js';
-import { AF_FLYING } from '../../combat/tables.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { SNAPSHOTTYPE_DAMAGE, NULL_ID } from './constants';
+import { AF_FLYING } from '../../combat/tables';
 
 export interface DamageFrame {
   readonly attackerObjid: number;

@@ -9,7 +9,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadAllResources } from '../src/index.js';
+import { loadAllResources } from '../src/index';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

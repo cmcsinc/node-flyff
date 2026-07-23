@@ -12,19 +12,19 @@
  * @module handlers/doUseItem
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { UseItemService } from '../services/useItem.service.js';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants.js';
-import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer.js';
-import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer.js';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { Validate } from '@flyff/core/utils/validate';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { UseItemService } from '../services/useItem.service';
+import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
+import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
 
 const logger = createLogger({ module: 'doUseItem-handler' });
 const PARTS_RIDE = 13;

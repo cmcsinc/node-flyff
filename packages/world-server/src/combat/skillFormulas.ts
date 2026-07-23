@@ -12,11 +12,11 @@
  * @module combat/skillFormulas
  */
 
-import type { Combatant, Rng, MeleeResult } from './formulas.js';
+import type { Combatant, Rng, MeleeResult } from './formulas';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import {
   AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1,
-} from './tables.js';
+} from './tables';
 
 /**
  * Magic skill element factor -- **separate from `ELEMENT_MATCH`**

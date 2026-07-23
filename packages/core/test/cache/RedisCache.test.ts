@@ -7,7 +7,7 @@
 
 import { describe, it, before } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { RedisCache } from '../../src/cache/RedisCache.js';
+import { RedisCache } from '../../src/cache/RedisCache';
 
 // ---------------------------------------------------------------------------
 // Mock Redis factory

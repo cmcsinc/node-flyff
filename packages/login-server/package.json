@@ -5,8 +5,32 @@
   "type": "module",
   "private": true,
   "main": "./dist/index.js",
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "target": "node20",
+    "platform": "node",
+    "sourcemap": true,
+    "clean": true,
+    "banner": {
+      "js": "import { createRequire } from 'module'; globalThis.require = createRequire(import.meta.url);"
+    },
+    "external": [
+      "@flyff/core",
+      "@flyff/database",
+      "@flyff/ipc",
+      "argon2",
+      "pino",
+      "zod",
+      "@flyff/*"
+    ]
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsup",
     "dev": "tsx src/index.ts",
     "lint": "eslint src --ext .ts",
     "seed": "tsx src/seed.ts",

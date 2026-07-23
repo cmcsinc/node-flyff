@@ -20,7 +20,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { type ZodTypeAny, ZodError } from 'zod';
-import { deepMerge } from './merge.js';
+import { deepMerge } from './merge';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -224,7 +224,7 @@ function loadDotenv(repoRoot: string): void {
  * @example
  * ```ts
  * import { loadConfig } from '@flyff/core/config';
- * import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world.js';
+ * import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
  *
  * const cfg = await loadConfig('world-server', WorldServerConfigSchema);
  * console.log(cfg.world.tickRateMs); // 50

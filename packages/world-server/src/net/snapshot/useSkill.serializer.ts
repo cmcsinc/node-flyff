@@ -20,9 +20,9 @@
  * @module net/snapshot/useSkill
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_USESKILL, SNAPSHOTTYPE_CLEAR_USESKILL } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_USESKILL, SNAPSHOTTYPE_CLEAR_USESKILL } from './constants';
 
 /** Fields for the USESKILL cast-start snapshot. */
 export interface UseSkillFrame {

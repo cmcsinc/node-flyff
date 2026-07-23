@@ -19,7 +19,7 @@
  * @module services/mapKey.service
  */
 
-import type { PlayerManager } from '../managers/player.manager.js';
+import type { PlayerManager } from '../managers/player.manager';
 
 export interface MapKeyServiceDeps {
   playerManager: PlayerManager;

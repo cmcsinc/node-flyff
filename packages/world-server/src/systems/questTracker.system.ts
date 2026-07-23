@@ -26,16 +26,16 @@
 import type { QuestArg, QuestDef, QuestIndex } from '@flyff/resources';
 import { dropsFor } from '@flyff/resources';
 import type { QuestRepository } from '@flyff/database';
-import type { CPlayer } from '../entities/player.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { InventoryService } from '../services/inventory.service.js';
-import type { Rng } from '../combat/formulas.js';
-import { xRandomRng } from '../combat/formulas.js';
-import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
-import { buildSetQuest, buildQuestTextTime } from '../net/snapshot/quest.serializer.js';
-import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
-import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer.js';
-import { createLogger } from '@flyff/core/logger.js';
+import type { CPlayer } from '../entities/player';
+import type { PlayerManager } from '../managers/player.manager';
+import type { InventoryService } from '../services/inventory.service';
+import type { Rng } from '../combat/formulas';
+import { xRandomRng } from '../combat/formulas';
+import { QUEST_FLAG } from '@flyff/core/constants/quest';
+import { buildSetQuest, buildQuestTextTime } from '../net/snapshot/quest.serializer';
+import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
+import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'quest-tracker' });
 

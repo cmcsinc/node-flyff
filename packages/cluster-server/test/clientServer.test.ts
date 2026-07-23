@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { buildClusterClientServer } from '../src/clientServer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CharHandler } from '../src/handlers/char.handler.js';
+import { buildClusterClientServer } from '../src/clientServer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { CharHandler } from '../src/handlers/char.handler';
 
 describe('buildClusterClientServer', () => {
   it('registers the four character-packet opcodes', () => {

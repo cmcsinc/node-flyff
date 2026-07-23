@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /**
  * One learned skill slot -- { slot: 0..44, skillId, level }.

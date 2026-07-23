@@ -5,11 +5,11 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { DropService, dropLevelFactor, goldSeedId } from '../../src/services/drop.service.js';
-import type { Rng } from '../../src/combat/formulas.js';
+import { DropService, dropLevelFactor, goldSeedId } from '../../src/services/drop.service';
+import type { Rng } from '../../src/combat/formulas';
 import type { ResourceIndex } from '@flyff/resources';
-import { CMover } from '../../src/entities/mover.js';
-import { CPlayer } from '../../src/entities/player.js';
+import { CMover } from '../../src/entities/mover';
+import { CPlayer } from '../../src/entities/player';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

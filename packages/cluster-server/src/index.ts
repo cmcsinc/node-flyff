@@ -1,7 +1,7 @@
-import { compose } from './compose.js';
+import { compose } from './compose';
 import { IpcBus, createLocalBus } from '@flyff/ipc';
-import type { PublisherBusPort } from './ipc/handoffPublisher.js';
-import { buildClusterClientServer } from './clientServer.js';
+import type { PublisherBusPort } from './ipc/handoffPublisher';
+import { buildClusterClientServer } from './clientServer';
 
 /**
  * Connect the ClusterHandoffPublisher to an `IpcBus`.

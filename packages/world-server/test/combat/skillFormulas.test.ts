@@ -36,9 +36,9 @@ import {
   getMagicSkillFactor,
   postCalcMagicSkill,
   resolveSkillCast,
-} from '../../src/combat/skillFormulas.js';
-import type { Combatant, Rng } from '../../src/combat/formulas.js';
-import { AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL } from '../../src/combat/tables.js';
+} from '../../src/combat/skillFormulas';
+import type { Combatant, Rng } from '../../src/combat/formulas';
+import { AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL } from '../../src/combat/tables';
 import type { SkillDefinition } from '@flyff/resources';
 import { loadSkills } from '@flyff/resources';
 

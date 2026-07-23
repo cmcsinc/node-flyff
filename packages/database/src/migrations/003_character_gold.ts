@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /**
  * Adds the `gold` column to `characters` (C++ `m_nGold`).

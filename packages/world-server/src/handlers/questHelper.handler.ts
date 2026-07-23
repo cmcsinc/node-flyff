@@ -10,15 +10,15 @@
  * @module handlers/questHelper.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import { buildNpcPos } from '../net/snapshot/quest.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { Validate } from '@flyff/core/utils/validate';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { SpawnManager } from '../managers/spawn.manager';
+import { buildNpcPos } from '../net/snapshot/quest.serializer';
 
 const logger = createLogger({ module: 'questHelper-handler' });
 const MAX_CHAR_KEY = 255;

@@ -4,9 +4,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { signIpcMessage } from '../src/signing.js';
-import type { IpcRequest } from '../src/IpcServer.js';
-import type { IpcResponseEnvelope } from '../src/IpcServer.js';
+import { signIpcMessage } from '../src/signing';
+import type { IpcRequest } from '../src/IpcServer';
+import type { IpcResponseEnvelope } from '../src/IpcServer';
 
 describe('IpcServer (without actual TLS)', () => {
   it('should validate request envelope structure', () => {

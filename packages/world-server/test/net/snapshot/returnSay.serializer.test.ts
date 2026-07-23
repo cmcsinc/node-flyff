@@ -1,13 +1,13 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   ReturnSaySerializer,
   RETURN_SELF_TARGET,
   RETURN_NOT_FOUND,
-} from '../../../src/net/snapshot/returnSay.serializer.js';
-import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from '../../../src/net/snapshot/constants.js';
+} from '../../../src/net/snapshot/returnSay.serializer';
+import { NULL_ID, SNAPSHOTTYPE_RETURNSAY } from '../../../src/net/snapshot/constants';
 
 describe('ReturnSaySerializer (SNAPSHOTTYPE_RETURNSAY 0x00a9)', () => {
   it('writes recipient objid + flag + name', () => {

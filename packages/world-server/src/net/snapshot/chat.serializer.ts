@@ -15,9 +15,9 @@
  * @module net/snapshot/chat.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_CHAT } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_CHAT } from './constants';
 
 export class ChatSerializer {
   build(speakerObjid: number, text: string): Buffer {

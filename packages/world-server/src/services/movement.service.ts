@@ -23,15 +23,15 @@
  * @module services/movement.service
  */
 
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { Vec3 } from '../entities/player.js';
-import type { CPlayer } from '../entities/player.js';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { Vec3 } from '../entities/player';
+import type { CPlayer } from '../entities/player';
 import {
   MoverBroadcastSerializer, type MovementFrame, type Movement2Frame,
-} from '../net/snapshot/moverBroadcast.serializer.js';
-import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
-import type { LootService } from './loot.service.js';
+} from '../net/snapshot/moverBroadcast.serializer';
+import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
+import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import type { LootService } from './loot.service';
 
 export interface MovementServiceDeps {
   zoneManager: ZoneManager;

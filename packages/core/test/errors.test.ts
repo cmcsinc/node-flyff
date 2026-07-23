@@ -4,7 +4,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { FlyffError, PacketError, AuthError, GameError } from '../src/errors.js';
+import { FlyffError, PacketError, AuthError, GameError } from '../src/errors';
 
 describe('FlyffError', () => {
   it('is an instance of Error', () => {

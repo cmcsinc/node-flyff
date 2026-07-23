@@ -15,9 +15,9 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { writeCItemElemBody } from '../../../src/net/snapshot/itemElemBody.serializer.js';
-import type { InventorySlot } from '../../../src/entities/player.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { writeCItemElemBody } from '../../../src/net/snapshot/itemElemBody.serializer';
+import type { InventorySlot } from '../../../src/entities/player';
 
 describe('writeCItemElemBody', () => {
   it('writes exactly 78 bytes for a populated slot', () => {

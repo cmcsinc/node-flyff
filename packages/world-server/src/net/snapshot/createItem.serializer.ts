@@ -23,10 +23,10 @@
  * @module net/snapshot/createItem
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_CREATEITEM } from './constants.js';
-import { writeCItemElemBody } from './itemElemBody.serializer.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_CREATEITEM } from './constants';
+import { writeCItemElemBody } from './itemElemBody.serializer';
 
 /** One slot this snapshot announces. */
 export interface CreateItemEntry {

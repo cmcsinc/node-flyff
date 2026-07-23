@@ -9,7 +9,7 @@
 
 import * as tls from 'node:tls';
 import * as net from 'node:net';
-import { verifyIpcMessage } from './signing.js';
+import { verifyIpcMessage } from './signing';
 
 /**
  * Request payload structure.

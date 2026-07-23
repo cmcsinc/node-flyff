@@ -13,15 +13,15 @@
  * @module handlers/meleeAttack.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { MeleeAttackService } from '../services/meleeAttack.service.js';
-import type { MeleeAttackFrame } from '../net/snapshot/meleeAttack.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { Validate } from '@flyff/core/utils/validate';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { MeleeAttackService } from '../services/meleeAttack.service';
+import type { MeleeAttackFrame } from '../net/snapshot/meleeAttack.serializer';
 
 const logger = createLogger({ module: 'meleeAttack-handler' });
 

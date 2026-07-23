@@ -1,10 +1,10 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import type { Socket } from 'node:net';
-import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { ServerListHandler } from '../../src/handlers/serverList.handler.js';
-import type { ServerListService, ServerListEntry } from '../../src/services/serverList.service.js';
+import { PacketBuffer } from '@flyff/core/net/PacketBuffer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { ServerListHandler } from '../../src/handlers/serverList.handler';
+import type { ServerListService, ServerListEntry } from '../../src/services/serverList.service';
 
 function mockSocket() {
   const written: Buffer[] = [];

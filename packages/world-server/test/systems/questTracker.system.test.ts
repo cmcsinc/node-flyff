@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { QuestTrackerSystem } from '../../src/systems/questTracker.system.js';
-import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
-import type { CPlayer } from '../../src/entities/player.js';
+import { QuestTrackerSystem } from '../../src/systems/questTracker.system';
+import { QUEST_FLAG } from '@flyff/core/constants/quest';
+import type { CPlayer } from '../../src/entities/player';
 import type { QuestDef, QuestIndex, QuestDrop } from '@flyff/resources';
-import type { AddItemResult, InventoryService } from '../../src/services/inventory.service.js';
-import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
+import type { AddItemResult, InventoryService } from '../../src/services/inventory.service';
+import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer';
+import type { PlayerManager } from '../../src/managers/player.manager';
 
 /** Capturing PlayerManager stub -- records every sendTo by charId. */
 function fakePm(players: CPlayer[]): { pm: PlayerManager; sent: Map<number, Buffer[]> } {

@@ -31,29 +31,29 @@
  * @module systems/ai
  */
 
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { CPlayer } from '../entities/player.js';
-import type { CMover } from '../entities/mover.js';
-import type { Vec3 } from '../entities/player.js';
-import { resolveMelee, xRandomRng, type Rng } from '../combat/formulas.js';
-import { playerCombatant, moverCombatant } from '../combat/combatants.js';
-import { AF_MISS } from '../combat/tables.js';
+import type { SpawnManager } from '../managers/spawn.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { PlayerManager } from '../managers/player.manager';
+import type { CPlayer } from '../entities/player';
+import type { CMover } from '../entities/mover';
+import type { Vec3 } from '../entities/player';
+import { resolveMelee, xRandomRng, type Rng } from '../combat/formulas';
+import { playerCombatant, moverCombatant } from '../combat/combatants';
+import { AF_MISS } from '../combat/tables';
 import {
   RANGE_MOVE, RAGE_LEASH, RANGE_RETURN_TO_BEGIN, HOME_ARRIVAL, SIGHT_RANGE,
   PURSUE_SPEED_FACTOR, RETURN_SPEED_FACTOR, CHASE_WINDOW_MS,
   RETURN_STUCK_MS, REATTACK_JITTER_MS, RANGE_REATTACK_DELAY_MS, SPEED_SCALE,
   AGGRO_LEVEL_BAND, OBJMSG_ATK1, OBJMSG_ATK_RANGE1,
-} from '../combat/aiConstants.js';
-import { DestPosSerializer } from '../net/snapshot/destPos.serializer.js';
-import { DestObjSerializer } from '../net/snapshot/destObj.serializer.js';
-import { DamageSerializer } from '../net/snapshot/damage.serializer.js';
-import { MeleeAttackSerializer } from '../net/snapshot/meleeAttack.serializer.js';
-import { RangeAttackSerializer } from '../net/snapshot/rangeAttack.serializer.js';
-import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants.js';
-import { MODE } from '../constants/mode.js';
-import { createLogger } from '@flyff/core/logger.js';
+} from '../combat/aiConstants';
+import { DestPosSerializer } from '../net/snapshot/destPos.serializer';
+import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
+import { DamageSerializer } from '../net/snapshot/damage.serializer';
+import { MeleeAttackSerializer } from '../net/snapshot/meleeAttack.serializer';
+import { RangeAttackSerializer } from '../net/snapshot/rangeAttack.serializer';
+import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
+import { MODE } from '../constants/mode';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'ai-system' });
 

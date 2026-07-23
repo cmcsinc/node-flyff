@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import {
   writeQuestStruct,
   buildSetQuest,
@@ -9,8 +9,8 @@ import {
   buildQuestTextTime,
   buildNpcPos,
   type RuntimeQuest,
-} from '../../../src/net/snapshot/quest.serializer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+} from '../../../src/net/snapshot/quest.serializer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   SNAPSHOTTYPE_SETQUEST,
   SNAPSHOTTYPE_QUEST_REMOVE,
@@ -18,7 +18,7 @@ import {
   SNAPSHOTTYPE_QUEST_TEXT_TIME,
   SNAPSHOTTYPE_QUESTHELPER_NPCPOS,
   NULL_ID,
-} from '../../../src/net/snapshot/constants.js';
+} from '../../../src/net/snapshot/constants';
 
 const sample: RuntimeQuest = {
   state: 7, time: 300, id: 42, killNpcNum: [3, 5], flags: 0b11,

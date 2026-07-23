@@ -12,10 +12,10 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { buildOpenShopWnd } from '../../../src/net/snapshot/shop.serializer.js';
-import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, MAX_VENDOR_INVENTORY } from '../../../src/net/snapshot/constants.js';
-import type { VendorStock } from '../../../src/entities/mover.js';
+import { buildOpenShopWnd } from '../../../src/net/snapshot/shop.serializer';
+import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, MAX_VENDOR_INVENTORY } from '../../../src/net/snapshot/constants';
+import type { VendorStock } from '../../../src/entities/mover';
 
 /** Tab 0 carries one item (id 81) at slot 0; tabs 1-3 empty. */
 const STOCK: VendorStock = Object.freeze([

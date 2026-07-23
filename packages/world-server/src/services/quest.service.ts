@@ -15,23 +15,23 @@
 
 import type { JournalEntry, QuestRepository, InventoryRepository } from '@flyff/database';
 import type { QuestDef, QuestIndex } from '@flyff/resources';
-import type { CPlayer } from '../entities/player.js';
-import { QUEST_LOG_ACTION, QS_BEGIN, QS_END } from '@flyff/core/constants/quest.js';
-import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
+import type { CPlayer } from '../entities/player';
+import { QUEST_LOG_ACTION, QS_BEGIN, QS_END } from '@flyff/core/constants/quest';
+import type { RuntimeQuest } from '../net/snapshot/quest.serializer';
 import {
   buildSetQuest,
   buildRemoveQuest,
   buildCheckedQuest,
-} from '../net/snapshot/quest.serializer.js';
-import { REMOVEQUEST_TYPE } from '@flyff/core/constants/quest.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { QuestFailReason } from './questConditions.js';
-import { canBegin, isComplete } from './questConditions.js';
-import type { RewardSink } from './questRewards.js';
-import { applyBeginSet, applyEnd } from './questRewards.js';
-import type { InventoryService } from './inventory.service.js';
-import type { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer.js';
-import { bindQuestInventory, type QuestInventory } from './questInventory.adapter.js';
+} from '../net/snapshot/quest.serializer';
+import { REMOVEQUEST_TYPE } from '@flyff/core/constants/quest';
+import { createLogger } from '@flyff/core/logger';
+import type { QuestFailReason } from './questConditions';
+import { canBegin, isComplete } from './questConditions';
+import type { RewardSink } from './questRewards';
+import { applyBeginSet, applyEnd } from './questRewards';
+import type { InventoryService } from './inventory.service';
+import type { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
+import { bindQuestInventory, type QuestInventory } from './questInventory.adapter';
 
 export type { QuestInventory };
 

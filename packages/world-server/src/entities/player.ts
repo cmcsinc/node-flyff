@@ -14,12 +14,12 @@
  */
 
 import type { CharacterRow } from '@flyff/database';
-import { AUTH } from '../constants/authority.js';
-import { getJobProps } from '../combat/tables.js';
-import { maxHitPoint, maxManaPoint } from '../combat/formulas.js';
-import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT } from '../net/snapshot/constants.js';
-import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest.js';
-import type { RuntimeQuest } from '../net/snapshot/quest.serializer.js';
+import { AUTH } from '../constants/authority';
+import { getJobProps } from '../combat/tables';
+import { maxHitPoint, maxManaPoint } from '../combat/formulas';
+import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT } from '../net/snapshot/constants';
+import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest';
+import type { RuntimeQuest } from '../net/snapshot/quest.serializer';
 
 /**
  * Minimal write-capable socket view a player holds for broadcasts.

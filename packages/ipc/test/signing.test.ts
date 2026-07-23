@@ -4,7 +4,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { signIpcMessage, verifyIpcMessage } from '../src/signing.js';
+import { signIpcMessage, verifyIpcMessage } from '../src/signing';
 
 describe('signing', () => {
   const secret = 'test-secret-key';

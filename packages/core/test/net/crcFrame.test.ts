@@ -3,7 +3,7 @@ import * as assert from 'node:assert/strict';
 import {
   crc32Flyff, framePacketCrc, tryDecodeCrcFrame, extractProtocolIdHello,
   CRC_HEADER_SIZE,
-} from '../../src/net/crcFrame.js';
+} from '../../src/net/crcFrame';
 
 describe('v15 CRC frame codec', () => {
   it('crc32Flyff(empty) === 0xFFFFFFFF (both XOR keys exercised, no input)', () => {

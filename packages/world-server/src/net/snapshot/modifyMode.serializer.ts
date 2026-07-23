@@ -13,9 +13,9 @@
  * @module net/snapshot/modifyMode.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_MODIFYMODE } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_MODIFYMODE } from './constants';
 
 export class ModifyModeSerializer {
   build(objid: number, dwMode: number): Buffer {

@@ -15,8 +15,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { ItemSnapshotSerializer } from '../../../src/net/snapshot/itemSnapshot.serializer.js';
-import { GroundItem } from '../../../src/entities/item.js';
+import { ItemSnapshotSerializer } from '../../../src/net/snapshot/itemSnapshot.serializer';
+import { GroundItem } from '../../../src/entities/item';
 
 const HEADER = 10; // SNAPSHOT DWORD + NULL_ID DWORD + count WORD
 const PER_ENTRY = 114;

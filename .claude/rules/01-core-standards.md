@@ -7,7 +7,7 @@ These rules apply to every file in the project without exception.
 - **Strict mode is mandatory.** `"strict": true` in every `tsconfig.json`. Zero `any`. Use `unknown` + type narrowing instead.
 - **No `@ts-ignore` or `@ts-expect-error`** unless accompanied by a comment explaining why it is unavoidable.
 - **No type assertions** (`as SomeType`) unless you have just narrowed the type with a runtime check.
-- **ESM only.** Every file uses `import`/`export`. No `require()`, no `.cjs` files. Import paths must end in `.js` (compiled output resolution under `Node16`).
+- **ESM only.** Every file uses `import`/`export`. No `require()`, no `.cjs` files. Imports are **extensionless** (moduleResolution `Bundler`): dev `tsx` resolves via `tsconfig.base.json` `paths` → `packages/*/src`, prod resolves via package `exports` → `dist/*.js`.
 - **`"type": "module"`** in every `package.json`.
 - **Consistent type imports.** Always use `import type { Foo }` for types that are only used as types — never mix value and type imports on the same line without the `type` keyword.
 
@@ -44,6 +44,6 @@ Order must be:
 
 ## Errors
 
-- All custom errors must extend `FlyffError` from `@flyff/core/errors.js`.
+- All custom errors must extend `FlyffError` from `@flyff/core/errors`.
 - The three standard subclasses are `PacketError`, `AuthError`, `GameError`.
 - Never throw plain `Error` — always throw a typed subclass so handlers can discriminate.

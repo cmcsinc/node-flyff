@@ -16,8 +16,8 @@
  */
 
 import type { ItemDefinition } from '@flyff/resources';
-import type { CPlayer, InventorySlot } from '../entities/player.js';
-import type { InventoryService } from './inventory.service.js';
+import type { CPlayer, InventorySlot } from '../entities/player';
+import type { InventoryService } from './inventory.service';
 
 export interface ConsumableResult {
   hp?: number;

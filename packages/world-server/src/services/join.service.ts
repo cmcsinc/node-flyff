@@ -16,15 +16,15 @@
  */
 
 import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
-import { createLogger } from '@flyff/core/logger.js';
-import { CPlayer } from '../entities/player.js';
-import type { PlayerSocket } from '../entities/player.js';
-import { AUTH } from '../constants/authority.js';
-import { withinLevelExp } from '../combat/formulas.js';
-import { decodeTaskBar } from './taskbar.service.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { ZoneManager } from '../managers/zone.manager.js';
-import type { ConsumedHandoff } from '../ipc/clusterListener.js';
+import { createLogger } from '@flyff/core/logger';
+import { CPlayer } from '../entities/player';
+import type { PlayerSocket } from '../entities/player';
+import { AUTH } from '../constants/authority';
+import { withinLevelExp } from '../combat/formulas';
+import { decodeTaskBar } from './taskbar.service';
+import type { PlayerManager } from '../managers/player.manager';
+import type { ZoneManager } from '../managers/zone.manager';
+import type { ConsumedHandoff } from '../ipc/clusterListener';
 
 const logger = createLogger({ module: 'join-service' });
 

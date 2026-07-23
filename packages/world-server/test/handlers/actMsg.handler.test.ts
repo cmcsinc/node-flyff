@@ -5,16 +5,16 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { ActMsgHandler } from '../../src/handlers/actMsg.handler.js';
-import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '../../src/net/snapshot/constants.js';
-import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import type { ItemManager } from '../../src/managers/item.manager.js';
-import type { InventoryService, AddItemResult } from '../../src/services/inventory.service.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { ActMsgHandler } from '../../src/handlers/actMsg.handler';
+import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '../../src/net/snapshot/constants';
+import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
+import type { CPlayer } from '../../src/entities/player';
+import type { ItemManager } from '../../src/managers/item.manager';
+import type { InventoryService, AddItemResult } from '../../src/services/inventory.service';
+import type { PlayerManager } from '../../src/managers/player.manager';
 
 const OBJMSG_PICKUP = 11;
 

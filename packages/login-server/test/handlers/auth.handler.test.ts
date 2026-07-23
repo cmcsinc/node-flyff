@@ -1,13 +1,13 @@
 import { describe, it, before, beforeEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import type { Socket } from 'node:net';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { AuthHandler } from '../../src/handlers/auth.handler.js';
-import { encryptV15Password } from '../../src/utils/v15Password.js';
-import type { AuthService } from '../../src/services/auth.service.js';
-import type { TokenService } from '../../src/services/token.service.js';
-import type { EventBus } from '@flyff/core/eventBus.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { AuthHandler } from '../../src/handlers/auth.handler';
+import { encryptV15Password } from '../../src/utils/v15Password';
+import type { AuthService } from '../../src/services/auth.service';
+import type { TokenService } from '../../src/services/token.service';
+import type { EventBus } from '@flyff/core/eventBus';
 
 const V = '20100412';
 const MD5HEX = '0123456789abcdef0123456789abcdef'; // 32 chars

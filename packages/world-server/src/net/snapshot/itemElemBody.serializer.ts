@@ -35,8 +35,8 @@
  * @module net/snapshot/itemElemBody
  */
 
-import type { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import type { InventorySlot } from '../../entities/player.js';
+import type { PacketWriter } from '@flyff/core/net/PacketWriter';
+import type { InventorySlot } from '../../entities/player';
 
 /**
  * Write the CItemBase + CItemElem body for one slot. `objId` is the per-slot

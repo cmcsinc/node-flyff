@@ -18,9 +18,9 @@
  * @module net/snapshot/notice.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_TEXT, TEXT_GENERAL, TEXT_COLOR_NOTICE } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_TEXT, TEXT_GENERAL, TEXT_COLOR_NOTICE } from './constants';
 
 export class NoticeSerializer {
   build(text: string, color?: number): Buffer {

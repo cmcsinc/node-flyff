@@ -4,10 +4,10 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { IpcTimeoutError, IpcRequestError } from '../src/IpcClient.js';
-import { signIpcMessage } from '../src/signing.js';
-import type { IpcRequestPayload } from '../src/IpcClient.js';
-import type { IpcResponseEnvelope } from '../src/IpcClient.js';
+import { IpcTimeoutError, IpcRequestError } from '../src/IpcClient';
+import { signIpcMessage } from '../src/signing';
+import type { IpcRequestPayload } from '../src/IpcClient';
+import type { IpcResponseEnvelope } from '../src/IpcClient';
 
 describe('IpcClient (without actual TLS)', () => {
   it('should create request envelope with signature', () => {

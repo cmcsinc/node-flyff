@@ -8,8 +8,8 @@
  * @module managers/player.manager
  */
 
-import type { CPlayer } from '../entities/player.js';
-import { framePacket } from '@flyff/core/net/PacketBuffer.js';
+import type { CPlayer } from '../entities/player';
+import { framePacket } from '@flyff/core/net/PacketBuffer';
 
 export class PlayerManager {
   private readonly players = new Map<number, CPlayer>();

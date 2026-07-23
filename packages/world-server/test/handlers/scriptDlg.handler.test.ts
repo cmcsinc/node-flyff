@@ -1,13 +1,13 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { framePacket } from '@flyff/core/net/PacketBuffer.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { ScriptDlgHandler } from '../../src/handlers/scriptDlg.handler.js';
-import type { ScriptDlgService, ScriptDlgResult } from '../../src/services/scriptDlg.service.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { CPlayer } from '../../src/entities/player.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { framePacket } from '@flyff/core/net/PacketBuffer';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { ScriptDlgHandler } from '../../src/handlers/scriptDlg.handler';
+import type { ScriptDlgService, ScriptDlgResult } from '../../src/services/scriptDlg.service';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { CPlayer } from '../../src/entities/player';
 
 function mockSocket(state = SessionState.IN_WORLD) {
   const written: Buffer[] = [];

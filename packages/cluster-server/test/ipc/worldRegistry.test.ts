@@ -2,7 +2,7 @@ import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import net from 'node:net';
 import type { Logger } from 'pino';
-import { WorldRegistry } from '../../src/ipc/worldRegistry.js';
+import { WorldRegistry } from '../../src/ipc/worldRegistry';
 import { IPC_OP, computeRegistrationToken, type RegisterWorldRequest, type WorldHeartbeat } from '@flyff/ipc';
 
 const DUMMY_LOGGER = {

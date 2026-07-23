@@ -13,13 +13,13 @@
  * @module handlers/queryPlayerData.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { sendPacket } from '@flyff/core/net/dispatcher.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { QueryPlayerDataService } from '../services/queryPlayerData.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { sendPacket } from '@flyff/core/net/dispatcher';
+import { Validate } from '@flyff/core/utils/validate';
+import { createLogger } from '@flyff/core/logger';
+import type { QueryPlayerDataService } from '../services/queryPlayerData.service';
 
 const logger = createLogger({ module: 'query-player-data-handler' });
 

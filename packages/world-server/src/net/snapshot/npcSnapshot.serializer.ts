@@ -49,12 +49,12 @@
  * @module net/snapshot/npcSnapshot.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CMover, MoverEquipPart } from '../../entities/mover.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { CMover, MoverEquipPart } from '../../entities/mover';
 import {
   SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, NULL_ID,
-} from './constants.js';
+} from './constants';
 
 export class NpcSnapshotSerializer {
   /** Build the SNAPSHOT/ADD_OBJ payload for a batch of NPC movers. */

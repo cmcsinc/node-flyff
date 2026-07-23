@@ -1,14 +1,14 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NoticeSerializer } from '../../../src/net/snapshot/notice.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NoticeSerializer } from '../../../src/net/snapshot/notice.serializer';
 import {
   NULL_ID,
   SNAPSHOTTYPE_TEXT,
   TEXT_COLOR_NOTICE,
   TEXT_GENERAL,
-} from '../../../src/net/snapshot/constants.js';
+} from '../../../src/net/snapshot/constants';
 
 describe('NoticeSerializer (SNAPSHOTTYPE_TEXT 0x00a0)', () => {
   it('writes the TEXT_GENERAL state byte before text + color (__S_SERVER_UNIFY)', () => {

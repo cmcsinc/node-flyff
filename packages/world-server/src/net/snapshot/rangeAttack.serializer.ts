@@ -14,9 +14,9 @@
  * @module net/snapshot/rangeAttack.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { SNAPSHOTTYPE_RANGE_ATTACK, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { SNAPSHOTTYPE_RANGE_ATTACK, NULL_ID } from './constants';
 
 export interface RangeAttackFrame {
   /** `OBJMSG_ATK_RANGE*` (DWORD) -- ranged swing id. */

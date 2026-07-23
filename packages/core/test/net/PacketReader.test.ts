@@ -4,8 +4,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '../../src/net/PacketReader.js';
-import { PacketError } from '../../src/errors.js';
+import { PacketReader } from '../../src/net/PacketReader';
+import { PacketError } from '../../src/errors';
 
 describe('PacketReader', () => {
   describe('constructor', () => {

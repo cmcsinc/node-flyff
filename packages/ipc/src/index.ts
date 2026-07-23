@@ -12,8 +12,8 @@
 // ---------------------------------------------------------------------------
 // IPC Opcode constants
 // ---------------------------------------------------------------------------
-export { IPC_OP } from './opcodes.js';
-export type { IpcOpcode } from './opcodes.js';
+export { IPC_OP } from './opcodes';
+export type { IpcOpcode } from './opcodes';
 
 // ---------------------------------------------------------------------------
 // Registration token utilities
@@ -21,8 +21,8 @@ export type { IpcOpcode } from './opcodes.js';
 export {
   computeRegistrationToken,
   verifyRegistrationToken,
-} from './registration.js';
-export type { ServerType } from './registration.js';
+} from './registration';
+export type { ServerType } from './registration';
 
 // ---------------------------------------------------------------------------
 // Zod schemas -- registration & handshake messages
@@ -43,7 +43,7 @@ export {
   // Player handoff
   PlayerEnterWorldSchema,
   PlayerEnterWorldAckSchema,
-} from './schemas/registration.schema.js';
+} from './schemas/registration.schema';
 
 // ---------------------------------------------------------------------------
 // Inferred TypeScript types
@@ -61,19 +61,19 @@ export type {
   UnregisterCluster,
   PlayerEnterWorld,
   PlayerEnterWorldAck,
-} from './schemas/registration.schema.js';
+} from './schemas/registration.schema';
 
 // ---------------------------------------------------------------------------
 // Core IPC Framework
 // ---------------------------------------------------------------------------
-export { signIpcMessage, verifyIpcMessage } from './signing.js';
-export { CircuitBreaker, CircuitOpenError } from './circuit.js';
-export type { CircuitBreakerOptions, CircuitState } from './circuit.js';
-export { IpcBus } from './IpcBus.js';
-export type { IpcMessageEnvelope, MessageHandler } from './IpcBus.js';
-export { LocalBus, createLocalBus } from './localBus.js';
-export type { LocalBusLike, LocalBusOptions } from './localBus.js';
-export { IpcServer } from './IpcServer.js';
-export type { IpcRequest, IpcResponseEnvelope, RequestHandler, IpcServerTLSOptions } from './IpcServer.js';
-export { IpcClient, IpcTimeoutError, IpcRequestError } from './IpcClient.js';
-export type { IpcRequestPayload, IpcClientTLSOptions } from './IpcClient.js';
+export { signIpcMessage, verifyIpcMessage } from './signing';
+export { CircuitBreaker, CircuitOpenError } from './circuit';
+export type { CircuitBreakerOptions, CircuitState } from './circuit';
+export { IpcBus } from './IpcBus';
+export type { IpcMessageEnvelope, MessageHandler } from './IpcBus';
+export { LocalBus, createLocalBus } from './localBus';
+export type { LocalBusLike, LocalBusOptions } from './localBus';
+export { IpcServer } from './IpcServer';
+export type { IpcRequest, IpcResponseEnvelope, RequestHandler, IpcServerTLSOptions } from './IpcServer';
+export { IpcClient, IpcTimeoutError, IpcRequestError } from './IpcClient';
+export type { IpcRequestPayload, IpcClientTLSOptions } from './IpcClient';

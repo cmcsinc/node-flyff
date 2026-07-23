@@ -10,13 +10,13 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { MoveItemHandler } from '../../src/handlers/moveItem.handler.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { InventoryService } from '../../src/services/inventory.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { MoveItemHandler } from '../../src/handlers/moveItem.handler';
+import type { CPlayer } from '../../src/entities/player';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { InventoryService } from '../../src/services/inventory.service';
 
 function mockSocket() {
   return { session: { state: SessionState.IN_WORLD, charId: 42 }, write: () => true, destroy: () => {} } as never;

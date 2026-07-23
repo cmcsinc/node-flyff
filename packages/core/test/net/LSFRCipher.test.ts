@@ -4,7 +4,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { LSFRCipher, transformBuffer, transformBufferCopy } from '../../src/net/LSFRCipher.js';
+import { LSFRCipher, transformBuffer, transformBufferCopy } from '../../src/net/LSFRCipher';
 
 describe('LSFRCipher', () => {
   describe('constructor', () => {
@@ -315,8 +315,8 @@ describe('Utility Functions', () => {
 
 describe('Integration Tests', () => {
   it('should work with PacketWriter and PacketReader round-trip', async () => {
-    const { PacketWriter } = await import('../../src/net/PacketWriter.js');
-    const { PacketReader } = await import('../../src/net/PacketReader.js');
+    const { PacketWriter } = await import('../../src/net/PacketWriter');
+    const { PacketReader } = await import('../../src/net/PacketReader');
 
     const key = 0x12345678;
 
@@ -342,8 +342,8 @@ describe('Integration Tests', () => {
   });
 
   it('should handle realistic packet sizes', async () => {
-    const { PacketWriter } = await import('../../src/net/PacketWriter.js');
-    const { PacketReader } = await import('../../src/net/PacketReader.js');
+    const { PacketWriter } = await import('../../src/net/PacketWriter');
+    const { PacketReader } = await import('../../src/net/PacketReader');
 
     const key = 999999;
 

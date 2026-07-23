@@ -7,7 +7,7 @@
 
 import { describe, it, before, after, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { MemoryCache } from '../../src/cache/MemoryCache.js';
+import { MemoryCache } from '../../src/cache/MemoryCache';
 
 // ---------------------------------------------------------------------------
 // get / set / del -- basic behaviour

@@ -7,13 +7,13 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CombatService } from '../../src/services/combat.service.js';
-import type { Rng } from '../../src/combat/formulas.js';
-import { CPlayer } from '../../src/entities/player.js';
+import { CombatService } from '../../src/services/combat.service';
+import type { Rng } from '../../src/combat/formulas';
+import { CPlayer } from '../../src/entities/player';
 import type { CharacterRow } from '@flyff/database';
-import { CMover } from '../../src/entities/mover.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { MODE } from '../../src/constants/mode.js';
+import { CMover } from '../../src/entities/mover';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { MODE } from '../../src/constants/mode';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {

@@ -51,13 +51,13 @@
  * @module net/snapshot/itemSnapshot
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { GroundItem } from '../../entities/item.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { GroundItem } from '../../entities/item';
 import {
   SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_DEL_OBJ, OT_ITEM,
-} from './constants.js';
-import { writeCItemElemBody } from './itemElemBody.serializer.js';
+} from './constants';
+import { writeCItemElemBody } from './itemElemBody.serializer';
 
 export class ItemSnapshotSerializer {
   /** Build the SNAPSHOT/ADD_OBJ payload for a batch of ground items. */

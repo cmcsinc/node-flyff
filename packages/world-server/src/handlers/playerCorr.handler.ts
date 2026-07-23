@@ -7,14 +7,14 @@
  * @module handlers/playerCorr.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { MovementService } from '../services/movement.service.js';
-import { readMovementFrame } from './playerMoved.handler.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { MovementService } from '../services/movement.service';
+import { readMovementFrame } from './playerMoved.handler';
 
 const logger = createLogger({ module: 'playerCorr-handler' });
 

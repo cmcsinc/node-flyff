@@ -12,7 +12,7 @@ import {
   ClusterServerConfigSchema,
   CharacterDefaultsSchema,
   ClusterRegistrationConfigSchema,
-} from '../../src/../../src/../src/config/../../src/config/schemas/cluster.schema.js';
+} from '../../src/../../src/../src/config/../../src/config/schemas/cluster.schema';
 
 // ---------------------------------------------------------------------------
 // Minimal valid base fields required by BaseConfigSchema

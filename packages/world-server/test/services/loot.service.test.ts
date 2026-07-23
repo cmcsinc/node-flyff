@@ -5,15 +5,15 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { LootService } from '../../src/services/loot.service.js';
-import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '../../src/net/snapshot/constants.js';
-import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer.js';
-import type { CPlayer, Vec3 } from '../../src/entities/player.js';
-import type { ItemManager } from '../../src/managers/item.manager.js';
-import type { InventoryService, AddItemResult } from '../../src/services/inventory.service.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { ZoneManager } from '../../src/managers/zone.manager.js';
-import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
+import { LootService } from '../../src/services/loot.service';
+import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '../../src/net/snapshot/constants';
+import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
+import type { CPlayer, Vec3 } from '../../src/entities/player';
+import type { ItemManager } from '../../src/managers/item.manager';
+import type { InventoryService, AddItemResult } from '../../src/services/inventory.service';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { ZoneManager } from '../../src/managers/zone.manager';
+import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 
 /** Subtype WORD of a self-snapshot: offset 14 (after SNAPSHOT hdr + objid). */
 function subtype(buf: Buffer): number {

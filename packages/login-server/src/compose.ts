@@ -1,12 +1,12 @@
 import { createLogger, type Logger, loadConfig, type LoginServerConfig, MemoryCache, createEventBus, type EventBus } from '@flyff/core';
 import { LoginServerConfigSchema } from '@flyff/core/config/schemas/login';
 import { createDb, type DbConfig, AccountRepository } from '@flyff/database';
-import { ClusterRegistry } from './ipc/clusterRegistry.js';
-import { ServerListService } from './services/serverList.service.js';
-import { AuthService } from './services/auth.service.js';
-import { TokenService } from './services/token.service.js';
-import { AuthHandler } from './handlers/auth.handler.js';
-import { ServerListHandler } from './handlers/serverList.handler.js';
+import { ClusterRegistry } from './ipc/clusterRegistry';
+import { ServerListService } from './services/serverList.service';
+import { AuthService } from './services/auth.service';
+import { TokenService } from './services/token.service';
+import { AuthHandler } from './handlers/auth.handler';
+import { ServerListHandler } from './handlers/serverList.handler';
 
 type LoginEvents = {
   'login:success': [{ accountId: number; account: string; socket: unknown; handoffToken: string }];

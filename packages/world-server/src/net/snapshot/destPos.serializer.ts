@@ -19,10 +19,10 @@
  * @module net/snapshot/destPos.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { Vec3 } from '../../entities/player.js';
-import { SNAPSHOTTYPE_DESTPOS, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { Vec3 } from '../../entities/player';
+import { SNAPSHOTTYPE_DESTPOS, NULL_ID } from './constants';
 
 /** Parsed DESTPOS body fields (DPSrvr.cpp:4364 OnPlayerDestPos read order). */
 export interface DestPosFrame {

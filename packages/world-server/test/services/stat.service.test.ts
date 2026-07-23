@@ -1,9 +1,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player.js';
-import { StatService } from '../../src/services/stat.service.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { SNAPSHOTTYPE_SETSTATE } from '../../src/net/snapshot/constants.js';
+import { CPlayer } from '../../src/entities/player';
+import { StatService } from '../../src/services/stat.service';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { SNAPSHOTTYPE_SETSTATE } from '../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';
 
 /** Minimal CharacterRow for CPlayer.fromRow (mirrors player.test.ts). */

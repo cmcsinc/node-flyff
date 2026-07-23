@@ -10,8 +10,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 
-import { ServerListService } from '../../src/services/serverList.service.js';
-import type { ClusterEntry } from '../../src/ipc/clusterRegistry.js';
+import { ServerListService } from '../../src/services/serverList.service';
+import type { ClusterEntry } from '../../src/ipc/clusterRegistry';
 
 // ---------------------------------------------------------------------------
 // Mock helpers
@@ -85,7 +85,7 @@ function makeService(
   const svc = new ServerListService();
   svc.init({
     // Cast: the mock satisfies the narrow interface the service actually uses.
-    clusterRegistry: makeRegistryMock(onlineClusters) as unknown as import('../ipc/clusterRegistry.js').ClusterRegistry,
+    clusterRegistry: makeRegistryMock(onlineClusters) as unknown as import('../ipc/clusterRegistry').ClusterRegistry,
     staticServerList,
   });
   return svc;

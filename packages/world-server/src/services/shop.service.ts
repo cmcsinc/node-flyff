@@ -15,11 +15,11 @@
  */
 
 import { MMI_TRADE } from '@flyff/resources';
-import type { SpawnManager } from '../managers/spawn.manager.js';
-import type { CPlayer } from '../entities/player.js';
-import type { VendorStock } from '../entities/mover.js';
-import type { InventoryService } from './inventory.service.js';
-import { MAX_INVENTORY, MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB } from '../net/snapshot/constants.js';
+import type { SpawnManager } from '../managers/spawn.manager';
+import type { CPlayer } from '../entities/player';
+import type { VendorStock } from '../entities/mover';
+import type { InventoryService } from './inventory.service';
+import { MAX_INVENTORY, MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB } from '../net/snapshot/constants';
 
 /** propItem fields the shop needs to price an item. */
 interface ShopItemDef {

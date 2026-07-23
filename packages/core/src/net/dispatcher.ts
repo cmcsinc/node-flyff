@@ -15,10 +15,10 @@
  */
 
 import net, { type Server, type Socket } from 'node:net';
-import { PacketBuffer, framePacket } from './PacketBuffer.js';
-import { PacketReader } from './PacketReader.js';
-import { SessionState, type SessionStateValue } from '../constants/sessionState.js';
-import { tryDecodeCrcFrame, CRC_HEADER_SIZE, CRC_HEADERMARK, CRC_MAX_BUFFER } from './crcFrame.js';
+import { PacketBuffer, framePacket } from './PacketBuffer';
+import { PacketReader } from './PacketReader';
+import { SessionState, type SessionStateValue } from '../constants/sessionState';
+import { tryDecodeCrcFrame, CRC_HEADER_SIZE, CRC_HEADERMARK, CRC_MAX_BUFFER } from './crcFrame';
 
 /** Per-connection session state. Handlers gate access by `session.state`. */
 export interface ClientSession {

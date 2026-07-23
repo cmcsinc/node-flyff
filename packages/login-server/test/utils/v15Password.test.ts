@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import {
   decryptV15Password, encryptV15Password, V15_PASSWORD_BLOB_SIZE, MAX_PASSWORD,
-} from '../../src/utils/v15Password.js';
+} from '../../src/utils/v15Password';
 
 describe('v15 password crypto (AES-128-CBC, key dldhsvmflvm)', () => {
   it('encrypts to the fixed 672-byte blob size', () => {

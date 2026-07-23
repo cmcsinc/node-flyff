@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { Validate } from '../../src/utils/validate.js';
-import { PacketError } from '../../src/errors.js';
+import { Validate } from '../../src/utils/validate';
+import { PacketError } from '../../src/errors';
 
 describe('Validate', () => {
   describe('name()', () => {

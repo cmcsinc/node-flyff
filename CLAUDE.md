@@ -115,7 +115,8 @@ tools/                ← packet-sniffer, resource-inspector (dev tools)
 | Validation | **Zod** — config env, IPC schemas, packet field validation |
 | Logging | `pino` (structured JSON) |
 | Dev runner | `tsx` (ts-node alternative, ESM-native) |
-| Build | `tsc` (outDir: dist/) |
+| Build | `tsup` (esbuild ESM bundles → dist/) |
+| Module resolution | `Bundler` — extensionless imports in dev (tsconfig `paths`) and prod (`exports`) |
 | Test runner | Node.js native (`node --test`) + `tsx` |
 | Linting | ESLint + `@typescript-eslint` |
 

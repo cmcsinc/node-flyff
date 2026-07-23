@@ -9,8 +9,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { ItemManager } from '../../src/managers/item.manager.js';
-import { FIRST_ITEM_ID } from '../../src/entities/item.js';
+import { ItemManager } from '../../src/managers/item.manager';
+import { FIRST_ITEM_ID } from '../../src/entities/item';
 
 function snapshotSubtype(payload: Buffer): number {
   // [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2] -> offset 14.

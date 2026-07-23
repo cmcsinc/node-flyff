@@ -11,14 +11,14 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import { createResourceLogger } from '../logger.js';
+import { createResourceLogger } from '../logger';
 import {
   DialogFileSchema,
   DialogStringTableSchema,
   DialogNpcMapSchema,
   type DialogFile,
   type DialogState,
-} from '../schemas/dialog.schema.js';
+} from '../schemas/dialog.schema';
 
 const logger = createResourceLogger('dialog.loader');
 

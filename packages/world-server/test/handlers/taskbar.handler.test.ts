@@ -8,14 +8,14 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { TaskBarHandler } from '../../src/handlers/taskbar.handler.js';
-import { TaskBarService } from '../../src/services/taskbar.service.js';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../src/net/snapshot/constants.js';
-import type { Shortcut } from '../../src/entities/player.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { TaskBarHandler } from '../../src/handlers/taskbar.handler';
+import { TaskBarService } from '../../src/services/taskbar.service';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../src/net/snapshot/constants';
+import type { Shortcut } from '../../src/entities/player';
+import type { PlayerManager } from '../../src/managers/player.manager';
 
 function emptyGrid(): Shortcut[][] {
   return Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>

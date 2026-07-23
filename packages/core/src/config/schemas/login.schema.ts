@@ -11,7 +11,7 @@
  */
 
 import { z } from 'zod';
-import { BaseConfigSchema } from './base.schema.js';
+import { BaseConfigSchema } from './base.schema';
 
 // ---------------------------------------------------------------------------
 // Auth sub-schema
@@ -89,7 +89,7 @@ export const LoginRegistrationConfigSchema = z.object({
  * @example
  * ```ts
  * import { loadConfig } from '@flyff/core/config';
- * import { LoginServerConfigSchema } from '@flyff/core/config/schemas/login.js';
+ * import { LoginServerConfigSchema } from '@flyff/core/config/schemas/login';
  *
  * const config = loadConfig('login-server', LoginServerConfigSchema);
  * ```

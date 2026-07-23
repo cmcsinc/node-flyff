@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
     "clean": "rm -rf dist",
     "test": "tsx --test test/**/*.test.ts",
     "typecheck": "tsc --noEmit",

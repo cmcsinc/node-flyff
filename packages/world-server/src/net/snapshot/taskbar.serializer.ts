@@ -20,10 +20,10 @@
  * @module net/snapshot/taskbar
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { Shortcut } from '../../entities/player.js';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { Shortcut } from '../../entities/player';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, NULL_ID } from './constants';
 
 export class TaskBarSnapshotSerializer {
   /** Build the SNAPSHOT/TASKBAR payload for `player`'s bound grid. */

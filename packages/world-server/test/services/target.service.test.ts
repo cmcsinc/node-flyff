@@ -1,10 +1,10 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { TargetService } from '../../src/services/target.service.js';
-import type { SpawnManager } from '../../src/managers/spawn.manager.js';
-import type { CMover } from '../../src/entities/mover.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import { NULL_ID } from '../../src/net/snapshot/constants.js';
+import { TargetService } from '../../src/services/target.service';
+import type { SpawnManager } from '../../src/managers/spawn.manager';
+import type { CMover } from '../../src/entities/mover';
+import type { CPlayer } from '../../src/entities/player';
+import { NULL_ID } from '../../src/net/snapshot/constants';
 
 /** Mutatable player stub with the fields TargetService touches. */
 function fakePlayer(pk = false): CPlayer {

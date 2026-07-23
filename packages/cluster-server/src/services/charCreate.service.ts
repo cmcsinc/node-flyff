@@ -16,8 +16,8 @@
  */
 
 import type { AccountRepository, CharacterRepository } from '@flyff/database';
-import { Validate } from '@flyff/core/utils/validate.js';
-import { PacketError } from '@flyff/core/errors.js';
+import { Validate } from '@flyff/core/utils/validate';
+import { PacketError } from '@flyff/core/errors';
 
 // Error codes from `game/source/_Network/MsgHdr.h:1315-1326` (+ best-effort).
 const ERR_DUPLICATE_SLOT = 105;

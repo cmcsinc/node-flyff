@@ -9,7 +9,7 @@
 import { describe, it, after } from 'node:test';
 import * as assert from 'node:assert/strict';
 import net, { type AddressInfo } from 'node:net';
-import { LocalBus, createLocalBus } from '../src/localBus.js';
+import { LocalBus, createLocalBus } from '../src/localBus';
 
 const noopLogger = {
   info: () => {},

@@ -5,9 +5,31 @@
   "type": "module",
   "private": true,
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "tsup": {
+    "entry": [
+      "src/main.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "target": "node20",
+    "platform": "node",
+    "sourcemap": true,
+    "clean": true,
+    "banner": {
+      "js": "import { createRequire } from 'module'; globalThis.require = createRequire(import.meta.url);"
+    },
+    "external": [
+      "@flyff/core",
+      "@flyff/database",
+      "knex",
+      "sqlite3",
+      "ws",
+      "@flyff/*"
+    ]
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsup",
     "dev": "tsx watch src/main.ts",
     "start": "node dist/main.js",
     "clean": "rimraf dist"

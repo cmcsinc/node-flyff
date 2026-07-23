@@ -22,15 +22,15 @@
  * @module handlers/join.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { JoinService } from '../services/join.service.js';
-import type { PlayerSnapshotSerializer } from '../net/snapshot/playerSnapshot.serializer.js';
-import type { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer.js';
-import type { TaskBarSnapshotSerializer } from '../net/snapshot/taskbar.serializer.js';
-import { cumulativeExp } from '../combat/formulas.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { createLogger } from '@flyff/core/logger';
+import type { JoinService } from '../services/join.service';
+import type { PlayerSnapshotSerializer } from '../net/snapshot/playerSnapshot.serializer';
+import type { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer';
+import type { TaskBarSnapshotSerializer } from '../net/snapshot/taskbar.serializer';
+import { cumulativeExp } from '../combat/formulas';
 
 const logger = createLogger({ module: 'join-handler' });
 

@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { LeaveHandler } from '../../src/handlers/leave.handler.js';
+import { LeaveHandler } from '../../src/handlers/leave.handler';
 
 function mockSocket() {
   let destroyed = false;

@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /**
  * Database row interface for one inventory item slot (the `inventory_item` table).

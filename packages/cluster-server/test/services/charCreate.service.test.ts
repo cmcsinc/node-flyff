@@ -1,9 +1,9 @@
 import { describe, it, before } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CharCreateService } from '../../src/services/charCreate.service.js';
+import { CharCreateService } from '../../src/services/charCreate.service';
 import type { AccountRepository } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
-import type { CharDefaults } from '../../src/services/charCreate.service.js';
+import type { CharDefaults } from '../../src/services/charCreate.service';
 
 const defaults: CharDefaults = {
   maxPerAccount: 3,

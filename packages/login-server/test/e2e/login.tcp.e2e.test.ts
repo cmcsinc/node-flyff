@@ -6,17 +6,17 @@ import net, { type Server, type Socket } from 'node:net';
 import { createDb, AccountRepository } from '@flyff/database';
 import { up, down } from '@flyff/database/migrations/001_initial';
 import { MemoryCache, createEventBus, hashPassword } from '@flyff/core';
-import { hashPassword as hashPw } from '@flyff/core/utils/password.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
-import { framePacketCrc } from '@flyff/core/net/crcFrame.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { hashPassword as hashPw } from '@flyff/core/utils/password';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PacketBuffer } from '@flyff/core/net/PacketBuffer';
+import { framePacketCrc } from '@flyff/core/net/crcFrame';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 
-import { AuthService } from '../../src/services/auth.service.js';
-import { TokenService } from '../../src/services/token.service.js';
-import { AuthHandler } from '../../src/handlers/auth.handler.js';
-import { buildLoginClientServer } from '../../src/clientServer.js';
-import { encryptV15Password } from '../../src/utils/v15Password.js';
+import { AuthService } from '../../src/services/auth.service';
+import { TokenService } from '../../src/services/token.service';
+import { AuthHandler } from '../../src/handlers/auth.handler';
+import { buildLoginClientServer } from '../../src/clientServer';
+import { encryptV15Password } from '../../src/utils/v15Password';
 
 type LoginSuccess = [{ accountId: number; socket: unknown; handoffToken: string }];
 

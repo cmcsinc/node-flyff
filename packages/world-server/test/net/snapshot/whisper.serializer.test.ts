@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { WhisperSerializer } from '../../../src/net/snapshot/whisper.serializer.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { WhisperSerializer } from '../../../src/net/snapshot/whisper.serializer';
 
 describe('WhisperSerializer (PACKETTYPE_WHISPER top-level)', () => {
   it('writes fromName, toName, msg, fromId, toId, search', () => {

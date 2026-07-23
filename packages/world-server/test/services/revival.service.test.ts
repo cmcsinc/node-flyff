@@ -5,10 +5,10 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { RevivalService } from '../../src/services/revival.service.js';
-import { CPlayer } from '../../src/entities/player.js';
+import { RevivalService } from '../../src/services/revival.service';
+import { CPlayer } from '../../src/entities/player';
 import type { CharacterRow } from '@flyff/database';
-import { II_SYS_SYS_SCR_RESURRECTION } from '../../src/combat/aiConstants.js';
+import { II_SYS_SYS_SCR_RESURRECTION } from '../../src/combat/aiConstants';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {

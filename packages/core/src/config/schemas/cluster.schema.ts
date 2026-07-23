@@ -10,7 +10,7 @@
  */
 
 import { z } from 'zod';
-import { BaseConfigSchema } from './base.schema.js';
+import { BaseConfigSchema } from './base.schema';
 
 // ---------------------------------------------------------------------------
 // Character creation defaults sub-schema
@@ -85,7 +85,7 @@ export const ClusterRegistrationConfigSchema = z.object({
  * @example
  * ```ts
  * import { loadConfig } from '@flyff/core/config';
- * import { ClusterServerConfigSchema } from '@flyff/core/config/schemas/cluster.js';
+ * import { ClusterServerConfigSchema } from '@flyff/core/config/schemas/cluster';
  *
  * const config = loadConfig('cluster-server', ClusterServerConfigSchema);
  * ```

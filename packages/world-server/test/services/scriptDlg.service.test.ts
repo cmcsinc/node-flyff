@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { ScriptDlgService } from '../../src/services/scriptDlg.service.js';
-import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import type { CMover } from '../../src/entities/mover.js';
+import { ScriptDlgService } from '../../src/services/scriptDlg.service';
+import { QUEST_FLAG } from '@flyff/core/constants/quest';
+import type { CPlayer } from '../../src/entities/player';
+import type { CMover } from '../../src/entities/mover';
 import type { DialogIndex, QuestDef, QuestIndex } from '@flyff/resources';
-import type { QuestService } from '../../src/services/quest.service.js';
-import type { ScriptFunc } from '../../src/net/snapshot/scriptDialog.serializer.js';
+import type { QuestService } from '../../src/services/quest.service';
+import type { ScriptFunc } from '../../src/net/snapshot/scriptDialog.serializer';
 
 const NPC_ID = 0x40000001;
 

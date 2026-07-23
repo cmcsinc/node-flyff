@@ -12,14 +12,14 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player.js';
-import { UseItemService } from '../../src/services/useItem.service.js';
-import { MAX_INVENTORY } from '../../src/net/snapshot/constants.js';
+import { CPlayer } from '../../src/entities/player';
+import { UseItemService } from '../../src/services/useItem.service';
+import { MAX_INVENTORY } from '../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
-import type { EquipService, EquipResult } from '../../src/services/equip.service.js';
-import type { ConsumableService, ConsumableResult } from '../../src/services/consumable.service.js';
-import type { InventoryService } from '../../src/services/inventory.service.js';
+import type { EquipService, EquipResult } from '../../src/services/equip.service';
+import type { ConsumableService, ConsumableResult } from '../../src/services/consumable.service';
+import type { InventoryService } from '../../src/services/inventory.service';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {

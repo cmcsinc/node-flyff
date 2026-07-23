@@ -25,8 +25,8 @@
  * @module net/snapshot/quest.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   NULL_ID,
   SNAPSHOTTYPE_SETQUEST,
@@ -34,7 +34,7 @@ import {
   SNAPSHOTTYPE_QUEST_CHECKED,
   SNAPSHOTTYPE_QUEST_TEXT_TIME,
   SNAPSHOTTYPE_QUESTHELPER_NPCPOS,
-} from './constants.js';
+} from './constants';
 
 /** In-memory mirror of the C++ `QUEST` struct (sans padding). */
 export interface RuntimeQuest {

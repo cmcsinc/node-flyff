@@ -12,7 +12,7 @@ import * as assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parse } from 'yaml';
-import { SkillDefinitionSchema, SkillFileSchema } from '../../src/schemas/skill.schema.js';
+import { SkillDefinitionSchema, SkillFileSchema } from '../../src/schemas/skill.schema';
 
 const MINIMAL = {
   id: 1,

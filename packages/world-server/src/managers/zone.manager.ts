@@ -9,8 +9,8 @@
  * @module managers/zone.manager
  */
 
-import type { CPlayer, Vec3 } from '../entities/player.js';
-import { framePacket } from '@flyff/core/net/PacketBuffer.js';
+import type { CPlayer, Vec3 } from '../entities/player';
+import { framePacket } from '@flyff/core/net/PacketBuffer';
 
 export class ZoneManager {
   /** zoneId -> live players in that zone. */

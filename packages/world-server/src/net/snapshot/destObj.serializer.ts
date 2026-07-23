@@ -12,9 +12,9 @@
  * @module net/snapshot/destObj.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { SNAPSHOTTYPE_MOVERSETDESTOBJ, SNAPSHOTTYPE_GETDESTOBJ, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { SNAPSHOTTYPE_MOVERSETDESTOBJ, SNAPSHOTTYPE_GETDESTOBJ, NULL_ID } from './constants';
 
 export class DestObjSerializer {
   /** Build the SNAPSHOT/MOVERSETDESTOBJ broadcast payload for `senderObjid`. */

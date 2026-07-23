@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { QueryGetDestObjHandler } from '../../src/handlers/queryGetDestObj.handler.js';
-import type { QueryGetDestObjService } from '../../src/services/queryGetDestObj.service.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { CPlayer } from '../../src/entities/player.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { QueryGetDestObjHandler } from '../../src/handlers/queryGetDestObj.handler';
+import type { QueryGetDestObjService } from '../../src/services/queryGetDestObj.service';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { CPlayer } from '../../src/entities/player';
 
 function mockSocket(state = SessionState.IN_WORLD) {
   let destroyed = false;

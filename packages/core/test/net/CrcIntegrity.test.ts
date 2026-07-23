@@ -11,7 +11,7 @@ import {
   computePayloadCrc,
   validateSizeCrc,
   validatePayloadCrc,
-} from '../../src/net/CrcIntegrity.js';
+} from '../../src/net/CrcIntegrity';
 
 describe('CrcIntegrity', () => {
   describe('obfuscate/deobfuscate', () => {

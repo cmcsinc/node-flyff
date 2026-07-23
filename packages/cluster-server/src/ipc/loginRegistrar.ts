@@ -26,7 +26,7 @@ import {
   type ClusterHeartbeat,
 } from '@flyff/ipc';
 import type { Logger } from 'pino';
-import type { WorldRegistry } from './worldRegistry.js';
+import type { WorldRegistry } from './worldRegistry';
 
 // ---------------------------------------------------------------------------
 // Types

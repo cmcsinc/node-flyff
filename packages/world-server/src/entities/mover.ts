@@ -17,11 +17,11 @@
  * @module entities/mover
  */
 
-import type { Vec3, InventorySlot } from './player.js';
+import type { Vec3, InventorySlot } from './player';
 import {
   MELEE_ATTACK_RANGE, RANGE_ATTACK_RANGE, REATTACK_DELAY_MS, BELLI_RANGE_KEYS,
   ACTIVE_BELLI,
-} from '../combat/aiConstants.js';
+} from '../combat/aiConstants';
 
 /** `NULL_ID` (`_Network/MsgHdr.h` = 0xffffffff) -- "no target" sentinel for `m_idTarget`. */
 const NULL_ID = 0xffffffff;

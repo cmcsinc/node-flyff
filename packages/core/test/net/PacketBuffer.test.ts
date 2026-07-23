@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 
-import { PacketBuffer, framePacket, HEADERMARK } from '../../src/net/PacketBuffer.js';
+import { PacketBuffer, framePacket, HEADERMARK } from '../../src/net/PacketBuffer';
 
 function buildPacket(opcode: number, payload: Buffer): Buffer {
   const body = Buffer.allocUnsafe(4 + payload.length);

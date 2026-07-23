@@ -8,16 +8,16 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { DoUseItemHandler } from '../../src/handlers/doUseItem.handler.js';
-import { DST_HP, DST_MP, DST_FP } from '../../src/net/snapshot/pointParam.serializer.js';
-import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { ZoneManager } from '../../src/managers/zone.manager.js';
-import type { UseItemService, UseResult } from '../../src/services/useItem.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { DoUseItemHandler } from '../../src/handlers/doUseItem.handler';
+import { DST_HP, DST_MP, DST_FP } from '../../src/net/snapshot/pointParam.serializer';
+import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import type { CPlayer } from '../../src/entities/player';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { ZoneManager } from '../../src/managers/zone.manager';
+import type { UseItemService, UseResult } from '../../src/services/useItem.service';
 
 function mockSocket() {
   return { session: { state: SessionState.IN_WORLD, charId: 42 }, write: () => true, destroy: () => {} } as never;

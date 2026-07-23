@@ -1,9 +1,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PlayerListSerializer } from '../../src/net/playerList.serializer.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { CharacterWithEquip } from '../../src/services/charList.service.js';
+import { PlayerListSerializer } from '../../src/net/playerList.serializer';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { CharacterWithEquip } from '../../src/services/charList.service';
 
 function makeChar(overrides: Partial<CharacterWithEquip> = {}): CharacterWithEquip {
   return {

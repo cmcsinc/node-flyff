@@ -15,9 +15,9 @@
  * @module net/snapshot/pointParam
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID, SNAPSHOTTYPE_SETPOINTPARAM } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID, SNAPSHOTTYPE_SETPOINTPARAM } from './constants';
 
 /** `DST_GOLD` (`defineAttribute.h:349`) -- the gold-counter point parameter. */
 export const DST_GOLD = 10000;

@@ -5,11 +5,11 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { MMI_TRADE } from '@flyff/resources';
-import { ShopService } from '../../src/services/shop.service.js';
-import type { CPlayer, InventorySlot } from '../../src/entities/player.js';
-import type { SpawnManager } from '../../src/managers/spawn.manager.js';
-import type { InventoryService } from '../../src/services/inventory.service.js';
-import type { VendorStock } from '../../src/entities/mover.js';
+import { ShopService } from '../../src/services/shop.service';
+import type { CPlayer, InventorySlot } from '../../src/entities/player';
+import type { SpawnManager } from '../../src/managers/spawn.manager';
+import type { InventoryService } from '../../src/services/inventory.service';
+import type { VendorStock } from '../../src/entities/mover';
 
 /** One populated slot (itemId 81) in tab 0/slot 0 for buy happy-path. */
 const STOCK: VendorStock = Object.freeze([
@@ -34,6 +34,12 @@ function makePlayer(overrides: Partial<CPlayer> = {}): CPlayer {
     m_idOther: null,
     m_Inventory: new Array(42).fill(null),
     _dirty: new Set<string>(),
+    findSlotByObjId(objid: number): number {
+      const inv = this.m_Inventory as (InventorySlot | null)[];
+      for (let i = 0; i < inv.length; i++) if (inv[i] && inv[i]!.objid === objid) return i;
+      if (objid >= 0 && objid < inv.length && inv[objid]) return objid;
+      return -1;
+    },
     ...overrides,
   } as unknown as CPlayer;
 }
@@ -273,11 +279,13 @@ describe('ShopService -- sell', () => {
     if (!res.ok) assert.equal(res.reason, 'empty');
   });
 
-  it('rejects an out-of-range inventory slot', () => {
+  it('rejects an objid not present in the inventory', () => {
     const svc = makeSvc({ 100: { id: 100, menus: [MMI_TRADE], stock: STOCK } }, { consume: consumeReal() });
+    // Wire nId is a stable m_dwObjId, not a slot. 99 matches no slot's objid
+    // and falls outside the bag range, so findSlotByObjId returns -1 -> empty.
     const res = svc.sell(makePlayer({ m_idOther: 100 }), 99, 1);
     assert.equal(res.ok, false);
-    if (!res.ok) assert.equal(res.reason, 'invalid');
+    if (!res.ok) assert.equal(res.reason, 'empty');
   });
 
   it('rejects when no vendor is set', () => {

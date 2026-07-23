@@ -12,7 +12,7 @@
 import crypto from 'node:crypto';
 import { createHmac } from 'node:crypto';
 import type { ICacheAdapter } from '@flyff/core/cache';
-import type { WorldTokenService } from './charSelect.service.js';
+import type { WorldTokenService } from './charSelect.service';
 
 export class WorldHandoffTokenService implements WorldTokenService {
   constructor(

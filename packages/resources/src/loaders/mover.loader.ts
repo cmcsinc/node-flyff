@@ -10,12 +10,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import { createResourceLogger } from '../logger.js';
+import { createResourceLogger } from '../logger';
 import {
   MoverDefinitionSchema,
   MoverFileSchema,
   MoverIndexSchema,
-} from '../schemas/mover.schema.js';
+} from '../schemas/mover.schema';
 
 const logger = createResourceLogger('mover.loader');
 
@@ -24,13 +24,13 @@ const logger = createResourceLogger('mover.loader');
  */
 export interface MoverIndex {
   /** Map of mover ID -> definition */
-  movers: Map<number, import('../schemas/mover.schema.js').MoverDefinition>;
+  movers: Map<number, import('../schemas/mover.schema').MoverDefinition>;
 
   /** Map of mover name -> definition */
-  byName: Map<string, import('../schemas/mover.schema.js').MoverDefinition>;
+  byName: Map<string, import('../schemas/mover.schema').MoverDefinition>;
 
   /** Map of type -> array of definitions */
-  byType: Map<string, import('../schemas/mover.schema.js').MoverDefinition[]>;
+  byType: Map<string, import('../schemas/mover.schema').MoverDefinition[]>;
 }
 
 /**
@@ -58,9 +58,9 @@ export async function loadMovers(dataDir: string): Promise<MoverIndex> {
   const indexData = parse(indexContent);
   const index = MoverIndexSchema.parse(indexData);
 
-  const movers = new Map<number, import('../schemas/mover.schema.js').MoverDefinition>();
-  const byName = new Map<string, import('../schemas/mover.schema.js').MoverDefinition>();
-  const byType = new Map<string, import('../schemas/mover.schema.js').MoverDefinition[]>();
+  const movers = new Map<number, import('../schemas/mover.schema').MoverDefinition>();
+  const byName = new Map<string, import('../schemas/mover.schema').MoverDefinition>();
+  const byType = new Map<string, import('../schemas/mover.schema').MoverDefinition[]>();
 
   // Track loaded files
   const loadedFiles = new Set<string>();
@@ -112,9 +112,9 @@ async function loadMoversWithoutIndex(
   const files = await readdir(moversDir);
   const ymlFiles = files.filter((f) => f.endsWith('.yml') && f !== '_index.yml');
 
-  const movers = new Map<number, import('../schemas/mover.schema.js').MoverDefinition>();
-  const byName = new Map<string, import('../schemas/mover.schema.js').MoverDefinition>();
-  const byType = new Map<string, import('../schemas/mover.schema.js').MoverDefinition[]>();
+  const movers = new Map<number, import('../schemas/mover.schema').MoverDefinition>();
+  const byName = new Map<string, import('../schemas/mover.schema').MoverDefinition>();
+  const byType = new Map<string, import('../schemas/mover.schema').MoverDefinition[]>();
 
   for (const file of ymlFiles) {
     const filePath = resolve(moversDir, file);

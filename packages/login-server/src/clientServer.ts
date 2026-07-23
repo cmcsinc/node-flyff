@@ -11,8 +11,8 @@
 
 import type { Server } from 'node:net';
 import { createClientServer, type PacketDispatcher, type DispatcherLogger } from '@flyff/core/net';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { AuthHandler } from './handlers/auth.handler.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { AuthHandler } from './handlers/auth.handler';
 
 export interface LoginClientServerDeps {
   authHandler: AuthHandler;

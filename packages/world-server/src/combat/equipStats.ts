@@ -17,11 +17,11 @@
  * @module combat/equipStats
  */
 
-import type { CPlayer } from '../entities/player.js';
+import type { CPlayer } from '../entities/player';
 import type { ItemDefinition } from '@flyff/resources';
-import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '../net/snapshot/constants.js';
-import { NO_PROP, WT_MELEE_SWD } from './tables.js';
-import type { WeaponStats } from './formulas.js';
+import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '../net/snapshot/constants';
+import { NO_PROP, WT_MELEE_SWD } from './tables';
+import type { WeaponStats } from './formulas';
 
 const PARTS_LWEAPON = 9;
 const PARTS_UPPER_BODY = 2; // defender suit element source (MoverAttack.cpp:1249)

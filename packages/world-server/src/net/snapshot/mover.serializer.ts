@@ -17,15 +17,15 @@
  * @module net/snapshot/mover.serializer
  */
 
-import type { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import type { CPlayer } from '../../entities/player.js';
+import type { PacketWriter } from '@flyff/core/net/PacketWriter';
+import type { CPlayer } from '../../entities/player';
 import {
   MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
   MAX_HONOR_TITLE, MAX_INVENTORY, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
-} from './constants.js';
-import { writeQuestStruct } from './quest.serializer.js';
-import { writeCItemElemBody } from './itemElemBody.serializer.js';
-import type { InventorySlot } from '../../entities/player.js';
+} from './constants';
+import { writeQuestStruct } from './quest.serializer';
+import { writeCItemElemBody } from './itemElemBody.serializer';
+import type { InventorySlot } from '../../entities/player';
 
 const NULL_ID = 0xffffffff;
 

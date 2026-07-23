@@ -7,18 +7,18 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { ShopHandler } from '../../src/handlers/shop.handler.js';
-import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes.js';
-import { MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB, SNAPSHOTTYPE_CREATEITEM } from '../../src/net/snapshot/constants.js';
-import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer.js';
-import { EMPTY_VENDOR_STOCK } from '../../src/entities/mover.js';
-import type { VendorStock } from '../../src/entities/mover.js';
-import type { CPlayer } from '../../src/entities/player.js';
-import type { PlayerManager } from '../../src/managers/player.manager.js';
-import type { ShopService } from '../../src/services/shop.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { ShopHandler } from '../../src/handlers/shop.handler';
+import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
+import { MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB, SNAPSHOTTYPE_CREATEITEM } from '../../src/net/snapshot/constants';
+import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
+import { EMPTY_VENDOR_STOCK } from '../../src/entities/mover';
+import type { VendorStock } from '../../src/entities/mover';
+import type { CPlayer } from '../../src/entities/player';
+import type { PlayerManager } from '../../src/managers/player.manager';
+import type { ShopService } from '../../src/services/shop.service';
 
 function mockSocket() {
   return { session: { state: SessionState.IN_WORLD, charId: 7 }, write: () => true, destroy: () => {} } as never;

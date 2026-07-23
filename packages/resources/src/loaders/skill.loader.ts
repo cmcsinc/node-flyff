@@ -13,12 +13,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
-import { createResourceLogger } from '../logger.js';
+import { createResourceLogger } from '../logger';
 import {
   SkillFileSchema,
   SkillIndexSchema,
   type SkillDefinition,
-} from '../schemas/skill.schema.js';
+} from '../schemas/skill.schema';
 
 const logger = createResourceLogger('skill.loader');
 

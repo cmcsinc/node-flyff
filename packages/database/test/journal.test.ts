@@ -3,8 +3,8 @@ import * as assert from 'node:assert/strict';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { Journal } from '../src/journal.js';
-import type { JournalRow } from '../src/journal.js';
+import { Journal } from '../src/journal';
+import type { JournalRow } from '../src/journal';
 
 describe('Journal', () => {
   let journal: Journal;

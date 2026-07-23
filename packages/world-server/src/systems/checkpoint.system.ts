@@ -20,7 +20,7 @@
  * @module systems/checkpoint
  */
 
-import { createLogger } from '@flyff/core/logger.js';
+import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'checkpoint' });
 

@@ -10,8 +10,8 @@ import {
   createLogger,
   type EventBus,
 } from '@flyff/core';
-import type { ClientSession } from './ClientSession.js';
-import type { PacketHandlerMap } from './types.js';
+import type { ClientSession } from './ClientSession';
+import type { PacketHandlerMap } from './types';
 
 const logger = createLogger({ module: 'gateway' });
 

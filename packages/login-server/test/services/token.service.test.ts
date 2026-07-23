@@ -1,7 +1,7 @@
 import { describe, it, before } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { TokenService } from '../../src/services/token.service.js';
-import type { ICacheAdapter } from '@flyff/core/cache.js';
+import { TokenService } from '../../src/services/token.service';
+import type { ICacheAdapter } from '@flyff/core/cache';
 
 // Mock cache
 function makeMockCache(): ICacheAdapter & { store: Map<string, { value: string; expiresAt: number }> } {

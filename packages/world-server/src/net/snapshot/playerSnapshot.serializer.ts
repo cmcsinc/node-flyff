@@ -22,14 +22,14 @@
  * @module net/snapshot/playerSnapshot.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import type { CPlayer } from '../../entities/player.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { CPlayer } from '../../entities/player';
 import {
   SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_WORLD_READINFO, WI_WORLD_MADRIGAL,
   OT_MOVER, MI_MALE, MI_FEMALE, METHOD_NONE,
-} from './constants.js';
-import { writeMoverSerialize } from './mover.serializer.js';
+} from './constants';
+import { writeMoverSerialize } from './mover.serializer';
 
 export class PlayerSnapshotSerializer {
   /** Build the JOIN self-spawn payload for `player`. */

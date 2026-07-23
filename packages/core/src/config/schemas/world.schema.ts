@@ -13,7 +13,7 @@
  */
 
 import { z } from 'zod';
-import { BaseConfigSchema } from './base.schema.js';
+import { BaseConfigSchema } from './base.schema';
 
 // ---------------------------------------------------------------------------
 // World simulation sub-schema
@@ -127,7 +127,7 @@ export const WalConfigSchema = z.object({
  * @example
  * ```ts
  * import { loadConfig } from '@flyff/core/config';
- * import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world.js';
+ * import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
  *
  * const config = loadConfig('world-server', WorldServerConfigSchema);
  * ```

@@ -13,7 +13,7 @@
  * @module ipc/clusterListener
  */
 
-import { createLogger } from '@flyff/core/logger.js';
+import { createLogger } from '@flyff/core/logger';
 
 /** IPC channel carrying the cluster->world handoff (rule 07 naming `<domain>:<action>`). */
 export const PLAYER_HANDOFF_CHANNEL = 'player:handoff';

@@ -12,9 +12,9 @@
  * @module net/snapshot/moverDeath.serializer
  */
 
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { SNAPSHOTTYPE_MOVERDEATH, NULL_ID } from './constants.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { SNAPSHOTTYPE_MOVERDEATH, NULL_ID } from './constants';
 
 export class MoverDeathSerializer {
   build(victimObjid: number, killerObjid: number, dwMsg: number): Buffer {

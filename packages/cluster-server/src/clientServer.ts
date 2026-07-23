@@ -10,10 +10,10 @@
 
 import type { Server } from 'node:net';
 import { createClientServer, type PacketDispatcher, type DispatcherLogger } from '@flyff/core/net';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { sendPacket } from '@flyff/core/net/dispatcher.js';
-import type { CharHandler } from './handlers/char.handler.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { sendPacket } from '@flyff/core/net/dispatcher';
+import type { CharHandler } from './handlers/char.handler';
 
 /**
  * FILETIME epoch bias -- 100-ns ticks between 1601-01-01 (FILETIME/Windows

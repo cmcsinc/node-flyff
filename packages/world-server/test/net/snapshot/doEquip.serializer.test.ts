@@ -12,11 +12,11 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { NULL_ID } from '../../../src/net/snapshot/constants.js';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { NULL_ID } from '../../../src/net/snapshot/constants';
 import {
   buildDoEquipVicinity,
-} from '../../../src/net/snapshot/doEquip.serializer.js';
+} from '../../../src/net/snapshot/doEquip.serializer';
 
 describe('buildDoEquipVicinity', () => {
   it('produces a 38 B frame with 12 B EQUIP_INFO padding (3 zero pad bytes)', () => {

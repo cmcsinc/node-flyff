@@ -28,14 +28,14 @@
 
 import type { DialogFile, DialogIndex, DialogState, QuestDef, QuestIndex } from '@flyff/resources';
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
-import type { CPlayer } from '../entities/player.js';
-import type { CMover } from '../entities/mover.js';
-import type { QuestService } from './quest.service.js';
-import { QUEST_FLAG } from '@flyff/core/constants/quest.js';
-import { createLogger } from '@flyff/core/logger.js';
-import { buildSetQuest } from '../net/snapshot/quest.serializer.js';
-import { ChatSerializer } from '../net/snapshot/chat.serializer.js';
-import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer.js';
+import type { CPlayer } from '../entities/player';
+import type { CMover } from '../entities/mover';
+import type { QuestService } from './quest.service';
+import { QUEST_FLAG } from '@flyff/core/constants/quest';
+import { createLogger } from '@flyff/core/logger';
+import { buildSetQuest } from '../net/snapshot/quest.serializer';
+import { ChatSerializer } from '../net/snapshot/chat.serializer';
+import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer';
 
 const logger = createLogger({ module: 'scriptDlg-service' });
 

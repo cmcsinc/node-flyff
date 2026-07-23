@@ -17,8 +17,8 @@
  * @module services/combat.policy
  */
 
-import type { CPlayer } from '../entities/player.js';
-import type { CMover } from '../entities/mover.js';
+import type { CPlayer } from '../entities/player';
+import type { CMover } from '../entities/mover';
 
 /**
  * May `player` register `mover` as an attack target?

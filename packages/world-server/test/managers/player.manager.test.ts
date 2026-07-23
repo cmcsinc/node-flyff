@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PlayerManager } from '../../src/managers/player.manager.js';
-import { CPlayer } from '../../src/entities/player.js';
+import { PlayerManager } from '../../src/managers/player.manager';
+import { CPlayer } from '../../src/entities/player';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(id: number): CharacterRow {

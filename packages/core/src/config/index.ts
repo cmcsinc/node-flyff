@@ -4,7 +4,7 @@
  * ## Usage
  * ```ts
  * import { loadConfig } from '@flyff/core/config';
- * import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world.js';
+ * import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
  *
  * const config = await loadConfig('world-server', WorldServerConfigSchema);
  * ```
@@ -18,22 +18,22 @@
  */
 
 // Loader
-export { loadConfig, loadConfigSync } from './loader.js';
-export type { LoadConfigOptions } from './loader.js';
+export { loadConfig, loadConfigSync } from './loader';
+export type { LoadConfigOptions } from './loader';
 
 // Base schema + types
-export { BaseConfigSchema } from './schemas/base.schema.js';
-export type { BaseConfig } from './schemas/base.schema.js';
+export { BaseConfigSchema } from './schemas/base.schema';
+export type { BaseConfig } from './schemas/base.schema';
 
 // Server-specific schemas + types
-export { LoginServerConfigSchema, ClusterEntrySchema } from './schemas/login.schema.js';
-export type { LoginServerConfig } from './schemas/login.schema.js';
+export { LoginServerConfigSchema, ClusterEntrySchema } from './schemas/login.schema';
+export type { LoginServerConfig } from './schemas/login.schema';
 
-export { ClusterServerConfigSchema } from './schemas/cluster.schema.js';
-export type { ClusterServerConfig } from './schemas/cluster.schema.js';
+export { ClusterServerConfigSchema } from './schemas/cluster.schema';
+export type { ClusterServerConfig } from './schemas/cluster.schema';
 
-export { WorldServerConfigSchema } from './schemas/world.schema.js';
-export type { WorldServerConfig } from './schemas/world.schema.js';
+export { WorldServerConfigSchema } from './schemas/world.schema';
+export type { WorldServerConfig } from './schemas/world.schema';
 
 // Utility
-export { deepMerge } from './merge.js';
+export { deepMerge } from './merge';

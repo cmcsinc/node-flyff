@@ -1,4 +1,4 @@
-import type { Knex } from '../types.js';
+import type { Knex } from '../types';
 
 /**
  * Skill slot axis on `skills` + `skill_point` / `skill_level` on `characters`.

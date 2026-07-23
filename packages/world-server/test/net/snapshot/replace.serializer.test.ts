@@ -1,9 +1,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
-import { ReplaceSerializer } from '../../../src/net/snapshot/replace.serializer.js';
-import { NULL_ID, SNAPSHOTTYPE_REPLACE } from '../../../src/net/snapshot/constants.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { ReplaceSerializer } from '../../../src/net/snapshot/replace.serializer';
+import { NULL_ID, SNAPSHOTTYPE_REPLACE } from '../../../src/net/snapshot/constants';
 
 describe('ReplaceSerializer (SNAPSHOTTYPE_REPLACE 0x00f2)', () => {
   it('writes worldId DWORD + 3 floats under a NULL_ID header', () => {

@@ -5,16 +5,16 @@ import net, { type Server, type Socket } from 'node:net';
 import { createDb, AccountRepository, CharacterRepository, InventoryRepository } from '@flyff/database';
 import { up, down } from '@flyff/database/migrations/001_initial';
 import { up as upGold } from '@flyff/database/migrations/003_character_gold';
-import { PacketWriter } from '@flyff/core/net/PacketWriter.js';
-import { PacketBuffer } from '@flyff/core/net/PacketBuffer.js';
-import { framePacketCrc } from '@flyff/core/net/crcFrame.js';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes.js';
+import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { PacketBuffer } from '@flyff/core/net/PacketBuffer';
+import { framePacketCrc } from '@flyff/core/net/crcFrame';
+import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 
-import { CharHandler } from '../../src/handlers/char.handler.js';
-import { CharListService } from '../../src/services/charList.service.js';
-import { PlayerListSerializer } from '../../src/net/playerList.serializer.js';
-import { AccountConnectionManager } from '../../src/managers/accountConnection.manager.js';
-import { buildClusterClientServer } from '../../src/clientServer.js';
+import { CharHandler } from '../../src/handlers/char.handler';
+import { CharListService } from '../../src/services/charList.service';
+import { PlayerListSerializer } from '../../src/net/playerList.serializer';
+import { AccountConnectionManager } from '../../src/managers/accountConnection.manager';
+import { buildClusterClientServer } from '../../src/clientServer';
 
 /**
  * Cluster (LoginServer-role) path over real TCP, matching the REAL client flow:

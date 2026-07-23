@@ -4,8 +4,8 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { createEventBus } from '../src/eventBus.js';
-import type { EventBus } from '../src/eventBus.js';
+import { createEventBus } from '../src/eventBus';
+import type { EventBus } from '../src/eventBus';
 
 type TestEvents = {
   'ping': [];

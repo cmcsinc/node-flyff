@@ -11,8 +11,8 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parse } from 'yaml';
-import { createResourceLogger } from '../logger.js';
-import { DropFileSchema, type DropTable } from '../schemas/drop.schema.js';
+import { createResourceLogger } from '../logger';
+import { DropFileSchema, type DropTable } from '../schemas/drop.schema';
 
 const logger = createResourceLogger('drop.loader');
 

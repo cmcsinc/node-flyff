@@ -10,14 +10,14 @@
  * @module handlers/playerAngle.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader.js';
-import type { ClientSocket } from '@flyff/core/net/dispatcher.js';
-import { SessionState } from '@flyff/core/constants/sessionState.js';
-import { Validate } from '@flyff/core/utils/validate.js';
-import { PacketError } from '@flyff/core/errors.js';
-import { createLogger } from '@flyff/core/logger.js';
-import type { PlayerManager } from '../managers/player.manager.js';
-import type { MovementService } from '../services/movement.service.js';
+import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { ClientSocket } from '@flyff/core/net/dispatcher';
+import { SessionState } from '@flyff/core/constants/sessionState';
+import { Validate } from '@flyff/core/utils/validate';
+import { PacketError } from '@flyff/core/errors';
+import { createLogger } from '@flyff/core/logger';
+import type { PlayerManager } from '../managers/player.manager';
+import type { MovementService } from '../services/movement.service';
 
 const logger = createLogger({ module: 'playerAngle-handler' });
 

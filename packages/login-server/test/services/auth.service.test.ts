@@ -1,9 +1,9 @@
 import { describe, it, mock, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { AuthService } from '../../src/services/auth.service.js';
-import type { AccountRepository } from '@flyff/database/repositories/account.repo.js';
-import type { ICacheAdapter } from '@flyff/core/cache.js';
-import type { AccountRow } from '@flyff/database/repositories/account.repo.js';
+import { AuthService } from '../../src/services/auth.service';
+import type { AccountRepository } from '@flyff/database/repositories/account.repo';
+import type { ICacheAdapter } from '@flyff/core/cache';
+import type { AccountRow } from '@flyff/database/repositories/account.repo';
 
 // Mock dependencies
 function makeMockCache(): ICacheAdapter & { store: Map<string, { value: string; expiresAt: number }> } {
