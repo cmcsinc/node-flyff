@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { canBegin, isComplete, type InventoryOps } from '../../src/services/questConditions';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import type { QuestCommand, QuestDef } from '@flyff/resources';

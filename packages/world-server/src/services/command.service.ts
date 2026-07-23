@@ -47,13 +47,13 @@
  * @module services/command.service
  */
 
-import type { CPlayer, Vec3 } from '../entities/player';
-import type { PlayerManager } from '../managers/player.manager';
-import type { SpawnManager } from '../managers/spawn.manager';
+import type { CPlayer, Vec3 } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
+import type { SpawnManager } from '@flyff/world-core';
 import type { QuestService } from './quest.service';
 import type { InventoryService } from './inventory.service';
 import type { CharacterRepository, InventoryRepository } from '@flyff/database';
-import { AUTH, hasAuthority } from '../constants/authority';
+import { AUTH, hasAuthority } from '@flyff/entities';
 import { Validate } from '@flyff/core/utils/validate';
 import { PacketError } from '@flyff/core/errors';
 import { MAX_GOLD } from '@flyff/core';
@@ -72,7 +72,7 @@ import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer';
 import { DisguiseSerializer } from '../net/snapshot/disguise.serializer';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
 import { SetStateSerializer } from '../net/snapshot/setState.serializer';
-import { MODE } from '../constants/mode';
+import { MODE } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'command-service' });

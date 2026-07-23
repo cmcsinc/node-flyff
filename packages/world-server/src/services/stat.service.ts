@@ -17,8 +17,8 @@
 
 import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
-import type { CPlayer } from '../entities/player';
-import type { PlayerManager } from '../managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 import { SetStateSerializer } from '../net/snapshot/setState.serializer';
 import { createLogger } from '@flyff/core/logger';
 

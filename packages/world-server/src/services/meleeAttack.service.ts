@@ -22,8 +22,8 @@
  * @module services/meleeAttack
  */
 
-import type { ZoneManager } from '../managers/zone.manager';
-import type { CPlayer } from '../entities/player';
+import type { ZoneManager } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
 import {
   MeleeAttackSerializer, type MeleeAttackFrame,
 } from '../net/snapshot/meleeAttack.serializer';

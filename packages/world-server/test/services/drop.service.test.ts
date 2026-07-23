@@ -8,8 +8,8 @@ import * as assert from 'node:assert/strict';
 import { DropService, dropLevelFactor, goldSeedId } from '../../src/services/drop.service';
 import type { Rng } from '../../src/combat/formulas';
 import type { ResourceIndex } from '@flyff/resources';
-import { CMover } from '../../src/entities/mover';
-import { CPlayer } from '../../src/entities/player';
+import { CMover } from '@flyff/entities';
+import { CPlayer } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

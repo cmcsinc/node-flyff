@@ -12,7 +12,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { UseItemService } from '../../src/services/useItem.service';
 import { MAX_INVENTORY } from '../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';

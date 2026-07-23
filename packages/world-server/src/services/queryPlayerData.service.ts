@@ -21,7 +21,7 @@
  * @module services/queryPlayerData.service
  */
 
-import type { PlayerManager } from '../managers/player.manager';
+import type { PlayerManager } from '@flyff/world-core';
 
 export interface QueryPlayerDataServiceDeps {
   playerManager: PlayerManager;

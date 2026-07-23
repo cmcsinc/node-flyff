@@ -24,8 +24,8 @@
  */
 
 import { createLogger } from '@flyff/core/logger';
-import type { PlayerManager } from '../managers/player.manager';
-import type { CPlayer } from '../entities/player';
+import type { PlayerManager } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
 import { getJobProps } from '../combat/tables';
 import { maxFatiguePoint, maxHitPoint, maxManaPoint, standRecovery } from '../combat/formulas';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer';

@@ -26,8 +26,8 @@
 import type { QuestArg, QuestDef, QuestIndex } from '@flyff/resources';
 import { dropsFor } from '@flyff/resources';
 import type { QuestRepository } from '@flyff/database';
-import type { CPlayer } from '../entities/player';
-import type { PlayerManager } from '../managers/player.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 import type { InventoryService } from '../services/inventory.service';
 import type { Rng } from '../combat/formulas';
 import { xRandomRng } from '../combat/formulas';

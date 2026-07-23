@@ -14,8 +14,8 @@ import { SessionState } from '@flyff/core/constants/sessionState';
 import { TaskBarHandler } from '../../src/handlers/taskbar.handler';
 import { TaskBarService } from '../../src/services/taskbar.service';
 import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../src/net/snapshot/constants';
-import type { Shortcut } from '../../src/entities/player';
-import type { PlayerManager } from '../../src/managers/player.manager';
+import type { Shortcut } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
 
 function emptyGrid(): Shortcut[][] {
   return Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>

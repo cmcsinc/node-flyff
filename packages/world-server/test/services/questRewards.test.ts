@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { applyBeginSet, applyEnd, type RewardSink } from '../../src/services/questRewards';
 import type { JournalEntry } from '@flyff/database';
 import type { QuestCommand, QuestDef } from '@flyff/resources';

@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { QuestService, type QuestInventory } from '../../src/services/quest.service';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { QS_BEGIN, QS_END, QUEST_FLAG } from '@flyff/core/constants/quest';
 import type { CharacterRow, JournalEntry } from '@flyff/database';
 import type { QuestCommand, QuestDef, QuestIndex } from '@flyff/resources';

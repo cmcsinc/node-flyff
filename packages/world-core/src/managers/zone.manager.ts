@@ -9,7 +9,7 @@
  * @module managers/zone.manager
  */
 
-import type { CPlayer, Vec3 } from '../entities/player';
+import type { CPlayer, Vec3 } from '@flyff/entities';
 import { framePacket } from '@flyff/core/net/PacketBuffer';
 
 export class ZoneManager {

@@ -14,7 +14,7 @@
  * @module managers/item.manager
  */
 
-import type { Vec3 } from '../entities/player';
+import type { Vec3 } from '@flyff/entities';
 import { GroundItem, FIRST_ITEM_ID, type GroundItemInit } from '../entities/item';
 import type { ZoneManager } from './zone.manager';
 import { ItemSnapshotSerializer } from '../net/snapshot/itemSnapshot.serializer';

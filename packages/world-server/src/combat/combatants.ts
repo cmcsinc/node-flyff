@@ -9,8 +9,8 @@
  * @module combat/combatants
  */
 
-import type { CPlayer } from '../entities/player';
-import type { CMover } from '../entities/mover';
+import type { CPlayer } from '@flyff/entities';
+import type { CMover } from '@flyff/entities';
 import { NO_PROP, WT_MELEE_SWD } from './tables';
 import type { Combatant, WeaponStats } from './formulas';
 import { sumEquipStats, type ItemLookup } from './equipStats';

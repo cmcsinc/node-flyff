@@ -17,7 +17,7 @@
  * @module combat/equipStats
  */
 
-import type { CPlayer } from '../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import type { ItemDefinition } from '@flyff/resources';
 import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '../net/snapshot/constants';
 import { NO_PROP, WT_MELEE_SWD } from './tables';

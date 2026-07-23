@@ -43,7 +43,9 @@
     "@flyff/ipc": "workspace:*",
     "@flyff/resources": "workspace:*",
     "ioredis": "^5.4.1",
-    "pino": "^10.3.1"
+    "pino": "^10.3.1",
+    "@flyff/entities": "workspace:*",
+    "@flyff/world-core": "workspace:*"
   },
   "devDependencies": {
     "@flyff/cluster-server": "workspace:*",

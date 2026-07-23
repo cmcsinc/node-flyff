@@ -31,12 +31,12 @@
  * @module systems/ai
  */
 
-import type { SpawnManager } from '../managers/spawn.manager';
-import type { ZoneManager } from '../managers/zone.manager';
-import type { PlayerManager } from '../managers/player.manager';
-import type { CPlayer } from '../entities/player';
-import type { CMover } from '../entities/mover';
-import type { Vec3 } from '../entities/player';
+import type { SpawnManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
+import type { PlayerManager } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
+import type { CMover } from '@flyff/entities';
+import type { Vec3 } from '@flyff/entities';
 import { resolveMelee, xRandomRng, type Rng } from '../combat/formulas';
 import { playerCombatant, moverCombatant } from '../combat/combatants';
 import { AF_MISS } from '../combat/tables';
@@ -45,14 +45,14 @@ import {
   PURSUE_SPEED_FACTOR, RETURN_SPEED_FACTOR, CHASE_WINDOW_MS,
   RETURN_STUCK_MS, REATTACK_JITTER_MS, RANGE_REATTACK_DELAY_MS, SPEED_SCALE,
   AGGRO_LEVEL_BAND, OBJMSG_ATK1, OBJMSG_ATK_RANGE1,
-} from '../combat/aiConstants';
+} from '@flyff/entities';
 import { DestPosSerializer } from '../net/snapshot/destPos.serializer';
 import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
 import { DamageSerializer } from '../net/snapshot/damage.serializer';
 import { MeleeAttackSerializer } from '../net/snapshot/meleeAttack.serializer';
 import { RangeAttackSerializer } from '../net/snapshot/rangeAttack.serializer';
 import { VISIBILITY_RADIUS, NULL_ID } from '../net/snapshot/constants';
-import { MODE } from '../constants/mode';
+import { MODE } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'ai-system' });

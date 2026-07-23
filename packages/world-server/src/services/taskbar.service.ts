@@ -19,7 +19,7 @@
  */
 
 import { createLogger } from '@flyff/core/logger';
-import type { Shortcut } from '../entities/player';
+import type { Shortcut } from '@flyff/entities';
 import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_CHAT } from '../net/snapshot/constants';
 
 const logger = createLogger({ module: 'taskbar-service' });

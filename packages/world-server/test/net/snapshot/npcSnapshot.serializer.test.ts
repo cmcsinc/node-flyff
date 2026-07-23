@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { CMover } from '../../../src/entities/mover';
+import { CMover } from '@flyff/entities';
 import { NpcSnapshotSerializer } from '../../../src/net/snapshot/npcSnapshot.serializer';
 import {
   SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, MI_SMALL_MUSHPOIE, NULL_ID,

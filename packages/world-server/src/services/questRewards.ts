@@ -18,7 +18,7 @@
 
 import type { QuestArg, QuestDef } from '@flyff/resources';
 import type { JournalEntry } from '@flyff/database';
-import type { CPlayer } from '../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import type { InventoryOps } from './questConditions';
 import { addExp, cumulativeExp } from '../combat/formulas';
 

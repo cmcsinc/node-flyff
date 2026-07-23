@@ -5,23 +5,34 @@
  * preserved as comments. Pure functions over {@link Combatant} views so the
  * math is unit-testable with hand-computed expected outputs.
  *
- * v1 scope: **player attacker -> NPC defender, normal melee (ATK_GENERIC)**.
- * Stubbed (`ponytail`): skills, stealHP, party-link, berserk, charge/range,
- * force/reflect, NPC-attacker + player-defender paths (monsters don't swing
- * yet -- lands with the AI system).
+ * Exp / vitals / Rng math moved to `@flyff/entities` (shared with CPlayer +
+ * recovery); re-exported here for legacy `from './formulas'` importers.
  *
  * @module combat/formulas
  */
 
 import {
-  getJobProps, ATK_SPEED_PLUS, elementFactor,
+  ATK_SPEED_PLUS, elementFactor,
   AF_MISS, AF_CRITICAL1, AF_BLOCKING, AF_GENERIC,
   WT_MELEE_SWD, WT_MELEE_AXE, WT_MELEE_STICK, WT_MELEE_KNUCKLE,
   WT_MELEE_STAFF, WT_MAGIC_WAND, WT_MELEE_YOYO, WT_RANGE_BOW,
-  MIN_HR, MAX_HR, NO_PROP,
+  MIN_HR, MAX_HR,
 } from './tables';
-import type { JobProps } from './tables';
-import { EXP_TABLE, MAX_LEVEL } from './expTable';
+import { getJobProps } from '@flyff/entities';
+import type { JobProps, Rng } from '@flyff/entities';
+
+// exp / vitals / rng moved to @flyff/entities -- re-export for transition.
+export {
+  expLevelDiffMult, expToNextLevel, addExp, subDieDecExp,
+  withinLevelExp, cumulativeExp,
+} from '@flyff/entities';
+export type { ExpGainResult } from '@flyff/entities';
+export { maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery } from '@flyff/entities';
+export type { RecoveryAmount } from '@flyff/entities';
+export type { Rng } from '@flyff/entities';
+export { xRandomRng } from '@flyff/entities';
+
+void ATK_SPEED_PLUS;
 
 /** Equipped-weapon view. `CombatService` supplies this; unarmed = bare-hand. */
 export interface WeaponStats {
@@ -69,18 +80,6 @@ export interface Combatant {
   /** Evasion from DST_PARRY (player jewelry/buffs; NPC = 0). */
   readonly parry: number;
 }
-
-/** `xRandom` (MoverAttack.cpp) -- `[0,n)` / `[a,b)` int. Injectable for tests. */
-export interface Rng {
-  int(max: number): number;
-  range(min: number, max: number): number;
-}
-
-/** Default rng -- `Math.random`-backed, matches `xRandom` semantics. */
-export const xRandomRng: Rng = {
-  int: (n) => Math.floor(Math.random() * n),
-  range: (a, b) => a + Math.floor(Math.random() * (b - a)),
-};
 
 export interface MeleeResult {
   readonly hit: boolean;
@@ -267,178 +266,3 @@ function getBlockFactor(defender: Combatant, attacker: Combatant, rng: Rng): num
 function clamp(n: number, lo: number, hi: number): number {
   return n < lo ? lo : n > hi ? hi : n;
 }
-
-// --- exp / level (#D) --------------------------------------------------------
-
-/**
- * `AddExperienceSolo` level-diff multiplier (Mover.cpp:6085).
- * `playerLevel - monsterLevel`: <=0->1.0, 1-2->0.7, 3-4->0.4, >=5->0.1.
- */
-export function expLevelDiffMult(playerLevel: number, monsterLevel: number): number {
-  const delta = playerLevel - monsterLevel;
-  if (delta <= 0) return 1.0;
-  if (delta <= 2) return 0.7;
-  if (delta <= 4) return 0.4;
-  return 0.1;
-}
-
-/**
- * Exp needed to advance FROM `level` TO `level+1` (delta of cumulative nExp1).
- * 0 if `level` is invalid or at/above the cap (no further progression).
- */
-export function expToNextLevel(level: number): number {
-  const cur = EXP_TABLE[level]?.nExp1;
-  const next = EXP_TABLE[level + 1]?.nExp1;
-  if (cur === undefined || next === undefined) return 0;
-  return Math.max(0, next - cur);
-}
-
-export interface ExpGainResult {
-  /** New level after applying `amount`. */
-  readonly level: number;
-  /** Remaining within-level exp (0 at exact level boundary). */
-  readonly exp: number;
-  /** Levels gained (0 if no level-up). */
-  readonly levelsGained: number;
-}
-
-/**
- * `AddExperienceSolo` + `LevelUp` cascade. `exp` is **within-level** (progress
- * toward the next level, 0 at each boundary). Adds `amount`, then while enough
- * exp remains to advance, subtracts the per-level cost and levels up -- carrying
- * any excess into the next level. Caps at {@link MAX_LEVEL}.
- *
- * Pure: caller mutates the entity + fires side effects (HP/MP refill, packets,
- * persist) based on {@link ExpGainResult.levelsGained}.
- */
-export function addExp(level: number, exp: number, amount: number): ExpGainResult {
-  let newExp = exp + amount;
-  let newLevel = level;
-  while (newLevel < MAX_LEVEL) {
-    const need = expToNextLevel(newLevel);
-    if (need <= 0 || newExp < need) break;
-    newExp -= need;
-    newLevel++;
-  }
-  return { level: newLevel, exp: newExp, levelsGained: newLevel - level };
-}
-
-/**
- * `CMover::SubDieDecExp` (`_Common/Mover.cpp:7157`) -- the death exp penalty,
- * applied on **revive** (not on death itself). Subtracts a % of the exp needed
- * for the current level off the within-level `m_nExp`, clamped at 0.
- *
- * v15 C++ never de-levels here (`bLvDown` forcibly reset at `Mover.cpp:7189` --
- * the `__VER < 8` guard is commented out), so the level is unchanged.
- *
- * Loss % by level bracket -- simplified from `DiePenalty.inc:35-60`
- * (`DECEXP_PENALTY` table: Lv<=20=0%, Lv<=29=6%, Lv<=59=5%, Lv<=89=4%, Lv<=99=3%,
- * Lv<=109=2%, Lv<=129=1.5%, Lv<=200=1%). Throws on invalid level.
- *
- * ponytail: load the real `DiePenalty.inc` table when the resource converter
- * exports it; the bracket values then come from data, not code.
- *
- * Pure: caller journals + mutates the entity + fires the SETEXPERIENCE packet.
- */
-export function subDieDecExp(level: number, exp: number): { level: number; exp: number } {
-  const pct = deathExpLossPct(level);
-  if (pct <= 0) return { level, exp: Math.max(0, exp) };
-  const loss = Math.floor(expToNextLevel(level) * pct);
-  return { level, exp: Math.max(0, exp - loss) };
-}
-
-/** `DECEXP_PENALTY` bracket -- % of current-level exp lost on town revive. */
-function deathExpLossPct(level: number): number {
-  if (level <= 20) return 0;
-  if (level <= 29) return 0.06;
-  if (level <= 59) return 0.05;
-  if (level <= 89) return 0.04;
-  if (level <= 99) return 0.03;
-  if (level <= 109) return 0.02;
-  if (level <= 129) return 0.015;
-  return 0.01;
-}
-
-/**
- * Within-level exp = cumulative exp - the level's `nExp1` base. Used to convert
- * the cumulative value stored in the DB / sent on the wire into the live
- * within-level `m_nExp`. Clamps >= 0 (a malformed row cannot give negative exp).
- */
-export function withinLevelExp(cumulativeExp: number, level: number): number {
-  const base = EXP_TABLE[level]?.nExp1 ?? 0;
-  return Math.max(0, cumulativeExp - base);
-}
-
-/**
- * Cumulative exp = level's `nExp1` base + within-level exp. The SETEXPERIENCE
- * snapshot (`nExp1`) and the DB `exp` column both store cumulative, per the C++
- * `m_nExp1` semantics.
- */
-export function cumulativeExp(level: number, exp: number): number {
-  return (EXP_TABLE[level]?.nExp1 ?? 0) + exp;
-}
-
-// --- vitals recovery (#E) ----------------------------------------------------
-
-/**
- * `CMover::GetMaxOriginHitPoint` player branch (`MoverParam.cpp:2871`):
- *   a = fFactorMaxHP * level / 2
- *   b = a * ((level+1)/4) * (1 + sta/50) + sta*10
- *   maxHP = b + 80
- * The DB `max_hp`/`max_mp` columns are stale caches -- the client computes this formula
- * itself and displays the result (e.g. 236 at lvl 1 vagrant), so the server
- * MUST derive max the same way or regen clamps against a wrong ceiling and
- * HP/MP/FP never visibly recover. Pure; caller assigns + syncs.
- */
-export function maxHitPoint(level: number, sta: number, fFactorMaxHP: number): number {
-  const lv = Math.max(1, level);
-  const a = (fFactorMaxHP * lv) / 2.0;
-  const b = a * ((lv + 1.0) / 4.0) * (1.0 + sta / 50.0) + sta * 10.0;
-  return Math.floor(b + 80.0);
-}
-
-/**
- * `CMover::GetMaxOriginManaPoint` player branch (`MoverParam.cpp:2904`):
- *   maxMP = (((level*2) + (int*8)) * fFactorMaxMP) + 22 + (int * fFactorMaxMP)
- * Same reasoning as `maxHitPoint` -- DB `max_mp` is a stale cache, derive live.
- */
-export function maxManaPoint(level: number, int_: number, fFactorMaxMP: number): number {
-  const lv = Math.max(1, level);
-  return Math.floor((((lv * 2.0) + int_ * 8.0) * fFactorMaxMP) + 22.0 + int_ * fFactorMaxMP);
-}
-
-/**
- * `CMover::GetMaxFatiguePoint` player base (`MoverParam.cpp:2910/2932`):
- *   `((level*2 + sta*6) * fFactorMaxFP) + (sta * fFactorMaxFP)`
- */
-export function maxFatiguePoint(level: number, sta: number, fFactorMaxFP: number): number {
-  const lv = Math.max(1, level);
-  return Math.floor((lv * 2.0 + sta * 6.0) * fFactorMaxFP + sta * fFactorMaxFP);
-}
-
-/**
- * Stand regen amounts per 3 s tick (`ProcessRecovery` stand branch,
- * `Mover.cpp:8381`, formulas `MoverParam.cpp:2972/2989/3006`). The v9+ `__RECOVERY10`
- * `-10%` is baked in via the trailing `* 0.9`. `level` is clamped `>= 1` to guard
- * the `/ (500*level)` term. Pure: the caller mutates the entity + sends the
- * SETPOINTPARAM sync (`RecoverySystem`). Negatives clamp to 0.
- */
-export interface RecoveryAmount { readonly hp: number; readonly mp: number; readonly fp: number; }
-
-export function standRecovery(
-  level: number,
-  sta: number,
-  int_: number,
-  maxHp: number,
-  maxMp: number,
-  maxFp: number,
-  job: JobProps,
-): RecoveryAmount {
-  const lv = Math.max(1, level);
-  const hp = Math.floor(((lv / 3) + maxHp / (500 * lv) + sta * job.fFactorHPRec) * 0.9);
-  const mp = Math.floor(((lv * 1.5 + maxMp / (500 * lv) + int_ * job.fFactorMPRec) * 0.2) * 0.9);
-  const fp = Math.floor(((lv * 2 + maxFp / (500 * lv) + sta * job.fFactorFPRec) * 0.2) * 0.9);
-  return { hp: Math.max(0, hp), mp: Math.max(0, mp), fp: Math.max(0, fp) };
-}
-
-void NO_PROP;

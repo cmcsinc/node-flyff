@@ -6,10 +6,10 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { MMI_TRADE } from '@flyff/resources';
 import { ShopService } from '../../src/services/shop.service';
-import type { CPlayer, InventorySlot } from '../../src/entities/player';
-import type { SpawnManager } from '../../src/managers/spawn.manager';
+import type { CPlayer, InventorySlot } from '@flyff/entities';
+import type { SpawnManager } from '@flyff/world-core';
 import type { InventoryService } from '../../src/services/inventory.service';
-import type { VendorStock } from '../../src/entities/mover';
+import type { VendorStock } from '@flyff/entities';
 
 /** One populated slot (itemId 81) in tab 0/slot 0 for buy happy-path. */
 const STOCK: VendorStock = Object.freeze([

@@ -24,7 +24,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import type { CPlayer } from '../../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import {
   SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_WORLD_READINFO, WI_WORLD_MADRIGAL,
   OT_MOVER, MI_MALE, MI_FEMALE, METHOD_NONE,

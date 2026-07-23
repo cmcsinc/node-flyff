@@ -19,7 +19,7 @@
 import type { InventoryRepository, Journal } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
-import type { CPlayer, InventorySlot } from '../entities/player';
+import type { CPlayer, InventorySlot } from '@flyff/entities';
 import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '../net/snapshot/constants';
 
 const logger = createLogger({ module: 'equip-service' });

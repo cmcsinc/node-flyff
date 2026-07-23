@@ -15,7 +15,7 @@
 
 import type { JournalEntry, QuestRepository, InventoryRepository } from '@flyff/database';
 import type { QuestDef, QuestIndex } from '@flyff/resources';
-import type { CPlayer } from '../entities/player';
+import type { CPlayer } from '@flyff/entities';
 import { QUEST_LOG_ACTION, QS_BEGIN, QS_END } from '@flyff/core/constants/quest';
 import type { RuntimeQuest } from '../net/snapshot/quest.serializer';
 import {

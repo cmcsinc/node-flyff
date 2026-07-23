@@ -5,8 +5,8 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { SetTargetHandler } from '../../src/handlers/setTarget.handler';
 import type { TargetService, SetTargetOutcome } from '../../src/services/target.service';
-import type { PlayerManager } from '../../src/managers/player.manager';
-import type { CPlayer } from '../../src/entities/player';
+import type { PlayerManager } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
 
 function mockSocket(state = SessionState.IN_WORLD) {
   let destroyed = false;

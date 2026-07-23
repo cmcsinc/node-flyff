@@ -9,11 +9,11 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CombatService } from '../../src/services/combat.service';
 import type { Rng } from '../../src/combat/formulas';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
-import { CMover } from '../../src/entities/mover';
+import { CMover } from '@flyff/entities';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { MODE } from '../../src/constants/mode';
+import { MODE } from '@flyff/entities';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {

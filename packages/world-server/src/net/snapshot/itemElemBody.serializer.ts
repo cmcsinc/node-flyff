@@ -36,7 +36,7 @@
  */
 
 import type { PacketWriter } from '@flyff/core/net/PacketWriter';
-import type { InventorySlot } from '../../entities/player';
+import type { InventorySlot } from '@flyff/entities';
 
 /**
  * Write the CItemBase + CItemElem body for one slot. `objId` is the per-slot

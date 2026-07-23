@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '../../src/entities/player';
+import { CPlayer } from '@flyff/entities';
 import { SkillService } from '../../src/services/skill.service';
 import { NULL_ID } from '../../src/net/snapshot/constants';
 import type { CharacterRow } from '@flyff/database';

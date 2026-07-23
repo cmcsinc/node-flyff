@@ -14,9 +14,9 @@ import { SessionState } from '@flyff/core/constants/sessionState';
 import { DoUseItemHandler } from '../../src/handlers/doUseItem.handler';
 import { DST_HP, DST_MP, DST_FP } from '../../src/net/snapshot/pointParam.serializer';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import type { CPlayer } from '../../src/entities/player';
-import type { PlayerManager } from '../../src/managers/player.manager';
-import type { ZoneManager } from '../../src/managers/zone.manager';
+import type { CPlayer } from '@flyff/entities';
+import type { PlayerManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import type { UseItemService, UseResult } from '../../src/services/useItem.service';
 
 function mockSocket() {

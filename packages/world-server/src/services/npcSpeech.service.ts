@@ -31,9 +31,9 @@
  * @module services/npcSpeech.service
  */
 
-import type { SpawnManager } from '../managers/spawn.manager';
-import type { ZoneManager } from '../managers/zone.manager';
-import type { CMover } from '../entities/mover';
+import type { SpawnManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
+import type { CMover } from '@flyff/entities';
 import type { DialogIndex } from '@flyff/resources';
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
 import { ChatSerializer } from '../net/snapshot/chat.serializer';

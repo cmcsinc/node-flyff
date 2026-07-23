@@ -15,7 +15,7 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import { NULL_ID, MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB } from './constants';
 import { writeItemContainer } from './mover.serializer';
-import type { VendorStock } from '../../entities/mover';
+import type { VendorStock } from '@flyff/entities';
 
 /**
  * Acknowledge OPENSHOPWND for vendor `vendorId`. Per `AddOpenShopWnd`

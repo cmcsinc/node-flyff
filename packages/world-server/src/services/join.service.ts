@@ -17,13 +17,13 @@
 
 import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
 import { createLogger } from '@flyff/core/logger';
-import { CPlayer } from '../entities/player';
-import type { PlayerSocket } from '../entities/player';
-import { AUTH } from '../constants/authority';
+import { CPlayer } from '@flyff/entities';
+import type { PlayerSocket } from '@flyff/entities';
+import { AUTH } from '@flyff/entities';
 import { withinLevelExp } from '../combat/formulas';
 import { decodeTaskBar } from './taskbar.service';
-import type { PlayerManager } from '../managers/player.manager';
-import type { ZoneManager } from '../managers/zone.manager';
+import type { PlayerManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import type { ConsumedHandoff } from '../ipc/clusterListener';
 
 const logger = createLogger({ module: 'join-service' });
