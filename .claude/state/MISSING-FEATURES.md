@@ -34,14 +34,14 @@ declares a feature fixed by testing on a real v15 client.
 
 ### Magic / skill damage
 - [x] ✅ Single-target skill damage (melee + magic, element, magic-factor) — `skillFormulas.ts`
-- [ ] 🟥 AoE (area skills) — `skillFormulas.ts:230`
-- [ ] 🟥 DoT (damage-over-time) — `skillFormulas.ts:230`
-- [ ] 🟥 Multi-hit skills — `skillFormulas.ts:230`
-- [ ] 🟥 Projectile skills — `skillFormulas.ts:230`
-- [ ] 🟥 Heal / buff skills — `skillFormulas.ts:230`, `skill.service.ts:116`
-- [ ] 🟥 Skill crit (own nProbability) — `skillFormulas.ts:226,266`
-- [ ] 🟥 Debuff/secondary-effect gate (nProbability roll — stun/poison) — `skillFormulas.ts:244`
-- [ ] ❌ PvP skill damage vars — `skillFormulas.ts:230`
+- [ ] 🟡→impl Skill crit (DEX×fCritical, 2.3×, AF_CRITICAL1) — reuses melee CalcDamage branch; build+tests green, awaiting user test — `skillFormulas.ts`
+- [ ] 🟡→impl Debuff/secondary-effect gate (nProbability roll — stun/poison) — `effectProc` surfaced, not yet applied (needs status system) — `skillFormulas.ts`
+- [ ] 🟥 AoE (area skills) — `skillFormulas.ts`
+- [ ] 🟥 DoT (damage-over-time) — `skillFormulas.ts`
+- [ ] 🟥 Multi-hit skills — `skillFormulas.ts`
+- [ ] 🟥 Projectile skills — `skillFormulas.ts`
+- [ ] 🟥 Heal / buff skills — `skillFormulas.ts`, `skill.service.ts`
+- [ ] ❌ PvP skill damage vars — `skillFormulas.ts`
 
 ---
 
