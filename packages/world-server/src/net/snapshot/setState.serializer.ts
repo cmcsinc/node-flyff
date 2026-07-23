@@ -16,7 +16,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_SETSTATE, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_SETSTATE, NULL_ID } from '@flyff/world-core';
 
 export interface StateFrame {
   readonly str: number;

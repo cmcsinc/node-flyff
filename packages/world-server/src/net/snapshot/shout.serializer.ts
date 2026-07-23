@@ -18,7 +18,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_SHOUT, SHOUT_COLOR_DEFAULT } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_SHOUT, SHOUT_COLOR_DEFAULT } from '@flyff/world-core';
 
 export interface ShoutFrame {
   senderObjid: number;

@@ -22,7 +22,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, SNAPSHOTTYPE_USESKILL, SNAPSHOTTYPE_CLEAR_USESKILL } from './constants';
+import { NULL_ID, SNAPSHOTTYPE_USESKILL, SNAPSHOTTYPE_CLEAR_USESKILL } from '@flyff/world-core';
 
 /** Fields for the USESKILL cast-start snapshot. */
 export interface UseSkillFrame {

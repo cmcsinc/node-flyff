@@ -6,7 +6,7 @@ import { ModifyModeSerializer } from '../../../src/net/snapshot/modifyMode.seria
 import {
   NULL_ID,
   SNAPSHOTTYPE_MODIFYMODE,
-} from '../../../src/net/snapshot/constants';
+} from '@flyff/world-core';
 
 describe('ModifyModeSerializer (SNAPSHOTTYPE_MODIFYMODE 0x00d3)', () => {
   it('writes objid + the full new m_dwMode bitmask', () => {

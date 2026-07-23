@@ -23,7 +23,7 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { TaskBarService } from '../services/taskbar.service';
 import type { Shortcut } from '@flyff/entities';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_STRING } from '../net/snapshot/constants';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_STRING } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'taskbar-handler' });
 

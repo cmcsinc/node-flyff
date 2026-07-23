@@ -18,7 +18,7 @@ import { PacketError } from '@flyff/core/errors';
 import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { SkillService } from '../services/skill.service';
-import { MAX_SKILL_JOB } from '../net/snapshot/constants';
+import { MAX_SKILL_JOB } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'useSkill-handler' });
 

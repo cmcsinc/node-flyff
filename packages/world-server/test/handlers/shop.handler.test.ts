@@ -12,7 +12,7 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { ShopHandler } from '../../src/handlers/shop.handler';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import { MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB, SNAPSHOTTYPE_CREATEITEM } from '../../src/net/snapshot/constants';
+import { MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB, SNAPSHOTTYPE_CREATEITEM } from '@flyff/world-core';
 import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
 import { EMPTY_VENDOR_STOCK } from '@flyff/entities';
 import type { VendorStock } from '@flyff/entities';

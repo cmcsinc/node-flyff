@@ -14,7 +14,7 @@ import { PacketReader } from '@flyff/core/net/PacketReader';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { DoEquipHandler } from '../../src/handlers/doEquip.handler';
-import { INVENTORY_SLOTS, MAX_INVENTORY } from '../../src/net/snapshot/constants';
+import { INVENTORY_SLOTS, MAX_INVENTORY } from '@flyff/world-core';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import { CPlayer } from '@flyff/entities';
 import type { InventorySlot } from '@flyff/entities';

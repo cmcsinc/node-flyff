@@ -14,7 +14,7 @@
 import type { ItemDefinition } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import type { CPlayer } from '@flyff/entities';
-import { MAX_INVENTORY } from '../net/snapshot/constants';
+import { MAX_INVENTORY } from '@flyff/world-core';
 import type { EquipService, EquipResult } from './equip.service';
 import type { ConsumableService } from './consumable.service';
 import type { InventoryService } from './inventory.service';

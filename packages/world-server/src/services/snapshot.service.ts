@@ -25,7 +25,7 @@ import type { CPlayer } from '@flyff/entities';
 import {
   DestPosSerializer, type DestPosFrame,
 } from '../net/snapshot/destPos.serializer';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS } from '@flyff/world-core';
 
 export interface SnapshotServiceDeps {
   zoneManager: ZoneManager;

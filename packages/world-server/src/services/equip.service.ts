@@ -20,7 +20,7 @@ import type { InventoryRepository, Journal } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import type { CPlayer, InventorySlot } from '@flyff/entities';
-import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '../net/snapshot/constants';
+import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'equip-service' });
 const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot -- reject for now

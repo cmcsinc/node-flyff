@@ -7,7 +7,7 @@ import {
   OT_MOVER, MI_MALE, SNAPSHOTTYPE_ADD_OBJ,
   SNAPSHOTTYPE_WORLD_READINFO, WI_WORLD_MADRIGAL,
   INVENTORY_SLOTS, BANK_SLOTS, emptyItemContainerSize,
-} from '../../../src/net/snapshot/constants';
+} from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {

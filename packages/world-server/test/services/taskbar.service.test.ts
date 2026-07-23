@@ -10,7 +10,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { TaskBarService, encodeTaskBar, decodeTaskBar } from '../../src/services/taskbar.service';
 import type { Shortcut } from '@flyff/entities';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '../../src/net/snapshot/constants';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '@flyff/world-core';
 
 function makePlayer(): { m_idPlayer?: number; m_aSlotItem: Shortcut[][] } {
   return {

@@ -18,7 +18,7 @@ import type { Vec3 } from '@flyff/entities';
 import { GroundItem, FIRST_ITEM_ID, type GroundItemInit } from '../entities/item';
 import type { ZoneManager } from './zone.manager';
 import { ItemSnapshotSerializer } from '../net/snapshot/itemSnapshot.serializer';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'item-manager' });

@@ -25,7 +25,7 @@ import type { CombatService } from './combat.service';
 import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
 import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer';
 import { buildSetPointParam, DST_MP, DST_FP, DST_HP } from '../net/snapshot/pointParam.serializer';
-import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'skill-service' });

@@ -14,7 +14,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_MOVERSETDESTOBJ, SNAPSHOTTYPE_GETDESTOBJ, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_MOVERSETDESTOBJ, SNAPSHOTTYPE_GETDESTOBJ, NULL_ID } from '@flyff/world-core';
 
 export class DestObjSerializer {
   /** Build the SNAPSHOT/MOVERSETDESTOBJ broadcast payload for `senderObjid`. */

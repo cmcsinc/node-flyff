@@ -18,7 +18,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_DAMAGE, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_DAMAGE, NULL_ID } from '@flyff/world-core';
 import { AF_FLYING } from '../../combat/tables';
 
 export interface DamageFrame {

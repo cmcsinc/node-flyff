@@ -30,7 +30,7 @@ import {
   FUNCTYPE_REMOVEKEY,
   FUNCTYPE_REMOVEALLKEY,
   FUNCTYPE_EXIT,
-} from './constants';
+} from '@flyff/world-core';
 
 /** One queued dialog operation (the TypeScript mirror of a C++ `RunScriptFunc`). */
 export type ScriptFunc =

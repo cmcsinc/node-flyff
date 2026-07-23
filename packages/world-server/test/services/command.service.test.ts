@@ -5,7 +5,7 @@ import { PlayerManager } from '@flyff/world-core';
 import { CommandService } from '../../src/services/command.service';
 import { AUTH } from '@flyff/entities';
 import { NoticeSerializer } from '../../src/net/snapshot/notice.serializer';
-import { TEXT_GENERAL } from '../../src/net/snapshot/constants';
+import { TEXT_GENERAL } from '@flyff/world-core';
 import { MODE } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 

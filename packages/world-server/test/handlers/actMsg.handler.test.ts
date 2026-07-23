@@ -9,7 +9,7 @@ import { PacketReader } from '@flyff/core/net/PacketReader';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { ActMsgHandler } from '../../src/handlers/actMsg.handler';
-import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '../../src/net/snapshot/constants';
+import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '@flyff/world-core';
 import { DST_GOLD } from '../../src/net/snapshot/pointParam.serializer';
 import type { CPlayer } from '@flyff/entities';
 import type { ItemManager } from '../../src/managers/item.manager';

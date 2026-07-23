@@ -14,7 +14,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { buildOpenShopWnd } from '../../../src/net/snapshot/shop.serializer';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
-import { NULL_ID, MAX_VENDOR_INVENTORY } from '../../../src/net/snapshot/constants';
+import { NULL_ID, MAX_VENDOR_INVENTORY } from '@flyff/world-core';
 import type { VendorStock } from '@flyff/entities';
 
 /** Tab 0 carries one item (id 81) at slot 0; tabs 1-3 empty. */

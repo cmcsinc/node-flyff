@@ -18,7 +18,7 @@
  */
 
 import type { CPlayer } from '@flyff/entities';
-import { NULL_ID } from '../net/snapshot/constants';
+import { NULL_ID } from '@flyff/world-core';
 
 export type QueryGetPosOutcome =
   | { ok: true; replied: false }

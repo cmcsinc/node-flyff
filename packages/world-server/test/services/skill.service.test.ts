@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
 import { SkillService } from '../../src/services/skill.service';
-import { NULL_ID } from '../../src/net/snapshot/constants';
+import { NULL_ID } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 import type { SkillIndex, SkillDefinition } from '@flyff/resources';
 

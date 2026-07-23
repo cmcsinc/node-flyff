@@ -16,7 +16,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
-import { SNAPSHOTTYPE_RANGE_ATTACK, NULL_ID } from './constants';
+import { SNAPSHOTTYPE_RANGE_ATTACK, NULL_ID } from '@flyff/world-core';
 
 export interface RangeAttackFrame {
   /** `OBJMSG_ATK_RANGE*` (DWORD) -- ranged swing id. */

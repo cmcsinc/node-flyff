@@ -37,7 +37,7 @@ import type { CMover } from '@flyff/entities';
 import type { DialogIndex } from '@flyff/resources';
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
 import { ChatSerializer } from '../net/snapshot/chat.serializer';
-import { VISIBILITY_RADIUS } from '../net/snapshot/constants';
+import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'npc-speech' });
