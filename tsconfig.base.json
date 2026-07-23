@@ -30,7 +30,9 @@
       "@flyff/combat": ["packages/combat/src/index.ts"],
       "@flyff/combat/*": ["packages/combat/src/*"],
       "@flyff/inventory": ["packages/inventory/src/index.ts"],
-      "@flyff/inventory/*": ["packages/inventory/src/*"]
+      "@flyff/inventory/*": ["packages/inventory/src/*"],
+      "@flyff/skills": ["packages/skills/src/index.ts"],
+      "@flyff/skills/*": ["packages/skills/src/*"]
     }
   }
 }
