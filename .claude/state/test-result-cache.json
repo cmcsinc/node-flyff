@@ -174,5 +174,6 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\stat.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\modifyStatus.handler.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\cluster-server\\test\\net\\playerList.serializer.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\cluster-server\\test\\services\\charList.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\cluster-server\\test\\services\\charList.service.test.ts": "pass",
+  "packages/inventory/test/services/equip.service.test.ts": "pass"
 }

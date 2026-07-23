@@ -22,8 +22,44 @@ Override rule: never mark done/fixed until user tests. Keep tasks in_progress.
 - Root `npx tsc --noEmit` has ~322 PRE-EXISTING errors (TS7016 dist decls + test fixtures) — NOT this work. Gate = `pnpm -r build` (tsup) + `pnpm -r test`.
 - Parallel `pnpm -r test` sometimes flakes on timer-heavy ipc/AI tests; each package green when run alone.
 
+## Hardening pass (2026-07-23, post-commit 2a26866) — IN PROGRESS
+Tracing each checklist behavior through real code to catch desyncs before user test.
+
+### FIX #1 landed — equip.service clampVitals stale-max desync
+- Bug: `EquipService.clampVitals` read `getMaxHp/Mp/Fp()` but never wrote back
+  cached `m_nMaxHp/Mp/Fp`. Every other path (stat allocate, recovery tick, JOIN)
+  refreshes them; equip was the gap.
+- Failure (≤3s window until next recovery tick recomputes): equip +HP gear →
+  potion/quest heal caps at STALE LOW max; unequip +HP gear → current clamped
+  but cached max stayed HIGH → full-heal refills over-max flicker.
+- Change: write `m_nMaxHp/Mp/Fp = getMaxHp/Mp/Fp()` in clampVitals before clamp.
+  `packages/inventory/src/services/equip.service.ts:159`. +2 regression tests.
+- Verified: inventory build clean, tests 87/0 (was 85).
+
+### TRACED clean (post-Fix#1) — no desync
+- **Equip +STR → ATK (#1)** — combatants.ts:39 `str: p.getStr()` (DST-adjusted) →
+  getWeaponATK scales ATK off it. No double-count: sumEquipStats folds weapon
+  ATK/refine/DEF/hit_rate/parry but NOT primary stats; ring STR flows only via
+  DST → getStr(). Clean.
+- **Allocate STA → max HP immediate (#2)** — stat.service.ts:96-104. Recomputes
+  maxes into cache (m_nMax*), refills current to max, pushes 3 SETPOINTPARAM after
+  SETSTATE — mirrors client OnSetState (DPClient.cpp:13376, recompute+refill). No
+  drop-flicker (cache write-back present, same pattern Fix#1 added to equip). Clean.
+- **Cooldown gate (#5)** — useItem.service.ts:55-88. Gate BEFORE consume
+  (C++ DoUseItem:1335 order); charge NOT spent on reject; `m_cooltime[group-1]`
+  set AFTER apply; groups 1-4, array size 4 (slots.ts MAX_COOLTIME_GROUP=4) →
+  index in bounds. `potionCooldownMs` wired from `config.consumable` (compose:444).
+  Handler emits UI_COOLTIME (not UI_NUM) on `cooltime:true` → client sweep starts
+  (doUseItem.handler.ts:87-96). Clean.
+- **DEX crit/dodge/hit (#3)** — formulas.ts reads `c.dex`; playerCombatant builds
+  from `p.getDex()` DST-adjusted (combatants.ts:39) → +DEX gear reaches crit
+  (getCriticalProb), dodge (getParrying), hit (getHR), atk-speed. SETSTATE/persist
+  at combat.service.ts:321/328 correctly use RAW m_nDex (base stats; client adds
+  equip bonus itself — getDex() there would double-count into DB). Clean.
+
 ## Awaiting user real-client test
 - Equip +STR ring → character-window ATK rises.
 - Allocate STA → max HP rises immediately (no drop flicker).
 - Allocate DEX → crit/dodge/hit rise; swing anim speeds up (client-side).
 - Unequip +HP gear → HP clamps down (no over-max).
+- Spam HP potion → 2nd use rejected in cooldown window, UI sweep on slot.
