@@ -71,7 +71,7 @@ import { NoticeSerializer } from '../net/snapshot/notice.serializer';
 import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer';
 import { DisguiseSerializer } from '../net/snapshot/disguise.serializer';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
-import { SetStateSerializer } from '../net/snapshot/setState.serializer';
+import { SetStateSerializer } from '@flyff/combat';
 import { MODE } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 

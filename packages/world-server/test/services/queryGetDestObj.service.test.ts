@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { QueryGetDestObjService } from '../../src/services/queryGetDestObj.service';
-import { DestObjSerializer } from '../../src/net/snapshot/destObj.serializer';
+import { DestObjSerializer } from '@flyff/combat';
 import { SNAPSHOTTYPE_GETDESTOBJ, NULL_ID } from '@flyff/world-core';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { PlayerManager } from '@flyff/world-core';

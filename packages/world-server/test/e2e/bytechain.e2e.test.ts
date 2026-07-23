@@ -35,7 +35,7 @@ import { SpawnManager } from '@flyff/world-core';
 import { JoinService } from '../../src/services/join.service';
 import { JoinHandler } from '../../src/handlers/join.handler';
 import { PlayerSnapshotSerializer } from '../../src/net/snapshot/playerSnapshot.serializer';
-import { SetExperienceSerializer } from '../../src/net/snapshot/setExperience.serializer';
+import { SetExperienceSerializer } from '@flyff/combat';
 import { TaskBarSnapshotSerializer } from '../../src/net/snapshot/taskbar.serializer';
 import { NpcSnapshotSerializer } from '../../src/net/snapshot/npcSnapshot.serializer';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';

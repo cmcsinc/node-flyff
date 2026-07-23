@@ -29,7 +29,7 @@ import type { CPlayer } from '@flyff/entities';
 import {
   MoverBroadcastSerializer, type MovementFrame, type Movement2Frame,
 } from '../net/snapshot/moverBroadcast.serializer';
-import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
+import { DestObjSerializer } from '@flyff/combat';
 import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import type { LootService } from './loot.service';
 

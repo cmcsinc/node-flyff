@@ -19,7 +19,7 @@ import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
-import { SetStateSerializer } from '../net/snapshot/setState.serializer';
+import { SetStateSerializer } from '@flyff/combat';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'stat-service' });

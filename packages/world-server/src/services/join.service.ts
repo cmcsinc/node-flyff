@@ -20,7 +20,7 @@ import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
 import { AUTH } from '@flyff/entities';
-import { withinLevelExp } from '../combat/formulas';
+import { withinLevelExp } from '@flyff/combat';
 import { decodeTaskBar } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';

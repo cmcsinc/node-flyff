@@ -6,7 +6,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { DropService, dropLevelFactor, goldSeedId } from '../../src/services/drop.service';
-import type { Rng } from '../../src/combat/formulas';
+import type { Rng } from '@flyff/combat';
 import type { ResourceIndex } from '@flyff/resources';
 import { CMover } from '@flyff/entities';
 import { CPlayer } from '@flyff/entities';

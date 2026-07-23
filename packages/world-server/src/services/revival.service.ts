@@ -29,7 +29,7 @@ import type { ZoneDefinition } from '@flyff/resources';
 import type { CPlayer, Vec3 } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
-import { cumulativeExp, subDieDecExp } from '../combat/formulas';
+import { cumulativeExp, subDieDecExp } from '@flyff/combat';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
 } from '@flyff/entities';
@@ -37,10 +37,10 @@ import { MAX_INVENTORY, VISIBILITY_RADIUS } from '@flyff/world-core';
 import {
   SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,
 } from '@flyff/world-core';
-import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';
+import { MoverDeathSerializer } from '@flyff/combat';
 import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';
 import { RevivalSerializer } from '../net/snapshot/revival.serializer';
-import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer';
+import { SetExperienceSerializer } from '@flyff/combat';
 import { SetPosSerializer } from '../net/snapshot/setPos.serializer';
 import { createLogger } from '@flyff/core/logger';
 

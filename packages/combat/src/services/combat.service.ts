@@ -37,13 +37,12 @@ import type { ItemLookup } from '../combat/equipStats';
 import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '@flyff/entities';
 import { isMoverAttackableBy } from './combat.policy';
 import { MODE } from '@flyff/entities';
-import type { DropService } from './drop.service';
 import { DamageSerializer } from '../net/snapshot/damage.serializer';
 import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';
 import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer';
 import { SetLevelSerializer } from '../net/snapshot/setLevel.serializer';
 import { DestObjSerializer } from '../net/snapshot/destObj.serializer';
-import { DoUseSkillPointSerializer } from '../net/snapshot/doUseSkillPoint.serializer';
+import { DoUseSkillPointSerializer } from '@flyff/world-core';
 import { SetStateSerializer } from '../net/snapshot/setState.serializer';
 import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
@@ -63,8 +62,12 @@ export interface CombatServiceDeps {
    * matching `SetEndCondKillNPC` slots.
    */
   questTracker?: { onKill(killer: CPlayer, victimModelIdx: number): void };
-  /** Optional drop-roller (Phase A-C). Spawns ground piles for the kill. */
-  dropService?: DropService;
+  /**
+   * Optional drop-roller (Phase A-C). Spawns ground piles for the kill.
+   * Structural type -- compose.ts binds the real `DropService` (in @flyff/
+   * inventory), which satisfies this signature without combat depending on it.
+   */
+  dropService?: { roll(mover: CMover, killer: CPlayer): void };
   /** Optional item-definition lookup -- folds equipped weapon/armor into ATK/DEF. */
   getItem?: ItemLookup;
 }

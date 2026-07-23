@@ -24,7 +24,7 @@
 
 import type { CPlayer } from '@flyff/entities';
 import type { SpawnManager } from '@flyff/world-core';
-import { isMoverAttackableBy } from './combat.policy';
+import { isMoverAttackableBy } from '@flyff/combat';
 import { NULL_ID } from '@flyff/world-core';
 
 export interface TargetServiceDeps {
