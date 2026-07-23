@@ -37,7 +37,7 @@ import type { CPlayer } from '@flyff/entities';
 import { isGoldSeed } from '../services/drop.service';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
 import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
-import { buildSetPointParam, DST_GOLD } from '../net/snapshot/pointParam.serializer';
+import { buildSetPointParam, DST_GOLD } from '@flyff/world-core';
 import { NULL_ID, LOOT_FFA_MS } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'actMsg-handler' });

@@ -4,8 +4,8 @@ import { QuestTrackerSystem } from '../../src/systems/questTracker.system';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import type { CPlayer } from '@flyff/entities';
 import type { QuestDef, QuestIndex, QuestDrop } from '@flyff/resources';
-import type { AddItemResult, InventoryService } from '../../src/services/inventory.service';
-import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer';
+import type { AddItemResult, InventoryService } from '@flyff/inventory';
+import { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import type { PlayerManager } from '@flyff/world-core';
 
 /** Capturing PlayerManager stub -- records every sendTo by charId. */

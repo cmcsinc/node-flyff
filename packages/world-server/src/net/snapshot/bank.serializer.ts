@@ -15,7 +15,7 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import { NULL_ID } from '@flyff/world-core';
-import { writeCItemElemBody } from './itemElemBody.serializer';
+import { writeCItemElemBody } from '@flyff/world-core';
 import type { InventorySlot } from '@flyff/entities';
 
 function snapshotFrame(objid: number, subtype: number, write: (w: PacketWriter) => void): Buffer {

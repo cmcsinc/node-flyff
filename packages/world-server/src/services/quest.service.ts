@@ -29,8 +29,8 @@ import type { QuestFailReason } from './questConditions';
 import { canBegin, isComplete } from './questConditions';
 import type { RewardSink } from './questRewards';
 import { applyBeginSet, applyEnd } from './questRewards';
-import type { InventoryService } from './inventory.service';
-import type { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
+import type { InventoryService } from '@flyff/inventory';
+import type { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import { bindQuestInventory, type QuestInventory } from './questInventory.adapter';
 
 export type { QuestInventory };

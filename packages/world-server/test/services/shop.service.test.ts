@@ -8,7 +8,7 @@ import { MMI_TRADE } from '@flyff/resources';
 import { ShopService } from '../../src/services/shop.service';
 import type { CPlayer, InventorySlot } from '@flyff/entities';
 import type { SpawnManager } from '@flyff/world-core';
-import type { InventoryService } from '../../src/services/inventory.service';
+import type { InventoryService } from '@flyff/inventory';
 import type { VendorStock } from '@flyff/entities';
 
 /** One populated slot (itemId 81) in tab 0/slot 0 for buy happy-path. */

@@ -5,8 +5,8 @@ import { CPlayer } from '@flyff/entities';
 import { QS_BEGIN, QS_END, QUEST_FLAG } from '@flyff/core/constants/quest';
 import type { CharacterRow, JournalEntry } from '@flyff/database';
 import type { QuestCommand, QuestDef, QuestIndex } from '@flyff/resources';
-import { InventoryService } from '../../src/services/inventory.service';
-import { CreateItemSnapshotSerializer } from '../../src/net/snapshot/createItem.serializer';
+import { InventoryService } from '@flyff/inventory';
+import { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST } from '@flyff/world-core';
 
 const baseRow = {

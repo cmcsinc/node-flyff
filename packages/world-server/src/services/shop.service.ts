@@ -18,7 +18,7 @@ import { MMI_TRADE } from '@flyff/resources';
 import type { SpawnManager } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
 import type { VendorStock } from '@flyff/entities';
-import type { InventoryService } from './inventory.service';
+import type { InventoryService } from '@flyff/inventory';
 import { MAX_INVENTORY, MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB } from '@flyff/world-core';
 
 /** propItem fields the shop needs to price an item. */

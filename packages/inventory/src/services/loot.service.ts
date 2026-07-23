@@ -34,7 +34,7 @@ import { isGoldSeed } from './drop.service';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
 import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';
 import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
-import { buildSetPointParam, DST_GOLD } from '../net/snapshot/pointParam.serializer';
+import { buildSetPointParam, DST_GOLD } from '@flyff/world-core';
 import { NULL_ID, LOOT_FFA_MS, VISIBILITY_RADIUS } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 

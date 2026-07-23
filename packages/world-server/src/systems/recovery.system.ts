@@ -28,7 +28,7 @@ import type { PlayerManager } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
 import { getJobProps } from '@flyff/combat';
 import { maxFatiguePoint, maxHitPoint, maxManaPoint, standRecovery } from '@flyff/combat';
-import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '../net/snapshot/pointParam.serializer';
+import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'recovery' });
 

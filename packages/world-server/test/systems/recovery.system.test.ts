@@ -7,7 +7,7 @@ import * as assert from 'node:assert/strict';
 import type { CharacterRow } from '@flyff/database';
 import { CPlayer } from '@flyff/entities';
 import { RecoverySystem } from '../../src/systems/recovery.system';
-import { DST_HP, DST_MP, DST_FP } from '../../src/net/snapshot/pointParam.serializer';
+import { DST_HP, DST_MP, DST_FP } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
