@@ -33,7 +33,7 @@ import { cumulativeExp, subDieDecExp } from '@flyff/combat';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
 } from '@flyff/entities';
-import { MAX_INVENTORY, VISIBILITY_RADIUS } from '@flyff/world-core';
+import { MAX_INVENTORY, VISIBILITY_RADIUS, buildRemoveSkillInfluence, buildResetDestParam } from '@flyff/world-core';
 import {
   SNAPSHOTTYPE_REVIVAL, SNAPSHOTTYPE_REVIVAL_TO_LODESTAR,
 } from '@flyff/world-core';
@@ -63,6 +63,8 @@ export interface RevivalServiceDeps {
 }
 
 const REVIVE_HP_RATE = 0.2; // v15 non-chaotic v9+ default (DPSrvr.cpp:997,1100)
+/** Chaotic (PK) players revive at half the normal HP rate (DPSrvr.cpp PK branch). */
+const REVIVE_HP_RATE_CHAOTIC = 0.1;
 
 export class RevivalService {
   private readonly moverDeath = new MoverDeathSerializer();
@@ -80,6 +82,22 @@ export class RevivalService {
   onPlayerDeath(player: CPlayer, killerObjid: number): void {
     if (player.m_bDead) return;
     player.m_bDead = true;
+
+    // Clear all active buffs (C++ DoDie drops the skill-state list). Reverses
+    // each DST delta on m_params + broadcasts REMOVESKILLINFULENCE + RESETDESTPARAM
+    // per buff so peers + self drop the icons and stat-window deltas.
+    for (const buff of player.m_buffs.clear()) {
+      this.deps.zoneManager.broadcastAround(
+        player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+        buildRemoveSkillInfluence(player.m_idPlayer, buff.type, buff.skillId),
+      );
+      for (const e of buff.effects) {
+        this.deps.zoneManager.broadcastAround(
+          player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+          buildResetDestParam(player.m_idPlayer, e.dst, e.adj),
+        );
+      }
+    }
 
     // Vicinity: peers play the death animation (AddMoverDeath, User.cpp:4488).
     this.deps.zoneManager.broadcastAround(
@@ -173,10 +191,15 @@ export class RevivalService {
     // ponytail: ClearState buffs when the buff system lands.
   }
 
-  /** HP/MP to 0.2 * max (v15 non-chaotic default). */
+  /**
+   * HP/MP restore on revive. Non-chaotic players get 0.2 * max (v15 default);
+   * chaotic (PK) players get half that (0.1 * max) -- the PK death penalty.
+   * ponytail: full DiePenalty.inc REVIVAL_PENALTY bracket table (level-based).
+   */
   private restoreVitals(player: CPlayer): void {
-    const hp = Math.floor(player.m_nMaxHp * REVIVE_HP_RATE);
-    const mp = Math.floor(player.m_nMaxMp * REVIVE_HP_RATE);
+    const rate = player.isChaotic() ? REVIVE_HP_RATE_CHAOTIC : REVIVE_HP_RATE;
+    const hp = Math.floor(player.m_nMaxHp * rate);
+    const mp = Math.floor(player.m_nMaxMp * rate);
     if (player.m_nHp < hp) { player.m_nHp = hp; player._dirty.add('m_nHp'); }
     if (player.m_nMp < mp) { player.m_nMp = mp; player._dirty.add('m_nMp'); }
   }

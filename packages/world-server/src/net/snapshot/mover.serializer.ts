@@ -89,10 +89,10 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(p.m_dwMode);    // m_dwMode (live -- late-arriving peers see current GM mode)
   w.writeDword(0);             // m_dwStateMode
   w.writeDword(0);             // dwUseItemId (0 = none)
-  w.writeDword(0);             // m_dwPKTime (__VER>=8)
-  w.writeDword(0);             // m_nPKValue
+  w.writeDword(p.m_dwPKTime);    // m_dwPKTime (__VER>=8)
+  w.writeDword(p.m_nPKValue);    // m_nPKValue
   w.writeDword(p.m_dwPKPropensity); // m_dwPKPropensity (IsChaotic when >0)
-  w.writeDword(0);             // m_dwPKExp
+  w.writeDword(p.m_dwPKExp);    // m_dwPKExp
   w.writeDword(0);             // m_nFame
   w.writeByte(0);              // m_nDuel
   w.writeDword(0);             // m_nHonor (__VER>=13)
