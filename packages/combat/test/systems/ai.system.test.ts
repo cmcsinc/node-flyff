@@ -8,7 +8,7 @@ import type { MoverSpawnSource } from '@flyff/entities';
 import type { Vec3 } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 import { AISystem } from '../../src/systems/ai.system';
-import { MODE } from '@flyff/entities';
+import { MODE, RUNAWAY_DELAY_MS } from '@flyff/entities';
 
 /** Minimal CharacterRow for a live player at `id`. */
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
@@ -535,6 +535,205 @@ describe('AISystem (retaliation)', () => {
     assert.equal(m.m_idTarget, player.m_idPlayer, 'target retained');
     assert.equal(m.m_bReturnToBegin, false, 'monster does NOT leash home');
     assert.ok(player.m_nHp < 200, 'monster swung back (player took damage)');
+  });
+});
+
+describe('AISystem (flee / low-HP retreat)', () => {
+  /** Aggressive monster that flees at 30% HP. */
+  function fleeingSrc(hp = 100): MoverSpawnSource {
+    return {
+      modelIndex: 20, name: 'Fleer', level: 1, hp,
+      attackable: true, guard: false, belligerence: 6,
+      fleeHpPct: 30, runawayDelay: RUNAWAY_DELAY_MS,
+    };
+  }
+
+  it('drops target + flees AWAY from the player when HP crosses the flee threshold', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 80, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 100, y: 0, z: 0 };
+    const m = CMover.spawn(0x40000080, fleeingSrc(100), { x: 0, y: 0, z: 0 }, 1);
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer; // already raged
+    m.m_nextAttackTick = 0;
+    m.m_nHitPoint = 20; // 20% of 100 -> <= 30 flee threshold
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(5000);
+    assert.equal(m.m_bRunaway, true, 'monster entered runaway state');
+    assert.equal(m.m_idTarget, 0xffffffff, 'target dropped');
+    // Ran AWAY from the player: monster started at x=0, player at x=100 -> flee dir is -x.
+    assert.ok(m.m_vPos.x < 0, `fled away from player (x=${m.m_vPos.x} should be < 0)`);
+  });
+
+  it('transitions to return-home after the runaway duration elapses', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 81, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 100, y: 0, z: 0 };
+    const m = CMover.spawn(0x40000081, fleeingSrc(100), { x: 0, y: 0, z: 0 }, 1);
+    m.m_fSpeedBase = 0.075;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nHitPoint = 20; // below flee threshold
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(5000); // enter runaway (m_tmRunawayEnd = 5000 + RUNAWAY_DELAY_MS)
+    assert.equal(m.m_bRunaway, true);
+    ai.tick(5000 + RUNAWAY_DELAY_MS + 1); // runaway expired -> return home
+    assert.equal(m.m_bRunaway, false, 'runaway cleared');
+    assert.equal(m.m_bReturnToBegin, true, 'transitioned to return-home');
+  });
+
+  it('a monster with no fleeHpPct never flees, even at 1 HP', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 82, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 2, y: 0, z: 0 }; // within melee range
+    const m = makeMover(0x40000082, { x: 0, y: 0, z: 0 }); // monsterSrc -> no fleeHpPct
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 0;
+    m.m_nHitPoint = 1; // 1% HP -- but no flee threshold set
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+      rng: { int: () => 0, range: () => 16 } as never,
+    });
+    ai.tick(1000);
+    assert.equal(m.m_bRunaway, false, 'no flee threshold -> never flees');
+    // Still fights: swings at the player.
+    assert.ok(casts.find((c) => subtypeOf(c.packet) === 0x0013), 'still swings at 1 HP');
+  });
+
+  it('a fleeing monster does not swing at the player while running', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 83, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 100, y: 0, z: 0 };
+    const m = CMover.spawn(0x40000083, fleeingSrc(100), { x: 0, y: 0, z: 0 }, 1);
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 0;
+    m.m_nHitPoint = 20; // below flee threshold
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(5000);
+    assert.equal(m.m_bRunaway, true);
+    assert.ok(!casts.find((c) => subtypeOf(c.packet) === 0x0013), 'no DAMAGE while fleeing');
+    assert.ok(!casts.find((c) => subtypeOf(c.packet) === 0x00e0), 'no MELEE_ATTACK while fleeing');
+  });
+});
+
+describe('AISystem (healer / self-heal)', () => {
+  /** Aggressive monster that self-heals at 50% HP, 20 HP per tick. */
+  function healerSrc(hp = 100): MoverSpawnSource {
+    return {
+      modelIndex: 20, name: 'Healer', level: 1, hp,
+      attackable: true, guard: false, belligerence: 6,
+      healHpPct: 50, healAmount: 20, healCadenceMs: 1000,
+    };
+  }
+
+  it('self-heals when HP drops to the heal threshold, still in combat', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 90, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 2, y: 0, z: 0 }; // within melee range
+    const m = CMover.spawn(0x40000090, healerSrc(100), { x: 0, y: 0, z: 0 }, 1);
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 0;
+    m.m_nHitPoint = 40; // 40% of 100 -> <= 50% heal threshold
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+      rng: { int: () => 0, range: () => 16 } as never,
+    });
+    ai.tick(5000);
+    assert.ok(m.m_nHitPoint > 40, `healed above 40 (got ${m.m_nHitPoint})`);
+    assert.equal(m.m_idTarget, player.m_idPlayer, 'still targeting player while healing');
+    assert.equal(m.m_bRunaway, false, 'does NOT flee (separate from flee state)');
+    assert.ok(m.m_tmNextHealTick > 5000, 'heal cadence armed');
+  });
+
+  it('does not exceed max HP when self-healing', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 91, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 2, y: 0, z: 0 };
+    const m = CMover.spawn(0x40000091, healerSrc(100), { x: 0, y: 0, z: 0 }, 1);
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 100_000; // suppress swing, only heal
+    m.m_nHealHpPct = 96; // override: 95% <= 96% so heal fires
+    m.m_nHitPoint = 95; // 5 HP below max (20 hp heal would overshoot)
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(5000);
+    assert.equal(m.m_nHitPoint, m.m_nMaxHitPoint, 'healed to max, not beyond');
+  });
+
+  it('a monster with no healHpPct never self-heals, even at 1 HP', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 92, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 2, y: 0, z: 0 };
+    const m = makeMover(0x40000092, { x: 0, y: 0, z: 0 });
+    m.m_fSpeedBase = 0.075;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 100_000;
+    m.m_nHitPoint = 1;
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(5000);
+    assert.equal(m.m_nHitPoint, 1, 'no self-heal without healHpPct');
+  });
+
+  it('heal cooldown is respected: only heals once per cadence', () => {
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 93, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 20, y: 0, z: 0 }; // out of melee range -> no swing interference
+    const m = CMover.spawn(0x40000093, healerSrc(100), { x: 0, y: 0, z: 0 }, 1);
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 100_000;
+    m.m_nHitPoint = 30; // 30% of 100 — still <= 50% threshold after first heal (50)
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+    });
+    ai.tick(5000); // tick 1: heals 20 -> HP 50
+    assert.equal(m.m_nHitPoint, 50, 'one heal applied');
+    ai.tick(5001); // only 1 ms later — cooldown not yet elapsed
+    assert.equal(m.m_nHitPoint, 50, 'second heal blocked by cooldown');
+    ai.tick(6001); // 1001 ms later — cooldown elapsed -> heal again
+    assert.equal(m.m_nHitPoint, 70, 'second heal applied after cooldown');
   });
 });
 

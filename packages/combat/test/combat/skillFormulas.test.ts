@@ -303,3 +303,39 @@ describe('resolveSkillCast — effect gate (nProbability)', () => {
     assert.equal(result.effectProc, false, 'prob 0 never procs');
   });
 });
+
+describe('resolveSkillCast — getDamageMultiplier applied', () => {
+  it('PvP skill damage takes the 0.60 factor', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    // Player vs player defender (same level ⇒ no cosine term), nATK=39, DEF 3.
+    // Base 36 → floor(36 * 0.60) = 21.
+    const result = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeAttacker({ npcArmor: 20 }), // kind 'player', calcDefense uses equip/level not npcArmor
+      skill, level, rng: minRng,
+    });
+    // player defender calcDefense differs; assert factor bit: damage < base 36.
+    assert.ok(result.damage < 36, `PvP multiplier shrinks damage (got ${result.damage})`);
+  });
+
+  it('PvE skill damage takes the NPC level-diff cosine falloff', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    // Defender NPC 15 levels above attacker (level 15 vs 30): d=15,
+    // factor = cos(pi*15/32) ≈ 0.0980. nATK=39, DEF 3 → 36 → floor(36*0.098)=3.
+    const full = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender({ level: 30 }),
+      skill, level, rng: minRng,
+    });
+    const near = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender({ level: 10 }), // delta ≤ 0 ⇒ factor 1.0
+      skill, level, rng: minRng,
+    });
+    assert.equal(near.damage, 36, 'no falloff when defender not higher level');
+    assert.ok(full.damage < near.damage, `higher-level NPC reduces skill damage (got ${full.damage})`);
+    assert.equal(full.damage, Math.floor(36 * Math.cos((Math.PI * 15) / 32)));
+  });
+});

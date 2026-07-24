@@ -13,7 +13,7 @@
  */
 
 import type { Combatant, Rng, MeleeResult } from './formulas';
-import { calcDefense, getCriticalProb } from './formulas';
+import { calcDefense, getCriticalProb, getDamageMultiplier } from './formulas';
 import { DST } from '@flyff/entities';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import {
@@ -288,6 +288,11 @@ export function resolveSkillCast(input: SkillCastInputs): SkillCastResult {
   } else {
     nDamage = Math.max(0, nATK - nDEF);
   }
+
+  // GetDamageMultiplier -- shared `CalcDamage` tail (docs #4): PvP 0.60 + the
+  // NPC level-diff cosine falloff apply to skill damage exactly as melee. Was
+  // skipped before, dropping both factors on the skill path.
+  nDamage = Math.floor(nDamage * getDamageMultiplier(attacker, defender));
 
   // Zero damage clears the crit flag (matches melee -- no crit banner on a
   // fully-blocked/absorbed hit).
