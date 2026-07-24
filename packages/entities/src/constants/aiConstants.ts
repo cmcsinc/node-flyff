@@ -31,6 +31,21 @@ export const RANGE_ATTACK_RANGE = 10.0;
 export const PURSUE_SPEED_FACTOR = 2.0;
 /** Return-home speed factor (`SetSpeedFactor(2.66F)`, `AIMonster.cpp:295`). */
 export const RETURN_SPEED_FACTOR = 2.66;
+/**
+ * Flee speed factor (`StateRunaway`, `AIMonster.cpp:528-560`). A fleeing monster
+ * runs from its attacker at the pursue speed; C++ reuses the chase factor for
+ * the runaway step. Documented separately so the flee state can tune its own
+ * cadence without touching the pursue constant.
+ */
+export const FLEE_SPEED_FACTOR = PURSUE_SPEED_FACTOR;
+/**
+ * Default runaway duration (ms) -- propMoverEx template
+ * `m_dwRunawayDelay = 1000` (`propMoverEx.inc` AI template block). A monster
+ * that crosses its `SetRunAway(HP%)` threshold flees from its attacker for
+ * this long, then transitions to `StateReturn` (go home). Per-mover override
+ * via `MoverSpawnSource.runawayDelay` once the resource col exports.
+ */
+export const RUNAWAY_DELAY_MS = 1000;
 /** Chase-window + anti-stuck gate (`s_tmAttack = SEC(15)`, `AIMonster.cpp:78`). */
 export const CHASE_WINDOW_MS = 15_000;
 /** Return-home stuck-teleport cap (`MoveProcessIdle:367-376` -- 20 s). */
