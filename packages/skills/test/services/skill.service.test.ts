@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '@flyff/entities';
+import { CPlayer, CMover, DST, CHRSTATE_BITS } from '@flyff/entities';
 import { SkillService } from '../../src/services/skill.service';
 import { NULL_ID } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
@@ -46,11 +46,14 @@ function healSkill(over: Partial<SkillDefinition> = {}): SkillDefinition {
   };
 }
 
+interface JournalCall { charId: number; type: string; payload: unknown; }
+
 interface MockDeps {
   service: SkillService;
   sent: Buffer[];
   broadcasts: Buffer[];
   calls: { resolve: number };
+  journalCalls: JournalCall[];
   spawnGet: (id: number) => { m_bDead: boolean } | undefined;
   setSpawn: (fn: (id: number) => { m_bDead: boolean } | undefined) => void;
   resolveResult: { ok: true; hit: boolean; damage: number; killed: boolean };
@@ -60,14 +63,16 @@ function makeService(
   skills: Map<number, SkillDefinition>,
   player: CPlayer,
   extraPlayers: CPlayer[] = [],
+  mover?: CMover,
 ): MockDeps {
   const sent: Buffer[] = [];
   const broadcasts: Buffer[] = [];
   const calls = { resolve: 0 };
+  const journalCalls: JournalCall[] = [];
   const playerMap = new Map<number, CPlayer>();
   for (const p of extraPlayers) playerMap.set(p.m_idPlayer, p);
   const state = {
-    spawnGet: ((_id: number) => ({ m_bDead: false })) as (id: number) => ({ m_bDead: boolean } | undefined),
+    spawnGet: ((_id: number) => (mover ?? { m_bDead: false }) as CMover | { m_bDead: boolean }) as (id: number) => (CMover | { m_bDead: boolean } | undefined),
     resolveResult: { ok: true, hit: true, damage: 42, killed: false } as const,
   };
   const deps = {
@@ -81,10 +86,11 @@ function makeService(
     combatService: { resolveSkill: () => { calls.resolve++; return state.resolveResult; } },
     skillRepo: { saveAll: async () => {} },
     charRepo: { updateSkillPoints: async () => {} },
+    journal: { append: (e: JournalCall) => { journalCalls.push(e); return journalCalls.length; } },
   };
   const service = new SkillService(deps);
   return {
-    service, sent, broadcasts, calls,
+    service, sent, broadcasts, calls, journalCalls,
     spawnGet: (id) => state.spawnGet(id),
     setSpawn: (fn) => { state.spawnGet = fn; },
     resolveResult: state.resolveResult as MockDeps['resolveResult'],
@@ -252,6 +258,97 @@ describe('SkillService.cast (heal)', () => {
   });
 });
 
+describe('SkillService.cast (buff)', () => {
+  /** RT_TIME self-buff: +20 STA for 300s (Assist-style Cannonball). */
+  function buffSkill(over: Partial<SkillDefinition> = {}): SkillDefinition {
+    return {
+      id: 150, name: 'Cannonball', name_id: 'IDS_CANNON', tier: 1, job: 3,
+      discipline: 0, reqLevel: 0, prereqs: [], resourceType: 1, maxLevel: 20,
+      referTargets: [2, 0], referStats: [4, 0], referValues: [0, 0],
+      levels: [{
+        level: 1, reqMp: 20, reqFp: 0, skillTime: 300_000,
+        destParams: [4, 0], adjParamVals: [20, 0],
+      }],
+      ...over,
+    };
+  }
+
+  it('attaches a timed DST buff to the caster + broadcasts SETSKILLSTATE', () => {
+    const p = CPlayer.fromRow(makeRow({ mp: 50, max_mp: 100 }), makeSocket());
+    p.hydrateSkills([{ slot: 0, skillId: 150, level: 1 }]);
+    const m = makeService(new Map([[150, buffSkill()]]), p);
+
+    const out = m.service.cast(p, { wId: 0, objid: p.m_idPlayer, useType: 0 });
+
+    assert.equal(out.ok, true);
+    assert.equal(p.m_nMp, 30, 'MP spent (50 - 20)');
+    assert.equal(p.m_buffs.has(150), true, 'buff active on caster');
+    assert.equal(p.m_params.get(DST.STA, 0), 20, '+STA applied to the DST pool');
+    // USESKILL (cast anim) + SETSKILLSTATE (buff icon) + SETDESTPARAM (STA delta).
+    assert.equal(m.broadcasts.length, 3);
+  });
+
+  it('refreshes duration on re-cast (same level), no double-apply', () => {
+    const p = CPlayer.fromRow(makeRow({ mp: 100, max_mp: 200 }), makeSocket());
+    p.hydrateSkills([{ slot: 0, skillId: 150, level: 1 }]);
+    const m = makeService(new Map([[150, buffSkill()]]), p);
+
+    m.service.cast(p, { wId: 0, objid: p.m_idPlayer, useType: 0 });
+    m.service.cast(p, { wId: 0, objid: p.m_idPlayer, useType: 0 });
+
+    assert.equal(p.m_buffs.size, 1, 'one buff slot, not two');
+    assert.equal(p.m_params.get(DST.STA, 0), 20, 'STA not double-applied');
+  });
+});
+
+describe('SkillService.cast (debuff on monster)', () => {
+  /** RT_TIME debuff: stun (CHRSTATE STUN bit) for 5s, targets a mover. */
+  function stunSkill(over: Partial<SkillDefinition> = {}): SkillDefinition {
+    return {
+      id: 160, name: 'Stun', name_id: 'IDS_STUN', tier: 2, job: 6,
+      discipline: 0, reqLevel: 0, prereqs: [], resourceType: 1, maxLevel: 20,
+      referTargets: [2, 0], referStats: [0, 0], referValues: [0, 0],
+      levels: [{
+        level: 1, reqMp: 10, reqFp: 0, skillTime: 5_000,
+        // CHRSTATE stun bit (0x0800) as the DST_CHRSTATE adj.
+        destParams: [64, 0], adjParamVals: [CHRSTATE_BITS.STUN, 0],
+      }],
+      ...over,
+    };
+  }
+
+  it('applies a stun debuff to the targeted monster', () => {
+    const p = CPlayer.fromRow(makeRow({ mp: 50, max_mp: 100 }), makeSocket());
+    p.hydrateSkills([{ slot: 0, skillId: 160, level: 1 }]);
+    const mob = CMover.spawn(999, { modelIndex: 0, key: '', name: 'Mob', level: 5, hp: 100 }, { x: 0, y: 0, z: 0 }, 1);
+    const m = makeService(new Map([[160, stunSkill()]]), p, [], mob);
+
+    const out = m.service.cast(p, { wId: 0, objid: 999, useType: 0 });
+
+    assert.equal(out.ok, true);
+    assert.equal(p.m_nMp, 40, 'MP spent (50 - 10)');
+    // Debuff landed on the MOVER's pool, not the player's.
+    assert.equal(mob.m_buffs.has(160), true);
+    assert.equal(mob.isStunned(), true, 'monster is stunned');
+    assert.equal(p.m_buffs.has(160), false, 'caster unaffected');
+  });
+
+  it('rejects a dead monster target', () => {
+    const p = CPlayer.fromRow(makeRow({ mp: 50, max_mp: 100 }), makeSocket());
+    p.hydrateSkills([{ slot: 0, skillId: 160, level: 1 }]);
+    const mob = CMover.spawn(999, { modelIndex: 0, key: '', name: 'Mob', level: 5, hp: 100 }, { x: 0, y: 0, z: 0 }, 1);
+    mob.m_bDead = true;
+    const m = makeService(new Map([[160, stunSkill()]]), p, [], mob);
+
+    const out = m.service.cast(p, { wId: 0, objid: 999, useType: 0 });
+
+    assert.equal(out.ok, false);
+    assert.equal(out.ok === false && out.reason, 'target_dead');
+    assert.equal(p.m_nMp, 50, 'no MP spent on reject');
+  });
+});
+
+
 describe('SkillService.learnSkills', () => {
   it('spends SP at tier cost, applies the roster, confirms + persists', async () => {
     const p = CPlayer.fromRow(makeRow(), makeSocket());
@@ -272,6 +369,26 @@ describe('SkillService.learnSkills', () => {
     assert.ok(p._dirty.has('m_nSkillPoint'));
     // confirm snapshot sent to self (last buffered write).
     assert.ok(m.sent.length >= 1);
+    // WAL SKILL_LEARN journaled BEFORE the fire-and-forget DB persist: absolute
+    // roster + SP so replay is idempotent (rule 04-persistence).
+    assert.equal(m.journalCalls.length, 1);
+    const j = m.journalCalls[0]!;
+    assert.equal(j.charId, p.m_idPlayer);
+    assert.equal(j.type, 'SKILL_LEARN');
+    const jp = j.payload as { roster: Array<{ slot: number; skillId: number; level: number }>; skillPoint: number; skillLevel: number };
+    assert.equal(jp.skillPoint, 7);
+    assert.deepEqual(jp.roster[0], { slot: 0, skillId: 100, level: 3 });
+  });
+
+  it('does not journal when no SP is spent (empty batch)', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nSkillPoint = 10;
+    const m = makeService(new Map([[100, meleeSkill()]]), p);
+    // All-empty request -> nothing raised -> totalCost 0 -> no WAL row.
+    const req = Array.from({ length: 45 }, () => ({ skillId: NULL_ID, level: 0 }));
+    const out = m.service.learnSkills(p, req);
+    assert.equal(out.ok, true);
+    assert.equal(m.journalCalls.length, 0);
   });
 
   it('rejects a level decrease', () => {
@@ -284,6 +401,30 @@ describe('SkillService.learnSkills', () => {
     const out = m.service.learnSkills(p, req);
     assert.equal(out.ok === false && out.reason, 'decrease');
     assert.equal(p.m_nSkillPoint, 10, 'no SP spent on reject');
+  });
+
+  it('rejects a skill whose job is outside the player class lineage (wrong_job)', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket()); // class 1 = MERCENARY
+    p.m_nSkillPoint = 100;
+    // skill job:6 (KNIGHT) -- MERCENARY cannot learn a 2nd-job skill.
+    const m = makeService(new Map([[100, meleeSkill({ job: 6 })]]), p);
+    const req = Array.from({ length: 45 }, () => ({ skillId: NULL_ID, level: 0 }));
+    req[0] = { skillId: 100, level: 1 };
+    const out = m.service.learnSkills(p, req);
+    assert.equal(out.ok === false && out.reason, 'wrong_job');
+    assert.equal(p.m_nSkillPoint, 100, 'no SP spent on reject');
+  });
+
+  it('accepts an ancestor-class skill (KNIGHT player learns MERCENARY skill)', () => {
+    const p = CPlayer.fromRow(makeRow({ class: 6 }), makeSocket()); // KNIGHT
+    p.m_nSkillPoint = 10;
+    // skill job:1 (MERCENARY) -- KNIGHT descends from MERCENARY => allowed.
+    const m = makeService(new Map([[100, meleeSkill({ job: 1 })]]), p);
+    const req = Array.from({ length: 45 }, () => ({ skillId: NULL_ID, level: 0 }));
+    req[0] = { skillId: 100, level: 1 };
+    const out = m.service.learnSkills(p, req);
+    assert.equal(out.ok, true);
+    assert.equal(p.m_nSkillPoint, 9);
   });
 
   it('rejects above maxLevel', () => {
