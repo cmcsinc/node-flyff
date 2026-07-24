@@ -54,6 +54,8 @@ function makeSvc(opts: {
     equipService, consumableService, inventoryService,
     getItem: opts.getItem,
     potionCooldownMs: opts.potionCooldownMs ?? 1000,
+    playerManager: { sendTo: () => {} } as never,
+    zoneManager: { broadcastAround: () => 0 } as never,
   });
   return { svc, equipCalled: () => equipCalled, applyCalled: () => applyCalled, consumeCalled: () => consumeCalled };
 }
@@ -107,6 +109,28 @@ describe('UseItemService.use', () => {
 
     assert.equal(r.kind, 'consumed');
     assert.equal(consumeCalled(), true, 'charge consumed');
+  });
+
+  it('applies a DST buff from an IK2_BUFF item with effects + duration', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[1] = { itemId: 7200, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [7200, {
+        id: 7200, name: 'Fire Pill', name_id: 'ITEM_FP', stack_size: 1, weight: 1,
+        level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_BUFF',
+        duration: 300, // 5 minutes in seconds (schema: seconds→ms in impl)
+        effects: [{ dst: 1, adj: 20 }], // +20 STR
+      }],
+    ]);
+    const { svc, consumeCalled } = makeSvc({ getItem: (id) => table.get(id) });
+
+    const r = svc.use(player, 1, 0);
+
+    assert.equal(r.kind, 'consumed');
+    assert.equal(consumeCalled(), true, 'charge consumed');
+    // Buff applied to the player buff container + ParamModel DST pool
+    assert.equal(player.m_buffs.has(7200), true);
+    assert.equal(player.m_params.get(1 /* DST_STR */, 0), 20);
   });
 
   it('rejects when the slot is empty', () => {
