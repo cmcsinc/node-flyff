@@ -130,6 +130,7 @@ export class JoinService {
         objid: r.slot,
         itemId: r.item_id, count: r.quantity,
         flags: r.flags, refine: r.refine, durability: r.durability,
+        element: r.element, element_level: r.element_level,
       };
     }
     // Carried penya lives on the inventory container row (migration 008), not
@@ -161,11 +162,10 @@ export class JoinService {
   }
 
   /**
-   * Hydrate `m_Bank` (3 tabs) + `m_BankGold` + `m_szBankPass` from the DB. Bank
-   * is account-shared (Flyff lore) -- all characters on the account see the
-   * same tabs, gold, and pin. Gold + pin live on the `bank` container row
-   * (migration 008); gold maps to tab 0 of `m_BankGold`, tabs 1/2 stay 0 until
-   * per-tab gold separation is needed.
+   * Hydrate `m_Bank` (3 tabs) + `m_BankGold` (3 pools) + `m_szBankPass` from the
+   * DB. Bank is account-shared (Flyff lore) -- all characters on the account
+   * see the same tabs, gold pools, and pin. Gold + pin live on the `bank`
+   * container row (migration 008); per-tab gold columns are migration 011.
    */
   private async loadBank(player: CPlayer): Promise<void> {
     if (!this.deps.bankRepo) return;
@@ -176,7 +176,9 @@ export class JoinService {
       if (r.slot < 0 || r.slot >= tab.length) continue;
       tab[r.slot] = { itemId: r.item_id, count: r.quantity, flags: r.flags, refine: r.refine, durability: r.durability };
     }
-    player.m_BankGold[0] = await this.deps.bankRepo.getGold(player.m_accountId);
+    for (let t = 0; t < player.m_BankGold.length; t++) {
+      player.m_BankGold[t] = await this.deps.bankRepo.getGold(player.m_accountId, t);
+    }
     // Account-wide bank pin lives on the bank container row (migration 008).
     player.m_szBankPass = await this.deps.bankRepo.getBankPass(player.m_accountId);
   }
@@ -252,7 +254,9 @@ export class JoinService {
       intelligence: player.m_nInt,
     });
     if (this.deps.bankRepo) {
-      await this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[0]);
+      for (let t = 0; t < player.m_BankGold.length; t++) {
+        await this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[t]!, t);
+      }
     }
   }
 
