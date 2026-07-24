@@ -57,6 +57,26 @@ export interface CharacterRow {
    * grid on JOIN). See `taskbar.service.encodeTaskBar` for the shape.
    */
   taskbar?: string | null;
+  /**
+   * PK propensity / chaotic state (C++ `m_dwPKPropensity`). > 0 = chaotic.
+   * Added by migration 013.
+   */
+  pk_propensity: number;
+  /**
+   * PK value / slaughter count (C++ `m_nSlaughter`). Incremented on player-kill.
+   * Added by migration 013.
+   */
+  pk_value: number;
+  /**
+   * Wall-clock ms of last PK action (C++ `m_dwPKTime`). Drives PK decay.
+   * Added by migration 013.
+   */
+  pk_time: number;
+  /**
+   * PK experience (C++ `m_dwPKExp`). Counter-decay accumulator.
+   * Added by migration 013.
+   */
+  pk_exp: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -291,6 +311,36 @@ export class CharacterRepository {
         skill_level: skillLevel,
         updated_at: new Date(),
       });
+  }
+
+  /**
+   * Update character PK state (C++ `m_dwPKPropensity`/`m_nSlaughter`/
+   * `m_dwPKTime`/`m_dwPKExp`). Fire-and-forget at call sites -- WAL `PK_KILL`
+   * is the crash-recovery backup for the propensity/value/time write.
+   *
+   * @param id - Character ID
+   * @param pkPropensity - New PK propensity (IsChaotic when > 0)
+   * @param pkValue - New PK value / slaughter count
+   * @param pkTime - New wall-clock ms of last PK action (decay base)
+   * @param pkExp - Optional new PK exp (defaults to unchanged)
+   */
+  async updatePKState(
+    id: number,
+    pkPropensity: number,
+    pkValue: number,
+    pkTime: number,
+    pkExp?: number,
+  ): Promise<void> {
+    const update: Record<string, number | Date> = {
+      pk_propensity: pkPropensity,
+      pk_value: pkValue,
+      pk_time: pkTime,
+      updated_at: new Date(),
+    };
+    if (pkExp !== undefined) update['pk_exp'] = pkExp;
+    await this.db('characters')
+      .where({ id })
+      .update(update);
   }
 
   /**

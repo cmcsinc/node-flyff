@@ -11,7 +11,6 @@
 
 import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
-import { EMPTY_PARAM_VIEW } from '@flyff/entities';
 import { NO_PROP, WT_MELEE_SWD } from './tables';
 import type { Combatant, WeaponStats } from './formulas';
 import { sumEquipStats, type ItemLookup } from './equipStats';
@@ -56,6 +55,6 @@ export function moverCombatant(m: CMover): Combatant {
     npcAtkMin: m.m_nAtkMin, npcAtkMax: m.m_nAtkMax, npcArmor: m.m_nArmor,
     npcResisMagic: 0, npcHR: m.m_nHR, npcER: m.m_nER, element: m.m_nElement,
     equipDef: 0, adjHitRate: 0, parry: 0,
-    params: EMPTY_PARAM_VIEW,
+    params: m.m_params,
   };
 }

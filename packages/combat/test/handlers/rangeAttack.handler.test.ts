@@ -33,7 +33,7 @@ const payload = (dwAtkMsg: number, objid: number, nParam2: number, nParam3: numb
 const fakePm = (p?: CPlayer): PlayerManager => ({ get: () => p }) as unknown as PlayerManager;
 const fakeSvc = (r: RangeAttackOutcome): RangeAttackService =>
   ({ attack: () => r }) as unknown as RangeAttackService;
-const player = { m_idPlayer: 42 } as unknown as CPlayer;
+const player = { m_idPlayer: 42, m_bDead: false, isStunned: () => false } as unknown as CPlayer;
 
 describe('RangeAttackHandler', () => {
   it('parses the 20-byte body and derives idSfxHit from HIWORD(nParam3)', () => {

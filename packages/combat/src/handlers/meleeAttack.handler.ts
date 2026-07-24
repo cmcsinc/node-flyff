@@ -39,6 +39,12 @@ export class MeleeAttackHandler {
     const player = this.playerManager.get(socket.session.charId!);
     if (!player) { socket.destroy(); return; }
 
+    // Stunned or sleeping? C++ OnMeleeAttack gates on CHRSTATE bits.
+    if (player.m_bDead || player.isStunned()) {
+      logger.debug({ charId: player.m_idPlayer, dead: player.m_bDead, stunned: player.isStunned() }, 'MELEE_ATTACK gated');
+      return;
+    }
+
     try {
       const dwAtkMsg = reader.readDword();
       const objid = reader.readDword();
