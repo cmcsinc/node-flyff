@@ -102,20 +102,18 @@ export class BankHandler {
     const tab = r.readByte();
     const dwGold = r.readDword();
     Validate.dword(dwGold);
-    const res = this.deps.bankService.depositGold(p, dwGold);
+    const res = this.deps.bankService.depositGold(p, tab, dwGold);
     if (!res.ok) return;
     this.deps.playerManager.sendTo(p, buildPutGoldBank(p.m_idPlayer, res.tab, res.invGold, res.bankGold));
-    void tab;
   }); }
 
   handleWithdrawGold(socket: ClientSocket, reader: PacketReader): void { this.run(socket, reader, (p, r) => {
     const tab = r.readByte();
     const dwGold = r.readDword();
     Validate.dword(dwGold);
-    const res = this.deps.bankService.withdrawGold(p, dwGold);
+    const res = this.deps.bankService.withdrawGold(p, tab, dwGold);
     if (!res.ok) return;
     this.deps.playerManager.sendTo(p, buildGetGoldBank(p.m_idPlayer, res.tab, res.invGold, res.bankGold));
-    void tab;
   }); }
 
   /** Shared session/player guard + PacketError swallow. */

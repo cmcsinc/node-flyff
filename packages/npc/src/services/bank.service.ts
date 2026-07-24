@@ -4,14 +4,16 @@
  * Ports `CDPSrvr::OnPutItemBank` / `OnGetItemBank` / `OnPutGoldBank` /
  * `OnGetGoldBank` (`WORLDSERVER/DPSrvr.cpp:3430/3791/3848/3900`). Bank is
  * account-shared (3 tabs * BANK_SLOTS). Moves items between the main bag and
- * `m_Bank[tab]`, gold between `m_nGold` and `m_BankGold[0]`. Each journals +
- * persists before the handler acks (PUTITEMBANK / GETITEMBANK / PUTGOLDBANK).
+ * `m_Bank[tab]`, gold between `m_nGold` and `m_BankGold[tab]` -- v15 carries
+ * one gold pool per tab (`m_BankGold[3]`), and PUTGOLDBANK / GETGOLDBANK send
+ * `BYTE nSlot` to select it. Each journals + persists before the handler acks
+ * (PUTITEMBANK / GETITEMBANK / PUTGOLDBANK).
  *
  * The client drags optimistically; ack snapshots confirm the new bank/gold
  * state. Inventory-side changes the client applies locally (same model as
  * MOVEITEM).
  *
- * ponytail: per-tab gold (tabs 1/2), bank-to-bank transfer.
+ * ponytail: bank-to-bank gold transfer.
  *
  * @module services/bank
  */
@@ -154,34 +156,40 @@ export class BankService {
     return { ok: true, tab, bankSlot, item: moved };
   }
 
-  /** Move `amount` gold from inv into bank (tab 0 account gold). */
-  depositGold(player: CPlayer, amount: number): GoldMoveResult {
+  /**
+   * Move `amount` gold from inv into bank `tab` (v15 per-tab gold pool,
+   * `m_BankGold[tab]`). `tab` is the `BYTE nSlot` from PUTGOLDBANK
+   * (DPSrvr.cpp:3848); validated in [0, MAX_BANK_TABS).
+   */
+  depositGold(player: CPlayer, tab: number, amount: number): GoldMoveResult {
+    if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) return { ok: false, reason: 'invalid' };
     if (amount <= 0 || amount > player.m_nGold) return { ok: false, reason: 'invalid' };
     player.m_nGold -= amount;
-    player.m_BankGold[0] += amount;
+    player.m_BankGold[tab] += amount;
     // Canonical CHAR_GOLD carries the absolute post-mutation m_nGold so WAL
     // replay restores the inventory side too -- without this the inventory
     // container keeps the pre-deposit value and a relog dupes the penya back.
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
-    this.persistGold(player);
-    return { ok: true, tab: 0, invGold: player.m_nGold, bankGold: player.m_BankGold[0] };
+    this.persistGold(player, tab);
+    return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] };
   }
 
-  /** Move `amount` gold from bank into inv. */
-  withdrawGold(player: CPlayer, amount: number): GoldMoveResult {
-    if (amount <= 0 || amount > player.m_BankGold[0]) return { ok: false, reason: 'invalid' };
-    player.m_BankGold[0] -= amount;
+  /** Move `amount` gold from bank `tab` into inv. */
+  withdrawGold(player: CPlayer, tab: number, amount: number): GoldMoveResult {
+    if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) return { ok: false, reason: 'invalid' };
+    if (amount <= 0 || amount > player.m_BankGold[tab]) return { ok: false, reason: 'invalid' };
+    player.m_BankGold[tab] -= amount;
     player.m_nGold += amount;
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
-    this.persistGold(player);
-    return { ok: true, tab: 0, invGold: player.m_nGold, bankGold: player.m_BankGold[0] };
+    this.persistGold(player, tab);
+    return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] };
   }
 
-  private persistGold(player: CPlayer): void {
+  private persistGold(player: CPlayer, tab: number): void {
     player._dirty.add('m_nGold');
     this.deps.inventoryRepo.setGold(player.m_idPlayer, player.m_nGold)
       .catch((e: unknown) => logger.warn({ err: e }, 'inv gold persist failed'));
-    this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[0]).catch((e: unknown) => logger.warn({ err: e }, 'bank setGold failed'));
+    this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[tab]!, tab).catch((e: unknown) => logger.warn({ err: e }, 'bank setGold failed'));
   }
 
   private cloneSlot(src: InventorySlot, count: number): InventorySlot {
