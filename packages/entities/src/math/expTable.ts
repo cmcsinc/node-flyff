@@ -2,8 +2,16 @@
  * Experience table -- `Server/Resource/expTable.inc` `expCharacter` block.
  *
  * 200 rows (levels 0-199). Struct `EXPCHARACTER { nExp1, nPxp, dwLPPoint,
- * nLimitExp }` (`Project.cpp:3251`). We keep `nExp1` (cumulative exp to reach
- * level N), `nLimitExp` (per-source gain cap), and `dwLPPoint` (skill points
+ * nLimitExp }` (`Project.cpp:3251`). `nExp1` is the **within-level threshold
+ * to reach this level** -- i.e. the within-level exp a character at level N-1
+ * must accumulate (via `m_nExp1`) to advance to N. C++ checks
+ * `m_nExp1 >= m_aExpCharacter[level+1].nExp1` to level up
+ * (`MoverParam.cpp:1326`), and the client draws the bar as
+ * `m_nExp1 / m_aExpCharacter[level+1].nExp1` (`MoverParam.cpp:488`). The
+ * values are NOT cumulative (the sequence 5880, 7840, 6875 is non-monotonic);
+ * each row is an independent per-level target.
+ *
+ * We also keep `nLimitExp` (per-source gain cap) and `dwLPPoint` (skill points
  * granted on leveling into N+1). `nPxp` is legacy PXP -- unused.
  *
  * `nExp1` exceeds 2^31 past L80, so this is `number` (float64, exact to 2^53).
@@ -13,7 +21,7 @@
  */
 
 export interface ExpRow {
-  /** Cumulative exp required to BE this level (`EXPCHARACTER.nExp1`). */
+  /** Within-level exp threshold to reach this level (`EXPCHARACTER.nExp1`). */
   readonly nExp1: number;
   /** Skill points granted on leveling INTO this level (`dwLPPoint`). */
   readonly dwLPPoint: number;

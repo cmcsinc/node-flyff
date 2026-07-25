@@ -20,7 +20,7 @@ import type { QuestArg, QuestDef } from '@flyff/resources';
 import type { JournalEntry } from '@flyff/database';
 import type { CPlayer } from '@flyff/entities';
 import type { InventoryOps } from './questConditions';
-import { addExp, cumulativeExp } from '@flyff/combat';
+import { addExp } from '@flyff/combat';
 
 /** Sink the grantors mutate through. `inventory` covers count/add/remove. */
 export interface RewardSink {
@@ -35,6 +35,13 @@ export interface RewardSink {
    * so the DB is consistent even if the server exits before the next 30s flush.
    */
   flushGold?: (charId: number, gold: number) => void;
+  /**
+   * Exp-gain client notification. Fired after the player's `m_nExp`/`m_nLevel`
+   * mutate so the QuestService can broadcast SETEXPERIENCE (+ SETLEVEL when
+   * `leveled` is true) without this module taking a serializer dep. Matches
+   * the C++ `AddExperienceSolo` tail (`Mover.cpp:6254`) which always broadcasts.
+   */
+  onExpGain?: (player: CPlayer, leveled: boolean) => void;
 }
 
 function num(arg: QuestArg | undefined, fallback = 0): number {
@@ -151,12 +158,13 @@ function grantGold(player: CPlayer, amount: number, sink: RewardSink): void {
 function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
   // m_nExp is within-level; addExp carries excess across level boundaries.
   const gain = addExp(player.m_nLevel, player.m_nExp, amount);
-  // Journal the ABSOLUTE post-state (cumulative exp) before the mutation (rule
-  // 04). Quest-granted exp has no write-through persist today, so this WAL row
-  // is the ONLY crash recovery for it -- idempotent replay on next boot.
+  // Journal the ABSOLUTE post-state (within-level exp -- the wire/DB value)
+  // before the mutation (rule 04). Quest-granted exp has no write-through
+  // persist today, so this WAL row is the ONLY crash recovery for it --
+  // idempotent replay on next boot.
   journal(player, 'CHAR_EXP', {
     level: gain.level,
-    exp: String(Math.floor(cumulativeExp(gain.level, gain.exp))),
+    exp: String(Math.floor(gain.exp)),
   }, sink);
   player.m_nExp = gain.exp;
   player.m_nLevel = gain.level;
@@ -167,9 +175,10 @@ function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
     player._dirty.add('m_nLevel');
     player._dirty.add('m_nHp');
     player._dirty.add('m_nMp');
-    // ponytail: no SETEXPERIENCE/SETLEVEL broadcast here -- quest reward path has
-    // no serializer/manager access; next exp gain or a dedicated flush broadcasts.
   }
+  // Notify the client (SETEXPERIENCE + SETLEVEL on level-up). QuestService
+  // wires this so the bar updates live without a serializer dep here.
+  sink.onExpGain?.(player, gain.levelsGained > 0);
 }
 
 function grantItem(player: CPlayer, item: number, count: number, sink: RewardSink): void {

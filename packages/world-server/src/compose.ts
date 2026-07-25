@@ -9,6 +9,7 @@ import { ZoneManager } from '@flyff/world-core';
 import { SpawnManager } from '@flyff/world-core';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer';
 import { SetExperienceSerializer } from '@flyff/combat';
+import { SetLevelSerializer } from '@flyff/combat';
 import { TaskBarSnapshotSerializer } from './net/snapshot/taskbar.serializer';
 import { NpcSnapshotSerializer } from '@flyff/npc';
 import { DestObjSerializer } from '@flyff/combat';
@@ -82,6 +83,7 @@ import { BankHandler } from '@flyff/npc';
 import { TaskBarService } from './services/taskbar.service';
 import { TaskBarHandler } from './handlers/taskbar.handler';
 import { EndSkillQueueHandler } from './handlers/endSkillQueue.handler';
+import { SkillTaskBarHandler } from './handlers/skillTaskbar.handler';
 import { ShopService } from '@flyff/npc';
 import { ShopHandler } from '@flyff/npc';
 import { RemoveQuestHandler } from '@flyff/quest';
@@ -167,6 +169,7 @@ export interface WorldComposeResult {
   shopHandler: ShopHandler;
   taskbarHandler: TaskBarHandler;
   endSkillQueueHandler: EndSkillQueueHandler;
+  skillTaskbarHandler: SkillTaskBarHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -297,6 +300,7 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const createItemSerializer = new CreateItemSnapshotSerializer();
 
+  const questSetLevelSerializer = new SetLevelSerializer();
   const questService = new QuestService({
     questRepo,
     quests: resources.quests,
@@ -304,6 +308,22 @@ export async function compose(): Promise<WorldComposeResult> {
     createItemSerializer,
     journal,
     inventoryRepo,
+    // Quest-reward exp gains broadcast SETEXPERIENCE (self) + SETLEVEL
+    // (vicinity, level-up only) so the bar updates live. Matches the C++
+    // AddExperienceSolo tail (Mover.cpp:6254 + LevelUpSetting -> AddSetLevel).
+    onExpGain: (player, leveled) => {
+      playerManager.sendTo(player, setExperienceSerializer.build(player.m_idPlayer, {
+        exp: player.m_nExp, level: player.m_nLevel,
+        skillLevel: player.m_nSkillLevel, skillPoint: player.m_nSkillPoint,
+      }));
+      if (leveled) {
+        zoneManager.broadcastAround(
+          player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+          questSetLevelSerializer.build(player.m_idPlayer, player.m_nLevel),
+          player,
+        );
+      }
+    },
   });
 
   // Phase 6 -- reactive quest tracker (kill/patrol/time + quest-item drops).
@@ -344,6 +364,7 @@ export async function compose(): Promise<WorldComposeResult> {
     skillRepo,
     skills: resources.skills,
     getItem: (id: number) => resources.items.items.get(id),
+    getSetItem: (id: number) => resources.setItems.byItemId.get(id),
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
@@ -405,7 +426,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // the audit that scoped these.
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
-    inventoryService, charRepo, inventoryRepo,
+    inventoryService, charRepo, inventoryRepo, zoneManager,
   });
   const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
@@ -467,6 +488,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const equipService = new EquipService({
     inventoryRepo, journal,
     getItem: (id: number) => resources.items.items.get(id),
+    getSetItem: (id: number) => resources.setItems.byItemId.get(id),
     sendTo: (player, buf) => playerManager.sendTo(player, buf),
   });
   const doEquipHandler = new DoEquipHandler({ playerManager, zoneManager, equipService });
@@ -502,6 +524,7 @@ export async function compose(): Promise<WorldComposeResult> {
   );
   const taskbarHandler = new TaskBarHandler({ playerManager, taskbarService });
   const endSkillQueueHandler = new EndSkillQueueHandler(playerManager);
+  const skillTaskbarHandler = new SkillTaskBarHandler({ playerManager, taskbarService });
 
   // NPC vendor shop -- open/close + buy/sell.
   const shopService = new ShopService({
@@ -593,6 +616,7 @@ export async function compose(): Promise<WorldComposeResult> {
     bankHandler,
     shopHandler,
     taskbarHandler,
+    skillTaskbarHandler,
     endSkillQueueHandler,
     removeQuestHandler,
     questCheckHandler,

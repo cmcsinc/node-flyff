@@ -29,7 +29,7 @@ import type { ZoneDefinition } from '@flyff/resources';
 import type { CPlayer, Vec3 } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
-import { cumulativeExp, subDieDecExp } from '@flyff/combat';
+import { subDieDecExp } from '@flyff/combat';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
 } from '@flyff/entities';
@@ -160,17 +160,18 @@ export class RevivalService {
       player._dirty.add('m_nExp');
       // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
       // Idempotent -- the boot replayer re-applies (level, exp) if the
-      // fire-and-forget persist below lost the race with a crash.
-      const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
+      // fire-and-forget persist below lost the race with a crash. m_nExp IS
+      // the within-level value the DB + wire carry (no cumulative form).
+      const exp = String(Math.floor(player.m_nExp));
       this.deps.journal?.append({
         charId: player.m_idPlayer, type: 'CHAR_EXP',
-        payload: { level: player.m_nLevel, exp: cumulative },
+        payload: { level: player.m_nLevel, exp },
       });
       this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
-        exp: cumulativeExp(player.m_nLevel, player.m_nExp), level: player.m_nLevel,
+        exp: player.m_nExp, level: player.m_nLevel,
       }));
       this.deps.charRepo.updateLevelAndExp(
-        player.m_idPlayer, player.m_nLevel, BigInt(cumulative),
+        player.m_idPlayer, player.m_nLevel, BigInt(Math.floor(player.m_nExp)),
       ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
     }
 
