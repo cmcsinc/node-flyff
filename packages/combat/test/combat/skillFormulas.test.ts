@@ -319,11 +319,13 @@ describe('resolveSkillCast — getDamageMultiplier applied', () => {
     assert.ok(result.damage < 36, `PvP multiplier shrinks damage (got ${result.damage})`);
   });
 
-  it('PvE skill damage takes the NPC level-diff cosine falloff', async () => {
+  it('PvE skill damage has NO level-diff cosine (C++ GetDamageMultiplier is skill-only)', async () => {
     const skill = await loadSkill(1);
     const level = skill.levels[0]!;
-    // Defender NPC 15 levels above attacker (level 15 vs 30): d=15,
-    // factor = cos(pi*15/32) ≈ 0.0980. nATK=39, DEF 3 → 36 → floor(36*0.098)=3.
+    // A defender 15 levels above the attacker takes the SAME skill damage as a
+    // same-level one -- C++ `GetDamageMultiplier` (MoverAttack.cpp:828) applies
+    // only per-skill factors, never a level-diff cosine. NPC DEF (`armor/7+1`)
+    // is level-independent, so both hits resolve to nATK 39 - DEF 3 = 36.
     const full = resolveSkillCast({
       attacker: makeAttacker(),
       defender: makeNpcDefender({ level: 30 }),
@@ -331,11 +333,10 @@ describe('resolveSkillCast — getDamageMultiplier applied', () => {
     });
     const near = resolveSkillCast({
       attacker: makeAttacker(),
-      defender: makeNpcDefender({ level: 10 }), // delta ≤ 0 ⇒ factor 1.0
+      defender: makeNpcDefender({ level: 10 }),
       skill, level, rng: minRng,
     });
-    assert.equal(near.damage, 36, 'no falloff when defender not higher level');
-    assert.ok(full.damage < near.damage, `higher-level NPC reduces skill damage (got ${full.damage})`);
-    assert.equal(full.damage, Math.floor(36 * Math.cos((Math.PI * 15) / 32)));
+    assert.equal(near.damage, 36);
+    assert.equal(full.damage, 36, 'higher-level NPC takes equal damage (no cosine falloff)');
   });
 });
