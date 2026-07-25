@@ -25,29 +25,55 @@ export interface BankItemRow {
 export type BankCreateData = Omit<BankItemRow, 'id' | 'created_at' | 'updated_at'>;
 
 /**
+ * Bank tab count. Mirrors `MAX_BANK_TABS` in `@flyff/entities` -- kept local to
+ * avoid a database -> world-core dependency (database only depends on
+ * `@flyff/core`). v15 banks have exactly 3 tabs (`m_BankGold[3]`).
+ */
+const MAX_BANK_TABS = 3;
+
+/**
+ * Map a bank tab index to its `bank`-table gold column. Tab 0 is the original
+ * `gold` column (migration 008); tabs 1 and 2 are `gold_tab1` / `gold_tab2`
+ * (migration 011). Returned name is from a fixed map -- never derived from
+ * caller input -- so it is safe to interpolate into a Knex column reference.
+ */
+function goldColumn(tab: number): string {
+  if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) {
+    throw new Error(`bank tab out of range: ${tab}`);
+  }
+  return tab === 0 ? 'gold' : `gold_tab${tab}`;
+}
+
+/**
  * Repository for the bank container -- item slots (`bank_item`) + the
- * container's gold and password (`bank`, 1 row per account). Bank is
- * account-shared (Flyff lore): all characters on one account see the same
- * 3 tabs and the same gold/pin. Mirrors {@link InventoryRepository} with a
- * `tab` axis (0..2).
+ * container's gold (one pool per tab) and password (`bank`, 1 row per
+ * account). Bank is account-shared (Flyff lore): all characters on one
+ * account see the same 3 tabs, gold pools, and pin. Mirrors
+ * {@link InventoryRepository} with a `tab` axis (0..2).
  */
 export class BankRepository {
   constructor(private db: Knex) {}
 
   // --- container state (the `bank` table, 1 row per account) ---
 
-  /** Account-wide bank penya (C++ `m_BankGold[0]`). Returns 0 when no row yet. */
-  async getGold(accountId: number): Promise<number> {
-    const row = await this.db('bank').where({ account_id: accountId }).select('gold').first();
-    return Number(row?.gold ?? 0);
+  /**
+   * Bank penya held in `tab` (C++ `m_BankGold[tab]`). Returns 0 when no
+   * container row exists yet -- tabs 1 and 2 read as 0 until first use
+   * (migration 011 defaults them to 0).
+   */
+  async getGold(accountId: number, tab: number): Promise<number> {
+    const column = goldColumn(tab);
+    const row = await this.db('bank').where({ account_id: accountId }).select(column).first();
+    return Number(row?.[column] ?? 0);
   }
 
-  /** Upsert the account-wide bank penya (absolute new total). */
-  async setGold(accountId: number, amount: number): Promise<void> {
+  /** Upsert the tab's bank penya (absolute new total). Other tabs are untouched. */
+  async setGold(accountId: number, amount: number, tab: number): Promise<void> {
+    const column = goldColumn(tab);
     await this.db('bank')
-      .insert({ account_id: accountId, gold: amount, created_at: new Date(), updated_at: new Date() })
+      .insert({ account_id: accountId, [column]: amount, created_at: new Date(), updated_at: new Date() })
       .onConflict('account_id')
-      .merge({ gold: amount, updated_at: new Date() });
+      .merge({ [column]: amount, updated_at: new Date() });
   }
 
   /**

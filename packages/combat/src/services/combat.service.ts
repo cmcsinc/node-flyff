@@ -30,12 +30,11 @@ import {
   type Rng, type MeleeResult,
 } from '../combat/formulas';
 import { resolveSkillCast } from '../combat/skillFormulas';
-import { EXP_TABLE } from '@flyff/entities';
 import { AF_MISS } from '../combat/tables';
 import { playerCombatant, moverCombatant } from '../combat/combatants';
 import type { ItemLookup } from '../combat/equipStats';
-import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR } from '@flyff/entities';
-import { isMoverAttackableBy } from './combat.policy';
+import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR, EXP_TABLE } from '@flyff/entities';
+import { isMoverAttackableBy, isPlayerAttackableBy } from './combat.policy';
 import { MODE } from '@flyff/entities';
 import { DamageSerializer } from '../net/snapshot/damage.serializer';
 import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';
@@ -53,7 +52,7 @@ export interface CombatServiceDeps {
   spawnManager: SpawnManager;
   zoneManager: ZoneManager;
   playerManager: PlayerManager;
-  charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateSkillPoints' | 'updateStats'>;
+  charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateSkillPoints' | 'updateStats' | 'updatePKState'>;
   journal?: Journal;
   rng?: Rng;
   /**
@@ -70,11 +69,28 @@ export interface CombatServiceDeps {
   dropService?: { roll(mover: CMover, killer: CPlayer): void };
   /** Optional item-definition lookup -- folds equipped weapon/armor into ATK/DEF. */
   getItem?: ItemLookup;
+  /**
+   * Optional PvP death hook (wired to `RevivalService.onPlayerDeath`). Called
+   * when a player kills another player so the revival loop can flag the victim
+   * dead + open the revive dialog. Combat must not depend on the revival service
+   * directly (layer boundary), so this seam mirrors `questTracker`.
+   */
+  onPvpKill?: (victim: CPlayer, killerObjid: number) => void;
 }
 
 export type CombatOutcome =
   | { ok: true; hit: boolean; damage: number; killed: boolean }
-  | { ok: false; reason: 'invalid_target' | 'target_dead' | 'target_not_attackable' };
+  | { ok: false; reason: 'invalid_target' | 'target_dead' | 'target_not_attackable' | 'pvp_not_enabled' };
+
+/**
+ * Resolved target -- either an NPC mover (PvE) or a live player (PvP). The
+ * `kind` discriminant routes the defender through the right Combatant builder
+ * (`moverCombatant` vs `playerCombatant`) and selects the death tail
+ * (`onDeath` grant-exp for NPC, `onPvpKill` for player).
+ */
+export type ResolvedTarget =
+  | { kind: 'npc'; mover: CMover }
+  | { kind: 'player'; target: CPlayer };
 
 export class CombatService {
   private readonly damage = new DamageSerializer();
@@ -93,14 +109,36 @@ export class CombatService {
   resolveAttack(player: CPlayer, targetObjid: number): CombatOutcome {
     const t = this.resolveTarget(player, targetObjid);
     if (!t.ok) return t;
-    const result = resolveMelee(playerCombatant(player, this.deps.getItem), moverCombatant(t.mover), this.rng);
-    return this.applyHit(player, t.mover, this.withOneKill(player, t.mover, result));
+    const attacker = playerCombatant(player, this.deps.getItem);
+    const target = t.target;
+    if (target.kind === 'player') {
+      // PvP: defender is a live player. The 0.60 PvP damage multiplier + the
+      // PvP hit-rate branch apply automatically inside the formula (both
+      // combatants are `kind: 'player'`).
+      const defender = playerCombatant(target.target);
+      const result = resolveMelee(attacker, defender, this.rng);
+      return this.applyHitPlayer(player, target.target, this.withOneKillPlayer(player, target.target, result));
+    }
+    const mover = target.mover;
+    const result = resolveMelee(attacker, moverCombatant(mover), this.rng);
+    return this.applyHit(player, mover, this.withOneKill(player, mover, result));
   }
 
   /**
    * Resolve a skill cast's damage from `player` onto `targetObjid`. Same target
    * validation + DAMAGE broadcast + death/exp/rage tail as `resolveAttack`; only
    * the ATK source differs (`resolveSkillCast` from `skillFormulas.ts`).
+   *
+   * **Multi-hit** (`nSkillCount`, docs #4 §"Multi-hit"): each hit is a full
+   * damage roll + its own DAMAGE snapshot + its own HP deduct. The chain stops
+   * the moment the target dies (its `m_bDead` gate prevents a second `onDeath`
+   * = double exp/drops). For single-hit skills (`skillCount` absent/1) this
+   * runs exactly once = the old path. Resource spend + USESKILL broadcast stay
+   * in `SkillService.cast` (one cast = one resource charge; per-hit MP split is
+   * display-only, total is unchanged).
+   *
+   * ponytail: 4-frame per-hit spacing (client animation cadence). Server-side
+   * all hits resolve in the same tick; spacing is a client visual concern.
    */
   resolveSkill(
     player: CPlayer,
@@ -110,30 +148,67 @@ export class CombatService {
   ): CombatOutcome {
     const t = this.resolveTarget(player, targetObjid);
     if (!t.ok) return t;
-    const result = resolveSkillCast({
-      attacker: playerCombatant(player, this.deps.getItem),
-      defender: moverCombatant(t.mover),
-      skill, level, rng: this.rng,
-    });
-    return this.applyHit(player, t.mover, this.withOneKill(player, t.mover, result));
+    const attacker = playerCombatant(player, this.deps.getItem);
+    const hits = Math.max(1, level.skillCount ?? 1);
+    let last: CombatOutcome = { ok: true, hit: true, damage: 0, killed: false };
+    const target = t.target;
+    if (target.kind === 'player') {
+      const defender = playerCombatant(target.target);
+      for (let i = 0; i < hits; i++) {
+        if (target.target.m_bDead) break;
+        const result = resolveSkillCast({ attacker, defender, skill, level, rng: this.rng });
+        last = this.applyHitPlayer(player, target.target, this.withOneKillPlayer(player, target.target, result));
+      }
+      return last;
+    }
+    const mover = target.mover;
+    const defender = moverCombatant(mover);
+    for (let i = 0; i < hits; i++) {
+      if (mover.m_bDead) break; // target died mid-chain → stop (no double-death)
+      const result = resolveSkillCast({ attacker, defender, skill, level, rng: this.rng });
+      last = this.applyHit(player, mover, this.withOneKill(player, mover, result));
+    }
+    return last;
   }
 
-  /** Shared target validation for melee + skill swings. */
+  /**
+   * Shared target validation for melee + skill swings. Resolves an NPC mover
+   * via `SpawnManager` (PvE) or a live player via `PlayerManager` (PvP). Player
+   * targets are gated by `isPlayerAttackableBy` -- both attacker and victim
+   * must have PK mode on (mutual PvP), otherwise the swing is rejected.
+   */
   private resolveTarget(
     player: CPlayer,
     targetObjid: number,
-  ): { ok: true; mover: CMover } | { ok: false; reason: 'invalid_target' | 'target_dead' | 'target_not_attackable' } {
+  ): { ok: true; target: ResolvedTarget } | { ok: false; reason: 'invalid_target' | 'target_dead' | 'target_not_attackable' | 'pvp_not_enabled' } {
+    // Self-target is never valid.
+    if (targetObjid === player.m_idPlayer) return { ok: false, reason: 'invalid_target' };
+    // NPC mover first (the common PvE path).
     const mover = this.deps.spawnManager.get(targetObjid);
-    if (mover === undefined) return { ok: false, reason: 'invalid_target' };
-    if (mover.m_bDead) return { ok: false, reason: 'target_dead' };
-    if (!isMoverAttackableBy(player, mover)) return { ok: false, reason: 'target_not_attackable' };
-    return { ok: true, mover };
+    if (mover !== undefined) {
+      if (mover.m_bDead) return { ok: false, reason: 'target_dead' };
+      if (!isMoverAttackableBy(player, mover)) return { ok: false, reason: 'target_not_attackable' };
+      return { ok: true, target: { kind: 'npc', mover } };
+    }
+    // Player target (PvP). `PlayerManager` keys by character id, which is the
+    // same object-id space the client addresses via `objid` in the attack body.
+    const target = this.deps.playerManager.get(targetObjid);
+    if (target === undefined) return { ok: false, reason: 'invalid_target' };
+    if (target.m_bDead) return { ok: false, reason: 'target_dead' };
+    if (!isPlayerAttackableBy(player, target)) return { ok: false, reason: 'pvp_not_enabled' };
+    return { ok: true, target: { kind: 'player', target } };
   }
 
   /** `/ok` ONEKILL_MODE override -- GM one-shot forces lethal damage. */
   private withOneKill(player: CPlayer, mover: CMover, result: MeleeResult): MeleeResult {
     if ((player.m_dwMode & MODE.ONEKILL) === 0) return result;
     return { hit: true, damage: mover.m_nHitPoint, atkFlags: result.atkFlags & ~AF_MISS };
+  }
+
+  /** `/ok` ONEKILL_MODE override for PvP -- forces lethal damage to a player. */
+  private withOneKillPlayer(player: CPlayer, target: CPlayer, result: MeleeResult): MeleeResult {
+    if ((player.m_dwMode & MODE.ONEKILL) === 0) return result;
+    return { hit: true, damage: target.m_nHp, atkFlags: result.atkFlags & ~AF_MISS };
   }
 
   /**
@@ -158,6 +233,68 @@ export class CombatService {
     if (killed) this.onDeath(player, mover);
     else this.triggerRage(mover, player);
     return { ok: true, hit: eff.hit, damage: dealt, killed };
+  }
+
+  /**
+   * PvP damage tail (player→player). Mirrors `applyHit` but against a `CPlayer`
+   * defender: apply MinusHP, broadcast DAMAGE, pause both players' stand regen,
+   * and on lethal hit run `onPvpKill` (PK value increment + revival hook).
+   * No exp grant (PvP kills give no exp in v15), no rage, no spawn removal.
+   */
+  private applyHitPlayer(player: CPlayer, target: CPlayer, eff: MeleeResult): CombatOutcome {
+    const dealt = applyDamagePlayer(target, eff);
+    if (dealt > 0) {
+      player.m_tmLastDamage = Date.now();
+      target.m_tmLastDamage = Date.now();
+      target._dirty.add('m_nHp');
+    }
+    const packet = this.damage.build(target.m_idPlayer, {
+      attackerObjid: player.m_idPlayer,
+      hit: dealt,
+      atkFlags: eff.atkFlags,
+    });
+    this.deps.zoneManager.broadcastAround(target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS, packet);
+    const killed = target.m_nHp <= 0 && !target.m_bDead;
+    if (killed) this.onPvpKill(player, target);
+    return { ok: true, hit: eff.hit, damage: dealt, killed };
+  }
+
+  /**
+   * `OnDiedPVP` (AttackArbiter.cpp:821) -- the victim died to a player killer.
+   * Increments the killer's PK value + propensity, stamps the PK-time decay base,
+   * journals the PK state before the ack (rule 04), persists fire-and-forget,
+   * and hands the victim off to the revival loop via the `onPvpKill` seam.
+   */
+  private onPvpKill(killer: CPlayer, victim: CPlayer): void {
+    victim.m_bDead = true;
+    victim._dirty.add('m_bDead');
+    killer.m_nPKValue += 1;
+    killer.m_dwPKPropensity = Math.max(killer.m_dwPKPropensity, 1);
+    killer.m_dwPKTime = Date.now();
+    killer._dirty.add('m_nPKValue');
+    killer._dirty.add('m_dwPKPropensity');
+    killer._dirty.add('m_dwPKTime');
+    logger.info(
+      { killer: killer.m_idPlayer, victim: victim.m_idPlayer, pkValue: killer.m_nPKValue },
+      'player killed in PvP (PK value incremented)',
+    );
+    // WAL journal the killer's absolute PK state before the ack (rule 04).
+    this.deps.journal?.append({
+      charId: killer.m_idPlayer, type: 'PK_KILL',
+      payload: {
+        pkPropensity: killer.m_dwPKPropensity,
+        pkValue: killer.m_nPKValue,
+        pkTime: killer.m_dwPKTime,
+        victimId: victim.m_idPlayer,
+      },
+    });
+    // Persist the PK state fire-and-forget (rule 02: service calls repo).
+    this.deps.charRepo.updatePKState(
+      killer.m_idPlayer, killer.m_dwPKPropensity, killer.m_nPKValue, killer.m_dwPKTime,
+    ).catch((err: unknown) => logger.error({ err, charId: killer.m_idPlayer }, 'PK state persist failed'));
+    // Hand the victim to the revival loop (flags dead, broadcasts MOVERDEATH,
+    // opens the revive dialog) -- combat must not depend on RevivalService.
+    this.deps.onPvpKill?.(victim, killer.m_idPlayer);
   }
 
   /**
@@ -346,4 +483,20 @@ function applyDamage(mover: CMover, result: MeleeResult): number {
 function recordHit(mover: CMover, attackerId: number, damage: number): void {
   if (damage <= 0) return;
   mover.m_idEnemies.set(attackerId, (mover.m_idEnemies.get(attackerId) ?? 0) + damage);
+}
+
+/**
+ * Apply `MinusHP` to a player defender; returns damage actually dealt (0 on
+ * miss). Floors HP at 0. Mirrors the NPC `applyDamage` helper but operates on
+ * `CPlayer.m_nHp`. A PvP hit always deals at least 1 damage when it lands (C++
+ * `nDamage = max(nDamage, 1)` before `MinusHP`, AttackArbiter.cpp:125).
+ */
+function applyDamagePlayer(target: CPlayer, result: MeleeResult): number {
+  if (!result.hit || result.atkFlags & AF_MISS) return 0;
+  let dmg = result.damage;
+  if (dmg <= 0) dmg = 1; // PvP damage floor (C++ OnDamageMsgW)
+  const hp = Math.max(0, target.m_nHp - dmg);
+  const dealt = target.m_nHp - hp;
+  target.m_nHp = hp;
+  return dealt;
 }

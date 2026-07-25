@@ -14,7 +14,8 @@
 import type { ItemDefinition } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import type { CPlayer } from '@flyff/entities';
-import { MAX_INVENTORY } from '@flyff/world-core';
+import { MAX_INVENTORY, buildSetSkillState, buildSetDestParam, VISIBILITY_RADIUS } from '@flyff/world-core';
+import type { ZoneManager, PlayerManager } from '@flyff/world-core';
 import type { EquipService, EquipResult } from './equip.service';
 import type { ConsumableService } from './consumable.service';
 import type { InventoryService } from './inventory.service';
@@ -35,6 +36,8 @@ export interface UseItemServiceDeps {
   getItem: (itemId: number) => ItemDefinition | undefined;
   /** Potion-group cooldown fallback (ms) when an item carries no `cooldown_ms`. */
   potionCooldownMs: number;
+  playerManager: PlayerManager;
+  zoneManager: ZoneManager;
 }
 
 export class UseItemService {
@@ -77,9 +80,28 @@ export class UseItemService {
     }
     if (k2 === 'IK2_BUFF' || k2 === 'IK2_BUFF2' || k2 === 'IK2_SKILL' || k2 === 'IK2_TEXT' || k2 === 'IK2_WARP') {
       const consumed = this.deps.inventoryService.consume(player, slot, 1);
-      logger.info({ charId: player.m_idPlayer, itemId: invSlot.itemId, k2 }, 'use-item: charge consumed (effect ponytail)');
+      const remaining = Math.max(0, consumed?.count ?? 0);
+      // Buff items (IK2_BUFF/IK2_BUFF2): attach a timed DST buff (CBuffItem path,
+      // C++ MoverSkill.cpp:1335). Effects come from the item's `dwDestParam*`
+      // triplets; duration from the item's `duration` field (seconds→ms).
+      if (k2 === 'IK2_BUFF' || k2 === 'IK2_BUFF2') {
+        const effects = prop.effects ?? [];
+        const durationMs = (prop.duration ?? 0) * 1_000;
+        if (effects.length > 0 && durationMs > 0) {
+          const now = Date.now();
+          player.m_buffs.addItemBuff(prop.id, durationMs, effects, now);
+          // Self sees the buff icon + DST deltas; no vicinity (item buff is self-only).
+          this.deps.playerManager.sendTo(player, buildSetSkillState(player.m_idPlayer, 0/*BUFF_ITEM*/, prop.id, 0, durationMs));
+          for (const e of effects) {
+            this.deps.playerManager.sendTo(player, buildSetDestParam(player.m_idPlayer, e.dst, e.adj, e.chg));
+          }
+        }
+      }
+      // skill/warp/text items: charge consumed, no effect yet. ponytail: skill
+      // items, text items, warp items.
+      logger.info({ charId: player.m_idPlayer, itemId: invSlot.itemId, k2 }, 'use-item: charge consumed');
       const out: { kind: 'consumed'; nId: number; remaining: number; cooltime?: boolean } =
-        { kind: 'consumed', nId: slot, remaining: Math.max(0, consumed?.count ?? 0) };
+        { kind: 'consumed', nId: slot, remaining };
       if (cd.group > 0) {
         player.m_cooltime[cd.group - 1] = Date.now() + cd.ms;
         out.cooltime = true;

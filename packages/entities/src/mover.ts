@@ -18,9 +18,12 @@
  */
 
 import type { Vec3, InventorySlot } from './player';
+import { ParamModel, EMPTY_PARAM_VIEW } from './params/ParamModel';
+import { BuffManager } from './params/BuffManager';
+import { DST, CHRSTATE_BITS } from './constants/dst';
 import {
   MELEE_ATTACK_RANGE, RANGE_ATTACK_RANGE, REATTACK_DELAY_MS, BELLI_RANGE_KEYS,
-  ACTIVE_BELLI,
+  ACTIVE_BELLI, RUNAWAY_DELAY_MS,
 } from './constants/aiConstants';
 
 /** `NULL_ID` (`_Network/MsgHdr.h` = 0xffffffff) -- "no target" sentinel for `m_idTarget`. */
@@ -132,6 +135,40 @@ export interface MoverSpawnSource {
    * col 31). Base cooldown between melee swings; ranged uses a fixed 3 s.
    */
   readonly reAttackDelay?: number | undefined;
+  /**
+   * Flee HP percentage (0-100) -- propMoverEx `SetRunAway(HP%)` AI block
+   * (`AIMonster.cpp` `StateRunaway`). When this monster's HP drops to/below
+   * this percent of max, it drops its target and runs AWAY from the attacker
+   * for `runawayDelay` ms, then returns home. Absent/0 = never flees
+   * (faithful: only `SetRunAway`-tagged mobs flee; the v15 Flaris field set
+   * has no such tag, so by default nothing flees).
+   */
+  readonly fleeHpPct?: number | undefined;
+  /**
+   * Runaway duration (ms) -- propMoverEx `m_dwRunawayDelay` (template default
+   * 1000). How long the monster flees before transitioning to return-home.
+   * Defaults to {@link RUNAWAY_DELAY_MS}.
+   */
+  readonly runawayDelay?: number | undefined;
+  /**
+   * Self-heal HP percentage (0-100) -- propMoverEx `Recovery(HP%)` AI block
+   * (`AIMonster.cpp` `MoveProcessStand` recvCond check). When this monster's
+   * HP drops to/below this percent of max, it heals itself for `healAmount`
+   * every `healCadenceMs` ms. Absent/0 = never self-heals (faithful: only
+   * `Recovery`-tagged mobs heal; the v15 Flaris field set has no such tag).
+   */
+  readonly healHpPct?: number | undefined;
+  /**
+   * Self-heal amount (HP restored per tick) when the heal threshold is met.
+   * Defaults to 10% of max HP per tick (C++ `m_nRecvCondMe` is a percent of
+   * max HP; typical value 10-20%).
+   */
+  readonly healAmount?: number | undefined;
+  /**
+   * Self-heal cadence (ms) -- how often the healer AI ticks. C++ checks
+   * recvCond every `ProcessAI` tick (~1 s). Defaults to 1000 ms.
+   */
+  readonly healCadenceMs?: number | undefined;
 }
 
 /**
@@ -229,6 +266,43 @@ export class CMover {
   /** Combat death flag -- set on lethal damage; swept from the spawn map on tick. */
   m_bDead: boolean = false;
   /**
+   * Fleeing (C++ `m_bRunaway`) -- running AWAY from the attacker at chase
+   * speed; expires after `m_tmRunawayEnd` -> transition to return-home.
+   */
+  m_bRunaway: boolean = false;
+  /** Timestamp (ms, `Date.now()`) when the current runaway expires -> return-home. */
+  m_tmRunawayEnd: number = 0;
+  /**
+   * Flee HP threshold -- 1-100 (% of max). Populated from `MoverSpawnSource.fleeHpPct`
+   * (propMoverEx `SetRunAway`). Undefined/0 = never flees.
+   */
+  m_nFleeHpPct: number = 0; // % -> when `100*HP/maxHP <= this` -> flee
+  /**
+   * Flee duration (ms) before returning home. Populated from `MoverSpawnSource.runawayDelay`
+   * (propMoverEx `m_dwRunawayDelay`, default 1000).
+   */
+  m_nRunawayDelay: number = RUNAWAY_DELAY_MS;
+  /**
+   * Self-heal HP threshold -- 1-100 (% of max). Populated from
+   * `MoverSpawnSource.healHpPct` (propMoverEx `Recovery` block). 0 = never.
+   */
+  m_nHealHpPct: number = 0;
+  /** Self-heal HP amount per tick (flat HP). Populated from `MoverSpawnSource.healAmount`. */
+  m_nHealAmount: number = 10;
+  /** Self-heal cadence (ms). Populated from `MoverSpawnSource.healCadenceMs` (default 1000). */
+  m_nHealCadenceMs: number = 1000;
+  /** Timestamp (ms, `Date.now()`) when the next self-heal tick fires. 0 = uninitialized. */
+  m_tmNextHealTick: number = 0;
+  /** DST destination-parameter pool (single `Int32Array(94)` adj + chg arrays). */
+  readonly m_params: ParamModel = new ParamModel();
+  /** Active timed DST buffs on this mover (debuffs from player skills). */
+  readonly m_buffs: BuffManager = new BuffManager(this.m_params);
+
+  /** True if a stun/sleep status bit is set in the DST_CHRSTATE pool (cannot act). */
+  isStunned(): boolean {
+    return (this.m_params.get(DST.CHRSTATE, 0) & (CHRSTATE_BITS.STUN | CHRSTATE_BITS.SLEEP)) !== 0;
+  }
+  /**
    * Timestamp (ms, `Date.now()`) when this mover next picks an idle-wander
    * destination. `0` = uninitialized -> the AI stagger-seeds it on first tick.
    * C++ drives this from `m_tmMove` + `SEC(5)+xRandom(SEC(1))` on arrival.
@@ -312,6 +386,11 @@ export class CMover {
     this.m_bRangeAttack = BELLI_RANGE_KEYS.has(this.m_dwBelligerence);
     this.m_nAttackRange = src.attackRange ?? (this.m_bRangeAttack ? RANGE_ATTACK_RANGE : MELEE_ATTACK_RANGE);
     this.m_nReAttackDelay = src.reAttackDelay ?? REATTACK_DELAY_MS;
+    this.m_nFleeHpPct = Math.max(0, Math.min(100, src.fleeHpPct ?? 0));
+    this.m_nRunawayDelay = src.runawayDelay ?? RUNAWAY_DELAY_MS;
+    this.m_nHealHpPct = Math.max(0, Math.min(100, src.healHpPct ?? 0));
+    this.m_nHealAmount = Math.max(1, src.healAmount ?? Math.max(1, Math.ceil(this.m_nMaxHitPoint * 0.1)));
+    this.m_nHealCadenceMs = Math.max(500, src.healCadenceMs ?? 1000);
   }
 
   /** Spawn a live monster from a definition + position. Caller assigns the id. */

@@ -32,3 +32,23 @@ export function isMoverAttackableBy(player: CPlayer, mover: CMover): boolean {
   if (mover.m_bChaoGuard && player.isChaotic()) return false;
   return true;
 }
+
+/**
+ * May `attacker` register `target` (a live player) as a PvP attack target?
+ *
+ * v15 PvP is consent-gated: both players must have PK mode ON (`m_bPKMode`)
+ * for damage to land. A chaotic attacker (already PK) may hit any player
+ * who also has PK on -- non-consensual PK is expressed through the PK-value
+ * penalty on the kill, not through bypassing the consent gate. A non-PK
+ * attacker cannot strike a player at all; the swing is rejected and the
+ * client sees the standard "cannot attack" feedback.
+ *
+ * Dead / stunned / same-player targets are rejected upstream by `resolveTarget`.
+ * ponytail: zone region-type enforcement (safe zones reject PvP) + duel
+ * handshake (`DUELREQUEST` opcode) for structured 1v1 consent.
+ */
+export function isPlayerAttackableBy(attacker: CPlayer, target: CPlayer): boolean {
+  // Both must have PK mode enabled -- mutual consent.
+  if (!attacker.m_bPKMode || !target.m_bPKMode) return false;
+  return true;
+}

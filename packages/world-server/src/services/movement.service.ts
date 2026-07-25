@@ -17,8 +17,10 @@
  *
  * No WAL (position checkpoints every 30s, rule 04). No sender reply.
  *
- * ponytail: add a dead/CC'd mover guard (`m_nHp <= 0` => drop) + per-socket
- * 30 Hz rate-limit once `rateLimit.ts` lands (rule 03).
+ * Death lockout: every apply path early-returns `{ ok: false, reason: 'dead' }`
+ * when `player.m_bDead` (`CMover::IsDie()` gate -- a corpse cannot walk or echo
+ * motion). The attack + skill-cast paths gate the same flag independently.
+ * ponytail: per-socket 30 Hz rate-limit once `rateLimit.ts` lands (rule 03).
  *
  * @module services/movement.service
  */
@@ -53,7 +55,7 @@ export interface MovementServiceDeps {
 
 export type MovementOutcome =
   | { ok: true; reached: number }
-  | { ok: false; reason: 'too_far' };
+  | { ok: false; reason: 'too_far' | 'dead' };
 
 export type GetPosOutcome =
   | { ok: true }
@@ -61,6 +63,9 @@ export type GetPosOutcome =
 
 /** `D3DXVec3LengthSq > 1_000_000` => drop (OnPlayerMoved, same as DESTPOS). */
 const ANTI_TELEPORT_SQ = 1_000_000;
+
+/** Dead lockout -- a corpse cannot move or echo motion (`CMover::IsDie()` gate). */
+const DEAD: MovementOutcome = { ok: false, reason: 'dead' };
 
 /** C++ `MAX_CORR_SIZE_150`-style frame cap for PLAYERMOVED2 -- not enforced today. */
 // const MAX_CORR_SIZE_150 = 150;
@@ -72,6 +77,7 @@ export class MovementService {
 
   /** Apply a PLAYERMOVED frame: anti-teleport, update pos, echo to peers. */
   applyMovement(player: CPlayer, frame: MovementFrame): MovementOutcome {
+    if (player.m_bDead) return DEAD;
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -84,6 +90,7 @@ export class MovementService {
 
   /** Apply a PLAYERBEHAVIOR frame: echo motion to peers (no position mutation). */
   applyBehavior(player: CPlayer, frame: MovementFrame): MovementOutcome {
+    if (player.m_bDead) return DEAD;
     return this.broadcast(player, this.serializer.buildBehavior(player.m_idPlayer, frame));
   }
 
@@ -93,6 +100,7 @@ export class MovementService {
    * pos, echo MOVERCORR to peers.
    */
   applyCorr(player: CPlayer, frame: MovementFrame): MovementOutcome {
+    if (player.m_bDead) return DEAD;
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -109,6 +117,7 @@ export class MovementService {
    * ponytail: gate on `player.m_pActMover?.IsFly()` once flight state exists.
    */
   applyMoved2(player: CPlayer, frame: Movement2Frame): MovementOutcome {
+    if (player.m_bDead) return DEAD;
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }

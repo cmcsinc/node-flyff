@@ -67,15 +67,15 @@ function recordingCharRepo(row: CharacterRow): {
 /** Recording bank repo -- captures setGold calls. */
 function recordingBankRepo(gold = 0): {
   repo: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold' | 'getBankPass'>;
-  setGoldCalls: Array<{ accountId: number; amount: number }>;
+  setGoldCalls: Array<{ accountId: number; amount: number; tab: number }>;
 } {
-  const setGoldCalls: Array<{ accountId: number; amount: number }> = [];
+  const setGoldCalls: Array<{ accountId: number; amount: number; tab: number }> = [];
   return {
     repo: {
       findByAccountId: async () => [],
       getGold: async () => gold,
-      setGold: async (accountId: number, amount: number) => {
-        setGoldCalls.push({ accountId, amount });
+      setGold: async (accountId: number, amount: number, tab: number) => {
+        setGoldCalls.push({ accountId, amount, tab });
       },
       getBankPass: async () => '0000',
     },
@@ -209,7 +209,13 @@ describe('JoinService', () => {
     assert.equal(data.strength, 20);
     assert.equal(data.world_id, 'W1');
     assert.equal(data.zone_id, 1);
-    assert.deepEqual(bank.setGoldCalls, [{ accountId: 7, amount: 5000 }]);
+    // Per-tab gold flush: all 3 tabs are written on checkpoint (tab 0 holds
+    // the banked 5000; tabs 1/2 default to 0). Order is tab-ascending.
+    assert.deepEqual(bank.setGoldCalls, [
+      { accountId: 7, amount: 5000, tab: 0 },
+      { accountId: 7, amount: 0, tab: 1 },
+      { accountId: 7, amount: 0, tab: 2 },
+    ]);
     // Player is dropped from the live set -- no ghost.
     assert.equal(players.get(42), undefined);
     assert.equal(zones.broadcastZone(1, Buffer.alloc(1)), 0);

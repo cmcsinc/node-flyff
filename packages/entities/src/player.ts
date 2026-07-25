@@ -18,8 +18,9 @@ import { AUTH } from './constants/authority';
 import { getJobProps } from './tables/job';
 import type { JobProps } from './tables/job';
 import { maxFatiguePoint, maxHitPoint, maxManaPoint } from './math/vitals';
-import { DST } from './constants/dst';
+import { DST, CHRSTATE_BITS } from './constants/dst';
 import { ParamModel } from './params/ParamModel';
+import { BuffManager } from './params/BuffManager';
 import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT, MAX_COOLTIME_GROUP } from './constants/slots';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest';
 import type { RuntimeQuest } from './state/quest';
@@ -213,10 +214,31 @@ export class CPlayer {
   m_fArrivalRange: number = 0;
   /**
    * Player-killer / chaotic disposition (C++ `m_dwPKPropensity`, Mover.h:1227 --
-   * `IsChaotic()` = `> 0`). Gates guard attackability. ponytail: set on
-   * player-kill + persist to a DB column; no source yet, defaults non-PK.
+   * `IsChaotic()` = `> 0`). Gates guard attackability. Hydrated from the DB on
+   * JOIN (`characters.pk_propensity`); mutated on player-kill and PK decay.
    */
   m_dwPKPropensity: number = 0;
+  /**
+   * PK value / slaughter count (C++ `m_nSlaughter`). Incremented on player-kill.
+   * Hydrated from DB on JOIN (`characters.pk_value`).
+   */
+  m_nPKValue: number = 0;
+  /**
+   * Wall-clock ms of the last PK action (C++ `m_dwPKTime`, `Date.now()`).
+   * Drives PK-value decay. Hydrated from DB on JOIN (`characters.pk_time`).
+   */
+  m_dwPKTime: number = 0;
+  /**
+   * PK experience (C++ `m_dwPKExp`). Counter-decay accumulator. Hydrated from
+   * DB on JOIN (`characters.pk_exp`).
+   */
+  m_dwPKExp: number = 0;
+  /**
+   * PK mode toggle -- transient, per-session, NOT persisted. When true, the
+   * player's attacks become PvP-enabled (can target + damage other players).
+   * Defaults off; toggled via `PACKETTYPE_MODE` (`CHANGE_PKMODE` branch).
+   */
+  m_bPKMode: boolean = false;
   /** Last SCRIPTDLG tick (C++ `m_tickScript`) -- 400ms rate limit (DPSrvr.cpp:903). */
   m_tickScript: number = 0;
   /**
@@ -303,6 +325,11 @@ export class CPlayer {
    */
   readonly m_params: ParamModel = new ParamModel();
   /**
+   * Active timed DST buffs (C++ `CBuffMgr` / `m_buffs`, `_Common/Mover.h:553`).
+   * Applies/ reverses effects on `m_params`; expiry driven by the world tick.
+   */
+  readonly m_buffs: BuffManager = new BuffManager(this.m_params);
+  /**
    * Per-slot learned skills (C++ `m_aJobSkill[45]`, sizeof 8 each). Slot ranges:
    * 0-2 vagrant, 3-22 expert, 23-42 pro, 43 master, 44 hero. Empty slots carry
    * `skillId = NULL_ID`. Hydrated from `SkillRepository` on JOIN; mutated by the
@@ -373,6 +400,10 @@ export class CPlayer {
     this.m_bAuthority = authority;
     this.m_nSkillPoint = row.skill_point ?? 0;
     this.m_nSkillLevel = row.skill_level ?? 0;
+    this.m_dwPKPropensity = row.pk_propensity ?? 0;
+    this.m_nPKValue = row.pk_value ?? 0;
+    this.m_dwPKTime = Number(row.pk_time ?? 0);
+    this.m_dwPKExp = row.pk_exp ?? 0;
     this.socket = socket;
   }
 
@@ -411,6 +442,12 @@ export class CPlayer {
   /** C++ `IsChaotic()` (Mover.h:1227) -- player-killer state (PK). */
   isChaotic(): boolean {
     return this.m_dwPKPropensity > 0;
+  }
+
+  /** True if a stun/sleep status bit is set in the DST_CHRSTATE pool (cannot act). */
+  isStunned(): boolean {
+    const state = this.m_params.get(DST.CHRSTATE, 0);
+    return (state & (CHRSTATE_BITS.STUN | CHRSTATE_BITS.SLEEP)) !== 0;
   }
 
   /**

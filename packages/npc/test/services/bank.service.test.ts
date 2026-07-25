@@ -28,7 +28,7 @@ function makeSvc() {
   const journalCalls: Array<{ type: string }> = [];
   const bankSet: Array<{ tab: number; slot: number; itemId: number; qty: number }> = [];
   const bankRemove: Array<{ tab: number; slot: number }> = [];
-  const goldSet: number[] = [];
+  const goldSet: Array<{ tab: number; amount: number }> = [];
   const invRemove: number[] = [];
   const invSet: Array<{ slot: number; itemId: number; qty: number }> = [];
   const passSet: string[] = [];
@@ -38,7 +38,7 @@ function makeSvc() {
       setItem: async (_a: number, tab: number, slot: number, itemId: number, qty: number) => bankSet.push({ tab, slot, itemId, qty }),
       removeItem: async (_a: number, tab: number, slot: number) => bankRemove.push({ tab, slot }),
       getGold: async () => 0,
-      setGold: async (_a: number, amount: number) => goldSet.push(amount),
+      setGold: async (_a: number, amount: number, tab: number) => goldSet.push({ tab, amount }),
       getBankPass: async () => '0000',
       setBankPass: async (_a: number, bankPass: string) => { passSet.push(bankPass); },
     },
@@ -141,15 +141,29 @@ describe('BankService gold', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_nGold = 1000;
     const { svc, goldSet, invGold, journalCalls } = makeSvc();
-    const r = svc.depositGold(player, 400);
+    const r = svc.depositGold(player, 0, 400);
     assert.equal(r.ok, true);
     assert.equal(player.m_nGold, 600);
     assert.equal(player.m_BankGold[0], 400);
     assert.equal(journalCalls[0]!.type, 'CHAR_GOLD');
     assert.deepEqual((journalCalls[0] as { payload: { gold: number } }).payload, { gold: 600 });
     await Promise.resolve();
-    assert.equal(goldSet[0], 400, 'bank gold persisted');
+    assert.deepEqual(goldSet[0], { tab: 0, amount: 400 }, 'bank gold persisted to tab 0');
     assert.equal(invGold[0], 600, 'inv gold persisted -- prevents relog dupe');
+  });
+
+  it('depositGold targets the per-tab pool (tab 1) without disturbing tab 0', async () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = 1000;
+    player.m_BankGold[0] = 111;
+    const { svc, goldSet } = makeSvc();
+    const r = svc.depositGold(player, 1, 400);
+    assert.equal(r.ok, true);
+    assert.equal(player.m_nGold, 600);
+    assert.equal(player.m_BankGold[1], 400, 'tab 1 received the deposit');
+    assert.equal(player.m_BankGold[0], 111, 'tab 0 untouched');
+    await Promise.resolve();
+    assert.deepEqual(goldSet[0], { tab: 1, amount: 400 }, 'persisted to tab 1 column');
   });
 
   it('withdrawGold moves penya from bank to inv + persists both sides', async () => {
@@ -157,12 +171,12 @@ describe('BankService gold', () => {
     player.m_nGold = 100;
     player.m_BankGold[0] = 500;
     const { svc, goldSet, invGold } = makeSvc();
-    const r = svc.withdrawGold(player, 200);
+    const r = svc.withdrawGold(player, 0, 200);
     assert.equal(r.ok, true);
     assert.equal(player.m_nGold, 300);
     assert.equal(player.m_BankGold[0], 300);
     await Promise.resolve();
-    assert.equal(goldSet[0], 300, 'bank gold persisted');
+    assert.deepEqual(goldSet[0], { tab: 0, amount: 300 }, 'bank gold persisted');
     assert.equal(invGold[0], 300, 'inv gold persisted');
   });
 
@@ -170,9 +184,18 @@ describe('BankService gold', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_BankGold[0] = 100;
     const { svc } = makeSvc();
-    const r = svc.withdrawGold(player, 500);
+    const r = svc.withdrawGold(player, 0, 500);
     assert.equal(r.ok, false);
     assert.equal(player.m_BankGold[0], 100, 'unchanged on reject');
+  });
+
+  it('rejects an out-of-range gold tab', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = 1000;
+    const { svc, goldSet } = makeSvc();
+    assert.equal(svc.depositGold(player, MAX_BANK_TABS, 10).ok, false, 'deposit tab >= MAX');
+    assert.equal(svc.withdrawGold(player, -1, 10).ok, false, 'withdraw tab < 0');
+    assert.equal(goldSet.length, 0, 'nothing persisted on reject');
   });
 });
 

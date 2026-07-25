@@ -14,6 +14,7 @@ import type { CharacterRow } from '@flyff/database';
 import { CMover } from '@flyff/entities';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import { MODE } from '@flyff/entities';
+import type { SkillDefinition } from '@flyff/resources';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {
@@ -209,5 +210,99 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(r.ok && r.killed, true, 'one-shot kill');
     assert.equal(mover.m_nHitPoint, 0, 'full 5000 HP gone in one swing');
     assert.equal(mover.m_bDead, true);
+  });
+});
+
+describe('CombatService.resolveSkill — multi-hit (nSkillCount)', () => {
+  /** Skill rng: range→min damage, int→99 (no crit). */
+  const skillRng: Rng = { int: () => 99, range: (lo: number) => lo };
+
+  async function loadCleanHit() {
+    const { loadSkills } = await import('@flyff/resources');
+    const { resolve } = await import('node:path');
+    const { fileURLToPath } = await import('node:url');
+    const dir = resolve(fileURLToPath(new URL('.', import.meta.url)), '../../../resources/data');
+    const idx = await loadSkills(dir);
+    const skill = idx.skills.get(1);
+    if (!skill) throw new Error('Clean Hit (id=1) not loaded');
+    return skill;
+  }
+
+  function makeCombat(mover: CMover) {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 0, y: 0, z: 0 };
+    const spawns = new Map([[mover.m_idMover, mover]]);
+    const broadcasts: Buffer[] = [];
+    const sends: Buffer[] = [];
+    const journalCalls: Array<{ type: string }> = [];
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: (id: number) => spawns.get(id), kill: () => {} },
+      zoneManager: { broadcastAround: (_p: unknown, _z: number, _r: number, b: Buffer) => { broadcasts.push(b); return 1; } },
+      playerManager: { sendTo: (_p: unknown, b: Buffer) => { sends.push(b); } },
+      charRepo: { updateLevelAndExp: async () => {} },
+      journal: { append: (e: { type: string }) => { journalCalls.push(e); } },
+      rng: skillRng,
+    });
+    return { player, combat, broadcasts, sends, journalCalls };
+  }
+
+  const MOVER_OPTS = { modelIndex: 20, name: 'Aibatt', level: 1, atkMin: 16, atkMax: 16, armor: 3, hr: 40, er: 3, expValue: 2 };
+
+  /** Count DAMAGE snapshots in the broadcast list (excludes rage/death side-broadcasts). */
+  const countDamage = (bufs: Buffer[]) => bufs.filter((b) => snapshotSubtype(b) === 0x0013).length;
+
+  /** Measure one hit's damage on a throwaway 200-HP mover so multi-hit asserts
+   *  don't hardcode the bare-fist ATK floor (which varies with BARE_EQUIP). */
+  async function perHitDamage(skill: SkillDefinition) {
+    const level = skill.levels[0]!;
+    const mover = CMover.spawn(0x40000090, { ...MOVER_OPTS, hp: 200 }, { x: 0, y: 0, z: 0 }, 1);
+    const { player, combat } = makeCombat(mover);
+    combat.resolveSkill(player, mover.m_idMover, skill, level);
+    return 200 - mover.m_nHitPoint;
+  }
+
+  it('single-hit (skillCount absent) applies one DAMAGE', async () => {
+    const skill = await loadCleanHit();
+    const level = skill.levels[0]!;
+    const perHit = await perHitDamage(skill);
+    const mover = CMover.spawn(0x40000001, { ...MOVER_OPTS, hp: 200 }, { x: 0, y: 0, z: 0 }, 1);
+    const { player, combat, broadcasts } = makeCombat(mover);
+    const r = combat.resolveSkill(player, mover.m_idMover, skill, level);
+    assert.equal(r.ok && r.hit, true);
+    assert.equal(r.ok && r.killed, false);
+    assert.equal(mover.m_nHitPoint, 200 - perHit);
+    assert.equal(countDamage(broadcasts), 1, 'one DAMAGE snapshot');
+  });
+
+  it('multi-hit (skillCount 3) applies 3 separate DAMAGE snapshots + 3× damage', async () => {
+    const skill = await loadCleanHit();
+    const level = { ...skill.levels[0]!, skillCount: 3 };
+    const perHit = await perHitDamage(skill);
+    const mover = CMover.spawn(0x40000002, { ...MOVER_OPTS, hp: 200 }, { x: 0, y: 0, z: 0 }, 1);
+    const { player, combat, broadcasts, journalCalls } = makeCombat(mover);
+    const r = combat.resolveSkill(player, mover.m_idMover, skill, level);
+    assert.equal(r.ok && r.killed, false);
+    assert.equal(countDamage(broadcasts), 3, 'three DAMAGE snapshots (one per hit)');
+    assert.equal(mover.m_nHitPoint, 200 - perHit * 3, 'three full damage rolls applied');
+    assert.equal(journalCalls.length, 0, 'not dead → no exp journal');
+  });
+
+  it('stops the chain when the target dies mid-hit (no double death/exp)', async () => {
+    const skill = await loadCleanHit();
+    const level = { ...skill.levels[0]!, skillCount: 3 };
+    const perHit = await perHitDamage(skill);
+    // HP exactly perHit → hit 1 lethal; hits 2-3 must be skipped.
+    const mover = CMover.spawn(0x40000003, { ...MOVER_OPTS, hp: perHit }, { x: 0, y: 0, z: 0 }, 1);
+    const { player, combat, broadcasts, journalCalls } = makeCombat(mover);
+    const r = combat.resolveSkill(player, mover.m_idMover, skill, level);
+    assert.equal(r.ok && r.killed, true);
+    assert.equal(mover.m_bDead, true);
+    assert.equal(mover.m_nHitPoint, 0);
+    // Exactly one DAMAGE + one MOVERDEATH — no duplicate death broadcast.
+    assert.equal(countDamage(broadcasts), 1, 'only hit 1 lands');
+    assert.equal(broadcasts.some((b) => snapshotSubtype(b) === 0x00c7), true, 'MOVERDEATH broadcast');
+    assert.equal(journalCalls.length, 1, 'exp granted exactly once (no double-death)');
   });
 });

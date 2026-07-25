@@ -118,12 +118,21 @@ export const PACKETTYPE = Object.freeze({
   // polls a mover's walk-to-object destination (~3*/s) to sync pathfinding.
   QUERYGETDESTOBJ:      0xffffff72,
 
+  // v15 `DPSrvr::OnMode` -- DWORD dwMode. Toggles PK / MATCHLESS / TRANSPARENT
+  // mode bits. `dwMode=1` = PK on, `dwMode=0` = PK off.
+  MODE:                 0xffffff7b,
+
   GUILD:                0xffffff30,
 
   // v15 client -> world -- `WORLDSERVER/DPSrvr.cpp` handlers.
   MAP_KEY:              0xfffff000, // OnMapKey -- per-.wld checksum as client loads the world
   QUERY_PLAYER_DATA:    0xf000f802, // OnQueryPlayerData -- peer data when client cache stale
   MODIFY_STATUS:        0xf000f501, // OnModifyStatus -- allocate STR/STA/DEX/INT from m_nRemainGP (DPSrvr.cpp:10345)
+  // MsgHdr.h:515 -- `CDPSrvr::OnEnchant` (DPSrvr.cpp:5735). Universal item-
+  // upgrade entry: `DWORD objidTarget, DWORD objidMaterial`. Server dispatches
+  // by the *material's* dwItemKind3 (ItemUpgrade.cpp:384): IK3_ENCHANT (Sunstone/
+  // orichalcum) -> weapon/armor refine; IK3_ELECARD (element card) -> element.
+  ENCHANT:              0xf000b024,
 } as const);
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];

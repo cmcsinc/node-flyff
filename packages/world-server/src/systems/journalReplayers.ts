@@ -20,14 +20,15 @@
  * @module systems/journalReplayers
  */
 
-import type { CharacterRepository, InventoryRepository, BankRepository, JournalRow } from '@flyff/database';
+import type { CharacterRepository, InventoryRepository, BankRepository, SkillRepository, JournalRow } from '@flyff/database';
 import type { Logger } from '@flyff/core';
 import type { JournalReplayer } from './journalReplayer';
 
 export interface ReplayerRegistryDeps {
-  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats'>;
+  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats' | 'updateSkillPoints'>;
   readonly inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem' | 'setGold'>;
   readonly bankRepo: Pick<BankRepository, 'setBankPass'>;
+  readonly skillRepo: Pick<SkillRepository, 'saveAll'>;
   readonly logger: Logger;
 }
 
@@ -55,12 +56,22 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   });
 
   // One inventory slot's absolute contents. `itemId: 0` => slot cleared.
+  // `refine`/`element`/`element_level` optional for back-compat with rows
+  // written before migration 012 (they default 0 -- plain item, same as before).
   r.register('INVENTORY_SLOT', async (row) => {
-    const p = payload<{ slot: number; itemId: number; count: number }>(row);
+    const p = payload<{
+      slot: number; itemId: number; count: number;
+      flags?: number; durability?: number; refine?: number;
+      element?: number; element_level?: number;
+    }>(row);
     if (p.itemId === 0) {
       await deps.inventoryRepo.removeItem(row.char_id, p.slot);
     } else {
-      await deps.inventoryRepo.setItem(row.char_id, p.slot, p.itemId, p.count);
+      await deps.inventoryRepo.setItem(
+        row.char_id, p.slot, p.itemId, p.count,
+        p.flags ?? 0, p.durability ?? -1, p.refine ?? 0,
+        undefined, p.element ?? 0, p.element_level ?? 0,
+      );
     }
   });
 
@@ -81,5 +92,17 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     await deps.charRepo.updateStats(row.char_id, p);
   });
 
-  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS'] }, 'Journal replay handlers registered');
+  // Absolute job-skill roster + unspent SP (C++ m_aJobSkill/m_nSkillPoint).
+  // Emitted by SkillService.learnSkills; absolute (whole roster) so replay is
+  // idempotent. saveAll delete+reinserts the whole set, matching the payload.
+  r.register('SKILL_LEARN', async (row) => {
+    const p = payload<{
+      roster: Array<{ slot: number; skillId: number; level: number }>;
+      skillPoint: number; skillLevel: number;
+    }>(row);
+    await deps.skillRepo.saveAll(row.char_id, p.roster);
+    await deps.charRepo.updateSkillPoints(row.char_id, p.skillPoint, p.skillLevel);
+  });
+
+  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS', 'SKILL_LEARN'] }, 'Journal replay handlers registered');
 }

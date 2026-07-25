@@ -30,6 +30,7 @@ import type { QueryGetDestObjHandler } from './handlers/queryGetDestObj.handler'
 import type { GetPosHandler } from './handlers/getPos.handler';
 import type { ScriptDlgHandler } from '@flyff/npc';
 import type { RevivalHandler } from './handlers/revival.handler';
+import type { PkModeHandler } from './handlers/pkMode.handler';
 import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler';
 import type { MeleeAttackHandler } from '@flyff/combat';
 import type { RangeAttackHandler } from '@flyff/combat';
@@ -43,6 +44,7 @@ import type { DropGoldHandler } from '@flyff/inventory';
 import type { RemoveItemHandler } from '@flyff/inventory';
 import type { DoEquipHandler } from '@flyff/inventory';
 import type { DoUseItemHandler } from '@flyff/inventory';
+import type { EnchantHandler } from '@flyff/inventory';
 import type { BankHandler } from '@flyff/npc';
 import type { ShopHandler } from '@flyff/npc';
 import type { TaskBarHandler } from './handlers/taskbar.handler';
@@ -69,6 +71,7 @@ export interface WorldClientServerDeps {
   getPosHandler: GetPosHandler;
   scriptDlgHandler: ScriptDlgHandler;
   revivalHandler: RevivalHandler;
+  pkModeHandler: PkModeHandler;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
   rangeAttackHandler: RangeAttackHandler;
@@ -82,6 +85,7 @@ export interface WorldClientServerDeps {
   removeItemHandler: RemoveItemHandler;
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
+  enchantHandler: EnchantHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
   taskbarHandler: TaskBarHandler;
@@ -125,6 +129,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.REVIVAL, (s, r) => deps.revivalHandler.handleRevival(s, r));
   dispatcher.register(PACKETTYPE.REVIVAL_TO_LODESTAR, (s, r) => deps.revivalHandler.handleRevivalLodestar(s, r));
   dispatcher.register(PACKETTYPE.REVIVAL_TO_LODELIGHT, (s, r) => deps.revivalHandler.handleRevivalLodelight(s, r));
+  dispatcher.register(PACKETTYPE.MODE, (s, r) => deps.pkModeHandler.handleMode(s, r));
   dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r));
   dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
   dispatcher.register(PACKETTYPE.RANGE_ATTACK, (s, r) => deps.rangeAttackHandler.handleRangeAttack(s, r));
@@ -138,6 +143,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.REMOVEINVENITEM, (s, r) => deps.removeItemHandler.handleRemoveItem(s, r));
   dispatcher.register(PACKETTYPE.DOEQUIP, (s, r) => deps.doEquipHandler.handleDoEquip(s, r));
   dispatcher.register(PACKETTYPE.DOUSEITEM, (s, r) => deps.doUseItemHandler.handleDoUseItem(s, r));
+  dispatcher.register(PACKETTYPE.ENCHANT, (s, r) => deps.enchantHandler.handleEnchant(s, r));
   dispatcher.register(PACKETTYPE.OPENBANKWND, (s, r) => deps.bankHandler.handleOpen(s, r));
   dispatcher.register(PACKETTYPE.CLOSEBANKWND, (s, r) => deps.bankHandler.handleClose(s, r));
   dispatcher.register(PACKETTYPE.PUTITEMBACK, (s, r) => deps.bankHandler.handleDeposit(s, r));

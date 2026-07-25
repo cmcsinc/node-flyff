@@ -117,6 +117,8 @@ async function main(): Promise<void> {
     aiSystem,
     checkpointSystem,
     recoverySystem,
+    buffSystem,
+    pkDecaySystem,
     itemManager,
   } = await compose();
 
@@ -143,6 +145,8 @@ async function main(): Promise<void> {
     aiSystem.stop();
     checkpointSystem.stop();
     recoverySystem.stop();
+    buffSystem.stop();
+    pkDecaySystem.stop();
     spawnManager.shutdown();
     itemManager.shutdown();
     journal.close();
