@@ -12,7 +12,7 @@
  *    exp penalty + teleport to zone revival pos. `LODELIGHT` -- C++ stubs this
  *    empty; rejected.
  *
- * HP restore rate 0.2 * max (v15 non-chaotic v9+ default). Exp penalty is the
+ * HP restore rate 0.2 * max (v19 non-chaotic v9+ default). Exp penalty is the
  * bracket table in `combat/formulas.subDieDecExp`.
  *
  * WAL: scroll consume + exp loss are journaled before the ack (rule 04).
@@ -29,7 +29,7 @@ import type { ZoneDefinition } from '@flyff/resources';
 import type { CPlayer, Vec3 } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
-import { cumulativeExp, subDieDecExp } from '@flyff/combat';
+import { subDieDecExp } from '@flyff/combat';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
 } from '@flyff/entities';
@@ -62,7 +62,7 @@ export interface RevivalServiceDeps {
   readonly zones: { byNumericId: Map<number, ZoneDefinition> };
 }
 
-const REVIVE_HP_RATE = 0.2; // v15 non-chaotic v9+ default (DPSrvr.cpp:997,1100)
+const REVIVE_HP_RATE = 0.2; // v19 non-chaotic v9+ default (DPSrvr.cpp:997,1100)
 /** Chaotic (PK) players revive at half the normal HP rate (DPSrvr.cpp PK branch). */
 const REVIVE_HP_RATE_CHAOTIC = 0.1;
 
@@ -160,17 +160,18 @@ export class RevivalService {
       player._dirty.add('m_nExp');
       // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
       // Idempotent -- the boot replayer re-applies (level, exp) if the
-      // fire-and-forget persist below lost the race with a crash.
-      const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
+      // fire-and-forget persist below lost the race with a crash. m_nExp IS
+      // the within-level value the DB + wire carry (no cumulative form).
+      const exp = String(Math.floor(player.m_nExp));
       this.deps.journal?.append({
         charId: player.m_idPlayer, type: 'CHAR_EXP',
-        payload: { level: player.m_nLevel, exp: cumulative },
+        payload: { level: player.m_nLevel, exp },
       });
       this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
-        exp: cumulativeExp(player.m_nLevel, player.m_nExp), level: player.m_nLevel,
+        exp: player.m_nExp, level: player.m_nLevel,
       }));
       this.deps.charRepo.updateLevelAndExp(
-        player.m_idPlayer, player.m_nLevel, BigInt(cumulative),
+        player.m_idPlayer, player.m_nLevel, BigInt(Math.floor(player.m_nExp)),
       ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
     }
 
@@ -192,7 +193,7 @@ export class RevivalService {
   }
 
   /**
-   * HP/MP restore on revive. Non-chaotic players get 0.2 * max (v15 default);
+   * HP/MP restore on revive. Non-chaotic players get 0.2 * max (v19 default);
    * chaotic (PK) players get half that (0.1 * max) -- the PK death penalty.
    * ponytail: full DiePenalty.inc REVIVAL_PENALTY bracket table (level-based).
    */

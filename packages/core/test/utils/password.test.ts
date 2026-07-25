@@ -16,8 +16,8 @@ describe('password utility', () => {
       assert.ok(hash.startsWith('$'));
     });
 
-    it('should hash an MD5 password from v15 client', async () => {
-      // Simulated MD5 hash from v15 client (32 hex chars)
+    it('should hash an MD5 password from v19 client', async () => {
+      // Simulated MD5 hash from v19 client (32 hex chars)
       const md5Password = '5d41402abc4b2a76b9719d911017c592'; // MD5 of "hello"
       const hash = await hashPassword(md5Password);
 
@@ -90,8 +90,8 @@ describe('password utility', () => {
   });
 
   describe('integration', () => {
-    it('should support v15 client flow: MD5 -> argon2id', async () => {
-      // Simulate v15 client sending MD5 password
+    it('should support v19 client flow: MD5 -> argon2id', async () => {
+      // Simulate v19 client sending MD5 password
       const clientMd5 = '5d41402abc4b2a76b9719d911017c592';
 
       // Server hashes it with argon2id for storage

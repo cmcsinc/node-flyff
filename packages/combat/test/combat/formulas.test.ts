@@ -10,9 +10,9 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import {
-  resolveMelee, getHitMinMax, getAttackResult, getParrying, getCriticalProb, getAttackSpeed,
+  resolveMelee, getHitMinMax, getAttackResult, getParrying, getCriticalProb, getAttackSpeed, getDamageMultiplier,
   calcDefense, expLevelDiffMult,
-  addExp, expToNextLevel, withinLevelExp, cumulativeExp, subDieDecExp,
+  addExp, expToNextLevel, subDieDecExp,
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
 } from '../../src/combat/formulas';
@@ -38,6 +38,25 @@ const aibatt: Combatant = {
   npcAtkMin: 16, npcAtkMax: 16, npcArmor: 3, npcResisMagic: 0, npcHR: 40, npcER: 3, element: NO_PROP,
   equipDef: 0, adjHitRate: 0, parry: 0,
   params: EMPTY_PARAM_VIEW,
+};
+
+/** Small Pukepuke (L7, atk 37, armor 10) -- a real low-level mob. */
+const pukepuke: Combatant = {
+  kind: 'npc', level: 7, job: 0,
+  str: 0, sta: 0, dex: 0, int: 0,
+  weapon: FIST,
+  npcAtkMin: 37, npcAtkMax: 37, npcArmor: 10, npcResisMagic: 0, npcHR: 40, npcER: 11, element: NO_PROP,
+  equipDef: 0, adjHitRate: 0, parry: 0,
+  params: EMPTY_PARAM_VIEW,
+};
+
+/**
+ * L30 VAGRANT STA 30 -- a higher-level, higher-DEF player. Base DEF
+ * (no gear) = floor((60+15)/2.8 - 4 + (30-14)*1) = 38, which exceeds the
+ * Pukepuke's ATK (37). Without the NPC->player min-damage rule this yields 0.
+ */
+const tank: Combatant = {
+  ...player, level: 30, sta: 30,
 };
 
 /** Scripted rng -- `int()` draws from `ints` in call order; `range()` is fixed. */
@@ -73,12 +92,12 @@ describe('combat calcDefense', () => {
 
   it('player defender uses summed equip DEF (SumEquipDefenseAbility)', () => {
     const armored: Combatant = { ...player, equipDef: 20 };
-    // byItem=20; floor((20)*2.3 + (1 + 15/2 + 15)/2.8 - 4 + 1*2 + fFactorDef)
-    // bare calcDefense(player) baseline first:
+    // AF_GENERIC path (MoverAttack.cpp:591): equip DEF contributes as byItem/4,
+    // NOT the *2.3 of the PvP non-generic branch.
     const base = calcDefense(player);
     const withEquip = calcDefense(armored);
     assert.ok(withEquip > base, 'equip DEF raises player defense');
-    assert.equal(withEquip - base, Math.floor(20 * 2.3), 'equip DEF contributes via *2.3 factor');
+    assert.equal(withEquip - base, Math.floor(20 / 4), 'equip DEF contributes via /4 (AF_GENERIC)');
   });
 });
 
@@ -107,7 +126,7 @@ describe('combat DST param un-stubs', () => {
     params.setDestParam(DST.ADJDEF, 30);
     const buffed: Combatant = { ...player, equipDef: 20, params };
     assert.ok(calcDefense(buffed) > base, 'ADJDEF buff raises player DEF');
-    assert.equal(calcDefense(buffed) - base, Math.floor(30 * 2.3), 'ADJDEF contributes via *2.3');
+    assert.equal(calcDefense(buffed) - base, 30, 'ADJDEF contributes flat (AF_GENERIC)');
   });
 
   it('DST_CHR_CHANCECRITICAL raises getCriticalProb', () => {
@@ -183,6 +202,42 @@ describe('combat resolveMelee', () => {
   });
 });
 
+describe('combat resolveMelee (NPC -> player min-damage rule)', () => {
+  it('monster always deals >= 10% ATK even when DEF >= ATK (MoverAttack.cpp:1444)', () => {
+    // Pukepuke ATK 37 vs tank DEF 38 -> raw nDamage = -1 -> 0, lifted to floor(37*0.1)=3.
+    // ints: hit=0, crit=99, block=50. range=37.
+    const r = resolveMelee(pukepuke, tank, makeRng([0, 99, 50], 37));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 3);
+  });
+
+  it('min rule does NOT apply player -> NPC (only NPC -> player)', () => {
+    // Reverse direction: player ATK 37-ish vs aibatt DEF 1 still uses the raw
+    // subtraction path -- no 10% floor on player swings.
+    // L1 player bare-hand getHitMinMax = {16,20}; range=16 -> nATK=16, DEF=1 -> 15.
+    const r = resolveMelee(player, aibatt, makeRng([0, 99, 50], 16));
+    assert.equal(r.damage, 15);
+  });
+
+  it('higher-level player defender is NOT shielded by any level-diff cosine', () => {
+    // A L30 player vs a L1 aibatt: no cosine falloff exists in C++ GetDamageMultiplier,
+    // so a normal hit deals full ATK-DEF (not reduced by the 29-level gap).
+    // aibatt ATK 16 vs tank DEF 38 -> raw -22 -> 0 -> lifted to floor(16*0.1)=1.
+    const r = resolveMelee(aibatt, tank, makeRng([0, 99, 50], 16));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 1); // 10% of 16
+  });
+});
+
+describe('combat getDamageMultiplier (no fabricated cosine)', () => {
+  it('returns 1.0 for NPC -> player regardless of level gap (C++ has no level term)', () => {
+    assert.equal(getDamageMultiplier(pukepuke, tank), 1.0);
+    // Even a L1 mob vs L80 player: no cosine reduction.
+    const hero: Combatant = { ...tank, level: 80 };
+    assert.equal(getDamageMultiplier(pukepuke, hero), 1.0);
+  });
+});
+
 describe('combat expLevelDiffMult', () => {
   it('playerLevel <= monsterLevel -> 1.0', () => {
     assert.equal(expLevelDiffMult(1, 1), 1.0);
@@ -203,7 +258,7 @@ describe('combat expLevelDiffMult', () => {
 
 describe('combat addExp (level-up cascade)', () => {
   it('no level-up when exp stays below the threshold', () => {
-    // L1->L2 needs 14 (nExp1 0->14). Gain 5 at 0 -> still L1, exp 5.
+    // L1 threshold is EXP_TABLE[2].nExp1 = 14. Gain 5 at 0 -> still L1, exp 5.
     const r = addExp(1, 0, 5);
     assert.deepEqual(r, { level: 1, exp: 5, levelsGained: 0 });
   });
@@ -214,15 +269,16 @@ describe('combat addExp (level-up cascade)', () => {
   });
 
   it('carries excess into the next level on overflow', () => {
-    // L1->L2 needs 14, L2->L3 needs 6 (14->20). Gain 18 from 0 -> L3, exp 18-14-6 = -2? No: 18-14=4, 4<6 stop -> L2 exp 4.
+    // L1 threshold 14, L2 threshold 20. Gain 18 from 0 -> 18-14=4 (L2), 4<20 stop.
     const r = addExp(1, 0, 18);
     assert.deepEqual(r, { level: 2, exp: 4, levelsGained: 1 });
   });
 
   it('cascades multiple levels from a single large gain', () => {
-    // Gain 20 from L1 exp 0: 20-14=6 (L2), 6-6=0 (L3, exact boundary), 0<16 stop.
-    const r = addExp(1, 0, 20);
-    assert.deepEqual(r, { level: 3, exp: 0, levelsGained: 2 });
+    // Thresholds: L1=14, L2=20, L3=36, L4=90. Gain 100 from L1 exp 0:
+    //   100-14=86 (L2), 86-20=66 (L3), 66-36=30 (L4), 30<90 stop -> L4 exp 30.
+    const r = addExp(1, 0, 100);
+    assert.deepEqual(r, { level: 4, exp: 30, levelsGained: 3 });
   });
 
   it('caps at MAX_LEVEL (no further progression)', () => {
@@ -231,27 +287,10 @@ describe('combat addExp (level-up cascade)', () => {
     assert.equal(huge.level, huge.level); // reached a finite cap row
   });
 
-  it('expToNextLevel is the delta of cumulative nExp1', () => {
-    assert.equal(expToNextLevel(1), 14); // 14 - 0
-    assert.equal(expToNextLevel(2), 6);  // 20 - 14
-    assert.equal(expToNextLevel(3), 16); // 36 - 20
-  });
-});
-
-describe('combat cumulative <-> within-level conversion', () => {
-  it('withinLevelExp subtracts the level base', () => {
-    assert.equal(withinLevelExp(1000, 12), 27); // 1000 - 973
-    assert.equal(withinLevelExp(14, 2), 0);
-    assert.equal(withinLevelExp(5, 1), 5);
-  });
-
-  it('withinLevelExp clamps negative (malformed row) to 0', () => {
-    assert.equal(withinLevelExp(3, 5), 0); // 3 - 90 < 0
-  });
-
-  it('cumulativeExp is the inverse of withinLevelExp', () => {
-    assert.equal(cumulativeExp(12, 27), 1000);
-    assert.equal(cumulativeExp(2, 0), 14);
+  it('expToNextLevel is the next level raw nExp1 (per-level threshold, not delta)', () => {
+    assert.equal(expToNextLevel(1), 14);  // EXP_TABLE[2].nExp1
+    assert.equal(expToNextLevel(2), 20);  // EXP_TABLE[3].nExp1
+    assert.equal(expToNextLevel(3), 36);  // EXP_TABLE[4].nExp1
   });
 });
 

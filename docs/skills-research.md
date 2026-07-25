@@ -1,6 +1,6 @@
-# v15 Skill System — Research (C++ → TS port reference)
+# v19 Skill System — Research (C++ → TS port reference)
 
-Aggregated from 4 parallel research passes over `H:\flyff\v15\Source\Source\` + `raw/propSkill*`. Canonical C++ cites preserved; this is the implementation reference for the skill system.
+Aggregated from 4 parallel research passes over `H:\flyff\v19\Source\Source\` + `raw/propSkill*`. Canonical C++ cites preserved; this is the implementation reference for the skill system.
 
 ## 1. Resources
 

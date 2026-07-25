@@ -140,7 +140,7 @@ export interface MoverSpawnSource {
    * (`AIMonster.cpp` `StateRunaway`). When this monster's HP drops to/below
    * this percent of max, it drops its target and runs AWAY from the attacker
    * for `runawayDelay` ms, then returns home. Absent/0 = never flees
-   * (faithful: only `SetRunAway`-tagged mobs flee; the v15 Flaris field set
+   * (faithful: only `SetRunAway`-tagged mobs flee; the v19 Flaris field set
    * has no such tag, so by default nothing flees).
    */
   readonly fleeHpPct?: number | undefined;
@@ -155,7 +155,7 @@ export interface MoverSpawnSource {
    * (`AIMonster.cpp` `MoveProcessStand` recvCond check). When this monster's
    * HP drops to/below this percent of max, it heals itself for `healAmount`
    * every `healCadenceMs` ms. Absent/0 = never self-heals (faithful: only
-   * `Recovery`-tagged mobs heal; the v15 Flaris field set has no such tag).
+   * `Recovery`-tagged mobs heal; the v19 Flaris field set has no such tag).
    */
   readonly healHpPct?: number | undefined;
   /**
@@ -298,9 +298,9 @@ export class CMover {
   /** Active timed DST buffs on this mover (debuffs from player skills). */
   readonly m_buffs: BuffManager = new BuffManager(this.m_params);
 
-  /** True if a stun/sleep status bit is set in the DST_CHRSTATE pool (cannot act). */
+  /** True if the stun bit is set in the DST_CHRSTATE pool (cannot act). */
   isStunned(): boolean {
-    return (this.m_params.get(DST.CHRSTATE, 0) & (CHRSTATE_BITS.STUN | CHRSTATE_BITS.SLEEP)) !== 0;
+    return (this.m_params.get(DST.CHRSTATE, 0) & CHRSTATE_BITS.STUN) !== 0;
   }
   /**
    * Timestamp (ms, `Date.now()`) when this mover next picks an idle-wander

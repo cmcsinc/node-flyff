@@ -1,5 +1,5 @@
 /**
- * Fixed combat data tables + enums -- ported from v15 C++ source.
+ * Fixed combat data tables + enums -- ported from v19 C++ source.
  *
  * Job data (`JOB_TABLE`, `getJobProps`, `JobProps`) now lives in
  * `@flyff/entities` (shared with CPlayer vitals). Re-exported here so legacy

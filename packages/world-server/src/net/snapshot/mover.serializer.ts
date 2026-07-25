@@ -124,7 +124,16 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   for (const id of p.m_aCompleteQuest) w.writeWord(id); // m_aCompleteQuest * size (WORD each)
   w.writeByte(p.m_aCheckedQuest.length);                // m_nCheckedQuestSize (BYTE)
   for (const id of p.m_aCheckedQuest) w.writeWord(id);  // m_aCheckedQuest * size (WORD each)
-  w.writeDword(NULL_ID);       // m_idMurderer
+  // m_idMurderer -- 0 (NOT NULL_ID) when the player has no murderer. The
+  // client's minimap classify (`WndField.cpp:9335`) does
+  // `if( m_idMurderer && m_idMurderer == pMover->m_idPlayer ) nIndex = 5;` (red).
+  // NPC/monster `m_idPlayer` is never sent in the ADD_OBJ NPC branch, so it
+  // stays at the client's init value NULL_ID (Obj.cpp:123). Sending NULL_ID
+  // here is truthy AND equals every mover's m_idPlayer -> every dot goes red.
+  // 0 short-circuits the check. C++ only sets a real attacker id here on PK
+  // death (Mover.cpp:5645); the "no murderer" value is 0. ponytail: track on
+  // CPlayer + broadcast when PvP murder-marking ships.
+  w.writeDword(0);              // m_idMurderer (0 = no murderer)
   w.writeWord(p.m_nRemainGP);  // m_nRemainGP (unspent stat points)
   w.writeWord(0);              // padding (literal 0)
   for (let i = 0; i < MAX_HUMAN_PARTS; i++) { // equipInfo[].dwId *31 (propItem id)
@@ -153,7 +162,9 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   // --- containers ---
   writeItemContainer(w, INVENTORY_SLOTS, p.m_Inventory, MAX_INVENTORY); // m_Inventory (73 = MAX_INVENTORY bag + MAX_HUMAN_PARTS equip)
   for (let k = 0; k < MAX_BANK_TABS; k++) writeItemContainer(w, BANK_SLOTS, p.m_Bank[k] ?? []); // m_Bank *3 (42 each)
-  w.writeDword(0);             // GetPetId (__VER>=9)
+  w.writeDword(NULL_ID);       // GetPetId (__VER>=9) -- NULL_ID when no pet (Mover.cpp:513/247).
+                               // NOT 0: client WndItemCtrl.cpp:477 fades any inv item whose
+                               // m_dwObjId == GetPetId() (slot-0 items use objid 0).
   writeEmptyPocketController(w);                       // m_Pocket (__VER>=11)
   w.writeDword(0);             // m_dwMute (#ifdef __JEFF_9_20 -- defined in VersionCommon.h:112)
   for (let i = 0; i < MAX_HONOR_TITLE; i++) w.writeDword(0); // m_aHonorTitle *150 (__VER>=13)

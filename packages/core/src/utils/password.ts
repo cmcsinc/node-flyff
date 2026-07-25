@@ -9,7 +9,7 @@
  * process -- a process-local Map does NOT work (seed and login are separate
  * processes, so the Map is empty on verify -> every login fails).
  *
- * Supports both plain passwords and MD5 digests from v15 clients: the server
+ * Supports both plain passwords and MD5 digests from v19 clients: the server
  * stores argon2(md5) / scrypt(md5) so both flows work identically.
  *
  * ponytail: ceiling = ship argon2id in production (install the `argon2`

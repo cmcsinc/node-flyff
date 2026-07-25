@@ -5,7 +5,7 @@ import {
   CRC_HEADER_SIZE,
 } from '../../src/net/crcFrame';
 
-describe('v15 CRC frame codec', () => {
+describe('v19 CRC frame codec', () => {
   it('crc32Flyff(empty) === 0xFFFFFFFF (both XOR keys exercised, no input)', () => {
     assert.equal(crc32Flyff(Buffer.alloc(0)), 0xffffffff);
   });

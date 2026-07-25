@@ -59,21 +59,24 @@ export class EnchantHandler {
       const r = this.deps.enchantService.enchant(player, targetObjid, materialObjid);
       const objid = player.m_idPlayer;
 
+      // UPDATE_ITEM nId MUST be the item's STABLE m_dwObjId, not the slot: client
+      // resolves via GetAtId(nId) (Mover.cpp:8528). targetObjid/materialObjid ARE
+      // those wire objids; echoing the slot strands the icon when objid != slot.
       // Material stack drop on every consume outcome (success / fail_kept / fail_destroyed).
       if (r.kind === 'refine_success' || r.kind === 'element_success' || r.kind === 'fail_kept' || r.kind === 'fail_destroyed') {
-        this.deps.playerManager.sendTo(player, buildUpdateItemCount(objid, r.materialSlot, r.materialRemaining));
+        this.deps.playerManager.sendTo(player, buildUpdateItemCount(objid, materialObjid, r.materialRemaining));
       }
 
       switch (r.kind) {
         case 'refine_success':
-          this.deps.playerManager.sendTo(player, buildUpdateItemRefine(objid, r.targetSlot, r.newRefine));
+          this.deps.playerManager.sendTo(player, buildUpdateItemRefine(objid, targetObjid, r.newRefine));
           break;
         case 'element_success':
-          this.deps.playerManager.sendTo(player, buildUpdateItemElement(objid, r.targetSlot, r.newElement));
-          this.deps.playerManager.sendTo(player, buildUpdateItemElementLevel(objid, r.targetSlot, r.newLevel));
+          this.deps.playerManager.sendTo(player, buildUpdateItemElement(objid, targetObjid, r.newElement));
+          this.deps.playerManager.sendTo(player, buildUpdateItemElementLevel(objid, targetObjid, r.newLevel));
           break;
         case 'fail_destroyed':
-          this.deps.playerManager.sendTo(player, buildUpdateItemCount(objid, r.targetSlot, 0));
+          this.deps.playerManager.sendTo(player, buildUpdateItemCount(objid, targetObjid, 0));
           break;
         case 'fail_kept':
           break;

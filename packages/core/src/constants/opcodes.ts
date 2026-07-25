@@ -41,25 +41,30 @@ export const PACKETTYPE = Object.freeze({
   MOVERDEATH:           0x00ff0013,
   MOTION:               0x00ff0016,
   USESKILL:             0x00ff0020,
-  // v15 learn skills -- `DPSrvr::OnDoUseSkillPoint` (DPSrvr.cpp:3265). Body is
+  // v19 learn skills -- `DPSrvr::OnDoUseSkillPoint` (DPSrvr.cpp:3265). Body is
   // 45x (DWORD dwSkill, DWORD dwLevel) -- the player's desired job-skill roster,
   // one entry per m_aJobSkill slot. Atomic all-or-nothing server-side.
   DOUSESKILLPOINT:      0x000f0003,
   DOUSEITEM:            0x00ff0021,
   SETTARGET:            0x00ff0023,
   REVIVAL:              0x00ff00c0,
-  // v15 client -> world revival opcodes (DPSrvr.cpp:960/1061/1188). All three
+  // v19 client -> world revival opcodes (DPSrvr.cpp:960/1061/1188). All three
   // handlers read ZERO body fields -- the opcode alone selects the branch
   // (`SendHdr` on the client side). OnRevival=scroll, OnRevivalLodestar=town,
   // OnRevivalLodelight=empty C++ stub.
   REVIVAL_TO_LODESTAR:  0x00ff00c1,
   REVIVAL_TO_LODELIGHT: 0x00ff00c2,
   WHISPER:              0x00ff00d4,
+  // MsgHdr.h:194 -- `CDPSrvr::OnEndSkillQueue` (DPSrvr.cpp:7077). Bodyless; the
+  // opcode alone signals "skill queue cancelled". Server acks with a self-only
+  // SNAPSHOTTYPE_ENDSKILLQUEUE so the client clears its taskbar cast slot
+  // (`CUserTaskBar::OnEndSkillQueue` -> `AddHdr(self, ENDSKILLQUEUE)`).
+  ENDSKILLQUEUE:         0x00ff00d5,
   SAY:                  0x00ff00e0,
   SHOUT:                0x00ff00e1,
   DEFINEDTEXT:          0x00ff00ec,
   SCRIPTDLG:            0x00ff00b0,
-  // v15 NPC shop window -- `WORLDSERVER/DPSrvr.cpp:149-150`. OnOpenShopWnd:2744
+  // v19 NPC shop window -- `WORLDSERVER/DPSrvr.cpp:149-150`. OnOpenShopWnd:2744
   // reads `OBJID objid` (the vendor NPC); OnCloseShopWnd:2793 is bodyless. Open
   // validates the vendor is a trade NPC + sets the player's interacting-other;
   // ack is SNAPSHOTTYPE_OPENSHOPWND with the vendor's `m_ShopInventory`.
@@ -67,7 +72,7 @@ export const PACKETTYPE = Object.freeze({
   CLOSESHOPWND:         0x00ff00b2,
   BUYITEM:              0x00ff00b3,
   SELLITEM:             0x00ff00b4,
-  // v15 bank window -- `WORLDSERVER/DPSrvr.cpp:152-167`. OPENBANKWND dwId=NULL_ID
+  // v19 bank window -- `WORLDSERVER/DPSrvr.cpp:152-167`. OPENBANKWND dwId=NULL_ID
   // -> NPC bank; PUT/GET ITEMBACK nSlot=bank tab(0..2), nId=inv slot; PUT/GET
   // GOLDBACK nSlot=tab, dwGold=amount. MOVEBANKITEM (0xffffff46) is an empty C++
   // stub -- not registered.
@@ -81,12 +86,12 @@ export const PACKETTYPE = Object.freeze({
   // DWORD dwId, DWORD dwItemId`. Acks SNAPSHOTTYPE_CHANGEBANKPASS nMode 1 (old
   // matched, new saved) / 0 (old wrong -> re-prompt).
   CHANGEBANKPASS:       0xffffff47,
-  // v15 bank password confirm -- `WORLDSERVER/DPSrvr.cpp:167` OnConfirmBank:3991.
+  // v19 bank password confirm -- `WORLDSERVER/DPSrvr.cpp:167` OnConfirmBank:3991.
   // Body: `String szPass(10), DWORD dwId, DWORD dwItemId`. Ack is
   // SNAPSHOTTYPE_CONFIRMBANKPASS with nMode 1 (open) / 0 (re-prompt). Fires when
   // OPENBANKWND sent nMode=1 (bank has a password set).
   CONFIRMBANK:          0xffffff48,
-  // v15 taskbar hotkey binding -- `WORLDSERVER/DPSrvr.cpp:2203/2251`.
+  // v19 taskbar hotkey binding -- `WORLDSERVER/DPSrvr.cpp:2203/2251`.
   // OnAddItemTaskBar: `BYTE nSlotIndex, BYTE nIndex, DWORD dwShortcut, DWORD
   // dwId, DWORD dwType, DWORD dwIndex, DWORD dwUserId, DWORD dwData` (+ String
   // szString when dwShortcut==SHORTCUT_CHAT). OnRemoveItemTaskBar: `BYTE nSlotIndex,
@@ -94,7 +99,15 @@ export const PACKETTYPE = Object.freeze({
   // memory (no DB write in the C++ handler). Rejected paths send nothing.
   ADDITEMTASKBAR:        0xffffff0c,
   REMOVEITEMTASKBAR:     0xffffff0d,
-  // v15 client -> world quest handlers (`WORLDSERVER/DPSrvr.cpp`, msghdr.h)
+  // v19 SKILLTASKBAR (0xffffff0e) -- `DPSrvr::OnSkillTaskBar` (DPSrvr.cpp:2141):
+  // `[DWORD nCount] nCount*{ [BYTE nIndex][6 DWORDs: dwShortcut,dwId,dwType,
+  // dwIndex,dwUserId,dwData] }`. Client always sends all MAX_SLOT_QUEUE(5)
+  // slots (`CDPClient::SendSkillTaskBar`, DPClient.cpp:10834) -- the action
+  // slot grid (m_playTaskBar.m_aSlotQueue). Echoed back on JOIN via the queue
+  // section of SNAPSHOTTYPE_TASKBAR. END_SKILLQUEUE (0x00ff00d5) is the
+  // separate cast-cancel/exhaustion ack, not the queue upload.
+  SKILLTASKBAR:          0xffffff0e,
+  // v19 client -> world quest handlers (`WORLDSERVER/DPSrvr.cpp`, msghdr.h)
   REMOVEQUEST:          0x00ff0026, // OnRemoveQuest -- DWORD dwQuestCancelID
   QUESTHELPER_REQNPCPOS: 0x70005000, // OnReqQuestNPCPos -- String szCharKey
   QUEST_CHECK:          0x88100110, // OnCheckedQuest -- int nQuestId, BOOL bCheck
@@ -114,20 +127,27 @@ export const PACKETTYPE = Object.freeze({
   PLAYERANGLE:          0xffffff29,
   QUERYGETPOS:          0xffffff08,
   GETPOS:               0xffffff09,
-  // v15 `WORLDSERVER/DPSrvr.cpp:1355` OnQueryGetDestObj -- OBJID objid. Client
+  // v19 `WORLDSERVER/DPSrvr.cpp:1355` OnQueryGetDestObj -- OBJID objid. Client
   // polls a mover's walk-to-object destination (~3*/s) to sync pathfinding.
   QUERYGETDESTOBJ:      0xffffff72,
 
-  // v15 `DPSrvr::OnMode` -- DWORD dwMode. Toggles PK / MATCHLESS / TRANSPARENT
+  // v19 `DPSrvr::OnMode` -- DWORD dwMode. Toggles PK / MATCHLESS / TRANSPARENT
   // mode bits. `dwMode=1` = PK on, `dwMode=0` = PK off.
   MODE:                 0xffffff7b,
 
   GUILD:                0xffffff30,
 
-  // v15 client -> world -- `WORLDSERVER/DPSrvr.cpp` handlers.
+  // v19 client -> world -- `WORLDSERVER/DPSrvr.cpp` handlers.
   MAP_KEY:              0xfffff000, // OnMapKey -- per-.wld checksum as client loads the world
   QUERY_PLAYER_DATA:    0xf000f802, // OnQueryPlayerData -- peer data when client cache stale
   MODIFY_STATUS:        0xf000f501, // OnModifyStatus -- allocate STR/STA/DEX/INT from m_nRemainGP (DPSrvr.cpp:10345)
+  // MsgHdr.h:229 -- `CDPSrvr::OnReqLeave` (DPSrvr.cpp:6703). Bodyless; client
+  // sends this when the player initiates logout (exit / char-select). Server
+  // records `m_dwLeavePenatyTime = now + TIMEWAIT_CLOSE*1000` (idempotent -- only
+  // set if 0). The actual teardown fires later via LEAVE/ScheduleDestroy; this
+  // opcode only annotates leave intent so the safe-zone / guild-war penalty path
+  // can defer disconnect by TIMEWAIT_CLOSE (10s).
+  REQ_LEAVE:              0x00ff00fa,
   // MsgHdr.h:515 -- `CDPSrvr::OnEnchant` (DPSrvr.cpp:5735). Universal item-
   // upgrade entry: `DWORD objidTarget, DWORD objidMaterial`. Server dispatches
   // by the *material's* dwItemKind3 (ItemUpgrade.cpp:384): IK3_ENCHANT (Sunstone/
@@ -138,7 +158,7 @@ export const PACKETTYPE = Object.freeze({
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];
 
 /**
- * v15 certifier login error codes -- the `LONG lError` payload of the
+ * v19 certifier login error codes -- the `LONG lError` payload of the
  * `PACKETTYPE_ERROR` (0xfe) reply (`_Network/MsgHdr.h:1312-1346`).
  * The client's `OnError` switch (`Neuz/DPCertified.cpp:305-389`) shows a
  * localized message for each; an unmapped code (e.g. our old `0`) shows nothing.
@@ -180,7 +200,7 @@ export const SNAPSHOTTYPE = Object.freeze({
   SETFAME:        0x0040,
   SETSTATE:       0x006a,
   SETSCALE:       0x0039,
-  // v15 bank S->C sub-types -- `_Network/MsgHdr.h:956-964` (`CUser::AddPutItemBank`
+  // v19 bank S->C sub-types -- `_Network/MsgHdr.h:956-964` (`CUser::AddPutItemBank`
   // etc.). Bodies confirmed against `WORLDSERVER/User.cpp` at implement time.
   PUTITEMBANK:    0x0050,
   GETITEMBANK:    0x0051,

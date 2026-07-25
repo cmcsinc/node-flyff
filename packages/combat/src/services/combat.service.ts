@@ -1,5 +1,5 @@
 /**
- * CombatService -- runs the v15 melee damage pipeline on a player->mover swing.
+ * CombatService -- runs the v19 melee damage pipeline on a player->mover swing.
  *
  * Wires the pure {@link resolveMelee} math to live state: resolves the target
  * via `SpawnManager`, applies `MinusHP` to the mover, broadcasts the DAMAGE
@@ -26,7 +26,7 @@ import type { SpawnManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 import {
-  resolveMelee, xRandomRng, expLevelDiffMult, addExp, cumulativeExp,
+  resolveMelee, xRandomRng, expLevelDiffMult, addExp,
   type Rng, type MeleeResult,
 } from '../combat/formulas';
 import { resolveSkillCast } from '../combat/skillFormulas';
@@ -239,7 +239,7 @@ export class CombatService {
    * PvP damage tail (player→player). Mirrors `applyHit` but against a `CPlayer`
    * defender: apply MinusHP, broadcast DAMAGE, pause both players' stand regen,
    * and on lethal hit run `onPvpKill` (PK value increment + revival hook).
-   * No exp grant (PvP kills give no exp in v15), no rage, no spawn removal.
+   * No exp grant (PvP kills give no exp in v19), no rage, no spawn removal.
    */
   private applyHitPlayer(player: CPlayer, target: CPlayer, eff: MeleeResult): CombatOutcome {
     const dealt = applyDamagePlayer(target, eff);
@@ -336,7 +336,10 @@ export class CombatService {
     this.deps.dropService?.roll(mover, killer);
     // Phase 7 -- increment SetEndCondKillNPC slots before the mover leaves scope.
     this.deps.questTracker?.onKill(killer, mover.m_dwIndex);
-    this.deps.spawnManager.kill(mover.m_idMover);
+    // Schedule corpse DEL_OBJ after CORPSE_DESPAWN_MS so clients drop the death
+    // animation; respawn (if any) runs on its own independent timer. Admin
+    // despawns (/rn, /ak) omit the flag and broadcast DEL_OBJ themselves.
+    this.deps.spawnManager.kill(mover.m_idMover, { despawn: true });
   }
 
   /**
@@ -383,16 +386,22 @@ export class CombatService {
     // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
     // Idempotent -- the boot replayer re-applies this exact (level, exp) if the
     // fire-and-forget persist below lost the race with a crash. Stored as a
-    // JSON-safe string so BigInt precision survives the round-trip.
-    const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
+    // JSON-safe string so BigInt precision survives the round-trip. m_nExp IS
+    // the within-level value the DB + wire carry (no cumulative form).
+    const exp = String(Math.floor(player.m_nExp));
     this.deps.journal?.append({
       charId: player.m_idPlayer, type: 'CHAR_EXP',
-      payload: { level: player.m_nLevel, exp: cumulative },
+      payload: { level: player.m_nLevel, exp },
     });
 
-    // SETEXPERIENCE -> self only (wire expects cumulative nExp1).
+    // SETEXPERIENCE -> self only (wire nExp1 = within-level m_nExp, resets to 0
+    // at each level boundary -- matches C++ GetExp1() semantics). SP/skillLevel
+    // MUST be carried here -- C++ AddSetExperience writes them (User.cpp:1123);
+    // omitting them zeroes the client's SP display every kill and clobbers the
+    // DOUSESKILLPOINT refresh sent in grantSkillPoints.
     this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
-      exp: cumulativeExp(player.m_nLevel, player.m_nExp), level: player.m_nLevel,
+      exp: player.m_nExp, level: player.m_nLevel,
+      skillLevel: player.m_nSkillLevel, skillPoint: player.m_nSkillPoint,
     }));
     // SETLEVEL -> vicinity, skips self (only if leveled).
     if (gain.levelsGained > 0) {
@@ -404,10 +413,10 @@ export class CombatService {
     }
 
     // Persist async -- fire-and-forget (rule 02: service calls repo, no SQL).
-    // DB stores cumulative (matches C++ m_nExp1 column semantics). The WAL row
-    // above is the crash-recovery backup for this write.
+    // DB stores the within-level value (matches C++ m_nExp1 column semantics).
+    // The WAL row above is the crash-recovery backup for this write.
     this.deps.charRepo.updateLevelAndExp(
-      player.m_idPlayer, player.m_nLevel, BigInt(cumulative),
+      player.m_idPlayer, player.m_nLevel, BigInt(Math.floor(player.m_nExp)),
     ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
   }
 

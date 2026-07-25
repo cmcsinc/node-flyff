@@ -145,8 +145,8 @@ export class QuestTrackerSystem {
       this.deps.playerManager.sendTo(
         killer,
         r.isNew
-          ? createItem.buildOne(killer.m_idPlayer, r.itemId, r.count, r.slot)
-          : buildUpdateItemCount(killer.m_idPlayer, r.slot, r.count),
+          ? createItem.buildOne(killer.m_idPlayer, r.itemId, r.count, r.objid)
+          : buildUpdateItemCount(killer.m_idPlayer, r.objid, r.count),
       );
     }
   }

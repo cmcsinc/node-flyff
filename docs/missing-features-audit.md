@@ -1,15 +1,15 @@
 # Missing Features Audit — node-flyff
 
-> **Generated:** 2026-07-21 (enriched from v15 C++ source scan)
-> **Scope:** All gameplay systems the v15 Flyff C++ server ships vs. what node-flyff has implemented.
-> **C++ source roots:** `h:\flyff\v15\Source\Source\` — `WORLDSERVER\DPSrvr.cpp` (C→S dispatch), `_Common\*` (game logic), `_AIInterface\*` (NPC FSM), `_Network\MsgHdr.h` (opcodes), `Neuz\DPClient.cpp` (S→C Send* callers), `_Database\DbManagerSave.cpp` (persistence).
+> **Generated:** 2026-07-21 (enriched from v19 C++ source scan)
+> **Scope:** All gameplay systems the v19 Flyff C++ server ships vs. what node-flyff has implemented.
+> **C++ source roots:** `h:\flyff\v19\Source\Source\` — `WORLDSERVER\DPSrvr.cpp` (C→S dispatch), `_Common\*` (game logic), `_AIInterface\*` (NPC FSM), `_Network\MsgHdr.h` (opcodes), `Neuz\DPClient.cpp` (S→C Send* callers), `_Database\DbManagerSave.cpp` (persistence).
 > **NPC team is actively touching:** `entities/mover.ts`, `managers/spawn.manager.ts`, `net/snapshot/npcSnapshot.serializer.ts`, NPC-snapshot branch of `handlers/join.handler.ts`, `data/movers/*.yml`, `schemas/mover.schema.ts`. Everything recommended below avoids those files.
 
 ---
 
 ## 1. Current State — What Works End-to-End
 
-A real v15 Neuz client can today: authenticate at Login, pick a server, create/select a character, land in Flaris, see the local player + static NPC/monster spawns, walk around (`PLAYERMOVED`/`PLAYERCORR`/`PLAYERMOVED2`/`PLAYERANGLE`), set facing/target, run motion loops, chat in zone (plain text, **no** `/cmd`), open script dialogs, revive, query peer data, leave cleanly.
+A real v19 Neuz client can today: authenticate at Login, pick a server, create/select a character, land in Flaris, see the local player + static NPC/monster spawns, walk around (`PLAYERMOVED`/`PLAYERCORR`/`PLAYERMOVED2`/`PLAYERANGLE`), set facing/target, run motion loops, chat in zone (plain text, **no** `/cmd`), open script dialogs, revive, query peer data, leave cleanly.
 
 **WAL journal shipped 2026-07-21** — `Journal` (`@flyff/database`) + `JournalReplayer` (world-server `systems/`), boot recovery wired before the TCP listener. Tier 2 inventory handlers are now unblocked.
 
@@ -158,7 +158,7 @@ Ranked by leverage × zero file conflict (WAL journal already done):
 
 ## 9. Implementation Risks (cross-cutting)
 
-1. **v15 DB layer is 100% stored procedures** (`usp_Master_Update`, `usp_SaveSkill`, … in `_Database\DbManagerSave.cpp`). Zero port-over — every repository must be rewritten against Knex query builders.
+1. **v19 DB layer is 100% stored procedures** (`usp_Master_Update`, `usp_SaveSkill`, … in `_Database\DbManagerSave.cpp`). Zero port-over — every repository must be rewritten against Knex query builders.
 2. **Combat formulas are ~1900 lines** (`AttackArbiter.cpp` ~900 + `MoverAttack.cpp` 8 methods). Plan one researcher dive per formula family before coding.
 3. **AI FSM + pathfinding** (`AIMonster.cpp` 1300+ lines, `layeredlinkmap.cpp`). Boss-specific AIs (`AIBigMuscle`, `AIClockWorks`, `AIBear`, `AIKrrr`, `aimeteonyker`). Pathfinder is the Worker-Thread candidate per `05-performance.md`.
 4. **WAL is gating** for inventory/bank/trade/mail-item — ✅ now landed.
@@ -170,7 +170,7 @@ Ranked by leverage × zero file conflict (WAL journal already done):
 
 ## 10. Opcode Gaps in `packages/core/src/constants/opcodes.ts`
 
-These v15 opcodes are referenced by the C++ source but **not yet declared** in `opcodes.ts`. Add them (with the `PACKETTYPE_*` C++ name) before implementing their handlers:
+These v19 opcodes are referenced by the C++ source but **not yet declared** in `opcodes.ts`. Add them (with the `PACKETTYPE_*` C++ name) before implementing their handlers:
 
 - Combat: `MELEE_ATTACK2=0x00ff0014`, `SFX_HIT=0x00ff00d2`, `SFX_ID=0x00ff0022`, `SFX_CLEAR=0x00ff0024`.
 - Skills: `TELESKILL=0x00ff0025`, `ENDSKILLQUEUE=0x00ff00d5`, `SKILLTASKBAR=0xffffff0e`, `DOUSESKILLPOINT=0x000f0003`, `PARTYSKILLUSE=0xffffff1b`, `NPC_BUFF=0xf000f813`.

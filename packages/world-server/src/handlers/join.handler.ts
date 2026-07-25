@@ -10,7 +10,7 @@
  *   name:String      account:String  password:String  [messenger block]
  *
  * Note: `WORLDSERVER/DPSrvr.cpp:612` `OnAddUser` reads a *different*
- * (cache->world internal) layout. In v15 the CacheServer re-serializes the
+ * (cache->world internal) layout. In v19 the CacheServer re-serializes the
  * packet before forwarding. This emulator has no separate cache layer, so the
  * world's client-facing port receives the Neuz-format packet directly.
  *
@@ -30,7 +30,6 @@ import type { JoinService } from '../services/join.service';
 import type { PlayerSnapshotSerializer } from '../net/snapshot/playerSnapshot.serializer';
 import type { SetExperienceSerializer } from '@flyff/combat';
 import type { TaskBarSnapshotSerializer } from '../net/snapshot/taskbar.serializer';
-import { cumulativeExp } from '@flyff/combat';
 
 const logger = createLogger({ module: 'join-handler' });
 
@@ -88,16 +87,21 @@ export class JoinHandler {
     // relog. The ADD_OBJ mover frame writes m_nExp1=0; without this self-only
     // SETEXPERIENCE the client shows 0 exp until the next kill/revive.
     sendPacket(socket, this.setExperienceSerializer.build(outcome.player.m_idPlayer, {
-      exp: cumulativeExp(outcome.player.m_nLevel, outcome.player.m_nExp),
+      exp: outcome.player.m_nExp,
       level: outcome.player.m_nLevel,
       skillLevel: outcome.player.m_nSkillLevel,
       skillPoint: outcome.player.m_nSkillPoint,
     }));
 
-    // Repush saved taskbar bindings (items/skills/emotes/chat macros) so the
-    // F1-F9 grid repopulates. `SNAPSHOTTYPE_TASKBAR` (0x0097) is independent of
-    // world load -- `CWndTaskBar::Serialize` (client) just fills the grid.
-    sendPacket(socket, this.taskbarSerializer.build(outcome.player.m_idPlayer, outcome.player.m_aSlotItem));
+    // Repush saved taskbar bindings (items/skills/emotes/chat macros) + the
+    // action-slot queue so the F1-F9 grid and action slot repopulate.
+    // `SNAPSHOTTYPE_TASKBAR` (0x0097) is independent of world load --
+    // `CWndTaskBar::Serialize` (client) just fills the grid + queue.
+    sendPacket(socket, this.taskbarSerializer.build(
+      outcome.player.m_idPlayer,
+      outcome.player.m_aSlotItem,
+      outcome.player.m_aSlotQueue,
+    ));
 
     // NOTE: zone NPCs/monsters are NOT sent here. Their server-side spawn lives
     // in SpawnManager.bootstrap() (run once at world-server boot, compose.ts) --

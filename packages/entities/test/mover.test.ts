@@ -47,9 +47,10 @@ describe('CMover param model + buffs', () => {
     assert.equal(m.isStunned(), false, 'stun cleared after expiry');
   });
 
-  it('sleep bit also gates (isStunned covers STUN | SLEEP)', () => {
-    const m = makeMover();
-    m.m_buffs.addSkillBuff(300, 1, 5_000, [{ dst: DST.CHRSTATE, adj: CHRSTATE_BITS.SLEEP }], 0);
-    assert.equal(m.isStunned(), true);
+  it('CHS_STUN value matches C++ (0x8), not the inverted 0x0800', () => {
+    // Regression: CHRSTATE_BITS.STUN was 0x0800 (actually CHS_POISON's slot),
+    // so POWERSTUMP landing CHS_STUN=0x8 never tripped isStunned.
+    assert.equal(CHRSTATE_BITS.STUN, 0x8);
+    assert.equal(CHRSTATE_BITS.POISON, 0x800);
   });
 });

@@ -105,12 +105,15 @@ export class ActMsgHandler {
     const r = this.deps.inventoryService.addItem(player, item.m_dwItemId, item.m_nItemNum);
     if (!r.ok) return; // bag_full -- ponytail: TID_GAME_LACKSPACE; pile stays lootable
 
-    // isNew slot -> CREATEITEM; stack-merge onto an existing slot -> UPDATE_ITEM.
+    // Both branches address by the client's stable m_dwObjId (r.objid), NOT the
+    // bag index: OnCreateItem SetAtId(nId) + C++ Add nId = m_apIndex[i]
+    // (Item.h:720). The objid drifts from the slot after an equip, so keying by
+    // slot misroutes the item into an equipped cell.
     this.deps.playerManager.sendTo(
       player,
       r.isNew
-        ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.slot)
-        : buildUpdateItemCount(player.m_idPlayer, r.slot, r.count),
+        ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.objid)
+        : buildUpdateItemCount(player.m_idPlayer, r.objid, r.count),
     );
     this.deps.itemManager.remove(objid);
   }

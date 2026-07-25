@@ -194,5 +194,22 @@
   "packages/inventory/test/services/useItem.service.test.ts": "pass",
   "packages/entities/test/mover.test.ts": "pass",
   "packages/world-server/test/services/movement.service.test.ts": "fail",
-  "packages/combat/test/systems/ai.system.test.ts": "fail"
+  "packages/combat/test/systems/ai.system.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\playerSnapshot.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\net\\snapshot\\npcSnapshot.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\endSkillQueue.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-core\\test\\spawn.manager.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\skillTaskbar.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\formulas.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\questRewards.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-core\\test\\actionSlot.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\skills\\test\\services\\skill.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\consumable.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\entities\\test\\player.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\setItem.loader.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\net\\snapshot\\createItem.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\entities\\test\\mover.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\equip.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\reqLeave.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\skillFormulas.test.ts": "pass"
 }

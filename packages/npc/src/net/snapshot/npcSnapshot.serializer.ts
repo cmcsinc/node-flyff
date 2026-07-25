@@ -53,7 +53,7 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { CMover, MoverEquipPart } from '@flyff/entities';
 import {
-  SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, NULL_ID,
+  SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_DEL_OBJ, OT_MOVER, NULL_ID,
 } from '@flyff/world-core';
 
 export class NpcSnapshotSerializer {
@@ -67,6 +67,22 @@ export class NpcSnapshotSerializer {
     for (const m of movers) {
       this.writeAddObj(w, m);
     }
+    return w.build();
+  }
+
+  /**
+   * `AddRemoveObj` (User.cpp) -- bodyless `objid | DEL_OBJ`. Tells clients to
+   * drop the mover from their scene. Used by the corpse-despawn callback so the
+   * death-animation corpse disappears after {@link CORPSE_DESPAWN_MS}; the same
+   * frame `/rn` and `/ak` use for immediate admin despawn.
+   */
+  buildRemove(objid: number): Buffer {
+    const w = new PacketWriter();
+    w.writeDword(PACKETTYPE.SNAPSHOT);   // dwHdr
+    w.writeDword(NULL_ID);               // objidPlayer -- unused
+    w.writeWord(1);                      // cb
+    w.writeDword(objid);
+    w.writeWord(SNAPSHOTTYPE_DEL_OBJ);
     return w.build();
   }
 

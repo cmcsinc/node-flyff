@@ -4,7 +4,7 @@
  * Mirrors `ParsingCommand` (`_Interface/FuncTextCmd.cpp:4458`): tokenize the
  * slash-line, match the command name case-insensitively, gate on authority
  * (`cmd.auth <= player.m_bAuthority`), dispatch. Unknown / no-auth lines are
- * dropped silently -- stock v15 sends no error reply.
+ * dropped silently -- stock v19 sends no error reply.
  *
  * Implemented commands (subset that works without inventory/combat/party):
  *   `/w <name> <msg>`     GENERAL       whisper (both peers receive)
@@ -71,7 +71,8 @@ import { NoticeSerializer } from '../net/snapshot/notice.serializer';
 import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer';
 import { DisguiseSerializer } from '../net/snapshot/disguise.serializer';
 import { CreateItemSnapshotSerializer } from '@flyff/inventory';
-import { SetStateSerializer } from '@flyff/combat';
+import { SetStateSerializer, SetExperienceSerializer, SetLevelSerializer } from '@flyff/combat';
+import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { MODE } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 
@@ -90,12 +91,14 @@ export interface CommandServiceDeps {
   questService: QuestService;
   /** Inventory service -- `/ci` (create item into main bag). */
   inventoryService?: InventoryService;
-  /** Character repo -- `/stat` persists STR/STA/DEX/INT. */
-  charRepo?: Pick<CharacterRepository, 'updateStats'>;
+  /** Character repo -- `/stat` persists STR/STA/DEX/INT, `/lv` persists level+exp. */
+  charRepo?: Pick<CharacterRepository, 'updateStats' | 'updateLevelAndExp'>;
   /** Inventory container repo -- `/gg`/`/rtg` persist carried gold (migration 008). */
   inventoryRepo?: Pick<InventoryRepository, 'setGold'>;
   /** WAL journal -- appended before any gold mutation (rule 04). Optional: no-op if absent. */
   journal?: CommandJournal;
+  /** Zone manager -- `/lv` vicinity SETLEVEL broadcast. Optional: self-only update if absent. */
+  zoneManager?: { broadcastAround(pos: Vec3, zoneId: number, radius: number, pkt: Buffer, except?: unknown): number };
 }
 
 export type CommandOutcome =
@@ -135,6 +138,8 @@ export class CommandService {
   private readonly disguiseSer = new DisguiseSerializer();
   private readonly createItemSer = new CreateItemSnapshotSerializer();
   private readonly setStateSer = new SetStateSerializer();
+  private readonly setExpSer = new SetExperienceSerializer();
+  private readonly setLevelSer = new SetLevelSerializer();
 
   private readonly commands: CommandEntry[];
 
@@ -308,10 +313,35 @@ export class CommandService {
   private level({ args, player }: CommandCtx): void {
     const n = Number.parseInt(args.split(/\s+/)[0] ?? '', 10);
     if (!Number.isInteger(n) || n < MIN_LEVEL || n > MAX_LEVEL) return;
+    // C++ SetLevel (MoverParam.cpp:1826): m_nLevel = n; m_nExp1 = 0; broadcast
+    // SETEXPERIENCE + SETLEVEL; refill HP/MP/FP. m_nExp is within-level (resets
+    // to 0); the wire nExp1=0 makes the client bar read 0% at the new level.
     player.m_nLevel = n;
+    player.m_nExp = 0;
+    player.m_nMaxHp = player.getMaxHp();
+    player.m_nMaxMp = player.getMaxMp();
+    player.m_nMaxFp = player.getMaxFp();
+    player.m_nHp = player.m_nMaxHp;
+    player.m_nMp = player.m_nMaxMp;
     player._dirty.add('level');
-    // ponytail: emit SETLEVEL/SETEXPERIENCE snapshot + recompute HP/MP when the
-    // leveling system lands. For now the field flips + flushes on the 30s dirty.
+    player._dirty.add('m_nExp');
+    player._dirty.add('m_nHp');
+    player._dirty.add('m_nMp');
+    this.deps.journal?.append({
+      charId: player.m_idPlayer, type: 'CHAR_EXP',
+      payload: { level: player.m_nLevel, exp: '0' },
+    });
+    this.deps.playerManager.sendTo(player, this.setExpSer.build(player.m_idPlayer, {
+      exp: 0, level: player.m_nLevel,
+      skillLevel: player.m_nSkillLevel, skillPoint: player.m_nSkillPoint,
+    }));
+    this.deps.zoneManager?.broadcastAround(
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+      this.setLevelSer.build(player.m_idPlayer, player.m_nLevel),
+      player,
+    );
+    this.deps.charRepo?.updateLevelAndExp(player.m_idPlayer, player.m_nLevel, 0n)
+      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, '/lv persist failed'));
   }
 
   /**
@@ -447,7 +477,7 @@ export class CommandService {
    * Each is `AUTH_GAMEMASTER3` in C++ ('N'); collapsed to ADMINISTRATOR here.
    * Self-targeting (C++ also supports a trailing player name; ponytail). All
    * mutate via QuestService (which persists + audit-logs) and forward the
-   * returned snapshot frames to the caller. Silent on failure -- stock v15 sends
+   * returned snapshot frames to the caller. Silent on failure -- stock v19 sends
    * no error reply for most quest-admin branches.
    */
   private async questCmd(
@@ -570,7 +600,7 @@ export class CommandService {
    * `CreateItem` into the first free slot. We take a numeric `itemId` only
    * (ponytail: propItem name lookup) and delegate to `InventoryService.addItem`
    * (WAL + persist + state), then send the CREATEITEM snapshot on success. Bag
-   * full -> silent (stock v15 prints `TID_GAME_LACKSPACE` via AddDefinedText;
+   * full -> silent (stock v19 prints `TID_GAME_LACKSPACE` via AddDefinedText;
    * omitted until a defined-text channel ships).
    */
   private createItem({ args, player }: CommandCtx): void {
@@ -582,7 +612,7 @@ export class CommandService {
     const count = Math.max(1, Number.parseInt(tokens[1] ?? '', 10) || 1);
     const res = inv.addItem(player, itemId, count);
     if (!res.ok) return;
-    const buf = this.createItemSer.buildOne(player.m_idPlayer, res.itemId, res.count, res.slot);
+    const buf = this.createItemSer.buildOne(player.m_idPlayer, res.itemId, res.count, res.objid);
     this.deps.playerManager.sendTo(player, buf);
   }
 

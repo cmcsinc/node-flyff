@@ -3,7 +3,7 @@ import type { Knex } from '../types';
 /**
  * Add PK state columns to `characters`.
  *
- * v15 Flyff tracks player-killer state per character: `m_dwPKPropensity`
+ * v19 Flyff tracks player-killer state per character: `m_dwPKPropensity`
  * (IsChaotic flag > 0), `m_nPKValue` (slaughter/kill count), `m_dwPKTime`
  * (wall clock time of last PK action -- decay reference), and `m_dwPKExp`
  * (PK experience -- counter-decay accumulator). These are loaded on JOIN,

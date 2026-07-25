@@ -41,7 +41,7 @@ export interface InventoryServiceDeps {
 }
 
 export type AddItemResult =
-  | { ok: true; slot: number; itemId: number; count: number; isNew: boolean }
+  | { ok: true; slot: number; objid: number; itemId: number; count: number; isNew: boolean }
   | { ok: false; reason: 'bag_full' | 'invalid' };
 
 export type MoveItemResult =
@@ -82,22 +82,34 @@ export class InventoryService {
           s.count += add;
           player._dirty.add('m_Inventory');
           this.persist(player, i, s);
-          return { ok: true, slot: i, itemId, count: s.count, isNew: false };
+          // objid = the client's stable m_dwObjId for this slot (drifts from the
+          // slot index once items cross the bag/equip boundary). UPDATE_ITEM /
+          // CREATEITEM must address by it, not the raw slot -- see clientObjId.
+          return { ok: true, slot: i, objid: s.objid ?? player.clientObjId(i), itemId, count: s.count, isNew: false };
         }
       }
     }
 
     const slot = this.findEmpty(player);
     if (slot === -1) return { ok: false, reason: 'bag_full' };
-    const placed: InventorySlot = { objid: slot, itemId, count: Math.min(count, Math.max(1, stackSize)) };
+    // m_dwObjId MUST equal the client's m_apIndex[slot] for CREATEITEM to render
+    // (SetAtId writes m_apItem[objid]; the grid draws m_apItem[m_apIndex[slot]]).
+    // After unequip->sell this is the stale equip objid, not the slot index.
+    // Mirrors vanilla CItemContainer::Add (Item.h:727: m_dwObjId = m_apIndex[i]).
+    const placed: InventorySlot = { objid: player.clientObjId(slot), itemId, count: Math.min(count, Math.max(1, stackSize)) };
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId, count: placed.count } });
     player.m_Inventory[slot] = placed;
     player._dirty.add('m_Inventory');
     this.persist(player, slot, placed);
-    return { ok: true, slot, itemId, count: placed.count, isNew: true };
+    // objid = clientObjId(slot): the client renders a CREATEITEM at the slot
+    // whose m_apIndex equals this objid (C++ Add uses nId = m_apIndex[i],
+    // Item.h:720), NOT the raw bag index. After equipping out of a slot the two
+    // diverge -- addressing by slot lands the new item in the equipped item's
+    // cell (weapon-in-shield-slot bug). placed.objid already carries this.
+    return { ok: true, slot, objid: placed.objid, itemId, count: placed.count, isNew: true };
   }
 
-  /** Swap two main-bag slots (v15 MOVEITEM is a pure swap; no split opcode). */
+  /** Swap two main-bag slots (v19 MOVEITEM is a pure swap; no split opcode). */
   moveItem(player: CPlayer, src: number, dst: number): MoveItemResult {
     if (src === dst || !this.inMainBag(src) || !this.inMainBag(dst)) return { ok: false, reason: 'invalid' };
     const a = player.m_Inventory[src];
@@ -106,6 +118,9 @@ export class InventoryService {
     const b = player.m_Inventory[dst] ?? null;
     player.m_Inventory[src] = b;
     player.m_Inventory[dst] = a;
+    // Mirror CItemContainer::Swap -- m_apIndex entries travel with the items, so
+    // future CREATEITEM objids stay aligned with the client's grid after swaps.
+    player.onInvSlotsSwapped(src, dst);
     player._dirty.add('m_Inventory');
     this.deps.inventoryRepo
       .moveItem(player.m_idPlayer, src, dst)
@@ -135,7 +150,7 @@ export class InventoryService {
   }
 
   /**
-   * Destroy `count` from main-bag `slot` (v15 REMOVEINVENITEM -- right-click
+   * Destroy `count` from main-bag `slot` (v19 REMOVEINVENITEM -- right-click
    * "Delete" / drag-to-trash). No ground pile; the item ceases to exist.
    * Mirrors `CDPSrvr::OnRemoveInvenItem` (`DPSrvr.cpp:8350`): non-positive
    * count, equipped slot, and insufficient stack are rejected silently.

@@ -7,7 +7,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '@flyff/entities';
+import { CPlayer, DST } from '@flyff/entities';
 import { ConsumableService } from '../../src/services/consumable.service';
 import type { CharacterRow } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
@@ -33,13 +33,22 @@ function makeSvc() {
 }
 
 describe('ConsumableService.apply', () => {
+  // Pin max via DST params (the gear/buff path) --ConsumableService clamps
+  // against `getMaxHp/Mp/Fp`, NOT the cached `m_nMaxHp` field, so setting the
+  // field directly would not exercise the real ceiling (see fix for the
+  // stale-field cap bug where +HP_MAX gear was ignored).
+  function pinMax(p: CPlayer, hp: number, mp: number, fp: number): void {
+    // chg-override forces the exact max regardless of the STA/INT-derived origin
+    // (`setDestParam(adj=0, chg=v)` -> `get` returns `v` outright).
+    p.m_params.setDestParam(DST.HP_MAX, 0, hp);
+    p.m_params.setDestParam(DST.MP_MAX, 0, mp);
+    p.m_params.setDestParam(DST.FP_MAX, 0, fp);
+  }
+
   it('restores HP/MP/FP and consumes one charge', () => {
     const player = CPlayer.fromRow(makeRow({ hp: 50, mp: 40 }), { write: () => true });
-    // Max HP/MP are formula-derived in fromRow; pin to the test's ceiling.
-    player.m_nMaxHp = 200;
-    player.m_nMaxMp = 100;
+    pinMax(player, 200, 100, 100);
     player.m_nFp = 10;
-    player.m_nMaxFp = 100;
     const { svc, getConsumed } = makeSvc();
     const prop: ItemDefinition = {
       id: 1, name: 'Potion', name_id: 'ITEM_P', stack_size: 1, weight: 1,
@@ -62,7 +71,7 @@ describe('ConsumableService.apply', () => {
 
   it('clamps HP at max_hp (no overheal)', () => {
     const player = CPlayer.fromRow(makeRow({ hp: 180, max_hp: 200 }), { write: () => true });
-    player.m_nMaxHp = 200;
+    pinMax(player, 200, 1000, 1000);
     const { svc } = makeSvc();
     const prop: ItemDefinition = {
       id: 1, name: 'Potion', name_id: 'ITEM_P', stack_size: 1, weight: 1,
@@ -72,8 +81,25 @@ describe('ConsumableService.apply', () => {
     assert.equal(player.m_nHp, 200, 'clamped at max_hp');
   });
 
+  it('clamps at the DST buffed max, not the cached field (leaf armor case)', () => {
+    // Reproduces the user bug: cached field held the stale base max while gear
+    // lifted the real max via DST_HP_MAX. Heal must clamp at the buffed value.
+    const player = CPlayer.fromRow(makeRow({ level: 10, hp: 300 }), { write: () => true });
+    player.m_nMaxHp = 333; // stale base cached on the field
+    pinMax(player, 469, 1000, 1000); // +HP_MAX gear lifts the real max to 469
+    const { svc } = makeSvc();
+    const prop: ItemDefinition = {
+      id: 1, name: 'Potion', name_id: 'ITEM_P', stack_size: 1, weight: 1,
+      level_req: 1, price: 0, sell_price: 0, hp_restore: 150,
+    };
+    svc.apply(player, prop, 0);
+    assert.equal(player.m_nHp, 450, 'heal applies up to the buffed max');
+    assert.equal(player.m_nMaxHp, 469, 'field synced to buffed max');
+  });
+
   it('skips pools with no restore value', () => {
     const player = CPlayer.fromRow(makeRow({ hp: 10 }), { write: () => true });
+    pinMax(player, 200, 1000, 1000);
     const { svc } = makeSvc();
     const prop: ItemDefinition = {
       id: 1, name: 'Food', name_id: 'ITEM_F', stack_size: 1, weight: 1,

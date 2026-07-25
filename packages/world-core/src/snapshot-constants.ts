@@ -54,12 +54,15 @@ export const MI_FEMALE = 12;
 export const MI_SMALL_MUSHPOIE = 168;   // defineObj.h:1161 -- small mushpang, Flaris area
 
 /**
- * `BELLI_*` aggressiveness (propMover `dwBelligerence` column). Sent as the
- * `m_dwBelligerence` BYTE in the CMover::Serialize prefix (_Common
- * /ObjSerializeOpt.cpp:109). PEACEFUL = never auto-attacks; rendered identically
- * regardless of value, so 0 is safe until the AI/combat system lands.
+ * `BELLI_PEACEFUL` -- `game/resource/defineAttribute.h:203` defines it as 1.
+ * Sent as the `m_dwBelligerence` BYTE in the CMover::Serialize prefix
+ * (`game/source/_Common/ObjSerializeOpt.cpp:109`). The value is NOT arbitrary:
+ * the client's `IsPeaceful()` (`Mover.h:1090`) and minimap classify
+ * (`WndField.cpp:9338`) compare `m_dwBelligerence == BELLI_PEACEFUL`, and
+ * `IsAttackAbleNPC` (`Mover.cpp:8991`) suppresses the attack cursor when it
+ * holds. Sending 0 makes peaceful NPCs attackable + red on the minimap.
  */
-export const BELLI_PEACEFUL = 0;
+export const BELLI_PEACEFUL = 1;
 
 // --- Raw struct / array sizes (bytes) ---------------------------------------
 // Slot-sizing consts (NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_HUMAN_PARTS,
@@ -103,9 +106,11 @@ export const SNAPSHOTTYPE_GETDESTOBJ = 0x004a;       // MsgHdr.h:947 -- AddGetDe
 export const SNAPSHOTTYPE_MOVERMOVED = 0x00ca;       // MsgHdr.h:1095 -- 60B movement frame
 export const SNAPSHOTTYPE_MOVERBEHAVIOR = 0x00cb;    // MsgHdr.h:1096 -- 60B motion frame (same body)
 export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195
-// Added for the remaining v15 C->S handlers (DPSrvr.cpp MsgHdr.h):
+// Added for the remaining v19 C->S handlers (DPSrvr.cpp MsgHdr.h):
 export const SNAPSHOTTYPE_CHAT_OUT = 0x00bc;         // MsgHdr.h:1078 -- CHATTEXT (defined-text echo)
 export const SNAPSHOTTYPE_MOTION = 0x0098;           // MsgHdr.h:1034 -- MOTION echo
+export const SNAPSHOTTYPE_ENDSKILLQUEUE = 0x00e5;   // MsgHdr.h:1115 -- AddHdr(self) bodyless ack (taskbar cancels queued skill)
+export const SNAPSHOTTYPE_SETACTIONPOINT = 0x00c5; // MsgHdr.h:1090 -- AddSetActionPoint(self, int nAP)
 export const SNAPSHOTTYPE_MELEE_ATTACK = 0x00e0;     // MsgHdr.h:1110 -- MELEE_ATTACK swing echo
 export const SNAPSHOTTYPE_RANGE_ATTACK = 0x00e2;    // MsgHdr.h:1112 -- RANGE_ATTACK projectile swing echo
 export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 -- PLAYERCORR echo (60B body)
@@ -257,11 +262,10 @@ export const SHOUT_COLOR_DEFAULT = 0xffff99cc;
 export const TEXT_COLOR_NOTICE = 0xffffff00;
 
 /**
- * `OnText` state BYTE -- written by `CUser::AddText` ONLY when `__S_SERVER_UNIFY`
- * is defined (`User.cpp:660-662`). Florist defines it (`WorldServer
- * /VersionCommon.h:30`), so the client's `OnText` (`DPClient.cpp:1341-1344`)
- * reads `BYTE nState` before the string. Omit it and the string-length DWORD
- * shifts by one byte -> garbled text -> silent drop. MsgHdr.h:1421-1422.
+ * `OnText` state BYTE -- written by `CUser::AddText` only when `__S_SERVER_UNIFY`
+ * is defined (`game/source/WORLDSERVER/User.cpp:681-683`). The build defines it,
+ * so the client's `OnText` reads `BYTE nState` before the string. Omit it and the
+ * string-length DWORD shifts by one byte -> garbled text -> silent drop.
  */
 export const TEXT_GENERAL = 0x01; // PutString (normal notice)
 export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
@@ -273,7 +277,7 @@ export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
  * first-hitter / killer) for this long; afterwards anyone may loot it.
  * Ports `CMover::IsLoot` (`_Common/MoverActEvent.cpp:2234`): after `SEC(7)`
  * since `m_dwDropTime` the pile goes free-for-all. (Pre-`__S_9` builds used
- * 40 s; v15 ships the 7 s gate.)
+ * 40 s; v19 ships the 7 s gate.)
  */
 export const LOOT_FFA_MS = 7_000;
 
@@ -288,7 +292,7 @@ export const DST_GOLD = 10000;                       // defineAttribute.h:352
 // Moved to @flyff/entities -- re-exported at bottom. See entities/constants/slots.ts.
 
 /**
- * Circular ground-plane broadcast radius approximating the v15 `CLinkMap`
+ * Circular ground-plane broadcast radius approximating the v19 `CLinkMap`
  * visibility grid (`LinkMap.cpp:66`): standard outdoor zone `nView=1`, 64-unit
  * cells, 2-cell range => 256*256 broadcast box (128 half-extent per axis). A
  * circle that covers that box needs r >= 128sqrt2 ~= 181; 200 rounds up to guarantee
@@ -305,6 +309,6 @@ export const VISIBILITY_RADIUS = 200;
 // importers keep resolving during the package split. New code: import from @flyff/entities.
 export {
   NULL_ID, MAX_HUMAN_PARTS, MAX_SKILL_JOB, MAX_INVENTORY, MAX_BANK, MAX_BANK_TABS,
-  INVENTORY_SLOTS, BANK_SLOTS, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM,
+  INVENTORY_SLOTS, BANK_SLOTS, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE,
   MAX_SHORTCUT_STRING, SHORTCUT, MAX_SHORTCUT_CHAT,
 } from '@flyff/entities';

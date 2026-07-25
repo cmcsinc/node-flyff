@@ -4,7 +4,7 @@ import {
   decryptV15Password, encryptV15Password, V15_PASSWORD_BLOB_SIZE, MAX_PASSWORD,
 } from '../../src/utils/v15Password';
 
-describe('v15 password crypto (AES-128-CBC, key dldhsvmflvm)', () => {
+describe('v19 password crypto (AES-128-CBC, key dldhsvmflvm)', () => {
   it('encrypts to the fixed 672-byte blob size', () => {
     assert.equal(encryptV15Password('hunter2').length, V15_PASSWORD_BLOB_SIZE);
     assert.equal(V15_PASSWORD_BLOB_SIZE, 672);

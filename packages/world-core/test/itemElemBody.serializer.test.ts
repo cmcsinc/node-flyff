@@ -9,7 +9,7 @@
  *
  * Layout (78B): CItemBase 16 + CItemElem 62. The two BOOL fields (m_bCharged,
  * m_bTranformVisPet) serialize as 4B (`BOOL`=`int`, no CAr BOOL overload) -- a
- * prior 72B variant wrote them BYTE and crashed the v15 shop window. See the
+ * prior 72B variant wrote them BYTE and crashed the v19 shop window. See the
  * source module header for the per-field offset map.
  */
 

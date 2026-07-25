@@ -130,14 +130,26 @@ describe('CPlayer entity', () => {
     assert.equal(p.m_aJobSkill[3]!.skillId, 0xffffffff, '0-id stays empty');
   });
 
-  it('seedVagrantRoster fills slots 0-2 with SI_VAG_ONE_* at level 0', () => {
+  it('seedRoster fills slots in order at level 0, rest stay empty', () => {
     const p = CPlayer.fromRow(makeRow(), makeSocket());
-    p.seedVagrantRoster();
-    assert.deepEqual(p.m_aJobSkill[0], { skillId: 1, level: 0 }); // SI_VAG_ONE_CLEANHIT
-    assert.deepEqual(p.m_aJobSkill[1], { skillId: 2, level: 0 }); // SI_VAG_ONE_BRANDISH
-    assert.deepEqual(p.m_aJobSkill[2], { skillId: 3, level: 0 }); // SI_VAG_ONE_OVERCUT
+    p.seedRoster([1, 2, 3]);
+    assert.deepEqual(p.m_aJobSkill[0], { skillId: 1, level: 0 });
+    assert.deepEqual(p.m_aJobSkill[1], { skillId: 2, level: 0 });
+    assert.deepEqual(p.m_aJobSkill[2], { skillId: 3, level: 0 });
     assert.equal(p.m_aJobSkill[3]!.skillId, 0xffffffff, 'slot 3 still empty');
-    assert.ok(p._dirty.has('m_aJobSkill'), 'dirty flag set');
+  });
+
+  it('overlaySkillLevels applies learned levels by skillId, drops unmatched', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.seedRoster([1, 2, 3]);
+    p.overlaySkillLevels([
+      { skillId: 2, level: 7 },      // matches slot 1
+      { skillId: 3, level: 0 },      // level 0 -> ignored
+      { skillId: 999, level: 4 },    // no matching roster slot -> dropped
+    ]);
+    assert.equal(p.m_aJobSkill[0]!.level, 0, 'unlearned stays 0');
+    assert.equal(p.m_aJobSkill[1]!.level, 7, 'learned level applied by id');
+    assert.equal(p.m_aJobSkill[2]!.level, 0, 'level-0 overlay ignored');
   });
 
   describe('findSlotByObjId', () => {
@@ -160,6 +172,68 @@ describe('CPlayer entity', () => {
       const p = CPlayer.fromRow(makeRow(), makeSocket());
       p.m_Inventory[5] = { itemId: 5000, count: 1 }; // no objid field
       assert.equal(p.findSlotByObjId(5), 5);
+    });
+  });
+
+  describe('m_invIndex (client m_apIndex mirror)', () => {
+    it('is identity for the bag range and NULL_ID for equip range at construction', () => {
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      assert.equal(p.clientObjId(0), 0);
+      assert.equal(p.clientObjId(41), 41);
+      // equip range (42..72) is NULL_ID until syncInvIndexAfterLoad
+      assert.equal(p.m_invIndex[42], 0xffffffff);
+    });
+
+    it('syncInvIndexAfterLoad marks equipped slots identity and empty equip slots NULL_ID', () => {
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      p.m_Inventory[42] = { itemId: 5000, count: 1 }; // equipped upper-body
+      p.syncInvIndexAfterLoad();
+      assert.equal(p.clientObjId(42), 42);   // equipped -> slot id
+      assert.equal(p.m_invIndex[43], 0xffffffff); // empty equip slot -> NULL_ID
+    });
+
+    it('onUnequipIndexMove: bag dst takes the equip objid, equip src cleared (the reported bug)', () => {
+      // JOIN-loaded armor at equip slot 44 -> m_apIndex[44] = 44. Unequip into
+      // bag slot 5: client sets m_apIndex[5] = 44 (stale). addItem into slot 5
+      // MUST reuse objid 44 or CREATEITEM writes m_apItem[5] while the grid
+      // still draws m_apItem[44] -> invisible.
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      p.m_Inventory[44] = { itemId: 5000, count: 1 };
+      p.syncInvIndexAfterLoad();
+      p.onUnequipIndexMove(44, 5);
+      assert.equal(p.clientObjId(5), 44);
+      assert.equal(p.m_invIndex[44], 0xffffffff);
+    });
+
+    it('onEquipIndexMove: equip dst takes bag objid, bag src takes a fresh free objid', () => {
+      // Equip from bag slot 5 (objid 5) into equip slot 44. Client moves the
+      // objid to 44 and assigns slot 5 a fresh empty m_apItem index.
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      p.m_Inventory[5] = { itemId: 5000, count: 1 };
+      p.onEquipIndexMove(5, 44);
+      assert.equal(p.clientObjId(44), 5);          // equip slot holds objid 5
+      const freed = p.clientObjId(5);
+      assert.notEqual(freed, 5);                   // bag slot 5 got a fresh objid
+      assert.ok(freed >= 0 && freed < 73, 'freed objid in range');
+    });
+
+    it('firstFreeObjId skips objids in use by occupied slots', () => {
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      p.m_Inventory[0] = { itemId: 1, count: 1 }; // objid 0 in use
+      p.m_Inventory[1] = { itemId: 2, count: 1 }; // objid 1 in use
+      p.onEquipIndexMove(0, 44);                  // frees slot 0, picks first free
+      // objid 0 still used (now at equip 44); slot 0's fresh pick must skip 0
+      assert.notEqual(p.clientObjId(0), 0);
+      assert.notEqual(p.clientObjId(0), 1);
+    });
+
+    it('onInvSlotsSwapped: swaps the m_apIndex entries of two slots (MOVEITEM)', () => {
+      const p = CPlayer.fromRow(makeRow(), makeSocket());
+      const before2 = p.clientObjId(2);
+      const before5 = p.clientObjId(5);
+      p.onInvSlotsSwapped(2, 5);
+      assert.equal(p.clientObjId(2), before5);
+      assert.equal(p.clientObjId(5), before2);
     });
   });
 });

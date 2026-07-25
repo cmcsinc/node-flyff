@@ -1,7 +1,7 @@
 /**
  * LootService -- the C++ `DoLoot` body + the dest-obj arrival trigger.
  *
- * v15 has NO dedicated pickup packet. To grab a ground pile the client clicks
+ * v19 has NO dedicated pickup packet. To grab a ground pile the client clicks
  * it and sends only `PACKETTYPE_PLAYERSETDESTOBJ` (`CMD_SetUseItem` ->
  * `SetDestObj`, `_Common/MoverMsg.cpp:536`; wire `objid | float fRange`,
  * `fRange == 0.0` for a ground item). The server auto-loots in its own
@@ -16,7 +16,7 @@
  * `DoLoot` body is the same gold/item routing the (dead) ACTMSG/OBJMSG_PICKUP
  * handler implemented -- the client never sends ACTMSG for pickup; OBJMSG_PICKUP
  * is only a server->clients motion broadcast (`User.cpp:7067`). See memory
- * `v15-isloot-anti-loot-steal`.
+ * `v19-isloot-anti-loot-steal`.
  *
  * WAL-first (rule 03/04): `InventoryService` journals + mutates before
  * `checkArrival`/`pickup` send any ack snapshot.
@@ -140,11 +140,16 @@ export class LootService {
     const r = this.deps.inventoryService.addItem(player, item.m_dwItemId, item.m_nItemNum);
     if (!r.ok) return; // bag_full -- ponytail: TID_GAME_LACKSPACE; pile stays lootable
 
+    // Both UPDATE_ITEM (stack merge) and CREATEITEM (new slot) address by the
+    // client's STABLE m_dwObjId (r.objid), NOT the slot index. OnCreateItem does
+    // SetAtId(nId) and C++ Add sends nId = m_apIndex[i] (Item.h:720) -- the
+    // drifted objid, which diverges from the slot after an equip. Keying by slot
+    // lands a looted item in an equipped item's cell (weapon-in-shield-slot bug).
     this.deps.playerManager.sendTo(
       player,
       r.isNew
-        ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.slot)
-        : buildUpdateItemCount(player.m_idPlayer, r.slot, r.count),
+        ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.objid)
+        : buildUpdateItemCount(player.m_idPlayer, r.objid, r.count),
     );
     this.deps.itemManager.remove(item.m_idObject);
     this.motion(player);

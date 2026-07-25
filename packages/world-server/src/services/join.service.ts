@@ -16,14 +16,14 @@
  */
 
 import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
-import type { ItemDefinition } from '@flyff/resources';
+import type { ItemDefinition, SetItemDef, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
-import { AUTH } from '@flyff/entities';
-import { withinLevelExp } from '@flyff/combat';
-import { MAX_HUMAN_PARTS, MAX_INVENTORY } from '@flyff/world-core';
-import { decodeTaskBar } from './taskbar.service';
+import { AUTH, isJobMatch } from '@flyff/entities';
+import { recomputeSetBonuses } from '@flyff/inventory';
+import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam } from '@flyff/world-core';
+import { decodeTaskBar, decodeTaskBarQueue } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { ConsumedHandoff } from '../ipc/clusterListener';
@@ -49,12 +49,23 @@ export interface JoinServiceDeps {
   /** Skill hydration on JOIN. Optional: empty skill roster if absent. */
   skillRepo?: Pick<SkillRepository, 'loadByCharacter'>;
   /**
+   * Skill index for seeding the job-skill roster IDs on JOIN. C++ re-derives
+   * `m_aJobSkill[i].dwSkill` from `prj.m_aJobSkill[job]` each load; only levels
+   * persist. Without it the client skill tree is empty. Optional: no seed if absent.
+   */
+  skills?: SkillIndex;
+  /**
    * Item-definition lookup for `SetEquipDstParam` on JOIN -- applies each
    * equipped item's DST effects (+STR/+STA/+DEF/etc) to `m_params` so the
    * first swing + regen see buffed stats. Optional: skip if absent (no equip
    * bonuses until first equip/unequip cycle).
    */
   getItem?: (itemId: number) => ItemDefinition | undefined;
+  /**
+   * Set-item definition lookup (propItemEtc.inc) for seeding set bonuses on
+   * JOIN. Optional: skip if absent (no set bonuses until first equip/unequip).
+   */
+  getSetItem?: (itemId: number) => SetItemDef | undefined;
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   handoffSource: HandoffSource;
@@ -98,8 +109,8 @@ export class JoinService {
     }
 
     const player = CPlayer.fromRow(row, socket, authority);
-    // DB stores cumulative exp (C++ m_nExp1); live field is within-level.
-    player.m_nExp = withinLevelExp(Number(row.exp), player.m_nLevel);
+    // DB stores the within-level value directly (C++ m_nExp1 is within-level).
+    player.m_nExp = Number(row.exp);
     logger.info(
       { charId: player.m_idPlayer, account: row.account_id, gm: authority > AUTH.GENERAL, authority },
       'JOIN resolved authority',
@@ -136,6 +147,11 @@ export class JoinService {
     // Carried penya lives on the inventory container row (migration 008), not
     // the character row -- hydrate it after the slots.
     player.m_nGold = await this.deps.inventoryRepo.getGold(player.m_idPlayer);
+    // Sync m_invIndex's equip range to the hydrated equip slots (bag range is
+    // already identity from the constructor). The JOIN container blob writes
+    // m_apIndex[equip] = slot-if-equipped, so the server must match the client
+    // or an immediate unequip->sell->buy would desync (see addItem objid note).
+    player.syncInvIndexAfterLoad();
     // Apply equipped items' DST effects (C++ `SetEquipDstParam`, MoverParam.cpp:
     // 1903) so buffed STR/STA/DEF/HP_MAX/etc count from the first tick. Must
     // precede the max recompute so JOIN snapshot + regen start from buffed maxes.
@@ -148,16 +164,36 @@ export class JoinService {
   /**
    * Iterate equipped slots (MAX_INVENTORY..MAX_HUMAN_PARTS-1) and apply each
    * item's `effects` to `m_params`. Idempotent at JOIN (m_params starts empty);
-   * subsequent equip/unequip go through `EquipService`.
+   * subsequent equip/unequip go through `EquipService`. Also seeds the client:
+   * the v19 Neuz client does NOT apply equip DST locally (`SetDestParamEquip` is
+   * `#ifndef __CLIENT`), so the server must push every active effect at login or
+   * the stat window shows base stats only (memory: v19-stat-dst-param-model-shipped).
    */
   private applyEquipDstParams(player: CPlayer): void {
     if (!this.deps.getItem) return;
+    const seeded: Array<{ dst: number; adj: number; chg?: number }> = [];
     for (let part = 0; part < MAX_HUMAN_PARTS; part++) {
       const slot = player.m_Inventory[MAX_INVENTORY + part];
       if (!slot) continue;
       const prop = this.deps.getItem(slot.itemId);
       const effects = prop?.effects;
-      if (effects && effects.length > 0) player.m_params.applyEffects(effects);
+      if (effects && effects.length > 0) {
+        player.m_params.applyEffects(effects);
+        seeded.push(...effects);
+      }
+    }
+    // Seed set-item bonuses so the JOIN snapshot + regen start from buffed maxes
+    // (C++ RedoEquip runs SetDestParamSetItem at load). Mirrors EquipService.
+    if (this.deps.getSetItem) recomputeSetBonuses(player, this.deps.getSetItem);
+
+    // Push the full active DST state to self so the client stat window matches
+    // the buffed server values from login (per-effect SetDestParam, self-only --
+    // peers have not seen this player yet).
+    for (const e of seeded) {
+      this.deps.playerManager.sendTo(player, buildSetDestParam(player.m_idPlayer, e.dst, e.adj, e.chg));
+    }
+    for (const e of player.m_setEffects) {
+      this.deps.playerManager.sendTo(player, buildSetDestParam(player.m_idPlayer, e.dst, e.adj, e.chg));
     }
   }
 
@@ -277,23 +313,57 @@ export class JoinService {
   }
 
   /**
-   * Hydrate `m_aJobSkill` from the DB. Learned slots overwrite the NULL_ID
-   * defaults; out-of-range slots drop defensively. No repo = leave the roster
-   * empty (CPlayer seeds all NULL_ID).
+   * Seed the job-skill roster IDs, then overlay persisted levels. C++ re-derives
+   * skill IDs from the job table every load and persists only levels; matching
+   * that keeps the client skill tree populated (empty roster = nothing to learn
+   * or upgrade). Falls back to the legacy slot-based hydrate when no skill index
+   * is wired (tests). No repo = seeded roster at level 0.
    */
   private async loadSkills(player: CPlayer): Promise<void> {
+    if (this.deps.skills) {
+      player.seedRoster(rosterIdsForJob(this.deps.skills, player.m_nJob));
+      if (this.deps.skillRepo) {
+        const learned = await this.deps.skillRepo.loadByCharacter(player.m_idPlayer);
+        player.overlaySkillLevels(learned);
+      }
+      return;
+    }
     if (!this.deps.skillRepo) return;
     const slots = await this.deps.skillRepo.loadByCharacter(player.m_idPlayer);
     player.hydrateSkills(slots);
   }
 
   /**
-   * Hydrate the taskbar grid (`m_aSlotItem`) from `characters.taskbar`. A null
-   * / empty column leaves the seeded all-empty grid (fresh character). Mirrors
-   * C++ `GetTaskBar` (`DbManagerFun.cpp:984`); the grid is later pushed to the
-   * client via `SNAPSHOTTYPE_TASKBAR` in the join handler.
+   * Hydrate the taskbar grid (`m_aSlotItem`) + action-slot queue
+   * (`m_aSlotQueue`) from `characters.taskbar`. A null/empty column leaves the
+   * seeded all-empty grid + queue (fresh character). Mirrors C++
+   * `GetTaskBar` (`DbManagerFun.cpp:984`); both are later pushed to the
+   * client via `SNAPSHOTTYPE_TASKBAR` in the join handler. Legacy v1 rows
+   * (queue absent) hydrate an empty queue.
    */
   private loadTaskBar(player: CPlayer, json: string | null | undefined): void {
     player.m_aSlotItem = decodeTaskBar(json);
+    player.m_aSlotQueue = decodeTaskBarQueue(json);
   }
+}
+
+/**
+ * Ordered skill-id roster for a job -- the set the client skill tree displays.
+ * Mirrors C++ `CProject::LoadSkill`: every non-COMMON skill whose JOB_*
+ * (`skill.job`) is in the player's job lineage, sorted by `reqLevel` (C++
+ * `SortJobSkill` on `dwReqDisLV`) then id for a stable order. A base Vagrant
+ * gets its 3 base skills; an advanced job also gets its inherited expert/pro
+ * skills (`isJobMatch` walks the lineage). COMMON (tier 4) skills are excluded,
+ * exactly as C++ skips `JTYPE_COMMON` from `m_aJobSkill`.
+ */
+const JTYPE_COMMON = 4;
+function rosterIdsForJob(skills: SkillIndex, job: number): number[] {
+  const roster = [];
+  for (const skill of skills.skills.values()) {
+    if (skill.tier === JTYPE_COMMON) continue;
+    if (!isJobMatch(job, skill.job)) continue;
+    roster.push(skill);
+  }
+  roster.sort((a, b) => (a.reqLevel - b.reqLevel) || (a.id - b.id));
+  return roster.map((s) => s.id);
 }

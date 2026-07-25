@@ -1,5 +1,5 @@
 /**
- * Quest engine constants -- mirrors the v15 C++ defines.
+ * Quest engine constants -- mirrors the v19 C++ defines.
  *
  * Sources:
  *   QS_BEGIN           resource/defineNeuz.h:86

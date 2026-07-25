@@ -27,7 +27,7 @@ export type BankCreateData = Omit<BankItemRow, 'id' | 'created_at' | 'updated_at
 /**
  * Bank tab count. Mirrors `MAX_BANK_TABS` in `@flyff/entities` -- kept local to
  * avoid a database -> world-core dependency (database only depends on
- * `@flyff/core`). v15 banks have exactly 3 tabs (`m_BankGold[3]`).
+ * `@flyff/core`). v19 banks have exactly 3 tabs (`m_BankGold[3]`).
  */
 const MAX_BANK_TABS = 3;
 

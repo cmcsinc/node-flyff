@@ -1,5 +1,5 @@
 /**
- * SkillDefinitionSchema test -- verifies the v15 schema parses a converted skill.
+ * SkillDefinitionSchema test -- verifies the v19 schema parses a converted skill.
  *
  * Mirrors the on-disk layout from `data/skills/vagrant.yml`: Clean Hit is a
  * base-tier Vagrant melee skill (SI_VAG_ONE_CLEANHIT, id=1, 10 levels, FP
@@ -22,7 +22,7 @@ const MINIMAL = {
   resourceType: 2,
 } as const;
 
-describe('SkillDefinitionSchema -- v15 fields', () => {
+describe('SkillDefinitionSchema -- v19 fields', () => {
   it('parses a minimal skill with defaults', () => {
     const s = SkillDefinitionSchema.parse(MINIMAL);
     assert.equal(s.id, 1);

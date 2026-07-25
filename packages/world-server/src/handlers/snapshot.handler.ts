@@ -2,11 +2,11 @@
  * SNAPSHOT handler -- client->world `PACKETTYPE_SNAPSHOT` (0xffffff00) multiplexer.
  *
  * `DPSrvr::OnSnapshot` (DPSrvr.cpp:4338) reads `c:BYTE` entries, then per entry
- * a `wHdr:WORD` switch. v15 sends ONLY `SNAPSHOTTYPE_DESTPOS` (click-to-move):
+ * a `wHdr:WORD` switch. v19 sends ONLY `SNAPSHOTTYPE_DESTPOS` (click-to-move):
  *   c:BYTE  [ [wHdr:WORD(=0x00c1)] [vPos:Vec3][fForward:BYTE] ]
  *
  * The trailing `objidIAObj:DWORD` is only read `#ifdef __IAOBJ0622`
- * (DPSrvr.cpp:4377). That macro is NOT defined in this v15 build, so the
+ * (DPSrvr.cpp:4377). That macro is NOT defined in this v19 build, so the
  * wire body is Vec3(12)+fForward(1) = 13 bytes -- no ship-objid field.
  *
  * Other sub-types hit the C++ `default: ASSERT(0)` -- treated as a protocol error
@@ -33,7 +33,7 @@ const logger = createLogger({ module: 'snapshot-handler' });
 /** Upper bound on entries per SNAPSHOT packet (anti-amplification). */
 const MAX_SNAPSHOT_ENTRIES = 16;
 
-/** `SNAPSHOTTYPE_DESTPOS` (MsgHdr.h:1086) -- the only sub-type v15 sends here. */
+/** `SNAPSHOTTYPE_DESTPOS` (MsgHdr.h:1086) -- the only sub-type v19 sends here. */
 const SNAPSHOTTYPE_DESTPOS_IN = 0x00c1;
 
 export class SnapshotHandler {

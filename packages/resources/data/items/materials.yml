@@ -9382,21 +9382,6 @@ items:
     durability: 8800000
     job_req:
       - vagrant
-  - id: 26765
-    name: Love Chocolate
-    name_id: IDS_PROPITEM_TXT_010348
-    weight: 1
-    price: 4
-    sell_price: 1
-    tradeable: true
-    dropable: true
-    destroyable: true
-    stack_size: 99
-    item_kind2: IK2_BUFF
-    item_kind3: IK3_POTION
-    durability: 8800000
-    job_req:
-      - vagrant
   - id: 26772
     name: Herb of Life
     name_id: IDS_PROPITEM_TXT_010454
@@ -9510,19 +9495,6 @@ items:
     durability: 50000
     job_req:
       - vagrant
-  - id: 20180
-    name: Christmas Cake
-    name_id: IDS_PROPITEM_TXT_011496
-    weight: 1
-    price: 4
-    sell_price: 1
-    tradeable: true
-    dropable: true
-    destroyable: true
-    stack_size: 99
-    item_kind2: IK2_BUFF
-    item_kind3: IK3_POTION
-    durability: 7200000
   - id: 20182
     name: Vanilla Cupcakes
     name_id: IDS_PROPITEM_TXT_011500

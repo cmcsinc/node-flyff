@@ -1,4 +1,4 @@
-# v15 Combat — Implementation Plan (architect, task #7)
+# v19 Combat — Implementation Plan (architect, task #7)
 
 Canonical formula source: `docs/combat-research.md` (sections A–E). Do not re-research — cite it.
 
@@ -6,7 +6,7 @@ Canonical formula source: `docs/combat-research.md` (sections A–E). Do not re-
 
 User ask = "monster takes damage and dies." Deliver **real-formula damage + death + exp/level-up** this pass. Defer (ponytail): drops/loot (propMoverEx.inc), respawn queue, equipped-weapon model (player fights unarmed), stealHP/asal/skills/party-link/berserk, PvP, player-death penalty (monsters don't hit back yet — no AI).
 
-Resources pkg **untouched** — monster yml already carries `level/hp/attack/defense/attack_rate/dodge_rate/exp`; player entity carries `STR/STA/DEX/INT/level/job`. Job + exp tables embedded as TS constants (read from `H:\flyff\v15\Server\Resource\*.inc`).
+Resources pkg **untouched** — monster yml already carries `level/hp/attack/defense/attack_rate/dodge_rate/exp`; player entity carries `STR/STA/DEX/INT/level/job`. Job + exp tables embedded as TS constants (read from `H:\flyff\v19\Server\Resource\*.inc`).
 
 ## Numbered checklist (implementor — bottom-up)
 

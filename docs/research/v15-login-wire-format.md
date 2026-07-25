@@ -1,8 +1,8 @@
-# Flyff v15 Client → Login(Certifier) Wire Format
+# Flyff v19 Client → Login(Certifier) Wire Format
 
 Source of truth: `game/source/` (`__VER 15`). All citations verbatim from the C++.
 This is the reference for making the TS emulator byte-compatible with the **real
-v15 client binary**. Researched 2026-07-19.
+v19 client binary**. Researched 2026-07-19.
 
 ## Topology (two-step)
 
@@ -14,9 +14,9 @@ v15 client binary**. Researched 2026-07-19.
 `_Network/MsgHdr.h:1414,1421`. No packet is sent before `CERTIFY` — `ConnectToSystem` →
 `SendCertify()` immediately (`_Interface/WndTitle.cpp:516-564`).
 
-## Frame — 13-byte CRC header (v15 default `__CRC`)
+## Frame — 13-byte CRC header (v19 default `__CRC`)
 
-`CLAUDE.md`'s 5-byte `[0x5E][size][payload]` is the **non-`__CRC`** variant. The v15
+`CLAUDE.md`'s 5-byte `[0x5E][size][payload]` is the **non-`__CRC`** variant. The v19
 default build defines `__CRC` (`CERTIFIER/VersionCommon.h:12`) and uses **13 bytes**:
 
 ```
@@ -24,7 +24,7 @@ default build defines `__CRC` (`CERTIFIER/VersionCommon.h:12`) and uses **13 byt
 ```
 
 Each CRC DWORD is stored as `~(digest ^ *m_pdwProtocolId)` (`_Network/Net/Src/buffer.cpp:161`).
-CRC variant + `protocolId` value extracted in `v15-crc-rijndael.md` (companion note).
+CRC variant + `protocolId` value extracted in `v19-crc-rijndael.md` (companion note).
 
 ## `PACKETTYPE_CERTIFY` (0xfc) — client→certifier
 
@@ -41,7 +41,7 @@ Opcode `_Network/MsgHdr.h:61`. Client send path `Neuz/DPCertified.cpp:122-165`
 
 **Password** (`Neuz/Neuz.cpp:1147`, `_Common/LodeConfig.h:8`):
 - If `m_bEncryptPWD==TRUE` (default): `md5("kikugalanet" + pwd)` → 32-char **lowercase** hex (`_Network/tools.cpp:5-37`).
-- If `__ENCRYPT_PASSWORD` (v15 certifier default): that 32-char string is padded into a 672-byte (16 × `MAX_PASSWORD`=16 × 42) buffer and **Rijndael-CBC encrypted** — a fixed 672-byte blob with **no length prefix** (`Neuz/DPCertified.cpp:142-149`). Server decrypts, reads first 42 bytes (`CERTIFIER/DPCertifier.cpp:255-268`).
+- If `__ENCRYPT_PASSWORD` (v19 certifier default): that 32-char string is padded into a 672-byte (16 × `MAX_PASSWORD`=16 × 42) buffer and **Rijndael-CBC encrypted** — a fixed 672-byte blob with **no length prefix** (`Neuz/DPCertified.cpp:142-149`). Server decrypts, reads first 42 bytes (`CERTIFIER/DPCertifier.cpp:255-268`).
 - Else: DWORD-len string.
 
 `ar.WriteString` = `[int32 len][chars]`, no null terminator (`_Network/Misc/Src/ar.cpp:81-86`).
@@ -67,7 +67,7 @@ Opcode `_Network/MsgHdr.h:62`. Client parse path `Neuz/DPCertified.cpp:204-270`
 | 6 | dwSizeofServerset | DWORD | server count |
 | 7 | (per server) dwParent, dwID, lpName(str≤35), lpAddr(str≤15), b18(DWORD), lCount, lEnable, lMax | repeat ×count | `SERVER_DESC` `_Network/Misc/Include/Misc.h:8-30`; `BOOL b18` is **4 bytes** on Win32 |
 
-Minimum v15 mainserver payload (no billing/GP/THA):
+Minimum v19 mainserver payload (no billing/GP/THA):
 `[dwAuthKey][cbAccountFlag][count]` then per server `[parent][id][name:str][addr:str][b18][count][enable][max]`.
 
 ## `PACKETTYPE_GETPLAYERLIST` (0xf6) — client→login(:28000)
@@ -98,11 +98,11 @@ JOIN 0xff00 | PRE_JOIN 0xff05
 ## Compatibility gap checklist (vs current TS emulator)
 
 - [x] **CERTIFY field order** — reworked to `[str ver][str acct][672B rijndael blob]` (`auth.handler.ts`).
-- [x] **13-byte `__CRC` frame** — `packages/core/src/net/crcFrame.ts` codec (13/0) + wired into the dispatcher (CRC mode, per-connection `protocolId`). **Server sends the 8-byte protocolId hello on accept** (plain-framed, server→client — the certifier is `crcRead`, so it reads CRC frames but writes plain), then validates inbound CRC frames against that id; CRC-fail → socket drop. Reply path (`sendPacket`) is always plain-framed. Login `clientServer` runs in CRC mode. See `v15-crc-rijndael.md` §protocolId for the corrected handshake direction.
+- [x] **13-byte `__CRC` frame** — `packages/core/src/net/crcFrame.ts` codec (13/0) + wired into the dispatcher (CRC mode, per-connection `protocolId`). **Server sends the 8-byte protocolId hello on accept** (plain-framed, server→client — the certifier is `crcRead`, so it reads CRC frames but writes plain), then validates inbound CRC frames against that id; CRC-fail → socket drop. Reply path (`sendPacket`) is always plain-framed. Login `clientServer` runs in CRC mode. See `v19-crc-rijndael.md` §protocolId for the corrected handshake direction.
 - [x] **Rijndael-CBC password decrypt** — `packages/login-server/src/utils/v15Password.ts` (AES-128-CBC key `dldhsvmflvm`, 6/0); CERTIFY decrypts the blob → md5hex → argon2-verifies.
 - [x] **SRVR_LIST reply** — rewritten to the client parse order (`serverList.handler.ts`, 2/0).
 - [x] **GETPLAYERLIST / cluster + world DPID prefix** — `BEFORESENDSOLE` prepends a `DPID_UNKNOWN` (0xFFFFFFFF) DWORD before the opcode (`dpmng.h:32-40`; server skips it at `DPLoginSrvr.cpp:65-87` + `DPSrvr.cpp:578-584`). Dispatcher gains a `leadsWithDpid` flag; cluster + world `clientServer` set it (login/certifier does not). Cluster TCP smoke proves GETPLAYERLIST → PLAYER_LIST over CRC + DPID.
 - [x] **Cluster/world frame mode** — both now run CRC (real client uses `__CRC` on every connection).
 - [x] Opcode `0xfc` correct.
 - [x] Handler framing — replies centralised on `sendPacket()` (plain-framed, matching the `crcRead` server's outbound); was raw payload (found via TCP smoke).
-- [x] **v15 login TCP smoke** (3/0): read server hello → adopt protocolId → CRC-framed CERTIFY → rijndael decrypt → argon2 verify; bad password ⇒ plain-framed ERROR; wrong protocolId ⇒ connection dropped.
+- [x] **v19 login TCP smoke** (3/0): read server hello → adopt protocolId → CRC-framed CERTIFY → rijndael decrypt → argon2 verify; bad password ⇒ plain-framed ERROR; wrong protocolId ⇒ connection dropped.

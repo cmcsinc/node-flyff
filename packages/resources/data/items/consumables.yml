@@ -1,6 +1,46 @@
 _version: "1.0"
 _kind: consumable
 items:
+  - id: 26454
+    name: Silver Battery
+    name_id: IDS_PROPITEM_TXT_008908
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    mp_restore: 9999
+    effects:
+      - dst: 52
+        adj: 15
+    duration: 1000000
+    durability: 12000000
+    job_req:
+      - acrobat
+  - id: 26455
+    name: Gold Battery
+    name_id: IDS_PROPITEM_TXT_008910
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    mp_restore: 9999
+    effects:
+      - dst: 52
+        adj: 15
+    duration: 1000000
+    durability: 12000000
+    job_req:
+      - acrobat
   - id: 10221
     name: Rocket Cracker
     name_id: IDS_PROPITEM_TXT_004496
@@ -31,6 +71,29 @@ items:
     durability: 12000000
     job_req:
       - acrobat
+  - id: 10223
+    name: Wings of an Angel
+    name_id: IDS_PROPITEM_TXT_004500
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_MAGICTRICK
+    effects:
+      - dst: 35
+        adj: 50
+      - dst: 10006
+        adj: 300
+      - dst: 52
+        adj: 15
+    duration: 120
+    durability: 12000000
+    job_req:
+      - acrobat
   - id: 10224
     name: Twister Cracker
     name_id: IDS_PROPITEM_TXT_004502
@@ -44,6 +107,489 @@ items:
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 12000000
+    job_req:
+      - acrobat
+  - id: 10461
+    name: Pumpkin Soup
+    name_id: IDS_PROPITEM_TXT_004686
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 54
+        adj: 50
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 30
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 10462
+    name: Uriel Cold noodle
+    name_id: IDS_PROPITEM_TXT_004688
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 53
+        adj: 50
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 30
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26220
+    name: Potion of Recklessness
+    name_id: IDS_PROPITEM_TXT_007172
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 9
+        adj: 5
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26221
+    name: Potion of Swiftness
+    name_id: IDS_PROPITEM_TXT_007174
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26222
+    name: Potion of Accuracy
+    name_id: IDS_PROPITEM_TXT_007176
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26223
+    name: Potion of Clarity
+    name_id: IDS_PROPITEM_TXT_007178
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 75
+        adj: 5
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26224
+    name: Elixir of the Tiger
+    name_id: IDS_PROPITEM_TXT_007180
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STR
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26225
+    name: Elixir of the Rabbit
+    name_id: IDS_PROPITEM_TXT_007182
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEX
+    effects:
+      - dst: 2
+        adj: 3
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26226
+    name: Elixir of the Fox
+    name_id: IDS_PROPITEM_TXT_007184
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_INT
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26227
+    name: Elixir of the Lion
+    name_id: IDS_PROPITEM_TXT_007186
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STA
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26228
+    name: Elixir of Stone
+    name_id: IDS_PROPITEM_TXT_007252
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEFENSE
+    effects:
+      - dst: 26
+        adj: 30
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26229
+    name: Elixir of Anti-Magic
+    name_id: IDS_PROPITEM_TXT_007254
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 27
+        adj: 50
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26230
+    name: Elixir of Flowing Thought
+    name_id: IDS_PROPITEM_TXT_007256
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 53
+        adj: 10
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26231
+    name: Elixir of the Sorceror
+    name_id: IDS_PROPITEM_TXT_007258
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 62
+        adj: 20
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26232
+    name: Elixir of Evasion
+    name_id: IDS_PROPITEM_TXT_007260
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 65
+        adj: 5
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 26233
+    name: Concoction of Profuse Bleeding
+    name_id: IDS_PROPITEM_TXT_007262
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 77
+        adj: 10
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 30016
+    name: Flask of the Tiger
+    name_id: IDS_PROPITEM_TXT_007320
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STR
+    effects:
+      - dst: 1
+        adj: 7
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 30017
+    name: Flask of the Rabbit
+    name_id: IDS_PROPITEM_TXT_007322
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEX
+    effects:
+      - dst: 2
+        adj: 7
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 30018
+    name: Flask of the Fox
+    name_id: IDS_PROPITEM_TXT_007324
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_INT
+    effects:
+      - dst: 3
+        adj: 7
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 30019
+    name: Flask of the Lion
+    name_id: IDS_PROPITEM_TXT_007326
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STA
+    effects:
+      - dst: 4
+        adj: 7
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 30020
+    name: Flask of Stone
+    name_id: IDS_PROPITEM_TXT_007328
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEFENSE
+    effects:
+      - dst: 26
+        adj: 70
+      - dst: 68
+        adj: 150
+      - dst: 52
+        adj: 15
+    duration: 1800
+    durability: 4500000
     job_req:
       - acrobat
   - id: 2904
@@ -121,6 +667,1773 @@ items:
     durability: 4500000
     job_req:
       - acrobat
+  - id: 18099
+    name: Beaujolai of Flaris
+    name_id: IDS_PROPITEM_TXT_005572
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_BINDS
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18100
+    name: Beaujolai of Saintmorning
+    name_id: IDS_PROPITEM_TXT_005574
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_BINDS
+    effects:
+      - dst: 74
+        adj: 50
+      - dst: 73
+        adj: 50
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18101
+    name: Beaujolai of Darkon
+    name_id: IDS_PROPITEM_TXT_005576
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_BINDS
+    effects:
+      - dst: 24
+        adj: 420
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 26114
+    name: Scroll of Combat 20
+    name_id: IDS_PROPITEM_TXT_008048
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 22
+        adj: 20
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
+    duration: 30
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 26115
+    name: Scroll of Combat 50
+    name_id: IDS_PROPITEM_TXT_008050
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 22
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
+    duration: 30
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 6319
+    name: Cupid Wings
+    name_id: IDS_PROPITEM_TXT_006012
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_MAGICTRICK
+    effects:
+      - dst: 47
+        adj: 15
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 280000
+    job_req:
+      - magician
+  - id: 30035
+    name: Red Angel
+    name_id: IDS_PROPITEM_TXT_007980
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_ANGEL_BUFF
+    hp_restore: 100
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 30036
+    name: Blue Angel
+    name_id: IDS_PROPITEM_TXT_007982
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_ANGEL_BUFF
+    hp_restore: 60
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 30037
+    name: Green Angel
+    name_id: IDS_PROPITEM_TXT_007984
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_ANGEL_BUFF
+    hp_restore: 30
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 30038
+    name: White Angel
+    name_id: IDS_PROPITEM_TXT_007986
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_ANGEL_BUFF
+    hp_restore: 10
+    effects:
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26418
+    name: Milk Chocolate
+    name_id: IDS_PROPITEM_TXT_008086
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 10
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 26531
+    name: Feed Bag (6 hrs)
+    name_id: IDS_PROPITEM_TXT_009242
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 10
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 30071
+    name: Nescafe 3 in1 Potion (Original)
+    name_id: IDS_PROPITEM_TXT_008642
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEFENSE
+    effects:
+      - dst: 26
+        adj: 30
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1800
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 30072
+    name: Nescafe 3 in1 Potion (Intense)
+    name_id: IDS_PROPITEM_TXT_008644
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 9
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1800
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 30073
+    name: Nescafe 3 in1 Potion (Sweet & Creamy)
+    name_id: IDS_PROPITEM_TXT_008646
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1800
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26503
+    name: Purple Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009022
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STA
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26504
+    name: Blue Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009024
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_INT
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26505
+    name: Green Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009026
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEX
+    effects:
+      - dst: 2
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26506
+    name: Red Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009028
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STR
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26507
+    name: Sky-Blue Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009030
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 65
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26508
+    name: Pink Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009032
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 9
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26509
+    name: Yellow Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009034
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26510
+    name: White Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009036
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 75
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26511
+    name: Gray Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009038
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEFENSE
+    effects:
+      - dst: 26
+        adj: 30
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26512
+    name: Orange Cotton Candy
+    name_id: IDS_PROPITEM_TXT_009040
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 300
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26544
+    name: Purple Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009292
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STA
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26545
+    name: Blue Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009294
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_INT
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26546
+    name: Green Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009296
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEX
+    effects:
+      - dst: 2
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26547
+    name: Red Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009298
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_STR
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26548
+    name: Sky-Blue Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009300
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 65
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26549
+    name: Pink Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009302
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 9
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26550
+    name: Yellow Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009304
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26551
+    name: White Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009306
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 75
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26552
+    name: Gray Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009308
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_DEFENSE
+    effects:
+      - dst: 26
+        adj: 30
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26553
+    name: Orange Cotton Candy (Event)
+    name_id: IDS_PROPITEM_TXT_009310
+    weight: 1
+    price: 20
+    sell_price: 5
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 21600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26537
+    name: Scroll of Party EXP (7 days)
+    name_id: IDS_PROPITEM_TXT_009278
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26538
+    name: Scroll of Party EXP (15 days)
+    name_id: IDS_PROPITEM_TXT_009280
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26539
+    name: Scroll of Party Skill (7 days)
+    name_id: IDS_PROPITEM_TXT_009282
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26540
+    name: Scroll of Party Skill (15 days)
+    name_id: IDS_PROPITEM_TXT_009284
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26573
+    name: Feed for (S)class pet
+    name_id: IDS_PROPITEM_TXT_009388
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26560
+    name: Copper Battery (1 day)
+    name_id: IDS_PROPITEM_TXT_009326
+    weight: 1
+    price: 2
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF2
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20019
+    name: Lord's Cheer
+    name_id: IDS_PROPITEM_TXT_009434
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20020
+    name: Lord's Blessing
+    name_id: IDS_PROPITEM_TXT_009436
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 66
+        adj: 10
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20021
+    name: Lord's Love
+    name_id: IDS_PROPITEM_TXT_009438
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 10003
+        adj: 15
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20022
+    name: Lord's Shout
+    name_id: IDS_PROPITEM_TXT_009440
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 10003
+        adj: 15
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20023
+    name: Lord's Anger
+    name_id: IDS_PROPITEM_TXT_009442
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 10003
+        adj: 15
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26615
+    name: Cooked Corn
+    name_id: IDS_PROPITEM_TXT_009568
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 10003
+        adj: 2
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26616
+    name: Cooked Octopus
+    name_id: IDS_PROPITEM_TXT_009570
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 11
+        adj: 20
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20036
+    name: Voter's Buff
+    name_id: IDS_PROPITEM_TXT_009802
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 20
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 5850000
+    job_req:
+      - vagrant
+  - id: 26663
+    name: Sugar Boost
+    name_id: IDS_PROPITEM_TXT_009958
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 10003
+        adj: 5
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 5850000
+    job_req:
+      - vagrant
+  - id: 26664
+    name: Flash Charm
+    name_id: IDS_PROPITEM_TXT_009960
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 30
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 5850000
+    job_req:
+      - vagrant
+  - id: 26666
+    name: FLY
+    name_id: IDS_PROPITEM_TXT_009984
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26667
+    name: FOR
+    name_id: IDS_PROPITEM_TXT_009986
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 26
+        adj: 150
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26668
+    name: FUN
+    name_id: IDS_PROPITEM_TXT_009988
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 83
+        adj: 200
+      - dst: 72
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 3600
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26720
+    name: Power of Love
+    name_id: IDS_PROPITEM_TXT_010150
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_COUPLE_BUFF
+    effects:
+      - dst: 83
+        adj: 20
+      - dst: 26
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26721
+    name: Power of Love
+    name_id: IDS_PROPITEM_TXT_010152
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_COUPLE_BUFF
+    effects:
+      - dst: 83
+        adj: 40
+      - dst: 26
+        adj: 20
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26722
+    name: Power of Love
+    name_id: IDS_PROPITEM_TXT_010154
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_COUPLE_BUFF
+    effects:
+      - dst: 83
+        adj: 60
+      - dst: 26
+        adj: 30
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26723
+    name: Power of Love
+    name_id: IDS_PROPITEM_TXT_010156
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_COUPLE_BUFF
+    effects:
+      - dst: 83
+        adj: 80
+      - dst: 26
+        adj: 40
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26730
+    name: Blessing of Love
+    name_id: IDS_PROPITEM_TXT_010158
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_COUPLE_BUFF
+    effects:
+      - dst: 67
+        adj: 4
+      - dst: 26
+        adj: 40
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26731
+    name: Blessing of Love
+    name_id: IDS_PROPITEM_TXT_010160
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_COUPLE_BUFF
+    effects:
+      - dst: 67
+        adj: 8
+      - dst: 26
+        adj: 40
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26740
+    name: Miracle of Love
+    name_id: IDS_PROPITEM_TXT_010162
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_COUPLE_BUFF
+    effects:
+      - dst: 67
+        adj: 8
+      - dst: 26
+        adj: 40
+      - dst: 75
+        adj: 5
+    duration: 1000000
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26749
+    name: Soy Bean
+    name_id: IDS_PROPITEM_TXT_010256
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 10003
+        adj: 3
+      - dst: 26
+        adj: 40
+      - dst: 75
+        adj: 5
+    duration: 180
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26765
+    name: Love Chocolate
+    name_id: IDS_PROPITEM_TXT_010348
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 66
+        adj: 10
+      - dst: 52
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 7200
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 26771
+    name: Super Star Candy
+    name_id: IDS_PROPITEM_TXT_010452
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 10003
+        adj: 10
+      - dst: 52
+        adj: 10
+      - dst: 75
+        adj: 5
+    duration: 7200
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 20052
+    name: Ice fakes(Strawberry)
+    name_id: IDS_PROPITEM_TXT_010726
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 24
+        adj: 400
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20053
+    name: Ice fakes(Lemon)
+    name_id: IDS_PROPITEM_TXT_010728
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 20
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20054
+    name: Ice fakes(Blue Hawaii)
+    name_id: IDS_PROPITEM_TXT_010730
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 68
+        adj: 50
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 10490
+    name: Scroll of Sprint
+    name_id: IDS_PROPITEM_TXT_010864
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 50
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20058
+    name: Melon Cookie
+    name_id: IDS_PROPITEM_TXT_010920
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION_BUFF_INT
+    effects:
+      - dst: 10003
+        adj: 2
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20088
+    name: Red Drop
+    name_id: IDS_PROPITEM_TXT_011082
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 1
+        adj: 5
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20089
+    name: Clear Drop
+    name_id: IDS_PROPITEM_TXT_011084
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 3
+        adj: 5
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20090
+    name: Yellow Drop
+    name_id: IDS_PROPITEM_TXT_011086
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 2
+        adj: 5
+      - dst: 83
+        adj: 300
+      - dst: 67
+        adj: 10
+    duration: 180
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 20094
+    name: Blue Macaron
+    name_id: IDS_PROPITEM_TXT_011094
+    weight: 1
+    price: 16
+    sell_price: 4
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 9
+        adj: 5
+      - dst: 67
+        adj: 10
+    duration: 300
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20095
+    name: Pink Macaron
+    name_id: IDS_PROPITEM_TXT_011096
+    weight: 1
+    price: 16
+    sell_price: 4
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 26
+        adj: 30
+      - dst: 67
+        adj: 10
+    duration: 300
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20096
+    name: Green Macaron
+    name_id: IDS_PROPITEM_TXT_011098
+    weight: 1
+    price: 16
+    sell_price: 4
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 75
+        adj: 5
+      - dst: 67
+        adj: 10
+    duration: 300
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20097
+    name: Red Macaron
+    name_id: IDS_PROPITEM_TXT_011100
+    weight: 1
+    price: 16
+    sell_price: 4
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 2
+        adj: 3
+      - dst: 65
+        adj: 5
+      - dst: 67
+        adj: 10
+    duration: 300
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20098
+    name: Gold Macaron
+    name_id: IDS_PROPITEM_TXT_011102
+    weight: 1
+    price: 16
+    sell_price: 4
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 47
+        adj: 5
+      - dst: 67
+        adj: 10
+    duration: 300
+    durability: 7200000
+    job_req:
+      - vagrant
   - id: 20105
     name: 하트폭죽(태국01)
     name_id: IDS_PROPITEM_TXT_011192
@@ -151,3 +2464,408 @@ items:
     durability: 50000
     job_req:
       - vagrant
+  - id: 26856
+    name: "Master and Apprentice Link: Level 1"
+    name_id: IDS_PROPITEM_TXT_011300
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_TS_BUFF
+    effects:
+      - dst: 67
+        adj: 3
+      - dst: 35
+        adj: 10
+      - dst: 67
+        adj: 10
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26857
+    name: "Master and Apprentice Link: Level 2"
+    name_id: IDS_PROPITEM_TXT_011302
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_TS_BUFF
+    effects:
+      - dst: 67
+        adj: 4
+      - dst: 35
+        adj: 20
+      - dst: 67
+        adj: 10
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 26858
+    name: "Master and Apprentice Link: Level 3"
+    name_id: IDS_PROPITEM_TXT_011304
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_TS_BUFF
+    effects:
+      - dst: 67
+        adj: 5
+      - dst: 35
+        adj: 30
+      - dst: 67
+        adj: 10
+    duration: 1000000
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20180
+    name: Christmas Cake
+    name_id: IDS_PROPITEM_TXT_011496
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 66
+        adj: 10
+      - dst: 77
+        adj: 20
+      - dst: 24
+        adj: 200
+    duration: 1200
+    durability: 7200000
+  - id: 26898
+    name: Delicious Cookie (F)
+    name_id: IDS_PROPITEM_TXT_011734
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
+    duration: 180
+    durability: 7200000
+  - id: 26899
+    name: Delicious Cookie (I)
+    name_id: IDS_PROPITEM_TXT_011736
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 26
+        adj: 150
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
+    duration: 180
+    durability: 7200000
+  - id: 26900
+    name: Delicious Cookie (T)
+    name_id: IDS_PROPITEM_TXT_011738
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 83
+        adj: 200
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
+    duration: 180
+    durability: 7200000
+  - id: 26901
+    name: Delicious Cookie (A)
+    name_id: IDS_PROPITEM_TXT_011740
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_POTION
+    effects:
+      - dst: 10003
+        adj: 10
+      - dst: 75
+        adj: 1
+      - dst: 24
+        adj: 200
+    duration: 180
+    durability: 7200000
+  - id: 26957
+    name: Green Root Beer
+    name_id: IDS_PROPITEM_TXT_011942
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 11
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 600
+    durability: 4500000
+  - id: 20229
+    name: Purple Egg
+    name_id: IDS_PROPITEM_TXT_012014
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 4
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20230
+    name: Green Egg
+    name_id: IDS_PROPITEM_TXT_012016
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 3
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20231
+    name: Blue Egg
+    name_id: IDS_PROPITEM_TXT_012018
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 2
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20232
+    name: Red Egg
+    name_id: IDS_PROPITEM_TXT_012020
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 1
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20233
+    name: Sky Blue Egg
+    name_id: IDS_PROPITEM_TXT_012022
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 65
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20234
+    name: Pink Egg
+    name_id: IDS_PROPITEM_TXT_012024
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 9
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20235
+    name: Yellow Egg
+    name_id: IDS_PROPITEM_TXT_012026
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20236
+    name: White Egg
+    name_id: IDS_PROPITEM_TXT_012028
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 75
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20237
+    name: Gray Egg
+    name_id: IDS_PROPITEM_TXT_012030
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 26
+        adj: 3
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000
+  - id: 20238
+    name: Orange Egg
+    name_id: IDS_PROPITEM_TXT_012032
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_BUFF
+    item_kind3: IK3_SCROLL
+    effects:
+      - dst: 47
+        adj: 5
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
+    duration: 300
+    durability: 3600000

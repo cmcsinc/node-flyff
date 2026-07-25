@@ -3,7 +3,7 @@
  *
  * `DPSrvr::OnMeleeAttack` (DPSrvr.cpp:4131) reads `DWORD dwAtkMsg, OBJID objid,
  * int nParam2, int nParam3` + a trailing `float fVal` under `__HACK_1023`
- * (active in v15 -- anti-cheat echo of the weapon's fAttackSpeed). `fVal` is
+ * (active in v19 -- anti-cheat echo of the weapon's fAttackSpeed). `fVal` is
  * consumed to keep the stream aligned but otherwise ignored until the inventory
  * system ships.
  *

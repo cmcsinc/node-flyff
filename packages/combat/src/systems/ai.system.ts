@@ -295,8 +295,8 @@ private pursue(m: CMover, now: number, dtMs: number): void {
     // Debug: per-swing retaliation detail. Pairs with the info "monster
     // retaliated" log in CombatService.triggerRage -- if that fires but these
     // never do, the mob acquired but never closed to swing (movement/range bug).
-    logger.debug(
-      { moverId: m.m_idMover, target: target.m_idPlayer, hit: result.hit, damage: dealt, targetHp: target.m_nHp },
+    logger.info(
+      { moverId: m.m_idMover, target: target.m_idPlayer, hit: result.hit, damage: dealt, rolledDamage: result.damage, atkFlags: result.atkFlags, invincible, targetHp: target.m_nHp, targetMaxHp: target.m_nMaxHp },
       'monster swing',
     );
     this.deps.zoneManager.broadcastAround(

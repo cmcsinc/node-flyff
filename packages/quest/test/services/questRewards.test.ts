@@ -74,22 +74,23 @@ describe('questRewards -- applyEnd', () => {
     assert.equal(female.store[7000], 1);
   });
 
-  it('grants exp, cascades level-ups with carryover, and journals CHAR_EXP (absolute cumulative)', () => {
+  it('grants exp, cascades level-ups with carryover, and journals CHAR_EXP (within-level)', () => {
     const { sink, log } = fakeSink();
     const p = player(); // L1, within-level exp 0
     applyEnd(p, def([cmd('SetEndRewardExp', 1000, 1000)]), sink);
-    // 1000 cumulative exp lands at L12 (nExp1=973); within-level remainder = 27.
-    assert.equal(p.m_nLevel, 12);
-    assert.equal(p.m_nExp, 27);
+    // Thresholds are the raw nExp1 per level (14,20,36,90,152,250,352,480,...).
+    // 1000 from L1 exp 0: 1000-14-20-36-90-152-250-352=86 (L8), 86<480 stop.
+    assert.equal(p.m_nLevel, 8);
+    assert.equal(p.m_nExp, 86);
     const row = log.find((e) => e.type === 'CHAR_EXP');
     assert.equal(row?.type, 'CHAR_EXP');
-    assert.equal((row!.payload as { level: number; exp: string }).level, 12);
-    assert.equal((row!.payload as { level: number; exp: string }).exp, '1000', 'absolute cumulative exp, idempotent on replay');
+    assert.equal((row!.payload as { level: number; exp: string }).level, 8);
+    assert.equal((row!.payload as { level: number; exp: string }).exp, '86', 'within-level exp, idempotent on replay');
   });
 
   it('resets within-level exp to 0 at an exact level boundary (no carryover)', () => {
     const { sink } = fakeSink();
-    const p = player(); // L1, exp 0 -- L1->L2 needs 14 cumulative
+    const p = player(); // L1, exp 0 -- L1 threshold is EXP_TABLE[2].nExp1 = 14
     applyEnd(p, def([cmd('SetEndRewardExp', 14, 14)]), sink);
     assert.equal(p.m_nLevel, 2);
     assert.equal(p.m_nExp, 0);

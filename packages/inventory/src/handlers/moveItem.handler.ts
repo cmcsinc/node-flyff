@@ -2,7 +2,7 @@
  * MOVEITEM handler -- `PACKETTYPE_MOVEITEM` (0x00ff0006).
  *
  * `CDPSrvr::OnMoveItem` (`DPSrvr.cpp:787`): `BYTE nItemType, BYTE nSrcIndex,
- * BYTE nDstIndex`. v15 is a pure slot swap (no split opcode). The client does
+ * BYTE nDstIndex`. v19 is a pure slot swap (no split opcode). The client does
  * NOT swap optimistically -- `OnDropIcon` sends `SendMoveItem` and waits; the
  * server validates bounds + persists, then echoes `AddMoveItem`
  * (`SNAPSHOTTYPE_MOVEITEM`), which is the only thing that triggers the

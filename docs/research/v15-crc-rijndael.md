@@ -1,7 +1,7 @@
-# v15 CRC Frame + Password Rijndael — Reimplementation Spec
+# v19 CRC Frame + Password Rijndael — Reimplementation Spec
 
 Extracted verbatim from `game/source/` (`__VER 15`, `__CRC`, `__ENCRYPT_PASSWORD`).
-All items LOCKED. Companion to `v15-login-wire-format.md`.
+All items LOCKED. Companion to `v19-login-wire-format.md`.
 
 ## 1. The 13-byte CRC frame (`__CRC` default)
 
