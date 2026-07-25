@@ -5,7 +5,7 @@
  * ```
  * ar << GETID(pMover);
  * ar << SNAPSHOTTYPE_DOUSESKILLPOINT;          // 0x007d
- * for (i = 0; i < MAX_SKILL_JOB; i++)          // 45 slots
+ * for (i = 0; i < MAX_SKILL_JOB; i++)          // 51 slots under v19 __3RD_LEGEND16
  *   ar << m_aJobSkill[i].dwSkill << m_aJobSkill[i].dwLevel;
  * ar << m_nSkillPoint;                         // unspent SP after the spend
  * ```
@@ -29,7 +29,7 @@ export interface DoUseSkillSlot {
 export class DoUseSkillPointSerializer {
   /**
    * @param casterObjid - player objid (m_idPlayer).
-   * @param roster      - full 45-slot m_aJobSkill (empty slots carry NULL_ID).
+   * @param roster      - full m_aJobSkill (MAX_SKILL_JOB slots; empty carry NULL_ID).
    * @param skillPoint  - current unspent SP (m_nSkillPoint).
    */
   build(

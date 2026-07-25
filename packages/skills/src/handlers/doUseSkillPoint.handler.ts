@@ -1,10 +1,12 @@
 /**
  * DOUSESKILLPOINT handler -- `PACKETTYPE.DOUSESKILLPOINT` (0x000f0003).
  *
- * `DPSrvr::OnDoUseSkillPoint` (`DPSrvr.cpp:3265`) reads `45x (DWORD dwSkill,
- * DWORD dwLevel)` -- the player's desired job-skill roster, one entry per slot,
- * no count prefix. The service validates atomically (all-or-nothing); on reject
- * no confirm is sent and the client keeps its prior state.
+ * `DPSrvr::OnDoUseSkillPoint` (`DPSrvr.cpp:3305`) reads `MAX_SKILL_JOBx
+ * (DWORD dwSkill, DWORD dwLevel)` -- the player's desired job-skill roster,
+ * one entry per slot, no count prefix. (MAX_SKILL_JOB is 51 under v19
+ * `__3RD_LEGEND16`, 45 on v15.) The service validates atomically
+ * (all-or-nothing); on reject no confirm is sent and the client keeps its
+ * prior state.
  *
  * @module handlers/doUseSkillPoint
  */
