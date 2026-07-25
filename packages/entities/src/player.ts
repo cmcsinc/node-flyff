@@ -223,6 +223,20 @@ export class CPlayer {
    */
   m_idDestObj: number = NULL_ID;
   /**
+   * Active 1v1 duel peer (C++ `m_idDuelOther`, Mover.h). `NULL_ID` = not
+   * dueling. Set by `DuelService.accept` on mutual consent; cleared on death,
+   * decline, expire, or disconnect. Drives `DUELCANCEL` broadcast on lethal
+   * blow + the dual `SETDUEL(nDuel=0)` clear. v1 party-duel variant deferred
+   * (ponytail: `m_idDuelParty`).
+   */
+  m_idDuelTarget: number = NULL_ID;
+  /**
+   * Duel active flag (C++ `m_nDuel`). 0 = idle, 1 = active. Mirrors the C++
+   * field the client reads via `OnSetDuel` (DPClient.cpp:15493). Set alongside
+   * {@link m_idDuelTarget}; cleared together.
+   */
+  m_nDuel: number = 0;
+  /**
    * Walk-to-object arrival range (C++ `CMover::m_fArrivalRange`). Set alongside
    * `m_idDestObj` by PLAYERSETDESTOBJ; echoed back by QUERYGETDESTOBJ replies.
    */
