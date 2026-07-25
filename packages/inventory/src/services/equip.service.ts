@@ -81,6 +81,11 @@ export class EquipService {
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: invSlot, itemId: prev?.itemId ?? 0, count: prev?.count ?? 0 } });
     player.m_Inventory[equipIdx] = item;
     player.m_Inventory[invSlot] = prev;
+    // Track the bag->equip index move (item's m_dwObjId travels to equipIdx on
+    // the client; invSlot's m_apIndex becomes a fresh free objid). ponytail:
+    // when `prev` exists (swap), the client self-UnEquips it to its own first
+    // empty bag slot -- not tracked here; only the primary move is mirrored.
+    player.onEquipIndexMove(invSlot, equipIdx);
     player._dirty.add('m_Inventory');
     // Swap DST effects: remove the previously-equipped item's bonuses, apply the
     // new item's. Then clamp current vitals to the new maxes (unequipping +HP
@@ -110,6 +115,10 @@ export class EquipService {
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: item.itemId, count: item.count } });
     player.m_Inventory[equipIdx] = null;
     player.m_Inventory[dst] = item;
+    // Track the equip->bag index move: on the client m_apIndex[dst] becomes the
+    // item's equip-time m_dwObjId (the stale value addItem must reuse if this
+    // slot is later refilled). equipIdx's m_apIndex is cleared.
+    player.onUnequipIndexMove(equipIdx, dst);
     player._dirty.add('m_Inventory');
     // Remove the item's DST effects BEFORE clamping so the max reflects the loss.
     this.applyItemEffects(player, item.itemId, false);

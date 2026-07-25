@@ -582,7 +582,7 @@ export class CommandService {
     const count = Math.max(1, Number.parseInt(tokens[1] ?? '', 10) || 1);
     const res = inv.addItem(player, itemId, count);
     if (!res.ok) return;
-    const buf = this.createItemSer.buildOne(player.m_idPlayer, res.itemId, res.count, res.slot);
+    const buf = this.createItemSer.buildOne(player.m_idPlayer, res.itemId, res.count, res.objid);
     this.deps.playerManager.sendTo(player, buf);
   }
 

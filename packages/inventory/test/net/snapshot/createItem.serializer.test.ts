@@ -34,9 +34,10 @@ describe('CreateItemSnapshotSerializer', () => {
     assert.equal(buf[16], 0x00, 'literal BYTE 0');
 
     // CItemBase (16B): objId + itemId + serial(DWORD) + text-len. m_dwObjId is
-    // the destination slot index (matches JOIN's container) -- the client
-    // CWndInventory will not render an elem whose m_dwObjId is 0.
-    assert.equal(buf.readUInt32LE(17), 5, 'm_dwObjId = slot index');
+    // the item's client objid (m_apIndex[slot]); for a never-moved fresh slot
+    // that equals the slot index -- the identity case the buildOne(,...,5) call
+    // pins. After an equip drifts m_apIndex, this value diverges from the slot.
+    assert.equal(buf.readUInt32LE(17), 5, 'm_dwObjId = client objid');
     assert.equal(buf.readUInt32LE(21), 2950, 'm_dwItemId');
     assert.equal(buf.readUInt32LE(25), 0, 'm_liSerialNumber (DWORD)');
     assert.equal(buf.readUInt32LE(29), 0, 'm_szItemText empty string length');
@@ -44,10 +45,19 @@ describe('CreateItemSnapshotSerializer', () => {
     // CItemElem (62B) -- first field is m_nItemNum (the count)
     assert.equal(buf.readInt16LE(33), 3, 'm_nItemNum = count');
 
-    // Trailer (last 4 bytes): nCount(1) + slot(1) + count(2)
+    // Trailer (last 4 bytes): nCount(1) + pnId(1, client objid) + count(2)
     assert.equal(buf[95], 1, 'nCount = 1');
-    assert.equal(buf[96], 5, 'slot id');
+    assert.equal(buf[96], 5, 'pnId = client objid (== slot for never-moved slots)');
     assert.equal(buf.readInt16LE(97), 3, 'per-slot count');
+  });
+
+  it('buildOne writes the STALE client objid, not the raw slot (unequip->sell drift case)', () => {
+    // After unequip->sell, m_apIndex[slot=5] still holds the old equip objid
+    // (e.g. 44). CREATEITEM must address SetAtId(44) -- writing the raw slot (5)
+    // leaves the new item invisible until relog. buildOne's 4th arg is the objid.
+    const buf = serializer.buildOne(0x00001234, 2950, 1, 44);
+    assert.equal(buf.readUInt32LE(17), 44, 'm_dwObjId = stale client objid (not 5)');
+    assert.equal(buf[96], 44, 'pnId = stale client objid (not 5)');
   });
 
   it('rejects an empty entry list', () => {
