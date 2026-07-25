@@ -153,6 +153,33 @@ export const PACKETTYPE = Object.freeze({
   // by the *material's* dwItemKind3 (ItemUpgrade.cpp:384): IK3_ENCHANT (Sunstone/
   // orichalcum) -> weapon/armor refine; IK3_ELECARD (element card) -> element.
   ENCHANT:              0xf000b024,
+
+  // ── Phase 1 v19 systems ───────────────────────────────────────────────────
+  // MsgHdr.h:179 -- `CDPSrvr::OnRepairItem` (DPSrvr.cpp:4949). Body:
+  // `BYTE c (count) | c × BYTE nId (inv slot)`. Cap c ≤ MAX_REPAIRINGITEM(25).
+  REPAIRITEM:           0x00ff00b5,
+  // MsgHdr.h:299-301 -- 1v1 PvP consent. REQUEST: `u_long uidSrc, u_long uidDst`.
+  // YES (accept) same body; NO: `u_long uidSrc` only. Party-duel 0xffffff26-28
+  // deferred (ponytail: add with party).
+  DUELREQUEST:          0xffffff23,
+  DUELYES:              0xffffff24,
+  DUELNO:               0xffffff25,
+  // MsgHdr.h:776-779 -- Couple (marriage link) under `__VER >= 13 // __COUPLE_1117`.
+  // PROPOSE body: DWORD-prefixed string `szPlayer[42]`. REFUSE/COUPLE/DECOUPLE
+  // bodyless (SendHdr). Delegates to CCoupleHelper singleton.
+  PROPOSE:              0x8FFFF000,
+  REFUSE:               0x8FFFF001,
+  COUPLE:               0x8FFFF002,
+  DECOUPLE:             0x8FFFF003,
+  // MsgHdr.h:361-370 -- Friend roster. REQEST: `u_long uidLeader, u_long uidMember`.
+  // NAMEREQEST: `u_long uidLeader` + DWORD-prefixed `szMemberName[64]`.
+  // CANCEL/REMOVEFRIEND/GETFRIENDSTATE/SETFRIENDSTATE: see MsgHdr.h:362-367.
+  ADDFRIENDREQEST:      0xffffff61,
+  ADDFRIENDCANCEL:      0xffffff62,
+  ADDFRIENDNAMEREQEST:  0xffffff6b,
+  REMOVEFRIEND:         0xffffff6a,
+  GETFRIENDSTATE:       0xffffff64,
+  SETFRIENDSTATE:       0xffffff67,
 } as const);
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];
@@ -230,6 +257,36 @@ export const SNAPSHOTTYPE = Object.freeze({
   // for motion/animation cues. Client `OnMotion` (DPClient.cpp:9813) re-dispatches
   // `dwMsg` as `SendActMsg` -- e.g. OBJMSG_PICKUP(11) plays the pickup anim+sound.
   MOTION:         0x0098,
+
+  // ── Phase 1 v19 systems S->C ──────────────────────────────────────────────
+  // MsgHdr.h:946-954, 1010-1011 -- Duel snapshots. DUELREQUEST/DUELSTART/DUELNO/
+  // DUELCANCEL to both parties; SETDUEL flips the m_nDuel flag; DUELCOUNT is the
+  // ranked win counter.
+  DUELREQUEST:    0x0030,
+  DUELSTART:      0x0031,
+  DUELNO:         0x0032,
+  DUELCANCEL:     0x0033,
+  SETDUEL:        0x0066,
+  DUELCOUNT:      0x0067,
+  // MsgHdr.h:1293-1297 -- Couple snapshots. PROPOSE_RESULT is the propose dialog
+  // prompt; COUPLE_RESULT confirms the link; DECOUPLE_RESULT confirms the break;
+  // ADD_COUPLE_EXPERIENCE is the periodic proximity-exp tick (ponytail).
+  COUPLE_PROPOSE_RESULT:  0x9701,
+  COUPLE_RESULT:          0x9703,
+  DECOUPLE_RESULT:        0x9704,
+  ADD_COUPLE_EXPERIENCE:  0x9705,
+  // MsgHdr.h:1020-1027 -- Friend roster snapshots. ADDFRIEND (roster insert),
+  // ADDFRIENDREQEST (incoming invite dialog), ADDFRIENDCANCEL, ADDGETFRIENDNAME,
+  // ADDFRIENDGAMEJOIN (online status ping), REMOVEFRIEND, ADDFRIENDERROR,
+  // ADDFRIENDCHANGEJOB. Bodies: `u_long uid + DWORD-prefixed name + state BYTEs`.
+  ADDFRIEND:            0x0070,
+  ADDFRIEND_SNAPSHOT_REQEST:    0x0071,
+  ADDFRIEND_SNAPSHOT_CANCEL:    0x0072,
+  ADDGETFRIENDNAME:     0x0073,
+  ADDFRIENDGAMEJOIN:    0x0074,
+  REMOVEFRIEND_SNAPSHOT: 0x0075,
+  ADDFRIENDERROR:       0x0076,
+  ADDFRIENDCHANGEJOB:   0x0077,
 } as const);
 
 export type SnapshotType = typeof SNAPSHOTTYPE[keyof typeof SNAPSHOTTYPE];
