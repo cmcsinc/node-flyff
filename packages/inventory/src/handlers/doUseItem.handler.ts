@@ -82,18 +82,21 @@ export class DoUseItemHandler {
         // nothing happened. remaining=0 removes the slot client-side. Grouped
         // items use UI_COOLTIME instead of UI_NUM so the client starts its
         // cooldown sweep (MoverSkill.cpp:1720).
+        // nId = STABLE m_dwObjId (client GetAtId, Mover.cpp:8528), NOT the slot
+        // (r.nId). `objid` is the wire objid we resolved the slot from; echoing
+        // the slot strands the icon when a moved item's objid != slot.
         this.deps.playerManager.sendTo(
           player,
           r.cooltime
-            ? buildUpdateItemCooltime(player.m_idPlayer, r.nId, r.remaining)
-            : buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining),
+            ? buildUpdateItemCooltime(player.m_idPlayer, objid, r.remaining)
+            : buildUpdateItemCount(player.m_idPlayer, objid, r.remaining),
         );
       } else if (r.kind === 'consumed') {
         this.deps.playerManager.sendTo(
           player,
           r.cooltime
-            ? buildUpdateItemCooltime(player.m_idPlayer, r.nId, r.remaining)
-            : buildUpdateItemCount(player.m_idPlayer, r.nId, r.remaining),
+            ? buildUpdateItemCooltime(player.m_idPlayer, objid, r.remaining)
+            : buildUpdateItemCount(player.m_idPlayer, objid, r.remaining),
         );
       } else if (r.kind === 'reject') {
         logger.debug({ charId: player.m_idPlayer, slot, nPart }, 'DOUSEITEM rejected (no equip_slot / unknown kind)');
