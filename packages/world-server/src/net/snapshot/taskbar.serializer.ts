@@ -1,5 +1,6 @@
 /**
- * TASKBAR S->C snapshot -- repopulate the F1-F9 hotkey grid on JOIN.
+ * TASKBAR S->C snapshot -- repopulate the F1-F9 hotkey grid + action-slot
+ * queue on JOIN.
  *
  * `SNAPSHOTTYPE_TASKBAR` (0x0097, `_Network/MsgHdr.h:1033`). Body mirrors the
  * storing branch of `CUserTaskBar::Serialize` (`_Interface/UserTaskBar.cpp:61`):
@@ -10,9 +11,9 @@
  *   [actionPoint:DWORD]
  *
  * The client (`CDPClient::OnTaskBar`, `Neuz/DPClient.cpp:4215`) hands the body
- * to `CWndTaskBar::Serialize` which rebuilds the grid. Only `m_aSlotItem`
- * (items/skills/emotes/chat) ships -- applet + skill-queue grids have no
- * handlers yet, so their counts are 0 and actionPoint is 0.
+ * to `CWndTaskBar::Serialize` which rebuilds the grid + queue. `m_aSlotItem`
+ * (items/skills/emotes/chat) and `m_aSlotQueue` (action slot) ship; the applet
+ * grid has no handler yet so its count is 0 and actionPoint is 0.
  *
  * Same SNAPSHOT frame as `setPos`/`setExperience`:
  *   [SNAPSHOT:DWORD][objidPlayer:DWORD][cb:WORD][ [objid:DWORD][hdr:WORD][body] ]
@@ -23,11 +24,19 @@
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { Shortcut } from '@flyff/entities';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, NULL_ID } from '@flyff/world-core';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE, NULL_ID } from '@flyff/world-core';
 
 export class TaskBarSnapshotSerializer {
-  /** Build the SNAPSHOT/TASKBAR payload for `player`'s bound grid. */
-  build(objid: number, grid: ReadonlyArray<ReadonlyArray<Shortcut>>): Buffer {
+  /**
+   * Build the SNAPSHOT/TASKBAR payload for `player`'s bound grid + action-slot
+   * queue. `queue` defaults to empty (no queued skills) so callers with no
+   * action slot simply pass the grid.
+   */
+  build(
+    objid: number,
+    grid: ReadonlyArray<ReadonlyArray<Shortcut>>,
+    queue: ReadonlyArray<Shortcut> = [],
+  ): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);
     w.writeDword(NULL_ID);                 // objidPlayer -- unused client-side
@@ -60,8 +69,25 @@ export class TaskBarSnapshotSerializer {
       if (slot.dwShortcut === SHORTCUT.CHAT) w.writeString(slot.szString ?? '');
     }
 
-    w.writeDword(0);                       // queueCount -- skill queue not wired
-    w.writeDword(0);                       // actionPoint
+    // Action-slot queue -- non-empty entries only (C++ Serialize skips
+    // SHORTCUT_NONE). MAX_SLOT_QUEUE(5) so the array is tiny.
+    const qEntries: Array<{ i: number; slot: Shortcut }> = [];
+    for (let i = 0; i < MAX_SLOT_QUEUE && i < queue.length; i++) {
+      const slot = queue[i]!;
+      if (slot.dwShortcut !== SHORTCUT.NONE) qEntries.push({ i, slot });
+    }
+    w.writeDword(qEntries.length);         // queueCount
+    for (const { i, slot } of qEntries) {
+      w.writeDword(i);
+      w.writeDword(slot.dwShortcut);
+      w.writeDword(slot.dwId);
+      w.writeDword(slot.dwType);
+      w.writeDword(slot.dwIndex);
+      w.writeDword(slot.dwUserId);
+      w.writeDword(slot.dwData);
+    }
+
+    w.writeDword(0);                       // actionPoint -- not server-tracked
     return w.build();
   }
 }

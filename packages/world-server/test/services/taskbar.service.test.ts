@@ -8,16 +8,17 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { TaskBarService, encodeTaskBar, decodeTaskBar } from '../../src/services/taskbar.service';
+import { TaskBarService, encodeTaskBar, decodeTaskBar, decodeTaskBarQueue } from '../../src/services/taskbar.service';
 import type { Shortcut } from '@flyff/entities';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '@flyff/world-core';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE } from '@flyff/world-core';
 
-function makePlayer(): { m_idPlayer?: number; m_aSlotItem: Shortcut[][] } {
+function makePlayer(): { m_idPlayer?: number; m_aSlotItem: Shortcut[][]; m_aSlotQueue: Shortcut[] } {
   return {
     m_idPlayer: 77,
     m_aSlotItem: Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>
       Array.from({ length: MAX_SLOT_ITEM }, () => ({ dwShortcut: SHORTCUT.NONE })),
     ),
+    m_aSlotQueue: Array.from({ length: MAX_SLOT_QUEUE }, () => ({ dwShortcut: SHORTCUT.NONE })),
   };
 }
 
@@ -89,7 +90,7 @@ describe('TaskBarService.removeItem', () => {
 });
 
 describe('TaskBarService persistence', () => {
-  it('fire-and-forgets an encoded grid on add when a persist hook is wired', async () => {
+  it('fire-and-forgets an encoded grid + queue on add when a persist hook is wired', async () => {
     const saved: Array<{ charId: number; json: string }> = [];
     const svc = new TaskBarService((charId, json) => { saved.push({ charId, json }); return Promise.resolve(); });
     const player = makePlayer();
@@ -98,7 +99,7 @@ describe('TaskBarService persistence', () => {
     await new Promise((r) => setImmediate(r));
     assert.equal(saved.length, 1);
     assert.equal(saved[0]!.charId, 77);
-    assert.deepEqual(JSON.parse(saved[0]!.json), [{ i: 1, j: 2, dwShortcut: SHORTCUT.SKILLFUN, dwId: 42, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }]);
+    assert.deepEqual(JSON.parse(saved[0]!.json), { v: 2, items: [{ i: 1, j: 2, dwShortcut: SHORTCUT.SKILLFUN, dwId: 42, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }], queue: [] });
   });
 
   it('persists on remove as well', async () => {
@@ -109,7 +110,7 @@ describe('TaskBarService persistence', () => {
     svc.removeItem(player, 0, 0);
     await new Promise((r) => setImmediate(r));
     assert.equal(saved.length, 2, 'add then remove each persist');
-    assert.deepEqual(JSON.parse(saved[1]!), [], 'remove leaves an empty grid');
+    assert.deepEqual(JSON.parse(saved[1]!), { v: 2, items: [], queue: [] }, 'remove leaves an empty grid');
   });
 
   it('does not persist when no hook is wired (unit-test default)', () => {
@@ -117,6 +118,30 @@ describe('TaskBarService persistence', () => {
     const player = makePlayer();
     svc.addItem(player, 0, 0, skillSlot(1)); // must not throw
     assert.equal(player.m_aSlotItem[0]![0]!.dwId, 1);
+  });
+});
+
+describe('TaskBarService.setQueue', () => {
+  it('writes the action-slot queue and persists it (action-slot survives logout)', async () => {
+    const saved: string[] = [];
+    const svc = new TaskBarService((_id, json) => { saved.push(json); return Promise.resolve(); });
+    const player = makePlayer();
+    const queue: Shortcut[] = Array.from({ length: MAX_SLOT_QUEUE }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }));
+    queue[0] = skillSlot(50);
+    queue[2] = skillSlot(51);
+    svc.setQueue(player, queue);
+    await new Promise((r) => setImmediate(r));
+    assert.equal(player.m_aSlotQueue[0]!.dwId, 50);
+    assert.equal(player.m_aSlotQueue[2]!.dwId, 51);
+    assert.equal(player.m_aSlotQueue[1]!.dwShortcut, SHORTCUT.NONE, 'untouched queue slots stay empty');
+    assert.equal(saved.length, 1);
+    assert.deepEqual(JSON.parse(saved[0]!), {
+      v: 2, items: [],
+      queue: [
+        { i: 0, dwShortcut: SHORTCUT.SKILLFUN, dwId: 50, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 },
+        { i: 2, dwShortcut: SHORTCUT.SKILLFUN, dwId: 51, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 },
+      ],
+    });
   });
 });
 
@@ -134,14 +159,33 @@ describe('encodeTaskBar / decodeTaskBar round-trip', () => {
     assert.equal(back[3]![3]!.dwShortcut, SHORTCUT.NONE, 'untouched slots stay empty');
   });
 
-  it('null / unreadable column yields an all-empty grid', () => {
+  it('round-trips the action-slot queue through the JSON column', () => {
+    const queue: Shortcut[] = Array.from({ length: MAX_SLOT_QUEUE }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }));
+    queue[1] = skillSlot(7);
+    queue[4] = skillSlot(8);
+    const json = encodeTaskBar(makePlayer().m_aSlotItem, queue);
+    const back = decodeTaskBarQueue(json);
+    assert.equal(back[1]!.dwId, 7);
+    assert.equal(back[4]!.dwId, 8);
+    assert.equal(back[0]!.dwShortcut, SHORTCUT.NONE, 'untouched queue slots stay empty');
+  });
+
+  it('decodes a legacy v1 (bare-array) row as items-only with empty queue', () => {
+    const v1 = JSON.stringify([{ i: 1, j: 2, dwShortcut: SHORTCUT.SKILLFUN, dwId: 9, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }]);
+    assert.equal(decodeTaskBar(v1)[1]![2]!.dwId, 9, 'items still decode');
+    assert.equal(decodeTaskBarQueue(v1).every((s) => s.dwShortcut === SHORTCUT.NONE), true, 'queue empty on v1 row');
+  });
+
+  it('null / unreadable column yields an all-empty grid + queue', () => {
     assert.equal(decodeTaskBar(null)[0]![0]!.dwShortcut, SHORTCUT.NONE);
     assert.equal(decodeTaskBar('')[0]![0]!.dwShortcut, SHORTCUT.NONE);
     assert.equal(decodeTaskBar('{bad json')[0]![0]!.dwShortcut, SHORTCUT.NONE);
+    assert.equal(decodeTaskBarQueue(null).every((s) => s.dwShortcut === SHORTCUT.NONE), true);
   });
 
   it('drops out-of-range entries defensively', () => {
-    const json = JSON.stringify([{ i: 99, j: 0, dwShortcut: SHORTCUT.SKILLFUN, dwId: 1 }]);
+    const json = JSON.stringify({ v: 2, items: [{ i: 99, j: 0, dwShortcut: SHORTCUT.SKILLFUN, dwId: 1 }], queue: [{ i: 99, dwShortcut: SHORTCUT.SKILLFUN, dwId: 2 }] });
     assert.equal(decodeTaskBar(json).every((row) => row.every((s) => s.dwShortcut === SHORTCUT.NONE)), true);
+    assert.equal(decodeTaskBarQueue(json).every((s) => s.dwShortcut === SHORTCUT.NONE), true);
   });
 });

@@ -33,7 +33,7 @@ export {
 } from './constants/aiConstants';
 export {
   NULL_ID, MAX_HUMAN_PARTS, MAX_SKILL_JOB, MAX_INVENTORY, MAX_BANK, MAX_BANK_TABS,
-  INVENTORY_SLOTS, BANK_SLOTS, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM,
+  INVENTORY_SLOTS, BANK_SLOTS, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE,
   MAX_SHORTCUT_STRING, SHORTCUT, MAX_SHORTCUT_CHAT,
   MAX_COOLTIME_GROUP, COOLTIME_GROUP,
 } from './constants/slots';
@@ -53,7 +53,6 @@ export type { Rng } from './math/rng';
 export { xRandomRng } from './math/rng';
 export {
   expLevelDiffMult, expToNextLevel, addExp, subDieDecExp,
-  withinLevelExp, cumulativeExp,
 } from './math/exp';
 export type { ExpGainResult } from './math/exp';
 export {
