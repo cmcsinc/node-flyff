@@ -57,8 +57,13 @@ export class MeleeAttackService {
       return { ok: false, reason: 'invalid_target' };
     }
     const packet = this.serializer.build(player.m_idPlayer, frame);
+    // Exclude the caster: C++ `AddMeleeAttack` skips `USERPTR != pMover`. The
+    // caster drives its own swing locally; echoing back re-queues the OBJMSG
+    // into the client's `m_qMeleeAtkMsg` (OnMeleeAttack → AddTail), which
+    // desyncs the auto-attack cadence and stalls it after a skill flushes the
+    // queue. Peers (and the damage broadcast below) still include the caster.
     const reached = this.deps.zoneManager.broadcastAround(
-      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet,
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet, player,
     );
     // Run the damage round-trip (DAMAGE broadcast + death/exp if lethal).
     const res = this.deps.combatService.resolveAttack(player, frame.objid);

@@ -60,8 +60,12 @@ export class RangeAttackService {
       return { ok: false, reason: 'invalid_target' };
     }
     const packet = this.serializer.build(player.m_idPlayer, frame);
+    // Exclude the caster: C++ `AddRangeAttack` skips `USERPTR != pMover`. The
+    // caster drives its own shot animation locally; echoing back re-queues it
+    // (OnRangeAttack) and desyncs auto-attack cadence after a skill. Damage
+    // broadcast below still includes the caster.
     const reached = this.deps.zoneManager.broadcastAround(
-      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet,
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet, player,
     );
     const res = this.deps.combatService.resolveAttack(player, frame.objid);
     if (!res.ok) {
