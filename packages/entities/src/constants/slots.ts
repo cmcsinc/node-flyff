@@ -37,6 +37,15 @@ export const BANK_SLOTS = MAX_BANK;                             // 42
 // --- Taskbar hotkey grid (`_Common/ProjectCmn.h:901-923`) --------------------
 export const MAX_SLOT_ITEM_COUNT = 8;   // ProjectCmn.h:904 -- taskbar pages (rows)
 export const MAX_SLOT_ITEM = 9;         // ProjectCmn.h:901 -- slots per page
+/**
+ * Action-slot queue depth (C++ `MAX_SLOT_QUEUE`, `ProjectCmn.h:902`). The
+ * action slot holds up to 5 queued skills the client fires in sequence
+ * (`CUserTaskBar::m_aSlotQueue[MAX_SLOT_QUEUE]`). Populated via
+ * `PACKETTYPE_SKILLTASKBAR`; persisted alongside `m_aSlotItem` in
+ * `characters.taskbar`; replayed via the queue section of
+ * `SNAPSHOTTYPE_TASKBAR`.
+ */
+export const MAX_SLOT_QUEUE = 5;
 export const MAX_SHORTCUT_STRING = 128; // _Common/DefineCommon.h:9 -- chat-macro text cap
 
 /**

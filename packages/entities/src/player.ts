@@ -19,9 +19,9 @@ import { getJobProps } from './tables/job';
 import type { JobProps } from './tables/job';
 import { maxFatiguePoint, maxHitPoint, maxManaPoint } from './math/vitals';
 import { DST, CHRSTATE_BITS } from './constants/dst';
-import { ParamModel } from './params/ParamModel';
+import { ParamModel, type DstEffect } from './params/ParamModel';
 import { BuffManager } from './params/BuffManager';
-import { NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, SHORTCUT, MAX_COOLTIME_GROUP } from './constants/slots';
+import { NULL_ID, INVENTORY_SLOTS, MAX_INVENTORY, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE, SHORTCUT, MAX_COOLTIME_GROUP } from './constants/slots';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest';
 import type { RuntimeQuest } from './state/quest';
 
@@ -82,6 +82,11 @@ function emptyTaskBar(): Shortcut[][] {
   return Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>
     Array.from({ length: MAX_SLOT_ITEM }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 })),
   );
+}
+
+/** Build an empty action-slot queue (`MAX_SLOT_QUEUE` skill slots). */
+function emptySkillQueue(): Shortcut[] {
+  return Array.from({ length: MAX_SLOT_QUEUE }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }));
 }
 
 /**
@@ -159,11 +164,11 @@ export class CPlayer {
    */
   m_nGold: number = 0;
   /**
-   * Within-level experience (C++ `m_nExp1` delta): progress toward the next
+   * Within-level experience (mirrors C++ `m_nExp1`): progress toward the next
    * level, 0 at each level boundary. On level-up the consumed portion is
-   * subtracted and any excess carries over (see `combat/formulas.addExp`).
-   * Hydrated on JOIN via `withinLevelExp`; the DB `exp` column and the
-   * SETEXPERIENCE wire field store the cumulative value.
+   * subtracted and any excess carries over (see `combat/formulas.addExp`). The
+   * DB `exp` column and the SETEXPERIENCE wire field store THIS value -- there
+   * is no cumulative form. Per-level threshold is `EXP_TABLE[level+1].nExp1`.
    */
   m_nExp: number = 0;
   m_dwSkin: number;
@@ -265,6 +270,22 @@ export class CPlayer {
    */
   m_Inventory: (InventorySlot | null)[] = new Array(INVENTORY_SLOTS).fill(null);
   /**
+   * Mirror of the client's `m_apIndex` (`_Common/Item.h:818`) -- per slot, the
+   * `m_dwObjId` the client believes is sitting there. The bag grid renders slot
+   * `i` via `GetAt(i) = m_apItem[m_apIndex[i]]`, so a `CREATEITEM` into slot `i`
+   * is only visible when its wire `m_dwObjId` equals `m_invIndex[i]`.
+   *
+   * Identity (`m_invIndex[i] = i`) at JOIN; **drifts** when items cross the
+   * bag/equip boundary on the client (`CItemContainer::DoEquip`/`UnEquip`,
+   * `Item.h:545/571`) and is NOT reset by `RemoveAtId` (`Item.h:761`) for bag
+   * slots. Without tracking this, `addItem` into a slot vacated by an
+   * unequipped-then-sold item writes `m_apItem[slot]` while the client still
+   * renders `m_apItem[stale_objid]` -> invisible until relog. Mirrors vanilla
+   * `CItemContainer::Add` (`Item.h:718-727`) which reads `nId = m_apIndex[i]`
+   * for exactly this reason. In-memory only: JOIN re-initializes both sides.
+   */
+  m_invIndex: Uint32Array = new Uint32Array(INVENTORY_SLOTS);
+  /**
    * Bank tabs (C++ `m_Bank[3]`, 42 slots each). Per-character in v15. Hydrated
    * from `BankRepository` on JOIN; mutated by the bank service. Tab 0..2.
    */
@@ -282,6 +303,42 @@ export class CPlayer {
    * retention is needed.
    */
   m_aSlotItem: Shortcut[][] = emptyTaskBar();
+  /**
+   * Action-slot queue (C++ `m_playTaskBar.m_aSlotQueue[MAX_SLOT_QUEUE]`) -- the
+   * 5-slot skill chain the client fires in sequence via the action slot UI.
+   * Populated by `PACKETTYPE_SKILLTASKBAR`; persisted alongside `m_aSlotItem`
+   * in `characters.taskbar` (encode v2); hydrated on JOIN and repushed via the
+   * queue section of `SNAPSHOTTYPE_TASKBAR`. END_SKILLQUEUE only signals cast
+   * cancel/exhaustion -- it does not mutate this array.
+   */
+  m_aSlotQueue: Shortcut[] = emptySkillQueue();
+  /**
+   * Active action-slot queue position (C++ `m_playTaskBar.m_nUsedSkillQueue`).
+   * -1 = no queue running; 0..MAX_SLOT_QUEUE-1 = currently-executing slot. Set
+   * to 0 on a successful `SUT_QUEUESTART` cast, incremented by the skill
+   * service's `advanceQueue` (port of C++ `SetNextSkill`,
+   * `UserTaskBar.cpp:203`) after each skill resolves, reset to -1 on queue
+   * exhaust or `END_SKILLQUEUE` cancel. Drives server-side combo progression.
+   */
+  m_nUsedSkillQueue: number = -1;
+  /**
+   * Action point (C++ `m_playTaskBar.m_nActionPoint`, 0..100). Gates how many
+   * queue slots chain: pos 1 costs 6 AP, 2 costs 8, 3 costs 11, 4 costs 30
+   * (`UserTaskBar.cpp:211` switch). Defaults to the 100 cap so a fresh logon
+   * can full-combo. ponytail: no AP regen tick (C++ `Mover.cpp:3417` regens
+   * ~+2/s while active); add when live action-slot pacing matters.
+   */
+  m_nActionPoint: number = 100;
+  /**
+   * Pending action-slot queue step timer. Set by `SkillService` when a queued
+   * skill is scheduled (the combo is spaced one cast per tick-window so the
+   * client's cast animation + `REQ_USESKILL` flag clear before the next fires
+   * and before the terminal `ENDSKILLQUEUE` ack). Cleared on queue exhaust,
+   * `END_SKILLQUEUE` cancel, or when the scheduled callback finds the player
+   * no longer live. ponytail: a per-tick `ActionSlotSystem` would own this
+   * instead of a raw timer on the entity.
+   */
+  m_queueTimer: ReturnType<typeof setTimeout> | undefined = undefined;
   /** True while the bank window is open (NPC range / instant-bank). */
   m_bBankOpen: boolean = false;
   /**
@@ -324,6 +381,13 @@ export class CPlayer {
    * not persisted; rebuilt on JOIN from the inventory.
    */
   readonly m_params: ParamModel = new ParamModel();
+  /**
+   * Set-item bonuses currently applied to `m_params` (C++ `SetDestParamSetItem`,
+   * `Mover.cpp:8956`). Removed + recomputed on every equip/unequip and re-seeded
+   * on JOIN -- set bonuses are a pure function of equipped state, so this cache
+   * is just the delta to reverse. Not persisted (rebuilt from the inventory).
+   */
+  m_setEffects: DstEffect[] = [];
   /**
    * Active timed DST buffs (C++ `CBuffMgr` / `m_buffs`, `_Common/Mover.h:553`).
    * Applies/ reverses effects on `m_params`; expiry driven by the world tick.
@@ -405,6 +469,13 @@ export class CPlayer {
     this.m_dwPKTime = Number(row.pk_time ?? 0);
     this.m_dwPKExp = row.pk_exp ?? 0;
     this.socket = socket;
+    // m_invIndex: identity for the bag range (m_apIndex[i] = i after Clear,
+    // Item.h:480), NULL_ID for equip slots (set by syncInvIndexAfterLoad once
+    // equipped items are hydrated). Matches the m_apIndex blob writeItemContainer
+    // emits at JOIN, so server and client start in sync.
+    for (let i = 0; i < INVENTORY_SLOTS; i++) {
+      this.m_invIndex[i] = i < MAX_INVENTORY ? i : NULL_ID;
+    }
   }
 
   /** Build a live player from a persisted row + connected socket. */
@@ -483,6 +554,74 @@ export class CPlayer {
     }
     if (objid >= 0 && objid < INVENTORY_SLOTS && this.m_Inventory[objid]) return objid;
     return -1;
+  }
+
+  // --- m_invIndex maintenance (mirror of client m_apIndex) -------------------
+  // Keep server tracking of m_apIndex in lockstep with the client's
+  // CItemContainer mutations so addItem() can pick the objid the client expects
+  // for a given slot. See the m_invIndex field doc above.
+
+  /** The `m_dwObjId` the client currently holds for `slot` (= its `m_apIndex[slot]`). */
+  clientObjId(slot: number): number {
+    return this.m_invIndex[slot] ?? slot;
+  }
+
+  /**
+   * After `JoinService.loadInventory` hydrates equipped slots: set the equip
+   * range of `m_invIndex` to match the JOIN container blob (slot = occupied ->
+   * `m_apIndex[slot] = slot`; empty -> `NULL_ID`). Bag range is already identity
+   * from the constructor.
+   */
+  syncInvIndexAfterLoad(): void {
+    for (let s = MAX_INVENTORY; s < INVENTORY_SLOTS; s++) {
+      this.m_invIndex[s] = this.m_Inventory[s] ? s : NULL_ID;
+    }
+  }
+
+  /**
+   * Equip move (bag `srcSlot` -> equip `dstSlot`): mirror `CItemContainer::DoEquip`
+   * (`Item.h:545`). The equip slot takes the bag slot's prior objid; the now-empty
+   * bag slot takes a fresh free objid (the first `m_apItem` index not used by any
+   * occupied slot). Idempotent against the prior occupant: callers handle the
+   * swap separately; this only tracks the primary bag->equip relocation.
+   */
+  onEquipIndexMove(srcSlot: number, dstSlot: number): void {
+    this.m_invIndex[dstSlot] = this.m_invIndex[srcSlot] ?? srcSlot;
+    this.m_invIndex[srcSlot] = this.firstFreeObjId();
+  }
+
+  /**
+   * Unequip move (equip `srcSlot` -> bag `dstSlot`): mirror `CItemContainer::UnEquip`
+   * (`Item.h:571`). The bag slot takes the equip slot's prior objid (the item's
+   * stable m_dwObjId); the equip slot is cleared. This is the drift that leaves
+   * `m_apIndex[dstSlot]` pointing at the stale equip objid after the item is
+   * later sold -- exactly what addItem() must match.
+   */
+  onUnequipIndexMove(srcSlot: number, dstSlot: number): void {
+    this.m_invIndex[dstSlot] = this.m_invIndex[srcSlot] ?? srcSlot;
+    this.m_invIndex[srcSlot] = NULL_ID;
+  }
+
+  /** MOVEITEM pure swap: mirror `CItemContainer::Swap` -- swap both slots' objids. */
+  onInvSlotsSwapped(a: number, b: number): void {
+    const tmp = this.m_invIndex[a];
+    this.m_invIndex[a] = this.m_invIndex[b];
+    this.m_invIndex[b] = tmp ?? b;
+  }
+
+  /**
+   * Smallest objid in `[0, INVENTORY_SLOTS)` not used by any occupied slot --
+   * mirrors the `m_apItem[i].IsEmpty()` scan in `CItemContainer::DoEquip`
+   * (`Item.h:555-567`). Used to assign a fresh placeholder when a bag slot is
+   * vacated by equipping out of it.
+   */
+  private firstFreeObjId(): number {
+    const used = new Set<number>();
+    for (let s = 0; s < INVENTORY_SLOTS; s++) {
+      if (this.m_Inventory[s]) used.add(this.m_invIndex[s] ?? s);
+    }
+    for (let o = 0; o < INVENTORY_SLOTS; o++) if (!used.has(o)) return o;
+    return NULL_ID;
   }
 
   // --- DST-adjusted primary-stat + vital-max readers (`MoverParam.cpp`) ---
