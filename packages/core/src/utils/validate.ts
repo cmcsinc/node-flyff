@@ -30,7 +30,7 @@ export const Validate = {
   /**
    * Validate a name field (account or character).
    *
-   * Default bounds are 3-16 alphanumeric characters, matching the Flyff v15
+   * Default bounds are 3-16 alphanumeric characters, matching the Flyff v19
    * account-name contract. Character names may override via {@link NameOptions}.
    *
    * @throws PacketError if length or charset is invalid.

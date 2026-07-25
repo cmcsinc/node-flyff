@@ -1,7 +1,7 @@
 /**
  * QueryPlayerDataService -- `PACKETTYPE_QUERY_PLAYER_DATA` (0xf000f802).
  *
- * v15 Neuz sends this when its local cache of another player's `sPlayerData` is
+ * v19 Neuz sends this when its local cache of another player's `sPlayerData` is
  * stale (guild/friend/party windows). C++ `CDPSrvr::OnQueryPlayerData`
  * (`WORLDSERVER/DPSrvr.cpp:1647`) replies via `CUser::AddQueryPlayerData`
  * (`WORLDSERVER/User.cpp:1779`) only when `pPlayerData->data.nVer != nVer`,

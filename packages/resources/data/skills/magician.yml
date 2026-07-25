@@ -39,401 +39,141 @@ skills:
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 2
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 3
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 4
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 5
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 6
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 7
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 8
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 9
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 10
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 11
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 12
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 13
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 14
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 15
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 16
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 17
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 18
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 19
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
       - level: 20
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - -95
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 23000
-        skillCount: 5
   - id: 65
     name: Flame Geyser
     name_id: IDS_PROPSKILL_TXT_000136
@@ -472,381 +212,241 @@ skills:
         abilityMax: 31
         abilityMinPvp: 30
         abilityMaxPvp: 31
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 9000
-        skillCount: 5
       - level: 2
         abilityMin: 30
         abilityMax: 31
         abilityMinPvp: 30
         abilityMaxPvp: 31
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 9500
-        skillCount: 5
       - level: 3
         abilityMin: 31
         abilityMax: 32
         abilityMinPvp: 31
         abilityMaxPvp: 32
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 10000
-        skillCount: 5
       - level: 4
         abilityMin: 31
         abilityMax: 32
         abilityMinPvp: 31
         abilityMaxPvp: 32
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 10500
-        skillCount: 5
       - level: 5
         abilityMin: 32
         abilityMax: 33
         abilityMinPvp: 32
         abilityMaxPvp: 33
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 11000
-        skillCount: 5
       - level: 6
         abilityMin: 32
         abilityMax: 33
         abilityMinPvp: 32
         abilityMaxPvp: 33
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 11500
-        skillCount: 5
       - level: 7
         abilityMin: 33
         abilityMax: 34
         abilityMinPvp: 33
         abilityMaxPvp: 34
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 12000
-        skillCount: 5
       - level: 8
         abilityMin: 33
         abilityMax: 34
         abilityMinPvp: 33
         abilityMaxPvp: 34
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 12500
-        skillCount: 5
       - level: 9
         abilityMin: 34
         abilityMax: 35
         abilityMinPvp: 34
         abilityMaxPvp: 35
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 13000
-        skillCount: 5
       - level: 10
         abilityMin: 34
         abilityMax: 35
         abilityMinPvp: 34
         abilityMaxPvp: 35
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 14000
-        skillCount: 5
       - level: 11
         abilityMin: 35
         abilityMax: 36
         abilityMinPvp: 35
         abilityMaxPvp: 36
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 15000
-        skillCount: 5
       - level: 12
         abilityMin: 35
         abilityMax: 36
         abilityMinPvp: 35
         abilityMaxPvp: 36
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 16000
-        skillCount: 5
       - level: 13
         abilityMin: 36
         abilityMax: 37
         abilityMinPvp: 36
         abilityMaxPvp: 37
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 17000
-        skillCount: 5
       - level: 14
         abilityMin: 36
         abilityMax: 37
         abilityMinPvp: 36
         abilityMaxPvp: 37
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 18000
-        skillCount: 5
       - level: 15
         abilityMin: 37
         abilityMax: 38
         abilityMinPvp: 37
         abilityMaxPvp: 38
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 19000
-        skillCount: 5
       - level: 16
         abilityMin: 37
         abilityMax: 38
         abilityMinPvp: 37
         abilityMaxPvp: 38
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 20000
-        skillCount: 5
       - level: 17
         abilityMin: 38
         abilityMax: 39
         abilityMinPvp: 38
         abilityMaxPvp: 39
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 21000
-        skillCount: 5
       - level: 18
         abilityMin: 38
         abilityMax: 39
         abilityMinPvp: 38
         abilityMaxPvp: 39
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 22000
-        skillCount: 5
       - level: 19
         abilityMin: 39
         abilityMax: 40
         abilityMinPvp: 39
         abilityMaxPvp: 40
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 23000
-        skillCount: 5
       - level: 20
         abilityMin: 39
         abilityMax: 40
         abilityMinPvp: 39
         abilityMaxPvp: 40
-        probability: 50
-        probabilityPvp: 50
+        destParams:
+          - 64
         adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
+          - 32768
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
         skillTime: 25000
-        skillCount: 5
   - id: 69
     name: Swordwind
     name_id: IDS_PROPSKILL_TXT_000138
@@ -885,381 +485,141 @@ skills:
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 2
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 3
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 4
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 5
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 6
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 7
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 8
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 9
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 10
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 11
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 12
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 13
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 14
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 15
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 16
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 17
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 18
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 19
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 20
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
   - id: 70
     name: Strongwind
     name_id: IDS_PROPSKILL_TXT_000140
@@ -1298,381 +658,141 @@ skills:
         abilityMax: 44
         abilityMinPvp: 43
         abilityMaxPvp: 44
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 2
         abilityMin: 43
         abilityMax: 44
         abilityMinPvp: 43
         abilityMaxPvp: 44
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 3
         abilityMin: 43
         abilityMax: 44
         abilityMinPvp: 43
         abilityMaxPvp: 44
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 4
         abilityMin: 43
         abilityMax: 44
         abilityMinPvp: 43
         abilityMaxPvp: 44
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 5
         abilityMin: 43
         abilityMax: 44
         abilityMinPvp: 43
         abilityMaxPvp: 44
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 6
         abilityMin: 45
         abilityMax: 46
         abilityMinPvp: 45
         abilityMaxPvp: 46
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 7
         abilityMin: 45
         abilityMax: 46
         abilityMinPvp: 45
         abilityMaxPvp: 46
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 8
         abilityMin: 45
         abilityMax: 46
         abilityMinPvp: 45
         abilityMaxPvp: 46
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 9
         abilityMin: 45
         abilityMax: 46
         abilityMinPvp: 45
         abilityMaxPvp: 46
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 10
         abilityMin: 45
         abilityMax: 46
         abilityMinPvp: 45
         abilityMaxPvp: 46
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 11
         abilityMin: 47
         abilityMax: 48
         abilityMinPvp: 47
         abilityMaxPvp: 48
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 12
         abilityMin: 47
         abilityMax: 48
         abilityMinPvp: 47
         abilityMaxPvp: 48
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 13
         abilityMin: 47
         abilityMax: 48
         abilityMinPvp: 47
         abilityMaxPvp: 48
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 43
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 14
         abilityMin: 47
         abilityMax: 48
         abilityMinPvp: 47
         abilityMaxPvp: 48
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 43
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 15
         abilityMin: 47
         abilityMax: 48
         abilityMinPvp: 47
         abilityMaxPvp: 48
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 16
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 17
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 18
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 19
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 49
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
       - level: 20
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 49
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 4
-        skillTime: 25000
-        skillCount: 5
   - id: 107
     name: Blinkpool
     name_id: IDS_PROPSKILL_TXT_000142
@@ -1707,365 +827,85 @@ skills:
     maxLevel: 20
     levels:
       - level: 1
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 22
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 14
-        skillTime: 25000
-        skillCount: 5
       - level: 2
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 22
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 14
-        skillTime: 25000
-        skillCount: 5
       - level: 3
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 23
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 14
-        skillTime: 25000
-        skillCount: 5
       - level: 4
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 23
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 15
-        skillTime: 25000
-        skillCount: 5
       - level: 5
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 24
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 15
-        skillTime: 25000
-        skillCount: 5
       - level: 6
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 24
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 15
-        skillTime: 25000
-        skillCount: 5
       - level: 7
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 15
-        skillTime: 25000
-        skillCount: 5
       - level: 8
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 16
-        skillTime: 25000
-        skillCount: 5
       - level: 9
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 16
-        skillTime: 25000
-        skillCount: 5
       - level: 10
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 16
-        skillTime: 25000
-        skillCount: 5
       - level: 11
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 16
-        skillTime: 25000
-        skillCount: 5
       - level: 12
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 17
-        skillTime: 25000
-        skillCount: 5
       - level: 13
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 28
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 17
-        skillTime: 25000
-        skillCount: 5
       - level: 14
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 17
-        skillTime: 25000
-        skillCount: 5
       - level: 15
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 18
-        skillTime: 25000
-        skillCount: 5
       - level: 16
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 18
-        skillTime: 25000
-        skillCount: 5
       - level: 17
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 18
-        skillTime: 25000
-        skillCount: 5
       - level: 18
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 19
-        skillTime: 25000
-        skillCount: 5
       - level: 19
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 19
-        skillTime: 25000
-        skillCount: 5
       - level: 20
-        abilityMin: 49
-        abilityMax: 50
-        abilityMinPvp: 49
-        abilityMaxPvp: 50
-        probability: 50
-        probabilityPvp: 50
-        adjParamVals:
-          - 65
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
+        cooldown: 3000
         skillRange: 20
-        skillTime: 25000
-        skillCount: 5
   - id: 118
     name: Ice Missile
     name_id: IDS_PROPSKILL_TXT_000144
@@ -2106,18 +946,15 @@ skills:
         abilityMaxPvp: 21
         probability: 20
         probabilityPvp: 20
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -1
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 4000
-        skillCount: 5
       - level: 2
         abilityMin: 20
         abilityMax: 21
@@ -2125,18 +962,15 @@ skills:
         abilityMaxPvp: 21
         probability: 22
         probabilityPvp: 22
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -1
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 3
         abilityMin: 21
         abilityMax: 22
@@ -2144,18 +978,15 @@ skills:
         abilityMaxPvp: 22
         probability: 24
         probabilityPvp: 24
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -2
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 8000
-        skillCount: 5
       - level: 4
         abilityMin: 21
         abilityMax: 22
@@ -2163,18 +994,15 @@ skills:
         abilityMaxPvp: 22
         probability: 26
         probabilityPvp: 26
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -2
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 10000
-        skillCount: 5
       - level: 5
         abilityMin: 22
         abilityMax: 23
@@ -2182,18 +1010,15 @@ skills:
         abilityMaxPvp: 23
         probability: 28
         probabilityPvp: 28
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -3
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 12000
-        skillCount: 5
       - level: 6
         abilityMin: 22
         abilityMax: 23
@@ -2201,18 +1026,15 @@ skills:
         abilityMaxPvp: 23
         probability: 30
         probabilityPvp: 30
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -3
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 14000
-        skillCount: 5
       - level: 7
         abilityMin: 23
         abilityMax: 24
@@ -2220,18 +1042,15 @@ skills:
         abilityMaxPvp: 24
         probability: 32
         probabilityPvp: 32
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -4
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 16000
-        skillCount: 5
       - level: 8
         abilityMin: 23
         abilityMax: 24
@@ -2239,18 +1058,15 @@ skills:
         abilityMaxPvp: 24
         probability: 34
         probabilityPvp: 34
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -4
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 18000
-        skillCount: 5
       - level: 9
         abilityMin: 24
         abilityMax: 25
@@ -2258,18 +1074,15 @@ skills:
         abilityMaxPvp: 25
         probability: 36
         probabilityPvp: 36
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -5
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 20000
-        skillCount: 5
       - level: 10
         abilityMin: 24
         abilityMax: 25
@@ -2277,18 +1090,15 @@ skills:
         abilityMaxPvp: 25
         probability: 38
         probabilityPvp: 38
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -5
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 22000
-        skillCount: 5
       - level: 11
         abilityMin: 25
         abilityMax: 26
@@ -2296,18 +1106,15 @@ skills:
         abilityMaxPvp: 26
         probability: 40
         probabilityPvp: 40
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -6
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 24000
-        skillCount: 5
       - level: 12
         abilityMin: 25
         abilityMax: 26
@@ -2315,18 +1122,15 @@ skills:
         abilityMaxPvp: 26
         probability: 42
         probabilityPvp: 42
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -6
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 26000
-        skillCount: 5
       - level: 13
         abilityMin: 26
         abilityMax: 27
@@ -2334,18 +1138,15 @@ skills:
         abilityMaxPvp: 27
         probability: 44
         probabilityPvp: 44
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -7
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 28000
-        skillCount: 5
       - level: 14
         abilityMin: 26
         abilityMax: 27
@@ -2353,18 +1154,15 @@ skills:
         abilityMaxPvp: 27
         probability: 46
         probabilityPvp: 46
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -7
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 30000
-        skillCount: 5
       - level: 15
         abilityMin: 27
         abilityMax: 28
@@ -2372,18 +1170,15 @@ skills:
         abilityMaxPvp: 28
         probability: 48
         probabilityPvp: 48
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -8
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 32000
-        skillCount: 5
       - level: 16
         abilityMin: 27
         abilityMax: 28
@@ -2391,18 +1186,15 @@ skills:
         abilityMaxPvp: 28
         probability: 50
         probabilityPvp: 50
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -8
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 34000
-        skillCount: 5
       - level: 17
         abilityMin: 28
         abilityMax: 29
@@ -2410,18 +1202,15 @@ skills:
         abilityMaxPvp: 29
         probability: 52
         probabilityPvp: 52
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -9
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 36000
-        skillCount: 5
       - level: 18
         abilityMin: 28
         abilityMax: 29
@@ -2429,18 +1218,15 @@ skills:
         abilityMaxPvp: 29
         probability: 54
         probabilityPvp: 54
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -9
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 38000
-        skillCount: 5
       - level: 19
         abilityMin: 29
         abilityMax: 30
@@ -2448,18 +1234,15 @@ skills:
         abilityMaxPvp: 30
         probability: 56
         probabilityPvp: 56
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -10
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 40000
-        skillCount: 5
       - level: 20
         abilityMin: 29
         abilityMax: 30
@@ -2467,18 +1250,15 @@ skills:
         abilityMaxPvp: 30
         probability: 58
         probabilityPvp: 58
+        destParams:
+          - 11
+          - 64
         adjParamVals:
           - -10
-        destData:
-          - 140
-          - -56
+          - 4096
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 42000
-        skillCount: 5
   - id: 119
     name: Static Ball
     name_id: IDS_PROPSKILL_TXT_000146
@@ -2517,381 +1297,141 @@ skills:
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 2
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 3
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 4
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 5
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 6
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 7
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 8
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 9
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 10
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 11
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 12
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 13
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 14
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 15
         abilityMin: 46
         abilityMax: 47
         abilityMinPvp: 46
         abilityMaxPvp: 47
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 16
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 17
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 18
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 19
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
       - level: 20
         abilityMin: 49
         abilityMax: 50
         abilityMinPvp: 49
         abilityMaxPvp: 50
-        probability: 58
-        probabilityPvp: 58
-        adjParamVals:
-          - -10
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 42000
-        skillCount: 5
   - id: 120
     name: Stone Spike
     name_id: IDS_PROPSKILL_TXT_000148
@@ -2932,16 +1472,13 @@ skills:
         abilityMaxPvp: 29
         probability: 10
         probabilityPvp: 5
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 2
         abilityMin: 28
         abilityMax: 29
@@ -2949,16 +1486,13 @@ skills:
         abilityMaxPvp: 29
         probability: 11
         probabilityPvp: 5
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 3
         abilityMin: 29
         abilityMax: 30
@@ -2966,16 +1500,13 @@ skills:
         abilityMaxPvp: 30
         probability: 11
         probabilityPvp: 5
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 4
         abilityMin: 29
         abilityMax: 30
@@ -2983,16 +1514,13 @@ skills:
         abilityMaxPvp: 30
         probability: 12
         probabilityPvp: 6
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 5
         abilityMin: 30
         abilityMax: 31
@@ -3000,16 +1528,13 @@ skills:
         abilityMaxPvp: 31
         probability: 12
         probabilityPvp: 6
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 6
         abilityMin: 30
         abilityMax: 31
@@ -3017,16 +1542,13 @@ skills:
         abilityMaxPvp: 31
         probability: 13
         probabilityPvp: 6
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 27
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 7
         abilityMin: 31
         abilityMax: 32
@@ -3034,16 +1556,13 @@ skills:
         abilityMaxPvp: 32
         probability: 13
         probabilityPvp: 6
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 8
         abilityMin: 31
         abilityMax: 32
@@ -3051,16 +1570,13 @@ skills:
         abilityMaxPvp: 32
         probability: 14
         probabilityPvp: 7
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 9
         abilityMin: 32
         abilityMax: 33
@@ -3068,16 +1584,13 @@ skills:
         abilityMaxPvp: 33
         probability: 14
         probabilityPvp: 7
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 10
         abilityMin: 32
         abilityMax: 33
@@ -3085,16 +1598,13 @@ skills:
         abilityMaxPvp: 33
         probability: 15
         probabilityPvp: 7
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 11
         abilityMin: 33
         abilityMax: 34
@@ -3102,16 +1612,13 @@ skills:
         abilityMaxPvp: 34
         probability: 15
         probabilityPvp: 7
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 12
         abilityMin: 33
         abilityMax: 34
@@ -3119,16 +1626,13 @@ skills:
         abilityMaxPvp: 34
         probability: 16
         probabilityPvp: 8
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 31
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 13
         abilityMin: 34
         abilityMax: 35
@@ -3136,16 +1640,13 @@ skills:
         abilityMaxPvp: 35
         probability: 16
         probabilityPvp: 8
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 14
         abilityMin: 34
         abilityMax: 35
@@ -3153,16 +1654,13 @@ skills:
         abilityMaxPvp: 35
         probability: 17
         probabilityPvp: 8
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 15
         abilityMin: 35
         abilityMax: 36
@@ -3170,16 +1668,13 @@ skills:
         abilityMaxPvp: 36
         probability: 17
         probabilityPvp: 8
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 16
         abilityMin: 35
         abilityMax: 36
@@ -3187,16 +1682,13 @@ skills:
         abilityMaxPvp: 36
         probability: 18
         probabilityPvp: 9
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 17
         abilityMin: 36
         abilityMax: 37
@@ -3204,16 +1696,13 @@ skills:
         abilityMaxPvp: 37
         probability: 18
         probabilityPvp: 9
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 18
         abilityMin: 36
         abilityMax: 37
@@ -3221,16 +1710,13 @@ skills:
         abilityMaxPvp: 37
         probability: 19
         probabilityPvp: 9
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 19
         abilityMin: 37
         abilityMax: 38
@@ -3238,16 +1724,13 @@ skills:
         abilityMaxPvp: 38
         probability: 19
         probabilityPvp: 9
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
       - level: 20
         abilityMin: 37
         abilityMax: 38
@@ -3255,16 +1738,13 @@ skills:
         abilityMaxPvp: 38
         probability: 20
         probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 64
+        adjParamVals:
+          - 8
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 2000
-        skillCount: 5
   - id: 121
     name: Mental Strike
     name_id: IDS_PROPSKILL_TXT_000150
@@ -3303,341 +1783,141 @@ skills:
         abilityMax: 36
         abilityMinPvp: 35
         abilityMaxPvp: 36
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 15
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 2
         abilityMin: 35
         abilityMax: 36
         abilityMinPvp: 35
         abilityMaxPvp: 36
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 15
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 3
         abilityMin: 36
         abilityMax: 37
         abilityMinPvp: 36
         abilityMaxPvp: 37
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 18
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 4
         abilityMin: 36
         abilityMax: 37
         abilityMinPvp: 36
         abilityMaxPvp: 37
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 18
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 5
         abilityMin: 37
         abilityMax: 38
         abilityMinPvp: 37
         abilityMaxPvp: 38
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 21
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 6
         abilityMin: 37
         abilityMax: 38
         abilityMinPvp: 37
         abilityMaxPvp: 38
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 21
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 7
         abilityMin: 38
         abilityMax: 39
         abilityMinPvp: 38
         abilityMaxPvp: 39
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 8
         abilityMin: 38
         abilityMax: 39
         abilityMinPvp: 38
         abilityMaxPvp: 39
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 25
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 9
         abilityMin: 39
         abilityMax: 40
         abilityMinPvp: 39
         abilityMaxPvp: 40
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 28
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 10
         abilityMin: 39
         abilityMax: 40
         abilityMinPvp: 39
         abilityMaxPvp: 40
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 28
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 11
         abilityMin: 40
         abilityMax: 41
         abilityMinPvp: 40
         abilityMaxPvp: 41
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 12
         abilityMin: 40
         abilityMax: 41
         abilityMinPvp: 40
         abilityMaxPvp: 41
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 29
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 13
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 14
         abilityMin: 41
         abilityMax: 42
         abilityMinPvp: 41
         abilityMaxPvp: 42
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 33
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 15
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 16
         abilityMin: 42
         abilityMax: 43
         abilityMinPvp: 42
         abilityMaxPvp: 43
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 35
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 17
         abilityMin: 43
         abilityMax: 44
         abilityMinPvp: 43
         abilityMaxPvp: 44
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 18
         abilityMin: 43
         abilityMax: 44
         abilityMinPvp: 43
         abilityMaxPvp: 44
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 19
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
       - level: 20
         abilityMin: 44
         abilityMax: 45
         abilityMinPvp: 44
         abilityMaxPvp: 45
-        probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 2000
-        skillCount: 5
   - id: 30
     name: Fire Strike
     name_id: IDS_PROPSKILL_TXT_000152
@@ -3676,381 +1956,241 @@ skills:
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 2
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 3
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 4
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 5
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 6
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 7
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 8
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 9
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 10
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 11
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 12
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 13
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 14
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 15
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 16
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 17
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 18
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 19
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
       - level: 20
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 32
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 5
   - id: 31
     name: Wind Cutter
     name_id: IDS_PROPSKILL_TXT_000154
@@ -4089,381 +2229,141 @@ skills:
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 2
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 3
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 4
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 5
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 6
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 7
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 8
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 9
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 10
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 11
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 12
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 13
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 14
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 15
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 16
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 17
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 18
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 19
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
       - level: 20
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 5
   - id: 32
     name: Waterball
     name_id: IDS_PROPSKILL_TXT_000156
@@ -4502,380 +2402,160 @@ skills:
         abilityMax: 51
         abilityMinPvp: 50
         abilityMaxPvp: 51
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 1
       - level: 2
         abilityMin: 50
         abilityMax: 51
         abilityMinPvp: 50
         abilityMaxPvp: 51
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 1
       - level: 3
         abilityMin: 51
         abilityMax: 52
         abilityMinPvp: 51
         abilityMaxPvp: 52
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 1
       - level: 4
         abilityMin: 51
         abilityMax: 52
         abilityMinPvp: 51
         abilityMaxPvp: 52
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 1
       - level: 5
         abilityMin: 52
         abilityMax: 53
         abilityMinPvp: 52
         abilityMaxPvp: 53
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 2
       - level: 6
         abilityMin: 52
         abilityMax: 53
         abilityMinPvp: 52
         abilityMaxPvp: 53
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 2
       - level: 7
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 2
       - level: 8
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 3
       - level: 9
         abilityMin: 54
         abilityMax: 55
         abilityMinPvp: 54
         abilityMaxPvp: 55
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 3
       - level: 10
         abilityMin: 54
         abilityMax: 55
         abilityMinPvp: 54
         abilityMaxPvp: 55
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 3
       - level: 11
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 4
       - level: 12
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 4
       - level: 13
         abilityMin: 56
         abilityMax: 57
         abilityMinPvp: 56
         abilityMaxPvp: 57
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 4
       - level: 14
         abilityMin: 56
         abilityMax: 57
         abilityMinPvp: 56
         abilityMaxPvp: 57
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 5
       - level: 15
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 5
       - level: 16
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 5
       - level: 17
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 5
       - level: 18
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 6
       - level: 19
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 6
       - level: 20
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
         skillCount: 6
   - id: 33
     name: Water Well
@@ -4915,381 +2595,241 @@ skills:
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 2
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 3
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 4
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 5
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 6
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 7
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 8
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 9
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 10
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 11
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 12
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 13
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 14
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 15
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 16
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 17
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 18
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 19
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 20
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 28
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
   - id: 34
     name: Lighting Ram
     name_id: IDS_PROPSKILL_TXT_000160
@@ -5328,381 +2868,141 @@ skills:
         abilityMax: 51
         abilityMinPvp: 50
         abilityMaxPvp: 51
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 2
         abilityMin: 50
         abilityMax: 51
         abilityMinPvp: 50
         abilityMaxPvp: 51
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 3
         abilityMin: 51
         abilityMax: 52
         abilityMinPvp: 51
         abilityMaxPvp: 52
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 4
         abilityMin: 51
         abilityMax: 52
         abilityMinPvp: 51
         abilityMaxPvp: 52
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 5
         abilityMin: 52
         abilityMax: 53
         abilityMinPvp: 52
         abilityMaxPvp: 53
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 6
         abilityMin: 52
         abilityMax: 53
         abilityMinPvp: 52
         abilityMaxPvp: 53
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 7
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 8
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 9
         abilityMin: 54
         abilityMax: 55
         abilityMinPvp: 54
         abilityMaxPvp: 55
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 10
         abilityMin: 54
         abilityMax: 55
         abilityMinPvp: 54
         abilityMaxPvp: 55
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 11
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 12
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 13
         abilityMin: 56
         abilityMax: 57
         abilityMinPvp: 56
         abilityMaxPvp: 57
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 14
         abilityMin: 56
         abilityMax: 57
         abilityMinPvp: 56
         abilityMaxPvp: 57
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 15
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 16
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 17
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 18
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 19
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 20
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
   - id: 35
     name: Lighting Shock
     name_id: IDS_PROPSKILL_TXT_000162
@@ -5741,381 +3041,241 @@ skills:
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 2
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 40
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 3
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 4
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 5
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 6
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 7
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 8
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 46
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 9
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 10
         abilityMin: 60
         abilityMax: 61
         abilityMinPvp: 60
         abilityMaxPvp: 61
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 48
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 11
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 12
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 13
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 14
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 53
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 15
         abilityMin: 62
         abilityMax: 63
         abilityMinPvp: 62
         abilityMaxPvp: 63
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 16
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 55
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 17
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 18
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 57
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 19
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 20
         abilityMin: 64
         abilityMax: 65
         abilityMinPvp: 64
         abilityMaxPvp: 65
-        probability: 20
-        probabilityPvp: 10
+        destParams:
+          - 33
         adjParamVals:
           - -20
-        destData:
-          - 140
-          - -56
         reqMp: 60
-        reqFp: 136
-        cooldown: 180000
         castingTime: 250
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
   - id: 36
     name: Rock Crash
     name_id: IDS_PROPSKILL_TXT_000164
@@ -6154,381 +3314,141 @@ skills:
         abilityMax: 51
         abilityMinPvp: 50
         abilityMaxPvp: 51
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 2
         abilityMin: 50
         abilityMax: 51
         abilityMinPvp: 50
         abilityMaxPvp: 51
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 3
         abilityMin: 51
         abilityMax: 52
         abilityMinPvp: 51
         abilityMaxPvp: 52
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 4
         abilityMin: 51
         abilityMax: 52
         abilityMinPvp: 51
         abilityMaxPvp: 52
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 5
         abilityMin: 52
         abilityMax: 53
         abilityMinPvp: 52
         abilityMaxPvp: 53
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 6
         abilityMin: 52
         abilityMax: 53
         abilityMinPvp: 52
         abilityMaxPvp: 53
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 7
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 8
         abilityMin: 53
         abilityMax: 54
         abilityMinPvp: 53
         abilityMaxPvp: 54
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 9
         abilityMin: 54
         abilityMax: 55
         abilityMinPvp: 54
         abilityMaxPvp: 55
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 10
         abilityMin: 54
         abilityMax: 55
         abilityMinPvp: 54
         abilityMaxPvp: 55
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 11
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 12
         abilityMin: 55
         abilityMax: 56
         abilityMinPvp: 55
         abilityMaxPvp: 56
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 13
         abilityMin: 56
         abilityMax: 57
         abilityMinPvp: 56
         abilityMaxPvp: 57
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 14
         abilityMin: 56
         abilityMax: 57
         abilityMinPvp: 56
         abilityMaxPvp: 57
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 15
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 16
         abilityMin: 57
         abilityMax: 58
         abilityMinPvp: 57
         abilityMaxPvp: 58
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 17
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 18
         abilityMin: 58
         abilityMax: 59
         abilityMinPvp: 58
         abilityMaxPvp: 59
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 19
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
       - level: 20
         abilityMin: 59
         abilityMax: 60
         abilityMinPvp: 59
         abilityMaxPvp: 60
-        probability: 20
-        probabilityPvp: 10
-        adjParamVals:
-          - -20
-        destData:
-          - 140
-          - -56
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
-        skillTime: 6000
-        skillCount: 6
   - id: 37
     name: Rooting
     name_id: IDS_PROPSKILL_TXT_000166
@@ -6562,342 +3482,162 @@ skills:
     maxLevel: 20
     levels:
       - level: 1
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 2
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 2
+        destParams:
+          - 11
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 2
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 4
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 4
+        destParams:
+          - 11
         reqMp: 30
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 3
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 6
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 6
+        destParams:
+          - 11
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 4
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 8
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 8
+        destParams:
+          - 11
         reqMp: 32
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 5
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 10
         probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        destParams:
+          - 11
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 6
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 12
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 12
+        destParams:
+          - 11
         reqMp: 34
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 7
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 14
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 14
+        destParams:
+          - 11
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 8
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 16
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 16
+        destParams:
+          - 11
         reqMp: 36
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 9
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 18
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 18
+        destParams:
+          - 11
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 10
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 20
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 20
+        destParams:
+          - 11
         reqMp: 38
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 11
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 22
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 22
+        destParams:
+          - 11
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 12
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 24
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 24
+        destParams:
+          - 11
         reqMp: 41
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 13
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 26
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 26
+        destParams:
+          - 11
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 14
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 28
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 28
+        destParams:
+          - 11
         reqMp: 42
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 15
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 30
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 30
+        destParams:
+          - 11
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 16
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 35
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 35
+        destParams:
+          - 11
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 17
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 40
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 40
+        destParams:
+          - 11
         reqMp: 44
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 18
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 45
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 45
+        destParams:
+          - 11
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 19
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 55
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 55
+        destParams:
+          - 11
         reqMp: 47
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6
       - level: 20
-        abilityMin: 59
-        abilityMax: 60
-        abilityMinPvp: 59
-        abilityMaxPvp: 60
         probability: 65
-        probabilityPvp: 10
-        destData:
-          - 140
-          - -56
+        probabilityPvp: 65
+        destParams:
+          - 11
         reqMp: 50
-        reqFp: 136
-        cooldown: 180000
         castingTime: 150
-        skillRange: 20
         skillTime: 6000
-        skillCount: 6

@@ -38,7 +38,7 @@ export class SetStateSerializer {
     w.writeDword(f.sta);        // m_nSta
     w.writeDword(f.dex);        // m_nDex
     w.writeDword(f.int);        // m_nInt
-    w.writeDword(0);            // m_nRemainLP (always 0 -- unused v15)
+    w.writeDword(0);            // m_nRemainLP (always 0 -- unused v19)
     w.writeDword(f.remainGP);   // m_nRemainGP
     return w.build();
   }

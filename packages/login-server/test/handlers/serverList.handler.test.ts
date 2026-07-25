@@ -24,7 +24,7 @@ const ENTRY: ServerListEntry = {
   channelCount: 1, status: 'online', channels: [],
 };
 
-describe('ServerListHandler -- v15 SRVR_LIST layout', () => {
+describe('ServerListHandler -- v19 SRVR_LIST layout', () => {
   // szBak: the handler echoes the account name right after cbAccountFlag
   // (REQUIRED by the __EUROPE_0514 client build, see handler doc). Parsed as a
   // DWORD-length-prefixed string, so the test reads it at a moving offset

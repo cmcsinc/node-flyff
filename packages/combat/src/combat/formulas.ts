@@ -1,5 +1,5 @@
 /**
- * v15 combat math -- pure port of the `CAttackArbiter` damage pipeline.
+ * v19 combat math -- pure port of the `CAttackArbiter` damage pipeline.
  *
  * Source: `docs/combat-research.md` #A/#B (canonical). All C++ function names
  * preserved as comments. Pure functions over {@link Combatant} views so the

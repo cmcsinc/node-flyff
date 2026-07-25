@@ -8,7 +8,7 @@
  *
  * `cType` selects the container (0 = main inventory slot); `nId` is the slot
  * index; `cParam` is the `UI_*` field (Mover.h:62) -- `UI_NUM=0` = stack count;
- * `dwValue` the new value; `dwTime` v15 trailing field (0 here).
+ * `dwValue` the new value; `dwTime` v19 trailing field (0 here).
  *
  * @module net/snapshot/updateItem
  */
@@ -79,6 +79,6 @@ function buildUpdateItem(objid: number, slot: number, cParam: number, count: num
   w.writeByte(slot & 0xff);                // nId
   w.writeByte(cParam);                     // UI_NUM / UI_COOLTIME
   w.writeDword(count);                     // dwValue
-  w.writeDword(0);                         // dwTime (v15)
+  w.writeDword(0);                         // dwTime (v19)
   return w.build();
 }

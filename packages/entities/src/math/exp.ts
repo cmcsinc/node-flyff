@@ -73,7 +73,7 @@ export function addExp(level: number, exp: number, amount: number): ExpGainResul
  * applied on **revive** (not on death itself). Subtracts a % of the exp needed
  * for the current level off the within-level `m_nExp`, clamped at 0.
  *
- * v15 C++ never de-levels here (`bLvDown` forcibly reset at `Mover.cpp:7189`),
+ * v19 C++ never de-levels here (`bLvDown` forcibly reset at `Mover.cpp:7189`),
  * so the level is unchanged.
  *
  * Loss % by level bracket -- simplified from `DiePenalty.inc:35-60`

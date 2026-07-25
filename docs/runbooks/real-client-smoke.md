@@ -1,12 +1,12 @@
 # Real-Client Smoke Runbook
 
-Boot the 3 servers + connect a real v15 client, with packet-level visibility so
+Boot the 3 servers + connect a real v19 client, with packet-level visibility so
 you can see every byte the client sends and confirm our server handles it.
 
 ## Prerequisites
 
 - **Node 20+**, **pnpm**, **Redis** running on `localhost:6379`.
-- A **v15 Flyff client** (`Neuz.exe`) on Windows, pointed at `127.0.0.1`.
+- A **v19 Flyff client** (`Neuz.exe`) on Windows, pointed at `127.0.0.1`.
 - `pnpm install` done at the repo root.
 
 ## 1. Secrets + DB

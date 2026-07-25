@@ -59,8 +59,10 @@ export class DoUseItemHandler {
       const objid = (dwData >>> 16) & 0xffff;
       const slot = player.findSlotByObjId(objid);
       if (slot < 0) { logger.debug({ charId: player.m_idPlayer, objid, nPart }, 'DOUSEITEM item not found by objid'); return; }
+      logger.info({ charId: player.m_idPlayer, objid, slot, nPart, itemId: player.m_Inventory?.[slot]?.itemId }, 'DOUSEITEM recv');
 
       const r = this.deps.useItemService.use(player, slot, nPart);
+      logger.info({ charId: player.m_idPlayer, kind: r.kind, slot, cooltime: 'cooltime' in r ? r.cooltime : undefined, remaining: 'remaining' in r ? r.remaining : undefined }, 'DOUSEITEM result');
       if (r.kind === 'equip') {
         const e = r.equip;
         if (!e.ok) { logger.debug({ charId: player.m_idPlayer, slot, nPart, reason: e.reason }, 'DOUSEITEM equip rejected'); return; }

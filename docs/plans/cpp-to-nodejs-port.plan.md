@@ -67,7 +67,7 @@ Repos exist (account, character, inventory). Verify schema vs C++ DB (`_Database
 - [ ] Migration `001_initial`: `accounts`, `characters`, `character_items`. Fields mirror C++ (`m_szName`, `m_nLevel`, job, stats, position, gold). Test: migrate up on `:memory:` sqlite, assert columns.
 - [ ] `account.repo` — `findByUsername`, `create`. Test CRUD + not-found on in-memory sqlite.
 - [ ] `character.repo` — `listByAccount`, `create`, `findById`, `delete`. Test list-by-account isolation.
-- [ ] Argon2id password hashing (rule 03; store argon2(md5) for v15 clients). Test hash/verify round-trip.
+- [ ] Argon2id password hashing (rule 03; store argon2(md5) for v19 clients). Test hash/verify round-trip.
 
 ### Phase 1.C — Login server (from `CERTIFIER`/`LOGINSERVER`)
 Port `ON_MSG(PACKETTYPE_CERTIFY,...)` and server-list flow.
@@ -96,7 +96,7 @@ Enter-world only for this milestone. Port `ON_MSG(PACKETTYPE_JOIN, &CDPSrvr::OnA
 
 ### Phase 1.F — End-to-end verification
 - [ ] Integration test: mock socket drives CERTIFY → SRVR_LIST → (cluster) GETPLAYERLIST → SEL_PLAYER → (world) JOIN → self-ADDOBJ. Assert byte-level packets at each hop.
-- [ ] Manual smoke: three servers boot, IPC connects, a scripted TCP client (or real Flyff v15 client if available) completes login→world. Use `/verify` skill.
+- [ ] Manual smoke: three servers boot, IPC connects, a scripted TCP client (or real Flyff v19 client if available) completes login→world. Use `/verify` skill.
 - [ ] Coverage ≥80% across touched packages (`pnpm test:coverage`).
 - [ ] Write TDD evidence report → `docs/testing/login-to-world.tdd.md` (journeys, RED/GREEN per feature, coverage, C++ source citations).
 

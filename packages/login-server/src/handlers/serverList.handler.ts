@@ -21,7 +21,7 @@ const NULL_ID = 0xffffffff;
 /**
  * Server list handler -- sends `PACKETTYPE_SRVR_LIST` (0xfd).
  *
- * Byte layout mirrors what the v15 client parses (`Neuz/DPCertified.cpp:204-270`
+ * Byte layout mirrors what the v19 client parses (`Neuz/DPCertified.cpp:204-270`
  * `CDPCertified::OnSvrList`, server send at `CERTIFIER/DPCertifier.cpp:154-196`):
  *
  *   [DWORD dwAuthKey][BYTE cbAccountFlag][DWORD count]
@@ -29,7 +29,7 @@ const NULL_ID = 0xffffffff;
  *               [DWORD b18][long count][long enable][long max]
  *
  * `BOOL b18` is 4 bytes on Win32 (`_Network/Misc/Include/Misc.h:8-30`). Minimum
- * v15 mainserver build (no `__BILLING0712` / `__GPAUTH_*` / `LANG_THA`).
+ * v19 mainserver build (no `__BILLING0712` / `__GPAUTH_*` / `LANG_THA`).
  *
  * `dwAuthKey` is the certifier-issued session key the client carries to the
  * `:28000` LoginServer. Slice: generated random non-zero here (the cluster path
@@ -44,7 +44,7 @@ export class ServerListHandler {
       const servers = this.serverListService.getServerList();
       const dwAuthKey = randomInt(1, 0x100000000); // non-zero DWORD
 
-      // Flatten the server->channel tree into the SERVER_DESC array the v15
+      // Flatten the server->channel tree into the SERVER_DESC array the v19
       // client expects (WndTitle.cpp:685-747): top-level servers have
       // dwParent=NULL_ID (0xffffffff) and populate the server list box; channels
       // have dwParent=<server.dwID> and populate the channel list box. With no

@@ -1,5 +1,5 @@
 /**
- * v15 `__CRC` packet frame -- the 13-byte header every real Flyff v15 client uses.
+ * v19 `__CRC` packet frame -- the 13-byte header every real Flyff v19 client uses.
  *
  * Layout (`_Network/Net/Include/buffer.h:13-23`, build `_Network/Net/Src/buffer.cpp:
  * 147-174`, verify `_Network/Net/Src/clientsock.cpp:378-393,450-457`):
@@ -117,7 +117,7 @@ export function tryDecodeCrcFrame(chunk: Buffer, protocolId: number): CrcFrameDe
 }
 
 /**
- * The v15 protocolId hello: an 8-byte payload `[DWORD 0][DWORD protocolId]`
+ * The v19 protocolId hello: an 8-byte payload `[DWORD 0][DWORD protocolId]`
  * (`clientsock.cpp:515-519`). If `payload` is a hello, returns the new id.
  */
 export function extractProtocolIdHello(payload: Buffer): number | null {

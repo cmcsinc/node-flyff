@@ -1,6 +1,6 @@
-# v15 Combat — Research Findings (C++ → TS port)
+# v19 Combat — Research Findings (C++ → TS port)
 
-Source root: `H:\flyff\v15\Source\Source\`. Generated 2026-07-21 by 4 parallel researcher dives.
+Source root: `H:\flyff\v19\Source\Source\`. Generated 2026-07-21 by 4 parallel researcher dives.
 This is the canonical formula reference for porting the combat system. Do not re-research — cite this.
 
 ---
@@ -88,7 +88,7 @@ NPC HP: dwAddHp * monsterHitpointRate(1.0) * hitPointRate(1.0)
 Col order: `fAttackSpeed, fFactorMaxHP, fFactorMaxMP, fFactorMaxFP, fFactorDef, fFactorHPRec, fFactorMPRec, fFactorFPRec, fMeleeSWD, fMeleeAXE, fMeleeSTAFF, fMeleeSTICK, fMeleeKNUCKLE, fMagicWAND, fBlocking, fMeleeYOYO, fCritical`
 - JOB_VAGRANT(0):  75, 0.9, 0.3, 0.3, 1.0, 1.2, 0.5, 0.5, 4.5, 5.5, 0.8, 3.0, 5.0, 6.0, 0.2, 4.2, 1.0
 - JOB_MERCENARY(1):80, 1.5, 0.5, 0.7, 1.35,1.6, 0.5, 1.0, 4.5, 5.5, 0.8, 3.0, 5.0, 6.0, 0.8, 4.2, 1.0
-- Full 32 rows at `H:\flyff\v15\Server\Resource\propJob.inc:3-34`. Master/Hero rows dup base.
+- Full 32 rows at `H:\flyff\v19\Server\Resource\propJob.inc:3-34`. Master/Hero rows dup base.
 - NPC `GetJobProp()` always returns VAGRANT (job 0).
 - Job ids: `resource/defineJob.h:41-85` (JOB_VAGRANT=0 … JOB_ELEMENTOR_HERO=31, MAX_JOB=32).
 
@@ -241,7 +241,7 @@ Client sends HIWORD(nParam3)=error; server reads LOWORD(=0), recomputes via GetA
 ## C. Combat Packet Wire Formats (User.cpp, DPClient.cpp, MsgHdr.h)
 
 All snapshot sub-entries: `[DWORD objid][WORD subtype][body]` inside PACKETTYPE_SNAPSHOT frame.
-**DEAD in v15** (do NOT implement): top-level PACKETTYPE_SETEXPERIENCE/MOVERDEATH/CREATEITEM/SETLEVEL, PACKETTYPE_ADDEXPERIENCE, SNAPSHOTTYPE_UPDATE_MOVER, SNAPSHOTTYPE_UPDATE_ITEM. Only snapshot sub-types are live.
+**DEAD in v19** (do NOT implement): top-level PACKETTYPE_SETEXPERIENCE/MOVERDEATH/CREATEITEM/SETLEVEL, PACKETTYPE_ADDEXPERIENCE, SNAPSHOTTYPE_UPDATE_MOVER, SNAPSHOTTYPE_UPDATE_ITEM. Only snapshot sub-types are live.
 
 ### DAMAGE — SNAPSHOTTYPE_DAMAGE = 0x0013 (User.cpp:4435 AddDamage, DPClient.cpp:1724 OnDamage)
 Vicinity broadcast (this IS the per-mover HP sync — client does `IncHitPoint(-dwHit)` locally).

@@ -5,7 +5,7 @@
  * the C++ `m_szCharacterKey`) that resolves to a dialog prefix periodically
  * "speaks" its state-0 greeting as a speech bubble above itself.
  *
- * Protocol (verified against the v15 C++ source):
+ * Protocol (verified against the v19 C++ source):
  *   - Bubble = `SNAPSHOTTYPE_CHAT` (0x0001) snapshot attributed to the NPC's
  *     objid. `Speak(npcId, n)` -> `CUserMng::AddChat((CCtrl*)pMover, str)`
  *     (`WORLDSERVER/User.cpp:4309`) -> `ar << GETID(pCtrl) << SNAPSHOTTYPE_CHAT;

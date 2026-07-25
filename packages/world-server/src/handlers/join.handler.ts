@@ -10,7 +10,7 @@
  *   name:String      account:String  password:String  [messenger block]
  *
  * Note: `WORLDSERVER/DPSrvr.cpp:612` `OnAddUser` reads a *different*
- * (cache->world internal) layout. In v15 the CacheServer re-serializes the
+ * (cache->world internal) layout. In v19 the CacheServer re-serializes the
  * packet before forwarding. This emulator has no separate cache layer, so the
  * world's client-facing port receives the Neuz-format packet directly.
  *

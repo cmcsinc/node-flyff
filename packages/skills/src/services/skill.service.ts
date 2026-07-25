@@ -151,8 +151,8 @@ export class SkillService {
    * `resourceType` (KT_MAGIC=1→MP, KT_SKILL=2→FP), set cooldown (SR_AFTER),
    * broadcast USESKILL (incl caster), then apply the effect.
    *
-   * ponytail: buffs (dwDestParam=0 across all v15 skills -- C++ per-id special
-   * case, not data-driven), AoE, multi-hit, projectile.
+   * ponytail: AoE, multi-hit, projectile, debuff-probability roll (nProbability
+   * currently ignored -- debuff always applies on hit).
    */
   cast(player: CPlayer, frame: UseSkillClientFrame): SkillCastOutcome {
     const outcome = this.executeCast(player, frame);
@@ -376,11 +376,15 @@ export class SkillService {
   /** Spend the routed resource (clamp >= 0) + sync the client. */
   private spendResource(player: CPlayer, need: { mp: number; fp: number }): void {
     if (need.mp > 0) {
-      player.m_nMp = Math.max(0, player.m_nMp - need.mp);
+      const before = player.m_nMp;
+      player.m_nMp = Math.max(0, before - need.mp);
+      logger.info({ charId: player.m_idPlayer, before, cost: need.mp, after: player.m_nMp }, 'spend MP');
       this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp));
     }
     if (need.fp > 0) {
-      player.m_nFp = Math.max(0, player.m_nFp - need.fp);
+      const before = player.m_nFp;
+      player.m_nFp = Math.max(0, before - need.fp);
+      logger.info({ charId: player.m_idPlayer, before, cost: need.fp, after: player.m_nFp }, 'spend FP');
       this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp));
     }
   }

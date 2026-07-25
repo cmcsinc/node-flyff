@@ -1,7 +1,7 @@
 /**
  * MapKeyService -- `PACKETTYPE_MAP_KEY` (0xfffff000) business logic.
  *
- * v15 Neuz sends one MAP_KEY per `.wld` file as it loads the world right after
+ * v19 Neuz sends one MAP_KEY per `.wld` file as it loads the world right after
  * the `WORLD_READINFO` sub-snapshot (`Neuz/worldmng.cpp:738`, build at
  * `Neuz/DPClient.cpp:18620` `SendMapKey`). The C++ world compares the client's
  * key against its loaded map manifest in `CWorldMng::CheckMapKey`

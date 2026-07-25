@@ -4,7 +4,7 @@
  * Ports `CDPSrvr::OnPutItemBank` / `OnGetItemBank` / `OnPutGoldBank` /
  * `OnGetGoldBank` (`WORLDSERVER/DPSrvr.cpp:3430/3791/3848/3900`). Bank is
  * account-shared (3 tabs * BANK_SLOTS). Moves items between the main bag and
- * `m_Bank[tab]`, gold between `m_nGold` and `m_BankGold[tab]` -- v15 carries
+ * `m_Bank[tab]`, gold between `m_nGold` and `m_BankGold[tab]` -- v19 carries
  * one gold pool per tab (`m_BankGold[3]`), and PUTGOLDBANK / GETGOLDBANK send
  * `BYTE nSlot` to select it. Each journals + persists before the handler acks
  * (PUTITEMBANK / GETITEMBANK / PUTGOLDBANK).
@@ -157,7 +157,7 @@ export class BankService {
   }
 
   /**
-   * Move `amount` gold from inv into bank `tab` (v15 per-tab gold pool,
+   * Move `amount` gold from inv into bank `tab` (v19 per-tab gold pool,
    * `m_BankGold[tab]`). `tab` is the `BYTE nSlot` from PUTGOLDBANK
    * (DPSrvr.cpp:3848); validated in [0, MAX_BANK_TABS).
    */

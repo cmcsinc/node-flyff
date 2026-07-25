@@ -5,7 +5,7 @@
  *
  *   idPlayer:DWORD   nVer:int
  *
- * v15 Neuz sends this when opening guild/friend/party windows whose cached
+ * v19 Neuz sends this when opening guild/friend/party windows whose cached
  * `sPlayerData` is stale (`Neuz/DPClient.cpp:13340` `SendQueryPlayerData`). The
  * service stub returns no reply; the client keeps its existing cache. No rate
  * limiter yet (rule 03 flags it as repeatable -- add when the real reply ships).

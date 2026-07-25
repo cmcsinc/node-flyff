@@ -1,7 +1,7 @@
 /**
  * PkModeService -- PK-mode toggle logic.
  *
- * The v15 client sends `DWORD dwMode` via `PACKETTYPE_MODE` (0xffffff7b).
+ * The v19 client sends `DWORD dwMode` via `PACKETTYPE_MODE` (0xffffff7b).
  * `dwMode=1` = PK on, `dwMode=0` = PK off. This sets `player.m_bPKMode`, which
  * gates PvP targeting in the combat pipeline (`isPlayerAttackableBy`).
  *
@@ -26,7 +26,7 @@ import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'pkMode-service' });
 
-/** v15 client PK-mode toggle values (C++ `OnMode` dispatch table). */
+/** v19 client PK-mode toggle values (C++ `OnMode` dispatch table). */
 const PK_MODE_ON = 1;
 const PK_MODE_OFF = 0;
 

@@ -51,7 +51,7 @@ describe('DropService', () => {
     assert.equal(goldSeedId(100), 14);  // SEED3 boundary
     assert.equal(goldSeedId(101), 15);  // SEED4
     assert.equal(goldSeedId(9999), 15); // SEED4
-    // itemId 0 null-derefs CItemBase::SetTexture in the v15 client -- never emit it.
+    // itemId 0 null-derefs CItemBase::SetTexture in the v19 client -- never emit it.
     assert.ok(goldSeedId(1) !== 0 && goldSeedId(9999) !== 0);
   });
 

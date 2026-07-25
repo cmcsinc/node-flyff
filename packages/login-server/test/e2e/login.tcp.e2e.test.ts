@@ -21,7 +21,7 @@ import { encryptV15Password } from '../../src/utils/v15Password';
 type LoginSuccess = [{ accountId: number; socket: unknown; handoffToken: string }];
 
 /**
- * Full v15 certifier connection over real TCP, matching the REAL client flow:
+ * Full v19 certifier connection over real TCP, matching the REAL client flow:
  *   1. server SENDS the 8-byte protocolId hello (plain-framed) on accept
  *   2. client reads the hello, adopts the id, uses it to CRC all its frames
  *   3. client sends CRC-framed CERTIFY: [str ver][str acct][672B rijndael blob]
@@ -43,7 +43,7 @@ const SALT = 'kikugalanet';
 const md5hex = (pw: string) => createHash('md5').update(SALT + pw).digest('hex');
 const VALID_MD5 = md5hex(PASSWORD);
 
-/** CRC-framed v15 CERTIFY. Payload leads with the opcode DWORD (dispatcher strips it). */
+/** CRC-framed v19 CERTIFY. Payload leads with the opcode DWORD (dispatcher strips it). */
 function certifyFrame(account: string, md5: string, protocolId: number, version = PROTOCOL_VERSION): Buffer {
   const w = new PacketWriter();
   w.writeDword(PACKETTYPE.CERTIFY);
@@ -55,7 +55,7 @@ function certifyFrame(account: string, md5: string, protocolId: number, version 
 
 const tick = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
-describe('Login v15 TCP smoke (CRC frame + hello + rijndael CERTIFY)', () => {
+describe('Login v19 TCP smoke (CRC frame + hello + rijndael CERTIFY)', () => {
   let db: ReturnType<typeof createDb>;
   let server: Server;
   let port: number;
@@ -142,7 +142,7 @@ describe('Login v15 TCP smoke (CRC frame + hello + rijndael CERTIFY)', () => {
     let ok = false;
     for (let i = 0; i < 40 && !ok; i++) { await tick(25); ok = captured.length > before; }
     sock.destroy();
-    assert.ok(ok, 'login:success must fire for valid v15 credentials');
+    assert.ok(ok, 'login:success must fire for valid v19 credentials');
     const last = captured[captured.length - 1]!;
     assert.equal(last.accountId, 1);
     assert.ok(last.handoffToken.length > 0);

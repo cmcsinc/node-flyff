@@ -106,7 +106,7 @@ export const SNAPSHOTTYPE_GETDESTOBJ = 0x004a;       // MsgHdr.h:947 -- AddGetDe
 export const SNAPSHOTTYPE_MOVERMOVED = 0x00ca;       // MsgHdr.h:1095 -- 60B movement frame
 export const SNAPSHOTTYPE_MOVERBEHAVIOR = 0x00cb;    // MsgHdr.h:1096 -- 60B motion frame (same body)
 export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195
-// Added for the remaining v15 C->S handlers (DPSrvr.cpp MsgHdr.h):
+// Added for the remaining v19 C->S handlers (DPSrvr.cpp MsgHdr.h):
 export const SNAPSHOTTYPE_CHAT_OUT = 0x00bc;         // MsgHdr.h:1078 -- CHATTEXT (defined-text echo)
 export const SNAPSHOTTYPE_MOTION = 0x0098;           // MsgHdr.h:1034 -- MOTION echo
 export const SNAPSHOTTYPE_ENDSKILLQUEUE = 0x00e5;   // MsgHdr.h:1115 -- AddHdr(self) bodyless ack (taskbar cancels queued skill)
@@ -277,7 +277,7 @@ export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
  * first-hitter / killer) for this long; afterwards anyone may loot it.
  * Ports `CMover::IsLoot` (`_Common/MoverActEvent.cpp:2234`): after `SEC(7)`
  * since `m_dwDropTime` the pile goes free-for-all. (Pre-`__S_9` builds used
- * 40 s; v15 ships the 7 s gate.)
+ * 40 s; v19 ships the 7 s gate.)
  */
 export const LOOT_FFA_MS = 7_000;
 
@@ -292,7 +292,7 @@ export const DST_GOLD = 10000;                       // defineAttribute.h:352
 // Moved to @flyff/entities -- re-exported at bottom. See entities/constants/slots.ts.
 
 /**
- * Circular ground-plane broadcast radius approximating the v15 `CLinkMap`
+ * Circular ground-plane broadcast radius approximating the v19 `CLinkMap`
  * visibility grid (`LinkMap.cpp:66`): standard outdoor zone `nView=1`, 64-unit
  * cells, 2-cell range => 256*256 broadcast box (128 half-extent per axis). A
  * circle that covers that box needs r >= 128sqrt2 ~= 181; 200 rounds up to guarantee

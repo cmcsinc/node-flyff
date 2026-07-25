@@ -157,7 +157,7 @@ describe('PacketDispatcher', () => {
   });
 
   it('crc mode: sends a plain-framed protocolId hello on connect (server-first)', { timeout: TEST_TIMEOUT }, async () => {
-    // v15 crcRead server: on accept it must SEND [DWORD 0][DWORD protocolId]
+    // v19 crcRead server: on accept it must SEND [DWORD 0][DWORD protocolId]
     // plain-framed. The real client blocks 10s waiting for this, else drops.
     const h = await withHarness(silentLogger(), { crc: true });
     const sock = await connect(h.port);

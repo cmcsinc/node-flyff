@@ -8,11 +8,11 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '@flyff/entities';
+import { CPlayer, DST } from '@flyff/entities';
 import { EquipService } from '../../src/services/equip.service';
 import { MAX_INVENTORY } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
-import type { ItemDefinition } from '@flyff/resources';
+import type { ItemDefinition, SetItemDef } from '@flyff/resources';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {
@@ -30,6 +30,7 @@ function makeSvc(getItem: (id: number) => ItemDefinition | undefined) {
   const removedSlots: number[] = [];
   const journalCalls: Array<{ type: string }> = [];
   const sent: Buffer[] = [];
+  const broadcast: Buffer[] = [];
   const svc = new EquipService({
     inventoryRepo: {
       setItem: async (_c: number, slot: number, itemId: number) => { setItemCalls.push({ slot, itemId }); },
@@ -37,9 +38,10 @@ function makeSvc(getItem: (id: number) => ItemDefinition | undefined) {
     },
     getItem,
     sendTo: (_p, buf: Buffer) => { sent.push(buf); },
+    broadcastAround: (_p, buf: Buffer) => { broadcast.push(buf); },
     journal: { append: (e: { type: string }) => { journalCalls.push(e); } } as never,
   });
-  return { svc, setItemCalls, removedSlots, journalCalls, sent };
+  return { svc, setItemCalls, removedSlots, journalCalls, sent, broadcast };
 }
 
 describe('EquipService.equip', () => {
@@ -150,6 +152,27 @@ describe('EquipService.equip', () => {
     assert.equal(r.ok, false);
     if (!r.ok) assert.equal(r.reason, 'restricted');
   });
+
+  it('broadcasts one SETDESTPARAM per item effect on equip + RESETDESTPARAM on unequip', () => {
+    // v19 Neuz does NOT apply equip DST locally (#ifndef __CLIENT on SetDestParamEquip)
+    // so the server must push every effect. Two effects on the ring -> two snapshots.
+    const RING = 6100, STR = 1, STA = 2, EQUIP_SLOT = 10;
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: RING, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [RING, { id: RING, name: 'Stat Ring', name_id: 'ITEM_R', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: EQUIP_SLOT, effects: [{ dst: STR, adj: 3 }, { dst: STA, adj: 5 }] }],
+    ]);
+    const { svc, broadcast } = makeSvc((id) => table.get(id));
+
+    const r = svc.equip(player, 0, EQUIP_SLOT);
+    assert.equal(r.ok, true);
+    assert.equal(broadcast.length, 2, 'one SETDESTPARAM per effect on equip');
+
+    const unequipR = svc.unequip(player, EQUIP_SLOT);
+    assert.equal(unequipR.ok, true);
+    // 2 from equip + 2 RESETDESTPARAM from unequip = 4 total
+    assert.equal(broadcast.length, 4, 'one RESETDESTPARAM per effect on unequip');
+  });
 });
 
 describe('EquipService.unequip', () => {
@@ -212,5 +235,72 @@ describe('EquipService.unequip', () => {
     assert.equal(r.ok, true);
     assert.equal(player.m_nMaxHp, player.getMaxHp(), 'cached max tracks derived max after unequip');
     assert.ok(player.m_nHp <= player.m_nMaxHp, 'current HP clamped to the lowered max');
+  });
+});
+
+describe('EquipService set-item bonuses', () => {
+  // A 2-piece armor set (helmet@CAP=6, suit@UPPER_BODY=2) with tiered avails:
+  //   2 pieces -> +50 HP_MAX, +3 STR;  ... (higher tiers unlock at more pieces)
+  // Mirrors the Vagrant set shape. Item ids 7000/7001 are the pieces.
+  const HELM = 7000, SUIT = 7001, CAP = 6, UPPER = 2;
+  const SET: SetItemDef = {
+    id: 1,
+    elems: [{ itemId: HELM, parts: CAP }, { itemId: SUIT, parts: UPPER }],
+    avails: [
+      { dst: DST.HP_MAX, adj: 50, equipped: 2 },
+      { dst: DST.STR, adj: 3, equipped: 2 },
+    ],
+  };
+  const table = new Map<number, ItemDefinition>([
+    [HELM, { id: HELM, name: 'Helm', name_id: 'ITEM_H', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: CAP }],
+    [SUIT, { id: SUIT, name: 'Suit', name_id: 'ITEM_U', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: UPPER }],
+  ]);
+
+  function makeSetSvc() {
+    return new EquipService({
+      inventoryRepo: { setItem: async () => {}, removeItem: async () => {} },
+      getItem: (id: number) => table.get(id),
+      getSetItem: (id: number) => (id === HELM || id === SUIT ? SET : undefined),
+      sendTo: () => {},
+    });
+  }
+
+  it('grants no set bonus with only one piece equipped', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const svc = makeSetSvc();
+    player.m_Inventory[0] = { itemId: HELM, count: 1 };
+    svc.equip(player, 0, CAP);
+    assert.equal(player.m_setEffects.length, 0, 'no set effects at 1 piece');
+    assert.equal(player.m_params.get(DST.STR, 0), 0, 'no +STR from an incomplete set');
+  });
+
+  it('applies the 2-piece tier when the second piece is equipped', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const svc = makeSetSvc();
+    const baseHp = player.getMaxHp();
+    player.m_Inventory[0] = { itemId: HELM, count: 1 };
+    player.m_Inventory[1] = { itemId: SUIT, count: 1 };
+    svc.equip(player, 0, CAP);
+    svc.equip(player, 1, UPPER);
+    assert.equal(player.m_params.get(DST.STR, 0), 3, '+3 STR from 2-piece set');
+    assert.equal(player.getMaxHp(), baseHp + 50, '+50 HP_MAX from 2-piece set');
+    assert.equal(player.m_setEffects.length, 2, 'two set effects tracked');
+  });
+
+  it('removes the set bonus when a piece is unequipped (recompute drops the tier)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const svc = makeSetSvc();
+    const baseHp = player.getMaxHp();
+    player.m_Inventory[0] = { itemId: HELM, count: 1 };
+    player.m_Inventory[1] = { itemId: SUIT, count: 1 };
+    svc.equip(player, 0, CAP);
+    svc.equip(player, 1, UPPER);
+    assert.equal(player.m_setEffects.length, 2, 'set active at 2 pieces');
+
+    svc.unequip(player, UPPER);
+
+    assert.equal(player.m_setEffects.length, 0, 'set bonus gone after dropping below tier');
+    assert.equal(player.m_params.get(DST.STR, 0), 0, '+STR removed');
+    assert.equal(player.getMaxHp(), baseHp, 'HP_MAX back to base');
   });
 });

@@ -95,6 +95,20 @@ function symbol(defines: Map<string, number>, token: string | undefined): number
   return defines.get(token);
 }
 
+/**
+ * Parse a propSkillAdd.csv cell that may be numeric OR a `DST_*`/`CHS_*` symbol.
+ * Unlike {@link num}, falls back to the defines table when the literal is
+ * non-numeric (e.g. `DST_STA`, `CHS_STUN`). `=` was already resolved to the
+ * prior row's literal by {@link parseAddCsv}, so symbolic buffs inherit too.
+ */
+function resolveSymbol(raw: Row, col: string, defines: Map<string, number>): number {
+  const v = raw[col];
+  if (!v || v === '=') return 0;
+  const n = Number(v);
+  if (Number.isFinite(n)) return n;
+  return defines.get(v) ?? 0;
+}
+
 /** Parse propSkillAdd.csv body (after the `//` header line). */
 function parseAddCsv(content: string): Row[] {
   const lines = content.split(/\r?\n/);
@@ -106,11 +120,22 @@ function parseAddCsv(content: string): Row[] {
     .map((c) => c.trim());
 
   const rows: Row[] = [];
-  const last: Record<string, string> = {};
+  // `=` in propSkillAdd.csv means "same as the previous level OF THE SAME skill"
+  // (per `dwName`), NOT the previous row in the file. A global `last` let a `=`
+  // at L01 of one skill inherit the trailing value of the unrelated skill above
+  // it (HEAPUP L1 `dwDestParam2 == ` bled DST_RECOVERY_EXP=71 from CLEANHIT).
+  // Reset the cache whenever dwName changes so L01 starts from a clean slate.
+  let last: Record<string, string> = {};
+  let lastSkill = '';
   for (let i = headerIdx + 1; i < lines.length; i++) {
     const line = lines[i]!;
     if (line.length === 0 || line.startsWith('//')) continue;
     const cells = line.split(',');
+    const name = (cells[1] ?? '').trim();
+    if (name && name !== lastSkill) {
+      last = {};
+      lastSkill = name;
+    }
     const row: Row = {};
     for (let c = 0; c < cols.length; c++) {
       const col = cols[c]!;
@@ -133,12 +158,13 @@ function parseAddCsv(content: string): Row[] {
 function applyInheritRules(
   raw: Row,
   baseCooldown: number,
+  defines: Map<string, number>,
 ): LevelRow {
   const abilityMin = num(raw, 'dwAbilityMin');
   const abilityMax = num(raw, 'dwAtkAbilityMax');
   const prob = num(raw, 'nProbability');
   // `=` already resolved to the previous row's literal value by parseAddCsv;
-  // but the v15 merge rule is PVP<-SAME-ROW non-PVP when the PVP cell was `=`.
+  // but the v19 merge rule is PVP<-SAME-ROW non-PVP when the PVP cell was `=`.
   // parseAddCsv preserved the `=` as previous-row inheritance, which is wrong
   // for the PVP columns (they want the SAME-ROW non-PVP value). We approximate
   // by always preferring the non-PVP value when PVP is missing/0.
@@ -159,14 +185,18 @@ function applyInheritRules(
   if (abilityMaxPvp) lvl.abilityMaxPvp = abilityMaxPvp;
   if (prob) lvl.probability = prob;
   if (probabilityPvp) lvl.probabilityPvp = probabilityPvp;
-  const dp1 = num(raw, 'dwDestParam1');
-  const dp2 = num(raw, 'dwDestParam2');
+  // dwDestParam / nAdjParamVal / dwChgParamVal cells are symbolic in buff rows
+  // (DST_STA, DST_CHRSTATE, CHS_STUN) -- num() drops them to 0 and the buff
+  // lands with an empty effects list. Resolve symbolically first, fall back to
+  // the numeric parse for stat-increment rows (HEAPUP nAdjParamVal=2,4,6...).
+  const dp1 = resolveSymbol(raw, 'dwDestParam1', defines);
+  const dp2 = resolveSymbol(raw, 'dwDestParam2', defines);
   if (dp1 || dp2) lvl.destParams = [dp1, dp2].filter((v) => v !== 0);
-  const av1 = num(raw, 'nAdjParamVal1');
-  const av2 = num(raw, 'nAdjParamVal2');
+  const av1 = resolveSymbol(raw, 'nAdjParamVal1', defines);
+  const av2 = resolveSymbol(raw, 'nAdjParamVal2', defines);
   if (av1 || av2) lvl.adjParamVals = [av1, av2].filter((v) => v !== 0);
-  const cv1 = num(raw, 'dwChgParamVal1');
-  const cv2 = num(raw, 'dwChgParamVal2');
+  const cv1 = resolveSymbol(raw, 'dwChgParamVal1', defines);
+  const cv2 = resolveSymbol(raw, 'dwChgParamVal2', defines);
   if (cv1 || cv2) lvl.chgParamVals = [cv1, cv2].filter((v) => v !== 0);
   const dd1 = num(raw, 'dwdestData1');
   const dd2 = num(raw, 'dwdestData2');
@@ -268,7 +298,11 @@ function rowToSkill(
 }
 
 /** Group propSkillAdd rows by parent SI_*, sorted ascending by level. */
-function groupLevels(addRows: Row[], baseCooldowns: Map<string, number>): Map<string, LevelRow[]> {
+function groupLevels(
+  addRows: Row[],
+  baseCooldowns: Map<string, number>,
+  defines: Map<string, number>,
+): Map<string, LevelRow[]> {
   const grouped = new Map<string, Row[]>();
   for (const r of addRows) {
     const parent = r.dwName!;
@@ -280,7 +314,7 @@ function groupLevels(addRows: Row[], baseCooldowns: Map<string, number>): Map<st
   for (const [parent, rows] of grouped) {
     rows.sort((a, b) => num(a, 'dwSkillLvl') - num(b, 'dwSkillLvl'));
     const baseCd = baseCooldowns.get(parent) ?? 0;
-    out.set(parent, rows.map((r) => applyInheritRules(r, baseCd)));
+    out.set(parent, rows.map((r) => applyInheritRules(r, baseCd, defines)));
   }
   return out;
 }
@@ -302,13 +336,18 @@ export async function convertSkills(rawDir: string, dataDir: string): Promise<vo
   // inner enum -- the base value (=0) is what skill rows reference, so keep the
   // first occurrence and ignore later ones.
   const defines = new Map<string, number>();
+  // CHS_* state bits are hex literals (`#define CHS_STUN 0x00000008`); allow
+  // `0x` form, parse with the right base (parseInt(..,10) butchers hex).
   const re = new RegExp(
-    '^\\s*#define\\s+((?:SI_|DST_|ST_|SRO_|EXT_|WUI_|AR_|WT_|HD_|SR_|KT_|RT_|JTYPE_|JOB_|DIS_|XI_SKILL_)\\w+)\\s+(-?\\d+)',
+    '^\\s*#define\\s+((?:SI_|DST_|CHS_|ST_|SRO_|EXT_|WUI_|AR_|WT_|HD_|SR_|KT_|RT_|JTYPE_|JOB_|DIS_|XI_SKILL_)\\w+)\\s+(0x[0-9a-fA-F]+|-?\\d+)',
     'gm',
   );
   for (const content of [defineAttr, defineJob, defineSkill]) {
     for (let m = re.exec(content); m !== null; m = re.exec(content)) {
-      if (!defines.has(m[1]!)) defines.set(m[1]!, parseInt(m[2]!, 10));
+      if (!defines.has(m[1]!)) {
+        const raw = m[2]!;
+        defines.set(m[1]!, raw.startsWith('0x') ? parseInt(raw, 16) : parseInt(raw, 10));
+      }
     }
   }
   void parseDefines; // (parseDefines kept imported for parity; we use the inline regex above for first-wins)
@@ -333,7 +372,7 @@ export async function convertSkills(rawDir: string, dataDir: string): Promise<vo
     if (cd) baseCooldowns.set(row.dwID, cd);
   }
 
-  const levelsByParent = groupLevels(addRows, baseCooldowns);
+  const levelsByParent = groupLevels(addRows, baseCooldowns, defines);
 
   let used = 0;
   let dropped = 0;

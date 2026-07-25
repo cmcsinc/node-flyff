@@ -59,6 +59,10 @@ function bucketFor(kind1: string, kind2: string, kind3: string): ItemYml | null 
   // Refined kind from IK2 for weapons/armors, else IK1 bucket.
   let key = kind1;
   if (kind2 === 'IK2_MAGIC') key = 'IK1_MAGIC';
+  // Buff scrolls (IK2_BUFF/IK2_BUFF2) live under IK1_SYSTEM, which has no bucket
+  // (IK2_SYSTEM server-internal items are intentionally skipped). Route them to
+  // consumables so UseItemService can apply their DST effects + timed duration.
+  if (kind2 === 'IK2_BUFF' || kind2 === 'IK2_BUFF2') key = 'IK1_MAGIC';
   let b = KIND_BUCKETS[key];
   // Accessories (ring/earring/necklace) share no IK1 -- route by IK3.
   if (!b && (kind3 === 'IK3_RING' || kind3 === 'IK3_EARRING' || kind3 === 'IK3_NECKLACE')) {
@@ -166,22 +170,41 @@ function rowToItem(
   // DST effects from the propItem dwDestParam{1-3}/nAdjParamVal{1-3}/dwChgParamVal{1-3}
   // triplets -- the ONLY way items carry +STR/+STA/+DEX/+INT/+ADJDEF/+HP_MAX/etc
   // (no dedicated stat columns exist). Resolved to numeric DST ids via
-  // defineAttribute.h. Equippable only: consumables expose vital restores via
-  // hp_restore/mp_restore/fp_restore above (a different consumer). Applied to
-  // the wearer's ParamModel on equip (C++ SetDestParam per item, MoverParam.cpp:2221).
-  if (isEquippable) {
+  // defineAttribute.h. Two carriers share the same triplet format:
+  //  - equippable gear: applied to the wearer's ParamModel on equip (C++
+  //    SetDestParam per item, MoverParam.cpp:2221). Vital restores
+  //    (DST_HP/MP/FP) on food/potions are NOT read here -- the RESTORE_DST loop
+  //    above folds those into hp_restore/mp_restore/fp_restore (different consumer).
+  //  - buff scrolls (IK2_BUFF/IK2_BUFF2): applied as a timed item-buff on consume
+  //    (UseItemService IK2_BUFF branch -> BuffManager.addItemBuff). Their DST is
+  //    everything-except-HP/MP/FP (e.g. DST_STR on II_SYS_SYS_SCR_STR).
+  const kind2 = row.dwItemKind2 ?? '';
+  const isBuffItem = kind2 === 'IK2_BUFF' || kind2 === 'IK2_BUFF2';
+  if (isEquippable || isBuffItem) {
     const effects: Array<{ dst: number; adj: number; chg?: number }> = [];
     for (let i = 1; i <= 3; i++) {
       const sym = row[`dwDestParam${i}`];
       if (!sym) continue;
       const dst = dstMap.get(sym);
       if (dst === undefined) continue; // unknown / unsupported DST symbol
+      // Skip pure vital-restore DST on buff items -- potions already fold those
+      // into hp_restore/mp_restore/fp_restore above; emitting them again here would
+      // double-apply as a timed DST_HP buff on top of the instant restore.
+      if (isBuffItem && (sym === 'DST_HP' || sym === 'DST_MP' || sym === 'DST_FP')) continue;
       const adj = num(row, `nAdjParamVal${i}`, 0);
       const chg = num(row, `dwChgParamVal${i}`, 0);
       if (adj !== 0) effects.push({ dst, adj });
       else if (chg !== 0) effects.push({ dst, adj: 0, chg });
     }
     if (effects.length > 0) item.effects = effects;
+  }
+
+  // Buff duration -- propItem `dwSkillTime` (ms). C++ ApplyParam reads the same
+  // field for the CBuffItem timer (MoverActEvent.cpp:213,221). Stored in seconds
+  // (schema item.schema.ts duration) -> UseItemService multiplies back to ms.
+  if (isBuffItem) {
+    const durMs = num(row, 'dwSkillTime', 0);
+    if (durMs > 0) item.duration = Math.round(durMs / 1000);
   }
 
   if (isWeapon) {

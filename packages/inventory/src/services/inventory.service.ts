@@ -109,7 +109,7 @@ export class InventoryService {
     return { ok: true, slot, objid: placed.objid, itemId, count: placed.count, isNew: true };
   }
 
-  /** Swap two main-bag slots (v15 MOVEITEM is a pure swap; no split opcode). */
+  /** Swap two main-bag slots (v19 MOVEITEM is a pure swap; no split opcode). */
   moveItem(player: CPlayer, src: number, dst: number): MoveItemResult {
     if (src === dst || !this.inMainBag(src) || !this.inMainBag(dst)) return { ok: false, reason: 'invalid' };
     const a = player.m_Inventory[src];
@@ -150,7 +150,7 @@ export class InventoryService {
   }
 
   /**
-   * Destroy `count` from main-bag `slot` (v15 REMOVEINVENITEM -- right-click
+   * Destroy `count` from main-bag `slot` (v19 REMOVEINVENITEM -- right-click
    * "Delete" / drag-to-trash). No ground pile; the item ceases to exist.
    * Mirrors `CDPSrvr::OnRemoveInvenItem` (`DPSrvr.cpp:8350`): non-positive
    * count, equipped slot, and insufficient stack are rejected silently.

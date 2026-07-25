@@ -83,6 +83,7 @@ import { BankHandler } from '@flyff/npc';
 import { TaskBarService } from './services/taskbar.service';
 import { TaskBarHandler } from './handlers/taskbar.handler';
 import { EndSkillQueueHandler } from './handlers/endSkillQueue.handler';
+import { ReqLeaveHandler } from './handlers/reqLeave.handler';
 import { SkillTaskBarHandler } from './handlers/skillTaskbar.handler';
 import { ShopService } from '@flyff/npc';
 import { ShopHandler } from '@flyff/npc';
@@ -169,6 +170,7 @@ export interface WorldComposeResult {
   shopHandler: ShopHandler;
   taskbarHandler: TaskBarHandler;
   endSkillQueueHandler: EndSkillQueueHandler;
+  reqLeaveHandler: ReqLeaveHandler;
   skillTaskbarHandler: SkillTaskBarHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
@@ -409,7 +411,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const snapshotService = new SnapshotService({ zoneManager });
   const snapshotHandler = new SnapshotHandler(playerManager, snapshotService);
   // ItemManager + LootService created before MovementService: movement runs the
-  // dest-obj arrival check (v15 pickup has no packet -- client walks to the pile
+  // dest-obj arrival check (v19 pickup has no packet -- client walks to the pile
   // via PLAYERSETDESTOBJ, server loots on arrival) every position update.
   const itemManager = new ItemManager({ zoneManager });
   const lootService = new LootService({ inventoryService, itemManager, playerManager, zoneManager });
@@ -421,7 +423,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const playerMovedHandler = new PlayerMovedHandler(playerManager, movementService);
   const playerBehaviorHandler = new PlayerBehaviorHandler(playerManager, movementService);
 
-  // Phase 6 -- remaining v15 C->S handlers (chat, motion, target, movement
+  // Phase 6 -- remaining v19 C->S handlers (chat, motion, target, movement
   // variants, query/getpos, script dialog, revival). See PROGRESS.md for
   // the audit that scoped these.
   const commandService = new CommandService({
@@ -464,7 +466,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
   const rangeAttackHandler = new RangeAttackHandler(playerManager, rangeAttackService);
-  // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v15 damage-skill MVP).
+  // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v19 damage-skill MVP).
   const skillService = new SkillService({
     skills: resources.skills,
     spawnManager, zoneManager, playerManager, combatService,
@@ -490,6 +492,8 @@ export async function compose(): Promise<WorldComposeResult> {
     getItem: (id: number) => resources.items.items.get(id),
     getSetItem: (id: number) => resources.setItems.byItemId.get(id),
     sendTo: (player, buf) => playerManager.sendTo(player, buf),
+    broadcastAround: (player, buf) =>
+      zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
   });
   const doEquipHandler = new DoEquipHandler({ playerManager, zoneManager, equipService });
 
@@ -524,6 +528,7 @@ export async function compose(): Promise<WorldComposeResult> {
   );
   const taskbarHandler = new TaskBarHandler({ playerManager, taskbarService });
   const endSkillQueueHandler = new EndSkillQueueHandler(playerManager);
+  const reqLeaveHandler = new ReqLeaveHandler(playerManager);
   const skillTaskbarHandler = new SkillTaskBarHandler({ playerManager, taskbarService });
 
   // NPC vendor shop -- open/close + buy/sell.
@@ -618,6 +623,7 @@ export async function compose(): Promise<WorldComposeResult> {
     taskbarHandler,
     skillTaskbarHandler,
     endSkillQueueHandler,
+    reqLeaveHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,

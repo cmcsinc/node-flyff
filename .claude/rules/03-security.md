@@ -65,7 +65,7 @@ db.raw('SELECT * FROM accounts WHERE username = ?', [username]);
 
 - Passwords are **never stored or compared in plaintext**.
 - Hash with `argon2id` (see `flyff-security` skill for config).
-- If the client sends MD5 (Flyff v15 vanilla), store the argon2 hash of the MD5 string.
+- If the client sends MD5 (Flyff v19 vanilla), store the argon2 hash of the MD5 string.
 
 ## IPC Message Security
 

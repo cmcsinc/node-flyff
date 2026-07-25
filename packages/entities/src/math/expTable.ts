@@ -68,7 +68,7 @@ const BASE: readonly ExpRow[] = [
   r(251153350660, 2, 6917446347), r(276670531087, 2, 7620463430), r(304780257046, 2, 8394603185), r(335745931162, 2, 9247607972),
 ];
 
-/** v15 ships no progression past L150 -- 150-199 all share the cap row. */
+/** v19 ships no progression past L150 -- 150-199 all share the cap row. */
 const CAP_ROW: ExpRow = r(369857717768, 2, 10187103688);
 const TAIL: ExpRow[] = Array.from({ length: 50 }, () => CAP_ROW);
 

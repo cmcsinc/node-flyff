@@ -65,7 +65,7 @@ export const REATTACK_JITTER_MS = 2000;
 export const RANGE_REATTACK_DELAY_MS = 3000;
 
 /**
- * v15 movement scale. C++ steps `vPos.xz += 4*dir*fSpeed` per 67 ms tick
+ * v19 movement scale. C++ steps `vPos.xz += 4*dir*fSpeed` per 67 ms tick
  * (`ActionMoverState.cpp:229` + `MoverMove.cpp:3813`) -> units/sec ~=
  * `fSpeed * speedFactor * (4*1000/67)` ~= fSpeed * speedFactor * 59.7.
  * An Aibatt (fSpeed 0.075) walks ~= 4.5 u/s, matching the client.
@@ -109,7 +109,7 @@ export const II_SYS_SYS_SCR_RESURRECTION = 10431;
  * ACTIVEATTACK_RANGE(7). The `BELLI_MELEE2X/MELEE/RANGE` (11/12/13) values are
  * "counterattack **when attacked**" (cautious-type) -- they retaliate via the
  * damage path (`triggerRage`), NEVER via `ScanTarget`. 1/2/8/9/10 likewise
- * never sight-aggro. The v15 Flaris field set is entirely 11/12/13, so with
+ * never sight-aggro. The v19 Flaris field set is entirely 11/12/13, so with
  * this set zero mobs get a red name -- correct (none are sight-aggressive).
  *
  * C++ fidelity note: `m_bActiveAttack` is really a PER-SPAWN flag (the
@@ -124,7 +124,7 @@ export const ACTIVE_BELLI: ReadonlySet<number> = new Set([3, 5, 6, 7]);
 /**
  * Sight-aggro level band -- a red-name mob auto-acquires only players within
  * this many levels ABOVE it (`player.level <= mob.level + AGGRO_LEVEL_BAND`).
- * ponytail: CUSTOM deviation -- v15 `ScanTarget` (`AIInterface.cpp:166`) has NO
+ * ponytail: CUSTOM deviation -- v19 `ScanTarget` (`AIInterface.cpp:166`) has NO
  * level filter; a level-1 active mob aggros a level-120 player in vanilla. Set
  * to the standard red/orange name window so trash mobs stop harassing
  * out-leveled players. Remove to restore strict C++ fidelity.

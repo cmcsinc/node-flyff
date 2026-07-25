@@ -3,7 +3,7 @@ import type { Knex } from '../types';
 /**
  * Adds a `tab` axis to the `bank` table (0..2) and account-wide `bank_gold`.
  *
- * v15 bank is 3 tabs * 42 slots. The original `bank` unique was
+ * v19 bank is 3 tabs * 42 slots. The original `bank` unique was
  * `(account_id, slot)`; with tabs the same slot index repeats per tab, so the
  * unique becomes `(account_id, tab, slot)`. Existing rows default to `tab 0`.
  *

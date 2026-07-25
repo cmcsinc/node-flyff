@@ -14,7 +14,7 @@
  * The projectile visual is client-side only. So this service exists purely to
  * play the RANGE swing animation (vs the MELEE one) for the correct weapon.
  *
- * Ammo: v15 retail bows are ammo-less -- there is no arrow/quiver item kind in
+ * Ammo: v19 retail bows are ammo-less -- there is no arrow/quiver item kind in
  * propItem, so nothing is consumed. (Later Flyff quivers would be a consumable
  * gate here; the emulator has no arrow item concept to enforce.)
  *

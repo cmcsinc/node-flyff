@@ -12,8 +12,8 @@ import {
 
 describe('NoticeSerializer (SNAPSHOTTYPE_TEXT 0x00a0)', () => {
   it('writes the TEXT_GENERAL state byte before text + color (__S_SERVER_UNIFY)', () => {
-    // Florist defines __S_SERVER_UNIFY, so AddText emits BYTE nState between the
-    // subtype and the string (User.cpp:660). OnText reads it before the string.
+    // __S_SERVER_UNIFY is defined, so AddText emits BYTE nState between the
+    // subtype and the string (game/source/WORLDSERVER/User.cpp:681).
     const buf = new NoticeSerializer().build('reboot soon');
     const r = new PacketReader(buf);
     assert.equal(r.readDword(), PACKETTYPE.SNAPSHOT);

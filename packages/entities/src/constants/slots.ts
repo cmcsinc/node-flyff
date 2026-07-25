@@ -65,7 +65,7 @@ export const SHORTCUT = Object.freeze({
 export const MAX_SHORTCUT_CHAT = 9;
 
 // --- Consumable cooldown groups (`_Common/CooltimeMgr.h`) --------------------
-// Groups are 1-based (C++ dwGroup-1 indexes m_times[]). 1..3 mirror v15
+// Groups are 1-based (C++ dwGroup-1 indexes m_times[]). 1..3 mirror v19
 // CCooltimeMgr::GetGroup (food / pill / skill); 4 = potions (our addition --
 // vanilla comments IK2_POTION out, so HP potions there have no cooldown).
 export const MAX_COOLTIME_GROUP = 4;

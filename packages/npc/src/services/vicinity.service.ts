@@ -10,13 +10,13 @@
  *
  * Sending the ADD_OBJ snapshot earlier (bolted onto JOIN) desyncs the client
  * stream and null-derefs `OnAddObj` (`DPClient.cpp:1160`). See memory
- * `v15-npc-addobj-method-exclude-item`.
+ * `v19-npc-addobj-method-exclude-item`.
  *
  * The service builds the packet bytes and hands them to the handler; it never
  * touches a socket (rule 02). `null` return = empty zone, handler skips the
  * write.
  *
- * ponytail: real v15 uses a `CLinkLink`/`CLinkMap` visibility grid and streams
+ * ponytail: real v19 uses a `CLinkLink`/`CLinkMap` visibility grid and streams
  * AddObj entries as movers enter/leave a player's view radius -- not the whole
  * zone at once. Swap `inZone(zoneId)` for a `withinRadius(pos, r)` query when
  * zones grow large enough that a 43-entry burst is a problem.
