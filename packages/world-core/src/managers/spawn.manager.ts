@@ -34,6 +34,14 @@ const logger = createLogger({ module: 'spawn-manager' });
 /** First object id assigned to a non-player mover (player char ids stay below). */
 const FIRST_MOVER_ID = 0x40000000;
 
+/**
+ * How long a slain monster's corpse stays visible on clients before the server
+ * broadcasts DEL_OBJ to drop it. Independent of the per-spawn respawn `delay`:
+ * the corpse fades on this timer while the respawn timer runs in parallel.
+ * Tunable -- mirrors the v15 client's own corpse-linger window.
+ */
+export const CORPSE_DESPAWN_MS = 10_000;
+
 /** Cap on monsters materialized per spawn point -- bounds memory on bad data. */
 const MAX_PER_SPAWN = 50;
 
@@ -58,6 +66,14 @@ export interface SpawnManagerDeps {
    * already present see the monster reappear. Not fired for the boot batch.
    */
   onSpawn?: (mover: CMover) => void;
+  /**
+   * Fired when a corpse-despawn timer elapses -- i.e. a mover killed via
+   * `kill(id, { despawn: true })` has lingered {@link CORPSE_DESPAWN_MS}. The
+   * compose root wires this to broadcast DEL_OBJ so clients drop the death-
+   * animation corpse. The mover is already gone from the live table by this
+   * point; this is a wire-only notification (the closure captures the mover).
+   */
+  onDespawn?: (mover: CMover) => void;
 }
 
 export class SpawnManager {
@@ -69,10 +85,12 @@ export class SpawnManager {
   private nextId = FIRST_MOVER_ID;
   private readonly resources: ResourceIndex;
   private readonly onSpawn: ((mover: CMover) => void) | undefined;
+  private readonly onDespawn: ((mover: CMover) => void) | undefined;
 
   constructor(deps: SpawnManagerDeps) {
     this.resources = deps.resources;
     this.onSpawn = deps.onSpawn;
+    this.onDespawn = deps.onDespawn;
   }
 
   /** Instantiate every zone NPC + monster spawn once, at boot. */
@@ -191,11 +209,25 @@ export class SpawnManager {
    * `Delete()` immediately -- no corpse, no death animation state on the server.
    * If the mover carries a respawn `delay > 0`, schedule a replacement at the
    * same placement; otherwise it is gone for good (static NPC).
+   *
+   * `opts.despawn`: when true, schedules `onDespawn(mover)` after
+   * {@link CORPSE_DESPAWN_MS} so the compose root can broadcast DEL_OBJ and
+   * clients drop the death-animation corpse. Use for natural combat deaths;
+   * admin despawns (`/rn`, `/ak`) broadcast DEL_OBJ themselves and leave this
+   * off to avoid a duplicate removal frame.
    */
-  kill(id: number): boolean {
+  kill(id: number, opts?: { despawn?: boolean }): boolean {
     const desc = this.descs.get(id);
+    const mover = this.movers.get(id);
     const had = this.movers.delete(id);
     this.descs.delete(id);
+    if (mover && opts?.despawn) {
+      const t = setTimeout(() => {
+        this.timers.delete(t);
+        this.onDespawn?.(mover);
+      }, CORPSE_DESPAWN_MS);
+      this.timers.add(t);
+    }
     if (desc && desc.delayMs > 0) {
       const timer = setTimeout(() => {
         this.timers.delete(timer);

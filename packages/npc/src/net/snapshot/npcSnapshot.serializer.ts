@@ -53,7 +53,7 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { CMover, MoverEquipPart } from '@flyff/entities';
 import {
-  SNAPSHOTTYPE_ADD_OBJ, OT_MOVER, NULL_ID,
+  SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_DEL_OBJ, OT_MOVER, NULL_ID,
 } from '@flyff/world-core';
 
 export class NpcSnapshotSerializer {
@@ -67,6 +67,22 @@ export class NpcSnapshotSerializer {
     for (const m of movers) {
       this.writeAddObj(w, m);
     }
+    return w.build();
+  }
+
+  /**
+   * `AddRemoveObj` (User.cpp) -- bodyless `objid | DEL_OBJ`. Tells clients to
+   * drop the mover from their scene. Used by the corpse-despawn callback so the
+   * death-animation corpse disappears after {@link CORPSE_DESPAWN_MS}; the same
+   * frame `/rn` and `/ak` use for immediate admin despawn.
+   */
+  buildRemove(objid: number): Buffer {
+    const w = new PacketWriter();
+    w.writeDword(PACKETTYPE.SNAPSHOT);   // dwHdr
+    w.writeDword(NULL_ID);               // objidPlayer -- unused
+    w.writeWord(1);                      // cb
+    w.writeDword(objid);
+    w.writeWord(SNAPSHOTTYPE_DEL_OBJ);
     return w.build();
   }
 
@@ -96,14 +112,7 @@ export class NpcSnapshotSerializer {
     w.writeDword(m.m_nHitPoint);         // m_nHitPoint
     w.writeDword(0);                     // GetState()
     w.writeDword(0);                     // GetStateFlag()
-    // m_dwBelligerence -- peaceful NPCs send 0, not 1. The in-repo defineAttribute.h
-    // has BELLI_PEACEFUL=1, but the running client's minimap classifies our peaceful
-    // NPCs as red (IsPeaceful()=false), while in-world they render peaceful via
-    // IsAttackAbleNPC's bKillable gate (Mover.cpp:8987, checked before belli). The
-    // consistent explanation: the compiled client's BELLI_PEACEFUL constant == 0.
-    // Monsters (belli 11/12/13) keep their real value so they stay red. Revert if
-    // this does not turn town NPCs green.
-    w.writeByte(m.m_dwBelligerence === 1 ? 0 : m.m_dwBelligerence);
+    w.writeByte(m.m_dwBelligerence);     // m_dwBelligerence
     w.writeDword(0);                     // m_dwMoverSfxId (__VER>=15)
 
     // NPC branch (m_bPlayer == 0) -- ObjSerializeOpt.cpp:319-352

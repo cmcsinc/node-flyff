@@ -336,7 +336,10 @@ export class CombatService {
     this.deps.dropService?.roll(mover, killer);
     // Phase 7 -- increment SetEndCondKillNPC slots before the mover leaves scope.
     this.deps.questTracker?.onKill(killer, mover.m_dwIndex);
-    this.deps.spawnManager.kill(mover.m_idMover);
+    // Schedule corpse DEL_OBJ after CORPSE_DESPAWN_MS so clients drop the death
+    // animation; respawn (if any) runs on its own independent timer. Admin
+    // despawns (/rn, /ak) omit the flag and broadcast DEL_OBJ themselves.
+    this.deps.spawnManager.kill(mover.m_idMover, { despawn: true });
   }
 
   /**
