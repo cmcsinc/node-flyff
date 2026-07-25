@@ -16,6 +16,10 @@ export interface InventoryItemRow {
   flags: number;
   durability: number;
   refine: number;
+  /** SAI79::ePropType element byte (0..5); migration 012. */
+  element: number;
+  /** Element level (m_nResistAbilityOption, 0..20); migration 012. */
+  element_level: number;
   stats: string | null;
   created_at: Date;
   updated_at: Date;
@@ -117,6 +121,8 @@ export class InventoryRepository {
    * @param flags - Item flags (elemental, rarity, etc.)
    * @param durability - Item durability (-1 for indestructible)
    * @param refine - Refine level (+0 to +20)
+   * @param element - Element type byte (0..5, SAI79::ePropType); migration 012
+   * @param elementLevel - Element level (0..20, m_nResistAbilityOption); migration 012
    * @param stats - JSON string for awakened stats
    */
   async setItem(
@@ -127,7 +133,9 @@ export class InventoryRepository {
     flags: number = 0,
     durability: number = -1,
     refine: number = 0,
-    stats?: string | null
+    stats?: string | null,
+    element: number = 0,
+    elementLevel: number = 0,
   ): Promise<void> {
     await this.db('inventory_item')
       .insert({
@@ -138,6 +146,8 @@ export class InventoryRepository {
         flags,
         durability,
         refine,
+        element,
+        element_level: elementLevel,
         stats: stats || null,
         created_at: new Date(),
         updated_at: new Date(),
@@ -149,6 +159,8 @@ export class InventoryRepository {
         flags,
         durability,
         refine,
+        element,
+        element_level: elementLevel,
         stats: stats || null,
         updated_at: new Date(),
       });

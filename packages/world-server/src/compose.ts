@@ -47,6 +47,8 @@ import { ScriptDlgHandler } from '@flyff/npc';
 import { RevivalService } from './services/revival.service';
 import { NpcSpeechService } from '@flyff/npc';
 import { RevivalHandler } from './handlers/revival.handler';
+import { PkModeService } from './services/pkMode.service';
+import { PkModeHandler } from './handlers/pkMode.handler';
 import { MeleeAttackService } from '@flyff/combat';
 import { RangeAttackService } from '@flyff/combat';
 import { CombatService } from '@flyff/combat';
@@ -72,7 +74,9 @@ import { DoEquipHandler } from '@flyff/inventory';
 import { EquipService } from '@flyff/inventory';
 import { ConsumableService } from '@flyff/inventory';
 import { UseItemService } from '@flyff/inventory';
+import { EnchantService } from '@flyff/inventory';
 import { DoUseItemHandler } from '@flyff/inventory';
+import { EnchantHandler } from '@flyff/inventory';
 import { BankService } from '@flyff/npc';
 import { BankHandler } from '@flyff/npc';
 import { TaskBarService } from './services/taskbar.service';
@@ -88,6 +92,8 @@ import { QuestTrackerSystem } from '@flyff/quest';
 import { AISystem } from '@flyff/combat';
 import { CheckpointSystem } from './systems/checkpoint.system';
 import { RecoverySystem } from './systems/recovery.system';
+import { BuffSystem } from './systems/buff.system';
+import { PkDecaySystem } from './systems/pkDecay.system';
 
 export interface WorldComposeResult {
   config: WorldServerConfig;
@@ -134,6 +140,8 @@ export interface WorldComposeResult {
   scriptDlgHandler: ScriptDlgHandler;
   revivalService: RevivalService;
   revivalHandler: RevivalHandler;
+  pkModeService: PkModeService;
+  pkModeHandler: PkModeHandler;
   meleeAttackService: MeleeAttackService;
   rangeAttackService: RangeAttackService;
   combatService: CombatService;
@@ -166,6 +174,8 @@ export interface WorldComposeResult {
   aiSystem: AISystem;
   checkpointSystem: CheckpointSystem;
   recoverySystem: RecoverySystem;
+  buffSystem: BuffSystem;
+  pkDecaySystem: PkDecaySystem;
 }
 
 export async function compose(): Promise<WorldComposeResult> {
@@ -230,7 +240,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // Register idempotent replay handlers for every WAL event type the services
   // emit (CHAR_EXP / CHAR_GOLD / INVENTORY_SLOT). Payloads are absolute
   // end-state, so recover() can re-apply them on the next boot without dupes.
-  registerReplayers(journalReplayer, { charRepo, inventoryRepo, bankRepo, logger });
+  registerReplayers(journalReplayer, { charRepo, inventoryRepo, bankRepo, skillRepo, logger });
 
   // In-memory world state + enter-world stack.
   const playerManager = new PlayerManager();
@@ -349,6 +359,10 @@ export async function compose(): Promise<WorldComposeResult> {
   // (public `tick(now)` for the future unified 50 ms loop); stopped on shutdown.
   const recoverySystem = new RecoverySystem({ playerManager });
   recoverySystem.start();
+  const buffSystem = new BuffSystem({ playerManager, zoneManager });
+  const pkDecaySystem = new PkDecaySystem({ playerManager, charRepo });
+  buffSystem.start();
+  pkDecaySystem.start();
 
   const mapKeyService = new MapKeyService({ playerManager });
   const vicinityService = new VicinityService({
@@ -403,11 +417,16 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalHandler = new RevivalHandler(playerManager, revivalService);
+  const pkModeService = new PkModeService({ playerManager, zoneManager });
+  const pkModeHandler = new PkModeHandler(playerManager, pkModeService);
 
   const dropService = new DropService({ resources, itemManager });
   const combatService = new CombatService({
     spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,
     getItem: (id: number) => resources.items.items.get(id),
+    // Hand PvP kills to the revival loop (flag victim dead + broadcast + open
+    // revive dialog). Mirrors the AISystem `onPlayerDeath` seam.
+    onPvpKill: (victim, killerObjid) => revivalService.onPlayerDeath(victim, killerObjid),
   });
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const rangeAttackService = new RangeAttackService({ zoneManager, combatService });
@@ -418,7 +437,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const skillService = new SkillService({
     skills: resources.skills,
     spawnManager, zoneManager, playerManager, combatService,
-    skillRepo, charRepo,
+    skillRepo, charRepo, journal,
   });
   const useSkillHandler = new UseSkillHandler(playerManager, skillService);
   const doUseSkillPointHandler = new DoUseSkillPointHandler(playerManager, skillService);
@@ -448,8 +467,19 @@ export async function compose(): Promise<WorldComposeResult> {
     equipService, consumableService, inventoryService,
     getItem: (id: number) => resources.items.items.get(id),
     potionCooldownMs: config.consumable.potionCooldownMs,
+    playerManager, zoneManager,
   });
   const doUseItemHandler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
+
+  // Enchant -- PACKETTYPE_ENCHANT refine (Sunstone) + element (card). Reuses
+  // inventoryService.consume for the material + journals the target slot's
+  // absolute end-state (refine/element) for crash-safe WAL recovery.
+  const enchantService = new EnchantService({
+    inventoryRepo, journal,
+    getItem: (id: number) => resources.items.items.get(id),
+    consume: (player, slot, count) => inventoryService.consume(player, slot, count),
+  });
+  const enchantHandler = new EnchantHandler({ playerManager, enchantService });
 
   // Bank -- open + deposit/withdraw item & gold (account-shared).
   const bankService = new BankService({ bankRepo, inventoryRepo, journal });
@@ -489,6 +519,8 @@ export async function compose(): Promise<WorldComposeResult> {
     aiSystem,
     checkpointSystem,
     recoverySystem,
+    buffSystem,
+    pkDecaySystem,
     snapshotSerializer,
     npcSnapshotSerializer,
     joinService,
@@ -524,6 +556,8 @@ export async function compose(): Promise<WorldComposeResult> {
     scriptDlgHandler,
     revivalService,
     revivalHandler,
+    pkModeService,
+    pkModeHandler,
     meleeAttackService,
     rangeAttackService,
     combatService,
@@ -544,6 +578,7 @@ export async function compose(): Promise<WorldComposeResult> {
     removeItemHandler,
     doEquipHandler,
     doUseItemHandler,
+    enchantHandler,
     bankHandler,
     shopHandler,
     taskbarHandler,

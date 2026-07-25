@@ -23,5 +23,6 @@ export * from './snapshot-constants';
 export * from './serializers/doUseSkillPoint.serializer';
 export * from './serializers/itemElemBody.serializer';
 export * from './serializers/pointParam.serializer';
+export * from './serializers/skillState.serializer';
 export * from './serializers/chat.serializer';
 export * from './serializers/itemContainer';

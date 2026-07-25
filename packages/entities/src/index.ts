@@ -26,6 +26,7 @@ export {
   MELEE_ATTACK_RANGE, RANGE_ATTACK_RANGE, REATTACK_DELAY_MS, REATTACK_JITTER_MS,
   RANGE_REATTACK_DELAY_MS, RANGE_MOVE, RANGE_RETURN_TO_BEGIN, RAGE_LEASH,
   HOME_ARRIVAL, SIGHT_RANGE, PURSUE_SPEED_FACTOR, RETURN_SPEED_FACTOR,
+  FLEE_SPEED_FACTOR, RUNAWAY_DELAY_MS,
   CHASE_WINDOW_MS, RETURN_STUCK_MS, SPEED_SCALE,
   OBJMSG_ATK1, OBJMSG_ATK_RANGE1, OBJMSG_STOP, OBJMSG_DIE,
   II_SYS_SYS_SCR_RESURRECTION, ACTIVE_BELLI, AGGRO_LEVEL_BAND, BELLI_RANGE_KEYS,
@@ -36,12 +37,14 @@ export {
   MAX_SHORTCUT_STRING, SHORTCUT, MAX_SHORTCUT_CHAT,
   MAX_COOLTIME_GROUP, COOLTIME_GROUP,
 } from './constants/slots';
-export { DST, MAX_ADJPARAMARY, CHG_SENTINEL } from './constants/dst';
+export { DST, MAX_ADJPARAMARY, CHG_SENTINEL, CHRSTATE_BITS } from './constants/dst';
 export type { DstId } from './constants/dst';
 
 // DST parameter model (equip + future buffs)
 export { ParamModel, EMPTY_PARAM_VIEW } from './params/ParamModel';
 export type { ParamView, DstEffect } from './params/ParamModel';
+export { BuffManager, BUFF_SKILL, BUFF_ITEM, MAX_SKILL_BUFF } from './params/BuffManager';
+export type { ActiveBuff, AddBuffOutcome, DoTPayload } from './params/BuffManager';
 
 // Math
 export { EXP_TABLE, MAX_LEVEL } from './math/expTable';
@@ -61,6 +64,7 @@ export type { RecoveryAmount } from './math/vitals';
 // Tables
 export { JOB_TABLE, JOB_VAGRANT, getJobProps } from './tables/job';
 export type { JobProps } from './tables/job';
+export { isJobMatch } from './tables/jobLineage';
 
 // State
 export type { RuntimeQuest } from './state/quest';

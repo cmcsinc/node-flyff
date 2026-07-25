@@ -16,15 +16,16 @@
  */
 
 import type { SkillIndex, SkillDefinition, SkillLevel } from '@flyff/resources';
-import type { SkillRepository, CharacterRepository } from '@flyff/database';
-import type { CPlayer } from '@flyff/entities';
+import type { SkillRepository, CharacterRepository, Journal } from '@flyff/database';
+import type { CPlayer, CMover, DstEffect, DoTPayload } from '@flyff/entities';
+import { isJobMatch, CHG_SENTINEL } from '@flyff/entities';
 import type { SpawnManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 import type { CombatService } from '@flyff/combat';
 import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
 import { DoUseSkillPointSerializer } from '@flyff/world-core';
-import { buildSetPointParam, DST_MP, DST_FP, DST_HP } from '@flyff/world-core';
+import { buildSetPointParam, DST_MP, DST_FP, DST_HP, buildSetSkillState, buildSetDestParam } from '@flyff/world-core';
 import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
@@ -33,6 +34,10 @@ const logger = createLogger({ module: 'skill-service' });
 /** EXT_* cast mechanics supported by the v1 damage path. */
 const EXT_MELEEATK = 17;
 const EXT_MAGICATKSHOT = 14;
+/** `RT_TIME` (defineAttribute.h:236) -- referTarget marks a timed buff skill. */
+const RT_TIME = 2;
+/** `BUFF_SKILL` (SkillInfluence.h:5) -- skill-sourced buff type tag for SETSKILLSTATE. */
+const BUFF_SKILL = 1;
 
 /**
  * Per-tier SP cost per raised skill level (`Project.cpp:5132`).
@@ -55,6 +60,8 @@ export interface SkillServiceDeps {
   combatService: CombatService;
   skillRepo: Pick<SkillRepository, 'saveAll'>;
   charRepo: Pick<CharacterRepository, 'updateSkillPoints'>;
+  /** WAL journal -- crash-safe learn (roster + SP). Optional (tests omit). */
+  journal?: Pick<Journal, 'append'>;
 }
 
 /** Client USESKILL frame after the dispatcher strips wType + bControl. */
@@ -76,6 +83,7 @@ export type SkillCastOutcome =
         | 'not_learned'
         | 'unknown_skill'
         | 'dead'
+        | 'stunned'
         | 'cooldown'
         | 'no_mp'
         | 'no_fp'
@@ -96,7 +104,8 @@ export type LearnOutcome =
         | 'over_max'
         | 'low_level'
         | 'prereq'
-        | 'insufficient_sp';
+        | 'insufficient_sp'
+        | 'wrong_job';
     };
 
 export class SkillService {
@@ -124,6 +133,7 @@ export class SkillService {
       return { ok: false, reason: 'not_learned' };
     }
     if (player.m_bDead) { this.clear(player); return { ok: false, reason: 'dead' }; }
+    if (player.isStunned()) { this.clear(player); return { ok: false, reason: 'stunned' }; }
 
     const skill = this.deps.skills.skills.get(slot.skillId);
     if (skill === undefined) { this.clear(player); return { ok: false, reason: 'unknown_skill' }; }
@@ -139,12 +149,15 @@ export class SkillService {
       return { ok: false, reason: 'cooldown' };
     }
 
-    // Resolve target by effect kind -- heal targets a player (self/other), damage
-    // targets a mover. Checked BEFORE the resource spend so a bad target never
-    // burns MP/FP (matches C++ DoUseSkill target-before-afford gate order).
+    // Resolve target by effect kind -- heal targets a player, damage targets a
+    // mover, buff targets a player (buff) OR a mover (debuff). Checked BEFORE the
+    // resource spend so a bad target never burns MP/FP (matches C++ DoUseSkill
+    // target-before-afford gate order).
     const target = kind === 'heal'
       ? this.resolveHealTarget(player, frame.objid)
-      : this.resolveDamageTarget(frame.objid);
+      : kind === 'buff'
+        ? this.resolveBuffTarget(player, frame.objid)
+        : this.resolveDamageTarget(frame.objid);
     if ('reason' in target) { this.clear(player); return target; }
 
     // Resource need is routed by KT (resourceType): magic=MP, skill=FP. The data
@@ -166,18 +179,49 @@ export class SkillService {
       }),
     );
 
-    return 'player' in target
-      ? this.applyHeal(player, target.player, skill, levelRow)
-      : this.deps.combatService.resolveSkill(player, frame.objid, skill, levelRow);
+    if ('player' in target) {
+      if (kind === 'buff') return this.applyBuffToPlayer(player, target.player, skill, levelRow, now);
+      return this.applyHeal(player, target.player, skill, levelRow);
+    }
+    if ('mover' in target) {
+      // Debuff on a monster (e.g. stun/poison/slow) lands in the mover's m_params.
+      return this.applyBuffToMover(player, target.mover, skill, levelRow, now);
+    }
+    return this.deps.combatService.resolveSkill(player, frame.objid, skill, levelRow);
   }
 
-  /** Classify a skill's effect: damage (EXT_*ATK), heal (RT_HEAL), or unsupported. */
-  private effectKind(skill: SkillDefinition): 'heal' | 'damage' | 'unsupported' {
+  /**
+   * Buff-target resolution: a player (self/other) for beneficial buffs, or a
+   * live mover (monster) for debuffs. Self (NULL_ID or own id) is always a
+   * player. Mirrors the C++ buff branch where the caster may be the target or
+   * a hostile mover depending on the skill's targeting.
+   */
+  private resolveBuffTarget(
+    player: CPlayer,
+    objid: number,
+  ): { player: CPlayer } | { mover: CMover } | { ok: false; reason: 'invalid_target' | 'target_dead' } {
+    if (objid === NULL_ID || objid === player.m_idPlayer) return { player };
+    const other = this.deps.playerManager.get(objid);
+    if (other !== undefined) {
+      if (other.m_bDead) return { ok: false, reason: 'target_dead' };
+      return { player: other };
+    }
+    const mover = this.deps.spawnManager.get(objid);
+    if (mover === undefined) return { ok: false, reason: 'invalid_target' };
+    if (mover.m_bDead) return { ok: false, reason: 'target_dead' };
+    return { mover };
+  }
+
+  /** Classify a skill's effect: damage (EXT_*ATK), heal (RT_HEAL), buff (RT_TIME), else unsupported. */
+  private effectKind(skill: SkillDefinition): 'heal' | 'damage' | 'buff' | 'unsupported' {
     const ext = skill.exeTarget ?? 0;
     if (ext === EXT_MELEEATK || ext === EXT_MAGICATKSHOT) return 'damage';
+    const rt1 = skill.referTargets?.[0] ?? 0;
+    const rt2 = skill.referTargets?.[1] ?? 0;
     // RT_HEAL=3 in referTargets marks a heal (docs #4). Heal id 44 has [3,0].
-    const rt = skill.referTargets?.[0] ?? 0;
-    if (rt === 3) return 'heal';
+    if (rt1 === 3) return 'heal';
+    // RT_TIME=2 on either referTarget marks a timed buff (Ctrl.cpp:1153).
+    if (rt1 === RT_TIME || rt2 === RT_TIME) return 'buff';
     return 'unsupported';
   }
 
@@ -251,6 +295,75 @@ export class SkillService {
   }
 
   /**
+   * `ApplyParam` RT_TIME (Ctrl.cpp:1149) -- attach a timed DST buff to the
+   * target. Duration is per-level `skillTime` (authoritative; propSkillAdd
+   * `dwSkillTime`). Effects built from `destParams`/`adjParamVals`/`chgParamVals`
+   * fan into the same `m_params` pool equip DST uses; the {@link BuffManager}
+   * owns the expiry lifecycle. Broadcasts SETSKILLSTATE to the vicinity so the
+   * client shows the buff icon + timer (the DST delta itself rides SETDESTPARAM,
+   * a later slice).
+   *
+   * The `now` is threaded in (rather than a fresh `Date.now()`) so the cast's
+   * cooldown + buff share one timestamp.
+   */
+  private applyBuffToPlayer(
+    caster: CPlayer,
+    target: CPlayer,
+    skill: SkillDefinition,
+    level: SkillLevel,
+    now: number,
+  ): SkillCastOutcome {
+    const effects = buffEffects(level);
+    const durationMs = Math.max(0, level.skillTime ?? 0);
+    const dot = dotFromSkill(level, now);
+    const outcome = target.m_buffs.addSkillBuff(skill.id, level.level, durationMs, effects, now, dot);
+    this.deps.zoneManager.broadcastAround(
+      target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS,
+      buildSetSkillState(target.m_idPlayer, BUFF_SKILL, skill.id, level.level, durationMs),
+    );
+    // Sync the DST delta(s) to the client so its stat window updates live. Only
+    // on a fresh apply/replace -- on 'refreshed' the effects are already applied
+    // (no delta) and on 'ignored' nothing changed.
+    if (outcome === 'added' || outcome === 'replaced') {
+      for (const e of effects) {
+        this.deps.zoneManager.broadcastAround(
+          target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS,
+          buildSetDestParam(target.m_idPlayer, e.dst, e.adj, e.chg ?? CHG_SENTINEL),
+        );
+      }
+    }
+    // Target only sees the icon + deltas; the caster (if different) is in the
+    // vicinity broadcast above. ponytail: RT_TIME stat-scaling bonus (SubReferTime).
+    return { ok: true, hit: true, damage: 0, killed: false };
+  }
+
+  /**
+   * RT_TIME debuff on a monster (`ApplyParam` on a hostile target). Lands the
+   * DST effects in the mover's `m_params` -- combat reads them (e.g. a stun bit
+   * gates the AI via `isStunned()`, a `-DEF` lowers the damage formula). The
+   * {@link BuffManager} owns expiry (swept by `AISystem.tick`). Broadcasts
+   * SETSKILLSTATE so peers see the monster debuff icon; no SETDESTPARAM (the
+   * client does not track monster DST pools, only the icon).
+   */
+  private applyBuffToMover(
+    caster: CPlayer,
+    target: CMover,
+    skill: SkillDefinition,
+    level: SkillLevel,
+    now: number,
+  ): SkillCastOutcome {
+    const effects = buffEffects(level);
+    const durationMs = Math.max(0, level.skillTime ?? 0);
+    const dot = dotFromSkill(level, now);
+    target.m_buffs.addSkillBuff(skill.id, level.level, durationMs, effects, now, dot);
+    this.deps.zoneManager.broadcastAround(
+      target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS,
+      buildSetSkillState(target.m_idMover, BUFF_SKILL, skill.id, level.level, durationMs),
+    );
+    return { ok: true, hit: true, damage: 0, killed: false };
+  }
+
+  /**
    * `OnDoUseSkillPoint` learn (docs #5). The client proposes its full 45-slot
    * roster; the server validates atomically (any reject -> whole batch rejected,
    * no SP spent, no confirm). Server-side gates beyond C++ (which trusts the
@@ -270,6 +383,10 @@ export class SkillService {
       if (req === undefined || req.skillId === NULL_ID || req.skillId === 0 || req.level <= 0) continue;
       const skill = this.deps.skills.skills.get(req.skillId);
       if (skill === undefined) return { ok: false, reason: 'unknown_skill' };
+      // Job-match gate (C++ IsLearnSkill): the player's job must descend from
+      // the skill's JOB_* (dwItemKind2). Closes the anti-cheat gap where any
+      // class could learn any skill if SP/reqLevel/prereqs were met.
+      if (!isJobMatch(player.m_nJob, skill.job)) return { ok: false, reason: 'wrong_job' };
       if (cur.skillId !== NULL_ID && cur.skillId !== req.skillId) {
         return { ok: false, reason: 'slot_occupied' };
       }
@@ -301,8 +418,22 @@ export class SkillService {
       player._dirty.add('m_nSkillPoint');
     }
 
-    // Persist roster + SP fire-and-forget. ponytail: WAL SKILL_LEARN + replayer.
+    // Journal the absolute end-state (full roster + SP) BEFORE the fire-and-forget
+    // DB persist, so a crash between here and the Knex write replays the learn on
+    // next boot (rule 04-persistence: journal critical mutations before ack).
+    // Absolute (whole roster, not a delta) => replay is idempotent.
     const roster = player.m_aJobSkill.map((s, slot) => ({ slot, skillId: s.skillId, level: s.level }));
+    if (totalCost > 0) {
+      this.deps.journal?.append({
+        charId: player.m_idPlayer,
+        type: 'SKILL_LEARN',
+        payload: {
+          roster,
+          skillPoint: player.m_nSkillPoint,
+          skillLevel: player.m_nSkillLevel,
+        },
+      });
+    }
     this.deps.skillRepo.saveAll(player.m_idPlayer, roster).catch(
       (err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'skill roster persist failed'),
     );
@@ -335,4 +466,44 @@ function statForDst(player: CPlayer, dst: number): number {
     case 4: return player.m_nSta;
     default: return 0;
   }
+}
+
+/**
+ * Build the DST effect list for a buff skill level from its `destParams`/
+ * `adjParamVals`/`chgParamVals` triplets (`MoverActEvent.cpp:205+ ApplyParam`).
+ * Skips entries with no `destParam`, and includes a `chg` override only when the
+ * per-level value is not the `0x7FFFFFFF` "unused" sentinel.
+ */
+function buffEffects(level: SkillLevel): DstEffect[] {
+  const dsts = level.destParams ?? [];
+  const adjs = level.adjParamVals ?? [];
+  const chgs = level.chgParamVals ?? [];
+  const effects: DstEffect[] = [];
+  for (let i = 0; i < dsts.length; i++) {
+    const dst = dsts[i];
+    if (!dst) continue;
+    const chg = chgs[i];
+    effects.push({ dst, adj: adjs[i] ?? 0, ...(chg !== undefined && chg !== CHG_SENTINEL ? { chg } : {}) });
+  }
+  return effects;
+}
+
+/** Default DoT tick interval when the skill carries no `destData` interval. */
+const DEFAULT_DOT_INTERVAL_MS = 2_000;
+
+/**
+ * Build a periodic-damage payload for a DoT skill level (poison/bleed), or
+ * `undefined` if the level has no per-tick damage. C++ sources the tick from
+ * `dwCircleTime`/`dwPainTime` (`ProjectCmn.h:140`) and the per-tick damage from
+ * `dwAbilityMin`. The converter exposes the interval as `destData[1]` (ms) and
+ * the damage as `abilityMin`; a missing interval falls back to 2 s.
+ *
+ * `nowMs` seeds the first tick (the cast instant), so the first tick lands one
+ * interval after cast (mirrors C++ which stamps `tmInst` on apply).
+ */
+function dotFromSkill(level: SkillLevel, nowMs: number): DoTPayload | undefined {
+  const damage = level.abilityMin ?? 0;
+  if (damage <= 0) return undefined;
+  const intervalMs = level.destData?.[1] ?? DEFAULT_DOT_INTERVAL_MS;
+  return { damage, intervalMs, nextTickMs: nowMs + intervalMs };
 }

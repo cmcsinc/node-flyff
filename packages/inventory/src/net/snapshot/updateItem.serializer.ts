@@ -19,6 +19,9 @@ import { NULL_ID } from '@flyff/world-core';
 
 /** Container/slot-field codes (`_Common/Mover.h:62`, `UI_*`). */
 export const UI_NUM = 0; // stack count
+export const UI_AO = 3; // refine level (m_nAbilityOption, Mover.h:65)
+export const UI_RAO = 4; // element level (m_nResistAbilityOption, Mover.h:66)
+export const UI_IR = 5; // element type (m_bItemResist, Mover.h:67)
 export const UI_COOLTIME = 8; // count + start cooldown sweep (Mover.h:68)
 
 /**
@@ -27,6 +30,32 @@ export const UI_COOLTIME = 8; // count + start cooldown sweep (Mover.h:68)
  */
 export function buildUpdateItemCount(objid: number, slot: number, count: number): Buffer {
   return buildUpdateItem(objid, slot, UI_NUM, count);
+}
+
+/**
+ * Build an UPDATE_ITEM snapshot for a refine-level change
+ * (`UpdateItem(..., UI_AO, nAbilityOption)` -- `ItemUpgrade.cpp:1118`). The
+ * enchant path sends one of these on a successful refine.
+ */
+export function buildUpdateItemRefine(objid: number, slot: number, refine: number): Buffer {
+  return buildUpdateItem(objid, slot, UI_AO, refine);
+}
+
+/**
+ * Build an UPDATE_ITEM snapshot for an element-type change
+ * (`UpdateItem(..., UI_IR, eItemType)` -- `ItemUpgrade.cpp:1286`). Paired with
+ * a `buildUpdateItemElementLevel` on element success (two snapshots).
+ */
+export function buildUpdateItemElement(objid: number, slot: number, element: number): Buffer {
+  return buildUpdateItem(objid, slot, UI_IR, element);
+}
+
+/**
+ * Build an UPDATE_ITEM snapshot for an element-level change
+ * (`UpdateItem(..., UI_RAO, m_nResistAbilityOption)` -- `ItemUpgrade.cpp:1287`).
+ */
+export function buildUpdateItemElementLevel(objid: number, slot: number, level: number): Buffer {
+  return buildUpdateItem(objid, slot, UI_RAO, level);
 }
 
 /**

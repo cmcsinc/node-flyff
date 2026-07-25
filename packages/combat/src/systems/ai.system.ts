@@ -42,7 +42,8 @@ import { playerCombatant, moverCombatant } from '../combat/combatants';
 import { AF_MISS } from '../combat/tables';
 import {
   RANGE_MOVE, RAGE_LEASH, RANGE_RETURN_TO_BEGIN, HOME_ARRIVAL, SIGHT_RANGE,
-  PURSUE_SPEED_FACTOR, RETURN_SPEED_FACTOR, CHASE_WINDOW_MS,
+  PURSUE_SPEED_FACTOR, RETURN_SPEED_FACTOR, FLEE_SPEED_FACTOR,
+  CHASE_WINDOW_MS,
   RETURN_STUCK_MS, REATTACK_JITTER_MS, RANGE_REATTACK_DELAY_MS, SPEED_SCALE,
   AGGRO_LEVEL_BAND, OBJMSG_ATK1, OBJMSG_ATK_RANGE1,
 } from '@flyff/entities';
@@ -110,7 +111,29 @@ export class AISystem {
     this.lastTickMs = now;
     for (const m of this.deps.spawnManager.all()) {
       if (!m.m_bAttackable || m.m_bGuard || m.m_bDead) continue;
-      if (m.m_idTarget !== NULL_ID) this.pursue(m, now, dtMs);
+      // Sweep timed debuffs on this mover (stun/poison/etc. from player skills).
+      // Expired buffs are reversed on m_params; no S->C needed (no monster buff
+      // icon on the client). ponytail: REMOVESKILLINFULENCE if monster icons ship.
+      const expired = m.m_buffs.tick(now);
+      if (expired.length > 0) {
+        logger.debug({ moverId: m.m_idMover, count: expired.length }, 'monster buffs expired');
+      }
+      // Apply DoT ticks (poison/bleed). ponytail: DAMAGE snapshot + killer
+      // attribution + death (CombatService.onMoverDeath) when DoT crosses 0.
+      const dots = m.m_buffs.tickDots(now);
+      if (dots.length > 0) {
+        let dotTotal = 0;
+        for (const d of dots) dotTotal += d.damage;
+        m.m_nHitPoint = Math.max(0, m.m_nHitPoint - dotTotal);
+        if (m.m_nHitPoint <= 0) {
+          m.m_bDead = true;
+          continue;
+        }
+      }
+      // Stunned/sleeping monsters cannot act this tick (C++ CHRSTATE gate).
+      if (m.isStunned()) continue;
+      if (m.m_bRunaway) this.stepFlee(m, now, dtMs);
+      else if (m.m_idTarget !== NULL_ID) this.pursue(m, now, dtMs);
       else if (m.m_bReturnToBegin) this.stepReturnHome(m, now, dtMs);
       else this.idleOrAcquire(m, now);
     }
@@ -176,8 +199,21 @@ export class AISystem {
 
   // --- RAGE: pursue target, swing in range, leash --------------------------
 
-  private pursue(m: CMover, now: number, dtMs: number): void {
+private pursue(m: CMover, now: number, dtMs: number): void {
+    // Flee gate: `SetRunAway(HP%)` -- C++ `StateRunaway` (`AIMonster.cpp:528-560`).
+    // When the monster's HP drops to/below the threshold, drop target and run
+    // AWAY from the attacker for `m_nRunawayDelay` ms, then return home.
+    const fleeThresholdPct = m.m_nFleeHpPct > 0 && m.m_nMaxHitPoint > 0
+      ? m.m_nFleeHpPct
+      : 0;
+    const belowFlee = fleeThresholdPct > 0
+      && (m.m_nHitPoint * 100 / m.m_nMaxHitPoint) <= fleeThresholdPct;
     const target = this.deps.playerManager.get(m.m_idTarget);
+    if (belowFlee && target && target.m_nHp > 0 && !target.m_bDead && !isHidden(target)) {
+      // Flee away from the live target's position.
+      this.startFlee(m, now, target.m_vPos);
+      return;
+    }
     if (target === undefined || target.m_nHp <= 0 || target.m_bDead || isHidden(target)) {
       // Target gone, dead, or vanished (`/inv` mid-fight) -> release + go home.
       // NOTE: no town safe-zone gate here -- C++ `AIMSG_DAMAGE` retaliation
@@ -191,10 +227,26 @@ export class AISystem {
       this.startReturn(m, now);
       return;
     }
+
+    // Self-heal gate: `Recovery(HP%)` -- C++ `MoveProcessStand` recvCond check
+    // (`AIMonster.cpp` + `m_bRecvCond`/`m_nRecvCondMe`/`m_nRecvCondHow`).
+    // When the monster's HP is below the heal threshold AND the heal cooldown
+    // has elapsed, restore HP. Healers stay in combat (unlike flee) and keep
+    // fighting. No S->C broadcast (no monster-HP-sync packet -- same reason
+    // return-home HP restore is intentionally omitted).
+    if (m.m_nHealHpPct > 0 && m.m_nMaxHitPoint > 0
+      && (m.m_nHitPoint * 100 / m.m_nMaxHitPoint) <= m.m_nHealHpPct
+      && now >= m.m_tmNextHealTick) {
+      const healed = Math.min(m.m_nMaxHitPoint, m.m_nHitPoint + m.m_nHealAmount);
+      m.m_nHitPoint = healed;
+      m.m_tmNextHealTick = now + m.m_nHealCadenceMs;
+    }
+
     // Spawn-anchor (150 m) OR damage-pos (120 m) leash -> go home.
     if (distSq2(m.m_vPos, m.m_vPosBegin) > RAGE_LEASH * RAGE_LEASH
       || distSq2(m.m_vPos, m.m_vPosDamage) > RANGE_RETURN_TO_BEGIN * RANGE_RETURN_TO_BEGIN) {
       this.startReturn(m, now);
+      return;
       return;
     }
     const rangeSq = m.m_nAttackRange * m.m_nAttackRange;
@@ -277,6 +329,43 @@ export class AISystem {
     m.m_tmReturnToBegin = now;
     m.m_fSpeedFactor = RETURN_SPEED_FACTOR;
     this.moveTo(m, m.m_vPosBegin, now, false);
+  }
+
+  /** `StateRunaway` entry — drop target, run AWAY from `awayFrom` position. */
+  private startFlee(m: CMover, now: number, awayFrom: Vec3): void {
+    m.m_idTarget = NULL_ID;
+    m.m_bRunaway = true;
+    m.m_fSpeedFactor = FLEE_SPEED_FACTOR;
+    m.m_tmRunawayEnd = now + m.m_nRunawayDelay;
+    // Flee AWAY from the attacker (C++ `StateRunaway` runs opposite the last
+    // combat position: `DoRunaway` -> `MoveToDst(vPos + dir*FLEE_DIST)`,
+    // `AIMonster.cpp:528-560`). The dir is computed as `(monster.pos - attacker.pos)`.
+    const dx = m.m_vPos.x - awayFrom.x;
+    const dz = m.m_vPos.z - awayFrom.z;
+    const dist = Math.hypot(dx, dz);
+    if (dist < 1e-3) {
+      // Edge case: monster is at the attacker position -> flee in a random direction.
+      const angle = Math.random() * Math.PI * 2;
+      const fleeDest: Vec3 = { x: m.m_vPos.x + Math.cos(angle) * 50, y: m.m_vPos.y, z: m.m_vPos.z + Math.sin(angle) * 50 };
+      this.moveTo(m, fleeDest, now, false);
+    } else {
+      // Run AWAY from the attacker, 50 m out.
+      const fleeDest: Vec3 = { x: m.m_vPos.x + (dx / dist) * 50, y: m.m_vPos.y, z: m.m_vPos.z + (dz / dist) * 50 };
+      this.moveTo(m, fleeDest, now, false);
+    }
+  }
+
+  /** Flee step — run toward the flee dest; on timeout -> return home. */
+  private stepFlee(m: CMover, now: number, dtMs: number): void {
+    // C++ `StateRunaway` runs for `m_dwRunawayDelay` ms, then transitions to
+    // `StateReturn`. During runaway the monster moves AWAY from the attacker
+    // at chase speed — no swings, no leash checks.
+    if (now >= m.m_tmRunawayEnd) {
+      m.m_bRunaway = false;
+      this.startReturn(m, now);
+      return;
+    }
+    stepToward(m, m.m_vDestPos, FLEE_SPEED_FACTOR, m.m_fSpeedBase, dtMs);
   }
 
   /** Step home; on arrival reset speed + re-arm wander. 20 s stuck-cap -> snap home. */

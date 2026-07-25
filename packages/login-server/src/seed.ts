@@ -28,6 +28,9 @@ import { up as migrationUp007 } from '@flyff/database/migrations/007_character_a
 import { up as migrationUp008 } from '@flyff/database/migrations/008_normalize_containers';
 import { up as migrationUp009 } from '@flyff/database/migrations/009_taskbar';
 import { up as migrationUp010 } from '@flyff/database/migrations/010_character_remain_gp';
+import { up as migrationUp011 } from '@flyff/database/migrations/011_bank_per_tab_gold';
+import { up as migrationUp012 } from '@flyff/database/migrations/012_item_element';
+import { up as migrationUp013 } from '@flyff/database/migrations/013_pk_state';
 import { hashPassword } from '@flyff/core/utils/password';
 
 /**
@@ -50,6 +53,9 @@ const MIGRATIONS = [
   { column: ['inventory', 'gold'], up: migrationUp008 },
   { column: ['characters', 'taskbar'], up: migrationUp009 },
   { column: ['characters', 'remain_gp'], up: migrationUp010 },
+  { column: ['bank', 'gold_tab1'], up: migrationUp011 },
+  { column: ['inventory_item', 'element'], up: migrationUp012 },
+  { column: ['characters', 'pk_propensity'], up: migrationUp013 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';

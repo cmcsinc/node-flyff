@@ -81,10 +81,26 @@ describe('bank.repo.ts', () => {
     assert.equal(item!.item_id, 8000, 'itemId untouched');
   });
 
-  it('getGold/setGold read + write the account-wide bank penya', async () => {
-    assert.equal(await repo.getGold(accountId), 0, 'default 0');
-    await repo.setGold(accountId, 12345);
-    assert.equal(await repo.getGold(accountId), 12345);
+  it('getGold/setGold read + write per-tab bank penya (tabs kept independent)', async () => {
+    assert.equal(await repo.getGold(accountId, 0), 0, 'tab 0 default 0');
+    assert.equal(await repo.getGold(accountId, 1), 0, 'tab 1 default 0');
+    assert.equal(await repo.getGold(accountId, 2), 0, 'tab 2 default 0');
+    await repo.setGold(accountId, 12345, 0);
+    await repo.setGold(accountId, 100, 1);
+    await repo.setGold(accountId, 200, 2);
+    assert.equal(await repo.getGold(accountId, 0), 12345, 'tab 0 round-trips');
+    assert.equal(await repo.getGold(accountId, 1), 100, 'tab 1 round-trips');
+    assert.equal(await repo.getGold(accountId, 2), 200, 'tab 2 round-trips');
+    // Re-writing one tab leaves the others untouched.
+    await repo.setGold(accountId, 999, 1);
+    assert.equal(await repo.getGold(accountId, 0), 12345, 'tab 0 untouched');
+    assert.equal(await repo.getGold(accountId, 1), 999, 'tab 1 overwritten');
+    assert.equal(await repo.getGold(accountId, 2), 200, 'tab 2 untouched');
+  });
+
+  it('getGold/setGold throw on an out-of-range tab', async () => {
+    await assert.rejects(() => repo.getGold(accountId, 3), /out of range/);
+    await assert.rejects(() => repo.setGold(accountId, 5, 3), /out of range/);
   });
 
   it('getBankPass/setBankPass default to 0000 and round-trip a new pin', async () => {

@@ -143,6 +143,33 @@ export const SNAPSHOTTYPE_CLEAR_USESKILL = 0x001a;   // MsgHdr.h:885 -- AddClear
 export const SNAPSHOTTYPE_SETSKILLLEVEL = 0x0026;    // MsgHdr.h:942 -- AddSetSkillLevel (peer skill-level delta)
 export const SNAPSHOTTYPE_DOUSESKILLPOINT = 0x007d;  // MsgHdr.h:996 -- AddDoUseSkillPoint (learn/SP confirm, self)
 /**
+ * Skill-buff S->C snapshots (`_Network/MsgHdr.h`):
+ * - SETSKILLSTATE (0x004c) -- `CUserMng::AddSetSkillState` (User.cpp:5672):
+ *   `OBJID | SETSKILLSTATE | WORD wType | WORD wID | DWORD dwLevel | DWORD dwTime`.
+ *   Broadcast to vicinity on buff attach/refresh -- the client adds the buff
+ *   icon + timer (DPClient.cpp:14233 OnSetSkillState). Does NOT carry the DST
+ *   delta; the stat change rides a separate SETDESTPARAM (future slice).
+ * - REMOVESKILLINFULENCE (0x00f8) -- `CUser::AddRemoveSkillInfluence`
+ *   (User.cpp:1025): `OBJID | REMOVESKILLINFULENCE | WORD wType | WORD wID`.
+ *   Broadcast on buff expire/remove -- client drops the icon.
+ */
+export const SNAPSHOTTYPE_SETSKILLSTATE = 0x004c;        // MsgHdr.h -- AddSetSkillState (buff attach/refresh)
+export const SNAPSHOTTYPE_REMOVESKILLINFULENCE = 0x00f8; // MsgHdr.h -- AddRemoveSkillInfluence (buff expire/remove)
+/**
+ * DST delta S->C snapshots (`_Network/MsgHdr.h`):
+ * - SETDESTPARAM (0x001c) -- `CUserMng::AddSetDestParam` (User.cpp:4651):
+ *   `OBJID | SETDESTPARAM | int nDstParameter | int nAdjParameterValue | int nChgParameterValue`.
+ *   Broadcast when a DST modifier is applied (equip/buff/item). Carries the delta
+ *   (adj/chg being added), NOT the new total -- the client maintains its own
+ *   adj/chg pool mirroring the server's, and reads its own total for display.
+ *   `nChgParameterValue = 0x7FFFFFFF` (CHG_SENTINEL) means "no override".
+ * - RESETDESTPARAM (0x001d) -- `CUserMng::AddResetDestParam` (User.cpp:4663):
+ *   `OBJID | RESETDESTPARAM | int nDstParameter | int nAdjParameterValue`.
+ *   Broadcast when a DST modifier is reversed (buff expire/unequip).
+ */
+export const SNAPSHOTTYPE_SETDESTPARAM = 0x001c;   // MsgHdr.h -- AddSetDestParam (DST apply delta)
+export const SNAPSHOTTYPE_RESETDESTPARAM = 0x001d; // MsgHdr.h -- AddResetDestParam (DST reverse delta)
+/**
  * `SNAPSHOTTYPE_MODIFYMODE` (MsgHdr.h:1105) -- `CUserMng::AddModifyMode`
  * (User.cpp:5096): `OBJID | MODIFYMODE | m_dwMode:DWORD`. Broadcast to vicinity
  * on any `m_dwMode` bit flip so peers re-render the mover (transparency,

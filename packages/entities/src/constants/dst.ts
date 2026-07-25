@@ -86,3 +86,16 @@ export const DST = Object.freeze({
 } as const);
 
 export type DstId = typeof DST[keyof typeof DST];
+
+/**
+ * `DST_CHRSTATE` state bits (`defineAttribute.h` `AF_*`). OR-ed into the
+ * CHRSTATE adj pool by stun/poison/sleep buffs; read to gate actions. The full
+ * combat-side attack-flag set (`AF_CRITICAL`, `AF_PUSH`, ...) lives in
+ * `@flyff/combat` -- these are only the *status* bits the status system reads.
+ */
+export const CHRSTATE_BITS = Object.freeze({
+  STUN: 0x0800,        // AF_STUN -- cannot act (no attack/cast/move)
+  POISON: 0x0001,      // AF_POISON -- DoT (status tick, ponytail)
+  SLEEP: 0x0040,       // AF_SLEEP -- cannot act, breaks on damage
+} as const);
+

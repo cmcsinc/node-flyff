@@ -30,7 +30,8 @@
     "server:world": "tsx packages/world-server/src/index.ts",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
-    "claude": "claude --dangerously-skip-permissions"
+    "claude": "claude --dangerously-skip-permissions",
+    "claude:rc": "claude --dangerously-skip-permissions --rc"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
