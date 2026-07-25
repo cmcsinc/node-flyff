@@ -81,6 +81,7 @@ import { BankService } from '@flyff/npc';
 import { BankHandler } from '@flyff/npc';
 import { TaskBarService } from './services/taskbar.service';
 import { TaskBarHandler } from './handlers/taskbar.handler';
+import { EndSkillQueueHandler } from './handlers/endSkillQueue.handler';
 import { ShopService } from '@flyff/npc';
 import { ShopHandler } from '@flyff/npc';
 import { RemoveQuestHandler } from '@flyff/quest';
@@ -165,6 +166,7 @@ export interface WorldComposeResult {
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
   taskbarHandler: TaskBarHandler;
+  endSkillQueueHandler: EndSkillQueueHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -333,6 +335,7 @@ export async function compose(): Promise<WorldComposeResult> {
     inventoryRepo,
     bankRepo,
     skillRepo,
+    skills: resources.skills,
     getItem: (id: number) => resources.items.items.get(id),
     playerManager,
     zoneManager,
@@ -491,6 +494,7 @@ export async function compose(): Promise<WorldComposeResult> {
     (charId, json) => charRepo.update(charId, { taskbar: json }),
   );
   const taskbarHandler = new TaskBarHandler({ playerManager, taskbarService });
+  const endSkillQueueHandler = new EndSkillQueueHandler(playerManager);
 
   // NPC vendor shop -- open/close + buy/sell.
   const shopService = new ShopService({
@@ -582,6 +586,7 @@ export async function compose(): Promise<WorldComposeResult> {
     bankHandler,
     shopHandler,
     taskbarHandler,
+    endSkillQueueHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,

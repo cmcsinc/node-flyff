@@ -106,6 +106,7 @@ export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195
 // Added for the remaining v15 C->S handlers (DPSrvr.cpp MsgHdr.h):
 export const SNAPSHOTTYPE_CHAT_OUT = 0x00bc;         // MsgHdr.h:1078 -- CHATTEXT (defined-text echo)
 export const SNAPSHOTTYPE_MOTION = 0x0098;           // MsgHdr.h:1034 -- MOTION echo
+export const SNAPSHOTTYPE_ENDSKILLQUEUE = 0x00e5;   // MsgHdr.h:1115 -- AddHdr(self) bodyless ack (taskbar cancels queued skill)
 export const SNAPSHOTTYPE_MELEE_ATTACK = 0x00e0;     // MsgHdr.h:1110 -- MELEE_ATTACK swing echo
 export const SNAPSHOTTYPE_RANGE_ATTACK = 0x00e2;    // MsgHdr.h:1112 -- RANGE_ATTACK projectile swing echo
 export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 -- PLAYERCORR echo (60B body)
