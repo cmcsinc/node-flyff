@@ -48,6 +48,7 @@ import type { EnchantHandler } from '@flyff/inventory';
 import type { BankHandler } from '@flyff/npc';
 import type { ShopHandler } from '@flyff/npc';
 import type { TaskBarHandler } from './handlers/taskbar.handler';
+import type { EndSkillQueueHandler } from './handlers/endSkillQueue.handler';
 import type { RemoveQuestHandler } from '@flyff/quest';
 import type { QuestCheckHandler } from '@flyff/quest';
 import type { QuestHelperHandler } from '@flyff/quest';
@@ -89,6 +90,7 @@ export interface WorldClientServerDeps {
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
   taskbarHandler: TaskBarHandler;
+  endSkillQueueHandler: EndSkillQueueHandler;
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
@@ -158,6 +160,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.SELLITEM, (s, r) => deps.shopHandler.handleSell(s, r));
   dispatcher.register(PACKETTYPE.ADDITEMTASKBAR, (s, r) => deps.taskbarHandler.handleAddItem(s, r));
   dispatcher.register(PACKETTYPE.REMOVEITEMTASKBAR, (s, r) => deps.taskbarHandler.handleRemoveItem(s, r));
+  dispatcher.register(PACKETTYPE.ENDSKILLQUEUE, (s) => deps.endSkillQueueHandler.handleEndSkillQueue(s));
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
   dispatcher.register(PACKETTYPE.QUEST_CHECK, (s, r) => deps.questCheckHandler.handleQuestCheck(s, r));
   dispatcher.register(PACKETTYPE.QUESTHELPER_REQNPCPOS, (s, r) => deps.questHelperHandler.handleQuestHelper(s, r));

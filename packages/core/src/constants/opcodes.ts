@@ -55,6 +55,11 @@ export const PACKETTYPE = Object.freeze({
   REVIVAL_TO_LODESTAR:  0x00ff00c1,
   REVIVAL_TO_LODELIGHT: 0x00ff00c2,
   WHISPER:              0x00ff00d4,
+  // MsgHdr.h:194 -- `CDPSrvr::OnEndSkillQueue` (DPSrvr.cpp:7077). Bodyless; the
+  // opcode alone signals "skill queue cancelled". Server acks with a self-only
+  // SNAPSHOTTYPE_ENDSKILLQUEUE so the client clears its taskbar cast slot
+  // (`CUserTaskBar::OnEndSkillQueue` -> `AddHdr(self, ENDSKILLQUEUE)`).
+  ENDSKILLQUEUE:         0x00ff00d5,
   SAY:                  0x00ff00e0,
   SHOUT:                0x00ff00e1,
   DEFINEDTEXT:          0x00ff00ec,
