@@ -18,6 +18,7 @@
  */
 
 import type { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { MAX_COMPLETE_QUEST_WIRE } from '@flyff/core/constants/quest';
 import type { CPlayer } from '@flyff/entities';
 import {
   MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
@@ -114,14 +115,17 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   w.writeDword(p.m_nSkillPoint); // m_nSkillPoint
   w.writeQword(0);             // m_nDeathExp (EXPINTEGER __int64, 8 bytes)
   w.writeDword(0);             // m_nDeathLevel
-  for (let i = 0; i < MAX_JOB; i++) w.writeDword(0);         // dwJobLv *32 (always 0)
+  for (let i = 0; i < MAX_JOB; i++) w.writeDword(0);         // dwJobLv *40 (v19 MAX_JOB, always 0)
   w.writeDword(NULL_ID);       // m_idMarkingWorld (gap -- C++ writes numeric world ID, Mover.cpp:969)
   w.writeFloat(0); w.writeFloat(0); w.writeFloat(0);         // m_vMarkingPos
   // --- Per-player quest arrays (inline after the size bytes -- ObjSerializeOpt.cpp:201-207) ---
   w.writeByte(p.m_aQuest.length);                       // m_nQuestSize (BYTE)
   for (const q of p.m_aQuest) writeQuestStruct(w, q);   // m_aQuest * size (12B each)
-  w.writeByte(p.m_aCompleteQuest.length);               // m_nCompleteQuestSize (BYTE)
-  for (const id of p.m_aCompleteQuest) w.writeWord(id); // m_aCompleteQuest * size (WORD each)
+  // `m_nCompleteQuestSize` is BYTE but v19 stores up to 300 completed quests.
+  // Sending more than 255 shifts every following CMover field and crashes JOIN.
+  const completedQuests = p.m_aCompleteQuest.slice(0, MAX_COMPLETE_QUEST_WIRE);
+  w.writeByte(completedQuests.length);                  // m_nCompleteQuestSize (BYTE)
+  for (const id of completedQuests) w.writeWord(id);    // m_aCompleteQuest * size (WORD each)
   w.writeByte(p.m_aCheckedQuest.length);                // m_nCheckedQuestSize (BYTE)
   for (const id of p.m_aCheckedQuest) w.writeWord(id);  // m_aCheckedQuest * size (WORD each)
   // m_idMurderer -- 0 (NOT NULL_ID) when the player has no murderer. The
@@ -140,8 +144,9 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
     const eq = p.m_Inventory[MAX_INVENTORY + i];
     w.writeDword(eq ? eq.itemId : 0);
   }
-  // m_aJobSkill raw -- 45 * 8 B (DWORD skillId, DWORD level per slot, no count prefix).
-  // Empty slot sentinel = NULL_ID/0. Byte-exact vs C++ ObjSerializeOpt.cpp:237.
+  // m_aJobSkill raw -- 51 * 8 B (v19 MAX_SKILL_JOB; DWORD skillId, DWORD level per
+  // slot, no count prefix). Empty slot sentinel = NULL_ID/0. Byte-exact vs C++
+  // ObjSerializeOpt.cpp:237 (`ar.Write( m_aJobSkill, sizeof(SKILL) * MAX_SKILL_JOB )`).
   for (let i = 0; i < MAX_SKILL_JOB; i++) {
     const s = p.m_aJobSkill[i] ?? { skillId: NULL_ID, level: 0 };
     w.writeDword(s.skillId === NULL_ID ? NULL_ID : s.skillId);

@@ -71,19 +71,20 @@ describe('PlayerSnapshotSerializer', () => {
     assert.equal(buf.readUInt32LE(99), 0x112233);     // m_dwHairColor
   });
 
-  it('produces the byte-exact total length (3350 + nameLen)', () => {
-    // fresh-spawn fixed budget + dynamic name; "Hero"=4 -> 3354.
-    // Base 3350 = 3328 (CMover blob) + 22 (WORLD_READINFO sub-record:
-    // objid 4 + hdr 2 + dwWorldId 4 + vPos 12). CMover base 3328 = 3086
-    // + 248 (inventory 42->73 slots) + 12 (3 EXPINTEGER exp fields 4->8)
-    // - 9 (3 resist BYTE not DWORD) - 9 (3 quest-size BYTE not DWORD).
-    assert.equal(buf.length, 3350 + 4);
+  it('produces the byte-exact total length (3430 + nameLen)', () => {
+    // fresh-spawn fixed budget + dynamic name; "Hero"=4 -> 3434.
+    // Base 3430 = 3408 (CMover blob) + 22 (WORLD_READINFO sub-record:
+    // objid 4 + hdr 2 + dwWorldId 4 + vPos 12). CMover base 3408 = 3328
+    // (v15-sized blob) + 32 (MAX_JOB 32->40 under v19 __3RD_LEGEND16) +
+    // 48 (MAX_SKILL_JOB 45->51, 6 SKILLs * 8 B). Pre-legend sizes
+    // under-sized dwJobLv + m_aJobSkill and crashed Neuz at Item.h:938.
+    assert.equal(buf.length, 3430 + 4);
 
     const p2 = CPlayer.fromRow(makeRow({ name: 'X' }), { write: () => true });
-    assert.equal(serializer.build(p2).length, 3350 + 1);
+    assert.equal(serializer.build(p2).length, 3430 + 1);
 
     const p3 = CPlayer.fromRow(makeRow({ name: '' }), { write: () => true });
-    assert.equal(serializer.build(p3).length, 3350);
+    assert.equal(serializer.build(p3).length, 3430);
   });
 
   it('includes the empty inventory + 3 bank tabs (NULL_ID framing)', () => {
@@ -91,7 +92,7 @@ describe('PlayerSnapshotSerializer', () => {
       emptyItemContainerSize(INVENTORY_SLOTS) + // m_Inventory: 73 slots
       3 * emptyItemContainerSize(BANK_SLOTS);   // m_Bank *3: 42 slots each
     assert.ok(containers > 0);
-    assert.equal(buf.length, 3350 + 4);
+    assert.equal(buf.length, 3430 + 4);
     // verify the NULL_ID pattern appears (empty index slots)
     assert.ok(buf.includes(Buffer.from([0xff, 0xff, 0xff, 0xff])));
   });

@@ -256,11 +256,11 @@ describe('E2E byte chain: login CERTIFY -> cluster PRE_JOIN -> world JOIN snapsh
     assert.equal(clusterSocket._written()[0]!.readUInt32LE(0), PACKETTYPE.PRE_JOIN);
   });
 
-  it('world writes the 3354-byte JOIN/ADD_OBJ snapshot for the seeded char', () => {
+  it('world writes the 3434-byte v19 JOIN/ADD_OBJ snapshot for the seeded char', () => {
     const snap = worldSocket._written()[0]!;
     assert.equal(snap.readUInt32LE(0), PACKETTYPE.JOIN);
     assert.equal(snap.readUInt32LE(4), charId); // objidPlayer
-    assert.equal(snap.length, 3354);            // WORLD_READINFO + "Hero" blob (3350 base + 4)
+    assert.equal(snap.length, 3434);            // WORLD_READINFO + "Hero" blob (3430 base + 4; v19 MAX_JOB=40/MAX_SKILL_JOB=51)
   });
 
   it('player is live in the world after JOIN', () => {

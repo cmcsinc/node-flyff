@@ -159,7 +159,7 @@ describe('E2E: cluster handoff -> world JOIN -> self-spawn snapshot', () => {
     assert.equal(written.length, 3);
     const snap = written[0]!;
     assert.equal(snap.readUInt32LE(0), PACKETTYPE.JOIN);
-    assert.equal(snap.length, 3354); // WORLD_READINFO + "Hero" blob (3350 base + 4)
+    assert.equal(snap.length, 3434); // WORLD_READINFO + "Hero" blob (3430 base + 4; v19 MAX_JOB=40/MAX_SKILL_JOB=51)
     assert.equal(snap.readUInt32LE(4), 42); // objidPlayer
 
     // 4. player is live in the world

@@ -13,7 +13,13 @@ export const NULL_ID = 0xffffffff;
 
 // --- Raw struct / array sizes ------------------------------------------------
 export const MAX_HUMAN_PARTS = 31;
-export const MAX_SKILL_JOB = 45;
+// v19 with `__3RD_LEGEND16` (`Neuz/VersionCommon.h:20`): MAX_JOB_SKILL(3) +
+// MAX_EXPERT_SKILL(20) + MAX_PRO_SKILL(20) + MAX_MASTER_SKILL(1) +
+// MAX_HERO_SKILL(1) + MAX_LEGEND_HERO_SKILL(6) = 51 (`resource/defineJob.h:18-27`,
+// `_Common/Mover.h:95`). v15 pre-legend was 45 -- using that under-sizes
+// `m_aJobSkill` on the wire by 6 SKILLs (48 B) and shifts every later CMover
+// field, crashing the client in `CItemContainer::Serialize` (Item.h:938).
+export const MAX_SKILL_JOB = 51;
 export const MAX_INVENTORY = 42;
 export const MAX_BANK = 42;
 export const MAX_BANK_TABS = 3;

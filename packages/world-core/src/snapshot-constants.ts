@@ -68,7 +68,11 @@ export const BELLI_PEACEFUL = 1;
 // Slot-sizing consts (NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_HUMAN_PARTS,
 // MAX_SKILL_JOB, MAX_INVENTORY, MAX_BANK, MAX_BANK_TABS, MAX_SLOT_ITEM_*,
 // SHORTCUT) moved to @flyff/entities -- re-exported at the bottom of this file.
-export const MAX_JOB = 32;
+// v19 (`__3RD_LEGEND16` + `__VER 19`): MAX_JOB = MAX_HERO(32) + 8 legend-hero
+// jobs = 40 (`resource/defineJob.h:145`). v15 pre-legend was 32 -- using that
+// here under-sizes the `dwJobLv` array by 8 DWORDs and shifts every subsequent
+// CMover field, crashing the client in `CItemContainer::Serialize` (Item.h:938).
+export const MAX_JOB = 40;
 export const SKILL_SIZE = 8;            // sizeof(SKILL)
 export const SM_MAX = 26;
 export const MAX_HONOR_TITLE = 150;

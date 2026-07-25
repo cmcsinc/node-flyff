@@ -24,6 +24,8 @@ export const QS_END = 14;
 /** Per-player array caps (`_Common/ProjectCmn.h`). */
 export const MAX_QUEST = 100;
 export const MAX_COMPLETE_QUEST = 300;
+/** `m_nCompleteQuestSize` is BYTE in `CMover::Serialize`; JOIN cannot send more. */
+export const MAX_COMPLETE_QUEST_WIRE = 0xff;
 export const MAX_CHECKED_QUEST = 5;
 
 /** `SetEndRemoveQuest` array cap (definequest.h). */

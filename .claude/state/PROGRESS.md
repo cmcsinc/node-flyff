@@ -301,5 +301,26 @@
 
 ---
 
+## v19 JOIN Item.h:938 crash — USER-CONFIRMED fixed (2026-07-25)
+
+**Root cause:** `__3RD_LEGEND16` enlarges two `CMover::Serialize` arrays vs v15 —
+`MAX_JOB` 32→40 (`resource/defineJob.h:145`) and `MAX_SKILL_JOB` 45→51
+(`_Common/Mover.h:95`). Server shipped v15 sizes in
+`packages/world-core/src/snapshot-constants.ts` + `packages/entities/src/constants/slots.ts`,
+so every JOIN was 80 B short before the inventory container → garbage `chSize` byte →
+`m_apItem[ch].Serialize(ar)` OOB → `0xC0000005` at `Item.h:938`.
+
+**Fix (user-confirmed 2026-07-25, branch `feat/v19-client-switch`):**
+- `MAX_JOB = 40` + `MAX_SKILL_JOB = 51` in the server constants; JOIN blob base
+  length 3350 → 3430 (name "Hero" → 3434).
+- First attempted fix (completed-quest BYTE cap) was the wrong diagnosis — kept
+  as a valid defensive guard only. See memory `v19-join-3rd-legend-sizes`.
+- All pinned byte-count assertions in the world-server test suite updated to the
+  v19 sizes; `byte-count-check.test.ts` walk uses 40/51 (no longer mirrors the
+  serializer's own constants — that hid the bug the first time).
+- World-server tests: 227/227 green.
+
+---
+
 *Last updated: 2026-07-25*
 *Update protocol: When completing a module, change its row Status + Last Agent + Notes.*
