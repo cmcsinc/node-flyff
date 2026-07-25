@@ -78,6 +78,8 @@ import { UseItemService } from '@flyff/inventory';
 import { EnchantService } from '@flyff/inventory';
 import { DoUseItemHandler } from '@flyff/inventory';
 import { EnchantHandler } from '@flyff/inventory';
+import { RepairService } from '@flyff/inventory';
+import { RepairHandler } from '@flyff/inventory';
 import { BankService } from '@flyff/npc';
 import { BankHandler } from '@flyff/npc';
 import { TaskBarService } from './services/taskbar.service';
@@ -531,6 +533,15 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const enchantHandler = new EnchantHandler({ playerManager, enchantService });
 
+  // Repair -- PACKETTYPE_REPAIRITEM bulk blacksmith fix. Reuses the inventory
+  // stat/persist primitives; journals each repaired slot's absolute end-state.
+  const repairService = new RepairService({
+    inventoryRepo, journal,
+    getItem: (id: number) => resources.items.items.get(id),
+    spendGold: (player, amount) => inventoryService.spendGold(player, amount),
+  });
+  const repairHandler = new RepairHandler({ playerManager, repairService });
+
   // Bank -- open + deposit/withdraw item & gold (account-shared).
   const bankService = new BankService({ bankRepo, inventoryRepo, journal });
   const bankHandler = new BankHandler({ playerManager, bankService });
@@ -632,6 +643,7 @@ export async function compose(): Promise<WorldComposeResult> {
     doEquipHandler,
     doUseItemHandler,
     enchantHandler,
+    repairHandler,
     bankHandler,
     shopHandler,
     taskbarHandler,

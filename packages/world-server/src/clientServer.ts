@@ -45,6 +45,7 @@ import type { RemoveItemHandler } from '@flyff/inventory';
 import type { DoEquipHandler } from '@flyff/inventory';
 import type { DoUseItemHandler } from '@flyff/inventory';
 import type { EnchantHandler } from '@flyff/inventory';
+import type { RepairHandler } from '@flyff/inventory';
 import type { BankHandler } from '@flyff/npc';
 import type { ShopHandler } from '@flyff/npc';
 import type { TaskBarHandler } from './handlers/taskbar.handler';
@@ -88,6 +89,7 @@ export interface WorldClientServerDeps {
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
   enchantHandler: EnchantHandler;
+  repairHandler: RepairHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
   taskbarHandler: TaskBarHandler;
@@ -149,6 +151,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.DOEQUIP, (s, r) => deps.doEquipHandler.handleDoEquip(s, r));
   dispatcher.register(PACKETTYPE.DOUSEITEM, (s, r) => deps.doUseItemHandler.handleDoUseItem(s, r));
   dispatcher.register(PACKETTYPE.ENCHANT, (s, r) => deps.enchantHandler.handleEnchant(s, r));
+  dispatcher.register(PACKETTYPE.REPAIRITEM, (s, r) => deps.repairHandler.handleRepair(s, r));
   dispatcher.register(PACKETTYPE.OPENBANKWND, (s, r) => deps.bankHandler.handleOpen(s, r));
   dispatcher.register(PACKETTYPE.CLOSEBANKWND, (s, r) => deps.bankHandler.handleClose(s, r));
   dispatcher.register(PACKETTYPE.PUTITEMBACK, (s, r) => deps.bankHandler.handleDeposit(s, r));
