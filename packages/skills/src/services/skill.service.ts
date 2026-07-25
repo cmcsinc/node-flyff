@@ -26,7 +26,7 @@ import type { CombatService } from '@flyff/combat';
 import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
 import { DoUseSkillPointSerializer } from '@flyff/world-core';
 import { buildSetPointParam, DST_MP, DST_FP, DST_HP, buildSetSkillState, buildSetDestParam } from '@flyff/world-core';
-import { buildEndSkillQueue, buildSetActionPoint } from '@flyff/world-core';
+import { buildEndSkillQueue } from '@flyff/world-core';
 import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB, MAX_SLOT_QUEUE, SHORTCUT } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
@@ -47,15 +47,6 @@ const BUFF_SKILL = 1;
  */
 const SUT_QUEUESTART = 1;
 const SUT_QUEUEING = 2;
-
-/**
- * Action-slot AP cost per queue depth (`UserTaskBar.cpp:211`). Index = queue
- * position after increment (pos 0 = the triggering SUT_QUEUESTART cast, free).
- * `SM_ACTPOINT` skips the cost entirely (ponytail: not ported).
- */
-const QUEUE_AP_COST: ReadonlyMap<number, number> = new Map([
-  [1, 6], [2, 8], [3, 11], [4, 30],
-]);
 
 /**
  * Minimum gap between queued casts. The C++ server spaces the combo via the
@@ -217,30 +208,32 @@ export class SkillService {
 
   /**
    * `CUserTaskBar::SetNextSkill` (`UserTaskBar.cpp:203`). Increments the queue
-   * pointer, charges the per-depth AP cost, reads `m_aSlotQueue[pos]`, casts it
-   * with `SUT_QUEUEING`, and schedules the next step after its action time. On
-   * a failed queued cast the C++ original recurses to skip it
-   * (`CMD_SetUseSkill == 0`); we re-schedule with the floor delay. When the
-   * queue runs off the end, hits an empty slot, or AP runs out, `endQueue` fires
-   * the `SNAPSHOTTYPE_ENDSKILLQUEUE` ack so the client clears its action-slot UI.
+   * pointer, reads `m_aSlotQueue[pos]`, casts it with `SUT_QUEUEING`, and
+   * schedules the next step after its action time. On a failed queued cast the
+   * C++ original recurses to skip it (`CMD_SetUseSkill == 0`); we re-schedule
+   * with the floor delay. When the queue runs off the end or hits an empty slot,
+   * `endQueue` fires the `SNAPSHOTTYPE_ENDSKILLQUEUE` ack so the client clears
+   * its action-slot UI.
+   *
+   * v19 note: the C++ AP-cost table (`UserTaskBar.cpp:211-235`) and the
+   * `AddSetActionPoint` send are `#ifndef __NEW_TASKBAR_V19` -- under v19 the
+   * client has no `case SNAPSHOTTYPE_SETACTIONPOINT` handler (DPClient.cpp:608),
+   * so emitting 0x00c5 hits `default: ASSERT(0)` and desyncs the stream. We
+   * never send it; `m_nActionPoint` stays seeded at 100.
    */
   private advanceQueue(player: CPlayer, targetObjid: number): void {
     player.m_nUsedSkillQueue += 1;
     const pos = player.m_nUsedSkillQueue;
 
-    const ap = player.m_nActionPoint - (QUEUE_AP_COST.get(pos) ?? 0);
     const slot = player.m_aSlotQueue[pos];
     const exhausted =
       pos >= MAX_SLOT_QUEUE ||
       slot === undefined ||
-      slot.dwShortcut === SHORTCUT.NONE ||
-      ap < 0;
+      slot.dwShortcut === SHORTCUT.NONE;
     if (exhausted) {
       this.endQueue(player);
       return;
     }
-    player.m_nActionPoint = ap;
-    this.deps.playerManager.sendTo(player, buildSetActionPoint(player.m_idPlayer, ap));
 
     const outcome = this.cast(player, { wId: slot.dwId, objid: targetObjid, useType: SUT_QUEUEING });
     if (!outcome.ok) {
