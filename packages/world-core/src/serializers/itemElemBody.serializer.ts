@@ -72,7 +72,18 @@ export function writeCItemElemBody(w: PacketWriter, objId: number, slot: Invento
   w.writeDword(0);                     // pet vis keep-time size (__VER>=15)
   w.writeDword(0);                     // m_bCharged (BOOL = int -> 4B; ar.h: no BOOL overload -> operator<<(int)->LONG)
   w.writeQword(0);                     // m_iRandomOptItemId (__int64)
-  w.writeDword(0);                     // m_dwKeepTime (0 -> skip conditional time_t)
+  // m_dwKeepTime: v19 ObjSerialize.cpp:69-74 writes the DWORD always, then IF
+  // non-zero writes a conditional `m_dwKeepTime - time_null()` remaining-secs.
+  // Today no InventorySlot populates keepTime, so this is the common no-extra
+  // path. When a timed item ships, set slot.keepTime (absolute seconds) and the
+  // conditional delta emits here. ponytail: time_t wire width (4 vs 8 B) needs
+  // confirming against the v19 CAr __int64 overload when first exercised.
+  const keepTime = slot.keepTime ?? 0;
+  w.writeDword(keepTime);
+  if (keepTime) {
+    const now = Math.floor(Date.now() / 1000);
+    w.writeDword(Math.max(0, keepTime - now));
+  }
   w.writeByte(0);                      // bPet (__VER>=9; explicit (BYTE) cast -> 1B; 0 = no pet -> skip CPet body)
   w.writeDword(0);                     // m_bTranformVisPet (BOOL = int -> 4B; __VER>=15)
 }

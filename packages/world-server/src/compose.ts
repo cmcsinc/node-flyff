@@ -353,6 +353,20 @@ export async function compose(): Promise<WorldComposeResult> {
   // unified 50 ms loop. Stopped on shutdown via index.ts (no leaked timer).
   const aiSystem = new AISystem({
     spawnManager, zoneManager, playerManager,
+    // v19 RA_SAFETY gate: true if the target's position is inside any of the
+    // zone's `regions` tagged `type: safe` (AABB check on the ground plane).
+    // Backed by `worlds/zones/*.yml` -> `resources.zones.byNumericId`.
+    safeZone: (zoneId, pos) => {
+      const z = resources.zones.byNumericId.get(zoneId);
+      if (!z?.regions) return false;
+      for (const r of z.regions) {
+        if (r.type !== 'safe') continue;
+        const b = r.bounds;
+        if (pos.x >= b.min.x && pos.x <= b.max.x
+          && pos.z >= b.min.z && pos.z <= b.max.z) return true;
+      }
+      return false;
+    },
     onPlayerDeath: (p, killerObjid) => revivalService.onPlayerDeath(p, killerObjid),
   });
   aiSystem.start();

@@ -484,7 +484,7 @@ describe('AISystem (idle wander)', () => {
     assert.equal(m.m_fSpeedFactor, 2.66, 'return speed');
   });
 
-  it('drops the target on arrival home; HP is NOT reset (no heal-sync packet)', () => {
+  it('drops the target on arrival home; HP is restored to max (v19 silent heal)', () => {
     const casts: Cast[] = [];
     const m = makeMover(0x40000023, { x: 500, y: 0, z: 500 });
     m.m_fSpeedBase = 0.075;
@@ -500,10 +500,10 @@ describe('AISystem (idle wander)', () => {
     ai.tick(1000);
     assert.equal(m.m_bReturnToBegin, false, 'arrived');
     assert.equal(m.m_fSpeedFactor, 1.0, 'speed reset');
-    // C++ StateReturn heals to max, but we omit it: there is no S->C packet to
-    // sync a monster HP heal, so healing desyncs client/server and makes leashed
-    // monsters appear unkillable. Server HP stays where it was -- still killable.
-    assert.equal(m.m_nHitPoint, 10, 'HP unchanged on return home (no unsyncable heal)');
+    // v19 `DoReturnToBegin(FALSE)` full-heals on arrival (`AIMonster.cpp:305`,
+    // SetPointParam(DST_HP, GetMaxHitPoint()) with bTrans=FALSE -- silent, no
+    // S->C monster-HP-sync packet). v19 accepts the client/server HP desync.
+    assert.equal(m.m_nHitPoint, m.m_nMaxHitPoint, 'HP healed to max on return home (v19 silent heal)');
   });
 });
 
@@ -515,8 +515,9 @@ describe('AISystem (retaliation)', () => {
     // every near-town mob acquired-then-instant-leashed and never swung back.
     // C++ AIMSG_DAMAGE retaliation has NO safety gate (the only such check, on
     // sight-scan, is commented out at AIMonster.cpp:429) -- the distance leash
-    // alone anchors the mob. Vanilla town safety is the RA_SAFETY region attr,
-    // not a revival-radius bubble (which we do not load).
+    // alone anchors the mob. Vanilla town safety is the RA_SAFETY region attr
+    // (AABB), not a revival-radius bubble; that gate is wired via the
+    // `safeZone` dep (see the next test) and is unset here so the mob swings.
     const casts: Cast[] = [];
     const player = CPlayer.fromRow(makeRow({ id: 6, hp: 200, max_hp: 200 }), { write: () => true } as never);
     player.m_nZoneId = 1;
@@ -535,6 +536,32 @@ describe('AISystem (retaliation)', () => {
     assert.equal(m.m_idTarget, player.m_idPlayer, 'target retained');
     assert.equal(m.m_bReturnToBegin, false, 'monster does NOT leash home');
     assert.ok(player.m_nHp < 200, 'monster swung back (player took damage)');
+  });
+
+  it('drops aggro on a target standing inside a safe zone (v19 AIMonster.cpp:1621-1628)', () => {
+    // v19 gate: if pTarget->IsRegionAttr(RA_SAFETY) && !RANK_GUARD, DoReturnToBegin.
+    // The `safeZone` dep is the AABB check over the zone's `regions: type: safe`.
+    const casts: Cast[] = [];
+    const player = CPlayer.fromRow(makeRow({ id: 7, hp: 200, max_hp: 200 }), { write: () => true } as never);
+    player.m_nZoneId = 1;
+    player.m_vPos = { x: 6978, y: 100, z: 3329 }; // Flaris revival -- inside the safe region
+    const m = makeMover(0x40000042, { x: 6979, y: 0, z: 3329 }); // within melee range
+    m.m_fSpeedBase = 0.075;
+    m.m_nAtkMin = 16; m.m_nAtkMax = 16; m.m_nHR = 40;
+    m.m_idTarget = player.m_idPlayer;
+    m.m_nextAttackTick = 0;
+    const ai = new AISystem({
+      spawnManager: makeSpawn([m]),
+      zoneManager: makeZone(casts),
+      playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+      // Mirror of compose.ts: Flaris safe region AABB (flaris.yml id 1).
+      safeZone: (zoneId, pos) => zoneId === 1
+        && pos.x >= 6800 && pos.x <= 7200 && pos.z >= 3100 && pos.z <= 3600,
+    });
+    ai.tick(1000);
+    assert.equal(m.m_idTarget, 0xffffffff, 'target dropped (safe-zone gate fired)');
+    assert.equal(m.m_bReturnToBegin, true, 'monster returns home instead of swinging into town');
+    assert.equal(player.m_nHp, 200, 'player took no damage (mob released before swinging)');
   });
 });
 
