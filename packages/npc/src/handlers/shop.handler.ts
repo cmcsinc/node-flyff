@@ -71,9 +71,11 @@ export class ShopHandler {
       logger.warn({ charId: p.m_idPlayer, reason: res.reason, cTab, nId, nNum, dwItemId, gold: p.m_nGold, other: p.m_idOther }, 'BUYITEM rejected');
       return;
     }
+    // Stack merge -> UPDATE_ITEM nId is the merged slot's STABLE m_dwObjId (client
+    // GetAtId, Mover.cpp:8528), not the slot; new slot -> CREATEITEM keys by slot.
     this.deps.playerManager.sendTo(p, res.isNew
       ? this.createItemSerializer.buildOne(p.m_idPlayer, res.itemId, res.count, res.slot)
-      : buildUpdateItemCount(p.m_idPlayer, res.slot, res.count));
+      : buildUpdateItemCount(p.m_idPlayer, p.m_Inventory?.[res.slot]?.objid ?? res.slot, res.count));
     this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_GOLD, res.gold));
     logger.info({ charId: p.m_idPlayer, itemId: res.itemId, count: res.count, slot: res.slot, gold: res.gold }, 'BUYITEM ok');
   }); }
@@ -88,7 +90,11 @@ export class ShopHandler {
       return;
     }
     // UPDATE_ITEM with the post-sell count; count 0 clears the slot client-side.
-    this.deps.playerManager.sendTo(p, buildUpdateItemCount(p.m_idPlayer, res.slot, res.remaining));
+    // nId MUST be the item's STABLE m_dwObjId, not the slot: the client resolves
+    // it via GetAtId(nId) (Mover.cpp:8528 C++ sends pItemElem->m_dwObjId). `nId`
+    // here IS the wire objid (see service comment). Passing res.slot leaves the
+    // icon stuck when a moved item's objid != its slot (the sell-ghost bug).
+    this.deps.playerManager.sendTo(p, buildUpdateItemCount(p.m_idPlayer, nId, res.remaining));
     this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_GOLD, res.gold));
     logger.info({ charId: p.m_idPlayer, itemId: res.itemId, remaining: res.remaining, gold: res.gold }, 'SELLITEM ok');
   }); }

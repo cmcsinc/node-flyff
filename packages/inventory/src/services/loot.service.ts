@@ -140,11 +140,15 @@ export class LootService {
     const r = this.deps.inventoryService.addItem(player, item.m_dwItemId, item.m_nItemNum);
     if (!r.ok) return; // bag_full -- ponytail: TID_GAME_LACKSPACE; pile stays lootable
 
+    // Stack merge -> UPDATE_ITEM nId is the merged slot's STABLE m_dwObjId, not
+    // the slot index: client resolves via GetAtId(nId) (Mover.cpp:8528). A moved
+    // stack's objid != slot, so the slot-index echo strands the count. New slot
+    // -> CREATEITEM addresses by slot (SetAtId) so r.slot is correct there.
     this.deps.playerManager.sendTo(
       player,
       r.isNew
         ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.slot)
-        : buildUpdateItemCount(player.m_idPlayer, r.slot, r.count),
+        : buildUpdateItemCount(player.m_idPlayer, player.m_Inventory?.[r.slot]?.objid ?? r.slot, r.count),
     );
     this.deps.itemManager.remove(item.m_idObject);
     this.motion(player);

@@ -45,7 +45,9 @@ export class RemoveItemHandler {
       const r = this.deps.inventoryService.removeItem(player, dwId, nNum);
       if (!r.ok) { logger.debug({ charId: player.m_idPlayer, dwId, nNum }, 'REMOVEINVENITEM rejected'); return; }
 
-      this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, r.slot, r.remaining));
+      // nId = STABLE m_dwObjId (client GetAtId, Mover.cpp:8528), NOT the slot.
+      // `dwId` is the wire objid; echoing r.slot strands the icon post-move.
+      this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, dwId, r.remaining));
       logger.info({ charId: player.m_idPlayer, itemId: r.itemId, slot: r.slot, remaining: r.remaining }, 'REMOVEINVENITEM ok');
     } catch (error) {
       if (error instanceof PacketError) {

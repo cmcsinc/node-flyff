@@ -67,7 +67,10 @@ export class DropItemHandler {
       });
       // Echo the post-drop count so the client clears the slot (0 => removed).
       // Without this the pile spawns but the inventory item stays = dupe.
-      this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, r.slot, r.remaining));
+      // nId = the STABLE m_dwObjId (client resolves via GetAtId, Mover.cpp:8528),
+      // NOT the slot -- a moved item's objid != slot, so echoing r.slot leaves
+      // the icon stuck. `dwItemId` is that wire objid.
+      this.deps.playerManager.sendTo(player, buildUpdateItemCount(player.m_idPlayer, dwItemId, r.remaining));
     } catch (error) {
       if (error instanceof PacketError) {
         logger.warn({ err: error, charId: player.m_idPlayer }, 'DROPITEM parse failed');
