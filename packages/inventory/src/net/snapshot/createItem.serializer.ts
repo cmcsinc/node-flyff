@@ -32,17 +32,25 @@ import { writeCItemElemBody } from '@flyff/world-core';
 export interface CreateItemEntry {
   itemId: number;
   count: number;
-  /** Inventory slot index (0..MAX_INVENTORY-1 main bag). */
-  slot: number;
+  /**
+   * The item's client `m_dwObjId` -- what the client's `m_apIndex[slot]` points
+   * at, NOT the raw slot index. The client does `SetAtId(objid)` (writes
+   * `m_apItem[objid]`) then the grid renders `m_apItem[m_apIndex[slot]]`; the two
+   * agree only when this equals `m_apIndex[slot]`. For a never-moved slot that
+   * is the slot index (identity); after an unequip->sell drift it is the stale
+   * equip objid. Callers pass `player.clientObjId(slot)` (== the placed slot's
+   * `objid`). Mirrors vanilla `AddCreateItem(pnId)` where `pnId = m_apIndex[i]`.
+   */
+  objid: number;
 }
 
 export class CreateItemSnapshotSerializer {
   /**
-   * Build a CREATEITEM snapshot for one item landing in `slot`. The common
+   * Build a CREATEITEM snapshot for one item at client-objid `objid`. The common
    * case (single pickup into one slot) -- wraps a single sub-snapshot.
    */
-  buildOne(playerObjid: number, itemId: number, count: number, slot: number): Buffer {
-    return this.build(playerObjid, [{ itemId, count, slot }]);
+  buildOne(playerObjid: number, itemId: number, count: number, objid: number): Buffer {
+    return this.build(playerObjid, [{ itemId, count, objid }]);
   }
 
   /**
@@ -70,16 +78,18 @@ export class CreateItemSnapshotSerializer {
     w.writeWord(SNAPSHOTTYPE_CREATEITEM);  // 0x0003
     w.writeByte(0);                        // the literal (BYTE)0
 
-    // Shared CItemBase + CItemElem body (72 B). m_dwObjId MUST be the
-    // destination slot index (same as the JOIN inventory container), NOT 0:
-    // the client's CWndInventory renders elems by m_dwObjId and silently skips
-    // a 0 id -- the item lands in the model on OnCreateItem's SetAtId but never
-    // draws until a relog re-blits the whole container.
-    writeCItemElemBody(w, e.slot, { itemId: bodyItemId, count: e.count });
+    // Shared CItemBase + CItemElem body (72 B). m_dwObjId MUST be the item's
+    // client objid (m_apIndex[slot]), NOT the raw slot: the client's
+    // CWndInventory renders elems by m_apItem[m_apIndex[slot]], so a slot that
+    // drifted (unequip->sell) needs the stale objid or the item is invisible
+    // until relog. For never-moved slots objid == slot (identity), so this is
+    // backward-compatible with pickups into fresh slots.
+    writeCItemElemBody(w, e.objid, { itemId: bodyItemId, count: e.count });
 
-    // Trailer -- per-slot fan-out.
+    // Trailer -- per-objid fan-out. pnId is the client m_apIndex value (SetAtId
+    // target), matching vanilla AddCreateItem where pnId = m_apIndex[i].
     w.writeByte(1);                       // nCount = 1 (this sub-snapshot covers one slot)
-    w.writeByte(e.slot & 0xff);           // pnId[0] -- slot id
+    w.writeByte(e.objid & 0xff);          // pnId[0] -- client objid (m_apIndex[slot])
     w.writeWord(e.count & 0xffff);        // pnNum[0] -- count
   }
 }

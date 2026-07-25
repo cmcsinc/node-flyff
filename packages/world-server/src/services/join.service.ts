@@ -142,6 +142,11 @@ export class JoinService {
     // Carried penya lives on the inventory container row (migration 008), not
     // the character row -- hydrate it after the slots.
     player.m_nGold = await this.deps.inventoryRepo.getGold(player.m_idPlayer);
+    // Sync m_invIndex's equip range to the hydrated equip slots (bag range is
+    // already identity from the constructor). The JOIN container blob writes
+    // m_apIndex[equip] = slot-if-equipped, so the server must match the client
+    // or an immediate unequip->sell->buy would desync (see addItem objid note).
+    player.syncInvIndexAfterLoad();
     // Apply equipped items' DST effects (C++ `SetEquipDstParam`, MoverParam.cpp:
     // 1903) so buffed STR/STA/DEF/HP_MAX/etc count from the first tick. Must
     // precede the max recompute so JOIN snapshot + regen start from buffed maxes.

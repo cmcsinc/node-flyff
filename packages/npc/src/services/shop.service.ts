@@ -32,7 +32,7 @@ export type ShopOpenResult =
   | { ok: false; reason: 'invalid' | 'not_vendor' | 'busy' };
 
 export type BuyResult =
-  | { ok: true; slot: number; itemId: number; count: number; isNew: boolean; gold: number }
+  | { ok: true; slot: number; objid: number; itemId: number; count: number; isNew: boolean; gold: number }
   | { ok: false; reason: 'no_vendor' | 'invalid' | 'no_stock' | 'no_gold' | 'bag_full' };
 
 export type SellResult =
@@ -105,7 +105,7 @@ export class ShopService {
     const add = this.deps.inventoryService.addItem(player, dwItemId, qty);
     if (!add.ok) return { ok: false, reason: 'bag_full' };
     this.deps.inventoryService.spendGold(player, unitCost * qty); // qty <= affordable; always succeeds
-    return { ok: true, slot: add.slot, itemId: add.itemId, count: add.count, isNew: add.isNew, gold: player.m_nGold };
+    return { ok: true, slot: add.slot, objid: add.objid, itemId: add.itemId, count: add.count, isNew: add.isNew, gold: player.m_nGold };
   }
 
   /**
