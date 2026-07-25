@@ -203,10 +203,13 @@ describe('combat resolveMelee', () => {
 });
 
 describe('combat resolveMelee (NPC -> player min-damage rule)', () => {
-  it('monster always deals >= 10% ATK even when DEF >= ATK (MoverAttack.cpp:1444)', () => {
-    // Pukepuke ATK 37 vs tank DEF 38 -> raw nDamage = -1 -> 0, lifted to floor(37*0.1)=3.
+  it('monster always deals >= 10% ATK even when DEF >= ATK (same level, no cosine)', () => {
+    // Same-level scenario isolates the 10% floor from the v19 level-diff cosine
+    // (nDelta=0 -> no falloff). pukepuke bumped to L30 to match `tank`; ATK 37
+    // vs tank DEF 38 -> raw -1 -> 0, lifted to floor(37*0.1)=3, unchanged by mult.
     // ints: hit=0, crit=99, block=50. range=37.
-    const r = resolveMelee(pukepuke, tank, makeRng([0, 99, 50], 37));
+    const sameLevelPuke: Combatant = { ...pukepuke, level: 30 };
+    const r = resolveMelee(sameLevelPuke, tank, makeRng([0, 99, 50], 37));
     assert.equal(r.hit, true);
     assert.equal(r.damage, 3);
   });
@@ -219,22 +222,33 @@ describe('combat resolveMelee (NPC -> player min-damage rule)', () => {
     assert.equal(r.damage, 15);
   });
 
-  it('higher-level player defender is NOT shielded by any level-diff cosine', () => {
-    // A L30 player vs a L1 aibatt: no cosine falloff exists in C++ GetDamageMultiplier,
-    // so a normal hit deals full ATK-DEF (not reduced by the 29-level gap).
-    // aibatt ATK 16 vs tank DEF 38 -> raw -22 -> 0 -> lifted to floor(16*0.1)=1.
+  it('v19 cosine crushes the 10% floor at a large level gap (L1 mob vs L30 player)', () => {
+    // v19 GetDamageMultiplier (MoverAttack.cpp:998-1025): nDelta = defender.level
+    // - attacker.level = 29, capped at 15, factor *= cos(15*pi/32) ~= 0.098.
+    // The 10% NPC->player floor (1) is applied BEFORE the multiplier, then
+    // floor(1 * 0.098) = 0 -- a L1 mob genuinely cannot damage a L30 player.
     const r = resolveMelee(aibatt, tank, makeRng([0, 99, 50], 16));
     assert.equal(r.hit, true);
-    assert.equal(r.damage, 1); // 10% of 16
+    assert.equal(r.damage, 0); // 10% floor (1) * cosine(0.098) -> floor -> 0
   });
 });
 
-describe('combat getDamageMultiplier (no fabricated cosine)', () => {
-  it('returns 1.0 for NPC -> player regardless of level gap (C++ has no level term)', () => {
-    assert.equal(getDamageMultiplier(pukepuke, tank), 1.0);
-    // Even a L1 mob vs L80 player: no cosine reduction.
+describe('combat getDamageMultiplier (v19 level-diff cosine)', () => {
+  it('applies cos(pi*nDelta/32) when defender is higher level and either side is NPC', () => {
+    // pukepuke(L7) vs tank(L30): nDelta=23 -> capped at 15.
+    const expected = Math.cos((Math.PI * 15) / 32); // ~0.098017
+    assert.equal(getDamageMultiplier(pukepuke, tank), expected);
+    // L7 mob vs L80 player: nDelta=73 -> same cap, same factor.
     const hero: Combatant = { ...tank, level: 80 };
-    assert.equal(getDamageMultiplier(pukepuke, hero), 1.0);
+    assert.equal(getDamageMultiplier(pukepuke, hero), expected);
+  });
+  it('NO cosine when defender is not higher level (nDelta <= 0)', () => {
+    // player(L30) -> pukepuke(L7): nDelta = 7-30 = -23 -> no reduction.
+    assert.equal(getDamageMultiplier(tank, pukepuke), 1.0);
+  });
+  it('NO cosine for PvP (both players) -- flat 0.6 only', () => {
+    const otherPlayer: Combatant = { ...tank, level: 80 };
+    assert.equal(getDamageMultiplier(tank, otherPlayer), 0.6);
   });
 });
 
