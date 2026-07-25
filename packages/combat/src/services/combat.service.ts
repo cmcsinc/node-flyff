@@ -26,7 +26,7 @@ import type { SpawnManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 import {
-  resolveMelee, xRandomRng, expLevelDiffMult, addExp, cumulativeExp,
+  resolveMelee, xRandomRng, expLevelDiffMult, addExp,
   type Rng, type MeleeResult,
 } from '../combat/formulas';
 import { resolveSkillCast } from '../combat/skillFormulas';
@@ -386,19 +386,21 @@ export class CombatService {
     // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
     // Idempotent -- the boot replayer re-applies this exact (level, exp) if the
     // fire-and-forget persist below lost the race with a crash. Stored as a
-    // JSON-safe string so BigInt precision survives the round-trip.
-    const cumulative = String(Math.floor(cumulativeExp(player.m_nLevel, player.m_nExp)));
+    // JSON-safe string so BigInt precision survives the round-trip. m_nExp IS
+    // the within-level value the DB + wire carry (no cumulative form).
+    const exp = String(Math.floor(player.m_nExp));
     this.deps.journal?.append({
       charId: player.m_idPlayer, type: 'CHAR_EXP',
-      payload: { level: player.m_nLevel, exp: cumulative },
+      payload: { level: player.m_nLevel, exp },
     });
 
-    // SETEXPERIENCE -> self only (wire expects cumulative nExp1).
-    // SP/skillLevel MUST be carried here -- C++ AddSetExperience writes them
-    // (User.cpp:1123); omitting them zeroes the client's SP display every kill
-    // and clobbers the DOUSESKILLPOINT refresh sent in grantSkillPoints.
+    // SETEXPERIENCE -> self only (wire nExp1 = within-level m_nExp, resets to 0
+    // at each level boundary -- matches C++ GetExp1() semantics). SP/skillLevel
+    // MUST be carried here -- C++ AddSetExperience writes them (User.cpp:1123);
+    // omitting them zeroes the client's SP display every kill and clobbers the
+    // DOUSESKILLPOINT refresh sent in grantSkillPoints.
     this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
-      exp: cumulativeExp(player.m_nLevel, player.m_nExp), level: player.m_nLevel,
+      exp: player.m_nExp, level: player.m_nLevel,
       skillLevel: player.m_nSkillLevel, skillPoint: player.m_nSkillPoint,
     }));
     // SETLEVEL -> vicinity, skips self (only if leveled).
@@ -411,10 +413,10 @@ export class CombatService {
     }
 
     // Persist async -- fire-and-forget (rule 02: service calls repo, no SQL).
-    // DB stores cumulative (matches C++ m_nExp1 column semantics). The WAL row
-    // above is the crash-recovery backup for this write.
+    // DB stores the within-level value (matches C++ m_nExp1 column semantics).
+    // The WAL row above is the crash-recovery backup for this write.
     this.deps.charRepo.updateLevelAndExp(
-      player.m_idPlayer, player.m_nLevel, BigInt(cumulative),
+      player.m_idPlayer, player.m_nLevel, BigInt(Math.floor(player.m_nExp)),
     ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
   }
 
