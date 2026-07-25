@@ -265,6 +265,13 @@ export async function compose(): Promise<WorldComposeResult> {
       const pkt = npcSnapshotSerializer.build([mover]);
       zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, pkt);
     },
+    // Corpse despawn: after CORPSE_DESPAWN_MS, push DEL_OBJ so clients drop the
+    // death-animation corpse. Mirrors onSpawn; the mover is captured by the
+    // SpawnManager timer closure (already gone from the live table).
+    onDespawn: (mover) => {
+      const pkt = npcSnapshotSerializer.buildRemove(mover.m_idMover);
+      zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, pkt);
+    },
   });
   spawnManager.bootstrap();
   logger.info(

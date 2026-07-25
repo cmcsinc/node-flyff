@@ -1,7 +1,7 @@
-import { describe, it, mock } from 'node:test';
+import { describe, it, mock, beforeEach, afterEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import type { ResourceIndex, ZoneIndex } from '@flyff/resources';
-import { SpawnManager } from '@flyff/world-core';
+import { SpawnManager, CORPSE_DESPAWN_MS } from '@flyff/world-core';
 import { CMover } from '@flyff/entities';
 
 /** Build a minimal in-memory resource index for spawn-wiring tests. */
@@ -331,42 +331,83 @@ describe('SpawnManager', () => {
     assert.equal(mgr.kill(homeit.m_idMover), false); // already gone
   });
 
-  it('kill() schedules a respawn after spawn.delay; onSpawn fires with a fresh mover', () => {
-    mock.timers.enable();
-    const spawned: number[] = [];
-    const mgr = new SpawnManager({
-      resources: makeResources(),
-      onSpawn: (m) => spawned.push(m.m_idMover),
+  // Mock timers are session-global (enable() throws if already enabled, reset()
+  // disables), so each timer test re-enables here and resets after.
+  describe('timers', () => {
+    beforeEach(() => mock.timers.enable());
+    afterEach(() => mock.timers.reset());
+
+    it('kill() schedules a respawn after spawn.delay; onSpawn fires with a fresh mover', () => {
+      const spawned: number[] = [];
+      const mgr = new SpawnManager({
+        resources: makeResources(),
+        onSpawn: (m) => spawned.push(m.m_idMover),
+      });
+      mgr.bootstrap();
+
+      // Fixture spawn: Guard (MI 20), count=2, delay=5000ms.
+      const guards = mgr.inZone(1).filter((m) => m.m_dwIndex === 20);
+      assert.equal(guards.length, 2);
+      const victim = guards[0]!;
+      const originalId = victim.m_idMover;
+      const originalHp = victim.m_nHitPoint;
+
+      assert.equal(mgr.kill(victim.m_idMover), true);
+      assert.equal(mgr.get(originalId), undefined);
+      assert.equal(spawned.length, 0); // not yet -- timer pending
+
+      mock.timers.tick(5001);
+
+      assert.equal(spawned.length, 1);
+      const replacement = mgr.get(spawned[0]!);
+      assert.ok(replacement, 'respawned mover is live');
+      assert.notEqual(replacement!.m_idMover, originalId, 'new objid');
+      assert.equal(replacement!.m_dwIndex, 20, 'same model index');
+      assert.equal(replacement!.m_nHitPoint, originalHp, 'full HP on respawn');
+      assert.equal(replacement!.m_bDead, false, 'death flag reset');
+
+      // The replacement is itself respawnable.
+      const secondId = replacement!.m_idMover;
+      mgr.kill(secondId);
+      mock.timers.tick(5001);
+      assert.equal(spawned.length, 2);
+      assert.notEqual(spawned[1]!, secondId);
     });
-    mgr.bootstrap();
 
-    // Fixture spawn: Guard (MI 20), count=2, delay=5000ms.
-    const guards = mgr.inZone(1).filter((m) => m.m_dwIndex === 20);
-    assert.equal(guards.length, 2);
-    const victim = guards[0]!;
-    const originalId = victim.m_idMover;
-    const originalHp = victim.m_nHitPoint;
+    it('kill(id, { despawn: true }) fires onDespawn after CORPSE_DESPAWN_MS', () => {
+      const despawned: number[] = [];
+      const mgr = new SpawnManager({
+        resources: makeResources(),
+        onDespawn: (m) => despawned.push(m.m_idMover),
+      });
+      mgr.bootstrap();
 
-    assert.equal(mgr.kill(victim.m_idMover), true);
-    assert.equal(mgr.get(originalId), undefined);
-    assert.equal(spawned.length, 0); // not yet -- timer pending
+      const guards = mgr.inZone(1).filter((m) => m.m_dwIndex === 20);
+      const victimId = guards[0]!.m_idMover;
 
-    mock.timers.tick(5001);
+      assert.equal(mgr.kill(victimId, { despawn: true }), true);
+      assert.equal(mgr.get(victimId), undefined); // removed from live table immediately
+      assert.equal(despawned.length, 0); // corpse timer pending
 
-    assert.equal(spawned.length, 1);
-    const replacement = mgr.get(spawned[0]!);
-    assert.ok(replacement, 'respawned mover is live');
-    assert.notEqual(replacement!.m_idMover, originalId, 'new objid');
-    assert.equal(replacement!.m_dwIndex, 20, 'same model index');
-    assert.equal(replacement!.m_nHitPoint, originalHp, 'full HP on respawn');
-    assert.equal(replacement!.m_bDead, false, 'death flag reset');
+      mock.timers.tick(CORPSE_DESPAWN_MS + 1);
 
-    // The replacement is itself respawnable.
-    const secondId = replacement!.m_idMover;
-    mgr.kill(secondId);
-    mock.timers.tick(5001);
-    assert.equal(spawned.length, 2);
-    assert.notEqual(spawned[1]!, secondId);
-    mock.restoreAll();
+      assert.equal(despawned.length, 1);
+      assert.equal(despawned[0], victimId);
+    });
+
+    it('kill(id) without despawn flag never fires onDespawn', () => {
+      const despawned: number[] = [];
+      const mgr = new SpawnManager({
+        resources: makeResources(),
+        onDespawn: (m) => despawned.push(m.m_idMover),
+      });
+      mgr.bootstrap();
+
+      const victimId = mgr.inZone(1).find((m) => m.m_dwIndex === 12)!.m_idMover;
+      mgr.kill(victimId); // admin path -- no despawn
+
+      mock.timers.tick(CORPSE_DESPAWN_MS + 1);
+      assert.equal(despawned.length, 0); // /rn-style kill does its own DEL_OBJ
+    });
   });
 });

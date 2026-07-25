@@ -8,7 +8,7 @@
 
 export { PlayerManager } from './managers/player.manager';
 export { ZoneManager } from './managers/zone.manager';
-export { SpawnManager } from './managers/spawn.manager';
+export { SpawnManager, CORPSE_DESPAWN_MS } from './managers/spawn.manager';
 
 export type { QuestHooks } from './quest-hooks';
 
@@ -26,3 +26,4 @@ export * from './serializers/pointParam.serializer';
 export * from './serializers/skillState.serializer';
 export * from './serializers/chat.serializer';
 export * from './serializers/itemContainer';
+export * from './serializers/actionSlot.serializer';
