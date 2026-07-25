@@ -153,7 +153,9 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   // --- containers ---
   writeItemContainer(w, INVENTORY_SLOTS, p.m_Inventory, MAX_INVENTORY); // m_Inventory (73 = MAX_INVENTORY bag + MAX_HUMAN_PARTS equip)
   for (let k = 0; k < MAX_BANK_TABS; k++) writeItemContainer(w, BANK_SLOTS, p.m_Bank[k] ?? []); // m_Bank *3 (42 each)
-  w.writeDword(0);             // GetPetId (__VER>=9)
+  w.writeDword(NULL_ID);       // GetPetId (__VER>=9) -- NULL_ID when no pet (Mover.cpp:513/247).
+                               // NOT 0: client WndItemCtrl.cpp:477 fades any inv item whose
+                               // m_dwObjId == GetPetId() (slot-0 items use objid 0).
   writeEmptyPocketController(w);                       // m_Pocket (__VER>=11)
   w.writeDword(0);             // m_dwMute (#ifdef __JEFF_9_20 -- defined in VersionCommon.h:112)
   for (let i = 0; i < MAX_HONOR_TITLE; i++) w.writeDword(0); // m_aHonorTitle *150 (__VER>=13)
