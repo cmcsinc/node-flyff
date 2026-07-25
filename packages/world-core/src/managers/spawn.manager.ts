@@ -280,8 +280,14 @@ function toOutfit(
  * `AddVendorItem(slot, IK3_*, job, minU, maxU, totalNum)` expands to the items
  * tagged with that IK3 symbol in {@link ItemIndex.byKind3}, sorted by
  * `level_req` ascending and capped at `totalNum`. `AddVendorItem2(slot, dwId)`
- * appends the explicit propItem id directly. Each placed slot is `{ count: 1 }`
- * -- NPC shops are infinite; per-slot stack counts arrive with BUYITEM/SELLITEM.
+ * appends the explicit propItem id directly. Each placed slot carries the
+ * item's `stack_size` (propItem `dwPackMax`) as its count: the v15 client's
+ * shop window (`WndShop.cpp:106`) clamps the buy-quantity edit box to this
+ * value, so `count: 1` made every vendor item effectively single-purchase
+ * ("can't buy more than 1"). Setting it to the natural stack size matches
+ * vanilla vendor display -- potions show 100, non-stackable gear shows 1.
+ * The server's BUYITEM path does NOT enforce this cap (no stock decrement),
+ * so it is purely the client-side input clamp.
  *
  * ponytail: permissive expansion -- the `job`/`nUniqueMin`/`nUniqueMax` band is
  * NOT filtered today (level_req 15-27 would wrongly exclude vagrant-tier stock).
@@ -302,7 +308,8 @@ function resolveVendorStock(
     if (tab < 0 || tab >= tabs.length) return;
     const row = tabs[tab]!;
     if (row.length >= VENDOR_TAB_SLOTS) return;
-    row.push({ itemId, count: 1 });
+    const count = Math.max(1, items.items.get(itemId)?.stack_size ?? 1);
+    row.push({ itemId, count });
   };
 
   for (const v of charBlock.vendorItems) {
