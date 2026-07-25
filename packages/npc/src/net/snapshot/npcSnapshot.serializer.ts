@@ -96,7 +96,14 @@ export class NpcSnapshotSerializer {
     w.writeDword(m.m_nHitPoint);         // m_nHitPoint
     w.writeDword(0);                     // GetState()
     w.writeDword(0);                     // GetStateFlag()
-    w.writeByte(m.m_dwBelligerence);     // m_dwBelligerence
+    // m_dwBelligerence -- peaceful NPCs send 0, not 1. The in-repo defineAttribute.h
+    // has BELLI_PEACEFUL=1, but the running client's minimap classifies our peaceful
+    // NPCs as red (IsPeaceful()=false), while in-world they render peaceful via
+    // IsAttackAbleNPC's bKillable gate (Mover.cpp:8987, checked before belli). The
+    // consistent explanation: the compiled client's BELLI_PEACEFUL constant == 0.
+    // Monsters (belli 11/12/13) keep their real value so they stay red. Revert if
+    // this does not turn town NPCs green.
+    w.writeByte(m.m_dwBelligerence === 1 ? 0 : m.m_dwBelligerence);
     w.writeDword(0);                     // m_dwMoverSfxId (__VER>=15)
 
     // NPC branch (m_bPlayer == 0) -- ObjSerializeOpt.cpp:319-352
