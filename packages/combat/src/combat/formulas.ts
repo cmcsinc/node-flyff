@@ -216,18 +216,29 @@ export function calcDefense(defender: Combatant): number {
 }
 
 /**
- * `GetDamageMultiplier` (MoverAttack.cpp:828) -- skill/buff multipliers only.
+ * `GetDamageMultiplier` (v19 `MoverAttack.cpp:998-1025`).
  *
- * C++ applies per-skill factors here (e.g. `SI_ACR_BOW_AIMEDSHOT` x4,
- * `SI_JST_YOYO_VATALSTAB` x2) and `BUFF_SKILL` effects -- no level-diff term.
- * A prior revision fabricated a `cos(pi*delta/32)` level-diff falloff here; that
- * does NOT exist in C++ and starved damage vs higher-level defenders (a L7 mob
- * swinging at a L30 player dropped to ~10% of ATK, rounding to 0). Removed.
- * ponytail: port the per-skill multipliers when the skill damage pipeline lands.
+ * Two terms:
+ *  1. PvP flat 0.6 when both sides are players.
+ *  2. v19 level-diff cosine falloff: `nDelta = defender.level - attacker.level`;
+ *     when `nDelta > 0` AND either side is an NPC, cap nDelta at `MAX_OVER_ATK-1`
+ *     (15) and multiply `factor *= cos(pi*nDelta/(MAX_OVER_ATK*2))`. At nDelta=15
+ *     factor drops to ~0.098; at nDelta=0 factor is unchanged. Guards/super
+ *     bosses (`RANK_GUARD`/`RANK_SUPER`) are exempt in C++ (nDelta forced 0);
+ *     ponytail: re-add the rank exemption when monster ranks ship.
+ *
+ * (v15 had no level term here -- a prior revision added a fabricated cosine,
+ * then removed it for v15 fidelity. v19 DOES ship the cosine, so it is restored.)
  */
 export function getDamageMultiplier(attacker: Combatant, defender: Combatant): number {
   let factor = 1.0;
   if (defender.kind === 'player' && attacker.kind === 'player') factor *= 0.60; // PvP
+  const MAX_OVER_ATK = 16;
+  const nDelta = defender.level - attacker.level;
+  if (nDelta > 0 && (attacker.kind === 'npc' || defender.kind === 'npc')) {
+    const cap = Math.min(nDelta, MAX_OVER_ATK - 1);
+    factor *= Math.cos((Math.PI * cap) / (MAX_OVER_ATK * 2));
+  }
   return factor;
 }
 
