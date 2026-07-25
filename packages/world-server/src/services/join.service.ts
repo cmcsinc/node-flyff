@@ -16,11 +16,11 @@
  */
 
 import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
-import type { ItemDefinition } from '@flyff/resources';
+import type { ItemDefinition, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
-import { AUTH } from '@flyff/entities';
+import { AUTH, isJobMatch } from '@flyff/entities';
 import { withinLevelExp } from '@flyff/combat';
 import { MAX_HUMAN_PARTS, MAX_INVENTORY } from '@flyff/world-core';
 import { decodeTaskBar } from './taskbar.service';
@@ -48,6 +48,12 @@ export interface JoinServiceDeps {
   bankRepo?: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold' | 'getBankPass'>;
   /** Skill hydration on JOIN. Optional: empty skill roster if absent. */
   skillRepo?: Pick<SkillRepository, 'loadByCharacter'>;
+  /**
+   * Skill index for seeding the job-skill roster IDs on JOIN. C++ re-derives
+   * `m_aJobSkill[i].dwSkill` from `prj.m_aJobSkill[job]` each load; only levels
+   * persist. Without it the client skill tree is empty. Optional: no seed if absent.
+   */
+  skills?: SkillIndex;
   /**
    * Item-definition lookup for `SetEquipDstParam` on JOIN -- applies each
    * equipped item's DST effects (+STR/+STA/+DEF/etc) to `m_params` so the
@@ -277,11 +283,21 @@ export class JoinService {
   }
 
   /**
-   * Hydrate `m_aJobSkill` from the DB. Learned slots overwrite the NULL_ID
-   * defaults; out-of-range slots drop defensively. No repo = leave the roster
-   * empty (CPlayer seeds all NULL_ID).
+   * Seed the job-skill roster IDs, then overlay persisted levels. C++ re-derives
+   * skill IDs from the job table every load and persists only levels; matching
+   * that keeps the client skill tree populated (empty roster = nothing to learn
+   * or upgrade). Falls back to the legacy slot-based hydrate when no skill index
+   * is wired (tests). No repo = seeded roster at level 0.
    */
   private async loadSkills(player: CPlayer): Promise<void> {
+    if (this.deps.skills) {
+      player.seedRoster(rosterIdsForJob(this.deps.skills, player.m_nJob));
+      if (this.deps.skillRepo) {
+        const learned = await this.deps.skillRepo.loadByCharacter(player.m_idPlayer);
+        player.overlaySkillLevels(learned);
+      }
+      return;
+    }
     if (!this.deps.skillRepo) return;
     const slots = await this.deps.skillRepo.loadByCharacter(player.m_idPlayer);
     player.hydrateSkills(slots);
@@ -296,4 +312,25 @@ export class JoinService {
   private loadTaskBar(player: CPlayer, json: string | null | undefined): void {
     player.m_aSlotItem = decodeTaskBar(json);
   }
+}
+
+/**
+ * Ordered skill-id roster for a job -- the set the client skill tree displays.
+ * Mirrors C++ `CProject::LoadSkill`: every non-COMMON skill whose JOB_*
+ * (`skill.job`) is in the player's job lineage, sorted by `reqLevel` (C++
+ * `SortJobSkill` on `dwReqDisLV`) then id for a stable order. A base Vagrant
+ * gets its 3 base skills; an advanced job also gets its inherited expert/pro
+ * skills (`isJobMatch` walks the lineage). COMMON (tier 4) skills are excluded,
+ * exactly as C++ skips `JTYPE_COMMON` from `m_aJobSkill`.
+ */
+const JTYPE_COMMON = 4;
+function rosterIdsForJob(skills: SkillIndex, job: number): number[] {
+  const roster = [];
+  for (const skill of skills.skills.values()) {
+    if (skill.tier === JTYPE_COMMON) continue;
+    if (!isJobMatch(job, skill.job)) continue;
+    roster.push(skill);
+  }
+  roster.sort((a, b) => (a.reqLevel - b.reqLevel) || (a.id - b.id));
+  return roster.map((s) => s.id);
 }

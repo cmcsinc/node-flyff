@@ -130,14 +130,26 @@ describe('CPlayer entity', () => {
     assert.equal(p.m_aJobSkill[3]!.skillId, 0xffffffff, '0-id stays empty');
   });
 
-  it('seedVagrantRoster fills slots 0-2 with SI_VAG_ONE_* at level 0', () => {
+  it('seedRoster fills slots in order at level 0, rest stay empty', () => {
     const p = CPlayer.fromRow(makeRow(), makeSocket());
-    p.seedVagrantRoster();
-    assert.deepEqual(p.m_aJobSkill[0], { skillId: 1, level: 0 }); // SI_VAG_ONE_CLEANHIT
-    assert.deepEqual(p.m_aJobSkill[1], { skillId: 2, level: 0 }); // SI_VAG_ONE_BRANDISH
-    assert.deepEqual(p.m_aJobSkill[2], { skillId: 3, level: 0 }); // SI_VAG_ONE_OVERCUT
+    p.seedRoster([1, 2, 3]);
+    assert.deepEqual(p.m_aJobSkill[0], { skillId: 1, level: 0 });
+    assert.deepEqual(p.m_aJobSkill[1], { skillId: 2, level: 0 });
+    assert.deepEqual(p.m_aJobSkill[2], { skillId: 3, level: 0 });
     assert.equal(p.m_aJobSkill[3]!.skillId, 0xffffffff, 'slot 3 still empty');
-    assert.ok(p._dirty.has('m_aJobSkill'), 'dirty flag set');
+  });
+
+  it('overlaySkillLevels applies learned levels by skillId, drops unmatched', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.seedRoster([1, 2, 3]);
+    p.overlaySkillLevels([
+      { skillId: 2, level: 7 },      // matches slot 1
+      { skillId: 3, level: 0 },      // level 0 -> ignored
+      { skillId: 999, level: 4 },    // no matching roster slot -> dropped
+    ]);
+    assert.equal(p.m_aJobSkill[0]!.level, 0, 'unlearned stays 0');
+    assert.equal(p.m_aJobSkill[1]!.level, 7, 'learned level applied by id');
+    assert.equal(p.m_aJobSkill[2]!.level, 0, 'level-0 overlay ignored');
   });
 
   describe('findSlotByObjId', () => {
