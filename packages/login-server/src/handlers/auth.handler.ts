@@ -16,13 +16,13 @@ type LoginEvents = {
 
 const logger = createLogger({ module: 'auth-handler' });
 
-/** Default v15 protocol version (`NEUZ_MSGVR`, `_Common/LodeConfig.h:9`). */
+/** Default v19 protocol version (`NEUZ_MSGVR`, `_Common/LodeConfig.h:9`). */
 const DEFAULT_PROTOCOL_VERSION = '20100412';
 
 /**
  * Login certification handler -- `PACKETTYPE_CERTIFY` (0xfc).
  *
- * v15 client->certifier payload (after opcode, `Neuz/DPCertified.cpp:122-165`):
+ * v19 client->certifier payload (after opcode, `Neuz/DPCertified.cpp:122-165`):
  *   [string protocolVersion][string account][672-byte Rijndael-CBC password blob]
  * The blob decrypts to the 32-char `md5("kikugalanet"+pwd)` lowercase hex; the
  * service argon2-verifies that digest against the stored hash.
@@ -115,7 +115,7 @@ export class AuthHandler {
     }
   }
 
-  /** Send a v15 `PACKETTYPE_ERROR` (0xfe) reply: `[opcode][LONG errorCode]`. */
+  /** Send a v19 `PACKETTYPE_ERROR` (0xfe) reply: `[opcode][LONG errorCode]`. */
   private sendError(socket: Socket, errorCode: number): void {
     const writer = new PacketWriter();
     writer.writeDword(PACKETTYPE.ERROR);

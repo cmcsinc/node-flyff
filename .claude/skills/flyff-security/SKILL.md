@@ -39,7 +39,7 @@ export async function verifyPassword(hash, plaintext) {
 }
 ```
 
-> **Legacy note**: Flyff v15 clients send MD5-hashed passwords. If targeting a vanilla client, you may need to accept MD5 from the client but store argon2 hashes in the DB. Bridge: store the argon2 hash of the MD5 string, not the plaintext.
+> **Legacy note**: Flyff v19 clients send MD5-hashed passwords. If targeting a vanilla client, you may need to accept MD5 from the client but store argon2 hashes in the DB. Bridge: store the argon2 hash of the MD5 string, not the plaintext.
 
 ---
 

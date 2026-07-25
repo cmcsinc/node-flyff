@@ -1,8 +1,8 @@
-# Flyff v15 — Missing Features Checklist
+# Flyff v19 — Missing Features Checklist
 
 Generated 2026-07-23 from a full-source sweep (3 parallel domain maps + every
 `ponytail:` comment). Re-verified 2026-07-24 against live code (3 parallel
-explorers, 57 items audited). Compares the emulator against full retail v15.
+explorers, 57 items audited). Compares the emulator against full retail v19.
 
 **Status legend**
 - ✅ DONE — implemented + passing on this device's checks (NOT user-confirmed)
@@ -11,7 +11,7 @@ explorers, 57 items audited). Compares the emulator against full retail v15.
 - ❌ MISSING — no code path at all
 
 **Override rule:** ✅ here = "passes my checks", never "fixed". Only the user
-declares a feature fixed by testing on a real v15 client.
+declares a feature fixed by testing on a real v19 client.
 
 ---
 
@@ -30,7 +30,7 @@ declares a feature fixed by testing on a real v15 client.
 - [x] ✅ Bow damage curve (STR/DEX) — `formulas.ts:109`
 - [x] ✅ NPC ranged attack (RANGE_ATTACK emit, re-attack delay) — `ai.system.ts:222` (re-verified 2026-07-24)
 - [x] ✅ Player ranged auto-attack as a distinct path — `rangeAttack.handler.ts`, `rangeAttack.service.ts` (re-verified 2026-07-24)
-- [ ] ❌ Ammo / arrow consumption — v15 retail bows are ammo-less by design; no arrow item kind in propItem. Only relevant for later-version quivers.
+- [ ] ❌ Ammo / arrow consumption — v19 retail bows are ammo-less by design; no arrow item kind in propItem. Only relevant for later-version quivers.
 
 ### Magic / skill damage
 - [x] ✅ Single-target skill damage (melee + magic, element, magic-factor) — `skillFormulas.ts`

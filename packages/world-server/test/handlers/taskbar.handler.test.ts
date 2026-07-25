@@ -13,7 +13,7 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { TaskBarHandler } from '../../src/handlers/taskbar.handler';
 import { TaskBarService } from '../../src/services/taskbar.service';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '@flyff/world-core';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE } from '@flyff/world-core';
 import type { Shortcut } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
 
@@ -23,8 +23,12 @@ function emptyGrid(): Shortcut[][] {
   );
 }
 
+function emptyQueue(): Shortcut[] {
+  return Array.from({ length: MAX_SLOT_QUEUE }, () => ({ dwShortcut: SHORTCUT.NONE }));
+}
+
 function makeHandler() {
-  const player = { m_idPlayer: 0xcccc, m_aSlotItem: emptyGrid() };
+  const player = { m_idPlayer: 0xcccc, m_aSlotItem: emptyGrid(), m_aSlotQueue: emptyQueue() };
   const playerManager = { get: () => player } as unknown as PlayerManager;
   const taskbarService = new TaskBarService();
   const handler = new TaskBarHandler({ playerManager, taskbarService });

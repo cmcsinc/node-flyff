@@ -1,7 +1,7 @@
 /**
  * PkModeHandler -- `PACKETTYPE_MODE` (0xffffff7b) PK branch.
  *
- * The v15 client sends `DWORD dwMode` to toggle PK mode. `dwMode=1` = PK on,
+ * The v19 client sends `DWORD dwMode` to toggle PK mode. `dwMode=1` = PK on,
  * `dwMode=0` = PK off. The server sets `player.m_bPKMode`, which gates PvP
  * targeting + damage routing in the combat pipeline.
  *

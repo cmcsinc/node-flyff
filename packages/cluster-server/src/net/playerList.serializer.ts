@@ -13,7 +13,7 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { CharacterWithEquip } from '../services/charList.service';
 
-// v15 canonical constants (referenced by C++ but defined outside game/source/).
+// v19 canonical constants (referenced by C++ but defined outside game/source/).
 const MI_MALE = 11;
 const MI_FEMALE = 12;
 const WI_WORLD_MADRIGAL = 1;

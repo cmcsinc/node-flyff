@@ -25,7 +25,7 @@ export interface ClientSession {
   state: SessionStateValue;
   accountId?: number;
   charId?: number;
-  /** v15 `__CRC` frame mode (certifier/login path). False => 5-byte plain frame. */
+  /** v19 `__CRC` frame mode (certifier/login path). False => 5-byte plain frame. */
   crc?: boolean;
   /** Per-connection protocolId negotiated via the 8-byte hello (CRC mode). */
   protocolId?: number;
@@ -51,7 +51,7 @@ export interface DispatcherLogger {
 /**
  * Frame a payload (opcode + fields) and write it to the client.
  *
- * ALWAYS the plain 5-byte frame. The v15 certifier/login path is a `crcRead`
+ * ALWAYS the plain 5-byte frame. The v19 certifier/login path is a `crcRead`
  * server: it READS 13-byte `__CRC` frames from the client but WRITES plain
  * 5-byte frames back (its send buffer has no crc, `serversock.cpp`). The frame
  * direction is asymmetric -- do not CRC outbound.
@@ -70,7 +70,7 @@ const EMPTY_BODY = Buffer.from([0]);
 
 export interface PacketDispatcherDeps {
   logger?: DispatcherLogger;
-  /** Use the 13-byte v15 `__CRC` frame (certifier/login path). Default plain. */
+  /** Use the 13-byte v19 `__CRC` frame (certifier/login path). Default plain. */
   crc?: boolean;
   /**
    * Client packets lead with a `DPID_UNKNOWN` DWORD before the opcode
@@ -134,7 +134,7 @@ export class PacketDispatcher {
     socket.session = { state: SessionState.CONNECTED, crc: this.crc, protocolId: 0 };
     if (!this.crc) this.buffers.set(raw, new PacketBuffer());
     this.log?.info({ ip: socket.remoteAddress, crc: this.crc }, 'Client connected');
-    // v15 CRC path: the server is `crcRead` -- it must SEND the protocolId hello
+    // v19 CRC path: the server is `crcRead` -- it must SEND the protocolId hello
     // FIRST (plain-framed, server->client). The client blocks in
     // WaitForSingleObject(10s) waiting for it, then disconnects on timeout.
     // Hello payload = [DWORD 0][DWORD protocolId]; protocolId must be non-zero.
@@ -182,7 +182,7 @@ export class PacketDispatcher {
   }
 
   /**
-   * v15 `__CRC` reassembly: verify each inbound frame against the
+   * v19 `__CRC` reassembly: verify each inbound frame against the
    * server-generated `session.protocolId` (sent in the hello on accept) and
    * dispatch. The client never sends a hello -- it adopts ours.
    */

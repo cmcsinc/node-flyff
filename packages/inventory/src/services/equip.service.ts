@@ -17,10 +17,19 @@
  */
 
 import type { InventoryRepository, Journal } from '@flyff/database';
-import type { ItemDefinition } from '@flyff/resources';
+import type { ItemDefinition, SetItemDef } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
-import type { CPlayer, InventorySlot } from '@flyff/entities';
-import { buildSetPointParam, DST_FP, DST_HP, DST_MP, MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
+import type { CPlayer, DstEffect, InventorySlot } from '@flyff/entities';
+import {
+  buildSetDestParam,
+  buildResetDestParam,
+  buildSetPointParam,
+  DST_FP,
+  DST_HP,
+  DST_MP,
+  MAX_INVENTORY,
+  MAX_HUMAN_PARTS,
+} from '@flyff/world-core';
 
 const logger = createLogger({ module: 'equip-service' });
 const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot -- reject for now
@@ -28,9 +37,62 @@ const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot -- reject for now
 export interface EquipServiceDeps {
   inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem'>;
   getItem: (itemId: number) => ItemDefinition | undefined;
+  /** Set-item definition lookup (propItemEtc.inc) -- undefined when sets are unloaded. */
+  getSetItem?: (itemId: number) => SetItemDef | undefined;
   /** Push a framed packet to the player (clamp-on-unequip vital sync). */
   sendTo: (player: CPlayer, buf: Buffer) => void;
+  /**
+   * Broadcast a framed DST snapshot to self + vicinity peers. The v19 client does
+   * NOT apply equip DST effects locally (`SetDestParamEquip` is `#ifndef __CLIENT`,
+   * `MoverEquip.cpp:2135`), so every per-item / set-bonus delta must be pushed by
+   * the server -- mirrors C++ `g_UserMng.AddSetDestParam` / `AddResetDestParam`
+   * (`MoverParam.cpp:2506`). Optional only because tests stub it.
+   */
+  broadcastAround?: (player: CPlayer, buf: Buffer) => void;
   journal?: Journal;
+}
+
+/**
+ * Recompute set-item bonuses from equipped state (C++ `RedoEquip` full-recompute
+ * path, `MoverEquip.cpp:2070` → `SetDestParamSetItem(NULL)` w/ `bAll=TRUE`).
+ * Reverse the previously-applied bonuses (`player.m_setEffects`), count pieces
+ * per set, reapply the cumulative tiers (`avail.equipped <= count`; same-DST
+ * entries sum -- mirrors `CSetItem::GetItemAvail`, `Project.cpp:4343`). Robust
+ * against any equip/unequip/relog sequence without per-tier bookkeeping.
+ *
+ * Shared by `EquipService` (equip/unequip) and `JoinService` (seed at login) so
+ * both paths stay in sync.
+ */
+export function recomputeSetBonuses(
+  player: CPlayer,
+  getSetItem: (itemId: number) => SetItemDef | undefined,
+): void {
+  if (player.m_setEffects.length > 0) {
+    player.m_params.removeEffects(player.m_setEffects);
+    player.m_setEffects = [];
+  }
+  const counts = new Map<SetItemDef, number>();
+  for (let part = 0; part < MAX_HUMAN_PARTS; part++) {
+    const slot = player.m_Inventory[MAX_INVENTORY + part];
+    if (!slot) continue;
+    const def = getSetItem(slot.itemId);
+    if (def) counts.set(def, (counts.get(def) ?? 0) + 1);
+  }
+  if (counts.size === 0) return;
+  // avails are sorted ascending by equipped (loader) -> break on first higher tier.
+  const dstTotals = new Map<number, number>();
+  for (const [def, count] of counts) {
+    for (const a of def.avails) {
+      if (a.equipped > count) break;
+      dstTotals.set(a.dst, (dstTotals.get(a.dst) ?? 0) + a.adj);
+    }
+  }
+  const effects: DstEffect[] = [];
+  for (const [dst, adj] of dstTotals) {
+    if (adj !== 0) effects.push({ dst, adj });
+  }
+  player.m_params.applyEffects(effects);
+  player.m_setEffects = effects;
 }
 
 export type EquipResult =
@@ -81,6 +143,11 @@ export class EquipService {
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: invSlot, itemId: prev?.itemId ?? 0, count: prev?.count ?? 0 } });
     player.m_Inventory[equipIdx] = item;
     player.m_Inventory[invSlot] = prev;
+    // Track the bag->equip index move (item's m_dwObjId travels to equipIdx on
+    // the client; invSlot's m_apIndex becomes a fresh free objid). ponytail:
+    // when `prev` exists (swap), the client self-UnEquips it to its own first
+    // empty bag slot -- not tracked here; only the primary move is mirrored.
+    player.onEquipIndexMove(invSlot, equipIdx);
     player._dirty.add('m_Inventory');
     // Swap DST effects: remove the previously-equipped item's bonuses, apply the
     // new item's. Then clamp current vitals to the new maxes (unequipping +HP
@@ -88,6 +155,7 @@ export class EquipService {
     // doesn't sit over-max until the next regen tick).
     if (prev) this.applyItemEffects(player, prev.itemId, false);
     this.applyItemEffects(player, item.itemId, true);
+    this.recomputeSetBonuses(player);
     this.clampVitals(player);
     this.persistSlot(player, equipIdx, item);
     if (prev) this.persistSlot(player, invSlot, prev);
@@ -110,9 +178,14 @@ export class EquipService {
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: item.itemId, count: item.count } });
     player.m_Inventory[equipIdx] = null;
     player.m_Inventory[dst] = item;
+    // Track the equip->bag index move: on the client m_apIndex[dst] becomes the
+    // item's equip-time m_dwObjId (the stale value addItem must reuse if this
+    // slot is later refilled). equipIdx's m_apIndex is cleared.
+    player.onUnequipIndexMove(equipIdx, dst);
     player._dirty.add('m_Inventory');
     // Remove the item's DST effects BEFORE clamping so the max reflects the loss.
     this.applyItemEffects(player, item.itemId, false);
+    this.recomputeSetBonuses(player);
     this.clampVitals(player);
     this.deps.inventoryRepo.removeItem(player.m_idPlayer, equipIdx).catch((e: unknown) => logger.warn({ err: e }, 'unequip remove equipSlot failed'));
     this.persistSlot(player, dst, item);
@@ -146,8 +219,59 @@ export class EquipService {
     const prop = this.deps.getItem(itemId);
     const effects = prop?.effects;
     if (!effects || effects.length === 0) return;
-    if (add) player.m_params.applyEffects(effects);
-    else player.m_params.removeEffects(effects);
+    if (add) {
+      player.m_params.applyEffects(effects);
+      this.emitDst(player, effects, true);
+    } else {
+      player.m_params.removeEffects(effects);
+      this.emitDst(player, effects, false);
+    }
+  }
+
+  /**
+   * Recompute set bonuses + broadcast the delta. The exported `recomputeSetBonuses`
+   * is a full reapply (remove all, re-add all), so we capture `m_setEffects` before
+   * and after and emit `ResetDestParam` / `SetDestParam` per dst whose adj changed.
+   * No-op when `getSetItem` dep is absent.
+   */
+  private recomputeSetBonuses(player: CPlayer): void {
+    if (!this.deps.getSetItem) return;
+    const prev = player.m_setEffects.map((e) => ({ ...e }));
+    recomputeSetBonuses(player, this.deps.getSetItem);
+    this.emitDstDelta(player, prev, player.m_setEffects);
+  }
+
+  /** Broadcast `SETDESTPARAM` (add) or `RESETDESTPARAM` (remove) per effect. */
+  private emitDst(player: CPlayer, effects: readonly DstEffect[], add: boolean): void {
+    const fn = this.deps.broadcastAround;
+    if (!fn) return;
+    for (const e of effects) {
+      fn(player, add
+        ? buildSetDestParam(player.m_idPlayer, e.dst, e.adj, e.chg)
+        : buildResetDestParam(player.m_idPlayer, e.dst, e.adj));
+    }
+  }
+
+  /**
+   * Broadcast the per-dst delta between two effect sets. For each dst: if its adj
+   * shrank or vanished, emit `RESETDESTPARAM` for the old value; if it grew or
+   * appeared, emit `SETDESTPARAM` for the new value. Unchanged dsts are skipped.
+   */
+  private emitDstDelta(player: CPlayer, prev: readonly DstEffect[], next: readonly DstEffect[]): void {
+    const fn = this.deps.broadcastAround;
+    if (!fn) return;
+    const prevByDst = new Map<number, DstEffect>();
+    for (const e of prev) prevByDst.set(e.dst, e);
+    const nextByDst = new Map<number, DstEffect>();
+    for (const e of next) nextByDst.set(e.dst, e);
+    const allDsts = new Set<number>([...prevByDst.keys(), ...nextByDst.keys()]);
+    for (const dst of allDsts) {
+      const p = prevByDst.get(dst);
+      const n = nextByDst.get(dst);
+      if (p?.adj === n?.adj && p?.chg === n?.chg) continue; // unchanged
+      if (p !== undefined) fn(player, buildResetDestParam(player.m_idPlayer, p.dst, p.adj));
+      if (n !== undefined) fn(player, buildSetDestParam(player.m_idPlayer, n.dst, n.adj, n.chg));
+    }
   }
 
   /**

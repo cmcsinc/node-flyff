@@ -53,8 +53,8 @@ export function bindQuestInventory(
       if (!r.ok) return; // bag full / invalid -> reward silently dropped (mirrors tracker)
       frames.push(
         r.isNew
-          ? deps.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.slot)
-          : buildUpdateItemCount(player.m_idPlayer, r.slot, r.count),
+          ? deps.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.objid)
+          : buildUpdateItemCount(player.m_idPlayer, r.objid, r.count),
       );
     },
     remove: (itemId, count) => removeFromBag(player, deps.inventoryService, itemId, count, frames),

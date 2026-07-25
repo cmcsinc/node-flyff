@@ -1,11 +1,11 @@
 # Implementor Agent Session
 
 - **Agent**: implementor
-- **Active Task**: v15 skill system foundation — Tasks 5-8 implemented; pending user approval
+- **Active Task**: v19 skill system foundation — Tasks 5-8 implemented; pending user approval
 - **Phase**: 2 — Implement (done; not marked complete per OVERRIDE RULE)
 - **Last Updated**: 2026-07-22
 
-## Current Work — v15 skill foundation
+## Current Work — v19 skill foundation
 
 - [x] Task 5: skill.schema.ts + converters/skills.ts — 166 skills + 2141 level rows
 - [ ] Task 6: DB migration 005 + skill.repo.ts + character.updateSkillPoints + seed.ts

@@ -62,6 +62,14 @@ export interface QuestServiceDeps {
    * without it; only the cold DB flush is skipped.
    */
   inventoryRepo?: Pick<InventoryRepository, 'setGold'>;
+  /**
+   * Optional exp-gain client notifier. When wired (compose.ts binds the
+   * SetExperience/SetLevel serializers + managers), the quest reward path
+   * broadcasts the bar update live; otherwise the next combat exp gain
+   * refreshes it (the pre-existing behavior). Matches C++ `AddExperienceSolo`
+   * tail (`Mover.cpp:6254`) which always sends AddSetExperience.
+   */
+  onExpGain?: (player: CPlayer, leveled: boolean) => void;
 }
 
 export type QuestOpResult =
@@ -121,6 +129,7 @@ export class QuestService {
 
     const sink: RewardSink = { inventory: inv };
     if (this.deps.journal) sink.journal = (entry) => { this.deps.journal!.append(entry); };
+    if (this.deps.onExpGain) sink.onExpGain = (p, leveled) => { this.deps.onExpGain!(p, leveled); };
     const inventoryRepo = this.deps.inventoryRepo;
     if (inventoryRepo) {
       // Fire-and-forget gold flush to the inventory container (migration 008).

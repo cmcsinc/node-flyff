@@ -119,7 +119,7 @@ export class DropService {
 }
 
 /**
- * Gold-pile propItem ids -- `II_GOLD_SEED1..4` (defineItem.h:26-29). The v15
+ * Gold-pile propItem ids -- `II_GOLD_SEED1..4` (defineItem.h:26-29). The v19
  * client renders ground penya as one of four seed items chosen by amount.
  */
 const II_GOLD_SEED1 = 12;

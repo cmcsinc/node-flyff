@@ -2,7 +2,7 @@
 
 Self-contained session handoff. Read this on another device to pick up where this
 session left off. Mirrors `.claude/state/SESSION.md` + memory
-`v15-stat-dst-param-model-shipped.md` (which live in the user home and may not be
+`v19-stat-dst-param-model-shipped.md` (which live in the user home and may not be
 present on the other machine).
 
 ---
@@ -102,7 +102,7 @@ HP potion anti-spam via `CPlayer.m_cooltime[4]` groups (food/pill/skill + potion
 - `packages/world-server/src/compose.ts` — `potionCooldownMs: config.consumable...`.
 
 ### Already-committed (NOT in this commit)
-- "Consume must echo UPDATE_ITEM" (memory `v15-consume-must-echo-updateitem`) —
+- "Consume must echo UPDATE_ITEM" (memory `v19-consume-must-echo-updateitem`) —
   user-confirmed 2026-07-23, already in HEAD. The `buildUpdateItemCount` echo
   is pre-existing; this commit only adds the cooltime branch next to it.
 
@@ -130,7 +130,7 @@ HP potion anti-spam via `CPlayer.m_cooltime[4]` groups (food/pill/skill + potion
 
 ## Awaiting user real-client test (THE unblocker)
 
-Do NOT mark anything complete until the user runs these on a real v15 client:
+Do NOT mark anything complete until the user runs these on a real v19 client:
 
 1. Equip a +STR ring → character-window ATK rises.
 2. Allocate STA → max HP rises immediately (no drop flicker).

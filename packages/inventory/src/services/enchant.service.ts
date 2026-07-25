@@ -9,7 +9,7 @@
  *     (element) + bump `m_nResistAbilityOption` (level).
  *
  * Roll = `xRandom(10000) <= chance` (n/10000 tables in {@link upgradeTables}).
- * Failure rule (v15): current level < {@link DESTROY_THRESHOLD} -> item kept,
+ * Failure rule (v19): current level < {@link DESTROY_THRESHOLD} -> item kept,
  * material consumed; >= threshold -> **item destroyed** (no protection buff
  * subsystem yet). Max-level is a pre-check reject (material NOT consumed) so a
  * maxed item can't eat a Sunstone for nothing.
@@ -134,7 +134,7 @@ export class EnchantService {
     return this.onFail(player, targetSlot, materialSlot, currentLevel, remaining);
   }
 
-  /** v15 failure: `< DESTROY_THRESHOLD` keeps the item; `>= threshold` destroys it. */
+  /** v19 failure: `< DESTROY_THRESHOLD` keeps the item; `>= threshold` destroys it. */
   private onFail(
     player: CPlayer, targetSlot: number, materialSlot: number, level: number, materialRemaining: number,
   ): EnchantOutcome {

@@ -36,7 +36,7 @@ export function isMoverAttackableBy(player: CPlayer, mover: CMover): boolean {
 /**
  * May `attacker` register `target` (a live player) as a PvP attack target?
  *
- * v15 PvP is consent-gated: both players must have PK mode ON (`m_bPKMode`)
+ * v19 PvP is consent-gated: both players must have PK mode ON (`m_bPKMode`)
  * for damage to land. A chaotic attacker (already PK) may hit any player
  * who also has PK on -- non-consensual PK is expressed through the PK-value
  * penalty on the kill, not through bypassing the consent gate. A non-PK

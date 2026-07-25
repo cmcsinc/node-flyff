@@ -1,5 +1,5 @@
 /**
- * StatService -- v15 stat-point allocation (`PACKETTYPE_MODIFY_STATUS`).
+ * StatService -- v19 stat-point allocation (`PACKETTYPE_MODIFY_STATUS`).
  *
  * Ports `CDPSrvr::OnModifyStatus` (`WORLDSERVER/DPSrvr.cpp:10345`): the client
  * sends four counts (STR/STA/DEX/INT) to add from the spendable `m_nRemainGP`

@@ -4,7 +4,7 @@
  * Pins the JOIN taskbar snapshot (SNAPSHOTTYPE_TASKBAR = 0x0097). Body is the
  * storing branch of `CUserTaskBar::Serialize` (UserTaskBar.cpp:61): three
  * counts (applet/item/queue) each leading their entries, trailing actionPoint.
- * We ship only the item grid, so applet/queue counts are 0.
+ * We ship the item grid + action-slot queue; applet count is always 0.
  */
 
 import { describe, it } from 'node:test';
@@ -12,13 +12,17 @@ import * as assert from 'node:assert/strict';
 import { PacketReader } from '@flyff/core/net/PacketReader';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import { TaskBarSnapshotSerializer } from '../../../src/net/snapshot/taskbar.serializer';
-import { NULL_ID, SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM } from '@flyff/world-core';
+import { NULL_ID, SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE } from '@flyff/world-core';
 import type { Shortcut } from '@flyff/entities';
 
 function emptyGrid(): Shortcut[][] {
   return Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>
     Array.from({ length: MAX_SLOT_ITEM }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 })),
   );
+}
+
+function emptyQueue(): Shortcut[] {
+  return Array.from({ length: MAX_SLOT_QUEUE }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }));
 }
 
 describe('TaskBarSnapshotSerializer.build', () => {
@@ -61,6 +65,35 @@ describe('TaskBarSnapshotSerializer.build', () => {
     r.readDword(); r.readDword(); r.readDword(); r.readDword();
 
     assert.equal(r.readDword(), 0, 'queueCount');
+    assert.equal(r.readDword(), 0, 'actionPoint');
+  });
+
+  it('emits a queue entry per non-empty action-slot slot (action-slot repush)', () => {
+    const grid = emptyGrid();
+    grid[1]![2] = { dwShortcut: SHORTCUT.SKILLFUN, dwId: 42, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
+    const queue = emptyQueue();
+    queue[0] = { dwShortcut: SHORTCUT.SKILLFUN, dwId: 100, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
+    queue[3] = { dwShortcut: SHORTCUT.SKILLFUN, dwId: 101, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
+
+    const buf = new TaskBarSnapshotSerializer().build(0xabcd, grid, queue);
+    const r = new PacketReader(buf);
+    r.readDword(); r.readDword(); r.readWord(); r.readDword(); r.readWord(); // header + 0x0097
+    r.readDword();                            // appletCount
+    r.readDword();                            // itemCount
+    // Drain the single item entry ([1][2] + 6 DWORDs).
+    for (let i = 0; i < 8; i++) r.readDword();
+
+    assert.equal(r.readDword(), 2, 'queueCount -- two non-empty queue slots');
+    const i0 = r.readDword();
+    assert.equal(i0, 0);
+    assert.equal(r.readDword(), SHORTCUT.SKILLFUN);
+    assert.equal(r.readDword(), 100, 'queue[0] dwId');
+    r.readDword(); r.readDword(); r.readDword(); r.readDword();
+    const i1 = r.readDword();
+    assert.equal(i1, 3);
+    assert.equal(r.readDword(), SHORTCUT.SKILLFUN);
+    assert.equal(r.readDword(), 101, 'queue[3] dwId');
+    r.readDword(); r.readDword(); r.readDword(); r.readDword();
     assert.equal(r.readDword(), 0, 'actionPoint');
   });
 });

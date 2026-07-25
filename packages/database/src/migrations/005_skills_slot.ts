@@ -3,7 +3,7 @@ import type { Knex } from '../types';
 /**
  * Skill slot axis on `skills` + `skill_point` / `skill_level` on `characters`.
  *
- * v15 character skill state is a flat 45-slot array (`m_aJobSkill[45]` -- see
+ * v19 character skill state is a flat 45-slot array (`m_aJobSkill[45]` -- see
  * `_Common/Mover.h`, docs #5). Each slot is either a learned `{ skillId, level }`
  * pair or empty (sentinel `0xffffffff`). The original `skills.unique` was
  * `(character_id, skill_id)` -- but the same skill id cannot legitimately occupy

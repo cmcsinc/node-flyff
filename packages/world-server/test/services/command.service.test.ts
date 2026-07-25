@@ -233,9 +233,9 @@ describe('CommandService -- system + level', () => {
     }
   });
 
-  it('NoticeSerializer emits the TEXT_GENERAL state byte (Florist __S_SERVER_UNIFY)', () => {
-    // OnText (DPClient.cpp:1341) reads BYTE nState before the string when
-    // __S_SERVER_UNIFY is defined (it is, in Florist). Omit the byte and the
+  it('NoticeSerializer emits the TEXT_GENERAL state byte (__S_SERVER_UNIFY)', () => {
+    // OnText reads BYTE nState before the string when __S_SERVER_UNIFY is defined
+    // (it is -- game/source/WORLDSERVER/User.cpp:681). Omit the byte and the
     // string-length DWORD shifts -> silent drop. Layout after the subtype WORD:
     //   [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2][TEXT_GENERAL:1]...
     const buf = new NoticeSerializer().build('hi');

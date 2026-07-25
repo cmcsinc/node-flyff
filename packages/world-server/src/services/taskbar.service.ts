@@ -1,14 +1,17 @@
 /**
- * TaskBarService -- taskbar hotkey binding (add/remove shortcut) + persistence.
+ * TaskBarService -- taskbar hotkey binding (add/remove shortcut) + action-slot
+ * queue upload + persistence.
  *
  * Ports `CDPSrvr::OnAddItemTaskBar` / `OnRemoveItemTaskBar`
- * (`WORLDSERVER/DPSrvr.cpp:2203/2251`). Stores bindings into the player's
- * in-memory `m_aSlotItem[8][9]` grid and fire-and-forget persists the grid to
- * `characters.taskbar` (migration 009). C++ saves the grid on logout
- * (`DbManagerSave.cpp:SaveTaskBar`); we write through on every change instead --
- * a drag is user-paced (rare) and a crash between logout saves would otherwise
- * lose the session's bindings. Low-stakes UI state, so no WAL journal entry
- * (rule 04 lists items/gold/exp/SP/quest/trade; taskbar is not among them).
+ * (`WORLDSERVER/DPSrvr.cpp:2203/2251`) for the F1-F9 grid and
+ * `CDPSrvr::OnSkillTaskBar` (`DPSrvr.cpp:2141`) for the action-slot queue
+ * (`m_aSlotQueue[5]`). Fire-and-forget persists both to `characters.taskbar`
+ * (migration 009, JSON v2 shape). C++ saves on logout
+ * (`DbManagerSave.cpp:SaveTaskBar`); we write through on every change instead
+ * -- a drag/queue-edit is user-paced (rare) and a crash between logout saves
+ * would otherwise lose the session's bindings. Low-stakes UI state, so no WAL
+ * journal entry (rule 04 lists items/gold/exp/SP/quest/trade; taskbar is not
+ * among them).
  *
  * Chat-macro cap: C++ counts existing `SHORTCUT_CHAT` slots and rejects an add
  * that would push past 10 (`if (nchatshortcut > 9) return`). The check counts
@@ -20,7 +23,7 @@
 
 import { createLogger } from '@flyff/core/logger';
 import type { Shortcut } from '@flyff/entities';
-import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SHORTCUT_CHAT } from '@flyff/world-core';
+import { SHORTCUT, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE, MAX_SHORTCUT_CHAT } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'taskbar-service' });
 
@@ -34,13 +37,14 @@ export type AddShortcutResult =
   | { ok: true }
   | { ok: false; reason: 'too_many_chat' };
 
-/** Player shape this service needs -- the grid + an optional id for persist. */
+/** Player shape this service needs -- grid + queue + an optional id for persist. */
 interface TaskBarPlayer {
   m_idPlayer?: number;
   m_aSlotItem: Shortcut[][];
+  m_aSlotQueue: Shortcut[];
 }
 
-/** One non-empty grid slot, positioned -- the `characters.taskbar` JSON shape. */
+/** One non-empty grid slot, positioned -- the v1 / v2 `items` JSON shape. */
 interface StoredShortcut {
   i: number;
   j: number;
@@ -53,11 +57,29 @@ interface StoredShortcut {
   szString?: string;
 }
 
+/** One non-empty queue slot, positioned -- the v2 `queue` JSON shape. */
+interface StoredQueueShortcut {
+  i: number;
+  dwShortcut: number;
+  dwId: number;
+  dwType: number;
+  dwIndex: number;
+  dwUserId: number;
+  dwData: number;
+}
+
+/** v2 envelope: `{ v: 2, items: [...], queue: [...] }`. */
+interface TaskBarBlobV2 {
+  v: 2;
+  items: StoredShortcut[];
+  queue: StoredQueueShortcut[];
+}
+
 /**
- * Encode the grid as JSON for the `characters.taskbar` column. Only non-empty
- * slots are stored (matches C++ `SaveTaskBar` skipping `SHORTCUT_NONE`).
+ * Build the non-empty items entries for the grid (matches C++ `SaveTaskBar`
+ * skipping `SHORTCUT_NONE`).
  */
-export function encodeTaskBar(grid: ReadonlyArray<ReadonlyArray<Shortcut>>): string {
+function collectItems(grid: ReadonlyArray<ReadonlyArray<Shortcut>>): StoredShortcut[] {
   const out: StoredShortcut[] = [];
   for (let i = 0; i < MAX_SLOT_ITEM_COUNT && i < grid.length; i++) {
     const row = grid[i]!;
@@ -73,28 +95,74 @@ export function encodeTaskBar(grid: ReadonlyArray<ReadonlyArray<Shortcut>>): str
       out.push(entry);
     }
   }
-  return JSON.stringify(out);
+  return out;
+}
+
+function collectQueue(queue: ReadonlyArray<Shortcut>): StoredQueueShortcut[] {
+  const out: StoredQueueShortcut[] = [];
+  for (let i = 0; i < MAX_SLOT_QUEUE && i < queue.length; i++) {
+    const s = queue[i]!;
+    if (s.dwShortcut === SHORTCUT.NONE) continue;
+    out.push({
+      i,
+      dwShortcut: s.dwShortcut, dwId: s.dwId, dwType: s.dwType,
+      dwIndex: s.dwIndex, dwUserId: s.dwUserId, dwData: s.dwData,
+    });
+  }
+  return out;
 }
 
 /**
- * Decode the `characters.taskbar` column into a fresh grid. Bad/out-of-range
- * rows are dropped defensively. `null`/empty yields an all-empty grid (fresh
- * character). Mirrors C++ `GetTaskBar` (`DbManagerFun.cpp:984`).
+ * Encode grid + queue as the `characters.taskbar` JSON column (v2 envelope).
+ * Empty queue collapses to an empty `queue: []`. Only non-empty slots ship.
  */
-export function decodeTaskBar(json: string | null | undefined): Shortcut[][] {
-  const grid: Shortcut[][] = Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>
+export function encodeTaskBar(
+  grid: ReadonlyArray<ReadonlyArray<Shortcut>>,
+  queue: ReadonlyArray<Shortcut> = [],
+): string {
+  const blob: TaskBarBlobV2 = { v: 2, items: collectItems(grid), queue: collectQueue(queue) };
+  return JSON.stringify(blob);
+}
+
+function emptyGrid(): Shortcut[][] {
+  return Array.from({ length: MAX_SLOT_ITEM_COUNT }, () =>
     Array.from({ length: MAX_SLOT_ITEM }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 })),
   );
-  if (!json) return grid;
+}
+
+function emptyQueue(): Shortcut[] {
+  return Array.from({ length: MAX_SLOT_QUEUE }, () => ({ dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 }));
+}
+
+/**
+ * Parse the `characters.taskbar` column into the v2 envelope, accepting both
+ * the legacy v1 shape (bare array of item entries -- queue empty) and the
+ * current v2 object. Bad/out-of-range rows are dropped defensively.
+ * `null`/empty/unreadable yields an all-empty blob (fresh character).
+ */
+function parseTaskBar(json: string | null | undefined): TaskBarBlobV2 {
+  if (!json) return { v: 2, items: [], queue: [] };
   let parsed: unknown;
   try {
     parsed = JSON.parse(json);
   } catch {
     logger.warn({ json }, 'taskbar column unreadable -- ignoring');
-    return grid;
+    return { v: 2, items: [], queue: [] };
   }
-  if (!Array.isArray(parsed)) return grid;
-  for (const e of parsed as StoredShortcut[]) {
+  if (Array.isArray(parsed)) return { v: 2, items: parsed as StoredShortcut[], queue: [] };
+  if (typeof parsed === 'object' && parsed !== null && (parsed as { v?: number }).v === 2) {
+    return parsed as TaskBarBlobV2;
+  }
+  return { v: 2, items: [], queue: [] };
+}
+
+/**
+ * Decode the `characters.taskbar` column into a fresh item grid. Mirrors C++
+ * `GetTaskBar` (`DbManagerFun.cpp:984`); out-of-range entries are dropped.
+ */
+export function decodeTaskBar(json: string | null | undefined): Shortcut[][] {
+  const grid = emptyGrid();
+  for (const e of parseTaskBar(json).items) {
     if (typeof e !== 'object' || e === null) continue;
     if (e.i < 0 || e.i >= MAX_SLOT_ITEM_COUNT || e.j < 0 || e.j >= MAX_SLOT_ITEM) continue;
     const slot: Shortcut = {
@@ -105,6 +173,24 @@ export function decodeTaskBar(json: string | null | undefined): Shortcut[][] {
     grid[e.i]![e.j] = slot;
   }
   return grid;
+}
+
+/**
+ * Decode the action-slot queue from the same `characters.taskbar` column.
+ * Legacy v1 rows (queue absent) yield an all-empty queue. Out-of-range
+ * indexes are dropped defensively.
+ */
+export function decodeTaskBarQueue(json: string | null | undefined): Shortcut[] {
+  const queue = emptyQueue();
+  for (const e of parseTaskBar(json).queue) {
+    if (typeof e !== 'object' || e === null) continue;
+    if (e.i < 0 || e.i >= MAX_SLOT_QUEUE) continue;
+    queue[e.i] = {
+      dwShortcut: e.dwShortcut | 0, dwId: e.dwId | 0, dwType: e.dwType | 0,
+      dwIndex: e.dwIndex | 0, dwUserId: e.dwUserId | 0, dwData: e.dwData | 0,
+    };
+  }
+  return queue;
 }
 
 export class TaskBarService {
@@ -121,10 +207,10 @@ export class TaskBarService {
     return n;
   }
 
-  /** Fire-and-forget write-through of the grid (rule 05 -- no unhandled rejection). */
+  /** Fire-and-forget write-through of grid + queue (rule 05 -- no unhandled rejection). */
   private save(player: TaskBarPlayer): void {
     if (!this.persist || player.m_idPlayer === undefined) return;
-    void this.persist(player.m_idPlayer, encodeTaskBar(player.m_aSlotItem)).catch((err) =>
+    void this.persist(player.m_idPlayer, encodeTaskBar(player.m_aSlotItem, player.m_aSlotQueue)).catch((err) =>
       logger.error({ err, charId: player.m_idPlayer }, 'taskbar persist failed'),
     );
   }
@@ -153,6 +239,26 @@ export class TaskBarService {
   /** Clear the binding at `[slotIndex][index]` (C++ `OnRemoveItemTaskBar`). */
   removeItem(player: TaskBarPlayer, slotIndex: number, index: number): void {
     player.m_aSlotItem[slotIndex]![index] = { dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
+    this.save(player);
+  }
+
+  /**
+   * Replace the action-slot queue (C++ `OnSkillTaskBar`). `slots` is the full
+   * MAX_SLOT_QUEUE-length array straight off the wire; each index maps 1:1 to
+   * `m_aSlotQueue[i]`. An all-empty upload clears the queue. Persists
+   * fire-and-forget -- the action slot must survive logout (was the
+   * "action slot not persistent" bug: handler existed for END_SKILLQUEUE
+   * cancel but SKILLTASKBAR upload was never wired, so the queue was
+   * in-memory only and lost on relog).
+   */
+  setQueue(player: TaskBarPlayer, slots: ReadonlyArray<Shortcut>): void {
+    for (let i = 0; i < MAX_SLOT_QUEUE; i++) {
+      const s = slots[i] ?? { dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
+      player.m_aSlotQueue[i] = {
+        dwShortcut: s.dwShortcut | 0, dwId: s.dwId | 0, dwType: s.dwType | 0,
+        dwIndex: s.dwIndex | 0, dwUserId: s.dwUserId | 0, dwData: s.dwData | 0,
+      };
+    }
     this.save(player);
   }
 }

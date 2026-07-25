@@ -1,8 +1,8 @@
-import { describe, it } from 'node:test';
+import { describe, it, mock, beforeEach, afterEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer, CMover, DST, CHRSTATE_BITS } from '@flyff/entities';
 import { SkillService } from '../../src/services/skill.service';
-import { NULL_ID } from '@flyff/world-core';
+import { NULL_ID, SHORTCUT, SNAPSHOTTYPE_ENDSKILLQUEUE, SNAPSHOTTYPE_SETACTIONPOINT } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 import type { SkillIndex, SkillDefinition } from '@flyff/resources';
 
@@ -70,6 +70,7 @@ function makeService(
   const calls = { resolve: 0 };
   const journalCalls: JournalCall[] = [];
   const playerMap = new Map<number, CPlayer>();
+  playerMap.set(player.m_idPlayer, player);
   for (const p of extraPlayers) playerMap.set(p.m_idPlayer, p);
   const state = {
     spawnGet: ((_id: number) => (mover ?? { m_bDead: false }) as CMover | { m_bDead: boolean }) as (id: number) => (CMover | { m_bDead: boolean } | undefined),
@@ -490,5 +491,118 @@ describe('SkillService.learnSkills', () => {
     assert.equal(out.ok, true);
     assert.equal(out.ok === true && out.spent, 8);
     assert.equal(p.m_nSkillPoint, 12);
+  });
+});
+
+/** A non-empty skill queue slot pointing at roster index `slot`. */
+function queueSlot(slot: number) {
+  return { dwShortcut: SHORTCUT.SKILLFUN, dwId: slot, dwType: 0, dwIndex: slot, dwUserId: 0, dwData: 0 };
+}
+
+describe('SkillService action-slot queue progression', () => {
+  // The combo is timer-spaced (one cast per QUEUE_ACTION_FLOOR_MS window), so
+  // these tests drive the scheduled steps with mocked timers.
+  beforeEach(() => mock.timers.enable());
+  afterEach(() => mock.timers.reset());
+
+  /** Advance one timer window per step -- node mock.timers fires chained timers
+   *  one tick at a time (a timer scheduled inside another timer's callback runs
+   *  on the *next* tick). 6 steps covers 4 queued casts + exhaust + slack. */
+  const tickFullChain = (steps = 6) => {
+    for (let i = 0; i < steps; i++) mock.timers.tick(800);
+  };
+
+  it('SUT_QUEUESTART arms the queue and chains all 5 slots, then ends', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100; // 5 casts * 5 FP = 25 FP
+    for (let i = 0; i < 5; i++) p.hydrateSkills([{ slot: i, skillId: 100, level: 1 }]);
+    for (let i = 0; i < 5; i++) p.m_aSlotQueue[i] = queueSlot(i);
+    const m = makeService(new Map([[100, meleeSkill()]]), p);
+
+    // Slot 0 is the SUT_QUEUESTART trigger; the service schedules slots 1..4.
+    const out = m.service.cast(p, { wId: 0, objid: 999, useType: 1 /* SUT_QUEUESTART */ });
+    assert.equal(out.ok, true);
+    assert.equal(m.calls.resolve, 1, 'only the trigger fires synchronously');
+
+    tickFullChain();
+
+    assert.equal(m.calls.resolve, 5, 'all 5 queued skills fired the damage pipeline');
+    assert.equal(p.m_nUsedSkillQueue, -1, 'queue pointer reset after exhaust');
+    assert.equal(p.m_queueTimer, undefined, 'pending timer cleared');
+    assert.equal(p.m_nActionPoint, 100 - (6 + 8 + 11 + 30), 'AP spent 6+8+11+30 across slots 1..4');
+    // SETACTIONPOINT echoes for slots 1..4, then the bodyless ENDSKILLQUEUE ack.
+    const subTypes = m.sent.map((b) => b.readUInt16LE(14));
+    assert.equal(subTypes.filter((s) => s === SNAPSHOTTYPE_SETACTIONPOINT).length, 4);
+    assert.ok(subTypes.includes(SNAPSHOTTYPE_ENDSKILLQUEUE), 'ENDSKILLQUEUE ack sent on exhaust');
+  });
+
+  it('SUT_NORMAL (useType 0) does not arm or advance the queue', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    p.hydrateSkills([{ slot: 0, skillId: 100, level: 1 }]);
+    p.m_aSlotQueue[0] = queueSlot(1); // would fire a 2nd skill if the queue ran
+    const m = makeService(new Map([[100, meleeSkill({ id: 100 })]]), p);
+
+    const out = m.service.cast(p, { wId: 0, objid: 999, useType: 0 });
+    tickFullChain();
+
+    assert.equal(out.ok, true);
+    assert.equal(m.calls.resolve, 1, 'only the triggered skill runs');
+    assert.equal(p.m_nUsedSkillQueue, -1, 'queue never armed');
+    assert.equal(p.m_nActionPoint, 100, 'AP untouched');
+  });
+
+  it('ends the queue at the first empty slot', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    for (let i = 0; i < 5; i++) p.hydrateSkills([{ slot: i, skillId: 100, level: 1 }]);
+    p.m_aSlotQueue[0] = queueSlot(0);
+    p.m_aSlotQueue[1] = queueSlot(1);
+    // slots 2..4 left empty (SHORTCUT.NONE) -> queue ends after slot 1.
+    const m = makeService(new Map([[100, meleeSkill()]]), p);
+
+    m.service.cast(p, { wId: 0, objid: 999, useType: 1 });
+    tickFullChain();
+
+    assert.equal(m.calls.resolve, 2, 'two skills fired before the empty slot ended the queue');
+    assert.equal(p.m_nUsedSkillQueue, -1);
+    assert.equal(p.m_nActionPoint, 100 - 6, 'only the pos-1 AP cost (6) was charged');
+  });
+
+  it('skips a queued skill whose cast fails and continues to the next', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    for (let i = 0; i < 5; i++) p.hydrateSkills([{ slot: i, skillId: 100, level: 1 }]);
+    for (let i = 0; i < 5; i++) p.m_aSlotQueue[i] = queueSlot(i);
+    const m = makeService(new Map([[100, meleeSkill()]]), p);
+    // Slot 2 is on cooldown -> its queued cast fails and the chain skips it.
+    p.m_tmReUseDelay[2] = Date.now() + 10_000;
+
+    m.service.cast(p, { wId: 0, objid: 999, useType: 1 });
+    tickFullChain();
+
+    assert.equal(m.calls.resolve, 4, 'slots 0,1,3,4 fired; slot 2 was skipped');
+    assert.equal(p.m_nUsedSkillQueue, -1);
+  });
+
+  it('ENDSKILLQUEUE cancel mid-chain stops the scheduled step', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    for (let i = 0; i < 5; i++) p.hydrateSkills([{ slot: i, skillId: 100, level: 1 }]);
+    for (let i = 0; i < 5; i++) p.m_aSlotQueue[i] = queueSlot(i);
+    const m = makeService(new Map([[100, meleeSkill()]]), p);
+
+    m.service.cast(p, { wId: 0, objid: 999, useType: 1 });
+    assert.equal(m.calls.resolve, 1);
+    // Player cancels (mimics EndSkillQueueHandler clearing the timer + pointer).
+    if (p.m_queueTimer !== undefined) {
+      clearTimeout(p.m_queueTimer);
+      p.m_queueTimer = undefined;
+    }
+    p.m_nUsedSkillQueue = -1;
+    tickFullChain();
+
+    assert.equal(m.calls.resolve, 1, 'no further skills fire after cancel');
+    assert.equal(p.m_nUsedSkillQueue, -1);
   });
 });

@@ -26,7 +26,8 @@ import type { CombatService } from '@flyff/combat';
 import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
 import { DoUseSkillPointSerializer } from '@flyff/world-core';
 import { buildSetPointParam, DST_MP, DST_FP, DST_HP, buildSetSkillState, buildSetDestParam } from '@flyff/world-core';
-import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB } from '@flyff/world-core';
+import { buildEndSkillQueue, buildSetActionPoint } from '@flyff/world-core';
+import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB, MAX_SLOT_QUEUE, SHORTCUT } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'skill-service' });
@@ -38,6 +39,34 @@ const EXT_MAGICATKSHOT = 14;
 const RT_TIME = 2;
 /** `BUFF_SKILL` (SkillInfluence.h:5) -- skill-sourced buff type tag for SETSKILLSTATE. */
 const BUFF_SKILL = 1;
+
+/**
+ * `SKILLUSETYPE` (`Mover.h:133`) -- how the client triggered the cast. Only the
+ * action-slot values matter here: {@link SUT_QUEUESTART} arms the queue (pos 0),
+ * {@link SUT_QUEUEING} is the server-driven chain cast for slots 1..4.
+ */
+const SUT_QUEUESTART = 1;
+const SUT_QUEUEING = 2;
+
+/**
+ * Action-slot AP cost per queue depth (`UserTaskBar.cpp:211`). Index = queue
+ * position after increment (pos 0 = the triggering SUT_QUEUESTART cast, free).
+ * `SM_ACTPOINT` skips the cost entirely (ponytail: not ported).
+ */
+const QUEUE_AP_COST: ReadonlyMap<number, number> = new Map([
+  [1, 6], [2, 8], [3, 11], [4, 30],
+]);
+
+/**
+ * Minimum gap between queued casts. The C++ server spaces the combo via the
+ * per-tick action FSM (`OnActEndMeleeSkill`/`OnActEndMagicSkill` fire when a
+ * skill's action completes); we approximate with a timer per step. Too short and
+ * the client's `OnCancelSkill` bails on the still-set `REQ_USESKILL` flag
+ * (`WndTaskBar.cpp:2420`) leaving `m_nExecute` stuck, which blocks re-triggering
+ * the action slot. 700 ms covers an instant-cast swing + flag clear; longer
+ * cast bars add their `castingTime` on top (see {@link castDurationMs}).
+ */
+const QUEUE_ACTION_FLOOR_MS = 700;
 
 /**
  * Per-tier SP cost per raised skill level (`Project.cpp:5132`).
@@ -122,10 +151,114 @@ export class SkillService {
    * `resourceType` (KT_MAGIC=1→MP, KT_SKILL=2→FP), set cooldown (SR_AFTER),
    * broadcast USESKILL (incl caster), then apply the effect.
    *
-   * ponytail: buffs (dwDestParam=0 across all v15 skills -- C++ per-id special
-   * case, not data-driven), AoE, multi-hit, projectile.
+   * ponytail: AoE, multi-hit, projectile, debuff-probability roll (nProbability
+   * currently ignored -- debuff always applies on hit).
    */
   cast(player: CPlayer, frame: UseSkillClientFrame): SkillCastOutcome {
+    const outcome = this.executeCast(player, frame);
+    if (outcome.ok) this.onCastResolved(player, frame);
+    return outcome;
+  }
+
+  /**
+   * Post-cast action-slot hook (port of C++ `OnActEndMeleeSkill` /
+   * `OnActEndMagicSkill`, `MoverActEvent.cpp:2056/2073`, which fire when a
+   * skill's action completes on the per-tick FSM). `SUT_QUEUESTART` arms the
+   * queue (pos 0) and schedules the first advance after skill[0]'s action time
+   * -- the chain is spaced one cast per timer tick, not resolved synchronously,
+   * so each USESKILL broadcast animates on the client and the terminal
+   * `ENDSKILLQUEUE` lands after `REQ_USESKILL` clears (else the client's
+   * `OnCancelSkill` bails and `m_nExecute` sticks, blocking re-trigger).
+   */
+  private onCastResolved(player: CPlayer, frame: UseSkillClientFrame): void {
+    if (frame.useType !== SUT_QUEUESTART) return;
+    player.m_nUsedSkillQueue = 0;
+    this.scheduleQueueStep(player, frame.objid, this.castDurationMs(player, frame.wId));
+  }
+
+  /**
+   * Approximate skill action duration -- cast bar (`dwCastingTime`) plus the
+   * swing/recovery floor. Used only to space queued casts; not a faithful port
+   * of the C++ motion-duration action FSM (ponytail).
+   */
+  private castDurationMs(player: CPlayer, wId: number): number {
+    const slot = player.m_aJobSkill[wId];
+    const skill = slot && slot.skillId !== NULL_ID ? this.deps.skills.skills.get(slot.skillId) : undefined;
+    const levelRow = skill?.levels.find((l) => l.level === slot?.level);
+    return Math.max(levelRow?.castingTime ?? 0, QUEUE_ACTION_FLOOR_MS);
+  }
+
+  private clearQueueTimer(player: CPlayer): void {
+    if (player.m_queueTimer !== undefined) {
+      clearTimeout(player.m_queueTimer);
+      player.m_queueTimer = undefined;
+    }
+  }
+
+  /**
+   * Schedule the next `advanceQueue` after `delay` ms. Replaces any pending step
+   * (a re-trigger or cancel superseded it). The callback self-guards: if the
+   * player logged out or the queue was cancelled, it no-ops instead of casting.
+   */
+  private scheduleQueueStep(player: CPlayer, targetObjid: number, delay: number): void {
+    this.clearQueueTimer(player);
+    player.m_queueTimer = setTimeout(() => {
+      player.m_queueTimer = undefined;
+      if (
+        player.m_nUsedSkillQueue === -1 ||
+        player.m_bDead ||
+        this.deps.playerManager.get(player.m_idPlayer) === undefined
+      ) {
+        return;
+      }
+      this.advanceQueue(player, targetObjid);
+    }, delay);
+  }
+
+  /**
+   * `CUserTaskBar::SetNextSkill` (`UserTaskBar.cpp:203`). Increments the queue
+   * pointer, charges the per-depth AP cost, reads `m_aSlotQueue[pos]`, casts it
+   * with `SUT_QUEUEING`, and schedules the next step after its action time. On
+   * a failed queued cast the C++ original recurses to skip it
+   * (`CMD_SetUseSkill == 0`); we re-schedule with the floor delay. When the
+   * queue runs off the end, hits an empty slot, or AP runs out, `endQueue` fires
+   * the `SNAPSHOTTYPE_ENDSKILLQUEUE` ack so the client clears its action-slot UI.
+   */
+  private advanceQueue(player: CPlayer, targetObjid: number): void {
+    player.m_nUsedSkillQueue += 1;
+    const pos = player.m_nUsedSkillQueue;
+
+    const ap = player.m_nActionPoint - (QUEUE_AP_COST.get(pos) ?? 0);
+    const slot = player.m_aSlotQueue[pos];
+    const exhausted =
+      pos >= MAX_SLOT_QUEUE ||
+      slot === undefined ||
+      slot.dwShortcut === SHORTCUT.NONE ||
+      ap < 0;
+    if (exhausted) {
+      this.endQueue(player);
+      return;
+    }
+    player.m_nActionPoint = ap;
+    this.deps.playerManager.sendTo(player, buildSetActionPoint(player.m_idPlayer, ap));
+
+    const outcome = this.cast(player, { wId: slot.dwId, objid: targetObjid, useType: SUT_QUEUEING });
+    if (!outcome.ok) {
+      // Queued skill rejected (cooldown, no MP, etc.) -- skip after a brief gap.
+      this.scheduleQueueStep(player, targetObjid, QUEUE_ACTION_FLOOR_MS);
+      return;
+    }
+    this.scheduleQueueStep(player, targetObjid, this.castDurationMs(player, slot.dwId));
+  }
+
+  /** Queue done -- clear timer, mark inactive, send the bodyless ENDSKILLQUEUE ack. */
+  private endQueue(player: CPlayer): void {
+    this.clearQueueTimer(player);
+    player.m_nUsedSkillQueue = -1;
+    this.deps.playerManager.sendTo(player, buildEndSkillQueue(player.m_idPlayer));
+  }
+
+  private executeCast(player: CPlayer, frame: UseSkillClientFrame): SkillCastOutcome {
     const slot = player.m_aJobSkill[frame.wId];
     if (slot === undefined) return { ok: false, reason: 'no_skill' };
     if (slot.skillId === NULL_ID || slot.level <= 0) {
@@ -187,7 +320,16 @@ export class SkillService {
       // Debuff on a monster (e.g. stun/poison/slow) lands in the mover's m_params.
       return this.applyBuffToMover(player, target.mover, skill, levelRow, now);
     }
-    return this.deps.combatService.resolveSkill(player, frame.objid, skill, levelRow);
+    // Damage skill (EXT_*ATK). C++ `DoUseSkill` still calls `ApplyParam` when the
+    // skill carries a dwDestParam -- so a damage skill with a debuff component
+    // (Power Stump = STUN, Sneaker = SLOW) lands BOTH damage AND the debuff on a
+    // surviving target. resolveSkill owns damage/death/exp; we tack the debuff on.
+    const outcome = this.deps.combatService.resolveSkill(player, frame.objid, skill, levelRow);
+    if (outcome.ok && outcome.hit && !outcome.killed && (levelRow.destParams?.length ?? 0) > 0) {
+      const target2 = this.deps.spawnManager.get(frame.objid);
+      if (target2 && !target2.m_bDead) this.applyBuffToMover(player, target2, skill, levelRow, now);
+    }
+    return outcome;
   }
 
   /**
@@ -234,11 +376,15 @@ export class SkillService {
   /** Spend the routed resource (clamp >= 0) + sync the client. */
   private spendResource(player: CPlayer, need: { mp: number; fp: number }): void {
     if (need.mp > 0) {
-      player.m_nMp = Math.max(0, player.m_nMp - need.mp);
+      const before = player.m_nMp;
+      player.m_nMp = Math.max(0, before - need.mp);
+      logger.info({ charId: player.m_idPlayer, before, cost: need.mp, after: player.m_nMp }, 'spend MP');
       this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp));
     }
     if (need.fp > 0) {
-      player.m_nFp = Math.max(0, player.m_nFp - need.fp);
+      const before = player.m_nFp;
+      player.m_nFp = Math.max(0, before - need.fp);
+      logger.info({ charId: player.m_idPlayer, before, cost: need.fp, after: player.m_nFp }, 'spend FP');
       this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp));
     }
   }

@@ -29,6 +29,7 @@ import { loadDialogs, type DialogIndex } from './loaders/dialog.loader';
 import { loadQuests, type QuestIndex } from './loaders/quest.loader';
 import { loadDrops, type DropIndex } from './loaders/drop.loader';
 import { loadCharacterInc, type CharacterIncIndex } from './loaders/characterInc.loader';
+import { loadSetItems, type SetItemIndex } from './loaders/setItem.loader';
 
 const logger = createResourceLogger('resources');
 
@@ -61,6 +62,9 @@ export interface ResourceIndex {
 
   /** character.inc NPC outfits + AddMenu capability + dialog file. */
   characterInc: CharacterIncIndex;
+
+  /** Set-item definitions (propItemEtc.inc `SetItem` blocks) keyed by id + item id. */
+  setItems: SetItemIndex;
 }
 
 /**
@@ -79,7 +83,7 @@ export async function loadAllResources(
 ): Promise<ResourceIndex> {
   logger.info({ dataDir, rawDir }, 'Loading all resources...');
 
-  const [items, movers, skills, zones, dialogs, quests, drops, characterInc] = await Promise.all([
+  const [items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems] = await Promise.all([
     loadItems(dataDir, rawDir),
     loadMovers(dataDir),
     loadSkills(dataDir),
@@ -88,6 +92,7 @@ export async function loadAllResources(
     loadQuests(dataDir),
     loadDrops(dataDir),
     loadCharacterInc(rawDir),
+    loadSetItems(dataDir),
   ]);
 
   logger.info(
@@ -100,11 +105,12 @@ export async function loadAllResources(
       quests: quests.byId.size,
       drops: drops.drops.size,
       characterInc: characterInc.byKey.size,
+      setItems: setItems.byId.size,
     },
     'All resources loaded'
   );
 
-  return { items, movers, skills, zones, dialogs, quests, drops, characterInc };
+  return { items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems };
 }
 
 /**
@@ -190,6 +196,13 @@ export {
   type CharacterIncVendorItem,
   type CharacterIncVendorItemId,
 } from './loaders/characterInc.loader';
+export {
+  loadSetItems,
+  type SetItemIndex,
+  type SetItemDef,
+  type SetItemElem,
+  type SetItemAvail,
+} from './loaders/setItem.loader';
 
 // Re-export schemas
 export * from './schemas/index';

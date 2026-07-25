@@ -26,7 +26,7 @@
  *     [m_dwItemId:DWORD]
  *     [m_liSerialNumber:QWORD] = 0
  *     [m_szItemText:String]          DWORD len(0) -- empty
- *   CItemElem::Serialize (:48, v15 store branch, all gates open):
+ *   CItemElem::Serialize (:48, v19 store branch, all gates open):
  *     [m_nItemNum:short]
  *     [m_nRepairNumber:short] = 0
  *     [m_nHitPoint:int] = 0

@@ -1,5 +1,5 @@
 /**
- * Zod schemas for v15 skill definitions.
+ * Zod schemas for v19 skill definitions.
  *
  * Mirrors the on-disk layout produced by the converter:
  *   - propSkill.txt  -> base {@link SkillDefinition} (static skill data)

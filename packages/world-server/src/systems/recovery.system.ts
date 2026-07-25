@@ -13,7 +13,7 @@
  * party system yet; ponytail: add a sit branch + multiplier when motion/party
  * land. Monster passive regen is intentionally NOT ported (no S->C monster-HP
  * sync packet -- server-side heal desyncs the client; see memory
- * `v15-monster-leash-heal-no-sync`).
+ * `v19-monster-leash-heal-no-sync`).
  *
  * Owns its own `setInterval` (idempotent start/stop mirroring `CheckpointSystem`),
  * stopped on shutdown via `index.ts`. No `await` in the callback (rule 05).
