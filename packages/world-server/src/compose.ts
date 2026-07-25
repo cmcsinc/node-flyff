@@ -53,6 +53,9 @@ import { PkModeHandler } from './handlers/pkMode.handler';
 import { MeleeAttackService } from '@flyff/combat';
 import { RangeAttackService } from '@flyff/combat';
 import { CombatService } from '@flyff/combat';
+import { DuelService } from '@flyff/combat';
+import { DuelManager } from '@flyff/combat';
+import { DuelHandler } from '@flyff/combat';
 import { DropService } from '@flyff/inventory';
 import { InventoryService } from '@flyff/inventory';
 import { LootService } from '@flyff/inventory';
@@ -156,6 +159,7 @@ export interface WorldComposeResult {
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
   rangeAttackHandler: RangeAttackHandler;
+  duelHandler: DuelHandler;
   skillService: SkillService;
   statService: StatService;
   useSkillHandler: UseSkillHandler;
@@ -470,18 +474,27 @@ export async function compose(): Promise<WorldComposeResult> {
   const pkModeHandler = new PkModeHandler(playerManager, pkModeService);
 
   const dropService = new DropService({ resources, itemManager });
+  // Duel manager + service -- created before CombatService so the PvP-kill seam
+  // can clear active-duel flags on a lethal blow (in addition to revival).
+  const duelManager = new DuelManager();
+  const duelService = new DuelService({ playerManager, duelManager });
   const combatService = new CombatService({
     spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,
     getItem: (id: number) => resources.items.items.get(id),
     // Hand PvP kills to the revival loop (flag victim dead + broadcast + open
-    // revive dialog). Mirrors the AISystem `onPlayerDeath` seam.
-    onPvpKill: (victim, killerObjid) => revivalService.onPlayerDeath(victim, killerObjid),
+    // revive dialog) AND tear down any active duel. Mirrors the AISystem
+    // `onPlayerDeath` seam.
+    onPvpKill: (victim, killerObjid) => {
+      revivalService.onPlayerDeath(victim, killerObjid);
+      duelService.onPlayerDeath(victim);
+    },
   });
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const rangeAttackService = new RangeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
   const rangeAttackHandler = new RangeAttackHandler(playerManager, rangeAttackService);
+  const duelHandler = new DuelHandler({ playerManager, duelService });
   // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v19 damage-skill MVP).
   const skillService = new SkillService({
     skills: resources.skills,
@@ -630,6 +643,7 @@ export async function compose(): Promise<WorldComposeResult> {
     playerSetDestObjHandler,
     meleeAttackHandler,
     rangeAttackHandler,
+    duelHandler,
     skillService,
     statService,
     useSkillHandler,
