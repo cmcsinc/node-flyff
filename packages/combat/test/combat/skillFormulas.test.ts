@@ -319,24 +319,26 @@ describe('resolveSkillCast — getDamageMultiplier applied', () => {
     assert.ok(result.damage < 36, `PvP multiplier shrinks damage (got ${result.damage})`);
   });
 
-  it('PvE skill damage has NO level-diff cosine (C++ GetDamageMultiplier is skill-only)', async () => {
+  it('PvE skill damage takes the v19 level-diff cosine (skills are NOT exempt)', async () => {
     const skill = await loadSkill(1);
     const level = skill.levels[0]!;
-    // A defender 15 levels above the attacker takes the SAME skill damage as a
-    // same-level one -- C++ `GetDamageMultiplier` (MoverAttack.cpp:828) applies
-    // only per-skill factors, never a level-diff cosine. NPC DEF (`armor/7+1`)
-    // is level-independent, so both hits resolve to nATK 39 - DEF 3 = 36.
-    const full = resolveSkillCast({
+    // v19 GetDamageMultiplier applies cos(pi*nDelta/32) for NPC defenders too;
+    // skill damage rides the same pipeline as melee. NPC DEF (armor/7+1 = 3) is
+    // level-independent, so base = nATK 39 - DEF 3 = 36 regardless of level.
+    // Same-level (nDelta=0): no cosine, full 36. L30 NPC vs L15 attacker:
+    // nDelta=15 -> cap 15 -> factor cos(15pi/32) ~0.098 -> floor(36*0.098)=3.
+    const same = resolveSkillCast({
+      attacker: makeAttacker(),
+      defender: makeNpcDefender({ level: 15 }),
+      skill, level, rng: minRng,
+    });
+    assert.equal(same.damage, 36, 'same-level NPC takes full skill damage (no cosine)');
+    const higher = resolveSkillCast({
       attacker: makeAttacker(),
       defender: makeNpcDefender({ level: 30 }),
       skill, level, rng: minRng,
     });
-    const near = resolveSkillCast({
-      attacker: makeAttacker(),
-      defender: makeNpcDefender({ level: 10 }),
-      skill, level, rng: minRng,
-    });
-    assert.equal(near.damage, 36);
-    assert.equal(full.damage, 36, 'higher-level NPC takes equal damage (no cosine falloff)');
+    const expected = Math.floor(36 * Math.cos((Math.PI * 15) / 32));
+    assert.equal(higher.damage, expected, 'higher-level NPC takes cosine-reduced skill damage');
   });
 });

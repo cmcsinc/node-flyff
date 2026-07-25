@@ -70,6 +70,13 @@ export interface AISystemDeps {
   zoneManager: ZoneManager;
   playerManager: Pick<PlayerManager, 'get'>;
   rng?: Rng;
+  /**
+   * v19 RA_SAFETY gate (`AIMonster.cpp:1621-1628`). Returns true if `pos` in
+   * `zoneId` is inside a safe region (town). When set, monsters drop aggro on a
+   * target standing in town (target-side gate; guards are exempt but never
+   * reach pursue). Backed by the zone's `regions: type: safe` AABB data.
+   */
+  safeZone?: (zoneId: number, pos: Vec3) => boolean;
   /** Called when a player's HP reaches 0 from a monster swing. */
   onPlayerDeath?: (player: CPlayer, killerObjid: number) => void;
 }
@@ -216,14 +223,17 @@ private pursue(m: CMover, now: number, dtMs: number): void {
     }
     if (target === undefined || target.m_nHp <= 0 || target.m_bDead || isHidden(target)) {
       // Target gone, dead, or vanished (`/inv` mid-fight) -> release + go home.
-      // NOTE: no town safe-zone gate here -- C++ `AIMSG_DAMAGE` retaliation
-      // (`AIMonster.cpp:1972`) has no safety check (the only such check, on
-      // sight-scan, is commented out at `AIMonster.cpp:429`). Our revival-radius
-      // bubble (`TOWN_EXCLUSION_RADIUS` 1000) covered legitimate near-town
-      // spawns (Mushpang field is ~210 u from Flaris revival), so gating
-      // retaliation on it made every nearby mob acquire-then-instant-le home
-      // -> "monster won't fight back". The distance leash below keeps mobs
-      // anchored to their spawn instead.
+      this.startReturn(m, now);
+      return;
+    }
+
+    // v19 safe-zone gate (`AIMonster.cpp:1621-1628`, under `#if __VER >= 9`):
+    // if the target is inside a `RA_SAFETY` region, drop aggro and run home --
+    // monsters don't pursue players into town. Guards (`RANK_GUARD`) are exempt
+    // in C++ but never reach pursue (the tick loop skips `m_bGuard`). Driven by
+    // the zone's `regions: type: safe` AABB data; until a zone defines safe
+    // regions this is a no-op (dep unset / returns false).
+    if (this.deps.safeZone?.(target.m_nZoneId, target.m_vPos)) {
       this.startReturn(m, now);
       return;
     }
@@ -376,15 +386,15 @@ private pursue(m: CMover, now: number, dtMs: number): void {
       m.m_vDestPos = { ...m.m_vPosBegin };
       m.m_bReturnToBegin = false;
       m.m_fSpeedFactor = 1.0;
-      // ponytail: C++ `StateReturn` restores m_nHitPoint to max here, but we
-      // intentionally DO NOT. There is no S->C monster-HP-sync packet -- DAMAGE
-      // only subtracts (`IncHitPoint(-dwHit)`) and ADD_OBJ only fires on zone
-      // enter. Healing server-side without telling the client desyncs the bars:
-      // the client keeps the drained sliver while the server is full again, so
-      // the monster becomes unkillable from the player's view (server HP never
-      // reaches 0 because it keeps getting reset). Re-add the heal only once a
-      // real HP-sync snapshot (or a DEL_OBJ + fresh ADD_OBJ re-broadcast on
-      // heal) ships. Keeping the monster damaged is the lesser evil.
+      // v19 fidelity: `DoReturnToBegin(FALSE)` full-heals on arrival home
+      // (`AIMonster.cpp:305` -> `SetPointParam(DST_HP, GetMaxHitPoint())` with
+      // `bTrans=FALSE` -> silent, no S->C monster-HP-sync packet). v19 accepts
+      // the desync: the client may show a drained sliver while the server is
+      // full again. There is no packet to push the heal -- DAMAGE only
+      // subtracts and ADD_OBJ only fires on zone-enter. If this causes visible
+      // "unkillable sliver" reports, a DEL_OBJ + fresh ADD_OBJ re-broadcast on
+      // heal is the upgrade path (ponytail).
+      m.m_nHitPoint = m.m_nMaxHitPoint;
       m.m_tmNextWander = now + stopInterval();
       return;
     }

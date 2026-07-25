@@ -34,18 +34,21 @@ export const MAX_BANK_TABS = 3;
 export const INVENTORY_SLOTS = MAX_INVENTORY + MAX_HUMAN_PARTS; // 73
 export const BANK_SLOTS = MAX_BANK;                             // 42
 
-// --- Taskbar hotkey grid (`_Common/ProjectCmn.h:901-923`) --------------------
-export const MAX_SLOT_ITEM_COUNT = 8;   // ProjectCmn.h:904 -- taskbar pages (rows)
-export const MAX_SLOT_ITEM = 9;         // ProjectCmn.h:901 -- slots per page
+// --- Taskbar hotkey grid (`_Common/ProjectCmn.h:1043-1057`) ------------------
+// v19 defines `__NEW_TASKBAR_V19` (`_Common/LodeConfig.h:19`) which resizes
+// these vs v15. ProjectCmn.h: `#ifdef __NEW_TASKBAR_V19` -> MAX_SLOT_ITEM=10,
+// MAX_SLOT_QUEUE=6; else 9 / 5. This build targets v19, so we use 10 / 6.
+export const MAX_SLOT_ITEM_COUNT = 8;   // ProjectCmn.h:1052 -- taskbar pages (rows)
+export const MAX_SLOT_ITEM = 10;        // ProjectCmn.h:1046 -- slots per page (v19; was 9 in v15)
 /**
- * Action-slot queue depth (C++ `MAX_SLOT_QUEUE`, `ProjectCmn.h:902`). The
- * action slot holds up to 5 queued skills the client fires in sequence
+ * Action-slot queue depth (C++ `MAX_SLOT_QUEUE`, `ProjectCmn.h:1047`). The
+ * action slot holds up to 6 queued skills the client fires in sequence
  * (`CUserTaskBar::m_aSlotQueue[MAX_SLOT_QUEUE]`). Populated via
  * `PACKETTYPE_SKILLTASKBAR`; persisted alongside `m_aSlotItem` in
  * `characters.taskbar`; replayed via the queue section of
- * `SNAPSHOTTYPE_TASKBAR`.
+ * `SNAPSHOTTYPE_TASKBAR`. (v15 was 5; v19 `__NEW_TASKBAR_V19` makes it 6.)
  */
-export const MAX_SLOT_QUEUE = 5;
+export const MAX_SLOT_QUEUE = 6;
 export const MAX_SHORTCUT_STRING = 128; // _Common/DefineCommon.h:9 -- chat-macro text cap
 
 /**

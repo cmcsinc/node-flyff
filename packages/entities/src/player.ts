@@ -117,6 +117,16 @@ export interface InventorySlot {
   element?: number;
   /** Element level (CItemElem m_nResistAbilityOption). Instance upgrade state. */
   element_level?: number;
+  /**
+   * Timed-item expiry (CItemElem `m_dwKeepTime`). Absolute server time in
+   * SECONDS since epoch when the item expires (v19 stores a `time_t` here).
+   * 0 / unset = no timer (the common case). When non-zero, the CItemElem
+   * serializer writes this DWORD then a conditional remaining-seconds field
+   * (`m_dwKeepTime - now`, ObjSerialize.cpp:69-74). ponytail: the exact wire
+   * width of the conditional (time_t = 4 vs 8 bytes) needs confirming against
+   * the v19 CAr overload when the first timed item actually ships.
+   */
+  keepTime?: number;
 }
 
 /**
