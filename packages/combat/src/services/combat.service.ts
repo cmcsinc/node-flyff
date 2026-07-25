@@ -391,8 +391,12 @@ export class CombatService {
     });
 
     // SETEXPERIENCE -> self only (wire expects cumulative nExp1).
+    // SP/skillLevel MUST be carried here -- C++ AddSetExperience writes them
+    // (User.cpp:1123); omitting them zeroes the client's SP display every kill
+    // and clobbers the DOUSESKILLPOINT refresh sent in grantSkillPoints.
     this.deps.playerManager.sendTo(player, this.setExp.build(player.m_idPlayer, {
       exp: cumulativeExp(player.m_nLevel, player.m_nExp), level: player.m_nLevel,
+      skillLevel: player.m_nSkillLevel, skillPoint: player.m_nSkillPoint,
     }));
     // SETLEVEL -> vicinity, skips self (only if leveled).
     if (gain.levelsGained > 0) {
