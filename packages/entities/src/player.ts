@@ -426,17 +426,34 @@ export class CPlayer {
   }
 
   /**
-   * Seed a fresh Vagrant's job-skill roster (3 slots pre-filled at level 0).
-   * C++ seeds `SI_VAG_ONE_CLEANHIT` (1), `SI_VAG_ONE_BRANDISH` (2),
-   * `SI_VAG_ONE_OVERCUT` (3) at slot 0/1/2 on character creation. Use after
-   * creating a brand-new character -- no-op for existing characters.
+   * Seed the job-skill roster IDs from a job-ordered skill-id list, mirroring
+   * C++ `CMover::CreateMover` which fills `m_aJobSkill[i].dwSkill` from
+   * `prj.m_aJobSkill[job]` on every load (`Mover.cpp:1497`). Only skill *levels*
+   * are persisted (by slot); the IDs are re-derived each JOIN, so without this
+   * the client's skill-tree window scans an all-NULL_ID roster and shows nothing
+   * to learn or upgrade. Slots beyond the list keep the NULL_ID sentinel.
+   * Levels are applied later via {@link overlaySkillLevels}.
    */
-  seedVagrantRoster(): void {
-    const VAGRANT_ROSTER = [1, 2, 3]; // SI_VAG_ONE_CLEANHIT/BRANDISH/OVERCUT
-    for (let i = 0; i < VAGRANT_ROSTER.length && i < this.m_aJobSkill.length; i++) {
-      this.m_aJobSkill[i] = { skillId: VAGRANT_ROSTER[i]!, level: 0 };
+  seedRoster(orderedSkillIds: ReadonlyArray<number>): void {
+    for (let i = 0; i < this.m_aJobSkill.length; i++) {
+      const id = orderedSkillIds[i];
+      this.m_aJobSkill[i] = id !== undefined
+        ? { skillId: id, level: 0 }
+        : { skillId: NULL_ID, level: 0 };
     }
-    this._dirty.add('m_aJobSkill');
+  }
+
+  /**
+   * Overlay persisted learned levels onto the seeded roster, matched by skillId
+   * (not slot) so a change in seed order across versions never mislabels a
+   * level. Unmatched entries are dropped defensively.
+   */
+  overlaySkillLevels(learned: ReadonlyArray<{ skillId: number; level: number }>): void {
+    for (const l of learned) {
+      if (l.skillId === NULL_ID || l.skillId === 0 || l.level <= 0) continue;
+      const slot = this.m_aJobSkill.find((s) => s.skillId === l.skillId);
+      if (slot) slot.level = l.level;
+    }
   }
 
   /** C++ `IsChaotic()` (Mover.h:1227) -- player-killer state (PK). */
