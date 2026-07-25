@@ -12,7 +12,7 @@
  *    exp penalty + teleport to zone revival pos. `LODELIGHT` -- C++ stubs this
  *    empty; rejected.
  *
- * HP restore rate 0.2 * max (v15 non-chaotic v9+ default). Exp penalty is the
+ * HP restore rate 0.2 * max (v19 non-chaotic v9+ default). Exp penalty is the
  * bracket table in `combat/formulas.subDieDecExp`.
  *
  * WAL: scroll consume + exp loss are journaled before the ack (rule 04).
@@ -62,7 +62,7 @@ export interface RevivalServiceDeps {
   readonly zones: { byNumericId: Map<number, ZoneDefinition> };
 }
 
-const REVIVE_HP_RATE = 0.2; // v15 non-chaotic v9+ default (DPSrvr.cpp:997,1100)
+const REVIVE_HP_RATE = 0.2; // v19 non-chaotic v9+ default (DPSrvr.cpp:997,1100)
 /** Chaotic (PK) players revive at half the normal HP rate (DPSrvr.cpp PK branch). */
 const REVIVE_HP_RATE_CHAOTIC = 0.1;
 
@@ -193,7 +193,7 @@ export class RevivalService {
   }
 
   /**
-   * HP/MP restore on revive. Non-chaotic players get 0.2 * max (v15 default);
+   * HP/MP restore on revive. Non-chaotic players get 0.2 * max (v19 default);
    * chaotic (PK) players get half that (0.1 * max) -- the PK death penalty.
    * ponytail: full DiePenalty.inc REVIVAL_PENALTY bracket table (level-based).
    */

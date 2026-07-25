@@ -1,5 +1,5 @@
 /**
- * v15 skill damage formulas -- pure port of the `GetMeleeSkillPower` +
+ * v19 skill damage formulas -- pure port of the `GetMeleeSkillPower` +
  * `GetMagicSkillPower` + `PostCalcMagicSkill` chain.
  *
  * Source: `docs/skills-research.md` #4 (canonical). Skill damage **reuses the

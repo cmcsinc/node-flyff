@@ -1,7 +1,7 @@
 /**
- * v15 CERTIFY password crypto -- AES-128-CBC, matching the C++ `g_xRijndael`.
+ * v19 CERTIFY password crypto -- AES-128-CBC, matching the C++ `g_xRijndael`.
  *
- * The default v15 client (`__ENCRYPT_PASSWORD`, `Neuz/VersionCommon.h:235`) sends
+ * The default v19 client (`__ENCRYPT_PASSWORD`, `Neuz/VersionCommon.h:235`) sends
  * the CERTIFY password as a fixed **672-byte** (`16 * MAX_PASSWORD`) Rijndael-CBC
  * blob. The shared key is the literal `"dldhsvmflvm"` zero-padded to 16 bytes
  * (`_Common/Rijndael.cpp:939`); IV is 16 zero bytes (`sm_chain0`,
@@ -26,7 +26,7 @@ const IV = Buffer.alloc(16, 0);
 /** Decrypt the 672-byte CERTIFY blob -> first 42 bytes as a UTF-8 C-string. */
 export function decryptV15Password(enc: Buffer): string {
   if (enc.length !== V15_PASSWORD_BLOB_SIZE) {
-    throw new Error(`v15 password blob must be ${V15_PASSWORD_BLOB_SIZE} bytes (got ${enc.length})`);
+    throw new Error(`v19 password blob must be ${V15_PASSWORD_BLOB_SIZE} bytes (got ${enc.length})`);
   }
   const d = createDecipheriv('aes-128-cbc', KEY, IV);
   d.setAutoPadding(false);

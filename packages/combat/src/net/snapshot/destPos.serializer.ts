@@ -5,7 +5,7 @@
  *   ar << GETID( pMover ) << SNAPSHOTTYPE_DESTPOS;
  *   ar << vPos << fForward;
  *   // ar << objidIAObj;  -- only `#ifdef __IAOBJ0622` (User.cpp:4714),
- *   // which is NOT defined in this v15 build, so no trailing DWORD.
+ *   // which is NOT defined in this v19 build, so no trailing DWORD.
  *
  * Wrapped in a SNAPSHOT packet the client dispatches in
  * `CDPClient::OnSnapshot` (`Neuz/DPClient.cpp:333`):

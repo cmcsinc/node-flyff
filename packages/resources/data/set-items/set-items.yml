@@ -1,0 +1,3467 @@
+# Set items -- generated from propItemEtc.inc
+_version: "1.0"
+sets:
+  - id: 1
+    nameId: IDS_PROPITEMETC_INC_000001
+    elems:
+      - itemId: 526
+        parts: 6
+      - itemId: 527
+        parts: 2
+      - itemId: 528
+        parts: 4
+      - itemId: 529
+        parts: 5
+    avails:
+      - dst: 35
+        adj: 50
+        equipped: 2
+      - dst: 1
+        adj: 3
+        equipped: 2
+      - dst: 11
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 23
+        equipped: 3
+      - dst: 35
+        adj: 150
+        equipped: 4
+  - id: 2
+    nameId: IDS_PROPITEMETC_INC_000002
+    elems:
+      - itemId: 522
+        parts: 6
+      - itemId: 523
+        parts: 2
+      - itemId: 524
+        parts: 4
+      - itemId: 525
+        parts: 5
+    avails:
+      - dst: 35
+        adj: 50
+        equipped: 2
+      - dst: 1
+        adj: 3
+        equipped: 2
+      - dst: 11
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 23
+        equipped: 3
+      - dst: 35
+        adj: 150
+        equipped: 4
+  - id: 3
+    nameId: IDS_PROPITEMETC_INC_000003
+    elems:
+      - itemId: 18000
+        parts: 6
+      - itemId: 18001
+        parts: 2
+      - itemId: 18002
+        parts: 4
+      - itemId: 18003
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 17
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 25
+        adj: 4
+        equipped: 4
+      - dst: 34
+        adj: 4
+        equipped: 4
+  - id: 4
+    nameId: IDS_PROPITEMETC_INC_000004
+    elems:
+      - itemId: 18004
+        parts: 6
+      - itemId: 18005
+        parts: 2
+      - itemId: 18006
+        parts: 4
+      - itemId: 18007
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 17
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 25
+        adj: 4
+        equipped: 4
+      - dst: 34
+        adj: 4
+        equipped: 4
+  - id: 5
+    nameId: IDS_PROPITEMETC_INC_000005
+    elems:
+      - itemId: 18008
+        parts: 6
+      - itemId: 18009
+        parts: 2
+      - itemId: 18010
+        parts: 4
+      - itemId: 18011
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 16
+        equipped: 2
+      - dst: 2
+        adj: 3
+        equipped: 2
+      - dst: 53
+        adj: 10
+        equipped: 3
+      - dst: 54
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 20
+        equipped: 3
+      - dst: 9
+        adj: 10
+        equipped: 4
+  - id: 6
+    nameId: IDS_PROPITEMETC_INC_000006
+    elems:
+      - itemId: 18012
+        parts: 6
+      - itemId: 18013
+        parts: 2
+      - itemId: 18014
+        parts: 4
+      - itemId: 18015
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 16
+        equipped: 2
+      - dst: 2
+        adj: 3
+        equipped: 2
+      - dst: 53
+        adj: 10
+        equipped: 3
+      - dst: 54
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 20
+        equipped: 3
+      - dst: 9
+        adj: 10
+        equipped: 4
+  - id: 7
+    nameId: IDS_PROPITEMETC_INC_000007
+    elems:
+      - itemId: 18016
+        parts: 6
+      - itemId: 18017
+        parts: 2
+      - itemId: 18018
+        parts: 4
+      - itemId: 18019
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 15
+        equipped: 2
+      - dst: 2
+        adj: 3
+        equipped: 2
+      - dst: 53
+        adj: 10
+        equipped: 3
+      - dst: 54
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 18
+        equipped: 3
+      - dst: 24
+        adj: 200
+        equipped: 4
+  - id: 8
+    nameId: IDS_PROPITEMETC_INC_000008
+    elems:
+      - itemId: 18020
+        parts: 6
+      - itemId: 18021
+        parts: 2
+      - itemId: 18022
+        parts: 4
+      - itemId: 18023
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 15
+        equipped: 2
+      - dst: 2
+        adj: 3
+        equipped: 2
+      - dst: 53
+        adj: 10
+        equipped: 3
+      - dst: 54
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 18
+        equipped: 3
+      - dst: 24
+        adj: 200
+        equipped: 4
+  - id: 9
+    nameId: IDS_PROPITEMETC_INC_000009
+    elems:
+      - itemId: 18024
+        parts: 6
+      - itemId: 18025
+        parts: 2
+      - itemId: 18026
+        parts: 4
+      - itemId: 18027
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 14
+        equipped: 2
+      - dst: 3
+        adj: 3
+        equipped: 2
+      - dst: 53
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 18
+        equipped: 3
+      - dst: 52
+        adj: 10
+        equipped: 4
+  - id: 10
+    nameId: IDS_PROPITEMETC_INC_000010
+    elems:
+      - itemId: 18028
+        parts: 6
+      - itemId: 18029
+        parts: 2
+      - itemId: 18030
+        parts: 4
+      - itemId: 18031
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 14
+        equipped: 2
+      - dst: 3
+        adj: 3
+        equipped: 2
+      - dst: 53
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 18
+        equipped: 3
+      - dst: 52
+        adj: 10
+        equipped: 4
+  - id: 11
+    nameId: IDS_PROPITEMETC_INC_000011
+    elems:
+      - itemId: 18032
+        parts: 6
+      - itemId: 18033
+        parts: 2
+      - itemId: 18034
+        parts: 4
+      - itemId: 18035
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 9
+        adj: 5
+        equipped: 3
+      - dst: 26
+        adj: 33
+        equipped: 3
+      - dst: 47
+        adj: 10
+        equipped: 4
+  - id: 12
+    nameId: IDS_PROPITEMETC_INC_000012
+    elems:
+      - itemId: 18036
+        parts: 6
+      - itemId: 18037
+        parts: 2
+      - itemId: 18038
+        parts: 4
+      - itemId: 18039
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 9
+        adj: 5
+        equipped: 3
+      - dst: 26
+        adj: 33
+        equipped: 3
+      - dst: 47
+        adj: 10
+        equipped: 4
+  - id: 13
+    nameId: IDS_PROPITEMETC_INC_000013
+    elems:
+      - itemId: 18040
+        parts: 6
+      - itemId: 18041
+        parts: 2
+      - itemId: 18042
+        parts: 4
+      - itemId: 18043
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 30
+        equipped: 3
+      - dst: 24
+        adj: 200
+        equipped: 4
+  - id: 14
+    nameId: IDS_PROPITEMETC_INC_000014
+    elems:
+      - itemId: 18044
+        parts: 6
+      - itemId: 18045
+        parts: 2
+      - itemId: 18046
+        parts: 4
+      - itemId: 18047
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 30
+        equipped: 3
+      - dst: 24
+        adj: 200
+        equipped: 4
+  - id: 15
+    nameId: IDS_PROPITEMETC_INC_000015
+    elems:
+      - itemId: 18048
+        parts: 6
+      - itemId: 18049
+        parts: 2
+      - itemId: 18050
+        parts: 4
+      - itemId: 18051
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 19
+        equipped: 2
+      - dst: 3
+        adj: 5
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 9
+        adj: 10
+        equipped: 4
+  - id: 16
+    nameId: IDS_PROPITEMETC_INC_000016
+    elems:
+      - itemId: 18052
+        parts: 6
+      - itemId: 18053
+        parts: 2
+      - itemId: 18054
+        parts: 4
+      - itemId: 18055
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 19
+        equipped: 2
+      - dst: 3
+        adj: 5
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 9
+        adj: 10
+        equipped: 4
+  - id: 17
+    nameId: IDS_PROPITEMETC_INC_000017
+    elems:
+      - itemId: 18056
+        parts: 6
+      - itemId: 18057
+        parts: 2
+      - itemId: 18058
+        parts: 4
+      - itemId: 18059
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 17
+        equipped: 2
+      - dst: 3
+        adj: 5
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 73
+        adj: 10
+        equipped: 4
+  - id: 18
+    nameId: IDS_PROPITEMETC_INC_000018
+    elems:
+      - itemId: 18060
+        parts: 6
+      - itemId: 18061
+        parts: 2
+      - itemId: 18062
+        parts: 4
+      - itemId: 18063
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 17
+        equipped: 2
+      - dst: 3
+        adj: 5
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 73
+        adj: 10
+        equipped: 4
+  - id: 19
+    nameId: IDS_PROPITEMETC_INC_000019
+    elems:
+      - itemId: 18064
+        parts: 6
+      - itemId: 18065
+        parts: 2
+      - itemId: 18066
+        parts: 4
+      - itemId: 18067
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 74
+        adj: 10
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 23
+        equipped: 3
+      - dst: 24
+        adj: 400
+        equipped: 4
+  - id: 20
+    nameId: IDS_PROPITEMETC_INC_000020
+    elems:
+      - itemId: 18068
+        parts: 6
+      - itemId: 18069
+        parts: 2
+      - itemId: 18070
+        parts: 4
+      - itemId: 18071
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 74
+        adj: 10
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 23
+        equipped: 3
+      - dst: 24
+        adj: 400
+        equipped: 4
+  - id: 21
+    nameId: IDS_PROPITEMETC_INC_000021
+    elems:
+      - itemId: 18072
+        parts: 6
+      - itemId: 18073
+        parts: 2
+      - itemId: 18074
+        parts: 4
+      - itemId: 18075
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 5
+        adj: 10
+        equipped: 2
+      - dst: 6
+        adj: 11
+        equipped: 2
+      - dst: 73
+        adj: 20
+        equipped: 3
+      - dst: 74
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 21
+        equipped: 3
+      - dst: 77
+        adj: 40
+        equipped: 4
+  - id: 22
+    nameId: IDS_PROPITEMETC_INC_000022
+    elems:
+      - itemId: 18076
+        parts: 6
+      - itemId: 18077
+        parts: 2
+      - itemId: 18078
+        parts: 4
+      - itemId: 18079
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 5
+        adj: 10
+        equipped: 2
+      - dst: 6
+        adj: 11
+        equipped: 2
+      - dst: 73
+        adj: 20
+        equipped: 3
+      - dst: 74
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 21
+        equipped: 3
+      - dst: 77
+        adj: 40
+        equipped: 4
+  - id: 23
+    nameId: IDS_PROPITEMETC_INC_000023
+    elems:
+      - itemId: 18080
+        parts: 6
+      - itemId: 18081
+        parts: 2
+      - itemId: 18082
+        parts: 4
+      - itemId: 18083
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 19
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 2
+      - dst: 73
+        adj: 20
+        equipped: 3
+      - dst: 74
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 19
+        equipped: 3
+      - dst: 75
+        adj: 30
+        equipped: 4
+  - id: 24
+    nameId: IDS_PROPITEMETC_INC_000024
+    elems:
+      - itemId: 18084
+        parts: 6
+      - itemId: 18085
+        parts: 2
+      - itemId: 18086
+        parts: 4
+      - itemId: 18087
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 19
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 2
+      - dst: 73
+        adj: 20
+        equipped: 3
+      - dst: 74
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 19
+        equipped: 3
+      - dst: 75
+        adj: 30
+        equipped: 4
+  - id: 25
+    nameId: IDS_PROPITEMETC_INC_000025
+    elems:
+      - itemId: 18088
+        parts: 6
+      - itemId: 18089
+        parts: 2
+      - itemId: 18090
+        parts: 4
+      - itemId: 18091
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 18
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 19
+        equipped: 3
+      - dst: 75
+        adj: 10
+        equipped: 4
+  - id: 26
+    nameId: IDS_PROPITEMETC_INC_000026
+    elems:
+      - itemId: 18092
+        parts: 6
+      - itemId: 18093
+        parts: 2
+      - itemId: 18094
+        parts: 4
+      - itemId: 18095
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 18
+        equipped: 2
+      - dst: 52
+        adj: 10
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 19
+        equipped: 3
+      - dst: 75
+        adj: 10
+        equipped: 4
+  - id: 27
+    nameId: IDS_PROPITEMETC_INC_000027
+    elems:
+      - itemId: 22066
+        parts: 6
+      - itemId: 22067
+        parts: 2
+      - itemId: 22068
+        parts: 4
+      - itemId: 22069
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 52
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 24
+        adj: 400
+        equipped: 4
+  - id: 28
+    nameId: IDS_PROPITEMETC_INC_000028
+    elems:
+      - itemId: 22070
+        parts: 6
+      - itemId: 22071
+        parts: 2
+      - itemId: 22072
+        parts: 4
+      - itemId: 22073
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 52
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 24
+        adj: 400
+        equipped: 4
+  - id: 29
+    nameId: IDS_PROPITEMETC_INC_000029
+    elems:
+      - itemId: 22074
+        parts: 6
+      - itemId: 22075
+        parts: 2
+      - itemId: 22076
+        parts: 4
+      - itemId: 22077
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 1
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 47
+        adj: 15
+        equipped: 4
+  - id: 30
+    nameId: IDS_PROPITEMETC_INC_000030
+    elems:
+      - itemId: 22078
+        parts: 6
+      - itemId: 22079
+        parts: 2
+      - itemId: 22080
+        parts: 4
+      - itemId: 22081
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 1
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 47
+        adj: 15
+        equipped: 4
+  - id: 31
+    nameId: IDS_PROPITEMETC_INC_000031
+    elems:
+      - itemId: 22082
+        parts: 6
+      - itemId: 22083
+        parts: 2
+      - itemId: 22084
+        parts: 4
+      - itemId: 22085
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 19
+        equipped: 2
+      - dst: 3
+        adj: 8
+        equipped: 3
+      - dst: 26
+        adj: 26
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 32
+    nameId: IDS_PROPITEMETC_INC_000032
+    elems:
+      - itemId: 22086
+        parts: 6
+      - itemId: 22087
+        parts: 2
+      - itemId: 22088
+        parts: 4
+      - itemId: 22089
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 19
+        equipped: 2
+      - dst: 3
+        adj: 8
+        equipped: 3
+      - dst: 26
+        adj: 26
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 33
+    nameId: IDS_PROPITEMETC_INC_000033
+    elems:
+      - itemId: 22090
+        parts: 6
+      - itemId: 22091
+        parts: 2
+      - itemId: 22092
+        parts: 4
+      - itemId: 22093
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 18
+        equipped: 2
+      - dst: 73
+        adj: 13
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 34
+    nameId: IDS_PROPITEMETC_INC_000034
+    elems:
+      - itemId: 22094
+        parts: 6
+      - itemId: 22095
+        parts: 2
+      - itemId: 22096
+        parts: 4
+      - itemId: 22097
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 18
+        equipped: 2
+      - dst: 73
+        adj: 13
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 35
+    nameId: IDS_PROPITEMETC_INC_000035
+    elems:
+      - itemId: 22098
+        parts: 6
+      - itemId: 22099
+        parts: 2
+      - itemId: 22100
+        parts: 4
+      - itemId: 22101
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 25
+        equipped: 2
+      - dst: 9
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 25
+        equipped: 3
+      - dst: 47
+        adj: 15
+        equipped: 4
+  - id: 36
+    nameId: IDS_PROPITEMETC_INC_000036
+    elems:
+      - itemId: 22102
+        parts: 6
+      - itemId: 22103
+        parts: 2
+      - itemId: 22104
+        parts: 4
+      - itemId: 22105
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 25
+        equipped: 2
+      - dst: 9
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 25
+        equipped: 3
+      - dst: 47
+        adj: 15
+        equipped: 4
+  - id: 37
+    nameId: IDS_PROPITEMETC_INC_000037
+    elems:
+      - itemId: 22106
+        parts: 6
+      - itemId: 22107
+        parts: 2
+      - itemId: 22108
+        parts: 4
+      - itemId: 22109
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 25
+        equipped: 2
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 25
+        equipped: 3
+      - dst: 1
+        adj: 7
+        equipped: 4
+  - id: 38
+    nameId: IDS_PROPITEMETC_INC_000038
+    elems:
+      - itemId: 22110
+        parts: 6
+      - itemId: 22111
+        parts: 2
+      - itemId: 22112
+        parts: 4
+      - itemId: 22113
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 25
+        equipped: 2
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 25
+        equipped: 3
+      - dst: 1
+        adj: 7
+        equipped: 4
+  - id: 39
+    nameId: IDS_PROPITEMETC_INC_000039
+    elems:
+      - itemId: 22114
+        parts: 6
+      - itemId: 22115
+        parts: 2
+      - itemId: 22116
+        parts: 4
+      - itemId: 22117
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 24
+        equipped: 2
+      - dst: 24
+        adj: 300
+        equipped: 3
+      - dst: 26
+        adj: 24
+        equipped: 3
+      - dst: 2
+        adj: 7
+        equipped: 4
+  - id: 40
+    nameId: IDS_PROPITEMETC_INC_000040
+    elems:
+      - itemId: 22118
+        parts: 6
+      - itemId: 22119
+        parts: 2
+      - itemId: 22120
+        parts: 4
+      - itemId: 22121
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 24
+        equipped: 2
+      - dst: 24
+        adj: 300
+        equipped: 3
+      - dst: 26
+        adj: 24
+        equipped: 3
+      - dst: 2
+        adj: 7
+        equipped: 4
+  - id: 41
+    nameId: IDS_PROPITEMETC_INC_000041
+    elems:
+      - itemId: 22122
+        parts: 6
+      - itemId: 22123
+        parts: 2
+      - itemId: 22124
+        parts: 4
+      - itemId: 22125
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 26
+        equipped: 2
+      - dst: 1
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 42
+    nameId: IDS_PROPITEMETC_INC_000042
+    elems:
+      - itemId: 22126
+        parts: 6
+      - itemId: 22127
+        parts: 2
+      - itemId: 22128
+        parts: 4
+      - itemId: 22129
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 26
+        equipped: 2
+      - dst: 1
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 43
+    nameId: IDS_PROPITEMETC_INC_000043
+    elems:
+      - itemId: 22130
+        parts: 6
+      - itemId: 22131
+        parts: 2
+      - itemId: 22132
+        parts: 4
+      - itemId: 22133
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 26
+        equipped: 2
+      - dst: 9
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 2
+        adj: 5
+        equipped: 4
+  - id: 44
+    nameId: IDS_PROPITEMETC_INC_000044
+    elems:
+      - itemId: 22134
+        parts: 6
+      - itemId: 22135
+        parts: 2
+      - itemId: 22136
+        parts: 4
+      - itemId: 22137
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 26
+        equipped: 2
+      - dst: 9
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 2
+        adj: 5
+        equipped: 4
+  - id: 45
+    nameId: IDS_PROPITEMETC_INC_000045
+    elems:
+      - itemId: 22138
+        parts: 6
+      - itemId: 22139
+        parts: 2
+      - itemId: 22140
+        parts: 4
+      - itemId: 22141
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 25
+        equipped: 2
+      - dst: 52
+        adj: 13
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 29
+        adj: 10
+        equipped: 4
+  - id: 46
+    nameId: IDS_PROPITEMETC_INC_000046
+    elems:
+      - itemId: 22142
+        parts: 6
+      - itemId: 22143
+        parts: 2
+      - itemId: 22144
+        parts: 4
+      - itemId: 22145
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 25
+        equipped: 2
+      - dst: 52
+        adj: 13
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 29
+        adj: 10
+        equipped: 4
+  - id: 47
+    nameId: IDS_PROPITEMETC_INC_000047
+    elems:
+      - itemId: 22146
+        parts: 6
+      - itemId: 22147
+        parts: 2
+      - itemId: 22148
+        parts: 4
+      - itemId: 22149
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 2
+        adj: 8
+        equipped: 4
+  - id: 48
+    nameId: IDS_PROPITEMETC_INC_000048
+    elems:
+      - itemId: 22150
+        parts: 6
+      - itemId: 22151
+        parts: 2
+      - itemId: 22152
+        parts: 4
+      - itemId: 22153
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 74
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 2
+        adj: 8
+        equipped: 4
+  - id: 49
+    nameId: IDS_PROPITEMETC_INC_000049
+    elems:
+      - itemId: 22154
+        parts: 6
+      - itemId: 22155
+        parts: 2
+      - itemId: 22156
+        parts: 4
+      - itemId: 22157
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 9
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 77
+        adj: 40
+        equipped: 4
+  - id: 50
+    nameId: IDS_PROPITEMETC_INC_000050
+    elems:
+      - itemId: 22158
+        parts: 6
+      - itemId: 22159
+        parts: 2
+      - itemId: 22160
+        parts: 4
+      - itemId: 22161
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 9
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 77
+        adj: 40
+        equipped: 4
+  - id: 51
+    nameId: IDS_PROPITEMETC_INC_000051
+    elems:
+      - itemId: 22162
+        parts: 6
+      - itemId: 22163
+        parts: 2
+      - itemId: 22164
+        parts: 4
+      - itemId: 22165
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 1
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 2
+        adj: 10
+        equipped: 4
+  - id: 52
+    nameId: IDS_PROPITEMETC_INC_000052
+    elems:
+      - itemId: 22166
+        parts: 6
+      - itemId: 22167
+        parts: 2
+      - itemId: 22168
+        parts: 4
+      - itemId: 22169
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 1
+        adj: 10
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 2
+        adj: 10
+        equipped: 4
+  - id: 53
+    nameId: IDS_PROPITEMETC_INC_000053
+    elems:
+      - itemId: 22170
+        parts: 6
+      - itemId: 22171
+        parts: 2
+      - itemId: 22172
+        parts: 4
+      - itemId: 22173
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 47
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 54
+    nameId: IDS_PROPITEMETC_INC_000054
+    elems:
+      - itemId: 22174
+        parts: 6
+      - itemId: 22175
+        parts: 2
+      - itemId: 22176
+        parts: 4
+      - itemId: 22177
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 47
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 55
+    nameId: IDS_PROPITEMETC_INC_000055
+    elems:
+      - itemId: 22178
+        parts: 6
+      - itemId: 22179
+        parts: 2
+      - itemId: 22180
+        parts: 4
+      - itemId: 22181
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 1
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 9
+        adj: 12
+        equipped: 4
+  - id: 56
+    nameId: IDS_PROPITEMETC_INC_000056
+    elems:
+      - itemId: 22182
+        parts: 6
+      - itemId: 22183
+        parts: 2
+      - itemId: 22184
+        parts: 4
+      - itemId: 22185
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 1
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 29
+        equipped: 3
+      - dst: 9
+        adj: 12
+        equipped: 4
+  - id: 57
+    nameId: IDS_PROPITEMETC_INC_000057
+    elems:
+      - itemId: 22186
+        parts: 6
+      - itemId: 22187
+        parts: 2
+      - itemId: 22188
+        parts: 4
+      - itemId: 22189
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 52
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 29
+        adj: 10
+        equipped: 4
+  - id: 58
+    nameId: IDS_PROPITEMETC_INC_000058
+    elems:
+      - itemId: 22190
+        parts: 6
+      - itemId: 22191
+        parts: 2
+      - itemId: 22192
+        parts: 4
+      - itemId: 22193
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 52
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 29
+        adj: 10
+        equipped: 4
+  - id: 59
+    nameId: IDS_PROPITEMETC_INC_000059
+    elems:
+      - itemId: 22194
+        parts: 6
+      - itemId: 22195
+        parts: 2
+      - itemId: 22196
+        parts: 4
+      - itemId: 22197
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 53
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 60
+    nameId: IDS_PROPITEMETC_INC_000060
+    elems:
+      - itemId: 22198
+        parts: 6
+      - itemId: 22199
+        parts: 2
+      - itemId: 22200
+        parts: 4
+      - itemId: 22201
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 53
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 61
+    nameId: IDS_PROPITEMETC_INC_000061
+    elems:
+      - itemId: 22202
+        parts: 6
+      - itemId: 22203
+        parts: 2
+      - itemId: 22204
+        parts: 4
+      - itemId: 22205
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 73
+        adj: 20
+        equipped: 4
+  - id: 62
+    nameId: IDS_PROPITEMETC_INC_000062
+    elems:
+      - itemId: 22206
+        parts: 6
+      - itemId: 22207
+        parts: 2
+      - itemId: 22208
+        parts: 4
+      - itemId: 22209
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 73
+        adj: 20
+        equipped: 4
+  - id: 63
+    nameId: IDS_PROPITEMETC_INC_000063
+    elems:
+      - itemId: 22210
+        parts: 6
+      - itemId: 22211
+        parts: 2
+      - itemId: 22212
+        parts: 4
+      - itemId: 22213
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 52
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 75
+        adj: 20
+        equipped: 4
+  - id: 64
+    nameId: IDS_PROPITEMETC_INC_000064
+    elems:
+      - itemId: 22214
+        parts: 6
+      - itemId: 22215
+        parts: 2
+      - itemId: 22216
+        parts: 4
+      - itemId: 22217
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 52
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 75
+        adj: 20
+        equipped: 4
+  - id: 65
+    nameId: IDS_PROPITEMETC_INC_000065
+    elems:
+      - itemId: 22218
+        parts: 6
+      - itemId: 22219
+        parts: 2
+      - itemId: 22220
+        parts: 4
+      - itemId: 22221
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 2
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 66
+    nameId: IDS_PROPITEMETC_INC_000066
+    elems:
+      - itemId: 22222
+        parts: 6
+      - itemId: 22223
+        parts: 2
+      - itemId: 22224
+        parts: 4
+      - itemId: 22225
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 2
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 67
+    nameId: IDS_PROPITEMETC_INC_000067
+    elems:
+      - itemId: 22226
+        parts: 6
+      - itemId: 22227
+        parts: 2
+      - itemId: 22228
+        parts: 4
+      - itemId: 22229
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 2
+        adj: 5
+        equipped: 4
+  - id: 68
+    nameId: IDS_PROPITEMETC_INC_000068
+    elems:
+      - itemId: 22230
+        parts: 6
+      - itemId: 22231
+        parts: 2
+      - itemId: 22232
+        parts: 4
+      - itemId: 22233
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 22
+        equipped: 3
+      - dst: 2
+        adj: 5
+        equipped: 4
+  - id: 69
+    nameId: IDS_PROPITEMETC_INC_000069
+    elems:
+      - itemId: 22234
+        parts: 6
+      - itemId: 22235
+        parts: 2
+      - itemId: 22236
+        parts: 4
+      - itemId: 22237
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 47
+        adj: 12
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 77
+        adj: 40
+        equipped: 4
+  - id: 70
+    nameId: IDS_PROPITEMETC_INC_000070
+    elems:
+      - itemId: 22238
+        parts: 6
+      - itemId: 22239
+        parts: 2
+      - itemId: 22240
+        parts: 4
+      - itemId: 22241
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 47
+        adj: 12
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 77
+        adj: 40
+        equipped: 4
+  - id: 71
+    nameId: IDS_PROPITEMETC_INC_000071
+    elems:
+      - itemId: 22242
+        parts: 6
+      - itemId: 22243
+        parts: 2
+      - itemId: 22244
+        parts: 4
+      - itemId: 22245
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 73
+        adj: 15
+        equipped: 4
+  - id: 72
+    nameId: IDS_PROPITEMETC_INC_000072
+    elems:
+      - itemId: 22246
+        parts: 6
+      - itemId: 22247
+        parts: 2
+      - itemId: 22248
+        parts: 4
+      - itemId: 22249
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 73
+        adj: 15
+        equipped: 4
+  - id: 73
+    nameId: IDS_PROPITEMETC_INC_000073
+    elems:
+      - itemId: 22250
+        parts: 6
+      - itemId: 22251
+        parts: 2
+      - itemId: 22252
+        parts: 4
+      - itemId: 22253
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 75
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 3
+        adj: 6
+        equipped: 4
+  - id: 74
+    nameId: IDS_PROPITEMETC_INC_000074
+    elems:
+      - itemId: 22254
+        parts: 6
+      - itemId: 22255
+        parts: 2
+      - itemId: 22256
+        parts: 4
+      - itemId: 22257
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 75
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 3
+        adj: 6
+        equipped: 4
+  - id: 75
+    nameId: IDS_PROPITEMETC_INC_000075
+    elems:
+      - itemId: 22258
+        parts: 6
+      - itemId: 22259
+        parts: 2
+      - itemId: 22260
+        parts: 4
+      - itemId: 22261
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 3
+        adj: 5
+        equipped: 4
+  - id: 76
+    nameId: IDS_PROPITEMETC_INC_000076
+    elems:
+      - itemId: 22262
+        parts: 6
+      - itemId: 22263
+        parts: 2
+      - itemId: 22264
+        parts: 4
+      - itemId: 22265
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 20
+        equipped: 2
+      - dst: 73
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 3
+        adj: 5
+        equipped: 4
+  - id: 77
+    nameId: IDS_PROPITEMETC_INC_000077
+    elems:
+      - itemId: 22266
+        parts: 6
+      - itemId: 22267
+        parts: 2
+      - itemId: 22268
+        parts: 4
+      - itemId: 22269
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 75
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 33
+        equipped: 3
+      - dst: 73
+        adj: 15
+        equipped: 4
+  - id: 78
+    nameId: IDS_PROPITEMETC_INC_000078
+    elems:
+      - itemId: 22270
+        parts: 6
+      - itemId: 22271
+        parts: 2
+      - itemId: 22272
+        parts: 4
+      - itemId: 22273
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 75
+        adj: 20
+        equipped: 3
+      - dst: 26
+        adj: 33
+        equipped: 3
+      - dst: 73
+        adj: 15
+        equipped: 4
+  - id: 79
+    nameId: IDS_PROPITEMETC_INC_000079
+    elems:
+      - itemId: 22274
+        parts: 6
+      - itemId: 22275
+        parts: 2
+      - itemId: 22276
+        parts: 4
+      - itemId: 22277
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 73
+        adj: 15
+        equipped: 4
+  - id: 80
+    nameId: IDS_PROPITEMETC_INC_000080
+    elems:
+      - itemId: 22278
+        parts: 6
+      - itemId: 22279
+        parts: 2
+      - itemId: 22280
+        parts: 4
+      - itemId: 22281
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 22
+        equipped: 2
+      - dst: 3
+        adj: 7
+        equipped: 3
+      - dst: 26
+        adj: 28
+        equipped: 3
+      - dst: 73
+        adj: 15
+        equipped: 4
+  - id: 81
+    nameId: IDS_PROPITEMETC_INC_000081
+    elems:
+      - itemId: 22282
+        parts: 6
+      - itemId: 22283
+        parts: 2
+      - itemId: 22284
+        parts: 4
+      - itemId: 22285
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 75
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 82
+    nameId: IDS_PROPITEMETC_INC_000082
+    elems:
+      - itemId: 22286
+        parts: 6
+      - itemId: 22287
+        parts: 2
+      - itemId: 22288
+        parts: 4
+      - itemId: 22289
+        parts: 5
+    avails:
+      - dst: 26
+        adj: 21
+        equipped: 2
+      - dst: 75
+        adj: 15
+        equipped: 3
+      - dst: 26
+        adj: 27
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 131
+    nameId: IDS_PROPITEMETC_INC_000131
+    elems:
+      - itemId: 22290
+        parts: 6
+      - itemId: 22291
+        parts: 2
+      - itemId: 22292
+        parts: 4
+      - itemId: 22293
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 132
+    nameId: IDS_PROPITEMETC_INC_000132
+    elems:
+      - itemId: 22294
+        parts: 6
+      - itemId: 22295
+        parts: 2
+      - itemId: 22296
+        parts: 4
+      - itemId: 22297
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 133
+    nameId: IDS_PROPITEMETC_INC_000133
+    elems:
+      - itemId: 22298
+        parts: 6
+      - itemId: 22299
+        parts: 2
+      - itemId: 22300
+        parts: 4
+      - itemId: 22301
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 134
+    nameId: IDS_PROPITEMETC_INC_000134
+    elems:
+      - itemId: 22302
+        parts: 6
+      - itemId: 22303
+        parts: 2
+      - itemId: 22304
+        parts: 4
+      - itemId: 22305
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 135
+    nameId: IDS_PROPITEMETC_INC_000135
+    elems:
+      - itemId: 22306
+        parts: 6
+      - itemId: 22307
+        parts: 2
+      - itemId: 22308
+        parts: 4
+      - itemId: 22309
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 136
+    nameId: IDS_PROPITEMETC_INC_000136
+    elems:
+      - itemId: 22310
+        parts: 6
+      - itemId: 22311
+        parts: 2
+      - itemId: 22312
+        parts: 4
+      - itemId: 22313
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 137
+    nameId: IDS_PROPITEMETC_INC_000137
+    elems:
+      - itemId: 22314
+        parts: 6
+      - itemId: 22315
+        parts: 2
+      - itemId: 22316
+        parts: 4
+      - itemId: 22317
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 138
+    nameId: IDS_PROPITEMETC_INC_000138
+    elems:
+      - itemId: 22318
+        parts: 6
+      - itemId: 22319
+        parts: 2
+      - itemId: 22320
+        parts: 4
+      - itemId: 22321
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 139
+    nameId: IDS_PROPITEMETC_INC_000139
+    elems:
+      - itemId: 22322
+        parts: 6
+      - itemId: 22323
+        parts: 2
+      - itemId: 22324
+        parts: 4
+      - itemId: 22325
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 140
+    nameId: IDS_PROPITEMETC_INC_000140
+    elems:
+      - itemId: 22326
+        parts: 6
+      - itemId: 22327
+        parts: 2
+      - itemId: 22328
+        parts: 4
+      - itemId: 22329
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 141
+    nameId: IDS_PROPITEMETC_INC_000141
+    elems:
+      - itemId: 22330
+        parts: 6
+      - itemId: 22331
+        parts: 2
+      - itemId: 22332
+        parts: 4
+      - itemId: 22333
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 142
+    nameId: IDS_PROPITEMETC_INC_000142
+    elems:
+      - itemId: 22334
+        parts: 6
+      - itemId: 22335
+        parts: 2
+      - itemId: 22336
+        parts: 4
+      - itemId: 22337
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 143
+    nameId: IDS_PROPITEMETC_INC_000143
+    elems:
+      - itemId: 22338
+        parts: 6
+      - itemId: 22339
+        parts: 2
+      - itemId: 22340
+        parts: 4
+      - itemId: 22341
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 144
+    nameId: IDS_PROPITEMETC_INC_000144
+    elems:
+      - itemId: 22342
+        parts: 6
+      - itemId: 22343
+        parts: 2
+      - itemId: 22344
+        parts: 4
+      - itemId: 22345
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 145
+    nameId: IDS_PROPITEMETC_INC_000145
+    elems:
+      - itemId: 22346
+        parts: 6
+      - itemId: 22347
+        parts: 2
+      - itemId: 22348
+        parts: 4
+      - itemId: 22349
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 146
+    nameId: IDS_PROPITEMETC_INC_000146
+    elems:
+      - itemId: 22350
+        parts: 6
+      - itemId: 22351
+        parts: 2
+      - itemId: 22352
+        parts: 4
+      - itemId: 22353
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 10
+        equipped: 2
+      - dst: 14
+        adj: 10
+        equipped: 3
+      - dst: 8
+        adj: 10
+        equipped: 3
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 14
+        adj: 5
+        equipped: 4
+      - dst: 8
+        adj: 5
+        equipped: 4
+      - dst: 72
+        adj: 5
+        equipped: 4
+  - id: 147
+    nameId: IDS_PROPITEMETC_INC_000147
+    elems:
+      - itemId: 22418
+        parts: 6
+      - itemId: 22419
+        parts: 2
+      - itemId: 22420
+        parts: 4
+      - itemId: 22421
+        parts: 5
+    avails:
+      - dst: 4
+        adj: 10
+        equipped: 4
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 72
+        adj: 15
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 148
+    nameId: IDS_PROPITEMETC_INC_000148
+    elems:
+      - itemId: 22422
+        parts: 6
+      - itemId: 22423
+        parts: 2
+      - itemId: 22424
+        parts: 4
+      - itemId: 22425
+        parts: 5
+    avails:
+      - dst: 4
+        adj: 10
+        equipped: 4
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 72
+        adj: 15
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 149
+    nameId: IDS_PROPITEMETC_INC_000149
+    elems:
+      - itemId: 22426
+        parts: 6
+      - itemId: 22427
+        parts: 2
+      - itemId: 22428
+        parts: 4
+      - itemId: 22429
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 25
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 150
+    nameId: IDS_PROPITEMETC_INC_000150
+    elems:
+      - itemId: 22430
+        parts: 6
+      - itemId: 22431
+        parts: 2
+      - itemId: 22432
+        parts: 4
+      - itemId: 22433
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 25
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 151
+    nameId: IDS_PROPITEMETC_INC_000151
+    elems:
+      - itemId: 22434
+        parts: 6
+      - itemId: 22435
+        parts: 2
+      - itemId: 22436
+        parts: 4
+      - itemId: 22437
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 2
+        adj: 10
+        equipped: 4
+      - dst: 72
+        adj: 15
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 152
+    nameId: IDS_PROPITEMETC_INC_000152
+    elems:
+      - itemId: 22438
+        parts: 6
+      - itemId: 22439
+        parts: 2
+      - itemId: 22440
+        parts: 4
+      - itemId: 22441
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 2
+        adj: 10
+        equipped: 4
+      - dst: 72
+        adj: 15
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 153
+    nameId: IDS_PROPITEMETC_INC_000153
+    elems:
+      - itemId: 22442
+        parts: 6
+      - itemId: 22443
+        parts: 2
+      - itemId: 22444
+        parts: 4
+      - itemId: 22445
+        parts: 5
+    avails:
+      - dst: 2
+        adj: 10
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 25
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 154
+    nameId: IDS_PROPITEMETC_INC_000154
+    elems:
+      - itemId: 22446
+        parts: 6
+      - itemId: 22447
+        parts: 2
+      - itemId: 22448
+        parts: 4
+      - itemId: 22449
+        parts: 5
+    avails:
+      - dst: 2
+        adj: 10
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 25
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 155
+    nameId: IDS_PROPITEMETC_INC_000155
+    elems:
+      - itemId: 22450
+        parts: 6
+      - itemId: 22451
+        parts: 2
+      - itemId: 22452
+        parts: 4
+      - itemId: 22453
+        parts: 5
+    avails:
+      - dst: 52
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 22
+        equipped: 4
+      - dst: 75
+        adj: 30
+        equipped: 4
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 156
+    nameId: IDS_PROPITEMETC_INC_000156
+    elems:
+      - itemId: 22454
+        parts: 6
+      - itemId: 22455
+        parts: 2
+      - itemId: 22456
+        parts: 4
+      - itemId: 22457
+        parts: 5
+    avails:
+      - dst: 52
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 22
+        equipped: 4
+      - dst: 75
+        adj: 30
+        equipped: 4
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 157
+    nameId: IDS_PROPITEMETC_INC_000157
+    elems:
+      - itemId: 22458
+        parts: 6
+      - itemId: 22459
+        parts: 2
+      - itemId: 22460
+        parts: 4
+      - itemId: 22461
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 2
+        adj: 10
+        equipped: 4
+      - dst: 72
+        adj: 25
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 158
+    nameId: IDS_PROPITEMETC_INC_000158
+    elems:
+      - itemId: 22462
+        parts: 6
+      - itemId: 22463
+        parts: 2
+      - itemId: 22464
+        parts: 4
+      - itemId: 22465
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 10
+        equipped: 4
+      - dst: 2
+        adj: 10
+        equipped: 4
+      - dst: 72
+        adj: 25
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+  - id: 159
+    nameId: IDS_PROPITEMETC_INC_000159
+    elems:
+      - itemId: 22466
+        parts: 6
+      - itemId: 22467
+        parts: 2
+      - itemId: 22468
+        parts: 4
+      - itemId: 22469
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 22
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 75
+        adj: 15
+        equipped: 4
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 160
+    nameId: IDS_PROPITEMETC_INC_000160
+    elems:
+      - itemId: 22470
+        parts: 6
+      - itemId: 22471
+        parts: 2
+      - itemId: 22472
+        parts: 4
+      - itemId: 22473
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 22
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 75
+        adj: 15
+        equipped: 4
+      - dst: 3
+        adj: 10
+        equipped: 4
+  - id: 161
+    nameId: IDS_PROPITEMETC_INC_000161
+    elems:
+      - itemId: 22474
+        parts: 6
+      - itemId: 22475
+        parts: 2
+      - itemId: 22476
+        parts: 4
+      - itemId: 22477
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 22
+        equipped: 4
+      - dst: 3
+        adj: 10
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 75
+        adj: 15
+        equipped: 4
+  - id: 162
+    nameId: IDS_PROPITEMETC_INC_000162
+    elems:
+      - itemId: 22478
+        parts: 6
+      - itemId: 22479
+        parts: 2
+      - itemId: 22480
+        parts: 4
+      - itemId: 22481
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 22
+        equipped: 4
+      - dst: 3
+        adj: 10
+        equipped: 4
+      - dst: 52
+        adj: 15
+        equipped: 4
+      - dst: 75
+        adj: 15
+        equipped: 4
+  - id: 163
+    nameId: IDS_PROPITEMETC_INC_000163
+    elems:
+      - itemId: 22533
+        parts: 6
+      - itemId: 22534
+        parts: 2
+      - itemId: 22535
+        parts: 4
+      - itemId: 22536
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 20
+        equipped: 4
+      - dst: 14
+        adj: 20
+        equipped: 4
+      - dst: 8
+        adj: 20
+        equipped: 4
+      - dst: 52
+        adj: 20
+        equipped: 4
+  - id: 164
+    nameId: IDS_PROPITEMETC_INC_000164
+    elems:
+      - itemId: 22537
+        parts: 6
+      - itemId: 22538
+        parts: 2
+      - itemId: 22539
+        parts: 4
+      - itemId: 22540
+        parts: 5
+    avails:
+      - dst: 72
+        adj: 20
+        equipped: 4
+      - dst: 14
+        adj: 20
+        equipped: 4
+      - dst: 8
+        adj: 20
+        equipped: 4
+      - dst: 52
+        adj: 20
+        equipped: 4
+  - id: 165
+    nameId: IDS_PROPITEMETC_INC_000165
+    elems:
+      - itemId: 22541
+        parts: 6
+      - itemId: 22542
+        parts: 2
+      - itemId: 22543
+        parts: 4
+      - itemId: 22544
+        parts: 5
+    avails:
+      - dst: 47
+        adj: 20
+        equipped: 4
+      - dst: 65
+        adj: 20
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+  - id: 166
+    nameId: IDS_PROPITEMETC_INC_000166
+    elems:
+      - itemId: 22545
+        parts: 6
+      - itemId: 22546
+        parts: 2
+      - itemId: 22547
+        parts: 4
+      - itemId: 22548
+        parts: 5
+    avails:
+      - dst: 47
+        adj: 20
+        equipped: 4
+      - dst: 65
+        adj: 20
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+  - id: 167
+    nameId: IDS_PROPITEMETC_INC_000167
+    elems:
+      - itemId: 22549
+        parts: 6
+      - itemId: 22550
+        parts: 2
+      - itemId: 22551
+        parts: 4
+      - itemId: 22552
+        parts: 5
+    avails:
+      - dst: 77
+        adj: 20
+        equipped: 4
+      - dst: 47
+        adj: 20
+        equipped: 4
+      - dst: 65
+        adj: 20
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+  - id: 168
+    nameId: IDS_PROPITEMETC_INC_000168
+    elems:
+      - itemId: 22553
+        parts: 6
+      - itemId: 22554
+        parts: 2
+      - itemId: 22555
+        parts: 4
+      - itemId: 22556
+        parts: 5
+    avails:
+      - dst: 77
+        adj: 20
+        equipped: 4
+      - dst: 47
+        adj: 20
+        equipped: 4
+      - dst: 65
+        adj: 20
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+  - id: 169
+    nameId: IDS_PROPITEMETC_INC_000169
+    elems:
+      - itemId: 22557
+        parts: 6
+      - itemId: 22558
+        parts: 2
+      - itemId: 22559
+        parts: 4
+      - itemId: 22560
+        parts: 5
+    avails:
+      - dst: 2
+        adj: 20
+        equipped: 4
+      - dst: 90
+        adj: 20
+        equipped: 4
+      - dst: 65
+        adj: 20
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+  - id: 170
+    nameId: IDS_PROPITEMETC_INC_000170
+    elems:
+      - itemId: 22561
+        parts: 6
+      - itemId: 22562
+        parts: 2
+      - itemId: 22563
+        parts: 4
+      - itemId: 22564
+        parts: 5
+    avails:
+      - dst: 2
+        adj: 20
+        equipped: 4
+      - dst: 90
+        adj: 20
+        equipped: 4
+      - dst: 65
+        adj: 20
+        equipped: 4
+      - dst: 9
+        adj: 20
+        equipped: 4
+  - id: 171
+    nameId: IDS_PROPITEMETC_INC_000171
+    elems:
+      - itemId: 22565
+        parts: 6
+      - itemId: 22566
+        parts: 2
+      - itemId: 22567
+        parts: 4
+      - itemId: 22568
+        parts: 5
+    avails:
+      - dst: 52
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 20
+        equipped: 4
+      - dst: 75
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+  - id: 172
+    nameId: IDS_PROPITEMETC_INC_000172
+    elems:
+      - itemId: 22569
+        parts: 6
+      - itemId: 22570
+        parts: 2
+      - itemId: 22571
+        parts: 4
+      - itemId: 22572
+        parts: 5
+    avails:
+      - dst: 52
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 20
+        equipped: 4
+      - dst: 75
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+  - id: 173
+    nameId: IDS_PROPITEMETC_INC_000173
+    elems:
+      - itemId: 22573
+        parts: 6
+      - itemId: 22574
+        parts: 2
+      - itemId: 22575
+        parts: 4
+      - itemId: 22576
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 20
+        equipped: 4
+      - dst: 52
+        adj: 20
+        equipped: 4
+  - id: 174
+    nameId: IDS_PROPITEMETC_INC_000174
+    elems:
+      - itemId: 22577
+        parts: 6
+      - itemId: 22578
+        parts: 2
+      - itemId: 22579
+        parts: 4
+      - itemId: 22580
+        parts: 5
+    avails:
+      - dst: 1
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+      - dst: 72
+        adj: 20
+        equipped: 4
+      - dst: 52
+        adj: 20
+        equipped: 4
+  - id: 175
+    nameId: IDS_PROPITEMETC_INC_000175
+    elems:
+      - itemId: 22581
+        parts: 6
+      - itemId: 22582
+        parts: 2
+      - itemId: 22583
+        parts: 4
+      - itemId: 22584
+        parts: 5
+    avails:
+      - dst: 73
+        adj: 20
+        equipped: 4
+      - dst: 53
+        adj: 20
+        equipped: 4
+      - dst: 75
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+  - id: 176
+    nameId: IDS_PROPITEMETC_INC_000176
+    elems:
+      - itemId: 22585
+        parts: 6
+      - itemId: 22586
+        parts: 2
+      - itemId: 22587
+        parts: 4
+      - itemId: 22588
+        parts: 5
+    avails:
+      - dst: 73
+        adj: 20
+        equipped: 4
+      - dst: 53
+        adj: 20
+        equipped: 4
+      - dst: 75
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+  - id: 177
+    nameId: IDS_PROPITEMETC_INC_000177
+    elems:
+      - itemId: 22589
+        parts: 6
+      - itemId: 22590
+        parts: 2
+      - itemId: 22591
+        parts: 4
+      - itemId: 22592
+        parts: 5
+    avails:
+      - dst: 62
+        adj: 20
+        equipped: 4
+      - dst: 53
+        adj: 20
+        equipped: 4
+      - dst: 75
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+  - id: 178
+    nameId: IDS_PROPITEMETC_INC_000178
+    elems:
+      - itemId: 22593
+        parts: 6
+      - itemId: 22594
+        parts: 2
+      - itemId: 22595
+        parts: 4
+      - itemId: 22596
+        parts: 5
+    avails:
+      - dst: 62
+        adj: 20
+        equipped: 4
+      - dst: 53
+        adj: 20
+        equipped: 4
+      - dst: 75
+        adj: 20
+        equipped: 4
+      - dst: 3
+        adj: 20
+        equipped: 4
+  - id: 179
+    nameId: IDS_PROPITEMETC_INC_000179
+    elems:
+      - itemId: 20211
+        parts: 20
+      - itemId: 20211
+        parts: 21
+      - itemId: 20215
+        parts: 22
+      - itemId: 20215
+        parts: 23
+      - itemId: 20217
+        parts: 19
+    avails:
+      - dst: 52
+        adj: 20
+        equipped: 4
+      - dst: 29
+        adj: 50
+        equipped: 4
+      - dst: 14
+        adj: 20
+        equipped: 5
+  - id: 180
+    nameId: IDS_PROPITEMETC_INC_000180
+    elems:
+      - itemId: 20214
+        parts: 20
+      - itemId: 20214
+        parts: 21
+      - itemId: 20222
+        parts: 22
+      - itemId: 20222
+        parts: 23
+      - itemId: 20219
+        parts: 19
+    avails:
+      - dst: 16
+        adj: 20
+        equipped: 4
+      - dst: 90
+        adj: 20
+        equipped: 4
+      - dst: 44
+        adj: 1000
+        equipped: 5
+  - id: 181
+    nameId: IDS_PROPITEMETC_INC_000181
+    elems:
+      - itemId: 20213
+        parts: 20
+      - itemId: 20213
+        parts: 21
+      - itemId: 20221
+        parts: 22
+      - itemId: 20221
+        parts: 23
+      - itemId: 20218
+        parts: 19
+    avails:
+      - dst: 76
+        adj: 20
+        equipped: 4
+      - dst: 75
+        adj: 20
+        equipped: 4
+      - dst: 45
+        adj: 500
+        equipped: 5
+  - id: 182
+    nameId: IDS_PROPITEMETC_INC_000182
+    elems:
+      - itemId: 20212
+        parts: 20
+      - itemId: 20212
+        parts: 21
+      - itemId: 20216
+        parts: 22
+      - itemId: 20216
+        parts: 23
+      - itemId: 20220
+        parts: 19
+    avails:
+      - dst: 41
+        adj: 500
+        equipped: 4
+      - dst: 42
+        adj: 500
+        equipped: 4
+      - dst: 61
+        adj: 100
+        equipped: 5

@@ -80,7 +80,7 @@ export class InventoryRepository {
    * `MAX_INVENTORY + parts`). Used by the cluster PLAYER_LIST to render the
    * character-select preview (C++ `SendPlayerList` reads `m_aEquipInfo`).
    *
-   * @param minEquipSlot - First equip slot index (MAX_INVENTORY, 42 in v15).
+   * @param minEquipSlot - First equip slot index (MAX_INVENTORY, 42 in v19).
    */
   async findEquippedItemIds(characterId: number, minEquipSlot: number): Promise<number[]> {
     const rows = await this.db('inventory_item')

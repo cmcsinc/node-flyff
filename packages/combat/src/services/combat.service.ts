@@ -1,5 +1,5 @@
 /**
- * CombatService -- runs the v15 melee damage pipeline on a player->mover swing.
+ * CombatService -- runs the v19 melee damage pipeline on a player->mover swing.
  *
  * Wires the pure {@link resolveMelee} math to live state: resolves the target
  * via `SpawnManager`, applies `MinusHP` to the mover, broadcasts the DAMAGE
@@ -239,7 +239,7 @@ export class CombatService {
    * PvP damage tail (player→player). Mirrors `applyHit` but against a `CPlayer`
    * defender: apply MinusHP, broadcast DAMAGE, pause both players' stand regen,
    * and on lethal hit run `onPvpKill` (PK value increment + revival hook).
-   * No exp grant (PvP kills give no exp in v15), no rage, no spawn removal.
+   * No exp grant (PvP kills give no exp in v19), no rage, no spawn removal.
    */
   private applyHitPlayer(player: CPlayer, target: CPlayer, eff: MeleeResult): CombatOutcome {
     const dealt = applyDamagePlayer(target, eff);

@@ -61,7 +61,7 @@ export class ShopService {
     // prevent trade-window dupes. We intentionally do NOT: BUYITEM/SELLITEM now
     // re-validate `m_idOther` against a live trade NPC on every call (see {@link
     // tradeVendor}), closing the stale-vendor dupe vector without the one-window
-    // gate -- which the v15 client trips over because it does not always send
+    // gate -- which the v19 client trips over because it does not always send
     // CLOSESHOPWND around the piercing/upgrade transition at a weapon shop
     // (SRT_WEAPON), leaving `m_idOther` stuck and locking the player out of every
     // shop until relog. Replacing the stale vendor here self-heals that.

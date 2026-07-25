@@ -4,7 +4,7 @@
  * Mirrors `ParsingCommand` (`_Interface/FuncTextCmd.cpp:4458`): tokenize the
  * slash-line, match the command name case-insensitively, gate on authority
  * (`cmd.auth <= player.m_bAuthority`), dispatch. Unknown / no-auth lines are
- * dropped silently -- stock v15 sends no error reply.
+ * dropped silently -- stock v19 sends no error reply.
  *
  * Implemented commands (subset that works without inventory/combat/party):
  *   `/w <name> <msg>`     GENERAL       whisper (both peers receive)
@@ -477,7 +477,7 @@ export class CommandService {
    * Each is `AUTH_GAMEMASTER3` in C++ ('N'); collapsed to ADMINISTRATOR here.
    * Self-targeting (C++ also supports a trailing player name; ponytail). All
    * mutate via QuestService (which persists + audit-logs) and forward the
-   * returned snapshot frames to the caller. Silent on failure -- stock v15 sends
+   * returned snapshot frames to the caller. Silent on failure -- stock v19 sends
    * no error reply for most quest-admin branches.
    */
   private async questCmd(
@@ -600,7 +600,7 @@ export class CommandService {
    * `CreateItem` into the first free slot. We take a numeric `itemId` only
    * (ponytail: propItem name lookup) and delegate to `InventoryService.addItem`
    * (WAL + persist + state), then send the CREATEITEM snapshot on success. Bag
-   * full -> silent (stock v15 prints `TID_GAME_LACKSPACE` via AddDefinedText;
+   * full -> silent (stock v19 prints `TID_GAME_LACKSPACE` via AddDefinedText;
    * omitted until a defined-text channel ships).
    */
   private createItem({ args, player }: CommandCtx): void {

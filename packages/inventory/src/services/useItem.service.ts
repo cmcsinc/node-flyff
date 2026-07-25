@@ -58,13 +58,18 @@ export class UseItemService {
     // Cooldown gate (C++ DoUseItem:1335 -- GetGroup + CanUse BEFORE UseItem).
     // Group 0 = no cooldown; otherwise reject silently if still on cooldown.
     // Charge is NOT spent on rejection -- mirrors the C++ gate-before-afford order.
+    const k2 = prop.item_kind2;
     const cd = cooltimeGroup(prop, this.deps.potionCooldownMs);
     if (cd.group > 0) {
       const now = Date.now();
-      if ((player.m_cooltime[cd.group - 1] ?? 0) > now) return { kind: 'reject' };
+      const expiry = player.m_cooltime[cd.group - 1] ?? 0;
+      const onCooldown = expiry > now;
+      logger.info({ charId: player.m_idPlayer, itemId: invSlot.itemId, k2, group: cd.group, cdMs: cd.ms, onCooldown, expiryIn: onCooldown ? expiry - now : 0 }, 'use-item cooldown gate');
+      if (onCooldown) return { kind: 'reject' };
+    } else {
+      logger.info({ charId: player.m_idPlayer, itemId: invSlot.itemId, k2, group: 0 }, 'use-item cooldown gate (no group)');
     }
 
-    const k2 = prop.item_kind2;
     if (k2 === 'IK2_POTION' || k2 === 'IK2_FOOD') {
       const r = this.deps.consumableService.apply(player, prop, slot);
       const out: { kind: 'consumable'; nId: number; remaining: number; hp?: number; mp?: number; fp?: number; cooltime?: boolean } =

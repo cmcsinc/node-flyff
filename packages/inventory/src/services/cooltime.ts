@@ -2,7 +2,7 @@
  * CooltimeService -- consumable cooldown group classification.
  *
  * Ports `CCooltimeMgr::GetGroup` (`_Common/CooltimeMgr.cpp:19-43`): maps an
- * item prop to a 1-based cooldown group + duration. v15 groups are food (1),
+ * item prop to a 1-based cooldown group + duration. v19 groups are food (1),
  * pill (2), skill (3). Vanilla comments `IK2_POTION` out (no cooldown); we add
  * a 4th potion group so HP potions can be rate-limited via config fallback --
  * the duration source (`dwSkillReady`) is 0 on potions in the source data.

@@ -45,7 +45,7 @@ export interface MovementServiceDeps {
    */
   onMoved?: (player: CPlayer) => void;
   /**
-   * Ground-item pickup trigger. v15 has no pickup packet: the client walks to a
+   * Ground-item pickup trigger. v19 has no pickup packet: the client walks to a
    * pile via `PLAYERSETDESTOBJ` and the server loots on arrival. Hooked here so
    * every accepted position update re-checks `m_idDestObj` range. Optional so
    * tests/standalone movement can omit it.
@@ -143,7 +143,7 @@ export class MovementService {
    * Apply a GETPOS frame (DPSrvr.cpp:1416 OnGetPos) -- authoritative position
    * report from client. NaN guard on `fAngle`, anti-teleport on `vPos`, then
    * store on player. When `objid == NULL_ID`, C++ accepts the position as the
-   * player's own (the only path v15 uses).
+   * player's own (the only path v19 uses).
    */
   applyGetPos(player: CPlayer, pos: Vec3, fAngle: number, objid: number): GetPosOutcome {
     if (Number.isNaN(fAngle)) return { ok: false, reason: 'nan_angle' };
@@ -172,7 +172,7 @@ export class MovementService {
       player.m_idDestObj = destObjid;
       player.m_fArrivalRange = fRange;
     }
-    // v15 pickup has no packet -- check immediately in case the player is already
+    // v19 pickup has no packet -- check immediately in case the player is already
     // on the pile (click a drop at your feet); otherwise the arrival check fires
     // on the next accepted position update.
     this.deps.lootService?.checkArrival(player);

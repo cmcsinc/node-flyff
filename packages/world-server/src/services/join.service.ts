@@ -22,7 +22,7 @@ import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
 import { AUTH, isJobMatch } from '@flyff/entities';
 import { recomputeSetBonuses } from '@flyff/inventory';
-import { MAX_HUMAN_PARTS, MAX_INVENTORY } from '@flyff/world-core';
+import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam } from '@flyff/world-core';
 import { decodeTaskBar, decodeTaskBarQueue } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
@@ -164,20 +164,37 @@ export class JoinService {
   /**
    * Iterate equipped slots (MAX_INVENTORY..MAX_HUMAN_PARTS-1) and apply each
    * item's `effects` to `m_params`. Idempotent at JOIN (m_params starts empty);
-   * subsequent equip/unequip go through `EquipService`.
+   * subsequent equip/unequip go through `EquipService`. Also seeds the client:
+   * the v19 Neuz client does NOT apply equip DST locally (`SetDestParamEquip` is
+   * `#ifndef __CLIENT`), so the server must push every active effect at login or
+   * the stat window shows base stats only (memory: v19-stat-dst-param-model-shipped).
    */
   private applyEquipDstParams(player: CPlayer): void {
     if (!this.deps.getItem) return;
+    const seeded: Array<{ dst: number; adj: number; chg?: number }> = [];
     for (let part = 0; part < MAX_HUMAN_PARTS; part++) {
       const slot = player.m_Inventory[MAX_INVENTORY + part];
       if (!slot) continue;
       const prop = this.deps.getItem(slot.itemId);
       const effects = prop?.effects;
-      if (effects && effects.length > 0) player.m_params.applyEffects(effects);
+      if (effects && effects.length > 0) {
+        player.m_params.applyEffects(effects);
+        seeded.push(...effects);
+      }
     }
     // Seed set-item bonuses so the JOIN snapshot + regen start from buffed maxes
     // (C++ RedoEquip runs SetDestParamSetItem at load). Mirrors EquipService.
     if (this.deps.getSetItem) recomputeSetBonuses(player, this.deps.getSetItem);
+
+    // Push the full active DST state to self so the client stat window matches
+    // the buffed server values from login (per-effect SetDestParam, self-only --
+    // peers have not seen this player yet).
+    for (const e of seeded) {
+      this.deps.playerManager.sendTo(player, buildSetDestParam(player.m_idPlayer, e.dst, e.adj, e.chg));
+    }
+    for (const e of player.m_setEffects) {
+      this.deps.playerManager.sendTo(player, buildSetDestParam(player.m_idPlayer, e.dst, e.adj, e.chg));
+    }
   }
 
   /**

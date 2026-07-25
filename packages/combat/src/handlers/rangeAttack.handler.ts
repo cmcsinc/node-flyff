@@ -3,7 +3,7 @@
  *
  * The ranged twin of {@link MeleeAttackHandler}. Same C->S body as melee
  * (`dwAtkMsg, objid, nParam2, nParam3` + trailing `fVal` under `__HACK_1023`,
- * active in v15). `fVal` is consumed to keep the stream aligned but otherwise
+ * active in v19). `fVal` is consumed to keep the stream aligned but otherwise
  * unused (anti-cheat echo of the weapon's fAttackSpeed).
  *
  * The client sends RANGE_ATTACK (not MELEE_ATTACK) when the equipped weapon is a

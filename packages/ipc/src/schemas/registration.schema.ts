@@ -97,7 +97,7 @@ export type UnregisterWorld = z.infer<typeof UnregisterWorldSchema>;
  * One world channel entry, shared between {@link RegisterClusterRequestSchema}
  * and {@link ClusterHeartbeatSchema}. Sent at registration so the Login Server
  * can populate the server list immediately instead of waiting for the first
- * heartbeat (the v15 client cannot proceed past server-select without a channel).
+ * heartbeat (the v19 client cannot proceed past server-select without a channel).
  */
 export const WorldChannelSchema = z.object({
   channelId: z.number().int().min(1),
@@ -125,7 +125,7 @@ export const RegisterClusterRequestSchema = z.object({
   channelCount: z.number().int().min(0),
   /**
    * World channels currently online under this cluster. Sent at registration so
-   * the Login Server's server list has channel children immediately -- the v15
+   * the Login Server's server list has channel children immediately -- the v19
    * client requires a server + a channel to proceed past server-select.
    */
   worlds: z.array(WorldChannelSchema).default([]),

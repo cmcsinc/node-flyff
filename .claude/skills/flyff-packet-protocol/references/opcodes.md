@@ -111,4 +111,4 @@
 
 ---
 
-> Values above are based on leaked v15/v18 source. Different Flyff versions may vary — always cross-check with a packet capture or the specific source version you are targeting.
+> Values above are based on leaked v19/v18 source. Different Flyff versions may vary — always cross-check with a packet capture or the specific source version you are targeting.

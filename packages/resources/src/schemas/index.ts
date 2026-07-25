@@ -11,3 +11,4 @@ export * from './zone.schema';
 export * from './dialog.schema';
 export * from './quest.schema';
 export * from './drop.schema';
+export * from './setItem.schema';

@@ -18,7 +18,7 @@
  * │                └─ BILLPOSTER(11)  ── BILLPOSTER_MASTER(21)  ── BILLPOSTER_HERO(29)
  * ├─ MAGICIAN(4)  ─┬─ PSYCHIKEEPER(12) ── PSYCHIKEEPER_MASTER(22) ── PSYCHIKEEPER_HERO(30)
  * │                └─ ELEMENTOR(13)    ── ELEMENTOR_MASTER(23)    ── ELEMENTOR_HERO(31)
- * ├─ PUPPETEER(5) -- v15 stub, no pro skills
+ * ├─ PUPPETEER(5) -- v19 stub, no pro skills
  * ├─ GATEKEEPER(14) / DOPPLER(15) -- unused, orphaned to root
  * ```
  *
@@ -38,7 +38,7 @@ const JOB_PARENT: ReadonlyMap<number, number> = new Map<number, number>([
   [1, 0], [2, 0], [3, 0], [4, 0], [5, 0],
   // Professional (2nd job) -- offset +5 from expert parent
   [6, 1], [7, 1], [8, 2], [9, 2], [10, 3], [11, 3], [12, 4], [13, 4],
-  // Unused v15 stubs -- orphan to root so they only self-match.
+  // Unused v19 stubs -- orphan to root so they only self-match.
   [14, 0], [15, 0],
   // Master -- parent is the matching pro job (offset -10).
   [16, 6], [17, 7], [18, 8], [19, 9], [20, 10], [21, 11], [22, 12], [23, 13],

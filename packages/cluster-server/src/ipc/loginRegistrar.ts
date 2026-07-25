@@ -204,7 +204,7 @@ export class LoginRegistrar extends EventEmitter {
       publicPort,
       channelCount: worlds.length,
       // Send the live channel list at registration so the Login Server's
-      // server list has channel children immediately -- the v15 client cannot
+      // server list has channel children immediately -- the v19 client cannot
       // proceed past server-select without a channel, and the first heartbeat
       // only fires after heartbeatIntervalMs.
       worlds: worlds.map(w => ({

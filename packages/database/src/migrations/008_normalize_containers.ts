@@ -21,7 +21,7 @@ import type { Knex } from '../types';
  * independently addressable container (unblocks a future "share-a-bank via an
  * item" feature -- the gold + pin travel with the container).
  *
- * `bank_pass` becomes account-wide (one pin per account). v15's per-character
+ * `bank_pass` becomes account-wide (one pin per account). v19's per-character
  * pin is collapsed to the account-shared bank we already ship; backfill takes
  * the first set pin per account, else '0000'.
  *

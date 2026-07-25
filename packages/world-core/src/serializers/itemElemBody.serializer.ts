@@ -27,7 +27,7 @@
  * m_bTranformVisPet` resolve to `operator<<(int)` -> `operator<<((LONG))` =
  * 4 bytes. Writing these as BYTE was the shop-open crash: the body came out
  * 6B short per item, so item #2+ in a populated `CItemContainer<CItemElem>`
- * read a garbage m_dwItemId -> null prop -> SetTexture null-deref. (The v15
+ * read a garbage m_dwItemId -> null prop -> SetTexture null-deref. (The v19
  * shop tab was the first populated container ever sent; JOIN spawns the
  * player naked, so the bug was latent until now.) `bPet` stays BYTE -- the
  * C++ stores it as an explicit `(BYTE)0x00` cast (ObjSerialize.cpp:78,83).
@@ -40,7 +40,7 @@ import type { InventorySlot } from '@flyff/entities';
 
 /**
  * Write the CItemBase + CItemElem body for one slot. `objId` is the per-slot
- * inventory elem id (v15 `m_dwObjId`, 0..255 -- we use the slot index). A null
+ * inventory elem id (v19 `m_dwObjId`, 0..255 -- we use the slot index). A null
  * slot is an error -- callers skip empties.
  */
 export function writeCItemElemBody(w: PacketWriter, objId: number, slot: InventorySlot): void {

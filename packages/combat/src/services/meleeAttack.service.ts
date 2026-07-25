@@ -2,7 +2,7 @@
  * MeleeAttackService -- `PACKETTYPE_MELEE_ATTACK` (0x00ff0010).
  *
  * `DPSrvr::OnMeleeAttack` (DPSrvr.cpp:4131) reads `dwAtkMsg, objid, nParam2,
- * nParam3, fVal` (the last only under `__HACK_1023`, active in v15) and echoes a
+ * nParam3, fVal` (the last only under `__HACK_1023`, active in v19) and echoes a
  * peer-broadcast swing animation via `g_UserMng.AddMeleeAttack`. `fVal` is an
  * anti-cheat echo of the weapon's `fAttackSpeed` -- verified server-side against
  * the equipped weapon, never re-broadcast.

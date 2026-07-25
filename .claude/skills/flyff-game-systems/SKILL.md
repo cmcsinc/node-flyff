@@ -28,7 +28,7 @@ export function computeStats(player) {
   const { m_nStr: str, m_nSta: sta, m_nDex: dex, m_nInt: int_, m_nLevel: lv } = player;
   const job = player.m_nJob;
 
-  // Base HP formula (matches v15 source)
+  // Base HP formula (matches v19 source)
   const maxHp = Math.floor((sta * 4.5 + lv * 1.8) * getHpFactor(job));
 
   // Base MP
@@ -98,7 +98,7 @@ export function resolveMeleeAttack(attacker, target) {
   // Damage roll
   const rawDmg = randBetween(atkStats.minAtk, atkStats.maxAtk);
 
-  // Defense reduction (additive model matching v15)
+  // Defense reduction (additive model matching v19)
   const reduced = Math.max(1, rawDmg - defStats.def);
 
   // Critical hit
@@ -138,7 +138,7 @@ const EXP_TABLE = buildExpTable();
 function buildExpTable() {
   const t = [0, 0]; // level 0 and 1 need 0 exp
   for (let lv = 2; lv <= 120; lv++) {
-    // Matches Flyff v15 formula
+    // Matches Flyff v19 formula
     t[lv] = Math.floor(Math.pow(lv, 3) * 18 + lv * 200);
   }
   return t;

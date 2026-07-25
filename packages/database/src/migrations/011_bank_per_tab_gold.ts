@@ -3,7 +3,7 @@ import type { Knex } from '../types';
 /**
  * Per-tab bank gold.
  *
- * v15 banks carry 3 independent gold pools -- one per tab -- and the wire
+ * v19 banks carry 3 independent gold pools -- one per tab -- and the wire
  * protocol carries `BYTE nSlot` (tab) on PUTGOLDBANK / GETGOLDBANK
  * (`DPSrvr.cpp:3848/3900`). The entity already models `m_BankGold[3]`
  * (`player.ts:255`) and the JOIN snapshot already writes all three to the

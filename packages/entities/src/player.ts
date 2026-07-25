@@ -98,7 +98,7 @@ export interface InventorySlot {
   itemId: number;
   count: number;
   /**
-   * Stable per-item id (v15 `CItemElem::m_dwObjId`). Assigned ONCE at creation
+   * Stable per-item id (v19 `CItemElem::m_dwObjId`). Assigned ONCE at creation
    * (JOIN: the slot index; pickup/CREATEITEM: the slot index) and NEVER changed
    * by equip/unequip/move -- the client addresses items by this id (`OnDoEquip`
    * `GetAtId`, `IsEquip`, Item.h:599). Our flat array moves items between slots
@@ -286,7 +286,7 @@ export class CPlayer {
    */
   m_invIndex: Uint32Array = new Uint32Array(INVENTORY_SLOTS);
   /**
-   * Bank tabs (C++ `m_Bank[3]`, 42 slots each). Per-character in v15. Hydrated
+   * Bank tabs (C++ `m_Bank[3]`, 42 slots each). Per-character in v19. Hydrated
    * from `BankRepository` on JOIN; mutated by the bank service. Tab 0..2.
    */
   m_Bank: (InventorySlot | null)[][] = [
@@ -339,6 +339,15 @@ export class CPlayer {
    * instead of a raw timer on the entity.
    */
   m_queueTimer: ReturnType<typeof setTimeout> | undefined = undefined;
+  /**
+   * Logout penalty deadline (ms epoch) -- C++ `m_dwLeavePenatyTime`. Set by
+   * REQ_LEAVE (0x00ff00fa) to `Date.now() + TIMEWAIT_CLOSE*1000` (10s). Idempotent
+   * (only set if 0). 0 = no leave requested. The actual disconnect is driven by
+   * the LEAVE handler; this timestamp is the deferred-destroy deadline for the
+   * safe-zone / guild-war logout penalty path. ponytail: no penalty enforcement
+   * yet -- LEAVE destroys immediately; consult this field when porting penalty.
+   */
+  m_dwLeavePenatyTime: number = 0;
   /** True while the bank window is open (NPC range / instant-bank). */
   m_bBankOpen: boolean = false;
   /**

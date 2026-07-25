@@ -40,6 +40,8 @@ export const DST = Object.freeze({
   MASTRY_ELECTRICITY: 19,
   MASTRY_WIND: 20,
   ATTACKSPEED: 24,
+  /** Bonus sword damage (`defineAttribute.h:25`) -- set-item avail, stored not yet read by combat. */
+  SWD_DMG: 25,
   ADJDEF: 26,
   RESIST_MAGIC: 27,
   RESIST_ELECTRICITY: 28,
@@ -47,6 +49,8 @@ export const DST = Object.freeze({
   RESIST_WIND: 31,
   RESIST_WATER: 32,
   RESIST_EARTH: 33,
+  /** Bonus axe damage (`defineAttribute.h:34`) -- set-item avail, stored not yet read by combat. */
+  AXE_DMG: 34,
   HP_MAX: 35,
   MP_MAX: 36,
   FP_MAX: 37,
@@ -88,14 +92,19 @@ export const DST = Object.freeze({
 export type DstId = typeof DST[keyof typeof DST];
 
 /**
- * `DST_CHRSTATE` state bits (`defineAttribute.h` `AF_*`). OR-ed into the
- * CHRSTATE adj pool by stun/poison/sleep buffs; read to gate actions. The full
- * combat-side attack-flag set (`AF_CRITICAL`, `AF_PUSH`, ...) lives in
- * `@flyff/combat` -- these are only the *status* bits the status system reads.
+ * `DST_CHRSTATE` state bits (`defineAttribute.h` `CHS_*`). OR-ed into the
+ * CHRSTATE adj pool by stun/poison/slow/debuff skills; read to gate actions
+ * (`isStunned`). Values mirror C++ `CHS_*` exactly -- earlier code had STUN
+ * and POISON inverted, so stun debuffs (POWERSTUMP `CHS_STUN=0x8`) never
+ * tripped the gate. The full combat-side attack-flag set (`AF_CRITICAL`,
+ * `AF_PUSH`, ...) is a *different* bitfield in `@flyff/combat`.
  */
 export const CHRSTATE_BITS = Object.freeze({
-  STUN: 0x0800,        // AF_STUN -- cannot act (no attack/cast/move)
-  POISON: 0x0001,      // AF_POISON -- DoT (status tick, ponytail)
-  SLEEP: 0x0040,       // AF_SLEEP -- cannot act, breaks on damage
+  STUN: 0x00000008,    // CHS_STUN -- cannot act (no attack/cast/move)
+  DARK: 0x00000100,    // CHS_DARK -- blindness
+  POISON: 0x00000800,  // CHS_POISON -- DoT
+  SLOW: 0x00001000,    // CHS_SLOW -- movement slow
+  BLEEDING: 0x00008000,// CHS_BLEEDING -- DoT
+  SILENT: 0x00010000,  // CHS_SILENT -- silence (no cast)
 } as const);
 

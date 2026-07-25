@@ -33,12 +33,9 @@ skills:
     maxLevel: 10
     levels:
       - level: 1
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -300
           - 100
@@ -47,12 +44,9 @@ skills:
         castingTime: 1250
         skillTime: 11000
       - level: 2
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -260
           - 130
@@ -61,12 +55,9 @@ skills:
         castingTime: 1250
         skillTime: 12000
       - level: 3
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -240
           - 160
@@ -75,12 +66,9 @@ skills:
         castingTime: 1250
         skillTime: 13000
       - level: 4
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -220
           - 190
@@ -89,12 +77,9 @@ skills:
         castingTime: 1250
         skillTime: 14000
       - level: 5
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -200
           - 210
@@ -103,12 +88,9 @@ skills:
         castingTime: 1250
         skillTime: 15000
       - level: 6
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -180
           - 240
@@ -117,12 +99,9 @@ skills:
         castingTime: 1250
         skillTime: 16000
       - level: 7
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -160
           - 270
@@ -131,12 +110,9 @@ skills:
         castingTime: 1250
         skillTime: 17000
       - level: 8
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -140
           - 300
@@ -145,12 +121,9 @@ skills:
         castingTime: 1250
         skillTime: 18000
       - level: 9
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -120
           - 350
@@ -159,12 +132,9 @@ skills:
         castingTime: 1250
         skillTime: 19000
       - level: 10
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 63
+          - 26
         adjParamVals:
           - -100
           - 400
@@ -203,132 +173,82 @@ skills:
     maxLevel: 10
     levels:
       - level: 1
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 5
-          - 400
         reqFp: 80
         castingTime: 1250
         skillTime: 2000
       - level: 2
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 10
-          - 400
         reqFp: 84
         castingTime: 1250
         skillTime: 2000
       - level: 3
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 15
-          - 400
         reqFp: 88
         castingTime: 1250
         skillTime: 2000
       - level: 4
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 20
-          - 400
         reqFp: 92
         castingTime: 1250
         skillTime: 2000
       - level: 5
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 25
-          - 400
         reqFp: 96
         castingTime: 1250
         skillTime: 2000
       - level: 6
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 30
-          - 400
         reqFp: 100
         castingTime: 1250
         skillTime: 2000
       - level: 7
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 35
-          - 400
         reqFp: 104
         castingTime: 1250
         skillTime: 2000
       - level: 8
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 40
-          - 400
         reqFp: 108
         castingTime: 1250
         skillTime: 2000
       - level: 9
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 45
-          - 400
         reqFp: 112
         castingTime: 1250
         skillTime: 2000
       - level: 10
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 29
         adjParamVals:
           - 50
-          - 400
         reqFp: 116
         castingTime: 1250
         skillTime: 2000
@@ -363,12 +283,9 @@ skills:
     maxLevel: 10
     levels:
       - level: 1
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 100
           - -5
@@ -376,12 +293,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 2
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 120
           - -10
@@ -389,12 +303,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 3
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 140
           - -15
@@ -402,12 +313,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 4
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 160
           - -20
@@ -415,12 +323,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 5
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 180
           - -24
@@ -428,12 +333,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 6
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 200
           - -28
@@ -441,12 +343,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 7
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 220
           - -32
@@ -454,12 +353,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 8
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 240
           - -36
@@ -467,12 +363,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 9
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 260
           - -40
@@ -480,12 +373,9 @@ skills:
         castingTime: 1250
         skillTime: 3000
       - level: 10
-        abilityMin: 39
-        abilityMax: 40
-        abilityMinPvp: 39
-        abilityMaxPvp: 40
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 10004
+          - 10005
         adjParamVals:
           - 280
           - -42
@@ -528,151 +418,91 @@ skills:
         abilityMax: 132
         abilityMinPvp: 131
         abilityMaxPvp: 132
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 80
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 2
         abilityMin: 133
         abilityMax: 134
         abilityMinPvp: 133
         abilityMaxPvp: 134
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 84
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 3
         abilityMin: 135
         abilityMax: 136
         abilityMinPvp: 135
         abilityMaxPvp: 136
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 88
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 4
         abilityMin: 137
         abilityMax: 138
         abilityMinPvp: 137
         abilityMaxPvp: 138
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 92
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 5
         abilityMin: 139
         abilityMax: 140
         abilityMinPvp: 139
         abilityMaxPvp: 140
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 96
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 6
         abilityMin: 141
         abilityMax: 142
         abilityMinPvp: 141
         abilityMaxPvp: 142
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 100
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 7
         abilityMin: 143
         abilityMax: 144
         abilityMinPvp: 143
         abilityMaxPvp: 144
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 104
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 8
         abilityMin: 145
         abilityMax: 146
         abilityMinPvp: 145
         abilityMaxPvp: 146
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 108
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 9
         abilityMin: 147
         abilityMax: 148
         abilityMinPvp: 147
         abilityMaxPvp: 148
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 112
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
       - level: 10
         abilityMin: 149
         abilityMax: 150
         abilityMinPvp: 149
         abilityMaxPvp: 150
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 116
         cooldown: 10000
         castingTime: 1250
         skillRange: 4
-        skillTime: 3000
   - id: 132
     name: Earth Divider
     name_id: IDS_PROPSKILL_TXT_000044
@@ -708,141 +538,81 @@ skills:
         abilityMax: 192
         abilityMinPvp: 111
         abilityMaxPvp: 192
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 82
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 2
         abilityMin: 113
         abilityMax: 184
         abilityMinPvp: 113
         abilityMaxPvp: 184
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 84
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 3
         abilityMin: 115
         abilityMax: 176
         abilityMinPvp: 115
         abilityMaxPvp: 176
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 86
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 4
         abilityMin: 117
         abilityMax: 168
         abilityMinPvp: 117
         abilityMaxPvp: 168
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 88
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 5
         abilityMin: 119
         abilityMax: 160
         abilityMinPvp: 119
         abilityMaxPvp: 160
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 90
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 6
         abilityMin: 121
         abilityMax: 152
         abilityMinPvp: 121
         abilityMaxPvp: 152
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 92
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 7
         abilityMin: 123
         abilityMax: 144
         abilityMinPvp: 123
         abilityMaxPvp: 144
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 94
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 8
         abilityMin: 125
         abilityMax: 136
         abilityMinPvp: 125
         abilityMaxPvp: 136
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 96
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 9
         abilityMin: 127
         abilityMax: 128
         abilityMinPvp: 127
         abilityMaxPvp: 128
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 98
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
       - level: 10
         abilityMin: 129
         abilityMax: 120
         abilityMinPvp: 129
         abilityMaxPvp: 120
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 100
         castingTime: 1500
         skillRange: 6
-        skillTime: 3000
   - id: 133
     name: Charge
     name_id: IDS_PROPSKILL_TXT_000046
@@ -878,141 +648,71 @@ skills:
         abilityMax: 102
         abilityMinPvp: 101
         abilityMaxPvp: 102
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 40
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 2
         abilityMin: 103
         abilityMax: 104
         abilityMinPvp: 103
         abilityMaxPvp: 104
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 42
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 3
         abilityMin: 105
         abilityMax: 106
         abilityMinPvp: 105
         abilityMaxPvp: 106
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 44
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 4
         abilityMin: 107
         abilityMax: 108
         abilityMinPvp: 107
         abilityMaxPvp: 108
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 46
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 5
         abilityMin: 109
         abilityMax: 110
         abilityMinPvp: 109
         abilityMaxPvp: 110
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 48
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 6
         abilityMin: 111
         abilityMax: 112
         abilityMinPvp: 111
         abilityMaxPvp: 112
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 50
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 7
         abilityMin: 113
         abilityMax: 114
         abilityMinPvp: 113
         abilityMaxPvp: 114
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 52
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 8
         abilityMin: 115
         abilityMax: 116
         abilityMinPvp: 115
         abilityMaxPvp: 116
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 54
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 9
         abilityMin: 117
         abilityMax: 118
         abilityMinPvp: 117
         abilityMaxPvp: 118
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 56
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
       - level: 10
         abilityMin: 119
         abilityMax: 120
         abilityMinPvp: 119
         abilityMaxPvp: 120
-        probability: 100
-        probabilityPvp: 100
-        adjParamVals:
-          - 280
-          - -42
         reqFp: 58
         castingTime: 1250
-        skillRange: 6
-        skillTime: 3000
   - id: 134
     name: Pain Dealer
     name_id: IDS_PROPSKILL_TXT_000048
@@ -1048,140 +748,120 @@ skills:
         abilityMax: 87
         abilityMinPvp: 86
         abilityMaxPvp: 87
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -20
-          - -42
         reqFp: 56
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 2
         abilityMin: 88
         abilityMax: 89
         abilityMinPvp: 88
         abilityMaxPvp: 89
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -40
-          - -42
         reqFp: 59
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 3
         abilityMin: 90
         abilityMax: 91
         abilityMinPvp: 90
         abilityMaxPvp: 91
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -60
-          - -42
         reqFp: 62
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 4
         abilityMin: 92
         abilityMax: 93
         abilityMinPvp: 92
         abilityMaxPvp: 93
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -80
-          - -42
         reqFp: 65
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 5
         abilityMin: 94
         abilityMax: 95
         abilityMinPvp: 94
         abilityMaxPvp: 95
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -100
-          - -42
         reqFp: 68
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 6
         abilityMin: 96
         abilityMax: 97
         abilityMinPvp: 96
         abilityMaxPvp: 97
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -110
-          - -42
         reqFp: 71
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 7
         abilityMin: 98
         abilityMax: 99
         abilityMinPvp: 98
         abilityMaxPvp: 99
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -120
-          - -42
         reqFp: 74
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 8
         abilityMin: 100
         abilityMax: 101
         abilityMinPvp: 100
         abilityMaxPvp: 101
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -130
-          - -42
         reqFp: 77
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 9
         abilityMin: 102
         abilityMax: 103
         abilityMinPvp: 102
         abilityMaxPvp: 103
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -140
-          - -42
         reqFp: 80
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
       - level: 10
         abilityMin: 104
         abilityMax: 105
         abilityMinPvp: 104
         abilityMaxPvp: 105
-        probability: 100
-        probabilityPvp: 100
+        destParams:
+          - 26
         adjParamVals:
           - -150
-          - -42
         reqFp: 83
         castingTime: 1250
-        skillRange: 6
         skillTime: 60000
   - id: 135
     name: Power Stomp
@@ -1220,8 +900,10 @@ skills:
         abilityMaxPvp: 97
         probability: 10
         probabilityPvp: 10
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 70
         castingTime: 1500
         skillRange: 4
@@ -1233,8 +915,10 @@ skills:
         abilityMaxPvp: 99
         probability: 11
         probabilityPvp: 11
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 72
         castingTime: 1500
         skillRange: 4
@@ -1246,8 +930,10 @@ skills:
         abilityMaxPvp: 101
         probability: 11
         probabilityPvp: 11
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 74
         castingTime: 1500
         skillRange: 4
@@ -1259,8 +945,10 @@ skills:
         abilityMaxPvp: 103
         probability: 12
         probabilityPvp: 12
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 76
         castingTime: 1500
         skillRange: 4
@@ -1272,8 +960,10 @@ skills:
         abilityMaxPvp: 105
         probability: 12
         probabilityPvp: 12
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 78
         castingTime: 1500
         skillRange: 4
@@ -1285,8 +975,10 @@ skills:
         abilityMaxPvp: 107
         probability: 13
         probabilityPvp: 13
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 80
         castingTime: 1500
         skillRange: 4
@@ -1298,8 +990,10 @@ skills:
         abilityMaxPvp: 109
         probability: 13
         probabilityPvp: 13
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 82
         castingTime: 1500
         skillRange: 4
@@ -1311,8 +1005,10 @@ skills:
         abilityMaxPvp: 111
         probability: 14
         probabilityPvp: 14
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 84
         castingTime: 1500
         skillRange: 4
@@ -1324,8 +1020,10 @@ skills:
         abilityMaxPvp: 113
         probability: 14
         probabilityPvp: 14
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 86
         castingTime: 1500
         skillRange: 4
@@ -1337,8 +1035,10 @@ skills:
         abilityMaxPvp: 115
         probability: 15
         probabilityPvp: 15
+        destParams:
+          - 64
         adjParamVals:
-          - -42
+          - 8
         reqFp: 88
         castingTime: 1500
         skillRange: 4

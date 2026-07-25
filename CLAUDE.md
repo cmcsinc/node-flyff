@@ -234,7 +234,7 @@ Two separate concerns that must stay split:
 - **Materialization** (server-side): zone NPCs + monster spawn points are instantiated ONCE at world-server boot by `SpawnManager.bootstrap()` (wired in `compose.ts`). They live in memory, independent of any player. `dwObjIndex` on each mover MUST be a real `MI_*` from `resource/defineObj.h` (active block starts line 1036) — the client's `CreateObj` → `GetMoverProp` null-derefs `OnAddObj` (`DPClient.cpp:1160`) on any value missing from its propMover table.
 - **Client notification**: the ADD_OBJ snapshot for a player's zone is sent by `VicinityService.enterZone(charId)`, triggered from `MapKeyHandler` on the player's FIRST accepted `MAP_KEY` (one-shot via `CPlayer.m_vicinitySent`). MAP_KEY is the point where Neuz has finished `WORLD_READINFO`/`ReadWorld` (so `g_pWorld`+`g_pPlayer` are set and `OnAddObj` can safely create mover models).
 
-**Never send the NPC ADD_OBJ snapshot from `JoinHandler`.** Bolting it onto JOIN races the client's async world load and desyncs the stream → `OnAddObj:1160` null-deref. JOIN sends only the self-spawn (WORLD_READINFO + the player's own ADD_OBJ). See memory `v15-npc-addobj-method-exclude-item`.
+**Never send the NPC ADD_OBJ snapshot from `JoinHandler`.** Bolting it onto JOIN races the client's async world load and desyncs the stream → `OnAddObj:1160` null-deref. JOIN sends only the self-spawn (WORLD_READINFO + the player's own ADD_OBJ). See memory `v19-npc-addobj-method-exclude-item`.
 
 **Performance rules**:
 

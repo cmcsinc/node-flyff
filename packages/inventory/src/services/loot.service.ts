@@ -1,7 +1,7 @@
 /**
  * LootService -- the C++ `DoLoot` body + the dest-obj arrival trigger.
  *
- * v15 has NO dedicated pickup packet. To grab a ground pile the client clicks
+ * v19 has NO dedicated pickup packet. To grab a ground pile the client clicks
  * it and sends only `PACKETTYPE_PLAYERSETDESTOBJ` (`CMD_SetUseItem` ->
  * `SetDestObj`, `_Common/MoverMsg.cpp:536`; wire `objid | float fRange`,
  * `fRange == 0.0` for a ground item). The server auto-loots in its own
@@ -16,7 +16,7 @@
  * `DoLoot` body is the same gold/item routing the (dead) ACTMSG/OBJMSG_PICKUP
  * handler implemented -- the client never sends ACTMSG for pickup; OBJMSG_PICKUP
  * is only a server->clients motion broadcast (`User.cpp:7067`). See memory
- * `v15-isloot-anti-loot-steal`.
+ * `v19-isloot-anti-loot-steal`.
  *
  * WAL-first (rule 03/04): `InventoryService` journals + mutates before
  * `checkArrival`/`pickup` send any ack snapshot.

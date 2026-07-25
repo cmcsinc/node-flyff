@@ -1,7 +1,7 @@
 /**
- * Seed a dev account + character so a real v15 client can log in.
+ * Seed a dev account + character so a real v19 client can log in.
  *
- * Password handling matches the v15 client (`Neuz/Neuz.cpp:1147`): the client
+ * Password handling matches the v19 client (`Neuz/Neuz.cpp:1147`): the client
  * sends `md5("kikugalanet" + typed)` Rijndael-encrypted; our certifier decrypts
  * that to the md5hex, then argon2-verifies. So the stored hash must be
  * `argon2(md5("kikugalanet" + typed))`.

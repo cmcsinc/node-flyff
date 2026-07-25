@@ -9,7 +9,7 @@
  *
  * Wire objids start at `FIRST_MOVER_ID` (0x40000000) -- high-bit range,
  * disjoint from player char ids so the client never confuses NPC and player
- * objids (memory: v15-npc-addobj-method-exclude-item).
+ * objids (memory: v19-npc-addobj-method-exclude-item).
  *
  * Respawn: on `kill(id)`, if the mover's spawn `delay > 0` (monsters only), a
  * `setTimeout` re-materializes it at the same placement after `delay` ms and
@@ -38,7 +38,7 @@ const FIRST_MOVER_ID = 0x40000000;
  * How long a slain monster's corpse stays visible on clients before the server
  * broadcasts DEL_OBJ to drop it. Independent of the per-spawn respawn `delay`:
  * the corpse fades on this timer while the respawn timer runs in parallel.
- * Tunable -- mirrors the v15 client's own corpse-linger window.
+ * Tunable -- mirrors the v19 client's own corpse-linger window.
  */
 export const CORPSE_DESPAWN_MS = 10_000;
 
@@ -313,7 +313,7 @@ function toOutfit(
  * tagged with that IK3 symbol in {@link ItemIndex.byKind3}, sorted by
  * `level_req` ascending and capped at `totalNum`. `AddVendorItem2(slot, dwId)`
  * appends the explicit propItem id directly. Each placed slot carries the
- * item's `stack_size` (propItem `dwPackMax`) as its count: the v15 client's
+ * item's `stack_size` (propItem `dwPackMax`) as its count: the v19 client's
  * shop window (`WndShop.cpp:106`) clamps the buy-quantity edit box to this
  * value, so `count: 1` made every vendor item effectively single-purchase
  * ("can't buy more than 1"). Setting it to the natural stack size matches

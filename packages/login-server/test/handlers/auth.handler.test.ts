@@ -12,7 +12,7 @@ import type { EventBus } from '@flyff/core/eventBus';
 const V = '20100412';
 const MD5HEX = '0123456789abcdef0123456789abcdef'; // 32 chars
 
-/** Build a v15 CERTIFY payload: [str version][str account][672B rijndael blob]. */
+/** Build a v19 CERTIFY payload: [str version][str account][672B rijndael blob]. */
 function certifyPayload(account: string, md5hex: string, version: string = V): Buffer {
   const w = new PacketWriter();
   w.writeString(version);
@@ -31,7 +31,7 @@ function mockSocket() {
   } as unknown as Socket & { _written: Buffer[] };
 }
 
-describe('AuthHandler (v15 CERTIFY)', () => {
+describe('AuthHandler (v19 CERTIFY)', () => {
   let authHandler: AuthHandler;
   let mockAuthService: AuthService;
   let mockTokenService: TokenService;
@@ -57,7 +57,7 @@ describe('AuthHandler (v15 CERTIFY)', () => {
     emitted.length = 0;
   });
 
-  it('authenticates a valid v15 CERTIFY + emits login:success', async () => {
+  it('authenticates a valid v19 CERTIFY + emits login:success', async () => {
     const sock = mockSocket();
     await authHandler.handleCertify(sock, new PacketReader(certifyPayload('testuser', MD5HEX)));
     assert.equal(emitted.length, 1);
