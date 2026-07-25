@@ -4,9 +4,12 @@
  * Carved out of `combat/formulas.ts` so non-combat consumers (join/revival/
  * quest) read it from `@flyff/entities` without a combat<->entities edge.
  *
- * `m_nExp` is **within-level** (progress toward the next level, 0 at each
- * boundary). The DB `exp` column + SETEXPERIENCE wire field store cumulative
- * -- convert via `withinLevelExp` / `cumulativeExp`.
+ * `m_nExp` mirrors C++ `m_nExp1`: the **within-level** exp (progress toward
+ * the next level, 0 at each level boundary). The DB `exp` column AND the
+ * SETEXPERIENCE wire field ALSO store this within-level value -- there is no
+ * cumulative form. The per-level threshold to advance is the NEXT level's
+ * `nExp1` table value (C++ `MoverParam.cpp:1326`: `m_nExp1 >= m_aExpCharacter[
+ * level+1].nExp1`), so `expToNextLevel(L) = EXP_TABLE[L+1].nExp1`.
  *
  * @module entities/math/exp
  */
@@ -26,14 +29,13 @@ export function expLevelDiffMult(playerLevel: number, monsterLevel: number): num
 }
 
 /**
- * Exp needed to advance FROM `level` TO `level+1` (delta of cumulative nExp1).
- * 0 if `level` is invalid or at/above the cap (no further progression).
+ * Within-level exp threshold to advance FROM `level` TO `level+1`. Per C++
+ * `MoverParam.cpp:1326`, this is **the next level's raw `nExp1`** (the table
+ * is indexed "exp needed at level N-1 to reach N"), NOT a delta. 0 at/above
+ * the cap (no further progression).
  */
 export function expToNextLevel(level: number): number {
-  const cur = EXP_TABLE[level]?.nExp1;
-  const next = EXP_TABLE[level + 1]?.nExp1;
-  if (cur === undefined || next === undefined) return 0;
-  return Math.max(0, next - cur);
+  return EXP_TABLE[level + 1]?.nExp1 ?? 0;
 }
 
 export interface ExpGainResult {
@@ -100,21 +102,8 @@ function deathExpLossPct(level: number): number {
   return 0.01;
 }
 
-/**
- * Within-level exp = cumulative exp - the level's `nExp1` base. Used to convert
- * the cumulative value stored in the DB / sent on the wire into the live
- * within-level `m_nExp`. Clamps >= 0 (a malformed row cannot give negative exp).
- */
-export function withinLevelExp(cumulativeExp: number, level: number): number {
-  const base = EXP_TABLE[level]?.nExp1 ?? 0;
-  return Math.max(0, cumulativeExp - base);
-}
-
-/**
- * Cumulative exp = level's `nExp1` base + within-level exp. The SETEXPERIENCE
- * snapshot (`nExp1`) and the DB `exp` column both store cumulative, per the C++
- * `m_nExp1` semantics.
- */
-export function cumulativeExp(level: number, exp: number): number {
-  return (EXP_TABLE[level]?.nExp1 ?? 0) + exp;
-}
+// NOTE: there is NO cumulative exp form. The C++ `m_nExp1`, the DB `exp`
+// column, and the SETEXPERIENCE wire field are ALL the same within-level
+// value (progress toward the next level, 0 at each boundary). The previous
+// `withinLevelExp` / `cumulativeExp` helpers were based on a misread of the
+// table as cumulative -- it is per-level thresholds (see expTable.ts).

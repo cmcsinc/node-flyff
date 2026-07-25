@@ -25,7 +25,6 @@ import { DST, EMPTY_PARAM_VIEW } from '@flyff/entities';
 // exp / vitals / rng moved to @flyff/entities -- re-export for transition.
 export {
   expLevelDiffMult, expToNextLevel, addExp, subDieDecExp,
-  withinLevelExp, cumulativeExp,
 } from '@flyff/entities';
 export type { ExpGainResult } from '@flyff/entities';
 export { maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery } from '@flyff/entities';

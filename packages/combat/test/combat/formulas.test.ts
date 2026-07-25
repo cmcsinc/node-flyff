@@ -12,7 +12,7 @@ import * as assert from 'node:assert/strict';
 import {
   resolveMelee, getHitMinMax, getAttackResult, getParrying, getCriticalProb, getAttackSpeed,
   calcDefense, expLevelDiffMult,
-  addExp, expToNextLevel, withinLevelExp, cumulativeExp, subDieDecExp,
+  addExp, expToNextLevel, subDieDecExp,
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
 } from '../../src/combat/formulas';
@@ -203,7 +203,7 @@ describe('combat expLevelDiffMult', () => {
 
 describe('combat addExp (level-up cascade)', () => {
   it('no level-up when exp stays below the threshold', () => {
-    // L1->L2 needs 14 (nExp1 0->14). Gain 5 at 0 -> still L1, exp 5.
+    // L1 threshold is EXP_TABLE[2].nExp1 = 14. Gain 5 at 0 -> still L1, exp 5.
     const r = addExp(1, 0, 5);
     assert.deepEqual(r, { level: 1, exp: 5, levelsGained: 0 });
   });
@@ -214,15 +214,16 @@ describe('combat addExp (level-up cascade)', () => {
   });
 
   it('carries excess into the next level on overflow', () => {
-    // L1->L2 needs 14, L2->L3 needs 6 (14->20). Gain 18 from 0 -> L3, exp 18-14-6 = -2? No: 18-14=4, 4<6 stop -> L2 exp 4.
+    // L1 threshold 14, L2 threshold 20. Gain 18 from 0 -> 18-14=4 (L2), 4<20 stop.
     const r = addExp(1, 0, 18);
     assert.deepEqual(r, { level: 2, exp: 4, levelsGained: 1 });
   });
 
   it('cascades multiple levels from a single large gain', () => {
-    // Gain 20 from L1 exp 0: 20-14=6 (L2), 6-6=0 (L3, exact boundary), 0<16 stop.
-    const r = addExp(1, 0, 20);
-    assert.deepEqual(r, { level: 3, exp: 0, levelsGained: 2 });
+    // Thresholds: L1=14, L2=20, L3=36, L4=90. Gain 100 from L1 exp 0:
+    //   100-14=86 (L2), 86-20=66 (L3), 66-36=30 (L4), 30<90 stop -> L4 exp 30.
+    const r = addExp(1, 0, 100);
+    assert.deepEqual(r, { level: 4, exp: 30, levelsGained: 3 });
   });
 
   it('caps at MAX_LEVEL (no further progression)', () => {
@@ -231,27 +232,10 @@ describe('combat addExp (level-up cascade)', () => {
     assert.equal(huge.level, huge.level); // reached a finite cap row
   });
 
-  it('expToNextLevel is the delta of cumulative nExp1', () => {
-    assert.equal(expToNextLevel(1), 14); // 14 - 0
-    assert.equal(expToNextLevel(2), 6);  // 20 - 14
-    assert.equal(expToNextLevel(3), 16); // 36 - 20
-  });
-});
-
-describe('combat cumulative <-> within-level conversion', () => {
-  it('withinLevelExp subtracts the level base', () => {
-    assert.equal(withinLevelExp(1000, 12), 27); // 1000 - 973
-    assert.equal(withinLevelExp(14, 2), 0);
-    assert.equal(withinLevelExp(5, 1), 5);
-  });
-
-  it('withinLevelExp clamps negative (malformed row) to 0', () => {
-    assert.equal(withinLevelExp(3, 5), 0); // 3 - 90 < 0
-  });
-
-  it('cumulativeExp is the inverse of withinLevelExp', () => {
-    assert.equal(cumulativeExp(12, 27), 1000);
-    assert.equal(cumulativeExp(2, 0), 14);
+  it('expToNextLevel is the next level raw nExp1 (per-level threshold, not delta)', () => {
+    assert.equal(expToNextLevel(1), 14);  // EXP_TABLE[2].nExp1
+    assert.equal(expToNextLevel(2), 20);  // EXP_TABLE[3].nExp1
+    assert.equal(expToNextLevel(3), 36);  // EXP_TABLE[4].nExp1
   });
 });
 

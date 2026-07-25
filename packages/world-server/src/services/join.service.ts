@@ -16,14 +16,14 @@
  */
 
 import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
-import type { ItemDefinition, SkillIndex } from '@flyff/resources';
+import type { ItemDefinition, SetItemDef, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
 import { AUTH, isJobMatch } from '@flyff/entities';
-import { withinLevelExp } from '@flyff/combat';
+import { recomputeSetBonuses } from '@flyff/inventory';
 import { MAX_HUMAN_PARTS, MAX_INVENTORY } from '@flyff/world-core';
-import { decodeTaskBar } from './taskbar.service';
+import { decodeTaskBar, decodeTaskBarQueue } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { ConsumedHandoff } from '../ipc/clusterListener';
@@ -61,6 +61,11 @@ export interface JoinServiceDeps {
    * bonuses until first equip/unequip cycle).
    */
   getItem?: (itemId: number) => ItemDefinition | undefined;
+  /**
+   * Set-item definition lookup (propItemEtc.inc) for seeding set bonuses on
+   * JOIN. Optional: skip if absent (no set bonuses until first equip/unequip).
+   */
+  getSetItem?: (itemId: number) => SetItemDef | undefined;
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   handoffSource: HandoffSource;
@@ -104,8 +109,8 @@ export class JoinService {
     }
 
     const player = CPlayer.fromRow(row, socket, authority);
-    // DB stores cumulative exp (C++ m_nExp1); live field is within-level.
-    player.m_nExp = withinLevelExp(Number(row.exp), player.m_nLevel);
+    // DB stores the within-level value directly (C++ m_nExp1 is within-level).
+    player.m_nExp = Number(row.exp);
     logger.info(
       { charId: player.m_idPlayer, account: row.account_id, gm: authority > AUTH.GENERAL, authority },
       'JOIN resolved authority',
@@ -170,6 +175,9 @@ export class JoinService {
       const effects = prop?.effects;
       if (effects && effects.length > 0) player.m_params.applyEffects(effects);
     }
+    // Seed set-item bonuses so the JOIN snapshot + regen start from buffed maxes
+    // (C++ RedoEquip runs SetDestParamSetItem at load). Mirrors EquipService.
+    if (this.deps.getSetItem) recomputeSetBonuses(player, this.deps.getSetItem);
   }
 
   /**
@@ -309,13 +317,16 @@ export class JoinService {
   }
 
   /**
-   * Hydrate the taskbar grid (`m_aSlotItem`) from `characters.taskbar`. A null
-   * / empty column leaves the seeded all-empty grid (fresh character). Mirrors
-   * C++ `GetTaskBar` (`DbManagerFun.cpp:984`); the grid is later pushed to the
-   * client via `SNAPSHOTTYPE_TASKBAR` in the join handler.
+   * Hydrate the taskbar grid (`m_aSlotItem`) + action-slot queue
+   * (`m_aSlotQueue`) from `characters.taskbar`. A null/empty column leaves the
+   * seeded all-empty grid + queue (fresh character). Mirrors C++
+   * `GetTaskBar` (`DbManagerFun.cpp:984`); both are later pushed to the
+   * client via `SNAPSHOTTYPE_TASKBAR` in the join handler. Legacy v1 rows
+   * (queue absent) hydrate an empty queue.
    */
   private loadTaskBar(player: CPlayer, json: string | null | undefined): void {
     player.m_aSlotItem = decodeTaskBar(json);
+    player.m_aSlotQueue = decodeTaskBarQueue(json);
   }
 }
 
