@@ -194,5 +194,8 @@
   "packages/inventory/test/services/useItem.service.test.ts": "pass",
   "packages/entities/test/mover.test.ts": "pass",
   "packages/world-server/test/services/movement.service.test.ts": "fail",
-  "packages/combat/test/systems/ai.system.test.ts": "fail"
+  "packages/combat/test/systems/ai.system.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\playerSnapshot.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\net\\snapshot\\npcSnapshot.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\endSkillQueue.handler.test.ts": "pass"
 }
