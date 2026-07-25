@@ -10,8 +10,11 @@ import type { CharacterRow } from '@flyff/database';
 import { PlayerSnapshotSerializer } from '../src/net/snapshot/playerSnapshot.serializer';
 
 const MAX_HUMAN_PARTS = 31;
-const MAX_JOB = 32;
-const MAX_SKILL_JOB = 45;
+// v19 (`__3RD_LEGEND16`): MAX_JOB=40, MAX_SKILL_JOB=51. Walking at v15 sizes
+// (32 / 45) hides the drift -- both writer and walker agreed on the wrong
+// layout, so the test passed while the real client crashed at Item.h:938.
+const MAX_JOB = 40;
+const MAX_SKILL_JOB = 51;
 const SM_MAX = 26;
 const MAX_HONOR_TITLE = 150;
 const MAX_INVENTORY = 42;
@@ -46,35 +49,28 @@ class R {
 }
 
 describe('JOIN payload -- client-side read walk', () => {
-  it('consumes exactly the bytes TS wrote (no drift)', () => {
+  it('caps 256 completed quests at 255 without shifting containers', () => {
     const p = CPlayer.fromRow(makeRow(), { write: () => true });
-    // Populate inventory + equip + bank like a real played character would.
-    p.m_Inventory[0] = { itemId: 2104, count: 50 };            // stack in bag
-    p.m_Inventory[5] = { itemId: 2811, count: 1, refine: 5, durability: 100 }; // equipped-ish
-    p.m_Inventory[MAX_INVENTORY + 0] = { itemId: 2000, count: 1, refine: 3, durability: 50 }; // PARTS_HAND
-    p.m_Inventory[MAX_INVENTORY + 2] = { itemId: 2001, count: 1, refine: 0, durability: 50 }; // PARTS_HEAD
-    (p as any).m_Bank = p.m_Bank ?? [[],[],[]];
-    p.m_Bank[0]![0] = { itemId: 2104, count: 999 };
-    p.m_Bank[1]![3] = { itemId: 2820, count: 1, refine: 8, durability: 100 };
+    p.m_aCompleteQuest = Array.from({ length: 256 }, (_, id) => id + 1);
     const buf = new PlayerSnapshotSerializer().build(p);
+
+    const exactCap = CPlayer.fromRow(makeRow(), { write: () => true });
+    exactCap.m_aCompleteQuest = Array.from({ length: 255 }, (_, id) => id + 1);
+    assert.deepEqual(buf, new PlayerSnapshotSerializer().build(exactCap));
+
     const r = new R(buf);
-    const log: string[] = [];
-    const mark = (label: string) => log.push(`${label} @${r.o}`);
 
     // Packet header (opcode is in buffer; OnJoin dispatcher consumes it but
     // OnSnapshot starts at objidPlayer -- we walk from the opcode for accounting)
     r.u32();                       // JOIN opcode
     r.u32();                       // objidPlayer
     let cb = r.u16();            // cb
-    mark(`header cb=${cb}`);
 
     while (cb-- > 0) {
       r.u32();                     // objid
       const hdr = r.u16();         // hdr
-      mark(`entry hdr=0x${hdr.toString(16)} @${r.o}`);
       if (hdr === 0x9910) {        // WORLD_READINFO
         r.u32(); r.f32(); r.f32(); r.f32();
-        mark('worldreadinfo done');
         continue;
       }
       if (hdr !== 0x00f0) continue; // ADD_OBJ
@@ -87,10 +83,8 @@ describe('JOIN payload -- client-side read walk', () => {
       r.u16();                     // scale
       r.f32(); r.f32(); r.f32();   // pos
       r.i16();                     // angle
-      mark(`after CObj`);
       // CCtrl::Serialize
       r.u32();                     // m_objid
-      mark(`after CCtrl m_objid`);
 
       // CMover::Serialize
       r.u16();                     // m_dwMotion
@@ -100,7 +94,7 @@ describe('JOIN payload -- client-side read walk', () => {
       r.u32();                     // GetStateFlag
       r.u8();                      // m_dwBelligerence
       r.u32();                     // m_dwMoverSfxId (__VER>=15)
-      mark(`mover prefix bPlayer=${bPlayer}`);
+      assert.equal(bPlayer, 1);
       if (!bPlayer) throw new Error('expected player');
 
       r.string();                  // m_szName
@@ -130,7 +124,6 @@ describe('JOIN payload -- client-side read walk', () => {
       for (let i = 0; i < MAX_HUMAN_PARTS; i++) r.i32(); // equipInfo nOption
       r.i32();                     // m_nGuildCombatState
       for (let j = 0; j < SM_MAX; j++) r.u32();           // m_dwSMTime
-      mark(`prefix+stats done`);
 
       // METHOD_NONE branch
       r.u16();                     // m_nManaPoint
@@ -149,7 +142,9 @@ describe('JOIN payload -- client-side read walk', () => {
       const nQuest = r.u8();
       r.bytes(nQuest * 12);
       const nCQ = r.u8();
-      r.bytes(nCQ * 2);
+      assert.equal(nCQ, 255);
+      assert.equal(r.u16(), 1);
+      r.bytes((nCQ - 1) * 2);
       const nChQ = r.u8();
       r.bytes(nChQ * 2);
       r.u32();                     // m_idMurderer
@@ -166,31 +161,24 @@ describe('JOIN payload -- client-side read walk', () => {
       r.u8(); r.u8(); r.u8();      // resist L/R/def
       r.u64();                     // m_nAngelExp
       r.i32();                     // m_nAngelLevel
-      mark(`METHOD_NONE pre-containers done`);
 
       // m_Inventory
-      readContainer(r, INVENTORY_SLOTS, 'inv');
-      // m_Bank * 3
-      for (let k = 0; k < MAX_BANK_TABS; k++) readContainer(r, BANK_SLOTS, `bank${k}`);
-      mark(`after all containers`);
+      readContainer(r, INVENTORY_SLOTS);
+      // m_Bank *3
+      for (let k = 0; k < MAX_BANK_TABS; k++) readContainer(r, BANK_SLOTS);
       r.u32();                     // GetPetId
       r.bytes(3);                  // Pocket (3 flag bytes)
       r.u32();                     // m_dwMute
       for (let i = 0; i < MAX_HONOR_TITLE; i++) r.u32();   // m_aHonorTitle
       r.u32();                     // m_idCampus
       r.i32();                     // m_nCampusPoint
-      mark(`after campus (pre-buffs)`);
-      // buffs: count(4) + 0
-      r.u32();
-      mark(`after buffs`);
+      r.u32();                     // empty CBuffMgr count
     }
-    mark('end');
-    console.log(log.join('\n'));
     assert.equal(r.o, buf.length, `read walk ended at ${r.o}, buffer is ${buf.length}`);
   });
 });
 
-function readContainer(r: R, slots: number, label: string): void {
+function readContainer(r: R, slots: number): void {
   r.bytes(slots * 4);             // m_apIndex
   const chSize = r.u8();
   for (let i = 0; i < chSize; i++) {
