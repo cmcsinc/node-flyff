@@ -10,7 +10,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import {
-  resolveMelee, getHitMinMax, getAttackResult, getParrying, getCriticalProb, getAttackSpeed,
+  resolveMelee, getHitMinMax, getAttackResult, getParrying, getCriticalProb, getAttackSpeed, getDamageMultiplier,
   calcDefense, expLevelDiffMult,
   addExp, expToNextLevel, subDieDecExp,
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
@@ -38,6 +38,25 @@ const aibatt: Combatant = {
   npcAtkMin: 16, npcAtkMax: 16, npcArmor: 3, npcResisMagic: 0, npcHR: 40, npcER: 3, element: NO_PROP,
   equipDef: 0, adjHitRate: 0, parry: 0,
   params: EMPTY_PARAM_VIEW,
+};
+
+/** Small Pukepuke (L7, atk 37, armor 10) -- a real low-level mob. */
+const pukepuke: Combatant = {
+  kind: 'npc', level: 7, job: 0,
+  str: 0, sta: 0, dex: 0, int: 0,
+  weapon: FIST,
+  npcAtkMin: 37, npcAtkMax: 37, npcArmor: 10, npcResisMagic: 0, npcHR: 40, npcER: 11, element: NO_PROP,
+  equipDef: 0, adjHitRate: 0, parry: 0,
+  params: EMPTY_PARAM_VIEW,
+};
+
+/**
+ * L30 VAGRANT STA 30 -- a higher-level, higher-DEF player. Base DEF
+ * (no gear) = floor((60+15)/2.8 - 4 + (30-14)*1) = 38, which exceeds the
+ * Pukepuke's ATK (37). Without the NPC->player min-damage rule this yields 0.
+ */
+const tank: Combatant = {
+  ...player, level: 30, sta: 30,
 };
 
 /** Scripted rng -- `int()` draws from `ints` in call order; `range()` is fixed. */
@@ -73,12 +92,12 @@ describe('combat calcDefense', () => {
 
   it('player defender uses summed equip DEF (SumEquipDefenseAbility)', () => {
     const armored: Combatant = { ...player, equipDef: 20 };
-    // byItem=20; floor((20)*2.3 + (1 + 15/2 + 15)/2.8 - 4 + 1*2 + fFactorDef)
-    // bare calcDefense(player) baseline first:
+    // AF_GENERIC path (MoverAttack.cpp:591): equip DEF contributes as byItem/4,
+    // NOT the *2.3 of the PvP non-generic branch.
     const base = calcDefense(player);
     const withEquip = calcDefense(armored);
     assert.ok(withEquip > base, 'equip DEF raises player defense');
-    assert.equal(withEquip - base, Math.floor(20 * 2.3), 'equip DEF contributes via *2.3 factor');
+    assert.equal(withEquip - base, Math.floor(20 / 4), 'equip DEF contributes via /4 (AF_GENERIC)');
   });
 });
 
@@ -107,7 +126,7 @@ describe('combat DST param un-stubs', () => {
     params.setDestParam(DST.ADJDEF, 30);
     const buffed: Combatant = { ...player, equipDef: 20, params };
     assert.ok(calcDefense(buffed) > base, 'ADJDEF buff raises player DEF');
-    assert.equal(calcDefense(buffed) - base, Math.floor(30 * 2.3), 'ADJDEF contributes via *2.3');
+    assert.equal(calcDefense(buffed) - base, 30, 'ADJDEF contributes flat (AF_GENERIC)');
   });
 
   it('DST_CHR_CHANCECRITICAL raises getCriticalProb', () => {
@@ -180,6 +199,42 @@ describe('combat resolveMelee', () => {
     const r = resolveMelee(player, aibatt, makeRng([0, 99, 95], 16));
     assert.equal(r.hit, true);
     assert.equal(r.damage, 1); // floor((16-1)*0.1)=1
+  });
+});
+
+describe('combat resolveMelee (NPC -> player min-damage rule)', () => {
+  it('monster always deals >= 10% ATK even when DEF >= ATK (MoverAttack.cpp:1444)', () => {
+    // Pukepuke ATK 37 vs tank DEF 38 -> raw nDamage = -1 -> 0, lifted to floor(37*0.1)=3.
+    // ints: hit=0, crit=99, block=50. range=37.
+    const r = resolveMelee(pukepuke, tank, makeRng([0, 99, 50], 37));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 3);
+  });
+
+  it('min rule does NOT apply player -> NPC (only NPC -> player)', () => {
+    // Reverse direction: player ATK 37-ish vs aibatt DEF 1 still uses the raw
+    // subtraction path -- no 10% floor on player swings.
+    // L1 player bare-hand getHitMinMax = {16,20}; range=16 -> nATK=16, DEF=1 -> 15.
+    const r = resolveMelee(player, aibatt, makeRng([0, 99, 50], 16));
+    assert.equal(r.damage, 15);
+  });
+
+  it('higher-level player defender is NOT shielded by any level-diff cosine', () => {
+    // A L30 player vs a L1 aibatt: no cosine falloff exists in C++ GetDamageMultiplier,
+    // so a normal hit deals full ATK-DEF (not reduced by the 29-level gap).
+    // aibatt ATK 16 vs tank DEF 38 -> raw -22 -> 0 -> lifted to floor(16*0.1)=1.
+    const r = resolveMelee(aibatt, tank, makeRng([0, 99, 50], 16));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 1); // 10% of 16
+  });
+});
+
+describe('combat getDamageMultiplier (no fabricated cosine)', () => {
+  it('returns 1.0 for NPC -> player regardless of level gap (C++ has no level term)', () => {
+    assert.equal(getDamageMultiplier(pukepuke, tank), 1.0);
+    // Even a L1 mob vs L80 player: no cosine reduction.
+    const hero: Combatant = { ...tank, level: 80 };
+    assert.equal(getDamageMultiplier(pukepuke, hero), 1.0);
   });
 });
 

@@ -200,25 +200,34 @@ export function calcDefense(defender: Combatant): number {
   if (defender.kind === 'npc') {
     return Math.floor(defender.npcArmor / 7.0) + 1;
   }
-  // Player defender (CalcDefensePlayer melee) -- equip DEF + refine + STA/DEX/level.
+  // Player defender, AF_GENERIC path (`CalcDefenseCore`, MoverAttack.cpp:591):
+  //   nDef = ((L*2 + S/2)/2.8 - 4) + (S-14)*fFactorDef + equipDef/4 + DST_ADJDEF
+  // Melee always sets AF_GENERIC (`resolveMelee`), so this is the live branch.
+  // NOTE: the `*2.3` multiplier belongs to the PvP non-generic branch
+  // (`CalcDefensePlayer`, MoverAttack.cpp:557) and was wrongly applied here --
+  // it inflated DEF (byItem=40 -> 92 instead of 10) making geared players
+  // immune to weak mobs (`rolledDamage=0`).
   const job = getJobProps(defender.job);
   const byItem = defender.equipDef; // SumEquipDefenseAbility (armor DEF + refine bonus)
   const adjDef = defender.params.get(DST.ADJDEF, 0); // GetParam(DST_ADJDEF) buff
-  return Math.floor((byItem + adjDef) * 2.3 + (defender.level + defender.sta / 2 + defender.dex) / 2.8 - 4 + defender.level * 2 + job.fFactorDef);
+  const statTerm = (defender.level * 2 + Math.floor(defender.sta / 2)) / 2.8 - 4;
+  const factorTerm = (defender.sta - 14) * job.fFactorDef;
+  return Math.max(0, Math.floor(statTerm + factorTerm) + Math.floor(byItem / 4) + adjDef);
 }
 
-/** `GetDamageMultiplier` (MoverAttack.cpp:828) -- final multipliers. */
+/**
+ * `GetDamageMultiplier` (MoverAttack.cpp:828) -- skill/buff multipliers only.
+ *
+ * C++ applies per-skill factors here (e.g. `SI_ACR_BOW_AIMEDSHOT` x4,
+ * `SI_JST_YOYO_VATALSTAB` x2) and `BUFF_SKILL` effects -- no level-diff term.
+ * A prior revision fabricated a `cos(pi*delta/32)` level-diff falloff here; that
+ * does NOT exist in C++ and starved damage vs higher-level defenders (a L7 mob
+ * swinging at a L30 player dropped to ~10% of ATK, rounding to 0). Removed.
+ * ponytail: port the per-skill multipliers when the skill damage pipeline lands.
+ */
 export function getDamageMultiplier(attacker: Combatant, defender: Combatant): number {
   let factor = 1.0;
   if (defender.kind === 'player' && attacker.kind === 'player') factor *= 0.60; // PvP
-  // Level-diff cosine falloff (only when an NPC is involved).
-  if (attacker.kind === 'npc' || defender.kind === 'npc') {
-    const delta = defender.level - attacker.level;
-    if (delta > 0) {
-      const d = Math.min(delta, 15);
-      factor *= Math.cos((Math.PI * d) / 32);
-    }
-  }
   return factor;
 }
 
@@ -269,6 +278,15 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
     }
   } else {
     nDamage = 0;
+  }
+  // NPC -> player minimum damage rule (`PostCalcGeneric`, MoverAttack.cpp:1444):
+  // a monster always deals at least 10% of its post-element/post-crit ATK,
+  // regardless of DEF. Without this, any player whose DEF >= the mob's ATK is
+  // immune -- the mob swings for 0 forever, stalling the in-combat logout gate
+  // ("prevent quit when being attacked"). C++: `nMin = max(0, nATK*0.1)`.
+  if (attacker.kind === 'npc' && defender.kind === 'player') {
+    const nMin = Math.max(0, Math.floor(nATK * 0.1));
+    if (nMin > nDamage) nDamage = nMin;
   }
   void nDEF;
 
