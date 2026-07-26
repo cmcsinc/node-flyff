@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer } from '@flyff/entities';
+import { CPlayer, MAX_SKILL_JOB } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
@@ -103,7 +103,7 @@ describe('CPlayer entity', () => {
     assert.equal(p.m_aJobSkill[50]!.skillId, 0xffffffff);
     assert.equal(p.m_nSkillPoint, 0, 'SP defaults to 0');
     assert.equal(p.m_nSkillLevel, 0, 'total SP defaults to 0');
-    assert.equal(p.m_tmReUseDelay.length, 45);
+    assert.equal(p.m_tmReUseDelay.length, MAX_SKILL_JOB);
     assert.equal(p.m_tmReUseDelay[0], 0, 'cooldowns start ready');
     assert.equal(p.m_cooltime.length, 4, '4 consumable cooldown groups');
     assert.equal(p.m_cooltime[0], 0, 'cooltime groups start ready');
