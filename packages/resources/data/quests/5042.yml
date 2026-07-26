@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaFl_Luda
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_Luda
+      - type: sym
+        value: 1
+      - type: num
+        value: 6927
+      - type: num
+        value: 3236
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaFl_Losha
+      - type: sym
+        value: 1
       - type: num
         value: 7172
       - type: num

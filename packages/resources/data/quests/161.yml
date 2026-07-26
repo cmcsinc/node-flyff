@@ -5,15 +5,27 @@ commands:
   - cmd: SetCharacter
     args:
       - type: str
-        value: MaSa_Hee
+        value: MaFl_Ringda
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_Ringda
+      - type: sym
+        value: 1
+      - type: num
+        value: 7165
+      - type: num
+        value: 3238
   - cmd: SetEndCondCharacter
     args:
       - type: str
-        value: MaFl_Hastan
+        value: MaFl_Masics
+      - type: sym
+        value: 1
       - type: num
-        value: 7001
+        value: 7166
       - type: num
-        value: 3895
+        value: 3239
       - type: num
         value: 1
   - cmd: SetBeginCondLevel
@@ -42,12 +54,32 @@ commands:
         value: 1
       - type: sym
         value: 160
-  - cmd: SetEndRewardItem
+  - cmd: SetBeginCondItem
     args:
       - type: num
         value: -1
       - type: num
         value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10388
+      - type: num
+        value: 1
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10388
+      - type: num
+        value: 1
+  - cmd: SetEndRemoveItem
+    args:
       - type: num
         value: 0
       - type: sym
@@ -61,17 +93,65 @@ commands:
       - type: num
         value: 0
       - type: num
-        value: 0
+        value: -1
       - type: sym
-        value: 4804
+        value: 10434
       - type: num
         value: 1
+      - type: num
+        value: 2
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10209
+      - type: num
+        value: 1
+      - type: num
+        value: 2
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10207
+      - type: num
+        value: 1
+      - type: num
+        value: 2
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10218
+      - type: num
+        value: 1
+      - type: num
+        value: 2
   - cmd: SetEndRewardGold
     args:
       - type: num
         value: 1500
       - type: num
         value: 1500
+  - cmd: SetEndRewardSkillPoint
+    args:
+      - type: num
+        value: 90
   - cmd: SetHeadQuest
     args:
       - type: num
@@ -81,59 +161,47 @@ commands:
       - type: sym
         value: 0
       - type: sym
-        value: IDS_PROPQUEST_INC_000797
+        value: IDS_PROPQUEST_INC_003798
   - cmd: SetDialog
     args:
       - type: sym
         value: 1
       - type: sym
-        value: IDS_PROPQUEST_INC_000798
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 2
-      - type: sym
-        value: IDS_PROPQUEST_INC_000799
+        value: IDS_PROPQUEST_INC_003799
   - cmd: SetDialog
     args:
       - type: sym
         value: 5
       - type: sym
-        value: IDS_PROPQUEST_INC_000800
+        value: IDS_PROPQUEST_INC_003800
   - cmd: SetDialog
     args:
       - type: sym
         value: 6
       - type: sym
-        value: IDS_PROPQUEST_INC_000801
+        value: IDS_PROPQUEST_INC_003801
   - cmd: SetDialog
     args:
       - type: sym
         value: 7
       - type: sym
-        value: IDS_PROPQUEST_INC_000802
+        value: IDS_PROPQUEST_INC_003802
   - cmd: SetDialog
     args:
       - type: sym
         value: 8
       - type: sym
-        value: IDS_PROPQUEST_INC_000803
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 9
-      - type: sym
-        value: IDS_PROPQUEST_INC_000804
+        value: IDS_PROPQUEST_INC_003803
   - cmd: SetDialog
     args:
       - type: sym
         value: 10
       - type: sym
-        value: IDS_PROPQUEST_INC_000805
+        value: IDS_PROPQUEST_INC_003837
 states:
   "0":
-    desc: IDS_PROPQUEST_INC_000806
+    desc: IDS_PROPQUEST_INC_003804
   "14":
-    desc: IDS_PROPQUEST_INC_000807
+    desc: IDS_PROPQUEST_INC_003805
 quest_items: []
-title: IDS_PROPQUEST_INC_000796
+title: IDS_PROPQUEST_INC_003797

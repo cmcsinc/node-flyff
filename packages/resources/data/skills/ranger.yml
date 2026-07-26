@@ -21,7 +21,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -135,7 +135,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 2
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -339,7 +339,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 2
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -453,7 +453,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 6
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -557,7 +557,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -751,7 +751,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -905,7 +905,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 3
@@ -1019,7 +1019,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2

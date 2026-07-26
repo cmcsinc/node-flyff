@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaSa_Helgar
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaSa_Helgar
+      - type: sym
+        value: 1
+      - type: num
+        value: 8449
+      - type: num
+        value: 3638
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaSa_Helgar
+      - type: sym
+        value: 1
       - type: num
         value: 8449
       - type: num

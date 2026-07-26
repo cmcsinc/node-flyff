@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaSa_Bowler
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaSa_Bowler
+      - type: sym
+        value: 1
+      - type: num
+        value: 9560
+      - type: num
+        value: 4020
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaSa_QueerCollector
+      - type: sym
+        value: 1
       - type: num
         value: 8383
       - type: num

@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaSa_Colack
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaSa_Colack
+      - type: sym
+        value: 1
+      - type: num
+        value: 8369
+      - type: num
+        value: 3675
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaSa_Colack
+      - type: sym
+        value: 1
       - type: num
         value: 8369
       - type: num

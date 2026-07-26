@@ -20,7 +20,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 1
     referStats:
       - 3
@@ -123,7 +123,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 1
     referStats:
       - 3
@@ -237,7 +237,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 5
+    element: 4
     resourceType: 1
     referStats:
       - 3
@@ -390,7 +390,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 1
-    element: 4
+    element: 2
     resourceType: 1
     referStats:
       - 3
@@ -493,7 +493,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 4
+    element: 2
     resourceType: 1
     referStats:
       - 3
@@ -606,7 +606,7 @@ skills:
     exeTarget: 4
     useChance: 1
     spellRegion: 7
-    element: 4
+    element: 2
     resourceType: 1
     referStats:
       - 3
@@ -1098,7 +1098,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 7
+    element: 32
     resourceType: 1
     referStats:
       - 3
@@ -1201,7 +1201,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 7
+    element: 32
     resourceType: 1
     referStats:
       - 3
@@ -1315,7 +1315,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 7
+    element: 32
     resourceType: 1
     referStats:
       - 3
@@ -1528,7 +1528,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 1
-    element: 6
+    element: 16
     resourceType: 1
     referStats:
       - 3
@@ -1631,7 +1631,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 6
+    element: 16
     resourceType: 1
     referStats:
       - 3
@@ -1744,7 +1744,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 6
+    element: 16
     resourceType: 1
     referStats:
       - 3
@@ -1928,7 +1928,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 11
+    element: 12
     resourceType: 1
     referStats:
       - 3
@@ -2052,7 +2052,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 12
+    element: 18
     resourceType: 1
     referStats:
       - 3
@@ -2176,7 +2176,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 13
+    element: 24
     resourceType: 1
     referStats:
       - 3
@@ -2300,7 +2300,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 14
+    element: 40
     resourceType: 1
     referStats:
       - 3

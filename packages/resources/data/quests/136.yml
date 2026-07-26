@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaFl_DrEstly
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_DrEstly
+      - type: sym
+        value: 1
+      - type: num
+        value: 7187
+      - type: num
+        value: 4090
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaDa_DarMayor
+      - type: sym
+        value: 1
       - type: num
         value: 3831
       - type: num
@@ -21,7 +33,7 @@ commands:
       - type: num
         value: 70
       - type: num
-        value: 129
+        value: 150
   - cmd: SetBeginCondPreviousQuest
     args:
       - type: num
@@ -88,12 +100,28 @@ commands:
         value: 30
       - type: sym
         value: 31
+      - type: sym
+        value: 32
+      - type: sym
+        value: 33
+      - type: sym
+        value: 34
+      - type: sym
+        value: 35
+      - type: sym
+        value: 37
+      - type: sym
+        value: 36
+      - type: sym
+        value: 38
+      - type: sym
+        value: 39
   - cmd: SetEndCondLevel
     args:
       - type: num
         value: 70
       - type: num
-        value: 129
+        value: 150
   - cmd: SetEndCondKillNPC
     args:
       - type: num
@@ -195,7 +223,7 @@ commands:
   - cmd: SetHeadQuest
     args:
       - type: num
-        value: 6004
+        value: 6006
   - cmd: SetDialog
     args:
       - type: sym

@@ -1,0 +1,249 @@
+_version: "1.0"
+id: 248
+symbol: QUEST_BASILISK_FRUIT04
+commands:
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6075
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaEw_Raundas
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaEw_Raundas
+      - type: sym
+        value: 1
+      - type: num
+        value: 6069
+      - type: num
+        value: 9235
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaEw_Raundas
+      - type: sym
+        value: 1
+      - type: num
+        value: 6069
+      - type: num
+        value: 9235
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 135
+      - type: num
+        value: 150
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 247
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+      - type: sym
+        value: 32
+      - type: sym
+        value: 33
+      - type: sym
+        value: 34
+      - type: sym
+        value: 35
+      - type: sym
+        value: 37
+      - type: sym
+        value: 36
+      - type: sym
+        value: 38
+      - type: sym
+        value: 39
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 1340
+      - type: num
+        value: 1
+      - type: num
+        value: 4830
+      - type: num
+        value: 8758
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 20831
+      - type: num
+        value: 1
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 20831
+      - type: num
+        value: 1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 10206
+      - type: num
+        value: 20
+  - cmd: SetEndRewardExp
+    args:
+      - type: num
+        value: 5270194952
+      - type: num
+        value: 5270194952
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_003659
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_003660
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_003661
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_003662
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_003663
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_003664
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 8
+      - type: sym
+        value: IDS_PROPQUEST_INC_003665
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 9
+      - type: sym
+        value: IDS_PROPQUEST_INC_003666
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_003667
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_003668
+  "14":
+    desc: IDS_PROPQUEST_INC_003669
+quest_items:
+  - mover: 1340
+    item: 20831
+    prob: 3000000000
+    num: 1
+title: IDS_PROPQUEST_INC_003658

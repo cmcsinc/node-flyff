@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaFl_Boboku
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_Boboku
+      - type: sym
+        value: 1
+      - type: num
+        value: 6926
+      - type: num
+        value: 3232
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaFl_Luda
+      - type: sym
+        value: 1
       - type: num
         value: 6927
       - type: num

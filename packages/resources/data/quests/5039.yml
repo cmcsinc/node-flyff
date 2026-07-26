@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaFl_Lui
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_Lui
+      - type: sym
+        value: 1
+      - type: num
+        value: 6975
+      - type: num
+        value: 3266
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaFl_Boboko
+      - type: sym
+        value: 1
       - type: num
         value: 6926
       - type: num
