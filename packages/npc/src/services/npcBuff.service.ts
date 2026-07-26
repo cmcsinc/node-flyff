@@ -140,7 +140,10 @@ export class NpcBuffService {
   /** True if any spawned buff-pang NPC is within `MAX_LEN_MOVER_MENU` of the player. */
   private hasNearbyBuffNpc(player: CPlayer): boolean {
     for (const npc of this.deps.spawnManager.inZone(player.m_nZoneId)) {
-      if (!npc.menus?.includes(MMI_NPC_BUFF)) continue;
+      // Spawned CMovers carry character.inc AddMenu flags on `m_abMoverMenu`
+      // (populated in spawn.manager.ts:134 via MoverSpawnSource.menus). The
+      // `menus` field on CMover is dead -- never assigned in the ctor.
+      if (!npc.m_abMoverMenu.includes(MMI_NPC_BUFF)) continue;
       if (distSqXZ(player.m_vPos, npc.m_vPos) <= MAX_LEN_MOVER_MENU_SQ) return true;
     }
     return false;
