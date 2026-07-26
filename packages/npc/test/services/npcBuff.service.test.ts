@@ -25,7 +25,7 @@ function makeNpc(pos: Vec3, hasBuffMenu: boolean): CMover {
   return {
     m_vPos: pos,
     m_nZoneId: 1,
-    menus: hasBuffMenu ? [MMI_NPC_BUFF] : [],
+    m_abMoverMenu: hasBuffMenu ? [MMI_NPC_BUFF] : [],
   } as unknown as CMover;
 }
 
