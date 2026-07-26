@@ -271,6 +271,12 @@ export class CPlayer {
   /** Last SCRIPTDLG tick (C++ `m_tickScript`) -- 400ms rate limit (DPSrvr.cpp:903). */
   m_tickScript: number = 0;
   /**
+   * Last NPC_BUFF tick -- rate limit for the buff-pang packet (C++ `OnNPCBuff`
+   * has none; we add a 1s floor to keep a spamming client from DDoS-ing the
+   * buff apply loop). Mirrors {@link m_tickScript}.
+   */
+  m_tickNpcBuff: number = 0;
+  /**
    * One-shot: the zone's NPC/monster ADD_OBJ snapshot has been sent for this
    * player. Neuz sends MAP_KEY once per `.wld` as it loads the world; the
    * vicinity burst must fire only on the first (world-enter), not every map.

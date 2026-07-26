@@ -10,7 +10,7 @@
 
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { parseCharacterInc, blockForMover, MMI_DIALOG } from '../../src/loaders/characterInc.loader';
+import { parseCharacterInc, blockForMover, MMI_DIALOG, MMI_NPC_BUFF } from '../../src/loaders/characterInc.loader';
 import type { CharacterIncIndex } from '../../src/loaders/characterInc.loader';
 
 const II = new Map<string, number>([
@@ -24,6 +24,7 @@ const MMI = new Map<string, number>([
   ['MMI_DIALOG', 0],
   ['MMI_TRADE', 2],
   ['MMI_BANKING', 9],
+  ['MMI_NPC_BUFF', 74],
 ]);
 
 const IK3 = new Map<string, number>([
@@ -31,6 +32,12 @@ const IK3 = new Map<string, number>([
   ['IK3_AXE', 3],
   ['IK3_SUIT', 11],
   ['IK3_PET', 99],
+]);
+
+const SI = new Map<string, number>([
+  ['SI_GEN_EVE_QUICKSTEP', 317],
+  ['SI_GEN_EVE_HASTE', 318],
+  ['SI_ASS_CHEER_QUICKSTEP', 114],
 ]);
 
 const FIXTURE = `
@@ -88,10 +95,25 @@ MaFl_BankTeller
 		m_szDialog= "MaFl_BankTeller.txt";
 	}
 }
+
+MaFl_Helper
+{
+	setting
+	{
+		AddMenu( MMI_DIALOG );
+		AddMenu( MMI_NPC_BUFF );
+		m_szDialog= "MaFl_Helper.txt";
+	}
+
+	SetBuffSkill( SI_GEN_EVE_QUICKSTEP, 2, 1, 30, 3600000 );
+	SetBuffSkill( SI_GEN_EVE_HASTE, 2, 1, 30, 3600000 );
+	SetBuffSkill( SI_ASS_CHEER_QUICKSTEP, 7, 1, 60, 3600000 );
+	SetBuffSkill( 123, 4, 5, 99, 60000 );
+}
 `;
 
 function index(): CharacterIncIndex {
-  const blocks = parseCharacterInc(FIXTURE, II, IK3, MMI);
+  const blocks = parseCharacterInc(FIXTURE, II, IK3, MMI, SI);
   const byKey = new Map(blocks.map((b) => [b.key, b]));
   const byStem = new Map(blocks.map((b) => [b.key.toLowerCase(), b]));
   return { byKey, byStem };
@@ -104,7 +126,8 @@ describe('parseCharacterInc', () => {
     assert.ok(idx.byKey.has('MaDa_Lorein'));
     assert.ok(idx.byKey.has('MaFl_BankTeller'));
     assert.ok(idx.byKey.has('MaFl_Marche'));
-    assert.equal(idx.byKey.size, 4);
+    assert.ok(idx.byKey.has('MaFl_Helper'));
+    assert.equal(idx.byKey.size, 5);
   });
 
   it('extracts MMI_DIALOG for every dialog NPC', () => {
@@ -189,6 +212,34 @@ describe('parseCharacterInc', () => {
       'AddVendorItem2 captures concrete item id',
     );
     assert.equal(m.venderType, 1);
+  });
+
+  it('parses SetBuffSkill list for buff-pang NPCs (SI_* resolved, bare numeric ok)', () => {
+    const idx = index();
+    const helper = idx.byKey.get('MaFl_Helper')!;
+    assert.ok(helper.menus.includes(MMI_NPC_BUFF), 'MMI_NPC_BUFF (74) in menus');
+    assert.equal(helper.buffSkills.length, 4);
+    // SI_* resolved via defineSkill.h
+    const [s0, s1, s2, s3] = helper.buffSkills;
+    assert.deepEqual(
+      [s0.skillId, s0.level, s0.minPlayerLevel, s0.maxPlayerLevel, s0.durationMs],
+      [SI.get('SI_GEN_EVE_QUICKSTEP'), 2, 1, 30, 3600000],
+      'first SetBuffSkill fields',
+    );
+    assert.equal(s1.skillId, SI.get('SI_GEN_EVE_HASTE'));
+    assert.equal(s2.skillId, SI.get('SI_ASS_CHEER_QUICKSTEP'));
+    // Bare numeric skill id accepted
+    assert.deepEqual(
+      [s3.skillId, s3.level, s3.minPlayerLevel, s3.maxPlayerLevel, s3.durationMs],
+      [123, 4, 5, 99, 60000],
+      'bare numeric skill id',
+    );
+  });
+
+  it('defaults buffSkills to [] for non-buff NPCs', () => {
+    const idx = index();
+    assert.deepEqual(idx.byKey.get('MaFl_Noier')!.buffSkills, []);
+    assert.deepEqual(idx.byKey.get('MaFl_Marche')!.buffSkills, []);
   });
 
   it('resolves a character.inc block key even without outfit (AddMenu-only NPC)', () => {
