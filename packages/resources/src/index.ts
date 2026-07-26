@@ -30,6 +30,7 @@ import { loadQuests, type QuestIndex } from './loaders/quest.loader';
 import { loadDrops, type DropIndex } from './loaders/drop.loader';
 import { loadCharacterInc, type CharacterIncIndex } from './loaders/characterInc.loader';
 import { loadSetItems, type SetItemIndex } from './loaders/setItem.loader';
+import { loadDefines } from './loaders/defines.loader';
 
 const logger = createResourceLogger('resources');
 
@@ -65,6 +66,10 @@ export interface ResourceIndex {
 
   /** Set-item definitions (propItemEtc.inc `SetItem` blocks) keyed by id + item id. */
   setItems: SetItemIndex;
+
+  /** `#define` symbol table from `raw/define*.h` -- resolves `QUEST_*` / `II_*`
+   *  / `MI_*` / `JOB_*` tokens in dialog source bodies + quest commands. */
+  defines: Map<string, number>;
 }
 
 /**
@@ -83,7 +88,7 @@ export async function loadAllResources(
 ): Promise<ResourceIndex> {
   logger.info({ dataDir, rawDir }, 'Loading all resources...');
 
-  const [items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems] = await Promise.all([
+  const [items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines] = await Promise.all([
     loadItems(dataDir, rawDir),
     loadMovers(dataDir),
     loadSkills(dataDir),
@@ -93,6 +98,7 @@ export async function loadAllResources(
     loadDrops(dataDir),
     loadCharacterInc(rawDir),
     loadSetItems(dataDir),
+    loadDefines(rawDir),
   ]);
 
   logger.info(
@@ -106,11 +112,12 @@ export async function loadAllResources(
       drops: drops.drops.size,
       characterInc: characterInc.byKey.size,
       setItems: setItems.byId.size,
+      defines: defines.size,
     },
     'All resources loaded'
   );
 
-  return { items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems };
+  return { items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines };
 }
 
 /**
@@ -180,8 +187,10 @@ export {
   questById,
   dropsFor,
   type QuestIndex,
+  type QuestsByNpc,
   type QuestDrop,
 } from './loaders/quest.loader';
+export { loadDefines } from './loaders/defines.loader';
 export {
   loadCharacterInc,
   parseCharacterInc,
