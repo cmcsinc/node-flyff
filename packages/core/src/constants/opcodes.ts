@@ -111,6 +111,12 @@ export const PACKETTYPE = Object.freeze({
   REMOVEQUEST:          0x00ff0026, // OnRemoveQuest -- DWORD dwQuestCancelID
   QUESTHELPER_REQNPCPOS: 0x70005000, // OnReqQuestNPCPos -- String szCharKey
   QUEST_CHECK:          0x88100110, // OnCheckedQuest -- int nQuestId, BOOL bCheck
+  // v19 2nd-password numpad -- `LOGINSERVER/DPLoginSrvr.cpp:281-287` SendNumPadId.
+  // S->C on GETPLAYERLIST: payload is one DWORD idNumPad (0-999). The client owns
+  // a hardcoded byNumberTable[1000][10] in Wnd2ndPassword.cpp:186-388; the server
+  // picks the row so the digit layout differs every session (anti-keylogger).
+  // Cosmetic-only in this emulator -- not validated server-side.
+  LOGIN_PROTECT_NUMPAD: 0x88100200,
 
   REPLACE:              0x00ff0f00,
   SETQUEST:             0x00ff0ff3,
