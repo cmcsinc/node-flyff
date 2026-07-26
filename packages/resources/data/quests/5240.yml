@@ -1,0 +1,197 @@
+_version: "1.0"
+id: 5240
+symbol: QUEST_WEEKEVENT_101M_139H_03
+commands:
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6003
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaFl_CARAPUCHICKS
+      - type: sym
+        value: 1
+      - type: num
+        value: 7249
+      - type: num
+        value: 9146
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 101
+      - type: num
+        value: 150
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+      - type: sym
+        value: 32
+      - type: sym
+        value: 33
+      - type: sym
+        value: 34
+      - type: sym
+        value: 35
+      - type: sym
+        value: 37
+      - type: sym
+        value: 36
+      - type: sym
+        value: 38
+      - type: sym
+        value: 39
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 1109
+      - type: num
+        value: 100
+      - type: num
+        value: 7971
+      - type: num
+        value: 6692
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 1110
+      - type: num
+        value: 100
+      - type: num
+        value: 8153
+      - type: num
+        value: 6705
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 2
+      - type: sym
+        value: 1111
+      - type: num
+        value: 50
+      - type: num
+        value: 8171
+      - type: num
+        value: 6783
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 20951
+      - type: num
+        value: 1
+  - cmd: SetEndRewardExp
+    args:
+      - type: num
+        value: 7252544917
+      - type: num
+        value: 7252544917
+  - cmd: SetEndRewardGold
+    args:
+      - type: num
+        value: 7000000
+      - type: num
+        value: 7000000
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_004866
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_004867
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_004868
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_004869
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_004870
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_004871
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_004872
+  "14":
+    desc: IDS_PROPQUEST_INC_004873
+quest_items: []
+title: IDS_PROPQUEST_INC_004865

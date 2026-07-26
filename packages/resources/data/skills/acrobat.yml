@@ -20,7 +20,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 2
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 3
@@ -193,7 +193,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 2
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 3
@@ -367,7 +367,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 3
@@ -542,7 +542,7 @@ skills:
         cooldown: 20000
         skillTime: 14000
   - id: 194
-    name: Junk Arrow
+    name: Rapid Shot
     name_id: IDS_PROPSKILL_TXT_000228
     tier: 1
     job: 2
@@ -560,7 +560,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -573,7 +573,7 @@ skills:
       - 5000
     subDefine: 3405
     maxLevel: 20
-    levels:
+    levels: &a1
       - level: 1
         abilityMin: 28
         abilityMax: 29
@@ -754,7 +754,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -947,7 +947,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -960,7 +960,7 @@ skills:
       - 5000
     subDefine: 3445
     maxLevel: 20
-    levels:
+    levels: &a2
       - level: 1
         abilityMin: 35
         abilityMax: 36
@@ -1140,7 +1140,7 @@ skills:
     exeTarget: 17
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -1473,7 +1473,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -1486,7 +1486,7 @@ skills:
       - 5000
     subDefine: 3485
     maxLevel: 20
-    levels:
+    levels: &a3
       - level: 1
         abilityMin: 20
         abilityMax: 21
@@ -1627,7 +1627,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -1821,7 +1821,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 2
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -1834,7 +1834,7 @@ skills:
       - 5000
     subDefine: 3525
     maxLevel: 20
-    levels:
+    levels: &a4
       - level: 1
         abilityMin: 16
         abilityMax: 17
@@ -2034,7 +2034,7 @@ skills:
     exeTarget: 17
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -2328,7 +2328,7 @@ skills:
     exeTarget: 14
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -2341,7 +2341,7 @@ skills:
       - 5000
     subDefine: 3565
     maxLevel: 20
-    levels:
+    levels: &a5
       - level: 1
         abilityMin: 3
         abilityMax: 4
@@ -2682,7 +2682,7 @@ skills:
     exeTarget: 17
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 2
@@ -2856,7 +2856,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -3130,7 +3130,7 @@ skills:
     exeTarget: 17
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -3484,7 +3484,7 @@ skills:
     exeTarget: 7
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -3598,3 +3598,170 @@ skills:
           - 1000
         reqFp: 40
         cooldown: 10000
+  - id: 194
+    name: Rapid Shot
+    name_id: IDS_PROPSKILL_TXT_000228
+    tier: 1
+    job: 2
+    discipline: 32
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 15
+    prereqs:
+      - skill: 203
+        level: 10
+      - skill: 176
+        level: 7
+    cooldownType: 2
+    exeTarget: 14
+    useChance: 4
+    spellRegion: 1
+    element: 40
+    resourceType: 2
+    referStats:
+      - 2
+      - 3
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 5
+      - 5000
+    subDefine: 3405
+    maxLevel: 20
+    levels: *a1
+  - id: 196
+    name: Aimed Shot
+    name_id: IDS_PROPSKILL_TXT_000232
+    tier: 1
+    job: 2
+    discipline: 32
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 35
+    prereqs:
+      - skill: 192
+        level: 5
+      - skill: 176
+        level: 7
+    cooldownType: 2
+    exeTarget: 14
+    useChance: 4
+    spellRegion: 1
+    element: 40
+    resourceType: 2
+    referStats:
+      - 2
+      - 3
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 10
+      - 5000
+    subDefine: 3445
+    maxLevel: 20
+    levels: *a2
+  - id: 198
+    name: Silent Shot
+    name_id: IDS_PROPSKILL_TXT_000236
+    tier: 1
+    job: 2
+    discipline: 32
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 30
+    prereqs:
+      - skill: 192
+        level: 4
+      - skill: 176
+        level: 7
+    cooldownType: 2
+    exeTarget: 14
+    useChance: 4
+    spellRegion: 1
+    element: 40
+    resourceType: 2
+    referStats:
+      - 2
+      - 3
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 8
+      - 5000
+    subDefine: 3485
+    maxLevel: 20
+    levels: *a3
+  - id: 200
+    name: Arrow Rain
+    name_id: IDS_PROPSKILL_TXT_000240
+    tier: 1
+    job: 2
+    discipline: 32
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 50
+    prereqs:
+      - skill: 196
+        level: 5
+      - skill: 176
+        level: 7
+    cooldownType: 2
+    baseCooldown: 10000
+    exeTarget: 14
+    useChance: 4
+    spellRegion: 2
+    element: 40
+    resourceType: 2
+    referStats:
+      - 2
+      - 3
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 10
+      - 5000
+    subDefine: 3525
+    maxLevel: 20
+    levels: *a4
+  - id: 202
+    name: Auto Shot
+    name_id: IDS_PROPSKILL_TXT_000244
+    tier: 1
+    job: 2
+    discipline: 32
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 45
+    prereqs:
+      - skill: 198
+        level: 9
+      - skill: 176
+        level: 7
+    cooldownType: 2
+    baseCooldown: 4000
+    exeTarget: 14
+    useChance: 4
+    spellRegion: 1
+    element: 40
+    resourceType: 2
+    referStats:
+      - 2
+      - 3
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 10
+      - 5000
+    subDefine: 3565
+    maxLevel: 20
+    levels: *a5

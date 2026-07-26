@@ -31745,7 +31745,7 @@ items:
     job_req:
       - vagrant
   - id: 16172
-    name: Fool Glasses
+    name: Fools Glasses
     name_id: IDS_PROPITEM_TXT_006988
     weight: 1
     price: 4
@@ -32695,7 +32695,7 @@ items:
     job_req:
       - vagrant
   - id: 16224
-    name: Blue Soccer Shoes (M)
+    name: Red Soccer Footgear (M)
     name_id: IDS_PROPITEM_TXT_007132
     weight: 1
     price: 4
@@ -32745,7 +32745,7 @@ items:
     job_req:
       - vagrant
   - id: 16227
-    name: Blue Soccer Shoes (F)
+    name: Red Soccer Footgear (F)
     name_id: IDS_PROPITEM_TXT_007138
     weight: 1
     price: 4
@@ -32795,7 +32795,7 @@ items:
     job_req:
       - vagrant
   - id: 16230
-    name: Red Soccer Shoes (M)
+    name: White Soccer Footgear (M)
     name_id: IDS_PROPITEM_TXT_007144
     weight: 1
     price: 4
@@ -32845,7 +32845,7 @@ items:
     job_req:
       - vagrant
   - id: 16233
-    name: Red Soccer Shoes (F)
+    name: White Soccer Footgear (F)
     name_id: IDS_PROPITEM_TXT_007150
     weight: 1
     price: 4
@@ -32895,7 +32895,7 @@ items:
     job_req:
       - vagrant
   - id: 16236
-    name: White Soccer Shoes (M)
+    name: Blue Soccer Footgear (M)
     name_id: IDS_PROPITEM_TXT_007156
     weight: 1
     price: 4
@@ -32945,7 +32945,7 @@ items:
     job_req:
       - vagrant
   - id: 16239
-    name: White Soccer Shoes (F)
+    name: Blue Soccer Footgear (F)
     name_id: IDS_PROPITEM_TXT_007162
     weight: 1
     price: 4
@@ -34170,7 +34170,7 @@ items:
     job_req:
       - vagrant
   - id: 16972
-    name: School Swimsuit Hand (M)
+    name: School Swimsuit Hand (F)
     name_id: IDS_PROPITEM_TXT_010908
     weight: 1
     price: 4
@@ -48121,7 +48121,7 @@ items:
     attack_min: 1
     durability: 3600000
   - id: 20240
-    name: Clock Cloak(Japan)
+    name: Cloak of the Night Sky
     name_id: IDS_PROPITEM_TXT_012036
     weight: 1
     price: 0
@@ -48144,7 +48144,7 @@ items:
     attack_min: 1
     durability: 50000
   - id: 20241
-    name: Rose Cloak(Japan)
+    name: Cloak of the Loving Rose
     name_id: IDS_PROPITEM_TXT_012038
     weight: 1
     price: 0
@@ -48167,7 +48167,7 @@ items:
     attack_min: 1
     durability: 50000
   - id: 20242
-    name: Cherry Blossom(Japan)
+    name: Cloak of Petals
     name_id: IDS_PROPITEM_TXT_012040
     weight: 1
     price: 0

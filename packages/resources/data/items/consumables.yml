@@ -1469,7 +1469,7 @@ items:
     job_req:
       - vagrant
   - id: 26537
-    name: Scroll of Party EXP (7 days)
+    name: 7 Day Scroll of Party EXP
     name_id: IDS_PROPITEM_TXT_009278
     weight: 1
     price: 2
@@ -1492,7 +1492,7 @@ items:
     job_req:
       - vagrant
   - id: 26538
-    name: Scroll of Party EXP (15 days)
+    name: 15 Day Scroll of Party EXP
     name_id: IDS_PROPITEM_TXT_009280
     weight: 1
     price: 2
@@ -1515,7 +1515,7 @@ items:
     job_req:
       - vagrant
   - id: 26539
-    name: Scroll of Party Skill (7 days)
+    name: 7 Day Scroll of Party Skill
     name_id: IDS_PROPITEM_TXT_009282
     weight: 1
     price: 2
@@ -1538,7 +1538,7 @@ items:
     job_req:
       - vagrant
   - id: 26540
-    name: Scroll of Party Skill (15 days)
+    name: 15 Day Scroll of Party Skill
     name_id: IDS_PROPITEM_TXT_009284
     weight: 1
     price: 2
@@ -2251,7 +2251,7 @@ items:
     job_req:
       - vagrant
   - id: 20088
-    name: Red Drop
+    name: Red Gumball
     name_id: IDS_PROPITEM_TXT_011082
     weight: 1
     price: 4
@@ -2274,7 +2274,7 @@ items:
     job_req:
       - vagrant
   - id: 20089
-    name: Clear Drop
+    name: Blue Gumball
     name_id: IDS_PROPITEM_TXT_011084
     weight: 1
     price: 4
@@ -2297,7 +2297,7 @@ items:
     job_req:
       - vagrant
   - id: 20090
-    name: Yellow Drop
+    name: Yellow Gumball
     name_id: IDS_PROPITEM_TXT_011086
     weight: 1
     price: 4

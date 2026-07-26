@@ -1,0 +1,167 @@
+_version: "1.0"
+id: 238
+symbol: QUEST_HEROMENT_TRN5
+commands:
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6069
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaSa_Wingyei
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaSa_Wingyei
+      - type: sym
+        value: 1
+      - type: num
+        value: 8484
+      - type: num
+        value: 3812
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaEw_Romain
+      - type: sym
+        value: 1
+      - type: num
+        value: 7230
+      - type: num
+        value: 9292
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 130
+      - type: num
+        value: 130
+  - cmd: SetEndCondLevel
+    args:
+      - type: num
+        value: 130
+      - type: num
+        value: 130
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 30
+  - cmd: SetEndCondItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 7029
+      - type: num
+        value: 1
+  - cmd: SetEndRemoveItem
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 7029
+      - type: num
+        value: 1
+  - cmd: SetEndRewardItem
+    args:
+      - type: num
+        value: -1
+      - type: num
+        value: 0
+      - type: num
+        value: -1
+      - type: sym
+        value: 20355
+      - type: num
+        value: 1
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 237
+  - cmd: SetEndRewardSkillPoint
+    args:
+      - type: num
+        value: 20
+  - cmd: SetEndRewardHide
+    args:
+      - type: num
+        value: 1
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_003253
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_003254
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_003255
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_003256
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_003257
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_003259
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 8
+      - type: sym
+        value: IDS_PROPQUEST_INC_003260
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 9
+      - type: sym
+        value: IDS_PROPQUEST_INC_003261
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_003258
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_003262
+  "14":
+    desc: IDS_PROPQUEST_INC_003264
+quest_items: []
+title: IDS_PROPQUEST_INC_003252

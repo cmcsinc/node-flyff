@@ -45,8 +45,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -70,8 +70,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -95,8 +95,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -120,8 +120,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -145,8 +145,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -170,8 +170,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -195,8 +195,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -220,8 +220,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -245,8 +245,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -270,8 +270,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -295,8 +295,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -320,8 +320,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -345,8 +345,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -370,8 +370,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -395,8 +395,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -420,8 +420,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -445,8 +445,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -470,8 +470,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -495,8 +495,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -520,8 +520,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -545,8 +545,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -570,8 +570,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -595,8 +595,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -620,8 +620,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -645,8 +645,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -670,8 +670,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -695,8 +695,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -720,8 +720,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -745,8 +745,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -770,8 +770,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -795,8 +795,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -820,8 +820,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: true
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -845,8 +845,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -1745,8 +1745,8 @@ movers:
     attack_speed: 1000
     exp: 1
     flyable: false
-    boss: true
-    giant: true
+    boss: false
+    giant: false
     raid: false
     attackable: false
     guard: false
@@ -3099,7 +3099,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1023
     key: MI_MAFL_GUILDWAR02
@@ -3124,7 +3124,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1024
     key: MI_MAFL_GUILDWAR03
@@ -3149,7 +3149,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1025
     key: MI_MAFL_GUILDWAR04
@@ -3174,7 +3174,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1026
     key: MI_MAFL_ARENA
@@ -3199,7 +3199,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1027
     key: MI_MAFL_MAYOR
@@ -3224,7 +3224,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1028
     key: MI_NPC_CHARLIE
@@ -3249,7 +3249,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1029
     key: MI_NPC_SNOWMAN01
@@ -3274,7 +3274,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1030
     key: MI_NPC_SNOWMAN02
@@ -3299,7 +3299,7 @@ movers:
     giant: false
     raid: false
     attackable: false
-    guard: true
+    guard: false
     belligerence: 1
   - id: 1031
     key: MI_PET_BULLDOG
@@ -3428,7 +3428,7 @@ movers:
     belligerence: 1
   - id: 1036
     key: MI_PET_ROBOT
-    name: Cute Robot
+    name: Baby Robot
     name_id: IDS_PROPMOVER_TXT_001328
     dwObjIndex: 1036
     scale: 1
@@ -3587,7 +3587,7 @@ movers:
     hp: 159450120
     mp: 100
     fp: 0
-    attack: 36240
+    attack: 14132
     defense: 0
     attack_rate: 0
     dodge_rate: 0
@@ -3612,7 +3612,7 @@ movers:
     hp: 159450120
     mp: 100
     fp: 0
-    attack: 36240
+    attack: 14132
     defense: 0
     attack_rate: 0
     dodge_rate: 0
@@ -3637,7 +3637,7 @@ movers:
     hp: 159450120
     mp: 100
     fp: 0
-    attack: 36240
+    attack: 14132
     defense: 0
     attack_rate: 0
     dodge_rate: 0
@@ -3662,7 +3662,7 @@ movers:
     hp: 159450120
     mp: 100
     fp: 0
-    attack: 36240
+    attack: 14132
     defense: 0
     attack_rate: 0
     dodge_rate: 0
@@ -3687,7 +3687,7 @@ movers:
     hp: 159450120
     mp: 100
     fp: 0
-    attack: 36240
+    attack: 14132
     defense: 0
     attack_rate: 0
     dodge_rate: 0
@@ -4308,11 +4308,11 @@ movers:
     dwObjIndex: 1164
     scale: 1
     type: npc
-    level: 1
-    hp: 2297
+    level: 127
+    hp: 31890024
     mp: 100
     fp: 0
-    attack: 1
+    attack: 9785
     defense: 0
     attack_rate: 0
     dodge_rate: 0
@@ -4331,6 +4331,4656 @@ movers:
     name: Bone Golem
     name_id: IDS_PROPMOVER_TXT_001586
     dwObjIndex: 1165
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1166
+    key: MI_PET_MOCOMOCI
+    name: Mocomochi
+    name_id: IDS_PROPMOVER_TXT_001588
+    dwObjIndex: 1166
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1167
+    key: MI_PET_DANCER
+    name: Soul Dancer
+    name_id: IDS_PROPMOVER_TXT_001590
+    dwObjIndex: 1167
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1169
+    key: MI_STATUE
+    name: "[Twisted Soul] Orcus"
+    name_id: IDS_PROPMOVER_TXT_001594
+    dwObjIndex: 1169
+    scale: 1
+    type: npc
+    level: 133
+    hp: 391000
+    mp: 100
+    fp: 0
+    attack: 17222
+    defense: 264
+    attack_rate: 115
+    dodge_rate: 825
+    speed: 0.075
+    attack_speed: 1000
+    exp: 367290
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1170
+    key: MI_SPIRITTULA
+    name: "[Tormented Soul] Nergal"
+    name_id: IDS_PROPMOVER_TXT_001596
+    dwObjIndex: 1170
+    scale: 1
+    type: npc
+    level: 134
+    hp: 402500
+    mp: 100
+    fp: 0
+    attack: 17222
+    defense: 270
+    attack_rate: 115
+    dodge_rate: 825
+    speed: 0.075
+    attack_speed: 1000
+    exp: 382595
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1171
+    key: MI_SPIRITUMTULA
+    name: "[Demonic Soul] Hel"
+    name_id: IDS_PROPMOVER_TXT_001598
+    dwObjIndex: 1171
+    scale: 1
+    type: npc
+    level: 135
+    hp: 414000
+    mp: 100
+    fp: 0
+    attack: 17222
+    defense: 275
+    attack_rate: 115
+    dodge_rate: 825
+    speed: 0.075
+    attack_speed: 1000
+    exp: 398536
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1172
+    key: MI_SPIRITOBNIS
+    name: "[Perverted Soul] Morrigan"
+    name_id: IDS_PROPMOVER_TXT_001600
+    dwObjIndex: 1172
+    scale: 1
+    type: npc
+    level: 136
+    hp: 425500
+    mp: 100
+    fp: 0
+    attack: 17222
+    defense: 281
+    attack_rate: 115
+    dodge_rate: 825
+    speed: 0.075
+    attack_speed: 1000
+    exp: 415142
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1173
+    key: MI_SPIRITBAGNIS
+    name: "[Anguished Soul] Mara"
+    name_id: IDS_PROPMOVER_TXT_001602
+    dwObjIndex: 1173
+    scale: 1
+    type: npc
+    level: 137
+    hp: 437000
+    mp: 100
+    fp: 0
+    attack: 17222
+    defense: 286
+    attack_rate: 115
+    dodge_rate: 825
+    speed: 0.075
+    attack_speed: 1000
+    exp: 432439
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1174
+    key: MI_BEGUARDIAN
+    name: "[Violent Soul] Ghed"
+    name_id: IDS_PROPMOVER_TXT_001604
+    dwObjIndex: 1174
+    scale: 1
+    type: npc
+    level: 138
+    hp: 448500
+    mp: 100
+    fp: 0
+    attack: 17222
+    defense: 320
+    attack_rate: 115
+    dodge_rate: 825
+    speed: 0.075
+    attack_speed: 1000
+    exp: 497304
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1175
+    key: MI_BEHEMOTH
+    name: "[God of Death] Ankou"
+    name_id: IDS_PROPMOVER_TXT_001606
+    dwObjIndex: 1175
+    scale: 1
+    type: npc
+    level: 143
+    hp: 265566928
+    mp: 100
+    fp: 0
+    attack: 23883
+    defense: 616
+    attack_rate: 300
+    dodge_rate: 2660
+    speed: 0.12
+    attack_speed: 1000
+    exp: 13811413
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 11
+  - id: 1210
+    key: MI_BEHESTATUE01
+    name: Monument of Death
+    name_id: IDS_PROPMOVER_TXT_001676
+    dwObjIndex: 1210
+    scale: 1
+    type: npc
+    level: 125
+    hp: 34000000
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 240
+    attack_rate: 250
+    dodge_rate: 1500
+    speed: 0
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1183
+    key: MI_NPCBULLSFESTIVAL
+    name: Dumb Bull Matador
+    name_id: IDS_PROPMOVER_TXT_001622
+    dwObjIndex: 1183
+    scale: 1
+    type: npc
+    level: 140
+    hp: 12728598
+    mp: 100
+    fp: 0
+    attack: 18372
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1185
+    key: MI_MaEw_RUIDAN
+    name: "[Public Office] Ruidan"
+    name_id: IDS_PROPMOVER_TXT_001626
+    dwObjIndex: 1185
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1186
+    key: MI_MaEw_HUNTRANG
+    name: "[Village Chief] Huntrang"
+    name_id: IDS_PROPMOVER_TXT_001628
+    dwObjIndex: 1186
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1187
+    key: MI_MaEw_MIORANG
+    name: "[Quest Office] Miorang"
+    name_id: IDS_PROPMOVER_TXT_001630
+    dwObjIndex: 1187
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1188
+    key: MI_MaEw_MAWRANG
+    name: "[Magic] Mawrang"
+    name_id: IDS_PROPMOVER_TXT_001632
+    dwObjIndex: 1188
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1189
+    key: MI_MaEw_KANRANG
+    name: "[Weapon] Kanrang"
+    name_id: IDS_PROPMOVER_TXT_001634
+    dwObjIndex: 1189
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1190
+    key: MI_MaEw_RALBADAN
+    name: "[Arena Manager] Rarbadan"
+    name_id: IDS_PROPMOVER_TXT_001636
+    dwObjIndex: 1190
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1191
+    key: MI_MaEw_RELGANTUS
+    name: Rergantus
+    name_id: IDS_PROPMOVER_TXT_001638
+    dwObjIndex: 1191
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1192
+    key: MI_MaEw_MIRIUN
+    name: Miriun
+    name_id: IDS_PROPMOVER_TXT_001640
+    dwObjIndex: 1192
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1193
+    key: MI_MaEw_KARANG
+    name: "[Armor] Karang"
+    name_id: IDS_PROPMOVER_TXT_001642
+    dwObjIndex: 1193
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1194
+    key: MI_MaEw_KURANG
+    name: "[Shield] Kurang"
+    name_id: IDS_PROPMOVER_TXT_001644
+    dwObjIndex: 1194
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1195
+    key: MI_MaEw_HEIRANG
+    name: "[Station] Heirang"
+    name_id: IDS_PROPMOVER_TXT_001646
+    dwObjIndex: 1195
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1196
+    key: MI_MaEw_ARANG
+    name: "[Food] Arang"
+    name_id: IDS_PROPMOVER_TXT_001648
+    dwObjIndex: 1196
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1197
+    key: MI_MaEw_MAURANG
+    name: "[General] Maurang"
+    name_id: IDS_PROPMOVER_TXT_001650
+    dwObjIndex: 1197
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1198
+    key: MI_MaEw_BATO
+    name: "[Force Master] Bato"
+    name_id: IDS_PROPMOVER_TXT_001652
+    dwObjIndex: 1198
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1199
+    key: MI_MaEw_MEIALUN
+    name: "[Crackshooter Master] Meiarun"
+    name_id: IDS_PROPMOVER_TXT_001654
+    dwObjIndex: 1199
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1200
+    key: MI_MaEw_HAWRANG
+    name: "[Arcanist Master] Howrang"
+    name_id: IDS_PROPMOVER_TXT_001656
+    dwObjIndex: 1200
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1201
+    key: MI_MaEw_RUTAM
+    name: "[Upgrade Specialist] Rutam"
+    name_id: IDS_PROPMOVER_TXT_001658
+    dwObjIndex: 1201
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1202
+    key: MI_MaEw_RAYA
+    name: "[Jewel Manager] Raia"
+    name_id: IDS_PROPMOVER_TXT_001660
+    dwObjIndex: 1202
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1203
+    key: MI_MaEw_HARLIE
+    name: "[Housing Specialist] Harlie"
+    name_id: IDS_PROPMOVER_TXT_001662
+    dwObjIndex: 1203
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1204
+    key: MI_MaEw_RODELLA
+    name: "[Guild House Manager] Rodella"
+    name_id: IDS_PROPMOVER_TXT_001664
+    dwObjIndex: 1204
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1205
+    key: MI_MaEw_EPIE
+    name: "[Card Master] Epie"
+    name_id: IDS_PROPMOVER_TXT_001666
+    dwObjIndex: 1205
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1206
+    key: MI_MaEw_HURI
+    name: "[Makeup Artist] Huri"
+    name_id: IDS_PROPMOVER_TXT_001668
+    dwObjIndex: 1206
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1207
+    key: MI_MaEw_GELGA
+    name: "[Hair Designer] Gelga"
+    name_id: IDS_PROPMOVER_TXT_001670
+    dwObjIndex: 1207
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1208
+    key: MI_MaEw_RUOBORU
+    name: "[Red Chip Merchant] Ruoboru"
+    name_id: IDS_PROPMOVER_TXT_001672
+    dwObjIndex: 1208
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1212
+    key: MI_MaEw_CHEIRNAG
+    name: Cheirang
+    name_id: IDS_PROPMOVER_TXT_001680
+    dwObjIndex: 1212
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1214
+    key: MI_MaEw_CARL
+    name: Karl
+    name_id: IDS_PROPMOVER_TXT_001682
+    dwObjIndex: 1214
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1216
+    key: MI_MaEw_ISILIS
+    name: Isillis
+    name_id: IDS_PROPMOVER_TXT_001684
+    dwObjIndex: 1216
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1217
+    key: MI_MaEw_ROMAIN
+    name: Romain
+    name_id: IDS_PROPMOVER_TXT_001686
+    dwObjIndex: 1217
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1215
+    key: MI_MaEw_BRANKA
+    name: Branka
+    name_id: IDS_PROPMOVER_TXT_001690
+    dwObjIndex: 1215
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1213
+    key: MI_MaEw_EMBLUM
+    name: Emblum
+    name_id: IDS_PROPMOVER_TXT_001688
+    dwObjIndex: 1213
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1211
+    key: MI_MaFl_ROMINA
+    name: "[Legendary Golden Weapon Vendor] Romina"
+    name_id: IDS_PROPMOVER_TXT_001678
+    dwObjIndex: 1211
+    scale: 1
+    type: npc
+    level: 1
+    hp: 1500000
+    mp: 100
+    fp: 0
+    attack: 7000
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1220
+    key: MI_PET_SMELTPIYO
+    name: Piyo
+    name_id: IDS_PROPMOVER_TXT_001696
+    dwObjIndex: 1220
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1221
+    key: MI_PET_SMELTUDI
+    name: Udi
+    name_id: IDS_PROPMOVER_TXT_001698
+    dwObjIndex: 1221
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1222
+    key: MI_PET_SHEEP1
+    name: "[Event] Baby Sheep"
+    name_id: IDS_PROPMOVER_TXT_001700
+    dwObjIndex: 1222
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1274
+    key: MI_PET_SMELTUDI01
+    name: No info
+    name_id: IDS_PROPMOVER_TXT_001702
+    dwObjIndex: 1274
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1275
+    key: MI_MaEw_MEWRANG
+    name: Myorang
+    name_id: IDS_PROPMOVER_TXT_001704
+    dwObjIndex: 1275
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1280
+    key: MI_NPCDEMIAN
+    name: "[Rock Scissor Paper NPC]Demian"
+    name_id: IDS_PROPMOVER_TXT_001714
+    dwObjIndex: 1280
+    scale: 1
+    type: npc
+    level: 9
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 40
+    dodge_rate: 15
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1281
+    key: MI_PET_CHAMELEON
+    name: Chameleon
+    name_id: IDS_PROPMOVER_TXT_001716
+    dwObjIndex: 1281
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1282
+    key: MI_LIGHT
+    name: Light
+    name_id: IDS_PROPMOVER_TXT_001718
+    dwObjIndex: 1282
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 40
+    dodge_rate: 15
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1283
+    key: MI_DARK
+    name: Dark
+    name_id: IDS_PROPMOVER_TXT_001720
+    dwObjIndex: 1283
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 40
+    dodge_rate: 15
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1284
+    key: MI_MaSa_ROA
+    name: "[Guild House Manager] Loa"
+    name_id: IDS_PROPMOVER_TXT_001722
+    dwObjIndex: 1284
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1285
+    key: MI_MaEw_TROY
+    name: "[Guild House Manager] Troy"
+    name_id: IDS_PROPMOVER_TXT_001724
+    dwObjIndex: 1285
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1303
+    key: MI_NPC_ROMERO
+    name: Romero
+    name_id: IDS_PROPMOVER_TXT_001728
+    dwObjIndex: 1303
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1286
+    key: MI_MaFl_GUILDHOUSE_DOOR_01
+    name: MI_MaFl_GUILDHOUSE_DOOR_01
+    name_id: IDS_PROPMOVER_TXT_001726
+    dwObjIndex: 1286
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1287
+    key: MI_MaFl_GUILDHOUSE_DOOR_02
+    name: MI_MaFl_GUILDHOUSE_DOOR_02
+    name_id: IDS_PROPMOVER_TXT_001730
+    dwObjIndex: 1287
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1288
+    key: MI_MaFl_GUILDHOUSE_DOOR_03
+    name: MI_MaFl_GUILDHOUSE_DOOR_03
+    name_id: IDS_PROPMOVER_TXT_001732
+    dwObjIndex: 1288
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1289
+    key: MI_MaFl_GUILDHOUSE_DOOR_04
+    name: MI_MaFl_GUILDHOUSE_DOOR_04
+    name_id: IDS_PROPMOVER_TXT_001734
+    dwObjIndex: 1289
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1290
+    key: MI_MaFl_GUILDHOUSE_DOOR_05
+    name: MI_MaFl_GUILDHOUSE_DOOR_05
+    name_id: IDS_PROPMOVER_TXT_001736
+    dwObjIndex: 1290
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1291
+    key: MI_MaSa_GUILDHOUSE_DOOR_01
+    name: MI_MaSa_GUILDHOUSE_DOOR_01
+    name_id: IDS_PROPMOVER_TXT_001738
+    dwObjIndex: 1291
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1292
+    key: MI_MaSa_GUILDHOUSE_DOOR_02
+    name: MI_MaSa_GUILDHOUSE_DOOR_02
+    name_id: IDS_PROPMOVER_TXT_001740
+    dwObjIndex: 1292
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1293
+    key: MI_MaSa_GUILDHOUSE_DOOR_03
+    name: MI_MaSa_GUILDHOUSE_DOOR_03
+    name_id: IDS_PROPMOVER_TXT_001742
+    dwObjIndex: 1293
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1294
+    key: MI_MaSa_GUILDHOUSE_DOOR_04
+    name: MI_MaSa_GUILDHOUSE_DOOR_04
+    name_id: IDS_PROPMOVER_TXT_001744
+    dwObjIndex: 1294
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1295
+    key: MI_MaSa_GUILDHOUSE_DOOR_05
+    name: MI_MaSa_GUILDHOUSE_DOOR_05
+    name_id: IDS_PROPMOVER_TXT_001746
+    dwObjIndex: 1295
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1296
+    key: MI_MaSa_GUILDHOUSE_DOOR_06
+    name: MI_MaSa_GUILDHOUSE_DOOR_06
+    name_id: IDS_PROPMOVER_TXT_001748
+    dwObjIndex: 1296
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1297
+    key: MI_MaSa_GUILDHOUSE_DOOR_07
+    name: MI_MaSa_GUILDHOUSE_DOOR_07
+    name_id: IDS_PROPMOVER_TXT_001750
+    dwObjIndex: 1297
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1298
+    key: MI_MaSa_GUILDHOUSE_DOOR_08
+    name: MI_MaSa_GUILDHOUSE_DOOR_08
+    name_id: IDS_PROPMOVER_TXT_001752
+    dwObjIndex: 1298
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1299
+    key: MI_MaSa_GUILDHOUSE_DOOR_09
+    name: MI_MaSa_GUILDHOUSE_DOOR_09
+    name_id: IDS_PROPMOVER_TXT_001754
+    dwObjIndex: 1299
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1300
+    key: MI_MaEw_GUILDHOUSE_DOOR_01
+    name: MI_MaEw_GUILDHOUSE_DOOR_01
+    name_id: IDS_PROPMOVER_TXT_001756
+    dwObjIndex: 1300
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1301
+    key: MI_MaEw_GUILDHOUSE_DOOR_02
+    name: MI_MaEw_GUILDHOUSE_DOOR_02
+    name_id: IDS_PROPMOVER_TXT_001758
+    dwObjIndex: 1301
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1302
+    key: MI_MaEw_GUILDHOUSE_DOOR_03
+    name: MI_MaEw_GUILDHOUSE_DOOR_03
+    name_id: IDS_PROPMOVER_TXT_001760
+    dwObjIndex: 1302
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1304
+    key: MI_NPC_FRANKENSTEIN
+    name: Kirkman
+    name_id: IDS_PROPMOVER_TXT_001762
+    dwObjIndex: 1304
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1305
+    key: MI_MaFl_GUILDHOUSE_NOTICE_01
+    name: MI_MaFl_GUILDHOUSE_NOTICE_01
+    name_id: IDS_PROPMOVER_TXT_001764
+    dwObjIndex: 1305
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1306
+    key: MI_MaFl_GUILDHOUSE_NOTICE_02
+    name: MI_MaFl_GUILDHOUSE_NOTICE_02
+    name_id: IDS_PROPMOVER_TXT_001766
+    dwObjIndex: 1306
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1307
+    key: MI_MaFl_GUILDHOUSE_NOTICE_03
+    name: MI_MaFl_GUILDHOUSE_NOTICE_03
+    name_id: IDS_PROPMOVER_TXT_001768
+    dwObjIndex: 1307
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1308
+    key: MI_MaFl_GUILDHOUSE_NOTICE_04
+    name: MI_MaFl_GUILDHOUSE_NOTICE_04
+    name_id: IDS_PROPMOVER_TXT_001770
+    dwObjIndex: 1308
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1309
+    key: MI_MaFl_GUILDHOUSE_NOTICE_05
+    name: MI_MaFl_GUILDHOUSE_NOTICE_05
+    name_id: IDS_PROPMOVER_TXT_001772
+    dwObjIndex: 1309
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1310
+    key: MI_MaSa_GUILDHOUSE_NOTICE_01
+    name: MI_MaSa_GUILDHOUSE_NOTICE_01
+    name_id: IDS_PROPMOVER_TXT_001774
+    dwObjIndex: 1310
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1311
+    key: MI_MaSa_GUILDHOUSE_NOTICE_02
+    name: MI_MaSa_GUILDHOUSE_NOTICE_02
+    name_id: IDS_PROPMOVER_TXT_001776
+    dwObjIndex: 1311
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1312
+    key: MI_MaSa_GUILDHOUSE_NOTICE_03
+    name: MI_MaSa_GUILDHOUSE_NOTICE_03
+    name_id: IDS_PROPMOVER_TXT_001778
+    dwObjIndex: 1312
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1313
+    key: MI_MaSa_GUILDHOUSE_NOTICE_04
+    name: MI_MaSa_GUILDHOUSE_NOTICE_04
+    name_id: IDS_PROPMOVER_TXT_001780
+    dwObjIndex: 1313
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1314
+    key: MI_MaSa_GUILDHOUSE_NOTICE_05
+    name: MI_MaSa_GUILDHOUSE_NOTICE_05
+    name_id: IDS_PROPMOVER_TXT_001782
+    dwObjIndex: 1314
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1315
+    key: MI_MaSa_GUILDHOUSE_NOTICE_06
+    name: MI_MaSa_GUILDHOUSE_NOTICE_06
+    name_id: IDS_PROPMOVER_TXT_001784
+    dwObjIndex: 1315
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1316
+    key: MI_MaSa_GUILDHOUSE_NOTICE_07
+    name: MI_MaSa_GUILDHOUSE_NOTICE_07
+    name_id: IDS_PROPMOVER_TXT_001786
+    dwObjIndex: 1316
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1317
+    key: MI_MaSa_GUILDHOUSE_NOTICE_08
+    name: MI_MaSa_GUILDHOUSE_NOTICE_08
+    name_id: IDS_PROPMOVER_TXT_001788
+    dwObjIndex: 1317
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1318
+    key: MI_MaSa_GUILDHOUSE_NOTICE_09
+    name: MI_MaSa_GUILDHOUSE_NOTICE_09
+    name_id: IDS_PROPMOVER_TXT_001790
+    dwObjIndex: 1318
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1319
+    key: MI_MaEw_GUILDHOUSE_NOTICE_01
+    name: MI_MaEw_GUILDHOUSE_NOTICE_01
+    name_id: IDS_PROPMOVER_TXT_001792
+    dwObjIndex: 1319
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1320
+    key: MI_MaEw_GUILDHOUSE_NOTICE_02
+    name: MI_MaEw_GUILDHOUSE_NOTICE_02
+    name_id: IDS_PROPMOVER_TXT_001794
+    dwObjIndex: 1320
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1321
+    key: MI_MaEw_GUILDHOUSE_NOTICE_03
+    name: MI_MaEw_GUILDHOUSE_NOTICE_03
+    name_id: IDS_PROPMOVER_TXT_001796
+    dwObjIndex: 1321
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1322
+    key: MI_BUFFPONG
+    name: "[Event NPC]Big Buff Pang"
+    name_id: IDS_PROPMOVER_TXT_001798
+    dwObjIndex: 1322
+    scale: 1
+    type: npc
+    level: 9
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 40
+    dodge_rate: 15
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1325
+    key: MI_PET_LITTLEZOMBIE
+    name: Braaaaains
+    name_id: IDS_PROPMOVER_TXT_001804
+    dwObjIndex: 1325
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1326
+    key: MI_GUILD_DOOR
+    name: MI_GUILD_DOOR
+    name_id: IDS_PROPMOVER_TXT_001806
+    dwObjIndex: 1326
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1327
+    key: MI_NPC_BROOKS
+    name: Brooks
+    name_id: IDS_PROPMOVER_TXT_001808
+    dwObjIndex: 1327
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1328
+    key: MI_NPC_ATMA
+    name: ATMA
+    name_id: IDS_PROPMOVER_TXT_001810
+    dwObjIndex: 1328
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1329
+    key: MI_NPC_JAPCHANGE
+    name: "[Exchange NPC] Chance"
+    name_id: IDS_PROPMOVER_TXT_001812
+    dwObjIndex: 1329
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1332
+    key: MI_MIDDLE_GUILDHOUSE_DOOR_01
+    name: MI_MIDDLE_GUILDHOUSE_DOOR_01
+    name_id: IDS_PROPMOVER_TXT_001818
+    dwObjIndex: 1332
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1333
+    key: MI_MIDDLE_GUILDHOUSE_DOOR_02
+    name: MI_MIDDLE_GUILDHOUSE_DOOR_02
+    name_id: IDS_PROPMOVER_TXT_001820
+    dwObjIndex: 1333
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1334
+    key: MI_MIDDLE_GUILDHOUSE_DOOR_03
+    name: MI_MIDDLE_GUILDHOUSE_DOOR_03
+    name_id: IDS_PROPMOVER_TXT_001822
+    dwObjIndex: 1334
+    scale: 1
+    type: npc
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1336
+    key: MI_PET_REDPAANG
+    name: Big Red
+    name_id: IDS_PROPMOVER_TXT_001826
+    dwObjIndex: 1336
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1337
+    key: MI_MaEw_RUKAS
+    name: "[Expedition Leader] Rukas"
+    name_id: IDS_PROPMOVER_TXT_001828
+    dwObjIndex: 1337
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1338
+    key: MI_MaEw_PiINANOCO
+    name: Pinanoco
+    name_id: IDS_PROPMOVER_TXT_001830
+    dwObjIndex: 1338
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1339
+    key: MI_MaEw_RAUNDAS
+    name: Raundas
+    name_id: IDS_PROPMOVER_TXT_001832
+    dwObjIndex: 1339
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1340
+    key: MI_BASILISK
+    name: Basilisk of the Great Maw
+    name_id: IDS_PROPMOVER_TXT_001834
+    dwObjIndex: 1340
+    scale: 1
+    type: npc
+    level: 146
+    hp: 139711294
+    mp: 100
+    fp: 0
+    attack: 12038
+    defense: 677
+    attack_rate: 253
+    dodge_rate: 3300
+    speed: 0.025
+    attack_speed: 1000
+    exp: 15274317
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1342
+    key: MI_RUGALHEAT02
+    name: Sunbaked Rhino Warrior
+    name_id: IDS_PROPMOVER_TXT_001838
+    dwObjIndex: 1342
+    scale: 1
+    type: npc
+    level: 138
+    hp: 187550
+    mp: 100
+    fp: 0
+    attack: 5112
+    defense: 272
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.025
+    attack_speed: 1000
+    exp: 2210746
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1343
+    key: MI_RUGALKUMA
+    name: Desert Spirit of the Commander
+    name_id: IDS_PROPMOVER_TXT_001840
+    dwObjIndex: 1343
+    scale: 1
+    type: npc
+    level: 141
+    hp: 217750
+    mp: 100
+    fp: 0
+    attack: 6762
+    defense: 303
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2302568
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1345
+    key: MI_RUGALRIMA
+    name: Desert Spirit of the Sage
+    name_id: IDS_PROPMOVER_TXT_001844
+    dwObjIndex: 1345
+    scale: 1
+    type: npc
+    level: 142
+    hp: 223750
+    mp: 100
+    fp: 0
+    attack: 7092
+    defense: 311
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2310568
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1346
+    key: MI_RUGALWIND02
+    name: Warrior Sand Skitter
+    name_id: IDS_PROPMOVER_TXT_001846
+    dwObjIndex: 1346
+    scale: 1
+    type: npc
+    level: 137
+    hp: 181500
+    mp: 100
+    fp: 0
+    attack: 4826
+    defense: 266
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.025
+    attack_speed: 1000
+    exp: 2203746
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1347
+    key: MI_KALGASAKIN01
+    name: "[Kalgas Guardian] Astaroth"
+    name_id: IDS_PROPMOVER_TXT_001848
+    dwObjIndex: 1347
+    scale: 1
+    type: npc
+    level: 146
+    hp: 493350
+    mp: 100
+    fp: 0
+    attack: 18944
+    defense: 352
+    attack_rate: 126
+    dodge_rate: 1815
+    speed: 0.075
+    attack_speed: 1000
+    exp: 542926
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1348
+    key: MI_KALGASBABY01
+    name: Baby Kargo
+    name_id: IDS_PROPMOVER_TXT_001850
+    dwObjIndex: 1348
+    scale: 1
+    type: npc
+    level: 143
+    hp: 455400
+    mp: 100
+    fp: 0
+    attack: 18944
+    defense: 302
+    attack_rate: 126
+    dodge_rate: 1815
+    speed: 0.075
+    attack_speed: 1000
+    exp: 478243
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1349
+    key: MI_KALGASBALT01
+    name: "[Kalgas Guardian] Malphas"
+    name_id: IDS_PROPMOVER_TXT_001852
+    dwObjIndex: 1349
+    scale: 1
+    type: npc
+    level: 147
+    hp: 504350
+    mp: 100
+    fp: 0
+    attack: 18944
+    defense: 372
+    attack_rate: 126
+    dodge_rate: 1815
+    speed: 0.075
+    attack_speed: 1000
+    exp: 566926
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1350
+    key: MI_KALGASFLY01
+    name: Kalgas Kargo Ripper
+    name_id: IDS_PROPMOVER_TXT_001854
+    dwObjIndex: 1350
+    scale: 1
+    type: npc
+    level: 144
+    hp: 468050
+    mp: 100
+    fp: 0
+    attack: 18944
+    defense: 309
+    attack_rate: 126
+    dodge_rate: 1815
+    speed: 0.075
+    attack_speed: 1000
+    exp: 498170
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1351
+    key: MI_KALGASKUMA01
+    name: Kalgas Cave Creeper
+    name_id: IDS_PROPMOVER_TXT_001856
+    dwObjIndex: 1351
+    scale: 1
+    type: npc
+    level: 141
+    hp: 430100
+    mp: 100
+    fp: 0
+    attack: 18944
+    defense: 290
+    attack_rate: 126
+    dodge_rate: 1815
+    speed: 0.075
+    attack_speed: 1000
+    exp: 440748
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1352
+    key: MI_KALGASLESSER01
+    name: Kalgas Hound
+    name_id: IDS_PROPMOVER_TXT_001858
+    dwObjIndex: 1352
+    scale: 1
+    type: npc
+    level: 145
+    hp: 480700
+    mp: 100
+    fp: 0
+    attack: 18944
+    defense: 314
+    attack_rate: 126
+    dodge_rate: 1815
+    speed: 0.075
+    attack_speed: 1000
+    exp: 518926
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1353
+    key: MI_KALGASRIMA01
+    name: Kalgas Wretched Soul
+    name_id: IDS_PROPMOVER_TXT_001860
+    dwObjIndex: 1353
+    scale: 1
+    type: npc
+    level: 142
+    hp: 442750
+    mp: 100
+    fp: 0
+    attack: 18944
+    defense: 297
+    attack_rate: 126
+    dodge_rate: 1815
+    speed: 0.075
+    attack_speed: 1000
+    exp: 459114
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1354
+    key: MI_KALGASBOSS
+    name: "[God of Wrath] Kalgas"
+    name_id: IDS_PROPMOVER_TXT_001862
+    dwObjIndex: 1354
+    scale: 1
+    type: npc
+    level: 152
+    hp: 146061808
+    mp: 100
+    fp: 0
+    attack: 25076
+    defense: 677
+    attack_rate: 330
+    dodge_rate: 5320
+    speed: 0
+    attack_speed: 1000
+    exp: 16573695
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 13
+  - id: 1357
+    key: MI_MaEw_IDELRUNA
+    name: Idelruna
+    name_id: IDS_PROPMOVER_TXT_001868
+    dwObjIndex: 1357
+    scale: 1
+    type: npc
+    level: 152
+    hp: 146061808
+    mp: 100
+    fp: 0
+    attack: 25076
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1358
+    key: MI_MaEw_GIGAKA
+    name: Gigaka
+    name_id: IDS_PROPMOVER_TXT_001870
+    dwObjIndex: 1358
+    scale: 1
+    type: npc
+    level: 152
+    hp: 146061808
+    mp: 100
+    fp: 0
+    attack: 25076
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1374
+    key: MI_COLODIEOPNIS
+    name: "[Mirrored Soul] Mara"
+    name_id: IDS_PROPMOVER_TXT_001902
+    dwObjIndex: 1374
+    scale: 1
+    type: npc
+    level: 136
+    hp: 425500
+    mp: 100
+    fp: 0
+    attack: 98415
+    defense: 281
+    attack_rate: 230
+    dodge_rate: 1650
+    speed: 0.075
+    attack_speed: 1000
+    exp: 415142
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1377
+    key: MI_COLOCLOCKWORK
+    name: "[Mirrored Soul] Clockworks"
+    name_id: IDS_PROPMOVER_TXT_001908
+    dwObjIndex: 1377
+    scale: 1
+    type: npc
+    level: 80
+    hp: 62582890
+    mp: 100
+    fp: 0
+    attack: 2900
+    defense: 140
+    attack_rate: 120
+    dodge_rate: 115
+    speed: 0.07
+    attack_speed: 1000
+    exp: 249864550
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 13
+  - id: 1385
+    key: MI_COLOANGRYBEHEMOTH
+    name: "[Mirrored Soul] Ankou"
+    name_id: IDS_PROPMOVER_TXT_001924
+    dwObjIndex: 1385
+    scale: 1
+    type: npc
+    level: 143
+    hp: 106226771
+    mp: 100
+    fp: 0
+    attack: 184282
+    defense: 616
+    attack_rate: 600
+    dodge_rate: 5320
+    speed: 0.12
+    attack_speed: 1000
+    exp: 13811413
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 11
+  - id: 1387
+    key: MI_COLOKALGAS
+    name: "[Mirrored Soul] Kalgas"
+    name_id: IDS_PROPMOVER_TXT_001928
+    dwObjIndex: 1387
+    scale: 1
+    type: npc
+    level: 152
+    hp: 146061808
+    mp: 100
+    fp: 0
+    attack: 4388
+    defense: 242
+    attack_rate: 253
+    dodge_rate: 1100
+    speed: 0
+    attack_speed: 1000
+    exp: 1559786
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1389
+    key: MI_PET_REDSNOWMAN
+    name: Jimbo the Snowman
+    name_id: IDS_PROPMOVER_TXT_001932
+    dwObjIndex: 1389
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1406
+    key: MI_COLODIEOPNIS_1
+    name: "[False Soul] Mara"
+    name_id: IDS_PROPMOVER_TXT_001964
+    dwObjIndex: 1406
+    scale: 1
+    type: npc
+    level: 136
+    hp: 425500
+    mp: 100
+    fp: 0
+    attack: 98415
+    defense: 281
+    attack_rate: 230
+    dodge_rate: 1650
+    speed: 0.075
+    attack_speed: 1000
+    exp: 415142
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1409
+    key: MI_COLOCLOCKWORK_1
+    name: "[False Soul] Clockworks"
+    name_id: IDS_PROPMOVER_TXT_001970
+    dwObjIndex: 1409
+    scale: 1
+    type: npc
+    level: 80
+    hp: 62582890
+    mp: 100
+    fp: 0
+    attack: 2900
+    defense: 140
+    attack_rate: 120
+    dodge_rate: 115
+    speed: 0.07
+    attack_speed: 1000
+    exp: 249864550
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 13
+  - id: 1417
+    key: MI_COLOANGRYBEHEMOTH_1
+    name: "[False Soul] Ankou"
+    name_id: IDS_PROPMOVER_TXT_001986
+    dwObjIndex: 1417
+    scale: 1
+    type: npc
+    level: 143
+    hp: 106226771
+    mp: 100
+    fp: 0
+    attack: 184282
+    defense: 616
+    attack_rate: 600
+    dodge_rate: 5320
+    speed: 0.12
+    attack_speed: 1000
+    exp: 13811413
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 11
+  - id: 1419
+    key: MI_COLOKALGAS_1
+    name: "[False Soul] Kalgas"
+    name_id: IDS_PROPMOVER_TXT_001990
+    dwObjIndex: 1419
+    scale: 1
+    type: npc
+    level: 152
+    hp: 146061808
+    mp: 100
+    fp: 0
+    attack: 4388
+    defense: 242
+    attack_rate: 253
+    dodge_rate: 1100
+    speed: 0
+    attack_speed: 1000
+    exp: 1559786
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1427
+    key: MI_PET_SNOWMAN01
+    name: Jack Frost
+    name_id: IDS_PROPMOVER_TXT_002006
+    dwObjIndex: 1427
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1428
+    key: MI_PET_CHRISTMASFAIRY
+    name: Mr. Grinchie
+    name_id: IDS_PROPMOVER_TXT_002008
+    dwObjIndex: 1428
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1429
+    key: MI_PET_CHRISTMASDEER
+    name: Rudolph
+    name_id: IDS_PROPMOVER_TXT_002010
+    dwObjIndex: 1429
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1434
+    key: MI_PET_KIMPD
+    name: "[Development Supervisor] Kim"
+    name_id: IDS_PROPMOVER_TXT_002020
+    dwObjIndex: 1434
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1435
+    key: MI_NPC_KIMPD
+    name: "[Development Supervisor] Producer Kim"
+    name_id: IDS_PROPMOVER_TXT_002022
+    dwObjIndex: 1435
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1437
+    key: MI_PET_CUTEBEAR
+    name: Kuma
+    name_id: IDS_PROPMOVER_TXT_002026
+    dwObjIndex: 1437
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1438
+    key: MI_PET_SMELTCOBI
+    name: "[Upgrade Spirit] Coby"
+    name_id: IDS_PROPMOVER_TXT_002028
+    dwObjIndex: 1438
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1439
+    key: MI_PET_SMELTPIERCE
+    name: "[Upgrade Spirit] Pierce"
+    name_id: IDS_PROPMOVER_TXT_002030
+    dwObjIndex: 1439
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1441
+    key: MI_PET_NEWYEARRABBIT
+    name: Usagi
+    name_id: IDS_PROPMOVER_TXT_002034
+    dwObjIndex: 1441
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1442
+    key: MI_MAFL_DONATION
+    name: Cooperative Donation NPC
+    name_id: IDS_PROPMOVER_TXT_002036
+    dwObjIndex: 1442
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1443
+    key: MI_PET_DEVILTOY
+    name: X900 EvilTron
+    name_id: IDS_PROPMOVER_TXT_002038
+    dwObjIndex: 1443
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1444
+    key: MI_PET_TADDYBEAR
+    name: Mister Grizz
+    name_id: IDS_PROPMOVER_TXT_002040
+    dwObjIndex: 1444
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1452
+    key: MI_SHIPHIPPOGRIPH
+    name: Phalanx
+    name_id: IDS_PROPMOVER_TXT_002056
+    dwObjIndex: 1452
+    scale: 1
+    type: npc
+    level: 111
+    hp: 493888
+    mp: 100
+    fp: 0
+    attack: 3767
+    defense: 258
+    attack_rate: 136
+    dodge_rate: 166
+    speed: 0
+    attack_speed: 1000
+    exp: 966356
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1445
+    key: MI_SHIPHARPINEES
+    name: Silverwing Duchess
+    name_id: IDS_PROPMOVER_TXT_002042
+    dwObjIndex: 1445
+    scale: 1
+    type: npc
+    level: 116
+    hp: 4468424
+    mp: 100
+    fp: 0
+    attack: 7288
+    defense: 516
+    attack_rate: 699
+    dodge_rate: 559
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1932712
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 11
+  - id: 1459
+    key: MI_DREAMQEEN01
+    name: "[Queen of Thorns] Entaness"
+    name_id: IDS_PROPMOVER_TXT_002070
+    dwObjIndex: 1459
+    scale: 1
+    type: npc
+    level: 85
+    hp: 1117106
+    mp: 100
+    fp: 0
+    attack: 6612
+    defense: 516
+    attack_rate: 165
+    dodge_rate: 155
+    speed: 0
+    attack_speed: 1000
+    exp: 615826
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 13
+  - id: 1466
+    key: MI_HERNSIREN01
+    name: Siren
+    name_id: IDS_PROPMOVER_TXT_002084
+    dwObjIndex: 1466
+    scale: 1
+    type: npc
+    level: 96
+    hp: 448989
+    mp: 100
+    fp: 0
+    attack: 3724
+    defense: 258
+    attack_rate: 131
+    dodge_rate: 161
+    speed: 0.075
+    attack_speed: 1000
+    exp: 545484
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1467
+    key: MI_HERNKRAKEN01
+    name: "[Terror] King Chiton"
+    name_id: IDS_PROPMOVER_TXT_002086
+    dwObjIndex: 1467
+    scale: 1
+    type: npc
+    level: 101
+    hp: 2234212
+    mp: 100
+    fp: 0
+    attack: 6942
+    defense: 516
+    attack_rate: 180
+    dodge_rate: 170
+    speed: 0
+    attack_speed: 1000
+    exp: 1090968
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 13
+  - id: 1475
+    key: MI_SHIPHIPPOGRIPH_1
+    name: Ace Phalanx
+    name_id: IDS_PROPMOVER_TXT_002130
+    dwObjIndex: 1475
+    scale: 1
+    type: npc
+    level: 111
+    hp: 1086552
+    mp: 100
+    fp: 0
+    attack: 7402
+    defense: 258
+    attack_rate: 95
+    dodge_rate: 151
+    speed: 0
+    attack_speed: 1000
+    exp: 966356
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1468
+    key: MI_SHIPHARPINEES_1
+    name: Ace Silverwing Dutchess
+    name_id: IDS_PROPMOVER_TXT_002132
+    dwObjIndex: 1468
+    scale: 1
+    type: npc
+    level: 116
+    hp: 39862530
+    mp: 100
+    fp: 0
+    attack: 23108
+    defense: 516
+    attack_rate: 699
+    dodge_rate: 559
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1932712
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 11
+  - id: 1482
+    key: MI_DREAMQEEN01_1
+    name: "[Vile Queen of Thorns] Entaness"
+    name_id: IDS_PROPMOVER_TXT_002100
+    dwObjIndex: 1482
+    scale: 1
+    type: npc
+    level: 85
+    hp: 9965632
+    mp: 100
+    fp: 0
+    attack: 10494
+    defense: 258
+    attack_rate: 689
+    dodge_rate: 449
+    speed: 0
+    attack_speed: 1000
+    exp: 615826
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 13
+  - id: 1489
+    key: MI_HERNSIREN01_1
+    name: Abyssal Siren
+    name_id: IDS_PROPMOVER_TXT_002114
+    dwObjIndex: 1489
+    scale: 1
+    type: npc
+    level: 96
+    hp: 987774
+    mp: 100
+    fp: 0
+    attack: 7711
+    defense: 516
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.075
+    attack_speed: 1000
+    exp: 545484
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1490
+    key: MI_HERNKRAKEN01_1
+    name: "[Abyssal Terror] King Chiton"
+    name_id: IDS_PROPMOVER_TXT_002116
+    dwObjIndex: 1490
+    scale: 1
+    type: npc
+    level: 101
+    hp: 19931265
+    mp: 100
+    fp: 0
+    attack: 13094
+    defense: 516
+    attack_rate: 694
+    dodge_rate: 554
+    speed: 0
+    attack_speed: 1000
+    exp: 1090968
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 13
+  - id: 1491
+    key: MI_MAFL_TELEPORTER_2
+    name: 2nd Class Teleporter
+    name_id: IDS_PROPMOVER_TXT_002134
+    dwObjIndex: 1491
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1492
+    key: MI_MASP_SANPRES
+    name: Sanpres
+    name_id: IDS_PROPMOVER_TXT_002136
+    dwObjIndex: 1492
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1493
+    key: MI_MAHE_RAELRA
+    name: Raelra
+    name_id: IDS_PROPMOVER_TXT_002138
+    dwObjIndex: 1493
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1494
+    key: MI_NPC_FLAME
+    name: Flami
+    name_id: IDS_PROPMOVER_TXT_002140
+    dwObjIndex: 1494
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1495
+    key: MI_NPC_REONAN
+    name: Reonan
+    name_id: IDS_PROPMOVER_TXT_002142
+    dwObjIndex: 1495
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1496
+    key: MI_NPC_AINHER
+    name: Ainher
+    name_id: IDS_PROPMOVER_TXT_002156
+    dwObjIndex: 1496
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1497
+    key: MI_NPC_ELLAIN
+    name: Elaine
+    name_id: IDS_PROPMOVER_TXT_002154
+    dwObjIndex: 1497
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1498
+    key: MI_NPC_HENDEL
+    name: Handel
+    name_id: IDS_PROPMOVER_TXT_002148
+    dwObjIndex: 1498
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1499
+    key: MI_NPC_SURY
+    name: Sury
+    name_id: IDS_PROPMOVER_TXT_002158
+    dwObjIndex: 1499
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1500
+    key: MI_NPC_HAEL
+    name: Hael
+    name_id: IDS_PROPMOVER_TXT_002146
+    dwObjIndex: 1500
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1501
+    key: MI_NPC_NERCO
+    name: Nerco
+    name_id: IDS_PROPMOVER_TXT_002144
+    dwObjIndex: 1501
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1502
+    key: MI_NPC_REODOS
+    name: Reodos
+    name_id: IDS_PROPMOVER_TXT_002150
+    dwObjIndex: 1502
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1503
+    key: MI_NPC_ZORO
+    name: Zoro
+    name_id: IDS_PROPMOVER_TXT_002152
+    dwObjIndex: 1503
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1509
+    key: MI_NPC_DRICO
+    name: Driko
+    name_id: IDS_PROPMOVER_TXT_002168
+    dwObjIndex: 1509
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1505
+    key: MI_EVENT_FWCMONSTER
+    name: Ripper
+    name_id: IDS_PROPMOVER_TXT_002160
+    dwObjIndex: 1505
+    scale: 1
+    type: npc
+    level: 200
+    hp: 1081995
+    mp: 100
+    fp: 0
+    attack: 3000
+    defense: 173
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.08
+    attack_speed: 1000
+    exp: 1901497
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 12
+  - id: 1506
+    key: MI_PET_GPOTATO
+    name: Lil' gPotato
+    name_id: IDS_PROPMOVER_TXT_002162
+    dwObjIndex: 1506
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1507
+    key: MI_NPC_FWCENTER
+    name: Arena Manager
+    name_id: IDS_PROPMOVER_TXT_002164
+    dwObjIndex: 1507
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1508
+    key: MI_PET_BABYKARGO
+    name: Friendly Baby Kargo
+    name_id: IDS_PROPMOVER_TXT_002166
+    dwObjIndex: 1508
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1510
+    key: MI_PET_MATRYOSHKA
+    name: Charming Babushka Doll
+    name_id: IDS_PROPMOVER_TXT_002170
+    dwObjIndex: 1510
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1511
+    key: MI_NPC_SHAIN
+    name: "[Market Transfer Manager] Shine"
+    name_id: IDS_PROPMOVER_TXT_002172
+    dwObjIndex: 1511
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1512
+    key: MI_NPC_RANGPANG
+    name: "[Vendor] Rangpang"
+    name_id: IDS_PROPMOVER_TXT_002174
+    dwObjIndex: 1512
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1513
+    key: MI_NPC_PONEANG
+    name: "[Vendor] Ponyang"
+    name_id: IDS_PROPMOVER_TXT_002176
+    dwObjIndex: 1513
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1514
+    key: MI_NPC_REONG
+    name: "[Vendor] Leon"
+    name_id: IDS_PROPMOVER_TXT_002178
+    dwObjIndex: 1514
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1515
+    key: MI_NPC_TAMTAM
+    name: "[Vendor] TomTom"
+    name_id: IDS_PROPMOVER_TXT_002180
+    dwObjIndex: 1515
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1516
+    key: MI_NPC_RANGGO
+    name: "[Vendor] Rango"
+    name_id: IDS_PROPMOVER_TXT_002182
+    dwObjIndex: 1516
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1517
+    key: MI_NPC_TOTO
+    name: "[Vendor] ToTo"
+    name_id: IDS_PROPMOVER_TXT_002184
+    dwObjIndex: 1517
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1518
+    key: MI_NPC_SEBRANCE
+    name: "[Perin Exchange] Severance"
+    name_id: IDS_PROPMOVER_TXT_002186
+    dwObjIndex: 1518
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1519
+    key: MI_NPC_DONJOBANNI
+    name: "[Perin Exchange] Don Jovanni"
+    name_id: IDS_PROPMOVER_TXT_002188
+    dwObjIndex: 1519
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1520
+    key: MI_NPC_MORDOLRIN
+    name: "[Perin Exchange] Mor Dorin"
+    name_id: IDS_PROPMOVER_TXT_002190
+    dwObjIndex: 1520
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1521
+    key: MI_NPC_JARCOBA
+    name: "[Perin Exchange] Jarcoba"
+    name_id: IDS_PROPMOVER_TXT_002192
+    dwObjIndex: 1521
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1522
+    key: MI_NPC_MONEYJOBA
+    name: "[Perin Exchange] Mony Zova"
+    name_id: IDS_PROPMOVER_TXT_002194
+    dwObjIndex: 1522
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1523
+    key: MI_NPC_GIVEMONEY
+    name: "[Perin Exchange] Gav Noni"
+    name_id: IDS_PROPMOVER_TXT_002196
+    dwObjIndex: 1523
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1529
+    key: MI_MAFL_TIFA
+    name: MI_MAFL_TIFA
+    name_id: IDS_PROPMOVER_TXT_002206
+    dwObjIndex: 1529
+    scale: 1
+    type: npc
+    level: 15
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1531
+    key: MI_NPC_SHARON
+    name: MI_NPC_SHARON
+    name_id: IDS_PROPMOVER_TXT_002210
+    dwObjIndex: 1531
+    scale: 1
+    type: npc
+    level: 15
+    hp: 15
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1532
+    key: MI_NPC_QueerCollector
+    name: MI_NPC_QueerCollector
+    name_id: IDS_PROPMOVER_TXT_002212
+    dwObjIndex: 1532
+    scale: 1
+    type: npc
+    level: 15
+    hp: 15
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1533
+    key: MI_NPC_DRIAN
+    name: MI_NPC_DRIAN
+    name_id: IDS_PROPMOVER_TXT_002214
+    dwObjIndex: 1533
+    scale: 1
+    type: npc
+    level: 15
+    hp: 15
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 0
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.025
+    attack_speed: 1000
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1542
+    key: MI_PET_BABYCAT
+    name: MI_PET_BABYCAT
+    name_id: IDS_PROPMOVER_TXT_002232
+    dwObjIndex: 1542
+    scale: 1
+    type: npc
+    level: 1
+    hp: 2297
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 19
+    attack_rate: 24
+    dodge_rate: 20
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: false
+    guard: false
+    belligerence: 1
+  - id: 1543
+    key: MI_PET_BABYCAT_2
+    name: MI_PET_BABYCAT_2
+    name_id: IDS_PROPMOVER_TXT_002234
+    dwObjIndex: 1543
     scale: 1
     type: npc
     level: 1

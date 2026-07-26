@@ -5,11 +5,15 @@ commands:
   - cmd: SetHeadQuest
     args:
       - type: num
-        value: 1992
+        value: 6003
   - cmd: SetRepeat
     args:
       - type: num
         value: 1
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: ""
   - cmd: SetBeginCondLevel
     args:
       - type: num
@@ -95,9 +99,9 @@ commands:
       - type: num
         value: -1
       - type: sym
-        value: 26421
+        value: 6301
       - type: num
-        value: 10
+        value: 5
   - cmd: SetEndCondGold
     args:
       - type: num
@@ -111,9 +115,9 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 26421
+        value: 6301
       - type: num
-        value: 10
+        value: 5
   - cmd: SetEndRewardItem
     args:
       - type: num
