@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaFl_SsoTta
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_SsoTta
+      - type: sym
+        value: 1
+      - type: num
+        value: 7179
+      - type: num
+        value: 3217
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaFl_SsoTta
+      - type: sym
+        value: 1
       - type: num
         value: 7179
       - type: num

@@ -21,16 +21,16 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
-      - 1
+      - 2
       - 3
     referTargets:
       - 1
       - 2
     referValues:
-      - 25
+      - 10
       - 5000
     subDefine: 3665
     maxLevel: 10
@@ -135,7 +135,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -269,7 +269,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -412,7 +412,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -546,7 +546,7 @@ skills:
     exeTarget: 17
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -720,7 +720,7 @@ skills:
     exeTarget: 17
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -844,7 +844,7 @@ skills:
     exeTarget: 1
     useChance: 1
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1
@@ -1008,7 +1008,7 @@ skills:
     exeTarget: 17
     useChance: 4
     spellRegion: 1
-    element: 14
+    element: 40
     resourceType: 2
     referStats:
       - 1

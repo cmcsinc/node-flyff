@@ -14,6 +14,8 @@ commands:
     args:
       - type: str
         value: MaFl_Newbie
+      - type: sym
+        value: 1
       - type: num
         value: 6965
       - type: num

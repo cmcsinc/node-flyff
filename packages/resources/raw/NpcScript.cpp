@@ -341,30 +341,31 @@ int g_nKeys[] = {
 	865,
 	866,
 };
+
 //Script Begin
 void CNpcScript::dudk_drian_0()
 {
-	Speak( NpcId(), 44 );
-	SetScriptTimer( 15 );
+	Speak( NpcId(), 44 );				
+	SetScriptTimer( 15 );		
 }
 void CNpcScript::dudk_drian_1()
 {
-	if(GetQuestState(QUEST_DUDK_VOL1) == QS_END)
+	if(GetQuestState(QUEST_DUDK_VOL1) == QS_END)	//조건 성공{ }		실패{ }	//선행 퀘스트로 대체// else시 
 	{ 
-	LaunchQuest();
+		LaunchQuest();
 	}
 	else
 	{
-	AddKey( 9 );
-	AddKey( 10 );
+		AddKey( 9 );
+		AddKey( 10 );
 	}
 }
 void CNpcScript::dudk_drian_2()
 {
 	AddKey( 9 );
-	if(GetItemNum(II_SYS_SYS_QUE_DRIANCARGO) == 0)
+	if(GetItemNum(II_SYS_SYS_QUE_DRIANCARGO) == 0)		//
 	{
-	AddCondKey( 45,11 );
+		AddCondKey( 45,11 );
 	}
 	AddKey( 10 );
 }
@@ -374,20 +375,20 @@ void CNpcScript::dudk_drian_3()
 }
 void CNpcScript::dudk_drian_4()
 {
-	if(IsSetQuest(QUEST_DUDK_VOL3) == TRUE)
+	if(IsSetQuest(QUEST_DUDK_VOL3) == TRUE)				//멀티 조건.
 	{
 		if(IsSetQuest(QUEST_DUDK_VOL4) == TRUE)
 		{
-		Say ( 47);
+			Say ( 47);
 		}
 		else
 		{
-		Say ( 48);	
+			Say ( 48);	
 		}	
 	}
 	else 
 	{
-	Say ( 49 );
+		Say ( 49 );
 	}
 }
 void CNpcScript::dudk_drian_5()
@@ -397,12 +398,12 @@ void CNpcScript::dudk_drian_6()
 {
 	if(IsSetQuest(QUEST_DUDK_VOL3) == TRUE)
 	{ 
-		if( GetEmptyInventoryNum() < 1 )
+		if (GetEmptyInventoryNum() < 1)
 		{
 			PrintSystemMessage(TID_GAME_LACKSPACE);
 			Exit();	
 		}
-		
+
 		else
 		{
 			CreateItem(II_SYS_SYS_KEY_NEVILPRISON, 1);
@@ -427,12 +428,12 @@ void CNpcScript::dudk_drian_10()
 void CNpcScript::dudk_drian_11()
 {
 	Say( 52 );
-	if( GetEmptyInventoryNum() < 1 )
+	if (GetEmptyInventoryNum() < 1)
 	{
 		PrintSystemMessage(TID_GAME_LACKSPACE);
 		Exit();	
 	}
-		
+
 	else
 	{
 		CreateItem( II_SYS_SYS_QUE_DRIANCARGO, 1 );
@@ -506,8 +507,8 @@ void CNpcScript::dudk_nevil_2()
 }
 void CNpcScript::dudk_nevil_3()
 {
-	  AddKey( 12 );
-	  AddKey( 10 );	
+	AddKey( 12 );
+	AddKey( 10 );	
 }
 void CNpcScript::dudk_nevil_4()
 {
@@ -518,7 +519,7 @@ void CNpcScript::dudk_nevil_5()
 }
 void CNpcScript::dudk_nevil_6()
 {
-	
+
 
 }
 void CNpcScript::dudk_nevil_7()
@@ -538,30 +539,30 @@ void CNpcScript::dudk_nevil_10()
 }
 //Script End
 void CNpcScript::kepe_ciel_0()
-	{
-		Speak( NpcId(), 62 );
-		SetScriptTimer( 15 );
-	}
-	
-void CNpcScript::kepe_ciel_1()
-	{
-		AddKey( 9 );
-		AddKey( 10 );
+{
+	Speak( NpcId(), 62 );
+	SetScriptTimer( 15 );
+}
 
-		Say( 63 );
-		
-	}
-	
+void CNpcScript::kepe_ciel_1()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+
+	Say( 63 );
+
+}
+
 void CNpcScript::kepe_ciel_9()
-	{
-		Say( 64 );
-	}
-	
+{
+	Say( 64 );
+}
+
 void CNpcScript::kepe_ciel_10()
-	{
-		Speak( NpcId(), 65 );
-		Exit();
-	}
+{
+	Speak( NpcId(), 65 );
+	Exit();
+}
 
 //Script Begin
 void CNpcScript::kepe_heron_0()
@@ -575,7 +576,7 @@ void CNpcScript::kepe_heron_1()
 }
 void CNpcScript::kepe_heron_2()
 {
-	//AddKey( "ÁË »çÇÔ" );
+	//AddKey( "죄 사함" );
 	AddKey( 9 );
 	AddKey( 10 );
 	AddKey( 13 );
@@ -619,82 +620,82 @@ void CNpcScript::kepe_heron_10()
 
 //Script End
 void CNpcScript::kepe_rocbin_0()
-	{
-		Speak( NpcId(), 72 );
-		SetScriptTimer( 15 );
-	}
-	
-void CNpcScript::kepe_rocbin_1()
-	{
-		AddKey( 9 );
-		AddKey( 10 );
+{
+	Speak( NpcId(), 72 );
+	SetScriptTimer( 15 );
+}
 
-		Say( 73 );
-		
-	}
-	
+void CNpcScript::kepe_rocbin_1()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+
+	Say( 73 );
+
+}
+
 void CNpcScript::kepe_rocbin_9()
-	{
-		Say( 74 );
-	}
-	
+{
+	Say( 74 );
+}
+
 void CNpcScript::kepe_rocbin_10()
-	{
-		Speak( NpcId(), 75 );
-		Exit();
-	}
+{
+	Speak( NpcId(), 75 );
+	Exit();
+}
 
 void CNpcScript::kepe_shun_0()
-	{
-		Speak( NpcId(), 76 );
-		SetScriptTimer( 15 );
-	}
-	
-void CNpcScript::kepe_shun_1()
-	{
-		AddKey( 9 );
-		AddKey( 10 );
+{
+	Speak( NpcId(), 76 );
+	SetScriptTimer( 15 );
+}
 
-		Say( 77 );
-		
-	}
-	
+void CNpcScript::kepe_shun_1()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+
+	Say( 77 );
+
+}
+
 void CNpcScript::kepe_shun_9()
-	{
-		Say( 78 );
-	}
-	
+{
+	Say( 78 );
+}
+
 void CNpcScript::kepe_shun_10()
-	{
-		Speak( NpcId(), 79 );
-		Exit();
-	}
+{
+	Speak( NpcId(), 79 );
+	Exit();
+}
 
 void CNpcScript::kepe_yuna_0()
-	{
-		Speak( NpcId(), 80 );
-		SetScriptTimer( 15 );
-	}
-	
-void CNpcScript::kepe_yuna_1()
-	{
-		AddKey( 9 );
-		AddKey( 10 );
+{
+	Speak( NpcId(), 80 );
+	SetScriptTimer( 15 );
+}
 
-		Say( 81 );
-		
-	}
-	
+void CNpcScript::kepe_yuna_1()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+
+	Say( 81 );
+
+}
+
 void CNpcScript::kepe_yuna_9()
-	{
-		Say( 82 );
-	}
-	
+{
+	Say( 82 );
+}
+
 void CNpcScript::kepe_yuna_10()
-	{
-		Speak( NpcId(), 65 );
-		Exit();
-	}
+{
+	Speak( NpcId(), 65 );
+	Exit();
+}
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.1( Modify060802 )
@@ -735,17 +736,17 @@ void CNpcScript::mada_achaben_4()
 
 void CNpcScript::mada_achaben_5()
 {
-	
+
 }
 
 void CNpcScript::mada_achaben_6()
 {
-	
+
 }
 
 void CNpcScript::mada_achaben_8()
 {
-	
+
 }
 
 void CNpcScript::mada_achaben_9()
@@ -786,7 +787,7 @@ void CNpcScript::mada_almani_2()
 	AddKey( 9 );
 	AddKey( 10 );
 	AddKey( 14 );
-        AddKey( 15 );		
+	AddKey( 15 );		
 }
 
 void CNpcScript::mada_almani_3()
@@ -801,17 +802,17 @@ void CNpcScript::mada_almani_4()
 
 void CNpcScript::mada_almani_5()
 {
-	
+
 }
 
 void CNpcScript::mada_almani_6()
 {
-	
+
 }
 
 void CNpcScript::mada_almani_8()
 {
-	
+
 }
 
 void CNpcScript::mada_almani_9()
@@ -822,22 +823,22 @@ void CNpcScript::mada_almani_9()
 void CNpcScript::mada_almani_14()
 {
 	Say( 92 );
-        Say( 93 ); 
+	Say( 93 ); 
 	Say( 94 );
 	Say( 95 );
-        Say( 96 );
-        Say( 97 );
+	Say( 96 );
+	Say( 97 );
 }
 
 void CNpcScript::mada_almani_15()
 {
 	Say(98);
 	Say(99);
-        Say(100);
-        Say(101);
-        Say(102);
+	Say(100);
+	Say(101);
+	Say(102);
 	Say(103);
-        Say(104); 	
+	Say(104); 	
 }
 
 void CNpcScript::mada_almani_10()
@@ -886,17 +887,17 @@ void CNpcScript::mada_amadolka_4()
 
 void CNpcScript::mada_amadolka_5()
 {
-	
+
 }
 
 void CNpcScript::mada_amadolka_6()
 {
-	
+
 }
 
 void CNpcScript::mada_amadolka_8()
 {
-	
+
 }
 
 void CNpcScript::mada_amadolka_9()
@@ -941,7 +942,7 @@ void CNpcScript::mada_andre_5()
 }
 void CNpcScript::mada_andre_6()
 {
-	
+
 
 }
 void CNpcScript::mada_andre_7()
@@ -976,9 +977,9 @@ void CNpcScript::mada_bernard_1()
 }
 void CNpcScript::mada_bernard_2()
 {
-	  AddKey( 12 );
-	  AddCondKey( 115,16 );
-	  AddKey( 10 );	
+	AddKey( 12 );
+	AddCondKey( 115,16 );
+	AddKey( 10 );	
 }
 void CNpcScript::mada_bernard_3()
 {
@@ -995,12 +996,12 @@ void CNpcScript::mada_bernard_6()
 {
 	if(IsSetQuest(QUEST_DUDK_VOL6) == TRUE)
 	{ 
-		if( GetEmptyInventoryNum() < 1)
+		if (GetEmptyInventoryNum() < 1)
 		{
 			PrintSystemMessage(TID_GAME_LACKSPACE);
 			Exit();
 		}
-	
+
 		else
 		{
 			CreateItem(II_SYS_SYS_QUE_WAKEROACHWATER, 1);
@@ -1026,7 +1027,7 @@ void CNpcScript::mada_bernard_10()
 void CNpcScript::mada_bernard_16()
 {
 	Say( 120 );
-	//if( GetEmptyInventoryNum() < 1)
+	//if( GetEmptyInventoryNum( II_SYS_SYS_QUE_DRIANCARGO ) < 1)
 	//{
 	//	PrintSystemMessage(TID_GAME_LACKSPACE);
 	//	Exit();
@@ -1078,17 +1079,17 @@ void CNpcScript::mada_bolpor_4()
 
 void CNpcScript::mada_bolpor_5()
 {
-	
+
 }
 
 void CNpcScript::mada_bolpor_6()
 {
-	
+
 }
 
 void CNpcScript::mada_bolpor_8()
 {
-	
+
 }
 
 void CNpcScript::mada_bolpor_9()
@@ -1142,17 +1143,17 @@ void CNpcScript::mada_boneper_4()
 
 void CNpcScript::mada_boneper_5()
 {
-	
+
 }
 
 void CNpcScript::mada_boneper_6()
 {
-	
+
 }
 
 void CNpcScript::mada_boneper_8()
 {
-	if( GetQuestState(QUEST_HEROKNI_TRN5) == QS_END && GetPlayerJob() == 1 && GetPlayerLvl() == 60 )
+	if( GetQuestState(QUEST_HEROKNI_TRN4) == QS_END && GetPlayerJob() == 1 && GetPlayerLvl() == 60 )
 	{
 		ChangeJob( 6 );
 	}
@@ -1216,17 +1217,17 @@ void CNpcScript::mada_capafe_4()
 
 void CNpcScript::mada_capafe_5()
 {
-	
+
 }
 
 void CNpcScript::mada_capafe_6()
 {
-	
+
 }
 
 void CNpcScript::mada_capafe_8()
 {
-	if( GetQuestState(QUEST_HEROBIL_TRN5) == QS_END && GetPlayerJob() == 3 && GetPlayerLvl() == 60 )
+	if( GetQuestState(QUEST_HEROBIL_TRN4) == QS_END && GetPlayerJob() == 3 && GetPlayerLvl() == 60 )
 	{
 		ChangeJob( 11 );
 	}
@@ -1277,7 +1278,7 @@ void CNpcScript::mada_cell_5()
 }
 void CNpcScript::mada_cell_6()
 {
-	
+
 
 }
 void CNpcScript::mada_cell_7()
@@ -1346,17 +1347,17 @@ void CNpcScript::mada_chenbing_4()
 
 void CNpcScript::mada_chenbing_5()
 {
-	
+
 }
 
 void CNpcScript::mada_chenbing_6()
 {
-	
+
 }
 
 void CNpcScript::mada_chenbing_8()
 {
-	
+
 }
 
 void CNpcScript::mada_chenbing_9()
@@ -1383,15 +1384,15 @@ void CNpcScript::mada_chenbing_10()
 //Script Begin
 void CNpcScript::mada_cloneeshylop_0()
 {
-	
+
 }
 
 void CNpcScript::mada_cloneeshylop_1()
 {
 	if( GetPlayerLvl() >= 70  && IsWormonServer() == TRUE && GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_END )
 	{
-	 	Say( 146 );		
-	 	AddKey( 18 );	
+		Say( 146 );		
+		AddKey( 18 );	
 	}
 
 	else
@@ -1418,17 +1419,17 @@ void CNpcScript::mada_cloneeshylop_4()
 
 void CNpcScript::mada_cloneeshylop_5()
 {
-	
+
 }
 
 void CNpcScript::mada_cloneeshylop_6()
 {
-	
+
 }
 
 void CNpcScript::mada_cloneeshylop_8()
 {
-	
+
 }
 
 void CNpcScript::mada_cloneeshylop_9()
@@ -1438,7 +1439,7 @@ void CNpcScript::mada_cloneeshylop_9()
 
 void CNpcScript::mada_cloneeshylop_18()
 {
-	Replace( WI_WORLD_MADRIGAL, 3780.0, 58.0, 4466.0 );		
+	Replace( WI_WORLD_MADRIGAL, 3780, 58, 4466 );		
 }
 
 void CNpcScript::mada_cloneeshylop_10()
@@ -1463,7 +1464,7 @@ void CNpcScript::mada_colar_0()
 	Speak( NpcId(), 151 );
 	SetScriptTimer( 15 );
 }
-	
+
 void CNpcScript::mada_colar_1()
 {
 	LaunchQuest();
@@ -1492,17 +1493,17 @@ void CNpcScript::mada_colar_5()
 
 void CNpcScript::mada_colar_6()
 {
-	
+
 }
 
 void CNpcScript::mada_colar_7()
 {
-	
+
 }
 
 void CNpcScript::mada_colar_8()
 {
-	
+
 }
 
 void CNpcScript::mada_colar_9()
@@ -1557,17 +1558,17 @@ void CNpcScript::mada_condram_4()
 
 void CNpcScript::mada_condram_5()
 {
-	
+
 }
 
 void CNpcScript::mada_condram_6()
 {
-	
+
 }
 
 void CNpcScript::mada_condram_8()
 {
-	
+
 }
 
 void CNpcScript::mada_condram_9()
@@ -1606,7 +1607,7 @@ void CNpcScript::mada_corel_1()
 		SayQuest( QUEST_HEROBLA_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -1631,17 +1632,17 @@ void CNpcScript::mada_corel_4()
 
 void CNpcScript::mada_corel_5()
 {
-	
+
 }
 
 void CNpcScript::mada_corel_6()
 {
-	
+
 }
 
 void CNpcScript::mada_corel_8()
 {
-	
+
 }
 
 void CNpcScript::mada_corel_9()
@@ -1683,7 +1684,7 @@ void CNpcScript::mada_cylor_1()
 		SayQuest( QUEST_HEROPSY_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -1708,17 +1709,17 @@ void CNpcScript::mada_cylor_4()
 
 void CNpcScript::mada_cylor_5()
 {
-	
+
 }
 
 void CNpcScript::mada_cylor_6()
 {
-	
+
 }
 
 void CNpcScript::mada_cylor_8()
 {
-	
+
 }
 
 void CNpcScript::mada_cylor_9()
@@ -1773,17 +1774,17 @@ void CNpcScript::mada_drest_4()
 
 void CNpcScript::mada_drest_5()
 {
-	
+
 }
 
 void CNpcScript::mada_drest_6()
 {
-	
+
 }
 
 void CNpcScript::mada_drest_8()
 {
-	
+
 }
 
 void CNpcScript::mada_drest_9()
@@ -1824,7 +1825,7 @@ void CNpcScript::mada_eliff_1()
 		SayQuest( QUEST_HERORAN_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -1903,7 +1904,7 @@ void CNpcScript::mada_ellend_1()
 		SayQuest( QUEST_HERORIN_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -1928,17 +1929,17 @@ void CNpcScript::mada_ellend_4()
 
 void CNpcScript::mada_ellend_5()
 {
-	
+
 }
 
 void CNpcScript::mada_ellend_6()
 {
-	
+
 }
 
 void CNpcScript::mada_ellend_8()
 {
-	
+
 }
 
 void CNpcScript::mada_ellend_9()
@@ -1979,12 +1980,12 @@ void CNpcScript::mada_eshylop_1()
 		{
 			Say( 181 ); 
 		}
-			
+
 		else if( IsGuildQuest( QUEST_WARMON_LV1 ) == TRUE && (GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_BEGIN || GetGuildQuestState( QUEST_WARMON_LV1 ) == 1 ) )
 		{
 			Say( 182 );
 		}
-               
+
 		else if( GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_END )
 		{
 			Say( 183 );
@@ -1993,7 +1994,7 @@ void CNpcScript::mada_eshylop_1()
 		else
 		{	
 			LaunchQuest();
-	        }
+		}
 	}
 
 	else
@@ -2020,17 +2021,17 @@ void CNpcScript::mada_eshylop_4()
 
 void CNpcScript::mada_eshylop_5()
 {
-	
+
 }
 
 void CNpcScript::mada_eshylop_6()
 {
-	
+
 }
 
 void CNpcScript::mada_eshylop_8()
 {
-	
+
 }
 
 void CNpcScript::mada_eshylop_9()
@@ -2060,14 +2061,14 @@ void CNpcScript::mada_eshylop_22()
 		if( MonHuntStart( QUEST_WARMON_LV1, QS_BEGIN, QS_END, 1 ) == FALSE )
 		{
 			Say( 187 );
-			
+
 		}
 
 		else if( MonHuntStart( QUEST_WARMON_LV1, QS_BEGIN, QS_END, 1 ) == TRUE )
 		{
-			
+
 		}
-			
+
 		else
 		{
 			Say( 188 );
@@ -2126,17 +2127,17 @@ void CNpcScript::mada_fera_4()
 
 void CNpcScript::mada_fera_5()
 {
-	
+
 }
 
 void CNpcScript::mada_fera_6()
 {
-	
+
 }
 
 void CNpcScript::mada_fera_8()
 {
-	
+
 }
 
 void CNpcScript::mada_fera_9()
@@ -2186,7 +2187,7 @@ void CNpcScript::mada_furan_5()
 
 void CNpcScript::mada_furan_6()
 {
-	
+
 }
 
 void CNpcScript::mada_furan_7()
@@ -2238,7 +2239,7 @@ void CNpcScript::mada_guildcombatshop_2()
 
 void CNpcScript::mada_guildcombatshop_3()
 {
-	
+
 }
 
 void CNpcScript::mada_guildcombatshop_4()
@@ -2317,17 +2318,17 @@ void CNpcScript::mada_hachal_4()
 
 void CNpcScript::mada_hachal_5()
 {
-	
+
 }
 
 void CNpcScript::mada_hachal_6()
 {
-	
+
 }
 
 void CNpcScript::mada_hachal_8()
 {
-	
+
 }
 
 void CNpcScript::mada_hachal_9()
@@ -2382,17 +2383,17 @@ void CNpcScript::mada_haven_4()
 
 void CNpcScript::mada_haven_5()
 {
-	
+
 }
 
 void CNpcScript::mada_haven_6()
 {
-	
+
 }
 
 void CNpcScript::mada_haven_8()
 {
-	
+
 }
 
 void CNpcScript::mada_haven_9()
@@ -2447,17 +2448,17 @@ void CNpcScript::mada_heedan_4()
 
 void CNpcScript::mada_heedan_5()
 {
-	
+
 }
 
 void CNpcScript::mada_heedan_6()
 {
-	
+
 }
 
 void CNpcScript::mada_heedan_8()
 {
-	
+
 }
 
 void CNpcScript::mada_heedan_9()
@@ -2509,12 +2510,12 @@ void CNpcScript::mada_heingard_3()
 
 void CNpcScript::mada_heingard_4()
 {
-	if( GetQuestState( QUEST_HEROJES_TRN5 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
+	if( GetQuestState( QUEST_HEROJES_TRN4 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
 	{
-		
+
 		ChangeJob( 8 );
 	}
-	
+
 	else
 	{
 		Say ( 245 );
@@ -2528,7 +2529,7 @@ void CNpcScript::mada_heingard_5()
 
 void CNpcScript::mada_heingard_6()
 {
-	
+
 }
 
 void CNpcScript::mada_heingard_7()
@@ -2538,12 +2539,12 @@ void CNpcScript::mada_heingard_7()
 
 void CNpcScript::mada_heingard_8()
 {
-	if( GetQuestState( QUEST_HEROJES_TRN5 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
+	if( GetQuestState( QUEST_HEROJES_TRN4 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
 	{
-		
+
 		ChangeJob( 8 );
 	}
-	
+
 	else
 	{
 		Exit();
@@ -2553,7 +2554,6 @@ void CNpcScript::mada_heingard_8()
 void CNpcScript::mada_heingard_9()
 {
 	Say ( 246 );
-	AddAnswer( 10 );
 }
 
 void CNpcScript::mada_heingard_10()
@@ -2581,13 +2581,17 @@ void CNpcScript::mada_hent_0()
 
 void CNpcScript::mada_hent_1()
 {
-	//Ãß°¡(20051018)
+	//추가(20051018)
 	if( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState( QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0)
 	{
 		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER4 ) >= 0 )
+		{
 			LaunchQuest();
+		}
 		else
+		{
 			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
 		AddKey( 9 );
 		AddKey( 10 );
 	}
@@ -2621,11 +2625,11 @@ void CNpcScript::mada_hent_5()
 
 void CNpcScript::mada_hent_6()
 {
-	//»õ·Î¹ø¿ª(20060104)
-	//Say( "¾Æ½±°Ôµµ, ÀÌÁ¦ ³»°¡ °¡Áö°í ÀÖ´Â ºí¸µÅ©À®Àº ¸ðµÎ ¼ÒÁøµÇ¾ú´Ù Á¦±º. ´ë½Å ½Ã°£À» ´õ ´Ã·ÈÁö. ºí¸µÅ©À®Àº ±¸ÀÔÇÏ¿© ¾²µµ·Ï, ÀÌ»ó!" );
+	//새로번역(20060104)
+	//Say( "아쉽게도, 이제 내가 가지고 있는 블링크윙은 모두 소진되었다 제군. 대신 시간을 더 늘렸지. 블링크윙은 구입하여 쓰도록, 이상!" );
 	if( GetQuestState(QUEST_VOCACR_BFTRN) == QS_BEGIN )
 	{
-		Replace( WI_WORLD_MADRIGAL, 7161.0, 100.0, 3264.0 );
+		Replace( WI_WORLD_MADRIGAL, 7161, 100, 3264 );
 	}
 }
 
@@ -2707,7 +2711,7 @@ void CNpcScript::mada_homeit_7()
 
 void CNpcScript::mada_homeit_8()
 {
-	
+
 }
 
 void CNpcScript::mada_homeit_9()
@@ -2745,7 +2749,7 @@ void CNpcScript::mada_horison_1()
 		SayQuest( QUEST_HEROELE_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -2770,17 +2774,17 @@ void CNpcScript::mada_horison_4()
 
 void CNpcScript::mada_horison_5()
 {
-	
+
 }
 
 void CNpcScript::mada_horison_6()
 {
-	
+
 }
 
 void CNpcScript::mada_horison_8()
 {
-	
+
 }
 
 void CNpcScript::mada_horison_9()
@@ -2836,17 +2840,17 @@ void CNpcScript::mada_jeperdy_4()
 
 void CNpcScript::mada_jeperdy_5()
 {
-	
+
 }
 
 void CNpcScript::mada_jeperdy_6()
 {
-	
+
 }
 
 void CNpcScript::mada_jeperdy_8()
 {
-	
+
 }
 
 void CNpcScript::mada_jeperdy_9()
@@ -2902,17 +2906,17 @@ void CNpcScript::mada_jinitte_4()
 
 void CNpcScript::mada_jinitte_5()
 {
-	
+
 }
 
 void CNpcScript::mada_jinitte_6()
 {
-	
+
 }
 
 void CNpcScript::mada_jinitte_8()
 {
-	
+
 }
 
 void CNpcScript::mada_jinitte_9()
@@ -2966,17 +2970,17 @@ void CNpcScript::mada_kablloc_4()
 
 void CNpcScript::mada_kablloc_5()
 {
-	
+
 }
 
 void CNpcScript::mada_kablloc_6()
 {
-	
+
 }
 
 void CNpcScript::mada_kablloc_8()
 {
-	
+
 }
 
 void CNpcScript::mada_kablloc_9()
@@ -3026,7 +3030,7 @@ void CNpcScript::mada_kailreard_3()
 
 void CNpcScript::mada_kailreard_4()
 {
-	if( GetQuestState( QUEST_HERORAN_TRN5 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
+	if( GetQuestState( QUEST_HERORAN_TRN4 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
 	{
 		ChangeJob( 9 );
 	}
@@ -3044,7 +3048,7 @@ void CNpcScript::mada_kailreard_5()
 
 void CNpcScript::mada_kailreard_6()
 {
-	
+
 }
 
 void CNpcScript::mada_kailreard_7()
@@ -3054,7 +3058,7 @@ void CNpcScript::mada_kailreard_7()
 
 void CNpcScript::mada_kailreard_8()
 {
-	if( GetQuestState( QUEST_HERORAN_TRN5 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
+	if( GetQuestState( QUEST_HERORAN_TRN4 ) == QS_END && GetPlayerJob() == 2 && GetPlayerLvl() == 60  )
 	{
 		ChangeJob( 9 );
 	}
@@ -3100,7 +3104,7 @@ void CNpcScript::mada_karanduru_1()
 		SayQuest( QUEST_HEROKNI_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -3125,17 +3129,17 @@ void CNpcScript::mada_karanduru_4()
 
 void CNpcScript::mada_karanduru_5()
 {
-	
+
 }
 
 void CNpcScript::mada_karanduru_6()
 {
-	
+
 }
 
 void CNpcScript::mada_karanduru_8()
 {
-	
+
 }
 
 void CNpcScript::mada_karanduru_9()
@@ -3183,7 +3187,7 @@ void CNpcScript::mada_krinton_2()
 
 void CNpcScript::mada_krinton_3()
 {
-	
+
 }
 
 void CNpcScript::mada_krinton_4()
@@ -3214,7 +3218,6 @@ void CNpcScript::mada_krinton_8()
 void CNpcScript::mada_krinton_9()
 {
 	Say( 281 );
-	AddAnswer( 10 );
 }
 
 void CNpcScript::mada_krinton_10()
@@ -3263,17 +3266,17 @@ void CNpcScript::mada_laloa_4()
 
 void CNpcScript::mada_laloa_5()
 {
-	
+
 }
 
 void CNpcScript::mada_laloa_6()
 {
-	
+
 }
 
 void CNpcScript::mada_laloa_8()
 {
-	
+
 }
 
 void CNpcScript::mada_laloa_9()
@@ -3305,7 +3308,7 @@ void CNpcScript::mada_liekyen_0()
 	Speak( NpcId(), 287 );
 	SetScriptTimer( 15 );
 }
-	
+
 void CNpcScript::mada_liekyen_1()
 {
 	LaunchQuest();
@@ -3334,7 +3337,7 @@ void CNpcScript::mada_liekyen_5()
 
 void CNpcScript::mada_liekyen_6()
 {
-	
+
 }
 
 void CNpcScript::mada_liekyen_7()
@@ -3344,7 +3347,7 @@ void CNpcScript::mada_liekyen_7()
 
 void CNpcScript::mada_liekyen_8()
 {
-	
+
 }
 
 void CNpcScript::mada_liekyen_9()
@@ -3397,17 +3400,17 @@ void CNpcScript::mada_lobiet_4()
 
 void CNpcScript::mada_lobiet_5()
 {
-	
+
 }
 
 void CNpcScript::mada_lobiet_6()
 {
-	
+
 }
 
 void CNpcScript::mada_lobiet_8()
 {
-	
+
 }
 
 void CNpcScript::mada_lobiet_9()
@@ -3464,17 +3467,17 @@ void CNpcScript::mada_lodelight_4()
 
 void CNpcScript::mada_lodelight_5()
 {
-	
+
 }
 
 void CNpcScript::mada_lodelight_6()
 {
-	
+
 }
 
 void CNpcScript::mada_lodelight_8()
 {
-	
+
 }
 
 void CNpcScript::mada_lodelight_9()
@@ -3534,17 +3537,17 @@ void CNpcScript::mada_lodelight2_4()
 
 void CNpcScript::mada_lodelight2_5()
 {
-	
+
 }
 
 void CNpcScript::mada_lodelight2_6()
 {
-	
+
 }
 
 void CNpcScript::mada_lodelight2_8()
 {
-	
+
 }
 
 void CNpcScript::mada_lodelight2_9()
@@ -3589,7 +3592,7 @@ void CNpcScript::mada_lorein_1()
 		SayQuest( QUEST_HEROJES_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -3790,7 +3793,7 @@ void CNpcScript::mada_ollien_2()
 {
 	AddKey( 9 );
 	AddKey( 10 );
-	//AddKey( "½ºÅÈÃÊ±âÈ­" );		
+	//AddKey( "스탯초기화" );		
 }
 
 void CNpcScript::mada_ollien_3()
@@ -3805,17 +3808,17 @@ void CNpcScript::mada_ollien_4()
 
 void CNpcScript::mada_ollien_5()
 {
-	
+
 }
 
 void CNpcScript::mada_ollien_6()
 {
-	
+
 }
 
 void CNpcScript::mada_ollien_8()
 {
-	
+
 }
 
 void CNpcScript::mada_ollien_9()
@@ -3874,17 +3877,17 @@ void CNpcScript::mada_pereb_4()
 
 void CNpcScript::mada_pereb_5()
 {
-	
+
 }
 
 void CNpcScript::mada_pereb_6()
 {
-	
+
 }
 
 void CNpcScript::mada_pereb_8()
 {
-	
+
 }
 
 void CNpcScript::mada_pereb_9()
@@ -3939,17 +3942,17 @@ void CNpcScript::mada_phacham_4()
 
 void CNpcScript::mada_phacham_5()
 {
-	
+
 }
 
 void CNpcScript::mada_phacham_6()
 {
-	
+
 }
 
 void CNpcScript::mada_phacham_8()
 {
-	
+
 }
 
 void CNpcScript::mada_phacham_9()
@@ -4009,7 +4012,7 @@ void CNpcScript::mada_pyre_5()
 
 void CNpcScript::mada_pyre_6()
 {
-	
+
 }
 
 void CNpcScript::mada_pyre_7()
@@ -4019,7 +4022,7 @@ void CNpcScript::mada_pyre_7()
 
 void CNpcScript::mada_pyre_8()
 {
-	
+
 }
 
 void CNpcScript::mada_pyre_9()
@@ -4049,7 +4052,7 @@ void CNpcScript::mada_rankashu_2()
 	AddKey( 12 );
 	if(GetItemNum(II_SYS_SYS_QUE_LETTERRANKASHU) == 0)
 	{
-	AddCondKey( 336,39 );
+		AddCondKey( 336,39 );
 	}
 	AddKey( 10 );
 	AddKey( 38 );
@@ -4062,11 +4065,11 @@ void CNpcScript::mada_rankashu_4()
 {
 	if(GetQuestState(QUEST_DUDK_VOL1) == QS_END)
 	{
-	Say ( 338 );
+		Say ( 338 );
 	}
 	else
 	{
-	Say ( 339 );
+		Say ( 339 );
 	}	
 }
 void CNpcScript::mada_rankashu_5()
@@ -4097,7 +4100,7 @@ void CNpcScript::mada_rankashu_10()
 void CNpcScript::mada_rankashu_39()
 {
 	Say( 343 );
-	if( GetEmptyInventoryNum() < 1 )
+	if (GetEmptyInventoryNum() < 1)
 	{
 		PrintSystemMessage(TID_GAME_LACKSPACE);
 		Exit();
@@ -4158,17 +4161,17 @@ void CNpcScript::mada_remine_4()
 
 void CNpcScript::mada_remine_5()
 {
-	
+
 }
 
 void CNpcScript::mada_remine_6()
 {
-	
+
 }
 
 void CNpcScript::mada_remine_8()
 {
-	
+
 }
 
 void CNpcScript::mada_remine_9()
@@ -4206,7 +4209,7 @@ void CNpcScript::mada_ride_1()
 		SayQuest( QUEST_HEROBIL_TRN1, QSAY_EXTRA01 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -4231,17 +4234,17 @@ void CNpcScript::mada_ride_4()
 
 void CNpcScript::mada_ride_5()
 {
-	
+
 }
 
 void CNpcScript::mada_ride_6()
 {
-	
+
 }
 
 void CNpcScript::mada_ride_8()
 {
-	
+
 }
 
 void CNpcScript::mada_ride_9()
@@ -4297,17 +4300,17 @@ void CNpcScript::mada_romvoette_4()
 
 void CNpcScript::mada_romvoette_5()
 {
-	
+
 }
 
 void CNpcScript::mada_romvoette_6()
 {
-	
+
 }
 
 void CNpcScript::mada_romvoette_8()
 {
-	if( GetQuestState(QUEST_HERORIN_TRN5) == QS_END && GetPlayerJob() == 3 && GetPlayerLvl() == 60 )
+	if( GetQuestState(QUEST_HERORIN_TRN4) == QS_END && GetPlayerJob() == 3 && GetPlayerLvl() == 60 )
 	{
 		ChangeJob( 10 );
 	}
@@ -4370,17 +4373,17 @@ void CNpcScript::mada_roocky_4()
 
 void CNpcScript::mada_roocky_5()
 {
-	
+
 }
 
 void CNpcScript::mada_roocky_6()
 {
-	
+
 }
 
 void CNpcScript::mada_roocky_8()
 {
-	
+
 }
 
 void CNpcScript::mada_roocky_9()
@@ -4441,7 +4444,7 @@ void CNpcScript::mada_rupim_5()
 
 void CNpcScript::mada_rupim_6()
 {
-	
+
 }
 
 void CNpcScript::mada_rupim_7()
@@ -4451,7 +4454,7 @@ void CNpcScript::mada_rupim_7()
 
 void CNpcScript::mada_rupim_8()
 {
-	
+
 }
 
 void CNpcScript::mada_rupim_9()
@@ -4505,17 +4508,17 @@ void CNpcScript::mada_sencyrit_4()
 
 void CNpcScript::mada_sencyrit_5()
 {
-	
+
 }
 
 void CNpcScript::mada_sencyrit_6()
 {
-	
+
 }
 
 void CNpcScript::mada_sencyrit_8()
 {
-	if( GetQuestState(QUEST_HEROBLA_TRN5) == QS_END && GetPlayerJob() == 1 && GetPlayerLvl() == 60 )
+	if( GetQuestState(QUEST_HEROBLA_TRN4) == QS_END && GetPlayerJob() == 1 && GetPlayerLvl() == 60 )
 	{
 		ChangeJob( 7 );
 	}
@@ -4578,17 +4581,17 @@ void CNpcScript::mada_shyniff_4()
 
 void CNpcScript::mada_shyniff_5()
 {
-	
+
 }
 
 void CNpcScript::mada_shyniff_6()
 {
-	
+
 }
 
 void CNpcScript::mada_shyniff_8()
 {
-	if( GetQuestState(QUEST_HEROPSY_TRN5) == QS_END && GetPlayerJob() == 4 && GetPlayerLvl() == 60 )
+	if( GetQuestState(QUEST_HEROPSY_TRN4) == QS_END && GetPlayerJob() == 4 && GetPlayerLvl() == 60 )
 	{
 		ChangeJob( 12 );
 	}
@@ -4651,17 +4654,17 @@ void CNpcScript::mada_stima_4()
 
 void CNpcScript::mada_stima_5()
 {
-	
+
 }
 
 void CNpcScript::mada_stima_6()
 {
-	
+
 }
 
 void CNpcScript::mada_stima_8()
 {
-	
+
 }
 
 void CNpcScript::mada_stima_9()
@@ -4732,7 +4735,6 @@ void CNpcScript::mada_tailer_7()
 
 void CNpcScript::mada_tailer_8()
 {
-
 	if( GetQuestState(QUEST_VOCACR_TRN3) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 )
 	{
 		ChangeJob( 2 );
@@ -4748,7 +4750,6 @@ void CNpcScript::mada_tailer_8()
 void CNpcScript::mada_tailer_9()
 {
 	Say ( 382 );
-	AddAnswer( 10 );
 }
 
 void CNpcScript::mada_tailer_10()
@@ -4798,17 +4799,17 @@ void CNpcScript::mada_tandy_4()
 
 void CNpcScript::mada_tandy_5()
 {
-	
+
 }
 
 void CNpcScript::mada_tandy_6()
 {
-	
+
 }
 
 void CNpcScript::mada_tandy_8()
 {
-	
+
 }
 
 void CNpcScript::mada_tandy_9()
@@ -4861,17 +4862,17 @@ void CNpcScript::mada_wendien_4()
 
 void CNpcScript::mada_wendien_5()
 {
-	
+
 }
 
 void CNpcScript::mada_wendien_6()
 {
-	
+
 }
 
 void CNpcScript::mada_wendien_8()
 {
-	if( GetQuestState(QUEST_HEROELE_TRN5) == QS_END && GetPlayerJob() == 4 && GetPlayerLvl() == 60 )
+	if( GetQuestState(QUEST_HEROELE_TRN4) == QS_END && GetPlayerJob() == 4 && GetPlayerLvl() == 60 )
 	{
 		ChangeJob( 13 );
 	}
@@ -4934,17 +4935,17 @@ void CNpcScript::mafl_andy_4()
 
 void CNpcScript::mafl_andy_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_andy_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_andy_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_andy_9()
@@ -4999,17 +5000,17 @@ void CNpcScript::mafl_aramy_4()
 
 void CNpcScript::mafl_aramy_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_aramy_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_aramy_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_aramy_9()
@@ -5064,17 +5065,17 @@ void CNpcScript::mafl_ata_4()
 
 void CNpcScript::mafl_ata_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_ata_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_ata_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_ata_9()
@@ -5129,17 +5130,17 @@ void CNpcScript::mafl_atto_4()
 
 void CNpcScript::mafl_atto_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_atto_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_atto_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_atto_9()
@@ -5194,17 +5195,17 @@ void CNpcScript::mafl_boboko_4()
 
 void CNpcScript::mafl_boboko_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_boboko_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_boboko_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_boboko_9()
@@ -5258,17 +5259,17 @@ void CNpcScript::mafl_boboku_4()
 
 void CNpcScript::mafl_boboku_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_boboku_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_boboku_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_boboku_9()
@@ -5322,17 +5323,17 @@ void CNpcScript::mafl_buruto_4()
 
 void CNpcScript::mafl_buruto_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_buruto_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_buruto_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_buruto_9()
@@ -5387,17 +5388,17 @@ void CNpcScript::mafl_chichi_4()
 
 void CNpcScript::mafl_chichi_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_chichi_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_chichi_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_chichi_9()
@@ -5451,17 +5452,17 @@ void CNpcScript::mafl_chorus1_4()
 
 void CNpcScript::mafl_chorus1_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus1_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus1_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus1_10()
@@ -5510,17 +5511,17 @@ void CNpcScript::mafl_chorus2_4()
 
 void CNpcScript::mafl_chorus2_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus2_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus2_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus2_10()
@@ -5569,17 +5570,17 @@ void CNpcScript::mafl_chorus3_4()
 
 void CNpcScript::mafl_chorus3_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus3_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus3_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus3_10()
@@ -5628,17 +5629,17 @@ void CNpcScript::mafl_chorus4_4()
 
 void CNpcScript::mafl_chorus4_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus4_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus4_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_chorus4_10()
@@ -5688,17 +5689,17 @@ void CNpcScript::mafl_clamb_4()
 
 void CNpcScript::mafl_clamb_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_clamb_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_clamb_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_clamb_9()
@@ -5753,17 +5754,17 @@ void CNpcScript::mafl_cuarine_4()
 
 void CNpcScript::mafl_cuarine_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_cuarine_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_cuarine_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_cuarine_9()
@@ -5818,17 +5819,17 @@ void CNpcScript::mafl_cuzrill_4()
 
 void CNpcScript::mafl_cuzrill_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_cuzrill_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_cuzrill_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_cuzrill_9()
@@ -5885,17 +5886,17 @@ void CNpcScript::mafl_dior_4()
 
 void CNpcScript::mafl_dior_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_dior_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_dior_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_dior_9()
@@ -5905,23 +5906,23 @@ void CNpcScript::mafl_dior_9()
 
 void CNpcScript::mafl_dior_40()
 {
- 	Say(452);
-        Say(453); 
+	Say(452);
+	Say(453); 
 	Say(454);
 	Say(455);
-        Say(456);
-        Say(457);
+	Say(456);
+	Say(457);
 }
 
 void CNpcScript::mafl_dior_41()
 {
 	Say(458);
 	Say(459);
-        Say(460);
-        Say(461);
-        Say(462);
+	Say(460);
+	Say(461);
+	Say(462);
 	Say(463);
-        Say(464); 
+	Say(464); 
 }
 
 void CNpcScript::mafl_dior_10()
@@ -5970,17 +5971,17 @@ void CNpcScript::mafl_domek_4()
 
 void CNpcScript::mafl_domek_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_domek_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_domek_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_domek_9()
@@ -6025,7 +6026,7 @@ void CNpcScript::mafl_donaris_2()
 
 void CNpcScript::mafl_donaris_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_donaris_4()
@@ -6104,17 +6105,17 @@ void CNpcScript::mafl_drestly_4()
 
 void CNpcScript::mafl_drestly_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_drestly_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_drestly_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_drestly_9()
@@ -6151,9 +6152,13 @@ void CNpcScript::mafl_elic_1()
 	if( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0 || GetQuestState( QUEST_VOCACR_BFTRN ) >= 0)
 	{
 		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER1 ) >= 0 )
+		{
 			LaunchQuest();
+		}
 		else
+		{
 			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
 		AddKey( 9 );
 		AddKey( 10 );
 	}
@@ -6181,17 +6186,17 @@ void CNpcScript::mafl_elic_4()
 
 void CNpcScript::mafl_elic_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_elic_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_elic_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_elic_9()
@@ -6246,17 +6251,17 @@ void CNpcScript::mafl_eoners_4()
 
 void CNpcScript::mafl_eoners_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_eoners_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_eoners_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_eoners_9()
@@ -6312,17 +6317,17 @@ void CNpcScript::mafl_flamayor_4()
 
 void CNpcScript::mafl_flamayor_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_flamayor_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_flamayor_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_flamayor_9()
@@ -6370,7 +6375,7 @@ void CNpcScript::mafl_flraness_2()
 
 void CNpcScript::mafl_flraness_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_flraness_4()
@@ -6439,7 +6444,7 @@ void CNpcScript::mafl_furan_5()
 
 void CNpcScript::mafl_furan_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_furan_7()
@@ -6501,17 +6506,17 @@ void CNpcScript::mafl_gergantes_4()
 
 void CNpcScript::mafl_gergantes_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_gergantes_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_gergantes_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_gergantes_9()
@@ -6569,17 +6574,17 @@ void CNpcScript::mafl_ghalade_4()
 
 void CNpcScript::mafl_ghalade_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_ghalade_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_ghalade_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_ghalade_9()
@@ -6635,17 +6640,17 @@ void CNpcScript::mafl_goripeg_4()
 
 void CNpcScript::mafl_goripeg_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_goripeg_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_goripeg_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_goripeg_9()
@@ -6692,11 +6697,11 @@ void CNpcScript::mafl_gornus_1()
 						Say( 506 );
 						AddKey( 10 );
 					}
-			
+
 
 					else if( MonHuntStartParty( QUEST_BOSS_LV2, QS_BEGIN, QS_END, 1 ) == TRUE )
 					{
-											
+
 					}
 
 					else
@@ -6705,15 +6710,15 @@ void CNpcScript::mafl_gornus_1()
 						AddKey( 10 );	
 					}
 				}	
-					
+
 				else
 				{
 					Say( 508 );	
 					AddKey( 10 );
 				}
-	
+
 			}	
-			
+
 			else
 			{
 				Say( 509);
@@ -6744,27 +6749,27 @@ void CNpcScript::mafl_gornus_2()
 
 void CNpcScript::mafl_gornus_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_gornus_4()
 {
-	
+
 }
 
 void CNpcScript::mafl_gornus_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_gornus_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_gornus_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_gornus_9()
@@ -6822,17 +6827,17 @@ void CNpcScript::mafl_guabrill_4()
 
 void CNpcScript::mafl_guabrill_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_guabrill_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_guabrill_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_guabrill_9()
@@ -6877,7 +6882,7 @@ void CNpcScript::mafl_guildwarser_2()
 
 void CNpcScript::mafl_guildwarser_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_guildwarser_4()
@@ -6956,17 +6961,17 @@ void CNpcScript::mafl_hastan_4()
 
 void CNpcScript::mafl_hastan_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_hastan_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_hastan_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_hastan_9()
@@ -7013,11 +7018,11 @@ void CNpcScript::mafl_himadel_1()
 						Say( 506 );
 						AddKey( 10 );
 					}
-			
+
 
 					else if( MonHuntStartParty( QUEST_BOSS_LV1, QS_BEGIN, QS_END, 1 ) == TRUE )
 					{
-						
+
 					}
 
 					else
@@ -7064,27 +7069,27 @@ void CNpcScript::mafl_himadel_2()
 
 void CNpcScript::mafl_himadel_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_himadel_4()
 {
-	
+
 }
 
 void CNpcScript::mafl_himadel_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_himadel_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_himadel_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_himadel_9()
@@ -7142,17 +7147,17 @@ void CNpcScript::mafl_hormes_4()
 
 void CNpcScript::mafl_hormes_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_hormes_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_hormes_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_hormes_9()
@@ -7207,17 +7212,17 @@ void CNpcScript::mafl_hyuit_4()
 
 void CNpcScript::mafl_hyuit_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_hyuit_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_hyuit_8()
 {
-	
+
 	if( GetQuestState(QUEST_VOCMER_TRN3) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 )
 	{
 		ChangeJob(1);
@@ -7261,12 +7266,14 @@ void CNpcScript::mafl_is_0()
 
 void CNpcScript::mafl_is_1()
 {
-	switch( Random( 3 ) )
-	{
-		case 0:	PlaySound( 536 ); break;
-		case 1:	PlaySound( 537 ); break;
-		case 2:	PlaySound( 538 ); break;
-	}
+	PlaySound( 536 + Random( 3 ) );
+
+	//switch( Random( 3 ) )
+	//{
+	//case 0:	PlaySound( 536 ); break;
+	//case 1:	PlaySound( 537 ); break;
+	//case 2:	PlaySound( 538 ); break;
+	//}
 
 	LaunchQuest();
 }
@@ -7339,11 +7346,12 @@ void CNpcScript::mafl_is_43()
 
 void CNpcScript::mafl_is_10()
 {
-	switch( Random( 2 ) )
-	{
-		case 0:	PlaySound( 552 ); break;
-		case 1:	PlaySound( 553 ); break;
-	}
+	PlaySound( 552 + Random( 2 ) );
+	//switch( Random( 2 ) )
+	//{
+	//case 0:	PlaySound( 552 ); break;
+	//case 1:	PlaySound( 553 ); break;
+	//}
 	Speak( NpcId(), 554 );
 	Exit();
 }
@@ -7367,12 +7375,13 @@ void CNpcScript::mafl_hairshop_0()
 
 void CNpcScript::mafl_hairshop_1()
 {
-	switch( Random( 3 ) )
-	{
-		case 0:	PlaySound( 555 ); break;
-		case 1:	PlaySound( 556 ); break;
-		case 2:	PlaySound( 557 ); break;
-	}
+	PlaySound( 555 + Random( 3 ) );
+	//switch( Random( 3 ) )
+	//{
+	//case 0:	PlaySound( 555 ); break;
+	//case 1:	PlaySound( 556 ); break;
+	//case 2:	PlaySound( 557 ); break;
+	//}
 
 	LaunchQuest();
 }
@@ -7425,11 +7434,12 @@ void CNpcScript::mafl_hairshop_9()
 
 void CNpcScript::mafl_hairshop_10()
 {
-	switch( Random( 2 ) )
-	{
-		case 0:	PlaySound( 559 ); break;
-		case 1:	PlaySound( 560 ); break;
-	}
+	PlaySound( 559 + Random( 2 ) );
+	//switch( Random( 2 ) )
+	//{
+	//case 0:	PlaySound( 559 ); break;
+	//case 1:	PlaySound( 560 ); break;
+	//}
 	Speak( NpcId(), 554 );
 	Exit();
 }
@@ -7453,12 +7463,13 @@ void CNpcScript::mafl_ismeralda_0()
 
 void CNpcScript::mafl_ismeralda_1()
 {
-	switch( Random( 3 ) )
-	{
-		case 0:	PlaySound( 561 ); break;
-		case 1:	PlaySound( 562 ); break;
-		case 2:	PlaySound( 563 ); break;
-	}
+	PlaySound( 561 + Random( 3 ) );
+	//switch( Random( 3 ) )
+	//{
+	//case 0:	PlaySound( 561 ); break;
+	//case 1:	PlaySound( 562 ); break;
+	//case 2:	PlaySound( 563 ); break;
+	//}
 
 	LaunchQuest();
 }
@@ -7531,11 +7542,12 @@ void CNpcScript::mafl_ismeralda_43()
 
 void CNpcScript::mafl_ismeralda_10()
 {
-	switch( Random( 2 ) )
-	{
-		case 0:	PlaySound( 565 ); break;
-		case 1:	PlaySound( 566 ); break;
-	}
+	PlaySound( 565 + Random( 2 ) );
+	//switch( Random( 2 ) )
+	//{
+	//case 0:	PlaySound( 565 ); break;
+	//case 1:	PlaySound( 566 ); break;
+	//}
 	Speak( NpcId(), 554 );
 	Exit();
 }
@@ -7559,12 +7571,13 @@ void CNpcScript::mafl_ispim_0()
 
 void CNpcScript::mafl_ispim_1()
 {
-	switch( Random( 3 ) )
-	{
-		case 0:	PlaySound( 567 ); break;
-		case 1:	PlaySound( 568 ); break;
-		case 2:	PlaySound( 569 ); break;
-	}
+	PlaySound( 567 + Random( 3 ) );
+	//switch( Random( 3 ) )
+	//{
+	//case 0:	PlaySound( 567 ); break;
+	//case 1:	PlaySound( 568 ); break;
+	//case 2:	PlaySound( 569 ); break;
+	//}
 
 	LaunchQuest();
 }
@@ -7637,11 +7650,12 @@ void CNpcScript::mafl_ispim_43()
 
 void CNpcScript::mafl_ispim_10()
 {
-	switch( Random( 2 ) )
-	{
-		case 0:	PlaySound( 571 ); break;
-		case 1:	PlaySound( 572 ); break;
-	}
+	PlaySound( 571 + Random( 2 ) );
+	//switch( Random( 2 ) )
+	//{
+	//case 0:	PlaySound( 571 ); break;
+	//case 1:	PlaySound( 572 ); break;
+	//}
 	Speak( NpcId(), 554 );
 	Exit();
 }
@@ -7665,12 +7679,13 @@ void CNpcScript::mafl_isruel_0()
 
 void CNpcScript::mafl_isruel_1()
 {
-	switch( Random( 3 ) )
-	{
-		case 0:	PlaySound( 573 ); break;
-		case 1:	PlaySound( 574 ); break;
-		case 2:	PlaySound( 575 ); break;
-	}
+	PlaySound( 573 + Random( 3 ) );
+	//switch( Random( 3 ) )
+	//{
+	//case 0:	PlaySound( 573 ); break;
+	//case 1:	PlaySound( 574 ); break;
+	//case 2:	PlaySound( 575 ); break;
+	//}
 
 	LaunchQuest();
 }
@@ -7743,11 +7758,12 @@ void CNpcScript::mafl_isruel_43()
 
 void CNpcScript::mafl_isruel_10()
 {
-	switch( Random( 2 ) )
-	{
-		case 0:	PlaySound( 577 ); break;
-		case 1:	PlaySound( 578 ); break;
-	}
+	PlaySound( 577 + Random( 2 ) );
+	//switch( Random( 2 ) )
+	//{
+	//case 0:	PlaySound( 577 ); break;
+	//case 1:	PlaySound( 578 ); break;
+	//}
 	Speak( NpcId(), 554 );
 	Exit();
 }
@@ -7792,17 +7808,17 @@ void CNpcScript::mafl_jeff_4()
 
 void CNpcScript::mafl_jeff_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_jeff_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_jeff_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_jeff_9()
@@ -7856,17 +7872,17 @@ void CNpcScript::mafl_juglin_4()
 
 void CNpcScript::mafl_juglin_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_juglin_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_juglin_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_juglin_9()
@@ -7922,17 +7938,17 @@ void CNpcScript::mafl_juria_4()
 
 void CNpcScript::mafl_juria_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_juria_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_juria_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_juria_9()
@@ -7974,7 +7990,7 @@ void CNpcScript::mafl_kanane_1()
 	{
 		if( IsWormonServer() == TRUE )
 		{
-		
+
 			if( IsSetQuest( QUEST_DREADMUTE ) == TRUE && GetQuestState( QUEST_DREADMUTE ) == QS_END )
 			{
 				if( IsParty() == TRUE )
@@ -7984,11 +8000,11 @@ void CNpcScript::mafl_kanane_1()
 						Say( 506 );
 						AddKey( 10 );
 					}
-			
+
 
 					else if( MonHuntStartParty( QUEST_BOSS_LV3, QS_BEGIN, QS_END, 1 ) == TRUE )
 					{
-								
+
 					}
 
 					else
@@ -8005,7 +8021,7 @@ void CNpcScript::mafl_kanane_1()
 				}
 
 			}
-				
+
 			else
 			{
 				Say( 509);
@@ -8046,17 +8062,17 @@ void CNpcScript::mafl_kanane_4()
 
 void CNpcScript::mafl_kanane_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_kanane_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_kanane_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_kanane_9()
@@ -8114,16 +8130,18 @@ void CNpcScript::mafl_kidmen_4()
 
 void CNpcScript::mafl_kidmen_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_kidmen_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_kidmen_8()
 {
+
+
 	if( GetQuestState(QUEST_VOCASS_TRN3) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 )
 	{
 		ChangeJob(3);
@@ -8134,6 +8152,7 @@ void CNpcScript::mafl_kidmen_8()
 	{
 		Exit();
 	}
+
 }
 
 void CNpcScript::mafl_kidmen_9()
@@ -8195,7 +8214,7 @@ void CNpcScript::mafl_kimel_5()
 
 void CNpcScript::mafl_kimel_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_kimel_7()
@@ -8259,17 +8278,17 @@ void CNpcScript::mafl_kurumin_4()
 
 void CNpcScript::mafl_kurumin_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_kurumin_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_kurumin_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_kurumin_9()
@@ -8324,17 +8343,17 @@ void CNpcScript::mafl_langdrong_4()
 
 void CNpcScript::mafl_langdrong_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_langdrong_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_langdrong_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_langdrong_9()
@@ -8390,17 +8409,17 @@ void CNpcScript::mafl_lodelight_4()
 
 void CNpcScript::mafl_lodelight_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_lodelight_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_lodelight_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_lodelight_9()
@@ -8459,17 +8478,17 @@ void CNpcScript::mafl_losha_4()
 
 void CNpcScript::mafl_losha_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_losha_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_losha_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_losha_9()
@@ -8523,17 +8542,17 @@ void CNpcScript::mafl_loyah_4()
 
 void CNpcScript::mafl_loyah_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_loyah_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_loyah_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_loyah_9()
@@ -8578,7 +8597,7 @@ void CNpcScript::mafl_luda_2()
 
 void CNpcScript::mafl_luda_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_luda_4()
@@ -8636,12 +8655,13 @@ void CNpcScript::mafl_lui_0()
 
 void CNpcScript::mafl_lui_1()
 {
-		switch( Random( 3 ) )
-	{
-		case 0:	PlaySound( 1036 ); break;
-		case 1:	PlaySound( 1037 ); break;
-		case 2:	PlaySound( 1038 ); break;
-	}
+	PlaySound( 1036 + Random( 3 ) );
+	//switch( Random( 3 ) )
+	//{
+	//case 0:	PlaySound( 1036 ); break;
+	//case 1:	PlaySound( 1037 ); break;
+	//case 2:	PlaySound( 1038 ); break;
+	//}
 	LaunchQuest();
 }
 
@@ -8663,17 +8683,17 @@ void CNpcScript::mafl_lui_4()
 
 void CNpcScript::mafl_lui_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_lui_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_lui_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_lui_9()
@@ -8683,11 +8703,12 @@ void CNpcScript::mafl_lui_9()
 
 void CNpcScript::mafl_lui_10()
 {
-		switch( Random( 2 ) )
-	{
-		case 0:	PlaySound( 1039 ); break;
-		case 1:	PlaySound( 1040 ); break;
-	}
+	PlaySound( 1039 + Random( 2 ) );
+	//switch( Random( 2 ) )
+	//{
+	//case 0:	PlaySound( 1039 ); break;
+	//case 1:	PlaySound( 1040 ); break;
+	//}
 	Speak( NpcId(), 626 );
 	Exit();
 }
@@ -8732,17 +8753,17 @@ void CNpcScript::mafl_maki_4()
 
 void CNpcScript::mafl_maki_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_maki_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_maki_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_maki_9()
@@ -8797,17 +8818,17 @@ void CNpcScript::mafl_marche_4()
 
 void CNpcScript::mafl_marche_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_marche_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_marche_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_marche_9()
@@ -8861,17 +8882,17 @@ void CNpcScript::mafl_martinyc_4()
 
 void CNpcScript::mafl_martinyc_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_martinyc_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_martinyc_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_martinyc_9()
@@ -8979,13 +9000,17 @@ void CNpcScript::mafl_mustang_1()
 	if( GetQuestState( QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0 || GetQuestState( QUEST_VOCACR_BFTRN ) >= 0)
 	{
 		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER2 ) >= 0 )
+		{
 			LaunchQuest();
+		}
 		else
+		{
 			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
 		AddKey( 9 );
 		AddKey( 10 );
 	}
-		
+
 	else
 	{ 
 		LaunchQuest();
@@ -9010,17 +9035,17 @@ void CNpcScript::mafl_mustang_4()
 
 void CNpcScript::mafl_mustang_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_mustang_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_mustang_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_mustang_9()
@@ -9076,17 +9101,17 @@ void CNpcScript::mafl_nina_4()
 
 void CNpcScript::mafl_nina_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_nina_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_nina_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_nina_9()
@@ -9141,17 +9166,17 @@ void CNpcScript::mafl_noier_4()
 
 void CNpcScript::mafl_noier_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_noier_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_noier_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_noier_9()
@@ -9205,17 +9230,17 @@ void CNpcScript::mafl_official_4()
 
 void CNpcScript::mafl_official_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_official_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_official_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_official_9()
@@ -9273,17 +9298,17 @@ void CNpcScript::mafl_phoho_4()
 
 void CNpcScript::mafl_phoho_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_phoho_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_phoho_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_phoho_9()
@@ -9338,17 +9363,17 @@ void CNpcScript::mafl_pipi_4()
 
 void CNpcScript::mafl_pipi_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_pipi_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_pipi_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_pipi_9()
@@ -9410,7 +9435,7 @@ void CNpcScript::mafl_radyon_5()
 
 void CNpcScript::mafl_radyon_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_radyon_7()
@@ -9543,17 +9568,17 @@ void CNpcScript::mafl_ryupang_4()
 
 void CNpcScript::mafl_ryupang_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_ryupang_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_ryupang_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_ryupang_9()
@@ -9608,17 +9633,17 @@ void CNpcScript::mafl_segho_4()
 
 void CNpcScript::mafl_segho_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_segho_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_segho_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_segho_9()
@@ -9673,17 +9698,17 @@ void CNpcScript::mafl_sgradion_4()
 
 void CNpcScript::mafl_sgradion_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_sgradion_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_sgradion_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_sgradion_9()
@@ -9727,7 +9752,7 @@ void CNpcScript::mafl_ssotta_2()
 
 void CNpcScript::mafl_ssotta_3()
 {
-	Say( 107 );
+	Say( 1409 );
 }
 
 void CNpcScript::mafl_ssotta_4()
@@ -9737,17 +9762,17 @@ void CNpcScript::mafl_ssotta_4()
 
 void CNpcScript::mafl_ssotta_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_ssotta_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_ssotta_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_ssotta_9()
@@ -9802,17 +9827,17 @@ void CNpcScript::mafl_teshar_4()
 
 void CNpcScript::mafl_teshar_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_teshar_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_teshar_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_teshar_9()
@@ -9867,17 +9892,17 @@ void CNpcScript::mafl_tomba_4()
 
 void CNpcScript::mafl_tomba_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_tomba_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_tomba_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_tomba_9()
@@ -10003,17 +10028,17 @@ void CNpcScript::mafl_ancimys_4()
 
 void CNpcScript::mafl_ancimys_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_ancimys_6()
 {
-	
+
 }
 
 void CNpcScript::mafl_ancimys_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_ancimys_9()
@@ -10067,17 +10092,17 @@ void CNpcScript::mama_ancimys_4()
 
 void CNpcScript::mama_ancimys_5()
 {
-	
+
 }
 
 void CNpcScript::mama_ancimys_6()
 {
-	
+
 }
 
 void CNpcScript::mama_ancimys_8()
 {
-	
+
 }
 
 void CNpcScript::mama_ancimys_9()
@@ -10133,17 +10158,17 @@ void CNpcScript::masa_ann_4()
 
 void CNpcScript::masa_ann_5()
 {
-	
+
 }
 
 void CNpcScript::masa_ann_6()
 {
-	
+
 }
 
 void CNpcScript::masa_ann_8()
 {
-	
+
 }
 
 void CNpcScript::masa_ann_9()
@@ -10217,17 +10242,17 @@ void CNpcScript::masa_bill_4()
 
 void CNpcScript::masa_bill_5()
 {
-	
+
 }
 
 void CNpcScript::masa_bill_6()
 {
-	
+
 }
 
 void CNpcScript::masa_bill_8()
 {
-	
+
 }
 
 void CNpcScript::masa_bill_9()
@@ -10351,17 +10376,17 @@ void CNpcScript::masa_bozman_4()
 
 void CNpcScript::masa_bozman_5()
 {
-	
+
 }
 
 void CNpcScript::masa_bozman_6()
 {
-	
+
 }
 
 void CNpcScript::masa_bozman_8()
 {
-	
+
 }
 
 void CNpcScript::masa_bozman_9()
@@ -10415,17 +10440,17 @@ void CNpcScript::masa_brodeay_4()
 
 void CNpcScript::masa_brodeay_5()
 {
-	
+
 }
 
 void CNpcScript::masa_brodeay_6()
 {
-	
+
 }
 
 void CNpcScript::masa_brodeay_8()
 {
-	
+
 }
 
 void CNpcScript::masa_brodeay_9()
@@ -10459,12 +10484,13 @@ void CNpcScript::masa_bulrox_0()
 
 void CNpcScript::masa_bulrox_1()
 {
-		switch( Random( 3 ) )
-	{
-		case 0:	PlaySound( 1041 ); break;
-		case 1:	PlaySound( 1042 ); break;
-		case 2:	PlaySound( 1043 ); break;
-	}
+	PlaySound( 1041 + Random( 3 ) );
+	//switch( Random( 3 ) )
+	//{
+	//case 0:	PlaySound( 1041 ); break;
+	//case 1:	PlaySound( 1042 ); break;
+	//case 2:	PlaySound( 1043 ); break;
+	//}
 	LaunchQuest();
 }
 
@@ -10486,17 +10512,17 @@ void CNpcScript::masa_bulrox_4()
 
 void CNpcScript::masa_bulrox_5()
 {
-	
+
 }
 
 void CNpcScript::masa_bulrox_6()
 {
-	
+
 }
 
 void CNpcScript::masa_bulrox_8()
 {
-	
+
 }
 
 void CNpcScript::masa_bulrox_9()
@@ -10506,11 +10532,12 @@ void CNpcScript::masa_bulrox_9()
 
 void CNpcScript::masa_bulrox_10()
 {
-		switch( Random( 2 ) )
-	{
-		case 0:	PlaySound( 1044 ); break;
-		case 1:	PlaySound( 1045 ); break;
-	}
+	PlaySound( 1044 + Random( 2 ) );
+	//switch( Random( 2 ) )
+	//{
+	//case 0:	PlaySound( 1044 ); break;
+	//case 1:	PlaySound( 1045 ); break;
+	//}
 	Speak( NpcId(), 733 );
 	Exit();
 }
@@ -10545,7 +10572,7 @@ void CNpcScript::masa_colack_2()
 
 void CNpcScript::masa_colack_3()
 {
-	
+
 }
 
 void CNpcScript::masa_colack_4()
@@ -10624,17 +10651,17 @@ void CNpcScript::masa_drestern_4()
 
 void CNpcScript::masa_drestern_5()
 {
-	
+
 }
 
 void CNpcScript::masa_drestern_6()
 {
-	
+
 }
 
 void CNpcScript::masa_drestern_8()
 {
-	
+
 }
 
 void CNpcScript::masa_drestern_9()
@@ -10684,7 +10711,7 @@ void CNpcScript::masa_furan_5()
 
 void CNpcScript::masa_furan_6()
 {
-	
+
 }
 
 void CNpcScript::masa_furan_7()
@@ -10746,17 +10773,17 @@ void CNpcScript::masa_gothante_4()
 
 void CNpcScript::masa_gothante_5()
 {
-	
+
 }
 
 void CNpcScript::masa_gothante_6()
 {
-	
+
 }
 
 void CNpcScript::masa_gothante_8()
 {
-	
+
 }
 
 void CNpcScript::masa_gothante_9()
@@ -10811,17 +10838,17 @@ void CNpcScript::masa_hee_4()
 
 void CNpcScript::masa_hee_5()
 {
-	
+
 }
 
 void CNpcScript::masa_hee_6()
 {
-	
+
 }
 
 void CNpcScript::masa_hee_8()
 {
-	
+
 }
 
 void CNpcScript::masa_hee_9()
@@ -10837,10 +10864,11 @@ void CNpcScript::masa_hee_10()
 
 //Script End
 
+
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: Jimmie
-// Title		: Saincity Assistance Manager
+// Title			: Saincity Assistance Manager (세인트 헬레나 도원결의)
 // File			: MaSa_Helena.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -10859,7 +10887,7 @@ void CNpcScript::masa_helena_1()
 	{
 		LaunchQuest();
 	}
-		
+
 	else if( IsSetQuest( QUEST_CREGUILD ) == TRUE && GetQuestState( QUEST_CREGUILD ) == QS_END && GetPlayerGold() >= 3000000 )	
 	{
 		if( IsPartyMaster() == 1 && GetPartyNum() >= 3  && IsPartyGuild() == 0 )
@@ -10869,7 +10897,7 @@ void CNpcScript::masa_helena_1()
 			AddKey(866);
 			AddKey(865);
 		}
-		
+
 		else
 		{
 			Say( 863 );
@@ -10901,12 +10929,12 @@ void CNpcScript::masa_helena_4()
 
 void CNpcScript::masa_helena_5()
 {
-	
+
 }
 
 void CNpcScript::masa_helena_6()
 {
-	
+
 }
 
 void CNpcScript::masa_helena_8()
@@ -10919,7 +10947,7 @@ void CNpcScript::masa_helena_8()
 			CreateGuild();
 			Say(752);
 		}
-		
+
 		else
 		{
 			Say( 753 );
@@ -10975,6 +11003,7 @@ void CNpcScript::masa_helena_866()
 	LaunchQuest();
 }
 //Script End
+
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
@@ -11158,17 +11187,17 @@ void CNpcScript::masa_herth_4()
 
 void CNpcScript::masa_herth_5()
 {
-	
+
 }
 
 void CNpcScript::masa_herth_6()
 {
-	
+
 }
 
 void CNpcScript::masa_herth_8()
 {
-	
+
 }
 
 void CNpcScript::masa_herth_9()
@@ -11245,17 +11274,17 @@ void CNpcScript::masa_janne_4()
 
 void CNpcScript::masa_janne_5()
 {
-	
+
 }
 
 void CNpcScript::masa_janne_6()
 {
-	
+
 }
 
 void CNpcScript::masa_janne_8()
 {
-	
+
 }
 
 void CNpcScript::masa_janne_9()
@@ -11329,17 +11358,17 @@ void CNpcScript::masa_jeonghwa_4()
 
 void CNpcScript::masa_jeonghwa_5()
 {
-	
+
 }
 
 void CNpcScript::masa_jeonghwa_6()
 {
-	
+
 }
 
 void CNpcScript::masa_jeonghwa_8()
 {
-	
+
 }
 
 void CNpcScript::masa_jeonghwa_9()
@@ -11394,17 +11423,17 @@ void CNpcScript::masa_karin_4()
 
 void CNpcScript::masa_karin_5()
 {
-	
+
 }
 
 void CNpcScript::masa_karin_6()
 {
-	
+
 }
 
 void CNpcScript::masa_karin_8()
 {
-	
+
 }
 
 void CNpcScript::masa_karin_9()
@@ -11461,17 +11490,17 @@ void CNpcScript::masa_kimberley_4()
 
 void CNpcScript::masa_kimberley_5()
 {
-	
+
 }
 
 void CNpcScript::masa_kimberley_6()
 {
-	
+
 }
 
 void CNpcScript::masa_kimberley_8()
 {
-	
+
 }
 
 void CNpcScript::masa_kimberley_9()
@@ -11575,7 +11604,7 @@ void CNpcScript::masa_lancomi_10()
 	Speak( NpcId(), 65 );
 	Exit();
 }
-	
+
 //Script End
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.1( Modify060804 )
@@ -11619,17 +11648,17 @@ void CNpcScript::masa_leann_4()
 
 void CNpcScript::masa_leann_5()
 {
-	
+
 }
 
 void CNpcScript::masa_leann_6()
 {
-	
+
 }
 
 void CNpcScript::masa_leann_8()
 {
-	
+
 }
 
 void CNpcScript::masa_leann_9()
@@ -11704,17 +11733,17 @@ void CNpcScript::masa_lodelight_4()
 
 void CNpcScript::masa_lodelight_5()
 {
-	
+
 }
 
 void CNpcScript::masa_lodelight_6()
 {
-	
+
 }
 
 void CNpcScript::masa_lodelight_8()
 {
-	
+
 }
 
 void CNpcScript::masa_lodelight_9()
@@ -11773,12 +11802,12 @@ void CNpcScript::masa_lopaze_4()
 
 void CNpcScript::masa_lopaze_5()
 {
-	
+
 }
 
 void CNpcScript::masa_lopaze_6()
 {
-	
+
 }
 
 void CNpcScript::masa_lopaze_8()
@@ -11793,6 +11822,7 @@ void CNpcScript::masa_lopaze_8()
 	{
 		Exit();
 	}
+
 }
 
 void CNpcScript::masa_lopaze_9()
@@ -11847,17 +11877,17 @@ void CNpcScript::masa_martin_4()
 
 void CNpcScript::masa_martin_5()
 {
-	
+
 }
 
 void CNpcScript::masa_martin_6()
 {
-	
+
 }
 
 void CNpcScript::masa_martin_8()
 {
-	
+
 }
 
 void CNpcScript::masa_martin_9()
@@ -11911,17 +11941,17 @@ void CNpcScript::masa_mayun_4()
 
 void CNpcScript::masa_mayun_5()
 {
-	
+
 }
 
 void CNpcScript::masa_mayun_6()
 {
-	
+
 }
 
 void CNpcScript::masa_mayun_8()
 {
-	
+
 }
 
 void CNpcScript::masa_mayun_9()
@@ -11976,17 +12006,17 @@ void CNpcScript::masa_parine_4()
 
 void CNpcScript::masa_parine_5()
 {
-	
+
 }
 
 void CNpcScript::masa_parine_6()
 {
-	
+
 }
 
 void CNpcScript::masa_parine_8()
 {
-	
+
 }
 
 void CNpcScript::masa_parine_9()
@@ -12041,17 +12071,17 @@ void CNpcScript::masa_porgo_4()
 
 void CNpcScript::masa_porgo_5()
 {
-	
+
 }
 
 void CNpcScript::masa_porgo_6()
 {
-	
+
 }
 
 void CNpcScript::masa_porgo_8()
 {
-	
+
 }
 
 void CNpcScript::masa_porgo_9()
@@ -12177,17 +12207,17 @@ void CNpcScript::masa_rovanett_4()
 
 void CNpcScript::masa_rovanett_5()
 {
-	
+
 }
 
 void CNpcScript::masa_rovanett_6()
 {
-	
+
 }
 
 void CNpcScript::masa_rovanett_8()
 {
-	
+
 }
 
 void CNpcScript::masa_rovanett_9()
@@ -12242,17 +12272,17 @@ void CNpcScript::masa_sainmayor_4()
 
 void CNpcScript::masa_sainmayor_5()
 {
-	
+
 }
 
 void CNpcScript::masa_sainmayor_6()
 {
-	
+
 }
 
 void CNpcScript::masa_sainmayor_8()
 {
-	
+
 }
 
 void CNpcScript::masa_sainmayor_9()
@@ -12310,17 +12340,17 @@ void CNpcScript::masa_tina_4()
 
 void CNpcScript::masa_tina_5()
 {
-	
+
 }
 
 void CNpcScript::masa_tina_6()
 {
-	
+
 }
 
 void CNpcScript::masa_tina_8()
 {
-	
+
 }
 
 void CNpcScript::masa_tina_9()
@@ -12330,23 +12360,23 @@ void CNpcScript::masa_tina_9()
 
 void CNpcScript::masa_tina_40()
 {
- 	Say(452);
-        Say(453); 
+	Say(452);
+	Say(453); 
 	Say(454);
 	Say(455);
-        Say(456);
-        Say(457);
+	Say(456);
+	Say(457);
 }
 
 void CNpcScript::masa_tina_41()
 {
 	Say(458);
 	Say(459);
-        Say(460);
-        Say(461);
-        Say(462);
+	Say(460);
+	Say(461);
+	Say(462);
 	Say(463);
-        Say(464); 
+	Say(464); 
 }
 
 void CNpcScript::masa_tina_10()
@@ -12368,31 +12398,32 @@ void CNpcScript::masa_tina_10()
 //Script Begin
 void CNpcScript::masa_troupemember1_0()
 {
-	switch( Random ( 3 ) )
-	{
-		case 0:
-		{
-			Speak( NpcId(), 820 );
-			SetScriptTimer( 15 );
-		}
-		break;
+	Speak( NpcId(), 820 + Random( 3 ) );
+	//switch( Random ( 3 ) )
+	//{
+	//case 0:
+	//	{
+	//		Speak( NpcId(), 820 );
+	//		SetScriptTimer( 15 );
+	//	}
+	//	break;
 
-		case 1:
-		{
-			Speak( NpcId(), 821 );
-			SetScriptTimer( 15 );
-		}
-		break;
+	//case 1:
+	//	{
+	//		Speak( NpcId(), 821 );
+	//		SetScriptTimer( 15 );
+	//	}
+	//	break;
 
-		case 2:
-		{
-			Speak( NpcId(), 822 );
-			SetScriptTimer( 15 );
-		}
-		break;
-	}
+	//case 2:
+	//	{
+	//		Speak( NpcId(), 822 );
+	//		SetScriptTimer( 15 );
+	//	}
+	//	break;
+	//}
 }
-	
+
 void CNpcScript::masa_troupemember1_1()
 {
 	LaunchQuest();
@@ -12421,17 +12452,17 @@ void CNpcScript::masa_troupemember1_5()
 
 void CNpcScript::masa_troupemember1_6()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember1_7()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember1_8()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember1_9()
@@ -12458,31 +12489,32 @@ void CNpcScript::masa_troupemember1_10()
 //Script Begin
 void CNpcScript::masa_troupemember2_0()
 {
-	switch( Random ( 3 ) )
-	{
-		case 0:
-			{
-				Speak( NpcId(), 826 );
-				SetScriptTimer( 10 );
-			}
-			break;
+	Speak( NpcId(), 826 + Random( 3 ) );
+	//switch( Random ( 3 ) )
+	//{
+	//case 0:
+	//	{
+	//		Speak( NpcId(), 826 );
+	//		SetScriptTimer( 10 );
+	//	}
+	//	break;
 
-		case 1:
-			{
-				Speak( NpcId(), 827 );
-				SetScriptTimer( 10 );
-			}
-			break;
+	//case 1:
+	//	{
+	//		Speak( NpcId(), 827 );
+	//		SetScriptTimer( 10 );
+	//	}
+	//	break;
 
-		case 2:
-			{
-				Speak( NpcId(), 828 );
-				SetScriptTimer( 10 );
-			}
-			break;
-	}
+	//case 2:
+	//	{
+	//		Speak( NpcId(), 828 );
+	//		SetScriptTimer( 10 );
+	//	}
+	//	break;
+	//}
 }
-	
+
 void CNpcScript::masa_troupemember2_1()
 {
 	LaunchQuest();
@@ -12511,17 +12543,17 @@ void CNpcScript::masa_troupemember2_5()
 
 void CNpcScript::masa_troupemember2_6()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember2_7()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember2_8()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember2_9()
@@ -12548,31 +12580,32 @@ void CNpcScript::masa_troupemember2_10()
 //Script Begin
 void CNpcScript::masa_troupemember3_0()
 {
-	switch( Random ( 3 ) )
-	{
-		case 0:
-			{
-				Speak( NpcId(), 831 );
-				SetScriptTimer( 12 );
-			}
-			break;
+	Speak( NpcId(), 831 + Random( 3 ) );
+	//switch( Random ( 3 ) )
+	//{
+	//case 0:
+	//	{
+	//		Speak( NpcId(), 831 );
+	//		SetScriptTimer( 12 );
+	//	}
+	//	break;
 
-		case 1:
-			{
-				Speak( NpcId(), 832 );
-				SetScriptTimer( 12 );
-			}
-			break;
+	//case 1:
+	//	{
+	//		Speak( NpcId(), 832 );
+	//		SetScriptTimer( 12 );
+	//	}
+	//	break;
 
-		case 2:
-			{
-				Speak( NpcId(), 833 );
-				SetScriptTimer( 12 );
-			}
-			break;
-	}
+	//case 2:
+	//	{
+	//		Speak( NpcId(), 833 );
+	//		SetScriptTimer( 12 );
+	//	}
+	//	break;
+	//}
 }
-	
+
 void CNpcScript::masa_troupemember3_1()
 {
 	LaunchQuest();
@@ -12601,17 +12634,17 @@ void CNpcScript::masa_troupemember3_5()
 
 void CNpcScript::masa_troupemember3_6()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember3_7()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember3_8()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember3_9()
@@ -12638,31 +12671,32 @@ void CNpcScript::masa_troupemember3_10()
 //Script Begin
 void CNpcScript::masa_troupemember4_0()
 {
-	switch( Random ( 3 ) )
-	{
-		case 0:
-			{
-				Speak( NpcId(), 835 );
-				SetScriptTimer( 15 );
-			}
-			break;
+	Speak( NpcId(), 835 + Random( 3 ) );
+	//switch( Random ( 3 ) )
+	//{
+	//case 0:
+	//	{
+	//		Speak( NpcId(), 835 );
+	//		SetScriptTimer( 15 );
+	//	}
+	//	break;
 
-		case 1:
-			{
-				Speak( NpcId(), 836 );
-				SetScriptTimer( 15 );
-			}
-			break;
+	//case 1:
+	//	{
+	//		Speak( NpcId(), 836 );
+	//		SetScriptTimer( 15 );
+	//	}
+	//	break;
 
-		case 2:
-			{
-				Speak( NpcId(), 837 );
-				SetScriptTimer( 15 );
-			}
-			break;
-	}
+	//case 2:
+	//	{
+	//		Speak( NpcId(), 837 );
+	//		SetScriptTimer( 15 );
+	//	}
+	//	break;
+	//}
 }
-	
+
 void CNpcScript::masa_troupemember4_1()
 {
 	LaunchQuest();
@@ -12691,17 +12725,17 @@ void CNpcScript::masa_troupemember4_5()
 
 void CNpcScript::masa_troupemember4_6()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember4_7()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember4_8()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember4_9()
@@ -12729,31 +12763,32 @@ void CNpcScript::masa_troupemember4_10()
 //Script Begin
 void CNpcScript::masa_troupemember5_0()
 {
-	switch( Random ( 3 ) )
-	{
-		case 0:
-		{
-			Speak( NpcId(), 839 );
-			SetScriptTimer( 5 );
-		}
-		break;
+	Speak( NpcId(), 839 + Random( 3 ) );
+	//switch( Random ( 3 ) )
+	//{
+	//case 0:
+	//	{
+	//		Speak( NpcId(), 839 );
+	//		SetScriptTimer( 5 );
+	//	}
+	//	break;
 
-		case 1:
-		{
-			Speak( NpcId(), 840 );
-			SetScriptTimer( 5 );
-		}
-		break;
+	//case 1:
+	//	{
+	//		Speak( NpcId(), 840 );
+	//		SetScriptTimer( 5 );
+	//	}
+	//	break;
 
-		case 2:
-		{
-			Speak( NpcId(), 841 );
-			SetScriptTimer( 5 );
-		}
-		break;
-	}
+	//case 2:
+	//	{
+	//		Speak( NpcId(), 841 );
+	//		SetScriptTimer( 5 );
+	//	}
+	//	break;
+	//}
 }
-	
+
 void CNpcScript::masa_troupemember5_1()
 {
 	LaunchQuest();
@@ -12782,23 +12817,22 @@ void CNpcScript::masa_troupemember5_5()
 
 void CNpcScript::masa_troupemember5_6()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember5_7()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember5_8()
 {
-	
+
 }
 
 void CNpcScript::masa_troupemember5_9()
 {
 	Say( 824 );
-	AddAnswer( 10 );
 }
 
 void CNpcScript::masa_troupemember5_10()
@@ -12828,9 +12862,13 @@ void CNpcScript::masa_wingyei_1()
 	if( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState( QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCACR_BFTRN ) >= 0)
 	{
 		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER3 ) >= 0 )
+		{
 			LaunchQuest();
+		}
 		else
+		{
 			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
 		AddKey( 9 );
 		AddKey( 10 );
 	}
@@ -12859,21 +12897,21 @@ void CNpcScript::masa_wingyei_4()
 
 void CNpcScript::masa_wingyei_5()
 {
-	
+
 }
 
 void CNpcScript::masa_wingyei_6()
 {
-	//Say( "¾Æ½±°Ôµµ, ÀÌÁ¦ ³»°¡ °¡Áö°í ÀÖ´Â ºí¸µÅ©À®Àº ¸ðµÎ ¼ÒÁøµÇ¾ú´Ù Á¦±º. ´ë½Å ½Ã°£ÀÌ ´Ã¾î³µÀ¸´Ï ºí¸µÅ©À®Àº ±¸ÀÔÇÏ¿© ¾²µµ·Ï." );
+	//Say( "아쉽게도, 이제 내가 가지고 있는 블링크윙은 모두 소진되었다 제군. 대신 시간이 늘어났으니 블링크윙은 구입하여 쓰도록." );
 	if( GetQuestState(QUEST_VOCMAG_BFTRN) == QS_BEGIN )
 	{
-		Replace( WI_WORLD_MADRIGAL, 7161.0, 100.0, 3264.0 );
+		Replace( WI_WORLD_MADRIGAL, 7161, 100, 3264 );
 	}
 }
 
 void CNpcScript::masa_wingyei_8()
 {
-	
+
 }
 
 void CNpcScript::masa_wingyei_9()
@@ -12928,7 +12966,7 @@ void CNpcScript::mada_darmayor_4()
 
 void CNpcScript::mada_darmayor_5()
 {
-	
+
 }
 
 void CNpcScript::mada_darmayor_6()
@@ -12938,7 +12976,7 @@ void CNpcScript::mada_darmayor_6()
 
 void CNpcScript::mada_darmayor_8()
 {
-	
+
 }
 
 void CNpcScript::mada_darmayor_9()
@@ -12976,64 +13014,64 @@ void CNpcScript::masa_daz_1()
 	{
 		if( IsSetQuest( QUEST_INTHEDARK ) == TRUE && GetQuestState( QUEST_INTHEDARK ) == QS_END )
 		{
-				if( IsParty() == TRUE )
+			if( IsParty() == TRUE )
+			{
+				if( GetItemNum( II_SYS_SYS_QUE_RUBY01 ) >= 1 && GetItemNum( II_SYS_SYS_QUE_RUBY02 ) >= 1 && GetItemNum( II_SYS_SYS_QUE_RUBY03 ) >=1 )
 				{
-					if( GetItemNum( II_SYS_SYS_QUE_RUBY01 ) >= 1 && GetItemNum( II_SYS_SYS_QUE_RUBY02 ) >= 1 && GetItemNum( II_SYS_SYS_QUE_RUBY03 ) >=1 )
+					if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) == FALSE )
 					{
-						if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) == FALSE )
-						{
-							Say( 871 );
-							AddKey( 10 );
-						}
-						else
-						{
-							RemoveItem( II_SYS_SYS_QUE_RUBY01, 1 );
-							RemoveItem( II_SYS_SYS_QUE_RUBY02, 1 );
-							RemoveItem( II_SYS_SYS_QUE_RUBY03, 1 );
-						}
-											
-						/*
-						if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) == FALSE )
-						{
-							Say( 871 );
-							AddKey( 10 );
-						}
-											
-						else if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) == TRUE )
-						{
-							
-						}
-						
-						else
-						{
-							Say( 872 );
-							AddKey( 10 );	
-						}
-						*/
+						Say( 871 );
+						AddKey( 10 );
+					}
+					else
+					{
+						RemoveItem( II_SYS_SYS_QUE_RUBY01, 1 );
+						RemoveItem( II_SYS_SYS_QUE_RUBY02, 1 );
+						RemoveItem( II_SYS_SYS_QUE_RUBY03, 1 );
+					}
+
+					/*
+					if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) == FALSE )
+					{
+					Say( 871 );
+					AddKey( 10 );
+					}
+
+					else if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) == TRUE )
+					{
+
 					}
 
 					else
 					{
-				    	Say( 873 );
-						AddKey( 10 );
+					Say( 872 );
+					AddKey( 10 );	
 					}
-				}	
-				
+					*/
+				}
+
 				else
 				{
-					Say( 870 );	
+					Say( 873 );
 					AddKey( 10 );
 				}
-				
+			}	
+
+			else
+			{
+				Say( 870 );	
+				AddKey( 10 );
+			}
+
 		}	
-			
+
 		else
 		{
 			Say( 869);
 			AddKey( 10 );
 		}
 	}
-	
+
 	else
 	{
 		Say( 868 );	
@@ -13059,17 +13097,17 @@ void CNpcScript::masa_daz_4()
 
 void CNpcScript::masa_daz_5()
 {
-	
+
 }
 
 void CNpcScript::masa_daz_6()
 {
-	
+
 }
 
 void CNpcScript::masa_daz_8()
 {
-	
+
 }
 
 void CNpcScript::masa_daz_9()
@@ -13123,7 +13161,7 @@ void CNpcScript::mafl_iblis01_4()
 
 void CNpcScript::mafl_iblis01_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis01_6()
@@ -13133,7 +13171,7 @@ void CNpcScript::mafl_iblis01_6()
 
 void CNpcScript::mafl_iblis01_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis01_9()
@@ -13187,7 +13225,7 @@ void CNpcScript::mafl_iblis02_4()
 
 void CNpcScript::mafl_iblis02_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis02_6()
@@ -13197,7 +13235,7 @@ void CNpcScript::mafl_iblis02_6()
 
 void CNpcScript::mafl_iblis02_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis02_9()
@@ -13251,7 +13289,7 @@ void CNpcScript::mafl_iblis03_4()
 
 void CNpcScript::mafl_iblis03_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis03_6()
@@ -13261,7 +13299,7 @@ void CNpcScript::mafl_iblis03_6()
 
 void CNpcScript::mafl_iblis03_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis03_9()
@@ -13315,7 +13353,7 @@ void CNpcScript::mafl_iblis04_4()
 
 void CNpcScript::mafl_iblis04_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis04_6()
@@ -13325,7 +13363,7 @@ void CNpcScript::mafl_iblis04_6()
 
 void CNpcScript::mafl_iblis04_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis04_9()
@@ -13379,7 +13417,7 @@ void CNpcScript::mafl_iblis05_4()
 
 void CNpcScript::mafl_iblis05_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis05_6()
@@ -13389,7 +13427,7 @@ void CNpcScript::mafl_iblis05_6()
 
 void CNpcScript::mafl_iblis05_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_iblis05_9()
@@ -13443,7 +13481,7 @@ void CNpcScript::mafl_autumnevent01_4()
 
 void CNpcScript::mafl_autumnevent01_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent01_6()
@@ -13453,7 +13491,7 @@ void CNpcScript::mafl_autumnevent01_6()
 
 void CNpcScript::mafl_autumnevent01_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent01_9()
@@ -13507,7 +13545,7 @@ void CNpcScript::mafl_autumnevent02_4()
 
 void CNpcScript::mafl_autumnevent02_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent02_6()
@@ -13517,7 +13555,7 @@ void CNpcScript::mafl_autumnevent02_6()
 
 void CNpcScript::mafl_autumnevent02_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent02_9()
@@ -13571,7 +13609,7 @@ void CNpcScript::mafl_autumnevent03_4()
 
 void CNpcScript::mafl_autumnevent03_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent03_6()
@@ -13581,7 +13619,7 @@ void CNpcScript::mafl_autumnevent03_6()
 
 void CNpcScript::mafl_autumnevent03_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent03_9()
@@ -13635,7 +13673,7 @@ void CNpcScript::mafl_autumnevent04_4()
 
 void CNpcScript::mafl_autumnevent04_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent04_6()
@@ -13645,7 +13683,7 @@ void CNpcScript::mafl_autumnevent04_6()
 
 void CNpcScript::mafl_autumnevent04_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_autumnevent04_9()
@@ -13699,7 +13737,7 @@ void CNpcScript::mama_pknpc01_4()
 
 void CNpcScript::mama_pknpc01_5()
 {
-	
+
 }
 
 void CNpcScript::mama_pknpc01_6()
@@ -13709,7 +13747,7 @@ void CNpcScript::mama_pknpc01_6()
 
 void CNpcScript::mama_pknpc01_8()
 {
-	
+
 }
 
 void CNpcScript::mama_pknpc01_9()
@@ -13762,7 +13800,7 @@ void CNpcScript::mafl_teacher01_4()
 
 void CNpcScript::mafl_teacher01_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_teacher01_6()
@@ -13772,7 +13810,7 @@ void CNpcScript::mafl_teacher01_6()
 
 void CNpcScript::mafl_teacher01_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_teacher01_9()
@@ -13826,7 +13864,7 @@ void CNpcScript::mafl_teacher02_4()
 
 void CNpcScript::mafl_teacher02_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_teacher02_6()
@@ -13836,7 +13874,7 @@ void CNpcScript::mafl_teacher02_6()
 
 void CNpcScript::mafl_teacher02_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_teacher02_9()
@@ -13890,7 +13928,7 @@ void CNpcScript::mafl_teacher03_4()
 
 void CNpcScript::mafl_teacher03_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_teacher03_6()
@@ -13900,7 +13938,7 @@ void CNpcScript::mafl_teacher03_6()
 
 void CNpcScript::mafl_teacher03_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_teacher03_9()
@@ -13954,7 +13992,7 @@ void CNpcScript::mafl_cooker01_4()
 
 void CNpcScript::mafl_cooker01_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_cooker01_6()
@@ -13964,7 +14002,7 @@ void CNpcScript::mafl_cooker01_6()
 
 void CNpcScript::mafl_cooker01_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_cooker01_9()
@@ -14018,7 +14056,7 @@ void CNpcScript::mafl_cooker02_4()
 
 void CNpcScript::mafl_cooker02_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_cooker02_6()
@@ -14028,7 +14066,7 @@ void CNpcScript::mafl_cooker02_6()
 
 void CNpcScript::mafl_cooker02_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_cooker02_9()
@@ -14082,7 +14120,7 @@ void CNpcScript::mafl_arborday01_4()
 
 void CNpcScript::mafl_arborday01_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday01_6()
@@ -14092,7 +14130,7 @@ void CNpcScript::mafl_arborday01_6()
 
 void CNpcScript::mafl_arborday01_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday01_9()
@@ -14147,7 +14185,7 @@ void CNpcScript::mafl_arborday02_4()
 
 void CNpcScript::mafl_arborday02_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday02_6()
@@ -14157,7 +14195,7 @@ void CNpcScript::mafl_arborday02_6()
 
 void CNpcScript::mafl_arborday02_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday02_9()
@@ -14212,7 +14250,7 @@ void CNpcScript::mafl_arborday03_4()
 
 void CNpcScript::mafl_arborday03_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday03_6()
@@ -14222,7 +14260,7 @@ void CNpcScript::mafl_arborday03_6()
 
 void CNpcScript::mafl_arborday03_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday03_9()
@@ -14277,7 +14315,7 @@ void CNpcScript::mafl_arborday04_4()
 
 void CNpcScript::mafl_arborday04_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday04_6()
@@ -14287,7 +14325,7 @@ void CNpcScript::mafl_arborday04_6()
 
 void CNpcScript::mafl_arborday04_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_arborday04_9()
@@ -14339,7 +14377,7 @@ void CNpcScript::mafl_pang_4()
 
 void CNpcScript::mafl_pang_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_pang_6()
@@ -14349,7 +14387,7 @@ void CNpcScript::mafl_pang_6()
 
 void CNpcScript::mafl_pang_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_pang_9()
@@ -14369,7 +14407,7 @@ void CNpcScript::mafl_pang_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: 2007³â 6¿ù ·Î¶Ç º¸´Ù Áñ°Å¿î °¡À§ ¹ÙÀ§ º¸ °ÔÀÓ(´ë¸¸)
+// Title		: 2007년 6월 로또 보다 즐거운 가위 바위 보 게임(대만)
 // File			: mafl_Pang.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14404,7 +14442,7 @@ void CNpcScript::mafl_kawibawibo01_4()
 
 void CNpcScript::mafl_kawibawibo01_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_kawibawibo01_6()
@@ -14414,7 +14452,7 @@ void CNpcScript::mafl_kawibawibo01_6()
 
 void CNpcScript::mafl_kawibawibo01_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_kawibawibo01_9()
@@ -14432,7 +14470,7 @@ void CNpcScript::mafl_kawibawibo01_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: kyk1236
-// Title		: ÀÇ¹®ÀÇ ·Îºê »ç³»
+// Title		: 의문의 로브 사내
 // File			: mada_redrobeman.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14468,7 +14506,7 @@ void CNpcScript::mada_redrobeman_4()
 
 void CNpcScript::mada_redrobeman_5()
 {
-	
+
 }
 
 void CNpcScript::mada_redrobeman_6()
@@ -14478,7 +14516,7 @@ void CNpcScript::mada_redrobeman_6()
 
 void CNpcScript::mada_redrobeman_8()
 {
-	
+
 }
 
 void CNpcScript::mada_redrobeman_9()
@@ -14495,7 +14533,7 @@ void CNpcScript::mada_redrobeman_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: kyk1236
-// Title		: ÀÇ¹®ÀÇ ·Îºê ¼Ò³à
+// Title		: 의문의 로브 소녀
 // File			: mada_redrobegirl.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14531,7 +14569,7 @@ void CNpcScript::mada_redrobegirl_4()
 
 void CNpcScript::mada_redrobegirl_5()
 {
-	
+
 }
 
 void CNpcScript::mada_redrobegirl_6()
@@ -14666,7 +14704,7 @@ void CNpcScript::mada_redrobegirl_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: Æê Å×ÀÌ¸Ó
+// Title		: 펫 테이머
 // File			: mafl_pettamer.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14701,7 +14739,7 @@ void CNpcScript::mafl_pettamer_4()
 
 void CNpcScript::mafl_pettamer_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_pettamer_6()
@@ -14711,7 +14749,7 @@ void CNpcScript::mafl_pettamer_6()
 
 void CNpcScript::mafl_pettamer_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_pettamer_9()
@@ -14728,7 +14766,7 @@ void CNpcScript::mafl_pettamer_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: kyk1236
-// Title		: °ÔÀÌÆ® Å°ÆÛ
+// Title		: 게이트 키퍼
 // File			: mada_gatekeeper.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14763,7 +14801,7 @@ void CNpcScript::mada_gatekeeper_4()
 
 void CNpcScript::mada_gatekeeper_5()
 {
-	
+
 }
 
 void CNpcScript::mada_gatekeeper_6()
@@ -14773,7 +14811,7 @@ void CNpcScript::mada_gatekeeper_6()
 
 void CNpcScript::mada_gatekeeper_8()
 {
-	
+
 }
 
 void CNpcScript::mada_gatekeeper_9()
@@ -14791,7 +14829,7 @@ void CNpcScript::mada_gatekeeper_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: Ä¥¼®ÀÌº¥Æ®01
+// Title		: 칠석이벤트01
 // File			: MaFl_July01.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14826,7 +14864,7 @@ void CNpcScript::mafl_july01_4()
 
 void CNpcScript::mafl_july01_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_july01_6()
@@ -14836,7 +14874,7 @@ void CNpcScript::mafl_july01_6()
 
 void CNpcScript::mafl_july01_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_july01_9()
@@ -14854,7 +14892,7 @@ void CNpcScript::mafl_july01_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: Ä¥¼®ÀÌº¥Æ®02
+// Title		: 칠석이벤트02
 // File			: MaFl_July02.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14889,7 +14927,7 @@ void CNpcScript::mafl_july02_4()
 
 void CNpcScript::mafl_july02_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_july02_6()
@@ -14899,7 +14937,7 @@ void CNpcScript::mafl_july02_6()
 
 void CNpcScript::mafl_july02_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_july02_9()
@@ -14916,7 +14954,7 @@ void CNpcScript::mafl_july02_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: º¸º¸Âù
+// Title		: 보보찬
 // File			: MaFl_Bobochan.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -14951,7 +14989,7 @@ void CNpcScript::mafl_bobochan_4()
 
 void CNpcScript::mafl_bobochan_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_bobochan_6()
@@ -14961,7 +14999,7 @@ void CNpcScript::mafl_bobochan_6()
 
 void CNpcScript::mafl_bobochan_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_bobochan_9()
@@ -15013,7 +15051,7 @@ void CNpcScript::mafl_nestle02_4()
 
 void CNpcScript::mafl_nestle02_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_nestle02_6()
@@ -15023,7 +15061,7 @@ void CNpcScript::mafl_nestle02_6()
 
 void CNpcScript::mafl_nestle02_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_nestle02_9()
@@ -15075,7 +15113,7 @@ void CNpcScript::mafl_nestle03_4()
 
 void CNpcScript::mafl_nestle03_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_nestle03_6()
@@ -15085,7 +15123,7 @@ void CNpcScript::mafl_nestle03_6()
 
 void CNpcScript::mafl_nestle03_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_nestle03_9()
@@ -15102,7 +15140,7 @@ void CNpcScript::mafl_nestle03_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ¸ð±â ÅðÄ¡ ´ë ÀÛÀü
+// Title		: 모기 퇴치 대 작전
 // File			: Mafl_KAWIBAWIBO03.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -15137,7 +15175,7 @@ void CNpcScript::mafl_kawibawibo03_4()
 
 void CNpcScript::mafl_kawibawibo03_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_kawibawibo03_6()
@@ -15147,7 +15185,7 @@ void CNpcScript::mafl_kawibawibo03_6()
 
 void CNpcScript::mafl_kawibawibo03_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_kawibawibo03_9()
@@ -15164,7 +15202,7 @@ void CNpcScript::mafl_kawibawibo03_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ºñ°øÁ¤ Àç·á¸¦ »ç¼öÇÏ¶ó!
+// Title		: 비공정 재료를 사수하라!
 // File			: Mafl_StrangeCollector.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -15199,7 +15237,7 @@ void CNpcScript::mafl_strangecollector_4()
 
 void CNpcScript::mafl_strangecollector_5()
 {
-	
+
 }
 
 void CNpcScript::mafl_strangecollector_6()
@@ -15209,7 +15247,7 @@ void CNpcScript::mafl_strangecollector_6()
 
 void CNpcScript::mafl_strangecollector_8()
 {
-	
+
 }
 
 void CNpcScript::mafl_strangecollector_9()
@@ -15254,7 +15292,7 @@ void CNpcScript::mafl_amos_2()
 
 void CNpcScript::mafl_amos_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_amos_4()
@@ -15323,7 +15361,7 @@ void CNpcScript::mafl_annie_2()
 
 void CNpcScript::mafl_annie_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_annie_4()
@@ -15392,7 +15430,7 @@ void CNpcScript::mafl_waforu_2()
 
 void CNpcScript::mafl_waforu_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_waforu_4()
@@ -15461,7 +15499,7 @@ void CNpcScript::mafl_santa01_2()
 
 void CNpcScript::mafl_santa01_3()
 {
-	
+	Say( 1023 );
 }
 
 void CNpcScript::mafl_santa01_4()
@@ -15530,7 +15568,7 @@ void CNpcScript::mafl_harold_2()
 
 void CNpcScript::mafl_harold_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_harold_4()
@@ -15599,7 +15637,7 @@ void CNpcScript::mafl_dick_2()
 
 void CNpcScript::mafl_dick_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_dick_4()
@@ -15668,7 +15706,7 @@ void CNpcScript::mafl_helper_2()
 
 void CNpcScript::mafl_helper_3()
 {
-	
+	Say( 1763 );
 }
 
 void CNpcScript::mafl_helper_4()
@@ -15737,7 +15775,7 @@ void CNpcScript::mafl_ray_2()
 
 void CNpcScript::mafl_ray_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_ray_4()
@@ -15806,7 +15844,7 @@ void CNpcScript::mafl_forestmanager_2()
 
 void CNpcScript::mafl_forestmanager_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_forestmanager_4()
@@ -15875,7 +15913,7 @@ void CNpcScript::mafl_collectormanager_2()
 
 void CNpcScript::mafl_collectormanager_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_collectormanager_4()
@@ -15944,7 +15982,7 @@ void CNpcScript::masa_karin_event_2()
 
 void CNpcScript::masa_karin_event_3()
 {
-	
+
 }
 
 void CNpcScript::masa_karin_event_4()
@@ -16013,7 +16051,7 @@ void CNpcScript::mafl_priest_2()
 
 void CNpcScript::mafl_priest_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_priest_4()
@@ -16082,7 +16120,7 @@ void CNpcScript::mafl_prepaidcard_2()
 
 void CNpcScript::mafl_prepaidcard_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_prepaidcard_4()
@@ -16151,7 +16189,7 @@ void CNpcScript::mafl_july03_2()
 
 void CNpcScript::mafl_july03_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_july03_4()
@@ -16220,7 +16258,7 @@ void CNpcScript::mafl_july04_2()
 
 void CNpcScript::mafl_july04_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_july04_4()
@@ -16289,7 +16327,7 @@ void CNpcScript::mafl_secretroom_east_2()
 
 void CNpcScript::mafl_secretroom_east_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_secretroom_east_4()
@@ -16358,7 +16396,7 @@ void CNpcScript::mafl_secretroom_west_2()
 
 void CNpcScript::mafl_secretroom_west_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_secretroom_west_4()
@@ -16427,7 +16465,7 @@ void CNpcScript::mafl_cardmaster_2()
 
 void CNpcScript::mafl_cardmaster_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_cardmaster_4()
@@ -16496,7 +16534,7 @@ void CNpcScript::mafl_peach_2()
 
 void CNpcScript::mafl_peach_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_peach_4()
@@ -16565,7 +16603,7 @@ void CNpcScript::mafl_miniwheel_2()
 
 void CNpcScript::mafl_miniwheel_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_miniwheel_4()
@@ -16634,7 +16672,7 @@ void CNpcScript::mafl_eventball_2()
 
 void CNpcScript::mafl_eventball_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_eventball_4()
@@ -16703,12 +16741,12 @@ void CNpcScript::mafl_redrobegirl_2()
 
 void CNpcScript::mafl_redrobegirl_3()
 {
-	
+	Say( 1103 );
 }
 
 void CNpcScript::mafl_redrobegirl_4()
 {
-	Say( 1103 );
+	Say( 1803 );
 }
 
 void CNpcScript::mafl_redrobegirl_5()
@@ -16772,7 +16810,7 @@ void CNpcScript::mafl_charlie_2()
 
 void CNpcScript::mafl_charlie_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_charlie_4()
@@ -16815,7 +16853,7 @@ void CNpcScript::mafl_charlie_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ½Å³â ÀÌº¥Æ®
+// Title		: 신년 이벤트
 // File			: Mafl_Snowman01.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -16841,7 +16879,7 @@ void CNpcScript::mafl_snowman01_2()
 
 void CNpcScript::mafl_snowman01_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_snowman01_4()
@@ -16884,7 +16922,7 @@ void CNpcScript::mafl_snowman01_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ½Å³â ÀÌº¥Æ®
+// Title		: 신년 이벤트
 // File			: Mafl_Snowman02.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -16910,7 +16948,7 @@ void CNpcScript::mafl_snowman02_2()
 
 void CNpcScript::mafl_snowman02_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_snowman02_4()
@@ -16953,7 +16991,7 @@ void CNpcScript::mafl_snowman02_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: 09³â ¹ß·»Å¸ÀÎ ÀÌº¥Æ®
+// Title		: 09년 발렌타인 이벤트
 // File			: Mafl_Grahoo.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -16979,7 +17017,7 @@ void CNpcScript::mafl_grahoo_2()
 
 void CNpcScript::mafl_grahoo_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_grahoo_4()
@@ -17022,7 +17060,7 @@ void CNpcScript::mafl_grahoo_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: 09³â È­ÀÌÆ® µ¥ÀÌ ÀÌº¥Æ®
+// Title		: 09년 화이트 데이 이벤트
 // File			: Mafl_Aberoo.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17091,7 +17129,7 @@ void CNpcScript::mafl_aberoo_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: 09³â ±ÃÁß ¿ä¸®»ç¸¦ µµ¿Í¶ó ÀÌº¥Æ®
+// Title		: 09년 궁중 요리사를 도와라 이벤트
 // File			: Mafl_Cook01.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17117,7 +17155,7 @@ void CNpcScript::mafl_cook01_2()
 
 void CNpcScript::mafl_cook01_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_cook01_4()
@@ -17160,7 +17198,7 @@ void CNpcScript::mafl_cook01_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ±¹³» È°¼ºÈ­ ÀÌº¥Æ®
+// Title		: 국내 활성화 이벤트
 // File			: Mafl_Alice.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17186,7 +17224,7 @@ void CNpcScript::mafl_alice_2()
 
 void CNpcScript::mafl_alice_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_alice_4()
@@ -17229,7 +17267,7 @@ void CNpcScript::mafl_alice_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ´Þ·Á¶ó ¿îµ¿È¸
+// Title		: 달려라 운동회
 // File			: Mafl_Oasis.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17255,7 +17293,7 @@ void CNpcScript::mafl_oasis_2()
 
 void CNpcScript::mafl_oasis_3()
 {
-	
+
 }
 
 void CNpcScript::mafl_oasis_4()
@@ -17298,7 +17336,7 @@ void CNpcScript::mafl_oasis_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ÇÏ¸£¸ð´Ñ NPC
+// Title		: 하르모닌 NPC
 // File			: MaHa_Jano.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17324,7 +17362,7 @@ void CNpcScript::maha_jano_2()
 
 void CNpcScript::maha_jano_3()
 {
-		Say( 1140 );
+	Say( 1140 );
 }
 
 void CNpcScript::maha_jano_4()
@@ -17334,7 +17372,7 @@ void CNpcScript::maha_jano_4()
 
 void CNpcScript::maha_jano_5()
 {
-			
+
 }
 
 void CNpcScript::maha_jano_6()
@@ -17368,7 +17406,7 @@ void CNpcScript::maha_jano_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ÇÏ¸£¸ð´Ñ NPC
+// Title		: 하르모닌 NPC
 // File			: MaHa_luca.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17394,7 +17432,7 @@ void CNpcScript::maha_luca_2()
 
 void CNpcScript::maha_luca_3()
 {
-		Say( 1145 );
+	Say( 1145 );
 }
 
 void CNpcScript::maha_luca_4()
@@ -17404,7 +17442,7 @@ void CNpcScript::maha_luca_4()
 
 void CNpcScript::maha_luca_5()
 {
-			
+
 }
 
 void CNpcScript::maha_luca_6()
@@ -17435,7 +17473,7 @@ void CNpcScript::maha_luca_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ÇÏ¸£¸ð´Ñ NPC
+// Title		: 하르모닌 NPC
 // File			: MaHa_vespu.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17461,7 +17499,7 @@ void CNpcScript::maha_vespu_2()
 
 void CNpcScript::maha_vespu_3()
 {
-		Say( 1150 );
+	Say( 1150 );
 }
 
 void CNpcScript::maha_vespu_4()
@@ -17471,7 +17509,7 @@ void CNpcScript::maha_vespu_4()
 
 void CNpcScript::maha_vespu_5()
 {
-			
+
 }
 
 void CNpcScript::maha_vespu_6()
@@ -17503,7 +17541,7 @@ void CNpcScript::maha_vespu_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ÇÏ¸£¸ð´Ñ NPC
+// Title		: 하르모닌 NPC
 // File			: MaDa_esof.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17529,7 +17567,7 @@ void CNpcScript::mada_esof_2()
 
 void CNpcScript::mada_esof_3()
 {
-		Say( 1156 );
+	Say( 1156 );
 }
 
 void CNpcScript::mada_esof_4()
@@ -17539,7 +17577,7 @@ void CNpcScript::mada_esof_4()
 
 void CNpcScript::mada_esof_5()
 {
-			
+
 }
 
 void CNpcScript::mada_esof_6()
@@ -17571,7 +17609,7 @@ void CNpcScript::mada_esof_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ÇÏ¸£¸ð´Ñ NPC
+// Title		: 하르모닌 NPC
 // File			: MaHa_ryan.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17597,7 +17635,7 @@ void CNpcScript::maha_ryan_2()
 
 void CNpcScript::maha_ryan_3()
 {
-		Say( 1161 );
+	Say( 1161 );
 }
 
 void CNpcScript::maha_ryan_4()
@@ -17607,7 +17645,7 @@ void CNpcScript::maha_ryan_4()
 
 void CNpcScript::maha_ryan_5()
 {
-			
+
 }
 
 void CNpcScript::maha_ryan_6()
@@ -17639,7 +17677,7 @@ void CNpcScript::maha_ryan_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ÇÏ¸£¸ð´Ñ NPC
+// Title		: 하르모닌 NPC
 // File			: MaHa_lasa.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17665,7 +17703,7 @@ void CNpcScript::maha_lasa_2()
 
 void CNpcScript::maha_lasa_3()
 {
-		Say( 1166 );
+	Say( 1166 );
 }
 
 void CNpcScript::maha_lasa_4()
@@ -17675,7 +17713,7 @@ void CNpcScript::maha_lasa_4()
 
 void CNpcScript::maha_lasa_5()
 {
-			
+
 }
 
 void CNpcScript::maha_lasa_6()
@@ -17707,7 +17745,7 @@ void CNpcScript::maha_lasa_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: ysiwar
-// Title		: ÇÃ¶ó¸®½º NPC
+// Title		: 플라리스 NPC
 // File			: MaFl_Meron.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17733,7 +17771,7 @@ void CNpcScript::mafl_meron_2()
 
 void CNpcScript::mafl_meron_3()
 {
-		Say( 1171 );
+	Say( 1171 );
 }
 
 void CNpcScript::mafl_meron_4()
@@ -17743,7 +17781,7 @@ void CNpcScript::mafl_meron_4()
 
 void CNpcScript::mafl_meron_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_meron_6()
@@ -17775,7 +17813,7 @@ void CNpcScript::mafl_meron_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: ysiwar
-// Title		: ÇÃ¶ó¸®½º NPC
+// Title		: 플라리스 NPC
 // File			: MaFl_August.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17811,7 +17849,7 @@ void CNpcScript::mafl_august_4()
 
 void CNpcScript::mafl_august_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_august_6()
@@ -17844,7 +17882,7 @@ void CNpcScript::mafl_august_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: ysiwar
-// Title		: ÇÃ¶ó¸®½º NPC
+// Title		: 플라리스 NPC
 // File			: MaFl_picksirose.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17880,7 +17918,7 @@ void CNpcScript::mafl_picksirose_4()
 
 void CNpcScript::mafl_picksirose_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_picksirose_6()
@@ -17913,7 +17951,7 @@ void CNpcScript::mafl_picksirose_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: ysiwar
-// Title		: ÇÃ¶ó¸®½º NPC
+// Title		: 플라리스 NPC
 // File			: MaFl_heroevent01.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -17949,7 +17987,7 @@ void CNpcScript::mafl_heroevent01_4()
 
 void CNpcScript::mafl_heroevent01_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_heroevent01_6()
@@ -17982,8 +18020,8 @@ void CNpcScript::mafl_heroevent01_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_Vanharlen.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18019,7 +18057,7 @@ void CNpcScript::mafl_vanharlen_4()
 
 void CNpcScript::mafl_vanharlen_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_vanharlen_6()
@@ -18051,8 +18089,8 @@ void CNpcScript::mafl_vanharlen_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_ete.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18088,7 +18126,7 @@ void CNpcScript::mafl_ete_4()
 
 void CNpcScript::mafl_ete_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_ete_6()
@@ -18121,8 +18159,8 @@ void CNpcScript::mafl_ete_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_tonge.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18158,7 +18196,7 @@ void CNpcScript::mafl_tonge_4()
 
 void CNpcScript::mafl_tonge_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_tonge_6()
@@ -18191,8 +18229,8 @@ void CNpcScript::mafl_tonge_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_missvtn.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18228,7 +18266,7 @@ void CNpcScript::mafl_missvtn_4()
 
 void CNpcScript::mafl_missvtn_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_missvtn_6()
@@ -18261,8 +18299,8 @@ void CNpcScript::mafl_missvtn_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_teleporter_03nomal.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18298,7 +18336,7 @@ void CNpcScript::mafl_teleporter_03nomal_4()
 
 void CNpcScript::mafl_teleporter_03nomal_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_teleporter_03nomal_6()
@@ -18331,8 +18369,8 @@ void CNpcScript::mafl_teleporter_03nomal_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_guildhousesale.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18368,7 +18406,7 @@ void CNpcScript::mafl_guildhousesale_4()
 
 void CNpcScript::mafl_guildhousesale_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_guildhousesale_6()
@@ -18401,8 +18439,8 @@ void CNpcScript::mafl_guildhousesale_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_Christmas_Romeo.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18438,7 +18476,7 @@ void CNpcScript::mafl_christmas_romeo_4()
 
 void CNpcScript::mafl_christmas_romeo_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_christmas_romeo_6()
@@ -18471,8 +18509,8 @@ void CNpcScript::mafl_christmas_romeo_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_Christmas_Juliet.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18508,7 +18546,7 @@ void CNpcScript::mafl_christmas_juliet_4()
 
 void CNpcScript::mafl_christmas_juliet_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_christmas_juliet_6()
@@ -18540,7 +18578,7 @@ void CNpcScript::mafl_christmas_juliet_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: ysiwar
-// Title		: ´ÙÄÜ ½º½Â NPC
+// Title		: 다콘 스승 NPC
 // File			: MaDa_Icinis.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18576,7 +18614,7 @@ void CNpcScript::mada_icinis_4()
 
 void CNpcScript::mada_icinis_5()
 {
-			
+
 }
 
 void CNpcScript::mada_icinis_6()
@@ -18608,8 +18646,8 @@ void CNpcScript::mada_icinis_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_commoner03.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18645,7 +18683,7 @@ void CNpcScript::mafl_commoner03_4()
 
 void CNpcScript::mafl_commoner03_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_commoner03_6()
@@ -18677,8 +18715,8 @@ void CNpcScript::mafl_commoner03_10()
 
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
-// Author		: ¾È¼º±¹
-// Title		: ÇÃ¶ó¸®½º NPC
+// Author		: 안성국
+// Title		: 플라리스 NPC
 // File			: MaFl_teleporter_03veteran.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18714,7 +18752,7 @@ void CNpcScript::mafl_teleporter_03veteran_4()
 
 void CNpcScript::mafl_teleporter_03veteran_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_teleporter_03veteran_6()
@@ -18743,10 +18781,79 @@ void CNpcScript::mafl_teleporter_03veteran_10()
 	Exit();
 }
 
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: 김민정
+// Title		: 플라리스 NPC
+// File			: MaFl_teleporter_2.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_teleporter_2_0()
+{
+	Speak( NpcId(), 1576 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_teleporter_2_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_teleporter_2_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_teleporter_2_3()
+{
+
+}
+
+void CNpcScript::mafl_teleporter_2_4()
+{
+	Say( 1577 );
+}
+
+void CNpcScript::mafl_teleporter_2_5()
+{
+
+}
+
+void CNpcScript::mafl_teleporter_2_6()
+{
+
+}
+
+void CNpcScript::mafl_teleporter_2_7()
+{
+
+}
+
+void CNpcScript::mafl_teleporter_2_8()
+{
+
+}
+
+void CNpcScript::mafl_teleporter_2_9()
+{
+	Say( 1578 );
+}
+
+void CNpcScript::mafl_teleporter_2_10()
+{
+	Speak( NpcId(), 1579 );
+	Exit();
+}
+
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: ysiwar
-// Title		: ´ÙÄÜ Á¦·Ã Àü¹®°¡ npc
+// Title		: 다콘 제련 전문가 npc
 // File			: MaDa_Laydian.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18782,7 +18889,7 @@ void CNpcScript::mada_laydian_4()
 
 void CNpcScript::mada_laydian_5()
 {
-			
+
 }
 
 void CNpcScript::mada_laydian_6()
@@ -18814,7 +18921,7 @@ void CNpcScript::mada_laydian_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: Å¥ÇÇµå ½Å npc
+// Title		: 큐피드 신 npc
 // File			: MaFl_Cupid.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18850,7 +18957,7 @@ void CNpcScript::mafl_cupid_4()
 
 void CNpcScript::mafl_cupid_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_cupid_6()
@@ -18882,7 +18989,7 @@ void CNpcScript::mafl_cupid_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ½Å³â Æ¯ÆÄ¿ø npc
+// Title		: 신년 특파원 npc
 // File			: MaFl_Correspondent.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18918,7 +19025,7 @@ void CNpcScript::mafl_correspondent_4()
 
 void CNpcScript::mafl_correspondent_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_correspondent_6()
@@ -18949,7 +19056,7 @@ void CNpcScript::mafl_correspondent_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ¿Ï¼Ò´ººñ Áö¿ø ´ã´ç°ü
+// Title		: 완소뉴비 지원 담당관
 // File			: MaFl_Newbie.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -18985,7 +19092,7 @@ void CNpcScript::mafl_newbie_4()
 
 void CNpcScript::mafl_newbie_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_newbie_6()
@@ -19017,7 +19124,7 @@ void CNpcScript::mafl_newbie_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ¹öºíÀÇ »çÁ¦ npc
+// Title		: 버블의 사제 npc
 // File			: MaFl_Bubble.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -19053,7 +19160,7 @@ void CNpcScript::mafl_bubble_4()
 
 void CNpcScript::mafl_bubble_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_bubble_6()
@@ -19085,7 +19192,7 @@ void CNpcScript::mafl_bubble_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: ·¹ÇÁ·¯ÄÜ npc
+// Title		: 레프러콘 npc
 // File			: MaFl_Leprechaun.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -19121,7 +19228,7 @@ void CNpcScript::mafl_leprechaun_4()
 
 void CNpcScript::mafl_leprechaun_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_leprechaun_6()
@@ -19153,7 +19260,7 @@ void CNpcScript::mafl_leprechaun_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: uri110
-// Title		: Å¥ÇÇµå
+// Title		: 큐피드
 // File			: MaFl_Cupid02.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -19189,7 +19296,7 @@ void CNpcScript::mafl_cupid02_4()
 
 void CNpcScript::mafl_cupid02_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_cupid02_6()
@@ -19221,7 +19328,7 @@ void CNpcScript::mafl_cupid02_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: piyopiyo20
-// Title		: Å¥ÇÇµå
+// Title		: 큐피드
 // File			: MaFl_Babario.txt
 // Save Type		: ANSI
 // Country Code		: KR
@@ -19257,7 +19364,7 @@ void CNpcScript::mafl_Babario_4()
 
 void CNpcScript::mafl_Babario_5()
 {
-			
+
 }
 
 void CNpcScript::mafl_Babario_6()
@@ -19289,71 +19396,9124 @@ void CNpcScript::mafl_Babario_10()
 //Script Information----------------------------------------------------------------//
 // Script Modify Version: 1.0( Create )
 // Author		: piyopiyo20
-// Title		: Å¥ÇÇµå
-// File			: MaFl_Door.txt
+// Title		: 큐피드
+// File			: MaFl_Bullsfestival.txt
 // Save Type		: ANSI
 // Country Code		: KR
 //----------------------------------------------------------------------------------//
 
 //Script Begin
-void CNpcScript::mafl_Door_0()
+void CNpcScript::mafl_bullsfestival_0()
 {
 	Speak( NpcId(), 1263 );
 	SetScriptTimer( 15 );
 }
 
-void CNpcScript::mafl_Door_1()
+void CNpcScript::mafl_bullsfestival_1()
 {
 	LaunchQuest();
 }
 
-void CNpcScript::mafl_Door_2()
+void CNpcScript::mafl_bullsfestival_2()
 {
 	AddKey( 9 );
 	AddKey( 10 );
 }
 
-void CNpcScript::mafl_Door_3()
+void CNpcScript::mafl_bullsfestival_3()
 {
 
 }
 
-void CNpcScript::mafl_Door_4()
+void CNpcScript::mafl_bullsfestival_4()
 {
 	Say( 1264 );
 }
 
-void CNpcScript::mafl_Door_5()
-{
-			
-}
-
-void CNpcScript::mafl_Door_6()
+void CNpcScript::mafl_bullsfestival_5()
 {
 
 }
 
-void CNpcScript::mafl_Door_7()
+void CNpcScript::mafl_bullsfestival_6()
 {
 
 }
 
-void CNpcScript::mafl_Door_8()
+void CNpcScript::mafl_bullsfestival_7()
 {
 
 }
 
-void CNpcScript::mafl_Door_9()
+void CNpcScript::mafl_bullsfestival_8()
+{
+
+}
+
+void CNpcScript::mafl_bullsfestival_9()
 {
 	Say( 1265 );
 }
 
-void CNpcScript::mafl_Door_10()
+void CNpcScript::mafl_bullsfestival_10()
 {
 	Speak( NpcId(), 1266 );
 	Exit();
 }
+
 //Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 플라리스 NPC
+// File			: MaFl_Romina.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_romina_0()
+{
+	Speak( NpcId(), 1374 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_romina_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_romina_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_romina_3()
+{
+	Say( 1375 );
+}
+
+void CNpcScript::mafl_romina_4()
+{
+	Say( 1376 );
+}
+
+void CNpcScript::mafl_romina_5()
+{
+
+}
+
+void CNpcScript::mafl_romina_6()
+{
+
+}
+
+void CNpcScript::mafl_romina_7()
+{
+
+}
+
+void CNpcScript::mafl_romina_8()
+{
+
+}
+
+void CNpcScript::mafl_romina_9()
+{
+	Say( 1377 );
+}
+
+void CNpcScript::mafl_romina_10()
+{
+	Speak( NpcId(), 1378 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Karl.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_karl_0()
+{
+	Speak( NpcId(), 1394 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_karl_1()
+{LaunchQuest();
+}
+
+void CNpcScript::maew_karl_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_karl_3()
+{
+	Say( 1396 );	
+}
+
+void CNpcScript::maew_karl_4()
+{
+	Say( 1395 );
+}
+
+void CNpcScript::maew_karl_5()
+{
+
+}
+
+void CNpcScript::maew_karl_6()
+{
+
+}
+
+void CNpcScript::maew_karl_7()
+{
+
+}
+
+void CNpcScript::maew_karl_8()
+{
+	if( GetQuestState( QUEST_HEROSTORMB_TRN6 ) == QS_END && GetPlayerJob() == 25 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 33 );
+	}
+
+	else
+	{
+		Exit();
+	}
+
+}
+
+void CNpcScript::maew_karl_9()
+{
+	Say( 1397 );
+}
+
+void CNpcScript::maew_karl_10()
+{
+	Speak( NpcId(), 1398 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Isilis.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_isilis_0()
+{
+	Speak( NpcId(), 1379 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_isilis_1()
+{LaunchQuest();
+}
+
+void CNpcScript::maew_isilis_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_isilis_3()
+{
+	Say( 1381 );	
+}
+
+void CNpcScript::maew_isilis_4()
+{
+	Say( 1380 );
+}
+
+void CNpcScript::maew_isilis_5()
+{
+
+}
+
+void CNpcScript::maew_isilis_6()
+{
+
+}
+
+void CNpcScript::maew_isilis_7()
+{
+
+}
+
+void CNpcScript::maew_isilis_8()
+{
+	if( GetQuestState( QUEST_HEROFLOR_TRN6 ) == QS_END && GetPlayerJob() == 28 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 36 );
+	}
+
+	else
+	{
+		Exit();
+	}
+}
+
+void CNpcScript::maew_isilis_9()
+{
+	Say( 1382 );
+}
+
+void CNpcScript::maew_isilis_10()
+{
+	Speak( NpcId(), 1383 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Branka.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_branka_0()
+{
+	Speak( NpcId(), 1384 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_branka_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_branka_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_branka_3()
+{
+	Say( 1386 );
+}
+
+void CNpcScript::maew_branka_4()
+{
+	Say( 1385 );
+}
+
+void CNpcScript::maew_branka_5()
+{
+
+}
+
+void CNpcScript::maew_branka_6()
+{
+
+}
+
+void CNpcScript::maew_branka_7()
+{
+
+}
+
+void CNpcScript::maew_branka_8()
+{
+	if( GetQuestState( QUEST_HEROWINDL_TRN6 ) == QS_END && GetPlayerJob() == 26 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 34 );
+	}
+
+	else
+	{
+		Exit();
+	}
+
+}
+
+void CNpcScript::maew_branka_9()
+{
+	Say( 1387 );
+}
+
+void CNpcScript::maew_branka_10()
+{
+	Speak( NpcId(), 1388 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Romain.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_romain_0()
+{
+	Speak( NpcId(), 1399 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_romain_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_romain_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_romain_3()
+{
+	Say( 1401 );
+}
+
+void CNpcScript::maew_romain_4()
+{
+	Say( 1400 );
+}
+
+void CNpcScript::maew_romain_5()
+{
+
+}
+
+void CNpcScript::maew_romain_6()
+{
+
+}
+
+void CNpcScript::maew_romain_7()
+{
+
+}
+
+void CNpcScript::maew_romain_8()
+{
+	if( GetQuestState( QUEST_HEROMENT_TRN5 ) == QS_END && GetPlayerJob() == 30 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 38 );
+	}
+
+	else
+	{
+		Exit();
+	}
+}
+
+void CNpcScript::maew_romain_9()
+{
+	Say( 1402 );
+}
+
+void CNpcScript::maew_romain_10()
+{
+	Speak( NpcId(), 1403 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Cheirang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_cheirang_0()
+{
+	Speak( NpcId(), 1304 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_cheirang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_cheirang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_cheirang_3()
+{
+	Say( 1370 );
+}
+
+void CNpcScript::maew_cheirang_4()
+{
+	Say( 1305 );
+}
+
+void CNpcScript::maew_cheirang_5()
+{
+
+}
+
+void CNpcScript::maew_cheirang_6()
+{
+
+}
+
+void CNpcScript::maew_cheirang_7()
+{
+
+}
+
+void CNpcScript::maew_cheirang_8()
+{
+
+}
+
+void CNpcScript::maew_cheirang_9()
+{
+	Say( 1306 );
+}
+
+void CNpcScript::maew_cheirang_10()
+{
+	Speak( NpcId(), 1307 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Huntrang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_huntrang_0()
+{
+	Speak( NpcId(), 1271 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_huntrang_1()
+{LaunchQuest();
+}
+
+void CNpcScript::maew_huntrang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_huntrang_3()
+{
+	Say( 1373 );	
+}
+
+void CNpcScript::maew_huntrang_4()
+{
+	Say( 1272 );
+}
+
+void CNpcScript::maew_huntrang_5()
+{
+
+}
+
+void CNpcScript::maew_huntrang_6()
+{
+
+}
+
+void CNpcScript::maew_huntrang_7()
+{
+
+}
+
+void CNpcScript::maew_huntrang_8()
+{
+
+}
+
+void CNpcScript::maew_huntrang_9()
+{
+	Say( 1273 );
+}
+
+void CNpcScript::maew_huntrang_10()
+{
+	Speak( NpcId(), 1274 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Miorang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_miorang_0()
+{
+	Speak( NpcId(), 1275 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_miorang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_miorang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_miorang_3()
+{
+	Say( 1277 );
+}
+
+void CNpcScript::maew_miorang_4()
+{
+	Say( 1276 );
+}
+
+void CNpcScript::maew_miorang_5()
+{
+
+}
+
+void CNpcScript::maew_miorang_6()
+{
+
+}
+
+void CNpcScript::maew_miorang_7()
+{
+
+}
+
+void CNpcScript::maew_miorang_8()
+{
+
+}
+
+void CNpcScript::maew_miorang_9()
+{
+	Say( 1278 );
+}
+
+void CNpcScript::maew_miorang_10()
+{
+	Speak( NpcId(), 1279 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Kanrang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_kanrang_0()
+{
+	Speak( NpcId(), 1267 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_kanrang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_kanrang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_kanrang_3()
+{
+	Say( 1765 );
+}
+
+void CNpcScript::maew_kanrang_4()
+{
+	Say( 1268 );
+}
+
+void CNpcScript::maew_kanrang_5()
+{
+
+}
+
+void CNpcScript::maew_kanrang_6()
+{
+
+}
+
+void CNpcScript::maew_kanrang_7()
+{
+
+}
+
+void CNpcScript::maew_kanrang_8()
+{
+
+}
+
+void CNpcScript::maew_kanrang_9()
+{
+	Say( 1279 );
+}
+
+void CNpcScript::maew_kanrang_10()
+{
+	Speak( NpcId(), 1270 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Karang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_karang_0()
+{
+	Speak( NpcId(), 1280 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_karang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_karang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_karang_3()
+{
+
+}
+
+void CNpcScript::maew_karang_4()
+{
+	Say( 1281 );
+}
+
+void CNpcScript::maew_karang_5()
+{
+
+}
+
+void CNpcScript::maew_karang_6()
+{
+
+}
+
+void CNpcScript::maew_karang_7()
+{
+
+}
+
+void CNpcScript::maew_karang_8()
+{
+
+}
+
+void CNpcScript::maew_karang_9()
+{
+	Say( 1282 );
+}
+
+void CNpcScript::maew_karang_10()
+{
+	Speak( NpcId(), 1283 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Kurang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_kurang_0()
+{
+	Speak( NpcId(), 1284 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_kurang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_kurang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_kurang_3()
+{
+
+}
+
+void CNpcScript::maew_kurang_4()
+{
+	Say( 1285 );	
+}
+
+void CNpcScript::maew_kurang_5()
+{
+
+}
+
+void CNpcScript::maew_kurang_6()
+{
+
+}
+
+void CNpcScript::maew_kurang_7()
+{
+
+}
+
+void CNpcScript::maew_kurang_8()
+{
+
+}
+
+void CNpcScript::maew_kurang_9()
+{
+	Say( 1286 );
+}
+
+void CNpcScript::maew_kurang_10()
+{
+	Speak( NpcId(), 1287 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Mawrang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_mawrang_0()
+{
+	Speak( NpcId(), 1288 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_mawrang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_mawrang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_mawrang_3()
+{
+
+}
+
+void CNpcScript::maew_mawrang_4()
+{
+	Say( 1289 );	
+}
+
+void CNpcScript::maew_mawrang_5()
+{
+
+}
+
+void CNpcScript::maew_mawrang_6()
+{
+
+}
+
+void CNpcScript::maew_mawrang_7()
+{
+
+}
+
+void CNpcScript::maew_mawrang_8()
+{
+
+}
+
+void CNpcScript::maew_mawrang_9()
+{
+	Say( 1290 );
+}
+
+void CNpcScript::maew_mawrang_10()
+{
+	Speak( NpcId(), 1291 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Maurang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_maurang_0()
+{
+	Speak( NpcId(), 1292 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_maurang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_maurang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_maurang_3()
+{
+
+}
+
+void CNpcScript::maew_maurang_4()
+{
+	Say( 1293 );	
+}
+
+void CNpcScript::maew_maurang_5()
+{
+
+}
+
+void CNpcScript::maew_maurang_6()
+{
+
+}
+
+void CNpcScript::maew_maurang_7()
+{
+
+}
+
+void CNpcScript::maew_maurang_8()
+{
+
+}
+
+void CNpcScript::maew_maurang_9()
+{
+	Say( 1294 );
+}
+
+void CNpcScript::maew_maurang_10()
+{
+	Speak( NpcId(), 1295  );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Arang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_arang_0()
+{
+	Speak( NpcId(), 1296 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_arang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_arang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_arang_3()
+{
+
+}
+
+void CNpcScript::maew_arang_4()
+{
+	Say( 1297 );	
+}
+
+void CNpcScript::maew_arang_5()
+{
+
+}
+
+void CNpcScript::maew_arang_6()
+{
+
+}
+
+void CNpcScript::maew_arang_7()
+{
+
+}
+
+void CNpcScript::maew_arang_8()
+{
+
+}
+
+void CNpcScript::maew_arang_9()
+{
+	Say( 1298 );
+}
+
+void CNpcScript::maew_arang_10()
+{
+	Speak( NpcId(), 1299 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Bato.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_bato_0()
+{
+	Speak( NpcId(), 1349 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_bato_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_bato_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_bato_3()
+{
+	Say( 1351 );
+}
+
+void CNpcScript::maew_bato_4()
+{
+	Say( 1350 );
+}
+
+void CNpcScript::maew_bato_5()
+{
+
+}
+
+void CNpcScript::maew_bato_6()
+{
+
+}
+
+void CNpcScript::maew_bato_7()
+{
+
+}
+
+void CNpcScript::maew_bato_8()
+{
+	if( GetQuestState( QUEST_HEROFORCEM_TRN6 ) == QS_END && GetPlayerJob() == 29 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 37 );
+	}
+
+	else
+	{
+		Exit();
+	}
+}
+
+void CNpcScript::maew_bato_9()
+{
+	Say( 1352 );
+}
+
+void CNpcScript::maew_bato_10()
+{
+	Speak( NpcId(), 1353 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Meialune.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_meialune_0()
+{
+	Speak( NpcId(), 1344 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_meialune_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_meialune_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_meialune_3()
+{
+	Say( 1346 );
+}
+
+void CNpcScript::maew_meialune_4()
+{
+	Say( 1345 );
+}
+
+void CNpcScript::maew_meialune_5()
+{
+
+}
+
+void CNpcScript::maew_meialune_6()
+{
+
+}
+
+void CNpcScript::maew_meialune_7()
+{
+
+}
+
+void CNpcScript::maew_meialune_8()
+{
+	if( GetQuestState( QUEST_HEROCRACKS_TRN6 ) == QS_END && GetPlayerJob() == 27 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 35 );
+	}
+
+	else
+	{
+		Exit();
+	}
+
+}
+
+void CNpcScript::maew_meialune_9()
+{
+	Say( 1347 );
+}
+
+void CNpcScript::maew_meialune_10()
+{
+	Speak( NpcId(), 1348 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Hawrang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_hawrang_0()
+{
+	Speak( NpcId(), 1354 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_hawrang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_hawrang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_hawrang_3()
+{
+	Say( 1356 );
+}
+
+void CNpcScript::maew_hawrang_4()
+{
+	Say( 1355 );
+}
+
+void CNpcScript::maew_hawrang_5()
+{
+
+}
+
+void CNpcScript::maew_hawrang_6()
+{
+
+}
+
+void CNpcScript::maew_hawrang_7()
+{
+
+}
+
+void CNpcScript::maew_hawrang_8()
+{
+	if( GetQuestState( QUEST_HEROELEL_TRN5 ) == QS_END && GetPlayerJob() == 31 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 39 );
+	}
+
+	else
+	{
+		Exit();
+	}
+}
+
+void CNpcScript::maew_hawrang_9()
+{
+	Say( 1357 );
+}
+
+void CNpcScript::maew_hawrang_10()
+{
+	Speak( NpcId(), 1358 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Heirang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_heirang_0()
+{
+	Speak( NpcId(), 1300 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_heirang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_heirang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_heirang_3()
+{
+
+}
+
+void CNpcScript::maew_heirang_4()
+{
+	Say( 1301 );	
+}
+
+void CNpcScript::maew_heirang_5()
+{
+
+}
+
+void CNpcScript::maew_heirang_6()
+{
+
+}
+
+void CNpcScript::maew_heirang_7()
+{
+
+}
+
+void CNpcScript::maew_heirang_8()
+{
+
+}
+
+void CNpcScript::maew_heirang_9()
+{
+	Say( 1302 );
+}
+
+void CNpcScript::maew_heirang_10()
+{
+	Speak( NpcId(), 1303 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Ralbadan.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_ralbadan_0()
+{
+	Speak( NpcId(), 1308 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_ralbadan_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_ralbadan_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_ralbadan_3()
+{
+
+}
+
+void CNpcScript::maew_ralbadan_4()
+{
+	Say( 1309 );	
+}
+
+void CNpcScript::maew_ralbadan_5()
+{
+
+}
+
+void CNpcScript::maew_ralbadan_6()
+{
+
+}
+
+void CNpcScript::maew_ralbadan_7()
+{
+
+}
+
+void CNpcScript::maew_ralbadan_8()
+{
+
+}
+
+void CNpcScript::maew_ralbadan_9()
+{
+	Say( 1310 );
+}
+
+void CNpcScript::maew_ralbadan_10()
+{
+	Speak( NpcId(), 1311 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Rutam.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_rutam_0()
+{
+	Speak( NpcId(), 1312 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_rutam_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_rutam_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_rutam_3()
+{
+
+}
+
+void CNpcScript::maew_rutam_4()
+{
+	Say( 1313 );	
+}
+
+void CNpcScript::maew_rutam_5()
+{
+
+}
+
+void CNpcScript::maew_rutam_6()
+{
+
+}
+
+void CNpcScript::maew_rutam_7()
+{
+
+}
+
+void CNpcScript::maew_rutam_8()
+{
+
+}
+
+void CNpcScript::maew_rutam_9()
+{
+	Say( 1314 );
+}
+
+void CNpcScript::maew_rutam_10()
+{
+	Speak( NpcId(), 1315 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Raya.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_raya_0()
+{
+	Speak( NpcId(), 1316 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_raya_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_raya_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_raya_3()
+{
+
+}
+
+void CNpcScript::maew_raya_4()
+{
+	Say( 1317 );
+}
+
+void CNpcScript::maew_raya_5()
+{
+
+}
+
+void CNpcScript::maew_raya_6()
+{
+
+}
+
+void CNpcScript::maew_raya_7()
+{
+
+}
+
+void CNpcScript::maew_raya_8()
+{
+
+}
+
+void CNpcScript::maew_raya_9()
+{
+	Say( 1318 );
+}
+
+void CNpcScript::maew_raya_10()
+{
+	Speak( NpcId(), 1319 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Harlie.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_harlie_0()
+{
+	Speak( NpcId(), 1320 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_harlie_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_harlie_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_harlie_3()
+{
+
+}
+
+void CNpcScript::maew_harlie_4()
+{
+	Say( 1321 );	
+}
+
+void CNpcScript::maew_harlie_5()
+{
+
+}
+
+void CNpcScript::maew_harlie_6()
+{
+
+}
+
+void CNpcScript::maew_harlie_7()
+{
+
+}
+
+void CNpcScript::maew_harlie_8()
+{
+
+}
+
+void CNpcScript::maew_harlie_9()
+{
+	Say( 1322 );
+}
+
+void CNpcScript::maew_harlie_10()
+{
+	Speak( NpcId(), 1323 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Rodella.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_rodella_0()
+{
+	Speak( NpcId(), 1324 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_rodella_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_rodella_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_rodella_3()
+{
+
+}
+
+void CNpcScript::maew_rodella_4()
+{
+	Say( 1325 );	
+}
+
+void CNpcScript::maew_rodella_5()
+{
+
+}
+
+void CNpcScript::maew_rodella_6()
+{
+
+}
+
+void CNpcScript::maew_rodella_7()
+{
+
+}
+
+void CNpcScript::maew_rodella_8()
+{
+
+}
+
+void CNpcScript::maew_rodella_9()
+{
+	Say( 1326 );
+}
+
+void CNpcScript::maew_rodella_10()
+{
+	Speak( NpcId(), 1327 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Gelga.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_gelga_0()
+{
+	Speak( NpcId(), 1328 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_gelga_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_gelga_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_gelga_3()
+{
+
+}
+
+void CNpcScript::maew_gelga_4()
+{
+	Say( 1329 );	
+}
+
+void CNpcScript::maew_gelga_5()
+{
+
+}
+
+void CNpcScript::maew_gelga_6()
+{
+
+}
+
+void CNpcScript::maew_gelga_7()
+{
+
+}
+
+void CNpcScript::maew_gelga_8()
+{
+
+}
+
+void CNpcScript::maew_gelga_9()
+{
+	Say( 1330 );
+}
+
+void CNpcScript::maew_gelga_10()
+{
+	Speak( NpcId(), 1331 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Huri.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_huri_0()
+{
+	Speak( NpcId(), 1332 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_huri_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_huri_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_huri_3()
+{
+
+}
+
+void CNpcScript::maew_huri_4()
+{
+	Say( 1333 );	
+}
+
+void CNpcScript::maew_huri_5()
+{
+
+}
+
+void CNpcScript::maew_huri_6()
+{
+
+}
+
+void CNpcScript::maew_huri_7()
+{
+
+}
+
+void CNpcScript::maew_huri_8()
+{
+
+}
+
+void CNpcScript::maew_huri_9()
+{
+	Say( 1334 );
+}
+
+void CNpcScript::maew_huri_10()
+{
+	Speak( NpcId(), 1335 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Epie.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_epie_0()
+{
+	Speak( NpcId(), 1336 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_epie_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_epie_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_epie_3()
+{
+
+}
+
+void CNpcScript::maew_epie_4()
+{
+	Say( 1337 );	
+}
+
+void CNpcScript::maew_epie_5()
+{
+
+}
+
+void CNpcScript::maew_epie_6()
+{
+
+}
+
+void CNpcScript::maew_epie_7()
+{
+
+}
+
+void CNpcScript::maew_epie_8()
+{
+
+}
+
+void CNpcScript::maew_epie_9()
+{
+	Say( 1338 );
+}
+
+void CNpcScript::maew_epie_10()
+{
+	Speak( NpcId(), 1339 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Ruoboru.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_ruoboru_0()
+{
+	Speak( NpcId(), 1340 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_ruoboru_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_ruoboru_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_ruoboru_3()
+{
+
+}
+
+void CNpcScript::maew_ruoboru_4()
+{
+	Say( 1341 );	
+}
+
+void CNpcScript::maew_ruoboru_5()
+{
+
+}
+
+void CNpcScript::maew_ruoboru_6()
+{
+
+}
+
+void CNpcScript::maew_ruoboru_7()
+{
+
+}
+
+void CNpcScript::maew_ruoboru_8()
+{
+
+}
+
+void CNpcScript::maew_ruoboru_9()
+{
+	Say( 1342 );
+}
+
+void CNpcScript::maew_ruoboru_10()
+{
+	Speak( NpcId(), 1343 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Ruidan.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_ruidan_0()
+{
+	Speak( NpcId(), 1359 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_ruidan_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_ruidan_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_ruidan_3()
+{
+
+}
+
+void CNpcScript::maew_ruidan_4()
+{
+	Say( 1360 );	
+}
+
+void CNpcScript::maew_ruidan_5()
+{
+
+}
+
+void CNpcScript::maew_ruidan_6()
+{
+
+}
+
+void CNpcScript::maew_ruidan_7()
+{
+
+}
+
+void CNpcScript::maew_ruidan_8()
+{
+
+}
+
+void CNpcScript::maew_ruidan_9()
+{
+	Say( 1361 );
+}
+
+void CNpcScript::maew_ruidan_10()
+{
+	Speak( NpcId(), 1362 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Miriun.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_miriun_0()
+{
+	Speak( NpcId(), 1363 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_miriun_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_miriun_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_miriun_3()
+{
+	Say( 1365 );
+}
+
+void CNpcScript::maew_miriun_4()
+{
+
+	Say( 1364 );
+}
+
+void CNpcScript::maew_miriun_5()
+{
+
+}
+
+void CNpcScript::maew_miriun_6()
+{
+
+}
+
+void CNpcScript::maew_miriun_7()
+{
+
+}
+
+void CNpcScript::maew_miriun_8()
+{
+
+}
+
+void CNpcScript::maew_miriun_9()
+{
+	Say( 1366 );
+}
+
+void CNpcScript::maew_miriun_10()
+{
+	Speak( NpcId(), 1367 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Relgantus.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_relgantus_0()
+{
+	Speak( NpcId(), 1368 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_relgantus_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_relgantus_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_relgantus_3()
+{
+	Say( 1370 );
+}
+
+void CNpcScript::maew_relgantus_4()
+{
+	Say( 1369 );
+}
+
+void CNpcScript::maew_relgantus_5()
+{
+
+}
+
+void CNpcScript::maew_relgantus_6()
+{
+
+}
+
+void CNpcScript::maew_relgantus_7()
+{
+
+}
+
+void CNpcScript::maew_relgantus_8()
+{
+
+}
+
+void CNpcScript::maew_relgantus_9()
+{
+	Say( 1371 );
+}
+
+void CNpcScript::maew_relgantus_10()
+{
+	Speak( NpcId(), 1372 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Emblum.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_emblum_0()
+{
+	Speak( NpcId(), 1389 );
+	SetScriptTimer( 15 );
+
+}
+
+void CNpcScript::maew_emblum_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_emblum_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_emblum_3()
+{
+	Say( 1391 );
+}
+
+void CNpcScript::maew_emblum_4()
+{
+
+	Say( 1390 );
+
+}
+
+void CNpcScript::maew_emblum_5()
+{
+
+}
+
+void CNpcScript::maew_emblum_6()
+{
+
+}
+
+void CNpcScript::maew_emblum_7()
+{
+
+}
+
+void CNpcScript::maew_emblum_8()
+{
+	if( GetQuestState( QUEST_HEROLORDK_TRN6 ) == QS_END && GetPlayerJob() == 24 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 32 );
+	}
+
+	else
+	{
+		Exit();
+	}
+
+}
+
+void CNpcScript::maew_emblum_9()
+{
+	Say( 1392 );
+}
+
+void CNpcScript::maew_emblum_10()
+{
+	Speak( NpcId(), 1393 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 엘리운 NPC
+// File			: MaEw_Mewrang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_mewrang_0()
+{
+
+	Speak( NpcId(), 1404 );
+	SetScriptTimer( 15 );
+
+}
+
+void CNpcScript::maew_mewrang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_mewrang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_mewrang_3()
+{
+	Say( 1406 );
+}
+
+void CNpcScript::maew_mewrang_4()
+{
+	Say( 1405 );
+}
+
+void CNpcScript::maew_mewrang_5()
+{
+
+}
+
+void CNpcScript::maew_mewrang_6()
+{
+
+}
+
+void CNpcScript::maew_mewrang_7()
+{
+
+}
+
+void CNpcScript::maew_mewrang_8()
+{
+
+}
+
+void CNpcScript::maew_mewrang_9()
+{
+	Say( 1407 );
+}
+
+void CNpcScript::maew_mewrang_10()
+{
+	Speak( NpcId(), 1408 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 프로페시 이벤트 다크
+// File			: MaDa_Dark.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mada_dark_0()
+{
+	Speak( NpcId(), 1410 );
+	SetScriptTimer( 15 );
+
+}
+
+void CNpcScript::mada_dark_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mada_dark_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mada_dark_3()
+{
+
+}
+
+void CNpcScript::mada_dark_4()
+{
+
+	Say( 1411 );
+
+}
+
+void CNpcScript::mada_dark_5()
+{
+
+}
+
+void CNpcScript::mada_dark_6()
+{
+
+}
+
+void CNpcScript::mada_dark_7()
+{
+
+}
+
+void CNpcScript::mada_dark_8()
+{
+	if( GetQuestState( QUEST_HEROLORDK_TRN6 ) == QS_END && GetPlayerJob() == 24 && GetPlayerLvl() == 130 )
+	{
+		ChangeJob( 32 );
+	}
+
+	else
+	{
+		Exit();
+	}
+
+}
+
+void CNpcScript::mada_dark_9()
+{
+	Say( 1412 );
+}
+
+void CNpcScript::mada_dark_10()
+{
+	Speak( NpcId(), 1413 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 프로페시 이벤트 라이트
+// File			: MaSa_Light.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masa_light_0()
+{
+	Speak( NpcId(), 1414 );
+	SetScriptTimer( 15 );
+
+}
+
+void CNpcScript::masa_light_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masa_light_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masa_light_3()
+{
+
+}
+
+void CNpcScript::masa_light_4()
+{
+
+	Say( 1415 );
+
+}
+
+void CNpcScript::masa_light_5()
+{
+
+}
+
+void CNpcScript::masa_light_6()
+{
+
+}
+
+void CNpcScript::masa_light_7()
+{
+
+}
+
+void CNpcScript::masa_light_8()
+{
+
+}
+
+void CNpcScript::masa_light_9()
+{
+	Say( 1416 );
+}
+
+void CNpcScript::masa_light_10()
+{
+	Speak( NpcId(), 1417 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 할로윈 이벤트 로메로
+// File			: MaFl_Romero.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_romero_0()
+{
+	Speak( NpcId(), 1418 );
+	SetScriptTimer( 15 );
+
+}
+
+void CNpcScript::mafl_romero_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_romero_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_romero_3()
+{
+	Say( 1442 );
+}
+
+void CNpcScript::mafl_romero_4()
+{
+
+	Say( 1419 );
+
+}
+
+void CNpcScript::mafl_romero_5()
+{
+
+}
+
+void CNpcScript::mafl_romero_6()
+{
+
+}
+
+void CNpcScript::mafl_romero_7()
+{
+
+}
+
+void CNpcScript::mafl_romero_8()
+{
+
+
+}
+
+void CNpcScript::mafl_romero_9()
+{
+	Say( 1420 );
+}
+
+void CNpcScript::mafl_romero_10()
+{
+	Speak( NpcId(), 1421 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 할로윈 이벤트 프랑케슈타인
+// File			: MaFl_Frankenstein.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_frankenstein_0()
+{
+	Speak( NpcId(), 1422 );
+	SetScriptTimer( 15 );
+
+}
+
+void CNpcScript::mafl_frankenstein_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_frankenstein_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_frankenstein_3()
+{
+
+}
+
+void CNpcScript::mafl_frankenstein_4()
+{
+
+	Say( 1423 );
+
+}
+
+void CNpcScript::mafl_frankenstein_5()
+{
+
+}
+
+void CNpcScript::mafl_frankenstein_6()
+{
+
+}
+
+void CNpcScript::mafl_frankenstein_7()
+{
+
+}
+
+void CNpcScript::mafl_frankenstein_8()
+{
+
+
+}
+
+void CNpcScript::mafl_frankenstein_9()
+{
+	Say( 1424 );
+}
+
+void CNpcScript::mafl_frankenstein_10()
+{
+	Speak( NpcId(), 1425 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 세인트모닝 NPC
+// File			: MaSa_Roa.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masa_roa_0()
+{
+	Speak( NpcId(), 1207 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masa_roa_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masa_roa_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masa_roa_3()
+{
+
+}
+
+void CNpcScript::masa_roa_4()
+{
+	Say( 1208 );
+}
+
+void CNpcScript::masa_roa_5()
+{
+
+}
+
+void CNpcScript::masa_roa_6()
+{
+
+}
+
+void CNpcScript::masa_roa_7()
+{
+
+}
+
+void CNpcScript::masa_roa_8()
+{
+
+}
+
+void CNpcScript::masa_roa_9()
+{
+	Say( 1209 );
+}
+
+void CNpcScript::masa_roa_10()
+{
+	Speak( NpcId(), 1210 );
+	Exit();
+}
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 엘리움 NPC
+// File			: MaEw_Troy.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_troy_0()
+{
+	Speak( NpcId(), 1207 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_troy_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_troy_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_troy_3()
+{
+
+}
+
+void CNpcScript::maew_troy_4()
+{
+	Say( 1208 );
+}
+
+void CNpcScript::maew_troy_5()
+{
+
+}
+
+void CNpcScript::maew_troy_6()
+{
+
+}
+
+void CNpcScript::maew_troy_7()
+{
+
+}
+
+void CNpcScript::maew_troy_8()
+{
+
+}
+
+void CNpcScript::maew_troy_9()
+{
+	Say( 1209 );
+}
+
+void CNpcScript::maew_troy_10()
+{
+	Speak( NpcId(), 1210 );
+	Exit();
+}
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 할로윈 NPC
+// File			: MaFl_Brooks.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_brooks_0()
+{
+	Speak( NpcId(), 1426 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_brooks_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_brooks_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_brooks_3()
+{
+
+}
+
+void CNpcScript::mafl_brooks_4()
+{
+	Say( 1427 );
+}
+
+void CNpcScript::mafl_brooks_5()
+{
+
+}
+
+void CNpcScript::mafl_brooks_6()
+{
+
+}
+
+void CNpcScript::mafl_brooks_7()
+{
+
+}
+
+void CNpcScript::mafl_brooks_8()
+{
+
+}
+
+void CNpcScript::mafl_brooks_9()
+{
+	Say( 1428 );
+}
+
+void CNpcScript::mafl_brooks_10()
+{
+	Speak( NpcId(), 1429 );
+	Exit();
+}
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 할로윈 NPC
+// File			: mafl_demian.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_demian_0()
+{
+	Speak( NpcId(), 1430 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_demian_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_demian_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_demian_3()
+{
+
+}
+
+void CNpcScript::mafl_demian_4()
+{
+	Say( 1431 );
+}
+
+void CNpcScript::mafl_demian_5()
+{
+
+}
+
+void CNpcScript::mafl_demian_6()
+{
+
+}
+
+void CNpcScript::mafl_demian_7()
+{
+
+}
+
+void CNpcScript::mafl_demian_8()
+{
+
+}
+
+void CNpcScript::mafl_demian_9()
+{
+	Say( 1432 );
+}
+
+void CNpcScript::mafl_demian_10()
+{
+	Speak( NpcId(), 1433 );
+	Exit();
+}
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 자신에 대한 도전 이벤트 NPC
+// File			: MaFl_Atma.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_atma_0()
+{
+	Speak( NpcId(), 1434 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_atma_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_atma_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_atma_3()
+{
+
+}
+
+void CNpcScript::mafl_atma_4()
+{
+	Say( 1435 );
+}
+
+void CNpcScript::mafl_atma_5()
+{
+
+}
+
+void CNpcScript::mafl_atma_6()
+{
+
+}
+
+void CNpcScript::mafl_atma_7()
+{
+
+}
+
+void CNpcScript::mafl_atma_8()
+{
+
+}
+
+void CNpcScript::mafl_atma_9()
+{
+	Say( 1436 );
+}
+
+void CNpcScript::mafl_atma_10()
+{
+	Speak( NpcId(), 1437 );
+	Exit();
+}
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ych1028
+// Title		: 일본 교환 NPC
+// File			: MaFl_Chance.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_chance_0()
+{
+	Speak( NpcId(), 1438 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_chance_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_chance_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_chance_3()
+{
+
+}
+
+void CNpcScript::mafl_chance_4()
+{
+	Say( 1439 );
+}
+
+void CNpcScript::mafl_chance_5()
+{
+
+}
+
+void CNpcScript::mafl_chance_6()
+{
+
+}
+
+void CNpcScript::mafl_chance_7()
+{
+
+}
+
+void CNpcScript::mafl_chance_8()
+{
+
+}
+
+void CNpcScript::mafl_chance_9()
+{
+	Say( 1440 );
+}
+
+void CNpcScript::mafl_chance_10()
+{
+	Speak( NpcId(), 1441 );
+	Exit();
+}
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 유럽 홀덤 이벤트 NPC
+// File			: masa_jacklin_pott.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masa_jacklin_pott_0()
+{
+	Speak( NpcId(), 1443 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masa_jacklin_pott_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masa_jacklin_pott_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masa_jacklin_pott_3()
+{
+
+}
+
+void CNpcScript::masa_jacklin_pott_4()
+{
+	Say( 1444 );
+}
+
+void CNpcScript::masa_jacklin_pott_5()
+{
+
+}
+
+void CNpcScript::masa_jacklin_pott_6()
+{
+
+}
+
+void CNpcScript::masa_jacklin_pott_7()
+{
+
+}
+
+void CNpcScript::masa_jacklin_pott_8()
+{
+
+}
+
+void CNpcScript::masa_jacklin_pott_9()
+{
+	Say( 1445 );
+}
+
+void CNpcScript::masa_jacklin_pott_10()
+{
+	Speak( NpcId(), 1446 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 17차 시나리오 NPC 루카스
+// File			: MaEw_Rukas.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_rukas_0()
+{
+	Speak( NpcId(), 1447 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_rukas_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_rukas_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_rukas_3()
+{
+	Say( 1448 );
+}
+
+void CNpcScript::maew_rukas_4()
+{
+	Say( 1449 );
+}
+
+void CNpcScript::maew_rukas_5()
+{
+
+}
+
+void CNpcScript::maew_rukas_6()
+{
+
+}
+
+void CNpcScript::maew_rukas_7()
+{
+
+}
+
+void CNpcScript::maew_rukas_8()
+{
+
+}
+
+void CNpcScript::maew_rukas_9()
+{
+	Say( 1450 );
+}
+
+void CNpcScript::maew_rukas_10()
+{
+	Speak( NpcId(), 1451 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 17차 시나리오 NPC 라운다스
+// File			: MaEw_Raundas.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_raundas_0()
+{
+	Speak( NpcId(), 1452 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_raundas_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_raundas_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_raundas_3()
+{
+	Say( 1453 );
+}
+
+void CNpcScript::maew_raundas_4()
+{
+	Say( 1454 );
+}
+
+void CNpcScript::maew_raundas_5()
+{
+
+}
+
+void CNpcScript::maew_raundas_6()
+{
+
+}
+
+void CNpcScript::maew_raundas_7()
+{
+
+}
+
+void CNpcScript::maew_raundas_8()
+{
+
+}
+
+void CNpcScript::maew_raundas_9()
+{
+	Say( 1455 );
+}
+
+void CNpcScript::maew_raundas_10()
+{
+	Speak( NpcId(), 1456 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 17차 시나리오 NPC 피나노코
+// File			: MaFl_KAWIBAWIBO03.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_pinanoco_0()
+{
+	Speak( NpcId(), 1457 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_pinanoco_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_pinanoco_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_pinanoco_3()
+{
+	Say( 1458 );
+}
+
+void CNpcScript::maew_pinanoco_4()
+{
+	Say( 1459 );
+}
+
+void CNpcScript::maew_pinanoco_5()
+{
+
+}
+
+void CNpcScript::maew_pinanoco_6()
+{
+
+}
+
+void CNpcScript::maew_pinanoco_7()
+{
+
+}
+
+void CNpcScript::maew_pinanoco_8()
+{
+
+}
+
+void CNpcScript::maew_pinanoco_9()
+{
+	Say( 1460 );
+}
+
+void CNpcScript::maew_pinanoco_10()
+{
+	Speak( NpcId(), 1461 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 국내 가위바위보NPC
+// File			: masa_christmasrubi.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_kawibawibo04_0()
+{
+	Speak( NpcId(), 1462 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_kawibawibo04_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_kawibawibo04_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_kawibawibo04_3()
+{
+
+}
+
+void CNpcScript::mafl_kawibawibo04_4()
+{
+	Say( 1463 );
+}
+
+void CNpcScript::mafl_kawibawibo04_5()
+{
+
+}
+
+void CNpcScript::mafl_kawibawibo04_6()
+{
+
+}
+
+void CNpcScript::mafl_kawibawibo04_7()
+{
+
+}
+
+void CNpcScript::mafl_kawibawibo04_8()
+{
+
+}
+
+void CNpcScript::mafl_kawibawibo04_9()
+{
+	Say( 1464 );
+}
+
+void CNpcScript::mafl_kawibawibo04_10()
+{
+	Speak( NpcId(), 1465 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 17차 시나리오 NPC 아이델루나
+// File			: MaEw_Idelruna.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_idelruna_0()
+{
+	Speak( NpcId(), 1466 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_idelruna_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_idelruna_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_idelruna_3()
+{
+	Say( 1467 );
+}
+
+void CNpcScript::maew_idelruna_4()
+{
+	Say( 1468 );
+}
+
+void CNpcScript::maew_idelruna_5()
+{
+
+}
+
+void CNpcScript::maew_idelruna_6()
+{
+
+}
+
+void CNpcScript::maew_idelruna_7()
+{
+
+}
+
+void CNpcScript::maew_idelruna_8()
+{
+
+}
+
+void CNpcScript::maew_idelruna_9()
+{
+	Say( 1469 );
+}
+
+void CNpcScript::maew_idelruna_10()
+{
+	Speak( NpcId(), 1470 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 17차 시나리오 NPC 지자카
+// File			: MaEw_Gigaka.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_gigaka_0()
+{
+	Speak( NpcId(), 1471 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::maew_gigaka_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_gigaka_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::maew_gigaka_3()
+{
+	Say( 1472 );
+}
+
+void CNpcScript::maew_gigaka_4()
+{
+	Say( 1473 );
+}
+
+void CNpcScript::maew_gigaka_5()
+{
+
+}
+
+void CNpcScript::maew_gigaka_6()
+{
+
+}
+
+void CNpcScript::maew_gigaka_7()
+{
+
+}
+
+void CNpcScript::maew_gigaka_8()
+{
+
+}
+
+void CNpcScript::maew_gigaka_9()
+{
+	Say( 1474 );
+}
+
+void CNpcScript::maew_gigaka_10()
+{
+	Speak( NpcId(), 1475 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 미국 크리스마스 이벤트 NPC
+// File			: masa_christmasrubi.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masa_christmasrubi_0()
+{
+	Speak( NpcId(), 1476 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masa_christmasrubi_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masa_christmasrubi_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masa_christmasrubi_3()
+{
+	Say( 1477 );
+}
+
+void CNpcScript::masa_christmasrubi_4()
+{
+	Say( 1478 );
+}
+
+void CNpcScript::masa_christmasrubi_5()
+{
+
+}
+
+void CNpcScript::masa_christmasrubi_6()
+{
+
+}
+
+void CNpcScript::masa_christmasrubi_7()
+{
+
+}
+
+void CNpcScript::masa_christmasrubi_8()
+{
+
+}
+
+void CNpcScript::masa_christmasrubi_9()
+{
+	Say( 1479 );
+}
+
+void CNpcScript::masa_christmasrubi_10()
+{
+	Speak( NpcId(), 1480 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 미국 크리스마스 이벤트 NPC
+// File			: MaDa_christmassnow.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mada_christmassnow_0()
+{
+	Speak( NpcId(), 1481 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mada_christmassnow_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mada_christmassnow_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mada_christmassnow_3()
+{
+	Say( 1482 );
+}
+
+void CNpcScript::mada_christmassnow_4()
+{
+	Say( 1483 );
+}
+
+void CNpcScript::mada_christmassnow_5()
+{
+
+}
+
+void CNpcScript::mada_christmassnow_6()
+{
+
+}
+
+void CNpcScript::mada_christmassnow_7()
+{
+
+}
+
+void CNpcScript::mada_christmassnow_8()
+{
+
+}
+
+void CNpcScript::mada_christmassnow_9()
+{
+	Say( 1484 );
+}
+
+void CNpcScript::mada_christmassnow_10()
+{
+	Speak( NpcId(), 1485 );
+	Exit();
+}
+//Script End
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Zandark.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_zandark_0()
+{
+	Speak( NpcId(), 1486 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_zandark_1()
+{
+	if( GetQuestState( QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0 || GetQuestState( QUEST_VOCACR_BFTRN ) >= 0)
+	{
+		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER2 ) >= 0 )
+		{
+			LaunchQuest();
+		}
+		else
+		{
+			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
+		AddKey( 9 );
+		AddKey( 10 );
+	}
+
+	else
+	{ 
+		LaunchQuest();
+	}
+}
+
+void CNpcScript::mafl_zandark_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_zandark_3()
+{
+	Say( 1487 );
+}
+
+void CNpcScript::mafl_zandark_4()
+{
+	Say( 1488 );
+}
+
+void CNpcScript::mafl_zandark_5()
+{
+
+}
+
+void CNpcScript::mafl_zandark_6()
+{
+
+}
+
+void CNpcScript::mafl_zandark_7()
+{
+
+}
+
+void CNpcScript::mafl_zandark_8()
+{
+
+	if( GetQuestState(QUEST_VOCMER_TRN2) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 )
+	{
+		ChangeJob(1);
+		InitStat();
+	}
+
+	else
+	{
+		Exit();
+	}
+}
+
+void CNpcScript::mafl_zandark_9()
+{
+	Say( 1489 );
+}
+
+void CNpcScript::mafl_zandark_10()
+{
+	Speak( NpcId(), 1490 );
+	Exit();
+}
+//Script End
+
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Asis.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_asis_0()
+{
+	Speak( NpcId(), 1491 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_asis_1()
+{
+	if( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0 || GetQuestState( QUEST_VOCACR_BFTRN ) >= 0)
+	{
+		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER1 ) >= 0 )
+		{
+			LaunchQuest();
+		}
+		else
+		{
+			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
+		AddKey( 9 );
+		AddKey( 10 );
+	}
+	else
+	{
+		LaunchQuest();
+	}
+}
+
+void CNpcScript::mafl_asis_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_asis_3()
+{
+	Say( 1492 );
+}
+
+void CNpcScript::mafl_asis_4()
+{
+	Say( 1493 );
+}
+
+void CNpcScript::mafl_asis_5()
+{
+
+}
+
+void CNpcScript::mafl_asis_6()
+{
+
+}
+
+void CNpcScript::mafl_asis_7()
+{
+
+}
+
+void CNpcScript::mafl_asis_8()
+{
+
+	if( GetQuestState(QUEST_VOCASS_TRN2) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 )
+	{
+		ChangeJob(3);
+		InitStat();
+	}
+
+	else
+	{
+		Exit();
+	}
+}
+
+void CNpcScript::mafl_asis_9()
+{
+	Say( 1494 );
+}
+
+void CNpcScript::mafl_asis_10()
+{
+	Speak( NpcId(), 1495 );
+	Exit();
+}
+//Script End
+
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Ssunder.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ssunder_0()
+{
+	Speak( NpcId(), 1496 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ssunder_1()
+{
+	if( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState( QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0)
+	{
+		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER4 ) >= 0 )
+		{
+			LaunchQuest();
+		}
+		else
+		{
+			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
+		AddKey( 9 );
+		AddKey( 10 );
+	}
+
+	else
+	{
+		LaunchQuest();
+	}
+}
+
+void CNpcScript::mafl_ssunder_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ssunder_3()
+{
+	Say( 1497 );
+}
+
+void CNpcScript::mafl_ssunder_4()
+{
+	Say( 1498 );
+}
+
+void CNpcScript::mafl_ssunder_5()
+{
+
+}
+
+void CNpcScript::mafl_ssunder_6()
+{
+
+}
+
+void CNpcScript::mafl_ssunder_7()
+{
+
+}
+
+void CNpcScript::mafl_ssunder_8()
+{
+
+	if( GetQuestState(QUEST_VOCACR_TRN2) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 )
+	{
+		ChangeJob( 2 );
+		InitStat();
+	}
+
+	else
+	{
+		Exit();
+	}
+
+}
+
+void CNpcScript::mafl_ssunder_9()
+{
+	Say( 1499 );
+}
+
+void CNpcScript::mafl_ssunder_10()
+{
+	Speak( NpcId(), 1500 );
+	Exit();
+}
+//Script End
+
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Masics.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_masics_0()
+{
+	Speak( NpcId(), 1501 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_masics_1()
+{
+	if( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState( QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCACR_BFTRN ) >= 0)
+	{
+		if( GetQuestState( QUEST_SCE_MDRIGALTEACHER3 ) >= 0 )
+		{
+			LaunchQuest();
+		}
+		else
+		{
+			SayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );
+		}
+		AddKey( 9 );
+		AddKey( 10 );
+	}
+
+	else
+	{
+		LaunchQuest();
+	}
+}
+
+void CNpcScript::mafl_masics_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_masics_3()
+{
+	Say( 1502 );
+}
+
+void CNpcScript::mafl_masics_4()
+{
+	Say( 1503 );
+}
+
+void CNpcScript::mafl_masics_5()
+{
+
+}
+
+void CNpcScript::mafl_masics_6()
+{
+
+}
+
+void CNpcScript::mafl_masics_7()
+{
+
+}
+
+void CNpcScript::mafl_masics_8()
+{
+
+	if( GetQuestState(QUEST_VOCMAG_TRN2) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 )
+	{
+		ChangeJob(4);
+		InitStat();
+	}
+
+	else
+	{
+		Exit();
+	}
+}
+
+void CNpcScript::mafl_masics_9()
+{
+	Say( 1504 );
+}
+
+void CNpcScript::mafl_masics_10()
+{
+	Speak( NpcId(), 1505 );
+	Exit();
+}
+//Script End
+
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Ringda.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ringda_0()
+{
+	Speak( NpcId(), 1506 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ringda_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_ringda_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ringda_3()
+{
+	Say( 1507 );
+}
+
+void CNpcScript::mafl_ringda_4()
+{
+	Say( 1508 );
+}
+
+void CNpcScript::mafl_ringda_5()
+{
+
+}
+
+void CNpcScript::mafl_ringda_6()
+{
+
+}
+
+void CNpcScript::mafl_ringda_7()
+{
+
+}
+
+void CNpcScript::mafl_ringda_8()
+{
+
+}
+
+void CNpcScript::mafl_ringda_9()
+{
+	Say( 1509 );
+}
+
+void CNpcScript::mafl_ringda_10()
+{
+	Speak( NpcId(), 1510 );
+	Exit();
+}
+//Script End
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Ria.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ria_0()
+{
+	Speak( NpcId(), 1511 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ria_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_ria_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ria_3()
+{
+	Say( 1512 );
+}
+
+void CNpcScript::mafl_ria_4()
+{
+	Say( 1513 );
+}
+
+void CNpcScript::mafl_ria_5()
+{
+
+}
+
+void CNpcScript::mafl_ria_6()
+{
+
+}
+
+void CNpcScript::mafl_ria_7()
+{
+
+}
+
+void CNpcScript::mafl_ria_8()
+{
+
+}
+
+void CNpcScript::mafl_ria_9()
+{
+	Say( 1514 );
+}
+
+void CNpcScript::mafl_ria_10()
+{
+	Speak( NpcId(), 1515 );
+	Exit();
+}
+//Script End
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Ruks.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ruks_0()
+{
+	Speak( NpcId(), 1516 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ruks_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_ruks_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ruks_3()
+{
+	Say( 1517 );
+}
+
+void CNpcScript::mafl_ruks_4()
+{
+	Say( 1518 );
+}
+
+void CNpcScript::mafl_ruks_5()
+{
+
+}
+
+void CNpcScript::mafl_ruks_6()
+{
+
+}
+
+void CNpcScript::mafl_ruks_7()
+{
+
+}
+
+void CNpcScript::mafl_ruks_8()
+{
+
+}
+
+void CNpcScript::mafl_ruks_9()
+{
+	Say( 1519 );
+}
+
+void CNpcScript::mafl_ruks_10()
+{
+	Speak( NpcId(), 1520 );
+	Exit();
+}
+//Script End
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: MaFl_Pire.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_pire_0()
+{
+	Speak( NpcId(), 1521 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_pire_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_pire_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_pire_3()
+{
+	Say( 1522 );
+}
+
+void CNpcScript::mafl_pire_4()
+{
+	Say( 1523 );
+}
+
+void CNpcScript::mafl_pire_5()
+{
+
+}
+
+void CNpcScript::mafl_pire_6()
+{
+
+}
+
+void CNpcScript::mafl_pire_7()
+{
+
+}
+
+void CNpcScript::mafl_pire_8()
+{
+
+}
+
+void CNpcScript::mafl_pire_9()
+{
+	Say( 1524 );
+}
+
+void CNpcScript::mafl_pire_10()
+{
+	Speak( NpcId(), 1525 );
+	Exit();
+}
+//Script End
+
+
+
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: lovelyminu
+// Title		: 1차 전직 npc
+// File			: NPC_FLYFFKIMPD.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::npc_flyffkimpd_0()
+{
+	Speak( NpcId(), 1531 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::npc_flyffkimpd_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::npc_flyffkimpd_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::npc_flyffkimpd_3()
+{
+	Say( 1532 );
+}
+
+void CNpcScript::npc_flyffkimpd_4()
+{
+	Say( 1533 );
+}
+
+void CNpcScript::npc_flyffkimpd_5()
+{
+
+}
+
+void CNpcScript::npc_flyffkimpd_6()
+{
+
+}
+
+void CNpcScript::npc_flyffkimpd_7()
+{
+
+}
+
+void CNpcScript::npc_flyffkimpd_8()
+{
+
+}
+
+void CNpcScript::npc_flyffkimpd_9()
+{
+	Say( 1534 );
+}
+
+void CNpcScript::npc_flyffkimpd_10()
+{
+	Speak( NpcId(), 1535 );
+	Exit();
+}
+//Script End
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: ysiwar
+// Title		: 콜로세움 npc
+// File			: MaFl_ColoNpc.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_colonpc_0()
+{
+	Speak( NpcId(), 1527 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_colonpc_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_colonpc_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_colonpc_3()
+{
+	Say( 1764 );
+}
+
+void CNpcScript::mafl_colonpc_4()
+{
+	Say( 1529 );
+}
+
+void CNpcScript::mafl_colonpc_5()
+{
+
+}
+
+void CNpcScript::mafl_colonpc_6()
+{
+
+}
+
+void CNpcScript::mafl_colonpc_7()
+{
+
+}
+
+void CNpcScript::mafl_colonpc_8()
+{
+
+}
+
+void CNpcScript::mafl_colonpc_9()
+{
+	Say( 1528 );
+}
+
+void CNpcScript::mafl_colonpc_10()
+{
+	Speak( NpcId(), 1530 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 천사 npc
+// File			: mafl_angel.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_angel_0()
+{
+	Speak( NpcId(), 1536 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_angel_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_angel_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_angel_3()
+{
+
+}
+
+void CNpcScript::mafl_angel_4()
+{
+	Say( 1537 );
+}
+
+void CNpcScript::mafl_angel_5()
+{
+
+}
+
+void CNpcScript::mafl_angel_6()
+{
+
+}
+
+void CNpcScript::mafl_angel_7()
+{
+
+}
+
+void CNpcScript::mafl_angel_8()
+{
+
+}
+
+void CNpcScript::mafl_angel_9()
+{
+	Say( 1538 );
+}
+
+void CNpcScript::mafl_angel_10()
+{
+	Speak( NpcId(), 1539 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 악마 npc
+// File			: mafl_devil.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_devil_0()
+{
+	Speak( NpcId(), 1540 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_devil_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_devil_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_devil_3()
+{
+
+}
+
+void CNpcScript::mafl_devil_4()
+{
+	Say( 1541 );
+}
+
+void CNpcScript::mafl_devil_5()
+{
+
+}
+
+void CNpcScript::mafl_devil_6()
+{
+
+}
+
+void CNpcScript::mafl_devil_7()
+{
+
+}
+
+void CNpcScript::mafl_devil_8()
+{
+
+}
+
+void CNpcScript::mafl_devil_9()
+{
+	Say( 1542 );
+}
+
+void CNpcScript::mafl_devil_10()
+{
+	Speak( NpcId(), 1543 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: 봉보야주
+// File			: mafl_bongbo.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_bongbo_0()
+{
+	Speak( NpcId(), 1544 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_bongbo_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_bongbo_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_bongbo_3()
+{
+
+}
+
+void CNpcScript::mafl_bongbo_4()
+{
+	Say( 1545 );
+}
+
+void CNpcScript::mafl_bongbo_5()
+{
+
+}
+
+void CNpcScript::mafl_bongbo_6()
+{
+
+}
+
+void CNpcScript::mafl_bongbo_7()
+{
+
+}
+
+void CNpcScript::mafl_bongbo_8()
+{
+
+}
+
+void CNpcScript::mafl_bongbo_9()
+{
+	Say( 1546 );
+}
+
+void CNpcScript::mafl_bongbo_10()
+{
+	Speak( NpcId(), 1547 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [나무꾼] 스테이크
+// File			: mafl_stake.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_stake_0()
+{
+	Speak( NpcId(), 1548 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_stake_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_stake_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_stake_3()
+{
+
+}
+
+void CNpcScript::mafl_stake_4()
+{
+	Say( 1549 );
+}
+
+void CNpcScript::mafl_stake_5()
+{
+
+}
+
+void CNpcScript::mafl_stake_6()
+{
+
+}
+
+void CNpcScript::mafl_stake_7()
+{
+
+}
+
+void CNpcScript::mafl_stake_8()
+{
+
+}
+
+void CNpcScript::mafl_stake_9()
+{
+	Say( 1550 );
+}
+
+void CNpcScript::mafl_stake_10()
+{
+	Speak( NpcId(), 1551 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [카드의 달인] 작귀
+// File			: mafl_jakgui.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_jakgui_0()
+{
+	Speak( NpcId(), 1552 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_jakgui_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_jakgui_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_jakgui_3()
+{
+
+}
+
+void CNpcScript::mafl_jakgui_4()
+{
+	Say( 1553 );
+}
+
+void CNpcScript::mafl_jakgui_5()
+{
+
+}
+
+void CNpcScript::mafl_jakgui_6()
+{
+
+}
+
+void CNpcScript::mafl_jakgui_7()
+{
+
+}
+
+void CNpcScript::mafl_jakgui_8()
+{
+
+}
+
+void CNpcScript::mafl_jakgui_9()
+{
+	Say( 1554 );
+}
+
+void CNpcScript::mafl_jakgui_10()
+{
+	Speak( NpcId(), 1555 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [이벤트 무기 상인] 라이어
+// File			: mafl_ryar.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ryar_0()
+{
+	Speak( NpcId(), 1556 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ryar_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_ryar_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ryar_3()
+{
+
+}
+
+void CNpcScript::mafl_ryar_4()
+{
+	Say( 1557 );
+}
+
+void CNpcScript::mafl_ryar_5()
+{
+
+}
+
+void CNpcScript::mafl_ryar_6()
+{
+
+}
+
+void CNpcScript::mafl_ryar_7()
+{
+
+}
+
+void CNpcScript::mafl_ryar_8()
+{
+
+}
+
+void CNpcScript::mafl_ryar_9()
+{
+	Say( 1558 );
+}
+
+void CNpcScript::mafl_ryar_10()
+{
+	Speak( NpcId(), 1559 );
+	Exit();
+}
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: [협동기부] 엔젤링
+// File			: mafl_donation.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_donation_0()
+{
+	Speak( NpcId(), 1560 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_donation_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_donation_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_donation_3()
+{
+
+}
+
+void CNpcScript::mafl_donation_4()
+{
+	Say( 1561 );
+}
+
+void CNpcScript::mafl_donation_5()
+{
+
+}
+
+void CNpcScript::mafl_donation_6()
+{
+
+}
+
+void CNpcScript::mafl_donation_7()
+{
+
+}
+
+void CNpcScript::mafl_donation_8()
+{
+
+}
+
+void CNpcScript::mafl_donation_9()
+{
+	Say( 1562 );
+}
+
+void CNpcScript::mafl_donation_10()
+{
+	Speak( NpcId(), 1563 );
+	Exit();
+}
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [가위바위보 NPC] 고니
+// File			: mafl_goni.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_goni_0()
+{
+	Speak( NpcId(), 1564 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_goni_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_goni_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_goni_3()
+{
+
+}
+
+void CNpcScript::mafl_goni_4()
+{
+	Say( 1565 );
+}
+
+void CNpcScript::mafl_goni_5()
+{
+
+}
+
+void CNpcScript::mafl_goni_6()
+{
+
+}
+
+void CNpcScript::mafl_goni_7()
+{
+
+}
+
+void CNpcScript::mafl_goni_8()
+{
+
+}
+
+void CNpcScript::mafl_goni_9()
+{
+	Say( 1566 );
+}
+
+void CNpcScript::mafl_goni_10()
+{
+	Speak( NpcId(), 1567 );
+	Exit();
+}
+
+//Script End
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [축제담당자 NPC] 페스티벌
+// File			: mafl_festival.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_festival_0()
+{
+	Speak( NpcId(), 1568 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_festival_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_festival_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_festival_3()
+{
+
+}
+
+void CNpcScript::mafl_festival_4()
+{
+	Say( 1569 );
+}
+
+void CNpcScript::mafl_festival_5()
+{
+
+}
+
+void CNpcScript::mafl_festival_6()
+{
+
+}
+
+void CNpcScript::mafl_festival_7()
+{
+
+}
+
+void CNpcScript::mafl_festival_8()
+{
+
+}
+
+void CNpcScript::mafl_festival_9()
+{
+	Say( 1570 );
+}
+
+void CNpcScript::mafl_festival_10()
+{
+	Speak( NpcId(), 1571 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [축제담당자 NPC] 페스티벌
+// File			: Mafl_CostumeNerupa.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_costumenerupa_0()
+{
+	Speak( NpcId(), 1572 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_costumenerupa_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_costumenerupa_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_costumenerupa_3()
+{
+
+}
+
+void CNpcScript::mafl_costumenerupa_4()
+{
+	Say( 1573 );
+}
+
+void CNpcScript::mafl_costumenerupa_5()
+{
+
+}
+
+void CNpcScript::mafl_costumenerupa_6()
+{
+
+}
+
+void CNpcScript::mafl_costumenerupa_7()
+{
+
+}
+
+void CNpcScript::mafl_costumenerupa_8()
+{
+
+}
+
+void CNpcScript::mafl_costumenerupa_9()
+{
+	Say( 1574 );
+}
+
+void CNpcScript::mafl_costumenerupa_10()
+{
+	Speak( NpcId(), 1575 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [수줍은] 플라미
+// File			: Mafl_Flame.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_flame_0()
+{
+	Speak( NpcId(), 1580 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_flame_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_flame_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_flame_3()
+{
+
+}
+
+void CNpcScript::mafl_flame_4()
+{
+	Say( 1581 );
+}
+
+void CNpcScript::mafl_flame_5()
+{
+
+}
+
+void CNpcScript::mafl_flame_6()
+{
+
+}
+
+void CNpcScript::mafl_flame_7()
+{
+
+}
+
+void CNpcScript::mafl_flame_8()
+{
+
+}
+
+void CNpcScript::mafl_flame_9()
+{
+	Say( 1582 );
+}
+
+void CNpcScript::mafl_flame_10()
+{
+	Speak( NpcId(), 1583 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [선장] 산프레스
+// File			: masp_sanpres.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masp_sanpres_0()
+{
+	Speak( NpcId(), 1584 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masp_sanpres_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masp_sanpres_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masp_sanpres_3()
+{
+
+}
+
+void CNpcScript::masp_sanpres_4()
+{
+	Say( 1585 );
+}
+
+void CNpcScript::masp_sanpres_5()
+{
+
+}
+
+void CNpcScript::masp_sanpres_6()
+{
+
+}
+
+void CNpcScript::masp_sanpres_7()
+{
+
+}
+
+void CNpcScript::masp_sanpres_8()
+{
+
+}
+
+void CNpcScript::masp_sanpres_9()
+{
+	Say( 1586 );
+}
+
+void CNpcScript::masp_sanpres_10()
+{
+	Speak( NpcId(), 1587 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [마을처녀]라엘라
+// File			: mahe_raelra.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mahe_raelra_0()
+{
+	Speak( NpcId(), 1588 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mahe_raelra_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mahe_raelra_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mahe_raelra_3()
+{
+
+}
+
+void CNpcScript::mahe_raelra_4()
+{
+	Say( 1589 );
+}
+
+void CNpcScript::mahe_raelra_5()
+{
+
+}
+
+void CNpcScript::mahe_raelra_6()
+{
+
+}
+
+void CNpcScript::mahe_raelra_7()
+{
+
+}
+
+void CNpcScript::mahe_raelra_8()
+{
+
+}
+
+void CNpcScript::mahe_raelra_9()
+{
+	Say( 1590 );
+}
+
+void CNpcScript::mahe_raelra_10()
+{
+	Speak( NpcId(), 1591 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [선장]산체르코
+// File			: masp_sancherco.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masp_sancherco_0()
+{
+	Speak( NpcId(), 1592 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masp_sancherco_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masp_sancherco_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masp_sancherco_3()
+{
+
+}
+
+void CNpcScript::masp_sancherco_4()
+{
+	Say( 1593 );
+}
+
+void CNpcScript::masp_sancherco_5()
+{
+
+}
+
+void CNpcScript::masp_sancherco_6()
+{
+
+}
+
+void CNpcScript::masp_sancherco_7()
+{
+
+}
+
+void CNpcScript::masp_sancherco_8()
+{
+
+}
+
+void CNpcScript::masp_sancherco_9()
+{
+	Say( 1594 );
+}
+
+void CNpcScript::masp_sancherco_10()
+{
+	Speak( NpcId(), 1595 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [마을처녀]라일라
+// File			: mahe_raila.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mahe_raila_0()
+{
+	Speak( NpcId(), 1596 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mahe_raila_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mahe_raila_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mahe_raila_3()
+{
+
+}
+
+void CNpcScript::mahe_raila_4()
+{
+	Say( 1597 );
+}
+
+void CNpcScript::mahe_raila_5()
+{
+
+}
+
+void CNpcScript::mahe_raila_6()
+{
+
+}
+
+void CNpcScript::mahe_raila_7()
+{
+
+}
+
+void CNpcScript::mahe_raila_8()
+{
+
+}
+
+void CNpcScript::mahe_raila_9()
+{
+	Say( 1598 );
+}
+
+void CNpcScript::mahe_raila_10()
+{
+	Speak( NpcId(), 1599 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [선원] 토마스
+// File			: masp_tomas.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masp_tomas_0()
+{
+	Speak( NpcId(), 1600 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masp_tomas_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masp_tomas_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masp_tomas_3()
+{
+
+}
+
+void CNpcScript::masp_tomas_4()
+{
+	Say( 1601 );
+}
+
+void CNpcScript::masp_tomas_5()
+{
+
+}
+
+void CNpcScript::masp_tomas_6()
+{
+
+}
+
+void CNpcScript::masp_tomas_7()
+{
+
+}
+
+void CNpcScript::masp_tomas_8()
+{
+
+}
+
+void CNpcScript::masp_tomas_9()
+{
+	Say( 1602 );
+}
+
+void CNpcScript::masp_tomas_10()
+{
+	Speak( NpcId(), 1603 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [마을청년]레오
+// File			: mahe_reo.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mahe_reo_0()
+{
+	Speak( NpcId(), 1604 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mahe_reo_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mahe_reo_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mahe_reo_3()
+{
+
+}
+
+void CNpcScript::mahe_reo_4()
+{
+	Say( 1605 );
+}
+
+void CNpcScript::mahe_reo_5()
+{
+
+}
+
+void CNpcScript::mahe_reo_6()
+{
+
+}
+
+void CNpcScript::mahe_reo_7()
+{
+
+}
+
+void CNpcScript::mahe_reo_8()
+{
+
+}
+
+void CNpcScript::mahe_reo_9()
+{
+	Say( 1606 );
+}
+
+void CNpcScript::mahe_reo_10()
+{
+	Speak( NpcId(), 1607 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [선원] 스미스
+// File			: masp_smith.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masp_smith_0()
+{
+	Speak( NpcId(), 1608 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masp_smith_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masp_smith_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masp_smith_3()
+{
+
+}
+
+void CNpcScript::masp_smith_4()
+{
+	Say( 1609 );
+}
+
+void CNpcScript::masp_smith_5()
+{
+
+}
+
+void CNpcScript::masp_smith_6()
+{
+
+}
+
+void CNpcScript::masp_smith_7()
+{
+
+}
+
+void CNpcScript::masp_smith_8()
+{
+
+}
+
+void CNpcScript::masp_smith_9()
+{
+	Say( 1610 );
+}
+
+void CNpcScript::masp_smith_10()
+{
+	Speak( NpcId(), 1611 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [마을청년] 리오
+// File			: mahe_rio.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mahe_rio_0()
+{
+	Speak( NpcId(), 1612 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mahe_rio_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mahe_rio_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mahe_rio_3()
+{
+
+}
+
+void CNpcScript::mahe_rio_4()
+{
+	Say( 1613 );
+}
+
+void CNpcScript::mahe_rio_5()
+{
+
+}
+
+void CNpcScript::mahe_rio_6()
+{
+
+}
+
+void CNpcScript::mahe_rio_7()
+{
+
+}
+
+void CNpcScript::mahe_rio_8()
+{
+
+}
+
+void CNpcScript::mahe_rio_9()
+{
+	Say( 1614 );
+}
+
+void CNpcScript::mahe_rio_10()
+{
+	Speak( NpcId(), 1615 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [의문의 사내] 레오난
+// File			: mafl_reonan.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_reonan_0()
+{
+	Speak( NpcId(), 1616 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_reonan_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_reonan_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_reonan_3()
+{
+
+}
+
+void CNpcScript::mafl_reonan_4()
+{
+	Say( 1617 );
+}
+
+void CNpcScript::mafl_reonan_5()
+{
+
+}
+
+void CNpcScript::mafl_reonan_6()
+{
+
+}
+
+void CNpcScript::mafl_reonan_7()
+{
+
+}
+
+void CNpcScript::mafl_reonan_8()
+{
+
+}
+
+void CNpcScript::mafl_reonan_9()
+{
+	Say( 1619 );
+}
+
+void CNpcScript::mafl_reonan_10()
+{
+	Speak( NpcId(), 1620 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [말썽쟁이] 네르코
+// File			: mafl_nerco.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_nerco_0()
+{
+	Speak( NpcId(), 1621 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_nerco_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_nerco_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_nerco_3()
+{
+
+}
+
+void CNpcScript::mafl_nerco_4()
+{
+	Say( 1622 );
+}
+
+void CNpcScript::mafl_nerco_5()
+{
+
+}
+
+void CNpcScript::mafl_nerco_6()
+{
+
+}
+
+void CNpcScript::mafl_nerco_7()
+{
+
+}
+
+void CNpcScript::mafl_nerco_8()
+{
+
+}
+
+void CNpcScript::mafl_nerco_9()
+{
+	Say( 1624 );
+}
+
+void CNpcScript::mafl_nerco_10()
+{
+	Speak( NpcId(), 1625 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [음침한 사내] 하엘
+// File			: mafl_hael.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_hael_0()
+{
+	Speak( NpcId(), 1626 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_hael_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_hael_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_hael_3()
+{
+
+}
+
+void CNpcScript::mafl_hael_4()
+{
+	Say( 1627 );
+}
+
+void CNpcScript::mafl_hael_5()
+{
+
+}
+
+void CNpcScript::mafl_hael_6()
+{
+
+}
+
+void CNpcScript::mafl_hael_7()
+{
+
+}
+
+void CNpcScript::mafl_hael_8()
+{
+
+}
+
+void CNpcScript::mafl_hael_9()
+{
+	Say( 1629 );
+}
+
+void CNpcScript::mafl_hael_10()
+{
+	Speak( NpcId(), 1630 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [엄마] 루지나
+// File			: masa_luzina.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masa_luzina_0()
+{
+	Speak( NpcId(), 1631 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masa_luzina_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masa_luzina_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masa_luzina_3()
+{
+
+}
+
+void CNpcScript::masa_luzina_4()
+{
+	Say( 1632 );
+}
+
+void CNpcScript::masa_luzina_5()
+{
+
+}
+
+void CNpcScript::masa_luzina_6()
+{
+
+}
+
+void CNpcScript::masa_luzina_7()
+{
+
+}
+
+void CNpcScript::masa_luzina_8()
+{
+
+}
+
+void CNpcScript::masa_luzina_9()
+{
+	Say( 1634 );
+}
+
+void CNpcScript::masa_luzina_10()
+{
+	Speak( NpcId(), 1635 );
+	Exit();
+}
+
+//Script End
+
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [새침데기] 네르샤
+// File			: masa_nercha.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::masa_nercha_0()
+{
+	Speak( NpcId(), 1636 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::masa_nercha_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::masa_nercha_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::masa_nercha_3()
+{
+
+}
+
+void CNpcScript::masa_nercha_4()
+{
+	Say( 1637 );
+}
+
+void CNpcScript::masa_nercha_5()
+{
+
+}
+
+void CNpcScript::masa_nercha_6()
+{
+
+}
+
+void CNpcScript::masa_nercha_7()
+{
+
+}
+
+void CNpcScript::masa_nercha_8()
+{
+
+}
+
+void CNpcScript::masa_nercha_9()
+{
+	Say( 1639 );
+}
+
+void CNpcScript::masa_nercha_10()
+{
+	Speak( NpcId(), 1640 );
+	Exit();
+}
+
+//Script End
+
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [저주에 걸린] 레오도스
+// File			: mafl_reodos.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_reodos_0()
+{
+	Speak( NpcId(), 1641 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_reodos_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_reodos_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_reodos_3()
+{
+
+}
+
+void CNpcScript::mafl_reodos_4()
+{
+	Say( 1642 );
+}
+
+void CNpcScript::mafl_reodos_5()
+{
+
+}
+
+void CNpcScript::mafl_reodos_6()
+{
+
+}
+
+void CNpcScript::mafl_reodos_7()
+{
+
+}
+
+void CNpcScript::mafl_reodos_8()
+{
+
+}
+
+void CNpcScript::mafl_reodos_9()
+{
+	Say( 1644 );
+}
+
+void CNpcScript::mafl_reodos_10()
+{
+	Speak( NpcId(), 1645 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [진실을 밝히는] 헨델
+// File			: mafl_hendel.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_hendel_0()
+{
+	Speak( NpcId(), 1646 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_hendel_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_hendel_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_hendel_3()
+{
+
+}
+
+void CNpcScript::mafl_hendel_4()
+{
+	Say( 1647 );
+}
+
+void CNpcScript::mafl_hendel_5()
+{
+
+}
+
+void CNpcScript::mafl_hendel_6()
+{
+
+}
+
+void CNpcScript::mafl_hendel_7()
+{
+
+}
+
+void CNpcScript::mafl_hendel_8()
+{
+
+}
+
+void CNpcScript::mafl_hendel_9()
+{
+	Say( 1649 );
+}
+
+void CNpcScript::mafl_hendel_10()
+{
+	Speak( NpcId(), 1650 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [해결사] 조로
+// File			: mafl_zoro.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_zoro_0()
+{
+	Speak( NpcId(), 1651 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_zoro_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_zoro_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_zoro_3()
+{
+
+}
+
+void CNpcScript::mafl_zoro_4()
+{
+	Say( 1652 );
+}
+
+void CNpcScript::mafl_zoro_5()
+{
+
+}
+
+void CNpcScript::mafl_zoro_6()
+{
+
+}
+
+void CNpcScript::mafl_zoro_7()
+{
+
+}
+
+void CNpcScript::mafl_zoro_8()
+{
+
+}
+
+void CNpcScript::mafl_zoro_9()
+{
+	Say( 1654 );
+}
+
+void CNpcScript::mafl_zoro_10()
+{
+	Speak( NpcId(), 1655 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [자연친화적 농부] 엘라인
+// File			: mafl_ellain.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ellain_0()
+{
+	Speak( NpcId(), 1656 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ellain_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_ellain_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ellain_3()
+{
+
+}
+
+void CNpcScript::mafl_ellain_4()
+{
+	Say( 1657 );
+}
+
+void CNpcScript::mafl_ellain_5()
+{
+
+}
+
+void CNpcScript::mafl_ellain_6()
+{
+
+}
+
+void CNpcScript::mafl_ellain_7()
+{
+
+}
+
+void CNpcScript::mafl_ellain_8()
+{
+
+}
+
+void CNpcScript::mafl_ellain_9()
+{
+	Say( 1659 );
+}
+
+void CNpcScript::mafl_ellain_10()
+{
+	Speak( NpcId(), 1660 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [지식을 갈망하는] 아인헤르
+// File			: mafl_ainher.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ainher_0()
+{
+	Speak( NpcId(), 1661 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ainher_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_ainher_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ainher_3()
+{
+
+}
+
+void CNpcScript::mafl_ainher_4()
+{
+	Say( 1662 );
+}
+
+void CNpcScript::mafl_ainher_5()
+{
+
+}
+
+void CNpcScript::mafl_ainher_6()
+{
+
+}
+
+void CNpcScript::mafl_ainher_7()
+{
+
+}
+
+void CNpcScript::mafl_ainher_8()
+{
+
+}
+
+void CNpcScript::mafl_ainher_9()
+{
+	Say( 1664 );
+}
+
+void CNpcScript::mafl_ainher_10()
+{
+	Speak( NpcId(), 1665 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: [도 닦는] 슈리
+// File			: mafl_sury.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_sury_0()
+{
+	Speak( NpcId(), 1666 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_sury_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_sury_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_sury_3()
+{
+
+}
+
+void CNpcScript::mafl_sury_4()
+{
+	Say( 1667 );
+}
+
+void CNpcScript::mafl_sury_5()
+{
+
+}
+
+void CNpcScript::mafl_sury_6()
+{
+
+}
+
+void CNpcScript::mafl_sury_7()
+{
+
+}
+
+void CNpcScript::mafl_sury_8()
+{
+
+}
+
+void CNpcScript::mafl_sury_9()
+{
+	Say( 1669 );
+}
+
+void CNpcScript::mafl_sury_10()
+{
+	Speak( NpcId(), 1670 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: 드리코
+// File			: dudk_drico.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::dudk_drico_0()
+{
+	Speak( NpcId(), 1671 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::dudk_drico_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::dudk_drico_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::dudk_drico_3()
+{
+
+}
+
+void CNpcScript::dudk_drico_4()
+{
+	Say( 1673 );
+}
+
+void CNpcScript::dudk_drico_5()
+{
+
+}
+
+void CNpcScript::dudk_drico_6()
+{
+
+}
+
+void CNpcScript::dudk_drico_7()
+{
+
+}
+
+void CNpcScript::dudk_drico_8()
+{
+
+}
+
+void CNpcScript::dudk_drico_9()
+{
+	Say( 1674 );
+}
+
+void CNpcScript::dudk_drico_10()
+{
+	Speak( NpcId(), 1675 );
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: 아레나 입장 관리인
+// File			: mafl_fwcenter.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_fwcenter_0()
+{
+	Speak( NpcId(), 1676 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_fwcenter_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_fwcenter_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_fwcenter_3()
+{
+
+}
+
+void CNpcScript::mafl_fwcenter_4()
+{
+	Say( 1677 );
+}
+
+void CNpcScript::mafl_fwcenter_5()
+{
+
+}
+
+void CNpcScript::mafl_fwcenter_6()
+{
+
+}
+
+void CNpcScript::mafl_fwcenter_7()
+{
+
+}
+
+void CNpcScript::mafl_fwcenter_8()
+{
+
+}
+
+void CNpcScript::mafl_fwcenter_9()
+{
+	Say( 1678 );
+}
+
+void CNpcScript::mafl_fwcenter_10()
+{
+	Speak( NpcId(), 1679 );
+	Exit();
+}
+
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [시장 이동 관리인] 샤인
+// File			: mafl_shain.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_shain_0()
+{
+	Speak( NpcId(), 1680 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_shain_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_shain_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_shain_3()
+{
+
+}
+
+void CNpcScript::mafl_shain_4()
+{
+	Say(1681);
+}
+
+void CNpcScript::mafl_shain_5()
+{
+
+}
+
+void CNpcScript::mafl_shain_6()
+{
+
+}
+
+void CNpcScript::mafl_shain_7()
+{
+
+}
+
+void CNpcScript::mafl_shain_8()
+{
+
+}
+
+void CNpcScript::mafl_shain_9()
+{
+	Say(1682);
+}
+
+void CNpcScript::mafl_shain_10()
+{
+	Speak( NpcId(),1683);
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [거래 중개인] 랑팡
+// File			: mafl_rangpang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_rangpang_0()
+{
+	Speak( NpcId(), 1685 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_rangpang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_rangpang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_rangpang_3()
+{
+
+}
+
+void CNpcScript::mafl_rangpang_4()
+{
+	Say(1686);
+}
+
+void CNpcScript::mafl_rangpang_5()
+{
+
+}
+
+void CNpcScript::mafl_rangpang_6()
+{
+
+}
+
+void CNpcScript::mafl_rangpang_7()
+{
+
+}
+
+void CNpcScript::mafl_rangpang_8()
+{
+
+}
+
+void CNpcScript::mafl_rangpang_9()
+{
+	Say(1687);
+}
+
+void CNpcScript::mafl_rangpang_10()
+{
+	Speak( NpcId(), 1688 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [거래 중개인] 포냥
+// File			: mafl_poneang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_poneang_0()
+{
+	Speak( NpcId(), 1690 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_poneang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_poneang_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_poneang_3()
+{
+
+}
+
+void CNpcScript::mafl_poneang_4()
+{
+	Say(1691);
+}
+
+void CNpcScript::mafl_poneang_5()
+{
+
+}
+
+void CNpcScript::mafl_poneang_6()
+{
+
+}
+
+void CNpcScript::mafl_poneang_7()
+{
+
+}
+
+void CNpcScript::mafl_poneang_8()
+{
+
+}
+
+void CNpcScript::mafl_poneang_9()
+{
+	Say(1692);
+}
+
+void CNpcScript::mafl_poneang_10()
+{
+	Speak( NpcId(), 1693);
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [거래 중개인] 레옹
+// File			: mafl_reong.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_reong_0()
+{
+	Speak( NpcId(), 1695 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_reong_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_reong_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_reong_3()
+{
+
+}
+
+void CNpcScript::mafl_reong_4()
+{
+	Say(1696);
+}
+
+void CNpcScript::mafl_reong_5()
+{
+
+}
+
+void CNpcScript::mafl_reong_6()
+{
+
+}
+
+void CNpcScript::mafl_reong_7()
+{
+
+}
+
+void CNpcScript::mafl_reong_8()
+{
+
+}
+
+void CNpcScript::mafl_reong_9()
+{
+	Say(1697);
+}
+
+void CNpcScript::mafl_reong_10()
+{
+	Speak( NpcId(),1698);
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [거래 중개인] 탐탐
+// File			: mafl_tamtam.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_tamtam_0()
+{
+	Speak( NpcId(), 1700 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_tamtam_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_tamtam_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_tamtam_3()
+{
+
+}
+
+void CNpcScript::mafl_tamtam_4()
+{
+	Say(1701);
+}
+
+void CNpcScript::mafl_tamtam_5()
+{
+
+}
+
+void CNpcScript::mafl_tamtam_6()
+{
+
+}
+
+void CNpcScript::mafl_tamtam_7()
+{
+
+}
+
+void CNpcScript::mafl_tamtam_8()
+{
+
+}
+
+void CNpcScript::mafl_tamtam_9()
+{
+	Say(1702);
+}
+
+void CNpcScript::mafl_tamtam_10()
+{
+	Speak( NpcId(),1703);
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [거래 중개인] 랭고
+// File			: mafl_ranggo.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_ranggo_0()
+{
+	Speak( NpcId(), 1705 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_ranggo_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_ranggo_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_ranggo_3()
+{
+
+}
+
+void CNpcScript::mafl_ranggo_4()
+{
+	Say(1706);
+}
+
+void CNpcScript::mafl_ranggo_5()
+{
+
+}
+
+void CNpcScript::mafl_ranggo_6()
+{
+
+}
+
+void CNpcScript::mafl_ranggo_7()
+{
+
+}
+
+void CNpcScript::mafl_ranggo_8()
+{
+
+}
+
+void CNpcScript::mafl_ranggo_9()
+{
+	Say(1707);
+}
+
+void CNpcScript::mafl_ranggo_10()
+{
+	Speak( NpcId(),1708);
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [거래 중개인] 토토
+// File			: mafl_toto.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_toto_0()
+{
+	Speak( NpcId(), 1710 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_toto_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_toto_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_toto_3()
+{
+
+}
+
+void CNpcScript::mafl_toto_4()
+{
+	Say(1711);
+}
+
+void CNpcScript::mafl_toto_5()
+{
+
+}
+
+void CNpcScript::mafl_toto_6()
+{
+
+}
+
+void CNpcScript::mafl_toto_7()
+{
+
+}
+
+void CNpcScript::mafl_toto_8()
+{
+
+}
+
+void CNpcScript::mafl_toto_9()
+{
+	Say(1712);
+}
+
+void CNpcScript::mafl_toto_10()
+{
+	Speak( NpcId(),1713);
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [페린 교환원] 세브란스
+// File			: mafl_sebrance.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_sebrance_0()
+{
+	Speak( NpcId(), 1715 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_sebrance_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_sebrance_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_sebrance_3()
+{
+
+}
+
+void CNpcScript::mafl_sebrance_4()
+{
+	Say( 1717 );
+}
+
+void CNpcScript::mafl_sebrance_5()
+{
+
+}
+
+void CNpcScript::mafl_sebrance_6()
+{
+
+}
+
+void CNpcScript::mafl_sebrance_7()
+{
+
+}
+
+void CNpcScript::mafl_sebrance_8()
+{
+
+}
+
+void CNpcScript::mafl_sebrance_9()
+{
+	Say( 1718 );
+}
+
+void CNpcScript::mafl_sebrance_10()
+{
+	Speak( NpcId(), 1719 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [페린 교환원] 돈조반니
+// File			: mafl_donjobanni.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_donjobanni_0()
+{
+	Speak( NpcId(), 1720 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_donjobanni_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_donjobanni_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_donjobanni_3()
+{
+
+}
+
+void CNpcScript::mafl_donjobanni_4()
+{
+	Say( 1722 );
+}
+
+void CNpcScript::mafl_donjobanni_5()
+{
+
+}
+
+void CNpcScript::mafl_donjobanni_6()
+{
+
+}
+
+void CNpcScript::mafl_donjobanni_7()
+{
+
+}
+
+void CNpcScript::mafl_donjobanni_8()
+{
+
+}
+
+void CNpcScript::mafl_donjobanni_9()
+{
+	Say( 1723 );
+}
+
+void CNpcScript::mafl_donjobanni_10()
+{
+	Speak( NpcId(), 1724 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [페린 교환원] 모르돌린
+// File			: mafl_mordolrin.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_mordolrin_0()
+{
+	Speak( NpcId(), 1725 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_mordolrin_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_mordolrin_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_mordolrin_3()
+{
+
+}
+
+void CNpcScript::mafl_mordolrin_4()
+{
+	Say( 1727 );
+}
+
+void CNpcScript::mafl_mordolrin_5()
+{
+
+}
+
+void CNpcScript::mafl_mordolrin_6()
+{
+
+}
+
+void CNpcScript::mafl_mordolrin_7()
+{
+
+}
+
+void CNpcScript::mafl_mordolrin_8()
+{
+
+}
+
+void CNpcScript::mafl_mordolrin_9()
+{
+	Say( 1728 );			
+}
+
+void CNpcScript::mafl_mordolrin_10()
+{
+	Speak( NpcId(), 1729 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [페린 교환원] 자르코바
+// File			: mafl_jarcoba.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_jarcoba_0()
+{
+	Speak( NpcId(), 1730 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_jarcoba_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_jarcoba_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_jarcoba_3()
+{
+
+}
+
+void CNpcScript::mafl_jarcoba_4()
+{
+	Say( 1732 );
+}
+
+void CNpcScript::mafl_jarcoba_5()
+{
+
+}
+
+void CNpcScript::mafl_jarcoba_6()
+{
+
+}
+
+void CNpcScript::mafl_jarcoba_7()
+{
+
+}
+
+void CNpcScript::mafl_jarcoba_8()
+{
+
+}
+
+void CNpcScript::mafl_jarcoba_9()
+{
+	Say( 1733 );
+}
+
+void CNpcScript::mafl_jarcoba_10()
+{
+	Speak( NpcId(), 1734 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [페린 교환원] 머니조바
+// File			: mafl_moneyjoba.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_moneyjoba_0()
+{
+	Speak( NpcId(), 1735 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_moneyjoba_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_moneyjoba_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_moneyjoba_3()
+{
+
+}
+
+void CNpcScript::mafl_moneyjoba_4()
+{
+	Say( 1737 );
+}
+
+void CNpcScript::mafl_moneyjoba_5()
+{
+
+}
+
+void CNpcScript::mafl_moneyjoba_6()
+{
+
+}
+
+void CNpcScript::mafl_moneyjoba_7()
+{
+
+}
+
+void CNpcScript::mafl_moneyjoba_8()
+{
+
+}
+
+void CNpcScript::mafl_moneyjoba_9()
+{
+	Say( 1738 );
+}
+
+void CNpcScript::mafl_moneyjoba_10()
+{
+	Speak( NpcId(), 1739 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [페린 교환원] 기브머니
+// File			: mafl_givemoney.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_givemoney_0()
+{
+	Speak( NpcId(), 1740 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_givemoney_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_givemoney_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_givemoney_3()
+{
+
+}
+
+void CNpcScript::mafl_givemoney_4()
+{
+	Say( 1742 );
+}
+
+void CNpcScript::mafl_givemoney_5()
+{
+
+}
+
+void CNpcScript::mafl_givemoney_6()
+{
+
+}
+
+void CNpcScript::mafl_givemoney_7()
+{
+
+}
+
+void CNpcScript::mafl_givemoney_8()
+{
+
+}
+
+void CNpcScript::mafl_givemoney_9()
+{
+	Say( 1743 );
+}
+
+void CNpcScript::mafl_givemoney_10()
+{
+	Speak( NpcId(), 1744 );
+	Exit();
+}
+
+//Script End
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa33
+// Title		: [청소부 NPC] 쿨브리즈
+// File			: mafl_maple.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_maple_0()
+{
+	Speak( NpcId(), 1744 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_maple_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_maple_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_maple_3()
+{
+
+}
+
+void CNpcScript::mafl_maple_4()
+{
+	Say(1745);
+}
+
+void CNpcScript::mafl_maple_5()
+{
+
+}
+
+void CNpcScript::mafl_maple_6()
+{
+
+}
+
+void CNpcScript::mafl_maple_7()
+{
+
+}
+
+void CNpcScript::mafl_maple_8()
+{
+
+}
+
+void CNpcScript::mafl_maple_9()
+{
+	Say(1746);
+}
+
+void CNpcScript::mafl_maple_10()
+{
+	Speak( NpcId(), 1747);
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: cialy
+// Title		: [유카타 장사꾼] 티파
+// File			: mafl_tifa.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_tifa_0()
+{
+	Speak( NpcId(), 1748 );
+	SetScriptTimer( 15 );
+}
+
+void CNpcScript::mafl_tifa_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_tifa_2()
+{
+	AddKey( 9 );
+	AddKey( 10 );
+}
+
+void CNpcScript::mafl_tifa_3()
+{
+
+}
+
+void CNpcScript::mafl_tifa_4()
+{
+	Say(1749);
+}
+
+void CNpcScript::mafl_tifa_5()
+{
+
+}
+
+void CNpcScript::mafl_tifa_6()
+{
+
+}
+
+void CNpcScript::mafl_tifa_7()
+{
+
+}
+
+void CNpcScript::mafl_tifa_8()
+{
+
+}
+
+void CNpcScript::mafl_tifa_9()
+{
+	Say(1750);
+}
+
+void CNpcScript::mafl_tifa_10()
+{
+	Speak( NpcId(),1751 );
+	Exit();
+}
+
+//Script End
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: 좀비 사냥꾼 NPC 스네이크닥
+// File			: mafl_snakedak.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_snakedak_0()
+{
+	Speak(NpcId(), 1750);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_snakedak_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_snakedak_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_snakedak_3()
+{
+
+}
+
+void CNpcScript::mafl_snakedak_4()
+{
+	Say(1751);
+}
+
+void CNpcScript::mafl_snakedak_5()
+{
+
+}
+
+void CNpcScript::mafl_snakedak_6()
+{
+
+}
+
+void CNpcScript::mafl_snakedak_7()
+{
+
+}
+
+void CNpcScript::mafl_snakedak_8()
+{
+
+}
+
+void CNpcScript::mafl_snakedak_9()
+{
+	Say(1752);
+}
+
+void CNpcScript::mafl_snakedak_10()
+{
+	Speak(NpcId(), 1753);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: [액박이 무녀] 원미인
+// File			: mafl_wonmiin.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_wonmiin_0()
+{
+	Speak(NpcId(), 1755);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_wonmiin_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_wonmiin_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_wonmiin_3()
+{
+
+}
+
+void CNpcScript::mafl_wonmiin_4()
+{
+
+}
+
+void CNpcScript::mafl_wonmiin_5()
+{
+
+}
+
+void CNpcScript::mafl_wonmiin_6()
+{
+
+}
+
+void CNpcScript::mafl_wonmiin_7()
+{
+
+}
+
+void CNpcScript::mafl_wonmiin_8()
+{
+
+}
+
+void CNpcScript::mafl_wonmiin_9()
+{
+	Say(1756);
+}
+
+void CNpcScript::mafl_wonmiin_10()
+{
+	Speak(NpcId(), 1757);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: coa44
+// Title		: 쿠폰 팡
+// File			: mafl_couponpang.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_couponpang_0()
+{
+	Speak(NpcId(), 1758);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_couponpang_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_couponpang_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_couponpang_3()
+{
+
+}
+
+void CNpcScript::mafl_couponpang_4()
+{
+	Say(1760);
+}
+
+void CNpcScript::mafl_couponpang_5()
+{
+
+}
+
+void CNpcScript::mafl_couponpang_6()
+{
+
+}
+
+void CNpcScript::mafl_couponpang_7()
+{
+
+}
+
+void CNpcScript::mafl_couponpang_8()
+{
+
+}
+
+void CNpcScript::mafl_couponpang_9()
+{
+	Say(1761);
+}
+
+void CNpcScript::mafl_couponpang_10()
+{
+	Speak(NpcId(), 1762);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: 뮤직 페스티벌 헨델
+// File			: mafl_musichandael.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_musichandael_0()
+{
+	Speak(NpcId(), 1766);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_musichandael_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_musichandael_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_musichandael_3()
+{
+
+}
+
+void CNpcScript::mafl_musichandael_4()
+{
+	Say(1767);
+}
+
+void CNpcScript::mafl_musichandael_5()
+{
+
+}
+
+void CNpcScript::mafl_musichandael_6()
+{
+
+}
+
+void CNpcScript::mafl_musichandael_7()
+{
+
+}
+
+void CNpcScript::mafl_musichandael_8()
+{
+
+}
+
+void CNpcScript::mafl_musichandael_9()
+{
+	Say(1768);
+}
+
+void CNpcScript::mafl_musichandael_10()
+{
+	Speak(NpcId(), 1770);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: 뮤직 페스티벌 플라미
+// File			: mafl_musicflami.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_musicflami_0()
+{
+	Speak(NpcId(), 1771);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_musicflami_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_musicflami_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_musicflami_3()
+{
+
+}
+
+void CNpcScript::mafl_musicflami_4()
+{
+	Say(1772);
+}
+
+void CNpcScript::mafl_musicflami_5()
+{
+
+}
+
+void CNpcScript::mafl_musicflami_6()
+{
+
+}
+
+void CNpcScript::mafl_musicflami_7()
+{
+
+}
+
+void CNpcScript::mafl_musicflami_8()
+{
+
+}
+
+void CNpcScript::mafl_musicflami_9()
+{
+	Say(1773);
+}
+
+void CNpcScript::mafl_musicflami_10()
+{
+	Speak(NpcId(), 1775);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: vrdine
+// Title		: 미국 길드전 이벤트 보상 npc
+// File			: mafl_schnookum.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_schnookum_0()
+{
+	Speak(NpcId(), 1776);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_schnookum_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_schnookum_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_schnookum_3()
+{
+
+}
+
+void CNpcScript::mafl_schnookum_4()
+{
+	Say(1777);
+}
+
+void CNpcScript::mafl_schnookum_5()
+{
+
+}
+
+void CNpcScript::mafl_schnookum_6()
+{
+
+}
+
+void CNpcScript::mafl_schnookum_7()
+{
+
+}
+
+void CNpcScript::mafl_schnookum_8()
+{
+
+}
+
+void CNpcScript::mafl_schnookum_9()
+{
+	Say(1778);
+}
+
+void CNpcScript::mafl_schnookum_10()
+{
+	Speak(NpcId(), 1779);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: daddybear
+// Title		: 해외 제련 이벤트 보상 npc
+// File			: mafl_summerwoman.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_summerwoman_0()
+{
+	Speak(NpcId(), 1780);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_summerwoman_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_summerwoman_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_summerwoman_3()
+{
+
+}
+
+void CNpcScript::mafl_summerwoman_4()
+{
+	Say(1781);
+}
+
+void CNpcScript::mafl_summerwoman_5()
+{
+
+}
+
+void CNpcScript::mafl_summerwoman_6()
+{
+
+}
+
+void CNpcScript::mafl_summerwoman_7()
+{
+
+}
+
+void CNpcScript::mafl_summerwoman_8()
+{
+
+}
+
+void CNpcScript::mafl_summerwoman_9()
+{
+	Say(1782);
+}
+
+void CNpcScript::mafl_summerwoman_10()
+{
+	Speak(NpcId(), 1783);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: daddybear
+// Title		: 발렌타인 이벤트
+// File			: mafl_jessica.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_jessica_0()
+{
+	Speak(NpcId(), 1789);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_jessica_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_jessica_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_jessica_3()
+{
+
+}
+
+void CNpcScript::mafl_jessica_4()
+{
+	Say(1790);
+}
+
+void CNpcScript::mafl_jessica_5()
+{
+
+}
+
+void CNpcScript::mafl_jessica_6()
+{
+
+}
+
+void CNpcScript::mafl_jessica_7()
+{
+
+}
+
+void CNpcScript::mafl_jessica_8()
+{
+
+}
+
+void CNpcScript::mafl_jessica_9()
+{
+	Say(1791);
+}
+
+void CNpcScript::mafl_jessica_10()
+{
+	Speak(NpcId(), 1792);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: daddybear
+// Title		: 발렌타인 이벤트
+// File			: mafl_nana.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_nana_0()
+{
+	Speak(NpcId(), 1793);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_nana_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_nana_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_nana_3()
+{
+
+}
+
+void CNpcScript::mafl_nana_4()
+{
+	Say(1794);
+}
+
+void CNpcScript::mafl_nana_5()
+{
+
+}
+
+void CNpcScript::mafl_nana_6()
+{
+
+}
+
+void CNpcScript::mafl_nana_7()
+{
+
+}
+
+void CNpcScript::mafl_nana_8()
+{
+
+}
+
+void CNpcScript::mafl_nana_9()
+{
+	Say(1795);
+}
+
+void CNpcScript::mafl_nana_10()
+{
+	Speak(NpcId(), 1796);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: daddybear
+// Title		: 발렌타인 이벤트
+// File			: mafl_rain.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_rain_0()
+{
+	Speak(NpcId(), 1797);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_rain_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_rain_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_rain_3()
+{
+
+}
+
+void CNpcScript::mafl_rain_4()
+{
+	Say(1798);
+}
+
+void CNpcScript::mafl_rain_5()
+{
+
+}
+
+void CNpcScript::mafl_rain_6()
+{
+
+}
+
+void CNpcScript::mafl_rain_7()
+{
+
+}
+
+void CNpcScript::mafl_rain_8()
+{
+
+}
+
+void CNpcScript::mafl_rain_9()
+{
+	Say(1799);
+}
+
+void CNpcScript::mafl_rain_10()
+{
+	Speak(NpcId(), 1800);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: daddybear
+// Title		: 발렌타인 이벤트
+// File			: mafl_qupid.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_qupid_0()
+{
+	Speak(NpcId(), 1801);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_qupid_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_qupid_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_qupid_3()
+{
+
+}
+
+void CNpcScript::mafl_qupid_4()
+{
+	Say(1801);
+}
+
+void CNpcScript::mafl_qupid_5()
+{
+
+}
+
+void CNpcScript::mafl_qupid_6()
+{
+
+}
+
+void CNpcScript::mafl_qupid_7()
+{
+
+}
+
+void CNpcScript::mafl_qupid_8()
+{
+
+}
+
+void CNpcScript::mafl_qupid_9()
+{
+	Say(1801);
+}
+
+void CNpcScript::mafl_qupid_10()
+{
+	Speak(NpcId(), 1801);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: daddybear
+// Title		: 발렌타인 이벤트
+// File			: mafl_moodyqupid.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_moodyqupid_0()
+{
+	Speak(NpcId(), 1802);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_moodyqupid_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_moodyqupid_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_moodyqupid_3()
+{
+
+}
+
+void CNpcScript::mafl_moodyqupid_4()
+{
+	Say(1802);
+}
+
+void CNpcScript::mafl_moodyqupid_5()
+{
+
+}
+
+void CNpcScript::mafl_moodyqupid_6()
+{
+
+}
+
+void CNpcScript::mafl_moodyqupid_7()
+{
+
+}
+
+void CNpcScript::mafl_moodyqupid_8()
+{
+
+}
+
+void CNpcScript::mafl_moodyqupid_9()
+{
+	Say(1802);
+}
+
+void CNpcScript::mafl_moodyqupid_10()
+{
+	Speak(NpcId(), 1802);
+	Exit();
+}
+
+//Script Begin
+void CNpcScript::mafl_redrobeman_0()
+{
+	Speak(NpcId(), 1102);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_redrobeman_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_redrobeman_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_redrobeman_3()
+{
+	Say(970);
+}
+
+void CNpcScript::mafl_redrobeman_4()
+{
+	Say(970);
+}
+
+void CNpcScript::mafl_redrobeman_5()
+{
+
+}
+
+void CNpcScript::mafl_redrobeman_6()
+{
+
+}
+
+void CNpcScript::mafl_redrobeman_8()
+{
+
+}
+
+void CNpcScript::mafl_redrobeman_9()
+{
+	Say(969);
+}
+
+void CNpcScript::mafl_redrobeman_10()
+{
+	Speak(NpcId(), 970);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: angelrks
+// Title		: 마드리갈 투어 헨델
+// File			: mafl_madrigalhandael.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_madrigalhandael_0()
+{
+	Speak(NpcId(), 1804);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_madrigalhandael_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_madrigalhandael_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_madrigalhandael_3()
+{
+
+}
+
+void CNpcScript::mafl_madrigalhandael_4()
+{
+	Say(1805);
+}
+
+void CNpcScript::mafl_madrigalhandael_5()
+{
+
+}
+
+void CNpcScript::mafl_madrigalhandael_6()
+{
+
+}
+
+void CNpcScript::mafl_madrigalhandael_7()
+{
+
+}
+
+void CNpcScript::mafl_madrigalhandael_8()
+{
+
+}
+
+void CNpcScript::mafl_madrigalhandael_9()
+{
+	Say(1806);
+}
+
+void CNpcScript::mafl_madrigalhandael_10()
+{
+	Speak(NpcId(), 1807);
+	Exit();
+}
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: angelrks
+// Title		: 마드리갈 투어 엘라인
+// File			: mafl_madrigalellain.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+void CNpcScript::mafl_madrigalellain_0()
+{
+	Speak(NpcId(), 1808);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_madrigalellain_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_madrigalellain_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_madrigalellain_3()
+{
+
+}
+
+void CNpcScript::mafl_madrigalellain_4()
+{
+	Say(1809);
+}
+
+void CNpcScript::mafl_madrigalellain_5()
+{
+
+}
+
+void CNpcScript::mafl_madrigalellain_6()
+{
+
+}
+
+void CNpcScript::mafl_madrigalellain_7()
+{
+
+}
+
+void CNpcScript::mafl_madrigalellain_8()
+{
+
+}
+
+void CNpcScript::mafl_madrigalellain_9()
+{
+	Say(1810);
+}
+
+void CNpcScript::mafl_madrigalellain_10()
+{
+	Speak(NpcId(), 1811);
+	Exit();
+}
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: angelrks
+// Title		: 의문의 로브 사내(엘리운 마을)
+// File			: maew_enterredrobeman.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+void CNpcScript::maew_enterredrobeman_0()
+{
+	Speak(NpcId(), 1818);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::maew_enterredrobeman_1()
+{
+	LaunchQuest();
+	//	MonHuntStartParty( QUEST_BOSS_LV2, QS_BEGIN, QS_END, 1 )
+	//	EnterInstanceDungeon ( WI_INSTANCE_RUSTIA, 692,100,1099);
+
+}
+
+void CNpcScript::maew_enterredrobeman_2()
+{
+	AddKey(9);
+	AddKey(1812);
+	AddKey(10);
+
+}
+
+void CNpcScript::maew_enterredrobeman_3()
+{
+
+}
+
+void CNpcScript::maew_enterredrobeman_4()
+{
+	Say(1819);
+}
+
+void CNpcScript::maew_enterredrobeman_5()
+{
+
+}
+
+void CNpcScript::maew_enterredrobeman_6()
+{
+
+}
+
+void CNpcScript::maew_enterredrobeman_7()
+{
+
+}
+
+void CNpcScript::maew_enterredrobeman_8()
+{
+
+}
+
+void CNpcScript::maew_enterredrobeman_9()
+{
+	Say(1820);
+}
+
+
+void CNpcScript::maew_enterredrobeman_1812()
+{
+		Say(1813);
+		AddKey(10);
+}
+
+void CNpcScript::maew_enterredrobeman_10()
+{
+	Speak(NpcId(), 1821);
+	Exit();
+
+}
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: angelrks
+// Title		: 아인헤르(엘리운 마을)
+// File			: maew_ainher.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::maew_ainher_0()
+{
+	Speak(NpcId(), 1822);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::maew_ainher_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::maew_ainher_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::maew_ainher_3()
+{
+	Say(1826);
+}
+
+void CNpcScript::maew_ainher_4()
+{
+	Say(1823);
+}
+
+void CNpcScript::maew_ainher_5()
+{
+
+}
+
+void CNpcScript::maew_ainher_6()
+{
+
+}
+
+void CNpcScript::maew_ainher_7()
+{
+
+}
+
+void CNpcScript::maew_ainher_8()
+{
+
+}
+
+void CNpcScript::maew_ainher_9()
+{
+	Say(1824);
+}
+
+void CNpcScript::maew_ainher_10()
+{
+	Speak(NpcId(), 1825);
+	Exit();
+}
+
+
+//Script Information----------------------------------------------------------------//
+// Script Modify Version: 1.0( Create )
+// Author		: angelrks
+// Title		: 리네(플라리스)
+// File			: mafl_rine.txt
+// Save Type		: ANSI
+// Country Code		: KR
+//----------------------------------------------------------------------------------//
+
+//Script Begin
+void CNpcScript::mafl_rine_0()
+{
+	Speak(NpcId(), 1828);
+	SetScriptTimer(15);
+}
+
+void CNpcScript::mafl_rine_1()
+{
+	LaunchQuest();
+}
+
+void CNpcScript::mafl_rine_2()
+{
+	AddKey(9);
+	AddKey(10);
+}
+
+void CNpcScript::mafl_rine_3()
+{
+	Say(1832);
+}
+
+void CNpcScript::mafl_rine_4()
+{
+	Say(1829);
+}
+
+void CNpcScript::mafl_rine_5()
+{
+
+}
+
+void CNpcScript::mafl_rine_6()
+{
+
+}
+
+void CNpcScript::mafl_rine_7()
+{
+
+}
+
+void CNpcScript::mafl_rine_8()
+{
+
+}
+
+void CNpcScript::mafl_rine_9()
+{
+	Say(1830);
+}
+
+void CNpcScript::mafl_rine_10()
+{
+	Speak(NpcId(), 1831);
+	Exit();
+}
 
 BOOL MakeKeyIndex()
 {
