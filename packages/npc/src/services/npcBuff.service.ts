@@ -46,12 +46,16 @@ export type NpcBuffResult =
   | { ok: true; applied: number; refreshed: number; replaced: number; conflicts: number; skipped: number }
   | { ok: false; reason: 'rate_limited' | 'unknown_npc' | 'not_buff_npc' | 'no_nearby_buff_npc' };
 
-/** Squared 3D distance -- matches C++ `D3DXVec3LengthSq`. */
-function distSq(a: { x: number; y: number; z: number }, b: { x: number; y: number; z: number }): number {
+/**
+ * Squared distance on the XZ ground plane. `CNpcChecker::IsCloseNpc` zeroes Y
+ * before `D3DXVec3LengthSq` (npchecker.cpp:86), so a pang on a different
+ * elevation still counts as "near" as long as it's within ~32 units on the
+ * ground. Full 3D distance would falsely reject terrain-elevated pangs.
+ */
+function distSqXZ(a: { x: number; z: number }, b: { x: number; z: number }): number {
   const dx = a.x - b.x;
-  const dy = a.y - b.y;
   const dz = a.z - b.z;
-  return dx * dx + dy * dy + dz * dz;
+  return dx * dx + dz * dz;
 }
 
 export class NpcBuffService {
@@ -137,7 +141,7 @@ export class NpcBuffService {
   private hasNearbyBuffNpc(player: CPlayer): boolean {
     for (const npc of this.deps.spawnManager.inZone(player.m_nZoneId)) {
       if (!npc.menus?.includes(MMI_NPC_BUFF)) continue;
-      if (distSq(player.m_vPos, npc.m_vPos) <= MAX_LEN_MOVER_MENU_SQ) return true;
+      if (distSqXZ(player.m_vPos, npc.m_vPos) <= MAX_LEN_MOVER_MENU_SQ) return true;
     }
     return false;
   }
