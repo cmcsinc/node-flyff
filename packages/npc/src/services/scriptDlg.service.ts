@@ -36,6 +36,11 @@ import { createLogger } from '@flyff/core/logger';
 import { buildSetQuest } from '@flyff/quest';
 import { ChatSerializer } from '@flyff/world-core';
 import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer';
+import {
+  interpretDialog,
+  type DialogInterpBindings,
+  type DialogInterpSink,
+} from './dialogInterpreter';
 
 const logger = createLogger({ module: 'scriptDlg-service' });
 
@@ -67,11 +72,18 @@ export interface ScriptDlgDeps {
   dialogs: DialogIndex;
   quests: QuestIndex;
   questService: QuestService;
+  /** `#define` symbol table (`raw/define*.h`) -- resolves `QUEST_*` / `II_*`
+   *  tokens inside dialog `source:` bodies. Empty map => symbols unresolved. */
+  defines?: Map<string, number>;
   /** Chat serializer for `Speak` broadcast text. Injected for testability. */
   chat?: ChatSerializer;
   /** RUNSCRIPTFUNC serializer for the per-clicker dialog menu. Testable. */
   scriptDialog?: ScriptDialogSerializer;
 }
+
+/** Quest action queued by the interpreter -- resolved + executed after the
+ *  dialog frame is built so SETQUEST reward frames append to the burst. */
+type QuestIntent = { kind: 'launch' } | { kind: 'begin'; id: number } | { kind: 'end'; id: number };
 
 export type ScriptDlgResult =
   | { ok: true; frames: Buffer[] }
@@ -83,6 +95,26 @@ function distSq(a: { x: number; y: number; z: number }, b: { x: number; y: numbe
   const dy = a.y - b.y;
   const dz = a.z - b.z;
   return dx * dx + dy * dy + dz * dz;
+}
+
+/** Copy a charKey->questIds map with lowercased keys so `MaFl_Valin` and
+ *  `MI_MAFL_VALIN` resolve to the same entry. Tolerates a missing map (older
+ *  test fixtures that stub `quests` without `byNpc`). */
+function lowerKeys(src: ReadonlyMap<string, number[]> | undefined): Map<string, number[]> {
+  const out = new Map<string, number[]>();
+  if (!src) return out;
+  for (const [k, v] of src) out.set(k.toLowerCase(), v);
+  return out;
+}
+
+/** Normalize an NPC to its lowercased charKey for begin/end quest lookups.
+ *  Prefers the character.inc outfit key (proper `MaFl_Valin` form); falls back
+ *  to stripping `MI_` off the propMover key. Returns undefined if neither is set. */
+function npcLookupKey(npc: CMover): string | undefined {
+  const ck = npc.outfit?.characterKey;
+  if (ck) return ck.toLowerCase();
+  const stripped = npc.m_szKey?.replace(/^MI_/i, '');
+  return stripped ? stripped.toLowerCase() : undefined;
 }
 
 /**
@@ -104,9 +136,15 @@ function endCondDialog(def: QuestDef): { charKey: string; addKey: string } | und
 export class ScriptDlgService {
   private readonly chat: ChatSerializer;
   private readonly scriptDialog: ScriptDialogSerializer;
+  /** Lowercased charKey -> quest ids (mirrors `quests.byNpc`, case-normalized
+   *  so `MI_MAFL_VALIN` and `MaFl_Valin` collapse to the same key). */
+  private readonly beginByKey: Map<string, number[]>;
+  private readonly endByKey: Map<string, number[]>;
   constructor(private deps: ScriptDlgDeps) {
     this.chat = deps.chat ?? new ChatSerializer();
     this.scriptDialog = deps.scriptDialog ?? new ScriptDialogSerializer();
+    this.beginByKey = lowerKeys(deps.quests.byNpc?.begin);
+    this.endByKey = lowerKeys(deps.quests.byNpc?.end);
   }
 
   /**
@@ -136,18 +174,35 @@ export class ScriptDlgService {
 
     await this.runState(player, npc, npcKey, frame.key, frames);
     this.sweepDialogCond(player, npcKey, frame.key, frames);
+    const prefix = prefixForNpc(this.deps.dialogs, npcKey);
+    const lk = npcLookupKey(npc);
     logger.info(
-      { charId: player.m_idPlayer, objid: frame.objid, npcKey, prefix: prefixForNpc(this.deps.dialogs, npcKey), key: frame.key, frames: frames.length },
-      'SCRIPTDLG resolved',
+      {
+        charId: player.m_idPlayer,
+        npcKey,
+        charKey: npc.outfit?.characterKey ?? null,
+        prefix: prefix ?? null,
+        hasSource: stateForKey(this.deps.dialogs, prefix ?? '', keyToIndex(frame.key))?.source != null,
+        key: frame.key,
+        beginQuests: (this.beginByKey.get(lk ?? '') ?? []).length,
+        endQuests: (this.endByKey.get(lk ?? '') ?? []).length,
+        frames: frames.length,
+      },
+      'SCRIPTDLG click',
     );
     return { ok: true, frames };
   }
 
   /**
-   * Resolve + execute the dialog state for the pressed key. Emits the per-clicker
-   * menu (`Say` body + `AddKey` buttons + `Exit`) as a RUNSCRIPTFUNC frame, the
-   * `Speak` lines as broadcast chat (C++ `ScriptLib.cpp:40` -> `AddChat`), and
-   * fires `LaunchQuest` -> `questService.beginQuest` when a quest id is present.
+   * Resolve + execute the dialog state for the pressed key. When the state has a
+   * `source` body (the unported C++ subset), the {@link interpretDialog}
+   * evaluator runs it -- emitting `Say`/`AddKey`/`Exit` ops, `Speak` chat, and
+   * queuing quest actions -- which is what makes quest-giver NPCs (Valin,
+   * Drian, ...) produce their conditional offer/accept menus. States without
+   * `source` fall through to the structured-subset emitter. State 0 always also
+   * runs {@link synthInitialMenu} so the `#init` greeting + buttons render even
+   * though the compiled `WorldDialog.dll` (which generates them natively) is
+   * not shipped.
    */
   private async runState(
     player: CPlayer, npc: CMover, npcKey: string, key: string, frames: Buffer[],
@@ -159,24 +214,147 @@ export class ScriptDlgService {
     const state = stateForKey(this.deps.dialogs, prefix, keyIdx);
     if (!state) return;
 
-    this.emitMenu(player, state, frames);
+    const intents: QuestIntent[] = [];
+    if (state.source) {
+      this.runSource(player, npc, state.source, intents, frames);
+    } else {
+      this.emitMenu(player, state, frames);
+      for (const n of state.speak ?? []) {
+        const text = dialogText(this.deps.dialogs, n);
+        if (text !== undefined) frames.push(this.chat.build(npc.m_idMover, text));
+      }
+    }
+
+    // The `launch_quest` flag was extracted from a `LaunchQuest()` call the
+    // simple-subset converter collapsed to a boolean. If the interpreter didn't
+    // queue one itself (simple body had no source to interpret), honor the flag.
+    if (state.launch_quest && !intents.some((i) => i.kind === 'launch' || i.kind === 'begin')) {
+      intents.push({ kind: 'launch' });
+    }
+    // Also honor an explicit `launch_quest_id` if the data ever carries one.
+    if (state.launch_quest_id !== undefined) intents.push({ kind: 'begin', id: state.launch_quest_id });
+
     // v19 `#init` (state 0) buttons are generated by the compiled WorldDialog.dll,
-    // which we don't ship -- the extracted state-0 body only carries `Speak` (chat
-    // bubble), so without synthesis the dialog window opens empty for every NPC.
-    // When state 0 has no menu ops of its own, synthesize a visible menu from the
-    // data we have: greeting as SAY + this NPC's menu-bearing states flattened to
-    // AddKey buttons + Exit. ponytail: replace with the real #addKey/quest-state
-    // logic when the `source`-body interpreter lands.
+    // which we don't ship. Synthesize a visible #init menu from sibling states.
     if (keyIdx === 0) this.synthInitialMenu(player, state, file, frames);
 
-    for (const n of state.speak ?? []) {
+    for (const intent of intents) await this.applyIntent(player, npc, intent, frames);
+  }
+
+  /**
+   * Run a `source:` body through the interpreter. Say/AddKey/Exit collect into a
+   * single RUNSCRIPTFUNC burst (leading removeAllKeys); Speak emits chat bubbles;
+   * LaunchQuest/BeginQuest/EndQuest queue for post-burst resolution. Mirrors how
+   * `emitMenu` builds frames so sourced + structured states render identically.
+   */
+  private runSource(
+    player: CPlayer, npc: CMover, source: string,
+    intents: QuestIntent[], frames: Buffer[],
+  ): void {
+    const ops: ScriptFunc[] = [];
+    const speaks: number[] = [];
+    let exit = false;
+    const sink: DialogInterpSink = {
+      say: (n) => {
+        const text = dialogText(this.deps.dialogs, n);
+        if (text !== undefined) ops.push({ type: 'say', text });
+      },
+      speak: (n) => { speaks.push(n); },
+      addKey: (label, key, param) => {
+        const word = dialogText(this.deps.dialogs, label) ?? '';
+        const f: Extract<ScriptFunc, { type: 'addKey' }> = { type: 'addKey', word, key: String(key ?? label) };
+        if (param !== undefined) f.param = param;
+        ops.push(f);
+      },
+      addCondKey: (label, key) => {
+        const word = dialogText(this.deps.dialogs, label) ?? '';
+        ops.push({ type: 'addKey', word, key: String(key) });
+      },
+      removeKey: () => { /* ponytail: ScriptFunc has no removeKey op yet */ },
+      exit: () => { exit = true; },
+      launchQuest: () => { intents.push({ kind: 'launch' }); },
+      beginQuest: (id) => { intents.push({ kind: 'begin', id }); },
+      endQuest: (id) => { intents.push({ kind: 'end', id }); },
+      changeJob: () => { /* ponytail: job change via dialog */ },
+      createItem: () => { /* ponytail: inventory grant via dialog */ },
+      removeAllItem: () => { /* ponytail: inventory wipe via dialog */ },
+    };
+    interpretDialog(source, this.makeBindings(player), sink);
+
+    for (const n of speaks) {
       const text = dialogText(this.deps.dialogs, n);
       if (text !== undefined) frames.push(this.chat.build(npc.m_idMover, text));
     }
-    if (state.launch_quest && state.launch_quest_id !== undefined) {
-      const res = await this.deps.questService.beginQuest(player, state.launch_quest_id);
-      if (res.ok) frames.push(...res.frames);
+    if (ops.length > 0 || exit) {
+      const funcs = ops.length > 0 ? [{ type: 'removeAllKeys' } as ScriptFunc, ...ops] : [{ type: 'removeAllKeys' } as ScriptFunc];
+      if (exit) funcs.push({ type: 'exit' });
+      frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
     }
+  }
+
+  /**
+   * Resolve a queued quest intent. `launch` (bare `LaunchQuest()` -- C++ calls
+   * `__QuestEnd(pcId, npcId, 0)`) auto-resolves the quest: the first quest in
+   * the NPC's `beginByKey` list that the player can begin, else the first active
+   * quest in `endByKey` the player can end. Explicit `begin`/`end` ids skip
+   * resolution. Appends SETQUEST + reward frames from `questService`.
+   */
+  private async applyIntent(
+    player: CPlayer, npc: CMover, intent: QuestIntent, frames: Buffer[],
+  ): Promise<void> {
+    let questId: number | undefined;
+    if (intent.kind === 'begin' || intent.kind === 'end') {
+      questId = intent.id;
+    } else {
+      questId = this.resolveLaunchQuest(player, npc);
+    }
+    if (questId === undefined) return;
+    const res = intent.kind === 'end'
+      ? await this.deps.questService.endQuest(player, questId)
+      : await this.deps.questService.beginQuest(player, questId);
+    if (res.ok) frames.push(...res.frames);
+  }
+
+  /** Find the quest a bare `LaunchQuest()` at this NPC should act on. Prefers a
+   *  begin-eligible quest; falls back to an end-eligible active quest. */
+  private resolveLaunchQuest(player: CPlayer, npc: CMover): number | undefined {
+    const lk = npcLookupKey(npc);
+    if (!lk) return undefined;
+    for (const id of this.beginByKey.get(lk) ?? []) {
+      if (!player.findQuest(id) && !player.isCompleteQuest(id)) return id;
+    }
+    for (const id of this.endByKey.get(lk) ?? []) {
+      const q = player.findQuest(id);
+      if (q) return id;
+    }
+    return undefined;
+  }
+
+  /** Build the interpreter bindings view over player + world state. Queries that
+   *  depend on unported systems (party/guild/inventory detail) return safe
+   *  defaults so conditional bodies degrade rather than crash. */
+  private makeBindings(player: CPlayer): DialogInterpBindings {
+    const defines = this.deps.defines ?? new Map<string, number>();
+    return {
+      resolveSymbol: (sym) => defines.get(sym),
+      questState: (id) => player.findQuest(id)?.state ?? -1,
+      isSetQuest: (id) => (player.findQuest(id) !== undefined || player.isCompleteQuest(id)) ? 1 : 0,
+      playerJob: () => player.m_nJob,
+      playerLvl: () => player.m_nLevel,
+      getItemNum: () => 0,           // ponytail: inventory count
+      emptyInventoryNum: () => 32,   // ponytail: assume room
+      playerGold: () => player.m_nGold ?? 0,
+      partySize: () => 1,
+      isParty: () => 0,
+      isPartyMaster: () => 1,        // solo player is their own master
+      isGuild: () => 0,
+      isGuildMaster: () => 0,
+      isGuildQuest: () => 0,
+      guildQuestState: () => -1,
+      playerExpPercent: () => 0,
+      random: (n) => (n > 0 ? Math.floor(Math.random() * n) : 0),
+      isWormonServer: () => 0,
+    };
   }
 
   /**

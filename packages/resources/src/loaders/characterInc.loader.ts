@@ -41,6 +41,7 @@ const MMI_FALLBACK: Record<string, number> = {
   MMI_MARKING: 8,
   MMI_BANKING: 9,
   MMI_GUILDBANKING: 15,
+  MMI_NPC_BUFF: 74,
 };
 
 /** `MMI_DIALOG` (`defineNeuz.h:92`) -- gates the right-click Dialog option. */
@@ -48,6 +49,13 @@ export const MMI_DIALOG = 0;
 
 /** `MMI_TRADE` (`defineNeuz.h:94`) -- gates the right-click Shop option -> OPENSHOPWND. */
 export const MMI_TRADE = 2;
+
+/**
+ * `MMI_NPC_BUFF` (`defineNeuz.h:180`) -- gates the right-click Buff Pang option
+ * under `__NPC_BUFF`. The client sends `PACKETTYPE_NPC_BUFF` with the NPC's
+ * character.inc key; the server applies the block's `SetBuffSkill` list.
+ */
+export const MMI_NPC_BUFF = 74;
 
 /** One equipped part -- C++ `m_adwEquip[ nEquipNum++ ]` (Project.cpp:2937). */
 export interface CharacterIncEquipPart {
@@ -138,6 +146,26 @@ export interface CharacterIncBlock {
   readonly venderType: number | undefined;
   /** Count of `AddVendorSlot(...)` entries (`vendorTabs.length`). */
   readonly vendorSlotCount: number;
+  /**
+   * Buff-pang skill list from `SetBuffSkill` under `__NPC_BUFF`
+   * (`Project.cpp:3218-3231`). Empty for non-buff NPCs. Each entry is applied to
+   * the player when they right-click a buff NPC + send `PACKETTYPE_NPC_BUFF`.
+   */
+  readonly buffSkills: readonly NpcBuffSkillEntry[];
+}
+
+/**
+ * One `SetBuffSkill( skillId, level, minLV, maxLV, timeMs )` entry -- C++
+ * `NPC_BUFF_SKILL` (`Project.h:384-393`). The server applies `skillId` at
+ * `level` to a player whose level is in `[minPlayerLevel, maxPlayerLevel]`,
+ * overriding the skill's base duration with `durationMs`.
+ */
+export interface NpcBuffSkillEntry {
+  readonly skillId: number;
+  readonly level: number;
+  readonly minPlayerLevel: number;
+  readonly maxPlayerLevel: number;
+  readonly durationMs: number;
 }
 
 export interface CharacterIncIndex {
@@ -195,6 +223,7 @@ function parseBlock(
   iiIds: Map<string, number>,
   ik3Ids: Map<string, number>,
   mmiIds: Map<string, number>,
+  siIds: Map<string, number>,
 ): CharacterIncBlock {
   const menus = new Set<number>();
   for (const m of body.matchAll(/\bAddMenu(?:Lang)?\s*\([^)]*?MMI_([A-Z0-9_]+)/g)) {
@@ -211,6 +240,7 @@ function parseBlock(
   const vendorTabs = parseVendorTabs(body);
   const vendorItems = parseVendorItems(body, ik3Ids);
   const vendorItemIds = parseVendorItemIds(body);
+  const buffSkills = parseBuffSkills(body, siIds);
   const vt = body.match(/\bSetVend[oe]rType\s*\(\s*(-?\d+)\s*\)/);
   const venderType = vt?.[1] !== undefined ? parseInt(vt[1], 10) : undefined;
 
@@ -250,6 +280,7 @@ function parseBlock(
     vendorItemIds,
     venderType,
     vendorSlotCount: vendorTabs.length,
+    buffSkills,
   };
 }
 
@@ -319,12 +350,43 @@ function parseHex(s: string): number {
     : parseInt(s, 10) >>> 0;
 }
 
+/**
+ * `SetBuffSkill( SI_*, dwSkillLV, nMinPlayerLV, nMaxPlayerLV, dwSkillTime )` ->
+ * `m_vecNPCBuffSkill` (`Project.cpp:3218-3231`). `SI_*` resolved via
+ * `defineSkill.h`; a bare numeric literal is accepted too (rare). Drops entries
+ * whose skill id fails to resolve -- mirrors C++ silently skipping a bad row.
+ */
+function parseBuffSkills(body: string, siIds: Map<string, number>): NpcBuffSkillEntry[] {
+  const re = /\bSetBuffSkill\s*\(\s*([A-Za-z0-9_]+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/g;
+  const out: NpcBuffSkillEntry[] = [];
+  for (const m of body.matchAll(re)) {
+    const skillTok = m[1];
+    const levelRaw = m[2];
+    const minRaw = m[3];
+    const maxRaw = m[4];
+    const timeRaw = m[5];
+    if (skillTok === undefined || levelRaw === undefined || minRaw === undefined ||
+        maxRaw === undefined || timeRaw === undefined) continue;
+    const skillId = siIds.get(skillTok) ?? (/^\d+$/.test(skillTok) ? parseInt(skillTok, 10) : -1);
+    if (skillId < 0) continue;
+    out.push({
+      skillId,
+      level: parseInt(levelRaw, 10),
+      minPlayerLevel: parseInt(minRaw, 10),
+      maxPlayerLevel: parseInt(maxRaw, 10),
+      durationMs: parseInt(timeRaw, 10),
+    });
+  }
+  return out;
+}
+
 /** Pure parser -- exported for tests. */
 export function parseCharacterInc(
   content: string,
   iiIds: Map<string, number>,
   ik3Ids: Map<string, number>,
   mmiIds: Map<string, number>,
+  siIds: Map<string, number> = new Map(),
 ): CharacterIncBlock[] {
   const blocks: CharacterIncBlock[] = [];
   const src = stripComments(content);
@@ -344,7 +406,7 @@ export function parseCharacterInc(
       i++;
     }
     const body = src.slice(openIdx + 1, i - 1);
-    blocks.push(parseBlock(key, body, iiIds, ik3Ids, mmiIds));
+    blocks.push(parseBlock(key, body, iiIds, ik3Ids, mmiIds, siIds));
     headerRe.lastIndex = i;
   }
   return blocks;
@@ -365,16 +427,18 @@ export async function loadCharacterInc(rawDir: string): Promise<CharacterIncInde
     return { byKey: new Map(), byStem: new Map() };
   }
 
-  const [iiBuf, ik3Buf, mmiBuf] = await Promise.all([
+  const [iiBuf, ik3Buf, mmiBuf, siBuf] = await Promise.all([
     readFile(resolve(rawDir, 'defineItem.h')).catch(() => null),
     readFile(resolve(rawDir, 'defineItemkind.h')).catch(() => null),
     readFile(resolve(rawDir, 'defineNeuz.h')).catch(() => null),
+    readFile(resolve(rawDir, 'defineSkill.h')).catch(() => null),
   ]);
   const iiIds = iiBuf ? parseDefines(decode(iiBuf), 'II_') : new Map<string, number>();
   const ik3Ids = ik3Buf ? parseDefines(decode(ik3Buf), 'IK3_') : new Map<string, number>();
   const mmiIds = mmiBuf ? parseDefines(decode(mmiBuf), 'MMI_') : new Map<string, number>();
+  const siIds = siBuf ? parseDefines(decode(siBuf), 'SI_') : new Map<string, number>();
 
-  const blocks = parseCharacterInc(decode(buf), iiIds, ik3Ids, mmiIds);
+  const blocks = parseCharacterInc(decode(buf), iiIds, ik3Ids, mmiIds, siIds);
   const byKey = new Map<string, CharacterIncBlock>();
   const byStem = new Map<string, CharacterIncBlock>();
   for (const b of blocks) {

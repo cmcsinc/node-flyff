@@ -27,3 +27,4 @@ export * from './serializers/skillState.serializer';
 export * from './serializers/chat.serializer';
 export * from './serializers/itemContainer';
 export * from './serializers/actionSlot.serializer';
+export * from './serializers/duel.serializer';

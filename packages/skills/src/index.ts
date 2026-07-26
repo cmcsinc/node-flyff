@@ -14,3 +14,4 @@ export * from './services/skill.service';
 export * from './handlers/useSkill.handler';
 export * from './handlers/doUseSkillPoint.handler';
 export * from './net/snapshot/useSkill.serializer';
+export * from './net/snapshot/doApplyUseSkill.serializer';

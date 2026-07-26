@@ -71,7 +71,7 @@ describe('JoinHandler', () => {
 
     // self-spawn, SETEXPERIENCE (loaded exp), then TASKBAR grid repush -- 3 packets total.
     assert.equal(sock._written.length, 3);
-    assert.equal(sock._written[0]!.length, 3354); // WORLD_READINFO + "Hero" snapshot (3350 base + 4)
+    assert.equal(sock._written[0]!.length, 3434); // WORLD_READINFO + "Hero" snapshot (3430 base + 4; v19 MAX_JOB=40/MAX_SKILL_JOB=51)
     assert.equal(sock._destroyed, false);
   });
 

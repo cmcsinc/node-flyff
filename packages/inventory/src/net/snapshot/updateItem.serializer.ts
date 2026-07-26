@@ -19,6 +19,8 @@ import { NULL_ID } from '@flyff/world-core';
 
 /** Container/slot-field codes (`_Common/Mover.h:62`, `UI_*`). */
 export const UI_NUM = 0; // stack count
+export const UI_HP = 1; // durability / m_nHitPoint (Mover.h:63)
+export const UI_RN = 2; // repair count / m_nRepairNumber (Mover.h:64)
 export const UI_AO = 3; // refine level (m_nAbilityOption, Mover.h:65)
 export const UI_RAO = 4; // element level (m_nResistAbilityOption, Mover.h:66)
 export const UI_IR = 5; // element type (m_bItemResist, Mover.h:67)
@@ -30,6 +32,16 @@ export const UI_COOLTIME = 8; // count + start cooldown sweep (Mover.h:68)
  */
 export function buildUpdateItemCount(objid: number, slot: number, count: number): Buffer {
   return buildUpdateItem(objid, slot, UI_NUM, count);
+}
+
+/**
+ * Build an UPDATE_ITEM snapshot for a durability change -- `OnRepairItem`
+ * tail (`DPSrvr.cpp:4994`): `UpdateItem(itemObjId, UI_HP, dwEndurance)`. Sets
+ * `m_nHitPoint` to the item's max (full repair). `objid` is the player's,
+ * `itemObjid` the stable CItemElem objid (nId field).
+ */
+export function buildUpdateItemDurability(objid: number, itemObjid: number, durability: number): Buffer {
+  return buildUpdateItem(objid, itemObjid, UI_HP, durability);
 }
 
 /**

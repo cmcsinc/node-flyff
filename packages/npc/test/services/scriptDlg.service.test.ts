@@ -12,14 +12,23 @@ const NPC_ID = 0x40000001;
 
 /** Minimal CPlayer stand-in -- only the fields `dialog()` touches. */
 function mkPlayer(overrides: Partial<CPlayer> = {}): CPlayer {
-  return {
+  const base = {
     m_idPlayer: 99,
     m_tickScript: -10000,
     m_vPos: { x: 0, y: 0, z: 0 },
-    m_aQuest: [],
+    m_aQuest: [] as Array<{ id: number; state: number }>,
+    m_aCompleteQuest: [] as number[],
     _dirty: new Set<string>(),
-    ...overrides,
-  } as unknown as CPlayer;
+  };
+  const merged = { ...base, ...overrides };
+  // `findQuest` / `isCompleteQuest` are methods on real CPlayer; attach them
+  // here so the interpreter bindings (which read player quest state) work in tests.
+  const player = {
+    ...merged,
+    findQuest: (id: number) => merged.m_aQuest.find((q) => q.id === id),
+    isCompleteQuest: (id: number) => merged.m_aCompleteQuest.includes(id),
+  };
+  return player as unknown as CPlayer;
 }
 
 function mkNpc(characterKey?: string, pos = { x: 0, y: 0, z: 0 }): CMover {
@@ -276,5 +285,59 @@ describe('ScriptDlgService.dialog', () => {
     // batch must not queue one (the player closes via the window close box / ESC).
     assert.equal(funcs.filter((f) => f.type === 'exit').length, 0);
     assert.ok(out.frames.some((f) => f.equals(Buffer.from([0xc0, NPC_ID & 0xff])))); // Speak chat too
+  });
+
+  it('interprets a `source:` body: conditional LaunchQuest auto-resolves + begins the NPC quest', async () => {
+    const { svc, began, frame } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const dialogs = mkDialogs(['', '', 'offer', 'accept']);
+    dialogs.byPrefix.set('mafl_test', {
+      _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+      // Mirrors dudk_drian state 1: if VOL1 done -> LaunchQuest(); else AddKey buttons.
+      states: { '1': { source: 'if(GetQuestState(QUEST_DUDK_VOL1) == QS_END) { LaunchQuest(); } else { AddKey( 9 ); }' } },
+    } as never);
+    const quests = {
+      byId: new Map(), drops: new Map(),
+      byNpc: { begin: new Map([['mafl_test', [4242]]]), end: new Map() },
+    } as unknown as QuestIndex;
+    const defines = new Map([['QUEST_DUDK_VOL1', 100]]);
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs, quests, questService: svc, defines,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    // Player has VOL1 ended (state 14 == QS_END) -> LaunchQuest branch fires.
+    const player = mkPlayer({ m_aQuest: [{ id: 100, state: 14 } as never] });
+    const out = await s.dialog(player, { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    // No menu ops in the taken branch -> no RUNSCRIPTFUNC frame; only the begin SETQUEST frame.
+    assert.equal(calls.length, 0);
+    assert.deepEqual(began, [4242]);           // auto-resolved from the NPC begin map
+    assert.ok(out.frames.some((f) => f.equals(frame)));
+  });
+
+  it('interprets a `source:` body: else-branch emits AddKey buttons', async () => {
+    const { svc, began } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const dialogs = mkDialogs(['', '', '', '', '', '', '', '', '', 'btn9', 'btn10']);
+    dialogs.byPrefix.set('mafl_test', {
+      _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+      states: { '1': { source: 'if(GetQuestState(QUEST_DUDK_VOL1) == QS_END) { LaunchQuest(); } else { AddKey( 9 ); AddKey( 10 ); }' } },
+    } as never);
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs, quests: mkQuests([]), questService: svc,
+      defines: new Map([['QUEST_DUDK_VOL1', 100]]),
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    // VOL1 NOT ended -> else branch -> two AddKey buttons.
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    assert.equal(calls.length, 1);
+    const funcs = calls[0]!;
+    assert.equal(funcs[0]!.type, 'removeAllKeys');
+    assert.deepEqual(funcs[1], { type: 'addKey', word: 'btn9', key: '9' });
+    assert.deepEqual(funcs[2], { type: 'addKey', word: 'btn10', key: '10' });
+    assert.deepEqual(began, []); // LaunchQuest branch not taken
   });
 });

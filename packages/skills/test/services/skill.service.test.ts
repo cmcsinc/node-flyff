@@ -2,7 +2,7 @@ import { describe, it, mock, beforeEach, afterEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer, CMover, DST, CHRSTATE_BITS } from '@flyff/entities';
 import { SkillService } from '../../src/services/skill.service';
-import { NULL_ID, SHORTCUT, SNAPSHOTTYPE_ENDSKILLQUEUE, SNAPSHOTTYPE_SETACTIONPOINT } from '@flyff/world-core';
+import { NULL_ID, SHORTCUT, SNAPSHOTTYPE_ENDSKILLQUEUE } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 import type { SkillIndex, SkillDefinition } from '@flyff/resources';
 
@@ -529,10 +529,11 @@ describe('SkillService action-slot queue progression', () => {
     assert.equal(m.calls.resolve, 5, 'all 5 queued skills fired the damage pipeline');
     assert.equal(p.m_nUsedSkillQueue, -1, 'queue pointer reset after exhaust');
     assert.equal(p.m_queueTimer, undefined, 'pending timer cleared');
-    assert.equal(p.m_nActionPoint, 100 - (6 + 8 + 11 + 30), 'AP spent 6+8+11+30 across slots 1..4');
-    // SETACTIONPOINT echoes for slots 1..4, then the bodyless ENDSKILLQUEUE ack.
+    assert.equal(p.m_nActionPoint, 100, 'v19 never decrements AP -- cost table is #ifndef __NEW_TASKBAR_V19 (UserTaskBar.cpp:211)');
+    // v19 client has no case SNAPSHOTTYPE_SETACTIONPOINT handler (DPClient.cpp:608);
+    // emitting 0x00c5 hits default:ASSERT(0) and desyncs the stream. Must be 0.
     const subTypes = m.sent.map((b) => b.readUInt16LE(14));
-    assert.equal(subTypes.filter((s) => s === SNAPSHOTTYPE_SETACTIONPOINT).length, 4);
+    assert.equal(subTypes.filter((s) => s === 0x00c5).length, 0, 'v19 forbids SETACTIONPOINT -- would crash client');
     assert.ok(subTypes.includes(SNAPSHOTTYPE_ENDSKILLQUEUE), 'ENDSKILLQUEUE ack sent on exhaust');
   });
 
@@ -566,7 +567,7 @@ describe('SkillService action-slot queue progression', () => {
 
     assert.equal(m.calls.resolve, 2, 'two skills fired before the empty slot ended the queue');
     assert.equal(p.m_nUsedSkillQueue, -1);
-    assert.equal(p.m_nActionPoint, 100 - 6, 'only the pos-1 AP cost (6) was charged');
+    assert.equal(p.m_nActionPoint, 100, 'v19 never decrements AP');
   });
 
   it('skips a queued skill whose cast fails and continues to the next', () => {
