@@ -32,7 +32,19 @@ import {
 /** `CHG_SENTINEL` (defineAttribute.h) -- "no override" marker sent on the wire. */
 const CHG_SENTINEL = 0x7fffffff;
 
-/** `objid | 0x004c | word type | word skillId | dword level | dword remainMs`. */
+/**
+ * `objid | 0x004c | dword idTarget | word type | word skillId | dword level | dword remainMs`.
+ *
+ * The client `OnSetSkillState(ar)` is dispatched with ONLY `ar` (no header
+ * objid) and reads `idTarget` as the FIRST body DWORD
+ * (`Neuz/DPClient.cpp:14194-14199`), then `wType/wID/dwLevel/dwTime`. Omitting
+ * `idTarget` misaligns the stream, `prj.GetMover(garbage)` returns null, and
+ * `AddBuff` never fires -- buffs apply server-side but no icon appears.
+ *
+ * For self/targeted buffs the broadcaster (`pCenter`, header) and `idTarget`
+ * (body) are the same mover, so `objid` is written into both slots (matches
+ * `CUserMng::AddSetSkillState` when `pCenter == pTarget`).
+ */
 export function buildSetSkillState(
   objid: number,
   type: number,
@@ -46,6 +58,7 @@ export function buildSetSkillState(
   w.writeWord(1);
   w.writeDword(objid);
   w.writeWord(SNAPSHOTTYPE_SETSKILLSTATE);
+  w.writeDword(objid); // body idTarget (DPClient.cpp:14199 reads this first)
   w.writeWord(type);
   w.writeWord(skillId);
   w.writeDword(level);

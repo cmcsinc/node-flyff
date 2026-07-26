@@ -29,7 +29,10 @@ function readSnapshotHeader(buf: Buffer, r: PacketReader) {
 }
 
 describe('buildSetSkillState (SNAPSHOTTYPE_SETSKILLSTATE 0x004c)', () => {
-  it('writes objid | type:word | skillId:word | level:dword | remainMs:dword', () => {
+  it('writes objid | idTarget:dword | type:word | skillId:word | level:dword | remainMs:dword', () => {
+    // Client OnSetSkillState(ar) reads idTarget FIRST from the body, before
+    // wType/wID/dwLevel/dwTime (DPClient.cpp:14194-14199). Without it the
+    // stream misaligns and AddBuff never fires -> no buff icon.
     const buf = buildSetSkillState(42, 1, 150, 4, 30_000);
     const r = new PacketReader(buf);
     const h = readSnapshotHeader(buf, r);
@@ -38,9 +41,10 @@ describe('buildSetSkillState (SNAPSHOTTYPE_SETSKILLSTATE 0x004c)', () => {
     assert.equal(h.count, 1);
     assert.equal(h.objid, 42);
     assert.equal(h.sub, SNAPSHOTTYPE_SETSKILLSTATE);
-    assert.equal(r.readWord(), 1);     // wType
-    assert.equal(r.readWord(), 150);   // wID (skill id)
-    assert.equal(r.readDword(), 4);    // dwLevel
+    assert.equal(r.readDword(), 42);    // idTarget (body, == objid for self-buff)
+    assert.equal(r.readWord(), 1);      // wType
+    assert.equal(r.readWord(), 150);    // wID (skill id)
+    assert.equal(r.readDword(), 4);     // dwLevel
     assert.equal(r.readDword(), 30_000); // dwTime (remaining ms)
   });
 });
