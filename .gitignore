@@ -154,3 +154,6 @@ game.zip
 
 # Agent worktrees (full repo working copies, not source)
 .claude/worktrees/
+
+# Test artifact leak (repair.service.test.ts hardcodes this path)
+.tmp-repair-test.sqlite3
