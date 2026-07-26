@@ -30,6 +30,8 @@ import type { JoinService } from '../services/join.service';
 import type { PlayerSnapshotSerializer } from '../net/snapshot/playerSnapshot.serializer';
 import type { SetExperienceSerializer } from '@flyff/combat';
 import type { TaskBarSnapshotSerializer } from '../net/snapshot/taskbar.serializer';
+import { buildSetSkillState, buildSetDestParam } from '@flyff/world-core';
+import { CHG_SENTINEL } from '@flyff/entities';
 
 const logger = createLogger({ module: 'join-handler' });
 
@@ -102,6 +104,20 @@ export class JoinHandler {
       outcome.player.m_aSlotItem,
       outcome.player.m_aSlotQueue,
     ));
+
+    // Replay active skill buffs restored by JoinService.loadBuffs: SETSKILLSTATE
+    // adds the icon + countdown timer (remainMs = totalMs -- C++ resets the
+    // timer to full on relog), per-effect SETDESTPARAM repopulates the stat
+    // window. Self-only -- peers have not seen this player yet; vicinity-on-
+    // spawn rides the ADD_OBJ buff list (ponytail). Buff DST already landed in
+    // m_params during join() so getMaxHp/Fp were correct from the snapshot.
+    const pid = outcome.player.m_idPlayer;
+    for (const buff of outcome.player.m_buffs.getAll()) {
+      sendPacket(socket, buildSetSkillState(pid, buff.type, buff.skillId, buff.level, buff.totalMs));
+      for (const e of buff.effects) {
+        sendPacket(socket, buildSetDestParam(pid, e.dst, e.adj, e.chg ?? CHG_SENTINEL));
+      }
+    }
 
     // NOTE: zone NPCs/monsters are NOT sent here. Their server-side spawn lives
     // in SpawnManager.bootstrap() (run once at world-server boot, compose.ts) --
