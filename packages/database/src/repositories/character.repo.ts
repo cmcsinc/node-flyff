@@ -58,6 +58,14 @@ export interface CharacterRow {
    */
   taskbar?: string | null;
   /**
+   * Active timed buffs (C++ `SkillInfluence`), JSON of `{ type, skillId,
+   * level, totalMs }` entries. Added by migration 014. Nullable: a fresh
+   * character has no active buffs (null -> none restored on JOIN). `totalMs`
+   * is the originally-applied TOTAL duration -- the timer resets to full on
+   * relog (matches C++ `SaveSkillInfluence` / `GetSKillInfluence`).
+   */
+  buffs?: string | null;
+  /**
    * PK propensity / chaotic state (C++ `m_dwPKPropensity`). > 0 = chaotic.
    * Added by migration 013.
    */
