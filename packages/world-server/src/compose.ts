@@ -92,6 +92,8 @@ import { ReqLeaveHandler } from './handlers/reqLeave.handler';
 import { SkillTaskBarHandler } from './handlers/skillTaskbar.handler';
 import { ShopService } from '@flyff/npc';
 import { ShopHandler } from '@flyff/npc';
+import { NpcBuffService } from '@flyff/npc';
+import { NpcBuffHandler } from '@flyff/npc';
 import { RemoveQuestHandler } from '@flyff/quest';
 import { QuestCheckHandler } from '@flyff/quest';
 import { QuestHelperHandler } from '@flyff/quest';
@@ -174,6 +176,7 @@ export interface WorldComposeResult {
   doUseItemHandler: DoUseItemHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
+  npcBuffHandler: NpcBuffHandler;
   taskbarHandler: TaskBarHandler;
   endSkillQueueHandler: EndSkillQueueHandler;
   reqLeaveHandler: ReqLeaveHandler;
@@ -577,6 +580,15 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const shopHandler = new ShopHandler({ playerManager, shopService, createItemSerializer });
 
+  // NPC buff-pang (__NPC_BUFF) -- applies a configured skill list on right-click.
+  const npcBuffService = new NpcBuffService({
+    spawnManager,
+    characterInc: resources.characterInc,
+    skills: resources.skills,
+    skillService,
+  });
+  const npcBuffHandler = new NpcBuffHandler(playerManager, npcBuffService);
+
   // Phase 4 -- C->S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
   const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
   const questCheckHandler = new QuestCheckHandler(playerManager, questService);
@@ -660,6 +672,7 @@ export async function compose(): Promise<WorldComposeResult> {
     repairHandler,
     bankHandler,
     shopHandler,
+    npcBuffHandler,
     taskbarHandler,
     skillTaskbarHandler,
     endSkillQueueHandler,
