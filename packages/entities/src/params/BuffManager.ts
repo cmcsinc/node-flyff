@@ -49,6 +49,13 @@ export interface ActiveBuff {
   readonly type: number;
   /** Absolute expiry timestamp (ms). C++ stores inst+total; we store the deadline. */
   expiresAtMs: number;
+  /**
+   * Originally-applied TOTAL duration in ms (C++ `IBuff::GetTotal`). Persisted
+   * to `characters.buffs` and used to re-apply the buff at full duration on
+   * relog (`SaveSkillInfluence` / `GetSKillInfluence` store total, not
+   * remaining, so the timer resets to full on JOIN).
+   */
+  totalMs: number;
   /** DST effects applied for this buff -- reversed verbatim on remove/expire. */
   readonly effects: readonly DstEffect[];
   /** Optional periodic-damage payload (poison/bleed). Absent on non-DoT buffs. */
@@ -92,6 +99,15 @@ export class BuffManager {
   }
 
   /**
+   * All active buffs in insertion order. Used by the checkpoint flush to
+   * persist `characters.buffs` and by the JOIN handler to re-broadcast
+   * SETSKILLSTATE + SETDESTPARAM for restored buffs (self-only).
+   */
+  getAll(): readonly ActiveBuff[] {
+    return [...this.buffs.values()];
+  }
+
+  /**
    * Attach a timed skill buff (`CBuffMgr::AddBuff` + `Overwrite`).
    *
    * - Same skill, same level → refresh duration to `max(remaining, new)`. Effects
@@ -116,6 +132,7 @@ export class BuffManager {
         // AddTotal: max(remaining, new). No re-apply (effects already in the pool).
         const deadline = nowMs + durationMs;
         existing.expiresAtMs = existing.expiresAtMs > deadline ? existing.expiresAtMs : deadline;
+        existing.totalMs = durationMs;
         return 'refreshed';
       }
       if (level < existing.level) {
@@ -132,7 +149,7 @@ export class BuffManager {
       }
     }
     this.params.applyEffects(effects);
-    this.buffs.set(skillId, { skillId, level, type: BUFF_SKILL, expiresAtMs: nowMs + durationMs, effects, dot });
+    this.buffs.set(skillId, { skillId, level, type: BUFF_SKILL, expiresAtMs: nowMs + durationMs, totalMs: durationMs, effects, dot });
     return existing !== undefined ? 'replaced' : 'added';
   }
 
@@ -154,6 +171,7 @@ export class BuffManager {
     if (existing !== undefined) {
       const deadline = nowMs + durationMs;
       existing.expiresAtMs = existing.expiresAtMs > deadline ? existing.expiresAtMs : deadline;
+      existing.totalMs = durationMs;
       return 'refreshed';
     }
     if (this.buffs.size >= MAX_SKILL_BUFF) {
@@ -164,7 +182,7 @@ export class BuffManager {
       }
     }
     this.params.applyEffects(effects);
-    this.buffs.set(itemId, { skillId: itemId, level: 0, type: BUFF_ITEM, expiresAtMs: nowMs + durationMs, effects });
+    this.buffs.set(itemId, { skillId: itemId, level: 0, type: BUFF_ITEM, expiresAtMs: nowMs + durationMs, totalMs: durationMs, effects });
     return 'added';
   }
 

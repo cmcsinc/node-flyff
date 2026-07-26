@@ -20,9 +20,10 @@ import type { ItemDefinition, SetItemDef, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
-import { AUTH, isJobMatch } from '@flyff/entities';
+import { AUTH, BUFF_SKILL, isJobMatch } from '@flyff/entities';
+import { buffEffects, dotFromSkill } from '@flyff/skills';
 import { recomputeSetBonuses } from '@flyff/inventory';
-import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam } from '@flyff/world-core';
+import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam, buildSetSkillState } from '@flyff/world-core';
 import { decodeTaskBar, decodeTaskBarQueue } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
@@ -116,6 +117,9 @@ export class JoinService {
       'JOIN resolved authority',
     );
     if (this.deps.questService) await this.deps.questService.loadOnJoin(player);
+    // Restore active buffs BEFORE loadInventory's max recompute so buffed
+    // STA/STR count toward getMaxHp/getMaxFp from the first tick.
+    this.loadBuffs(player, row.buffs);
     await this.loadInventory(player);
     await this.loadBank(player);
     await this.loadSkills(player);
@@ -288,6 +292,7 @@ export class JoinService {
       stamina: player.m_nSta,
       dexterity: player.m_nDex,
       intelligence: player.m_nInt,
+      buffs: serializeBuffs(player),
     });
     if (this.deps.bankRepo) {
       for (let t = 0; t < player.m_BankGold.length; t++) {
@@ -345,6 +350,36 @@ export class JoinService {
     player.m_aSlotItem = decodeTaskBar(json);
     player.m_aSlotQueue = decodeTaskBarQueue(json);
   }
+
+  /**
+   * Hydrate active timed buffs from `characters.buffs` (C++
+   * `GetSKillInfluence`, `DbManagerFun.cpp:1384`). Each persisted entry is
+   * `{ type, skillId, level, totalMs }`; the DST effects are re-derived from
+   * the skill definition via {@link buffEffects} / {@link dotFromSkill} (C++
+   * re-derives from `prj.skillProp` on `CreateBuff` -- effects are not
+   * persisted). The timer resets to the full `totalMs` (C++ stores total, not
+   * remaining). Applies state to `m_params` only; the JOIN handler broadcasts
+   * SETSKILLSTATE + SETDESTPARAM to self after the snapshot.
+   *
+   * Only `BUFF_SKILL` entries are restored. `BUFF_ITEM` entries are dropped on
+   * save (see {@link serializeBuffs}) -- item-buff effect derivation from the
+   * item definition is a ponytail upgrade.
+   */
+  private loadBuffs(player: CPlayer, json: string | null | undefined): void {
+    if (!this.deps.skills) return;
+    const entries = deserializeBuffs(json);
+    if (entries.length === 0) return;
+    const now = Date.now();
+    for (const e of entries) {
+      const skill = this.deps.skills.skills.get(e.skillId);
+      if (skill === undefined) continue;
+      const levelRow = skill.levels.find((l) => l.level === e.level);
+      if (levelRow === undefined) continue;
+      const effects = buffEffects(levelRow);
+      const dot = dotFromSkill(levelRow, now);
+      player.m_buffs.addSkillBuff(e.skillId, e.level, e.totalMs, effects, now, dot);
+    }
+  }
 }
 
 /**
@@ -366,4 +401,63 @@ function rosterIdsForJob(skills: SkillIndex, job: number): number[] {
   }
   roster.sort((a, b) => (a.reqLevel - b.reqLevel) || (a.id - b.id));
   return roster.map((s) => s.id);
+}
+
+/** Persisted buff entry shape (C++ `{ type, id, level, total }` 4-int SaveSkillInfluence). */
+interface PersistedBuffRow {
+  /** Buff source type (BUFF_SKILL). */
+  readonly t: number;
+  /** Skill id (wID). */
+  readonly s: number;
+  /** Skill level (dwLevel). */
+  readonly l: number;
+  /** Total duration ms (GetTotal) -- timer resets to this on relog. */
+  readonly d: number;
+}
+
+/** A restored buff entry, mapped from the compact {@link PersistedBuffRow}. */
+export interface RestoredBuff {
+  readonly type: number;
+  readonly skillId: number;
+  readonly level: number;
+  readonly totalMs: number;
+}
+
+/**
+ * Serialize active `BUFF_SKILL` buffs to the `characters.buffs` JSON column.
+ * Mirrors C++ `SaveSkillInfluence` (`DbManagerSave.cpp:1079`) minus the equip
+ * and housing skips (equip buffs are never in `m_buffs`; housing doesn't ship).
+ * `BUFF_ITEM` entries are excluded -- their effects are not re-derivable from
+ * the skill index on restore (ponytail: add item-def effect derivation).
+ */
+export function serializeBuffs(player: CPlayer): string {
+  const entries = player.m_buffs
+    .getAll()
+    .filter((b) => b.type === BUFF_SKILL)
+    .map((b) => ({ t: b.type, s: b.skillId, l: b.level, d: b.totalMs }));
+  return JSON.stringify(entries);
+}
+
+/**
+ * Parse the `characters.buffs` column back into entries. Returns `[]` on null,
+ * empty, or malformed JSON (defensive -- a corrupt row must not crash JOIN).
+ */
+export function deserializeBuffs(json: string | null | undefined): readonly RestoredBuff[] {
+  if (!json) return [];
+  try {
+    const parsed: unknown = JSON.parse(json);
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter(
+        (e): e is PersistedBuffRow =>
+          e !== null && typeof e === 'object'
+          && Number.isFinite((e as PersistedBuffRow).t)
+          && Number.isFinite((e as PersistedBuffRow).s)
+          && Number.isFinite((e as PersistedBuffRow).l)
+          && Number.isFinite((e as PersistedBuffRow).d),
+      )
+      .map((e) => ({ type: e.t, skillId: e.s, level: e.l, totalMs: e.d }));
+  } catch {
+    return [];
+  }
 }

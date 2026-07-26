@@ -702,7 +702,7 @@ function statForDst(player: CPlayer, dst: number): number {
  * Skips entries with no `destParam`, and includes a `chg` override only when the
  * per-level value is not the `0x7FFFFFFF` "unused" sentinel.
  */
-function buffEffects(level: SkillLevel): DstEffect[] {
+export function buffEffects(level: SkillLevel): DstEffect[] {
   const dsts = level.destParams ?? [];
   const adjs = level.adjParamVals ?? [];
   const chgs = level.chgParamVals ?? [];
@@ -729,7 +729,7 @@ const DEFAULT_DOT_INTERVAL_MS = 2_000;
  * `nowMs` seeds the first tick (the cast instant), so the first tick lands one
  * interval after cast (mirrors C++ which stamps `tmInst` on apply).
  */
-function dotFromSkill(level: SkillLevel, nowMs: number): DoTPayload | undefined {
+export function dotFromSkill(level: SkillLevel, nowMs: number): DoTPayload | undefined {
   const damage = level.abilityMin ?? 0;
   if (damage <= 0) return undefined;
   const intervalMs = level.destData?.[1] ?? DEFAULT_DOT_INTERVAL_MS;
