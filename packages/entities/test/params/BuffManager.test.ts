@@ -215,3 +215,31 @@ describe('BuffManager.tickDots (DoT)', () => {
   });
 });
 
+describe('BuffManager.totalMs + getAll (persistence surface)', () => {
+  it('stores the originally-applied totalMs on add', () => {
+    const buffs = new BuffManager(new ParamModel());
+    buffs.addSkillBuff(100, 4, 3_600_000, [buffEffect(DST.STR, 20)], 1_000);
+    const all = buffs.getAll();
+    assert.equal(all.length, 1);
+    assert.equal(all[0]!.skillId, 100);
+    assert.equal(all[0]!.level, 4);
+    assert.equal(all[0]!.type, BUFF_SKILL);
+    assert.equal(all[0]!.totalMs, 3_600_000); // total, not remaining
+    assert.equal(all[0]!.expiresAtMs, 1_000 + 3_600_000); // absolute deadline
+  });
+
+  it('refreshes totalMs on same-level re-cast', () => {
+    const buffs = new BuffManager(new ParamModel());
+    buffs.addSkillBuff(100, 1, 30_000, [buffEffect(DST.STR, 20)], 0);
+    buffs.addSkillBuff(100, 1, 7_200_000, [buffEffect(DST.STR, 20)], 10_000);
+    assert.equal(buffs.getAll()[0]!.totalMs, 7_200_000);
+  });
+
+  it('getAll() returns entries in insertion order', () => {
+    const buffs = new BuffManager(new ParamModel());
+    buffs.addSkillBuff(100, 1, 60_000, [], 0);
+    buffs.addSkillBuff(200, 1, 60_000, [], 0);
+    buffs.addSkillBuff(300, 1, 60_000, [], 0);
+    assert.deepEqual(buffs.getAll().map((b) => b.skillId), [100, 200, 300]);
+  });
+});
