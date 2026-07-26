@@ -67,6 +67,11 @@ export class CharHandler {
       // character is selected. Without it m_lpCacheAddr stays empty and the
       // client hangs on "connecting please wait" (WndTitle.cpp:2105).
       this.sendCacheAddr(socket);
+      // C++ sends LOGIN_PROTECT_NUMPAD (0x88100200) right after CACHE_ADDR
+      // (DPLoginSrvr.cpp:170). Client stores the id and uses it to pick a row
+      // from its hardcoded byNumberTable[1000][10] (Wnd2ndPassword.cpp:397).
+      // Without this the client defaults to id=0 -- same layout every session.
+      this.sendNumPadId(socket);
       await this.sendPlayerList(socket, authKey, account);
     } catch (error) {
       logger.error({ error }, 'GETPLAYERLIST failed');
@@ -165,6 +170,22 @@ export class CharHandler {
     const writer = new PacketWriter();
     writer.writeDword(PACKETTYPE.CACHE_ADDR);
     writer.writeString(addr);
+    sendPacket(socket, writer.build());
+  }
+
+  /**
+   * Send LOGIN_PROTECT_NUMPAD (0x88100200) with a random id 0-999.
+   *
+   * Client maps the id to a row in byNumberTable[1000][10] (Wnd2ndPassword.cpp:397)
+   * so the digit layout on the PIN pad differs every session. Cosmetic only --
+   * the emulator does not validate the 2nd password server-side.
+   * ponytail: full validation via CLoginProtect::GetNumPad2PW when 2nd-password DB column added.
+   */
+  private sendNumPadId(socket: Socket): void {
+    const idNumPad = Math.floor(Math.random() * 1000);
+    const writer = new PacketWriter();
+    writer.writeDword(PACKETTYPE.LOGIN_PROTECT_NUMPAD);
+    writer.writeDword(idNumPad);
     sendPacket(socket, writer.build());
   }
 
