@@ -448,7 +448,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // the audit that scoped these.
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
-    inventoryService, charRepo, inventoryRepo, zoneManager,
+    inventoryService, charRepo, inventoryRepo, zoneManager, vicinityService,
   });
   const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
@@ -467,6 +467,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const getPosHandler = new GetPosHandler(playerManager, movementService);
   const scriptDlgService = new ScriptDlgService({
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
+    defines: resources.defines,
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalHandler = new RevivalHandler(playerManager, revivalService);

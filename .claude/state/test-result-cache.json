@@ -213,5 +213,7 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\reqLeave.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\skillFormulas.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\systems\\ai.system.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\byte-count-check.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\byte-count-check.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\dialogInterpreter.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass"
 }
