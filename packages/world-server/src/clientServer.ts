@@ -49,6 +49,7 @@ import type { EnchantHandler } from '@flyff/inventory';
 import type { RepairHandler } from '@flyff/inventory';
 import type { BankHandler } from '@flyff/npc';
 import type { ShopHandler } from '@flyff/npc';
+import type { NpcBuffHandler } from '@flyff/npc';
 import type { TaskBarHandler } from './handlers/taskbar.handler';
 import type { SkillTaskBarHandler } from './handlers/skillTaskbar.handler';
 import type { EndSkillQueueHandler } from './handlers/endSkillQueue.handler';
@@ -94,6 +95,7 @@ export interface WorldClientServerDeps {
   repairHandler: RepairHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
+  npcBuffHandler: NpcBuffHandler;
   taskbarHandler: TaskBarHandler;
   skillTaskbarHandler: SkillTaskBarHandler;
   endSkillQueueHandler: EndSkillQueueHandler;
@@ -169,6 +171,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.CLOSESHOPWND, (s, r) => deps.shopHandler.handleClose(s, r));
   dispatcher.register(PACKETTYPE.BUYITEM, (s, r) => deps.shopHandler.handleBuy(s, r));
   dispatcher.register(PACKETTYPE.SELLITEM, (s, r) => deps.shopHandler.handleSell(s, r));
+  dispatcher.register(PACKETTYPE.NPC_BUFF, (s, r) => deps.npcBuffHandler.handleNpcBuff(s, r));
   dispatcher.register(PACKETTYPE.ADDITEMTASKBAR, (s, r) => deps.taskbarHandler.handleAddItem(s, r));
   dispatcher.register(PACKETTYPE.REMOVEITEMTASKBAR, (s, r) => deps.taskbarHandler.handleRemoveItem(s, r));
   dispatcher.register(PACKETTYPE.SKILLTASKBAR, (s, r) => deps.skillTaskbarHandler.handleSkillTaskBar(s, r));

@@ -95,12 +95,12 @@ describe('CPlayer entity', () => {
     assert.equal(sock._written[0], buf);
   });
 
-  it('starts with a 45-slot skill roster of NULL_ID/0', () => {
+  it('starts with a 51-slot skill roster of NULL_ID/0', () => {
     const p = CPlayer.fromRow(makeRow(), makeSocket());
-    assert.equal(p.m_aJobSkill.length, 45);
+    assert.equal(p.m_aJobSkill.length, 51);
     assert.equal(p.m_aJobSkill[0]!.skillId, 0xffffffff, 'empty slot sentinel');
     assert.equal(p.m_aJobSkill[0]!.level, 0);
-    assert.equal(p.m_aJobSkill[44]!.skillId, 0xffffffff);
+    assert.equal(p.m_aJobSkill[50]!.skillId, 0xffffffff);
     assert.equal(p.m_nSkillPoint, 0, 'SP defaults to 0');
     assert.equal(p.m_nSkillLevel, 0, 'total SP defaults to 0');
     assert.equal(p.m_tmReUseDelay.length, 45);

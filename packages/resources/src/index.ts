@@ -197,6 +197,7 @@ export {
   blockForMover,
   MMI_DIALOG,
   MMI_TRADE,
+  MMI_NPC_BUFF,
   type CharacterIncIndex,
   type CharacterIncBlock,
   type CharacterIncOutfit,
@@ -204,6 +205,7 @@ export {
   type CharacterIncVendorTab,
   type CharacterIncVendorItem,
   type CharacterIncVendorItemId,
+  type NpcBuffSkillEntry,
 } from './loaders/characterInc.loader';
 export {
   loadSetItems,

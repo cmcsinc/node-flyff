@@ -180,6 +180,12 @@ export const PACKETTYPE = Object.freeze({
   REMOVEFRIEND:         0xffffff6a,
   GETFRIENDSTATE:       0xffffff64,
   SETFRIENDSTATE:       0xffffff67,
+  // MsgHdr.h:665 -- `CDPSrvr::OnNPCBuff` (DPSrvr.cpp:11242) under `__NPC_BUFF`.
+  // Body: DWORD-prefixed string `szKey[64]` -- the character.inc block key of the
+  // buff-pang NPC the player right-clicked (`MMI_NPC_BUFF`). Server resolves the
+  // block, validates proximity to any spawned buff NPC, and applies its
+  // `SetBuffSkill` list (skill id/level/player-level-range/duration) to self.
+  NPC_BUFF:             0xf000f813,
 } as const);
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];
