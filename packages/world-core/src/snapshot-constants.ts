@@ -165,6 +165,15 @@ export const SNAPSHOTTYPE_DOUSESKILLPOINT = 0x007d;  // MsgHdr.h:996 -- AddDoUse
 export const SNAPSHOTTYPE_SETSKILLSTATE = 0x004c;        // MsgHdr.h -- AddSetSkillState (buff attach/refresh)
 export const SNAPSHOTTYPE_REMOVESKILLINFULENCE = 0x00f8; // MsgHdr.h -- AddRemoveSkillInfluence (buff expire/remove)
 /**
+ * `SNAPSHOTTYPE_DOAPPLYUSESKILL` (MsgHdr.h:1137) -- `g_UserMng.AddDoApplySkill`
+ * (`WORLDSERVER/UserLux.cpp:272-282`): `OBJID caster | DOAPPLYUSESKILL |
+ * DWORD idTarget | DWORD dwSkill | DWORD dwLevel`. Broadcast to vicinity on a
+ * server-applied skill (NPC buff pang, etc.) so peers + self run the client-local
+ * `DoApplySkill` animation (`DPClient.cpp:15263`). NPC-buff path emits this per
+ * applied entry alongside the SETSKILLSTATE icon + SETDESTPARAM stat delta.
+ */
+export const SNAPSHOTTYPE_DOAPPLYUSESKILL = 0x00d7;       // MsgHdr.h:1137 -- AddDoApplySkill (server-applied skill)
+/**
  * DST delta S->C snapshots (`_Network/MsgHdr.h`):
  * - SETDESTPARAM (0x001c) -- `CUserMng::AddSetDestParam` (User.cpp:4651):
  *   `OBJID | SETDESTPARAM | int nDstParameter | int nAdjParameterValue | int nChgParameterValue`.

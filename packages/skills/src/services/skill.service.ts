@@ -24,6 +24,7 @@ import type { ZoneManager } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 import type { CombatService } from '@flyff/combat';
 import { UseSkillSerializer } from '../net/snapshot/useSkill.serializer';
+import { DoApplyUseSkillSerializer } from '../net/snapshot/doApplyUseSkill.serializer';
 import { DoUseSkillPointSerializer } from '@flyff/world-core';
 import { buildSetPointParam, DST_MP, DST_FP, DST_HP, buildSetSkillState, buildSetDestParam } from '@flyff/world-core';
 import { buildEndSkillQueue } from '@flyff/world-core';
@@ -39,6 +40,34 @@ const EXT_MAGICATKSHOT = 14;
 const RT_TIME = 2;
 /** `BUFF_SKILL` (SkillInfluence.h:5) -- skill-sourced buff type tag for SETSKILLSTATE. */
 const BUFF_SKILL = 1;
+
+/**
+ * `SI_GEN_EVE_*` (resource/defineSkill.h:243-246) -- generic event buff skill
+ * ids the NPC buff-pang applies. `SI_ASS_CHEER_*` (defineSkill.h:44-54) are the
+ * Assist-class Cheer variants -- strictly stronger, so the C++ NPC-buff path
+ * refuses the generic event variant when its Cheer counterpart is active
+ * (`DPSrvr.cpp:11268-11275`). Values resolved verbatim from defineSkill.h.
+ */
+const SI_GEN_EVE_QUICKSTEP = 317;
+const SI_GEN_EVE_HASTE = 318;
+const SI_GEN_EVE_HEAPUP = 319;
+const SI_GEN_EVE_ACCURACY = 320;
+const SI_ASS_CHEER_QUICKSTEP = 114;
+const SI_ASS_CHEER_HASTE = 20;
+const SI_ASS_CHEER_HEAPUP = 49;
+const SI_ASS_CHEER_ACCURACY = 116;
+
+/**
+ * Generic event buff -> Assist Cheer conflict table
+ * (`DPSrvr.cpp:11268-11275`). Key = the NPC-buff eve skill id; value = the
+ * Cheer id that, if active, blocks the eve variant (Cheer is strictly stronger).
+ */
+const NPC_BUFF_CONFLICT: ReadonlyMap<number, number> = new Map([
+  [SI_GEN_EVE_QUICKSTEP, SI_ASS_CHEER_QUICKSTEP],
+  [SI_GEN_EVE_HASTE, SI_ASS_CHEER_HASTE],
+  [SI_GEN_EVE_HEAPUP, SI_ASS_CHEER_HEAPUP],
+  [SI_GEN_EVE_ACCURACY, SI_ASS_CHEER_ACCURACY],
+]);
 
 /**
  * `SKILLUSETYPE` (`Mover.h:133`) -- how the client triggered the cast. Only the
@@ -131,6 +160,7 @@ export type LearnOutcome =
 export class SkillService {
   private readonly useSkill = new UseSkillSerializer();
   private readonly douseSkillPoint = new DoUseSkillPointSerializer();
+  private readonly doApplyUseSkill = new DoApplyUseSkillSerializer();
 
   constructor(private readonly deps: SkillServiceDeps) {}
 
@@ -431,6 +461,65 @@ export class SkillService {
     const adj = level.adjParamVals?.[0] ?? 0;
     const skillLvl = level.level ?? 1;
     return adj + Math.floor(refVal / 10) * stat + skillLvl * Math.floor(stat / 50);
+  }
+
+  /**
+   * NPC buff-pang skill application (`OnNPCBuff`, DPSrvr.cpp:11289 -- the
+   * `pUser->DoApplySkill(self,self,...)` path). Server-applied: no client cast
+   * request, no MP/FP spend, no cooldown. The NPC config supplies the skill id,
+   * level, and a duration override (`SetBuffSkill dwSkillTime`, e.g. 3,600,000 ms
+   * = one hour) which replaces the per-level `skillTime`.
+   *
+   * Reuses the same attach + fan-out as {@link applyBuffToPlayer} (BuffManager
+   * overwrite rules + SETSKILLSTATE icon + per-DST SETDESTPARAM on add/replace).
+   * Two NPC-specific behaviors:
+   *  1. **Conflict guard** (DPSrvr.cpp:11268-11275): if the entry is a generic
+   *     event buff (`SI_GEN_EVE_*`) whose Assist Cheer counterpart is already
+   *     active on the player, refuse it (Cheer is strictly stronger) -- returns
+   *     `'conflict'` with no attach.
+   *  2. **DOAPPLYUSESKILL** (UserLux.cpp:272) broadcast after any successful
+   *     attach so peers + self run the client-local skill animation. The normal
+   *     USESKILL cast path does not emit this (it sends USESKILL for the cast bar
+   *     instead); the NPC path has no cast bar.
+   *
+   * `now` is threaded in for testability (shares the service tick's clock).
+   */
+  applyNpcBuff(
+    player: CPlayer,
+    skill: SkillDefinition,
+    level: SkillLevel,
+    durationMs: number,
+    now: number,
+  ): 'applied' | 'refreshed' | 'replaced' | 'ignored' | 'conflict' {
+    const cheerConflict = NPC_BUFF_CONFLICT.get(skill.id);
+    if (cheerConflict !== undefined && player.m_buffs.has(cheerConflict)) {
+      return 'conflict';
+    }
+    const effects = buffEffects(level);
+    const dot = dotFromSkill(level, now);
+    const outcome = player.m_buffs.addSkillBuff(skill.id, level.level, durationMs, effects, now, dot);
+    // 'ignored' = a weaker refresh of a stronger active buff (BuffManager kept the
+    // stronger). Re-broadcasting SETSKILLSTATE with the weaker level would
+    // overwrite the icon's level display, and DOAPPLYUSESKILL would replay the
+    // anim for nothing -- so skip both. The existing stronger buff stays visible.
+    if (outcome === 'ignored') return 'ignored';
+    this.deps.zoneManager.broadcastAround(
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+      buildSetSkillState(player.m_idPlayer, BUFF_SKILL, skill.id, level.level, durationMs),
+    );
+    if (outcome === 'added' || outcome === 'replaced') {
+      for (const e of effects) {
+        this.deps.zoneManager.broadcastAround(
+          player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+          buildSetDestParam(player.m_idPlayer, e.dst, e.adj, e.chg ?? CHG_SENTINEL),
+        );
+      }
+    }
+    this.deps.zoneManager.broadcastAround(
+      player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+      this.doApplyUseSkill.build(player.m_idPlayer, player.m_idPlayer, skill.id, level.level),
+    );
+    return outcome === 'added' ? 'applied' : outcome;
   }
 
   /**
