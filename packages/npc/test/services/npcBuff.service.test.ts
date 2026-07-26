@@ -166,6 +166,14 @@ describe('NpcBuffService', () => {
     assert.equal(svc2.svc.buff(p2, 'MaFl_Helper', 1000).ok, false);
   });
 
+  it('flattens Y: a pang on a different elevation counts as near (XZ-only)', () => {
+    // Ground distance 5 (25 sq) but huge Y offset -- full 3D would be 10025 > 1024.
+    const elevated = makeNpc({ x: 0, y: 100, z: 5 }, true);
+    const p = makePlayer(15, { x: 0, y: 0, z: 0 });
+    const svc = makeService({ npcs: [elevated] });
+    assert.equal(svc.svc.buff(p, 'MaFl_Helper', 1000).ok, true);
+  });
+
   it('rejects with unknown_npc when the key is not a character.inc block', () => {
     const p = makePlayer(15, { x: 0, y: 0, z: 0 });
     const { svc } = makeService({ npcs: [makeNpc({ x: 0, y: 0, z: 0 }, true)] });
