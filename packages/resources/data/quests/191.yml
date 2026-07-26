@@ -5,15 +5,27 @@ commands:
   - cmd: SetCharacter
     args:
       - type: str
-        value: MaSa_Parine
-  - cmd: SetEndCondCharacter
+        value: MaDa_Condram
+  - cmd: SetBeginCondCharacter
     args:
       - type: str
         value: MaDa_Condram
+      - type: sym
+        value: 1
       - type: num
         value: 3959
       - type: num
         value: 3509
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaDa_Wendien
+      - type: sym
+        value: 1
+      - type: num
+        value: 3349
+      - type: num
+        value: 2057
       - type: num
         value: 1
   - cmd: SetBeginCondLevel
@@ -42,24 +54,26 @@ commands:
         value: 1
       - type: sym
         value: 190
-  - cmd: SetBeginCondItem
-    args:
-      - type: num
-        value: -1
-      - type: num
-        value: 0
-      - type: num
-        value: -1
-      - type: sym
-        value: 10391
-      - type: num
-        value: 1
   - cmd: SetEndCondLevel
     args:
       - type: num
         value: 60
       - type: num
         value: 129
+  - cmd: SetEndCondKillNPC
+    args:
+      - type: num
+        value: 0
+      - type: sym
+        value: 663
+      - type: num
+        value: 1
+      - type: num
+        value: 3238
+      - type: num
+        value: 2522
+      - type: num
+        value: 1
   - cmd: SetEndCondItem
     args:
       - type: num
@@ -67,45 +81,29 @@ commands:
       - type: num
         value: 0
       - type: num
-        value: 4
+        value: -1
       - type: sym
-        value: 18180
+        value: 10254
       - type: num
         value: 1
       - type: num
-        value: 2647
+        value: -1
       - type: num
-        value: 4587
+        value: -1
       - type: sym
-        value: QUEST_DESTINATION_ID_0000
+        value: QUEST_DESTINATION_ID_0009
   - cmd: SetEndRemoveItem
     args:
       - type: num
         value: 0
       - type: sym
-        value: 18180
+        value: 10254
       - type: num
         value: -1
-  - cmd: SetEndRemoveItem
+  - cmd: SetEndRewardSkillPoint
     args:
       - type: num
-        value: 1
-      - type: sym
-        value: 10391
-      - type: num
-        value: -1
-  - cmd: SetEndRewardItem
-    args:
-      - type: num
-        value: -1
-      - type: num
-        value: 0
-      - type: num
-        value: 4
-      - type: sym
-        value: 10249
-      - type: num
-        value: 1
+        value: 300
   - cmd: SetHeadQuest
     args:
       - type: num
@@ -115,53 +113,51 @@ commands:
       - type: sym
         value: 0
       - type: sym
-        value: IDS_PROPQUEST_INC_001688
+        value: IDS_PROPQUEST_INC_004162
   - cmd: SetDialog
     args:
       - type: sym
         value: 1
       - type: sym
-        value: IDS_PROPQUEST_INC_001689
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 2
-      - type: sym
-        value: IDS_PROPQUEST_INC_001690
+        value: IDS_PROPQUEST_INC_004163
   - cmd: SetDialog
     args:
       - type: sym
         value: 5
       - type: sym
-        value: IDS_PROPQUEST_INC_001691
+        value: IDS_PROPQUEST_INC_004164
   - cmd: SetDialog
     args:
       - type: sym
         value: 6
       - type: sym
-        value: IDS_PROPQUEST_INC_001692
+        value: IDS_PROPQUEST_INC_004165
   - cmd: SetDialog
     args:
       - type: sym
         value: 7
       - type: sym
-        value: IDS_PROPQUEST_INC_001693
+        value: IDS_PROPQUEST_INC_004166
   - cmd: SetDialog
     args:
       - type: sym
         value: 8
       - type: sym
-        value: IDS_PROPQUEST_INC_001694
+        value: IDS_PROPQUEST_INC_004167
   - cmd: SetDialog
     args:
       - type: sym
         value: 10
       - type: sym
-        value: IDS_PROPQUEST_INC_001695
+        value: IDS_PROPQUEST_INC_004168
 states:
   "0":
-    desc: IDS_PROPQUEST_INC_001696
+    desc: IDS_PROPQUEST_INC_004169
   "14":
-    desc: IDS_PROPQUEST_INC_001697
-quest_items: []
-title: IDS_PROPQUEST_INC_001687
+    desc: IDS_PROPQUEST_INC_004170
+quest_items:
+  - mover: 663
+    item: 10254
+    prob: 3000000000
+    num: 1
+title: IDS_PROPQUEST_INC_004161

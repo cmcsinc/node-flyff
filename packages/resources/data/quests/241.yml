@@ -1,0 +1,181 @@
+_version: "1.0"
+id: 241
+symbol: QUEST_GUILDHOUSE_TRN3
+commands:
+  - cmd: SetHeadQuest
+    args:
+      - type: num
+        value: 6071
+  - cmd: SetCharacter
+    args:
+      - type: str
+        value: MaFl_COMMONER04
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaFl_COMMONER04
+  - cmd: SetBeginCondLevel
+    args:
+      - type: num
+        value: 1
+      - type: num
+        value: 150
+  - cmd: SetBeginCondParty
+    args:
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+      - type: num
+        value: 0
+  - cmd: SetBeginCondJob
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: 0
+      - type: sym
+        value: 1
+      - type: sym
+        value: 2
+      - type: sym
+        value: 3
+      - type: sym
+        value: 16
+      - type: sym
+        value: 7
+      - type: sym
+        value: 19
+      - type: sym
+        value: 9
+      - type: sym
+        value: 10
+      - type: sym
+        value: 10
+      - type: sym
+        value: 12
+      - type: sym
+        value: 13
+      - type: sym
+        value: 16
+      - type: sym
+        value: 17
+      - type: sym
+        value: 18
+      - type: sym
+        value: 19
+      - type: sym
+        value: 20
+      - type: sym
+        value: 21
+      - type: sym
+        value: 22
+      - type: sym
+        value: 23
+      - type: sym
+        value: 24
+      - type: sym
+        value: 25
+      - type: sym
+        value: 26
+      - type: sym
+        value: 27
+      - type: sym
+        value: 28
+      - type: sym
+        value: 29
+      - type: sym
+        value: 30
+      - type: sym
+        value: 31
+      - type: sym
+        value: 32
+      - type: sym
+        value: 33
+      - type: sym
+        value: 34
+      - type: sym
+        value: 35
+      - type: sym
+        value: 37
+      - type: sym
+        value: 36
+      - type: sym
+        value: 38
+      - type: sym
+        value: 39
+  - cmd: SetBeginCondPreviousQuest
+    args:
+      - type: num
+        value: 1
+      - type: sym
+        value: 240
+  - cmd: SetBeginCondGuild
+    args:
+      - type: num
+        value: 2
+      - type: num
+        value: 1
+      - type: num
+        value: 0
+      - type: num
+        value: 2
+  - cmd: SetEndCondGuildWarWin
+    args:
+      - type: num
+        value: 1
+  - cmd: SetEndRewardHide
+    args:
+      - type: num
+        value: 1
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 0
+      - type: sym
+        value: IDS_PROPQUEST_INC_003384
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 1
+      - type: sym
+        value: IDS_PROPQUEST_INC_003385
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 2
+      - type: sym
+        value: IDS_PROPQUEST_INC_003386
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 5
+      - type: sym
+        value: IDS_PROPQUEST_INC_003387
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 6
+      - type: sym
+        value: IDS_PROPQUEST_INC_003388
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 7
+      - type: sym
+        value: IDS_PROPQUEST_INC_003389
+  - cmd: SetDialog
+    args:
+      - type: sym
+        value: 10
+      - type: sym
+        value: IDS_PROPQUEST_INC_003390
+states:
+  "0":
+    desc: IDS_PROPQUEST_INC_003391
+  "14":
+    desc: IDS_PROPQUEST_INC_003392
+quest_items: []
+title: IDS_PROPQUEST_INC_003383

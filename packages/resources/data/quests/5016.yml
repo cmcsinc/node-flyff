@@ -5,7 +5,7 @@ commands:
   - cmd: SetHeadQuest
     args:
       - type: num
-        value: 1992
+        value: 6003
   - cmd: SetRepeat
     args:
       - type: num
@@ -14,12 +14,34 @@ commands:
     args:
       - type: str
         value: MaDa_RedRobeMan
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaDa_RedRobeMan
+      - type: sym
+        value: 1
+      - type: num
+        value: 3343
+      - type: num
+        value: 1858
+  - cmd: SetEndCondCharacter
+    args:
+      - type: str
+        value: MaDa_RedRobeMan
+      - type: sym
+        value: 1
+      - type: num
+        value: 3343
+      - type: num
+        value: 1858
+      - type: sym
+        value: QUEST_DESTINATION_ID_0000
   - cmd: SetBeginCondLevel
     args:
       - type: num
         value: 1
       - type: num
-        value: 129
+        value: 150
   - cmd: SetBeginCondParty
     args:
       - type: num
@@ -90,6 +112,22 @@ commands:
         value: 30
       - type: sym
         value: 31
+      - type: sym
+        value: 32
+      - type: sym
+        value: 33
+      - type: sym
+        value: 34
+      - type: sym
+        value: 35
+      - type: sym
+        value: 37
+      - type: sym
+        value: 36
+      - type: sym
+        value: 38
+      - type: sym
+        value: 39
   - cmd: SetEndCondItem
     args:
       - type: num

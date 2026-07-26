@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaDa_Amadolka
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaDa_Amadolka
+      - type: sym
+        value: 1
+      - type: num
+        value: 5600
+      - type: num
+        value: 3767
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaDa_Amadolka
+      - type: sym
+        value: 1
       - type: num
         value: 5600
       - type: num

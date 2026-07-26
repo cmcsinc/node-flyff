@@ -7507,7 +7507,7 @@ movers:
     dwObjIndex: 593
     scale: 1
     type: monster
-    level: 70
+    level: 1
     hp: 10000000
     mp: 20
     fp: 0
@@ -9402,7 +9402,7 @@ movers:
     belligerence: 12
   - id: 874
     key: MI_CYCLOPSX
-    name: Cyclops X
+    name: CyclopsX
     name_id: IDS_PROPMOVER_TXT_000990
     dwObjIndex: 874
     scale: 1
@@ -13513,8 +13513,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 83621
@@ -13538,8 +13538,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 90311
@@ -13563,8 +13563,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 97535
@@ -13586,10 +13586,10 @@ movers:
     hp: 8858340
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 5889
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
     exp: 798627
@@ -13613,8 +13613,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 83621
@@ -13638,8 +13638,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 90311
@@ -13663,8 +13663,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 97535
@@ -13686,10 +13686,10 @@ movers:
     hp: 8858340
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 5889
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
     exp: 798627
@@ -13713,8 +13713,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
     exp: 83621
@@ -13738,8 +13738,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
     exp: 90311
@@ -13763,8 +13763,8 @@ movers:
     fp: 0
     attack: 4530
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
     exp: 97535
@@ -13786,10 +13786,10 @@ movers:
     hp: 8858340
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 5889
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.085
     attack_speed: 1000
     exp: 798627
@@ -13811,10 +13811,10 @@ movers:
     hp: 26575020
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 5889
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.1
     attack_speed: 1000
     exp: 1597254
@@ -13836,10 +13836,10 @@ movers:
     hp: 79725060
     mp: 100
     fp: 0
-    attack: 18120
+    attack: 11777
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.15
     attack_speed: 1000
     exp: 3194508
@@ -13861,10 +13861,10 @@ movers:
     hp: 851390
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 167242
@@ -13886,10 +13886,10 @@ movers:
     hp: 868540
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 180622
@@ -13911,10 +13911,10 @@ movers:
     hp: 885830
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 195070
@@ -13936,10 +13936,10 @@ movers:
     hp: 17716680
     mp: 100
     fp: 0
-    attack: 18120
+    attack: 7655
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
     exp: 1597254
@@ -13961,10 +13961,10 @@ movers:
     hp: 851390
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 167242
@@ -13986,10 +13986,10 @@ movers:
     hp: 868540
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 180622
@@ -14011,10 +14011,10 @@ movers:
     hp: 885830
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
     exp: 195070
@@ -14036,10 +14036,10 @@ movers:
     hp: 17716680
     mp: 100
     fp: 0
-    attack: 18120
+    attack: 7655
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
     exp: 1597254
@@ -14061,10 +14061,10 @@ movers:
     hp: 851390
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
     exp: 167242
@@ -14086,10 +14086,10 @@ movers:
     hp: 868540
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
     exp: 180622
@@ -14111,10 +14111,10 @@ movers:
     hp: 885830
     mp: 100
     fp: 0
-    attack: 9060
+    attack: 6795
     defense: 223
-    attack_rate: 210
-    dodge_rate: 200
+    attack_rate: 105
+    dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
     exp: 195070
@@ -14136,10 +14136,10 @@ movers:
     hp: 17716680
     mp: 100
     fp: 0
-    attack: 18120
+    attack: 7655
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.085
     attack_speed: 1000
     exp: 1597254
@@ -14161,10 +14161,10 @@ movers:
     hp: 53150040
     mp: 100
     fp: 0
-    attack: 18120
+    attack: 7655
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.1
     attack_speed: 1000
     exp: 3194508
@@ -14186,10 +14186,10 @@ movers:
     hp: 159450120
     mp: 100
     fp: 0
-    attack: 36240
+    attack: 14132
     defense: 464
-    attack_rate: 420
-    dodge_rate: 400
+    attack_rate: 210
+    dodge_rate: 200
     speed: 0.15
     attack_speed: 1000
     exp: 6389016
@@ -14238,8 +14238,8 @@ movers:
     fp: 0
     attack: 3989
     defense: 220
-    attack_rate: 230
-    dodge_rate: 1000
+    attack_rate: 115
+    dodge_rate: 500
     speed: 0.085
     attack_speed: 1000
     exp: 1356336
@@ -14263,8 +14263,8 @@ movers:
     fp: 0
     attack: 4225
     defense: 225
-    attack_rate: 230
-    dodge_rate: 1000
+    attack_rate: 125
+    dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
     exp: 1412850
@@ -14288,8 +14288,8 @@ movers:
     fp: 0
     attack: 4474
     defense: 230
-    attack_rate: 230
-    dodge_rate: 1000
+    attack_rate: 125
+    dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
     exp: 1471719
@@ -14313,8 +14313,8 @@ movers:
     fp: 0
     attack: 4738
     defense: 235
-    attack_rate: 230
-    dodge_rate: 1000
+    attack_rate: 125
+    dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
     exp: 1533041
@@ -14338,8 +14338,8 @@ movers:
     fp: 0
     attack: 5019
     defense: 240
-    attack_rate: 230
-    dodge_rate: 1000
+    attack_rate: 125
+    dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
     exp: 1596917
@@ -14363,8 +14363,8 @@ movers:
     fp: 0
     attack: 5316
     defense: 245
-    attack_rate: 230
-    dodge_rate: 1000
+    attack_rate: 125
+    dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
     exp: 1663456
@@ -14386,10 +14386,10 @@ movers:
     hp: 230927760
     mp: 100
     fp: 0
-    attack: 9949
+    attack: 14132
     defense: 560
-    attack_rate: 230
-    dodge_rate: 3000
+    attack_rate: 125
+    dodge_rate: 2000
     speed: 0.1
     attack_speed: 1000
     exp: 11068346
@@ -14411,10 +14411,10 @@ movers:
     hp: 340000
     mp: 100
     fp: 0
-    attack: 75279
+    attack: 11482
     defense: 240
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0.065
     attack_speed: 1000
     exp: 319383
@@ -14436,10 +14436,10 @@ movers:
     hp: 350000
     mp: 100
     fp: 0
-    attack: 79736
+    attack: 11482
     defense: 245
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
     exp: 332691
@@ -14461,10 +14461,10 @@ movers:
     hp: 360000
     mp: 100
     fp: 0
-    attack: 84461
+    attack: 11482
     defense: 250
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
     exp: 346553
@@ -14486,10 +14486,10 @@ movers:
     hp: 370000
     mp: 100
     fp: 0
-    attack: 89468
+    attack: 11482
     defense: 255
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
     exp: 360993
@@ -14511,10 +14511,10 @@ movers:
     hp: 380000
     mp: 100
     fp: 0
-    attack: 94776
+    attack: 11482
     defense: 260
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
     exp: 376034
@@ -14536,10 +14536,10 @@ movers:
     hp: 230927760
     mp: 100
     fp: 0
-    attack: 167529
+    attack: 18372
     defense: 560
-    attack_rate: 500
-    dodge_rate: 4000
+    attack_rate: 125
+    dodge_rate: 2000
     speed: 0.12
     attack_speed: 1000
     exp: 12009924
@@ -14558,13 +14558,13 @@ movers:
     scale: 1
     type: monster
     level: 125
-    hp: 34000000
+    hp: 17000000
     mp: 100
     fp: 0
     attack: 1
     defense: 240
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0
     attack_speed: 1000
     exp: 0
@@ -14583,13 +14583,13 @@ movers:
     scale: 1
     type: monster
     level: 126
-    hp: 35000000
+    hp: 17500000
     mp: 100
     fp: 0
     attack: 1
     defense: 245
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0
     attack_speed: 1000
     exp: 0
@@ -14608,13 +14608,13 @@ movers:
     scale: 1
     type: monster
     level: 127
-    hp: 36000000
+    hp: 18000000
     mp: 100
     fp: 0
     attack: 1
     defense: 250
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0
     attack_speed: 1000
     exp: 0
@@ -14633,13 +14633,13 @@ movers:
     scale: 1
     type: monster
     level: 128
-    hp: 37000000
+    hp: 18500000
     mp: 100
     fp: 0
     attack: 1
     defense: 255
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0
     attack_speed: 1000
     exp: 0
@@ -14658,13 +14658,13 @@ movers:
     scale: 1
     type: monster
     level: 129
-    hp: 38000000
+    hp: 19000000
     mp: 100
     fp: 0
     attack: 1
     defense: 260
-    attack_rate: 250
-    dodge_rate: 1500
+    attack_rate: 125
+    dodge_rate: 750
     speed: 0
     attack_speed: 1000
     exp: 0
@@ -15141,6 +15141,3631 @@ movers:
     attack_rate: 121
     dodge_rate: 81
     speed: 0
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1157
+    key: MI_RABBITGUARDER01
+    name: Sakai
+    name_id: IDS_PROPMOVER_TXT_001570
+    dwObjIndex: 1157
+    scale: 1
+    type: monster
+    level: 116
+    hp: 108089
+    mp: 100
+    fp: 0
+    attack: 1581
+    defense: 190
+    attack_rate: 191
+    dodge_rate: 185
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1787500
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1159
+    key: MI_TUTTLEFIGHTER01
+    name: Grumble Mauler
+    name_id: IDS_PROPMOVER_TXT_001574
+    dwObjIndex: 1159
+    scale: 1
+    type: monster
+    level: 118
+    hp: 118898
+    mp: 100
+    fp: 0
+    attack: 1641
+    defense: 209
+    attack_rate: 196
+    dodge_rate: 194
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1966250
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1158
+    key: MI_TUTTLESWORDER01
+    name: Vile Thorn
+    name_id: IDS_PROPMOVER_TXT_001572
+    dwObjIndex: 1158
+    scale: 1
+    type: monster
+    level: 120
+    hp: 130787
+    mp: 100
+    fp: 0
+    attack: 1702
+    defense: 230
+    attack_rate: 201
+    dodge_rate: 204
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2162875
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1160
+    key: MI_TUTTLEASSASSIN01
+    name: Blackweb Shade
+    name_id: IDS_PROPMOVER_TXT_001576
+    dwObjIndex: 1160
+    scale: 1
+    type: monster
+    level: 122
+    hp: 143865
+    mp: 100
+    fp: 0
+    attack: 1763
+    defense: 252
+    attack_rate: 206
+    dodge_rate: 214
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2379162
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1162
+    key: MI_TUTTLEAXE01
+    name: Dire Razor
+    name_id: IDS_PROPMOVER_TXT_001578
+    dwObjIndex: 1162
+    scale: 1
+    type: monster
+    level: 124
+    hp: 158250
+    mp: 100
+    fp: 0
+    attack: 1824
+    defense: 276
+    attack_rate: 211
+    dodge_rate: 225
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2617079
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1161
+    key: MI_TUTTLESPEAR01
+    name: Immovable Crag
+    name_id: IDS_PROPMOVER_TXT_001580
+    dwObjIndex: 1161
+    scale: 1
+    type: monster
+    level: 126
+    hp: 174075
+    mp: 100
+    fp: 0
+    attack: 1885
+    defense: 304
+    attack_rate: 216
+    dodge_rate: 236
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2878787
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1163
+    key: MI_TUTTLEKING01
+    name: Guan Yu Heavyblade
+    name_id: IDS_PROPMOVER_TXT_001582
+    dwObjIndex: 1163
+    scale: 1
+    type: monster
+    level: 127
+    hp: 31890024
+    mp: 100
+    fp: 0
+    attack: 9785
+    defense: 557
+    attack_rate: 462
+    dodge_rate: 440
+    speed: 0.12
+    attack_speed: 1000
+    exp: 2491716
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1168
+    key: MI_CLOCKWORKBUTLER01
+    name: Clockworks Butler
+    name_id: IDS_PROPMOVER_TXT_001592
+    dwObjIndex: 1168
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1209
+    key: MI_SPAINDRAGON01
+    name: Needle Tail Dragon
+    name_id: IDS_PROPMOVER_TXT_001674
+    dwObjIndex: 1209
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1176
+    key: MI_PUPPETWOLF
+    name: Hundur Sharpfoot
+    name_id: IDS_PROPMOVER_TXT_001608
+    dwObjIndex: 1176
+    scale: 1
+    type: monster
+    level: 129
+    hp: 165000
+    mp: 100
+    fp: 0
+    attack: 4388
+    defense: 242
+    attack_rate: 126
+    dodge_rate: 550
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1559786
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1177
+    key: MI_RYSENTRY
+    name: Samoset
+    name_id: IDS_PROPMOVER_TXT_001610
+    dwObjIndex: 1177
+    scale: 1
+    type: monster
+    level: 130
+    hp: 170500
+    mp: 100
+    fp: 0
+    attack: 4647
+    defense: 248
+    attack_rate: 126
+    dodge_rate: 550
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1624778
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1178
+    key: MI_RYGUARD
+    name: Kyouchish
+    name_id: IDS_PROPMOVER_TXT_001612
+    dwObjIndex: 1178
+    scale: 1
+    type: monster
+    level: 131
+    hp: 176000
+    mp: 100
+    fp: 0
+    attack: 4921
+    defense: 253
+    attack_rate: 126
+    dodge_rate: 550
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1692477
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1179
+    key: MI_RYARCHER
+    name: Kanonicus
+    name_id: IDS_PROPMOVER_TXT_001614
+    dwObjIndex: 1179
+    scale: 1
+    type: monster
+    level: 132
+    hp: 181500
+    mp: 100
+    fp: 0
+    attack: 5212
+    defense: 259
+    attack_rate: 126
+    dodge_rate: 550
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1762997
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1180
+    key: MI_RYMAGI
+    name: Mage Redcloud
+    name_id: IDS_PROPMOVER_TXT_001616
+    dwObjIndex: 1180
+    scale: 1
+    type: monster
+    level: 133
+    hp: 187000
+    mp: 100
+    fp: 0
+    attack: 5521
+    defense: 264
+    attack_rate: 126
+    dodge_rate: 550
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1836455
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1181
+    key: MI_RYWARRIOR
+    name: Taiaha
+    name_id: IDS_PROPMOVER_TXT_001618
+    dwObjIndex: 1181
+    scale: 1
+    type: monster
+    level: 134
+    hp: 192500
+    mp: 100
+    fp: 0
+    attack: 5847
+    defense: 270
+    attack_rate: 126
+    dodge_rate: 550
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1912974
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1182
+    key: MI_RYBARGA
+    name: Chief Keokuk
+    name_id: IDS_PROPMOVER_TXT_001620
+    dwObjIndex: 1182
+    scale: 1
+    type: monster
+    level: 140
+    hp: 12728598
+    mp: 100
+    fp: 0
+    attack: 18372
+    defense: 616
+    attack_rate: 126
+    dodge_rate: 1650
+    speed: 0.12
+    attack_speed: 1000
+    exp: 12728598
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1184
+    key: MI_DUMBBULL5
+    name: Rampaging Dumb Bull
+    name_id: IDS_PROPMOVER_TXT_001624
+    dwObjIndex: 1184
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.03
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1218
+    key: MI_MaEw_GUARDIAN01
+    name: Muran Defender
+    name_id: IDS_PROPMOVER_TXT_001692
+    dwObjIndex: 1218
+    scale: 1
+    type: monster
+    level: 1
+    hp: 1500000
+    mp: 100
+    fp: 0
+    attack: 7000
+    defense: 300
+    attack_rate: 150
+    dodge_rate: 150
+    speed: 0.1
+    attack_speed: 800
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: true
+    belligerence: 12
+  - id: 1219
+    key: MI_MaEw_GUARDIAN02
+    name: Muran Guardian
+    name_id: IDS_PROPMOVER_TXT_001694
+    dwObjIndex: 1219
+    scale: 1
+    type: monster
+    level: 1
+    hp: 1500000
+    mp: 100
+    fp: 0
+    attack: 7000
+    defense: 300
+    attack_rate: 150
+    dodge_rate: 150
+    speed: 0.1
+    attack_speed: 800
+    exp: 1
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: true
+    belligerence: 12
+  - id: 1276
+    key: MI_MIA5
+    name: Event Mia
+    name_id: IDS_PROPMOVER_TXT_001706
+    dwObjIndex: 1276
+    scale: 1
+    type: monster
+    level: 20
+    hp: 30000000
+    mp: 100
+    fp: 0
+    attack: 1877
+    defense: 126
+    attack_rate: 75
+    dodge_rate: 50
+    speed: 0.075
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1277
+    key: MI_CARDPUPPET5
+    name: Event Cardpuppet
+    name_id: IDS_PROPMOVER_TXT_001708
+    dwObjIndex: 1277
+    scale: 1
+    type: monster
+    level: 40
+    hp: 30000000
+    mp: 100
+    fp: 0
+    attack: 1877
+    defense: 126
+    attack_rate: 100
+    dodge_rate: 85
+    speed: 0.075
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1278
+    key: MI_RANGDA05
+    name: Event Rangda
+    name_id: IDS_PROPMOVER_TXT_001710
+    dwObjIndex: 1278
+    scale: 1
+    type: monster
+    level: 90
+    hp: 30000000
+    mp: 100
+    fp: 0
+    attack: 1877
+    defense: 126
+    attack_rate: 150
+    dodge_rate: 123
+    speed: 0.075
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1279
+    key: MI_PINATA
+    name: Pinata
+    name_id: IDS_PROPMOVER_TXT_001712
+    dwObjIndex: 1279
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 5000
+    speed: 0.03
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1323
+    key: MI_MZOMBIE
+    name: R. DeFeo
+    name_id: IDS_PROPMOVER_TXT_001800
+    dwObjIndex: 1323
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1324
+    key: MI_FZOMBIE
+    name: Bloody Mary
+    name_id: IDS_PROPMOVER_TXT_001802
+    dwObjIndex: 1324
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1330
+    key: MI_NMZOMBIE
+    name: Male Zombie
+    name_id: IDS_PROPMOVER_TXT_001814
+    dwObjIndex: 1330
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 10000
+    speed: 0.08
+    attack_speed: 1000
+    exp: 250
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1331
+    key: MI_NFZOMBIE
+    name: Female Zombie
+    name_id: IDS_PROPMOVER_TXT_001816
+    dwObjIndex: 1331
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 10000
+    speed: 0.08
+    attack_speed: 1000
+    exp: 250
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1335
+    key: MI_TGLUIA01
+    name: Gobbler
+    name_id: IDS_PROPMOVER_TXT_001824
+    dwObjIndex: 1335
+    scale: 1
+    type: monster
+    level: 1
+    hp: 5
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.03
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1341
+    key: MI_RUGALHEAT01
+    name: Wild Sunbaked Rhino
+    name_id: IDS_PROPMOVER_TXT_001836
+    dwObjIndex: 1341
+    scale: 1
+    type: monster
+    level: 138
+    hp: 187550
+    mp: 100
+    fp: 0
+    attack: 5112
+    defense: 272
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1949733
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1344
+    key: MI_RUGALRIM
+    name: Desert Spirit of the Fallen Mage
+    name_id: IDS_PROPMOVER_TXT_001842
+    dwObjIndex: 1344
+    scale: 1
+    type: monster
+    level: 140
+    hp: 199650
+    mp: 100
+    fp: 0
+    attack: 5733
+    defense: 284
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2115596
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1355
+    key: MI_RUGALKUM
+    name: Desert Spirit of the Fallen Soldier
+    name_id: IDS_PROPMOVER_TXT_001864
+    dwObjIndex: 1355
+    scale: 1
+    type: monster
+    level: 139
+    hp: 193600
+    mp: 100
+    fp: 0
+    attack: 5413
+    defense: 278
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2030972
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1356
+    key: MI_RUGALWIN
+    name: Wild Sand Skitter
+    name_id: IDS_PROPMOVER_TXT_001866
+    dwObjIndex: 1356
+    scale: 1
+    type: monster
+    level: 137
+    hp: 181500
+    mp: 100
+    fp: 0
+    attack: 4826
+    defense: 266
+    attack_rate: 278
+    dodge_rate: 1210
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1871743
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1359
+    key: MI_COLOBANG
+    name: "[Mirrored Soul] Giant Bang"
+    name_id: IDS_PROPMOVER_TXT_001872
+    dwObjIndex: 1359
+    scale: 1
+    type: boss
+    level: 23
+    hp: 63106
+    mp: 100
+    fp: 0
+    attack: 377
+    defense: 50
+    attack_rate: 70
+    dodge_rate: 45
+    speed: 0.075
+    attack_speed: 1000
+    exp: 367
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1360
+    key: MI_COLOWAGJAK
+    name: "[Mirrored Soul] Giant Wagsaac"
+    name_id: IDS_PROPMOVER_TXT_001874
+    dwObjIndex: 1360
+    scale: 1
+    type: boss
+    level: 25
+    hp: 75204
+    mp: 100
+    fp: 0
+    attack: 406
+    defense: 50
+    attack_rate: 70
+    dodge_rate: 48
+    speed: 0.075
+    attack_speed: 1000
+    exp: 479
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 13
+  - id: 1361
+    key: MI_COLOREDMANTIS
+    name: "[Mirrored Soul] Giant Red Mantis"
+    name_id: IDS_PROPMOVER_TXT_001876
+    dwObjIndex: 1361
+    scale: 1
+    type: boss
+    level: 31
+    hp: 93121
+    mp: 100
+    fp: 0
+    attack: 492
+    defense: 60
+    attack_rate: 80
+    dodge_rate: 55
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1060
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1362
+    key: MI_COLOJACKTHEHAMMER
+    name: "[Mirrored Soul] Giant Jack the Hammer"
+    name_id: IDS_PROPMOVER_TXT_001878
+    dwObjIndex: 1362
+    scale: 1
+    type: boss
+    level: 33
+    hp: 101552
+    mp: 100
+    fp: 0
+    attack: 524
+    defense: 60
+    attack_rate: 75
+    dodge_rate: 57
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1377
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1363
+    key: MI_COLOBERKRO
+    name: "[Mirrored Soul] Giant Bucrow"
+    name_id: IDS_PROPMOVER_TXT_001880
+    dwObjIndex: 1363
+    scale: 1
+    type: boss
+    level: 37
+    hp: 136456
+    mp: 100
+    fp: 0
+    attack: 700
+    defense: 77
+    attack_rate: 90
+    dodge_rate: 77
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2996
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1364
+    key: MI_COLOHOWBOW
+    name: "[Mirrored Soul] Giant Hobo"
+    name_id: IDS_PROPMOVER_TXT_001882
+    dwObjIndex: 1364
+    scale: 1
+    type: boss
+    level: 39
+    hp: 118131
+    mp: 100
+    fp: 0
+    attack: 610
+    defense: 70
+    attack_rate: 80
+    dodge_rate: 68
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2993
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1365
+    key: MI_COLOROKEPELER
+    name: "[Mirrored Soul] Giant Rockepeller"
+    name_id: IDS_PROPMOVER_TXT_001884
+    dwObjIndex: 1365
+    scale: 1
+    type: boss
+    level: 53
+    hp: 168432
+    mp: 100
+    fp: 0
+    attack: 798
+    defense: 85
+    attack_rate: 100
+    dodge_rate: 85
+    speed: 0.16
+    attack_speed: 1000
+    exp: 14540
+    flyable: true
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1366
+    key: MI_COLOSTIMEWORK
+    name: "[Mirrored Soul] Giant Steam Walker"
+    name_id: IDS_PROPMOVER_TXT_001886
+    dwObjIndex: 1366
+    scale: 1
+    type: boss
+    level: 57
+    hp: 190200
+    mp: 100
+    fp: 0
+    attack: 854
+    defense: 80
+    attack_rate: 120
+    dodge_rate: 102
+    speed: 0.075
+    attack_speed: 1000
+    exp: 22873
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1367
+    key: MI_COLOGRREUNG
+    name: "[Mirrored Soul] Giant Grrr"
+    name_id: IDS_PROPMOVER_TXT_001888
+    dwObjIndex: 1367
+    scale: 1
+    type: boss
+    level: 92
+    hp: 939316
+    mp: 100
+    fp: 0
+    attack: 2038
+    defense: 145
+    attack_rate: 160
+    dodge_rate: 132
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1113294
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1368
+    key: MI_COLOGRIMONG
+    name: "[Mirrored Soul] Giant Greemong"
+    name_id: IDS_PROPMOVER_TXT_001890
+    dwObjIndex: 1368
+    scale: 1
+    type: boss
+    level: 75
+    hp: 552915
+    mp: 100
+    fp: 0
+    attack: 1516
+    defense: 112
+    attack_rate: 120
+    dodge_rate: 102
+    speed: 0.075
+    attack_speed: 1000
+    exp: 182714
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1369
+    key: MI_COLOLUIA
+    name: "[Mirrored Soul] Giant Luia"
+    name_id: IDS_PROPMOVER_TXT_001892
+    dwObjIndex: 1369
+    scale: 1
+    type: boss
+    level: 95
+    hp: 1009362
+    mp: 100
+    fp: 0
+    attack: 2092
+    defense: 164
+    attack_rate: 180
+    dodge_rate: 149
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1468311
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1370
+    key: MI_COLOGONGRI
+    name: "[Mirrored Soul] Giant Gongury"
+    name_id: IDS_PROPMOVER_TXT_001894
+    dwObjIndex: 1370
+    scale: 1
+    type: boss
+    level: 98
+    hp: 1081995
+    mp: 100
+    fp: 0
+    attack: 2145
+    defense: 173
+    attack_rate: 190
+    dodge_rate: 157
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1901497
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1371
+    key: MI_COLOKEREUN
+    name: "[Mirrored Soul] Giant Kern"
+    name_id: IDS_PROPMOVER_TXT_001896
+    dwObjIndex: 1371
+    scale: 1
+    type: boss
+    level: 104
+    hp: 1235058
+    mp: 100
+    fp: 0
+    attack: 2360
+    defense: 178
+    attack_rate: 200
+    dodge_rate: 162
+    speed: 0.075
+    attack_speed: 1000
+    exp: 3073551
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1372
+    key: MI_COLOMATEONIKER
+    name: "[Mirrored Soul] Meteonyker"
+    name_id: IDS_PROPMOVER_TXT_001898
+    dwObjIndex: 1372
+    scale: 1
+    type: monster
+    level: 118
+    hp: 120000
+    mp: 100
+    fp: 0
+    attack: 1750
+    defense: 190
+    attack_rate: 210
+    dodge_rate: 180
+    speed: 0.14
+    attack_speed: 1000
+    exp: 1100000
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1373
+    key: MI_COLOCYCLOPSX
+    name: "[Mirrored Soul] CyclopsX"
+    name_id: IDS_PROPMOVER_TXT_001900
+    dwObjIndex: 1373
+    scale: 1
+    type: monster
+    level: 120
+    hp: 140000
+    mp: 100
+    fp: 0
+    attack: 1950
+    defense: 205
+    attack_rate: 210
+    dodge_rate: 180
+    speed: 0.14
+    attack_speed: 1000
+    exp: 1250000
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1375
+    key: MI_COLORACCOUN
+    name: "[Mirrored Soul] Tanuki"
+    name_id: IDS_PROPMOVER_TXT_001904
+    dwObjIndex: 1375
+    scale: 1
+    type: monster
+    level: 72
+    hp: 125140
+    mp: 100
+    fp: 0
+    attack: 3085
+    defense: 249
+    attack_rate: 121
+    dodge_rate: 144
+    speed: 0.075
+    attack_speed: 1000
+    exp: 133768
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1376
+    key: MI_COLOMATEONIKER01
+    name: "[Mirrored Soul] Red Meteonyker"
+    name_id: IDS_PROPMOVER_TXT_001906
+    dwObjIndex: 1376
+    scale: 1
+    type: monster
+    level: 118
+    hp: 120000
+    mp: 100
+    fp: 0
+    attack: 1750
+    defense: 190
+    attack_rate: 210
+    dodge_rate: 180
+    speed: 0.14
+    attack_speed: 1000
+    exp: 1100000
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1378
+    key: MI_COLOBIGFOOT
+    name: "[Mirrored Soul] Khan"
+    name_id: IDS_PROPMOVER_TXT_001910
+    dwObjIndex: 1378
+    scale: 1
+    type: monster
+    level: 80
+    hp: 251349
+    mp: 100
+    fp: 0
+    attack: 19989
+    defense: 688
+    attack_rate: 912
+    dodge_rate: 592
+    speed: 0.12
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1379
+    key: MI_COLOLUCIFER
+    name: "[Mirrored Soul] Asmodan"
+    name_id: IDS_PROPMOVER_TXT_001912
+    dwObjIndex: 1379
+    scale: 1
+    type: monster
+    level: 121
+    hp: 49500000
+    mp: 10000
+    fp: 0
+    attack: 4500
+    defense: 232
+    attack_rate: 210
+    dodge_rate: 200
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1380
+    key: MI_COLOLYCANOS
+    name: "[Mirrored Soul] Lykanose"
+    name_id: IDS_PROPMOVER_TXT_001914
+    dwObjIndex: 1380
+    scale: 1
+    type: monster
+    level: 120
+    hp: 8769756
+    mp: 100
+    fp: 0
+    attack: 9060
+    defense: 464
+    attack_rate: 420
+    dodge_rate: 400
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1597254
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1381
+    key: MI_COLOSOULVAMPAIN
+    name: "[Mirrored Soul] Drakul"
+    name_id: IDS_PROPMOVER_TXT_001916
+    dwObjIndex: 1381
+    scale: 1
+    type: monster
+    level: 121
+    hp: 26309269
+    mp: 100
+    fp: 0
+    attack: 18120
+    defense: 464
+    attack_rate: 420
+    dodge_rate: 400
+    speed: 0.15
+    attack_speed: 1000
+    exp: 3194508
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1382
+    key: MI_COLOSKELGENERAL
+    name: "[Mirrored Soul] Razgul"
+    name_id: IDS_PROPMOVER_TXT_001918
+    dwObjIndex: 1382
+    scale: 1
+    type: monster
+    level: 133
+    hp: 38103080
+    mp: 100
+    fp: 0
+    attack: 18372
+    defense: 560
+    attack_rate: 125
+    dodge_rate: 2000
+    speed: 0.1
+    attack_speed: 1000
+    exp: 11068346
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1383
+    key: MI_COLOTUTTLEKING
+    name: "[Mirrored Soul] Guan Yu Heavyblade"
+    name_id: IDS_PROPMOVER_TXT_001920
+    dwObjIndex: 1383
+    scale: 1
+    type: monster
+    level: 127
+    hp: 31890024
+    mp: 100
+    fp: 0
+    attack: 9785
+    defense: 557
+    attack_rate: 462
+    dodge_rate: 440
+    speed: 0.12
+    attack_speed: 1000
+    exp: 2491716
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1384
+    key: MI_COLORYCANBARGA
+    name: "[Mirrored Soul] Keokuk"
+    name_id: IDS_PROPMOVER_TXT_001922
+    dwObjIndex: 1384
+    scale: 1
+    type: monster
+    level: 140
+    hp: 101608214
+    mp: 100
+    fp: 0
+    attack: 10944
+    defense: 616
+    attack_rate: 253
+    dodge_rate: 3300
+    speed: 0.12
+    attack_speed: 1000
+    exp: 12728598
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1386
+    key: MI_COLOBASILISK
+    name: "[Mirrored Soul] Basilisk of the Great Maw"
+    name_id: IDS_PROPMOVER_TXT_001926
+    dwObjIndex: 1386
+    scale: 1
+    type: monster
+    level: 147
+    hp: 139711294
+    mp: 100
+    fp: 0
+    attack: 4388
+    defense: 242
+    attack_rate: 253
+    dodge_rate: 1100
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1559786
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1388
+    key: MI_COLOSKELDEVIL
+    name: "[Mirrored Soul] Kheldor"
+    name_id: IDS_PROPMOVER_TXT_001930
+    dwObjIndex: 1388
+    scale: 1
+    type: monster
+    level: 135
+    hp: 38103080
+    mp: 100
+    fp: 0
+    attack: 22046
+    defense: 560
+    attack_rate: 125
+    dodge_rate: 2000
+    speed: 0.12
+    attack_speed: 1000
+    exp: 12009924
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1391
+    key: MI_COLOBANG_1
+    name: "[Inferior Soul] Giant Bang"
+    name_id: IDS_PROPMOVER_TXT_001934
+    dwObjIndex: 1391
+    scale: 1
+    type: boss
+    level: 23
+    hp: 63106
+    mp: 100
+    fp: 0
+    attack: 377
+    defense: 50
+    attack_rate: 70
+    dodge_rate: 45
+    speed: 0.075
+    attack_speed: 1000
+    exp: 367
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1392
+    key: MI_COLOWAGJAK_1
+    name: "[Inferior Soul] Giant Wagsaac"
+    name_id: IDS_PROPMOVER_TXT_001936
+    dwObjIndex: 1392
+    scale: 1
+    type: boss
+    level: 25
+    hp: 75204
+    mp: 100
+    fp: 0
+    attack: 406
+    defense: 50
+    attack_rate: 70
+    dodge_rate: 48
+    speed: 0.075
+    attack_speed: 1000
+    exp: 479
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 13
+  - id: 1393
+    key: MI_COLOREDMANTIS_1
+    name: "[Inferior Soul] Giant Red Mantis"
+    name_id: IDS_PROPMOVER_TXT_001938
+    dwObjIndex: 1393
+    scale: 1
+    type: boss
+    level: 31
+    hp: 93121
+    mp: 100
+    fp: 0
+    attack: 492
+    defense: 60
+    attack_rate: 80
+    dodge_rate: 55
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1060
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1394
+    key: MI_COLOJACKTHEHAMMER_1
+    name: "[Inferior Soul] Giant Jack the Hammer"
+    name_id: IDS_PROPMOVER_TXT_001940
+    dwObjIndex: 1394
+    scale: 1
+    type: boss
+    level: 33
+    hp: 101552
+    mp: 100
+    fp: 0
+    attack: 524
+    defense: 60
+    attack_rate: 75
+    dodge_rate: 57
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1377
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1395
+    key: MI_COLOBERKRO_1
+    name: "[Inferior Soul] Giant Bucrow"
+    name_id: IDS_PROPMOVER_TXT_001942
+    dwObjIndex: 1395
+    scale: 1
+    type: boss
+    level: 37
+    hp: 136456
+    mp: 100
+    fp: 0
+    attack: 700
+    defense: 77
+    attack_rate: 90
+    dodge_rate: 77
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2996
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1396
+    key: MI_COLOHOWBOW_1
+    name: "[Inferior Soul] Giant Hobo"
+    name_id: IDS_PROPMOVER_TXT_001944
+    dwObjIndex: 1396
+    scale: 1
+    type: boss
+    level: 39
+    hp: 118131
+    mp: 100
+    fp: 0
+    attack: 610
+    defense: 70
+    attack_rate: 80
+    dodge_rate: 68
+    speed: 0.075
+    attack_speed: 1000
+    exp: 2993
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1397
+    key: MI_COLOROKEPELER_1
+    name: "[Inferior Soul] Giant Rockepeller"
+    name_id: IDS_PROPMOVER_TXT_001946
+    dwObjIndex: 1397
+    scale: 1
+    type: boss
+    level: 53
+    hp: 168432
+    mp: 100
+    fp: 0
+    attack: 798
+    defense: 85
+    attack_rate: 100
+    dodge_rate: 85
+    speed: 0.16
+    attack_speed: 1000
+    exp: 14540
+    flyable: true
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1398
+    key: MI_COLOSTIMEWORK_1
+    name: "[Inferior Soul] Giant Steam Walker"
+    name_id: IDS_PROPMOVER_TXT_001948
+    dwObjIndex: 1398
+    scale: 1
+    type: boss
+    level: 57
+    hp: 190200
+    mp: 100
+    fp: 0
+    attack: 854
+    defense: 80
+    attack_rate: 120
+    dodge_rate: 102
+    speed: 0.075
+    attack_speed: 1000
+    exp: 22873
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1399
+    key: MI_COLOGRREUNG_1
+    name: "[Inferior Soul] Giant Grrr"
+    name_id: IDS_PROPMOVER_TXT_001950
+    dwObjIndex: 1399
+    scale: 1
+    type: boss
+    level: 92
+    hp: 939316
+    mp: 100
+    fp: 0
+    attack: 2038
+    defense: 145
+    attack_rate: 160
+    dodge_rate: 132
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1113294
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1400
+    key: MI_COLOGRIMONG_1
+    name: "[Inferior Soul] Giant Greemong"
+    name_id: IDS_PROPMOVER_TXT_001952
+    dwObjIndex: 1400
+    scale: 1
+    type: boss
+    level: 75
+    hp: 552915
+    mp: 100
+    fp: 0
+    attack: 1516
+    defense: 112
+    attack_rate: 120
+    dodge_rate: 102
+    speed: 0.075
+    attack_speed: 1000
+    exp: 182714
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1401
+    key: MI_COLOLUIA_1
+    name: "[Inferior Soul] Giant Luia"
+    name_id: IDS_PROPMOVER_TXT_001954
+    dwObjIndex: 1401
+    scale: 1
+    type: boss
+    level: 95
+    hp: 1009362
+    mp: 100
+    fp: 0
+    attack: 2092
+    defense: 164
+    attack_rate: 180
+    dodge_rate: 149
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1468311
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1402
+    key: MI_COLOGONGRI_1
+    name: "[Inferior Soul] Giant Gongury"
+    name_id: IDS_PROPMOVER_TXT_001956
+    dwObjIndex: 1402
+    scale: 1
+    type: boss
+    level: 98
+    hp: 1081995
+    mp: 100
+    fp: 0
+    attack: 2145
+    defense: 173
+    attack_rate: 190
+    dodge_rate: 157
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1901497
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1403
+    key: MI_COLOKEREUN_1
+    name: "[Inferior Soul] Giant Kern"
+    name_id: IDS_PROPMOVER_TXT_001958
+    dwObjIndex: 1403
+    scale: 1
+    type: boss
+    level: 104
+    hp: 1235058
+    mp: 100
+    fp: 0
+    attack: 2360
+    defense: 178
+    attack_rate: 200
+    dodge_rate: 162
+    speed: 0.075
+    attack_speed: 1000
+    exp: 3073551
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1404
+    key: MI_COLOMATEONIKER_1
+    name: "[False Soul] Meteonyker"
+    name_id: IDS_PROPMOVER_TXT_001960
+    dwObjIndex: 1404
+    scale: 1
+    type: monster
+    level: 118
+    hp: 120000
+    mp: 100
+    fp: 0
+    attack: 1750
+    defense: 190
+    attack_rate: 210
+    dodge_rate: 180
+    speed: 0.14
+    attack_speed: 1000
+    exp: 1100000
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1405
+    key: MI_COLOCYCLOPSX_1
+    name: "[False Soul] CyclopsX"
+    name_id: IDS_PROPMOVER_TXT_001962
+    dwObjIndex: 1405
+    scale: 1
+    type: monster
+    level: 120
+    hp: 140000
+    mp: 100
+    fp: 0
+    attack: 1950
+    defense: 205
+    attack_rate: 210
+    dodge_rate: 180
+    speed: 0.14
+    attack_speed: 1000
+    exp: 1250000
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1407
+    key: MI_COLORACCOUN_1
+    name: "[False Soul] Tanuki"
+    name_id: IDS_PROPMOVER_TXT_001966
+    dwObjIndex: 1407
+    scale: 1
+    type: monster
+    level: 72
+    hp: 125140
+    mp: 100
+    fp: 0
+    attack: 3085
+    defense: 249
+    attack_rate: 121
+    dodge_rate: 144
+    speed: 0.075
+    attack_speed: 1000
+    exp: 133768
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1408
+    key: MI_COLOMATEONIKER01_1
+    name: "[False Soul] Red Meteonkyer"
+    name_id: IDS_PROPMOVER_TXT_001968
+    dwObjIndex: 1408
+    scale: 1
+    type: monster
+    level: 118
+    hp: 120000
+    mp: 100
+    fp: 0
+    attack: 1750
+    defense: 190
+    attack_rate: 210
+    dodge_rate: 180
+    speed: 0.14
+    attack_speed: 1000
+    exp: 1100000
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1410
+    key: MI_COLOBIGFOOT_1
+    name: "[False Soul] Khan"
+    name_id: IDS_PROPMOVER_TXT_001972
+    dwObjIndex: 1410
+    scale: 1
+    type: monster
+    level: 80
+    hp: 251349
+    mp: 100
+    fp: 0
+    attack: 19989
+    defense: 688
+    attack_rate: 912
+    dodge_rate: 592
+    speed: 0.12
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1411
+    key: MI_COLOLUCIFER_1
+    name: "[False Soul] Asmodan"
+    name_id: IDS_PROPMOVER_TXT_001974
+    dwObjIndex: 1411
+    scale: 1
+    type: monster
+    level: 121
+    hp: 49500000
+    mp: 10000
+    fp: 0
+    attack: 4500
+    defense: 232
+    attack_rate: 210
+    dodge_rate: 200
+    speed: 0.1
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1412
+    key: MI_COLOLYCANOS_1
+    name: "[False Soul] Lykanose"
+    name_id: IDS_PROPMOVER_TXT_001976
+    dwObjIndex: 1412
+    scale: 1
+    type: monster
+    level: 120
+    hp: 8769756
+    mp: 100
+    fp: 0
+    attack: 9060
+    defense: 464
+    attack_rate: 420
+    dodge_rate: 400
+    speed: 0.1
+    attack_speed: 1000
+    exp: 1597254
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1413
+    key: MI_COLOSOULVAMPAIN_1
+    name: "[False Soul] Drakul"
+    name_id: IDS_PROPMOVER_TXT_001978
+    dwObjIndex: 1413
+    scale: 1
+    type: monster
+    level: 121
+    hp: 26309269
+    mp: 100
+    fp: 0
+    attack: 18120
+    defense: 464
+    attack_rate: 420
+    dodge_rate: 400
+    speed: 0.15
+    attack_speed: 1000
+    exp: 3194508
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1414
+    key: MI_COLOSKELGENERAL_1
+    name: "[False Soul] Razgul"
+    name_id: IDS_PROPMOVER_TXT_001980
+    dwObjIndex: 1414
+    scale: 1
+    type: monster
+    level: 133
+    hp: 38103080
+    mp: 100
+    fp: 0
+    attack: 18372
+    defense: 560
+    attack_rate: 125
+    dodge_rate: 2000
+    speed: 0.1
+    attack_speed: 1000
+    exp: 11068346
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1415
+    key: MI_COLOTUTTLEKING_1
+    name: "[False Soul] Guan Yu Heavyblade"
+    name_id: IDS_PROPMOVER_TXT_001982
+    dwObjIndex: 1415
+    scale: 1
+    type: monster
+    level: 127
+    hp: 31890024
+    mp: 100
+    fp: 0
+    attack: 9785
+    defense: 557
+    attack_rate: 462
+    dodge_rate: 440
+    speed: 0.12
+    attack_speed: 1000
+    exp: 2491716
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1416
+    key: MI_COLORYCANBARGA_1
+    name: "[False Soul] Keokuk"
+    name_id: IDS_PROPMOVER_TXT_001984
+    dwObjIndex: 1416
+    scale: 1
+    type: monster
+    level: 140
+    hp: 101608214
+    mp: 100
+    fp: 0
+    attack: 10944
+    defense: 616
+    attack_rate: 253
+    dodge_rate: 3300
+    speed: 0.12
+    attack_speed: 1000
+    exp: 12728598
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1418
+    key: MI_COLOBASILISK_1
+    name: "[False Soul] Basilisk of the Great Maw"
+    name_id: IDS_PROPMOVER_TXT_001988
+    dwObjIndex: 1418
+    scale: 1
+    type: monster
+    level: 146
+    hp: 139711294
+    mp: 100
+    fp: 0
+    attack: 4388
+    defense: 242
+    attack_rate: 253
+    dodge_rate: 1100
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1559786
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1420
+    key: MI_COLOSKELDEVIL_1
+    name: "[False Soul] Kheldor"
+    name_id: IDS_PROPMOVER_TXT_001992
+    dwObjIndex: 1420
+    scale: 1
+    type: monster
+    level: 135
+    hp: 38103080
+    mp: 100
+    fp: 0
+    attack: 22046
+    defense: 560
+    attack_rate: 125
+    dodge_rate: 2000
+    speed: 0.12
+    attack_speed: 1000
+    exp: 12009924
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1421
+    key: MI_KALGASEGG01
+    name: Kalgas Statue
+    name_id: IDS_PROPMOVER_TXT_001994
+    dwObjIndex: 1421
+    scale: 1
+    type: monster
+    level: 125
+    hp: 17000000
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 240
+    attack_rate: 125
+    dodge_rate: 750
+    speed: 0
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1422
+    key: MI_KALGASSTELE01
+    name: Akin Statue
+    name_id: IDS_PROPMOVER_TXT_001996
+    dwObjIndex: 1422
+    scale: 1
+    type: monster
+    level: 125
+    hp: 17000000
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 240
+    attack_rate: 125
+    dodge_rate: 750
+    speed: 0
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1423
+    key: MI_KALGASSTELE02
+    name: Balt Statue
+    name_id: IDS_PROPMOVER_TXT_001998
+    dwObjIndex: 1423
+    scale: 1
+    type: monster
+    level: 125
+    hp: 17000000
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 240
+    attack_rate: 125
+    dodge_rate: 750
+    speed: 0
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1424
+    key: MI_BURR
+    name: Buur
+    name_id: IDS_PROPMOVER_TXT_002000
+    dwObjIndex: 1424
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.012
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1425
+    key: MI_SAPHYRYAN
+    name: Saphyryan
+    name_id: IDS_PROPMOVER_TXT_002002
+    dwObjIndex: 1425
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.075
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1426
+    key: MI_GRAYEARL
+    name: Gray Earl
+    name_id: IDS_PROPMOVER_TXT_002004
+    dwObjIndex: 1426
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.03
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1430
+    key: MI_EVEROCKEPELLER
+    name: Event Rocketfeller
+    name_id: IDS_PROPMOVER_TXT_002012
+    dwObjIndex: 1430
+    scale: 1
+    type: monster
+    level: 49
+    hp: 20
+    mp: 100
+    fp: 0
+    attack: 413
+    defense: 58
+    attack_rate: 79
+    dodge_rate: 58
+    speed: 0.16
+    attack_speed: 1000
+    exp: 2086
+    flyable: true
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1431
+    key: MI_EVEMOTHBEE
+    name: Event Mosbie
+    name_id: IDS_PROPMOVER_TXT_002014
+    dwObjIndex: 1431
+    scale: 1
+    type: monster
+    level: 20
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 180
+    defense: 29
+    attack_rate: 70
+    dodge_rate: 29
+    speed: 0.16
+    attack_speed: 1000
+    exp: 55
+    flyable: true
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1432
+    key: MI_GPOTATO01
+    name: Rex gPotato
+    name_id: IDS_PROPMOVER_TXT_002016
+    dwObjIndex: 1432
+    scale: 1
+    type: monster
+    level: 121
+    hp: 6577317
+    mp: 100
+    fp: 0
+    attack: 1812
+    defense: 464
+    attack_rate: 260
+    dodge_rate: 200
+    speed: 0.15
+    attack_speed: 1000
+    exp: 3194508
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1436
+    key: MI_GPOTATO02
+    name: Maximus Rex gPotato
+    name_id: IDS_PROPMOVER_TXT_002024
+    dwObjIndex: 1436
+    scale: 1
+    type: boss
+    level: 70
+    hp: 9965632
+    mp: 50
+    fp: 0
+    attack: 1812
+    defense: 232
+    attack_rate: 130
+    dodge_rate: 100
+    speed: 0.15
+    attack_speed: 1000
+    exp: 1597254
+    flyable: false
+    boss: true
+    giant: true
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1433
+    key: MI_EVEKALGASBABY
+    name: Event Baby Cargo
+    name_id: IDS_PROPMOVER_TXT_002018
+    dwObjIndex: 1433
+    scale: 1
+    type: monster
+    level: 15
+    hp: 15
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.03
+    attack_speed: 1000
+    exp: 75
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1440
+    key: MI_LOVETHIEF
+    name: Love Thief
+    name_id: IDS_PROPMOVER_TXT_002032
+    dwObjIndex: 1440
+    scale: 1
+    type: monster
+    level: 15
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 212
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1446
+    key: MI_SHIPMOUGUS
+    name: Mouzer
+    name_id: IDS_PROPMOVER_TXT_002044
+    dwObjIndex: 1446
+    scale: 1
+    type: monster
+    level: 105
+    hp: 278787
+    mp: 100
+    fp: 0
+    attack: 4710
+    defense: 258
+    attack_rate: 136
+    dodge_rate: 166
+    speed: 0.075
+    attack_speed: 1000
+    exp: 545484
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1447
+    key: MI_SHIPWINGMOUGUS
+    name: Winged Mouzer
+    name_id: IDS_PROPMOVER_TXT_002046
+    dwObjIndex: 1447
+    scale: 1
+    type: monster
+    level: 106
+    hp: 306664
+    mp: 100
+    fp: 0
+    attack: 4710
+    defense: 258
+    attack_rate: 136
+    dodge_rate: 166
+    speed: 0.075
+    attack_speed: 1000
+    exp: 600033
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1448
+    key: MI_SHIPMESPI
+    name: Regal Hawk
+    name_id: IDS_PROPMOVER_TXT_002048
+    dwObjIndex: 1448
+    scale: 1
+    type: monster
+    level: 107
+    hp: 337332
+    mp: 100
+    fp: 0
+    attack: 4710
+    defense: 258
+    attack_rate: 136
+    dodge_rate: 166
+    speed: 0.075
+    attack_speed: 1000
+    exp: 660036
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1449
+    key: MI_SHIPWINDMESPI
+    name: Regal Raptor
+    name_id: IDS_PROPMOVER_TXT_002050
+    dwObjIndex: 1449
+    scale: 1
+    type: monster
+    level: 108
+    hp: 371064
+    mp: 100
+    fp: 0
+    attack: 4710
+    defense: 258
+    attack_rate: 136
+    dodge_rate: 166
+    speed: 0.075
+    attack_speed: 1000
+    exp: 726039
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1450
+    key: MI_SHIPREDHARPY
+    name: Crimson Garuda
+    name_id: IDS_PROPMOVER_TXT_002052
+    dwObjIndex: 1450
+    scale: 1
+    type: monster
+    level: 109
+    hp: 408171
+    mp: 100
+    fp: 0
+    attack: 4710
+    defense: 258
+    attack_rate: 136
+    dodge_rate: 166
+    speed: 0.075
+    attack_speed: 1000
+    exp: 798642
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1451
+    key: MI_SHIPBLUEHARPY
+    name: Veiled Garuda
+    name_id: IDS_PROPMOVER_TXT_002054
+    dwObjIndex: 1451
+    scale: 1
+    type: monster
+    level: 110
+    hp: 448989
+    mp: 100
+    fp: 0
+    attack: 4710
+    defense: 258
+    attack_rate: 136
+    dodge_rate: 166
+    speed: 0.075
+    attack_speed: 1000
+    exp: 878506
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1454
+    key: MI_DREAMRAPRA01
+    name: Mushbro
+    name_id: IDS_PROPMOVER_TXT_002058
+    dwObjIndex: 1454
+    scale: 1
+    type: monster
+    level: 75
+    hp: 209457
+    mp: 100
+    fp: 0
+    attack: 3239
+    defense: 258
+    attack_rate: 126
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 191189
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1453
+    key: MI_DREAMFLAME01
+    name: Blossom
+    name_id: IDS_PROPMOVER_TXT_002060
+    dwObjIndex: 1453
+    scale: 1
+    type: monster
+    level: 76
+    hp: 230401
+    mp: 100
+    fp: 0
+    attack: 2591
+    defense: 258
+    attack_rate: 126
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 210309
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1455
+    key: MI_DREAMOLDRUT01
+    name: Oldroot
+    name_id: IDS_PROPMOVER_TXT_002062
+    dwObjIndex: 1455
+    scale: 1
+    type: monster
+    level: 77
+    hp: 253443
+    mp: 100
+    fp: 0
+    attack: 3239
+    defense: 258
+    attack_rate: 126
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 231339
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1456
+    key: MI_DREAMMINIMUSHU01
+    name: Minimusha
+    name_id: IDS_PROPMOVER_TXT_002064
+    dwObjIndex: 1456
+    scale: 1
+    type: monster
+    level: 78
+    hp: 278787
+    mp: 100
+    fp: 0
+    attack: 3239
+    defense: 258
+    attack_rate: 126
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 254474
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1457
+    key: MI_DREAMLADYBLUM01
+    name: Lady Bloom
+    name_id: IDS_PROPMOVER_TXT_002066
+    dwObjIndex: 1457
+    scale: 1
+    type: monster
+    level: 79
+    hp: 306664
+    mp: 100
+    fp: 0
+    attack: 3239
+    defense: 258
+    attack_rate: 126
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 279921
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1458
+    key: MI_DREAMNIGHTMIST01
+    name: Nightmyst
+    name_id: IDS_PROPMOVER_TXT_002068
+    dwObjIndex: 1458
+    scale: 1
+    type: monster
+    level: 80
+    hp: 337332
+    mp: 100
+    fp: 0
+    attack: 2591
+    defense: 258
+    attack_rate: 126
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 307913
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1460
+    key: MI_HERNSHARK01
+    name: Razor Maw
+    name_id: IDS_PROPMOVER_TXT_002072
+    dwObjIndex: 1460
+    scale: 1
+    type: monster
+    level: 90
+    hp: 253443
+    mp: 100
+    fp: 0
+    attack: 3724
+    defense: 258
+    attack_rate: 131
+    dodge_rate: 161
+    speed: 0.08
+    attack_speed: 1000
+    exp: 307913
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1461
+    key: MI_HERNMERMAN01
+    name: Kappa
+    name_id: IDS_PROPMOVER_TXT_002074
+    dwObjIndex: 1461
+    scale: 1
+    type: monster
+    level: 91
+    hp: 278787
+    mp: 100
+    fp: 0
+    attack: 3724
+    defense: 258
+    attack_rate: 131
+    dodge_rate: 161
+    speed: 0.08
+    attack_speed: 1000
+    exp: 338704
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1462
+    key: MI_HERNMERMAID01
+    name: Nereid
+    name_id: IDS_PROPMOVER_TXT_002076
+    dwObjIndex: 1462
+    scale: 1
+    type: monster
+    level: 92
+    hp: 306664
+    mp: 100
+    fp: 0
+    attack: 3724
+    defense: 258
+    attack_rate: 131
+    dodge_rate: 161
+    speed: 0.08
+    attack_speed: 1000
+    exp: 372574
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1463
+    key: MI_HERNTURTLE01
+    name: Terrorpin
+    name_id: IDS_PROPMOVER_TXT_002078
+    dwObjIndex: 1463
+    scale: 1
+    type: monster
+    level: 93
+    hp: 337332
+    mp: 100
+    fp: 0
+    attack: 3724
+    defense: 258
+    attack_rate: 131
+    dodge_rate: 161
+    speed: 0.08
+    attack_speed: 1000
+    exp: 409831
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1464
+    key: MI_HERNMERMAN02
+    name: Bunyip
+    name_id: IDS_PROPMOVER_TXT_002080
+    dwObjIndex: 1464
+    scale: 1
+    type: monster
+    level: 94
+    hp: 371064
+    mp: 100
+    fp: 0
+    attack: 3724
+    defense: 258
+    attack_rate: 131
+    dodge_rate: 161
+    speed: 0.08
+    attack_speed: 1000
+    exp: 450814
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1465
+    key: MI_HERNMERMAID02
+    name: Selkie
+    name_id: IDS_PROPMOVER_TXT_002082
+    dwObjIndex: 1465
+    scale: 1
+    type: monster
+    level: 95
+    hp: 408171
+    mp: 100
+    fp: 0
+    attack: 3724
+    defense: 258
+    attack_rate: 131
+    dodge_rate: 161
+    speed: 0.08
+    attack_speed: 1000
+    exp: 495895
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1469
+    key: MI_SHIPMOUGUS_1
+    name: Ace Mouzer
+    name_id: IDS_PROPMOVER_TXT_002118
+    dwObjIndex: 1469
+    scale: 1
+    type: monster
+    level: 105
+    hp: 613329
+    mp: 100
+    fp: 0
+    attack: 9253
+    defense: 258
+    attack_rate: 95
+    dodge_rate: 151
+    speed: 0.075
+    attack_speed: 1000
+    exp: 545484
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1470
+    key: MI_SHIPWINGMOUGUS_1
+    name: Ace Winged Mouzer
+    name_id: IDS_PROPMOVER_TXT_002120
+    dwObjIndex: 1470
+    scale: 1
+    type: monster
+    level: 106
+    hp: 674664
+    mp: 100
+    fp: 0
+    attack: 9253
+    defense: 258
+    attack_rate: 95
+    dodge_rate: 151
+    speed: 0.075
+    attack_speed: 1000
+    exp: 600033
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1471
+    key: MI_SHIPMESPI_1
+    name: Ace Regal Hawk
+    name_id: IDS_PROPMOVER_TXT_002122
+    dwObjIndex: 1471
+    scale: 1
+    type: monster
+    level: 107
+    hp: 742128
+    mp: 100
+    fp: 0
+    attack: 9253
+    defense: 258
+    attack_rate: 95
+    dodge_rate: 151
+    speed: 0.075
+    attack_speed: 1000
+    exp: 660036
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1472
+    key: MI_SHIPWINDMESPI_1
+    name: Ace Regal Raptor
+    name_id: IDS_PROPMOVER_TXT_002124
+    dwObjIndex: 1472
+    scale: 1
+    type: monster
+    level: 108
+    hp: 816342
+    mp: 100
+    fp: 0
+    attack: 9253
+    defense: 258
+    attack_rate: 95
+    dodge_rate: 151
+    speed: 0.075
+    attack_speed: 1000
+    exp: 726039
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1473
+    key: MI_SHIPREDHARPY_1
+    name: Ace Crimson Garuda
+    name_id: IDS_PROPMOVER_TXT_002126
+    dwObjIndex: 1473
+    scale: 1
+    type: monster
+    level: 109
+    hp: 897978
+    mp: 100
+    fp: 0
+    attack: 9253
+    defense: 258
+    attack_rate: 95
+    dodge_rate: 151
+    speed: 0.075
+    attack_speed: 1000
+    exp: 798642
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1474
+    key: MI_SHIPBLUEHARPY_1
+    name: Ace Veiled Garuda
+    name_id: IDS_PROPMOVER_TXT_002128
+    dwObjIndex: 1474
+    scale: 1
+    type: monster
+    level: 110
+    hp: 987777
+    mp: 100
+    fp: 0
+    attack: 9253
+    defense: 258
+    attack_rate: 95
+    dodge_rate: 151
+    speed: 0.075
+    attack_speed: 1000
+    exp: 878506
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1476
+    key: MI_DREAMFLAME01_1
+    name: Vile Blossom
+    name_id: IDS_PROPMOVER_TXT_002088
+    dwObjIndex: 1476
+    scale: 1
+    type: monster
+    level: 76
+    hp: 506886
+    mp: 100
+    fp: 0
+    attack: 4059
+    defense: 258
+    attack_rate: 65
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 210309
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1477
+    key: MI_DREAMRAPRA01_1
+    name: Vile Mushbro
+    name_id: IDS_PROPMOVER_TXT_002090
+    dwObjIndex: 1477
+    scale: 1
+    type: monster
+    level: 75
+    hp: 460803
+    mp: 100
+    fp: 0
+    attack: 5074
+    defense: 258
+    attack_rate: 65
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 191189
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1478
+    key: MI_DREAMOLDRUT01_1
+    name: Vile Oldroot
+    name_id: IDS_PROPMOVER_TXT_002092
+    dwObjIndex: 1478
+    scale: 1
+    type: monster
+    level: 77
+    hp: 557574
+    mp: 100
+    fp: 0
+    attack: 5074
+    defense: 258
+    attack_rate: 65
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 231339
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1479
+    key: MI_DREAMMINIMUSHU01_1
+    name: Vile Minimusha
+    name_id: IDS_PROPMOVER_TXT_002094
+    dwObjIndex: 1479
+    scale: 1
+    type: monster
+    level: 78
+    hp: 613329
+    mp: 100
+    fp: 0
+    attack: 5074
+    defense: 258
+    attack_rate: 65
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 254474
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1480
+    key: MI_DREAMLADYBLUM01_1
+    name: Vile Lady Bloom
+    name_id: IDS_PROPMOVER_TXT_002096
+    dwObjIndex: 1480
+    scale: 1
+    type: monster
+    level: 79
+    hp: 674664
+    mp: 100
+    fp: 0
+    attack: 5074
+    defense: 258
+    attack_rate: 65
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 279921
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1481
+    key: MI_DREAMNIGHTMIST01_1
+    name: Vile Nightmyst
+    name_id: IDS_PROPMOVER_TXT_002098
+    dwObjIndex: 1481
+    scale: 1
+    type: monster
+    level: 80
+    hp: 742128
+    mp: 100
+    fp: 0
+    attack: 4059
+    defense: 258
+    attack_rate: 65
+    dodge_rate: 155
+    speed: 0.075
+    attack_speed: 1000
+    exp: 307913
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1483
+    key: MI_HERNSHARK01_1
+    name: Abyssal Razor Maw
+    name_id: IDS_PROPMOVER_TXT_002102
+    dwObjIndex: 1483
+    scale: 1
+    type: monster
+    level: 90
+    hp: 557574
+    mp: 100
+    fp: 0
+    attack: 7711
+    defense: 258
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.08
+    attack_speed: 1000
+    exp: 307913
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1484
+    key: MI_HERNMERMAN01_1
+    name: Abyssal Kappa
+    name_id: IDS_PROPMOVER_TXT_002104
+    dwObjIndex: 1484
+    scale: 1
+    type: monster
+    level: 91
+    hp: 613329
+    mp: 100
+    fp: 0
+    attack: 7711
+    defense: 258
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.08
+    attack_speed: 1000
+    exp: 338704
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1485
+    key: MI_HERNMERMAID01_1
+    name: Abyssal Nereid
+    name_id: IDS_PROPMOVER_TXT_002106
+    dwObjIndex: 1485
+    scale: 1
+    type: monster
+    level: 92
+    hp: 674664
+    mp: 100
+    fp: 0
+    attack: 7711
+    defense: 258
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.08
+    attack_speed: 1000
+    exp: 372574
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1486
+    key: MI_HERNTURTLE01_1
+    name: Abyssal Terrorpin
+    name_id: IDS_PROPMOVER_TXT_002108
+    dwObjIndex: 1486
+    scale: 1
+    type: monster
+    level: 93
+    hp: 742128
+    mp: 100
+    fp: 0
+    attack: 7711
+    defense: 258
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.08
+    attack_speed: 1000
+    exp: 409831
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1487
+    key: MI_HERNMERMAN02_1
+    name: Abyssal Bunyip
+    name_id: IDS_PROPMOVER_TXT_002110
+    dwObjIndex: 1487
+    scale: 1
+    type: monster
+    level: 94
+    hp: 816342
+    mp: 100
+    fp: 0
+    attack: 7711
+    defense: 258
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.08
+    attack_speed: 1000
+    exp: 450814
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1488
+    key: MI_HERNMERMAID02_1
+    name: Abyssal Selkie
+    name_id: IDS_PROPMOVER_TXT_002112
+    dwObjIndex: 1488
+    scale: 1
+    type: monster
+    level: 95
+    hp: 897978
+    mp: 100
+    fp: 0
+    attack: 7711
+    defense: 516
+    attack_rate: 80
+    dodge_rate: 146
+    speed: 0.08
+    attack_speed: 1000
+    exp: 495895
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1525
+    key: MI_CHAMELEON_GREEN
+    name: MI_CHAMELEON_GREEN
+    name_id: IDS_PROPMOVER_TXT_002198
+    dwObjIndex: 1525
+    scale: 1
+    type: monster
+    level: 15
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1526
+    key: MI_CHAMELEON_BLUE
+    name: MI_CHAMELEON_BLUE
+    name_id: IDS_PROPMOVER_TXT_002200
+    dwObjIndex: 1526
+    scale: 1
+    type: monster
+    level: 15
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1527
+    key: MI_CHAMELEON_YELLOW
+    name: MI_CHAMELEON_YELLOW
+    name_id: IDS_PROPMOVER_TXT_002202
+    dwObjIndex: 1527
+    scale: 1
+    type: monster
+    level: 15
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1528
+    key: MI_CHAMELEON_RED
+    name: MI_CHAMELEON_RED
+    name_id: IDS_PROPMOVER_TXT_002204
+    dwObjIndex: 1528
+    scale: 1
+    type: monster
+    level: 15
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.05
+    attack_speed: 1000
+    exp: 0
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1530
+    key: MI_CRISTMASGIGLEBOX
+    name: Mischievous Present Box
+    name_id: IDS_PROPMOVER_TXT_002208
+    dwObjIndex: 1530
+    scale: 1
+    type: monster
+    level: 15
+    hp: 15
+    mp: 100
+    fp: 0
+    attack: 1
+    defense: 60
+    attack_rate: 80
+    dodge_rate: 57
+    speed: 0.075
+    attack_speed: 1000
+    exp: 1000
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1534
+    key: MI_TURTLEGUARDER
+    name: Dark Guardian Terrapin
+    name_id: IDS_PROPMOVER_TXT_002216
+    dwObjIndex: 1534
+    scale: 1
+    type: monster
+    level: 129
+    hp: 200000
+    mp: 100
+    fp: 0
+    attack: 2090
+    defense: 200
+    attack_rate: 382
+    dodge_rate: 670
+    speed: 0.075
+    attack_speed: 1000
+    exp: 3324998
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1535
+    key: MI_RABBITFIGHTER
+    name: Dark Usagi Fighter
+    name_id: IDS_PROPMOVER_TXT_002218
+    dwObjIndex: 1535
+    scale: 1
+    type: monster
+    level: 133
+    hp: 220000
+    mp: 100
+    fp: 0
+    attack: 3060
+    defense: 205
+    attack_rate: 392
+    dodge_rate: 700
+    speed: 0.075
+    attack_speed: 1000
+    exp: 4023248
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1536
+    key: MI_RABBITSWORDER
+    name: Dark Usagi Blade Master
+    name_id: IDS_PROPMOVER_TXT_002220
+    dwObjIndex: 1536
+    scale: 1
+    type: monster
+    level: 137
+    hp: 240000
+    mp: 100
+    fp: 0
+    attack: 2130
+    defense: 210
+    attack_rate: 402
+    dodge_rate: 750
+    speed: 0.075
+    attack_speed: 1000
+    exp: 4868131
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1537
+    key: MI_RABBITSPEAR
+    name: Dark Usagi Yari
+    name_id: IDS_PROPMOVER_TXT_002222
+    dwObjIndex: 1537
+    scale: 1
+    type: monster
+    level: 141
+    hp: 260000
+    mp: 100
+    fp: 0
+    attack: 4310
+    defense: 215
+    attack_rate: 412
+    dodge_rate: 800
+    speed: 0.075
+    attack_speed: 1000
+    exp: 5890438
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1538
+    key: MI_RABBITASSASSIN
+    name: Dark Usagi Ninja
+    name_id: IDS_PROPMOVER_TXT_002224
+    dwObjIndex: 1538
+    scale: 1
+    type: monster
+    level: 145
+    hp: 280000
+    mp: 100
+    fp: 0
+    attack: 2200
+    defense: 220
+    attack_rate: 422
+    dodge_rate: 850
+    speed: 0.075
+    attack_speed: 1000
+    exp: 7127430
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1539
+    key: MI_RABBITAXE
+    name: Dark Usagi Axe Master
+    name_id: IDS_PROPMOVER_TXT_002226
+    dwObjIndex: 1539
+    scale: 1
+    type: monster
+    level: 149
+    hp: 300000
+    mp: 100
+    fp: 0
+    attack: 2300
+    defense: 225
+    attack_rate: 432
+    dodge_rate: 900
+    speed: 0.075
+    attack_speed: 1000
+    exp: 8624191
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 12
+  - id: 1540
+    key: MI_IBLESSPUPPET
+    name: Iblis's Perpetrator
+    name_id: IDS_PROPMOVER_TXT_002228
+    dwObjIndex: 1540
+    scale: 1
+    type: monster
+    level: 150
+    hp: 100000000
+    mp: 100
+    fp: 0
+    attack: 7250
+    defense: 700
+    attack_rate: 253
+    dodge_rate: 3300
+    speed: 0.12
+    attack_speed: 1000
+    exp: 43120955
+    flyable: false
+    boss: false
+    giant: false
+    raid: false
+    attackable: true
+    guard: false
+    belligerence: 11
+  - id: 1541
+    key: MI_GRAYEARL01
+    name: Earl Vermelho
+    name_id: IDS_PROPMOVER_TXT_002230
+    dwObjIndex: 1541
+    scale: 1
+    type: monster
+    level: 1
+    hp: 10
+    mp: 100
+    fp: 0
+    attack: 0
+    defense: 110
+    attack_rate: 0
+    dodge_rate: 0
+    speed: 0.03
     attack_speed: 1000
     exp: 0
     flyable: false

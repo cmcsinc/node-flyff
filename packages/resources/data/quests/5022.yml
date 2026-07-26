@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaDa_RedRobeGirl
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaDa_RedRobeGirl
+      - type: sym
+        value: 203
+      - type: num
+        value: 1034
+      - type: num
+        value: 959
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaDa_RedRobeGirl
+      - type: sym
+        value: 203
       - type: num
         value: 1034
       - type: num
