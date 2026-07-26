@@ -340,4 +340,42 @@ describe('ScriptDlgService.dialog', () => {
     assert.deepEqual(funcs[2], { type: 'addKey', word: 'btn10', key: '10' });
     assert.deepEqual(began, []); // LaunchQuest branch not taken
   });
+
+  it('synthesizes a quest Accept button when the NPC begins a quest the player lacks', async () => {
+    const { svc, began } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const dialogs = mkDialogs(['', '', '', 'greeting']); // strings[3] = greeting via speak index 3
+    dialogs.byPrefix.set('mafl_alice', {
+      _version: '1.0', prefix: 'mafl_alice', character_key: 'MaFl_Alice',
+      // Alice-like: state 0 speak-only (no quest logic in source) + a launch state.
+      states: { '0': { speak: [3] }, '1': { launch_quest: true } },
+    } as never);
+    const quests = {
+      byId: new Map([[5062, { id: 5062, symbol: 'QUEST_ALICE01', title: 'IDS_X', commands: [], states: {}, quest_items: [] }]]),
+      drops: new Map(),
+      byNpc: { begin: new Map([['mafl_alice', [5062]]]), end: new Map() },
+    } as unknown as QuestIndex;
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Alice') },
+      dialogs, quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    // mkNpc sets m_szKey; outfit.characterKey is undefined -> npcLookupKey falls
+    // back to stripping MI_ + lowercasing. Use an explicit outfit via override.
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const funcs = calls[0]!;
+    const accept = funcs.find((f) => f.type === 'addKey' && f.key === '#b5062');
+    assert.ok(accept, 'expected a #b5062 Accept button in the synth menu');
+    // No outfit on mkNpc -> npcLookupKey uses m_szKey. mkNpc('MaFl_Alice') sets
+    // m_szKey='MaFl_Alice' which has no MI_ prefix -> stripped stays 'MaFl_Alice'
+    // -> lowercased 'mafl_alice' -> matches beginByKey. Confirm the label.
+    assert.equal((accept as { word: string }).word, 'QUEST_ALICE01');
+
+    // Click the Accept button -> routes to beginQuest.
+    const out2 = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '#b5062', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out2.ok) throw new Error('expected ok');
+    assert.deepEqual(began, [5062]);
+    assert.ok(calls.at(-1)!.some((f) => f.type === 'exit')); // closes the window
+  });
 });
