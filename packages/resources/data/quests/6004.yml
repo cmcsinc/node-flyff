@@ -11,7 +11,7 @@ commands:
       - type: num
         value: 0
       - type: num
-        value: 6001
+        value: 6003
 states: {}
 quest_items: []
 title: IDS_PROPQUEST_INC_002608

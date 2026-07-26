@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaSa_JeongHwa
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaSa_JeongHwa
+      - type: sym
+        value: 1
+      - type: num
+        value: 8335
+      - type: num
+        value: 3713
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaSa_MaYun
+      - type: sym
+        value: 1
       - type: num
         value: 8197
       - type: num

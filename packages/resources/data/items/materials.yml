@@ -162,7 +162,7 @@ items:
     job_req:
       - knight
   - id: 2540
-    name: II_GEN_POT_POT_ANTIDOTE
+    name: Antidote Potion
     name_id: IDS_PROPITEM_TXT_003986
     weight: 1
     price: 100
@@ -7061,7 +7061,7 @@ items:
     job_req:
       - acrobat
   - id: 3019
-    name: Tote Bill
+    name: Tengu Bill
     name_id: IDS_PROPITEM_TXT_009642
     weight: 1
     price: 4990

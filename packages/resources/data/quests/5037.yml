@@ -9,7 +9,7 @@ commands:
   - cmd: SetCharacter
     args:
       - type: str
-        value: MaFl_ForestManager02
+        value: ""
   - cmd: SetBeginCondLevel
     args:
       - type: num

@@ -9,7 +9,7 @@ commands:
   - cmd: SetCharacter
     args:
       - type: str
-        value: MaFl_Heroevent01
+        value: ""
   - cmd: SetBeginCondLevel
     args:
       - type: num

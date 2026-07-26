@@ -5775,7 +5775,7 @@ items:
     job_req:
       - magician
   - id: 22022
-    name: Branch of Rhsis
+    name: Branch of Rhisis
     name_id: IDS_PROPITEM_TXT_003878
     weight: 1
     price: 125000
@@ -7790,7 +7790,7 @@ items:
     durability: 7200000
     job_req:
       - knight
-  - id: 20378
+  - id: 22378
     name: Ultimate Guardian Axe @
     name_id: IDS_PROPITEM_TXT_008538
     weight: 1

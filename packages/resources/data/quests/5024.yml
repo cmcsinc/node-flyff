@@ -5,7 +5,7 @@ commands:
   - cmd: SetHeadQuest
     args:
       - type: num
-        value: 1992
+        value: 6003
   - cmd: SetRepeat
     args:
       - type: num

@@ -5,15 +5,27 @@ commands:
   - cmd: SetCharacter
     args:
       - type: str
-        value: MaDa_Ellend
+        value: MaFl_Clamb
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_Clamb
+      - type: sym
+        value: 1
+      - type: num
+        value: 7691
+      - type: num
+        value: 4227
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaFl_Clamb
+      - type: sym
+        value: 1
       - type: num
-        value: 7694
+        value: 7691
       - type: num
-        value: 4226
+        value: 4227
       - type: num
         value: 1
   - cmd: SetBeginCondLevel
@@ -42,18 +54,6 @@ commands:
         value: 1
       - type: sym
         value: 178
-  - cmd: SetBeginCondItem
-    args:
-      - type: num
-        value: -1
-      - type: num
-        value: 0
-      - type: num
-        value: -1
-      - type: sym
-        value: 10389
-      - type: num
-        value: 1
   - cmd: SetEndCondLevel
     args:
       - type: num
@@ -65,41 +65,27 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 688
+        value: 81
+      - type: num
+        value: 10
+      - type: num
+        value: 9408
+      - type: num
+        value: 3872
       - type: num
         value: 1
-      - type: num
-        value: 8779
-      - type: num
-        value: 2170
-      - type: num
-        value: 1
-  - cmd: SetEndCondItem
+  - cmd: SetEndRewardItem
     args:
       - type: num
         value: -1
       - type: num
         value: 0
       - type: num
-        value: 3
+        value: -1
       - type: sym
-        value: 18175
+        value: 10249
       - type: num
         value: 1
-      - type: num
-        value: -1
-      - type: num
-        value: -1
-      - type: sym
-        value: QUEST_DESTINATION_ID_0023
-  - cmd: SetEndRemoveItem
-    args:
-      - type: num
-        value: 0
-      - type: sym
-        value: 10389
-      - type: num
-        value: -1
   - cmd: SetHeadQuest
     args:
       - type: num
@@ -109,63 +95,47 @@ commands:
       - type: sym
         value: 0
       - type: sym
-        value: IDS_PROPQUEST_INC_001553
+        value: IDS_PROPQUEST_INC_004016
   - cmd: SetDialog
     args:
       - type: sym
         value: 1
       - type: sym
-        value: IDS_PROPQUEST_INC_001554
+        value: IDS_PROPQUEST_INC_004017
   - cmd: SetDialog
     args:
       - type: sym
         value: 2
       - type: sym
-        value: IDS_PROPQUEST_INC_001555
+        value: IDS_PROPQUEST_INC_004018
   - cmd: SetDialog
     args:
       - type: sym
         value: 5
       - type: sym
-        value: IDS_PROPQUEST_INC_001556
+        value: IDS_PROPQUEST_INC_004019
   - cmd: SetDialog
     args:
       - type: sym
         value: 6
       - type: sym
-        value: IDS_PROPQUEST_INC_001557
+        value: IDS_PROPQUEST_INC_004020
   - cmd: SetDialog
     args:
       - type: sym
         value: 7
       - type: sym
-        value: IDS_PROPQUEST_INC_001558
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 8
-      - type: sym
-        value: IDS_PROPQUEST_INC_001559
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 9
-      - type: sym
-        value: IDS_PROPQUEST_INC_001560
+        value: IDS_PROPQUEST_INC_004021
   - cmd: SetDialog
     args:
       - type: sym
         value: 10
       - type: sym
-        value: IDS_PROPQUEST_INC_001561
+        value: IDS_PROPQUEST_INC_004022
 states:
   "0":
-    desc: IDS_PROPQUEST_INC_001562
+    desc: IDS_PROPQUEST_INC_004023
   "14":
-    desc: IDS_PROPQUEST_INC_001563
-quest_items:
-  - mover: 688
-    item: 18175
-    prob: 3000000000
-    num: 1
-title: IDS_PROPQUEST_INC_001552
+    desc: IDS_PROPQUEST_INC_004024
+quest_items: []
+title: IDS_PROPQUEST_INC_004015

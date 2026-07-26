@@ -5,15 +5,27 @@ commands:
   - cmd: SetCharacter
     args:
       - type: str
-        value: MaFl_Mustang
+        value: MaFl_Zandark
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaFl_Zandark
+      - type: sym
+        value: 1
+      - type: num
+        value: 7152
+      - type: num
+        value: 3244
   - cmd: SetEndCondCharacter
     args:
       - type: str
-        value: MaFl_Mustang
+        value: MaFl_Ruks
+      - type: sym
+        value: 1
       - type: num
-        value: 7153
+        value: 6932
       - type: num
-        value: 3244
+        value: 3326
       - type: num
         value: 1
   - cmd: SetBeginCondLevel
@@ -36,20 +48,6 @@ commands:
     args:
       - type: sym
         value: 5
-  - cmd: SetEndCondKillNPC
-    args:
-      - type: num
-        value: 0
-      - type: sym
-        value: 20
-      - type: num
-        value: 10
-      - type: num
-        value: 7128
-      - type: num
-        value: 3333
-      - type: num
-        value: 1
   - cmd: SetEndRewardGold
     args:
       - type: num
@@ -65,77 +63,53 @@ commands:
       - type: sym
         value: 0
       - type: sym
-        value: IDS_PROPQUEST_INC_000671
+        value: IDS_PROPQUEST_INC_003720
   - cmd: SetDialog
     args:
       - type: sym
         value: 1
       - type: sym
-        value: IDS_PROPQUEST_INC_000672
+        value: IDS_PROPQUEST_INC_003721
   - cmd: SetDialog
     args:
       - type: sym
         value: 2
       - type: sym
-        value: IDS_PROPQUEST_INC_000673
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 3
-      - type: sym
-        value: IDS_PROPQUEST_INC_000674
+        value: IDS_PROPQUEST_INC_003722
   - cmd: SetDialog
     args:
       - type: sym
         value: 5
       - type: sym
-        value: IDS_PROPQUEST_INC_000675
+        value: IDS_PROPQUEST_INC_003723
   - cmd: SetDialog
     args:
       - type: sym
         value: 6
       - type: sym
-        value: IDS_PROPQUEST_INC_000676
+        value: IDS_PROPQUEST_INC_003724
   - cmd: SetDialog
     args:
       - type: sym
         value: 7
       - type: sym
-        value: IDS_PROPQUEST_INC_000677
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 8
-      - type: sym
-        value: IDS_PROPQUEST_INC_000678
+        value: IDS_PROPQUEST_INC_003725
   - cmd: SetDialog
     args:
       - type: sym
         value: 10
       - type: sym
-        value: IDS_PROPQUEST_INC_000679
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 11
-      - type: sym
-        value: IDS_PROPQUEST_INC_000680
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 12
-      - type: sym
-        value: IDS_PROPQUEST_INC_000681
+        value: IDS_PROPQUEST_INC_003726
   - cmd: SetDialog
     args:
       - type: sym
         value: 15
       - type: sym
-        value: IDS_PROPQUEST_INC_000682
+        value: IDS_PROPQUEST_INC_004226
 states:
   "0":
-    desc: IDS_PROPQUEST_INC_000683
+    desc: IDS_PROPQUEST_INC_003727
   "14":
-    desc: IDS_PROPQUEST_INC_000684
+    desc: IDS_PROPQUEST_INC_003728
 quest_items: []
-title: IDS_PROPQUEST_INC_000670
+title: IDS_PROPQUEST_INC_003719

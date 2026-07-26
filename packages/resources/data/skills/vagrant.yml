@@ -884,7 +884,7 @@ skills:
     exeTarget: 4
     useChance: 4
     spellRegion: 2
-    element: 5
+    element: 4
     resourceType: 1
     referStats:
       - 3
@@ -961,7 +961,7 @@ skills:
     exeTarget: 7
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 2
     referStats:
       - 3
@@ -1073,7 +1073,7 @@ skills:
     exeTarget: 7
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 2
     referStats:
       - 3
@@ -1225,7 +1225,7 @@ skills:
     exeTarget: 7
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 2
     referStats:
       - 3
@@ -1377,7 +1377,7 @@ skills:
     exeTarget: 7
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 2
     referStats:
       - 3
@@ -1459,7 +1459,7 @@ skills:
     exeTarget: 7
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 2
     referStats:
       - 3
@@ -1531,7 +1531,7 @@ skills:
     exeTarget: 7
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 2
     referStats:
       - 3
@@ -2519,3 +2519,231 @@ skills:
           - 30
         cooldown: 5000
         skillTime: 3600000
+  - id: 437
+    name: Antiquity Stone_Berk
+    name_id: IDS_PROPSKILL_TXT_000452
+    tier: 4
+    job: 0
+    discipline: 0
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 130
+    prereqs:
+      - skill: 215
+        level: 2
+      - skill: 218
+        level: 7
+    cooldownType: 2
+    useChance: 4
+    spellRegion: 1
+    element: 8
+    resourceType: 1
+    referStats:
+      - 3
+      - 2
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 110
+      - 100
+    subDefine: 4330
+    maxLevel: 5
+    levels:
+      - level: 1
+        destParams:
+          - 10030
+        adjParamVals:
+          - 10000
+        castingTime: 150
+  - id: 438
+    name: Antiquity Stone_Zera
+    name_id: IDS_PROPSKILL_TXT_000454
+    tier: 4
+    job: 0
+    discipline: 0
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 130
+    prereqs:
+      - skill: 215
+        level: 2
+      - skill: 218
+        level: 7
+    cooldownType: 2
+    useChance: 4
+    spellRegion: 1
+    element: 8
+    resourceType: 1
+    referStats:
+      - 3
+      - 2
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 110
+      - 100
+    subDefine: 4340
+    maxLevel: 5
+    levels:
+      - level: 1
+        destParams:
+          - 10032
+        adjParamVals:
+          - 10000
+        castingTime: 150
+  - id: 439
+    name: Antiquity Stone_Manaz
+    name_id: IDS_PROPSKILL_TXT_000456
+    tier: 4
+    job: 0
+    discipline: 0
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 130
+    prereqs:
+      - skill: 215
+        level: 2
+      - skill: 218
+        level: 7
+    cooldownType: 2
+    useChance: 4
+    spellRegion: 1
+    element: 8
+    resourceType: 1
+    referStats:
+      - 3
+      - 2
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 110
+      - 100
+    subDefine: 4350
+    maxLevel: 5
+    levels:
+      - level: 1
+        destParams:
+          - 10031
+        adjParamVals:
+          - 10000
+        castingTime: 150
+  - id: 440
+    name: Antiquity Stone_Sigel
+    name_id: IDS_PROPSKILL_TXT_000450
+    tier: 4
+    job: 0
+    discipline: 0
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 130
+    prereqs:
+      - skill: 215
+        level: 2
+      - skill: 218
+        level: 7
+    cooldownType: 2
+    useChance: 4
+    spellRegion: 1
+    element: 8
+    resourceType: 1
+    referStats:
+      - 3
+      - 2
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 110
+      - 100
+    subDefine: 4360
+    maxLevel: 5
+    levels:
+      - level: 1
+        destParams:
+          - 10021
+        castingTime: 150
+  - id: 441
+    name: Antiquity Stone_Aeo
+    name_id: IDS_PROPSKILL_TXT_000458
+    tier: 4
+    job: 0
+    discipline: 0
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 130
+    prereqs:
+      - skill: 215
+        level: 2
+      - skill: 218
+        level: 7
+    cooldownType: 2
+    useChance: 1
+    spellRegion: 1
+    element: 8
+    resourceType: 2
+    referStats:
+      - 3
+      - 2
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 110
+      - 100
+    subDefine: 4370
+    maxLevel: 5
+    levels:
+      - level: 1
+        destParams:
+          - 10022
+        adjParamVals:
+          - 30
+        castingTime: 150
+        skillTime: 12000
+  - id: 442
+    name: Antiquity Stone_Tir
+    name_id: IDS_PROPSKILL_TXT_000460
+    tier: 4
+    job: 0
+    discipline: 0
+    weaponType: 13
+    handed: 3
+    attackRange: 5
+    reqLevel: 130
+    prereqs:
+      - skill: 215
+        level: 2
+      - skill: 218
+        level: 7
+    cooldownType: 2
+    useChance: 1
+    spellRegion: 1
+    element: 8
+    resourceType: 2
+    referStats:
+      - 3
+      - 2
+    referTargets:
+      - 1
+      - 2
+    referValues:
+      - 110
+      - 100
+    subDefine: 4380
+    maxLevel: 5
+    levels:
+      - level: 1
+        destParams:
+          - 10022
+        adjParamVals:
+          - 20
+        castingTime: 150
+        skillTime: 12000

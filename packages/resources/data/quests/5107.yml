@@ -18,6 +18,8 @@ commands:
     args:
       - type: str
         value: MaFl_Bubble
+      - type: sym
+        value: 1
       - type: num
         value: 6962
       - type: num
