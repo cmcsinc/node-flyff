@@ -50,9 +50,12 @@ export class NpcBuffHandler {
       throw error;
     }
 
+    logger.info({ charId: player.m_idPlayer, key }, 'NPC_BUFF received');
     const outcome = this.npcBuffService.buff(player, key, Date.now());
     if (!outcome.ok) {
-      logger.debug({ charId: player.m_idPlayer, reason: outcome.reason }, 'NPC_BUFF rejected');
+      logger.info({ charId: player.m_idPlayer, key, reason: outcome.reason }, 'NPC_BUFF rejected');
+    } else {
+      logger.info({ charId: player.m_idPlayer, key, ...outcome }, 'NPC_BUFF ok');
     }
   }
 }
