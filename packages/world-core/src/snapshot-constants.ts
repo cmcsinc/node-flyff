@@ -68,7 +68,11 @@ export const BELLI_PEACEFUL = 1;
 // Slot-sizing consts (NULL_ID, INVENTORY_SLOTS, BANK_SLOTS, MAX_HUMAN_PARTS,
 // MAX_SKILL_JOB, MAX_INVENTORY, MAX_BANK, MAX_BANK_TABS, MAX_SLOT_ITEM_*,
 // SHORTCUT) moved to @flyff/entities -- re-exported at the bottom of this file.
-export const MAX_JOB = 32;
+// v19 (`__3RD_LEGEND16` + `__VER 19`): MAX_JOB = MAX_HERO(32) + 8 legend-hero
+// jobs = 40 (`resource/defineJob.h:145`). v15 pre-legend was 32 -- using that
+// here under-sizes the `dwJobLv` array by 8 DWORDs and shifts every subsequent
+// CMover field, crashing the client in `CItemContainer::Serialize` (Item.h:938).
+export const MAX_JOB = 40;
 export const SKILL_SIZE = 8;            // sizeof(SKILL)
 export const SM_MAX = 26;
 export const MAX_HONOR_TITLE = 150;
@@ -160,6 +164,15 @@ export const SNAPSHOTTYPE_DOUSESKILLPOINT = 0x007d;  // MsgHdr.h:996 -- AddDoUse
  */
 export const SNAPSHOTTYPE_SETSKILLSTATE = 0x004c;        // MsgHdr.h -- AddSetSkillState (buff attach/refresh)
 export const SNAPSHOTTYPE_REMOVESKILLINFULENCE = 0x00f8; // MsgHdr.h -- AddRemoveSkillInfluence (buff expire/remove)
+/**
+ * `SNAPSHOTTYPE_DOAPPLYUSESKILL` (MsgHdr.h:1137) -- `g_UserMng.AddDoApplySkill`
+ * (`WORLDSERVER/UserLux.cpp:272-282`): `OBJID caster | DOAPPLYUSESKILL |
+ * DWORD idTarget | DWORD dwSkill | DWORD dwLevel`. Broadcast to vicinity on a
+ * server-applied skill (NPC buff pang, etc.) so peers + self run the client-local
+ * `DoApplySkill` animation (`DPClient.cpp:15263`). NPC-buff path emits this per
+ * applied entry alongside the SETSKILLSTATE icon + SETDESTPARAM stat delta.
+ */
+export const SNAPSHOTTYPE_DOAPPLYUSESKILL = 0x00d7;       // MsgHdr.h:1137 -- AddDoApplySkill (server-applied skill)
 /**
  * DST delta S->C snapshots (`_Network/MsgHdr.h`):
  * - SETDESTPARAM (0x001c) -- `CUserMng::AddSetDestParam` (User.cpp:4651):
@@ -303,6 +316,28 @@ export const DST_GOLD = 10000;                       // defineAttribute.h:352
  * to a box check if peer pop-in/desync shows up under real load.
  */
 export const VISIBILITY_RADIUS = 200;
+
+/**
+ * Navigator (minimap) icon display radius -- the ground-plane distance from the
+ * player within which we emit ADD_OBJ in the MAP_KEY vicinity burst. The v19
+ * client's own clip math is `fDistMap = rect.Width()/2/fx = 256/2/0.5 = 256`
+ * world units (`_Interface/WndField.cpp:11060`, `m_size=CSize(256,256)` `:11795`,
+ * `fx = m_size.cx/(MAP_SIZE*MPU) = 0.5` `:10880`). BUT the visible HUD is the
+ * `m_ALPHACIRCLE` mask (`:10976`) -- a circle inscribed in the 256 px window
+ * with a frame border, so its drawable radius is noticeably smaller than 256.
+ * The client's dot clip is also a SQUARE `rDistance` rect (`:11173`), and quest
+ * emoticons (`:11225`) have NO v19 clip -- anything we send beyond the visible
+ * circle overflows the HUD. We cap at `VISIBILITY_RADIUS` (200): safely inside
+ * the circle (100 px from center) AND consistent with the broadcast radius, so
+ * every sent mover also receives movement updates (no frozen dots).
+ *
+ * ponytail: this only filters the one-shot MAP_KEY burst -- movers that wander
+ * into range later still won't appear. Real v19 streams AddObj/RemoveObj via the
+ * `CLinkMap` visibility grid as movers cross this radius; port that (hook
+ * `MovementService` like `lootService.checkArrival`) so the minimap populates as
+ * the player walks.
+ */
+export const MINIMAP_VIEW_RADIUS = VISIBILITY_RADIUS;
 
 // --- Slot sizing + taskbar consts (moved to @flyff/entities) -----------------
 // Re-exported here so legacy `from './constants'` / `from '../net/snapshot/constants'`

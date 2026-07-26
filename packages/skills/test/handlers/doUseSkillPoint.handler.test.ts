@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PacketReader } from '@flyff/core/net/PacketReader';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import { MAX_SKILL_JOB } from '@flyff/world-core';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { DoUseSkillPointHandler } from '../../src/handlers/doUseSkillPoint.handler';
 import type { SkillService, LearnOutcome } from '../../src/services/skill.service';
@@ -18,10 +19,10 @@ function mockSocket(state = SessionState.IN_WORLD) {
   };
 }
 
-/** DOUSESKILLPOINT body: 45x (DWORD dwSkill, DWORD dwLevel), no count prefix. */
+/** DOUSESKILLPOINT body: MAX_SKILL_JOBx (DWORD dwSkill, DWORD dwLevel), no count prefix. */
 const payload = (slot: number, skillId: number, level: number): Buffer => {
   const w = new PacketWriter();
-  for (let i = 0; i < 45; i++) {
+  for (let i = 0; i < MAX_SKILL_JOB; i++) {
     w.writeDword(i === slot ? skillId : 0xffffffff);
     w.writeDword(i === slot ? level : 0);
   }
@@ -32,7 +33,7 @@ const fakePm = (p?: CPlayer): PlayerManager => ({ get: () => p }) as unknown as 
 const player = { m_idPlayer: 42 } as unknown as CPlayer;
 
 describe('DoUseSkillPointHandler', () => {
-  it('reads 45 (skill,level) pairs and delegates the roster to SkillService.learnSkills', () => {
+  it('reads MAX_SKILL_JOB (skill,level) pairs and delegates the roster to SkillService.learnSkills', () => {
     let got: Array<{ skillId: number; level: number }> | null = null;
     const svc = {
       learnSkills: (_p: CPlayer, req: Array<{ skillId: number; level: number }>) => {
@@ -42,7 +43,7 @@ describe('DoUseSkillPointHandler', () => {
     } as unknown as SkillService;
     const handler = new DoUseSkillPointHandler(fakePm(player), svc);
     handler.handleDoUseSkillPoint(mockSocket() as never, new PacketReader(payload(3, 100, 3)));
-    assert.equal(got!.length, 45);
+    assert.equal(got!.length, MAX_SKILL_JOB, `v19 __3RD_LEGEND16 sizes MAX_SKILL_JOB to ${MAX_SKILL_JOB}`);
     assert.deepEqual(got![3], { skillId: 100, level: 3 });
     assert.equal(got![0]!.skillId, 0xffffffff, 'empty slots carry NULL_ID');
   });

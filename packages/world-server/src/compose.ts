@@ -53,6 +53,9 @@ import { PkModeHandler } from './handlers/pkMode.handler';
 import { MeleeAttackService } from '@flyff/combat';
 import { RangeAttackService } from '@flyff/combat';
 import { CombatService } from '@flyff/combat';
+import { DuelService } from '@flyff/combat';
+import { DuelManager } from '@flyff/combat';
+import { DuelHandler } from '@flyff/combat';
 import { DropService } from '@flyff/inventory';
 import { InventoryService } from '@flyff/inventory';
 import { LootService } from '@flyff/inventory';
@@ -78,6 +81,8 @@ import { UseItemService } from '@flyff/inventory';
 import { EnchantService } from '@flyff/inventory';
 import { DoUseItemHandler } from '@flyff/inventory';
 import { EnchantHandler } from '@flyff/inventory';
+import { RepairService } from '@flyff/inventory';
+import { RepairHandler } from '@flyff/inventory';
 import { BankService } from '@flyff/npc';
 import { BankHandler } from '@flyff/npc';
 import { TaskBarService } from './services/taskbar.service';
@@ -87,6 +92,8 @@ import { ReqLeaveHandler } from './handlers/reqLeave.handler';
 import { SkillTaskBarHandler } from './handlers/skillTaskbar.handler';
 import { ShopService } from '@flyff/npc';
 import { ShopHandler } from '@flyff/npc';
+import { NpcBuffService } from '@flyff/npc';
+import { NpcBuffHandler } from '@flyff/npc';
 import { RemoveQuestHandler } from '@flyff/quest';
 import { QuestCheckHandler } from '@flyff/quest';
 import { QuestHelperHandler } from '@flyff/quest';
@@ -154,6 +161,7 @@ export interface WorldComposeResult {
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
   rangeAttackHandler: RangeAttackHandler;
+  duelHandler: DuelHandler;
   skillService: SkillService;
   statService: StatService;
   useSkillHandler: UseSkillHandler;
@@ -168,6 +176,7 @@ export interface WorldComposeResult {
   doUseItemHandler: DoUseItemHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
+  npcBuffHandler: NpcBuffHandler;
   taskbarHandler: TaskBarHandler;
   endSkillQueueHandler: EndSkillQueueHandler;
   reqLeaveHandler: ReqLeaveHandler;
@@ -442,7 +451,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // the audit that scoped these.
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
-    inventoryService, charRepo, inventoryRepo, zoneManager,
+    inventoryService, charRepo, inventoryRepo, zoneManager, vicinityService,
   });
   const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
@@ -461,6 +470,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const getPosHandler = new GetPosHandler(playerManager, movementService);
   const scriptDlgService = new ScriptDlgService({
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
+    defines: resources.defines,
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalHandler = new RevivalHandler(playerManager, revivalService);
@@ -468,18 +478,27 @@ export async function compose(): Promise<WorldComposeResult> {
   const pkModeHandler = new PkModeHandler(playerManager, pkModeService);
 
   const dropService = new DropService({ resources, itemManager });
+  // Duel manager + service -- created before CombatService so the PvP-kill seam
+  // can clear active-duel flags on a lethal blow (in addition to revival).
+  const duelManager = new DuelManager();
+  const duelService = new DuelService({ playerManager, duelManager });
   const combatService = new CombatService({
     spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,
     getItem: (id: number) => resources.items.items.get(id),
     // Hand PvP kills to the revival loop (flag victim dead + broadcast + open
-    // revive dialog). Mirrors the AISystem `onPlayerDeath` seam.
-    onPvpKill: (victim, killerObjid) => revivalService.onPlayerDeath(victim, killerObjid),
+    // revive dialog) AND tear down any active duel. Mirrors the AISystem
+    // `onPlayerDeath` seam.
+    onPvpKill: (victim, killerObjid) => {
+      revivalService.onPlayerDeath(victim, killerObjid);
+      duelService.onPlayerDeath(victim);
+    },
   });
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const rangeAttackService = new RangeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
   const rangeAttackHandler = new RangeAttackHandler(playerManager, rangeAttackService);
+  const duelHandler = new DuelHandler({ playerManager, duelService });
   // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v19 damage-skill MVP).
   const skillService = new SkillService({
     skills: resources.skills,
@@ -531,6 +550,15 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const enchantHandler = new EnchantHandler({ playerManager, enchantService });
 
+  // Repair -- PACKETTYPE_REPAIRITEM bulk blacksmith fix. Reuses the inventory
+  // stat/persist primitives; journals each repaired slot's absolute end-state.
+  const repairService = new RepairService({
+    inventoryRepo, journal,
+    getItem: (id: number) => resources.items.items.get(id),
+    spendGold: (player, amount) => inventoryService.spendGold(player, amount),
+  });
+  const repairHandler = new RepairHandler({ playerManager, repairService });
+
   // Bank -- open + deposit/withdraw item & gold (account-shared).
   const bankService = new BankService({ bankRepo, inventoryRepo, journal });
   const bankHandler = new BankHandler({ playerManager, bankService });
@@ -552,6 +580,15 @@ export async function compose(): Promise<WorldComposeResult> {
     getItem: (id: number) => resources.items.items.get(id),
   });
   const shopHandler = new ShopHandler({ playerManager, shopService, createItemSerializer });
+
+  // NPC buff-pang (__NPC_BUFF) -- applies a configured skill list on right-click.
+  const npcBuffService = new NpcBuffService({
+    spawnManager,
+    characterInc: resources.characterInc,
+    skills: resources.skills,
+    skillService,
+  });
+  const npcBuffHandler = new NpcBuffHandler(playerManager, npcBuffService);
 
   // Phase 4 -- C->S quest handlers (REMOVEQUEST / QUEST_CHECK / QUESTHELPER).
   const removeQuestHandler = new RemoveQuestHandler(playerManager, questService);
@@ -619,6 +656,7 @@ export async function compose(): Promise<WorldComposeResult> {
     playerSetDestObjHandler,
     meleeAttackHandler,
     rangeAttackHandler,
+    duelHandler,
     skillService,
     statService,
     useSkillHandler,
@@ -632,8 +670,10 @@ export async function compose(): Promise<WorldComposeResult> {
     doEquipHandler,
     doUseItemHandler,
     enchantHandler,
+    repairHandler,
     bankHandler,
     shopHandler,
+    npcBuffHandler,
     taskbarHandler,
     skillTaskbarHandler,
     endSkillQueueHandler,

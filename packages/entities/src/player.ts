@@ -223,6 +223,20 @@ export class CPlayer {
    */
   m_idDestObj: number = NULL_ID;
   /**
+   * Active 1v1 duel peer (C++ `m_idDuelOther`, Mover.h). `NULL_ID` = not
+   * dueling. Set by `DuelService.accept` on mutual consent; cleared on death,
+   * decline, expire, or disconnect. Drives `DUELCANCEL` broadcast on lethal
+   * blow + the dual `SETDUEL(nDuel=0)` clear. v1 party-duel variant deferred
+   * (ponytail: `m_idDuelParty`).
+   */
+  m_idDuelTarget: number = NULL_ID;
+  /**
+   * Duel active flag (C++ `m_nDuel`). 0 = idle, 1 = active. Mirrors the C++
+   * field the client reads via `OnSetDuel` (DPClient.cpp:15493). Set alongside
+   * {@link m_idDuelTarget}; cleared together.
+   */
+  m_nDuel: number = 0;
+  /**
    * Walk-to-object arrival range (C++ `CMover::m_fArrivalRange`). Set alongside
    * `m_idDestObj` by PLAYERSETDESTOBJ; echoed back by QUERYGETDESTOBJ replies.
    */
@@ -256,6 +270,12 @@ export class CPlayer {
   m_bPKMode: boolean = false;
   /** Last SCRIPTDLG tick (C++ `m_tickScript`) -- 400ms rate limit (DPSrvr.cpp:903). */
   m_tickScript: number = 0;
+  /**
+   * Last NPC_BUFF tick -- rate limit for the buff-pang packet (C++ `OnNPCBuff`
+   * has none; we add a 1s floor to keep a spamming client from DDoS-ing the
+   * buff apply loop). Mirrors {@link m_tickScript}.
+   */
+  m_tickNpcBuff: number = 0;
   /**
    * One-shot: the zone's NPC/monster ADD_OBJ snapshot has been sent for this
    * player. Neuz sends MAP_KEY once per `.wld` as it loads the world; the
