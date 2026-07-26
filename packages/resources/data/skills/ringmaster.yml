@@ -505,24 +505,21 @@ skills:
     levels:
       - level: 1
         destParams:
-          - 10006
-        adjParamVals:
-          - 2048
+          - 10036
         reqMp: 95
+        cooldown: 10000
         castingTime: 250
       - level: 2
         destParams:
-          - 10006
-        adjParamVals:
-          - 2304
+          - 10036
         reqMp: 95
+        cooldown: 5000
         castingTime: 250
       - level: 3
         destParams:
-          - 10006
-        adjParamVals:
-          - 35080
+          - 10036
         reqMp: 95
+        cooldown: 5000
         castingTime: 250
   - id: 150
     name: Geburah Tiphreth
@@ -816,7 +813,7 @@ skills:
     cooldownType: 2
     useChance: 4
     spellRegion: 1
-    element: 5
+    element: 4
     resourceType: 1
     referStats:
       - 3

@@ -9,6 +9,9 @@
  .이는 일반적으로 몬스터들이 장비를 드랍할때 몹레벨보다 2~5레벨 낮은 템이 드랍되게 하여
  .낮은템으로 사냥은 가능하게 발란스를 설정하고, 돈이 있다면 더 좋은 아이템을 사서 사냥할 수 있도록 했다.
 */
+//DropKind(아이템 3차 분류, 레어등급최소값, 레어등급최대값)	
+//DropKind은 게임에 존재하는 아이템 분류의 레어등급 구간에 해당되는 아이템을 랜덤하게 드롭 시킬때 사용하는 함수이다.
+//EX) DropKind(IK3_SWD, 1, 6);
 
 /*
 아이템 발생 판정 O -> 발생 최대 개수에 의한 아이템 발생, 25% 돈
@@ -34,7 +37,11 @@ MVI_MONSTER
 	현재 hp, 핼퍼 몬스터 index, 도움 요청할 몬스터 수(0 주변에 검색되는 놈 모두)
 	만약 도움 요청할 몬스터가 필요 없다면 index를 0으로
 	SetCallHelper( HP(Percent), NPC(Index), 갯수(0이면 몽땅), bParty(TRUE,FALSE, 공격 대상자를 해당 플레이어의 파티 맴버로 설정) ); 
-	m_nAttackFirstRange = 10; // 선공 몹이 선공하기 위한 스캔 범위. 미터 단위
+	m_nAttackFirstRange = 10; // 선공 몹이 선공하기 위한 스캔 범위. 미터 단위, 
+				// 1. 100이상 사용할 수 없음. 선공 몹의 시야 뿐만이 아닌
+				// 2. 동족 인식을 하는 몬스터의 헬퍼 인식 범위에도 포함됨. 
+				// 3. 기본은 10으로 하며 10이상 설정할땐 프로그램팀과 상의. 
+				// 4. 10이상 범위는 AI가 AII_AGGRO_NORMAL일 경우에만 적용 가능. (다른 AI 일 경우 프로그램팀과 상의)
 }
 
 AI
@@ -45,7 +52,7 @@ AI
     Summon (%) (num) (MoverID) B  // 20초마다 한번씩 (%)확률로 소환시도. MoverID를 num마리 생성.
     Rangeattack (X)                                B 
     Keeprangeattack (Range)                        B  
-    Evade (%)                                      B
+    Evade (%)                                      B // 입력한 수치 값에 몬스터의 HP가 도달했을 때 도망간다.
     Helper   (freq) (sr) (num) (mtype)             B
     Berserk  (hp) (%)                              B
     Randomtarget  제일먼저 쓰이는 경우 사용        B 
@@ -79,6 +86,7 @@ MI_AIBATT1
 	DropGold(6, 9);
 
 	DropItem(II_GEN_GEM_GEM_TWINKLESTONE, 300000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_TWINKLESTONE_1, 300000000, 0, 1);
 
 	m_dwAttackMoveDelay = 2000;
 	m_dwRunawayDelay = 3000;
@@ -106,8 +114,8 @@ MI_AIBATT2
 	Maxitem = 2;
 	DropGold(6, 9);
 	
-
 	DropItem(II_GEN_GEM_GEM_TWINKLESTONE, 200000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_TWINKLESTONE_1, 200000000, 0, 1);
 
 	m_nAttackFirstRange = 8;
 
@@ -134,6 +142,7 @@ MI_AIBATT3
 	DropGold(8, 11);
 	
 	DropItem(II_GEN_GEM_GEM_TWINKLESTONE, 200000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_TWINKLESTONE_1, 200000000, 0, 1);
 
 	m_nAttackFirstRange = 8;
 
@@ -172,7 +181,7 @@ MI_AIBATT4
 	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
 
 	DropItem(II_GEN_GEM_GEM_TWINKLESTONE, 1000000000, 0, 1);
-	DropItem(II_GEN_GEM_GEM_TWINKLESTONE, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_TWINKLESTONE_1, 1000000000, 0, 1);
 	DropItem(II_GEN_FOO_INS_LOLLIPOP, 1000000001, 0, 1);
 	DropItem(II_GEN_FOO_INS_LOLLIPOP, 1000000001, 0, 1);
 	DropItem(II_GEN_FOO_INS_LOLLIPOP, 1000000001, 0, 1);
@@ -210,7 +219,8 @@ MI_MUSHPANG1
 
 	DropItem(II_GEN_GEM_GEM_FORFORM, 300000000, 0, 1);
 	DropItem(II_GEN_FOO_INS_LOLLIPOP, 1000000001, 0, 1);
-
+	DropItem(II_GEN_GEM_GEM_FORFORM_1, 200000000, 0, 1);
+	
 	m_dwAttackMoveDelay = 2000;
 	m_dwRunawayDelay = 3000;
 	m_nAttackFirstRange = 8;
@@ -237,6 +247,7 @@ MI_MUSHPANG2
 	DropGold(9, 13);
 
 	DropItem(II_GEN_GEM_GEM_FORFORM, 200000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_FORFORM_1, 200000000, 0, 1);
 	
 	m_nAttackFirstRange = 8;
 
@@ -263,6 +274,7 @@ MI_MUSHPANG3
 	DropGold(10, 15);
 
 	DropItem(II_GEN_GEM_GEM_FORFORM, 200000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_FORFORM_1, 200000000, 0, 1);
 
 	m_nAttackFirstRange = 8;
 	
@@ -300,7 +312,7 @@ MI_MUSHPANG4
 	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
 
 	DropItem(II_GEN_GEM_GEM_FORFORM, 1000000000, 0, 1);
-	DropItem(II_GEN_GEM_GEM_FORFORM, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_FORFORM_1, 1000000000, 0, 1);
 	DropItem(II_GEN_FOO_INS_LOLLIPOP, 1000000001, 0, 1);
 	DropItem(II_GEN_FOO_INS_LOLLIPOP, 1000000001, 0, 1);
 	DropItem(II_GEN_FOO_INS_LOLLIPOP, 1000000001, 0, 1);
@@ -2127,6 +2139,206 @@ MI_MIA4
 	DropItem(II_GEN_FOO_INS_CHOCOLATE, 1000000001, 0, 1);
 	DropItem(II_GEN_FOO_ICE_PINEAPPLECONE, 600000001, 0, 1);
 	DropItem(II_GEN_FOO_ICE_PINEAPPLECONE, 600000001, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        berserk 30 1.2
+			Evade 10            
+                    }
+		#move
+		    { 
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_MIA5
+{
+	Maxitem = 50;
+	DropGold(229, 332);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        berserk 30 1.2
+			Evade 10            
+                    }
+		#move
+		    { 
+			loot d 5
+		    }	
+   	}               
+}
+
+
+MI_MZOMBIE
+{
+	Maxitem = 5;
+	DropGold(229, 332);
+
+	DropItem(II_SYS_SYS_SCR_BXEVMONSTER01, 3000000000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        berserk 30 1.2
+			Evade 10            
+                    }
+		#move
+		    { 
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_FZOMBIE
+{
+	Maxitem = 5;
+	DropGold(229, 332);
+
+	DropItem(II_SYS_SYS_SCR_BXEVMONSTER02, 3000000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        berserk 30 1.2
+			Evade 10            
+                    }
+		#move
+		    { 
+			loot d 5
+		    }	
+   	}               
+}
+MI_NMZOMBIE
+{
+	Maxitem = 5;
+	DropGold(229, 332);
+	
+	DropItem(II_SYS_SYS_EVE_BXZOMBIES, 3000000000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        berserk 30 1.2
+			Evade 10            
+                    }
+		#move
+		    { 
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_NFZOMBIE
+{
+	Maxitem = 5;
+	DropGold(229, 332);
+	
+	DropItem(II_SYS_SYS_EVE_BXZOMBIES, 3000000000, 0, 1);
+
 
 	m_nAttackFirstRange = 8;
 
@@ -4041,6 +4253,111 @@ MI_CARDPUPPET4
 		    }	
    	}               
 }
+
+MI_CARDPUPPET5
+{
+	Maxitem = 71;
+DropGold(229, 332);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FLY01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FOR01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_FUN01, 3000000000, 0, 1);
+	
+
+
+
+
+	m_nAttackFirstRange = 8;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                          
+                                    
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+}
+
 MI_TOMBSTONEBEARER1
 {
 	Maxitem = 2;
@@ -14787,10 +15104,69 @@ MI_HADESEOR
 }
 
 //P.K 관련 경비병 및 몬스터 세팅
+
+MI_MaEw_GUARDIAN01
+{
+	
+	m_nAttackFirstRange = 10;
+
+	SetCallHelper( 0, 0, 0, FALSE );
+
+	AI
+	{
+		#Scan
+                    {
+			scan range 10 chao 100
+                    }
+
+		#battle
+		    {
+			attack
+			Helper sam 5000 1
+			Rangeattack 10              
+                    }
+
+		#move
+		    {
+			
+		    }	
+   	}   
+}
+
+MI_MaEw_GUARDIAN02
+{
+	
+	m_nAttackFirstRange = 10;
+
+	SetCallHelper( 0, 0, 0, FALSE );
+
+	AI
+	{
+		#Scan
+                    {
+			scan range 10 chao 100
+                    }
+
+		#battle
+		    {
+			attack
+			Helper sam 5000 1
+			Rangeattack 10              
+                    }
+
+		#move
+		    {
+			
+		    }	
+   	}   
+}
+
 MI_GUARDIAN
 {
 	
 	m_nAttackFirstRange = 10;
+
+	SetCallHelper( 0, 0, 0, FALSE );
 
 	AI
 	{
@@ -14816,6 +15192,8 @@ MI_CHAOGUARDIAN
 {
 
 	m_nAttackFirstRange = 10;
+
+	SetCallHelper( 0, 0, 0, FALSE );
 
 	AI
 	{
@@ -18670,7 +19048,7 @@ MI_EVENT04
 
 	DropItem(II_SYS_SYS_SCR_BXUSU01, 3000000000, 0, 1);
 	DropItem(II_SYS_SYS_SCR_BXUSU01, 3000000000, 0, 1);
-	DropItem(II_SYS_SYS_SCR_BXANGEL01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXWOODSET01, 3000000000, 0, 1);
 
 	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
 	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
@@ -20923,6 +21301,86 @@ MI_RANGDA02
 		    }	
    	}               
 }
+
+MI_RANGDA05
+{
+	Maxitem = 44;
+	DropGold(100, 200);
+	
+DropGold(229, 332);
+
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3000000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 3000000000, 0, 1);
+
+
+	
+	DropItem(II_SYS_SYS_SCR_BXSUHO01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXUSU01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXSUHO01, 3000000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXUSU01, 3000000000, 0, 1);
+
+	
+	II_SYS_SYS_SCR_BXSUHO01
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			recovery 10 50 100 m  
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+}
+
 
 MI_RANGDA03
 {
@@ -23963,6 +24421,8 @@ MI_VEMPAIN01
 	DropKind(IK3_THSWD, 6, 6);
 	DropKind(IK3_THAXE, 6, 6);
 
+	 DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
+
 	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
 	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
 	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
@@ -24822,6 +25282,8 @@ MI_VEMPAIN01_1
 	DropKind(IK3_THSWD, 6, 6);
 	DropKind(IK3_THAXE, 6, 6);
 
+	 DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
+
 	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
 	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
 	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
@@ -24923,12 +25385,9 @@ MI_VEMPAIN01_1
 MI_MOCOMOCHI1
 {
 	Maxitem = 8;	
-	DropItem(II_ARM_S_CLO_HAT_NPCEVENT02, 15000000, 0, 1);
-	DropItem(II_ARM_S_CLO_HAT_NPCEVENT03, 15000000, 0, 1);
-	DropItem(II_ARM_S_CLO_HAT_NPCEVENT04, 15000000, 0, 1);
+	
 	DropItem(II_SYS_SYS_SCR_BXSPECIALHOOD01, 157500000, 0, 1);
 	DropItem(II_SYS_SYS_SCR_BXSPECIALFUN01, 157500000, 0, 1);
-	DropItem(II_GEN_WARP_COUPLERING, 450000000, 0, 1);
 	DropItem(II_CHR_MAG_TRI_ROCKETBOMB, 900000000, 0, 1);
 	DropItem(II_GEN_MAG_TRI_HWFIREWORKS, 900000000, 0, 1);
 
@@ -25275,8 +25734,11 @@ MI_SKELGENERAL
 	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
 	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
 	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_ARM_ARM_SHI_BOKSOUL, 50000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_SHESOUL, 50000000, 0, 1);
 
-        DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
 	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
 	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
 
@@ -25553,7 +26015,7 @@ MI_SKELRIDER
 MI_SKELDEVIL
 {
 	Maxitem = 8;
-	DropGold(99, 143);
+	DropGold(1755000,2160000);
 
 	DropKind(IK3_SWD, 6, 6);
 	DropKind(IK3_AXE, 6, 6);
@@ -25571,130 +26033,135 @@ MI_SKELDEVIL
 	DropKind(IK3_THSWD, 6, 6);
 	DropKind(IK3_THAXE, 6, 6);
 
-	DropItem(II_ARM_M_KIN_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_KIN_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_KIN_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_KIN_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_KIN_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_KIN_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_KIN_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_KIN_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BLA_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BLA_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BLA_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BLA_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BLA_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BLA_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BLA_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BLA_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_JST_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_JST_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_JST_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_JST_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_JST_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_JST_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_JST_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_JST_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RAG_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RAG_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RAG_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RAG_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RAG_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RAG_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RAG_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RAG_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RIN_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RIN_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RIN_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_RIN_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RIN_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RIN_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RIN_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_RIN_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BIL_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BIL_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BIL_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_BIL_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BIL_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BIL_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BIL_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_BIL_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_PSY_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_PSY_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_PSY_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_PSY_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_PSY_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_PSY_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_PSY_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_PSY_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_ELE_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_ELE_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_ELE_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_M_ELE_BOOTS_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_ELE_HELMET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_ELE_SUIT_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_ELE_GAUNTLET_SET_34 , 900000, 0, 1);
-	DropItem(II_ARM_F_ELE_BOOTS_SET_34 , 900000, 0, 1);
+	 DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
 
-	DropItem(II_SYS_VIS_LV3_WARRIOR, 21000000, 0, 1);
-	DropItem(II_SYS_VIS_LV3_KNIGHT, 21000000, 0, 1);
-	DropItem(II_SYS_VIS_LV3_BUBBLE 21000000, 0, 1);
-	DropItem(II_SYS_VIS_LV3_IBLIS, 21000000, 0, 1);
-	DropItem(II_SYS_VIS_LV3_SHADE, 21000000, 0, 1);
+	DropItem(II_ARM_M_KIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_KIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_KIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_KIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_BOOTS_SET_34 , 15000000, 0, 1);
 
-	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
-	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
-	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
-	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
-	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
-	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
-	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
-	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
-	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
-	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
-	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
-	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
-	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
-	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
-	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
-	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
-	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
-	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
-	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
-	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
-	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
-	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
-	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
-	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
-	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
-	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
-	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_WEA_SWO_SWDSOUL , 60000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_ZEMSOUL , 60000000, 0, 1);
 
-        DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
-	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
-	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 31000000, 0, 1);
 
-	DropItem(II_GEN_MAT_ELE_CANDLEA, 6000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_RAINATKA, 6000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_SPARKATKA, 6000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 6000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_SANDATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
 
-	DropItem(II_GEN_MAT_ELE_LIGHTING, 30000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_VOLCANO, 30000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 30000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_OCEAN, 30000000, 0, 1);
-	DropItem(II_GEN_MAT_ELE_VACCUM, 30000000, 0, 1);
+    DropItem(II_GEN_JEW_RIN_INTRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 30000000, 18, 1);
 
-	DropItem(II_GEN_GEM_GEM_DEVILPIECE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 50000000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_DEVILPIECE, 500000000, 0, 1);
 	
 	
 	m_nAttackFirstRange = 10;
@@ -26148,6 +26615,7 @@ MI_SHAMANWUTANGKA01
 MI_BESIBIGFOOT01
 {
 	Maxitem = 1;
+	DropGold( 800000,1040000 );
 
 	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
 	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
@@ -26171,7 +26639,7 @@ MI_BESIBIGFOOT01
 	DropItem(II_WEA_BOW_LUZA, 90000000, 0, 1);
 	DropItem(II_WEA_YOY_LUZA, 90000000, 0, 1);
 	
-
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
 	DropItem(II_GEN_GEM_GEM_BIGFOOTHEART, 200000000, 0, 1);
 
 	m_nAttackFirstRange = 8;
@@ -26503,9 +26971,9 @@ MI_BESIBIGFOOT02
 	DropItem(II_WEA_STA_LUZAM, 3000000, 0, 1);
 	DropItem(II_WEA_BOW_LUZAM, 3000000, 0, 1);
 	DropItem(II_WEA_YOY_LUZAM, 3000000, 0, 1);
-	
 
-	DropItem(II_GEN_GEM_GEM_LIGHTBIGFOOTHEART, 200000000, 0, 1);
+	 DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
+	
 
 	m_nAttackFirstRange = 8;
 
@@ -26523,6 +26991,6578 @@ MI_BESIBIGFOOT02
 		#move
 		    {
 			Loot d 5
+		    }	
+   	}               
+}
+
+MI_RABBITGUARDER01
+{
+	Maxitem = 2;
+	DropGold(1000, 3000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	
+	DropItem(II_GEN_MAT_ORICHALCUM01, 4500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE,  4500000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_TUTTLESWORDER01
+{
+	Maxitem = 2;
+	DropGold(1000, 3000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 4500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE,  4500000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_TUTTLEFIGHTER01
+{
+	Maxitem = 2;
+	DropGold(1000, 3000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 4500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE,  4500000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_TUTTLEASSASSIN01
+{
+	Maxitem = 2;
+	DropGold(1000, 3000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 4500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE,  4500000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_TUTTLESPEAR01
+{
+	Maxitem = 2;
+	DropGold(1000, 3000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 4500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE,  4500000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_TUTTLEAXE01
+{
+	Maxitem = 2;
+	DropGold(1000, 3000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 4500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE,  4500000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_TUTTLEKING01
+{
+	Maxitem = 4;
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+
+
+//16차 카일룬 초원
+
+
+MI_PUPPETWOLF
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_SKULLMASK01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_RYSENTRY
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_LEATHERCAPE01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_RYGUARD
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_LYCANCLAW01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_RYARCHER
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_BLOODANTIDOTE01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8    
+			           
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+}
+
+MI_RYMAGI
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_MAGICSKULL01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8                                 			         
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+}
+
+MI_RYWARRIOR
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_DEVILHORN01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_RYBARGA
+{
+	Maxitem = 7;
+	
+	DropItem(II_GEN_JEW_RIN_FIRERING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 15000000, 0, 1)
+	
+	DropItem(II_GEN_MAT_OPERCID, 80000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 80000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 110000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 110000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 110000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_CHIEFHEART01, 400000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+
+
+MI_CLOCKWORKBUTLER01
+{
+	Maxitem = 1;	
+	DropItem(II_GEN_JEW_EAR_ATTEARRING, 7500000, 12, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 7500000, 9, 1);
+	DropItem(II_ARM_S_CLO_CLOCK01, 1500000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXBLUEWEA01, 150000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXCLOCKRABBIT01, 66000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_COMMERGIFTBOX37, 67500000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_CLOCKHEART, 450000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_WHEEL, 900000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_MINIWHEEL, 900000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_NUCTUWHEEL, 450000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_SPAINDRAGON01
+{
+	Maxitem = 1;	
+	DropItem(II_GEN_JEW_EAR_ATTEARRING, 7500000, 12, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 7500000, 9, 1);
+	DropItem(II_ARM_S_CLO_CLOCK01, 1500000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXBLUEWEA01, 150000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BXCLOCKRABBIT01, 66000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_COMMERGIFTBOX37, 67500000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_CLOCKHEART, 450000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_WHEEL, 900000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_MINIWHEEL, 900000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_NUCTUWHEEL, 450000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_DUMBBULL5
+{
+	Maxitem = 0;	
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+
+//16차 베히모스
+
+MI_STATUE
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_STETUEPIECE01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_SPIRITTULA
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_TULAZAM01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_SPIRITUMTULA
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_UMTULAZAM01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_SPIRITOBNIS
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_OBNISCRYSTAL01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_SPIRITBAGNIS
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_BAGNISHAIR01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_BEGUARDIAN
+{
+	Maxitem = 2;
+	DropGold(149, 215);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	
+
+	DropItem(II_SYS_SYS_QUE_ARMORSHARD01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+
+MI_BEHEMOTH
+{
+	Maxitem = 10;
+	DropGold(1859000, 2288000);	
+	
+	DropItem(II_WEA_SWO_BEHESWORD, 8000000, 0, 1);
+	DropItem(II_WEA_SWT_BEHETWOSWORD, 8000000, 0, 1);
+	DropItem(II_WEA_AXT_BEHETWOAXE, 8000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_BEHESHILD, 8000000, 0, 1);
+	DropItem(II_WEA_SWO_BEHEONEHANDSWORD, 8000000, 0, 1);
+	DropItem(II_WEA_AXE_BEHEONEHANDAXE, 8000000, 0, 1);
+	DropItem(II_WEA_BOW_BEHECROSSBOW, 8000000, 0, 1);
+	DropItem(II_WEA_YOY_BEHEYOYO, 8000000, 0, 1);
+	DropItem(II_WEA_KNU_BEHENUCLE, 8000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_BEHEFORCEZEM, 8000000, 0, 1);
+	DropItem(II_WEA_CHE_BEHESTICK, 8000000, 0, 1);
+	DropItem(II_WEA_WAN_BEHEWAND, 8000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_BEHEMAGICBOOK, 8000000, 0, 1);
+	DropItem(II_WEA_STA_BEHESTAFF, 8000000, 0, 1);
+
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
+	
+	DropItem(II_GEN_JEW_RIN_FIRERING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 16000000, 0, 1)
+	
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_BEHEMOTHSCALES01, 400000000, 0, 1);
+
+	m_nAttackFirstRange = 40;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 15
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_PINATA
+{
+	Maxitem = 1;
+
+
+	DropItem(II_SYS_SYS_SCR_BXHAPPYBDAY, 3000000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+
+MI_BEHESTATUE01
+{
+	AI
+	{
+		#Scan
+                    {
+                    }
+		#battle
+		    {
+                    }
+		#move
+		    {
+		    }	
+   	}               
+}
+
+MI_TGLUIA01
+{
+	Maxitem = 5;
+	DropGold(229, 332);
+	
+	DropItem(II_SYS_SYS_SCR_BXThGiving, 450000000, 0, 1);
+	
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        berserk 30 1.2
+			Evade 10            
+                    }
+		#move
+		    { 
+			loot d 5
+		    }	
+   	}               
+}
+
+
+//17차 몬스터
+
+MI_RUGALHEAT01
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_SYS_QUE_LUGALHORN, 200000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+
+MI_RUGALWIN
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_SYS_QUE_LUGALFEATHER, 200000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_RUGALKUM
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_SYS_QUE_KUMCLOTH, 200000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+	
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_RUGALRIM
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_SYS_QUE_RIMSTAFF, 200000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_RUGALKUMA
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+	
+	AddSummonMonster( MI_RUGALWIND02 );
+
+
+
+	m_nAttackFirstRange = 8;
+	
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_RUGALWIND02
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_SYS_QUE_LUGALFETTERS, 200000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+
+MI_RUGALRIMA
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	
+	AddSummonMonster( MI_RUGALHEAT02 );
+	DropItem(II_SYS_SYS_QUE_RIMACROWN, 200000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_RUGALHEAT02
+{
+	Maxitem = 2;
+	DropGold(409, 515);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+
+MI_BASILISK
+{
+	Maxitem = 8;
+	DropGold(409, 515);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 31000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 30000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 50000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_OPERCID, 500000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 500000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 500000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 800000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 800000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 800000000, 0, 1);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 150000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 150000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 150000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_UNIQUEFRUIT, 500000000, 0, 1);
+	
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+
+//17차 인던
+
+
+MI_KALGASKUMA01  //지하의 망령 쿠마
+{
+	Maxitem = 2;
+	DropGold(224, 305);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_KALGASRIMA01		//지하의 망령 리마
+{
+	Maxitem = 2;
+	DropGold(224, 305);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_KALGASBABY01		//베이비 카르고
+{
+	Maxitem = 2;
+	DropGold(224, 305);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_KALGASFLY01		//플라이 카르고
+{
+	Maxitem = 2;
+	DropGold(224, 305);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_KALGASLESSER01		//레서 칼가스
+{
+	Maxitem = 2;
+	DropGold(224, 305);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 15000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 15000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_KALGASAKIN01		//에킨
+{
+	Maxitem = 2;
+	DropGold(224, 305);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 11000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 10000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 30000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 30000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 30000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 30000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 10 cunning sam
+			Berserk 20 2.0
+			summon 30 1 MI_KALGASKUMA01
+			Keeprangeattack 8 
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+
+MI_KALGASBALT01		//발트
+{
+	Maxitem = 2;
+	DropGold(224, 305);
+
+
+	
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 11000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 11000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 10000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 10000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 30000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE03, 30000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE04, 30000000, 0, 1);
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE05, 30000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			summon 10 1 MI_KALGASRIMA01
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_KALGASBOSS		//칼가스
+{
+	Maxitem = 8;
+	DropGold(1976000, 2432000);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+
+	DropItem(II_ARM_M_LORDK_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_LORDK_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_LORDK_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_LORDK_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_BOOTS_SET_KAL , 15000000, 0, 1);
+
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 31000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 30000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 50000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	
+	
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 150000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_ETERPENDANT, 500000000, 0, 1);
+	
+	
+	
+	m_nAttackFirstRange = 60;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 60
+                        KeepRangeAttack 60
+			Berserk 20 2.0
+			summon 10 3 MI_KALGASLESSER01
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+
+
+MI_KALGASSTELE01			//에킨 석상
+{
+	AI
+	{
+		#Scan
+                    {
+                    }
+		#battle
+		    {
+                    }
+		#move
+		    {
+		    }	
+   	}               
+}
+
+
+
+
+MI_KALGASSTELE02			//발트 석상
+{
+	AI
+	{
+		#Scan
+                    {
+                    }
+		#battle
+		    {
+                    }
+		#move
+		    {
+		    }	
+   	}               
+}
+
+
+
+MI_KALGASEGG01			// 칼가스 알
+{
+	AI
+	{
+		#Scan
+                    {
+                    }
+		#battle
+		    {
+                    }
+		#move
+		    {
+		    }	
+   	}               
+}
+
+
+MI_COLOBANG // 거대뱅
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+	DropItem(II_WEA_SWO_ARKON, 20000000, 0, 1);
+	DropItem(II_WEA_CHEE_GRIM, 20000000, 0, 1);
+	DropItem(II_WEA_WAN_DIA, 20000000, 0, 1);
+	DropItem(II_WEA_STA_VEGA, 20000000, 0, 1);
+	DropItem(II_WEA_KNU_BABIL, 20000000, 0, 1);
+	DropItem(II_WEA_AXE_KARHEM, 20000000, 0, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 1, 1);
+	DropItem(II_GEN_JEW_RIN_STARING, 30000000, 1, 1);
+
+	DropKind(IK3_SWD, 17, 24);
+	DropKind(IK3_AXE, 17, 24);
+	DropKind(IK3_CHEERSTICK, 17, 24);
+	DropKind(IK3_KNUCKLEHAMMER, 17, 24);
+	DropKind(IK3_WAND, 17, 24);
+	DropKind(IK3_STAFF, 17, 24);
+	DropKind(IK3_HELMET, 17, 24);
+	DropKind(IK3_SUIT, 17, 24);
+	DropKind(IK3_GAUNTLET, 17, 24);
+	DropKind(IK3_BOOTS, 17, 24);
+	DropKind(IK3_SHIELD, 17, 24);
+	DropKind(IK3_BOW, 17, 24);
+	DropKind(IK3_YOYO, 17, 24);
+
+	DropItem(II_GEN_MAT_ELE_DESERT, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_DESERT, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_GOLDENWING, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_GOLDENWING, 1000000000, 0, 1);
+	DropItem(II_GEN_POT_DRI_VITAL200,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_THIRD, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_BARBECUE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_BARBECUE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_BARBECUE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_STRAWBERRYSHAKE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_STRAWBERRYSHAKE, 600000001, 0, 1);
+
+	m_dwAttackMoveDelay = 0;
+	m_dwRunawayDelay = 1000;
+	SetRunAway( 10, MI_BANG1, 2 );
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+}
+
+MI_COLOWAGJAK // 거대 와그작
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropKind(IK3_SWD, 19, 26);
+	DropKind(IK3_AXE, 19, 26);
+	DropKind(IK3_CHEERSTICK, 19, 26);
+	DropKind(IK3_KNUCKLEHAMMER, 19, 26);
+	DropKind(IK3_WAND, 19, 26);
+	DropKind(IK3_STAFF, 19, 26);
+	DropKind(IK3_HELMET, 19, 26);
+	DropKind(IK3_SUIT, 19, 26);
+	DropKind(IK3_GAUNTLET, 19, 26);
+	DropKind(IK3_BOOTS, 19, 26);
+	DropKind(IK3_SHIELD, 19, 26);
+	DropKind(IK3_BOW, 19, 26);
+	DropKind(IK3_YOYO, 19, 26);
+	
+	DropItem(II_GEN_MAT_ELE_RIVER, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_RIVER, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_BLUEHONEY, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_BLUEHONEY, 1000000000, 0, 1);
+
+	m_dwAttackMoveDelay = 0;
+	m_dwRunawayDelay = 1000;
+	SetRunAway( 10, 0, 1 );
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        rangeattack 10            
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOREDMANTIS // 거대 레드맨티스
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropKind(IK3_SWD, 25, 32);
+	DropKind(IK3_AXE, 25, 32);
+	DropKind(IK3_CHEERSTICK, 25, 32);
+	DropKind(IK3_KNUCKLEHAMMER, 25, 32);
+	DropKind(IK3_WAND, 25, 32);
+	DropKind(IK3_STAFF, 25, 32);
+	DropKind(IK3_HELMET, 25, 32);
+	DropKind(IK3_SUIT, 25, 32);
+	DropKind(IK3_GAUNTLET, 25, 32);
+	DropKind(IK3_BOOTS, 25, 32);
+	DropKind(IK3_SHIELD, 25, 32);
+	DropKind(IK3_BOW, 25, 32);
+	DropKind(IK3_YOYO, 25, 32);
+
+	DropItem(II_GEN_MAT_ELE_CYCLON, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_CYCLON, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+	
+	DropItem(II_GEN_GEM_GEM_CARDRIN, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_CARDRIN, 1000000000, 0, 1);
+	DropItem(II_GEN_POT_DRI_VITAL200,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_FOUTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_SEAFOODPANCAKE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_SEAFOODPANCAKE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_SEAFOODPANCAKE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_PINEAPPLECONE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_PINEAPPLECONE, 600000001, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                                                 
+                        Berserk 10 1.2            
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOJACKTHEHAMMER // 거대 잭더해머
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropItem(II_GEN_JEW_NEC_HPNECKLACE, 30000000, 4, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING,    30000000, 2, 1);
+	DropItem(II_GEN_JEW_RIN_STARING,    30000000, 3, 1);
+
+	DropKind(IK3_SWD, 27, 34);
+	DropKind(IK3_AXE, 27, 34);
+	DropKind(IK3_CHEERSTICK, 27, 34);
+	DropKind(IK3_KNUCKLEHAMMER, 27, 34);
+	DropKind(IK3_WAND, 27, 34);
+	DropKind(IK3_STAFF, 27, 34);
+	DropKind(IK3_HELMET, 27, 34);
+	DropKind(IK3_SUIT, 27, 34);
+	DropKind(IK3_GAUNTLET, 27, 34);
+	DropKind(IK3_BOOTS, 27, 34);
+	DropKind(IK3_SHIELD, 27, 34);
+	DropKind(IK3_BOW, 27, 34);
+	DropKind(IK3_YOYO, 27, 34);
+
+	DropItem(II_GEN_MAT_ELE_GENERATOR, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_GENERATOR, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_HAMMARBLE, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_HAMMARBLE, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL300,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_FOUTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_SEAFOODPANCAKE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_SEAFOODPANCAKE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_SEAFOODPANCAKE, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_PINEAPPLECONE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_PINEAPPLECONE, 600000001, 0, 1);
+
+	
+
+	m_nAttackFirstRange = 8;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+}
+
+MI_COLOBERKRO // 거대 버크로
+{
+	Maxitem = 8;
+	DropGold(200000 , 300000);
+
+	DropItem(II_GEN_JEW_NEC_FPNECKLACE, 4166000, 11, 1);
+
+	DropKind(IK3_SWD, 31, 38);
+	DropKind(IK3_AXE, 31, 38);
+	DropKind(IK3_CHEERSTICK, 31, 38);
+	DropKind(IK3_KNUCKLEHAMMER, 31, 38);
+	DropKind(IK3_WAND, 31, 38);
+	DropKind(IK3_STAFF, 31, 38);
+	DropKind(IK3_HELMET, 31, 38);
+	DropKind(IK3_SUIT, 31, 38);
+	DropKind(IK3_GAUNTLET, 31, 38);
+	DropKind(IK3_BOOTS, 31, 38);
+	DropKind(IK3_SHIELD, 31, 38);
+	DropKind(IK3_BOW, 31, 38);
+	DropKind(IK3_YOYO, 31, 38);
+
+	DropItem(II_GEN_MAT_ELE_CYCLON, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_CYCLON, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_BUCORONG, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_BUCORONG, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL400,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_FOUTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_INS_MILK, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_INS_MILK, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_INS_MILK, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_BANANAJUJUBAR, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_BANANAJUJUBAR, 600000001, 0, 1);
+
+	SetCallHelper( 100, MI_BUCROW2, 5, TRUE);
+	SetCallHelper( 100, MI_BUCROW3, 5, TRUE);
+
+	m_nAttackFirstRange = 10;
+
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_BUCROW3
+			recovery 10 50 100 m
+                                    
+                    }
+		#move
+		    {
+			Loot d 3
+		    }	
+   	}               
+}
+
+MI_COLOHOWBOW // 거대 호우보우
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropKind(IK3_SWD, 33, 40);
+	DropKind(IK3_AXE, 33, 40);
+	DropKind(IK3_CHEERSTICK, 33, 40);
+	DropKind(IK3_KNUCKLEHAMMER, 33, 40);
+	DropKind(IK3_WAND, 33, 40);
+	DropKind(IK3_STAFF, 33, 40);
+	DropKind(IK3_HELMET, 33, 40);
+	DropKind(IK3_SUIT, 33, 40);
+	DropKind(IK3_GAUNTLET, 33, 40);
+	DropKind(IK3_BOOTS, 33, 40);
+	DropKind(IK3_SHIELD, 33, 40);
+	DropKind(IK3_BOW, 33, 40);
+	DropKind(IK3_YOYO, 33, 40);
+
+	DropItem(II_GEN_MAT_ELE_RIVER, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_RIVER, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_BOBAND, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_BOBAND, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL400,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_FOUTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_FISHSOUP, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_FISHSOUP, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_FISHSOUP, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_BANANAJUJUBAR, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_BANANAJUJUBAR, 600000001, 0, 1);
+
+	
+
+	m_nAttackFirstRange = 8;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 4
+		    }	
+   	}               
+}
+
+MI_COLOROKEPELER // 거대 로케펠러
+{
+	Maxitem = 2;
+	DropGold(200000 , 300000);
+
+	DropItem(II_GEN_JEW_EAR_ATTEARRING, 30000000, 3, 1);
+	DropItem(II_GEN_JEW_EAR_DEFEARRING, 30000000, 9, 1);
+
+	DropItem(II_GEN_MAT_ELE_FLAME, 75000000, 0, 1); //속성 카드3 2.5%
+	DropItem(II_GEN_MAT_ELE_FLAME, 150000000, 0, 1); //속성 카드2 5%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_ROCKEPELLER3
+			recovery 10 40 100 m             
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+
+}
+
+MI_COLOSTIMEWORK // 거대 스팀워커
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropKind(IK3_SWD, 51, 58);
+	DropKind(IK3_AXE, 51, 58);
+	DropKind(IK3_CHEERSTICK, 51, 58);
+	DropKind(IK3_KNUCKLEHAMMER, 51, 58);
+	DropKind(IK3_WAND, 51, 58);
+	DropKind(IK3_STAFF, 51, 58);
+	DropKind(IK3_HELMET, 51, 58);
+	DropKind(IK3_SUIT, 51, 58);
+	DropKind(IK3_GAUNTLET, 51, 58);
+	DropKind(IK3_BOOTS, 51, 58);
+	DropKind(IK3_SHIELD, 51, 58);
+	DropKind(IK3_BOW, 51, 58);
+	DropKind(IK3_YOYO, 51, 58);
+
+	DropItem(II_GEN_MAT_ELE_GENERATOR, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_GENERATOR, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_STEAMTEAR, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_STEAMTEAR, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL600,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_SIXTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_INS_HOTDOG, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_INS_HOTDOG, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_INS_HOTDOG, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_FRUITICEWATER, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_FRUITICEWATER, 600000001, 0, 1);
+
+	
+
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_STEAMWALKER3
+			recovery 10 40 100 m 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+
+}
+
+MI_COLOGRREUNG // 거대 그르릉
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropItem(II_WEA_SWO_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_SWT_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_AXE_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_AXT_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_KNU_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_CHE_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_WAN_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_STA_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_BOW_ANGEL, 2700000, 0, 1);
+	DropItem(II_WEA_YOY_ANGEL, 2700000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_STRRING, 4166000, 4, 1);
+	DropItem(II_GEN_JEW_RIN_INTRING, 4166000, 4, 1);
+
+	DropKind(IK3_SWD, 80, 95);
+	DropKind(IK3_AXE, 80, 95);
+	DropKind(IK3_CHEERSTICK, 80, 95);
+	DropKind(IK3_KNUCKLEHAMMER, 80, 95);
+	DropKind(IK3_WAND, 80, 95);
+	DropKind(IK3_STAFF, 80, 95);
+	DropKind(IK3_HELMET, 80, 95);
+	DropKind(IK3_SUIT, 80, 95);
+	DropKind(IK3_GAUNTLET, 80, 95);
+	DropKind(IK3_BOOTS, 80, 95);
+	DropKind(IK3_SHIELD, 80, 95);
+	DropKind(IK3_BOW, 80, 95);
+	DropKind(IK3_YOYO, 80, 95);
+	DropKind(IK3_THSWD, 80, 95);
+	DropKind(IK3_THAXE, 80, 95);
+
+	DropItem(II_GEN_MAT_ELE_RIVER, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_RIVER, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_GRBANDAGE, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_GRBANDAGE, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL800,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_EIGHTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+
+	
+
+	m_nAttackFirstRange = 10;
+	
+
+	
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_GRRR3
+			recovery 10 30 100 m            
+                    }
+		#move
+		    {
+			loot d 5
+		    {
+			
+		    }	
+   	}               
+}
+
+MI_COLOGRIMONG // 거대 그리몽
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropItem(II_WEA_SWO_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_SWT_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_AXE_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_AXT_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_KNU_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_CHE_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_WAN_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_STA_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_BOW_SUHO, 4050000, 0, 1);
+	DropItem(II_WEA_YOY_SUHO, 4050000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_STRRING, 30000000, 6, 1);
+	DropItem(II_GEN_JEW_RIN_INTRING, 30000000, 6, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 6, 1);
+	DropItem(II_GEN_JEW_RIN_STARING, 30000000, 6, 1);
+
+	DropKind(IK3_SWD, 69, 75);
+	DropKind(IK3_AXE, 69, 75);
+	DropKind(IK3_CHEERSTICK, 69, 75);
+	DropKind(IK3_KNUCKLEHAMMER, 69, 75);
+	DropKind(IK3_WAND, 69, 75);
+	DropKind(IK3_STAFF, 69, 75);
+	DropKind(IK3_HELMET, 69, 75);
+	DropKind(IK3_SUIT, 69, 75);
+	DropKind(IK3_GAUNTLET, 69, 75);
+	DropKind(IK3_BOOTS, 69, 75);
+	DropKind(IK3_SHIELD, 69, 75);
+	DropKind(IK3_BOW, 69, 75);
+	DropKind(IK3_YOYO, 69, 75);
+
+	DropItem(II_GEN_MAT_ELE_DESERT, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_DESERT, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_MONGTEAR, 100000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_MONGTEAR, 100000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL800,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_EIGHTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_GREEMONG3
+			recovery 10 40 100 m             
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+}
+
+MI_COLOLUIA // 거대 루이아
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropItem(II_WEA_SWO_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_SWT_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_AXE_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_AXT_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_KNU_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_CHE_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_WAN_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_STA_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_BOW_ANGEL, 3150000, 0, 1);
+	DropItem(II_WEA_YOY_ANGEL, 3150000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_STRRING, 4166000, 4, 1);
+	DropItem(II_GEN_JEW_RIN_INTRING, 4166000, 4, 1);
+
+	DropKind(IK3_SWD, 80, 95);
+	DropKind(IK3_AXE, 80, 95);
+	DropKind(IK3_CHEERSTICK, 80, 95);
+	DropKind(IK3_KNUCKLEHAMMER, 80, 95);
+	DropKind(IK3_WAND, 80, 95);
+	DropKind(IK3_STAFF, 80, 95);
+	DropKind(IK3_HELMET, 80, 95);
+	DropKind(IK3_SUIT, 80, 95);
+	DropKind(IK3_GAUNTLET, 80, 95);
+	DropKind(IK3_BOOTS, 80, 95);
+	DropKind(IK3_SHIELD, 80, 95);
+	DropKind(IK3_BOW, 80, 95);
+	DropKind(IK3_YOYO, 80, 95);
+	DropKind(IK3_THSWD, 80, 95);
+	DropKind(IK3_THAXE, 80, 95);
+
+	DropItem(II_GEN_MAT_ELE_DESERT, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_DESERT, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_LUCHEST, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_LUCHEST, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL800,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_EIGHTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+
+	
+
+	m_nAttackFirstRange = 10;
+
+	
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			recovery 10 50 100 m
+			summon 10 1 MI_LUIA3            
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+
+}
+
+MI_COLOGONGRI // 거대 공그리
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropItem(II_WEA_SWO_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_SWT_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_AXE_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_AXT_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_KNU_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_CHE_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_WAN_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_STA_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_BOW_ANGEL, 3600000, 0, 1);
+	DropItem(II_WEA_YOY_ANGEL, 3600000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_STRRING, 4166000, 4, 1);
+	DropItem(II_GEN_JEW_RIN_INTRING, 4166000, 4, 1);
+
+	DropKind(IK3_SWD, 90, 101);
+	DropKind(IK3_AXE, 90, 101);
+	DropKind(IK3_CHEERSTICK, 90, 101);
+	DropKind(IK3_KNUCKLEHAMMER, 90, 101);
+	DropKind(IK3_WAND, 90, 101);
+	DropKind(IK3_STAFF, 90, 101);
+	DropKind(IK3_HELMET, 90, 101);
+	DropKind(IK3_SUIT, 90, 101);
+	DropKind(IK3_GAUNTLET, 90, 101);
+	DropKind(IK3_BOOTS, 90, 101);
+	DropKind(IK3_SHIELD, 90, 101);
+	DropKind(IK3_BOW, 90, 101);
+	DropKind(IK3_YOYO, 90, 101);
+	DropKind(IK3_THSWD, 90, 101);
+	DropKind(IK3_THAXE, 90, 101);
+
+	DropItem(II_GEN_MAT_ELE_CYCLON, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_CYCLON, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_ERONSIMINT, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_ERONSIMINT, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL800,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_EIGHTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+
+	
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.6
+			summon 10 1 MI_GONGURY3
+			recovery 20 30 100 a           
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+
+}
+
+MI_COLOKEREUN // 거대 케른
+{
+	Maxitem = 5;
+	DropGold(200000 , 300000);
+
+	DropItem(II_WEA_SWO_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_SWT_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_AXE_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_AXT_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_KNU_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_CHE_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_WAN_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_STA_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_BOW_ANGEL, 4500000, 0, 1);
+	DropItem(II_WEA_YOY_ANGEL, 4500000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_STRRING, 4166000, 4, 1);
+	DropItem(II_GEN_JEW_RIN_INTRING, 4166000, 4, 1);
+
+	DropKind(IK3_SWD, 90, 104);
+	DropKind(IK3_AXE, 90, 104);
+	DropKind(IK3_CHEERSTICK, 90, 104);
+	DropKind(IK3_KNUCKLEHAMMER, 90, 104);
+	DropKind(IK3_WAND, 90, 104);
+	DropKind(IK3_STAFF, 90, 104);
+	DropKind(IK3_HELMET, 90, 104);
+	DropKind(IK3_SUIT, 90, 104);
+	DropKind(IK3_GAUNTLET, 90, 104);
+	DropKind(IK3_BOOTS, 90, 104);
+	DropKind(IK3_SHIELD, 90, 104);
+	DropKind(IK3_BOW, 90, 104);
+	DropKind(IK3_YOYO, 90, 104);
+	DropKind(IK3_THSWD, 90, 104);
+	DropKind(IK3_THAXE, 90, 104);
+
+	DropItem(II_GEN_MAT_ELE_DESERT, 3750000, 0, 1); //속성 카드3 0.125%
+	DropItem(II_GEN_MAT_ELE_DESERT, 7500000, 0, 1); //속성 카드2 0.25%
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 3006250, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1560000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_RNAMOND, 1000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_RNAMOND, 1000000000, 0, 1);
+
+	DropItem(II_GEN_POT_DRI_VITAL800,  110000000, 0, 1);
+	DropItem(II_GEN_REF_REF_EIGHTH, 420000000, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_COO_MEATSALAD, 1000000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+	DropItem(II_GEN_FOO_ICE_ICECREAMCAKE, 600000001, 0, 1);
+
+	
+
+	m_nAttackFirstRange = 10;
+
+	
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Recovery 10 50 100 m
+			Berserk 30 1.5
+			summon 10 1 MI_KERN3            
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+
+}
+
+MI_COLOMATEONIKER // 메테오니커
+{
+	Maxitem = 3;
+	DropGold(200000 , 300000);
+
+	DropItem(II_WEA_SWO_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_SWT_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_AXE_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_AXT_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_KNU_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_CHE_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_WAN_BLOODY2, 300, 0, 1);
+	DropItem(II_WEA_STA_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_BOW_BLOODY, 300, 0, 1);
+	DropItem(II_WEA_YOY_BLOODY, 300, 0, 1);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_GEM_GEM_DRAGONHEART, 100000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 300000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+
+		#battle
+		    {
+		        berserk 20 2.0
+        
+                    }
+
+		#move
+		    {
+			
+		    }	
+   	}               
+
+}
+
+MI_COLOCYCLOPSX // 싸이클롭스 X
+{
+	Maxitem = 3;
+	DropGold(200000 , 300000);
+
+	DropItem(II_WEA_SWO_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_SWT_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_AXE_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_AXT_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_KNU_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_CHE_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_WAN_BLOODY2, 450, 0, 1);
+	DropItem(II_WEA_STA_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_BOW_BLOODY, 450, 0, 1);
+	DropItem(II_WEA_YOY_BLOODY, 450, 0, 1);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_GEM_GEM_STRANGEEYES, 300000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+
+}
+
+MI_COLODIEOPNIS // 죽음의 정령 옵니스
+{
+	Maxitem = 2;
+	DropGold(200000 , 300000);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+
+	DropItem(II_SYS_SYS_QUE_OBNISCRYSTAL01, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLORACCOUN // 거대 라쿤
+{
+	Maxitem = 2;
+	DropGold(2000000 , 3000000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	
+
+	DropItem(II_GEN_GEM_GEM_SOFTFUR, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOMATEONIKER01 // 불의 메테오니커
+{
+	Maxitem = 10;
+	DropGold(100000 , 200000);
+        DropItem(II_PET_EGG, 600000000, 0, 1);
+        DropItem(II_PET_EGG, 600000000, 0, 1);
+        DropItem(II_PET_EGG, 600000000, 0, 1);
+        DropItem(II_PET_EGG, 600000000, 0, 1);
+        DropItem(II_PET_EGG, 600000000, 0, 1);
+	DropItem(II_ARM_F_MER_HELMET_SET_04	,  900000, 0, 1);
+	DropItem(II_ARM_F_MER_SUIT_SET_04	,  900000, 0, 1);
+	DropItem(II_ARM_F_MER_GAUNTLET_SET_04	,  900000, 0, 1);
+	DropItem(II_ARM_F_MER_BOOTS_SET_04	,  900000, 0, 1);			
+	DropItem(II_ARM_M_MER_HELMET_SET_04	,  900000, 0, 1);		
+	DropItem(II_ARM_M_MER_SUIT_SET_04	,  900000, 0, 1);		
+	DropItem(II_ARM_M_MER_GAUNTLET_SET_04	,  900000, 0, 1);		
+	DropItem(II_ARM_M_MER_BOOTS_SET_04	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ACR_HELMET_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ACR_SUIT_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ACR_GAUNTLET_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ACR_BOOTS_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ACR_HELMET_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ACR_SUIT_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ACR_GAUNTLET_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ACR_BOOTS_SET_05	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ASS_HELMET_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ASS_SUIT_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ASS_GAUNTLET_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ASS_BOOTS_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ASS_HELMET_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ASS_SUIT_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ASS_GAUNTLET_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ASS_BOOTS_SET_06	,  900000, 0, 1);		
+	DropItem(II_ARM_F_MAG_HELMET_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_F_MAG_SUIT_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_F_MAG_GAUNTLET_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_F_MAG_BOOTS_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_M_MAG_HELMET_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_M_MAG_SUIT_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_M_MAG_GAUNTLET_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_M_MAG_BOOTS_SET_07	,  900000, 0, 1);		
+	DropItem(II_ARM_F_KIN_HELMET_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_SUIT_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_GAUNTLET_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_BOOTS_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_HELMET_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_SUIT_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_GAUNTLET_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_BOOTS_SET_08	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_HELMET_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_SUIT_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_GAUNTLET_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_BOOTS_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_HELMET_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_SUIT_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_GAUNTLET_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_BOOTS_SET_11	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_HELMET_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_SUIT_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_GAUNTLET_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_BOOTS_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_HELMET_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_SUIT_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_GAUNTLET_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_BOOTS_SET_14	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_HELMET_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_SUIT_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_GAUNTLET_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_BOOTS_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_HELMET_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_SUIT_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_GAUNTLET_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_BOOTS_SET_17	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_HELMET_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_SUIT_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_GAUNTLET_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_BOOTS_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_HELMET_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_SUIT_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_GAUNTLET_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_BOOTS_SET_20	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_HELMET_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_SUIT_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_GAUNTLET_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_BOOTS_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_HELMET_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_SUIT_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_GAUNTLET_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_BOOTS_SET_23	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_HELMET_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_SUIT_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_GAUNTLET_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_BOOTS_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_HELMET_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_SUIT_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_GAUNTLET_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_BOOTS_SET_26	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_HELMET_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_SUIT_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_GAUNTLET_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_BOOTS_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_HELMET_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_SUIT_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_GAUNTLET_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_BOOTS_SET_29	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_HELMET_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_SUIT_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_GAUNTLET_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_BOOTS_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_HELMET_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_SUIT_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_GAUNTLET_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_M_KIN_BOOTS_SET_09	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_HELMET_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_SUIT_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_GAUNTLET_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BLA_BOOTS_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_HELMET_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_SUIT_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_GAUNTLET_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BLA_BOOTS_SET_12	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_HELMET_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_SUIT_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_GAUNTLET_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_F_JST_BOOTS_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_HELMET_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_SUIT_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_GAUNTLET_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_M_JST_BOOTS_SET_15	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_HELMET_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_SUIT_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_GAUNTLET_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RAG_BOOTS_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_HELMET_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_SUIT_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_GAUNTLET_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RAG_BOOTS_SET_18	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_HELMET_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_SUIT_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_GAUNTLET_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_F_RIN_BOOTS_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_HELMET_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_SUIT_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_GAUNTLET_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_M_RIN_BOOTS_SET_21	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_HELMET_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_SUIT_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_GAUNTLET_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_F_BIL_BOOTS_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_HELMET_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_SUIT_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_GAUNTLET_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_M_BIL_BOOTS_SET_24	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_HELMET_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_SUIT_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_GAUNTLET_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_F_PSY_BOOTS_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_HELMET_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_SUIT_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_GAUNTLET_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_M_PSY_BOOTS_SET_27	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_HELMET_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_SUIT_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_GAUNTLET_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_F_ELE_BOOTS_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_HELMET_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_SUIT_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_GAUNTLET_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_M_ELE_BOOTS_SET_30	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_HELMET_SET_10	,  900000, 0, 1);	
+	DropItem(II_ARM_F_KIN_SUIT_SET_10	,  900000, 0, 1);		
+	DropItem(II_ARM_F_KIN_GAUNTLET_SET_10	,  900000, 0, 1);		
+	DropItem(II_ARM_F_KIN_BOOTS_SET_10	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_HELMET_SET_10	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_SUIT_SET_10	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_GAUNTLET_SET_10	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_BOOTS_SET_10	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_HELMET_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_SUIT_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_GAUNTLET_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_BOOTS_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_HELMET_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_SUIT_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_GAUNTLET_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_BOOTS_SET_13	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_HELMET_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_SUIT_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_GAUNTLET_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_BOOTS_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_HELMET_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_SUIT_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_GAUNTLET_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_BOOTS_SET_16	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_HELMET_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_SUIT_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_GAUNTLET_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_BOOTS_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_HELMET_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_SUIT_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_GAUNTLET_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_BOOTS_SET_19	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_HELMET_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_SUIT_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_GAUNTLET_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_BOOTS_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_HELMET_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_SUIT_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_GAUNTLET_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_BOOTS_SET_22	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_HELMET_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_SUIT_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_GAUNTLET_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_BOOTS_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_HELMET_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_SUIT_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_GAUNTLET_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_BOOTS_SET_25	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_HELMET_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_SUIT_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_GAUNTLET_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_BOOTS_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_HELMET_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_SUIT_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_GAUNTLET_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_BOOTS_SET_28	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_HELMET_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_SUIT_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_GAUNTLET_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_BOOTS_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_HELMET_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_SUIT_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_GAUNTLET_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_BOOTS_SET_31	,  900000, 0, 1);		
+	DropItem(II_ARM_F_KIN_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_KIN_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_KIN_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_KIN_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_KIN_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BLA_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BLA_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_JST_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_JST_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RAG_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RAG_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_RIN_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_RIN_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_BIL_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_BIL_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_PSY_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_PSY_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_F_ELE_BOOTS_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_HELMET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_SUIT_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_GAUNTLET_SET_32	,  900000, 0, 1);		
+	DropItem(II_ARM_M_ELE_BOOTS_SET_32	,  900000, 0, 1);		
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_WEA_SWO_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_SWT_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_AXE_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_AXT_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_KNU_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_CHE_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_WAN_BLOODY2, 15000000, 0, 1);
+	DropItem(II_WEA_STA_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_BOW_BLOODY, 15000000, 0, 1);
+	DropItem(II_WEA_YOY_BLOODY, 15000000, 0, 1);
+
+        DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+	DropItem(II_RID_RID_BOR_RIDINGCLOUD04, 6000000, 0, 1);
+
+        DropGold(20000, 30000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_GEM_GEM_DRAGONHEART, 4500000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONHEART, 450000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_DRAGONCANINE, 3000000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#battle
+		{
+			berserk 2 1.5
+		}
+	}
+}
+
+MI_COLOCLOCKWORK // 클락워크
+{
+	Maxitem = 8;
+		DropGold(2000000 , 3000000);
+
+	DropItem(II_GEN_JEW_EAR_ATTEARRING, 5000000, 14, 1);
+	DropItem(II_GEN_JEW_EAR_DEFEARRING, 10000000, 10, 1);
+	DropItem(II_GEN_JEW_EAR_DEFEARRING, 5000000, 14, 1);
+	DropItem(II_GEN_JEW_EAR_U_EARRING07, 10000000, 0, 1);
+	DropItem(II_GEN_JEW_EAR_U_EARRING08, 5000000, 0, 1);
+	DropItem(II_GEN_JEW_EAR_U_EARRING09, 2000000, 0, 1);
+
+        DropItem(II_GEN_JEW_RIN_STRRING, 10000000, 9, 1);	
+	DropItem(II_GEN_JEW_RIN_STRRING, 4000000, 15, 1);
+//	DropItem(II_GEN_JEW_RIN_STRRING, 2000000, 18, 1);
+
+        DropItem(II_GEN_JEW_RIN_INTRING, 10000000, 9, 1);
+	DropItem(II_GEN_JEW_RIN_INTRING, 4000000, 15, 1);
+//	DropItem(II_GEN_JEW_RIN_INTRING, 2000000, 18, 1);
+
+	DropItem(II_GEN_JEW_RIN_DEXRING, 10000000, 9, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 4000000, 15, 1);
+//	DropItem(II_GEN_JEW_RIN_DEXRING, 2000000, 18, 1);
+
+	
+        DropItem(II_ARM_ARM_SHI_RUKENSHIA, 300000000, 0, 1);         
+        DropItem(II_ARM_ARM_SHI_TOEFFIN, 300000000, 0, 1); //(아이템 통합으로 변경됨)
+        DropItem(II_ARM_ARM_SHI_TOEFFIN, 300000000, 0, 1);            
+        DropItem(II_ARM_ARM_SHI_CATEPO, 300000000, 0, 1); 
+
+	DropItem(II_WEA_SWO_SET01, 300000000, 0, 1);
+	DropItem(II_WEA_AXE_SET01, 300000000, 0, 1);
+	DropItem(II_WEA_CHE_SET01, 300000000, 0, 1);
+	DropItem(II_WEA_WAN_SET01, 300000000, 0, 1);
+	DropItem(II_WEA_STA_SET01, 300000000, 0, 1);
+	DropItem(II_WEA_KNU_SET01, 300000000, 0, 1);
+
+	DropItem(II_ARM_M_MER_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_M_MER_SET01SUIT, 50000000, 0, 1);
+	DropItem(II_ARM_M_MER_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_M_MER_SET01BOOTS, 10000000, 0, 1);
+	DropItem(II_ARM_M_ASS_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_M_ASS_SET01SUIT, 50000000, 0, 1);
+	DropItem(II_ARM_M_ASS_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_M_ASS_SET01BOOTS, 10000000, 0, 1);
+	DropItem(II_ARM_M_MAG_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_M_MAG_SET01SUIT, 50000000, 0, 1);
+	DropItem(II_ARM_M_MAG_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_M_MAG_SET01BOOTS, 10000000, 0, 1);
+	DropItem(II_ARM_F_MER_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_F_MER_SET01SUIT, 50000000, 0, 1);
+	DropItem(II_ARM_F_MER_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_F_MER_SET01BOOTS, 10000000, 0, 1);
+	DropItem(II_ARM_F_ASS_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_F_ASS_SET01SUIT, 50000000, 0, 1);
+	DropItem(II_ARM_F_ASS_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_F_ASS_SET01BOOTS, 10000000, 0, 1);
+	DropItem(II_ARM_F_MAG_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_F_MAG_SET01SUIT, 50000000, 0, 1);
+	DropItem(II_ARM_F_MAG_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_F_MAG_SET01BOOTS, 10000000, 0, 1);
+	DropItem(II_ARM_M_ACR_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_M_ACR_SET01SUIT  , 50000000, 0, 1);
+	DropItem(II_ARM_M_ACR_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_M_ACR_SET01BOOTS  , 10000000, 0, 1);
+	DropItem(II_ARM_F_ACR_SET01HELMET, 80000000, 0, 1);
+	DropItem(II_ARM_F_ACR_SET01SUIT, 50000000, 0, 1);
+	DropItem(II_ARM_F_ACR_SET01GAUNTLET, 10000000, 0, 1);
+	DropItem(II_ARM_F_ACR_SET01BOOTS  , 10000000, 0, 1);
+	DropItem(II_GEN_JEW_EAR_ATTEARRING, 3000000000, 12, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 3000000000, 9, 1);
+
+	m_nAttackFirstRange = 10;
+
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 30 2
+                        recovery 5 20 100 m            
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+
+}
+
+MI_COLOBIGFOOT // 악령의 빅풋
+{
+	Maxitem = 4;
+	DropGold(2000000 , 3000000);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+
+	DropItem(II_WEA_SWO_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_SWT_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_AXE_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_AXT_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_KNU_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_CHE_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_WAN_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_STA_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_BOW_LUZAM, 3000000, 0, 1);
+	DropItem(II_WEA_YOY_LUZAM, 3000000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOLUCIFER // 루시퍼
+{
+	Maxitem = 10;
+	DropGold(2000000 , 3000000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+                        Berserk 10 1.5 
+			Summon	20	2	MI_IMP03
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+}
+
+MI_COLOLYCANOS // 죽음의 라이카노스
+{
+	Maxitem = 4;
+	DropGold(2000000 , 3000000);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_GEM_GEM_BIGTOENAIL, 210000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_BIGTOENAIL, 210000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_BIGTOENAIL, 210000000, 0, 1);
+
+	DropItem(II_SYS_SYS_EVE_OMINOUSGIFTBOX01, 300000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_OMINOUSGIFTBOX02, 300000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_OMINOUSGIFTBOX03, 300000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 30000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.5
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOSOULVAMPAIN // 영혼의 뱀파인
+{
+	Maxitem = 6;
+	DropGold(2000000 , 3000000);
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+
+	DropItem(II_SYS_SYS_EVE_OMINOUSGIFTBOX01, 600000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_OMINOUSGIFTBOX02, 600000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_OMINOUSGIFTBOX03, 600000000, 0, 1);
+
+	DropItem(II_WEA_SWO_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_SWT_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_AXE_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_AXT_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_KNU_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_CHE_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_WAN_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_STA_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_BOW_VEMPIRE, 9000000, 0, 1);
+	DropItem(II_WEA_YOY_VEMPIRE, 9000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 6000000, 0, 1);
+
+        DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_GEM_GEM_VEMPIREGLASS, 210000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_VEMPIREGLASS, 210000000, 0, 1);
+	DropItem(II_GEN_GEM_GEM_VEMPIREGLASS, 210000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOSKELGENERAL // 스켈튼 제너럴
+{
+	Maxitem = 8;
+	DropGold(2000000 , 3000000);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 21000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 21000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 21000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 21000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 21000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_ARM_ARM_SHI_BOKSOUL, 50000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_SHESOUL, 50000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 6000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 30000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+
+	DropItem(II_GEN_GEM_GEM_SKELGENERALPIECE, 200000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOSKELDEVIL // 스켈튼 데빌
+{
+	Maxitem = 8;
+	DropGold(2000000 , 3000000);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_ARM_M_KIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_KIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_KIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_KIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_KIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BLA_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BLA_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_JST_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_JST_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RAG_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RAG_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_RIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_RIN_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_BIL_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_BIL_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_PSY_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_PSY_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELE_BOOTS_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_HELMET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_SUIT_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_GAUNTLET_SET_34 , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELE_BOOTS_SET_34 , 15000000, 0, 1);
+
+	DropItem(II_WEA_SWO_SWDSOUL , 60000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_ZEMSOUL , 60000000, 0, 1);
+
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 31000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 30000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 50000000, 0, 1);
+
+	DropItem(II_GEN_GEM_GEM_DEVILPIECE, 500000000, 0, 1);
+	
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOTUTTLEKING // 터틀킹
+{
+	Maxitem = 4;
+	DropGold(2000000 , 3000000);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLORYCANBARGA // 라이칸 바르가
+{
+	Maxitem = 7;
+	DropGold(2000000 , 3000000);
+	
+	DropItem(II_GEN_JEW_RIN_FIRERING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 15000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 15000000, 0, 1)
+	
+	DropItem(II_GEN_MAT_OPERCID, 80000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 80000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 110000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 110000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 110000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 31000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 37000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 46000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 73000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 220000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_CHIEFHEART01, 400000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOANGRYBEHEMOTH // 분노한 베히모스
+{
+	Maxitem = 10;
+	DropGold(2000000 , 3000000);
+	
+	DropItem(II_WEA_SWO_BEHESWORD, 8000000, 0, 1);
+	DropItem(II_WEA_SWT_BEHETWOSWORD, 8000000, 0, 1);
+	DropItem(II_WEA_AXT_BEHETWOAXE, 8000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_BEHESHILD, 8000000, 0, 1);
+	DropItem(II_WEA_SWO_BEHEONEHANDSWORD, 8000000, 0, 1);
+	DropItem(II_WEA_AXE_BEHEONEHANDAXE, 8000000, 0, 1);
+	DropItem(II_WEA_BOW_BEHECROSSBOW, 8000000, 0, 1);
+	DropItem(II_WEA_YOY_BEHEYOYO, 8000000, 0, 1);
+	DropItem(II_WEA_KNU_BEHENUCLE, 8000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_BEHEFORCEZEM, 8000000, 0, 1);
+	DropItem(II_WEA_CHE_BEHESTICK, 8000000, 0, 1);
+	DropItem(II_WEA_WAN_BEHEWAND, 8000000, 0, 1);
+	DropItem(II_ARM_ARM_SHI_BEHEMAGICBOOK, 8000000, 0, 1);
+	DropItem(II_WEA_STA_BEHESTAFF, 8000000, 0, 1);
+	
+	DropItem(II_GEN_JEW_RIN_FIRERING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 16000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 16000000, 0, 1)
+	
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 45000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 49000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 58000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 70000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 83000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 200000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_BEHEMOTHSCALES01, 400000000, 0, 1);
+
+	m_nAttackFirstRange = 40;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 15
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOBASILISK // 바실리스크
+{
+	Maxitem = 8;
+	DropGold(2000000 , 3000000);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 31000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 30000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 50000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_OPERCID, 500000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 500000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 500000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 800000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 800000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 800000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_LUDASBANGLE, 500000000, 0, 1);
+	
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOKALGAS		//칼가스
+{
+	Maxitem = 8;
+	DropGold(2000000 , 3000000);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_ARM_M_LORDK_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_LORDK_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_LORDK_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_LORDK_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_LORDK_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_STORMB_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_STORMB_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_WINDL_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_WINDL_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_CRACKS_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_CRACKS_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FLOR_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FLOR_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_FORCEM_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_FORCEM_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_MENT_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_MENT_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_HELMET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_SUIT_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_GAUNTLET_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_M_ELEL_BOOTS_SET_KAL , 15000000, 0, 1);
+	DropItem(II_ARM_F_ELEL_BOOTS_SET_KAL , 15000000, 0, 1);
+
+	DropItem(II_SYS_VIS_LV3_WARRIOR, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_KNIGHT, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_BUBBLE 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_IBLIS, 31000000, 0, 1);
+	DropItem(II_SYS_VIS_LV3_SHADE, 31000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 51000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 57000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 660000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 680000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 830000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 2700000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 30000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 30000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 30000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ELE_LIGHTING, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VOLCANO, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_EARTHQUAKE, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_OCEAN, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_VACCUM, 50000000, 0, 1);
+	
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_OPERCID, 50000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+	DropItem(II_GEN_MAT_CID,	 80000000, 0, 1);
+
+	DropItem(II_SYS_SYS_QUE_ETERPENDANT, 500000000, 0, 1);
+	
+	
+	m_nAttackFirstRange = 60;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 60
+                        KeepRangeAttack 60
+			Berserk 20 2.0
+			summon 10 3 MI_KALGASLESSER01
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOBANG_1 // 거대뱅
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+	
+	m_dwAttackMoveDelay = 0;
+	m_dwRunawayDelay = 1000;
+	SetRunAway( 10, MI_BANG1, 2 );
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+}
+
+MI_COLOWAGJAK_1 // 거대 와그작
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	m_dwAttackMoveDelay = 0;
+	m_dwRunawayDelay = 1000;
+	SetRunAway( 10, 0, 1 );
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        rangeattack 10            
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOREDMANTIS_1 // 거대 레드맨티스
+{
+	Maxitem = 5;
+
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                                                 
+                        Berserk 10 1.2            
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOJACKTHEHAMMER_1 // 거대 잭더해머
+{
+	Maxitem = 5;
+
+
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	
+
+	m_nAttackFirstRange = 8;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+}
+
+MI_COLOBERKRO_1 // 거대 버크로
+{
+	Maxitem = 8;
+
+
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	m_nAttackFirstRange = 10;
+
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_BUCROW3
+			recovery 10 50 100 m
+                                    
+                    }
+		#move
+		    {
+			Loot d 3
+		    }	
+   	}               
+}
+
+MI_COLOHOWBOW_1 // 거대 호우보우
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	
+
+	m_nAttackFirstRange = 8;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 4
+		    }	
+   	}               
+}
+
+MI_COLOROKEPELER_1 // 거대 로케펠러
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_ROCKEPELLER3
+			recovery 10 40 100 m             
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+
+}
+
+MI_COLOSTIMEWORK_1 // 거대 스팀워커
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	
+
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_STEAMWALKER3
+			recovery 10 40 100 m 
+                          
+                                    
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+
+}
+
+MI_COLOGRREUNG_1 // 거대 그르릉
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+	
+
+	m_nAttackFirstRange = 10;
+	
+
+	
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_GRRR3
+			recovery 10 30 100 m            
+                    }
+		#move
+		    {
+			loot d 5
+		    {
+			
+		    }	
+   	}               
+}
+
+MI_COLOGRIMONG_1 // 거대 그리몽
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			summon 10 1 MI_GREEMONG3
+			recovery 10 40 100 m             
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+}
+
+MI_COLOLUIA_1 // 거대 루이아
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	
+
+	m_nAttackFirstRange = 10;
+
+	
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.5
+			recovery 10 50 100 m
+			summon 10 1 MI_LUIA3            
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+
+}
+
+MI_COLOGONGRI_1 // 거대 공그리
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Berserk 30 1.6
+			summon 10 1 MI_GONGURY3
+			recovery 20 30 100 a           
+                    }
+		#move
+		    {
+			loot d 3
+		    }	
+   	}               
+
+}
+
+MI_COLOKEREUN_1 // 거대 케른
+{
+	Maxitem = 5;
+	DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	
+
+	m_nAttackFirstRange = 10;
+
+	
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        Recovery 10 50 100 m
+			Berserk 30 1.5
+			summon 10 1 MI_KERN3            
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+
+}
+
+MI_COLOMATEONIKER_1 // 메테오니커
+{
+	Maxitem = 5;
+        DropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+
+		#battle
+		    {
+		        berserk 20 2.0
+        
+                    }
+
+		#move
+		    {
+			
+		    }	
+   	}               
+
+}
+
+MI_COLOCYCLOPSX_1 // 싸이클롭스 X
+{
+	Maxitem = 5;
+        DDropGold(100000 , 200000);
+	DropItem(II_GEN_FOO_PIL_GOLD, 300000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 300000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 300000000, 0, 30);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+
+}
+
+MI_COLODIEOPNIS_1 // 죽음의 정령 옵니스
+{
+	Maxitem = 10;
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 30000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 30000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 30000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 30000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLORACCOUN_1 // 거대 라쿤
+{
+	Maxitem = 10;
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 30000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 30000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 30000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 30000000, 0, 1);
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOMATEONIKER01_1 // 불의 메테오니커
+{
+	Maxitem = 10;
+   	DropGold(100000, 200000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 30000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 30000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 30000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 30000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#battle
+		{
+			berserk 2 1.5
+		}
+	}
+}
+
+MI_COLOCLOCKWORK_1 // 클락워크
+{
+	Maxitem = 10;
+
+	DropGold(100000, 200000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 90000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 30000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 30000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 30000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 30000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 30 2
+                        recovery 5 20 100 m            
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+
+}
+
+MI_COLOBIGFOOT_1 // 악령의 빅풋
+{
+	Maxitem = 10;
+
+		DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOLUCIFER_1 // 루시퍼
+{
+	Maxitem = 10;
+        	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+                        Berserk 10 1.5 
+			Summon	20	2	MI_IMP03
+                    }
+		#move
+		    {
+			
+		    }	
+   	}               
+}
+
+MI_COLOLYCANOS_1 // 죽음의 라이카노스
+{
+	Maxitem = 10;
+		DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+			Berserk 20 2.5
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOSOULVAMPAIN_1 // 영혼의 뱀파인
+{
+	Maxitem = 10;
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOSKELGENERAL_1 // 스켈튼 제너럴
+{
+	Maxitem = 10;
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOSKELDEVIL_1 // 스켈튼 데빌
+{
+	Maxitem = 10;
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+	
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOTUTTLEKING_1 // 터틀킹
+{
+	Maxitem = 10;
+
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack cunning low
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLORYCANBARGA_1 // 라이칸 바르가
+{
+	Maxitem = 10;
+	
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOANGRYBEHEMOTH_1 // 분노한 베히모스
+{
+	Maxitem = 10;
+	
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+
+	m_nAttackFirstRange = 40;
+
+	AI
+	{
+		#Scan
+                    {
+			scan 
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 15
+			Berserk 20 2.0
+                               
+                    }
+		#move
+		    {
+			Loot d 5
+		    }	
+   	}               
+}
+
+MI_COLOBASILISK_1 // 바실리스크
+{
+	Maxitem = 10;
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+	
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 10
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_COLOKALGAS_1 // 약간 부족한 콜로세움 정예 날카로운 송곳니의 칼가스
+
+{
+	Maxitem = 10;
+	DropGold(1000000 , 2000000);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 600000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 150000000, 0, 1);
+	
+	
+	m_nAttackFirstRange = 60;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 20 cunning sam
+                        Rangeattack 60
+						KeepRangeAttack 60
+			Berserk 20 2.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_EVEROCKEPELLER
+{
+	Maxitem = 2;
+	
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 60 
+                               
+                    }
+		#move
+		    {
+			loot d 3			
+			
+		    }	
+   	}               
+
+}
+
+MI_EVEMOTHBEE
+{
+	Maxitem = 2;
+
+	m_nAttackFirstRange = 10;
+
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack  
+                                    
+                    }
+		#move
+		    {
+			loot d 5
+		    }	
+   	}               
+}
+
+MI_BURR
+{
+	Maxitem = 2;	
+	
+	DropItem(II_SYS_SYS_SCR_BXGOLDPACK,15000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_BXTAMER, 24000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01_1, 310500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE_1, 310500000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_BALLOON_GP, 360000000, 0, 1);
+	DropItem(II_CHR_SYS_SCR_CM_03, 30000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_02, 30000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_01, 30000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_LV60, 270000000, 0, 3);
+	DropItem(II_CHR_SYS_SCR_CM_LV65, 270000000, 0, 3);
+	DropItem(II_CHR_SYS_SCR_CM_LV70, 270000000, 0, 3);
+	DropItem(II_SYS_SYS_EVE_WHITEGG1, 150000000, 0, 3);
+	DropItem(II_SYS_SYS_EVE_YELLOWEGG1, 150000000, 0, 3);
+	DropItem(II_GEN_REF_REF_TENTH, 390000000, 0, 10);
+	DropItem(II_GEN_POT_DRI_VITAL900, 390000000, 0, 10);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+MI_SAPHYRYAN
+{
+	Maxitem = 2;	
+	
+	DropItem(II_SYS_SYS_SCR_BXGOLDPACK,15000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_BXLEVEL,24000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01_1, 310500000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE_1, 310500000, 0, 1);
+	DropItem(II_CHR_SYS_SCR_CM_03, 30000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_02, 30000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_LV35, 285000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_LV45, 285000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_LV55, 285000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_LV65, 285000000, 0, 2);
+	DropItem(II_SYS_SYS_EVE_PURPLEEGG1, 150000000, 0, 2);
+	DropItem(II_SYS_SYS_EVE_GRAYEGG1, 150000000, 0, 2);
+	DropItem(II_GEN_REF_REF_TENTH, 420000000, 0, 10);
+	DropItem(II_GEN_POT_DRI_VITAL900, 420000000, 0, 10);
+	
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+MI_GRAYEARL
+{
+	Maxitem = 2;	
+	
+	DropItem(II_SYS_SYS_SCR_BXGOLDPACK,15000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_COMMERGIFTBOX20,24000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_BALLOON_01,300000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_BALLOON01_01,300000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_BALLOON02_01,300000000, 0, 1);
+	DropItem(II_CHR_SYS_SCR_CM_04,30000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_01,30000000, 0, 2);
+	DropItem(II_CHR_SYS_SCR_CM_LV30,34500000, 0, 3);
+	DropItem(II_CHR_SYS_SCR_CM_LV40,34500000, 0, 3);
+	DropItem(II_CHR_SYS_SCR_CM_LV50,34500000, 0, 3);
+	DropItem(II_CHR_SYS_SCR_CM_LV60,34500000, 0, 3);
+	DropItem(II_SYS_SYS_EVE_CHRISTMASTEA01,153000000, 0, 1);
+	DropItem(II_SYS_SYS_EVE_CHOCOLATE02,240000000, 0, 3);
+	DropItem(II_GEN_REF_REF_TENTH, 330000000, 0, 10);
+	DropItem(II_GEN_POT_DRI_VITAL900, 330000000, 0, 10);
+	
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_GPOTATO01
+{
+	Maxitem = 6;
+   	DropGold(20000, 30000);
+
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 1500000000, 0, 1);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 1500000000, 0, 1);
+    
+    
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_GPOTATO02
+{
+	Maxitem = 6;
+   	DropGold(20000, 30000);
+
+	DropItem(II_GEN_FOO_PIL_GOLD, 1500000000, 0, 30);
+	DropItem(II_CHR_FOO_COO_REMANTIS, 1500000000, 0, 30);
+	DropItem(II_GEN_FOO_COO_DDUKGUKHOT, 1500000000, 0, 30);
+	DropItem(II_GEN_MAT_ORICHALCUM02, 1500000000, 0, 1);
+    
+    
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+MI_EVEKALGASBABY
+{
+	Maxitem = 2;	
+	
+	
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+MI_LOVETHIEF
+{
+	Maxitem = 5;
+	DropGold(229, 332);
+
+	DropItem(II_SYS_SYS_EVE_HEARTPIECE, 3000000000, 0, 1);
+	
+
+	m_nAttackFirstRange = 8;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack 
+                        
+                        berserk 30 1.2
+			Evade 10            
+                    }
+		#move
+		    { 
+			loot d 5
 		    }	
    	}               
 }
@@ -26562,23 +33602,2766 @@ MI_MAFL_PATROL
 	
 	m_nAttackFirstRange = 10;
 
+	SetCallHelper( 0, 0, 0, FALSE );
+
 	AI
 	{
 		#Scan
                     {
-			scan range 10 chao 100
+			scan
                     }
-
 		#battle
 		    {
-			attack
-			Helper sam 5000 1
-			Rangeattack 10              
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
                     }
-
 		#move
 		    {
 			
 		    }	
    	}   
+}
+
+MI_SHIPHARPINEES			
+{					
+	Maxitem = 8;	
+    DropGold(1365000, 1680000);
+	   
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_WEA_SWO_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_SWT_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_AXE_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_AXT_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_KNU_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_CHE_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_WAN_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_STA_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_BOW_ROYAL, 9000000, 0, 1);
+	DropItem(II_WEA_YOY_ROYAL, 9000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKB, 6000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+		
+	m_nAttackFirstRange = 60;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack 20 cunning sam			
+                       						
+                        						
+			Berserk 20 2.0			
+			summon 10 3 MI_SHIPREDHARPY			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPMOUGUS						
+{	
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPWINGMOUGUS						
+{		
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPMESPI						
+{		
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPWINDMESPI						
+{				
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPREDHARPY						
+{	
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPBLUEHARPY						
+{		
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPHIPPOGRIPH						
+{		
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 35						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMFLAME01						
+{		
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+					
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMRAPRA01						
+{			
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+					
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMOLDRUT01						
+{			
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+					
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMMINIMUSHU01						
+{		
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+					
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMLADYBLUM01						
+{			
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+					
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMNIGHTMIST01						
+{			
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+					
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMQEEN01		
+{				
+	Maxitem = 8;	
+    DropGold(850000, 1105000);
+	   
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_WEA_SWO_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_SWT_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_AXE_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_AXT_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_KNU_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_CHE_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_WAN_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_STA_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_BOW_ENTANESS, 9000000, 0, 1);
+	DropItem(II_WEA_YOY_ENTANESS, 9000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKB, 6000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+		
+	m_nAttackFirstRange = 60;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack 20 cunning sam			
+                        KeepRangeattack 50						
+			Berserk 20 2.0			
+			summon 10 3 MI_DREAMNIGHTMIST01			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNSHARK01						
+{				
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+	
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAN01						
+{		
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAID01						
+{					
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNTURTLE01						
+{			
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAN02						
+{				
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAID02						
+{				
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNSIREN01						
+{				
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNKRAKEN01			
+{				
+	Maxitem = 8;	
+    DropGold(1313000, 1616000);
+	   
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_WEA_SWO_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_SWT_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXE_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXT_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_KNU_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_CHE_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_WAN_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_STA_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_BOW_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_YOY_HERNESUM, 9000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKB, 6000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+		
+	m_nAttackFirstRange = 60;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack 20 cunning sam			
+                        						
+                        KeepRangeattack 50						
+			Berserk 20 2.0			
+			summon 10 3 MI_HERNMERMAID02			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPHARPINEES_1
+{				
+	Maxitem = 8;	
+    DropGold(1365000, 1680000);
+	   
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_WEA_SWO_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_SWT_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXE_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXT_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_KNU_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_CHE_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_WAN_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_STA_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_BOW_ROYALUM, 9000000, 0, 1);
+	DropItem(II_WEA_YOY_ROYALUM, 9000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKB, 6000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+		
+	m_nAttackFirstRange = 60;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack 20 cunning sam			
+                    						
+                        						
+			Berserk 20 2.0			
+			summon 10 3 MI_SHIPREDHARPY_1			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPMOUGUS_1						
+{			
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPWINGMOUGUS_1						
+{					
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPMESPI_1						
+{				
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPWINDMESPI_1						
+{			
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPREDHARPY_1						
+{				
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPBLUEHARPY_1						
+{						
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_SHIPHIPPOGRIPH_1						
+{					
+	Maxitem = 2;
+	DropGold(400,600);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 35
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMFLAME01_1						
+{					
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMRAPRA01_1						
+{						
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMOLDRUT01_1						
+{		
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMMINIMUSHU01_1						
+{				
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMLADYBLUM01_1						
+{					
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMNIGHTMIST01_1						
+{		
+	Maxitem = 2;
+	DropGold(400,900);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_DREAMQEEN01_1	
+{				
+	Maxitem = 8;	
+    DropGold(1105000, 1360000);
+	   
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_WEA_SWO_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_SWT_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXE_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXT_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_KNU_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_CHE_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_WAN_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_STA_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_BOW_ENTANESSUM, 9000000, 0, 1);
+	DropItem(II_WEA_YOY_ENTANESSUM, 9000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKB, 6000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+		
+	m_nAttackFirstRange = 60;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack 20 cunning sam			
+                      						
+                        KeepRangeattack 50						
+			Berserk 20 2.0			
+			summon 10 3 MI_DREAMNIGHTMIST01_1			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNSHARK01_1						
+{		
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAN01_1						
+{			
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAID01_1						
+{		
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNTURTLE01_1						
+{			
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAN02_1						
+{			
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNMERMAID02_1						
+{			
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNSIREN01_1						
+{				
+	Maxitem = 2;
+	DropGold(400,1500);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+                        Rangeattack 10						
+			Berserk 20 3.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+MI_HERNKRAKEN01_1				
+{					
+	Maxitem = 8;	
+    DropGold(1313000, 1616000);
+	   
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	
+	DropItem(II_WEA_SWO_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_SWT_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXE_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_AXT_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_KNU_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_CHE_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_WAN_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_STA_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_BOW_HERNESUM, 9000000, 0, 1);
+	DropItem(II_WEA_YOY_HERNESUM, 9000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKB, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKB, 6000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+		
+	m_nAttackFirstRange = 60;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack 20 cunning sam			
+                       						
+                        KeepRangeattack 50						
+			Berserk 20 2.0			
+			summon 10 3 MI_HERNMERMAID02_1			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}						
+
+MI_EVENT_FWCMONSTER		//아레나 사신 몬스터				
+{						
+	m_nAttackFirstRange = 10;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan			
+                    }						
+		#battle				
+		    {				
+			Attack			
+			Berserk 20 2.0			
+                    }						
+		#move				
+		    {				
+		    }				
+   	}                					
+}
+
+MI_CHAMELEON_GREEN
+{
+	Maxitem = 2;	
+	
+	DropItem(II_SYS_SYS_SCR_TWOMGGREEN,3000000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_CHAMELEON_BLUE
+{
+	Maxitem = 2;	
+	
+	DropItem(II_SYS_SYS_SCR_TWOMGBLUE,3000000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_CHAMELEON_YELLOW
+{
+	Maxitem = 2;	
+	
+	DropItem(II_SYS_SYS_SCR_TWOMGYELLOW,3000000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_CHAMELEON_RED
+{
+	Maxitem = 2;	
+	
+	DropItem(II_SYS_SYS_SCR_TWOMGRED,3000000000, 0, 1);
+
+	m_nAttackFirstRange = 10;
+
+	AI
+	{
+		#Scan
+                    {
+			scan
+                    }
+		#battle
+		    {
+			Attack
+                        Rangeattack 10
+			Berserk 20 3.0
+                    }
+		#move
+		    {
+			
+		    }	
+   	}                
+}
+
+MI_CRISTMASGIGLEBOX						
+{		
+	SetLevelDropPanalty_Off									
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+{						
+			scan			
+}						
+		#battle				
+		{				
+			Attack			
+}						
+		#move				
+		{				
+		}				
+	}					
+}			
+
+
+MI_TURTLEGUARDER						
+{						
+	Maxitem = 2;
+	DropGold(645,1290);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan 			
+                    }						
+		#battle				
+		    {				
+			Attack cunning low			
+                               						
+                    }						
+		#move				
+		    {				
+			Loot d 5			
+		    }				
+   	}               					
+}					
+	
+MI_RABBITFIGHTER						
+{			
+	Maxitem = 2;
+	DropGold(665,1330);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+			
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan 			
+                    }						
+		#battle				
+		    {				
+			Attack cunning low			
+                               						
+                    }						
+		#move				
+		    {				
+			Loot d 5			
+		    }				
+   	}               					
+}					
+	
+MI_RABBITSWORDER						
+{			
+	Maxitem = 2;
+	DropGold(685,1370);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+						
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan 			
+                    }						
+		#battle				
+		    {				
+			Attack cunning low			
+                               						
+                    }						
+		#move				
+		    {				
+			Loot d 5			
+		    }				
+   	}               					
+}						
+
+MI_RABBITSPEAR			
+{				
+	Maxitem = 2;
+	DropGold(705,1410);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+								
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan 			
+                    }						
+		#battle				
+		    {				
+			Attack cunning low			
+                               						
+                    }						
+		#move				
+		    {				
+			Loot d 5			
+		    }				
+   	}               					
+}				
+		
+MI_RABBITASSASSIN						
+{			
+	Maxitem = 2;
+	DropGold(725,1450);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+											
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan 			
+                    }						
+		#battle				
+		    {				
+			Attack cunning low			
+                               						
+                    }						
+		#move				
+		    {				
+			Loot d 5			
+		    }				
+   	}               					
+}		
+				
+MI_RABBITAXE						
+{						
+	Maxitem = 2;
+	DropGold(745,1490);
+
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+											
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan 			
+                    }						
+		#battle				
+		    {				
+			Attack cunning low			
+                               						
+                    }						
+		#move				
+		    {				
+			Loot d 5			
+		    }				
+   	}               					
+}			
+			
+MI_IBLESSPUPPET		
+{				
+	Maxitem = 8;	
+    DropGold(1500000,1950000);
+		
+	DropKind(IK3_SWD, 6, 6);
+	DropKind(IK3_AXE, 6, 6);
+	DropKind(IK3_CHEERSTICK, 6, 6);
+	DropKind(IK3_KNUCKLEHAMMER, 6, 6);
+	DropKind(IK3_WAND, 6, 6);
+	DropKind(IK3_STAFF, 6, 6);
+	DropKind(IK3_HELMET, 6, 6);
+	DropKind(IK3_SUIT, 6, 6);
+	DropKind(IK3_GAUNTLET, 6, 6);
+	DropKind(IK3_BOOTS, 6, 6);
+	DropKind(IK3_SHIELD, 6, 6);
+	DropKind(IK3_BOW, 6, 6);
+	DropKind(IK3_YOYO, 6, 6);
+	DropKind(IK3_THSWD, 6, 6);
+	DropKind(IK3_THAXE, 6, 6);
+
+	DropItem(II_SYS_SYS_SCR_BARUNARUNE01, 30000000, 0, 1);
+
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_DIAMOND, 21000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_EMERALD, 27000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_SAPPHIRE, 36000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_RUBY, 48000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_TOPAZ, 63000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_ORICHALCUM01, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+	DropItem(II_GEN_MAT_MOONSTONE, 180000000, 0, 1);
+
+    DropItem(II_GEN_JEW_RIN_INTRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_DEXRING, 6000000, 18, 1);
+	DropItem(II_GEN_JEW_RIN_STRRING, 6000000, 18, 1);
+
+	DropItem(II_GEN_MAT_ELE_CANDLEA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_RAINATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SPARKATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_BREEZEATKA, 6000000, 0, 1);
+	DropItem(II_GEN_MAT_ELE_SANDATKA, 6000000, 0, 1);
+
+	DropItem(II_GEN_JEW_RIN_FIRERING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_LANDRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_WATERRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_RIN_ELECTRICRING, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_ATTEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_DEFEARRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_MPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_FPNECKLACEMR, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_NEC_HPMPNECKLACE, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_MAGICRINGEST, 9000000, 0, 1)
+	DropItem(II_GEN_JEW_EAR_RANGERINGEST, 9000000, 0, 1)
+
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+                    {						
+			scan 			
+                    }						
+		#battle				
+		    {				
+			Attack cunning low	
+			 Rangeattack 20		
+                               						
+                    }						
+		#move				
+		    {				
+			Loot d 5			
+		    }				
+   	}               					
+}
+
+MI_GRAYEARL01						
+{		
+	SetLevelDropPanalty_Off									
+	m_nAttackFirstRange = 8;					
+	AI					
+	{					
+		#Scan				
+{						
+			scan			
+}						
+		#battle				
+		{				
+			Attack			
+}						
+		#move				
+		{				
+		}				
+	}					
 }

@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaSa_Troupemember1
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaSa_Troupemember1
+      - type: sym
+        value: 1
+      - type: num
+        value: 8387
+      - type: num
+        value: 3651
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaDa_Colar
+      - type: sym
+        value: 1
       - type: num
         value: 6131
       - type: num

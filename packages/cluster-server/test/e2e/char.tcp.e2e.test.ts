@@ -123,7 +123,7 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
       const onData = (c: Buffer) => {
         rx.push(c);
         const frames = rx.drain();
-        if (frames.length >= 2) { sock.off('data', onData); resolve(frames); }
+        if (frames.length >= 3) { sock.off('data', onData); resolve(frames); }
       };
       sock.on('data', onData);
       setTimeout(() => { sock.off('data', onData); resolve(rx.drain()); }, 2000);
@@ -131,11 +131,12 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
     });
     sock.destroy();
 
-    // First frame is CACHE_ADDR (0xf2), second is PLAYER_LIST -- mirrors C++
-    // DPLoginSrvr.cpp:167 which sends the cache address before the player list.
-    assert.ok(replies.length >= 2, 'cluster must reply with CACHE_ADDR then PLAYER_LIST');
+    // CACHE_ADDR (0xf2), LOGIN_PROTECT_NUMPAD (0x88100200), PLAYER_LIST --
+    // mirrors C++ DPLoginSrvr.cpp:167-170.
+    assert.ok(replies.length >= 3, 'cluster must reply with CACHE_ADDR, NUMPAD, then PLAYER_LIST');
     assert.equal(replies[0]!.readUInt32LE(0), PACKETTYPE.CACHE_ADDR);
-    assert.equal(replies[1]!.readUInt32LE(0), PACKETTYPE.PLAYER_LIST);
+    assert.equal(replies[1]!.readUInt32LE(0), PACKETTYPE.LOGIN_PROTECT_NUMPAD);
+    assert.equal(replies[2]!.readUInt32LE(0), PACKETTYPE.PLAYER_LIST);
   });
 
   it('does not reply when the leading DPID is missing (opcode misread)', async () => {

@@ -200,6 +200,36 @@ describe('CommandService -- teleport', () => {
     commandService.route(gm, '/te Ghost');
     assert.equal((gm.socket as unknown as SpySocket)._sent.length, 1, 'ReturnSay sent');
   });
+
+  it('re-emits the vicinity snapshot at the destination after teleport', () => {
+    const playerManager = new PlayerManager();
+    const vicinity = { resendAt: (id: number) => (id === 1 ? { snapshot: Buffer.from([0xde, 0xad]) } : null) };
+    const commandService = new CommandService({
+      playerManager,
+      spawnManager: makeSpawnManager(),
+      questService: makeQuestService().svc,
+      vicinityService: vicinity,
+    });
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    playerManager.add(gm);
+
+    commandService.route(gm, '/te 100 200');
+
+    const sent = (gm.socket as unknown as SpySocket)._sent;
+    // SETPOS frame + the vicinity ADD_OBJ snapshot forwarded from resendAt.
+    assert.equal(sent.length, 2, 'SETPOS + vicinity snapshot');
+    // sendPacket frames the payload (0x5E marker + size DWORD + body); assert
+    // the raw vicinity body is delivered, not the framing wrapper.
+    assert.deepEqual(sent[1]!.subarray(-2), Buffer.from([0xde, 0xad]), 'vicinity snapshot forwarded');
+  });
+
+  it('skips the vicinity resend silently when no service is wired', () => {
+    const { playerManager, commandService } = setup();
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    playerManager.add(gm);
+    commandService.route(gm, '/te 100 200');
+    assert.equal((gm.socket as unknown as SpySocket)._sent.length, 1, 'SETPOS only');
+  });
 });
 
 describe('CommandService -- summon', () => {

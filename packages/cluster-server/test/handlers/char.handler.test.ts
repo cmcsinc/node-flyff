@@ -46,12 +46,32 @@ describe('CharHandler', () => {
       w.writeString('pw');    // password
       w.writeDword(0);        // dwId
       await handler.handleGetPlayerList(socket, new PacketReader(w.build()));
-      // CACHE_ADDR (0xf2) first, then PLAYER_LIST -- mirrors C++ DPLoginSrvr.cpp:167.
-      assert.equal(socket._written.length, 2);
+      // CACHE_ADDR (0xf2), LOGIN_PROTECT_NUMPAD (0x88100200), PLAYER_LIST --
+      // mirrors C++ DPLoginSrvr.cpp:167-170.
+      assert.equal(socket._written.length, 3);
       const cacheReader = new PacketReader(socket._written[0]!);
       assert.equal(cacheReader.readDword(), PACKETTYPE.CACHE_ADDR);
       assert.equal(cacheReader.readString(), '10.0.0.5');
-      assert.equal(new PacketReader(socket._written[1]!).readDword(), PACKETTYPE.PLAYER_LIST);
+      const numPadReader = new PacketReader(socket._written[1]!);
+      assert.equal(numPadReader.readDword(), PACKETTYPE.LOGIN_PROTECT_NUMPAD);
+      const idNumPad = numPadReader.readDword();
+      assert.ok(idNumPad >= 0 && idNumPad < 1000, `idNumPad in range: ${idNumPad}`);
+      assert.equal(new PacketReader(socket._written[2]!).readDword(), PACKETTYPE.PLAYER_LIST);
+    });
+
+    it('sends a different numpad id on each GETPLAYERLIST', async () => {
+      const ids = new Set<number>();
+      for (let i = 0; i < 6; i++) {
+        const socket = makeMockSocket();
+        const w = new PacketWriter();
+        w.writeString('2023'); w.writeDword(0x1234); w.writeString('alice'); w.writeString('pw'); w.writeDword(0);
+        await handler.handleGetPlayerList(socket, new PacketReader(w.build()));
+        const reader = new PacketReader(socket._written[1]!);
+        reader.readDword(); // opcode
+        ids.add(reader.readDword());
+      }
+      // Random over 0-999 -- 6 draws colliding to a single value is astronomically unlikely.
+      assert.ok(ids.size > 1, `expected >1 distinct numpad id, got ${ids.size}`);
     });
 
     it('drops the request silently when authKey is 0', async () => {

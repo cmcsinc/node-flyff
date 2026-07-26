@@ -5,7 +5,7 @@ commands:
   - cmd: SetHeadQuest
     args:
       - type: num
-        value: 6003
+        value: 1992
   - cmd: SetCharacter
     args:
       - type: str

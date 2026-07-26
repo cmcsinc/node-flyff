@@ -6,10 +6,22 @@ commands:
     args:
       - type: str
         value: MaSa_Helena
+  - cmd: SetBeginCondCharacter
+    args:
+      - type: str
+        value: MaSa_Helena
+      - type: sym
+        value: 1
+      - type: num
+        value: 8463
+      - type: num
+        value: 3600
   - cmd: SetEndCondCharacter
     args:
       - type: str
         value: MaSa_Helena
+      - type: sym
+        value: 1
       - type: num
         value: 8463
       - type: num
@@ -21,7 +33,7 @@ commands:
       - type: num
         value: 40
       - type: num
-        value: 129
+        value: 150
   - cmd: SetBeginCondJob
     args:
       - type: sym
@@ -82,12 +94,28 @@ commands:
         value: 30
       - type: sym
         value: 31
+      - type: sym
+        value: 32
+      - type: sym
+        value: 33
+      - type: sym
+        value: 34
+      - type: sym
+        value: 35
+      - type: sym
+        value: 37
+      - type: sym
+        value: 36
+      - type: sym
+        value: 38
+      - type: sym
+        value: 39
   - cmd: SetEndCondLevel
     args:
       - type: num
         value: 40
       - type: num
-        value: 129
+        value: 150
   - cmd: SetEndCondParty
     args:
       - type: num

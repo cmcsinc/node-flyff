@@ -16,6 +16,8 @@ commands:
     args:
       - type: str
         value: MaFl_Alice
+      - type: sym
+        value: 1
       - type: num
         value: -1
       - type: num
@@ -27,7 +29,7 @@ commands:
       - type: num
         value: 70
       - type: num
-        value: 129
+        value: 150
   - cmd: SetBeginCondParty
     args:
       - type: num
@@ -104,6 +106,22 @@ commands:
         value: 30
       - type: sym
         value: 31
+      - type: sym
+        value: 32
+      - type: sym
+        value: 33
+      - type: sym
+        value: 34
+      - type: sym
+        value: 35
+      - type: sym
+        value: 37
+      - type: sym
+        value: 36
+      - type: sym
+        value: 38
+      - type: sym
+        value: 39
   - cmd: SetEndCondItem
     args:
       - type: num
