@@ -30,8 +30,9 @@ import {
  * vs everything (factor 1.0).
  *
  * Element enum (`defineAttribute.h` ST_* -> internal): MAGIC=1 (not used here),
- * FIRE=5->1, WATER=7->2, ELECTRICITY=4->3, WIND=6->4, EARTH=8->5. We index by the
- * 1..5 numeric element id post-conversion.
+ * FIRE=0x04->1, WATER=0x20->2, ELECTRICITY=0x02->3, WIND=0x10->4, EARTH=0x08->5
+ * (v19 bit flags; see `ST_TO_INTERNAL`). We index by the 1..5 numeric element
+ * id post-conversion.
  */
 // ponytail: convert ST_* resource values to the 1..5 internal index via a
 // shared table once more than fire/water/electric/wind/earth appear.
@@ -51,13 +52,21 @@ export function getMagicSkillFactor(atkElement: number, defElement: number): num
   return 1.0;
 }
 
-/** Map ST_* resource element value -> 1..5 internal magic-factor index. */
+/**
+ * Map ST_* resource element value -> 1..5 internal magic-factor index.
+ *
+ * v19 `defineAttribute.h` encodes `ST_*` as **bit flags** (combinable, e.g.
+ * `ST_ELECFIRE = ST_ELECTRICITY|ST_FIRE = 0x06`), NOT the sequential ordinals
+ * older clients used (FIRE=5, WATER=7, ...). v19 values: FIRE=0x04, WATER=0x20,
+ * ELECTRICITY=0x02, WIND=0x10, EARTH=0x08. Single-element skills carry one bit,
+ * so the map keys are the bare flag values.
+ */
 const ST_TO_INTERNAL: ReadonlyMap<number, number> = new Map([
-  [5, 1], // ST_FIRE
-  [7, 2], // ST_WATER
-  [4, 3], // ST_ELECTRICITY
-  [6, 4], // ST_WIND
-  [8, 5], // ST_EARTH
+  [0x04, 1], // ST_FIRE
+  [0x20, 2], // ST_WATER
+  [0x02, 3], // ST_ELECTRICITY
+  [0x10, 4], // ST_WIND
+  [0x08, 5], // ST_EARTH
 ]);
 
 /**
@@ -181,13 +190,13 @@ function getResist(defender: Combatant, skillElement: number): number {
   return defender.params.get(dst, 0);
 }
 
-/** ST_* resource element value -> DST_RESIST_* id for defender resist lookup. */
+/** ST_* v19 bit-flag value -> DST_RESIST_* id for defender resist lookup. */
 const RESIST_DST_BY_ELEMENT = new Map<number, number>([
-  [5, DST.RESIST_FIRE],   // ST_FIRE
-  [7, DST.RESIST_WATER],  // ST_WATER
-  [4, DST.RESIST_ELECTRICITY], // ST_ELECTRICITY
-  [6, DST.RESIST_WIND],   // ST_WIND
-  [8, DST.RESIST_EARTH],  // ST_EARTH
+  [0x04, DST.RESIST_FIRE],   // ST_FIRE
+  [0x20, DST.RESIST_WATER],  // ST_WATER
+  [0x02, DST.RESIST_ELECTRICITY], // ST_ELECTRICITY
+  [0x10, DST.RESIST_WIND],   // ST_WIND
+  [0x08, DST.RESIST_EARTH],  // ST_EARTH
 ]);
 
 /**

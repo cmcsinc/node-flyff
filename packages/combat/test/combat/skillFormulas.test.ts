@@ -146,14 +146,15 @@ describe('getMagicSkillPower — Flame Ball L1 (real data)', () => {
 
 describe('postCalcMagicSkill', () => {
   it('subtracts defender DEF and applies element factor', () => {
+    // v19 ST_* are bit flags: ST_FIRE=0x04, ST_WATER=0x20.
     // nATK=281, nDEF=3, no defender element → factor 1.0 → 278
-    assert.equal(postCalcMagicSkill(281, makeNpcDefender(), 3, 5), 278);
+    assert.equal(postCalcMagicSkill(281, makeNpcDefender(), 3, 0x04), 278);
     // Same element (FIRE vs FIRE defender) → factor 1.1
-    assert.equal(postCalcMagicSkill(100, makeNpcDefender({ element: 5 }), 10, 5), Math.floor(90 * 1.1));
+    assert.equal(postCalcMagicSkill(100, makeNpcDefender({ element: 0x04 }), 10, 0x04), Math.floor(90 * 1.1));
     // Fire beats Water defender → factor 0.9
-    assert.equal(postCalcMagicSkill(100, makeNpcDefender({ element: 7 }), 10, 5), Math.floor(90 * 0.9));
+    assert.equal(postCalcMagicSkill(100, makeNpcDefender({ element: 0x20 }), 10, 0x04), Math.floor(90 * 0.9));
     // ATK below DEF clamps to 0
-    assert.equal(postCalcMagicSkill(2, makeNpcDefender(), 3, 5), 0);
+    assert.equal(postCalcMagicSkill(2, makeNpcDefender(), 3, 0x04), 0);
   });
 });
 
@@ -201,9 +202,15 @@ describe('resolveSkillCast', () => {
   it('Flame Ball L1 vs FIRE defender applies 1.1 same-element factor', async () => {
     const skill = await loadSkill(64);
     const level = skill.levels[0]!;
+    // v19 defineAttribute.h encodes ST_* as bit flags; Flame Ball's dwSpellType
+    // resolves to ST_FIRE = 0x04. Defender uses the same ST_* encoding here.
+    // ponytail: C++ GetMagicSkillFactor (MoverAttack.cpp:1140) actually compares
+    // skillType vs the ATTACKER'S WEAPON element, not the defender -- the
+    // emulator compares vs defender. That model divergence is unresolved; this
+    // test pins the emulator's current behavior, not C++ truth.
     const result = resolveSkillCast({
       attacker: makeAttacker({ int: 15 }),
-      defender: makeNpcDefender({ element: 5 }), // FIRE
+      defender: makeNpcDefender({ element: 0x04 }), // ST_FIRE v19
       skill, level, rng: minRng,
     });
     // nATK=281, nDEF=3 → 278; factor 1.1 → 305 (floor)
