@@ -216,7 +216,6 @@ export class ScriptDlgService {
     // state-0 is a shop menu (Boboku) or who have no dialog file at all.
     if (keyToIndex(frame.key) === 0) this.emitQuestOffer(player, npc, frames, menuEmitted);
     const prefix = prefixForNpc(this.deps.dialogs, npcKey);
-    const lk = npcLookupKey(npc);
     logger.info(
       {
         charId: player.m_idPlayer,
@@ -225,8 +224,6 @@ export class ScriptDlgService {
         prefix: prefix ?? null,
         hasSource: stateForKey(this.deps.dialogs, prefix ?? '', keyToIndex(frame.key))?.source != null,
         key: frame.key,
-        beginQuests: (this.beginByKey.get(lk ?? '') ?? []).length,
-        endQuests: (this.endByKey.get(lk ?? '') ?? []).length,
         frames: frames.length,
       },
       'SCRIPTDLG click',
@@ -372,22 +369,16 @@ export class ScriptDlgService {
       if (seen.has(qid)) return;
       seen.add(qid);
       const def = this.deps.quests.byId.get(qid);
-      if (!def) {
-        logger.warn({ charId: player.m_idPlayer, qid }, 'classify: quest def not in byId');
-        return;
-      }
+      if (!def) return;
       const q = player.findQuest(qid);
       const complete = player.isCompleteQuest(qid);
       if (!q && !complete) {
         const begin = canBegin(player, def, inv);
         if (begin.ok) newQuests.push(qid);
         else if (isNextLevel(player, def, inv)) nextQuests.push(qid);
-        else logger.warn({ charId: player.m_idPlayer, qid, reason: begin.reason, lvl: player.m_nLevel, job: player.m_nJob, sex: player.m_nSex }, 'classify: canBegin+isNextLevel both failed');
       } else if (q && !complete && q.state !== QS_END) {
         if (isComplete(player, q, def, inv).ok) endQuests.push(qid);
         else currQuests.push(qid);
-      } else {
-        logger.warn({ charId: player.m_idPlayer, qid, hasQ: !!q, complete, state: q?.state }, 'classify: fell through (already complete or QS_END)');
       }
     };
     // Quest Office NPCs (SRT_QUESTOFFICE) offer ALL eligible quests, not just
@@ -421,10 +412,10 @@ export class ScriptDlgService {
       funcs.push({ type: 'currQuest', word: this.questLabel(qid), key: QUEST_KEY.END, quest: qid });
     if (funcs.length === 0) {
       // Diagnostic: if byNpc has entries but all failed classification, or byNpc
-      // is empty for this NPC, this log reveals which. Remove once root-caused.
+      // is empty for this NPC, this log reveals which.
       const beginList = this.beginByKey.get(lk);
       const endList = this.endByKey.get(lk);
-      if ((beginList?.length ?? 0) > 0 || (endList?.length ?? 0) > 0) {
+      if (!isQuestOffice && ((beginList?.length ?? 0) > 0 || (endList?.length ?? 0) > 0)) {
         logger.warn(
           {
             charId: player.m_idPlayer, lk,
@@ -436,7 +427,7 @@ export class ScriptDlgService {
           },
           'quest offer: NPC has byNpc entries but 0 rows classified',
         );
-      } else {
+      } else if (!isQuestOffice) {
         logger.warn(
           { charId: player.m_idPlayer, lk, charKey: npc.m_szCharacterKey ?? null, propKey: npc.m_szKey ?? null },
           'quest offer: byNpc miss -- NPC key not in begin/end maps',
