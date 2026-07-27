@@ -257,7 +257,6 @@ private pursue(m: CMover, now: number, dtMs: number): void {
       || distSq2(m.m_vPos, m.m_vPosDamage) > RANGE_RETURN_TO_BEGIN * RANGE_RETURN_TO_BEGIN) {
       this.startReturn(m, now);
       return;
-      return;
     }
     const rangeSq = m.m_nAttackRange * m.m_nAttackRange;
     // Step only while out of range so ranged monsters hold at `m_nAttackRange`
