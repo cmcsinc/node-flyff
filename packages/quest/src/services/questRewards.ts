@@ -42,6 +42,14 @@ export interface RewardSink {
    * the C++ `AddExperienceSolo` tail (`Mover.cpp:6254`) which always broadcasts.
    */
   onExpGain?: (player: CPlayer, leveled: boolean) => void;
+  /**
+   * Item-acquire client notification. Fired after an item reward lands so the
+   * QuestService can emit a `SNAPSHOTTYPE_TEXT` "you acquired X" chat line.
+   * Emulator addition -- v19 C++ sends no item-name text on quest reward, only
+   * CREATEITEM + the pickup sound (see memory `v19-loot-quest-acquire-notice`).
+   * Optional -- no-op in tests.
+   */
+  onItemReward?: (player: CPlayer, itemId: number, count: number) => void;
 }
 
 function num(arg: QuestArg | undefined, fallback = 0): number {
@@ -186,6 +194,7 @@ function grantItem(player: CPlayer, item: number, count: number, sink: RewardSin
   // stub), so there is no DB write to recover. When the inventory system ships
   // and journals per-slot absolute state, item rewards recover through it.
   sink.inventory.add(item, count);
+  sink.onItemReward?.(player, item, count);
 }
 
 /**

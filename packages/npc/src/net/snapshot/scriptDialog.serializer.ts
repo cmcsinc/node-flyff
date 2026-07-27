@@ -27,6 +27,8 @@ import {
   FUNCTYPE_SAY,
   FUNCTYPE_ADDKEY,
   FUNCTYPE_ADDANSWER,
+  FUNCTYPE_NEWQUEST,
+  FUNCTYPE_CURRQUEST,
   FUNCTYPE_REMOVEKEY,
   FUNCTYPE_REMOVEALLKEY,
   FUNCTYPE_EXIT,
@@ -37,6 +39,8 @@ export type ScriptFunc =
   | { type: 'say'; text: string; quest?: number }
   | { type: 'addKey'; word: string; key: string; param?: number; quest?: number }
   | { type: 'addAnswer'; word: string; key: string; param?: number; quest?: number }
+  | { type: 'newQuest'; word: string; key: string; param?: number; quest?: number }
+  | { type: 'currQuest'; word: string; key: string; param?: number; quest?: number }
   | { type: 'removeKey'; key: string }
   | { type: 'removeAllKeys' }
   | { type: 'exit' };
@@ -70,12 +74,19 @@ export class ScriptDialogSerializer {
         break;
       case 'addKey':
       case 'addAnswer':
-        w.writeWord(f.type === 'addKey' ? FUNCTYPE_ADDKEY : FUNCTYPE_ADDANSWER);
+      case 'newQuest':
+      case 'currQuest': {
+        const ft = f.type === 'addKey' ? FUNCTYPE_ADDKEY
+          : f.type === 'addAnswer' ? FUNCTYPE_ADDANSWER
+          : f.type === 'newQuest' ? FUNCTYPE_NEWQUEST
+          : FUNCTYPE_CURRQUEST;
+        w.writeWord(ft);
         w.writeString(f.word);
         w.writeString(f.key);
         w.writeDword(f.param ?? 0);
         w.writeDword(f.quest ?? 0);
         break;
+      }
       case 'removeKey':
         w.writeWord(FUNCTYPE_REMOVEKEY);
         w.writeString(f.key);

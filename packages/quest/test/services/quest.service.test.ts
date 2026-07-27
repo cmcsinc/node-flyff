@@ -7,7 +7,7 @@ import type { CharacterRow, JournalEntry } from '@flyff/database';
 import type { QuestCommand, QuestDef, QuestIndex } from '@flyff/resources';
 import { InventoryService } from '@flyff/inventory';
 import { CreateItemSnapshotSerializer } from '@flyff/inventory';
-import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST } from '@flyff/world-core';
+import { SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETQUEST, SNAPSHOTTYPE_QUEST_CHECKED } from '@flyff/world-core';
 
 const baseRow = {
   id: 1, account_id: 1, name: 'Tester', slot: 0, class: 0, gender: 0,
@@ -30,7 +30,8 @@ describe('quest.service.ts + CPlayer quest helpers', () => {
           kill_npc_num_0: 2, kill_npc_num_1: 0, flags: QUEST_FLAG.DIALOG, updated_at: new Date(),
         }],
         completed: [3, 4],
-        checked: [5],
+        // 5 is stale (not active -> filtered); 7 matches the active quest.
+        checked: [5, 7],
       }),
     } as unknown as Parameters<typeof Object> extends never ? never : any;
     const svc = new QuestService({ questRepo: repo });
@@ -42,7 +43,8 @@ describe('quest.service.ts + CPlayer quest helpers', () => {
     assert.deepEqual(p.m_aQuest[0].killNpcNum, [2, 0]);
     assert.equal(p.m_aQuest[0].flags, QUEST_FLAG.DIALOG);
     assert.deepEqual(p.m_aCompleteQuest, [3, 4]);
-    assert.deepEqual(p.m_aCheckedQuest, [5]);
+    // Stale id 5 dropped (would null-deref the client quick-info sidebar); 7 kept.
+    assert.deepEqual(p.m_aCheckedQuest, [7]);
   });
 
   it('setQuest upserts, findQuest locates, removeQuest clears all lists', () => {
@@ -295,10 +297,13 @@ describe('quest.service -- real InventoryService adapter', () => {
     const res = await svc.beginQuest(p, 7);
     assert.equal(res.ok, true);
     if (res.ok) {
-      assert.equal(res.frames.length, 2);
+      // SETQUEST + QUEST_CHECKED (auto-tracked) + CREATEITEM reward.
+      assert.equal(res.frames.length, 3);
       assert.equal(subtype(res.frames[0]!), SNAPSHOTTYPE_SETQUEST);
-      assert.equal(subtype(res.frames[1]!), SNAPSHOTTYPE_CREATEITEM);
+      assert.equal(subtype(res.frames[1]!), SNAPSHOTTYPE_QUEST_CHECKED);
+      assert.equal(subtype(res.frames[2]!), SNAPSHOTTYPE_CREATEITEM);
     }
+    assert.equal(p.m_aCheckedQuest.includes(7), true);
     assert.equal(countInBag(p, 7000), 2);
   });
 
