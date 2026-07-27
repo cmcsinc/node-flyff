@@ -121,6 +121,8 @@ export function getHitMinMax(c: Combatant): { min: number; max: number } {
   // applied to the raw weapon ability range, before weapon ATK and item multiplier.
   nMin = c.params.get(DST.ABILITY_MIN, nMin);
   nMax = c.params.get(DST.ABILITY_MAX, nMax);
+  if (nMin < 0) nMin = 0;
+  if (nMax < 0) nMax = 0;
   // GetWeaponATK + GetParam(DST_CHR_DMG) + GetPlusWeaponATK(refine) -- C++ adds
   // the CHR_DMG buff to both min/max; refine bonus is the pow(option,1.5) below.
   const plus = getWeaponATK(c) + c.params.get(DST.CHR_DMG, 0);

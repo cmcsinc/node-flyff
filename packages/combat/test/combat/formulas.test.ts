@@ -141,9 +141,9 @@ describe('combat DST param un-stubs', () => {
     const params = new ParamModel();
     params.setDestParam(DST.ABILITY_MIN, 10);
     const result = getHitMinMax({ ...player, params });
-    // base min=16; ABILITY_MIN replaces 1*2=2 with 10, so min = 10 + 14.6 + 0 = 24.6 -> 24
-    const base = getHitMinMax(player); // {16,20}
-    assert.equal(result.min, 24, 'ABILITY_MIN=10 replaces weapon*2 before plus');
+    // ParamModel.get(DST.ABILITY_MIN, nMin) = nMin + adj = 2 + 10 = 12; 12+14.6=26.6->26
+    const base = getHitMinMax(player);
+    assert.equal(result.min, 26, 'ABILITY_MIN adj=10 adds to min');
     assert.equal(result.max, 20, 'max unchanged (ABILITY_MAX not set)');
   });
 
@@ -151,16 +151,17 @@ describe('combat DST param un-stubs', () => {
     const params = new ParamModel();
     params.setDestParam(DST.ABILITY_MAX, 30);
     const result = getHitMinMax({ ...player, params });
-    // max = 30 + 14.6 = 44.6 -> 44; min unchanged at 16
-    assert.equal(result.max, 44, 'ABILITY_MAX=30 replaces weapon max before plus');
+    // adj=30: nMax = 6+30=36; 36+14.6=50.6->50
+    assert.equal(result.max, 50, 'ABILITY_MAX adj=30 adds to max');
     assert.equal(result.min, 16, 'min unchanged (ABILITY_MIN not set)');
   });
 
-  it('H3: DST_ABILITY_MIN floors at 0', () => {
+  it('H3: DST_ABILITY_MIN floors weapon base at 0', () => {
     const params = new ParamModel();
     params.setDestParam(DST.ABILITY_MIN, -999);
     const result = getHitMinMax({ ...player, params });
-    assert.ok(result.min >= 0, 'min never goes negative');
+    // nMin=2, adj=-999 -> -997, floor -> 0, then +14.6=14.6 -> 14
+    assert.equal(result.min, 14, 'negative weapon base floored to 0 before plus');
   });
 });
 
