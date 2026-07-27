@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "seed": "node ../../scripts/seed-admin.mjs"
   },
   "dependencies": {
     "next": "^15.3.0",

@@ -15,7 +15,7 @@
  * @module services/join.service
  */
 
-import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
+import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, PersistedBuff } from '@flyff/database';
 import type { ItemDefinition, SetItemDef, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
@@ -49,6 +49,8 @@ export interface JoinServiceDeps {
   bankRepo?: Pick<BankRepository, 'findByAccountId' | 'getGold' | 'setGold' | 'getBankPass'>;
   /** Skill hydration on JOIN. Optional: empty skill roster if absent. */
   skillRepo?: Pick<SkillRepository, 'loadByCharacter'>;
+  /** Active buff hydration on JOIN + flush on disconnect/checkpoint. Optional: no buff restore if absent. */
+  buffRepo?: Pick<BuffRepository, 'loadByCharacter' | 'saveAll'>;
   /**
    * Skill index for seeding the job-skill roster IDs on JOIN. C++ re-derives
    * `m_aJobSkill[i].dwSkill` from `prj.m_aJobSkill[job]` each load; only levels
@@ -119,7 +121,7 @@ export class JoinService {
     if (this.deps.questService) await this.deps.questService.loadOnJoin(player);
     // Restore active buffs BEFORE loadInventory's max recompute so buffed
     // STA/STR count toward getMaxHp/getMaxFp from the first tick.
-    this.loadBuffs(player, row.buffs);
+    await this.loadBuffs(player);
     await this.loadInventory(player);
     await this.loadBank(player);
     await this.loadSkills(player);
@@ -292,8 +294,10 @@ export class JoinService {
       stamina: player.m_nSta,
       dexterity: player.m_nDex,
       intelligence: player.m_nInt,
-      buffs: serializeBuffs(player),
     });
+    if (this.deps.buffRepo) {
+      await this.deps.buffRepo.saveAll(player.m_idPlayer, collectPersistedBuffs(player));
+    }
     if (this.deps.bankRepo) {
       for (let t = 0; t < player.m_BankGold.length; t++) {
         await this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[t]!, t);
@@ -352,7 +356,7 @@ export class JoinService {
   }
 
   /**
-   * Hydrate active timed buffs from `characters.buffs` (C++
+   * Hydrate active timed buffs from the `character_buffs` table (C++
    * `GetSKillInfluence`, `DbManagerFun.cpp:1384`). Each persisted entry is
    * `{ type, skillId, level, totalMs }`; the DST effects are re-derived from
    * the skill definition via {@link buffEffects} / {@link dotFromSkill} (C++
@@ -362,15 +366,16 @@ export class JoinService {
    * SETSKILLSTATE + SETDESTPARAM to self after the snapshot.
    *
    * Only `BUFF_SKILL` entries are restored. `BUFF_ITEM` entries are dropped on
-   * save (see {@link serializeBuffs}) -- item-buff effect derivation from the
-   * item definition is a ponytail upgrade.
+   * save (see {@link collectPersistedBuffs}) -- item-buff effect derivation
+   * from the item definition is a ponytail upgrade.
    */
-  private loadBuffs(player: CPlayer, json: string | null | undefined): void {
-    if (!this.deps.skills) return;
-    const entries = deserializeBuffs(json);
+  private async loadBuffs(player: CPlayer): Promise<void> {
+    if (!this.deps.buffRepo || !this.deps.skills) return;
+    const entries = await this.deps.buffRepo.loadByCharacter(player.m_idPlayer);
     if (entries.length === 0) return;
     const now = Date.now();
     for (const e of entries) {
+      if (e.type !== BUFF_SKILL) continue;
       const skill = this.deps.skills.skills.get(e.skillId);
       if (skill === undefined) continue;
       const levelRow = skill.levels.find((l) => l.level === e.level);
@@ -403,61 +408,16 @@ function rosterIdsForJob(skills: SkillIndex, job: number): number[] {
   return roster.map((s) => s.id);
 }
 
-/** Persisted buff entry shape (C++ `{ type, id, level, total }` 4-int SaveSkillInfluence). */
-interface PersistedBuffRow {
-  /** Buff source type (BUFF_SKILL). */
-  readonly t: number;
-  /** Skill id (wID). */
-  readonly s: number;
-  /** Skill level (dwLevel). */
-  readonly l: number;
-  /** Total duration ms (GetTotal) -- timer resets to this on relog. */
-  readonly d: number;
-}
-
-/** A restored buff entry, mapped from the compact {@link PersistedBuffRow}. */
-export interface RestoredBuff {
-  readonly type: number;
-  readonly skillId: number;
-  readonly level: number;
-  readonly totalMs: number;
-}
-
 /**
- * Serialize active `BUFF_SKILL` buffs to the `characters.buffs` JSON column.
- * Mirrors C++ `SaveSkillInfluence` (`DbManagerSave.cpp:1079`) minus the equip
- * and housing skips (equip buffs are never in `m_buffs`; housing doesn't ship).
- * `BUFF_ITEM` entries are excluded -- their effects are not re-derivable from
- * the skill index on restore (ponytail: add item-def effect derivation).
+ * Collect active `BUFF_SKILL` buffs for persistence to the `character_buffs`
+ * table. Mirrors C++ `SaveSkillInfluence` (`DbManagerSave.cpp:1079`) minus the
+ * equip and housing skips (equip buffs are never in `m_buffs`; housing doesn't
+ * ship). `BUFF_ITEM` entries are excluded -- their effects are not re-derivable
+ * from the skill index on restore (ponytail: add item-def effect derivation).
  */
-export function serializeBuffs(player: CPlayer): string {
-  const entries = player.m_buffs
+export function collectPersistedBuffs(player: CPlayer): PersistedBuff[] {
+  return player.m_buffs
     .getAll()
     .filter((b) => b.type === BUFF_SKILL)
-    .map((b) => ({ t: b.type, s: b.skillId, l: b.level, d: b.totalMs }));
-  return JSON.stringify(entries);
-}
-
-/**
- * Parse the `characters.buffs` column back into entries. Returns `[]` on null,
- * empty, or malformed JSON (defensive -- a corrupt row must not crash JOIN).
- */
-export function deserializeBuffs(json: string | null | undefined): readonly RestoredBuff[] {
-  if (!json) return [];
-  try {
-    const parsed: unknown = JSON.parse(json);
-    if (!Array.isArray(parsed)) return [];
-    return parsed
-      .filter(
-        (e): e is PersistedBuffRow =>
-          e !== null && typeof e === 'object'
-          && Number.isFinite((e as PersistedBuffRow).t)
-          && Number.isFinite((e as PersistedBuffRow).s)
-          && Number.isFinite((e as PersistedBuffRow).l)
-          && Number.isFinite((e as PersistedBuffRow).d),
-      )
-      .map((e) => ({ type: e.t, skillId: e.s, level: e.l, totalMs: e.d }));
-  } catch {
-    return [];
-  }
+    .map((b) => ({ type: b.type, skillId: b.skillId, level: b.level, totalMs: b.totalMs }));
 }

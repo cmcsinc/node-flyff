@@ -1,29 +1,34 @@
 import { loadItems } from "@/lib/resources";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { getIk3Label } from "@/lib/game-constants";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
 export default async function ItemsPage() {
   const data = loadItems();
 
-  // Flatten item entries from all YAML files
+  // YAML structure: { _kind, items: [{ id, name, item_kind3, ... }] }
   const items: Array<{ id: number; name: string; kind: string; file: string }> = [];
   for (const file of data) {
     if (typeof file !== "object" || file === null) continue;
-    for (const [key, val] of Object.entries(file)) {
-      if (typeof val === "object" && val !== null && "dwID" in val) {
-        const v = val as Record<string, unknown>;
-        items.push({
-          id: Number(v.dwID ?? 0),
-          name: String(v.szName ?? key),
-          kind: String(v.szKind ?? v.dwItemKind3 ?? "—"),
-          file: key,
-        });
-      }
+    const kind = String(file._kind ?? "unknown");
+    const entries = (file as Record<string, unknown>).items;
+    if (!Array.isArray(entries)) continue;
+    for (const entry of entries) {
+      if (typeof entry !== "object" || entry === null) continue;
+      const v = entry as Record<string, unknown>;
+      const rawKind = String(v.item_kind3 ?? v.item_kind2 ?? "");
+      items.push({
+        id: Number(v.id ?? 0),
+        name: String(v.name ?? "?"),
+        kind: rawKind ? getIk3Label(rawKind) : "—",
+        file: kind,
+      });
     }
   }
 
@@ -45,6 +50,7 @@ export default async function ItemsPage() {
                   <TableHead>ID</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Kind</TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -53,6 +59,9 @@ export default async function ItemsPage() {
                     <TableCell className="font-mono text-xs">{item.id}</TableCell>
                     <TableCell className="font-medium">{item.name}</TableCell>
                     <TableCell><Badge variant="secondary">{item.kind}</Badge></TableCell>
+                    <TableCell>
+                      <Link href={`/resources/items/${item.id}/edit`} className="text-xs text-primary hover:underline">Edit</Link>
+                    </TableCell>
                   </TableRow>
                 ))}
                 {items.length > 500 && (

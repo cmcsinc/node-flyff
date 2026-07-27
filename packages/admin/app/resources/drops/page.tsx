@@ -19,21 +19,36 @@ export default async function DropsPage() {
           <div className="max-h-[70vh] overflow-auto">
             <Table>
               <TableHeader className="sticky top-0 bg-background">
-                <TableRow><TableHead>File</TableHead><TableHead>Entries</TableHead></TableRow>
+                <TableRow><TableHead>Mover Key</TableHead><TableHead>Gold</TableHead><TableHead>Drops</TableHead></TableRow>
               </TableHeader>
               <TableBody>
-                {data.map((file, i) => {
-                  const entries = typeof file === "object" && file !== null ? Object.keys(file).length : 0;
-                  const name = typeof file === "object" && file !== null ? Object.keys(file)[0] : `file-${i}`;
-                  return (
-                    <TableRow key={i}>
-                      <TableCell className="font-medium">{name}</TableCell>
-                      <TableCell><Badge variant="secondary">{entries}</Badge></TableCell>
+                {(() => {
+                  const allDrops: Array<{ key: string; gold: string; count: number }> = [];
+                  for (const file of data) {
+                    if (typeof file !== "object" || file === null) continue;
+                    const entries = (file as Record<string, unknown>).drops;
+                    if (!Array.isArray(entries)) continue;
+                    for (const d of entries) {
+                      if (typeof d !== "object" || d === null) continue;
+                      const v = d as Record<string, unknown>;
+                      const gold = v.gold as Record<string, unknown> | undefined;
+                      allDrops.push({
+                        key: String(v.key ?? "?"),
+                        gold: gold ? `${gold.min ?? 0}–${gold.max ?? 0}` : "—",
+                        count: Array.isArray(v.items) ? v.items.length : 0,
+                      });
+                    }
+                  }
+                  return allDrops.slice(0, 300).map((d) => (
+                    <TableRow key={d.key}>
+                      <TableCell className="font-mono text-xs">{d.key}</TableCell>
+                      <TableCell>{d.gold}</TableCell>
+                      <TableCell><Badge variant="secondary">{d.count}</Badge></TableCell>
                     </TableRow>
-                  );
-                })}
+                  ));
+                })()}
                 {data.length === 0 && (
-                  <TableRow><TableCell colSpan={2} className="text-center py-8 text-muted-foreground">No drop data</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={3} className="text-center py-8 text-muted-foreground">No drop data</TableCell></TableRow>
                 )}
               </TableBody>
             </Table>

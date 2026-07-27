@@ -2,13 +2,15 @@ import { db } from "@/lib/db";
 import { accounts, characters } from "@/../drizzle/schema";
 import { count, eq, like, desc, sql } from "drizzle-orm";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
 import { BanToggleButton, GmToggleButton } from "./actions";
+import { Search, Filter } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -63,27 +65,33 @@ export default async function AccountsPage({
       </div>
 
       {/* Filters */}
-      <form className="flex gap-3" method="GET">
-        <input
-          name="search"
-          placeholder="Search username..."
-          defaultValue={search}
-          className="flex h-9 w-64 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
-        />
-        <select
-          name="filter"
-          defaultValue={filter}
-          className="h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
-        >
-          <option value="all">All</option>
-          <option value="gm">GM Only</option>
-          <option value="banned">Banned Only</option>
-        </select>
+      <form className="flex gap-2 items-center" method="GET">
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            name="search"
+            placeholder="Search username..."
+            defaultValue={search}
+            className="pl-8 h-9 w-64"
+          />
+        </div>
+        <div className="relative">
+          <Filter className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <select
+            name="filter"
+            defaultValue={filter}
+            className="h-9 rounded-md border border-input bg-transparent pl-8 pr-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+          >
+            <option value="all">All Accounts</option>
+            <option value="gm">GM Only</option>
+            <option value="banned">Banned Only</option>
+          </select>
+        </div>
         <button
           type="submit"
           className="h-9 rounded-md bg-primary px-4 py-1 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
         >
-          Filter
+          Search
         </button>
       </form>
 

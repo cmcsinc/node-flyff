@@ -7,14 +7,21 @@ export const dynamic = "force-dynamic";
 
 export default async function SetItemsPage() {
   const data = loadSetItems();
-  const sets: Array<{ name: string; count: number }> = [];
-
+  // YAML structure: { sets: [{ id, elems, avails }] }
+  const sets: Array<{ name: string; id: number; pieces: number; bonuses: number }> = [];
   for (const file of data) {
     if (typeof file !== "object" || file === null) continue;
-    for (const [key, val] of Object.entries(file)) {
-      if (typeof val === "object" && val !== null) {
-        sets.push({ name: String(key), count: Object.keys(val as object).length });
-      }
+    const entries = (file as Record<string, unknown>).sets;
+    if (!Array.isArray(entries)) continue;
+    for (const entry of entries) {
+      if (typeof entry !== "object" || entry === null) continue;
+      const v = entry as Record<string, unknown>;
+      sets.push({
+        name: String(v.nameId ?? `Set ${v.id}`),
+        id: Number(v.id ?? 0),
+        pieces: Array.isArray(v.elems) ? v.elems.length : 0,
+        bonuses: Array.isArray(v.avails) ? v.avails.length : 0,
+      });
     }
   }
 
@@ -27,15 +34,17 @@ export default async function SetItemsPage() {
       <Card>
         <CardContent className="p-0">
           <Table>
-            <TableHeader><TableRow><TableHead>Set Name</TableHead><TableHead>Entries</TableHead></TableRow></TableHeader>
+            <TableHeader><TableRow><TableHead>ID</TableHead><TableHead>Name</TableHead><TableHead>Pieces</TableHead><TableHead>Bonuses</TableHead></TableRow></TableHeader>
             <TableBody>
               {sets.map((s) => (
-                <TableRow key={s.name}>
+                <TableRow key={s.id}>
+                  <TableCell className="font-mono text-xs">{s.id}</TableCell>
                   <TableCell className="font-medium">{s.name}</TableCell>
-                  <TableCell><Badge variant="secondary">{s.count}</Badge></TableCell>
+                  <TableCell><Badge variant="secondary">{s.pieces}</Badge></TableCell>
+                  <TableCell><Badge variant="secondary">{s.bonuses}</Badge></TableCell>
                 </TableRow>
               ))}
-              {sets.length === 0 && <TableRow><TableCell colSpan={2} className="text-center py-8 text-muted-foreground">No set item data</TableCell></TableRow>}
+              {sets.length === 0 && <TableRow><TableCell colSpan={4} className="text-center py-8 text-muted-foreground">No set item data</TableCell></TableRow>}
             </TableBody>
           </Table>
         </CardContent>
