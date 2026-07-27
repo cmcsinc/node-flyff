@@ -16,12 +16,13 @@ import {
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
 } from '../../src/combat/formulas';
-import { WT_MELEE_SWD, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables';
+import { WT_MELEE_SWD, WT_RANGE_BOW, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables';
 import { EMPTY_PARAM_VIEW, DST, ParamModel } from '@flyff/entities';
 
 const FIST = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 const BARE_HAND = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 const REFINED_SWORD = { min: 10, max: 20, type: WT_MELEE_SWD, atkSpeed: 0.5, option: 5, element: NO_PROP };
+const BOW_WEAPON = { min: 5, max: 10, type: WT_RANGE_BOW, atkSpeed: 0.3, option: 0, element: NO_PROP };
 
 const player: Combatant = {
   kind: 'player', level: 1, job: 0,
@@ -188,6 +189,37 @@ describe('combat DST param un-stubs', () => {
     // nMin=2, adj=-999 -> -997, floor -> 0, then +14.6=14.6 -> 14
     assert.equal(result.min, 14, 'negative weapon base floored to 0 before plus');
   });
+
+  it('M1: DST_SWD_DMG weapon mastery raises getWeaponATK (MoverAttack.cpp:359)', () => {
+    const base = getHitMinMax(player);
+    const params = new ParamModel();
+    params.setDestParam(DST.SWD_DMG, 20);
+    const mastery = getHitMinMax({ ...player, params });
+    // mastery bonus adds 20 to getWeaponATK, which adds to both min and max
+    assert.equal(mastery.min - base.min, 20, 'SWD_DMG +20 adds to min via GetPlusWeaponATK');
+    assert.equal(mastery.max - base.max, 20, 'SWD_DMG +20 adds to max via GetPlusWeaponATK');
+  });
+
+  it('M1: DST_BOW_DMG raises bow weapon ATK but NOT sword ATK', () => {
+    const bowPlayer: Combatant = { ...player, weapon: BOW_WEAPON };
+    const baseBow = getHitMinMax(bowPlayer);
+    const params = new ParamModel();
+    params.setDestParam(DST.BOW_DMG, 15);
+    const buffedBow = getHitMinMax({ ...bowPlayer, params });
+    assert.equal(buffedBow.min - baseBow.min, 15, 'BOW_DMG applies to bow weapon');
+    // Verify it does NOT apply to sword (different DST)
+    const swordBase = getHitMinMax(player);
+    const swordBuffed = getHitMinMax({ ...player, params });
+    assert.equal(swordBuffed.min, swordBase.min, 'BOW_DMG does NOT apply to sword');
+  });
+
+  it('M3: DST_ATKPOWER does NOT affect getHitMinMax (moved to resolveMelee)', () => {
+    const base = getHitMinMax(player);
+    const params = new ParamModel();
+    params.setDestParam(DST.ATKPOWER, 50);
+    const result = getHitMinMax({ ...player, params });
+    assert.deepEqual(result, base, 'ATKPOWER no longer in getHitMinMax');
+  });
 });
 
 describe('combat H4: GetItemMultiplier (refine option bonus)', () => {
@@ -271,6 +303,17 @@ describe('combat resolveMelee', () => {
     const r = resolveMelee(player, aibatt, makeRng([0, 99, 95], 16));
     assert.equal(r.hit, true);
     assert.equal(r.damage, 1); // floor((16-1)*0.1)=1
+  });
+
+  it('M3: DST_ATKPOWER adds flat to ATK after element factor in resolveMelee', () => {
+    // No element (NO_PROP=100, atkFactor=10000). Base: ATK=16, DEF=1, damage=15.
+    // With ATKPOWER=10: ATK=16, elem=10000/10000=16, +10=26, DEF=1, damage=25.
+    const params = new ParamModel();
+    params.setDestParam(DST.ATKPOWER, 10);
+    const buffed: Combatant = { ...player, params };
+    const r = resolveMelee(buffed, aibatt, makeRng([0, 99, 50], 16));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 25, 'ATKPOWER=10 adds 10 flat after element');
   });
 });
 
