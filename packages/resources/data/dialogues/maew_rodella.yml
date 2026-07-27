@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: maew_rodella
+states:
+  "0":
+    speak:
+      - 1324
+    timer: 15
+    source: "Speak( NpcId(), 1324 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1325
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1326
+  "10":
+    speak:
+      - 1327
+    exit: true
+    source: "Speak( NpcId(), 1327 );\r\n\tExit();"

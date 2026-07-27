@@ -21,6 +21,12 @@ const KIND_BUCKETS: Record<string, { file: string; kind: string }> = {
   IK1_GENERAL: { file: 'materials', kind: 'material' },
   // Accessories share no IK1 -- routed by IK3 in bucketFor.
   _JEWELRY: { file: 'jewelry', kind: 'jewelry' },
+  // Quest items (IK3_QUEST) live under IK1_SYSTEM/IK2_SYSTEM, which has no
+  // bucket. Route them by IK3 so they get indexed with `stack_size` (dwPackMax)
+  // -- without this the loader never sees them and InventoryService.addItem
+  // treats every quest drop as non-stacking (stack_size=1), so each kill lands
+  // in a fresh slot instead of merging onto the existing partial stack.
+  _QUEST: { file: 'questitems', kind: 'quest' },
 };
 
 /** IK2_WEAPON_DIRECT etc. are sub-kinds; bucket still keyed by IK1. */
@@ -67,6 +73,10 @@ function bucketFor(kind1: string, kind2: string, kind3: string): ItemYml | null 
   // Accessories (ring/earring/necklace) share no IK1 -- route by IK3.
   if (!b && (kind3 === 'IK3_RING' || kind3 === 'IK3_EARRING' || kind3 === 'IK3_NECKLACE')) {
     b = KIND_BUCKETS._JEWELRY;
+  }
+  // Quest items (IK3_QUEST under IK2_SYSTEM) -- route by IK3 for stack_size.
+  if (!b && kind3 === 'IK3_QUEST') {
+    b = KIND_BUCKETS._QUEST;
   }
   if (!b) return null;
   let yml = buckets.get(b.file);

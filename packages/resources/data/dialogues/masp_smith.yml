@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: masp_smith
+states:
+  "0":
+    speak:
+      - 1608
+    timer: 15
+    source: "Speak( NpcId(), 1608 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1609
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1610
+  "10":
+    speak:
+      - 1611
+    exit: true
+    source: "Speak( NpcId(), 1611 );\r\n\tExit();"

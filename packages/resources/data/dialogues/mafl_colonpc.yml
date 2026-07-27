@@ -1,0 +1,34 @@
+_version: "1.0"
+prefix: mafl_colonpc
+states:
+  "0":
+    speak:
+      - 1527
+    timer: 15
+    source: "Speak( NpcId(), 1527 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1764
+  "4":
+    say:
+      - 1529
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1528
+  "10":
+    speak:
+      - 1530
+    exit: true
+    source: "Speak( NpcId(), 1530 );\r\n\tExit();"

@@ -34,78 +34,62 @@ states:
 
       \t\t{\r
 
-      \t\t\t\tif( IsParty() == TRUE )\r
+      \t\t\tif( IsParty() == TRUE )\r
 
-      \t\t\t\t{\r
+      \t\t\t{\r
 
-      \t\t\t\t\tif( GetItemNum( II_SYS_SYS_QUE_RUBY01 ) >= 1 && GetItemNum(
+      \t\t\t\tif( GetItemNum( II_SYS_SYS_QUE_RUBY01 ) >= 1 && GetItemNum(
       II_SYS_SYS_QUE_RUBY02 ) >= 1 && GetItemNum( II_SYS_SYS_QUE_RUBY03 ) >=1
       )\r
 
+      \t\t\t\t{\r
+
+      \t\t\t\t\tif( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) ==
+      FALSE )\r
+
       \t\t\t\t\t{\r
 
-      \t\t\t\t\t\tif( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) ==
+      \t\t\t\t\t\tSay( 871 );\r
+
+      \t\t\t\t\t\tAddKey( 10 );\r
+
+      \t\t\t\t\t}\r
+
+      \t\t\t\t\telse\r
+
+      \t\t\t\t\t{\r
+
+      \t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY01, 1 );\r
+
+      \t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY02, 1 );\r
+
+      \t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY03, 1 );\r
+
+      \t\t\t\t\t}\r
+
+      \r
+
+      \t\t\t\t\t/*\r
+
+      \t\t\t\t\tif( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) ==
       FALSE )\r
 
-      \t\t\t\t\t\t{\r
+      \t\t\t\t\t{\r
 
-      \t\t\t\t\t\t\tSay( 871 );\r
+      \t\t\t\t\tSay( 871 );\r
 
-      \t\t\t\t\t\t\tAddKey( 10 );\r
+      \t\t\t\t\tAddKey( 10 );\r
 
-      \t\t\t\t\t\t}\r
+      \t\t\t\t\t}\r
 
-      \t\t\t\t\t\telse\r
+      \r
 
-      \t\t\t\t\t\t{\r
+      \t\t\t\t\telse if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 )
+      == TRUE )\r
 
-      \t\t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY01, 1 );\r
+      \t\t\t\t\t{\r
 
-      \t\t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY02, 1 );\r
-
-      \t\t\t\t\t\t\tRemoveItem( II_SYS_SYS_QUE_RUBY03, 1 );\r
-
-      \t\t\t\t\t\t}\r
-
-      \t\t\t\t\t\t\t\t\t\t\t\r
-
-      \t\t\t\t\t\t/*\r
-
-      \t\t\t\t\t\tif( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1 ) ==
-      FALSE )\r
-
-      \t\t\t\t\t\t{\r
-
-      \t\t\t\t\t\t\tSay( 871 );\r
-
-      \t\t\t\t\t\t\tAddKey( 10 );\r
-
-      \t\t\t\t\t\t}\r
-
-      \t\t\t\t\t\t\t\t\t\t\t\r
-
-      \t\t\t\t\t\telse if( MonHuntStartParty( QUEST_IBLBOSS, QS_BEGIN, QS_END, 1
-      ) == TRUE )\r
-
-      \t\t\t\t\t\t{\r
-
-      \t\t\t\t\t\t\t\r
-
-      \t\t\t\t\t\t}\r
-
-      \t\t\t\t\t\t\r
-
-      \t\t\t\t\t\telse\r
-
-      \t\t\t\t\t\t{\r
-
-      \t\t\t\t\t\t\tSay( 872 );\r
-
-      \t\t\t\t\t\t\tAddKey( 10 );\t\r
-
-      \t\t\t\t\t\t}\r
-
-      \t\t\t\t\t\t*/\r
+      \r
 
       \t\t\t\t\t}\r
 
@@ -115,31 +99,47 @@ states:
 
       \t\t\t\t\t{\r
 
-      \t\t\t\t    \tSay( 873 );\r
+      \t\t\t\t\tSay( 872 );\r
 
-      \t\t\t\t\t\tAddKey( 10 );\r
+      \t\t\t\t\tAddKey( 10 );\t\r
 
       \t\t\t\t\t}\r
 
-      \t\t\t\t}\t\r
+      \t\t\t\t\t*/\r
 
-      \t\t\t\t\r
+      \t\t\t\t}\r
+
+      \r
 
       \t\t\t\telse\r
 
       \t\t\t\t{\r
 
-      \t\t\t\t\tSay( 870 );\t\r
+      \t\t\t\t\tSay( 873 );\r
 
       \t\t\t\t\tAddKey( 10 );\r
 
       \t\t\t\t}\r
 
-      \t\t\t\t\r
+      \t\t\t}\t\r
+
+      \r
+
+      \t\t\telse\r
+
+      \t\t\t{\r
+
+      \t\t\t\tSay( 870 );\t\r
+
+      \t\t\t\tAddKey( 10 );\r
+
+      \t\t\t}\r
+
+      \r
 
       \t\t}\t\r
 
-      \t\t\t\r
+      \r
 
       \t\telse\r
 
@@ -153,7 +153,7 @@ states:
 
       \t}\r
 
-      \t\r
+      \r
 
       \telse\r
 

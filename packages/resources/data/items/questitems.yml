@@ -1,0 +1,3662 @@
+_version: "1.0"
+_kind: quest
+items:
+  - id: 6001
+    name: Vision Stone
+    name_id: IDS_PROPITEM_TXT_005182
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6002
+    name: Boboku Letter
+    name_id: IDS_PROPITEM_TXT_005184
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6003
+    name: Julia Letter
+    name_id: IDS_PROPITEM_TXT_005186
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6004
+    name: Doridoma Scale
+    name_id: IDS_PROPITEM_TXT_005188
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6005
+    name: Small Burudeng Tooth
+    name_id: IDS_PROPITEM_TXT_005190
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6006
+    name: Arcard Stone
+    name_id: IDS_PROPITEM_TXT_005192
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6007
+    name: Epic Stone
+    name_id: IDS_PROPITEM_TXT_005194
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6008
+    name: Crest of Bulrox
+    name_id: IDS_PROPITEM_TXT_005196
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6009
+    name: Scoll Gem
+    name_id: IDS_PROPITEM_TXT_005198
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6010
+    name: Forge Stone
+    name_id: IDS_PROPITEM_TXT_005200
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6011
+    name: Letter of Karin
+    name_id: IDS_PROPITEM_TXT_005202
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6012
+    name: Tina Letter
+    name_id: IDS_PROPITEM_TXT_005204
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6013
+    name: Losha Lunch
+    name_id: IDS_PROPITEM_TXT_005206
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6014
+    name: Blade Bravery
+    name_id: IDS_PROPITEM_TXT_005208
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6016
+    name: Lux Stone
+    name_id: IDS_PROPITEM_TXT_005210
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6017
+    name: Rooney Letter
+    name_id: IDS_PROPITEM_TXT_005212
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6018
+    name: Lui Letter
+    name_id: IDS_PROPITEM_TXT_005214
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6020
+    name: Mule Book
+    name_id: IDS_PROPITEM_TXT_005216
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6021
+    name: Book Piece
+    name_id: IDS_PROPITEM_TXT_005218
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6022
+    name: Wand Book
+    name_id: IDS_PROPITEM_TXT_005220
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6023
+    name: Luxos Stone
+    name_id: IDS_PROPITEM_TXT_005222
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6024
+    name: Lumix Stone
+    name_id: IDS_PROPITEM_TXT_005224
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6025
+    name: Bluemill
+    name_id: IDS_PROPITEM_TXT_005226
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6026
+    name: Aibatt Wing
+    name_id: IDS_PROPITEM_TXT_005228
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6027
+    name: Nyang Tail
+    name_id: IDS_PROPITEM_TXT_005230
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6028
+    name: Valin Cookies
+    name_id: IDS_PROPITEM_TXT_005232
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6029
+    name: Mule Novel
+    name_id: IDS_PROPITEM_TXT_005234
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6030
+    name: Rooney Refresher
+    name_id: IDS_PROPITEM_TXT_005236
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6031
+    name: Map Piece 1
+    name_id: IDS_PROPITEM_TXT_005238
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6032
+    name: Map Piece 2
+    name_id: IDS_PROPITEM_TXT_005240
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6033
+    name: Rock of Will
+    name_id: IDS_PROPITEM_TXT_005242
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 10
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6034
+    name: Secret Map Piece
+    name_id: IDS_PROPITEM_TXT_005244
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 15
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6035
+    name: Broom Head
+    name_id: IDS_PROPITEM_TXT_005246
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6036
+    name: Broom Body
+    name_id: IDS_PROPITEM_TXT_005248
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6037
+    name: Broom Tail
+    name_id: IDS_PROPITEM_TXT_005250
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6038
+    name: Young Lawolf Tooth
+    name_id: IDS_PROPITEM_TXT_005252
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6039
+    name: Pukepuke Knife
+    name_id: IDS_PROPITEM_TXT_005254
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6040
+    name: Fefern Leg
+    name_id: IDS_PROPITEM_TXT_005256
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6041
+    name: Chain of Bang
+    name_id: IDS_PROPITEM_TXT_005258
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6042
+    name: Martin Certificate
+    name_id: IDS_PROPITEM_TXT_005260
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6043
+    name: Marche Certificate
+    name_id: IDS_PROPITEM_TXT_005262
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6044
+    name: Nyang Hair
+    name_id: IDS_PROPITEM_TXT_005264
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6045
+    name: Hair Coupon
+    name_id: IDS_PROPITEM_TXT_005266
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6046
+    name: Magic Broom
+    name_id: IDS_PROPITEM_TXT_005268
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6047
+    name: Mr. Pumpkin Head
+    name_id: IDS_PROPITEM_TXT_005270
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6048
+    name: Redyspawn
+    name_id: IDS_PROPITEM_TXT_005272
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6049
+    name: Redyforcep
+    name_id: IDS_PROPITEM_TXT_005274
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6050
+    name: Roli-Pang
+    name_id: IDS_PROPITEM_TXT_005276
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6051
+    name: Beard of Jack
+    name_id: IDS_PROPITEM_TXT_005278
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6052
+    name: Hearth Cargo
+    name_id: IDS_PROPITEM_TXT_005280
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6053
+    name: Ismerelda Cargo
+    name_id: IDS_PROPITEM_TXT_005282
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6054
+    name: Saint Holy
+    name_id: IDS_PROPITEM_TXT_005284
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6055
+    name: Helper Ribbon
+    name_id: IDS_PROPITEM_TXT_005286
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6056
+    name: Bearer Heart
+    name_id: IDS_PROPITEM_TXT_005288
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6057
+    name: Bone Bowl
+    name_id: IDS_PROPITEM_TXT_005290
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6058
+    name: Live Tea
+    name_id: IDS_PROPITEM_TXT_005292
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6059
+    name: Mon-Book 1
+    name_id: IDS_PROPITEM_TXT_005294
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6060
+    name: Mon-Book 2
+    name_id: IDS_PROPITEM_TXT_005296
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6061
+    name: Mon-Book 3
+    name_id: IDS_PROPITEM_TXT_005298
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6062
+    name: WarmonIden
+    name_id: IDS_PROPITEM_TXT_005300
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6063
+    name: Leygall
+    name_id: IDS_PROPITEM_TXT_005302
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6064
+    name: Radoram
+    name_id: IDS_PROPITEM_TXT_005304
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6065
+    name: Lemeat
+    name_id: IDS_PROPITEM_TXT_005306
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6066
+    name: Steam Woodlock
+    name_id: IDS_PROPITEM_TXT_005308
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6067
+    name: Steam Tears
+    name_id: IDS_PROPITEM_TXT_005310
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6068
+    name: Knight Mineral
+    name_id: IDS_PROPITEM_TXT_005312
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6069
+    name: Nyanyang
+    name_id: IDS_PROPITEM_TXT_005314
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6070
+    name: Unknown Letter
+    name_id: IDS_PROPITEM_TXT_005316
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6071
+    name: Unknown Cerificate
+    name_id: IDS_PROPITEM_TXT_005318
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6072
+    name: Office Document
+    name_id: IDS_PROPITEM_TXT_005320
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6200
+    name: WhiteTarin Root
+    name_id: IDS_PROPITEM_TXT_005322
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6201
+    name: Astro-Paper
+    name_id: IDS_PROPITEM_TXT_005324
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6208
+    name: Sun Paper
+    name_id: IDS_PROPITEM_TXT_005326
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6202
+    name: Shining Star Stone
+    name_id: IDS_PROPITEM_TXT_005328
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6203
+    name: Teeth of Dungeon Rat
+    name_id: IDS_PROPITEM_TXT_005330
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6204
+    name: Big Snake Skull
+    name_id: IDS_PROPITEM_TXT_005332
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6205
+    name: Shattered Spring Piece
+    name_id: IDS_PROPITEM_TXT_005334
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6206
+    name: Testimony
+    name_id: IDS_PROPITEM_TXT_005336
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6207
+    name: Big Blue Honey
+    name_id: IDS_PROPITEM_TXT_005338
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6209
+    name: Envelope of Dunkan
+    name_id: IDS_PROPITEM_TXT_005340
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6210
+    name: Nerbal Sword
+    name_id: IDS_PROPITEM_TXT_005342
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6211
+    name: Medal
+    name_id: IDS_PROPITEM_TXT_005344
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6212
+    name: Pendant of Faith
+    name_id: IDS_PROPITEM_TXT_005346
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6213
+    name: Letter of Pardon
+    name_id: IDS_PROPITEM_TXT_005348
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6214
+    name: Ring of Promise
+    name_id: IDS_PROPITEM_TXT_005350
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6215
+    name: Silver Candle Stick
+    name_id: IDS_PROPITEM_TXT_005352
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6216
+    name: Holy Branch
+    name_id: IDS_PROPITEM_TXT_005354
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6217
+    name: Fire Feather
+    name_id: IDS_PROPITEM_TXT_005356
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6218
+    name: Crest of Maal
+    name_id: IDS_PROPITEM_TXT_005358
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6219
+    name: Troupe Badge
+    name_id: IDS_PROPITEM_TXT_005360
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6220
+    name: Reco Paper
+    name_id: IDS_PROPITEM_TXT_005362
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6221
+    name: Bone of Heaven
+    name_id: IDS_PROPITEM_TXT_005364
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6222
+    name: Confidential Map
+    name_id: IDS_PROPITEM_TXT_005366
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6223
+    name: Corrupted Flybat Claw
+    name_id: IDS_PROPITEM_TXT_005368
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6224
+    name: Sworn Mia Doll
+    name_id: IDS_PROPITEM_TXT_005370
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6225
+    name: Flaris Pumpkin Head
+    name_id: IDS_PROPITEM_TXT_005372
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6226
+    name: Flaris Citizen Recommendation
+    name_id: IDS_PROPITEM_TXT_005374
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6227
+    name: Super Furious Match
+    name_id: IDS_PROPITEM_TXT_005376
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6228
+    name: Red Cardrin
+    name_id: IDS_PROPITEM_TXT_005378
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6229
+    name: Combat Ranglass
+    name_id: IDS_PROPITEM_TXT_005380
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6230
+    name: Good Knightler
+    name_id: IDS_PROPITEM_TXT_005382
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6231
+    name: Clean Droil
+    name_id: IDS_PROPITEM_TXT_005384
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6232
+    name: Core Guardieye
+    name_id: IDS_PROPITEM_TXT_005386
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6233
+    name: Giga Ampere
+    name_id: IDS_PROPITEM_TXT_005388
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6234
+    name: Hellish Sycale
+    name_id: IDS_PROPITEM_TXT_005390
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6235
+    name: Clean Mongtear
+    name_id: IDS_PROPITEM_TXT_005392
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 6236
+    name: Tough Bomb Timer
+    name_id: IDS_PROPITEM_TXT_005394
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18126
+    name: Scholarship Application
+    name_id: IDS_PROPITEM_TXT_005396
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18127
+    name: Stone Piece of Flaris
+    name_id: IDS_PROPITEM_TXT_005398
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18128
+    name: Stone Piece of Saintmorning
+    name_id: IDS_PROPITEM_TXT_005400
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18129
+    name: Stone Piece of Darkon
+    name_id: IDS_PROPITEM_TXT_005402
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18130
+    name: Proof of Continent Division
+    name_id: IDS_PROPITEM_TXT_005404
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18131
+    name: Recommendation of Gothante
+    name_id: IDS_PROPITEM_TXT_005406
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18132
+    name: Piece of Strange Cloth
+    name_id: IDS_PROPITEM_TXT_005408
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18142
+    name: Unknown Mark
+    name_id: IDS_PROPITEM_TXT_005410
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18143
+    name: Piece of Unknown Cloth
+    name_id: IDS_PROPITEM_TXT_005412
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18144
+    name: Book of Troubled History
+    name_id: IDS_PROPITEM_TXT_005414
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18151
+    name: Data Examined by Hakal
+    name_id: IDS_PROPITEM_TXT_005416
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18152
+    name: Ancient Book
+    name_id: IDS_PROPITEM_TXT_005418
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18154
+    name: Mysterious Black Gem
+    name_id: IDS_PROPITEM_TXT_005420
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18153
+    name: Mysterious Red Gem
+    name_id: IDS_PROPITEM_TXT_005422
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18155
+    name: Book of Laola
+    name_id: IDS_PROPITEM_TXT_005424
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18156
+    name: Scroll of Gothante
+    name_id: IDS_PROPITEM_TXT_005426
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10227
+    name: Book of Hero 1
+    name_id: IDS_PROPITEM_TXT_005428
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10228
+    name: Book of Hero 2
+    name_id: IDS_PROPITEM_TXT_005430
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10229
+    name: Book of Hero 3
+    name_id: IDS_PROPITEM_TXT_005432
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10230
+    name: Book of Hero 4
+    name_id: IDS_PROPITEM_TXT_005434
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10231
+    name: Book of Hero 5
+    name_id: IDS_PROPITEM_TXT_005436
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10232
+    name: Book of Hero 6
+    name_id: IDS_PROPITEM_TXT_005438
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10233
+    name: Trace of Hero 1
+    name_id: IDS_PROPITEM_TXT_005440
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10234
+    name: Trace of Hero 2
+    name_id: IDS_PROPITEM_TXT_005442
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10235
+    name: Trace of Hero 3
+    name_id: IDS_PROPITEM_TXT_005444
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10236
+    name: Trace of Hero 4
+    name_id: IDS_PROPITEM_TXT_005446
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10237
+    name: Trace of Hero 5
+    name_id: IDS_PROPITEM_TXT_005448
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10238
+    name: Trace of Hero 6
+    name_id: IDS_PROPITEM_TXT_005450
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10239
+    name: History of Hero 1
+    name_id: IDS_PROPITEM_TXT_005452
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10240
+    name: History of Hero 2
+    name_id: IDS_PROPITEM_TXT_005454
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10241
+    name: History of Hero 3
+    name_id: IDS_PROPITEM_TXT_005456
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10242
+    name: History of Hero 4
+    name_id: IDS_PROPITEM_TXT_005458
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10243
+    name: History of Hero 5
+    name_id: IDS_PROPITEM_TXT_005460
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10244
+    name: History of Hero 6
+    name_id: IDS_PROPITEM_TXT_005462
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10246
+    name: Staff of Venken
+    name_id: IDS_PROPITEM_TXT_005466
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10247
+    name: Ribbon of Luellui
+    name_id: IDS_PROPITEM_TXT_005468
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10248
+    name: Charm of Charms
+    name_id: IDS_PROPITEM_TXT_005470
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10250
+    name: Sign of Ollien
+    name_id: IDS_PROPITEM_TXT_005474
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10251
+    name: Sign of Burlox
+    name_id: IDS_PROPITEM_TXT_005476
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10252
+    name: Sign of Losha
+    name_id: IDS_PROPITEM_TXT_005478
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10253
+    name: Authentication of Hero
+    name_id: IDS_PROPITEM_TXT_005480
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 10387
+    name: Book of Technique
+    name_id: IDS_PROPITEM_TXT_005484
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18102
+    name: Red Bang Head
+    name_id: IDS_PROPITEM_TXT_005498
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18103
+    name: Luda Safe
+    name_id: IDS_PROPITEM_TXT_005500
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18104
+    name: Meteoritill
+    name_id: IDS_PROPITEM_TXT_005502
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18105
+    name: Script
+    name_id: IDS_PROPITEM_TXT_005504
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18106
+    name: Lesson 1
+    name_id: IDS_PROPITEM_TXT_005506
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18107
+    name: Lesson 2
+    name_id: IDS_PROPITEM_TXT_005508
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18108
+    name: Lesson 3
+    name_id: IDS_PROPITEM_TXT_005510
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18109
+    name: 1st Portrait Clue
+    name_id: IDS_PROPITEM_TXT_005512
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18110
+    name: 2nd Portrait Clue
+    name_id: IDS_PROPITEM_TXT_005514
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18111
+    name: Portrait of Radion
+    name_id: IDS_PROPITEM_TXT_005516
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18112
+    name: Pieces of Wagsaac Bone
+    name_id: IDS_PROPITEM_TXT_005518
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18113
+    name: Pieces of Wagsaac DNA
+    name_id: IDS_PROPITEM_TXT_005520
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18114
+    name: Black Tombmarble
+    name_id: IDS_PROPITEM_TXT_005522
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18115
+    name: Black Curse Book
+    name_id: IDS_PROPITEM_TXT_005524
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18116
+    name: Black Heroca
+    name_id: IDS_PROPITEM_TXT_005526
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18121
+    name: Book of Secret Disappearances
+    name_id: IDS_PROPITEM_TXT_005528
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18122
+    name: Jinyoung Doll
+    name_id: IDS_PROPITEM_TXT_005530
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18123
+    name: Disappearance Investigation
+    name_id: IDS_PROPITEM_TXT_005532
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18149
+    name: Mia Report
+    name_id: IDS_PROPITEM_TXT_005534
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18150
+    name: Disappearence Evidence
+    name_id: IDS_PROPITEM_TXT_005536
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18133
+    name: 1st Book of Dread
+    name_id: IDS_PROPITEM_TXT_005538
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18134
+    name: Fortress Map
+    name_id: IDS_PROPITEM_TXT_005540
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18135
+    name: Heart of Thyred
+    name_id: IDS_PROPITEM_TXT_005542
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18136
+    name: 2nd Book of Dread
+    name_id: IDS_PROPITEM_TXT_005544
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18137
+    name: Temple Map
+    name_id: IDS_PROPITEM_TXT_005546
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18138
+    name: Heart of Dasied
+    name_id: IDS_PROPITEM_TXT_005548
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18139
+    name: 3rd Book of Dread
+    name_id: IDS_PROPITEM_TXT_005550
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18140
+    name: Boggy Map
+    name_id: IDS_PROPITEM_TXT_005552
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18141
+    name: Heart of Arvan
+    name_id: IDS_PROPITEM_TXT_005554
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 18146
+    name: Entanale Sword
+    name_id: IDS_PROPITEM_TXT_005558
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18147
+    name: Symbol of Red Bang Troupe
+    name_id: IDS_PROPITEM_TXT_005560
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18148
+    name: Necklace of Lord Bang
+    name_id: IDS_PROPITEM_TXT_005562
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18157
+    name: Emerald Mantis Egg
+    name_id: IDS_PROPITEM_TXT_005564
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18164
+    name: Yorrn
+    name_id: IDS_PROPITEM_TXT_007122
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18165
+    name: Doridoma Keratin
+    name_id: IDS_PROPITEM_TXT_007124
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18166
+    name: Mushpang Secretion
+    name_id: IDS_PROPITEM_TXT_007126
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18169
+    name: Golden Helmet of Billaon
+    name_id: IDS_PROPITEM_TXT_007202
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18171
+    name: Earring of Heren
+    name_id: IDS_PROPITEM_TXT_007206
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18178
+    name: Trace of Offerep
+    name_id: IDS_PROPITEM_TXT_007220
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18179
+    name: Feather of Magic Power
+    name_id: IDS_PROPITEM_TXT_007222
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18180
+    name: Perfume of Lillip
+    name_id: IDS_PROPITEM_TXT_007224
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18181
+    name: Piece of Key
+    name_id: IDS_PROPITEM_TXT_007266
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18182
+    name: War Remenant
+    name_id: IDS_PROPITEM_TXT_007316
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18183
+    name: War Scar
+    name_id: IDS_PROPITEM_TXT_007318
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18184
+    name: Rubbed Copy of the Ivillis Revelation
+    name_id: IDS_PROPITEM_TXT_007464
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18185
+    name: Pattern of Ivillis Guardian
+    name_id: IDS_PROPITEM_TXT_007466
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18096
+    name: Grape of Flaris
+    name_id: IDS_PROPITEM_TXT_005566
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18097
+    name: Grape of Saintmorning
+    name_id: IDS_PROPITEM_TXT_005568
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 18098
+    name: Grape of Darkon
+    name_id: IDS_PROPITEM_TXT_005570
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 265
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 6237
+    name: Red Socks
+    name_id: IDS_PROPITEM_TXT_005632
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 10
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - mercenary
+  - id: 10354
+    name: Rosy Paper
+    name_id: IDS_PROPITEM_TXT_005752
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10353
+    name: Isruel Letter
+    name_id: IDS_PROPITEM_TXT_005754
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10394
+    name: Rankashu Letter
+    name_id: IDS_PROPITEM_TXT_005760
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10395
+    name: Mine Entrance Card
+    name_id: IDS_PROPITEM_TXT_005762
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10396
+    name: Piece of Prison Key 1
+    name_id: IDS_PROPITEM_TXT_005764
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10397
+    name: Piece of Prison Key 2
+    name_id: IDS_PROPITEM_TXT_005766
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10398
+    name: Piece of Prison Key 3
+    name_id: IDS_PROPITEM_TXT_005768
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10399
+    name: Key to the Prison
+    name_id: IDS_PROPITEM_TXT_005770
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10400
+    name: Keakoon Chief Sign
+    name_id: IDS_PROPITEM_TXT_005772
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10401
+    name: Cargo of Drian
+    name_id: IDS_PROPITEM_TXT_005774
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10403
+    name: Pink Roach Fluid
+    name_id: IDS_PROPITEM_TXT_005778
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10404
+    name: Blue Roach Fluid
+    name_id: IDS_PROPITEM_TXT_005780
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10405
+    name: Wake Roach Water
+    name_id: IDS_PROPITEM_TXT_005782
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10406
+    name: Pink Roach Queen Fluid
+    name_id: IDS_PROPITEM_TXT_005784
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10407
+    name: Blue Roach Queen Fluid
+    name_id: IDS_PROPITEM_TXT_005786
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3200000
+    job_req:
+      - vagrant
+  - id: 10414
+    name: Bernard Card
+    name_id: IDS_PROPITEM_TXT_005804
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10415
+    name: Cillin
+    name_id: IDS_PROPITEM_TXT_005806
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10416
+    name: Ribenuum
+    name_id: IDS_PROPITEM_TXT_005808
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10417
+    name: Pure Ribenuum
+    name_id: IDS_PROPITEM_TXT_005810
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10418
+    name: Andre Card
+    name_id: IDS_PROPITEM_TXT_005812
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10419
+    name: Triduum
+    name_id: IDS_PROPITEM_TXT_005814
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10420
+    name: Kazen Card
+    name_id: IDS_PROPITEM_TXT_005816
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10423
+    name: Roach Zone Card
+    name_id: IDS_PROPITEM_TXT_005820
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 280000
+    job_req:
+      - magician
+  - id: 10386
+    name: Bead of Sin
+    name_id: IDS_PROPITEM_TXT_006086
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 747
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 30319
+    name: Recipe of legend-Introduction
+    name_id: IDS_PROPITEM_TXT_010690
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 30320
+    name: Recipe of legend-Material
+    name_id: IDS_PROPITEM_TXT_010692
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 30321
+    name: Recipe of legend-Cookery
+    name_id: IDS_PROPITEM_TXT_010694
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 30322
+    name: Recipe of legend-Decoration
+    name_id: IDS_PROPITEM_TXT_010696
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 30323
+    name: Recipe of legend-Appreciation
+    name_id: IDS_PROPITEM_TXT_010698
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 30324
+    name: Damaged recipe
+    name_id: IDS_PROPITEM_TXT_010700
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 30325
+    name: Completed recipe
+    name_id: IDS_PROPITEM_TXT_010702
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 8800000
+    job_req:
+      - vagrant
+  - id: 22520
+    name: Diary of adventurer
+    name_id: IDS_PROPITEM_TXT_010854
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 22521
+    name: Decoding Document
+    name_id: IDS_PROPITEM_TXT_010856
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 22522
+    name: Decoded Document
+    name_id: IDS_PROPITEM_TXT_010858
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 22523
+    name: Battle Toadrin Heart
+    name_id: IDS_PROPITEM_TXT_010860
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 22524
+    name: Bartholomew Hunt's Second Diary
+    name_id: IDS_PROPITEM_TXT_010862
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 22525
+    name: Second Journal
+    name_id: IDS_PROPITEM_TXT_011200
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 22527
+    name: Scroll of Dire Information
+    name_id: IDS_PROPITEM_TXT_011204
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 22528
+    name: Piece of the third journal
+    name_id: IDS_PROPITEM_TXT_011206
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 22529
+    name: Piece of the third journal
+    name_id: IDS_PROPITEM_TXT_011208
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 99
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 22530
+    name: Three Shaduwar journals
+    name_id: IDS_PROPITEM_TXT_011210
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 22531
+    name: Magic Liquor
+    name_id: IDS_PROPITEM_TXT_011212
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 22532
+    name: Red Powder
+    name_id: IDS_PROPITEM_TXT_011214
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 22597
+    name: Fighter's Mysterious Toolbox
+    name_id: IDS_PROPITEM_TXT_011700
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant

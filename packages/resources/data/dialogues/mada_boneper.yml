@@ -24,7 +24,7 @@ states:
   "6": {}
   "8":
     exit: true
-    source: "if( GetQuestState(QUEST_HEROKNI_TRN5) == QS_END && GetPlayerJob() == 1
+    source: "if( GetQuestState(QUEST_HEROKNI_TRN4) == QS_END && GetPlayerJob() == 1
       && GetPlayerLvl() == 60 )\r
 
       \t{\r

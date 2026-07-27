@@ -1,0 +1,34 @@
+_version: "1.0"
+prefix: maew_ainher
+states:
+  "0":
+    speak:
+      - 1822
+    timer: 15
+    source: "Speak(NpcId(), 1822);\r
+
+      \tSetScriptTimer(15);"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1826
+  "4":
+    say:
+      - 1823
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1824
+  "10":
+    speak:
+      - 1825
+    exit: true
+    source: "Speak(NpcId(), 1825);\r\n\tExit();"

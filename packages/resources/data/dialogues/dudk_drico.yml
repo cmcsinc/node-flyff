@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: dudk_drico
+states:
+  "0":
+    speak:
+      - 1671
+    timer: 15
+    source: "Speak( NpcId(), 1671 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1673
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1674
+  "10":
+    speak:
+      - 1675
+    exit: true
+    source: "Speak( NpcId(), 1675 );\r\n\tExit();"

@@ -1,0 +1,34 @@
+_version: "1.0"
+prefix: maew_cheirang
+states:
+  "0":
+    speak:
+      - 1304
+    timer: 15
+    source: "Speak( NpcId(), 1304 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1370
+  "4":
+    say:
+      - 1305
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1306
+  "10":
+    speak:
+      - 1307
+    exit: true
+    source: "Speak( NpcId(), 1307 );\r\n\tExit();"

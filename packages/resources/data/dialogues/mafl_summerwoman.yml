@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_summerwoman
+states:
+  "0":
+    speak:
+      - 1780
+    timer: 15
+    source: "Speak(NpcId(), 1780);\r
+
+      \tSetScriptTimer(15);"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1781
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1782
+  "10":
+    speak:
+      - 1783
+    exit: true
+    source: "Speak(NpcId(), 1783);\r\n\tExit();"

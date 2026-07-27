@@ -25,7 +25,7 @@ states:
 
       \t}\r
 
-      \t\t\r
+      \r
 
       \telse if( IsSetQuest( QUEST_CREGUILD ) == TRUE && GetQuestState(
       QUEST_CREGUILD ) == QS_END && GetPlayerGold() >= 3000000 )\t\r
@@ -47,7 +47,7 @@ states:
 
       \t\t}\r
 
-      \t\t\r
+      \r
 
       \t\telse\r
 
@@ -105,7 +105,7 @@ states:
 
       \t\t}\r
 
-      \t\t\r
+      \r
 
       \t\telse\r
 

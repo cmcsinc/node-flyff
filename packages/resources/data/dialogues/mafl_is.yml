@@ -10,17 +10,21 @@ states:
       \tSetScriptTimer( 15 );"
   "1":
     launch_quest: true
-    source: "switch( Random( 3 ) )\r
+    source: "PlaySound( 536 + Random( 3 ) );\r
 
-      \t{\r
+      \r
 
-      \t\tcase 0:\tPlaySound( 536 ); break;\r
+      \t//switch( Random( 3 ) )\r
 
-      \t\tcase 1:\tPlaySound( 537 ); break;\r
+      \t//{\r
 
-      \t\tcase 2:\tPlaySound( 538 ); break;\r
+      \t//case 0:\tPlaySound( 536 ); break;\r
 
-      \t}\r
+      \t//case 1:\tPlaySound( 537 ); break;\r
+
+      \t//case 2:\tPlaySound( 538 ); break;\r
+
+      \t//}\r
 
       \r
 
@@ -51,15 +55,17 @@ states:
     speak:
       - 554
     exit: true
-    source: "switch( Random( 2 ) )\r
+    source: "PlaySound( 552 + Random( 2 ) );\r
 
-      \t{\r
+      \t//switch( Random( 2 ) )\r
 
-      \t\tcase 0:\tPlaySound( 552 ); break;\r
+      \t//{\r
 
-      \t\tcase 1:\tPlaySound( 553 ); break;\r
+      \t//case 0:\tPlaySound( 552 ); break;\r
 
-      \t}\r
+      \t//case 1:\tPlaySound( 553 ); break;\r
+
+      \t//}\r
 
       \tSpeak( NpcId(), 554 );\r
 

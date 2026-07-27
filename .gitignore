@@ -157,3 +157,7 @@ game.zip
 
 # Test artifact leak (repair.service.test.ts hardcodes this path)
 .tmp-repair-test.sqlite3
+
+# Temp propQuest extraction dumps (qt-<pid>-<ts>/propQuest.txt.txt)
+qt-*/
+packages/resources/qt-*/

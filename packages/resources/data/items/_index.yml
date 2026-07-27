@@ -2574,7 +2574,7 @@
   name: Tenth Refresher
 "2540":
   file: materials.yml
-  name: II_GEN_POT_POT_ANTIDOTE
+  name: Antidote Potion
 "2541":
   file: materials.yml
   name: Cure Disease Potion
@@ -3198,7 +3198,7 @@
   name: Hague Nail
 "3019":
   file: materials.yml
-  name: Tote Bill
+  name: Tengu Bill
 "3020":
   file: materials.yml
   name: Horn of Asterius
@@ -4072,6 +4072,333 @@
 "4765":
   file: armors.yml
   name: St. Patrick's Day Cloak
+"6001":
+  file: questitems.yml
+  name: Vision Stone
+"6002":
+  file: questitems.yml
+  name: Boboku Letter
+"6003":
+  file: questitems.yml
+  name: Julia Letter
+"6004":
+  file: questitems.yml
+  name: Doridoma Scale
+"6005":
+  file: questitems.yml
+  name: Small Burudeng Tooth
+"6006":
+  file: questitems.yml
+  name: Arcard Stone
+"6007":
+  file: questitems.yml
+  name: Epic Stone
+"6008":
+  file: questitems.yml
+  name: Crest of Bulrox
+"6009":
+  file: questitems.yml
+  name: Scoll Gem
+"6010":
+  file: questitems.yml
+  name: Forge Stone
+"6011":
+  file: questitems.yml
+  name: Letter of Karin
+"6012":
+  file: questitems.yml
+  name: Tina Letter
+"6013":
+  file: questitems.yml
+  name: Losha Lunch
+"6014":
+  file: questitems.yml
+  name: Blade Bravery
+"6016":
+  file: questitems.yml
+  name: Lux Stone
+"6017":
+  file: questitems.yml
+  name: Rooney Letter
+"6018":
+  file: questitems.yml
+  name: Lui Letter
+"6020":
+  file: questitems.yml
+  name: Mule Book
+"6021":
+  file: questitems.yml
+  name: Book Piece
+"6022":
+  file: questitems.yml
+  name: Wand Book
+"6023":
+  file: questitems.yml
+  name: Luxos Stone
+"6024":
+  file: questitems.yml
+  name: Lumix Stone
+"6025":
+  file: questitems.yml
+  name: Bluemill
+"6026":
+  file: questitems.yml
+  name: Aibatt Wing
+"6027":
+  file: questitems.yml
+  name: Nyang Tail
+"6028":
+  file: questitems.yml
+  name: Valin Cookies
+"6029":
+  file: questitems.yml
+  name: Mule Novel
+"6030":
+  file: questitems.yml
+  name: Rooney Refresher
+"6031":
+  file: questitems.yml
+  name: Map Piece 1
+"6032":
+  file: questitems.yml
+  name: Map Piece 2
+"6033":
+  file: questitems.yml
+  name: Rock of Will
+"6034":
+  file: questitems.yml
+  name: Secret Map Piece
+"6035":
+  file: questitems.yml
+  name: Broom Head
+"6036":
+  file: questitems.yml
+  name: Broom Body
+"6037":
+  file: questitems.yml
+  name: Broom Tail
+"6038":
+  file: questitems.yml
+  name: Young Lawolf Tooth
+"6039":
+  file: questitems.yml
+  name: Pukepuke Knife
+"6040":
+  file: questitems.yml
+  name: Fefern Leg
+"6041":
+  file: questitems.yml
+  name: Chain of Bang
+"6042":
+  file: questitems.yml
+  name: Martin Certificate
+"6043":
+  file: questitems.yml
+  name: Marche Certificate
+"6044":
+  file: questitems.yml
+  name: Nyang Hair
+"6045":
+  file: questitems.yml
+  name: Hair Coupon
+"6046":
+  file: questitems.yml
+  name: Magic Broom
+"6047":
+  file: questitems.yml
+  name: Mr. Pumpkin Head
+"6048":
+  file: questitems.yml
+  name: Redyspawn
+"6049":
+  file: questitems.yml
+  name: Redyforcep
+"6050":
+  file: questitems.yml
+  name: Roli-Pang
+"6051":
+  file: questitems.yml
+  name: Beard of Jack
+"6052":
+  file: questitems.yml
+  name: Hearth Cargo
+"6053":
+  file: questitems.yml
+  name: Ismerelda Cargo
+"6054":
+  file: questitems.yml
+  name: Saint Holy
+"6055":
+  file: questitems.yml
+  name: Helper Ribbon
+"6056":
+  file: questitems.yml
+  name: Bearer Heart
+"6057":
+  file: questitems.yml
+  name: Bone Bowl
+"6058":
+  file: questitems.yml
+  name: Live Tea
+"6059":
+  file: questitems.yml
+  name: Mon-Book 1
+"6060":
+  file: questitems.yml
+  name: Mon-Book 2
+"6061":
+  file: questitems.yml
+  name: Mon-Book 3
+"6062":
+  file: questitems.yml
+  name: WarmonIden
+"6063":
+  file: questitems.yml
+  name: Leygall
+"6064":
+  file: questitems.yml
+  name: Radoram
+"6065":
+  file: questitems.yml
+  name: Lemeat
+"6066":
+  file: questitems.yml
+  name: Steam Woodlock
+"6067":
+  file: questitems.yml
+  name: Steam Tears
+"6068":
+  file: questitems.yml
+  name: Knight Mineral
+"6069":
+  file: questitems.yml
+  name: Nyanyang
+"6070":
+  file: questitems.yml
+  name: Unknown Letter
+"6071":
+  file: questitems.yml
+  name: Unknown Cerificate
+"6072":
+  file: questitems.yml
+  name: Office Document
+"6200":
+  file: questitems.yml
+  name: WhiteTarin Root
+"6201":
+  file: questitems.yml
+  name: Astro-Paper
+"6202":
+  file: questitems.yml
+  name: Shining Star Stone
+"6203":
+  file: questitems.yml
+  name: Teeth of Dungeon Rat
+"6204":
+  file: questitems.yml
+  name: Big Snake Skull
+"6205":
+  file: questitems.yml
+  name: Shattered Spring Piece
+"6206":
+  file: questitems.yml
+  name: Testimony
+"6207":
+  file: questitems.yml
+  name: Big Blue Honey
+"6208":
+  file: questitems.yml
+  name: Sun Paper
+"6209":
+  file: questitems.yml
+  name: Envelope of Dunkan
+"6210":
+  file: questitems.yml
+  name: Nerbal Sword
+"6211":
+  file: questitems.yml
+  name: Medal
+"6212":
+  file: questitems.yml
+  name: Pendant of Faith
+"6213":
+  file: questitems.yml
+  name: Letter of Pardon
+"6214":
+  file: questitems.yml
+  name: Ring of Promise
+"6215":
+  file: questitems.yml
+  name: Silver Candle Stick
+"6216":
+  file: questitems.yml
+  name: Holy Branch
+"6217":
+  file: questitems.yml
+  name: Fire Feather
+"6218":
+  file: questitems.yml
+  name: Crest of Maal
+"6219":
+  file: questitems.yml
+  name: Troupe Badge
+"6220":
+  file: questitems.yml
+  name: Reco Paper
+"6221":
+  file: questitems.yml
+  name: Bone of Heaven
+"6222":
+  file: questitems.yml
+  name: Confidential Map
+"6223":
+  file: questitems.yml
+  name: Corrupted Flybat Claw
+"6224":
+  file: questitems.yml
+  name: Sworn Mia Doll
+"6225":
+  file: questitems.yml
+  name: Flaris Pumpkin Head
+"6226":
+  file: questitems.yml
+  name: Flaris Citizen Recommendation
+"6227":
+  file: questitems.yml
+  name: Super Furious Match
+"6228":
+  file: questitems.yml
+  name: Red Cardrin
+"6229":
+  file: questitems.yml
+  name: Combat Ranglass
+"6230":
+  file: questitems.yml
+  name: Good Knightler
+"6231":
+  file: questitems.yml
+  name: Clean Droil
+"6232":
+  file: questitems.yml
+  name: Core Guardieye
+"6233":
+  file: questitems.yml
+  name: Giga Ampere
+"6234":
+  file: questitems.yml
+  name: Hellish Sycale
+"6235":
+  file: questitems.yml
+  name: Clean Mongtear
+"6236":
+  file: questitems.yml
+  name: Tough Bomb Timer
+"6237":
+  file: questitems.yml
+  name: Red Socks
+"6319":
+  file: consumables.yml
+  name: Cupid Wings
 "6320":
   file: weapons.yml
   name: Heart Stone
@@ -5308,6 +5635,9 @@
 "10222":
   file: consumables.yml
   name: Heart Cracker
+"10223":
+  file: consumables.yml
+  name: Wings of an Angel
 "10224":
   file: consumables.yml
   name: Twister Cracker
@@ -5317,6 +5647,81 @@
 "10226":
   file: materials.yml
   name: Meteofy
+"10227":
+  file: questitems.yml
+  name: Book of Hero 1
+"10228":
+  file: questitems.yml
+  name: Book of Hero 2
+"10229":
+  file: questitems.yml
+  name: Book of Hero 3
+"10230":
+  file: questitems.yml
+  name: Book of Hero 4
+"10231":
+  file: questitems.yml
+  name: Book of Hero 5
+"10232":
+  file: questitems.yml
+  name: Book of Hero 6
+"10233":
+  file: questitems.yml
+  name: Trace of Hero 1
+"10234":
+  file: questitems.yml
+  name: Trace of Hero 2
+"10235":
+  file: questitems.yml
+  name: Trace of Hero 3
+"10236":
+  file: questitems.yml
+  name: Trace of Hero 4
+"10237":
+  file: questitems.yml
+  name: Trace of Hero 5
+"10238":
+  file: questitems.yml
+  name: Trace of Hero 6
+"10239":
+  file: questitems.yml
+  name: History of Hero 1
+"10240":
+  file: questitems.yml
+  name: History of Hero 2
+"10241":
+  file: questitems.yml
+  name: History of Hero 3
+"10242":
+  file: questitems.yml
+  name: History of Hero 4
+"10243":
+  file: questitems.yml
+  name: History of Hero 5
+"10244":
+  file: questitems.yml
+  name: History of Hero 6
+"10246":
+  file: questitems.yml
+  name: Staff of Venken
+"10247":
+  file: questitems.yml
+  name: Ribbon of Luellui
+"10248":
+  file: questitems.yml
+  name: Charm of Charms
+"10250":
+  file: questitems.yml
+  name: Sign of Ollien
+"10251":
+  file: questitems.yml
+  name: Sign of Burlox
+"10252":
+  file: questitems.yml
+  name: Sign of Losha
+"10253":
+  file: questitems.yml
+  name: Authentication of Hero
 "10255":
   file: weapons.yml
   name: Pre-BastardSword
@@ -5536,6 +5941,12 @@
 "10352":
   file: materials.yml
   name: Hair of Wormveduque
+"10353":
+  file: questitems.yml
+  name: Isruel Letter
+"10354":
+  file: questitems.yml
+  name: Rosy Paper
 "10355":
   file: materials.yml
   name: Hair of Serus Uriel
@@ -5557,9 +5968,54 @@
 "10361":
   file: weapons.yml
   name: Tritium Staff
+"10386":
+  file: questitems.yml
+  name: Bead of Sin
+"10387":
+  file: questitems.yml
+  name: Book of Technique
+"10394":
+  file: questitems.yml
+  name: Rankashu Letter
+"10395":
+  file: questitems.yml
+  name: Mine Entrance Card
+"10396":
+  file: questitems.yml
+  name: Piece of Prison Key 1
+"10397":
+  file: questitems.yml
+  name: Piece of Prison Key 2
+"10398":
+  file: questitems.yml
+  name: Piece of Prison Key 3
+"10399":
+  file: questitems.yml
+  name: Key to the Prison
+"10400":
+  file: questitems.yml
+  name: Keakoon Chief Sign
+"10401":
+  file: questitems.yml
+  name: Cargo of Drian
 "10402":
   file: materials.yml
   name: Shubrin Ring
+"10403":
+  file: questitems.yml
+  name: Pink Roach Fluid
+"10404":
+  file: questitems.yml
+  name: Blue Roach Fluid
+"10405":
+  file: questitems.yml
+  name: Wake Roach Water
+"10406":
+  file: questitems.yml
+  name: Pink Roach Queen Fluid
+"10407":
+  file: questitems.yml
+  name: Blue Roach Queen Fluid
 "10408":
   file: weapons.yml
   name: Qurion Sword
@@ -5578,9 +6034,33 @@
 "10413":
   file: weapons.yml
   name: Qurion Staff
+"10414":
+  file: questitems.yml
+  name: Bernard Card
+"10415":
+  file: questitems.yml
+  name: Cillin
+"10416":
+  file: questitems.yml
+  name: Ribenuum
+"10417":
+  file: questitems.yml
+  name: Pure Ribenuum
+"10418":
+  file: questitems.yml
+  name: Andre Card
+"10419":
+  file: questitems.yml
+  name: Triduum
+"10420":
+  file: questitems.yml
+  name: Kazen Card
 "10421":
   file: materials.yml
   name: Puran Necklace
+"10423":
+  file: questitems.yml
+  name: Roach Zone Card
 "10436":
   file: materials.yml
   name: ArekRing
@@ -5632,6 +6112,12 @@
 "10457":
   file: materials.yml
   name: Chimeradon Horn
+"10461":
+  file: consumables.yml
+  name: Pumpkin Soup
+"10462":
+  file: consumables.yml
+  name: Uriel Cold noodle
 "10481":
   file: armors.yml
   name: Cloak of Quick
@@ -5647,6 +6133,9 @@
 "10485":
   file: armors.yml
   name: Cloak of Low Wisdom
+"10490":
+  file: consumables.yml
+  name: Scroll of Sprint
 "15001":
   file: armors.yml
   name: Cloth Santa Hat (M)
@@ -6021,7 +6510,7 @@
   name: Turban (M)
 "16172":
   file: armors.yml
-  name: Fool Glasses
+  name: Fools Glasses
 "16173":
   file: armors.yml
   name: Ball Mask 09
@@ -6135,37 +6624,37 @@
   name: Red Soccer Uniform (M)
 "16224":
   file: armors.yml
-  name: Blue Soccer Shoes (M)
+  name: Red Soccer Footgear (M)
 "16226":
   file: armors.yml
   name: Red Soccer Uniform (F)
 "16227":
   file: armors.yml
-  name: Blue Soccer Shoes (F)
+  name: Red Soccer Footgear (F)
 "16229":
   file: armors.yml
   name: White Soccer Uniform (M)
 "16230":
   file: armors.yml
-  name: Red Soccer Shoes (M)
+  name: White Soccer Footgear (M)
 "16232":
   file: armors.yml
   name: White Soccer Uniform (F)
 "16233":
   file: armors.yml
-  name: Red Soccer Shoes (F)
+  name: White Soccer Footgear (F)
 "16235":
   file: armors.yml
   name: Blue Soccer Uniform (M)
 "16236":
   file: armors.yml
-  name: White Soccer Shoes (M)
+  name: Blue Soccer Footgear (M)
 "16238":
   file: armors.yml
   name: Blue Soccer Uniform (F)
 "16239":
   file: armors.yml
-  name: White Soccer Shoes (F)
+  name: Blue Soccer Footgear (F)
 "16241":
   file: armors.yml
   name: Yukata 2006 (M)
@@ -7284,7 +7773,7 @@
   name: School Swimsuit (F)
 "16972":
   file: armors.yml
-  name: School Swimsuit Hand (M)
+  name: School Swimsuit Hand (F)
 "16973":
   file: armors.yml
   name: Kid's sandal (F)
@@ -7822,15 +8311,234 @@
 "18095":
   file: armors.yml
   name: Teba Boots
+"18096":
+  file: questitems.yml
+  name: Grape of Flaris
+"18097":
+  file: questitems.yml
+  name: Grape of Saintmorning
+"18098":
+  file: questitems.yml
+  name: Grape of Darkon
+"18099":
+  file: consumables.yml
+  name: Beaujolai of Flaris
+"18100":
+  file: consumables.yml
+  name: Beaujolai of Saintmorning
+"18101":
+  file: consumables.yml
+  name: Beaujolai of Darkon
+"18102":
+  file: questitems.yml
+  name: Red Bang Head
+"18103":
+  file: questitems.yml
+  name: Luda Safe
+"18104":
+  file: questitems.yml
+  name: Meteoritill
+"18105":
+  file: questitems.yml
+  name: Script
+"18106":
+  file: questitems.yml
+  name: Lesson 1
+"18107":
+  file: questitems.yml
+  name: Lesson 2
+"18108":
+  file: questitems.yml
+  name: Lesson 3
+"18109":
+  file: questitems.yml
+  name: 1st Portrait Clue
+"18110":
+  file: questitems.yml
+  name: 2nd Portrait Clue
+"18111":
+  file: questitems.yml
+  name: Portrait of Radion
+"18112":
+  file: questitems.yml
+  name: Pieces of Wagsaac Bone
+"18113":
+  file: questitems.yml
+  name: Pieces of Wagsaac DNA
+"18114":
+  file: questitems.yml
+  name: Black Tombmarble
+"18115":
+  file: questitems.yml
+  name: Black Curse Book
+"18116":
+  file: questitems.yml
+  name: Black Heroca
+"18121":
+  file: questitems.yml
+  name: Book of Secret Disappearances
+"18122":
+  file: questitems.yml
+  name: Jinyoung Doll
+"18123":
+  file: questitems.yml
+  name: Disappearance Investigation
+"18126":
+  file: questitems.yml
+  name: Scholarship Application
+"18127":
+  file: questitems.yml
+  name: Stone Piece of Flaris
+"18128":
+  file: questitems.yml
+  name: Stone Piece of Saintmorning
+"18129":
+  file: questitems.yml
+  name: Stone Piece of Darkon
+"18130":
+  file: questitems.yml
+  name: Proof of Continent Division
+"18131":
+  file: questitems.yml
+  name: Recommendation of Gothante
+"18132":
+  file: questitems.yml
+  name: Piece of Strange Cloth
+"18133":
+  file: questitems.yml
+  name: 1st Book of Dread
+"18134":
+  file: questitems.yml
+  name: Fortress Map
+"18135":
+  file: questitems.yml
+  name: Heart of Thyred
+"18136":
+  file: questitems.yml
+  name: 2nd Book of Dread
+"18137":
+  file: questitems.yml
+  name: Temple Map
+"18138":
+  file: questitems.yml
+  name: Heart of Dasied
+"18139":
+  file: questitems.yml
+  name: 3rd Book of Dread
+"18140":
+  file: questitems.yml
+  name: Boggy Map
+"18141":
+  file: questitems.yml
+  name: Heart of Arvan
+"18142":
+  file: questitems.yml
+  name: Unknown Mark
+"18143":
+  file: questitems.yml
+  name: Piece of Unknown Cloth
+"18144":
+  file: questitems.yml
+  name: Book of Troubled History
 "18145":
   file: weapons.yml
   name: Entanale Sword
+"18146":
+  file: questitems.yml
+  name: Entanale Sword
+"18147":
+  file: questitems.yml
+  name: Symbol of Red Bang Troupe
+"18148":
+  file: questitems.yml
+  name: Necklace of Lord Bang
+"18149":
+  file: questitems.yml
+  name: Mia Report
+"18150":
+  file: questitems.yml
+  name: Disappearence Evidence
+"18151":
+  file: questitems.yml
+  name: Data Examined by Hakal
+"18152":
+  file: questitems.yml
+  name: Ancient Book
+"18153":
+  file: questitems.yml
+  name: Mysterious Red Gem
+"18154":
+  file: questitems.yml
+  name: Mysterious Black Gem
+"18155":
+  file: questitems.yml
+  name: Book of Laola
+"18156":
+  file: questitems.yml
+  name: Scroll of Gothante
+"18157":
+  file: questitems.yml
+  name: Emerald Mantis Egg
+"18164":
+  file: questitems.yml
+  name: Yorrn
+"18165":
+  file: questitems.yml
+  name: Doridoma Keratin
+"18166":
+  file: questitems.yml
+  name: Mushpang Secretion
 "18167":
   file: materials.yml
   name: Doridori Sushi
+"18169":
+  file: questitems.yml
+  name: Golden Helmet of Billaon
+"18171":
+  file: questitems.yml
+  name: Earring of Heren
+"18178":
+  file: questitems.yml
+  name: Trace of Offerep
+"18179":
+  file: questitems.yml
+  name: Feather of Magic Power
+"18180":
+  file: questitems.yml
+  name: Perfume of Lillip
+"18181":
+  file: questitems.yml
+  name: Piece of Key
+"18182":
+  file: questitems.yml
+  name: War Remenant
+"18183":
+  file: questitems.yml
+  name: War Scar
+"18184":
+  file: questitems.yml
+  name: Rubbed Copy of the Ivillis Revelation
+"18185":
+  file: questitems.yml
+  name: Pattern of Ivillis Guardian
 "18186":
   file: materials.yml
   name: Wedding Ring
+"20019":
+  file: consumables.yml
+  name: Lord's Cheer
+"20020":
+  file: consumables.yml
+  name: Lord's Blessing
+"20021":
+  file: consumables.yml
+  name: Lord's Love
+"20022":
+  file: consumables.yml
+  name: Lord's Shout
+"20023":
+  file: consumables.yml
+  name: Lord's Anger
 "20026":
   file: armors.yml
   name: Helmet of Dignity (M)
@@ -7855,6 +8563,9 @@
 "20034":
   file: armors.yml
   name: Boots of Dignity (F)
+"20036":
+  file: consumables.yml
+  name: Voter's Buff
 "20044":
   file: armors.yml
   name: Red Cherry Blossom Yukata (F)
@@ -7873,6 +8584,18 @@
 "20049":
   file: armors.yml
   name: Dragon Geta (M)
+"20052":
+  file: consumables.yml
+  name: Ice fakes(Strawberry)
+"20053":
+  file: consumables.yml
+  name: Ice fakes(Lemon)
+"20054":
+  file: consumables.yml
+  name: Ice fakes(Blue Hawaii)
+"20058":
+  file: consumables.yml
+  name: Melon Cookie
 "20059":
   file: materials.yml
   name: Melon Denish
@@ -7903,9 +8626,33 @@
 "20076":
   file: armors.yml
   name: Bathroom Slippers (F)
+"20088":
+  file: consumables.yml
+  name: Red Gumball
+"20089":
+  file: consumables.yml
+  name: Blue Gumball
+"20090":
+  file: consumables.yml
+  name: Yellow Gumball
 "20091":
   file: weapons.yml
   name: Pink Parasol
+"20094":
+  file: consumables.yml
+  name: Blue Macaron
+"20095":
+  file: consumables.yml
+  name: Pink Macaron
+"20096":
+  file: consumables.yml
+  name: Green Macaron
+"20097":
+  file: consumables.yml
+  name: Red Macaron
+"20098":
+  file: consumables.yml
+  name: Gold Macaron
 "20101":
   file: armors.yml
   name: Neko Soul Mask
@@ -8000,7 +8747,7 @@
   file: weapons.yml
   name: Lusaka's Crystal Yo-Yo
 "20180":
-  file: materials.yml
+  file: consumables.yml
   name: Christmas Cake
 "20182":
   file: materials.yml
@@ -8047,18 +8794,45 @@
 "20222":
   file: materials.yml
   name: Marksman's Earring of Power
+"20229":
+  file: consumables.yml
+  name: Purple Egg
+"20230":
+  file: consumables.yml
+  name: Green Egg
+"20231":
+  file: consumables.yml
+  name: Blue Egg
+"20232":
+  file: consumables.yml
+  name: Red Egg
+"20233":
+  file: consumables.yml
+  name: Sky Blue Egg
+"20234":
+  file: consumables.yml
+  name: Pink Egg
+"20235":
+  file: consumables.yml
+  name: Yellow Egg
+"20236":
+  file: consumables.yml
+  name: White Egg
+"20237":
+  file: consumables.yml
+  name: Gray Egg
+"20238":
+  file: consumables.yml
+  name: Orange Egg
 "20240":
   file: armors.yml
-  name: Clock Cloak(Japan)
+  name: Cloak of the Night Sky
 "20241":
   file: armors.yml
-  name: Rose Cloak(Japan)
+  name: Cloak of the Loving Rose
 "20242":
   file: armors.yml
-  name: Cherry Blossom(Japan)
-"20378":
-  file: weapons.yml
-  name: Ultimate Guardian Axe @
+  name: Cloak of Petals
 "20500":
   file: materials.yml
   name: Merahook
@@ -8310,7 +9084,7 @@
   name: Wand of Earthquake
 "22022":
   file: weapons.yml
-  name: Branch of Rhsis
+  name: Branch of Rhisis
 "22023":
   file: weapons.yml
   name: Staff of Luena Lab
@@ -9376,6 +10150,9 @@
 "22377":
   file: weapons.yml
   name: Ultimate Bloody Slayer @
+"22378":
+  file: weapons.yml
+  name: Ultimate Guardian Axe @
 "22379":
   file: weapons.yml
   name: Ultimate Historic Axe @
@@ -9745,6 +10522,42 @@
 "22519":
   file: weapons.yml
   name: Ultimate Vampire Yo-Yo
+"22520":
+  file: questitems.yml
+  name: Diary of adventurer
+"22521":
+  file: questitems.yml
+  name: Decoding Document
+"22522":
+  file: questitems.yml
+  name: Decoded Document
+"22523":
+  file: questitems.yml
+  name: Battle Toadrin Heart
+"22524":
+  file: questitems.yml
+  name: Bartholomew Hunt's Second Diary
+"22525":
+  file: questitems.yml
+  name: Second Journal
+"22527":
+  file: questitems.yml
+  name: Scroll of Dire Information
+"22528":
+  file: questitems.yml
+  name: Piece of the third journal
+"22529":
+  file: questitems.yml
+  name: Piece of the third journal
+"22530":
+  file: questitems.yml
+  name: Three Shaduwar journals
+"22531":
+  file: questitems.yml
+  name: Magic Liquor
+"22532":
+  file: questitems.yml
+  name: Red Powder
 "22533":
   file: armors.yml
   name: Bileire Helmet (M)
@@ -9937,6 +10750,9 @@
 "22596":
   file: armors.yml
   name: Lypine Boots (F)
+"22597":
+  file: questitems.yml
+  name: Fighter's Mysterious Toolbox
 "26104":
   file: armors.yml
   name: Cats Hat+ (M)
@@ -9961,6 +10777,54 @@
 "26111":
   file: armors.yml
   name: Cats Shoes+ (F)
+"26114":
+  file: consumables.yml
+  name: Scroll of Combat 20
+"26115":
+  file: consumables.yml
+  name: Scroll of Combat 50
+"26220":
+  file: consumables.yml
+  name: Potion of Recklessness
+"26221":
+  file: consumables.yml
+  name: Potion of Swiftness
+"26222":
+  file: consumables.yml
+  name: Potion of Accuracy
+"26223":
+  file: consumables.yml
+  name: Potion of Clarity
+"26224":
+  file: consumables.yml
+  name: Elixir of the Tiger
+"26225":
+  file: consumables.yml
+  name: Elixir of the Rabbit
+"26226":
+  file: consumables.yml
+  name: Elixir of the Fox
+"26227":
+  file: consumables.yml
+  name: Elixir of the Lion
+"26228":
+  file: consumables.yml
+  name: Elixir of Stone
+"26229":
+  file: consumables.yml
+  name: Elixir of Anti-Magic
+"26230":
+  file: consumables.yml
+  name: Elixir of Flowing Thought
+"26231":
+  file: consumables.yml
+  name: Elixir of the Sorceror
+"26232":
+  file: consumables.yml
+  name: Elixir of Evasion
+"26233":
+  file: consumables.yml
+  name: Concoction of Profuse Bleeding
 "26234":
   file: weapons.yml
   name: Sword of Ivillines
@@ -10195,6 +11059,9 @@
 "26402":
   file: materials.yml
   name: Heart Cookies
+"26418":
+  file: consumables.yml
+  name: Milk Chocolate
 "26423":
   file: materials.yml
   name: Pumpkin Pie
@@ -10210,6 +11077,12 @@
 "26453":
   file: materials.yml
   name: Battery
+"26454":
+  file: consumables.yml
+  name: Silver Battery
+"26455":
+  file: consumables.yml
+  name: Gold Battery
 "26457":
   file: materials.yml
   name: Mysterious Pill
@@ -10243,6 +11116,36 @@
 "26472":
   file: materials.yml
   name: Peision Necklace
+"26503":
+  file: consumables.yml
+  name: Purple Cotton Candy
+"26504":
+  file: consumables.yml
+  name: Blue Cotton Candy
+"26505":
+  file: consumables.yml
+  name: Green Cotton Candy
+"26506":
+  file: consumables.yml
+  name: Red Cotton Candy
+"26507":
+  file: consumables.yml
+  name: Sky-Blue Cotton Candy
+"26508":
+  file: consumables.yml
+  name: Pink Cotton Candy
+"26509":
+  file: consumables.yml
+  name: Yellow Cotton Candy
+"26510":
+  file: consumables.yml
+  name: White Cotton Candy
+"26511":
+  file: consumables.yml
+  name: Gray Cotton Candy
+"26512":
+  file: consumables.yml
+  name: Orange Cotton Candy
 "26525":
   file: materials.yml
   name: Red Crystal
@@ -10255,15 +11158,66 @@
 "26528":
   file: materials.yml
   name: Blue Crystal
+"26531":
+  file: consumables.yml
+  name: Feed Bag (6 hrs)
 "26535":
   file: armors.yml
   name: Cloak of Bravery
 "26536":
   file: armors.yml
   name: Cloak of honor
+"26537":
+  file: consumables.yml
+  name: 7 Day Scroll of Party EXP
+"26538":
+  file: consumables.yml
+  name: 15 Day Scroll of Party EXP
+"26539":
+  file: consumables.yml
+  name: 7 Day Scroll of Party Skill
+"26540":
+  file: consumables.yml
+  name: 15 Day Scroll of Party Skill
+"26544":
+  file: consumables.yml
+  name: Purple Cotton Candy (Event)
+"26545":
+  file: consumables.yml
+  name: Blue Cotton Candy (Event)
+"26546":
+  file: consumables.yml
+  name: Green Cotton Candy (Event)
+"26547":
+  file: consumables.yml
+  name: Red Cotton Candy (Event)
+"26548":
+  file: consumables.yml
+  name: Sky-Blue Cotton Candy (Event)
+"26549":
+  file: consumables.yml
+  name: Pink Cotton Candy (Event)
+"26550":
+  file: consumables.yml
+  name: Yellow Cotton Candy (Event)
+"26551":
+  file: consumables.yml
+  name: White Cotton Candy (Event)
+"26552":
+  file: consumables.yml
+  name: Gray Cotton Candy (Event)
+"26553":
+  file: consumables.yml
+  name: Orange Cotton Candy (Event)
+"26560":
+  file: consumables.yml
+  name: Copper Battery (1 day)
 "26565":
   file: materials.yml
   name: Collector (14 days)
+"26573":
+  file: consumables.yml
+  name: Feed for (S)class pet
 "26594":
   file: materials.yml
   name: Fire Card (D)
@@ -10324,6 +11278,12 @@
 "26613":
   file: materials.yml
   name: Land Card (A)
+"26615":
+  file: consumables.yml
+  name: Cooked Corn
+"26616":
+  file: consumables.yml
+  name: Cooked Octopus
 "26644":
   file: weapons.yml
   name: Apple Wheat-Gluten
@@ -10354,15 +11314,54 @@
 "26660":
   file: armors.yml
   name: Event Wind Wig (Blue) (M)
+"26663":
+  file: consumables.yml
+  name: Sugar Boost
+"26664":
+  file: consumables.yml
+  name: Flash Charm
 "26665":
   file: weapons.yml
   name: Blood Red Umbrella
+"26666":
+  file: consumables.yml
+  name: FLY
+"26667":
+  file: consumables.yml
+  name: FOR
+"26668":
+  file: consumables.yml
+  name: FUN
+"26720":
+  file: consumables.yml
+  name: Power of Love
+"26721":
+  file: consumables.yml
+  name: Power of Love
+"26722":
+  file: consumables.yml
+  name: Power of Love
+"26723":
+  file: consumables.yml
+  name: Power of Love
+"26730":
+  file: consumables.yml
+  name: Blessing of Love
+"26731":
+  file: consumables.yml
+  name: Blessing of Love
+"26740":
+  file: consumables.yml
+  name: Miracle of Love
 "26745":
   file: materials.yml
   name: Snow Flake
 "26748":
   file: materials.yml
   name: Wish Roll
+"26749":
+  file: consumables.yml
+  name: Soy Bean
 "26750":
   file: materials.yml
   name: Soju
@@ -10376,8 +11375,11 @@
   file: materials.yml
   name: Chocolate of Love
 "26765":
-  file: materials.yml
+  file: consumables.yml
   name: Love Chocolate
+"26771":
+  file: consumables.yml
+  name: Super Star Candy
 "26772":
   file: materials.yml
   name: Herb of Life
@@ -10390,6 +11392,27 @@
 "26854":
   file: materials.yml
   name: Tiny Tanuki
+"26856":
+  file: consumables.yml
+  name: "Master and Apprentice Link: Level 1"
+"26857":
+  file: consumables.yml
+  name: "Master and Apprentice Link: Level 2"
+"26858":
+  file: consumables.yml
+  name: "Master and Apprentice Link: Level 3"
+"26898":
+  file: consumables.yml
+  name: Delicious Cookie (F)
+"26899":
+  file: consumables.yml
+  name: Delicious Cookie (I)
+"26900":
+  file: consumables.yml
+  name: Delicious Cookie (T)
+"26901":
+  file: consumables.yml
+  name: Delicious Cookie (A)
 "26902":
   file: armors.yml
   name: FITA Cloak
@@ -10402,12 +11425,51 @@
 "26954":
   file: materials.yml
   name: Lost lucky bag
+"26957":
+  file: consumables.yml
+  name: Green Root Beer
+"30016":
+  file: consumables.yml
+  name: Flask of the Tiger
+"30017":
+  file: consumables.yml
+  name: Flask of the Rabbit
+"30018":
+  file: consumables.yml
+  name: Flask of the Fox
+"30019":
+  file: consumables.yml
+  name: Flask of the Lion
+"30020":
+  file: consumables.yml
+  name: Flask of Stone
 "30026":
   file: materials.yml
   name: Secret Medicine 1
 "30027":
   file: materials.yml
   name: Secret Medicine 2
+"30035":
+  file: consumables.yml
+  name: Red Angel
+"30036":
+  file: consumables.yml
+  name: Blue Angel
+"30037":
+  file: consumables.yml
+  name: Green Angel
+"30038":
+  file: consumables.yml
+  name: White Angel
+"30071":
+  file: consumables.yml
+  name: Nescafe 3 in1 Potion (Original)
+"30072":
+  file: consumables.yml
+  name: Nescafe 3 in1 Potion (Intense)
+"30073":
+  file: consumables.yml
+  name: Nescafe 3 in1 Potion (Sweet & Creamy)
 "30077":
   file: armors.yml
   name: 2008 Yukata (M)
@@ -10480,3 +11542,24 @@
 "30199":
   file: armors.yml
   name: Red Swimwear (M)
+"30319":
+  file: questitems.yml
+  name: Recipe of legend-Introduction
+"30320":
+  file: questitems.yml
+  name: Recipe of legend-Material
+"30321":
+  file: questitems.yml
+  name: Recipe of legend-Cookery
+"30322":
+  file: questitems.yml
+  name: Recipe of legend-Decoration
+"30323":
+  file: questitems.yml
+  name: Recipe of legend-Appreciation
+"30324":
+  file: questitems.yml
+  name: Damaged recipe
+"30325":
+  file: questitems.yml
+  name: Completed recipe

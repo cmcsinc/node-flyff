@@ -48,7 +48,6 @@ states:
   "9":
     say:
       - 382
-    source: "Say ( 382 );\r\n\tAddAnswer( 10 );"
   "10":
     speak:
       - 383

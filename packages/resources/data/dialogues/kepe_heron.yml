@@ -15,7 +15,7 @@ states:
       - label: 9
       - label: 10
       - label: 13
-    source: "//AddKey( \"ÁË »çÇÔ\" );\r
+    source: "//AddKey( \"죄 사함\" );\r
 
       \tAddKey( 9 );\r
 

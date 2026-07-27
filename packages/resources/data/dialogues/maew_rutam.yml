@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: maew_rutam
+states:
+  "0":
+    speak:
+      - 1312
+    timer: 15
+    source: "Speak( NpcId(), 1312 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1313
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1314
+  "10":
+    speak:
+      - 1315
+    exit: true
+    source: "Speak( NpcId(), 1315 );\r\n\tExit();"

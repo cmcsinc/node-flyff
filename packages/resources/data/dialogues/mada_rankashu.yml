@@ -21,7 +21,7 @@ states:
 
       \t{\r
 
-      \tAddCondKey( 336,39 );\r
+      \t\tAddCondKey( 336,39 );\r
 
       \t}\r
 
@@ -39,7 +39,7 @@ states:
 
       \t{\r
 
-      \tSay ( 338 );\r
+      \t\tSay ( 338 );\r
 
       \t}\r
 
@@ -47,7 +47,7 @@ states:
 
       \t{\r
 
-      \tSay ( 339 );\r
+      \t\tSay ( 339 );\r
 
       \t}"
   "5": {}
@@ -70,7 +70,7 @@ states:
     exit: true
     source: "Say( 343 );\r
 
-      \tif( GetEmptyInventoryNum() < 1 )\r
+      \tif (GetEmptyInventoryNum() < 1)\r
 
       \t{\r
 

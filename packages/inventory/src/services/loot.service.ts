@@ -52,6 +52,14 @@ export interface LootServiceDeps {
   createItemSerializer?: CreateItemSnapshotSerializer;
   /** Injector seam for tests; defaults to `Date.now`. */
   now?: () => number;
+  /**
+   * Item-acquire client notification. Fired after a successful pickup so the
+   * compose root can emit a `SNAPSHOTTYPE_TEXT` "you acquired X" chat line.
+   * Emulator addition -- v19 C++ sends no item-name text on pickup, only
+   * CREATEITEM + the pickup sound (see memory `v19-loot-quest-acquire-notice`).
+   * Optional -- no-op in tests.
+   */
+  onAcquireItem?: (player: CPlayer, itemId: number, count: number) => void;
 }
 
 /**
@@ -151,6 +159,7 @@ export class LootService {
         ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.objid)
         : buildUpdateItemCount(player.m_idPlayer, r.objid, r.count),
     );
+    this.deps.onAcquireItem?.(player, item.m_dwItemId, r.count);
     this.deps.itemManager.remove(item.m_idObject);
     this.motion(player);
   }

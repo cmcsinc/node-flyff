@@ -1,0 +1,53 @@
+_version: "1.0"
+prefix: maew_isilis
+states:
+  "0":
+    speak:
+      - 1379
+    timer: 15
+    source: "Speak( NpcId(), 1379 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1381
+  "4":
+    say:
+      - 1380
+  "5": {}
+  "6": {}
+  "7": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState( QUEST_HEROFLOR_TRN6 ) == QS_END && GetPlayerJob() ==
+      28 && GetPlayerLvl() == 130 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 36 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 1382
+  "10":
+    speak:
+      - 1383
+    exit: true
+    source: "Speak( NpcId(), 1383 );\r\n\tExit();"

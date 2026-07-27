@@ -215,5 +215,9 @@
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\systems\\ai.system.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\byte-count-check.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\dialogInterpreter.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\questText.loader.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\quest.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\items.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\questConditions.test.ts": "fail"
 }

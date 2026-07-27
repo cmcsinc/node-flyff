@@ -25,7 +25,6 @@ states:
   "9":
     say:
       - 281
-    source: "Say( 281 );\r\n\tAddAnswer( 10 );"
   "10":
     speak:
       - 282

@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: masp_tomas
+states:
+  "0":
+    speak:
+      - 1600
+    timer: 15
+    source: "Speak( NpcId(), 1600 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1601
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1602
+  "10":
+    speak:
+      - 1603
+    exit: true
+    source: "Speak( NpcId(), 1603 );\r\n\tExit();"

@@ -31,7 +31,7 @@ states:
 
       \t\t{\r
 
-      \t\t\r
+      \r
 
       \t\t\tif( IsSetQuest( QUEST_DREADMUTE ) == TRUE && GetQuestState(
       QUEST_DREADMUTE ) == QS_END )\r
@@ -53,7 +53,7 @@ states:
 
       \t\t\t\t\t}\r
 
-      \t\t\t\r
+      \r
 
       \r
 
@@ -62,7 +62,7 @@ states:
 
       \t\t\t\t\t{\r
 
-      \t\t\t\t\t\t\t\t\r
+      \r
 
       \t\t\t\t\t}\r
 
@@ -96,7 +96,7 @@ states:
 
       \t\t\t}\r
 
-      \t\t\t\t\r
+      \r
 
       \t\t\telse\r
 

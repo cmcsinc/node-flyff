@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_zoro
+states:
+  "0":
+    speak:
+      - 1651
+    timer: 15
+    source: "Speak( NpcId(), 1651 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1652
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1654
+  "10":
+    speak:
+      - 1655
+    exit: true
+    source: "Speak( NpcId(), 1655 );\r\n\tExit();"

@@ -1,0 +1,43 @@
+_version: "1.0"
+prefix: maew_enterredrobeman
+states:
+  "0":
+    speak:
+      - 1818
+    timer: 15
+    source: "Speak(NpcId(), 1818);\r
+
+      \tSetScriptTimer(15);"
+  "1":
+    launch_quest: true
+    source: "LaunchQuest();\r
+
+      \t//\tMonHuntStartParty( QUEST_BOSS_LV2, QS_BEGIN, QS_END, 1 )\r
+
+      \t//\tEnterInstanceDungeon ( WI_INSTANCE_RUSTIA, 692,100,1099);"
+  "2":
+    keys:
+      - label: 9
+      - label: 1812
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1819
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1820
+  "10":
+    speak:
+      - 1821
+    exit: true
+    source: "Speak(NpcId(), 1821);\r\n\tExit();"
+  "1812":
+    say:
+      - 1813
+    keys:
+      - label: 10

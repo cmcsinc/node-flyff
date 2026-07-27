@@ -1,0 +1,53 @@
+_version: "1.0"
+prefix: maew_romain
+states:
+  "0":
+    speak:
+      - 1399
+    timer: 15
+    source: "Speak( NpcId(), 1399 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1401
+  "4":
+    say:
+      - 1400
+  "5": {}
+  "6": {}
+  "7": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState( QUEST_HEROMENT_TRN5 ) == QS_END && GetPlayerJob() ==
+      30 && GetPlayerLvl() == 130 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 38 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 1402
+  "10":
+    speak:
+      - 1403
+    exit: true
+    source: "Speak( NpcId(), 1403 );\r\n\tExit();"

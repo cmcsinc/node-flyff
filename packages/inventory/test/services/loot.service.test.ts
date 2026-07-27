@@ -178,4 +178,40 @@ describe('LootService', () => {
     assert.equal(sent.length, 0);
     assert.equal(removedIds.length, 0, 'pile stays for retry');
   });
+
+  it('onAcquireItem fires after a successful item pickup (not gold, not bag-full)', () => {
+    // Item pickup -> CREATEITEM + onAcquireItem(itemId, count).
+    const calls: Array<[number, number]> = [];
+    const item = {
+      m_idObject: 0x80000009, m_dwItemId: 2950, m_nItemNum: 3, m_idOwn: NULL_ID,
+      m_dwDropTime: Date.now(), m_vPos: { x: 100, y: 0, z: 100 }, m_nZoneId: 1,
+    };
+    const player = {
+      m_idPlayer: 7, m_nGold: 0, m_idDestObj: item.m_idObject, m_fArrivalRange: 0,
+      m_nZoneId: 1, m_vPos: { x: 100, y: 0, z: 100 },
+    } as unknown as CPlayer;
+    const loot = new LootService({
+      inventoryService: { addItem: () => ({ ok: true, slot: 0, objid: 1, itemId: 2950, count: 3, isNew: true }) } as unknown as InventoryService,
+      itemManager: { get: () => item, remove: () => item } as unknown as ItemManager,
+      playerManager: { sendTo: () => {} } as unknown as PlayerManager,
+      zoneManager: { broadcastAround: () => 1 } as unknown as ZoneManager,
+      onAcquireItem: (_p, itemId, count) => { calls.push([itemId, count]); },
+    });
+    loot.checkArrival(player);
+    assert.deepEqual(calls, [[2950, 3]]);
+
+    // Gold pickup -> SETPOINTPARAM only, onAcquireItem NOT fired.
+    calls.length = 0;
+    const gold = { ...item, m_dwItemId: 13, m_nItemNum: 50 };
+    const p2 = { ...player, m_idDestObj: gold.m_idObject } as unknown as CPlayer;
+    const lootGold = new LootService({
+      inventoryService: { addItem: () => ({ ok: false, reason: 'invalid' }), addGold: () => {} } as unknown as InventoryService,
+      itemManager: { get: () => gold, remove: () => gold } as unknown as ItemManager,
+      playerManager: { sendTo: () => {} } as unknown as PlayerManager,
+      zoneManager: { broadcastAround: () => 1 } as unknown as ZoneManager,
+      onAcquireItem: (_p, itemId, count) => { calls.push([itemId, count]); },
+    });
+    lootGold.checkArrival(p2);
+    assert.equal(calls.length, 0, 'gold path does not fire onAcquireItem');
+  });
 });

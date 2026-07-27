@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
-import { canBegin, isComplete, type InventoryOps } from '../../src/services/questConditions';
+import { canBegin, isComplete, isNextLevel, type InventoryOps } from '../../src/services/questConditions';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import type { QuestCommand, QuestDef } from '@flyff/resources';
 import type { CharacterRow } from '@flyff/database';
@@ -112,5 +112,34 @@ describe('questConditions -- isComplete', () => {
     assert.deepEqual(isComplete(poor, rt(), d, inv()), { ok: false, reason: 'gold' });
     const rich = player(); rich.m_nGold = 1000;
     assert.equal(isComplete(rich, rt(), d, inv()).ok, true);
+  });
+});
+
+describe('questConditions -- isNextLevel', () => {
+  // __IsNextLevelQuest (Mover.cpp:10367): level < min && level + 5 >= min.
+  it('is next-level when within 5 levels below the min', () => {
+    const d = def(1, [cmd('SetBeginCondLevel', 10, 20)]);
+    assert.equal(isNextLevel(player({ level: 7 }), d, inv()), true);   // 7 < 10, 7+5 >= 10
+    assert.equal(isNextLevel(player({ level: 9 }), d, inv()), true);   // 9 < 10, 9+5 >= 10
+  });
+
+  it('is not next-level when the begin level range is met (begin-eligible instead)', () => {
+    const d = def(1, [cmd('SetBeginCondLevel', 10, 20)]);
+    assert.equal(isNextLevel(player({ level: 10 }), d, inv()), false);
+    assert.equal(canBegin(player({ level: 10 }), d, inv()).ok, true);
+  });
+
+  it('is not next-level when more than 5 levels below the min', () => {
+    const d = def(1, [cmd('SetBeginCondLevel', 10, 20)]);
+    assert.equal(isNextLevel(player({ level: 4 }), d, inv()), false);  // 4+5 = 9 < 10
+  });
+
+  it('is not next-level when a non-level gate fails', () => {
+    const d = def(1, [cmd('SetBeginCondLevel', 10, 20), cmd('SetBeginCondJob', 5, 6)]);
+    assert.equal(isNextLevel(player({ level: 7, class: 7 }), d, inv()), false);
+  });
+
+  it('is not next-level when the quest has no level gate', () => {
+    assert.equal(isNextLevel(player({ level: 1 }), def(1, []), inv()), false);
   });
 });

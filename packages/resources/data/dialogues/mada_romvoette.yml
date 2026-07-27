@@ -24,7 +24,7 @@ states:
   "6": {}
   "8":
     exit: true
-    source: "if( GetQuestState(QUEST_HERORIN_TRN5) == QS_END && GetPlayerJob() == 3
+    source: "if( GetQuestState(QUEST_HERORIN_TRN4) == QS_END && GetPlayerJob() == 3
       && GetPlayerLvl() == 60 )\r
 
       \t{\r

@@ -1491,7 +1491,7 @@
   name: Post Box
 "874":
   file: monsters.yml
-  name: Cyclops X
+  name: CyclopsX
 "875":
   file: npcs.yml
   name: Mysterious Robed Boy
@@ -1977,7 +1977,7 @@
   name: Patches
 "1036":
   file: npcs.yml
-  name: Cute Robot
+  name: Baby Robot
 "1037":
   file: npcs.yml
   name: Baby Bang
@@ -2338,9 +2338,1002 @@
 "1156":
   file: npcs.yml
   name: Tiger Cub
+"1157":
+  file: monsters.yml
+  name: Sakai
+"1158":
+  file: monsters.yml
+  name: Vile Thorn
+"1159":
+  file: monsters.yml
+  name: Grumble Mauler
+"1160":
+  file: monsters.yml
+  name: Blackweb Shade
+"1161":
+  file: monsters.yml
+  name: Immovable Crag
+"1162":
+  file: monsters.yml
+  name: Dire Razor
+"1163":
+  file: monsters.yml
+  name: Guan Yu Heavyblade
 "1164":
   file: npcs.yml
   name: Laveau
 "1165":
   file: npcs.yml
   name: Bone Golem
+"1166":
+  file: npcs.yml
+  name: Mocomochi
+"1167":
+  file: npcs.yml
+  name: Soul Dancer
+"1168":
+  file: monsters.yml
+  name: Clockworks Butler
+"1169":
+  file: npcs.yml
+  name: "[Twisted Soul] Orcus"
+"1170":
+  file: npcs.yml
+  name: "[Tormented Soul] Nergal"
+"1171":
+  file: npcs.yml
+  name: "[Demonic Soul] Hel"
+"1172":
+  file: npcs.yml
+  name: "[Perverted Soul] Morrigan"
+"1173":
+  file: npcs.yml
+  name: "[Anguished Soul] Mara"
+"1174":
+  file: npcs.yml
+  name: "[Violent Soul] Ghed"
+"1175":
+  file: npcs.yml
+  name: "[God of Death] Ankou"
+"1176":
+  file: monsters.yml
+  name: Hundur Sharpfoot
+"1177":
+  file: monsters.yml
+  name: Samoset
+"1178":
+  file: monsters.yml
+  name: Kyouchish
+"1179":
+  file: monsters.yml
+  name: Kanonicus
+"1180":
+  file: monsters.yml
+  name: Mage Redcloud
+"1181":
+  file: monsters.yml
+  name: Taiaha
+"1182":
+  file: monsters.yml
+  name: Chief Keokuk
+"1183":
+  file: npcs.yml
+  name: Dumb Bull Matador
+"1184":
+  file: monsters.yml
+  name: Rampaging Dumb Bull
+"1185":
+  file: npcs.yml
+  name: "[Public Office] Ruidan"
+"1186":
+  file: npcs.yml
+  name: "[Village Chief] Huntrang"
+"1187":
+  file: npcs.yml
+  name: "[Quest Office] Miorang"
+"1188":
+  file: npcs.yml
+  name: "[Magic] Mawrang"
+"1189":
+  file: npcs.yml
+  name: "[Weapon] Kanrang"
+"1190":
+  file: npcs.yml
+  name: "[Arena Manager] Rarbadan"
+"1191":
+  file: npcs.yml
+  name: Rergantus
+"1192":
+  file: npcs.yml
+  name: Miriun
+"1193":
+  file: npcs.yml
+  name: "[Armor] Karang"
+"1194":
+  file: npcs.yml
+  name: "[Shield] Kurang"
+"1195":
+  file: npcs.yml
+  name: "[Station] Heirang"
+"1196":
+  file: npcs.yml
+  name: "[Food] Arang"
+"1197":
+  file: npcs.yml
+  name: "[General] Maurang"
+"1198":
+  file: npcs.yml
+  name: "[Force Master] Bato"
+"1199":
+  file: npcs.yml
+  name: "[Crackshooter Master] Meiarun"
+"1200":
+  file: npcs.yml
+  name: "[Arcanist Master] Howrang"
+"1201":
+  file: npcs.yml
+  name: "[Upgrade Specialist] Rutam"
+"1202":
+  file: npcs.yml
+  name: "[Jewel Manager] Raia"
+"1203":
+  file: npcs.yml
+  name: "[Housing Specialist] Harlie"
+"1204":
+  file: npcs.yml
+  name: "[Guild House Manager] Rodella"
+"1205":
+  file: npcs.yml
+  name: "[Card Master] Epie"
+"1206":
+  file: npcs.yml
+  name: "[Makeup Artist] Huri"
+"1207":
+  file: npcs.yml
+  name: "[Hair Designer] Gelga"
+"1208":
+  file: npcs.yml
+  name: "[Red Chip Merchant] Ruoboru"
+"1209":
+  file: monsters.yml
+  name: Needle Tail Dragon
+"1210":
+  file: npcs.yml
+  name: Monument of Death
+"1211":
+  file: npcs.yml
+  name: "[Legendary Golden Weapon Vendor] Romina"
+"1212":
+  file: npcs.yml
+  name: Cheirang
+"1213":
+  file: npcs.yml
+  name: Emblum
+"1214":
+  file: npcs.yml
+  name: Karl
+"1215":
+  file: npcs.yml
+  name: Branka
+"1216":
+  file: npcs.yml
+  name: Isillis
+"1217":
+  file: npcs.yml
+  name: Romain
+"1218":
+  file: monsters.yml
+  name: Muran Defender
+"1219":
+  file: monsters.yml
+  name: Muran Guardian
+"1220":
+  file: npcs.yml
+  name: Piyo
+"1221":
+  file: npcs.yml
+  name: Udi
+"1222":
+  file: npcs.yml
+  name: "[Event] Baby Sheep"
+"1274":
+  file: npcs.yml
+  name: No info
+"1275":
+  file: npcs.yml
+  name: Myorang
+"1276":
+  file: monsters.yml
+  name: Event Mia
+"1277":
+  file: monsters.yml
+  name: Event Cardpuppet
+"1278":
+  file: monsters.yml
+  name: Event Rangda
+"1279":
+  file: monsters.yml
+  name: Pinata
+"1280":
+  file: npcs.yml
+  name: "[Rock Scissor Paper NPC]Demian"
+"1281":
+  file: npcs.yml
+  name: Chameleon
+"1282":
+  file: npcs.yml
+  name: Light
+"1283":
+  file: npcs.yml
+  name: Dark
+"1284":
+  file: npcs.yml
+  name: "[Guild House Manager] Loa"
+"1285":
+  file: npcs.yml
+  name: "[Guild House Manager] Troy"
+"1286":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_DOOR_01
+"1287":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_DOOR_02
+"1288":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_DOOR_03
+"1289":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_DOOR_04
+"1290":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_DOOR_05
+"1291":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_01
+"1292":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_02
+"1293":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_03
+"1294":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_04
+"1295":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_05
+"1296":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_06
+"1297":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_07
+"1298":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_08
+"1299":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_DOOR_09
+"1300":
+  file: npcs.yml
+  name: MI_MaEw_GUILDHOUSE_DOOR_01
+"1301":
+  file: npcs.yml
+  name: MI_MaEw_GUILDHOUSE_DOOR_02
+"1302":
+  file: npcs.yml
+  name: MI_MaEw_GUILDHOUSE_DOOR_03
+"1303":
+  file: npcs.yml
+  name: Romero
+"1304":
+  file: npcs.yml
+  name: Kirkman
+"1305":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_NOTICE_01
+"1306":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_NOTICE_02
+"1307":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_NOTICE_03
+"1308":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_NOTICE_04
+"1309":
+  file: npcs.yml
+  name: MI_MaFl_GUILDHOUSE_NOTICE_05
+"1310":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_01
+"1311":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_02
+"1312":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_03
+"1313":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_04
+"1314":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_05
+"1315":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_06
+"1316":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_07
+"1317":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_08
+"1318":
+  file: npcs.yml
+  name: MI_MaSa_GUILDHOUSE_NOTICE_09
+"1319":
+  file: npcs.yml
+  name: MI_MaEw_GUILDHOUSE_NOTICE_01
+"1320":
+  file: npcs.yml
+  name: MI_MaEw_GUILDHOUSE_NOTICE_02
+"1321":
+  file: npcs.yml
+  name: MI_MaEw_GUILDHOUSE_NOTICE_03
+"1322":
+  file: npcs.yml
+  name: "[Event NPC]Big Buff Pang"
+"1323":
+  file: monsters.yml
+  name: R. DeFeo
+"1324":
+  file: monsters.yml
+  name: Bloody Mary
+"1325":
+  file: npcs.yml
+  name: Braaaaains
+"1326":
+  file: npcs.yml
+  name: MI_GUILD_DOOR
+"1327":
+  file: npcs.yml
+  name: Brooks
+"1328":
+  file: npcs.yml
+  name: ATMA
+"1329":
+  file: npcs.yml
+  name: "[Exchange NPC] Chance"
+"1330":
+  file: monsters.yml
+  name: Male Zombie
+"1331":
+  file: monsters.yml
+  name: Female Zombie
+"1332":
+  file: npcs.yml
+  name: MI_MIDDLE_GUILDHOUSE_DOOR_01
+"1333":
+  file: npcs.yml
+  name: MI_MIDDLE_GUILDHOUSE_DOOR_02
+"1334":
+  file: npcs.yml
+  name: MI_MIDDLE_GUILDHOUSE_DOOR_03
+"1335":
+  file: monsters.yml
+  name: Gobbler
+"1336":
+  file: npcs.yml
+  name: Big Red
+"1337":
+  file: npcs.yml
+  name: "[Expedition Leader] Rukas"
+"1338":
+  file: npcs.yml
+  name: Pinanoco
+"1339":
+  file: npcs.yml
+  name: Raundas
+"1340":
+  file: npcs.yml
+  name: Basilisk of the Great Maw
+"1341":
+  file: monsters.yml
+  name: Wild Sunbaked Rhino
+"1342":
+  file: npcs.yml
+  name: Sunbaked Rhino Warrior
+"1343":
+  file: npcs.yml
+  name: Desert Spirit of the Commander
+"1344":
+  file: monsters.yml
+  name: Desert Spirit of the Fallen Mage
+"1345":
+  file: npcs.yml
+  name: Desert Spirit of the Sage
+"1346":
+  file: npcs.yml
+  name: Warrior Sand Skitter
+"1347":
+  file: npcs.yml
+  name: "[Kalgas Guardian] Astaroth"
+"1348":
+  file: npcs.yml
+  name: Baby Kargo
+"1349":
+  file: npcs.yml
+  name: "[Kalgas Guardian] Malphas"
+"1350":
+  file: npcs.yml
+  name: Kalgas Kargo Ripper
+"1351":
+  file: npcs.yml
+  name: Kalgas Cave Creeper
+"1352":
+  file: npcs.yml
+  name: Kalgas Hound
+"1353":
+  file: npcs.yml
+  name: Kalgas Wretched Soul
+"1354":
+  file: npcs.yml
+  name: "[God of Wrath] Kalgas"
+"1355":
+  file: monsters.yml
+  name: Desert Spirit of the Fallen Soldier
+"1356":
+  file: monsters.yml
+  name: Wild Sand Skitter
+"1357":
+  file: npcs.yml
+  name: Idelruna
+"1358":
+  file: npcs.yml
+  name: Gigaka
+"1359":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Bang"
+"1360":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Wagsaac"
+"1361":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Red Mantis"
+"1362":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Jack the Hammer"
+"1363":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Bucrow"
+"1364":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Hobo"
+"1365":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Rockepeller"
+"1366":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Steam Walker"
+"1367":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Grrr"
+"1368":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Greemong"
+"1369":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Luia"
+"1370":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Gongury"
+"1371":
+  file: monsters.yml
+  name: "[Mirrored Soul] Giant Kern"
+"1372":
+  file: monsters.yml
+  name: "[Mirrored Soul] Meteonyker"
+"1373":
+  file: monsters.yml
+  name: "[Mirrored Soul] CyclopsX"
+"1374":
+  file: npcs.yml
+  name: "[Mirrored Soul] Mara"
+"1375":
+  file: monsters.yml
+  name: "[Mirrored Soul] Tanuki"
+"1376":
+  file: monsters.yml
+  name: "[Mirrored Soul] Red Meteonyker"
+"1377":
+  file: npcs.yml
+  name: "[Mirrored Soul] Clockworks"
+"1378":
+  file: monsters.yml
+  name: "[Mirrored Soul] Khan"
+"1379":
+  file: monsters.yml
+  name: "[Mirrored Soul] Asmodan"
+"1380":
+  file: monsters.yml
+  name: "[Mirrored Soul] Lykanose"
+"1381":
+  file: monsters.yml
+  name: "[Mirrored Soul] Drakul"
+"1382":
+  file: monsters.yml
+  name: "[Mirrored Soul] Razgul"
+"1383":
+  file: monsters.yml
+  name: "[Mirrored Soul] Guan Yu Heavyblade"
+"1384":
+  file: monsters.yml
+  name: "[Mirrored Soul] Keokuk"
+"1385":
+  file: npcs.yml
+  name: "[Mirrored Soul] Ankou"
+"1386":
+  file: monsters.yml
+  name: "[Mirrored Soul] Basilisk of the Great Maw"
+"1387":
+  file: npcs.yml
+  name: "[Mirrored Soul] Kalgas"
+"1388":
+  file: monsters.yml
+  name: "[Mirrored Soul] Kheldor"
+"1389":
+  file: npcs.yml
+  name: Jimbo the Snowman
+"1391":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Bang"
+"1392":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Wagsaac"
+"1393":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Red Mantis"
+"1394":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Jack the Hammer"
+"1395":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Bucrow"
+"1396":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Hobo"
+"1397":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Rockepeller"
+"1398":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Steam Walker"
+"1399":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Grrr"
+"1400":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Greemong"
+"1401":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Luia"
+"1402":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Gongury"
+"1403":
+  file: monsters.yml
+  name: "[Inferior Soul] Giant Kern"
+"1404":
+  file: monsters.yml
+  name: "[False Soul] Meteonyker"
+"1405":
+  file: monsters.yml
+  name: "[False Soul] CyclopsX"
+"1406":
+  file: npcs.yml
+  name: "[False Soul] Mara"
+"1407":
+  file: monsters.yml
+  name: "[False Soul] Tanuki"
+"1408":
+  file: monsters.yml
+  name: "[False Soul] Red Meteonkyer"
+"1409":
+  file: npcs.yml
+  name: "[False Soul] Clockworks"
+"1410":
+  file: monsters.yml
+  name: "[False Soul] Khan"
+"1411":
+  file: monsters.yml
+  name: "[False Soul] Asmodan"
+"1412":
+  file: monsters.yml
+  name: "[False Soul] Lykanose"
+"1413":
+  file: monsters.yml
+  name: "[False Soul] Drakul"
+"1414":
+  file: monsters.yml
+  name: "[False Soul] Razgul"
+"1415":
+  file: monsters.yml
+  name: "[False Soul] Guan Yu Heavyblade"
+"1416":
+  file: monsters.yml
+  name: "[False Soul] Keokuk"
+"1417":
+  file: npcs.yml
+  name: "[False Soul] Ankou"
+"1418":
+  file: monsters.yml
+  name: "[False Soul] Basilisk of the Great Maw"
+"1419":
+  file: npcs.yml
+  name: "[False Soul] Kalgas"
+"1420":
+  file: monsters.yml
+  name: "[False Soul] Kheldor"
+"1421":
+  file: monsters.yml
+  name: Kalgas Statue
+"1422":
+  file: monsters.yml
+  name: Akin Statue
+"1423":
+  file: monsters.yml
+  name: Balt Statue
+"1424":
+  file: monsters.yml
+  name: Buur
+"1425":
+  file: monsters.yml
+  name: Saphyryan
+"1426":
+  file: monsters.yml
+  name: Gray Earl
+"1427":
+  file: npcs.yml
+  name: Jack Frost
+"1428":
+  file: npcs.yml
+  name: Mr. Grinchie
+"1429":
+  file: npcs.yml
+  name: Rudolph
+"1430":
+  file: monsters.yml
+  name: Event Rocketfeller
+"1431":
+  file: monsters.yml
+  name: Event Mosbie
+"1432":
+  file: monsters.yml
+  name: Rex gPotato
+"1433":
+  file: monsters.yml
+  name: Event Baby Cargo
+"1434":
+  file: npcs.yml
+  name: "[Development Supervisor] Kim"
+"1435":
+  file: npcs.yml
+  name: "[Development Supervisor] Producer Kim"
+"1436":
+  file: monsters.yml
+  name: Maximus Rex gPotato
+"1437":
+  file: npcs.yml
+  name: Kuma
+"1438":
+  file: npcs.yml
+  name: "[Upgrade Spirit] Coby"
+"1439":
+  file: npcs.yml
+  name: "[Upgrade Spirit] Pierce"
+"1440":
+  file: monsters.yml
+  name: Love Thief
+"1441":
+  file: npcs.yml
+  name: Usagi
+"1442":
+  file: npcs.yml
+  name: Cooperative Donation NPC
+"1443":
+  file: npcs.yml
+  name: X900 EvilTron
+"1444":
+  file: npcs.yml
+  name: Mister Grizz
+"1445":
+  file: npcs.yml
+  name: Silverwing Duchess
+"1446":
+  file: monsters.yml
+  name: Mouzer
+"1447":
+  file: monsters.yml
+  name: Winged Mouzer
+"1448":
+  file: monsters.yml
+  name: Regal Hawk
+"1449":
+  file: monsters.yml
+  name: Regal Raptor
+"1450":
+  file: monsters.yml
+  name: Crimson Garuda
+"1451":
+  file: monsters.yml
+  name: Veiled Garuda
+"1452":
+  file: npcs.yml
+  name: Phalanx
+"1453":
+  file: monsters.yml
+  name: Blossom
+"1454":
+  file: monsters.yml
+  name: Mushbro
+"1455":
+  file: monsters.yml
+  name: Oldroot
+"1456":
+  file: monsters.yml
+  name: Minimusha
+"1457":
+  file: monsters.yml
+  name: Lady Bloom
+"1458":
+  file: monsters.yml
+  name: Nightmyst
+"1459":
+  file: npcs.yml
+  name: "[Queen of Thorns] Entaness"
+"1460":
+  file: monsters.yml
+  name: Razor Maw
+"1461":
+  file: monsters.yml
+  name: Kappa
+"1462":
+  file: monsters.yml
+  name: Nereid
+"1463":
+  file: monsters.yml
+  name: Terrorpin
+"1464":
+  file: monsters.yml
+  name: Bunyip
+"1465":
+  file: monsters.yml
+  name: Selkie
+"1466":
+  file: npcs.yml
+  name: Siren
+"1467":
+  file: npcs.yml
+  name: "[Terror] King Chiton"
+"1468":
+  file: npcs.yml
+  name: Ace Silverwing Dutchess
+"1469":
+  file: monsters.yml
+  name: Ace Mouzer
+"1470":
+  file: monsters.yml
+  name: Ace Winged Mouzer
+"1471":
+  file: monsters.yml
+  name: Ace Regal Hawk
+"1472":
+  file: monsters.yml
+  name: Ace Regal Raptor
+"1473":
+  file: monsters.yml
+  name: Ace Crimson Garuda
+"1474":
+  file: monsters.yml
+  name: Ace Veiled Garuda
+"1475":
+  file: npcs.yml
+  name: Ace Phalanx
+"1476":
+  file: monsters.yml
+  name: Vile Blossom
+"1477":
+  file: monsters.yml
+  name: Vile Mushbro
+"1478":
+  file: monsters.yml
+  name: Vile Oldroot
+"1479":
+  file: monsters.yml
+  name: Vile Minimusha
+"1480":
+  file: monsters.yml
+  name: Vile Lady Bloom
+"1481":
+  file: monsters.yml
+  name: Vile Nightmyst
+"1482":
+  file: npcs.yml
+  name: "[Vile Queen of Thorns] Entaness"
+"1483":
+  file: monsters.yml
+  name: Abyssal Razor Maw
+"1484":
+  file: monsters.yml
+  name: Abyssal Kappa
+"1485":
+  file: monsters.yml
+  name: Abyssal Nereid
+"1486":
+  file: monsters.yml
+  name: Abyssal Terrorpin
+"1487":
+  file: monsters.yml
+  name: Abyssal Bunyip
+"1488":
+  file: monsters.yml
+  name: Abyssal Selkie
+"1489":
+  file: npcs.yml
+  name: Abyssal Siren
+"1490":
+  file: npcs.yml
+  name: "[Abyssal Terror] King Chiton"
+"1491":
+  file: npcs.yml
+  name: 2nd Class Teleporter
+"1492":
+  file: npcs.yml
+  name: Sanpres
+"1493":
+  file: npcs.yml
+  name: Raelra
+"1494":
+  file: npcs.yml
+  name: Flami
+"1495":
+  file: npcs.yml
+  name: Reonan
+"1496":
+  file: npcs.yml
+  name: Ainher
+"1497":
+  file: npcs.yml
+  name: Elaine
+"1498":
+  file: npcs.yml
+  name: Handel
+"1499":
+  file: npcs.yml
+  name: Sury
+"1500":
+  file: npcs.yml
+  name: Hael
+"1501":
+  file: npcs.yml
+  name: Nerco
+"1502":
+  file: npcs.yml
+  name: Reodos
+"1503":
+  file: npcs.yml
+  name: Zoro
+"1505":
+  file: npcs.yml
+  name: Ripper
+"1506":
+  file: npcs.yml
+  name: Lil' gPotato
+"1507":
+  file: npcs.yml
+  name: Arena Manager
+"1508":
+  file: npcs.yml
+  name: Friendly Baby Kargo
+"1509":
+  file: npcs.yml
+  name: Driko
+"1510":
+  file: npcs.yml
+  name: Charming Babushka Doll
+"1511":
+  file: npcs.yml
+  name: "[Market Transfer Manager] Shine"
+"1512":
+  file: npcs.yml
+  name: "[Vendor] Rangpang"
+"1513":
+  file: npcs.yml
+  name: "[Vendor] Ponyang"
+"1514":
+  file: npcs.yml
+  name: "[Vendor] Leon"
+"1515":
+  file: npcs.yml
+  name: "[Vendor] TomTom"
+"1516":
+  file: npcs.yml
+  name: "[Vendor] Rango"
+"1517":
+  file: npcs.yml
+  name: "[Vendor] ToTo"
+"1518":
+  file: npcs.yml
+  name: "[Perin Exchange] Severance"
+"1519":
+  file: npcs.yml
+  name: "[Perin Exchange] Don Jovanni"
+"1520":
+  file: npcs.yml
+  name: "[Perin Exchange] Mor Dorin"
+"1521":
+  file: npcs.yml
+  name: "[Perin Exchange] Jarcoba"
+"1522":
+  file: npcs.yml
+  name: "[Perin Exchange] Mony Zova"
+"1523":
+  file: npcs.yml
+  name: "[Perin Exchange] Gav Noni"
+"1525":
+  file: monsters.yml
+  name: MI_CHAMELEON_GREEN
+"1526":
+  file: monsters.yml
+  name: MI_CHAMELEON_BLUE
+"1527":
+  file: monsters.yml
+  name: MI_CHAMELEON_YELLOW
+"1528":
+  file: monsters.yml
+  name: MI_CHAMELEON_RED
+"1529":
+  file: npcs.yml
+  name: MI_MAFL_TIFA
+"1530":
+  file: monsters.yml
+  name: Mischievous Present Box
+"1531":
+  file: npcs.yml
+  name: MI_NPC_SHARON
+"1532":
+  file: npcs.yml
+  name: MI_NPC_QueerCollector
+"1533":
+  file: npcs.yml
+  name: MI_NPC_DRIAN
+"1534":
+  file: monsters.yml
+  name: Dark Guardian Terrapin
+"1535":
+  file: monsters.yml
+  name: Dark Usagi Fighter
+"1536":
+  file: monsters.yml
+  name: Dark Usagi Blade Master
+"1537":
+  file: monsters.yml
+  name: Dark Usagi Yari
+"1538":
+  file: monsters.yml
+  name: Dark Usagi Ninja
+"1539":
+  file: monsters.yml
+  name: Dark Usagi Axe Master
+"1540":
+  file: monsters.yml
+  name: Iblis's Perpetrator
+"1541":
+  file: monsters.yml
+  name: Earl Vermelho
+"1542":
+  file: npcs.yml
+  name: MI_PET_BABYCAT
+"1543":
+  file: npcs.yml
+  name: MI_PET_BABYCAT_2

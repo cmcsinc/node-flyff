@@ -91,17 +91,52 @@ export function canBegin(
   def: QuestDef,
   inv: InventoryOps,
 ): CondResult {
+  return evalBegin(player, def, inv, false);
+}
+
+/**
+ * `__IsNextLevelQuest` (`Mover.cpp:10301`) -- true if every begin condition
+ * passes with the level gate relaxed to "within 5 levels below min" (the grey
+ * "!" come-back-later icon, `QUEST_NEXT_LEVEL`). Same AND-semantics as
+ * {@link canBegin}; only the level line differs. Returns false when the quest
+ * has no level gate (such a quest is begin-eligible, not next-level).
+ */
+export function isNextLevel(
+  player: CPlayer,
+  def: QuestDef,
+  inv: InventoryOps,
+): boolean {
+  return evalBegin(player, def, inv, true).ok;
+}
+
+/** Shared body of {@link canBegin} / {@link isNextLevel}. `nextLevel` swaps the
+ *  level gate from the begin range to the +5 below-min window
+ *  (`Mover.cpp:10367`: `level < min && level + 5 >= min`). */
+function evalBegin(
+  player: CPlayer,
+  def: QuestDef,
+  inv: InventoryOps,
+  nextLevel: boolean,
+): CondResult {
   if (player.isCompleteQuest(def.id)) return { ok: false, reason: 'already_complete' };
   if (player.findQuest(def.id)) return { ok: false, reason: 'already_active' };
 
   let beginSetItems = 0;
+  // In next-level mode the level gate must be PRESENT and met (C++ defaults
+  // m_nBeginCondLevelMin to 0, for which the `level < min && level+5 >= min`
+  // line cannot increment nResult -> never next-level). Track that here.
+  let nextLevelMet = false;
   for (const c of def.commands) {
     switch (c.cmd) {
       case 'SetBeginCondLevel': {
         const min = num(c.args[0]);
         const max = num(c.args[1]);
-        if (min !== 0 && (player.m_nLevel < min || player.m_nLevel > max))
+        if (nextLevel) {
+          if (min !== 0 && player.m_nLevel < min && player.m_nLevel + 5 >= min) nextLevelMet = true;
+          else return { ok: false, reason: 'level' };
+        } else if (min !== 0 && (player.m_nLevel < min || player.m_nLevel > max)) {
           return { ok: false, reason: 'level' };
+        }
         break;
       }
       case 'SetBeginCondJob':
@@ -137,6 +172,7 @@ export function canBegin(
   }
   if (beginSetItems > 0 && inv.emptySlots() < beginSetItems)
     return { ok: false, reason: 'inventory_space' };
+  if (nextLevel) return { ok: nextLevelMet };
   return { ok: true };
 }
 
