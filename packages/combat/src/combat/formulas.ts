@@ -200,7 +200,8 @@ export function getAttackResult(attacker: Combatant, defender: Combatant): numbe
   const LVL = attacker.level, defLVL = defender.level;
   let rate: number;
   if (attacker.kind === 'player' && defender.kind === 'npc') {
-    rate = (HR * 1.5 / (HR + parry)) * 2.0 * (LVL * 0.5 / (LVL + defLVL * 0.3)) * 100;
+    // MoverAttack.cpp:333-336 — Player→NPC hit rate
+    rate = (HR * 1.6 / (HR + parry)) * 1.5 * (LVL * 1.2 / (LVL + defLVL)) * 100;
   } else if (attacker.kind === 'npc' && defender.kind === 'player') {
     rate = (HR * 1.6 / (HR + parry)) * 1.5 * (LVL * 1.2 / (LVL + defLVL)) * 100;
   } else { // PvP
@@ -218,7 +219,13 @@ export function getAttackResult(attacker: Combatant, defender: Combatant): numbe
  */
 export function calcDefense(defender: Combatant, rng?: Rng): number {
   if (defender.kind === 'npc') {
-    return Math.floor(defender.npcArmor / 7.0) + 1;
+    let nDefense = Math.floor(defender.npcArmor / 7.0) + 1;
+    // GetDEFMultiplier applies to NPCs too (MoverAttack.cpp:592)
+    const adjDefRate = defender.params.get(DST.ADJDEF_RATE, 0);
+    if (adjDefRate !== 0) {
+      nDefense = Math.floor(nDefense * (1.0 + adjDefRate / 100));
+    }
+    return Math.max(0, nDefense);
   }
   // Player defender, AF_GENERIC path (`CalcDefenseCore`, MoverAttack.cpp:591):
   //   nDef = ((L*2 + S/2)/2.8 - 4) + (S-14)*fFactorDef + GetDefenseByItem(bRandom)/4 + DST_ADJDEF
@@ -233,7 +240,15 @@ export function calcDefense(defender: Combatant, rng?: Rng): number {
   const adjDef = defender.params.get(DST.ADJDEF, 0); // GetParam(DST_ADJDEF) buff
   const statTerm = (defender.level * 2 + Math.floor(defender.sta / 2)) / 2.8 - 4;
   const factorTerm = (defender.sta - 14) * job.fFactorDef;
-  return Math.max(0, Math.floor(statTerm + factorTerm) + Math.floor(byItem / 4) + adjDef);
+  let nDefense = Math.floor(statTerm + factorTerm) + Math.floor(byItem / 4) + adjDef;
+  // GetDEFMultiplier (MoverAttack.cpp:592): DST_ADJDEF_RATE is a % modifier
+  // applied after base defense. Positive = more defense, negative = less.
+  const adjDefRate = defender.params.get(DST.ADJDEF_RATE, 0);
+  if (adjDefRate !== 0) {
+    nDefense = Math.floor(nDefense * (1.0 + adjDefRate / 100));
+  }
+  // ponytail: m_fDefence_Rate (NPC server config), armor-penetrate skill
+  return Math.max(0, nDefense);
 }
 
 /**
@@ -298,6 +313,13 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
     nATK = Math.floor(nATK * 2.3);
   }
   if (nATK < 0) nATK = 0;
+
+  // PostCalcDamage (AttackArbiter.cpp:462-470): NPC melee ATK boost vs
+  // higher-level player. +5% per level delta, applied BEFORE DEF subtract.
+  if (attacker.kind === 'npc' && defender.kind === 'player') {
+    const nDelta = attacker.level - defender.level;
+    if (nDelta > 0) nATK = Math.floor(nATK * (1.0 + 0.05 * nDelta));
+  }
 
   // PostCalcGeneric (melee): DEF subtract (element-adjusted), then block.
   let nDEF = Math.floor((calcDefense(defender, rng) * ef.defFactor) / 10000);
