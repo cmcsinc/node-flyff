@@ -103,7 +103,7 @@ export class RecoverySystem {
     p.m_tmNextRecovery = now + STAND_INTERVAL_MS;
 
     const rec = standRecovery(
-      p.m_nLevel, p.m_nSta, p.m_nInt,
+      p.m_nLevel, p.getSta(), p.getInt(),
       p.m_nMaxHp, p.m_nMaxMp, p.m_nMaxFp,
       job,
     );

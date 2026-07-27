@@ -225,5 +225,6 @@
   "H:\\flyff\\node-flyff\\packages\\party\\test\\services\\party.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\party\\test\\handlers\\party.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\loot.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\combat.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\combat.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\handlers\\dropGold.handler.test.ts": "pass"
 }

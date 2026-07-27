@@ -41,7 +41,8 @@ import type { Combatant, Rng } from '../../src/combat/formulas';
 import { AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1 } from '../../src/combat/tables';
 import type { SkillDefinition } from '@flyff/resources';
 import { loadSkills } from '@flyff/resources';
-import { EMPTY_PARAM_VIEW } from '@flyff/entities';
+import { EMPTY_PARAM_VIEW, DST } from '@flyff/entities';
+import type { ParamView } from '@flyff/entities';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const RESOURCES_DATA = resolve(__dirname, '../../../resources/data');
@@ -230,46 +231,42 @@ describe('resolveSkillCast', () => {
   });
 });
 
-describe('resolveSkillCast — skill crit', () => {
-  it('crit sets AF_CRITICAL1 and multiplies nATK by 2.3 before DEF subtract', async () => {
+describe('resolveSkillCast — skills never crit (C++ IsCriticalAttack returns FALSE for skills)', () => {
+  it('even with critRng, no AF_CRITICAL1 and no damage boost', async () => {
     const skill = await loadSkill(1);
     const level = skill.levels[0]!;
-    // DEX 15, vagrant fCritical=1.0 → getCriticalProb = floor(1.5) = 1.
-    // critRng.int()=0 < 1 ⇒ crit fires. nATK=39 (min) → floor(39*2.3)=89.
-    // DEF 3 → 89 - 3 = 86.
-    const attacker = makeAttacker({ dex: 15 });
-    assert.equal(attacker.dex, 15);
+    // critRng.int()=0 would trigger crit on melee, but skills skip IsCriticalAttack.
+    // nATK=39 (min) → DEF 3 → 36. No 2.3× multiplier.
     const result = resolveSkillCast({
-      attacker,
+      attacker: makeAttacker({ dex: 15 }),
       defender: makeNpcDefender(),
       skill, level, rng: critRng,
     });
-    assert.equal(result.atkFlags & AF_CRITICAL1, AF_CRITICAL1, 'crit flag set');
-    assert.equal(result.damage, Math.floor(39 * 2.3) - 3, '2.3× nATK then DEF subtract');
+    assert.equal(result.atkFlags & AF_CRITICAL1, 0, 'no crit flag on skills');
+    assert.equal(result.damage, 39 - 3, 'plain base damage, no crit multiplier');
   });
 
-  it('non-crit (int 99 ≥ prob) leaves AF_CRITICAL1 clear and uses base damage', async () => {
+  it('non-crit rng also produces no AF_CRITICAL1 and base damage', async () => {
     const skill = await loadSkill(1);
     const level = skill.levels[0]!;
     const result = resolveSkillCast({
       attacker: makeAttacker(),
       defender: makeNpcDefender(),
-      skill, level, rng: minRng, // int=99, no crit
+      skill, level, rng: minRng,
     });
     assert.equal(result.atkFlags & AF_CRITICAL1, 0, 'no crit flag');
     assert.equal(result.damage, 39 - 3, 'plain base damage');
   });
 
-  it('crit on a fully-blocked (0) hit clears AF_CRITICAL1', async () => {
+  it('blocked skill hit has 0 damage and no AF_CRITICAL1', async () => {
     const skill = await loadSkill(1);
     const level = skill.levels[0]!;
-    // Defender armor huge → DEF ≥ nATK → nDamage 0 → crit flag cleared.
     const result = resolveSkillCast({
       attacker: makeAttacker(),
       defender: makeNpcDefender({ npcArmor: 10_000 }),
       skill, level, rng: critRng,
     });
-    assert.equal(result.atkFlags & AF_CRITICAL1, 0, 'crit cleared on 0 damage');
+    assert.equal(result.atkFlags & AF_CRITICAL1, 0, 'no crit flag on skills');
     assert.equal(result.damage, 0);
   });
 });
@@ -347,5 +344,49 @@ describe('resolveSkillCast — getDamageMultiplier applied', () => {
     });
     const expected = Math.floor(36 * Math.cos((Math.PI * 15) / 32));
     assert.equal(higher.damage, expected, 'higher-level NPC takes cosine-reduced skill damage');
+  });
+});
+
+describe('resolveSkillCast — DST_ATKPOWER_RATE (GetATKMultiplier)', () => {
+  it('applies ATKPOWER_RATE +10% to skill nATK before defense subtract', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    // ATKPOWER_RATE = 10 → multiplier 1.1
+    const paramsWithRate: ParamView = {
+      get: (dst: number, def: number) => dst === DST.ATKPOWER_RATE ? 10 : def,
+    };
+    // Clean Hit L1: nATK=39 (minRng), *1.1 = floor(42.9)=42, -3 DEF = 39
+    const result = resolveSkillCast({
+      attacker: makeAttacker({ params: paramsWithRate }),
+      defender: makeNpcDefender(),
+      skill, level, rng: minRng,
+    });
+    assert.equal(result.damage, 39, 'floor(39*1.1) - 3 DEF = 39');
+  });
+
+  it('applies ATKPOWER_RATE to magic skills too', async () => {
+    const skill = await loadSkill(64);
+    const level = skill.levels[0]!;
+    const paramsWithRate: ParamView = {
+      get: (dst: number, def: number) => dst === DST.ATKPOWER_RATE ? 10 : def,
+    };
+    // Flame Ball L1: nATK=281, *1.1 = floor(309.1)=309, -3 DEF = 306, factor 1.0
+    const result = resolveSkillCast({
+      attacker: makeAttacker({ int: 15, params: paramsWithRate }),
+      defender: makeNpcDefender(),
+      skill, level, rng: minRng,
+    });
+    assert.equal(result.damage, 306, 'floor(281*1.1) - 3 DEF = 306');
+  });
+
+  it('zero ATKPOWER_RATE has no effect', async () => {
+    const skill = await loadSkill(1);
+    const level = skill.levels[0]!;
+    const result = resolveSkillCast({
+      attacker: makeAttacker(), // EMPTY_PARAM_VIEW returns 0
+      defender: makeNpcDefender(),
+      skill, level, rng: minRng,
+    });
+    assert.equal(result.damage, 36, 'no rate → same as before (39-3)');
   });
 });

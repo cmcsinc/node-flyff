@@ -13,7 +13,7 @@
  */
 
 import type { Combatant, Rng, MeleeResult } from './formulas';
-import { calcDefense, getCriticalProb, getDamageMultiplier } from './formulas';
+import { calcDefense, getDamageMultiplier } from './formulas';
 import { DST } from '@flyff/entities';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import {
@@ -281,12 +281,18 @@ export function resolveSkillCast(input: SkillCastInputs): SkillCastResult {
   let nATK = rng.range(lo, hi + 1);
   if (nATK < 0) nATK = 0;
 
-  // Skill crit -- shared melee `CalcDamage` branch (docs #4). 2.3× on nATK
-  // BEFORE the defense subtract, same order as `resolveMelee`.
-  if (rng.int(100) < getCriticalProb(attacker)) {
-    atkFlags |= AF_CRITICAL1;
-    nATK = Math.floor(nATK * 2.3);
+  // GetATKMultiplier (MoverAttack.cpp:1207) — DST_ATKPOWER_RATE (%) buff.
+  // C++ CalcATK applies this to ALL attack types (melee AND skills) at
+  // AttackArbiter.cpp:329, AFTER the ATK roll, BEFORE defense subtract.
+  // Melee applies it inside getHitMinMax; skills must apply it here.
+  // ponytail: PvP modifier + SM_* mode adjustments from GetATKMultiplier skipped.
+  const atkRate = attacker.params.get(DST.ATKPOWER_RATE, 0);
+  if (atkRate !== 0) {
+    nATK = Math.floor(nATK * (1.0 + atkRate / 100));
   }
+
+  // Skills never crit — C++ IsCriticalAttack() returns FALSE for skill attacks
+  // (MoverAttack.cpp:800: `if (IsSkillAttack(dwAtkFlags)) return FALSE`).
 
   // Standard defense path. Magic uses CalcDefense too (docs #4: nDEF =
   // defender.CalcDefense), then PostCalcMagicSkill applies magic factor.

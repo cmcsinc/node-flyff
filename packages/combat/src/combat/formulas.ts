@@ -117,12 +117,22 @@ export function getHitMinMax(c: Combatant): { min: number; max: number } {
   }
   let nMin = c.weapon.min * 2;
   let nMax = c.weapon.max * 2;
+  // H3: DST_ABILITY_MIN/MAX (MoverAttack.cpp:508-509) -- flat buff/equip modifiers
+  // applied to the raw weapon ability range, before weapon ATK and item multiplier.
+  nMin = c.params.get(DST.ABILITY_MIN, nMin);
+  nMax = c.params.get(DST.ABILITY_MAX, nMax);
   // GetWeaponATK + GetParam(DST_CHR_DMG) + GetPlusWeaponATK(refine) -- C++ adds
   // the CHR_DMG buff to both min/max; refine bonus is the pow(option,1.5) below.
   const plus = getWeaponATK(c) + c.params.get(DST.CHR_DMG, 0);
   nMin += plus;
   nMax += plus;
+  // H4: GetItemMultiplier (MoverAttack.cpp:2135) -- scales by refine option bonus.
+  // ponytail: full C++ also checks expired flag (0) and durability; add when
+  //   expiry model and durability are implemented.
   if (c.weapon.option > 0) {
+    const itemMult = 1.0 + c.weapon.option * 0.02;
+    nMin *= itemMult;
+    nMax *= itemMult;
     const v = Math.floor(Math.pow(c.weapon.option, 1.5));
     nMin += v;
     nMax += v;

@@ -21,6 +21,7 @@ import { EMPTY_PARAM_VIEW, DST, ParamModel } from '@flyff/entities';
 
 const FIST = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 const BARE_HAND = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
+const REFINED_SWORD = { min: 10, max: 20, type: WT_MELEE_SWD, atkSpeed: 0.5, option: 5, element: NO_PROP };
 
 const player: Combatant = {
   kind: 'player', level: 1, job: 0,
@@ -135,6 +136,50 @@ describe('combat DST param un-stubs', () => {
     params.setDestParam(DST.CHR_CHANCECRITICAL, 8);
     assert.equal(getCriticalProb({ ...player, params }), base + 8);
   });
+
+  it('H3: DST_ABILITY_MIN raises min (MoverAttack.cpp:508)', () => {
+    const params = new ParamModel();
+    params.setDestParam(DST.ABILITY_MIN, 10);
+    const result = getHitMinMax({ ...player, params });
+    // base min=16; ABILITY_MIN replaces 1*2=2 with 10, so min = 10 + 14.6 + 0 = 24.6 -> 24
+    const base = getHitMinMax(player); // {16,20}
+    assert.equal(result.min, 24, 'ABILITY_MIN=10 replaces weapon*2 before plus');
+    assert.equal(result.max, 20, 'max unchanged (ABILITY_MAX not set)');
+  });
+
+  it('H3: DST_ABILITY_MAX raises max (MoverAttack.cpp:509)', () => {
+    const params = new ParamModel();
+    params.setDestParam(DST.ABILITY_MAX, 30);
+    const result = getHitMinMax({ ...player, params });
+    // max = 30 + 14.6 = 44.6 -> 44; min unchanged at 16
+    assert.equal(result.max, 44, 'ABILITY_MAX=30 replaces weapon max before plus');
+    assert.equal(result.min, 16, 'min unchanged (ABILITY_MIN not set)');
+  });
+
+  it('H3: DST_ABILITY_MIN floors at 0', () => {
+    const params = new ParamModel();
+    params.setDestParam(DST.ABILITY_MIN, -999);
+    const result = getHitMinMax({ ...player, params });
+    assert.ok(result.min >= 0, 'min never goes negative');
+  });
+});
+
+describe('combat H4: GetItemMultiplier (refine option bonus)', () => {
+  it('weapon option > 0 applies itemMult = 1 + option*0.02 before pow refine bonus', () => {
+    const base = getHitMinMax({ ...player, weapon: REFINED_SWORD });
+    // option=5, base weapon: min=10*2=20, max=20*2=40, plus=(STR-12)*4.5+LVL*1.1=14.6
+    // C++ order: after ABILITY_MIN/MAX (not set) + plus:
+    //   pre-mult min = 20+14.6=34.6, max=40+14.6=54.6
+    // itemMult = 1+5*0.02=1.1 -> min=34.6*1.1=38.06, max=54.6*1.1=60.06
+    // pow(5,1.5)=11.18->11 -> min=38.06+11=49.06->49, max=60.06+11=71.06->71
+    // DST_ATKPOWER=0, DST_ATKPOWER_RATE=0
+    assert.deepEqual(base, { min: 49, max: 71 });
+  });
+
+  it('option=0 skips itemMult (bare-hand unaffected)', () => {
+    const base = getHitMinMax(player);
+    assert.deepEqual(base, { min: 16, max: 20 }, 'bare-hand unchanged by H4');
+  });
 });
 
 describe('combat getAttackSpeed', () => {
@@ -230,6 +275,63 @@ describe('combat resolveMelee (NPC -> player min-damage rule)', () => {
     const r = resolveMelee(aibatt, tank, makeRng([0, 99, 50], 16));
     assert.equal(r.hit, true);
     assert.equal(r.damage, 0); // 10% floor (1) * cosine(0.098) -> floor -> 0
+  });
+});
+
+describe('combat H1: NPC->player ATK boost (PostCalcDamage:462)', () => {
+  it('monster 6 levels above player deals +30% ATK (0.05*6)', () => {
+    // pukepuke(L7) -> player(L1): nDelta=6, +30% boost on post-crit ATK.
+    // ATK=37, no crit. Boost: floor(37*1.3)=48. Player DEF=0. No cosine
+    // (defender.level-attacker.level = 1-7 = -6 < 0). Damage=48.
+    // ints: hit=0, crit=99, block=50. range=37.
+    const r = resolveMelee(pukepuke, player, makeRng([0, 99, 50], 37));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 48);
+  });
+  it('no boost when monster is same or lower level', () => {
+    // aibatt(L1) -> player(L1): nDelta=0, no boost. ATK=16, DEF=0, damage=16.
+    const r = resolveMelee(aibatt, player, makeRng([0, 99, 50], 16));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 16);
+  });
+  it('boost does NOT apply player -> NPC', () => {
+    // player(L1) -> pukepuke(L7): no ATK boost. ATK=16, DEF=2, cosine(nDelta=6).
+    // damage = floor((16-2)*cos(6*pi/32)) = floor(14*0.8315) = 11.
+    const r = resolveMelee(player, pukepuke, makeRng([0, 99, 50], 16));
+    assert.equal(r.hit, true);
+    assert.equal(r.damage, 11);
+  });
+});
+
+describe('combat H5: DST_ADJDEF_RATE (GetDEFMultiplier)', () => {
+  it('positive ADJDEF_RATE raises player defense', () => {
+    const base = calcDefense({ ...player, equipDef: 20 });
+    const params = new ParamModel();
+    params.setDestParam(DST.ADJDEF_RATE, 50); // +50% defense
+    const buffed = calcDefense({ ...player, equipDef: 20, params });
+    const expected = Math.floor(base * 1.5);
+    assert.equal(buffed, expected, 'ADJDEF_RATE=50 => defense * 1.5');
+  });
+  it('negative ADJDEF_RATE reduces player defense', () => {
+    const base = calcDefense({ ...player, equipDef: 20 });
+    const params = new ParamModel();
+    params.setDestParam(DST.ADJDEF_RATE, -30); // -30% defense
+    const debuffed = calcDefense({ ...player, equipDef: 20, params });
+    const expected = Math.floor(base * 0.7);
+    assert.equal(debuffed, expected, 'ADJDEF_RATE=-30 => defense * 0.7');
+  });
+  it('ADJDEF_RATE floors at 0 (defense never goes negative from this modifier)', () => {
+    // Base DEF=0 (no gear, low stats), -50% modifier -> 0, not negative.
+    const params = new ParamModel();
+    params.setDestParam(DST.ADJDEF_RATE, -50);
+    assert.equal(calcDefense({ ...player, params }), 0, '0 DEF * 0.5 = 0 (floored)');
+  });
+  it('ADJDEF_RATE also applies to NPC defense', () => {
+    // aibatt base DEF = floor(3/7)+1 = 1. With +100% rate => 2.
+    const params = new ParamModel();
+    params.setDestParam(DST.ADJDEF_RATE, 100);
+    const buffed = calcDefense({ ...aibatt, params });
+    assert.equal(buffed, 2, 'NPC DEF 1 * 2.0 = 2');
   });
 });
 

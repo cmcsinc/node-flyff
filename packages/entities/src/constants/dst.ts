@@ -78,6 +78,8 @@ export const DST = Object.freeze({
   CRITICAL_BONUS: 77,
   /** Flat attack-power bonus (`GetHitMinMax` adds). */
   ATKPOWER: 83,
+  /** Percentage defense modifier (`GetDEFMultiplier`); positive = more DEF. */
+  ADJDEF_RATE: 72,
   RESIST_MAGIC_RATE: 91,
 
   // pseudo-params (>= 10000) -- fan out via setDestParam switch, never stored.

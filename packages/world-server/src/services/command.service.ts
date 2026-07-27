@@ -53,6 +53,7 @@ import type { SpawnManager } from '@flyff/world-core';
 import type { QuestService } from '@flyff/quest';
 import type { InventoryService } from '@flyff/inventory';
 import type { CharacterRepository, InventoryRepository } from '@flyff/database';
+import type { ItemDefinition } from '@flyff/resources';
 import { AUTH, hasAuthority } from '@flyff/entities';
 import { Validate } from '@flyff/core/utils/validate';
 import { PacketError } from '@flyff/core/errors';
@@ -92,6 +93,8 @@ export interface CommandServiceDeps {
   questService: QuestService;
   /** Inventory service -- `/ci` (create item into main bag). */
   inventoryService?: InventoryService;
+  /** Item name -> definition lookup for `/ci name` resolution. */
+  getItemByName?: (name: string) => ItemDefinition | undefined;
   /** Character repo -- `/stat` persists STR/STA/DEX/INT, `/lv` persists level+exp. */
   charRepo?: Pick<CharacterRepository, 'updateStats' | 'updateLevelAndExp'>;
   /** Inventory container repo -- `/gg`/`/rtg` persist carried gold (migration 008). */
@@ -605,22 +608,23 @@ export class CommandService {
   }
 
   /**
-   * `/ci <itemId> [count]` -- `TextCmd_CreateItem` (FuncTextCmd.cpp:2522). C++
-   * resolves the item by name OR id, validates non-IK3_VIRTUAL, then
-   * `CreateItem` into the first free slot. We take a numeric `itemId` only
-   * (ponytail: propItem name lookup) and delegate to `InventoryService.addItem`
-   * (WAL + persist + state), then send the CREATEITEM snapshot on success. Bag
-   * full -> silent (stock v19 prints `TID_GAME_LACKSPACE` via AddDefinedText;
-   * omitted until a defined-text channel ships).
+   * `/ci <itemId|"name"|name> [count]` -- `TextCmd_CreateItem` (FuncTextCmd.cpp:2522).
+   * C++ resolves the item by name OR id. We support both: a numeric first token
+   * is treated as an item id; a quoted or non-numeric token is looked up via
+   * `getItemByName`. Delegates to `InventoryService.addItem` (WAL + persist +
+   * state), then sends the CREATEITEM snapshot on success. Bag full -> silent
+   * (stock v19 prints `TID_GAME_LACKSPACE`; omitted until a defined-text channel
+   * ships).
    */
   private createItem({ args, player }: CommandCtx): void {
     const inv = this.deps.inventoryService;
     if (inv === undefined) return;
-    const tokens = args.split(/\s+/).filter(Boolean);
-    const itemId = Number.parseInt(tokens[0] ?? '', 10);
-    if (!Number.isInteger(itemId) || itemId <= 0) return;
-    const count = Math.max(1, Number.parseInt(tokens[1] ?? '', 10) || 1);
-    const res = inv.addItem(player, itemId, count);
+
+    const resolved = resolveItemId(args, this.deps.getItemByName);
+    if (!resolved) return;
+    const count = Math.max(1, resolved.count);
+
+    const res = inv.addItem(player, resolved.itemId, count);
     if (!res.ok) return;
     const buf = this.createItemSer.buildOne(player.m_idPlayer, res.itemId, res.count, res.objid);
     this.deps.playerManager.sendTo(player, buf);
@@ -739,6 +743,54 @@ function splitTargetMessage(args: string): { target: string; message: string } |
 
 function isSelf(player: CPlayer, name: string): boolean {
   return name.toLowerCase() === player.m_szName.toLowerCase();
+}
+
+/**
+ * Resolve `/ci` args into `{ itemId, count }`.
+ * Supports: numeric id (`1234 5`), quoted name (`"Popom Powder" 5`),
+ * unquoted multi-word (`Popom Powder 5` -- greedy longest-match).
+ */
+function resolveItemId(
+  args: string,
+  getItemByName?: (name: string) => ItemDefinition | undefined,
+): { itemId: number; count: number } | null {
+  const trimmed = args.trim();
+  if (!trimmed) return null;
+
+  // --- Quoted name: `"Popom Powder" 5` ---
+  if (trimmed[0] === '"') {
+    const endQuote = trimmed.indexOf('"', 1);
+    if (endQuote > 1) {
+      const name = trimmed.slice(1, endQuote);
+      const rest = trimmed.slice(endQuote + 1).trim();
+      const def = getItemByName?.(name) ?? getItemByName?.(name.toLowerCase());
+      return def ? { itemId: def.id, count: parseCount(rest) } : null;
+    }
+  }
+
+  // --- Try first token as numeric ID: `1234 5` ---
+  const tokens = trimmed.split(/\s+/);
+  const firstNum = Number.parseInt(tokens[0] ?? '', 10);
+  if (Number.isInteger(firstNum) && firstNum > 0) {
+    return { itemId: firstNum, count: parseCount(tokens.slice(1).join(' ')) };
+  }
+
+  // --- Greedy multi-word name match: `Popom Powder 5` ---
+  // Try longest prefix first (all tokens), shrink until match.
+  if (!getItemByName) return null;
+  for (let n = tokens.length; n >= 1; n--) {
+    const nameCandidate = tokens.slice(0, n).join(' ');
+    const def = getItemByName(nameCandidate) ?? getItemByName(nameCandidate.toLowerCase());
+    if (def) {
+      return { itemId: def.id, count: parseCount(tokens.slice(n).join(' ')) };
+    }
+  }
+  return null;
+}
+
+function parseCount(s: string): number {
+  const n = Number.parseInt(s, 10);
+  return Number.isInteger(n) && n > 0 ? n : 1;
 }
 
 /**
