@@ -37,6 +37,15 @@ const MMI_FALLBACK: Record<string, number> = {
   MMI_MESSAGE: 4,
   MMI_ADD_MESSENGER: 5,
   MMI_INVITE_PARTY: 6,
+};
+
+/** SRT_* structure type defines (defineNeuz.h:75-89). Resolves `m_nStructure=`. */
+const SRT_MAP: Record<string, number> = {
+  SRT_NONE: 0, SRT_LODESTAR: 1, SRT_LODELOGHT: 2, SRT_STATION: 3,
+  SRT_WEAPON: 4, SRT_SHIELD: 5, SRT_FOOD: 6, SRT_MAGIC: 7,
+  SRT_GENERAL: 8, SRT_PUBLICOFFICE: 9, SRT_QUESTOFFICE: 10,
+  SRT_DUNGEON: 11, SRT_BUCKLER: 12, SRT_WARPZONE: 13,
+};
   MMI_INVITE_COMPANY: 7,
   MMI_MARKING: 8,
   MMI_BANKING: 9,
@@ -245,8 +254,12 @@ function parseBlock(
   const buffSkills = parseBuffSkills(body, siIds);
   const vt = body.match(/\bSetVend[oe]rType\s*\(\s*(-?\d+)\s*\)/);
   const venderType = vt?.[1] !== undefined ? parseInt(vt[1], 10) : undefined;
-  const sr = body.match(/\bm_nStructure\s*=\s*(\d+)/);
-  const structure = sr?.[1] !== undefined ? parseInt(sr[1], 10) : undefined;
+  const sr = body.match(/\bm_nStructure\s*=\s*(\d+|SRT_\w+)/);
+  let structure: number | undefined;
+  if (sr?.[1] !== undefined) {
+    if (/^\d+$/.test(sr[1])) structure = parseInt(sr[1], 10);
+    else structure = SRT_MAP[sr[1]] ?? undefined;
+  }
 
   const fig = body.match(
     /SetFigure\s*\(\s*MI_[A-Z0-9_]+\s*,\s*(\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(\d+)\s*\)/,
