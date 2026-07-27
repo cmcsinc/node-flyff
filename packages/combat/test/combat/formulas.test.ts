@@ -233,11 +233,12 @@ describe('combat getAttackResult (DST_ADJ_HITRATE)', () => {
     assert.equal(getAttackResult(withRing, aibatt), 96);
   });
   it('adjHitRate lifts a below-cap hit rate', () => {
-    // Low-DEX player so the base rate sits below cap, then jewelry bumps it.
+    // Low-DEX player (DEX=5) base rate: (5*1.6/8)*1.5*(1.2/2)*100 = 90.
+    // Jewelry +4 bumps to 94, still below MAX_HR=96.
     const weak: Combatant = { ...player, dex: 5 };
     const base = getAttackResult(weak, aibatt);
-    const withRing: Combatant = { ...weak, adjHitRate: 12 };
-    assert.equal(getAttackResult(withRing, aibatt), base + 12, 'flat +12% from DST_ADJ_HITRATE');
+    const withRing: Combatant = { ...weak, adjHitRate: 4 };
+    assert.equal(getAttackResult(withRing, aibatt), base + 4, 'flat +4% from DST_ADJ_HITRATE');
   });
 });
 
