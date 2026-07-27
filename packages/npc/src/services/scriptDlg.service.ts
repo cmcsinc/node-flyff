@@ -54,6 +54,10 @@ const MAX_SCRIPT_KEY = 255;
 /** C++ `MAX_LEN_MOVER_MENU` (npchecker.h:4) -- squared distance gate. */
 const MAX_LEN_MOVER_MENU_SQ = 1024;
 
+/** C++ `SRT_QUESTOFFICE` (defineNeuz.h:85) -- Quest Office NPC structure type.
+ *  These NPCs offer ALL eligible quests (not just those bound via SetCharacter). */
+const SRT_QUESTOFFICE = 10;
+
 /**
  * Reserved v19 quest round-trip keys (`_Common/scriptdialog.cpp:213-241` +
  * `ScriptHelper.cpp`). The client sends these verbatim with the quest id in
@@ -352,7 +356,8 @@ export class ScriptDlgService {
     player: CPlayer, npc: CMover, frames: Buffer[], dialogMenuEmitted: boolean,
   ): void {
     const lk = npcLookupKey(npc);
-    if (!lk) return;
+    const isQuestOffice = npc.m_nStructure === SRT_QUESTOFFICE;
+    if (!lk && !isQuestOffice) return;
     const inv = this.questInv(player);
     // C++ `__QuestEnd` (ScriptHelper.cpp:542-586) classifies the NPC's quests
     // into four buckets so the dialog lists every quest the client renders an
@@ -385,8 +390,15 @@ export class ScriptDlgService {
         logger.warn({ charId: player.m_idPlayer, qid, hasQ: !!q, complete, state: q?.state }, 'classify: fell through (already complete or QS_END)');
       }
     };
-    for (const qid of this.beginByKey.get(lk) ?? []) classify(qid);
-    for (const qid of this.endByKey.get(lk) ?? []) classify(qid);
+    // Quest Office NPCs (SRT_QUESTOFFICE) offer ALL eligible quests, not just
+    // those bound to this NPC via SetCharacter/SetEndCondCharacter. Iterate the
+    // full quest catalog instead of the per-NPC byNpc maps.
+    if (npc.m_nStructure === SRT_QUESTOFFICE) {
+      for (const [qid] of this.deps.quests.byId) classify(qid);
+    } else {
+      for (const qid of this.beginByKey.get(lk) ?? []) classify(qid);
+      for (const qid of this.endByKey.get(lk) ?? []) classify(qid);
+    }
     // C++ single-new-quest shortcut (`ScriptHelper.cpp:654`): exactly one
     // begin-eligible quest and nothing else pending -> skip the list and open
     // the begin confirmation directly.

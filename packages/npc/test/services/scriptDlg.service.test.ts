@@ -491,4 +491,28 @@ describe('ScriptDlgService.dialog', () => {
     assert.equal(calls.flat().some((f) => f.type === 'addAnswer' && f.key === 'QUEST_BEGIN_YES'), false,
       'shortcut must not fire while a current quest is pending');
   });
+
+  it('Quest Office NPC (SRT_QUESTOFFICE) scans ALL quests from byId, not just byNpc', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    // Quest 7001 is in byId but NOT in byNpc for this NPC.
+    const quests = {
+      byId: new Map([[7001, { id: 7001, symbol: 'Q7001', title: 'IDS_X', commands: [], states: {}, quest_items: [] }]]),
+      drops: new Map(),
+      byNpc: { begin: new Map(), end: new Map() },
+    } as unknown as QuestIndex;
+    // Quest Office NPC: m_nStructure = 10 (SRT_QUESTOFFICE).
+    const questOfficeNpc = { ...mkNpc('MaFl_Mikyel'), m_nStructure: 10 } as unknown as CMover;
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => questOfficeNpc },
+      dialogs: mkDialogs(), quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    // The Quest Office scan should find quest 7001 via full byId iteration.
+    const yes = calls.flat().find((f) => f.type === 'addAnswer' && f.key === 'QUEST_BEGIN_YES');
+    assert.ok(yes, 'Quest Office NPC must offer begin-eligible quests from the full catalog');
+    assert.equal((yes as { quest?: number }).quest, 7001);
+  });
 });

@@ -122,6 +122,8 @@ export interface MoverSpawnSource {
   readonly er?: number | undefined;
   /** `nExpValue` (col 58) -- base exp granted on kill. */
   readonly expValue?: number | undefined;
+  /** character.inc `m_nStructure` (SRT_* define). Omit for monsters / unset. */
+  readonly structure?: number | undefined;
   /** propMover `fSpeed` (col 44) -- per-sub-step walk distance; 0 = stationary. */
   readonly speed?: number | undefined;
   /**
@@ -218,6 +220,8 @@ export class CMover {
    * via `triggerRage` on the damage path instead.
    */
   m_bActiveAttack: number;
+  /** character.inc `m_nStructure` (SRT_* define). `undefined` when not set. */
+  m_nStructure: number | undefined;
   /** AI speed multiplier (C++ `m_fSpeedFactor`); 1.0 = propMover speed. */
   m_fSpeedFactor: number;
   /**
@@ -369,6 +373,7 @@ export class CMover {
     this.m_nZoneId = zoneId;
     this.m_dwBelligerence = src.belligerence ?? 0;
     this.m_bActiveAttack = ACTIVE_BELLI.has(this.m_dwBelligerence) ? 1 : 0;
+    this.m_nStructure = src.structure;
     this.m_fSpeedFactor = 1.0;
     this.m_bAttackable = src.attackable ?? true;
     this.m_bGuard = src.guard ?? false;

@@ -152,6 +152,8 @@ export interface CharacterIncBlock {
    * the player when they right-click a buff NPC + send `PACKETTYPE_NPC_BUFF`.
    */
   readonly buffSkills: readonly NpcBuffSkillEntry[];
+  /** `m_nStructure` value (SRT_* define). `undefined` when not set (default -1). */
+  readonly structure: number | undefined;
 }
 
 /**
@@ -243,6 +245,8 @@ function parseBlock(
   const buffSkills = parseBuffSkills(body, siIds);
   const vt = body.match(/\bSetVend[oe]rType\s*\(\s*(-?\d+)\s*\)/);
   const venderType = vt?.[1] !== undefined ? parseInt(vt[1], 10) : undefined;
+  const sr = body.match(/\bm_nStructure\s*=\s*(\d+)/);
+  const structure = sr?.[1] !== undefined ? parseInt(sr[1], 10) : undefined;
 
   const fig = body.match(
     /SetFigure\s*\(\s*MI_[A-Z0-9_]+\s*,\s*(\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(\d+)\s*\)/,
@@ -281,6 +285,7 @@ function parseBlock(
     venderType,
     vendorSlotCount: vendorTabs.length,
     buffSkills,
+    structure,
   };
 }
 
