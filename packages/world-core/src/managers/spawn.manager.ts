@@ -133,6 +133,7 @@ export class SpawnManager {
             outfit: toOutfit(def, charBlock),
             menus: charBlock?.menus,
             vendorStock: resolveVendorStock(charBlock, this.resources.items),
+            structure: charBlock?.structure,
             attackable: def.attackable,
             guard: def.guard ?? false,
             belligerence: def.belligerence ?? 0,
