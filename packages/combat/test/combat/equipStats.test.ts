@@ -118,6 +118,39 @@ describe('sumEquipStats', () => {
     assert.equal(r.armorDef, 26, '18 + floor(pow(4,1.5))=8');
   });
 
+  it('computes armorDefMax from defense_max (C++ SumEquipDefenseAbility dwAbilityMax)', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 2] = { itemId: 6100, count: 1 }; // UPPER_BODY
+    const table = new Map<number, ItemDefinition>([
+      [6100, { id: 6100, name: 'Suit', name_id: 'ITEM_A', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, defense: 18, defense_max: 22 }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.armorDef, 18, 'min uses defense (dwAbilityMin)');
+    assert.equal(r.armorDefMax, 22, 'max uses defense_max (dwAbilityMax)');
+  });
+
+  it('armorDefMax falls back to defense when defense_max is undefined', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 2] = { itemId: 6100, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [6100, { id: 6100, name: 'Suit', name_id: 'ITEM_A', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, defense: 18 }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.armorDef, 18);
+    assert.equal(r.armorDefMax, 18, 'no defense_max -> uses defense for both');
+  });
+
+  it('armorDefMax includes refine bonus (matches C++ nOptionVal added to both min and max)', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 2] = { itemId: 6100, count: 1, refine: 4 }; // +floor(4^1.5)=+8
+    const table = new Map<number, ItemDefinition>([
+      [6100, { id: 6100, name: 'Suit', name_id: 'ITEM_A', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, defense: 18, defense_max: 22 }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.armorDef, 26, '18 + 8 refine');
+    assert.equal(r.armorDefMax, 30, '22 + 8 refine');
+  });
+
   it('folds jewelry hit_rate + parry from equipped parts (DST_ADJ_HITRATE / DST_PARRY)', () => {
     const p = CPlayer.fromRow(makeRow(), { write: () => true });
     // RING1=20, EARRING1=22 -- jewelry slots

@@ -89,8 +89,12 @@ export const ItemDefinitionSchema = z.object({
   /** Raw attack speed (propItem dwAttackSpeed) -- fractional multiplier, feeds combat atkSpeed table */
   attack_speed: z.number().min(0).optional(),
 
-  /** Defense rating (armor only) */
+  /** Defense rating (armor only) -- propItem dwAbilityMin floor */
   defense: z.number().int().min(0).optional(),
+
+  /** Defense ceiling (armor only) -- propItem dwAbilityMax. When set, combat
+   *  randomizes defense between `defense` and `defense_max` per hit. */
+  defense_max: z.number().int().min(0).optional(),
 
   /** Magic defense (armor only) */
   magic_defense: z.number().int().min(0).optional(),

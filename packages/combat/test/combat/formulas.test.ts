@@ -28,7 +28,7 @@ const player: Combatant = {
   str: 15, sta: 15, dex: 15, int: 15,
   weapon: BARE_HAND,
   npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0, npcHR: 0, npcER: 0, element: NO_PROP,
-  equipDef: 0, adjHitRate: 0, parry: 0,
+  equipDef: 0, equipDefMax: 0, adjHitRate: 0, parry: 0,
   params: EMPTY_PARAM_VIEW,
 };
 
@@ -37,7 +37,7 @@ const aibatt: Combatant = {
   str: 0, sta: 0, dex: 0, int: 0,
   weapon: FIST,
   npcAtkMin: 16, npcAtkMax: 16, npcArmor: 3, npcResisMagic: 0, npcHR: 40, npcER: 3, element: NO_PROP,
-  equipDef: 0, adjHitRate: 0, parry: 0,
+  equipDef: 0, equipDefMax: 0, adjHitRate: 0, parry: 0,
   params: EMPTY_PARAM_VIEW,
 };
 
@@ -47,7 +47,7 @@ const pukepuke: Combatant = {
   str: 0, sta: 0, dex: 0, int: 0,
   weapon: FIST,
   npcAtkMin: 37, npcAtkMax: 37, npcArmor: 10, npcResisMagic: 0, npcHR: 40, npcER: 11, element: NO_PROP,
-  equipDef: 0, adjHitRate: 0, parry: 0,
+  equipDef: 0, equipDefMax: 0, adjHitRate: 0, parry: 0,
   params: EMPTY_PARAM_VIEW,
 };
 
@@ -99,6 +99,31 @@ describe('combat calcDefense', () => {
     const withEquip = calcDefense(armored);
     assert.ok(withEquip > base, 'equip DEF raises player defense');
     assert.equal(withEquip - base, Math.floor(20 / 4), 'equip DEF contributes via /4 (AF_GENERIC)');
+  });
+
+  it('randomizes equip DEF when equipDefMax > equipDef and rng supplied (C++ GetDefenseByItem)', () => {
+    // equipDef=20, equipDefMax=30 -- range=10. rng.range(20,31) returns fixed 25.
+    const rangeRng: Rng = { int: () => 0, range: (lo: number, _hi: number) => lo + 5 };
+    const ranged: Combatant = { ...player, equipDef: 20, equipDefMax: 30 };
+    const def = calcDefense(ranged, rangeRng);
+    // byItem = 20 + 5 = 25; floor(25/4) = 6. Stat terms same as base.
+    const base = calcDefense({ ...player, equipDef: 25 });
+    assert.equal(def, base, 'rng.range produces byItem=25, same as deterministic equipDef=25');
+  });
+
+  it('falls back to deterministic equipDef when rng not supplied even with equipDefMax set', () => {
+    const ranged: Combatant = { ...player, equipDef: 20, equipDefMax: 30 };
+    const def = calcDefense(ranged); // no rng
+    const base = calcDefense({ ...player, equipDef: 20 });
+    assert.equal(def, base, 'without rng, uses equipDef floor deterministically');
+  });
+
+  it('no randomization when equipDefMax === equipDef', () => {
+    const equal: Combatant = { ...player, equipDef: 20, equipDefMax: 20 };
+    const rangeRng: Rng = { int: () => 0, range: () => 999 }; // should NOT be called
+    const def = calcDefense(equal, rangeRng);
+    const base = calcDefense({ ...player, equipDef: 20 });
+    assert.equal(def, base, 'equal min/max = no randomization');
   });
 });
 
