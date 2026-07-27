@@ -400,7 +400,31 @@ export class ScriptDlgService {
       funcs.push({ type: 'currQuest', word: this.questLabel(qid), key: QUEST_KEY.END, quest: qid });
     for (const qid of currQuests)
       funcs.push({ type: 'currQuest', word: this.questLabel(qid), key: QUEST_KEY.END, quest: qid });
-    if (funcs.length === 0) return;
+    if (funcs.length === 0) {
+      // Diagnostic: if byNpc has entries but all failed classification, or byNpc
+      // is empty for this NPC, this log reveals which. Remove once root-caused.
+      const beginList = this.beginByKey.get(lk);
+      const endList = this.endByKey.get(lk);
+      if ((beginList?.length ?? 0) > 0 || (endList?.length ?? 0) > 0) {
+        logger.warn(
+          {
+            charId: player.m_idPlayer, lk,
+            beginKeys: beginList?.length ?? 0,
+            endKeys: endList?.length ?? 0,
+            seen: seen.size,
+            newQ: newQuests.length, nextQ: nextQuests.length,
+            endQ: endQuests.length, currQ: currQuests.length,
+          },
+          'quest offer: NPC has byNpc entries but 0 rows classified',
+        );
+      } else {
+        logger.warn(
+          { charId: player.m_idPlayer, lk, charKey: npc.m_szCharacterKey ?? null, propKey: npc.m_szKey ?? null },
+          'quest offer: byNpc miss -- NPC key not in begin/end maps',
+        );
+      }
+      return;
+    }
     if (!dialogMenuEmitted) funcs.unshift({ type: 'removeAllKeys' });
     frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
   }
