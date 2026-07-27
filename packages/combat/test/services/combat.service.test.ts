@@ -347,25 +347,27 @@ describe('CombatService.resolveSkill — multi-hit (nSkillCount)', () => {
     assert.equal(countDamage(broadcasts), 1, 'one DAMAGE snapshot');
   });
 
-  it('multi-hit (skillCount 3) applies 3 separate DAMAGE snapshots + 3× damage', async () => {
+  it('multi-hit (skillCount 3) applies 3 separate DAMAGE snapshots + 1/3 damage each', async () => {
     const skill = await loadCleanHit();
     const level = { ...skill.levels[0]!, skillCount: 3 };
-    const perHit = await perHitDamage(skill);
+    const baseDamage = await perHitDamage(skill);
+    const perHitDivided = Math.floor(baseDamage / 3); // C++ MoverAttack.cpp:925 -- factor /= nSkillCount
     const mover = CMover.spawn(0x40000002, { ...MOVER_OPTS, hp: 200 }, { x: 0, y: 0, z: 0 }, 1);
     const { player, combat, broadcasts, journalCalls } = makeCombat(mover);
     const r = combat.resolveSkill(player, mover.m_idMover, skill, level);
     assert.equal(r.ok && r.killed, false);
     assert.equal(countDamage(broadcasts), 3, 'three DAMAGE snapshots (one per hit)');
-    assert.equal(mover.m_nHitPoint, 200 - perHit * 3, 'three full damage rolls applied');
+    assert.equal(mover.m_nHitPoint, 200 - perHitDivided * 3, 'each hit deals 1/3 base damage');
     assert.equal(journalCalls.length, 0, 'not dead → no exp journal');
   });
 
   it('stops the chain when the target dies mid-hit (no double death/exp)', async () => {
     const skill = await loadCleanHit();
     const level = { ...skill.levels[0]!, skillCount: 3 };
-    const perHit = await perHitDamage(skill);
-    // HP exactly perHit → hit 1 lethal; hits 2-3 must be skipped.
-    const mover = CMover.spawn(0x40000003, { ...MOVER_OPTS, hp: perHit }, { x: 0, y: 0, z: 0 }, 1);
+    const baseDamage = await perHitDamage(skill);
+    const perHitDivided = Math.floor(baseDamage / 3);
+    // HP exactly perHitDivided → hit 1 lethal; hits 2-3 must be skipped.
+    const mover = CMover.spawn(0x40000003, { ...MOVER_OPTS, hp: perHitDivided }, { x: 0, y: 0, z: 0 }, 1);
     const { player, combat, broadcasts, journalCalls } = makeCombat(mover);
     const r = combat.resolveSkill(player, mover.m_idMover, skill, level);
     assert.equal(r.ok && r.killed, true);

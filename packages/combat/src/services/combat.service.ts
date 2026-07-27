@@ -158,13 +158,19 @@ export class CombatService {
     if (!t.ok) return t;
     const attacker = playerCombatant(player, this.deps.getItem);
     const hits = Math.max(1, level.skillCount ?? 1);
+    // C++ MoverAttack.cpp:925 -- `factor /= (float)pAddSkillProp->nSkillCount`
+    // Each hit deals 1/nSkillCount of the base damage.
+    const hitDivisor = hits > 1 ? hits : 1;
     let last: CombatOutcome = { ok: true, hit: true, damage: 0, killed: false };
     const target = t.target;
     if (target.kind === 'player') {
       const defender = playerCombatant(target.target);
       for (let i = 0; i < hits; i++) {
         if (target.target.m_bDead) break;
-        const result = resolveSkillCast({ attacker, defender, skill, level, rng: this.rng });
+        const raw = resolveSkillCast({ attacker, defender, skill, level, rng: this.rng });
+        const result: MeleeResult = hitDivisor > 1
+          ? { ...raw, damage: Math.floor(raw.damage / hitDivisor) }
+          : raw;
         last = this.applyHitPlayer(player, target.target, this.withOneKillPlayer(player, target.target, result));
       }
       return last;
@@ -173,7 +179,10 @@ export class CombatService {
     const defender = moverCombatant(mover);
     for (let i = 0; i < hits; i++) {
       if (mover.m_bDead) break; // target died mid-chain → stop (no double-death)
-      const result = resolveSkillCast({ attacker, defender, skill, level, rng: this.rng });
+      const raw = resolveSkillCast({ attacker, defender, skill, level, rng: this.rng });
+      const result: MeleeResult = hitDivisor > 1
+        ? { ...raw, damage: Math.floor(raw.damage / hitDivisor) }
+        : raw;
       last = this.applyHit(player, mover, this.withOneKill(player, mover, result));
     }
     return last;

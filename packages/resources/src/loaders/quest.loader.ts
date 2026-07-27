@@ -71,12 +71,27 @@ export async function loadQuests(dataDir: string): Promise<QuestIndex> {
   const indexFile = parse(await readFile(resolve(dir, '_index.yml'), 'utf-8'));
   const indexRow = QuestIndexSchema.parse(indexFile);
 
+  // Build id->title lookup from _index.yml so individual YAMLs that lack a
+  // `title:` field (most quests -- the converter skips SetTitle when absent
+  // from the C++ source) still carry the IDS_PROPQUEST_INC_* token for
+  // runtime resolution via questText.
+  const indexTitles = new Map<number, string>();
+  for (const row of indexRow.quests) {
+    if (row.title) indexTitles.set(row.id, row.title);
+  }
+
   const byId = new Map<number, QuestDef>();
   const files = (await readdir(dir)).filter((f) => /^\d+\.yml$/.test(f));
   let drops = 0;
+  let backfilled = 0;
   for (const file of files) {
     try {
       const def = QuestDefSchema.parse(parse(await readFile(resolve(dir, file), 'utf-8')));
+      // Backfill title from _index.yml when the individual YAML has none.
+      if (!def.title) {
+        const idxTitle = indexTitles.get(def.id);
+        if (idxTitle) { def.title = idxTitle; backfilled++; }
+      }
       byId.set(def.id, def);
     } catch (err) {
       logger.warn({ file, err: (err as Error).message }, 'Failed to validate quest file');
@@ -119,7 +134,7 @@ export async function loadQuests(dataDir: string): Promise<QuestIndex> {
   }
 
   logger.info(
-    { quests: byId.size, indexed: indexRow.quests.length, dropGens: drops, npcBegin: begin.size, npcEnd: end.size },
+    { quests: byId.size, indexed: indexRow.quests.length, backfilled, dropGens: drops, npcBegin: begin.size, npcEnd: end.size },
     'Quests loaded',
   );
   return { byId, drops: dropsMap, byNpc: { begin, end } };

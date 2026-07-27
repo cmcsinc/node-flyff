@@ -1,36 +1,26 @@
 # Session: 2026-07-27
 
 ## Current Task
-NPC quest-icon/but-no-offer bug — investigation ongoing (NOT fixed)
+C++ fidelity audit fixes — combat + inventory
 
-## What was tried (both dead ends)
-**Path 1: byNpc key mismatch.** Found 8 NPCs in character.inc + propQuest.inc not in server byNpc. BUT: all 8 are from quest blocks inside a `/* */` comment in propQuest.inc (QUEST_PANG at line 15975+). Commented out in source → client also doesn't load them. **Red herring.**
+## Fixed This Session
+- **C5** — magic element factor: skill vs attacker weapon (not defender)
+- **C1** — Player→NPC hit rate coefficients corrected
+- **C2+C3** — skill crits blocked; pre-roll 1.1-1.4x crit variance
+- **C6** — recovery uses DST-adjusted getSta()/getInt()
+- **H1** — NPC→player ATK boost (+5% per level delta)
+- **H5** — GetDEFMultiplier (DST_ADJDEF_RATE)
+- **H6** — multi-hit skills deal 1/N damage per hit
+- **H8** — DROPGOLD is now no-op (matches C++ v19)
 
-**Path 2: Classification failure.** 4-bucket offer scan (new/next/end/curr) already shipped in a22b94a. User confirms problem persists AFTER that commit. The 4-bucket logic matches C++ `__QuestEnd` (ScriptHelper.cpp:542-586).
+## Remaining from Audit
+- **H9** — defense randomization (min/max range per hit)
+- **H2** — skill GetATKMultiplier (DST_ATKPOWER_RATE)
+- **H3+H4** — DST_ABILITY_MIN/MAX + GetItemMultiplier
+- **H10-H17** — shop/bank/quest guards
+- **M-tier** — 23 medium findings
 
-## Diagnostic log pushed
-Commit `dbb14a8` adds a warn log in `emitQuestOffer` when it returns 0 rows. Distinguishes:
-- `byNpc miss` — NPC key not in begin/end maps
-- `NPC has byNpc entries but 0 rows classified` — all quests failed classification
-
-## What the user needs to do
-Rebuild, click ONE affected NPC, check pino log for `quest offer:` warn line. That line reveals the exact cause. Share the NPC name + log line.
-
-## Key architectural facts confirmed
-- Quest icon is CLIENT-SIDE (CMover::ProcessQuest, Mover.cpp:1118-1159). Server sends zero NPC quest data.
-- Server's byNpc has 178 begin-NPCs, 131 end-NPCs, 489 quest defs.
-- Client's propQuest.inc is IDENTICAL to server's raw (diff confirmed).
-- 81 quests have genuinely-empty SetCharacter("") in the source.
-- canBegin matches C++ __IsBeginQuestCondition faithfully.
-- isNextLevel added this session (port of __IsNextLevelQuest).
-
-## Files Modified
-- packages/quest/src/services/questConditions.ts (isNextLevel added)
-- packages/npc/src/services/scriptDlg.service.ts (4-bucket classify + diagnostic log)
-- packages/quest/test/services/questConditions.test.ts (+5 tests)
-- packages/npc/test/services/scriptDlg.service.test.ts (+3 tests)
-
-## Commits
-- a22b94a (prior session): 4-bucket offer scan
-- aa0802b: party system commit + push
-- dbb14a8: diagnostic log pushed
+## Branches
+- fix/c5-magic-element-factor (b40a31c)
+- fix/h8-dropgold-noop (93824ce)
+- fix/c1 + fix/c2c3 + fix/c6-h6 + fix/h1-h5 committed to fix/h8-dropgold-noop
