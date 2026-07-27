@@ -42,8 +42,10 @@ export class BankHandler {
     const dwItemId = r.readDword();
     Validate.dword(dwId);
     // nMode from BankService.open: 0 = no pin (set-pin dialog), 1 = pin set
-    // (enter-pin dialog). Matches C++ OnOpenBankWnd/AddBankWindow (DPSrvr.cpp:3218).
-    const nMode = this.deps.bankService.open(p);
+    // (enter-pin dialog). -1 = rejected (no nearby bank NPC or chaotic).
+    // Matches C++ OnOpenBankWnd/AddBankWindow (DPSrvr.cpp:3218).
+    const nMode = this.deps.bankService.open(p, dwId);
+    if (nMode < 0) return;
     this.deps.playerManager.sendTo(p, buildBankWindow(p.m_idPlayer, nMode, dwId, dwItemId));
   }); }
 

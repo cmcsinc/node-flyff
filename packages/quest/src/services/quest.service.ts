@@ -33,6 +33,11 @@ import type { InventoryService } from '@flyff/inventory';
 import type { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import { bindQuestInventory, type QuestInventory } from './questInventory.adapter';
 
+/** Structural party-query interface (avoids @flyff/party import dependency). */
+export interface PartyQuery {
+  getByMember(charId: number): { members: number[] } | undefined;
+}
+
 export type { QuestInventory };
 
 const EMPTY_FRAMES: Buffer[] = [];
@@ -77,6 +82,8 @@ export interface QuestServiceDeps {
    * v19 C++ sends no item-name text). Matches {@link onExpGain}'s wiring shape.
    */
   onItemReward?: (player: CPlayer, itemId: number, count: number) => void;
+  /** Party query for quest begin/end party conditions (M8). Optional -- guild is ponytail. */
+  partyQuery?: PartyQuery;
 }
 
 export type QuestOpResult =
@@ -133,6 +140,16 @@ export class QuestService {
       ? bindQuestInventory(player, { inventoryService: svc, createItemSerializer: ser })
       : null;
     const inv: QuestInventory = override ?? bound?.inventory ?? PERMISSIVE_INV;
+
+    // Populate party fields for questConditions (M8). Guild: ponytail.
+    if (this.deps.partyQuery) {
+      const party = this.deps.partyQuery.getByMember(player.m_idPlayer);
+      if (party) {
+        inv.isInParty = true;
+        inv.partySize = party.members.length;
+        inv.isPartyLeader = party.members[0] === player.m_idPlayer;
+      }
+    }
 
     const sink: RewardSink = { inventory: inv };
     if (this.deps.journal) sink.journal = (entry) => { this.deps.journal!.append(entry); };
@@ -247,6 +264,9 @@ export class QuestService {
    */
   async cancelQuest(player: CPlayer, questId: number): Promise<QuestOpResult> {
     if (!player.findQuest(questId)) return { ok: false, reason: 'not_found' };
+    // C++ DPSrvr.cpp:1656 — pQuestProp->m_bNoRemove == FALSE required.
+    const def = this.deps.quests?.byId.get(questId);
+    if (def?.no_remove) return { ok: false, reason: 'no_remove' };
     player.removeQuest(questId);
     await this.deps.questRepo.removeActive(player.m_idPlayer, questId);
     await this.deps.questRepo.insertLog(player.m_idPlayer, questId, QUEST_LOG_ACTION.CANCEL);

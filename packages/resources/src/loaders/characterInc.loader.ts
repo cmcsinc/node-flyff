@@ -54,6 +54,7 @@ const SRT_MAP: Record<string, number> = {
 
 /** `MMI_DIALOG` (`defineNeuz.h:92`) -- gates the right-click Dialog option. */
 export const MMI_DIALOG = 0;
+export const MMI_BANKING = 9;
 
 /** `MMI_TRADE` (`defineNeuz.h:94`) -- gates the right-click Shop option -> OPENSHOPWND. */
 export const MMI_TRADE = 2;

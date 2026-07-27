@@ -106,6 +106,7 @@ export class RecoverySystem {
       p.m_nLevel, p.getSta(), p.getInt(),
       p.m_nMaxHp, p.m_nMaxMp, p.m_nMaxFp,
       job,
+      p.m_params,
     );
 
     logger.debug(

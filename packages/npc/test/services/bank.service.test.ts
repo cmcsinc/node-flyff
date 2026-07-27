@@ -9,9 +9,12 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
-import { BankService } from '../../src/services/bank.service';
-import { BANK_SLOTS, MAX_BANK_TABS } from '@flyff/world-core';
+import { MAX_GOLD } from '@flyff/core';
+import { BankService, type BankSpawnLookup } from '../../src/services/bank.service';
+import { BANK_SLOTS, MAX_BANK_TABS, NULL_ID } from '@flyff/world-core';
+import { MMI_BANKING } from '@flyff/resources';
 import type { CharacterRow } from '@flyff/database';
+import type { CMover } from '@flyff/entities';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   return {
@@ -24,7 +27,12 @@ function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   };
 }
 
-function makeSvc() {
+/** Fake bank NPC at origin with MMI_BANKING. */
+function makeBankNpc(x = 0, z = 0): Pick<CMover, 'm_abMoverMenu' | 'm_vPos'> {
+  return { m_abMoverMenu: [MMI_BANKING], m_vPos: { x, y: 0, z } };
+}
+
+function makeSvc(spawnNpcs: ReadonlyArray<Pick<CMover, 'm_abMoverMenu' | 'm_vPos'>> = [makeBankNpc()]) {
   const journalCalls: Array<{ type: string }> = [];
   const bankSet: Array<{ tab: number; slot: number; itemId: number; qty: number }> = [];
   const bankRemove: Array<{ tab: number; slot: number }> = [];
@@ -33,6 +41,7 @@ function makeSvc() {
   const invSet: Array<{ slot: number; itemId: number; qty: number }> = [];
   const passSet: string[] = [];
   const invGold: number[] = [];
+  const spawnManager: BankSpawnLookup = { inZone: () => spawnNpcs as readonly CMover[] };
   const svc = new BankService({
     bankRepo: {
       setItem: async (_a: number, tab: number, slot: number, itemId: number, qty: number) => bankSet.push({ tab, slot, itemId, qty }),
@@ -47,6 +56,7 @@ function makeSvc() {
       setItem: async (_c: number, slot: number, itemId: number, qty: number) => invSet.push({ slot, itemId, qty }),
       setGold: async (_c: number, gold: number) => { invGold.push(gold); },
     },
+    spawnManager,
     journal: { append: (e: { type: string }) => { journalCalls.push(e); } } as never,
   });
   return { svc, journalCalls, bankSet, bankRemove, goldSet, invRemove, invSet, passSet, invGold };
@@ -197,6 +207,37 @@ describe('BankService gold', () => {
     assert.equal(svc.withdrawGold(player, -1, 10).ok, false, 'withdraw tab < 0');
     assert.equal(goldSet.length, 0, 'nothing persisted on reject');
   });
+
+  // H16: depositGold rejects when no bank NPC is nearby.
+  it('rejects depositGold when no bank NPC is within range', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = 1000;
+    player.m_vPos = { x: 500, y: 0, z: 500 };
+    const { svc, goldSet } = makeSvc([makeBankNpc(0, 0)]);
+    const r = svc.depositGold(player, 0, 100);
+    assert.equal(r.ok, false);
+    assert.equal(goldSet.length, 0, 'nothing persisted on reject');
+  });
+
+  // M12: C++ DPSrvr.cpp:3929 -- bank gold overflow guard (CanAdd check).
+  it('M12: rejects depositGold when bank tab gold would overflow MAX_GOLD', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = 500_000_000;
+    player.m_BankGold[0] = 1_900_000_000;
+    const { svc, goldSet } = makeSvc();
+    const r = svc.depositGold(player, 0, 200_000_000);
+    assert.equal(r.ok, false, 'rejects when bank gold + amount > MAX_GOLD');
+    assert.equal(goldSet.length, 0, 'nothing persisted on reject');
+  });
+
+  it('M12: allows depositGold when bank tab gold stays within MAX_GOLD', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nGold = 500_000_000;
+    player.m_BankGold[0] = 1_800_000_000;
+    const { svc } = makeSvc();
+    const r = svc.depositGold(player, 0, 200_000_000);
+    assert.equal(r.ok, true, '2B total does not overflow MAX_GOLD (2B)');
+  });
 });
 
 describe('BankService.changeBankPass', () => {
@@ -280,7 +321,8 @@ describe('BankService.open', () => {
   it('returns nMode 0 (set-pin dialog) when no password is set', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     const { svc } = makeSvc();
-    assert.equal(svc.open(player), 0);
+    // NPC click (dwId != NULL_ID) skips proximity check.
+    assert.equal(svc.open(player, 42), 0);
     assert.equal(player.m_bBankOpen, true);
   });
 
@@ -288,6 +330,47 @@ describe('BankService.open', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_szBankPass = '1234';
     const { svc } = makeSvc();
-    assert.equal(svc.open(player), 1);
+    assert.equal(svc.open(player, 42), 1);
+  });
+
+  // H14: proximity check when opening bank directly (dwId == NULL_ID).
+  it('allows direct open (NULL_ID) when a bank NPC is within range', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_vPos = { x: 5, y: 0, z: 5 };
+    const { svc } = makeSvc([makeBankNpc(0, 0)]);
+    assert.equal(svc.open(player, NULL_ID), 0);
+    assert.equal(player.m_bBankOpen, true);
+  });
+
+  it('rejects direct open (NULL_ID) when no bank NPC is nearby', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_vPos = { x: 200, y: 0, z: 200 };
+    const { svc } = makeSvc([makeBankNpc(0, 0)]);
+    assert.equal(svc.open(player, NULL_ID), -1);
+    assert.equal(player.m_bBankOpen, false);
+  });
+
+  it('skips proximity check when dwId != NULL_ID (NPC click)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_vPos = { x: 999, y: 0, z: 999 };
+    // No bank NPCs at all -- still allowed because dwId is set.
+    const { svc } = makeSvc([]);
+    assert.equal(svc.open(player, 100), 0);
+  });
+
+  // H15: chaotic players cannot open the bank.
+  it('rejects chaotic players (PK propensity > 0)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_dwPKPropensity = 1;
+    const { svc } = makeSvc();
+    assert.equal(svc.open(player, 42), -1);
+    assert.equal(player.m_bBankOpen, false);
+  });
+
+  it('allows non-chaotic players (PK propensity == 0)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_dwPKPropensity = 0;
+    const { svc } = makeSvc();
+    assert.equal(svc.open(player, 42), 0);
   });
 });

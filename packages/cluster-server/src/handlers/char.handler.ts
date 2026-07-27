@@ -25,6 +25,9 @@ import type { AccountConnectionManager } from '../managers/accountConnection.man
 
 const logger = createLogger({ module: 'char-handler' });
 
+/** Default v19 protocol version (`NEUZ_MSGVR`, `_Common/LodeConfig.h:9`). */
+const DEFAULT_PROTOCOL_VERSION = '20100412';
+
 /** Resolves the public address the client should dial for gameplay (:5400). */
 export interface CacheAddrSource {
   /** World/cache server public IPv4, or null when no world is registered. */
@@ -44,7 +47,7 @@ export class CharHandler {
   /** PACKETTYPE_GETPLAYERLIST (0xf6) -> replies PLAYER_LIST. */
   async handleGetPlayerList(socket: Socket, reader: PacketReader): Promise<void> {
     try {
-      const _version = reader.readString();
+      const version = reader.readString();
       const authKey = reader.readDword();
       const account = reader.readString();
       const _password = reader.readString();
@@ -53,6 +56,13 @@ export class CharHandler {
       // C++ destroys the connection when dwAuthKey == 0 (DPLoginSrvr.cpp:145).
       if (authKey === 0) {
         logger.warn({ account }, 'GETPLAYERLIST with zero auth key -- dropping');
+        return;
+      }
+
+      // C++ rejects mismatched protocol version (DPLoginSrvr.cpp:151).
+      if (version !== DEFAULT_PROTOCOL_VERSION) {
+        logger.warn({ version, account }, 'GETPLAYERLIST rejected -- illegal version');
+        this.sendError(socket, 107); // ERROR_ILLEGAL_VER
         return;
       }
 

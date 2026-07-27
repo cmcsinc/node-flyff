@@ -9,6 +9,7 @@ import { NULL_ID } from '@flyff/world-core';
 /** Mutatable player stub with the fields TargetService touches. */
 function fakePlayer(pk = false): CPlayer {
   return {
+    m_idPlayer: pk ? 9001 : 1001,
     m_idTarget: NULL_ID,
     m_idSetTarget: NULL_ID,
     m_dwPKPropensity: pk ? 1 : 0,
@@ -29,6 +30,7 @@ function moverOf(opts: { attackable?: boolean; guard?: boolean }): CMover {
   return {
     m_bAttackable: opts.attackable ?? true,
     m_bGuard: opts.guard ?? false,
+    m_idTargeter: NULL_ID,
   } as unknown as CMover;
 }
 
@@ -48,17 +50,21 @@ describe('TargetService', () => {
   });
 
   it('allows a claim on a guard when the player is PK', () => {
-    const svc = new TargetService({ spawnManager: fakeSpawnManager(200, moverOf({ attackable: true, guard: true })) });
+    const mover = moverOf({ attackable: true, guard: true });
+    const svc = new TargetService({ spawnManager: fakeSpawnManager(200, mover) });
     const p = fakePlayer(true);
     const out = svc.setTarget(p, 200, 0);
     assert.deepEqual(out, { ok: true, mode: 'claim' });
-    assert.equal(p.m_idTarget, 200);
+    assert.equal(mover.m_idTargeter, p.m_idPlayer, 'target m_idTargeter set to claimer');
   });
 
   it('allows a claim on a normal monster', () => {
-    const svc = new TargetService({ spawnManager: fakeSpawnManager(300, moverOf({ attackable: true, guard: false })) });
-    const out = svc.setTarget(fakePlayer(false), 300, 0);
+    const mover = moverOf({ attackable: true, guard: false });
+    const svc = new TargetService({ spawnManager: fakeSpawnManager(300, mover) });
+    const p = fakePlayer(false);
+    const out = svc.setTarget(p, 300, 0);
     assert.deepEqual(out, { ok: true, mode: 'claim' });
+    assert.equal(mover.m_idTargeter, p.m_idPlayer, 'target m_idTargeter set to claimer');
   });
 
   it('falls through for an unknown (player) target id', () => {
@@ -68,12 +74,13 @@ describe('TargetService', () => {
   });
 
   it('release (bClear=1) clears the target lock', () => {
-    const svc = new TargetService({ spawnManager: fakeSpawnManager(null, null) });
     const p = fakePlayer(false);
-    p.m_idTarget = 555;
+    const mover = moverOf({ attackable: true });
+    mover.m_idTargeter = p.m_idPlayer;
+    const svc = new TargetService({ spawnManager: fakeSpawnManager(555, mover) });
     const out = svc.setTarget(p, 555, 1);
     assert.deepEqual(out, { ok: true, mode: 'release' });
-    assert.equal(p.m_idTarget, NULL_ID);
+    assert.equal(mover.m_idTargeter, NULL_ID, 'target m_idTargeter cleared on release');
   });
 
   it('objective (bClear=2) sets m_idSetTarget', () => {

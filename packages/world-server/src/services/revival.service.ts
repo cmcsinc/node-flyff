@@ -153,7 +153,7 @@ export class RevivalService {
     this.clearDeadState(player);
 
     const before = player.m_nExp;
-    const pen = subDieDecExp(player.m_nLevel, player.m_nExp);
+    const pen = subDieDecExp(player.m_nLevel, player.m_nExp, player.m_params);
     const lost = before - pen.exp;
     if (lost > 0) {
       player.m_nExp = pen.exp;
