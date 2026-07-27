@@ -1,25 +1,24 @@
 /**
  * ScriptDlgService -- `PACKETTYPE_SCRIPTDLG` (0x00ff00b0).
  *
- * `DPSrvr::OnScriptDialogReq` (DPSrvr.cpp:807-879) reads:
+ * `DPSrvr::OnScriptDialogReq` (DPSrvr.cpp:914) reads:
  *   OBJID objid   String key(256)   int nGlobal1..nGlobal4
+ * and runs the NPC's dialog script. v19 quest offering is driven by the
+ * improved quest interface (`__IMPROVE_QUEST_INTERFACE`): selecting a quest
+ * from `APP_DIALOG_EX`'s list round-trips a reserved key string
+ * (`QUEST_BEGIN`, `QUEST_END`, ...) with the quest id in `nGlobal2`.
  *
- * Flow (all gated by the 400ms `__QUEST_1208` rate-limit):
- *   1. Resolve the NPC (`prj.GetMover(objid)`) + distance gate
- *      (`MAX_LEN_MOVER_MENU = 1024` squared, npchecker.h:4).
- *   2. Run the NPC's dialog script for the pressed key. The simple subset
- *      (`Speak` -> broadcast chat; `LaunchQuest` -> begin quest) is executed here;
- *      advanced states (`source` bodies with `EndQuest`/`SetQuestState`/item
- *      ops) are not yet ported -- `ponytail`.
- *   3. Post-dialog sweep (DPSrvr.cpp:859-875): scan `m_aQuest` for an active
- *      quest whose `SetEndCondDialog` (PROJECT.CPP:1974) charKey matches the
- *      NPC and addKey matches the pressed key -> set `m_bDialog` -> SETQUEST.
- *
- * v19 note: propQuest.inc uses `SetEndCondCharacter` (the "meet NPC" UI hint),
- * not `SetEndCondDialog` (the sweep trigger), so the sweep is dormant on v19
- * data -- but it is the C++ spec, cheap, and future-proofs the engine. The real
- * quest trigger is the dialog script calling `EndQuest`/`BeginQuest`, blocked
- * on porting the `source` bodies.
+ * Quest offer flow (port of C++ `__QuestEnd`, ScriptHelper.cpp:518-661):
+ *   - On dialog open, scan the NPC's begin/end quests; classify each via
+ *     {@link canBegin} / {@link isComplete}; push one `FUNCTYPE_NEWQUEST`
+ *     (begin-eligible) or `FUNCTYPE_CURRQUEST` (end-eligible) entry per quest
+ *     with `quest=questId`. The client renders these as rows in the dialog's
+ *     New/Current quest list boxes.
+ *   - Single begin-eligible quest + no pending completion -> skip the list and
+ *     open the begin confirmation directly (C++ `vecNewQuest.size()==1`).
+ *   - Selecting a quest sends `QUEST_BEGIN`/`QUEST_END` (+ questId in nGlobal2)
+ *     -> show confirmation (`addAnswer` YES/NO). YES -> `QUEST_BEGIN_YES` ->
+ *     `questService.beginQuest`.
  *
  * The service owns no socket bytes (rule 02) -- handlers write returned frames.
  *
@@ -30,10 +29,12 @@ import type { DialogFile, DialogIndex, DialogState, QuestDef, QuestIndex } from 
 import { prefixForNpc, stateForKey, dialogText } from '@flyff/resources';
 import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
+import { MAX_INVENTORY } from '@flyff/entities';
 import type { QuestService } from '@flyff/quest';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import { createLogger } from '@flyff/core/logger';
-import { buildSetQuest } from '@flyff/quest';
+import { buildSetQuest, canBegin, isComplete } from '@flyff/quest';
+import type { InventoryOps } from '@flyff/quest';
 import { ChatSerializer } from '@flyff/world-core';
 import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer';
 import {
@@ -44,7 +45,7 @@ import {
 
 const logger = createLogger({ module: 'scriptDlg-service' });
 
-/** C++ `__QUEST_1208` rate limit (`DPSrvr.cpp:824`). */
+/** C++ `__QUEST_1208` rate limit (`DPSrvr.cpp:930`). */
 const SCRIPT_DLG_COOLDOWN_MS = 400;
 
 /** C++ reads `lpKey[256]` -- wire string can be up to 255 chars. */
@@ -52,6 +53,23 @@ const MAX_SCRIPT_KEY = 255;
 
 /** C++ `MAX_LEN_MOVER_MENU` (npchecker.h:4) -- squared distance gate. */
 const MAX_LEN_MOVER_MENU_SQ = 1024;
+
+/**
+ * Reserved v19 quest round-trip keys (`_Common/scriptdialog.cpp:213-241` +
+ * `ScriptHelper.cpp`). The client sends these verbatim with the quest id in
+ * `nGlobal2` when the player acts on a quest list row or a YES/NO answer.
+ */
+const QUEST_KEY = {
+  BEGIN: 'QUEST_BEGIN',
+  BEGIN_YES: 'QUEST_BEGIN_YES',
+  BEGIN_NO: 'QUEST_BEGIN_NO',
+  END: 'QUEST_END',
+  END_COMPLETE: 'QUEST_END_COMPLETE',
+  END_FAIL: 'QUEST_END_FAIL',
+  NEXT_LEVEL: 'QUEST_NEXT_LEVEL',
+} as const;
+
+const QUEST_ROUTE_KEYS: ReadonlySet<string> = new Set<string>(Object.values(QUEST_KEY));
 
 export interface ScriptDlgFrame {
   objid: number;
@@ -75,6 +93,9 @@ export interface ScriptDlgDeps {
   /** `#define` symbol table (`raw/define*.h`) -- resolves `QUEST_*` / `II_*`
    *  tokens inside dialog `source:` bodies. Empty map => symbols unresolved. */
   defines?: Map<string, number>;
+  /** `IDS_PROPQUEST_INC_* -> display text` from propQuest.txt.txt. Resolves
+   *  quest titles + per-state desc/cond/status for the dialog UI. */
+  questText?: Map<string, string>;
   /** Chat serializer for `Speak` broadcast text. Injected for testability. */
   chat?: ChatSerializer;
   /** RUNSCRIPTFUNC serializer for the per-clicker dialog menu. Testable. */
@@ -83,7 +104,7 @@ export interface ScriptDlgDeps {
 
 /** Quest action queued by the interpreter -- resolved + executed after the
  *  dialog frame is built so SETQUEST reward frames append to the burst. */
-type QuestIntent = { kind: 'launch' } | { kind: 'begin'; id: number } | { kind: 'end'; id: number };
+type QuestIntent = { kind: 'begin'; id: number } | { kind: 'end'; id: number };
 
 export type ScriptDlgResult =
   | { ok: true; frames: Buffer[] }
@@ -108,10 +129,11 @@ function lowerKeys(src: ReadonlyMap<string, number[]> | undefined): Map<string, 
 }
 
 /** Normalize an NPC to its lowercased charKey for begin/end quest lookups.
- *  Prefers the character.inc outfit key (proper `MaFl_Valin` form); falls back
- *  to stripping `MI_` off the propMover key. Returns undefined if neither is set. */
+ *  Prefers `m_szCharacterKey` (character.inc block key, populated from
+ *  `charBlock.key` for every placed NPC); falls back to `outfit.characterKey`,
+ *  then to stripping `MI_` off the propMover key. Returns undefined if none. */
 function npcLookupKey(npc: CMover): string | undefined {
-  const ck = npc.outfit?.characterKey;
+  const ck = npc.m_szCharacterKey || npc.outfit?.characterKey;
   if (ck) return ck.toLowerCase();
   const stripped = npc.m_szKey?.replace(/^MI_/i, '');
   return stripped ? stripped.toLowerCase() : undefined;
@@ -141,8 +163,8 @@ export class ScriptDlgService {
   private readonly beginByKey: Map<string, number[]>;
   private readonly endByKey: Map<string, number[]>;
   /** Count of RUNSCRIPTFUNC menu frames pushed during the current `runState`.
-   *  Lets the dialog-open path know whether a dialog menu already rendered, so
-   *  the quest offer either appends buttons or opens its own menu. */
+   *  Lets the offer scan know whether a dialog menu already rendered, so it
+   *  appends quest rows rather than wiping the prior menu. */
   private menuCount = 0;
   constructor(private deps: ScriptDlgDeps) {
     this.chat = deps.chat ?? new ChatSerializer();
@@ -152,9 +174,9 @@ export class ScriptDlgService {
   }
 
   /**
-   * `DPSrvr::OnScriptDialogReq` -- rate-limit + distance gate, run the simple
-   * dialog subset, then the post-dialog sweep. Returns outbound frames for the
-   * handler to write. `Date.now()` is injected by the handler (testable).
+   * `DPSrvr::OnScriptDialogReq` -- rate-limit + distance gate, run the dialog
+   * state machine + quest offer scan, then the post-dialog sweep. Returns
+   * outbound frames for the handler to write. `now` is injected by the handler.
    */
   async dialog(player: CPlayer, frame: ScriptDlgFrame, now: number): Promise<ScriptDlgResult> {
     if (now - player.m_tickScript < SCRIPT_DLG_COOLDOWN_MS)
@@ -170,33 +192,24 @@ export class ScriptDlgService {
 
     player.m_tickScript = now;
     const frames: Buffer[] = [];
-    // Dialog prefix is resolved from the propMover key (`MI_MAFL_BOBOKU` ->
-    // `mafl_boboku`). C++ keys `CNpcProperty` by the character.inc block, but
-    // those outfit blocks aren't parsed yet (raw/README.md); `m_szKey` carries
-    // the same identity in MI_* form, which `prefixForNpc` strips + lowercases.
-    const npcKey = npc.m_szKey;
+    // Dialog prefix + quest lookup both key off the character.inc block key
+    // (`MaFl_Boboku`), carried verbatim by `m_szCharacterKey`. `m_szKey` (MI_*)
+    // only matches for convention-following props -- `MI_NPC_*` rule-breakers
+    // (Stima, Phacham, ...) strip to the wrong stem. Prefer the character key.
+    const npcKey = npc.m_szCharacterKey || npc.m_szKey;
 
-    // Quest-offer route: a button pressed from `appendQuestButtons` carries a
-    // synthetic `#b<id>` / `#e<id>` key. Resolve it directly to begin/end the
-    // quest, send SETQUEST + reward frames, then close the window. These keys
-    // never reach the dialog-state machine.
-    const route = parseQuestRoute(frame.key);
-    if (route) {
-      await this.applyIntent(player, npc, route, frames);
-      frames.push(this.scriptDialog.build(player.m_idPlayer, [
-        { type: 'removeAllKeys' },
-        { type: 'say', text: route.kind === 'begin' ? 'Quest accepted.' : 'Quest complete.' },
-        { type: 'exit' },
-      ]));
+    // v19 quest round-trip: selecting a quest from APP_DIALOG_EX's list sends a
+    // reserved key with the quest id in nGlobal2. Route before the state machine.
+    if (QUEST_ROUTE_KEYS.has(frame.key)) {
+      await this.handleQuestRoute(player, npc, frame.key, frame.nGlobal2, frames);
       return { ok: true, frames };
     }
 
     const menuEmitted = await this.runState(player, npc, npcKey, frame.key, frames);
     this.sweepDialogCond(player, npcKey, frame.key, frames);
-    // Quest-offer buttons render on every dialog-open (keyIdx 0), regardless of
-    // whether the NPC has a dialog file or a shop menu. This is the only path
-    // that reaches quest NPCs whose state-0 is a shop menu (Boboku) or who have
-    // no dialog file at all -- `synthInitialMenu` suppresses itself for both.
+    // Quest offer scan runs on every dialog-open (keyIdx 0): pushes NEWQUEST/
+    // CURRQUEST rows into the v19 quest list boxes. Reaches quest NPCs whose
+    // state-0 is a shop menu (Boboku) or who have no dialog file at all.
     if (keyToIndex(frame.key) === 0) this.emitQuestOffer(player, npc, frames, menuEmitted);
     const prefix = prefixForNpc(this.deps.dialogs, npcKey);
     const lk = npcLookupKey(npc);
@@ -204,7 +217,7 @@ export class ScriptDlgService {
       {
         charId: player.m_idPlayer,
         npcKey,
-        charKey: npc.outfit?.characterKey ?? null,
+        charKey: npc.m_szCharacterKey ?? null,
         prefix: prefix ?? null,
         hasSource: stateForKey(this.deps.dialogs, prefix ?? '', keyToIndex(frame.key))?.source != null,
         key: frame.key,
@@ -221,8 +234,7 @@ export class ScriptDlgService {
    * Resolve + execute the dialog state for the pressed key. When the state has a
    * `source` body (the unported C++ subset), the {@link interpretDialog}
    * evaluator runs it -- emitting `Say`/`AddKey`/`Exit` ops, `Speak` chat, and
-   * queuing quest actions -- which is what makes quest-giver NPCs (Valin,
-   * Drian, ...) produce their conditional offer/accept menus. States without
+   * queuing explicit `BeginQuest(n)`/`EndQuest(n)` intents. States without
    * `source` fall through to the structured-subset emitter. State 0 always also
    * runs {@link synthInitialMenu} so the `#init` greeting + buttons render even
    * though the compiled `WorldDialog.dll` (which generates them natively) is
@@ -250,13 +262,9 @@ export class ScriptDlgService {
       }
     }
 
-    // The `launch_quest` flag was extracted from a `LaunchQuest()` call the
-    // simple-subset converter collapsed to a boolean. If the interpreter didn't
-    // queue one itself (simple body had no source to interpret), honor the flag.
-    if (state.launch_quest && !intents.some((i) => i.kind === 'launch' || i.kind === 'begin')) {
-      intents.push({ kind: 'launch' });
-    }
-    // Also honor an explicit `launch_quest_id` if the data ever carries one.
+    // Honor an explicit `BeginQuest(n)`/`EndQuest(n)` from the source body. The
+    // bare `LaunchQuest()` form is handled by the eager offer scan on dialog
+    // open (emitQuestOffer), so it is a no-op here.
     if (state.launch_quest_id !== undefined) intents.push({ kind: 'begin', id: state.launch_quest_id });
 
     // v19 `#init` (state 0) buttons are generated by the compiled WorldDialog.dll,
@@ -264,16 +272,13 @@ export class ScriptDlgService {
     if (keyIdx === 0) this.synthInitialMenu(player, state, file, frames);
 
     for (const intent of intents) await this.applyIntent(player, npc, intent, frames);
-    // `menuCount` is bumped by every producer that pushes a RUNSCRIPTFUNC menu
-    // frame (emitMenu / runSource / synthInitialMenu). The caller uses it to
-    // decide whether the quest offer opens a fresh menu or appends to this one.
     return this.menuCount > 0;
   }
 
   /**
    * Run a `source:` body through the interpreter. Say/AddKey/Exit collect into a
    * single RUNSCRIPTFUNC burst (leading removeAllKeys); Speak emits chat bubbles;
-   * LaunchQuest/BeginQuest/EndQuest queue for post-burst resolution. Mirrors how
+   * BeginQuest/EndQuest queue for post-burst resolution. Mirrors how
    * `emitMenu` builds frames so sourced + structured states render identically.
    */
   private runSource(
@@ -301,7 +306,7 @@ export class ScriptDlgService {
       },
       removeKey: () => { /* ponytail: ScriptFunc has no removeKey op yet */ },
       exit: () => { exit = true; },
-      launchQuest: () => { intents.push({ kind: 'launch' }); },
+      launchQuest: () => { /* bare LaunchQuest(): eager emitQuestOffer covers it */ },
       beginQuest: (id) => { intents.push({ kind: 'begin', id }); },
       endQuest: (id) => { intents.push({ kind: 'end', id }); },
       changeJob: () => { /* ponytail: job change via dialog */ },
@@ -322,42 +327,179 @@ export class ScriptDlgService {
     }
   }
 
-  /**
-   * Resolve a queued quest intent. `launch` (bare `LaunchQuest()` -- C++ calls
-   * `__QuestEnd(pcId, npcId, 0)`) auto-resolves the quest: the first quest in
-   * the NPC's `beginByKey` list that the player can begin, else the first active
-   * quest in `endByKey` the player can end. Explicit `begin`/`end` ids skip
-   * resolution. Appends SETQUEST + reward frames from `questService`.
-   */
+  /** Resolve + execute an explicit BeginQuest(n)/EndQuest(n) from a source body. */
   private async applyIntent(
-    player: CPlayer, npc: CMover, intent: QuestIntent, frames: Buffer[],
+    player: CPlayer, _npc: CMover, intent: QuestIntent, frames: Buffer[],
   ): Promise<void> {
-    let questId: number | undefined;
-    if (intent.kind === 'begin' || intent.kind === 'end') {
-      questId = intent.id;
-    } else {
-      questId = this.resolveLaunchQuest(player, npc);
-    }
-    if (questId === undefined) return;
-    const res = intent.kind === 'end'
-      ? await this.deps.questService.endQuest(player, questId)
-      : await this.deps.questService.beginQuest(player, questId);
-    if (res.ok) frames.push(...res.frames);
+    if (intent.kind === 'begin') await this.applyBegin(player, intent.id, frames);
+    else await this.applyEnd(player, intent.id, frames);
   }
 
-  /** Find the quest a bare `LaunchQuest()` at this NPC should act on. Prefers a
-   *  begin-eligible quest; falls back to an end-eligible active quest. */
-  private resolveLaunchQuest(player: CPlayer, npc: CMover): number | undefined {
+  /**
+   * Emit the v19 quest offer scan (port of C++ `__QuestEnd`'s offer loop,
+   * ScriptHelper.cpp:542-587). Classifies the NPC's begin/end quests and pushes
+   * one `FUNCTYPE_NEWQUEST` (begin-eligible) or `FUNCTYPE_CURRQUEST`
+   * (end-eligible active) row per quest into the dialog's quest list boxes.
+   *
+   * Single begin-eligible quest + no pending completion -> skip the list and
+   * open the begin confirmation directly (C++ `vecNewQuest.size()==1`).
+   *
+   * `dialogMenuEmitted` says whether `runState` already pushed a menu frame; if
+   * so we append rows (no removeAllKeys, which would wipe the shop/greeting
+   * menu), otherwise we open a fresh menu frame.
+   */
+  private emitQuestOffer(
+    player: CPlayer, npc: CMover, frames: Buffer[], dialogMenuEmitted: boolean,
+  ): void {
     const lk = npcLookupKey(npc);
-    if (!lk) return undefined;
-    for (const id of this.beginByKey.get(lk) ?? []) {
-      if (!player.findQuest(id) && !player.isCompleteQuest(id)) return id;
+    if (!lk) return;
+    const inv = this.questInv(player);
+    const newQuests: number[] = [];
+    const endQuests: number[] = [];
+    for (const qid of this.beginByKey.get(lk) ?? []) {
+      if (player.findQuest(qid) || player.isCompleteQuest(qid)) continue;
+      const def = this.deps.quests.byId.get(qid);
+      if (def && canBegin(player, def, inv).ok) newQuests.push(qid);
     }
-    for (const id of this.endByKey.get(lk) ?? []) {
-      const q = player.findQuest(id);
-      if (q) return id;
+    for (const qid of this.endByKey.get(lk) ?? []) {
+      const q = player.findQuest(qid);
+      if (!q || player.isCompleteQuest(qid)) continue;
+      const def = this.deps.quests.byId.get(qid);
+      if (def && isComplete(player, q, def, inv).ok) endQuests.push(qid);
     }
-    return undefined;
+    // C++ single-new-quest shortcut: skip the list, open begin confirmation.
+    if (newQuests.length === 1 && endQuests.length === 0) {
+      this.questBeginConfirm(player, newQuests[0]!, frames);
+      this.menuCount++;
+      return;
+    }
+    const funcs: ScriptFunc[] = [];
+    for (const qid of newQuests)
+      funcs.push({ type: 'newQuest', word: this.questLabel(qid), key: QUEST_KEY.BEGIN, quest: qid });
+    for (const qid of endQuests)
+      funcs.push({ type: 'currQuest', word: this.questLabel(qid), key: QUEST_KEY.END, quest: qid });
+    if (funcs.length === 0) return;
+    if (!dialogMenuEmitted) funcs.unshift({ type: 'removeAllKeys' });
+    frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
+  }
+
+  /**
+   * Dispatch a reserved v19 quest round-trip key. `QUEST_BEGIN`/`QUEST_END` open
+   * a confirmation (Say + YES/NO answer buttons); `QUEST_BEGIN_YES` grants the
+   * quest via `questService.beginQuest`; `QUEST_END_COMPLETE` completes it.
+   * `QUEST_BEGIN_NO`/`QUEST_END_FAIL`/`QUEST_NEXT_LEVEL` close the window.
+   * Quest id comes from `nGlobal2` (C++ `dwVal2` round-trip).
+   */
+  private async handleQuestRoute(
+    player: CPlayer, npc: CMover, key: string, questId: number, frames: Buffer[],
+  ): Promise<void> {
+    if (!questId || !this.deps.quests.byId.has(questId)) {
+      this.closeDialog(player, frames);
+      return;
+    }
+    switch (key) {
+      case QUEST_KEY.BEGIN:
+        this.questBeginConfirm(player, questId, frames);
+        return;
+      case QUEST_KEY.END:
+        this.questEndConfirm(player, questId, frames);
+        return;
+      case QUEST_KEY.BEGIN_YES:
+        await this.applyBegin(player, questId, frames);
+        return;
+      case QUEST_KEY.END_COMPLETE:
+        await this.applyEnd(player, questId, frames);
+        return;
+      case QUEST_KEY.NEXT_LEVEL:
+        frames.push(this.scriptDialog.build(player.m_idPlayer, [
+          { type: 'removeAllKeys' },
+          { type: 'say', text: 'You are not yet ready for this quest.' },
+          { type: 'exit' },
+        ]));
+        return;
+      default:
+        // BEGIN_NO / END_FAIL -> close.
+        this.closeDialog(player, frames);
+    }
+    void npc;
+  }
+
+  /** `__QuestBegin` confirmation: quest title + YES/NO answer buttons
+   *  (keys round-trip `QUEST_BEGIN_YES` / `QUEST_BEGIN_NO` with questId). */
+  private questBeginConfirm(player: CPlayer, questId: number, frames: Buffer[]): void {
+    frames.push(this.scriptDialog.build(player.m_idPlayer, [
+      { type: 'removeAllKeys' },
+      { type: 'say', text: this.questLabel(questId) },
+      { type: 'say', text: 'Will you accept this quest?' },
+      { type: 'addAnswer', word: 'Yes', key: QUEST_KEY.BEGIN_YES, quest: questId },
+      { type: 'addAnswer', word: 'No', key: QUEST_KEY.BEGIN_NO, quest: questId },
+    ]));
+  }
+
+  /** `__QuestEnd` confirmation: complete-eligible -> OK=>`QUEST_END_COMPLETE`;
+   *  not yet eligible -> OK=>`QUEST_END_FAIL` (closes). */
+  private questEndConfirm(player: CPlayer, questId: number, frames: Buffer[]): void {
+    const def = this.deps.quests.byId.get(questId);
+    const q = player.findQuest(questId);
+    const eligible = def && q ? isComplete(player, q, def, this.questInv(player)).ok : false;
+    const label = this.questLabel(questId);
+    if (eligible) {
+      frames.push(this.scriptDialog.build(player.m_idPlayer, [
+        { type: 'removeAllKeys' },
+        { type: 'say', text: `${label} -- quest complete!` },
+        { type: 'addAnswer', word: 'OK', key: QUEST_KEY.END_COMPLETE, quest: questId },
+      ]));
+    } else {
+      frames.push(this.scriptDialog.build(player.m_idPlayer, [
+        { type: 'removeAllKeys' },
+        { type: 'say', text: `${label} -- conditions not yet met.` },
+        { type: 'addAnswer', word: 'OK', key: QUEST_KEY.END_FAIL, quest: questId },
+      ]));
+    }
+  }
+
+  /** Grant a quest; append SETQUEST + reward frames, then close. Logs the
+   *  `QuestFailReason` when `canBegin` rejects so the click isn't silent. */
+  private async applyBegin(player: CPlayer, questId: number, frames: Buffer[]): Promise<void> {
+    const res = await this.deps.questService.beginQuest(player, questId);
+    if (res.ok) {
+      frames.push(...res.frames);
+      frames.push(this.scriptDialog.build(player.m_idPlayer, [
+        { type: 'removeAllKeys' },
+        { type: 'say', text: 'Quest accepted.' },
+        { type: 'exit' },
+      ]));
+    } else {
+      logger.info({ charId: player.m_idPlayer, questId, reason: res.reason }, 'quest begin rejected');
+      frames.push(this.scriptDialog.build(player.m_idPlayer, [
+        { type: 'removeAllKeys' },
+        { type: 'say', text: `Cannot begin quest (${res.reason}).` },
+        { type: 'exit' },
+      ]));
+    }
+  }
+
+  /** Complete a quest; append SETQUEST + reward frames, then close. */
+  private async applyEnd(player: CPlayer, questId: number, frames: Buffer[]): Promise<void> {
+    const res = await this.deps.questService.endQuest(player, questId);
+    if (res.ok) {
+      frames.push(...res.frames);
+      frames.push(this.scriptDialog.build(player.m_idPlayer, [
+        { type: 'removeAllKeys' },
+        { type: 'say', text: 'Quest complete.' },
+        { type: 'exit' },
+      ]));
+    } else {
+      logger.info({ charId: player.m_idPlayer, questId, reason: res.reason }, 'quest end rejected');
+      this.closeDialog(player, frames);
+    }
+  }
+
+  private closeDialog(player: CPlayer, frames: Buffer[]): void {
+    frames.push(this.scriptDialog.build(player.m_idPlayer, [
+      { type: 'removeAllKeys' },
+      { type: 'exit' },
+    ]));
   }
 
   /** Build the interpreter bindings view over player + world state. Queries that
@@ -387,6 +529,28 @@ export class ScriptDlgService {
     };
   }
 
+  /** Real `InventoryOps` view over the player's live bag, so the offer scan's
+   *  `canBegin`/`isComplete` see actual item counts (gather-quest completion,
+   *  begin-item gates). Reads `m_Inventory` directly -- no InventoryService
+   *  dependency. `count` sums every stack matching `itemId`; `emptySlots`
+   *  counts unoccupied slots in the main-bag range `[0, MAX_INVENTORY)`. */
+  private questInv(player: CPlayer): InventoryOps {
+    return {
+      count: (itemId: number): number => {
+        let n = 0;
+        for (const s of player.m_Inventory) {
+          if (s && s.itemId === itemId) n += s.count;
+        }
+        return n;
+      },
+      emptySlots: (): number => {
+        let n = 0;
+        for (let i = 0; i < MAX_INVENTORY; i++) if (!player.m_Inventory[i]) n++;
+        return n;
+      },
+    };
+  }
+
   /**
    * Synthesize a visible `#init` menu when state 0 produced no ops of its own.
    * Emits the greeting as a SAY (so the window isn't blank) and flattens each
@@ -395,10 +559,9 @@ export class ScriptDlgService {
    * {@link runState} for the `ponytail` note.
    *
    * No `Exit` here: FUNCTYPE_EXIT calls `CWndDialog::Destroy()` on the client
-   * (DPClient.cpp:14219), so an unconditional Exit in the #init batch closes the
+   * (DPClient.cpp:14402), so an unconditional Exit in the #init batch closes the
    * window the client just opened -- the dialog flashes and disappears. The
-   * player closes the dialog via the window's close box / ESC; a state may still
-   * queue a data-driven Exit (see {@link emitMenu}) when its script body calls it.
+   * player closes the dialog via the window's close box / ESC.
    */
   private synthInitialMenu(
     player: CPlayer, state: DialogState, file: DialogFile | undefined, frames: Buffer[],
@@ -427,71 +590,35 @@ export class ScriptDlgService {
         }
       }
     }
-    // Quest-offer buttons are emitted separately by `emitQuestOffer` on the
-    // dialog-open path so they also reach shop-menu / no-dialog-file NPCs that
-    // never run this synth. Here we only render the greeting + child-state menu.
     if (funcs.length === 0) return;
     funcs.unshift({ type: 'removeAllKeys' });
     frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
     this.menuCount++;
   }
 
-  /**
-   * Emit Accept/Complete quest buttons for quests bound to this NPC on the
-   * dialog-open path. Runs for EVERY quest NPC regardless of whether it has a
-   * dialog file, a shop menu, or a speak-only greeting -- this is the only path
-   * that reaches quest NPCs whose state-0 is otherwise a shop menu (Boboku) or
-   * absent. Accept shows for begin-eligible quests (`beginByKey`, not yet
-   * begun/complete); Complete for active `endByKey` quests. Buttons carry
-   * synthetic `#b<id>` / `#e<id>` keys that {@link parseQuestRoute} resolves.
-   *
-   * `dialogMenuEmitted` says whether `runState` already pushed a menu frame. The
-   * client keeps prior buttons until `removeAllKeys`, so when a menu preceded us
-   * we append buttons (no removeAllKeys, which would wipe the shop/greeting menu);
-   * when none did (no dialog file / speak-only), we open our own menu frame.
-   */
-  private emitQuestOffer(
-    player: CPlayer, npc: CMover, frames: Buffer[], dialogMenuEmitted: boolean,
-  ): void {
-    const lk = npcLookupKey(npc);
-    if (!lk) return;
-    const funcs: ScriptFunc[] = [];
-    for (const qid of this.beginByKey.get(lk) ?? []) {
-      if (funcs.length >= 9) break;
-      if (player.findQuest(qid) || player.isCompleteQuest(qid)) continue;
-      funcs.push({ type: 'addKey', word: this.questLabel(qid), key: `#b${qid}` });
-    }
-    for (const qid of this.endByKey.get(lk) ?? []) {
-      if (funcs.length >= 9) break;
-      if (!player.findQuest(qid) || player.isCompleteQuest(qid)) continue;
-      funcs.push({ type: 'addKey', word: `Complete: ${this.questLabel(qid)}`, key: `#e${qid}` });
-    }
-    if (funcs.length === 0) return;
-    // No preceding menu -> open one (leading removeAllKeys) so the client shows a
-    // dialog window. A preceding menu -> append (client retains its buttons).
-    if (!dialogMenuEmitted) funcs.unshift({ type: 'removeAllKeys' });
-    frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
-  }
-
-  /** Display label for a quest button. Resolves to the def title when plain
-   *  text, else falls back to symbol/id (title is usually an unresolved
-   *  `IDS_PROPQUEST_INC_*` until the text-table loader lands). */
+  /** Display label for a quest button. Resolves `IDS_PROPQUEST_INC_*` titles
+   *  via the propQuest text table; falls back to the raw title, the symbol, or
+   *  the id (mirrors C++ `m_szTitle` lookup). */
   private questLabel(qid: number): string {
     const def = this.deps.quests.byId.get(qid);
-    if (def?.title && !def.title.startsWith('IDS_')) return def.title;
-    return def?.symbol ?? `Quest ${qid}`;
+    if (!def) return `Quest ${qid}`;
+    return this.resolveText(def.title) ?? def.title ?? def.symbol ?? `Quest ${qid}`;
+  }
+
+  /** Resolve an `IDS_PROPQUEST_INC_*` token to display text, or undefined. */
+  private resolveText(token: string | undefined): string | undefined {
+    if (!token || !token.startsWith('IDS_')) return token;
+    const t = this.deps.questText?.get(token);
+    return t && t.length > 0 ? t : undefined;
   }
 
   /**
    * Build the per-user RUNSCRIPTFUNC frame for `state` -- the ops a C++
    * `CNpcScript::<prefix>_<idx>` body queues via `AddRunScriptFunc`
    * (`User.cpp:6259`). A leading `RemoveAllKeys` clears any prior button set so
-   * each state renders a fresh menu (the client window persists across button
-   * clicks and keeps key buttons until cleared -- `WndDialog.cpp:710`). The
-   * `AddKey` routing key is the target state index stringified so the client's
-   * echo round-trips through `keyToIndex`. States with no `say`/`keys`/`exit`
-   * (e.g. `speak`-only or `launch_quest`-only) emit no menu frame -- matching
-   * C++, which queues nothing when the script body calls none of these.
+   * each state renders a fresh menu. The `AddKey` routing key is the target
+   * state index stringified so the client's echo round-trips through
+   * `keyToIndex`. States with no `say`/`keys`/`exit` emit no menu frame.
    */
   private emitMenu(player: CPlayer, state: DialogState, frames: Buffer[]): void {
     const funcs: ScriptFunc[] = [];
@@ -537,22 +664,10 @@ export class ScriptDlgService {
 
 /**
  * Dialog states are keyed by stringified index (`"0"`, `"9"`, ...). Empty key or
- * `#init` (DPSrvr.cpp:850) routes to state 0; otherwise parse the leading int.
+ * `#init` (DPSrvr.cpp:850,955) routes to state 0; otherwise parse the leading int.
  */
 function keyToIndex(key: string): number {
   if (key.length === 0 || key === '#init') return 0;
   const n = parseInt(key, 10);
   return Number.isNaN(n) ? 0 : n;
-}
-
-/** Recognize the synthetic quest-offer keys emitted by `appendQuestButtons`.
- *  `#b<id>` -> begin quest; `#e<id>` -> end quest. Returns a {@link QuestIntent}
- *  shape the existing `applyIntent` consumes, or undefined for normal keys. */
-function parseQuestRoute(key: string): QuestIntent | undefined {
-  if (key.length < 3 || key[0] !== '#') return undefined;
-  const kind = key[1] === 'b' ? 'begin' : key[1] === 'e' ? 'end' : null;
-  if (!kind) return undefined;
-  const id = parseInt(key.slice(2), 10);
-  if (Number.isNaN(id) || id <= 0) return undefined;
-  return { kind, id };
 }

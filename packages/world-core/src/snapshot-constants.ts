@@ -265,6 +265,13 @@ export const FUNCTYPE_ADDKEY = 0x0010;              // MsgHdr.h:1387 -- String w
 export const FUNCTYPE_REMOVEKEY = 0x0011;           // MsgHdr.h:1388 -- String key
 export const FUNCTYPE_SAY = 0x0012;                 // MsgHdr.h:1389 -- String text, DWORD quest
 export const FUNCTYPE_ADDANSWER = 0x0013;           // MsgHdr.h:1390 -- String word, String key, DWORD param, DWORD quest
+// v19 __IMPROVE_QUEST_INTERFACE quest-list ops (MsgHdr.h:1438/1439). Same payload
+// shape as ADDKEY (String word, String key, DWORD param, DWORD quest); the quest
+// id (dwVal2) round-trips back to the server as nGlobal2 when the player picks the
+// entry. ADDKEY renders as a legacy dialog button; NEWQUEST/CURRQUEST render as
+// rows in APP_DIALOG_EX's NewQuestListBox / CurrentQuestListBox (WndDialog.cpp:1083).
+export const FUNCTYPE_NEWQUEST = 0x0026;            // MsgHdr.h:1438 -- begin-eligible quest offer (New Quest list)
+export const FUNCTYPE_CURRQUEST = 0x0027;           // MsgHdr.h:1439 -- active quest offer (Current Quest list)
 export const FUNCTYPE_EXIT = 0x0016;                // MsgHdr.h:1393 -- (no payload)
 export const FUNCTYPE_ENDSAY = 0x0017;              // MsgHdr.h:1394 -- (no payload)
 export const FUNCTYPE_REMOVEALLKEY = 0x001d;        // MsgHdr.h:1400 -- (no payload)

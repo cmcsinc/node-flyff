@@ -4,6 +4,7 @@ import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journa
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
+import type { CPlayer } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
 import { ZoneManager } from '@flyff/world-core';
 import { SpawnManager } from '@flyff/world-core';
@@ -97,6 +98,7 @@ import { NpcBuffHandler } from '@flyff/npc';
 import { RemoveQuestHandler } from '@flyff/quest';
 import { QuestCheckHandler } from '@flyff/quest';
 import { QuestHelperHandler } from '@flyff/quest';
+import { NoticeSerializer } from './net/snapshot/notice.serializer';
 import { JournalReplayer } from './systems/journalReplayer';
 import { registerReplayers } from './systems/journalReplayers';
 import { QuestTrackerSystem } from '@flyff/quest';
@@ -311,6 +313,16 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const createItemSerializer = new CreateItemSnapshotSerializer();
 
+  // Item-acquire chat-line notifier (SNAPSHOTTYPE_TEXT). v19 C++ sends no
+  // item-name text on pickup or quest reward -- only CREATEITEM + sound -- so
+  // this is an emulator-side addition for a visible "you acquired X" log line.
+  // Shared by LootService (ground piles) and QuestService (reward items).
+  const noticeSerializer = new NoticeSerializer();
+  const notifyItemAcquire = (player: CPlayer, itemId: number, count: number) => {
+    const name = resources.items.items.get(itemId)?.name ?? `Item ${itemId}`;
+    playerManager.sendTo(player, noticeSerializer.build(count > 1 ? `${name} x${count}` : name));
+  };
+
   const questSetLevelSerializer = new SetLevelSerializer();
   const questService = new QuestService({
     questRepo,
@@ -335,6 +347,7 @@ export async function compose(): Promise<WorldComposeResult> {
         );
       }
     },
+    onItemReward: (player, itemId, count) => notifyItemAcquire(player, itemId, count),
   });
 
   // Phase 6 -- reactive quest tracker (kill/patrol/time + quest-item drops).
@@ -437,7 +450,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // dest-obj arrival check (v19 pickup has no packet -- client walks to the pile
   // via PLAYERSETDESTOBJ, server loots on arrival) every position update.
   const itemManager = new ItemManager({ zoneManager });
-  const lootService = new LootService({ inventoryService, itemManager, playerManager, zoneManager });
+  const lootService = new LootService({ inventoryService, itemManager, playerManager, zoneManager, onAcquireItem: (player, itemId, count) => notifyItemAcquire(player, itemId, count) });
   const movementService = new MovementService({
     zoneManager,
     onMoved: (p) => questTracker.onPlayerMoved(p),
@@ -470,7 +483,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const getPosHandler = new GetPosHandler(playerManager, movementService);
   const scriptDlgService = new ScriptDlgService({
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
-    defines: resources.defines,
+    defines: resources.defines, questText: resources.questText,
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalHandler = new RevivalHandler(playerManager, revivalService);

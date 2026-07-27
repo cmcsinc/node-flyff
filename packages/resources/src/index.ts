@@ -31,6 +31,7 @@ import { loadDrops, type DropIndex } from './loaders/drop.loader';
 import { loadCharacterInc, type CharacterIncIndex } from './loaders/characterInc.loader';
 import { loadSetItems, type SetItemIndex } from './loaders/setItem.loader';
 import { loadDefines } from './loaders/defines.loader';
+import { loadQuestText, type QuestTextIndex } from './loaders/questText.loader';
 
 const logger = createResourceLogger('resources');
 
@@ -70,6 +71,10 @@ export interface ResourceIndex {
   /** `#define` symbol table from `raw/define*.h` -- resolves `QUEST_*` / `II_*`
    *  / `MI_*` / `JOB_*` tokens in dialog source bodies + quest commands. */
   defines: Map<string, number>;
+
+  /** `IDS_PROPQUEST_INC_* -> display text` from `raw/propQuest.txt.txt`.
+   *  Resolves quest titles + per-state desc/cond/status for the dialog UI. */
+  questText: QuestTextIndex;
 }
 
 /**
@@ -88,7 +93,7 @@ export async function loadAllResources(
 ): Promise<ResourceIndex> {
   logger.info({ dataDir, rawDir }, 'Loading all resources...');
 
-  const [items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines] = await Promise.all([
+  const [items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines, questText] = await Promise.all([
     loadItems(dataDir, rawDir),
     loadMovers(dataDir),
     loadSkills(dataDir),
@@ -99,6 +104,7 @@ export async function loadAllResources(
     loadCharacterInc(rawDir),
     loadSetItems(dataDir),
     loadDefines(rawDir),
+    loadQuestText(rawDir),
   ]);
 
   logger.info(
@@ -113,11 +119,12 @@ export async function loadAllResources(
       characterInc: characterInc.byKey.size,
       setItems: setItems.byId.size,
       defines: defines.size,
+      questText: questText.size,
     },
     'All resources loaded'
   );
 
-  return { items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines };
+  return { items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines, questText };
 }
 
 /**
@@ -191,6 +198,7 @@ export {
   type QuestDrop,
 } from './loaders/quest.loader';
 export { loadDefines } from './loaders/defines.loader';
+export { loadQuestText, type QuestTextIndex } from './loaders/questText.loader';
 export {
   loadCharacterInc,
   parseCharacterInc,

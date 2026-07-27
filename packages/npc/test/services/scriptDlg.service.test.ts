@@ -32,9 +32,12 @@ function mkPlayer(overrides: Partial<CPlayer> = {}): CPlayer {
 }
 
 function mkNpc(characterKey?: string, pos = { x: 0, y: 0, z: 0 }): CMover {
+  // Model the real spawn-manager output: `m_szCharacterKey` carries the
+  // character.inc block key (`MaFl_Alice`) and `m_szKey` the propMover MI_* form.
   return {
     m_idMover: NPC_ID, m_vPos: pos,
-    m_szKey: characterKey ?? '',
+    m_szCharacterKey: characterKey,
+    m_szKey: characterKey ? `MI_${characterKey.toUpperCase()}` : '',
   } as unknown as CMover;
 }
 
@@ -287,35 +290,6 @@ describe('ScriptDlgService.dialog', () => {
     assert.ok(out.frames.some((f) => f.equals(Buffer.from([0xc0, NPC_ID & 0xff])))); // Speak chat too
   });
 
-  it('interprets a `source:` body: conditional LaunchQuest auto-resolves + begins the NPC quest', async () => {
-    const { svc, began, frame } = fakeQuestService();
-    const { serializer, calls } = fakeScriptDialog();
-    const dialogs = mkDialogs(['', '', 'offer', 'accept']);
-    dialogs.byPrefix.set('mafl_test', {
-      _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
-      // Mirrors dudk_drian state 1: if VOL1 done -> LaunchQuest(); else AddKey buttons.
-      states: { '1': { source: 'if(GetQuestState(QUEST_DUDK_VOL1) == QS_END) { LaunchQuest(); } else { AddKey( 9 ); }' } },
-    } as never);
-    const quests = {
-      byId: new Map(), drops: new Map(),
-      byNpc: { begin: new Map([['mafl_test', [4242]]]), end: new Map() },
-    } as unknown as QuestIndex;
-    const defines = new Map([['QUEST_DUDK_VOL1', 100]]);
-    const s = new ScriptDlgService({
-      spawnManager: { get: () => mkNpc('MaFl_Test') },
-      dialogs, quests, questService: svc, defines,
-      chat: fakeChat as never, scriptDialog: serializer as never,
-    });
-    // Player has VOL1 ended (state 14 == QS_END) -> LaunchQuest branch fires.
-    const player = mkPlayer({ m_aQuest: [{ id: 100, state: 14 } as never] });
-    const out = await s.dialog(player, { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
-    if (!out.ok) throw new Error('expected ok');
-    // No menu ops in the taken branch -> no RUNSCRIPTFUNC frame; only the begin SETQUEST frame.
-    assert.equal(calls.length, 0);
-    assert.deepEqual(began, [4242]);           // auto-resolved from the NPC begin map
-    assert.ok(out.frames.some((f) => f.equals(frame)));
-  });
-
   it('interprets a `source:` body: else-branch emits AddKey buttons', async () => {
     const { svc, began } = fakeQuestService();
     const { serializer, calls } = fakeScriptDialog();
@@ -341,14 +315,13 @@ describe('ScriptDlgService.dialog', () => {
     assert.deepEqual(began, []); // LaunchQuest branch not taken
   });
 
-  it('synthesizes a quest Accept button when the NPC begins a quest the player lacks', async () => {
-    const { svc, began } = fakeQuestService();
+  it('offer scan: single begin-eligible quest opens the begin confirmation (C++ shortcut)', async () => {
+    const { svc } = fakeQuestService();
     const { serializer, calls } = fakeScriptDialog();
-    const dialogs = mkDialogs(['', '', '', 'greeting']); // strings[3] = greeting via speak index 3
+    const dialogs = mkDialogs(['', '', '', 'greeting']);
     dialogs.byPrefix.set('mafl_alice', {
       _version: '1.0', prefix: 'mafl_alice', character_key: 'MaFl_Alice',
-      // Alice-like: state 0 speak-only (no quest logic in source) + a launch state.
-      states: { '0': { speak: [3] }, '1': { launch_quest: true } },
+      states: { '0': { speak: [3] } },
     } as never);
     const quests = {
       byId: new Map([[5062, { id: 5062, symbol: 'QUEST_ALICE01', title: 'IDS_X', commands: [], states: {}, quest_items: [] }]]),
@@ -360,40 +333,28 @@ describe('ScriptDlgService.dialog', () => {
       dialogs, quests, questService: svc,
       chat: fakeChat as never, scriptDialog: serializer as never,
     });
-    // mkNpc sets m_szKey; outfit.characterKey is undefined -> npcLookupKey falls
-    // back to stripping MI_ + lowercasing. Use an explicit outfit via override.
+    // Dialog open (key='') -> NPC identity via m_szCharacterKey ('MaFl_Alice') ->
+    // lookup 'mafl_alice' -> one begin-eligible quest -> begin confirmation.
     const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
     if (!out.ok) throw new Error('expected ok');
-    // Quest offer is now its own RUNSCRIPTFUNC frame (emitted on dialog-open,
-    // separate from the greeting menu) so it reaches shop-menu / no-dialog NPCs.
-    const accept = calls.flat().find((f) => f.type === 'addKey' && f.key === '#b5062');
-    assert.ok(accept, 'expected a #b5062 Accept button in the synth menu');
-    // No outfit on mkNpc -> npcLookupKey uses m_szKey. mkNpc('MaFl_Alice') sets
-    // m_szKey='MaFl_Alice' which has no MI_ prefix -> stripped stays 'MaFl_Alice'
-    // -> lowercased 'mafl_alice' -> matches beginByKey. Confirm the label.
-    assert.equal((accept as { word: string }).word, 'QUEST_ALICE01');
-
-    // Click the Accept button -> routes to beginQuest.
-    const out2 = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '#b5062', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
-    if (!out2.ok) throw new Error('expected ok');
-    assert.deepEqual(began, [5062]);
-    assert.ok(calls.at(-1)!.some((f) => f.type === 'exit')); // closes the window
+    const yes = calls.flat().find((f) => f.type === 'addAnswer' && f.key === 'QUEST_BEGIN_YES');
+    assert.ok(yes, 'expected a QUEST_BEGIN_YES answer button');
+    assert.equal((yes as { quest?: number }).quest, 5062);
   });
 
-  it('emits quest Accept even when state 0 is a shop/menu (buttons not suppressed)', async () => {
+  it('offer scan: multiple begin quests push NEWQUEST rows into the quest list', async () => {
     const { svc } = fakeQuestService();
     const { serializer, calls } = fakeScriptDialog();
     const dialogs = mkDialogs(['', '', 'Buy', 'Sell'], 'mafl_boboku');
-    // Boboku-like: state 0 has real menu keys (a shop). Old synthInitialMenu
-    // early-returned on non-empty keys and dropped the quest offer entirely.
     dialogs.byPrefix.set('mafl_boboku', {
       _version: '1.0', prefix: 'mafl_boboku', character_key: 'MaFl_Boboku',
       states: { '0': { keys: [{ label: 2 }, { label: 3 }] } },
     } as never);
+    const qd = (id: number) => ({ id, symbol: `Q${id}`, title: 'IDS_X', commands: [], states: {}, quest_items: [] });
     const quests = {
-      byId: new Map([[7001, { id: 7001, symbol: 'QUEST_BOBOKU01', title: 'IDS_X', commands: [], states: {}, quest_items: [] }]]),
+      byId: new Map([[7001, qd(7001)], [7002, qd(7002)]]),
       drops: new Map(),
-      byNpc: { begin: new Map([['mafl_boboku', [7001]]]), end: new Map() },
+      byNpc: { begin: new Map([['mafl_boboku', [7001, 7002]]]), end: new Map() },
     } as unknown as QuestIndex;
     const s = new ScriptDlgService({
       spawnManager: { get: () => mkNpc('MaFl_Boboku') },
@@ -402,11 +363,56 @@ describe('ScriptDlgService.dialog', () => {
     });
     const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
     if (!out.ok) throw new Error('expected ok');
-    // Shop menu frame renders AND a separate quest-offer frame carries #b7001.
-    const accept = calls.flat().find((f) => f.type === 'addKey' && f.key === '#b7001');
-    assert.ok(accept, 'shop-menu NPC must still offer its quest');
-    // The quest offer appends (no removeAllKeys) so the shop buttons survive.
-    const offerFrame = calls.find((c) => c.some((f) => f.type === 'addKey' && f.key === '#b7001'))!;
-    assert.equal(offerFrame[0]?.type !== 'removeAllKeys', true, 'quest offer appends, not wipes, when a menu preceded it');
+    // Two NEWQUEST rows appended after the shop menu (no removeAllKeys).
+    const rows = calls.flat().filter((f) => f.type === 'newQuest') as Array<{ type: 'newQuest'; key: string; quest: number }>;
+    assert.equal(rows.length, 2);
+    assert.ok(rows.every((r) => r.key === 'QUEST_BEGIN'));
+    assert.deepEqual(rows.map((r) => r.quest).sort(), [7001, 7002]);
+    const offerFrame = calls.find((c) => c.some((f) => f.type === 'newQuest'))!;
+    assert.equal(offerFrame[0]?.type !== 'removeAllKeys', true, 'multi-quest offer appends to the shop menu');
+  });
+
+  it('QUEST_BEGIN_YES round-trip grants the quest (questId in nGlobal2)', async () => {
+    const { svc, began } = fakeQuestService();
+    const { serializer } = fakeScriptDialog();
+    const quests = {
+      byId: new Map([[5062, { id: 5062, symbol: 'QUEST_ALICE01', title: 'IDS_X', commands: [], states: {}, quest_items: [] }]]),
+      drops: new Map(),
+      byNpc: { begin: new Map([['mafl_alice', [5062]]]), end: new Map() },
+    } as unknown as QuestIndex;
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Alice') },
+      dialogs: mkDialogs(), quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    // Client picked the quest -> sends QUEST_BEGIN_YES + questId in nGlobal2.
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: 'QUEST_BEGIN_YES', nGlobal1: 0, nGlobal2: 5062, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    assert.deepEqual(began, [5062]);
+  });
+
+  it('offer scan resolves an MI_NPC_*-keyed NPC via m_szCharacterKey (rule-breaker prop)', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    // Stima: propMover key MI_NPC_STIMA but character.inc block MaDa_Stima.
+    // The MI_ strip fallback yields 'npc_stima' (wrong); m_szCharacterKey yields
+    // 'mada_stima' (matches the begin map + npcToPrefix).
+    const quests = {
+      byId: new Map([[8001, { id: 8001, symbol: 'QUEST_STIMA', title: 'IDS_X', commands: [], states: {}, quest_items: [] }]]),
+      drops: new Map(),
+      byNpc: { begin: new Map([['mada_stima', [8001]]]), end: new Map() },
+    } as unknown as QuestIndex;
+    const dialogs = mkDialogs();
+    dialogs.npcToPrefix.set('MaDa_Stima', 'mada_stima');
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => ({ m_idMover: NPC_ID, m_vPos: { x: 0, y: 0, z: 0 }, m_szCharacterKey: 'MaDa_Stima', m_szKey: 'MI_NPC_STIMA' } as unknown as CMover) },
+      dialogs, quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const yes = calls.flat().find((f) => f.type === 'addAnswer' && f.key === 'QUEST_BEGIN_YES');
+    assert.ok(yes, 'MI_NPC_* NPC must still offer its quest via m_szCharacterKey');
+    assert.equal((yes as { quest?: number }).quest, 8001);
   });
 });

@@ -70,6 +70,13 @@ export interface QuestServiceDeps {
    * tail (`Mover.cpp:6254`) which always sends AddSetExperience.
    */
   onExpGain?: (player: CPlayer, leveled: boolean) => void;
+  /**
+   * Optional item-reward client notifier. When wired (compose.ts binds the
+   * NoticeSerializer), the quest reward path emits a "you acquired X" chat line
+   * alongside CREATEITEM; otherwise the item lands silently (vanilla behavior --
+   * v19 C++ sends no item-name text). Matches {@link onExpGain}'s wiring shape.
+   */
+  onItemReward?: (player: CPlayer, itemId: number, count: number) => void;
 }
 
 export type QuestOpResult =
@@ -130,6 +137,7 @@ export class QuestService {
     const sink: RewardSink = { inventory: inv };
     if (this.deps.journal) sink.journal = (entry) => { this.deps.journal!.append(entry); };
     if (this.deps.onExpGain) sink.onExpGain = (p, leveled) => { this.deps.onExpGain!(p, leveled); };
+    if (this.deps.onItemReward) sink.onItemReward = (p, itemId, count) => { this.deps.onItemReward!(p, itemId, count); };
     const inventoryRepo = this.deps.inventoryRepo;
     if (inventoryRepo) {
       // Fire-and-forget gold flush to the inventory container (migration 008).
@@ -151,7 +159,13 @@ export class QuestService {
     const state = await this.deps.questRepo.loadState(player.m_idPlayer);
     player.m_aQuest = state.active.map(rowToRuntime);
     player.m_aCompleteQuest = state.completed;
-    player.m_aCheckedQuest = state.checked;
+    // Filter the tracked list to active quests only -- the client's quick-info
+    // sidebar (CWndQuestQuickInfo::Process -> MakeQuestConditionItems,
+    // WndQuest.cpp:1915) derefs FindQuest(id) per checked entry with no null
+    // guard, so a stale id (quest completed/abandoned after it was tracked)
+    // null-derefs Neuz. Drop stale ids defensively on hydrate.
+    const activeIds = new Set(player.m_aQuest.map((q) => q.id));
+    player.m_aCheckedQuest = state.checked.filter((id) => activeIds.has(id));
   }
 
   /**
@@ -171,9 +185,25 @@ export class QuestService {
       killNpcNum: [0, 0], flags: 0,
     };
     player.setQuest(rt);
+    // Auto-track: surface the newly accepted quest in the tracker sidebar
+    // (CWndQuestQuickInfo iterates m_aCheckedQuest). The v19 C++ begin path
+    // (CMover::__SetQuest) does NOT push to the checked list, so the vanilla
+    // sidebar stays empty until the player manually ticks the quest in the Q
+    // window -- the user wants it tracked on accept. Safe because the quest is
+    // already in m_aQuest, so the client's MakeQuestConditionItems FindQuest(id)
+    // resolves (no null-deref).
+    player.setCheckedQuest(questId, true);
+    await this.deps.questRepo.setChecked(player.m_idPlayer, player.m_aCheckedQuest);
     await this.persist(player, rt);
     await this.deps.questRepo.insertLog(player.m_idPlayer, questId, QUEST_LOG_ACTION.START);
-    return { ok: true, frames: [buildSetQuest(player.m_idPlayer, rt), ...frames] };
+    return {
+      ok: true,
+      frames: [
+        buildSetQuest(player.m_idPlayer, rt),
+        buildCheckedQuest(player.m_idPlayer, player.m_aCheckedQuest),
+        ...frames,
+      ],
+    };
   }
 
   /** Update an active quest's state (e.g. dialog advance). Persists + emits. */
@@ -255,6 +285,14 @@ export class QuestService {
    * QUEST_CHECKED frame for the handler to write.
    */
   async setChecked(player: CPlayer, questId: number, check: boolean): Promise<Buffer> {
+    // The client quick-info sidebar derefs FindQuest(id) per checked entry with
+    // no null guard (WndQuest.cpp:1915) -- tracking a non-active quest (completed
+    // / never begun) crashes Neuz. Reject checks on non-active quests; uncheck is
+    // idempotent for any id.
+    if (check && !player.findQuest(questId)) {
+      logger.info({ charId: player.m_idPlayer, questId }, 'QUEST_CHECK rejected -- quest not active');
+      return buildCheckedQuest(player.m_idPlayer, player.m_aCheckedQuest);
+    }
     const list = player.setCheckedQuest(questId, check);
     await this.deps.questRepo.setChecked(player.m_idPlayer, list);
     return buildCheckedQuest(player.m_idPlayer, list);
