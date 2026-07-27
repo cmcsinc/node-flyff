@@ -32,6 +32,7 @@ import { up as migrationUp011 } from '@flyff/database/migrations/011_bank_per_ta
 import { up as migrationUp012 } from '@flyff/database/migrations/012_item_element';
 import { up as migrationUp013 } from '@flyff/database/migrations/013_pk_state';
 import { up as migrationUp014 } from '@flyff/database/migrations/014_character_buffs';
+import { up as migrationUp015 } from '@flyff/database/migrations/015_normalize_buffs';
 import { hashPassword } from '@flyff/core/utils/password';
 
 /**
@@ -58,6 +59,7 @@ const MIGRATIONS = [
   { column: ['inventory_item', 'element'], up: migrationUp012 },
   { column: ['characters', 'pk_propensity'], up: migrationUp013 },
   { column: ['characters', 'buffs'], up: migrationUp014 },
+  { table: 'character_buffs', up: migrationUp015 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';

@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
 import { db } from "@/lib/db";
 import { accounts } from "@/../drizzle/schema";
 import { eq } from "drizzle-orm";
+import { verifyAccountPassword } from "@/lib/password";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -26,7 +26,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!account.gm) return null;
         if (account.banned) return null;
 
-        const valid = await compare(
+        const valid = await verifyAccountPassword(
           credentials.password as string,
           account.passwordHash,
         );

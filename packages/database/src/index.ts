@@ -47,6 +47,12 @@ export {
   type SkillRow,
 } from './repositories/skill.repo';
 
+export {
+  BuffRepository,
+  type PersistedBuff,
+  type BuffRow,
+} from './repositories/buff.repo';
+
 // WAL journal -- embedded SQLite crash-recovery log
 export {
   Journal,

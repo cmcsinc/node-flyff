@@ -10,11 +10,11 @@ export function formatNumber(n: number | bigint | string): string {
   return BigInt(n).toLocaleString();
 }
 
-/** Format a timestamp string to a readable date. */
-export function formatDate(ts: string | Date | null | undefined): string {
+/** Format a timestamp (Unix epoch ms number, ISO string, or Date) to a readable date. */
+export function formatDate(ts: string | number | Date | null | undefined): string {
   if (!ts) return "—";
-  const d = typeof ts === "string" ? new Date(ts) : ts;
-  if (isNaN(d.getTime())) return "—";
+  const d = typeof ts === "number" ? new Date(ts) : typeof ts === "string" ? new Date(ts) : ts;
+  if (!(d instanceof Date) || isNaN(d.getTime())) return "—";
   return d.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",

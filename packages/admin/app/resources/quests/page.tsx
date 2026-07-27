@@ -10,20 +10,26 @@ export const dynamic = "force-dynamic";
 export default async function QuestsPage() {
   const data = loadQuests();
 
+  // YAML structure: each file IS a quest { id, symbol, commands, states, quest_items }
   const quests: Array<{ id: number; title: string; level: number; type: string }> = [];
   for (const file of data) {
     if (typeof file !== "object" || file === null) continue;
-    for (const [key, val] of Object.entries(file)) {
-      if (typeof val === "object" && val !== null) {
-        const v = val as Record<string, unknown>;
-        quests.push({
-          id: Number(v.dwID ?? v.id ?? key),
-          title: String(v.szTitle ?? v.title ?? `Quest ${key}`),
-          level: Number(v.nBeginLevel ?? v.level ?? 0),
-          type: String(v.dwPatrol ?? v.type ?? "—"),
-        });
-      }
+    const v = file as Record<string, unknown>;
+    const id = Number(v.id ?? 0);
+    // Extract level from SetBeginCondLevel command args if present
+    let level = 0;
+    const cmds = Array.isArray(v.commands) ? v.commands : [];
+    const lvlCmd = cmds.find((c: Record<string, unknown>) => c.cmd === "SetBeginCondLevel");
+    if (lvlCmd && Array.isArray((lvlCmd as Record<string, unknown>).args)) {
+      const args = (lvlCmd as Record<string, unknown>).args as Array<Record<string, unknown>>;
+      if (args.length > 0) level = Number(args[0].value ?? 0);
     }
+    quests.push({
+      id,
+      title: String(v.symbol ?? `Quest ${id}`),
+      level,
+      type: cmds.length > 0 ? `${cmds.length} cmds` : "—",
+    });
   }
 
   quests.sort((a, b) => a.id - b.id);

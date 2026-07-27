@@ -51,8 +51,8 @@ export interface ActiveBuff {
   expiresAtMs: number;
   /**
    * Originally-applied TOTAL duration in ms (C++ `IBuff::GetTotal`). Persisted
-   * to `characters.buffs` and used to re-apply the buff at full duration on
-   * relog (`SaveSkillInfluence` / `GetSKillInfluence` store total, not
+   * to `character_buffs` table and used to re-apply the buff at full duration
+   * on relog (`SaveSkillInfluence` / `GetSKillInfluence` store total, not
    * remaining, so the timer resets to full on JOIN).
    */
   totalMs: number;
@@ -100,7 +100,7 @@ export class BuffManager {
 
   /**
    * All active buffs in insertion order. Used by the checkpoint flush to
-   * persist `characters.buffs` and by the JOIN handler to re-broadcast
+   * persist to `character_buffs` table and by the JOIN handler to re-broadcast
    * SETSKILLSTATE + SETDESTPARAM for restored buffs (self-only).
    */
   getAll(): readonly ActiveBuff[] {

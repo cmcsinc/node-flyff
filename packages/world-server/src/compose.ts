@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
@@ -252,6 +252,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const inventoryRepo = new InventoryRepository(db);
   const bankRepo = new BankRepository(db);
   const skillRepo = new SkillRepository(db);
+  const buffRepo = new BuffRepository(db);
 
   // WAL journal -- embedded SQLite, opened once per process. Critical mutations
   // (items, gold, exp, level) append here before ack so a crash never dupes or
@@ -403,6 +404,7 @@ export async function compose(): Promise<WorldComposeResult> {
     inventoryRepo,
     bankRepo,
     skillRepo,
+    buffRepo,
     skills: resources.skills,
     getItem: (id: number) => resources.items.items.get(id),
     getSetItem: (id: number) => resources.setItems.byItemId.get(id),

@@ -51,7 +51,6 @@ export const characters = sqliteTable("characters", {
   skillPoint: integer("skill_point").default(0).notNull(),
   skillLevel: integer("skill_level").default(0).notNull(),
   taskbar: text("taskbar"),
-  buffs: text("buffs"),
   pkPropensity: integer("pk_propensity").default(0).notNull(),
   pkValue: integer("pk_value").default(0).notNull(),
   pkTime: integer("pk_time").default(0).notNull(),
@@ -65,6 +64,7 @@ export const charactersRelations = relations(characters, ({ one, many }) => ({
   inventory: one(inventory),
   inventoryItems: many(inventoryItems),
   skills: many(skills),
+  buffs: many(characterBuffs),
   activeQuests: many(characterQuests),
   completedQuests: many(characterCompletedQuests),
 }));
@@ -131,6 +131,20 @@ export const skills = sqliteTable("skills", {
   createdAt: text("created_at").default("CURRENT_TIMESTAMP").notNull(),
   updatedAt: text("updated_at").default("CURRENT_TIMESTAMP").notNull(),
 });
+
+// ── Character Buffs (active timed skill buffs) ───────────────────────────────
+export const characterBuffs = sqliteTable("character_buffs", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  characterId: integer("character_id").notNull().references(() => characters.id, { onDelete: "cascade" }),
+  type: integer("type").notNull(),         // BUFF_ITEM=0, BUFF_SKILL=1
+  skillId: integer("skill_id").notNull(),  // skill id or item id
+  level: integer("level").notNull(),       // skill level
+  totalMs: integer("total_ms").notNull(),  // original total duration (ms)
+});
+
+export const characterBuffsRelations = relations(characterBuffs, ({ one }) => ({
+  character: one(characters, { fields: [characterBuffs.characterId], references: [characters.id] }),
+}));
 
 // ── Character Quests (active) ─────────────────────────────────────────────────
 export const characterQuests = sqliteTable("character_quests", {

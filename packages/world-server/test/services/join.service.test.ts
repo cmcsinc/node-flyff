@@ -1,7 +1,7 @@
 import { describe, it, beforeEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { JoinService } from '../../src/services/join.service';
-import { serializeBuffs, deserializeBuffs } from '../../src/services/join.service';
+import { collectPersistedBuffs } from '../../src/services/join.service';
 import { BuffManager, ParamModel, BUFF_SKILL, BUFF_ITEM, DST } from '@flyff/entities';
 import type { CPlayer, DstEffect } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
@@ -292,36 +292,37 @@ describe('JoinService', () => {
   });
 });
 
-describe('buff persistence (serializeBuffs / deserializeBuffs)', () => {
-  it('round-trips BUFF_SKILL entries with total duration + filters BUFF_ITEM', () => {
+describe('buff persistence (collectPersistedBuffs)', () => {
+  it('collects BUFF_SKILL entries with total duration + filters BUFF_ITEM', () => {
     const buffs = new BuffManager(new ParamModel());
     const eff: DstEffect = { dst: DST.STA, adj: 20 };
     buffs.addSkillBuff(150, 4, 3_600_000, [eff], 1_000);   // persisted
     buffs.addItemBuff(999, 60_000, [eff], 1_000);           // dropped on save
 
-    const json = serializeBuffs({ m_buffs: buffs } as unknown as CPlayer);
-    const parsed = deserializeBuffs(json);
-    assert.equal(parsed.length, 1);
-    assert.deepEqual(parsed[0], { type: BUFF_SKILL, skillId: 150, level: 4, totalMs: 3_600_000 });
+    const result = collectPersistedBuffs({ m_buffs: buffs } as unknown as CPlayer);
+    assert.equal(result.length, 1);
+    assert.deepEqual(result[0], { type: BUFF_SKILL, skillId: 150, level: 4, totalMs: 3_600_000 });
   });
 
-  it('deserializeBuffs is defensive: null/empty/malformed/partial -> []', () => {
-    assert.deepEqual(deserializeBuffs(null), []);
-    assert.deepEqual(deserializeBuffs(''), []);
-    assert.deepEqual(deserializeBuffs('not-json'), []);
-    assert.deepEqual(deserializeBuffs('[{"t":1}]'), []); // missing s/l/d
-    assert.deepEqual(deserializeBuffs('[]'), []);
+  it('returns empty array when no buffs are active', () => {
+    const buffs = new BuffManager(new ParamModel());
+    const result = collectPersistedBuffs({ m_buffs: buffs } as unknown as CPlayer);
+    assert.deepEqual(result, []);
   });
 
   it('loadBuffs (via join) restores state into m_params (STA buff raises the pool)', async () => {
     const skillRow = { level: 4, skillTime: 3_600_000, destParams: [DST.STA], adjParamVals: [20] };
     const skills: any = { skills: new Map([[150, { id: 150, levels: [skillRow] }]]) };
     const charRepo: any = {
-      findById: async () => makeRow({ buffs: JSON.stringify([{ t: BUFF_SKILL, s: 150, l: 4, d: 3_600_000 }]) }),
+      findById: async () => makeRow(),
       update: async () => {},
     };
+    const buffRepo: any = {
+      loadByCharacter: async () => [{ type: BUFF_SKILL, skillId: 150, level: 4, totalMs: 3_600_000 }],
+      saveAll: async () => {},
+    };
     const svc = new JoinService({
-      charRepo, skills,
+      charRepo, buffRepo, skills,
       playerManager: new PlayerManager(),
       zoneManager: new ZoneManager(),
       handoffSource: { consumeByCharId: () => ({ charId: 42, worldId: 'W1', token: 't' }) },

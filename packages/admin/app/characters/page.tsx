@@ -4,10 +4,12 @@ import { eq, desc, like, sql } from "drizzle-orm";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { formatNumber, jobName } from "@/lib/utils";
+import { Search } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -56,13 +58,16 @@ export default async function CharactersPage({
         <p className="text-muted-foreground">{filtered.length} characters</p>
       </div>
 
-      <form className="flex gap-3" method="GET">
-        <input
-          name="search"
-          placeholder="Search by name..."
-          defaultValue={search}
-          className="flex h-9 w-64 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
-        />
+      <form className="flex gap-2 items-center" method="GET">
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            name="search"
+            placeholder="Search by name..."
+            defaultValue={search}
+            className="pl-8 h-9 w-64"
+          />
+        </div>
         <button
           type="submit"
           className="h-9 rounded-md bg-primary px-4 py-1 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"

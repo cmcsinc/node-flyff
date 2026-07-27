@@ -23,12 +23,15 @@ export default async function DialoguesPage() {
               </TableHeader>
               <TableBody>
                 {data.map((file, i) => {
-                  const entries = typeof file === "object" && file !== null ? Object.keys(file).length : 0;
-                  const name = typeof file === "object" && file !== null ? Object.keys(file)[0] : `file-${i}`;
+                  if (typeof file !== "object" || file === null) return null;
+                  const v = file as Record<string, unknown>;
+                  const prefix = String(v.prefix ?? "");
+                  const states = typeof v.states === "object" && v.states !== null ? Object.keys(v.states as object).length : 0;
+                  if (!prefix) return null;
                   return (
-                    <TableRow key={i}>
-                      <TableCell className="font-medium">{name}</TableCell>
-                      <TableCell><Badge variant="secondary">{entries}</Badge></TableCell>
+                    <TableRow key={prefix}>
+                      <TableCell className="font-mono text-xs">{prefix}</TableCell>
+                      <TableCell><Badge variant="secondary">{states} states</Badge></TableCell>
                     </TableRow>
                   );
                 })}
