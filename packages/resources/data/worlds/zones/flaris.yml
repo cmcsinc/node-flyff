@@ -9538,18 +9538,15 @@ npcs:
     angle: 3.193
     functions: []
 regions:
-  - id: 1
-    name: Flaris Safe Zone
-    type: safe
-    bounds:
-      min:
-        x: 6800
-        y: 0
-        z: 3100
-      max:
-        x: 7200
-        y: 500
-        z: 3600
+  # NOTE: the bogus "Flaris Safe Zone" (x6800-7200, z3100-3600) was removed -- it
+  # was centered on the revival point (6978,3329) which sits in the Captain
+  # Mushpang field, NOT in Flaris town (NPCs cluster at x~2800-3700, z~2100-3100).
+  # With it present, every mushpang-field swing tripped the v19 RA_SAFETY gate
+  # (AIMonster.cpp:1622) -> monster dropped target, snapped home, and silent-
+  # full-healed every tick -> unkillable except by a one-shot crit. The C++ gate
+  # is correct; the region DATA was wrong. Re-add a safe region ONLY after
+  # extracting real RA_SAFETY AABBs from WdMadrigal.rgn (extractFlaris preserves
+  # this section verbatim, so it will NOT be regenerated).
   - id: 2
     name: Flaris PVP Arena
     type: pvp
