@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **Flyff (Fly For Fun) MMORPG server emulator** written in **TypeScript**. It replicates the Login, Cluster, and World servers of the Flyff game and communicates with real Flyff game clients over TCP using the authentic binary packet protocol.
 
+**This is a port, not new development.** Every feature, bug, formula, packet structure, and game rule already has a working C++ implementation in `game/source/`. When a task is unclear, read the C++ source and translate — do not design, speculate, or "best-effort" from scratch. The C++ behavior is the spec. If the C++ source contradicts a design idea, the C++ wins.
+
 ---
 
 ## Commands
