@@ -35,6 +35,7 @@ import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handle
 import type { MeleeAttackHandler } from '@flyff/combat';
 import type { RangeAttackHandler } from '@flyff/combat';
 import type { DuelHandler } from '@flyff/combat';
+import type { PartyHandler } from '@flyff/party';
 import type { UseSkillHandler } from '@flyff/skills';
 import type { DoUseSkillPointHandler } from '@flyff/skills';
 import type { ModifyStatusHandler } from './handlers/modifyStatus.handler';
@@ -81,6 +82,7 @@ export interface WorldClientServerDeps {
   meleeAttackHandler: MeleeAttackHandler;
   rangeAttackHandler: RangeAttackHandler;
   duelHandler: DuelHandler;
+  partyHandler: PartyHandler;
   useSkillHandler: UseSkillHandler;
   doUseSkillPointHandler: DoUseSkillPointHandler;
   modifyStatusHandler: ModifyStatusHandler;
@@ -147,6 +149,14 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.DUELREQUEST, (s, r) => deps.duelHandler.handleDuelRequest(s, r));
   dispatcher.register(PACKETTYPE.DUELYES, (s, r) => deps.duelHandler.handleDuelYes(s, r));
   dispatcher.register(PACKETTYPE.DUELNO, (s, r) => deps.duelHandler.handleDuelNo(s, r));
+  dispatcher.register(PACKETTYPE.MEMBERREQUEST, (s, r) => deps.partyHandler.handleMemberRequest(s, r));
+  dispatcher.register(PACKETTYPE.MEMBERREQUESTCANCLE, (s, r) => deps.partyHandler.handleMemberRequestCancle(s, r));
+  dispatcher.register(PACKETTYPE.ADDPARTYMEMBER, (s, r) => deps.partyHandler.handleAddPartyMember(s, r));
+  dispatcher.register(PACKETTYPE.REMOVEPARTYMEMBER, (s, r) => deps.partyHandler.handleRemovePartyMember(s, r));
+  dispatcher.register(PACKETTYPE.PARTYCHANGELEADER, (s, r) => deps.partyHandler.handlePartyChangeLeader(s, r));
+  dispatcher.register(PACKETTYPE.PARTYCHANGEITEMMODE, (s, r) => deps.partyHandler.handlePartyChangeItemMode(s, r));
+  dispatcher.register(PACKETTYPE.PARTYCHANGEEXPMODE, (s, r) => deps.partyHandler.handlePartyChangeExpMode(s, r));
+  dispatcher.register(PACKETTYPE.PARTYCHAT, (s, r) => deps.partyHandler.handlePartyChat(s, r));
   dispatcher.register(PACKETTYPE.USESKILL, (s, r) => deps.useSkillHandler.handleUseSkill(s, r));
   dispatcher.register(PACKETTYPE.DOUSESKILLPOINT, (s, r) => deps.doUseSkillPointHandler.handleDoUseSkillPoint(s, r));
   dispatcher.register(PACKETTYPE.MODIFY_STATUS, (s, r) => deps.modifyStatusHandler.handleModifyStatus(s, r));

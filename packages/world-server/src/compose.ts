@@ -57,6 +57,9 @@ import { CombatService } from '@flyff/combat';
 import { DuelService } from '@flyff/combat';
 import { DuelManager } from '@flyff/combat';
 import { DuelHandler } from '@flyff/combat';
+import { PartyManager } from '@flyff/party';
+import { PartyService } from '@flyff/party';
+import { PartyHandler } from '@flyff/party';
 import { DropService } from '@flyff/inventory';
 import { InventoryService } from '@flyff/inventory';
 import { LootService } from '@flyff/inventory';
@@ -450,7 +453,24 @@ export async function compose(): Promise<WorldComposeResult> {
   // dest-obj arrival check (v19 pickup has no packet -- client walks to the pile
   // via PLAYERSETDESTOBJ, server loots on arrival) every position update.
   const itemManager = new ItemManager({ zoneManager });
-  const lootService = new LootService({ inventoryService, itemManager, playerManager, zoneManager, onAcquireItem: (player, itemId, count) => notifyItemAcquire(player, itemId, count) });
+  // Party -- created before LootService + CombatService so the loot-share
+  // (sameParty) and exp-share (partyExp) seams can close over the party
+  // manager / service. `grantExpAmount` is bound to CombatService, which is
+  // built further below; capture it via a slot that's filled once combat exists.
+  const partyManager = new PartyManager();
+  const combatGrantSlot: { fn: ((p: CPlayer, amount: number) => void) | null } = { fn: null };
+  const partyService = new PartyService({
+    playerManager, partyManager,
+    grantExpAmount: (p, amount) => combatGrantSlot.fn!(p, amount),
+  });
+  const lootService = new LootService({
+    inventoryService, itemManager, playerManager, zoneManager,
+    onAcquireItem: (player, itemId, count) => notifyItemAcquire(player, itemId, count),
+    sameParty: (a, b) => {
+      const pa = partyManager.getByMember(a);
+      return pa !== undefined && pa.members.includes(b);
+    },
+  });
   const movementService = new MovementService({
     zoneManager,
     onMoved: (p) => questTracker.onPlayerMoved(p),
@@ -505,13 +525,21 @@ export async function compose(): Promise<WorldComposeResult> {
       revivalService.onPlayerDeath(victim, killerObjid);
       duelService.onPlayerDeath(victim);
     },
+    // Party exp-share seam -- delegates to PartyService.distributeExp, which
+    // splits the kill exp among nearby party members (proximity + level gate).
+    // Returns null when the killer has no party -> combat runs its solo grant.
+    partyExp: (killer, mover, baseExp) => partyService.distributeExp(killer, mover, baseExp),
   });
+  // Fill the late-bound exp-applier slot so party share routes through the
+  // SAME grantExpAmount path as solo kills (one exp-application code path).
+  combatGrantSlot.fn = (p, amount) => combatService.grantExpAmount(p, amount);
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const rangeAttackService = new RangeAttackService({ zoneManager, combatService });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
   const rangeAttackHandler = new RangeAttackHandler(playerManager, rangeAttackService);
   const duelHandler = new DuelHandler({ playerManager, duelService });
+  const partyHandler = new PartyHandler({ playerManager, partyService });
   // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v19 damage-skill MVP).
   const skillService = new SkillService({
     skills: resources.skills,
@@ -670,6 +698,9 @@ export async function compose(): Promise<WorldComposeResult> {
     meleeAttackHandler,
     rangeAttackHandler,
     duelHandler,
+    partyManager,
+    partyService,
+    partyHandler,
     skillService,
     statService,
     useSkillHandler,

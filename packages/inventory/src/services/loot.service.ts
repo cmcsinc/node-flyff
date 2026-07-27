@@ -60,6 +60,13 @@ export interface LootServiceDeps {
    * Optional -- no-op in tests.
    */
   onAcquireItem?: (player: CPlayer, itemId: number, count: number) => void;
+  /**
+   * Optional party-share seam (wired to a `partyManager`-backed check in
+   * `compose.ts`). When non-null, a party member may loot an owner-locked pile
+   * before the {@link LOOT_FFA_MS} timeout. Keeps `@flyff/inventory` free of
+   * any `@flyff/party` import (structural type -- closure satisfies the signature).
+   */
+  sameParty?: (a: number, b: number) => boolean;
 }
 
 /**
@@ -182,11 +189,12 @@ export class LootService {
   /**
    * `CMover::IsLoot` (`MoverActEvent.cpp:2193-2255`). A pile is lootable by
    * `player` when it has no owner (`m_idOwn == NULL_ID`), `player` IS the owner,
-   * or {@link LOOT_FFA_MS} has elapsed since `m_dwDropTime`. ponytail:
-   * same-`m_idparty` share + invalid-owner FFA -- add when parties ship.
+   * a party member of the owner (via the injected `sameParty` seam), or
+   * {@link LOOT_FFA_MS} has elapsed since `m_dwDropTime`.
    */
   private isLoot(player: CPlayer, item: GroundItem): boolean {
     if (item.m_idOwn === NULL_ID || item.m_idOwn === player.m_idPlayer) return true;
+    if (this.deps.sameParty?.(player.m_idPlayer, item.m_idOwn)) return true;
     return this.now() - item.m_dwDropTime >= LOOT_FFA_MS;
   }
 }

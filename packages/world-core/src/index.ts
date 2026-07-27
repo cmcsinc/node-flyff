@@ -28,3 +28,4 @@ export * from './serializers/chat.serializer';
 export * from './serializers/itemContainer';
 export * from './serializers/actionSlot.serializer';
 export * from './serializers/duel.serializer';
+export * from './serializers/party.serializer';

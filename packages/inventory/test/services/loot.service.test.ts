@@ -169,6 +169,32 @@ describe('LootService', () => {
     assert.equal(removedIds.length, 1);
   });
 
+  it('sameParty seam: party member loots owner-locked pile pre-FFA', () => {
+    // Player 42, drop owned by 99. Without sameParty this is owner-locked until
+    // the 7s FFA timeout (see the owner-lock test above). Inject a sameParty
+    // closure that says 42 + 99 are partymates -> loot succeeds immediately.
+    const item = {
+      m_idObject: 0x80000005, m_dwItemId: 2950, m_nItemNum: 1, m_idOwn: 99,
+      m_dwDropTime: Date.now(), m_vPos: { x: 100, y: 0, z: 100 }, m_nZoneId: 1,
+    };
+    const sent: Buffer[] = [];
+    const removedIds: number[] = [];
+    const player = {
+      m_idPlayer: 42, m_nGold: 100, m_idDestObj: item.m_idObject, m_fArrivalRange: 0,
+      m_nZoneId: 1, m_vPos: { x: 100, y: 0, z: 100 },
+    } as unknown as CPlayer;
+    const loot = new LootService({
+      inventoryService: { addItem: () => ({ ok: true, slot: 0, objid: 1, itemId: 2950, count: 1, isNew: true }) } as unknown as InventoryService,
+      itemManager: { get: () => item, remove: (id: number) => { removedIds.push(id); return item; } } as unknown as ItemManager,
+      playerManager: { sendTo: (_p: CPlayer, b: Buffer) => { sent.push(b); } } as unknown as PlayerManager,
+      zoneManager: { broadcastAround: () => 1 } as unknown as ZoneManager,
+      sameParty: (a, b) => a === 42 && b === 99,
+    });
+    loot.checkArrival(player);
+    assert.equal(sent.length, 1, 'party member loots pre-FFA');
+    assert.equal(removedIds.length, 1);
+  });
+
   it('bag-full: pile left lootable, no snapshot', () => {
     const { loot, player, sent, removedIds } = setup({
       itemId: 2950, count: 1, owner: NULL_ID,
