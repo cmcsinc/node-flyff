@@ -318,6 +318,13 @@ export class CMover {
    * `AIMonster.cpp:485`). Single slot -- no aggro list (ponytail: full table).
    */
   m_idTarget: number = NULL_ID;
+  /**
+   * Who is targeting THIS mover (C++ `m_idTargeter`, `Mover.h:589`).
+   * Set by `OnSetTarget` claim/release on the TARGET entity, not the player's.
+   * Used to enforce single-target locking (one player at a time per NPC).
+   * `NULL_ID` = unclaimed.
+   */
+  m_idTargeter: number = NULL_ID;
   /** Position when first damaged (C++ `m_vPosDamage`) -- 120 m pursuit leash origin. */
   m_vPosDamage: Vec3;
   /** Current walk destination (C++ `GetDestPos()`) -- idle pick, pursue target, or home. */

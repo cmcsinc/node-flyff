@@ -67,6 +67,8 @@ export const QuestDefSchema = z.object({
   dialog: z.record(z.string(), z.string()).optional(),
   /** All `QuestItem(...)` calls aggregated across the block (drop generators). */
   quest_items: z.array(QuestItemSchema),
+  /** `SetRemove(FALSE)` = quest cannot be cancelled (`m_bNoRemove` in C++). Default false (removable). */
+  no_remove: z.boolean().optional(),
 });
 
 /** Index row -- `data/quests/_index.yml`. */

@@ -53,12 +53,14 @@ export class DoEquipHandler {
       const nId = reader.readDword();
       const nPartRaw = reader.readDword();
       Validate.dword(nId);
-      Validate.dword(nPartRaw);
-      // `int nPart` on the wire (DPClient.cpp:9202). 0xffffffff == -1 == the client's
-      // default arg for the normal equip UX (double-click / drag-drop). The server
-      // resolves the target slot from the item prop in that case (EquipService.equip,
-      // mirroring C++ DoUseEquipmentItem). Coerce to signed int32 so -1 is detectable.
+      // C++ reads `int nPart` (signed 4 bytes, DPSrvr.cpp:735). Coerce to
+      // signed int32 BEFORE validating range so 0xffffffff → -1 is handled
+      // correctly. Valid values: -1 (auto-resolve from dwParts) or 0..30
+      // (PARTS_* slots, `_Common/Item.h:548`).
       const nPart = nPartRaw | 0;
+      if (nPart !== -1 && (nPart < 0 || nPart > 30)) {
+        throw new PacketError('DOEQUIP invalid nPart');
+      }
       if (nPart === PARTS_RIDE) reader.readFloat(); // __HACK_1023 trailing float -- consume + reject below
 
       // Client sends the item's STABLE m_dwObjId (DPClient.cpp:9201 SendDoEquip).

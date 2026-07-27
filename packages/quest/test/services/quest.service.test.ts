@@ -191,6 +191,17 @@ describe('quest.service -- begin/end engine (QUEST_1 worked example)', () => {
     assert.equal(p.findQuest(7), undefined);
   });
 
+  it('cancelQuest rejects quests with no_remove=true (m_bNoRemove guard)', async () => {
+    const def = { ...quest1Def(), no_remove: true };
+    const { svc } = makeService(fakeInv(), def);
+    const p = CPlayer.fromRow({ ...baseRow, level: 10, class: 5 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 7);
+    const res = await svc.cancelQuest(p, 7);
+    assert.equal(res.ok, false);
+    if (!res.ok) assert.equal(res.reason, 'no_remove');
+    assert.notEqual(p.findQuest(7), undefined); // still active
+  });
+
   it('removeAllQuests clears the active list + emits a REMOVEQUEST ALL frame', async () => {
     const def = quest1Def();
     const { svc } = makeService(fakeInv(), def);

@@ -27,21 +27,21 @@ export const UI_IR = 5; // element type (m_bItemResist, Mover.h:67)
 export const UI_COOLTIME = 8; // count + start cooldown sweep (Mover.h:68)
 
 /**
- * Build an UPDATE_ITEM snapshot setting slot `slot`'s count to `count`.
- * `objid` is the player's, `slot` the inventory index.
+ * Build an UPDATE_ITEM snapshot setting item `nId`'s count to `count`.
+ * `objid` is the player's, `nId` the stable item objid (C++ `nId` field).
  */
-export function buildUpdateItemCount(objid: number, slot: number, count: number): Buffer {
-  return buildUpdateItem(objid, slot, UI_NUM, count);
+export function buildUpdateItemCount(objid: number, nId: number, count: number): Buffer {
+  return buildUpdateItem(objid, nId, UI_NUM, count);
 }
 
 /**
  * Build an UPDATE_ITEM snapshot for a durability change -- `OnRepairItem`
  * tail (`DPSrvr.cpp:4994`): `UpdateItem(itemObjId, UI_HP, dwEndurance)`. Sets
  * `m_nHitPoint` to the item's max (full repair). `objid` is the player's,
- * `itemObjid` the stable CItemElem objid (nId field).
+ * `nId` the stable CItemElem objid.
  */
-export function buildUpdateItemDurability(objid: number, itemObjid: number, durability: number): Buffer {
-  return buildUpdateItem(objid, itemObjid, UI_HP, durability);
+export function buildUpdateItemDurability(objid: number, nId: number, durability: number): Buffer {
+  return buildUpdateItem(objid, nId, UI_HP, durability);
 }
 
 /**
@@ -49,8 +49,8 @@ export function buildUpdateItemDurability(objid: number, itemObjid: number, dura
  * (`UpdateItem(..., UI_AO, nAbilityOption)` -- `ItemUpgrade.cpp:1118`). The
  * enchant path sends one of these on a successful refine.
  */
-export function buildUpdateItemRefine(objid: number, slot: number, refine: number): Buffer {
-  return buildUpdateItem(objid, slot, UI_AO, refine);
+export function buildUpdateItemRefine(objid: number, nId: number, refine: number): Buffer {
+  return buildUpdateItem(objid, nId, UI_AO, refine);
 }
 
 /**
@@ -58,29 +58,29 @@ export function buildUpdateItemRefine(objid: number, slot: number, refine: numbe
  * (`UpdateItem(..., UI_IR, eItemType)` -- `ItemUpgrade.cpp:1286`). Paired with
  * a `buildUpdateItemElementLevel` on element success (two snapshots).
  */
-export function buildUpdateItemElement(objid: number, slot: number, element: number): Buffer {
-  return buildUpdateItem(objid, slot, UI_IR, element);
+export function buildUpdateItemElement(objid: number, nId: number, element: number): Buffer {
+  return buildUpdateItem(objid, nId, UI_IR, element);
 }
 
 /**
  * Build an UPDATE_ITEM snapshot for an element-level change
  * (`UpdateItem(..., UI_RAO, m_nResistAbilityOption)` -- `ItemUpgrade.cpp:1287`).
  */
-export function buildUpdateItemElementLevel(objid: number, slot: number, level: number): Buffer {
-  return buildUpdateItem(objid, slot, UI_RAO, level);
+export function buildUpdateItemElementLevel(objid: number, nId: number, level: number): Buffer {
+  return buildUpdateItem(objid, nId, UI_RAO, level);
 }
 
 /**
- * Build an UPDATE_ITEM snapshot that also signals a cooldown on `slot`
+ * Build an UPDATE_ITEM snapshot that also signals a cooldown on `nId`
  * (`UpdateItem(..., UI_COOLTIME, newCount)` -- `MoverSkill.cpp:1720`). The
  * client re-derives the sweep duration from the item's own `dwSkillReady`
  * (`DPClient.cpp:3154`); `dwTime` is unused for cooldown, stays 0.
  */
-export function buildUpdateItemCooltime(objid: number, slot: number, count: number): Buffer {
-  return buildUpdateItem(objid, slot, UI_COOLTIME, count);
+export function buildUpdateItemCooltime(objid: number, nId: number, count: number): Buffer {
+  return buildUpdateItem(objid, nId, UI_COOLTIME, count);
 }
 
-function buildUpdateItem(objid: number, slot: number, cParam: number, count: number): Buffer {
+function buildUpdateItem(objid: number, nId: number, cParam: number, count: number): Buffer {
   const w = new PacketWriter();
   w.writeDword(PACKETTYPE.SNAPSHOT);
   w.writeDword(NULL_ID);
@@ -88,7 +88,7 @@ function buildUpdateItem(objid: number, slot: number, cParam: number, count: num
   w.writeDword(objid);                     // GetId()
   w.writeWord(SNAPSHOTTYPE.UPDATE_ITEM);   // 0x0018
   w.writeByte(0);                          // cType = inventory slot
-  w.writeByte(slot & 0xff);                // nId
+  w.writeByte(nId & 0xff);                 // nId
   w.writeByte(cParam);                     // UI_NUM / UI_COOLTIME
   w.writeDword(count);                     // dwValue
   w.writeDword(0);                         // dwTime (v19)

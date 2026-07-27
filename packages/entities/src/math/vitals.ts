@@ -10,6 +10,9 @@
  */
 
 import type { JobProps } from '../tables/job';
+import { EMPTY_PARAM_VIEW } from '../params/ParamModel';
+import type { ParamView } from '../params/ParamModel';
+import { DST } from '../constants/dst';
 
 /**
  * `CMover::GetMaxOriginHitPoint` player branch (`MoverParam.cpp:2871`):
@@ -64,10 +67,16 @@ export function standRecovery(
   maxMp: number,
   maxFp: number,
   job: JobProps,
+  params: ParamView = EMPTY_PARAM_VIEW,
 ): RecoveryAmount {
   const lv = Math.max(1, level);
-  const hp = Math.floor(((lv / 3) + maxHp / (500 * lv) + sta * job.fFactorHPRec) * 0.9);
-  const mp = Math.floor(((lv * 1.5 + maxMp / (500 * lv) + int_ * job.fFactorMPRec) * 0.2) * 0.9);
-  const fp = Math.floor(((lv * 2 + maxFp / (500 * lv) + sta * job.fFactorFPRec) * 0.2) * 0.9);
+  const baseHp = Math.floor(((lv / 3) + maxHp / (500 * lv) + sta * job.fFactorHPRec) * 0.9);
+  const baseMp = Math.floor(((lv * 1.5 + maxMp / (500 * lv) + int_ * job.fFactorMPRec) * 0.2) * 0.9);
+  const baseFp = Math.floor(((lv * 2 + maxFp / (500 * lv) + sta * job.fFactorFPRec) * 0.2) * 0.9);
+  // C++ `GetParam(DST_HP_RECOVERY, nValue)` -- flat addition from equip/buff DST.
+  // `ParamView.get` returns `def + adj`, so pass 0 and add to base.
+  const hp = baseHp + params.get(DST.HP_RECOVERY, 0);
+  const mp = baseMp + params.get(DST.MP_RECOVERY, 0);
+  const fp = baseFp + params.get(DST.FP_RECOVERY, 0);
   return { hp: Math.max(0, hp), mp: Math.max(0, mp), fp: Math.max(0, fp) };
 }

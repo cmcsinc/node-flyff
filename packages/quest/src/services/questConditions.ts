@@ -23,13 +23,30 @@ import type { RuntimeQuest } from '../net/snapshot/quest.serializer';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 
 /**
- * Inventory operations the evaluators need. Stubbed in `compose.ts` until the
- * inventory system lands -- a permissive stub (count 0, plenty of empty slots)
- * keeps non-item quests playable; item quests simply stay uncompletable.
+ * Inventory + social operations the evaluators need. Stubbed in `compose.ts`
+ * until the inventory system lands -- a permissive stub (count 0, plenty of
+ * empty slots) keeps non-item quests playable; item quests simply stay
+ * uncompletable.
+ *
+ * Party/guild fields mirror C++ `__IsBeginQuestCondition` bookkeeping
+ * (`Mover.cpp:10007`): `bParty`/`bLeader`/`nSize` sourced from `CPartyMng`
+ * at eval time. Guild is ponytail (no guild system).
  */
 export interface InventoryOps {
   count(itemId: number): number;
   emptySlots(): number;
+  /** Player is in a party. Defaults to false when absent. */
+  isInParty?: boolean;
+  /** Player is the party leader. Defaults to false when absent. */
+  isPartyLeader?: boolean;
+  /** Current party member count. Defaults to 0 when absent. */
+  partySize?: number;
+  /** Player is in a guild. Ponytail: always false (guild system pending). */
+  isInGuild?: boolean;
+  /** Player is the guild master. Ponytail: always false. */
+  isGuildLeader?: boolean;
+  /** Current guild member count. Ponytail: always 0. */
+  guildSize?: number;
 }
 
 /** Failure bucket. Phase 5 dialog maps each to a `TID_GAME_*` defined-text id. */
@@ -37,6 +54,7 @@ export type QuestFailReason =
   | 'already_active'
   | 'already_complete'
   | 'not_found'
+  | 'no_remove'
   | 'level'
   | 'job'
   | 'sex'
@@ -48,7 +66,9 @@ export type QuestFailReason =
   | 'time'
   | 'patrol'
   | 'gold'
-  | 'state';
+  | 'state'
+  | 'party'
+  | 'guild';
 
 export type CondResult = { ok: true } | { ok: false; reason: QuestFailReason };
 
@@ -162,10 +182,28 @@ function evalBegin(
       case 'SetBeginCondExclusiveQuest':
         if (!passesExclusiveQuest(player, c.args)) return { ok: false, reason: 'exclusive_quest' };
         break;
+      case 'SetBeginCondParty': {
+        const mode = num(c.args[0]); // 0=skip, 1=must NOT be in party, 2=must be in party
+        if (mode === 1 && (inv.isInParty ?? false)) return { ok: false, reason: 'party' };
+        if (mode === 2) {
+          if (!(inv.isInParty ?? false)) return { ok: false, reason: 'party' };
+          const leader = num(c.args[3], -1); // -1 = don't care
+          if (leader !== -1 && leader !== ((inv.isPartyLeader ?? false) ? 1 : 0)) return { ok: false, reason: 'party' };
+          if (!passesPartyGuildNum(inv.partySize ?? 0, num(c.args[2]), num(c.args[1]))) return { ok: false, reason: 'party' };
+        }
+        break;
+      }
+      case 'SetBeginCondGuild': {
+        // ponytail: guild system not landed. mode 0 auto-passes; mode 1
+        // (must NOT be in guild) also passes since isInGuild defaults false.
+        // mode 2 (must be in guild) fails since no guild exists.
+        const mode = num(c.args[0]);
+        if (mode === 2) return { ok: false, reason: 'guild' };
+        break;
+      }
       case 'SetBeginSetAddItem':
         if (num(c.args[1]) !== 0) beginSetItems++;
         break;
-      // SetBeginCondParty / SetBeginCondGuild: stubbed permissive (ponytail).
       default:
         break;
     }
@@ -256,4 +294,17 @@ function passesExclusiveQuest(player: CPlayer, args: QuestArg[]): boolean {
   const ids = args.map((a) => num(a)).filter((id) => id !== 0);
   if (ids.length === 0) return true;
   return ids.every((id) => !player.findQuest(id) && !player.isCompleteQuest(id));
+}
+
+/**
+ * Party/guild size comparison gate (`Mover.cpp:10029-10048`).
+ * `comp`: 0=equal, 1=greater-or-equal, -1=less-or-equal. `required=0` means
+ * no size check (auto-pass).
+ */
+function passesPartyGuildNum(actual: number, required: number, comp: number): boolean {
+  if (required === 0) return true;
+  if (comp === 0) return actual === required;
+  if (comp === 1) return actual >= required;
+  if (comp === -1) return actual <= required;
+  return true;
 }

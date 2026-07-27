@@ -40,7 +40,7 @@ describe('CharHandler', () => {
     it('replies with a PLAYER_LIST packet', async () => {
       const socket = makeMockSocket();
       const w = new PacketWriter();
-      w.writeString('2023');   // version
+      w.writeString('20100412');   // version
       w.writeDword(0x1234);   // authKey
       w.writeString('alice'); // account
       w.writeString('pw');    // password
@@ -64,7 +64,7 @@ describe('CharHandler', () => {
       for (let i = 0; i < 6; i++) {
         const socket = makeMockSocket();
         const w = new PacketWriter();
-        w.writeString('2023'); w.writeDword(0x1234); w.writeString('alice'); w.writeString('pw'); w.writeDword(0);
+        w.writeString('20100412'); w.writeDword(0x1234); w.writeString('alice'); w.writeString('pw'); w.writeDword(0);
         await handler.handleGetPlayerList(socket, new PacketReader(w.build()));
         const reader = new PacketReader(socket._written[1]!);
         reader.readDword(); // opcode
@@ -77,13 +77,28 @@ describe('CharHandler', () => {
     it('drops the request silently when authKey is 0', async () => {
       const socket = makeMockSocket();
       const w = new PacketWriter();
-      w.writeString('2023');
+      w.writeString('20100412');
       w.writeDword(0); // zero auth key
       w.writeString('alice');
       w.writeString('pw');
       w.writeDword(0);
       await handler.handleGetPlayerList(socket, new PacketReader(w.build()));
       assert.equal(socket._written.length, 0);
+    });
+
+    it('sends ERROR(107) when protocol version mismatches', async () => {
+      const socket = makeMockSocket();
+      const w = new PacketWriter();
+      w.writeString('99999999'); // wrong version
+      w.writeDword(0x1234);
+      w.writeString('alice');
+      w.writeString('pw');
+      w.writeDword(0);
+      await handler.handleGetPlayerList(socket, new PacketReader(w.build()));
+      assert.equal(socket._written.length, 1);
+      const reader = new PacketReader(socket._written[0]!);
+      assert.equal(reader.readDword(), PACKETTYPE.ERROR);
+      assert.equal(reader.readDword(), 107); // ERROR_ILLEGAL_VER
     });
   });
 

@@ -15,6 +15,9 @@
  */
 
 import { EXP_TABLE, MAX_LEVEL } from './expTable';
+import { EMPTY_PARAM_VIEW } from '../params/ParamModel';
+import type { ParamView } from '../params/ParamModel';
+import { DST } from '../constants/dst';
 
 /**
  * `AddExperienceSolo` level-diff multiplier (Mover.cpp:6085).
@@ -69,9 +72,10 @@ export function addExp(level: number, exp: number, amount: number): ExpGainResul
 }
 
 /**
- * `CMover::SubDieDecExp` (`_Common/Mover.cpp:7157`) -- the death exp penalty,
- * applied on **revive** (not on death itself). Subtracts a % of the exp needed
- * for the current level off the within-level `m_nExp`, clamped at 0.
+ * `CMover::SubDieDecExp` + `GetDieDecExpRate` (`_Common/Mover.cpp:7333-7346`).
+ * Death exp penalty, applied on **revive** (not on death itself). Subtracts a %
+ * of the exp needed for the current level off the within-level `m_nExp`,
+ * clamped at 0.
  *
  * v19 C++ never de-levels here (`bLvDown` forcibly reset at `Mover.cpp:7189`),
  * so the level is unchanged.
@@ -80,13 +84,31 @@ export function addExp(level: number, exp: number, amount: number): ExpGainResul
  * (Lv<=20=0%, Lv<=29=6%, Lv<=59=5%, Lv<=89=4%, Lv<=99=3%, Lv<=109=2%,
  * Lv<=129=1.5%, Lv<=200=1%).
  *
+ * Modifiers (`GetDieDecExpRate`, Mover.cpp:7333):
+ * - `DST_RECOVERY_EXP` (Resurrection skill): reduces penalty by
+ *   `(100 - n) / 100` where `n` is the DST value (e.g. 50 → halved).
+ * - SM_REVIVAL + chaotic: 0.9x penalty (ponytail: no SM tracking yet).
+ * - SM_REVIVAL alone (not chaotic): zero penalty (ponytail).
+ *
  * ponytail: load the real `DiePenalty.inc` table when the resource converter
  * exports it; the bracket values then come from data, not code.
  */
-export function subDieDecExp(level: number, exp: number): { level: number; exp: number } {
+export function subDieDecExp(
+  level: number,
+  exp: number,
+  params: ParamView = EMPTY_PARAM_VIEW,
+): { level: number; exp: number } {
   const pct = deathExpLossPct(level);
   if (pct <= 0) return { level, exp: Math.max(0, exp) };
-  const loss = Math.floor(expToNextLevel(level) * pct);
+  let loss = Math.floor(expToNextLevel(level) * pct);
+  // C++ `GetDieDecExpRate` -- DST_RECOVERY_EXP reduces penalty.
+  const recoveryPct = params.get(DST.RECOVERY_EXP, 0);
+  if (recoveryPct > 0) {
+    const factor = (100 - recoveryPct) / 100;
+    loss = Math.floor(loss * factor);
+  }
+  // ponytail: SM_REVIVAL + chaotic → 0.9x; SM_REVIVAL alone → 0.
+  // No SM mode tracking yet; add when SM_REVIVAL buff lands.
   return { level, exp: Math.max(0, exp - loss) };
 }
 

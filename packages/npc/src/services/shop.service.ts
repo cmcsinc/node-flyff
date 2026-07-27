@@ -25,11 +25,15 @@ import { MAX_INVENTORY, MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB } from '@
 interface ShopItemDef {
   readonly price?: number;
   readonly sellable?: boolean;
+  /** Raw IK3_* symbol (e.g. `IK3_EVENTMAIN`, `IK3_QUEST`). */
+  readonly item_kind3?: string;
+  /** Raw IK2_* symbol (e.g. `IK2_QUEST`). */
+  readonly item_kind2?: string;
 }
 
 export type ShopOpenResult =
   | { ok: true; vendorId: number; stock: VendorStock }
-  | { ok: false; reason: 'invalid' | 'not_vendor' | 'busy' };
+  | { ok: false; reason: 'invalid' | 'not_vendor' | 'busy' | 'chaotic' };
 
 export type BuyResult =
   | { ok: true; slot: number; objid: number; itemId: number; count: number; isNew: boolean; gold: number }
@@ -45,6 +49,12 @@ export interface ShopServiceDeps {
   inventoryService: Pick<InventoryService, 'addItem' | 'consume' | 'addGold' | 'spendGold'>;
   /** propItem lookup for `price` / `sell_price` / `sellable`. */
   getItem: (id: number) => ShopItemDef | undefined;
+  /**
+   * Global shop cost rate (`prj.m_fShopCost`, C++ `Project.h:968`). Defaults to 1.0.
+   * Set by the database backend from GAME_SETTING; multiplied into every buy price.
+   * ponytail: event-LUA factor (`GetShopBuyFactor`) and PERIN_VALUE conversion skipped.
+   */
+  shopCostRate?: number;
 }
 
 export class ShopService {
@@ -57,6 +67,11 @@ export class ShopService {
     if (!vendor) return { ok: false, reason: 'invalid' };
     // Monsters have no character.inc menus; only trade NPCs carry MMI_TRADE.
     if (!vendor.m_abMoverMenu.includes(MMI_TRADE)) return { ok: false, reason: 'not_vendor' };
+    // M9: C++ DPSrvr.cpp:2791 -- chaotic players (PK propensity > 0) are blocked
+    // from opening shops. `prj.GetPropensityPenalty().nShop` gates access; we use
+    // isChaotic() as the simpler gate (ponytail: upgrade to propensity-penalty
+    // table when PK penalty system ships).
+    if (player.isChaotic()) return { ok: false, reason: 'chaotic' };
     // C++ refuses when another vendor is already open (`m_vtInfo.GetOther()`) to
     // prevent trade-window dupes. We intentionally do NOT: BUYITEM/SELLITEM now
     // re-validate `m_idOther` against a live trade NPC on every call (see {@link
@@ -81,13 +96,14 @@ export class ShopService {
    * nNum, DWORD dwItemId`. Validates the vendor is the player's current other
    * (`m_idOther`), the stock slot exists + matches `dwItemId` (anti-cheat: a
    * tampered client naming an out-of-stock or cheaper item is refused). Unit
-   * cost is the propItem `price` floored to 1 (`OnBuyItem`'s `if(nCost<1) nCost=1`);
-   * `nNum` is clamped to what the player's gold can cover (`gold / unitCost`),
-   * matching C++ -- a request for more than affordable buys as many as possible,
-   * and only when even one is unaffordable does it refuse (`no_gold`). Item add
-   * + gold debit are both WAL-backed via {@link InventoryService}.
-   * ponytail: `fShopCost` multiplier, event-lua buy factor, perin fixed-price
-   * (PERIN_VALUE), purchase tax, and the 500 ms `__PERIN_BUY_BUG` re-buy gate.
+   * cost is `floor(fShopCost * propItem.price)` floored to 1 (`OnBuyItem:2886,2910`).
+   * `nNum` is first clamped to the vendor stock count (C++ `2874`), then to
+   * what the player's gold can cover (`gold / unitCost`) -- a request for more
+   * than affordable buys as many as possible, and only when even one is
+   * unaffordable does it refuse (`no_gold`). Item add + gold debit are both
+   * WAL-backed via {@link InventoryService}.
+   * ponytail: event-lua buy factor, perin fixed-price (PERIN_VALUE), purchase
+   * tax, and the 500 ms `__PERIN_BUY_BUG` re-buy gate.
    */
   buy(player: CPlayer, cTab: number, nId: number, nNum: number, dwItemId: number): BuyResult {
     const vendor = this.tradeVendor(player);
@@ -97,7 +113,12 @@ export class ShopService {
     const stockSlot = vendor.m_vendorStock[cTab]![nId];
     if (!stockSlot || stockSlot.itemId !== dwItemId) return { ok: false, reason: 'no_stock' };
 
-    const unitCost = Math.max(1, this.deps.getItem(dwItemId)?.price ?? 0);
+    // H13: clamp nNum to vendor stock (C++ DPSrvr.cpp:2874)
+    nNum = Math.min(nNum, stockSlot.count);
+
+    // H12: apply global fShopCost rate (C++ DPSrvr.cpp:2886)
+    const rawPrice = this.deps.getItem(dwItemId)?.price ?? 0;
+    const unitCost = Math.max(1, Math.floor((this.deps.shopCostRate ?? 1) * rawPrice));
     const affordable = Math.floor(player.m_nGold / unitCost);
     const qty = Math.min(nNum, affordable);
     if (qty < 1) return { ok: false, reason: 'no_gold' };
@@ -113,12 +134,15 @@ export class ShopService {
    * `nId` is the player's own inventory slot (no `dwItemId` echo -- C++ trusts
    * the slot alone, asymmetric vs. BUYITEM). Validates the vendor + slot is in
    * the main bag + item is sellable, then removes `nNum` via {@link
-   * InventoryService.consume} and credits `floor(price / 4) * take` -- the C++
-   * sell price is 25% of the buy cost (`GetCost()/4`), not a separate field.
-   * Handler acks UPDATE_ITEM(slot, remaining) -- count 0 clears the slot -- plus
-   * the new gold. ponytail: quest / equipped / perin / event-main blocks (C++
-   * returns TID_GAME_EQUIPTRADE etc.); the 2.1 B overflow guard (our addGold
-   * already clamps to MAX_GOLD).
+   * InventoryService.consume} and credits `max(1, floor(price / 4)) * take`
+   * -- the C++ sell price is 25% of the buy cost (`GetCost()/4`) floored to 1,
+   * not a separate field. Handler acks UPDATE_ITEM(slot, remaining) -- count 0
+   * clears the slot -- plus the new gold.
+   * **M10** (DPSrvr.cpp:3137-3154): blocks selling IK3_EVENTMAIN, quest
+   * (IK2_QUEST/IK3_QUEST), sealed-char, and perin items.
+   * **M11** (DPSrvr.cpp:3163-3168): `max(1, ...)` sell price floor.
+   * ponytail: sealed-char + perin-by-id blocks (item ID constants not exported);
+   * 2.1B overflow guard (our addGold already clamps to MAX_GOLD).
    */
   sell(player: CPlayer, nId: number, nNum: number): SellResult {
     const vendor = this.tradeVendor(player);
@@ -144,8 +168,19 @@ export class ShopService {
     const def = this.deps.getItem(src.itemId);
     if (def?.sellable === false) return { ok: false, reason: 'unsellable' };
 
+    // M10: C++ DPSrvr.cpp:3137-3154 -- block selling restricted item types.
+    // Event main items (IK3_EVENTMAIN) cannot be sold at all.
+    if (def?.item_kind3 === 'IK3_EVENTMAIN') return { ok: false, reason: 'unsellable' };
+    // Quest items (C++ `IsQuest()`) cannot be sold.
+    if (def?.item_kind2 === 'IK2_QUEST' || def?.item_kind3 === 'IK3_QUEST') return { ok: false, reason: 'unsellable' };
+    // ponytail: sealed-char (II_SYS_SYS_SCR_SEALCHARACTER) and perin
+    // (II_SYS_SYS_SCR_PERIN) blocks -- item ID constants not yet exported;
+    // add when the seal/perin systems are ported.
+
     const take = Math.min(nNum, src.count);
-    const gain = Math.floor((def?.price ?? 0) / 4) * take;
+    // M11: C++ DPSrvr.cpp:3163-3168 -- sell price floor of 1 penya per unit.
+    // `max(1, GetCost()/4) * nNum`. Our addGold already clamps to MAX_GOLD.
+    const gain = Math.max(1, Math.floor((def?.price ?? 0) / 4)) * take;
     const after = this.deps.inventoryService.consume(player, slot, take);
     this.deps.inventoryService.addGold(player, gain);
     return { ok: true, slot, itemId: src.itemId, remaining: after?.count ?? 0, gold: player.m_nGold };

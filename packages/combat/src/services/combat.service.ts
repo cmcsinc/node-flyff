@@ -496,6 +496,11 @@ export class CombatService {
     for (let lvl = prevLevel + 1; lvl <= player.m_nLevel; lvl++) {
       gpGain += EXP_TABLE[lvl]?.dwLPPoint ?? 0;
     }
+    // C++ `MoverParam.cpp:1446`: Master/Hero/LegendHero get +1 GP per level-up.
+    const isMasterOrHero = player.m_nJob >= 16 && player.m_nJob <= 31;
+    if (isMasterOrHero) {
+      gpGain += player.m_nLevel - prevLevel;
+    }
     if (gpGain <= 0) return;
     player.m_nRemainGP += gpGain;
     player._dirty.add('remain_gp');

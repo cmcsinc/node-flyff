@@ -61,15 +61,26 @@ export class TargetService {
       // a guard while this player is not PK). Player-char targets fall through
       // unchanged -- PvP targeting is out of scope here.
       const mover = this.spawnManager.get(idTarget);
-      if (mover !== undefined && !isMoverAttackableBy(player, mover)) {
-        return { ok: false, reason: 'target_not_attackable' };
+      if (mover !== undefined) {
+        if (!isMoverAttackableBy(player, mover)) {
+          return { ok: false, reason: 'target_not_attackable' };
+        }
+        // C++ DPSrvr.cpp:4383: claim only if m_idTargeter is free.
+        if (mover.m_idTargeter !== NULL_ID) {
+          return { ok: false, reason: 'invalid_target' };
+        }
+        mover.m_idTargeter = player.m_idPlayer;
       }
     }
 
-    // ponytail: implement target claim/release against MoverManager.
-    // For now record the player's intent on their own entity for diagnostics.
-    player.m_idTarget = bClear === 0 ? idTarget : NULL_ID;
-    player._dirty.add('m_idTarget');
+    if (bClear === 1) {
+      // Release: C++ DPSrvr.cpp:4367: only the claimer can release.
+      const mover = this.spawnManager.get(idTarget);
+      if (mover !== undefined && mover.m_idTargeter === player.m_idPlayer) {
+        mover.m_idTargeter = NULL_ID;
+      }
+    }
+
     return { ok: true, mode: bClear === 0 ? 'claim' : 'release' };
   }
 }

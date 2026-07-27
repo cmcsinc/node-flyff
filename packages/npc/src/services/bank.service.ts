@@ -20,14 +20,25 @@
 
 import type { BankRepository, InventoryRepository, Journal } from '@flyff/database';
 import { createLogger } from '@flyff/core/logger';
-import type { CPlayer, InventorySlot } from '@flyff/entities';
-import { MAX_INVENTORY, BANK_SLOTS, MAX_BANK_TABS } from '@flyff/world-core';
+import { MAX_GOLD } from '@flyff/core';
+import type { CPlayer, CMover, InventorySlot } from '@flyff/entities';
+import { MAX_INVENTORY, BANK_SLOTS, MAX_BANK_TABS, NULL_ID } from '@flyff/world-core';
+import { MMI_BANKING } from '@flyff/resources';
 
 const logger = createLogger({ module: 'bank-service' });
+
+/** C++ `MAX_LEN_MOVER_MENU` (npchecker.h:4) -- squared distance gate. */
+const MAX_LEN_MOVER_MENU_SQ = 1024;
+
+/** SpawnManager surface consumed for bank NPC proximity checks. */
+export interface BankSpawnLookup {
+  inZone(zoneId: number): readonly CMover[];
+}
 
 export interface BankServiceDeps {
   bankRepo: Pick<BankRepository, 'setItem' | 'removeItem' | 'getGold' | 'setGold' | 'getBankPass' | 'setBankPass'>;
   inventoryRepo: Pick<InventoryRepository, 'removeItem' | 'setItem' | 'setGold'>;
+  spawnManager?: BankSpawnLookup;
   journal?: Journal;
 }
 
@@ -61,8 +72,19 @@ export class BankService {
    * else `CWndBankPassword` (set/change-pin). So:
    *   `'0000'` (no password) -> nMode 0 -> set-pin dialog
    *   any set password       -> nMode 1 -> enter-pin dialog (then CONFIRMBANK)
+   *
+   * **H14** (DPSrvr.cpp:3248): when `dwId == NULL_ID` (direct bank open,
+   * not via NPC click), must be within `MAX_LEN_MOVER_MENU` of a bank NPC.
+   * **H15** (DPSrvr.cpp:3251): chaotic players (PK propensity > 0) cannot
+   * open the bank. `prj.GetPropensityPenalty().nBank` is not ported yet --
+   * `isChaotic()` is the gate (ponytail: upgrade to propensity-penalty table
+   * when PK penalty system ships).
    */
-  open(player: CPlayer): number {
+  open(player: CPlayer, dwId: number): number {
+    if (dwId === NULL_ID) {
+      if (!this.hasNearbyBankNpc(player)) return -1;
+    }
+    if (player.isChaotic()) return -1;
     player.m_bBankOpen = true;
     return player.m_szBankPass === NO_BANK_PASS ? 0 : 1;
   }
@@ -160,10 +182,19 @@ export class BankService {
    * Move `amount` gold from inv into bank `tab` (v19 per-tab gold pool,
    * `m_BankGold[tab]`). `tab` is the `BYTE nSlot` from PUTGOLDBANK
    * (DPSrvr.cpp:3848); validated in [0, MAX_BANK_TABS).
+   *
+   * **H16** (DPSrvr.cpp:3918): `OnPutGoldBank` checks `IsCloseNpc(MMI_BANKING)`
+   * unless `m_bInstantBank` is set. `m_bInstantBank` is not ported yet
+   * (ponytail: add when GM instant-bank feature ships); the proximity check
+   * always applies.
    */
   depositGold(player: CPlayer, tab: number, amount: number): GoldMoveResult {
     if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) return { ok: false, reason: 'invalid' };
     if (amount <= 0 || amount > player.m_nGold) return { ok: false, reason: 'invalid' };
+    if (!this.hasNearbyBankNpc(player)) return { ok: false, reason: 'invalid' };
+    // M12: C++ DPSrvr.cpp:3929 -- `CanAdd(m_dwGoldBank[nSlot], nGold)` rejects
+    // deposits that would overflow the bank tab's gold pool.
+    if (player.m_BankGold[tab] + amount > MAX_GOLD) return { ok: false, reason: 'invalid' };
     player.m_nGold -= amount;
     player.m_BankGold[tab] += amount;
     // Canonical CHAR_GOLD carries the absolute post-mutation m_nGold so WAL
@@ -213,5 +244,17 @@ export class BankService {
   private findEmptyInv(player: CPlayer): number {
     for (let i = 0; i < MAX_INVENTORY; i++) if (player.m_Inventory[i] === null) return i;
     return -1;
+  }
+
+  /** XZ distance check mirroring `CNpcChecker::IsCloseNpc` (npchecker.cpp:86). */
+  private hasNearbyBankNpc(player: CPlayer): boolean {
+    if (!this.deps.spawnManager) return false;
+    for (const npc of this.deps.spawnManager.inZone(player.m_nZoneId)) {
+      if (!npc.m_abMoverMenu.includes(MMI_BANKING)) continue;
+      const dx = player.m_vPos.x - npc.m_vPos.x;
+      const dz = player.m_vPos.z - npc.m_vPos.z;
+      if (dx * dx + dz * dz <= MAX_LEN_MOVER_MENU_SQ) return true;
+    }
+    return false;
   }
 }

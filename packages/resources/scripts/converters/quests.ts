@@ -39,6 +39,8 @@ interface ParseAcc {
   dialog: Record<string, string>;
   questItems: QuestItem[];
   title?: string;
+  /** `SetRemove(FALSE)` → true (quest cannot be cancelled). */
+  noRemove?: boolean;
 }
 
 /** Coerce a `str`/`sym` arg to its string value (IDS_* keys stay symbolic for runtime text lookup). */
@@ -84,6 +86,7 @@ class QuestParser {
       dialog: Object.keys(acc.dialog).length ? acc.dialog : undefined,
       quest_items: acc.questItems,
       ...(acc.title !== undefined ? { title: acc.title } : {}),
+      ...(acc.noRemove ? { no_remove: true } : {}),
     };
     return def;
   }
@@ -139,6 +142,9 @@ class QuestParser {
     this.i++; // past cmd ident
     const args = this.readArgs();
     if (cmd === 'SetTitle') { const t = asString(args[0]); if (t !== undefined) acc.title = t; return; }
+    // C++ Project.cpp:2433 — SetRemove(N) → m_bNoRemove = !N.  Extracted as
+    // `noRemove` on the def so runtime can check without scanning commands.
+    if (cmd === 'SetRemove' && args[0]?.type === 'bool') { acc.noRemove = !args[0].value; return; }
     if (cmd === 'SetDialog' && args[0]?.type === 'num') {
       const t = asString(args[1]);
       if (t !== undefined) acc.dialog[String(args[0].value)] = t;
