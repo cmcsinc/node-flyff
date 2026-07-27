@@ -71,7 +71,7 @@ function makeAttacker(over: Partial<Combatant> = {}): Combatant {
     npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0,
     npcHR: 0, npcER: 0,
     element: 0,
-    equipDef: 0, adjHitRate: 0, parry: 0,
+    equipDef: 0, equipDefMax: 0, adjHitRate: 0, parry: 0,
     params: EMPTY_PARAM_VIEW,
     ...over,
   };
@@ -88,7 +88,7 @@ function makeNpcDefender(over: Partial<Combatant> = {}): Combatant {
     npcArmor: 20, npcResisMagic: 0,
     npcHR: 0, npcER: 0,
     element: 0,
-    equipDef: 0, adjHitRate: 0, parry: 0,
+    equipDef: 0, equipDefMax: 0, adjHitRate: 0, parry: 0,
     params: EMPTY_PARAM_VIEW,
     ...over,
   };

@@ -71,8 +71,11 @@ export interface Combatant {
   readonly npcER: number;
   /** Mover element (`eElementType`). */
   readonly element: number;
-  /** Summed equip DEF (player armor; NPC = 0 -- uses `npcArmor`). */
+  /** Summed equip DEF floor (player armor dwAbilityMin; NPC = 0). */
   readonly equipDef: number;
+  /** Summed equip DEF ceiling (player armor dwAbilityMax; NPC = 0).
+   *  When > equipDef, `calcDefense` randomizes between the two per hit. */
+  readonly equipDefMax: number;
   /** Flat hit-rate % from DST_ADJ_HITRATE (player jewelry/buffs; NPC = 0). */
   readonly adjHitRate: number;
   /** Evasion from DST_PARRY (player jewelry/buffs; NPC = 0). */
@@ -207,20 +210,26 @@ export function getAttackResult(attacker: Combatant, defender: Combatant): numbe
   return clamp(Math.floor(rate), MIN_HR, MAX_HR);
 }
 
-/** `CalcDefenseCore` (MoverAttack.cpp:573) -- NPC melee: `dwNaturalArmor/7 + 1`. */
-export function calcDefense(defender: Combatant): number {
+/**
+ * `CalcDefenseCore` (MoverAttack.cpp:573) -- NPC melee: `dwNaturalArmor/7 + 1`.
+ * When `rng` is supplied and the defender has a defense range (`equipDefMax` >
+ * `equipDef`), the equip defense is randomized per hit (C++ `GetDefenseByItem
+ * (bRandom=TRUE)`). Without `rng` or with no range, uses deterministic floor.
+ */
+export function calcDefense(defender: Combatant, rng?: Rng): number {
   if (defender.kind === 'npc') {
     return Math.floor(defender.npcArmor / 7.0) + 1;
   }
   // Player defender, AF_GENERIC path (`CalcDefenseCore`, MoverAttack.cpp:591):
-  //   nDef = ((L*2 + S/2)/2.8 - 4) + (S-14)*fFactorDef + equipDef/4 + DST_ADJDEF
-  // Melee always sets AF_GENERIC (`resolveMelee`), so this is the live branch.
-  // NOTE: the `*2.3` multiplier belongs to the PvP non-generic branch
-  // (`CalcDefensePlayer`, MoverAttack.cpp:557) and was wrongly applied here --
-  // it inflated DEF (byItem=40 -> 92 instead of 10) making geared players
-  // immune to weak mobs (`rolledDamage=0`).
+  //   nDef = ((L*2 + S/2)/2.8 - 4) + (S-14)*fFactorDef + GetDefenseByItem(bRandom)/4 + DST_ADJDEF
   const job = getJobProps(defender.job);
-  const byItem = defender.equipDef; // SumEquipDefenseAbility (armor DEF + refine bonus)
+  // GetDefenseByItem: xRandom(defenseMin, defenseMax) when range exists.
+  let byItem: number;
+  if (rng && defender.equipDefMax > defender.equipDef) {
+    byItem = rng.range(defender.equipDef, defender.equipDefMax + 1);
+  } else {
+    byItem = defender.equipDef;
+  }
   const adjDef = defender.params.get(DST.ADJDEF, 0); // GetParam(DST_ADJDEF) buff
   const statTerm = (defender.level * 2 + Math.floor(defender.sta / 2)) / 2.8 - 4;
   const factorTerm = (defender.sta - 14) * job.fFactorDef;
@@ -291,7 +300,7 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
   if (nATK < 0) nATK = 0;
 
   // PostCalcGeneric (melee): DEF subtract (element-adjusted), then block.
-  let nDEF = Math.floor((calcDefense(defender) * ef.defFactor) / 10000);
+  let nDEF = Math.floor((calcDefense(defender, rng) * ef.defFactor) / 10000);
   let nDamage = nATK - nDEF;
   if (nDamage > 0) {
     const fBlock = getBlockFactor(defender, attacker, rng);

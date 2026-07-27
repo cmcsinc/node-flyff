@@ -30,8 +30,13 @@ const ARMOR_PARTS = new Set([2, 3, 4, 5, 6, 11]); // UPPER_BODY, LOWER_BODY, HAN
 
 export interface EquipStats {
   weapon: WeaponStats;
-  /** Summed armor DEF (propItem defense + refine bonus per piece). */
+  /** Summed armor DEF min (propItem dwAbilityMin + refine bonus per piece). */
   armorDef: number;
+  /** Summed armor DEF max (propItem dwAbilityMax + refine bonus per piece).
+   *  When > armorDef, combat randomizes between the two per hit (C++
+   *  GetDefenseByItem(bRandom=TRUE)). Falls back to armorDef when the
+   *  resource has no defense_max (older / non-armor items). */
+  armorDefMax: number;
   /** Flat hit-rate % from equipped DST_ADJ_HITRATE (jewelry nAdjHitRate). */
   adjHitRate: number;
   /** Evasion from equipped DST_PARRY (jewelry dwParry). */
@@ -56,6 +61,7 @@ export type ItemLookup = (itemId: number) => ItemDefinition | undefined;
 export function sumEquipStats(p: CPlayer, getItem: ItemLookup): EquipStats {
   let weapon: WeaponStats = { min: 1, max: 3, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
   let armorDef = 0;
+  let armorDefMax = 0;
   let adjHitRate = 0;
   let parry = 0;
   let element = NO_PROP;
@@ -83,8 +89,9 @@ export function sumEquipStats(p: CPlayer, getItem: ItemLookup): EquipStats {
     const prop = getItem(slot.itemId);
     if (!prop) continue;
     if (ARMOR_PARTS.has(part)) {
-      armorDef += prop.defense ?? 0;
-      armorDef += Math.floor(Math.pow(slot.refine ?? 0, 1.5)); // SumEquipDefenseAbility refine bonus
+      const refineBonus = Math.floor(Math.pow(slot.refine ?? 0, 1.5)); // SumEquipDefenseAbility
+      armorDef += (prop.defense ?? 0) + refineBonus;
+      armorDefMax += (prop.defense_max ?? prop.defense ?? 0) + refineBonus;
     }
     if (prop.hit_rate) adjHitRate += prop.hit_rate;
     if (prop.parry) parry += prop.parry;
@@ -93,5 +100,5 @@ export function sumEquipStats(p: CPlayer, getItem: ItemLookup): EquipStats {
   const suit = p.m_Inventory[MAX_INVENTORY + PARTS_UPPER_BODY];
   if (suit) element = suit.element ?? elementFromName(getItem(suit.itemId)?.element);
 
-  return { weapon, armorDef, adjHitRate, parry, element };
+  return { weapon, armorDef, armorDefMax, adjHitRate, parry, element };
 }

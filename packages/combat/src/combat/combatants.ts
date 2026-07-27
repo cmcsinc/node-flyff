@@ -22,7 +22,7 @@ export const BARE_HAND: WeaponStats = { min: 1, max: 3, type: WT_MELEE_SWD, atkS
 export const FIST_NPC: WeaponStats = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
 
 /** No-gear equip fold (NPC->player path lacks resource access -- ponytail). */
-const BARE_EQUIP = { weapon: BARE_HAND, armorDef: 0, adjHitRate: 0, parry: 0, element: NO_PROP };
+const BARE_EQUIP = { weapon: BARE_HAND, armorDef: 0, armorDefMax: 0, adjHitRate: 0, parry: 0, element: NO_PROP };
 
 /**
  * Project a live player onto the melee-formula combatant shape. When `getItem`
@@ -40,6 +40,7 @@ export function playerCombatant(p: CPlayer, getItem?: ItemLookup): Combatant {
     npcAtkMin: 0, npcAtkMax: 0, npcArmor: 0, npcResisMagic: 0, npcHR: 0, npcER: 0,
     element: eq.element,
     equipDef: eq.armorDef,
+    equipDefMax: eq.armorDefMax,
     adjHitRate: eq.adjHitRate,
     parry: eq.parry,
     params: p.m_params,
@@ -54,7 +55,7 @@ export function moverCombatant(m: CMover): Combatant {
     weapon: FIST_NPC,
     npcAtkMin: m.m_nAtkMin, npcAtkMax: m.m_nAtkMax, npcArmor: m.m_nArmor,
     npcResisMagic: 0, npcHR: m.m_nHR, npcER: m.m_nER, element: m.m_nElement,
-    equipDef: 0, adjHitRate: 0, parry: 0,
+    equipDef: 0, equipDefMax: 0, adjHitRate: 0, parry: 0,
     params: m.m_params,
   };
 }

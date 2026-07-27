@@ -225,6 +225,7 @@ function rowToItem(
     item.attack_speed = num(row, 'dwAttackSpeed', 0);
   } else if (isArmor) {
     item.defense = abilMin;
+    item.defense_max = abilMax;
     item.attack_min = abilMin;
   }
 
