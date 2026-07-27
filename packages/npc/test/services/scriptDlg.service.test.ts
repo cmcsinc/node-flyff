@@ -364,8 +364,9 @@ describe('ScriptDlgService.dialog', () => {
     // back to stripping MI_ + lowercasing. Use an explicit outfit via override.
     const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
     if (!out.ok) throw new Error('expected ok');
-    const funcs = calls[0]!;
-    const accept = funcs.find((f) => f.type === 'addKey' && f.key === '#b5062');
+    // Quest offer is now its own RUNSCRIPTFUNC frame (emitted on dialog-open,
+    // separate from the greeting menu) so it reaches shop-menu / no-dialog NPCs.
+    const accept = calls.flat().find((f) => f.type === 'addKey' && f.key === '#b5062');
     assert.ok(accept, 'expected a #b5062 Accept button in the synth menu');
     // No outfit on mkNpc -> npcLookupKey uses m_szKey. mkNpc('MaFl_Alice') sets
     // m_szKey='MaFl_Alice' which has no MI_ prefix -> stripped stays 'MaFl_Alice'
@@ -377,5 +378,35 @@ describe('ScriptDlgService.dialog', () => {
     if (!out2.ok) throw new Error('expected ok');
     assert.deepEqual(began, [5062]);
     assert.ok(calls.at(-1)!.some((f) => f.type === 'exit')); // closes the window
+  });
+
+  it('emits quest Accept even when state 0 is a shop/menu (buttons not suppressed)', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const dialogs = mkDialogs(['', '', 'Buy', 'Sell'], 'mafl_boboku');
+    // Boboku-like: state 0 has real menu keys (a shop). Old synthInitialMenu
+    // early-returned on non-empty keys and dropped the quest offer entirely.
+    dialogs.byPrefix.set('mafl_boboku', {
+      _version: '1.0', prefix: 'mafl_boboku', character_key: 'MaFl_Boboku',
+      states: { '0': { keys: [{ label: 2 }, { label: 3 }] } },
+    } as never);
+    const quests = {
+      byId: new Map([[7001, { id: 7001, symbol: 'QUEST_BOBOKU01', title: 'IDS_X', commands: [], states: {}, quest_items: [] }]]),
+      drops: new Map(),
+      byNpc: { begin: new Map([['mafl_boboku', [7001]]]), end: new Map() },
+    } as unknown as QuestIndex;
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Boboku') },
+      dialogs, quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    // Shop menu frame renders AND a separate quest-offer frame carries #b7001.
+    const accept = calls.flat().find((f) => f.type === 'addKey' && f.key === '#b7001');
+    assert.ok(accept, 'shop-menu NPC must still offer its quest');
+    // The quest offer appends (no removeAllKeys) so the shop buttons survive.
+    const offerFrame = calls.find((c) => c.some((f) => f.type === 'addKey' && f.key === '#b7001'))!;
+    assert.equal(offerFrame[0]?.type !== 'removeAllKeys', true, 'quest offer appends, not wipes, when a menu preceded it');
   });
 });
