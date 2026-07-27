@@ -37,6 +37,11 @@ const MMI_FALLBACK: Record<string, number> = {
   MMI_MESSAGE: 4,
   MMI_ADD_MESSENGER: 5,
   MMI_INVITE_PARTY: 6,
+  MMI_INVITE_COMPANY: 7,
+  MMI_MARKING: 8,
+  MMI_BANKING: 9,
+  MMI_GUILDBANKING: 15,
+  MMI_NPC_BUFF: 74,
 };
 
 /** SRT_* structure type defines (defineNeuz.h:75-89). Resolves `m_nStructure=`. */
@@ -45,12 +50,6 @@ const SRT_MAP: Record<string, number> = {
   SRT_WEAPON: 4, SRT_SHIELD: 5, SRT_FOOD: 6, SRT_MAGIC: 7,
   SRT_GENERAL: 8, SRT_PUBLICOFFICE: 9, SRT_QUESTOFFICE: 10,
   SRT_DUNGEON: 11, SRT_BUCKLER: 12, SRT_WARPZONE: 13,
-};
-  MMI_INVITE_COMPANY: 7,
-  MMI_MARKING: 8,
-  MMI_BANKING: 9,
-  MMI_GUILDBANKING: 15,
-  MMI_NPC_BUFF: 74,
 };
 
 /** `MMI_DIALOG` (`defineNeuz.h:92`) -- gates the right-click Dialog option. */
