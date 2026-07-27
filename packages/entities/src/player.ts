@@ -231,6 +231,12 @@ export class CPlayer {
    */
   m_idDuelTarget: number = NULL_ID;
   /**
+   * Party id this player belongs to (C++ `m_idParty` / `CParty::m_uPartyId`),
+   * or {@link NULL_ID} when solo. Roster lives in `PartyManager`; this is the
+   * per-player back-reference the loot-share + party-chat paths key on.
+   */
+  m_idParty: number = NULL_ID;
+  /**
    * Duel active flag (C++ `m_nDuel`). 0 = idle, 1 = active. Mirrors the C++
    * field the client reads via `OnSetDuel` (DPClient.cpp:15493). Set alongside
    * {@link m_idDuelTarget}; cleared together.

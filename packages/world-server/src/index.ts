@@ -93,6 +93,10 @@ async function main(): Promise<void> {
     playerSetDestObjHandler,
     meleeAttackHandler,
     rangeAttackHandler,
+    duelHandler,
+    partyManager,
+    partyService,
+    partyHandler,
     actMsgHandler,
     moveItemHandler,
     dropItemHandler,
@@ -196,6 +200,8 @@ async function main(): Promise<void> {
     playerSetDestObjHandler,
     meleeAttackHandler,
     rangeAttackHandler,
+    duelHandler,
+    partyHandler,
     actMsgHandler,
     moveItemHandler,
     dropItemHandler,
@@ -217,10 +223,18 @@ async function main(): Promise<void> {
     doUseSkillPointHandler,
     modifyStatusHandler,
     onDisconnect: (socket) => {
+      // Party cleanup FIRST -- needs the live player object to clear m_idParty
+      // + re-broadcast roster / disband. After disconnectByCharId drops the
+      // player from PlayerManager the party service can no longer resolve them.
+      const charId = socket.session?.charId;
+      if (charId !== undefined) {
+        const player = playerManager.get(charId);
+        if (player) partyService.onDisconnect(player);
+      }
       // Flush player state (position, vitals, stats, bank gold) + drop from
       // managers. disconnectByCharId swallows its own errors so this never
       // rejects; the dispatcher also guards the hook with try/catch.
-      void joinService.disconnectByCharId(socket.session?.charId);
+      void joinService.disconnectByCharId(charId);
     },
     logger,
   });

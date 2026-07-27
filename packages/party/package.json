@@ -1,0 +1,29 @@
+{
+  "name": "@flyff/party",
+  "version": "1.0.0",
+  "description": "Flyff party domain -- invite/accept/decline, roster snapshot, party chat, shared EXP split + loot share seams",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src --ext .ts",
+    "test": "tsx --test test/**/*.test.ts",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@flyff/core": "workspace:*",
+    "@flyff/entities": "workspace:*",
+    "@flyff/world-core": "workspace:*",
+    "@flyff/database": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}

@@ -130,6 +130,77 @@ describe('CombatService.resolveAttack', () => {
     void PACKETTYPE;
   });
 
+  it('partyExp seam: when party handles the kill, solo grant is skipped', () => {
+    // Same setup as the happy-path test, but with a partyExp seam that claims
+    // the kill. The solo grantExpAmount path (WAL + SETEXPERIENCE + persist)
+    // must NOT run -- the party service applied each member's exp itself.
+    const writes: Buffer[] = [];
+    const socket = { write: (b: Buffer) => { writes.push(b); return true; } };
+    const player = CPlayer.fromRow(makeRow(), socket);
+    player.m_nZoneId = 1;
+    const mover = CMover.spawn(
+      0x40000040,
+      { modelIndex: 20, name: 'Aibatt', level: 1, hp: 30, atkMin: 16, atkMax: 16, armor: 3, hr: 40, er: 3, expValue: 2 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    const spawns = new Map([[mover.m_idMover, mover]]);
+    const spawnManager = { get: (id: number) => spawns.get(id), kill: () => {} };
+    const zoneManager = { broadcastAround: () => 1 };
+    const sends: Buffer[] = [];
+    const playerManager = { sendTo: (_p: unknown, buf: Buffer) => { sends.push(buf); } };
+    const repoCalls: Array<{ id: number; level: number; exp: bigint }> = [];
+    const charRepo = { updateLevelAndExp: async (id: number, level: number, exp: bigint) => { repoCalls.push({ id, level, exp }); } };
+    const journalCalls: Array<{ charId: number; type: string; payload: unknown }> = [];
+    const journal = { append: (e: { charId: number; type: string; payload: unknown }) => { journalCalls.push(e); } };
+    let partyCalls = 0;
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager, zoneManager, playerManager, charRepo, journal, rng: fixedRng,
+      partyExp: (_k, _m, baseExp) => { partyCalls++; return baseExp > 0 ? 2 : 0; },
+    });
+
+    // Two swings: 30 -> 15 -> 0 (dead). grantExp fires on the killing blow only.
+    combat.resolveAttack(player, mover.m_idMover);
+    combat.resolveAttack(player, mover.m_idMover);
+    assert.equal(partyCalls, 1, 'partyExp seam invoked once on kill');
+    // Solo grant path skipped: no WAL, no SETEXPERIENCE, no repo persist.
+    assert.equal(journalCalls.length, 0);
+    assert.equal(sends.length, 0);
+    assert.equal(repoCalls.length, 0);
+    assert.equal(player.m_nExp, 0, 'solo exp untouched');
+  });
+
+  it('partyExp seam: when party returns null/0, solo grant runs unchanged', () => {
+    const writes: Buffer[] = [];
+    const socket = { write: (b: Buffer) => { writes.push(b); return true; } };
+    const player = CPlayer.fromRow(makeRow(), socket);
+    player.m_nZoneId = 1;
+    const mover = CMover.spawn(
+      0x40000041,
+      { modelIndex: 20, name: 'Aibatt', level: 1, hp: 30, atkMin: 16, atkMax: 16, armor: 3, hr: 40, er: 3, expValue: 2 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    const spawns = new Map([[mover.m_idMover, mover]]);
+    const spawnManager = { get: (id: number) => spawns.get(id), kill: () => {} };
+    const zoneManager = { broadcastAround: () => 1 };
+    const sends: Buffer[] = [];
+    const playerManager = { sendTo: (_p: unknown, buf: Buffer) => { sends.push(buf); } };
+    const charRepo = { updateLevelAndExp: async () => {} };
+    const journal = { append: () => {} };
+    let partyCalls = 0;
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager, zoneManager, playerManager, charRepo, journal, rng: fixedRng,
+      partyExp: () => { partyCalls++; return null; }, // killer has no party
+    });
+
+    combat.resolveAttack(player, mover.m_idMover);
+    combat.resolveAttack(player, mover.m_idMover);
+    assert.equal(partyCalls, 1, 'seam invoked on kill');
+    assert.equal(player.m_nExp, 2, 'solo grant ran unchanged');
+    assert.equal(sends.length, 1, 'SETEXPERIENCE sent');
+  });
+
   it('rejects a non-attackable (guard, non-PK player) target', () => {
     const socket = { write: () => true };
     const player = CPlayer.fromRow(makeRow(), socket);

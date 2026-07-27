@@ -76,6 +76,14 @@ export interface CombatServiceDeps {
    * directly (layer boundary), so this seam mirrors `questTracker`.
    */
   onPvpKill?: (victim: CPlayer, killerObjid: number) => void;
+  /**
+   * Optional party-exp seam (wired to `PartyService.distributeExp` in
+   * `compose.ts`). If the killer is in a party, this returns the number of
+   * members who received a share (and we skip the solo grant); otherwise null
+   * and combat runs its normal solo grant. Keeps `@flyff/combat` free of any
+   * `@flyff/party` import (structural type -- closure satisfies the signature).
+   */
+  partyExp?: (killer: CPlayer, mover: CMover, baseExp: number) => number | null;
 }
 
 export type CombatOutcome =
@@ -347,6 +355,12 @@ export class CombatService {
    * base = nExpValue * level-diff mult; cap = min(base, LimitExp); journal
    * before ack; cascade level-ups (within-level exp resets to 0, excess carries
    * over); persist async.
+   *
+   * Party share seam: if `deps.partyExp` is wired and the killer is in a party,
+   * it returns the count of members who received a share (>0) and we skip the
+   * solo grant entirely -- the party service applied each member's exp itself
+   * via {@link grantExpAmount}. Returns `null`/0 when there is no party (or no
+   * eligible member) and we fall through to the solo grant unchanged.
    */
   private grantExp(player: CPlayer, mover: CMover): void {
     const base = Math.floor(mover.m_nExpValue * expLevelDiffMult(player.m_nLevel, mover.m_nLevel));
@@ -365,10 +379,25 @@ export class CombatService {
       );
       return;
     }
+    if (this.deps.partyExp) {
+      const handled = this.deps.partyExp(player, mover, cap);
+      if (handled !== null && handled > 0) return; // party share applied; skip solo
+    }
+    this.grantExpAmount(player, cap);
+  }
 
+  /**
+   * Apply `amount` exp to `player` -- the shared per-player grant body. Runs the
+   * within-level `addExp` cascade, refills HP/MP/FP on level-up, WAL-journals
+   * `CHAR_EXP`, sends SETEXPERIENCE (self) + SETLEVEL (vicinity), and persists
+   * fire-and-forget. Called by {@link grantExp} (solo) AND by `PartyService
+   * .distributeExp` (per-member split) so there is ONE exp-application path.
+   */
+  grantExpAmount(player: CPlayer, amount: number): void {
+    if (amount <= 0) return;
     // m_nExp is within-level (resets at each boundary); addExp carries excess.
     const prevLevel = player.m_nLevel;
-    const gain = addExp(player.m_nLevel, player.m_nExp, cap);
+    const gain = addExp(player.m_nLevel, player.m_nExp, amount);
     player.m_nExp = gain.exp;
     player.m_nLevel = gain.level;
     player._dirty.add('m_nExp');

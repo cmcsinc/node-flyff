@@ -170,6 +170,22 @@ export const PACKETTYPE = Object.freeze({
   DUELREQUEST:          0xffffff23,
   DUELYES:              0xffffff24,
   DUELNO:               0xffffff25,
+  // MsgHdr.h:280-316 -- Party C->S (solo party MVP). Bodies (Neuz/DPClient.cpp
+  // :9583-9637): MEMBERREQUEST `u_long uLeaderId, u_long uMemberId, BYTE bTroup`
+  // (invite); MEMBERREQUESTCANCLE `u_long uLeader, u_long uMember, int nMode`
+  // (reject); ADDPARTYMEMBER accept (leader/member ids re-derived from session);
+  // REMOVEPARTYMEMBER `u_long LeaderId, u_long MemberId` (leave/kick);
+  // PARTYCHANGELEADER `u_long uLeaderId, u_long uChangerLeaderid`;
+  // PARTYCHANGEITEMMODE/EXPMODE `u_long idPlayer, int nMode`; PARTYCHAT
+  // `DWORD dpidUser, u_long idParty, String msg`. Party-duel 0xffffff26-28 still deferred.
+  MEMBERREQUEST:        0xffffff17,
+  MEMBERREQUESTCANCLE:  0xffffff18,
+  ADDPARTYMEMBER:       0xffffff11,
+  REMOVEPARTYMEMBER:    0xffffff12,
+  PARTYCHANGELEADER:    0xffffff2f,
+  PARTYCHANGEITEMMODE:  0xffffff20,
+  PARTYCHANGEEXPMODE:   0xffffff21,
+  PARTYCHAT:            0xffffff59,
   // MsgHdr.h:776-779 -- Couple (marriage link) under `__VER >= 13 // __COUPLE_1117`.
   // PROPOSE body: DWORD-prefixed string `szPlayer[42]`. REFUSE/COUPLE/DECOUPLE
   // bodyless (SendHdr). Delegates to CCoupleHelper singleton.
@@ -299,6 +315,22 @@ export const SNAPSHOTTYPE = Object.freeze({
   REMOVEFRIEND_SNAPSHOT: 0x0075,
   ADDFRIENDERROR:       0x0076,
   ADDFRIENDCHANGEJOB:   0x0077,
+  // MsgHdr.h:1028-1070 -- Party S->C (solo party MVP). ERRORPARTY error text;
+  // PARTYMEMBER full roster (CParty::Serialize body, party.cpp:169-223 -- crash-
+  // risk widths, verify vs game/source); PARTYREQEST invite popup; PARTYREQESTCANCEL;
+  // PARTYEXP party-level bar; PARTYMEMBERLEVEL member level delta;
+  // ADDPARTYCHANGELEADER new-leader notice; PARTYCHAT party chat line;
+  // PARTYCHANGEITEMMODE/EXPMODE mode-change echo.
+  ERRORPARTY:             0x0081,
+  PARTYMEMBER:            0x0082,
+  PARTYREQEST:            0x0083,
+  PARTYREQESTCANCEL:      0x0084,
+  PARTYEXP:               0x0085,
+  PARTYMEMBERLEVEL:       0x0087,
+  ADDPARTYCHANGELEADER:   0x0079,
+  PARTYCHAT:              0x0069,
+  PARTYCHANGEITEMMODE:    0x008f,
+  PARTYCHANGEEXPMODE:     0x0090,
 } as const);
 
 export type SnapshotType = typeof SNAPSHOTTYPE[keyof typeof SNAPSHOTTYPE];
