@@ -367,15 +367,22 @@ export class ScriptDlgService {
       if (seen.has(qid)) return;
       seen.add(qid);
       const def = this.deps.quests.byId.get(qid);
-      if (!def) return;
+      if (!def) {
+        logger.warn({ charId: player.m_idPlayer, qid }, 'classify: quest def not in byId');
+        return;
+      }
       const q = player.findQuest(qid);
       const complete = player.isCompleteQuest(qid);
       if (!q && !complete) {
-        if (canBegin(player, def, inv).ok) newQuests.push(qid);
+        const begin = canBegin(player, def, inv);
+        if (begin.ok) newQuests.push(qid);
         else if (isNextLevel(player, def, inv)) nextQuests.push(qid);
+        else logger.warn({ charId: player.m_idPlayer, qid, reason: begin.reason, lvl: player.m_nLevel, job: player.m_nJob, sex: player.m_nSex }, 'classify: canBegin+isNextLevel both failed');
       } else if (q && !complete && q.state !== QS_END) {
         if (isComplete(player, q, def, inv).ok) endQuests.push(qid);
         else currQuests.push(qid);
+      } else {
+        logger.warn({ charId: player.m_idPlayer, qid, hasQ: !!q, complete, state: q?.state }, 'classify: fell through (already complete or QS_END)');
       }
     };
     for (const qid of this.beginByKey.get(lk) ?? []) classify(qid);
