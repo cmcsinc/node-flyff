@@ -40,7 +40,7 @@ export const DST = Object.freeze({
   MASTRY_ELECTRICITY: 19,
   MASTRY_WIND: 20,
   ATTACKSPEED: 24,
-  /** Bonus sword damage (`defineAttribute.h:25`) -- set-item avail, stored not yet read by combat. */
+  /** Bonus sword damage (`defineAttribute.h:25`) -- weapon mastery via GetPlusWeaponATK. */
   SWD_DMG: 25,
   ADJDEF: 26,
   RESIST_MAGIC: 27,
@@ -49,8 +49,14 @@ export const DST = Object.freeze({
   RESIST_WIND: 31,
   RESIST_WATER: 32,
   RESIST_EARTH: 33,
-  /** Bonus axe damage (`defineAttribute.h:34`) -- set-item avail, stored not yet read by combat. */
+  /** Bonus axe damage (`defineAttribute.h:34`) -- weapon mastery via GetPlusWeaponATK. */
   AXE_DMG: 34,
+  /** Bonus yoyo damage (`defineAttribute.h:5`) -- weapon mastery via GetPlusWeaponATK. */
+  YOY_DMG: 5,
+  /** Bonus bow damage (`defineAttribute.h:6`) -- weapon mastery via GetPlusWeaponATK. */
+  BOW_DMG: 6,
+  /** Bonus knuckle damage (`defineAttribute.h:21`) -- weapon mastery via GetPlusWeaponATK. */
+  KNUCKLE_DMG: 21,
   HP_MAX: 35,
   MP_MAX: 36,
   FP_MAX: 37,
@@ -73,6 +79,8 @@ export const DST = Object.freeze({
   /** Character-state bits -- bitwise-OR into adj (not additive). */
   CHRSTATE: 64,
   PARRY: 65,
+  /** Death-exp-penalty recovery % (`defineAttribute.h:366`); set by Resurrection skill. */
+  RECOVERY_EXP: 71,
   ATKPOWER_RATE: 66,
   /** Crit extra damage on a crit hit. */
   CRITICAL_BONUS: 77,

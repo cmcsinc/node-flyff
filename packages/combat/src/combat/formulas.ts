@@ -96,20 +96,37 @@ export interface MeleeResult {
 
 // --- stat getters (#A) -------------------------------------------------------
 
-/** `GetWeaponATK` (MoverAttack.cpp:371) -- STR/level scaling per weapon type. */
+/** `GetWeaponATK` (MoverAttack.cpp:371) -- STR/level scaling per weapon type + `GetPlusWeaponATK` (weapon mastery). */
 export function getWeaponATK(c: Combatant): number {
   const job = getJobProps(c.job);
   const LVL = c.level, STR = c.str, INT = c.int;
+  let nATK: number;
   switch (c.weapon.type) {
-    case WT_MELEE_SWD:     return (STR - 12) * job.fMeleeSWD + LVL * 1.1;
-    case WT_MELEE_AXE:     return (STR - 12) * job.fMeleeAXE + LVL * 1.2;
-    case WT_MELEE_STICK:   return (STR - 10) * job.fMeleeSTICK + LVL * 1.3;
-    case WT_MELEE_KNUCKLE: return (STR - 10) * job.fMeleeKNUCKLE + LVL * 1.2;
-    case WT_MELEE_STAFF:   return (STR - 10) * job.fMeleeSTAFF + LVL * 1.1;
-    case WT_MAGIC_WAND:    return (INT - 10) * job.fMagicWAND + LVL * 1.2;
-    case WT_MELEE_YOYO:    return (STR - 12) * job.fMeleeYOYO + LVL * 1.1;
-    case WT_RANGE_BOW:     return ((c.dex - 14) * 4.0 + LVL * 1.3 + STR * 0.2) * 0.7;
-    default:               return (STR - 12) * job.fMeleeSWD + LVL * 1.1; // bare-hand -> sword curve
+    case WT_MELEE_SWD:     nATK = (STR - 12) * job.fMeleeSWD + LVL * 1.1; break;
+    case WT_MELEE_AXE:     nATK = (STR - 12) * job.fMeleeAXE + LVL * 1.2; break;
+    case WT_MELEE_STICK:   nATK = (STR - 10) * job.fMeleeSTICK + LVL * 1.3; break;
+    case WT_MELEE_KNUCKLE: nATK = (STR - 10) * job.fMeleeKNUCKLE + LVL * 1.2; break;
+    case WT_MELEE_STAFF:   nATK = (STR - 10) * job.fMeleeSTAFF + LVL * 1.1; break;
+    case WT_MAGIC_WAND:    nATK = (INT - 10) * job.fMagicWAND + LVL * 1.2; break;
+    case WT_MELEE_YOYO:    nATK = (STR - 12) * job.fMeleeYOYO + LVL * 1.1; break;
+    case WT_RANGE_BOW:     nATK = ((c.dex - 14) * 4.0 + LVL * 1.3 + STR * 0.2) * 0.7; break;
+    default:               nATK = (STR - 12) * job.fMeleeSWD + LVL * 1.1; break; // bare-hand -> sword curve
+  }
+  // GetPlusWeaponATK (MoverAttack.cpp:359) -- weapon mastery DST bonuses.
+  // ponytail: only common weapon types; rare types (staff, wand, stick) have no C++ DST.
+  nATK += getPlusWeaponATK(c);
+  return nATK;
+}
+
+/** `GetPlusWeaponATK` (MoverAttack.cpp:359) -- weapon mastery DST lookup. */
+function getPlusWeaponATK(c: Combatant): number {
+  switch (c.weapon.type) {
+    case WT_MELEE_SWD:     return c.params.get(DST.SWD_DMG, 0);
+    case WT_MELEE_AXE:     return c.params.get(DST.AXE_DMG, 0);
+    case WT_MELEE_KNUCKLE: return c.params.get(DST.KNUCKLE_DMG, 0);
+    case WT_MELEE_YOYO:    return c.params.get(DST.YOY_DMG, 0);
+    case WT_RANGE_BOW:     return c.params.get(DST.BOW_DMG, 0);
+    default:               return 0; // no mastery DST for stick, staff, wand
   }
 }
 
@@ -142,9 +159,9 @@ export function getHitMinMax(c: Combatant): { min: number; max: number } {
     nMin += v;
     nMax += v;
   }
-  // DST_ATKPOWER (flat) + DST_ATKPOWER_RATE (%) -- C++ GetHitMinMax tail.
-  const atkPower = c.params.get(DST.ATKPOWER, 0);
-  if (atkPower !== 0) { nMin += atkPower; nMax += atkPower; }
+  // DST_ATKPOWER_RATE (%) -- percentage modifier within GetHitMinMax.
+  // ponytail: DST_ATKPOWER (flat) moved to resolveMelee (M3: C++ CalcATK:334)
+  //   to match pipeline position: after GetATKMultiplier + element factor.
   const atkRate = c.params.get(DST.ATKPOWER_RATE, 0);
   if (atkRate !== 0) { nMin *= 1 + atkRate / 100; nMax *= 1 + atkRate / 100; }
   return { min: Math.floor(nMin), max: Math.floor(nMax) };
@@ -307,6 +324,9 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
   const ef = elementFactor(attacker.weapon.element || attacker.element, defender.element);
   nATK = Math.floor((nATK * ef.atkFactor) / 10000);
 
+  // M3: DST_ATKPOWER (flat) applied after element factor (CalcATK:334).
+  nATK += attacker.params.get(DST.ATKPOWER, 0);
+
   // Crit (IsCriticalAttack -> AF_CRITICAL1, flat 2.3* for v1).
   if (rng.int(100) < getCriticalProb(attacker)) {
     atkFlags |= AF_CRITICAL1;
@@ -361,12 +381,23 @@ function getBlockFactor(defender: Combatant, attacker: Combatant, rng: Rng): num
     const nBR = Math.max(0, (defender.npcER - attacker.level) * 0.5);
     return nBR > r ? 0.2 : 1.0;
   }
-  // Player defender branch -- unused until monsters swing.
+  // Player defender branch (MoverAttack.cpp:808-835).
   const r = rng.int(80);
   if (r <= 5) return 1.0;
   if (r >= 75) return 0.1;
+  const defLVL = defender.level, atkLVL = attacker.level;
+  const defDex = defender.dex, atkDex = attacker.dex;
+  // Attacker-dependent blocking terms (C++ fBlockA + fBlockB).
+  let fBlockA = defLVL / ((defLVL + atkLVL) * 15.0);
+  let fBlockB = (defDex + atkDex + 2) * ((defDex - atkDex) / 800.0);
+  if (fBlockB > 10.0) fBlockB = 10.0;
+  let fAdd = fBlockA + fBlockB;
+  if (fAdd < 0.0) fAdd = 0.0;
+  // ponytail: DST_BLOCK_RANGE/DST_BLOCK_MELEE (range-attack flag not yet on Combatant);
+  //   add when ranged attack types ship.
   const job = getJobProps(defender.job);
-  const nBR = Math.floor((defender.dex / 8) * job.fBlocking);
+  let nBR = Math.floor((defDex / 8.0) * job.fBlocking + fAdd);
+  if (nBR < 0) nBR = 0;
   return nBR > r ? 0.0 : 1.0;
 }
 
