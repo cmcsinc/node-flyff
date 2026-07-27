@@ -41,7 +41,7 @@ commands:
   - cmd: SetBeginCondJob
     args:
       - type: sym
-        value: 19
+        value: 8
       - type: sym
         value: 18
       - type: sym

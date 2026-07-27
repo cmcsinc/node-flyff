@@ -29,7 +29,7 @@ commands:
   - cmd: SetBeginCondJob
     args:
       - type: sym
-        value: 5
+        value: 0
   - cmd: SetBeginCondItem
     args:
       - type: num

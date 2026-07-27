@@ -47,7 +47,7 @@ commands:
   - cmd: SetBeginCondJob
     args:
       - type: sym
-        value: 0
+        value: 1
   - cmd: SetBeginCondPreviousQuest
     args:
       - type: num

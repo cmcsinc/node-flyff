@@ -47,7 +47,7 @@ commands:
   - cmd: SetBeginCondJob
     args:
       - type: sym
-        value: 2
+        value: 3
   - cmd: SetBeginCondPreviousQuest
     args:
       - type: num
@@ -65,7 +65,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 81
+        value: 66
       - type: num
         value: 10
       - type: num

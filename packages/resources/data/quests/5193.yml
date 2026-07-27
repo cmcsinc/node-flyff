@@ -63,13 +63,13 @@ commands:
   - cmd: SetBeginCondJob
     args:
       - type: sym
-        value: 0
-      - type: sym
         value: 1
       - type: sym
         value: 2
       - type: sym
         value: 3
+      - type: sym
+        value: 4
   - cmd: SetEndCondItem
     args:
       - type: num
@@ -97,7 +97,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 0
+        value: 1
       - type: sym
         value: 26932
       - type: num
@@ -109,7 +109,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 1
+        value: 2
       - type: sym
         value: 26936
       - type: num
@@ -121,7 +121,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 2
+        value: 3
       - type: sym
         value: 26930
       - type: num
@@ -133,7 +133,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 3
+        value: 4
       - type: sym
         value: 26934
       - type: num
@@ -145,7 +145,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 0
+        value: 1
       - type: sym
         value: 26933
       - type: num
@@ -157,7 +157,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 1
+        value: 2
       - type: sym
         value: 26937
       - type: num
@@ -169,7 +169,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 2
+        value: 3
       - type: sym
         value: 26931
       - type: num
@@ -181,7 +181,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 3
+        value: 4
       - type: sym
         value: 26935
       - type: num

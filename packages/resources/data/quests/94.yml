@@ -53,13 +53,13 @@ commands:
   - cmd: SetBeginCondJob
     args:
       - type: sym
-        value: 0
-      - type: sym
         value: 1
       - type: sym
         value: 2
       - type: sym
         value: 3
+      - type: sym
+        value: 4
   - cmd: SetEndCondLevel
     args:
       - type: num
@@ -144,19 +144,19 @@ states:
   "14":
     desc: IDS_PROPQUEST_INC_000965
 quest_items:
-  - mover: 48
+  - mover: 41
     item: 18113
     prob: 750000000
     num: 1
-  - mover: 49
+  - mover: 42
     item: 18113
     prob: 750000000
     num: 1
-  - mover: 50
+  - mover: 43
     item: 18113
     prob: 750000000
     num: 1
-  - mover: 51
+  - mover: 78
     item: 18113
     prob: 750000000
     num: 1
