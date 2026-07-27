@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_donation
+states:
+  "0":
+    speak:
+      - 1560
+    timer: 15
+    source: "Speak( NpcId(), 1560 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1561
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1562
+  "10":
+    speak:
+      - 1563
+    exit: true
+    source: "Speak( NpcId(), 1563 );\r\n\tExit();"

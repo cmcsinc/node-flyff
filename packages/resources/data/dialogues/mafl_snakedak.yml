@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_snakedak
+states:
+  "0":
+    speak:
+      - 1750
+    timer: 15
+    source: "Speak(NpcId(), 1750);\r
+
+      \tSetScriptTimer(15);"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1751
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1752
+  "10":
+    speak:
+      - 1753
+    exit: true
+    source: "Speak(NpcId(), 1753);\r\n\tExit();"

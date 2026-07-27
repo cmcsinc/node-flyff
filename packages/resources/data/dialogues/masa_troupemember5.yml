@@ -7,51 +7,53 @@ states:
       - 840
       - 841
     timer: 5
-    source: "switch( Random ( 3 ) )\r
+    source: "Speak( NpcId(), 839 + Random( 3 ) );\r
 
-      \t{\r
+      \t//switch( Random ( 3 ) )\r
 
-      \t\tcase 0:\r
+      \t//{\r
 
-      \t\t{\r
+      \t//case 0:\r
 
-      \t\t\tSpeak( NpcId(), 839 );\r
+      \t//\t{\r
 
-      \t\t\tSetScriptTimer( 5 );\r
+      \t//\t\tSpeak( NpcId(), 839 );\r
 
-      \t\t}\r
+      \t//\t\tSetScriptTimer( 5 );\r
 
-      \t\tbreak;\r
+      \t//\t}\r
 
-      \r
-
-      \t\tcase 1:\r
-
-      \t\t{\r
-
-      \t\t\tSpeak( NpcId(), 840 );\r
-
-      \t\t\tSetScriptTimer( 5 );\r
-
-      \t\t}\r
-
-      \t\tbreak;\r
+      \t//\tbreak;\r
 
       \r
 
-      \t\tcase 2:\r
+      \t//case 1:\r
 
-      \t\t{\r
+      \t//\t{\r
 
-      \t\t\tSpeak( NpcId(), 841 );\r
+      \t//\t\tSpeak( NpcId(), 840 );\r
 
-      \t\t\tSetScriptTimer( 5 );\r
+      \t//\t\tSetScriptTimer( 5 );\r
 
-      \t\t}\r
+      \t//\t}\r
 
-      \t\tbreak;\r
+      \t//\tbreak;\r
 
-      \t}"
+      \r
+
+      \t//case 2:\r
+
+      \t//\t{\r
+
+      \t//\t\tSpeak( NpcId(), 841 );\r
+
+      \t//\t\tSetScriptTimer( 5 );\r
+
+      \t//\t}\r
+
+      \t//\tbreak;\r
+
+      \t//}"
   "1":
     launch_quest: true
   "2":
@@ -71,7 +73,6 @@ states:
   "9":
     say:
       - 824
-    source: "Say( 824 );\r\n\tAddAnswer( 10 );"
   "10":
     speak:
       - 825

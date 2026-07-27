@@ -1,0 +1,53 @@
+_version: "1.0"
+prefix: maew_karl
+states:
+  "0":
+    speak:
+      - 1394
+    timer: 15
+    source: "Speak( NpcId(), 1394 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1396
+  "4":
+    say:
+      - 1395
+  "5": {}
+  "6": {}
+  "7": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState( QUEST_HEROSTORMB_TRN6 ) == QS_END && GetPlayerJob()
+      == 25 && GetPlayerLvl() == 130 )\r
+
+      \t{\r
+
+      \t\tChangeJob( 33 );\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 1397
+  "10":
+    speak:
+      - 1398
+    exit: true
+    source: "Speak( NpcId(), 1398 );\r\n\tExit();"

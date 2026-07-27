@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: maew_troy
+states:
+  "0":
+    speak:
+      - 1207
+    timer: 15
+    source: "Speak( NpcId(), 1207 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1208
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1209
+  "10":
+    speak:
+      - 1210
+    exit: true
+    source: "Speak( NpcId(), 1210 );\r\n\tExit();"

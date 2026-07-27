@@ -31,9 +31,9 @@ import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
 import { MAX_INVENTORY } from '@flyff/entities';
 import type { QuestService } from '@flyff/quest';
-import { QUEST_FLAG } from '@flyff/core/constants/quest';
+import { QS_END, QUEST_FLAG } from '@flyff/core/constants/quest';
 import { createLogger } from '@flyff/core/logger';
-import { buildSetQuest, canBegin, isComplete } from '@flyff/quest';
+import { buildSetQuest, canBegin, isComplete, isNextLevel } from '@flyff/quest';
 import type { InventoryOps } from '@flyff/quest';
 import { ChatSerializer } from '@flyff/world-core';
 import { ScriptDialogSerializer, type ScriptFunc } from '../net/snapshot/scriptDialog.serializer';
@@ -354,21 +354,39 @@ export class ScriptDlgService {
     const lk = npcLookupKey(npc);
     if (!lk) return;
     const inv = this.questInv(player);
-    const newQuests: number[] = [];
-    const endQuests: number[] = [];
-    for (const qid of this.beginByKey.get(lk) ?? []) {
-      if (player.findQuest(qid) || player.isCompleteQuest(qid)) continue;
+    // C++ `__QuestEnd` (ScriptHelper.cpp:542-586) classifies the NPC's quests
+    // into four buckets so the dialog lists every quest the client renders an
+    // icon for. Dropping next/current previously left NPCs showing a grey
+    // ?/! icon with an empty quest list on click.
+    const newQuests: number[] = [];   // yellow "!" -- begin-eligible
+    const nextQuests: number[] = [];  // grey "!"   -- level too low, within 5
+    const endQuests: number[] = [];   // green "?"  -- active, end-eligible
+    const currQuests: number[] = [];  // grey "?"   -- active, not complete
+    const seen = new Set<number>();
+    const classify = (qid: number): void => {
+      if (seen.has(qid)) return;
+      seen.add(qid);
       const def = this.deps.quests.byId.get(qid);
-      if (def && canBegin(player, def, inv).ok) newQuests.push(qid);
-    }
-    for (const qid of this.endByKey.get(lk) ?? []) {
+      if (!def) return;
       const q = player.findQuest(qid);
-      if (!q || player.isCompleteQuest(qid)) continue;
-      const def = this.deps.quests.byId.get(qid);
-      if (def && isComplete(player, q, def, inv).ok) endQuests.push(qid);
-    }
-    // C++ single-new-quest shortcut: skip the list, open begin confirmation.
-    if (newQuests.length === 1 && endQuests.length === 0) {
+      const complete = player.isCompleteQuest(qid);
+      if (!q && !complete) {
+        if (canBegin(player, def, inv).ok) newQuests.push(qid);
+        else if (isNextLevel(player, def, inv)) nextQuests.push(qid);
+      } else if (q && !complete && q.state !== QS_END) {
+        if (isComplete(player, q, def, inv).ok) endQuests.push(qid);
+        else currQuests.push(qid);
+      }
+    };
+    for (const qid of this.beginByKey.get(lk) ?? []) classify(qid);
+    for (const qid of this.endByKey.get(lk) ?? []) classify(qid);
+    // C++ single-new-quest shortcut (`ScriptHelper.cpp:654`): exactly one
+    // begin-eligible quest and nothing else pending -> skip the list and open
+    // the begin confirmation directly.
+    if (
+      newQuests.length === 1 && nextQuests.length === 0 &&
+      endQuests.length === 0 && currQuests.length === 0
+    ) {
       this.questBeginConfirm(player, newQuests[0]!, frames);
       this.menuCount++;
       return;
@@ -376,7 +394,11 @@ export class ScriptDlgService {
     const funcs: ScriptFunc[] = [];
     for (const qid of newQuests)
       funcs.push({ type: 'newQuest', word: this.questLabel(qid), key: QUEST_KEY.BEGIN, quest: qid });
+    for (const qid of nextQuests)
+      funcs.push({ type: 'newQuest', word: this.questLabel(qid), key: QUEST_KEY.NEXT_LEVEL, quest: qid });
     for (const qid of endQuests)
+      funcs.push({ type: 'currQuest', word: this.questLabel(qid), key: QUEST_KEY.END, quest: qid });
+    for (const qid of currQuests)
       funcs.push({ type: 'currQuest', word: this.questLabel(qid), key: QUEST_KEY.END, quest: qid });
     if (funcs.length === 0) return;
     if (!dialogMenuEmitted) funcs.unshift({ type: 'removeAllKeys' });

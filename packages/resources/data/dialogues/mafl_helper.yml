@@ -14,7 +14,9 @@ states:
     keys:
       - label: 9
       - label: 10
-  "3": {}
+  "3":
+    say:
+      - 1763
   "4":
     say:
       - 1033

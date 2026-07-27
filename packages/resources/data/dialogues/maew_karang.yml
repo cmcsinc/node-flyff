@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: maew_karang
+states:
+  "0":
+    speak:
+      - 1280
+    timer: 15
+    source: "Speak( NpcId(), 1280 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1281
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1282
+  "10":
+    speak:
+      - 1283
+    exit: true
+    source: "Speak( NpcId(), 1283 );\r\n\tExit();"

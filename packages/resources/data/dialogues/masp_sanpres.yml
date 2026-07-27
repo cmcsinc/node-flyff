@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: masp_sanpres
+states:
+  "0":
+    speak:
+      - 1584
+    timer: 15
+    source: "Speak( NpcId(), 1584 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1585
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1586
+  "10":
+    speak:
+      - 1587
+    exit: true
+    source: "Speak( NpcId(), 1587 );\r\n\tExit();"

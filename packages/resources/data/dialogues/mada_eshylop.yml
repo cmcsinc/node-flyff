@@ -28,7 +28,7 @@ states:
 
       \t\t}\r
 
-      \t\t\t\r
+      \r
 
       \t\telse if( IsGuildQuest( QUEST_WARMON_LV1 ) == TRUE &&
       (GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_BEGIN || GetGuildQuestState(
@@ -40,7 +40,7 @@ states:
 
       \t\t}\r
 
-      \               \r
+      \r
 
       \t\telse if( GetGuildQuestState( QUEST_WARMON_LV1 ) == QS_END )\r
 
@@ -58,7 +58,7 @@ states:
 
       \t\t\tLaunchQuest();\r
 
-      \t        }\r
+      \t\t}\r
 
       \t}\r
 
@@ -117,7 +117,7 @@ states:
 
       \t\t\tSay( 187 );\r
 
-      \t\t\t\r
+      \r
 
       \t\t}\r
 
@@ -128,11 +128,11 @@ states:
 
       \t\t{\r
 
-      \t\t\t\r
+      \r
 
       \t\t}\r
 
-      \t\t\t\r
+      \r
 
       \t\telse\r
 

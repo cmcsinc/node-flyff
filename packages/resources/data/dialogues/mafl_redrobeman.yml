@@ -1,0 +1,33 @@
+_version: "1.0"
+prefix: mafl_redrobeman
+states:
+  "0":
+    speak:
+      - 1102
+    timer: 15
+    source: "Speak(NpcId(), 1102);\r
+
+      \tSetScriptTimer(15);"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 970
+  "4":
+    say:
+      - 970
+  "5": {}
+  "6": {}
+  "8": {}
+  "9":
+    say:
+      - 969
+  "10":
+    speak:
+      - 970
+    exit: true
+    source: "Speak(NpcId(), 970);\r\n\tExit();"

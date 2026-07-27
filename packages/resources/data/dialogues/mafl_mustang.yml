@@ -20,11 +20,19 @@ states:
 
       \t\tif( GetQuestState( QUEST_SCE_MDRIGALTEACHER2 ) >= 0 )\r
 
+      \t\t{\r
+
       \t\t\tLaunchQuest();\r
+
+      \t\t}\r
 
       \t\telse\r
 
+      \t\t{\r
+
       \t\t\tSayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );\r
+
+      \t\t}\r
 
       \t\tAddKey( 9 );\r
 
@@ -32,7 +40,7 @@ states:
 
       \t}\r
 
-      \t\t\r
+      \r
 
       \telse\r
 

@@ -1,13 +1,32 @@
-# Session
+# Session: 2026-07-27
 
-- **Active goal:** Fix NPC quest dialogs not showing (quest icon rendered but click produced no dialog window content).
-- **Branch:** `fix/navigator-icon-range`
-- **Root cause:** Quest-giver NPCs (Drian, Boneper, Capafe, Cell, ...) have dialog files whose state bodies are unported C++ (`if(GetQuestState(...)) { LaunchQuest(); } else { AddKey(...); }`) kept verbatim in `source:`. The simple-subset converter extracted only `launch_quest: true` (no quest id) and never ran the conditional body → 0 RUNSCRIPTFUNC frames → blank CWndDialog.
-- **Fix (shipped):** Built the dialog source-body interpreter the ponytail deferred.
-  - **Phase A** `@flyff/resources`: `loaders/defines.loader.ts` (parses `raw/define*.h` → symbol table), `quest.loader.ts` builds `byNpc: {begin, end}` reverse map from `SetCharacter`/`SetEndCondCharacter`. Wired into `ResourceIndex`.
-  - **Phase B** `@flyff/npc`: `services/dialogInterpreter.ts` — tokenizer + recursive-descent parser + evaluator for the C++ subset (if/else, &&/||, ==/!=/</<=/>/>=; Say/Speak/AddKey/AddCondKey/Exit/LaunchQuest/BeginQuest/EndQuest/ChangeJob/CreateItem/RemoveAllItem; GetQuestState/IsSetQuest/GetPlayerJob/GetPlayerLvl/GetItemNum/GetEmptyInventoryNum/IsParty/IsGuild/Random; QS_*/TRUE/FALSE builtins + symbol resolution). Never throws — malformed bodies degrade to no-ops.
-  - **Phase C** `scriptDlg.service.ts`: `runState` runs `interpretDialog` when `state.source` present (replaces structured emit for sourced states). Bare `LaunchQuest()` auto-resolves the quest via the NPC's `beginByKey` list (first begin-eligible, else first end-eligible active). Lowercased charKey lookup so `MI_MAFL_VALIN`/`MaFl_Valin` collide.
-  - **Phase D** `compose.ts` injects `defines`; tests added.
-- **Verification:** npc 133/133 (+12), resources 51/51, quest 59/59, world-server 229/229. world-server + resources build clean.
-- **Remaining gap (ponytail):** Quest NPCs with NO dialog file (Valin, MaFl_Homeit, Macus, Roji) still bail at `runState:156` (prefix unresolved) — matches authentic v19 (`IsDialogLoaded=false`, no RUNSCRIPTFUNC). Completing quests at those NPCs needs the `SetEndCondCharacter` proximity/talk completion path, not dialog. Also deferred: `changeJob`/`createItem`/`removeAllItem`/`getItemNum`/`emptyInventoryNum` are stubbed in bindings.
-- **Next step:** User tests real v19 client — click Drian/Kazen/Nevil/Boneper/Capafe (DUDK + job-change chains). `SCRIPTDLG resolved` log line at `scriptDlg.service.ts:139` shows npcKey/prefix/frames per click.
+## Current Task
+Fix: NPCs showing quest icon above head but dialog offers no quest.
+
+## Root Cause (confirmed via game/source C++)
+- Quest icon is **client-computed** every frame in `CMover::ProcessQuest` (`_Common/Mover.cpp:1118-1159`), driven by the NPC's `m_awSrcQuest`/`m_awDstQuest` loaded from the client's own `propQuest.inc` at boot (NOT network). Server sends NO NPC quest data in ADD_OBJ.
+- Icon types: 1=yellow"!" new, 2=grey"?" in-progress, 3=green"?" completable, 4=grey"!" next-level.
+- Canonical server offer scan = C++ `__QuestEnd` (`_Common/ScriptHelper.cpp:542-586`) which classifies NPC quests into **4 buckets**: vecNewQuest / vecNextQuest / vecEndQuest / vecCurrQuest, emitting one dialog row per quest.
+- Server `ScriptDlgService.emitQuestOffer` only emitted 2 of 4 buckets (new + end). **Dropped next-level (grey !) and in-progress-not-complete (grey ?)** → those NPCs showed an icon but the click dialog had no quest row.
+
+## Fix (implemented, my-side tests green; NOT user-confirmed)
+- `packages/quest/src/services/questConditions.ts`: added `isNextLevel()` (port of `__IsNextLevelQuest`, Mover.cpp:10301) — refactored `canBegin` body into shared `evalBegin(.., nextLevel)`; next-level mode requires a `SetBeginCondLevel` present with `level < min && level+5 >= min`.
+- `packages/npc/src/services/scriptDlg.service.ts`: `emitQuestOffer` now mirrors `__QuestEnd`'s 4-bucket classification across begin+end quest lists (deduped); emits `NEWQUEST/QUEST_NEXT_LEVEL` for next-level and `CURRQUEST/QUEST_END` for current quests. Tightened the single-new-quest shortcut to require all other buckets empty.
+- Tests: `questConditions.test.ts` (+5 isNextLevel cases), `scriptDlg.service.test.ts` (+3 offer-scan cases: next-level row, current-quest row, new+current lists both).
+
+## Test Results (my side)
+- @flyff/quest: 65/0 pass
+- @flyff/npc: 152/0 pass
+- @flyff/world-server: 232/0 pass
+
+## Files Modified
+- packages/quest/src/services/questConditions.ts
+- packages/npc/src/services/scriptDlg.service.ts
+- packages/quest/test/services/questConditions.test.ts
+- packages/npc/test/services/scriptDlg.service.test.ts
+
+## Branch / Commit
+NOT committed (override rule: no auto-commit). Changes in working tree on master. Awaiting user in-game test before marking fixed.
+
+## Next
+User: test in-game — click an NPC that previously showed a quest icon with no dialog offer. Should now list the quest (yellow"!" accept, grey"!" come-back-later, or grey"?" in-progress).

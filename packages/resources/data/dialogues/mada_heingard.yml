@@ -20,18 +20,18 @@ states:
   "4":
     say:
       - 245
-    source: "if( GetQuestState( QUEST_HEROJES_TRN5 ) == QS_END && GetPlayerJob() ==
+    source: "if( GetQuestState( QUEST_HEROJES_TRN4 ) == QS_END && GetPlayerJob() ==
       2 && GetPlayerLvl() == 60  )\r
 
       \t{\r
 
-      \t\t\r
+      \r
 
       \t\tChangeJob( 8 );\r
 
       \t}\r
 
-      \t\r
+      \r
 
       \telse\r
 
@@ -45,18 +45,18 @@ states:
   "7": {}
   "8":
     exit: true
-    source: "if( GetQuestState( QUEST_HEROJES_TRN5 ) == QS_END && GetPlayerJob() ==
+    source: "if( GetQuestState( QUEST_HEROJES_TRN4 ) == QS_END && GetPlayerJob() ==
       2 && GetPlayerLvl() == 60  )\r
 
       \t{\r
 
-      \t\t\r
+      \r
 
       \t\tChangeJob( 8 );\r
 
       \t}\r
 
-      \t\r
+      \r
 
       \telse\r
 
@@ -68,7 +68,6 @@ states:
   "9":
     say:
       - 246
-    source: "Say ( 246 );\r\n\tAddAnswer( 10 );"
   "10":
     speak:
       - 247

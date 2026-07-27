@@ -5,7 +5,7 @@ states:
     speak:
       - 44
     timer: 15
-    source: "Speak( NpcId(), 44 );\r
+    source: "Speak( NpcId(), 44 );\t\t\t\t\r
 
       \tSetScriptTimer( 15 );"
   "1":
@@ -13,11 +13,12 @@ states:
       - label: 9
       - label: 10
     launch_quest: true
-    source: "if(GetQuestState(QUEST_DUDK_VOL1) == QS_END)\r
+    source: "if(GetQuestState(QUEST_DUDK_VOL1) == QS_END)\t//조건 성공{ }\t\t실패{ }\t//선행
+      퀘스트로 대체// else시 \r
 
       \t{ \r
 
-      \tLaunchQuest();\r
+      \t\tLaunchQuest();\r
 
       \t}\r
 
@@ -25,9 +26,9 @@ states:
 
       \t{\r
 
-      \tAddKey( 9 );\r
+      \t\tAddKey( 9 );\r
 
-      \tAddKey( 10 );\r
+      \t\tAddKey( 10 );\r
 
       \t}"
   "2":
@@ -36,11 +37,11 @@ states:
       - label: 10
     source: "AddKey( 9 );\r
 
-      \tif(GetItemNum(II_SYS_SYS_QUE_DRIANCARGO) == 0)\r
+      \tif(GetItemNum(II_SYS_SYS_QUE_DRIANCARGO) == 0)\t\t//\r
 
       \t{\r
 
-      \tAddCondKey( 45,11 );\r
+      \t\tAddCondKey( 45,11 );\r
 
       \t}\r
 
@@ -53,7 +54,7 @@ states:
       - 47
       - 48
       - 49
-    source: "if(IsSetQuest(QUEST_DUDK_VOL3) == TRUE)\r
+    source: "if(IsSetQuest(QUEST_DUDK_VOL3) == TRUE)\t\t\t\t//멀티 조건.\r
 
       \t{\r
 
@@ -61,7 +62,7 @@ states:
 
       \t\t{\r
 
-      \t\tSay ( 47);\r
+      \t\t\tSay ( 47);\r
 
       \t\t}\r
 
@@ -69,7 +70,7 @@ states:
 
       \t\t{\r
 
-      \t\tSay ( 48);\t\r
+      \t\t\tSay ( 48);\t\r
 
       \t\t}\t\r
 
@@ -79,7 +80,7 @@ states:
 
       \t{\r
 
-      \tSay ( 49 );\r
+      \t\tSay ( 49 );\r
 
       \t}"
   "5": {}
@@ -89,7 +90,7 @@ states:
 
       \t{ \r
 
-      \t\tif( GetEmptyInventoryNum() < 1 )\r
+      \t\tif (GetEmptyInventoryNum() < 1)\r
 
       \t\t{\r
 
@@ -99,7 +100,7 @@ states:
 
       \t\t}\r
 
-      \t\t\r
+      \r
 
       \t\telse\r
 
@@ -125,7 +126,7 @@ states:
     exit: true
     source: "Say( 52 );\r
 
-      \tif( GetEmptyInventoryNum() < 1 )\r
+      \tif (GetEmptyInventoryNum() < 1)\r
 
       \t{\r
 
@@ -135,7 +136,7 @@ states:
 
       \t}\r
 
-      \t\t\r
+      \r
 
       \telse\r
 

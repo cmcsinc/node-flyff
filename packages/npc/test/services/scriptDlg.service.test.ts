@@ -415,4 +415,80 @@ describe('ScriptDlgService.dialog', () => {
     assert.ok(yes, 'MI_NPC_* NPC must still offer its quest via m_szCharacterKey');
     assert.equal((yes as { quest?: number }).quest, 8001);
   });
+
+  it('offer scan: level-gated begin quest pushes a NEXT_LEVEL row (grey "!" icon)', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    // Quest min level 10; player at 7 is within the +5 next-level window.
+    const qd = { id: 7001, symbol: 'Q7001', title: 'IDS_X',
+      commands: [{ cmd: 'SetBeginCondLevel', args: [{ type: 'num', value: 10 }, { type: 'num', value: 20 }] }],
+      states: {}, quest_items: [] };
+    const quests = {
+      byId: new Map([[7001, qd]]), drops: new Map(),
+      byNpc: { begin: new Map([['mafl_npc', [7001]]]), end: new Map() },
+    } as unknown as QuestIndex;
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Npc') },
+      dialogs: mkDialogs(), quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer({ m_nLevel: 7 } as Partial<CPlayer>), { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const rows = calls.flat().filter((f) => f.type === 'newQuest') as Array<{ type: 'newQuest'; key: string; quest: number }>;
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0]!.key, 'QUEST_NEXT_LEVEL');
+    assert.equal(rows[0]!.quest, 7001);
+  });
+
+  it('offer scan: active-but-incomplete quest pushes a CURRQUEST row (grey "?" icon)', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    // Active quest ending here, but patrol objective unmet -> not complete.
+    const qd = { id: 7001, symbol: 'Q7001', title: 'IDS_X',
+      commands: [{ cmd: 'SetEndCondPatrolZone', args: [{ type: 'num', value: 1 }, { type: 'num', value: 0 }, { type: 'num', value: 0 }, { type: 'num', value: 100 }, { type: 'num', value: 100 }] }],
+      states: {}, quest_items: [] };
+    const quests = {
+      byId: new Map([[7001, qd]]), drops: new Map(),
+      byNpc: { begin: new Map(), end: new Map([['mafl_npc', [7001]]]) },
+    } as unknown as QuestIndex;
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Npc') },
+      dialogs: mkDialogs(), quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const player = mkPlayer({ m_aQuest: [{ id: 7001, state: 0 }] } as Partial<CPlayer>);
+    const out = await s.dialog(player, { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const rows = calls.flat().filter((f) => f.type === 'currQuest') as Array<{ type: 'currQuest'; key: string; quest: number }>;
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0]!.key, 'QUEST_END');
+    assert.equal(rows[0]!.quest, 7001);
+  });
+
+  it('offer scan: a current quest alongside a single new quest lists both (no shortcut)', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const newDef = { id: 7001, symbol: 'Q7001', title: 'IDS_X', commands: [], states: {}, quest_items: [] };
+    const currDef = { id: 7002, symbol: 'Q7002', title: 'IDS_X',
+      commands: [{ cmd: 'SetEndCondPatrolZone', args: [{ type: 'num', value: 1 }, { type: 'num', value: 0 }, { type: 'num', value: 0 }, { type: 'num', value: 100 }, { type: 'num', value: 100 }] }],
+      states: {}, quest_items: [] };
+    const quests = {
+      byId: new Map([[7001, newDef], [7002, currDef]]), drops: new Map(),
+      byNpc: { begin: new Map([['mafl_npc', [7001]]]), end: new Map([['mafl_npc', [7002]]]) },
+    } as unknown as QuestIndex;
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Npc') },
+      dialogs: mkDialogs(), quests, questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const player = mkPlayer({ m_aQuest: [{ id: 7002, state: 0 }] } as Partial<CPlayer>);
+    const out = await s.dialog(player, { objid: NPC_ID, key: '', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    // New quest would normally trigger the single-quest shortcut, but the
+    // pending current quest forces the list view so both rows render.
+    const rows = calls.flat().filter((f) => f.type === 'newQuest' || f.type === 'currQuest');
+    assert.equal(rows.length, 2, 'both the new and current quest must be listed');
+    assert.equal(calls.flat().some((f) => f.type === 'addAnswer' && f.key === 'QUEST_BEGIN_YES'), false,
+      'shortcut must not fire while a current quest is pending');
+  });
 });

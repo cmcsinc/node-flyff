@@ -255,7 +255,7 @@ function fakeInventoryRepo() {
   };
 }
 
-function makeRealService(def: QuestDef) {
+function makeRealService(def: QuestDef, onItemReward?: (itemId: number, count: number) => void) {
   const inventoryService = new InventoryService({
     inventoryRepo: fakeInventoryRepo() as never,
     charRepo: { updateGold: async () => {} } as never,
@@ -278,6 +278,7 @@ function makeRealService(def: QuestDef) {
     inventoryService,
     createItemSerializer: new CreateItemSnapshotSerializer(),
     journal: { append: (e) => { log.push(e); return 1; } },
+    onItemReward: onItemReward ? (_p, itemId, count) => onItemReward(itemId, count) : undefined,
   });
   return { svc, log };
 }
@@ -327,6 +328,25 @@ describe('quest.service -- real InventoryService adapter', () => {
       assert.ok(reward, 'CREATEITEM reward frame emitted');
     }
     assert.equal(countInBag(p, 7100), 3);
+  });
+
+  it('endQuest SetEndRewardItem fires onItemReward (acquire-notice hook)', async () => {
+    const def: QuestDef = {
+      _version: '1.0', id: 7, symbol: 'Q7', states: {}, quest_items: [],
+      commands: [
+        { cmd: 'SetBeginCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetEndCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetEndRewardItem', args: [numArg(-1), numArg(0), numArg(-1), symArg(7100), numArg(3)] },
+      ],
+    } as unknown as QuestDef;
+    const calls: Array<[number, number]> = [];
+    const { svc } = makeRealService(def, (itemId, count) => calls.push([itemId, count]));
+    const p = CPlayer.fromRow({ ...baseRow, level: 10 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 7);
+
+    const res = await svc.endQuest(p, 7);
+    assert.equal(res.ok, true);
+    assert.deepEqual(calls, [[7100, 3]], 'onItemReward fired once with reward itemId + count');
   });
 
   it('endQuest removes SetEndRemoveItem from the bag + emits UPDATE_ITEM', async () => {

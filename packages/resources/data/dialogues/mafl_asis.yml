@@ -1,0 +1,92 @@
+_version: "1.0"
+prefix: mafl_asis
+states:
+  "0":
+    speak:
+      - 1491
+    timer: 15
+    source: "Speak( NpcId(), 1491 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    keys:
+      - label: 9
+      - label: 10
+    launch_quest: true
+    source: "if( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState(
+      QUEST_VOCMAG_BFTRN ) >= 0 || GetQuestState( QUEST_VOCACR_BFTRN ) >= 0)\r
+
+      \t{\r
+
+      \t\tif( GetQuestState( QUEST_SCE_MDRIGALTEACHER1 ) >= 0 )\r
+
+      \t\t{\r
+
+      \t\t\tLaunchQuest();\r
+
+      \t\t}\r
+
+      \t\telse\r
+
+      \t\t{\r
+
+      \t\t\tSayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );\r
+
+      \t\t}\r
+
+      \t\tAddKey( 9 );\r
+
+      \t\tAddKey( 10 );\r
+
+      \t}\r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tLaunchQuest();\r
+
+      \t}"
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3":
+    say:
+      - 1492
+  "4":
+    say:
+      - 1493
+  "5": {}
+  "6": {}
+  "7": {}
+  "8":
+    exit: true
+    source: "if( GetQuestState(QUEST_VOCASS_TRN2) == QS_END && GetPlayerJob() == 0
+      && GetPlayerLvl() == 15 )\r
+
+      \t{\r
+
+      \t\tChangeJob(3);\r
+
+      \t\tInitStat();\r
+
+      \t}\r
+
+      \r
+
+      \telse\r
+
+      \t{\r
+
+      \t\tExit();\r
+
+      \t}"
+  "9":
+    say:
+      - 1494
+  "10":
+    speak:
+      - 1495
+    exit: true
+    source: "Speak( NpcId(), 1495 );\r\n\tExit();"

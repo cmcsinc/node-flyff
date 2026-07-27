@@ -13,7 +13,7 @@ states:
       - label: 9
       - label: 10
     launch_quest: true
-    source: "//Ãß°¡(20051018)\r
+    source: "//추가(20051018)\r
 
       \tif( GetQuestState( QUEST_VOCMER_BFTRN ) >= 0 || GetQuestState(
       QUEST_VOCASS_BFTRN ) >= 0 || GetQuestState( QUEST_VOCMAG_BFTRN ) >= 0)\r
@@ -22,11 +22,19 @@ states:
 
       \t\tif( GetQuestState( QUEST_SCE_MDRIGALTEACHER4 ) >= 0 )\r
 
+      \t\t{\r
+
       \t\t\tLaunchQuest();\r
+
+      \t\t}\r
 
       \t\telse\r
 
+      \t\t{\r
+
       \t\t\tSayQuest( QUEST_VOCACR_BFTRN, QSAY_EXTRA01 );\r
+
+      \t\t}\r
 
       \t\tAddKey( 9 );\r
 
@@ -55,16 +63,16 @@ states:
       - 250
   "5": {}
   "6":
-    source: "//»õ·Î¹ø¿ª(20060104)\r
+    source: "//새로번역(20060104)\r
 
-      \t//Say( \"¾Æ½±°Ôµµ, ÀÌÁ¦ ³»°¡ °¡Áö°í ÀÖ´Â ºí¸µÅ©À®Àº ¸ðµÎ ¼ÒÁøµÇ¾ú´Ù
-      Á¦±º. ´ë½Å ½Ã°£À» ´õ ´Ã·ÈÁö. ºí¸µÅ©À®Àº ±¸ÀÔÇÏ¿© ¾²µµ·Ï, ÀÌ»ó!\" );\r
+      \t//Say( \"아쉽게도, 이제 내가 가지고 있는 블링크윙은 모두 소진되었다 제군. 대신 시간을 더 늘렸지. 블링크윙은 구입하여
+      쓰도록, 이상!\" );\r
 
       \tif( GetQuestState(QUEST_VOCACR_BFTRN) == QS_BEGIN )\r
 
       \t{\r
 
-      \t\tReplace( WI_WORLD_MADRIGAL, 7161.0, 100.0, 3264.0 );\r
+      \t\tReplace( WI_WORLD_MADRIGAL, 7161, 100, 3264 );\r
 
       \t}"
   "7": {}

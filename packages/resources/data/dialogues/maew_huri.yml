@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: maew_huri
+states:
+  "0":
+    speak:
+      - 1332
+    timer: 15
+    source: "Speak( NpcId(), 1332 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1333
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1334
+  "10":
+    speak:
+      - 1335
+    exit: true
+    source: "Speak( NpcId(), 1335 );\r\n\tExit();"

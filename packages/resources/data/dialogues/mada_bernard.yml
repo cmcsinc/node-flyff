@@ -16,9 +16,9 @@ states:
       - label: 10
     source: "AddKey( 12 );\r
 
-      \t  AddCondKey( 115,16 );\r
+      \tAddCondKey( 115,16 );\r
 
-      \t  AddKey( 10 );"
+      \tAddKey( 10 );"
   "3":
     say:
       - 116
@@ -32,7 +32,7 @@ states:
 
       \t{ \r
 
-      \t\tif( GetEmptyInventoryNum() < 1)\r
+      \t\tif (GetEmptyInventoryNum() < 1)\r
 
       \t\t{\r
 
@@ -42,7 +42,7 @@ states:
 
       \t\t}\r
 
-      \t\r
+      \r
 
       \t\telse\r
 
@@ -68,7 +68,7 @@ states:
     exit: true
     source: "Say( 120 );\r
 
-      \t//if( GetEmptyInventoryNum() < 1)\r
+      \t//if( GetEmptyInventoryNum( II_SYS_SYS_QUE_DRIANCARGO ) < 1)\r
 
       \t//{\r
 

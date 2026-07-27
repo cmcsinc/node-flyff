@@ -816,9 +816,6 @@ npcs:
   MaFl_PrepaidCard:
     dialog_file: MaFl_PrepaidCard.txt
     sz_npc: mafl_prepaidcard
-  MaFl_Helper_ver12:
-    dialog_file: MaFl_Helper_ver12.txt
-    sz_npc: mafl_helper_ver12
   MaFl_Snowman01:
     dialog_file: MaFl_Snowman01.txt
     sz_npc: mafl_snowman01
@@ -852,12 +849,333 @@ npcs:
   MaFl_COMMONER03:
     dialog_file: MaFl_COMMONER03.txt
     sz_npc: mafl_commoner03
+  MaFl_COMMONER04:
+    dialog_file: MaFl_COMMONER04.txt
+    sz_npc: mafl_commoner04
   MaFl_Leprechaun:
     dialog_file: MaFl_Leprechaun.txt
     sz_npc: mafl_leprechaun
   MaFl_Cupid02:
     dialog_file: MaFl_Cupid02.txt
     sz_npc: mafl_cupid02
+  MaFl_LASA_EVENT:
+    dialog_file: MaFl_LASA_EVENT.txt
+    sz_npc: mafl_lasa_event
   MaFl_Babario:
     dialog_file: MaFl_Babario.txt
     sz_npc: mafl_babario
+  MaFl_WORLDCUP2010_KOR:
+    dialog_file: MaFl_WORLDCUP2010_KOR.txt
+    sz_npc: mafl_worldcup2010_kor
+  MaFl_Bullsfestival:
+    dialog_file: MaFl_Bullsfestival.txt
+    sz_npc: mafl_bullsfestival
+  MaEw_Ruidan:
+    dialog_file: MaEw_Ruidan.txt
+    sz_npc: maew_ruidan
+  MaEw_Huntrang:
+    dialog_file: MaEw_Huntrang.txt
+    sz_npc: maew_huntrang
+  MaEw_Miorang:
+    dialog_file: MaEw_Miorang.txt
+    sz_npc: maew_miorang
+  MaEw_Mawrang:
+    dialog_file: MaEw_Mawrang.txt
+    sz_npc: maew_mawrang
+  MaEw_Kanrang:
+    dialog_file: MaEw_Kanrang.txt
+    sz_npc: maew_kanrang
+  MaEw_Ralbadan:
+    dialog_file: MaEw_Ralbadan.txt
+    sz_npc: maew_ralbadan
+  MaEw_Relgantus:
+    dialog_file: MaEw_Relgantus.txt
+    sz_npc: maew_relgantus
+  MaEw_Miriun:
+    dialog_file: MaEw_Miriun.txt
+    sz_npc: maew_miriun
+  MaEw_Karang:
+    dialog_file: MaEw_Karang.txt
+    sz_npc: maew_karang
+  MaEw_Kurang:
+    dialog_file: MaEw_Kurang.txt
+    sz_npc: maew_kurang
+  MaEw_Heirang:
+    dialog_file: MaEw_Heirang.txt
+    sz_npc: maew_heirang
+  MaEw_Arang:
+    dialog_file: MaEw_Arang.txt
+    sz_npc: maew_arang
+  MaEw_Maurang:
+    dialog_file: MaEw_Maurang.txt
+    sz_npc: maew_maurang
+  MaEw_Bato:
+    dialog_file: MaEw_Bato.txt
+    sz_npc: maew_bato
+  MaEw_Meialune:
+    dialog_file: MaEw_Meialune.txt
+    sz_npc: maew_meialune
+  MaEw_Hawrang:
+    dialog_file: MaEw_Hawrang.txt
+    sz_npc: maew_hawrang
+  MaEw_Rutam:
+    dialog_file: MaEw_Rutam.txt
+    sz_npc: maew_rutam
+  MaEw_Raya:
+    dialog_file: MaEw_Raya.txt
+    sz_npc: maew_raya
+  MaEw_Harlie:
+    dialog_file: MaEw_Harlie.txt
+    sz_npc: maew_harlie
+  MaEw_Rodella:
+    dialog_file: MaEw_Rodella.txt
+    sz_npc: maew_rodella
+  MaEw_Epie:
+    dialog_file: MaEw_Epie.txt
+    sz_npc: maew_epie
+  MaEw_Huri:
+    dialog_file: MaEw_Huri.txt
+    sz_npc: maew_huri
+  MaEw_Gelga:
+    dialog_file: MaEw_Gelga.txt
+    sz_npc: maew_gelga
+  MaEw_Ruoboru:
+    dialog_file: MaEw_Ruoboru.txt
+    sz_npc: maew_ruoboru
+  MaEw_Karl:
+    dialog_file: MaEw_Karl.txt
+    sz_npc: maew_karl
+  MaEw_Isilis:
+    dialog_file: MaEw_Isilis.txt
+    sz_npc: maew_isilis
+  MaEw_Romain:
+    dialog_file: MaEw_Romain.txt
+    sz_npc: maew_romain
+  MaEw_Branka:
+    dialog_file: MaEw_Branka.txt
+    sz_npc: maew_branka
+  MaEw_Emblum:
+    dialog_file: MaEw_Emblum.txt
+    sz_npc: maew_emblum
+  Pet_Seltpudi:
+    dialog_file: Pet_Seltpudi.txt
+    sz_npc: pet_seltpudi
+  Pet_Seltcobi:
+    dialog_file: Pet_Seltcobi.txt
+    sz_npc: pet_seltcobi
+  Pet_Seltpierce:
+    dialog_file: Pet_Seltpierce.txt
+    sz_npc: pet_seltpierce
+  MaEw_Mewrang:
+    dialog_file: MaEw_Mewrang.txt
+    sz_npc: maew_mewrang
+  MaFl_Npcdemian:
+    dialog_file: MaFl_Npcdemian.txt
+    sz_npc: mafl_npcdemian
+  MaFl_NpcKoni:
+    dialog_file: MaFl_NpcKoni.txt
+    sz_npc: mafl_npckoni
+  MaSa_GUILDHOUSESALEROA:
+    dialog_file: MaSa_GUILDHOUSESALEROA.txt
+    sz_npc: masa_guildhousesaleroa
+  MaEw_GUILDHOUSESALETROY:
+    dialog_file: MaEw_GUILDHOUSESALETROY.txt
+    sz_npc: maew_guildhousesaletroy
+  NPC_GUILDHOUSDOOR:
+    dialog_file: NPC_GUILDHOUSDOOR.txt
+    sz_npc: npc_guildhousdoor
+  MaFl_Zandark:
+    dialog_file: MaFl_Zandark.txt
+    sz_npc: mafl_zandark
+  MaFl_Asis:
+    dialog_file: MaFl_Asis.txt
+    sz_npc: mafl_asis
+  MaFl_Ssunder:
+    dialog_file: MaFl_Ssunder.txt
+    sz_npc: mafl_ssunder
+  MaFl_Masics:
+    dialog_file: MaFl_Masics.txt
+    sz_npc: mafl_masics
+  MaFl_Ringda:
+    dialog_file: MaFl_Ringda.txt
+    sz_npc: mafl_ringda
+  MaFl_Ria:
+    dialog_file: MaFl_Ria.txt
+    sz_npc: mafl_ria
+  MaFl_Ruks:
+    dialog_file: MaFl_Ruks.txt
+    sz_npc: mafl_ruks
+  MaFl_Pire:
+    dialog_file: MaFl_Pire.txt
+    sz_npc: mafl_pire
+  MaSa_SELIA_EVENT:
+    dialog_file: MaSa_SELIA_EVENT.txt
+    sz_npc: masa_selia_event
+  MaFl_Angel:
+    dialog_file: MaFl_Angel.txt
+    sz_npc: mafl_angel
+  MaFl_Devil:
+    dialog_file: MaFl_Devil.txt
+    sz_npc: mafl_devil
+  MaFl_BONGBO:
+    dialog_file: MaFl_BONGBO.txt
+    sz_npc: mafl_bongbo
+  MaFl_STAKE:
+    dialog_file: MaFl_STAKE.txt
+    sz_npc: mafl_stake
+  MaFl_JAKGUI:
+    dialog_file: MaFl_JAKGUI.txt
+    sz_npc: mafl_jakgui
+  MaFl_RYAR:
+    dialog_file: MaFl_RYAR.txt
+    sz_npc: mafl_ryar
+  MaFl_JULIAEVENT:
+    dialog_file: MaFl_JULIAEVENT.txt
+    sz_npc: mafl_juliaevent
+  MaDa_OLLIENEVENT:
+    dialog_file: MaDa_OLLIENEVENT.txt
+    sz_npc: mada_ollienevent
+  MaFl_GONI:
+    dialog_file: MaFl_GONI.txt
+    sz_npc: mafl_goni
+  MaFl_Festival:
+    dialog_file: MaFl_Festival.txt
+    sz_npc: mafl_festival
+  MASP_SANPRES:
+    dialog_file: MASP_SANPRES.txt
+    sz_npc: masp_sanpres
+  MAHE_RAELRA:
+    dialog_file: MAHE_RAELRA.txt
+    sz_npc: mahe_raelra
+  MASP_SANCHERCO:
+    dialog_file: MASP_SANCHERCO.txt
+    sz_npc: masp_sancherco
+  MAHE_RAILA:
+    dialog_file: MAHE_RAILA.txt
+    sz_npc: mahe_raila
+  MaFl_Flame:
+    dialog_file: MaFl_Flame.txt
+    sz_npc: mafl_flame
+  MaFl_Flame02:
+    dialog_file: MaFl_Flame02.txt
+    sz_npc: mafl_flame02
+  MASP_TOMAS:
+    dialog_file: MASP_TOMAS.txt
+    sz_npc: masp_tomas
+  MAHE_REO:
+    dialog_file: MAHE_REO.txt
+    sz_npc: mahe_reo
+  MASP_SMITH:
+    dialog_file: MASP_SMITH.txt
+    sz_npc: masp_smith
+  MAHE_RIO:
+    dialog_file: MAHE_RIO.txt
+    sz_npc: mahe_rio
+  MaFl_REONAN:
+    dialog_file: MaFl_REONAN.txt
+    sz_npc: mafl_reonan
+  MaFl_NERCO:
+    dialog_file: MaFl_NERCO.txt
+    sz_npc: mafl_nerco
+  MaFl_HAEL:
+    dialog_file: MaFl_HAEL.txt
+    sz_npc: mafl_hael
+  MaSa_LUZINA:
+    dialog_file: MaSa_LUZINA.txt
+    sz_npc: masa_luzina
+  MaSa_NERCHA:
+    dialog_file: MaSa_NERCHA.txt
+    sz_npc: masa_nercha
+  MaFl_HENDEL:
+    dialog_file: MaFl_HENDEL.txt
+    sz_npc: mafl_hendel
+  MaFl_ZORO:
+    dialog_file: MaFl_ZORO.txt
+    sz_npc: mafl_zoro
+  MaFl_ELLAIN:
+    dialog_file: MaFl_ELLAIN.txt
+    sz_npc: mafl_ellain
+  MaFl_AINHER:
+    dialog_file: MaFl_AINHER.txt
+    sz_npc: mafl_ainher
+  MaFl_REODOS:
+    dialog_file: MaFl_REODOS.txt
+    sz_npc: mafl_reodos
+  MaFl_FWCENTER:
+    dialog_file: MaFl_FWCENTER.txt
+    sz_npc: mafl_fwcenter
+  MaFl_SURY:
+    dialog_file: MaFl_SURY.txt
+    sz_npc: mafl_sury
+  MaFl_DONAKIT:
+    dialog_file: MaFl_DONAKIT.txt
+    sz_npc: mafl_donakit
+  MaFl_PAPATE:
+    dialog_file: MaFl_PAPATE.txt
+    sz_npc: mafl_papate
+  MaFl_CARAPUCHICKS:
+    dialog_file: MaFl_CARAPUCHICKS.txt
+    sz_npc: mafl_carapuchicks
+  MaFl_PATOU:
+    dialog_file: MaFl_PATOU.txt
+    sz_npc: mafl_patou
+  MaFl_BOBOCHU01:
+    dialog_file: MaFl_BOBOCHU01.txt
+    sz_npc: mafl_bobochu01
+  MaFl_BOBOCHU02:
+    dialog_file: MaFl_BOBOCHU02.txt
+    sz_npc: mafl_bobochu02
+  MaFl_BOBOCHU03:
+    dialog_file: MaFl_BOBOCHU03.txt
+    sz_npc: mafl_bobochu03
+  MaFl_BOBOCHU04:
+    dialog_file: MaFl_BOBOCHU04.txt
+    sz_npc: mafl_bobochu04
+  DuDk_Drico:
+    dialog_file: DuDk_Drico.txt
+    sz_npc: dudk_drico
+  MaFl_Poneang:
+    dialog_file: MaFl_Poneang.txt
+    sz_npc: mafl_poneang
+  MaFl_Reong:
+    dialog_file: MaFl_Reong.txt
+    sz_npc: mafl_reong
+  MaFl_Tamtam:
+    dialog_file: MaFl_Tamtam.txt
+    sz_npc: mafl_tamtam
+  MaFl_Ranggo:
+    dialog_file: MaFl_Ranggo.txt
+    sz_npc: mafl_ranggo
+  MaFl_Toto:
+    dialog_file: MaFl_Toto.txt
+    sz_npc: mafl_toto
+  MaFl_Donjobanni:
+    dialog_file: MaFl_Donjobanni.txt
+    sz_npc: mafl_donjobanni
+  MaFl_Mordolrin:
+    dialog_file: MaFl_Mordolrin.txt
+    sz_npc: mafl_mordolrin
+  MaFl_Jarcoba:
+    dialog_file: MaFl_Jarcoba.txt
+    sz_npc: mafl_jarcoba
+  MaFl_Moneyjoba:
+    dialog_file: MaFl_Moneyjoba.txt
+    sz_npc: mafl_moneyjoba
+  MaFl_Givemoney:
+    dialog_file: MaFl_Givemoney.txt
+    sz_npc: mafl_givemoney
+  MaFl_SNAKEDAK:
+    dialog_file: MaFl_SNAKEDAK.txt
+    sz_npc: mafl_snakedak
+  MaFl_RON:
+    dialog_file: MaFl_RON.txt
+    sz_npc: mafl_ron
+  MaFl_MEWRANG:
+    dialog_file: MaFl_MEWRANG.txt
+    sz_npc: mafl_mewrang
+  MaFl_SANTA2011:
+    dialog_file: MaFl_SANTA2011.txt
+    sz_npc: mafl_santa2011
+  MaFl_SANTA2011SECOND:
+    dialog_file: MaFl_SANTA2011SECOND.txt
+    sz_npc: mafl_santa2011second

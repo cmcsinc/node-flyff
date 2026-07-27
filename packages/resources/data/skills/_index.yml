@@ -330,7 +330,7 @@
   name: Dark Illusion
 "194":
   file: acrobat.yml
-  name: Junk Arrow
+  name: Rapid Shot
 "195":
   file: acrobat.yml
   name: Fast Walker
@@ -496,3 +496,21 @@
 "320":
   file: vagrant.yml
   name: Accuracy (Event)
+"437":
+  file: vagrant.yml
+  name: Antiquity Stone_Berk
+"438":
+  file: vagrant.yml
+  name: Antiquity Stone_Zera
+"439":
+  file: vagrant.yml
+  name: Antiquity Stone_Manaz
+"440":
+  file: vagrant.yml
+  name: Antiquity Stone_Sigel
+"441":
+  file: vagrant.yml
+  name: Antiquity Stone_Aeo
+"442":
+  file: vagrant.yml
+  name: Antiquity Stone_Tir

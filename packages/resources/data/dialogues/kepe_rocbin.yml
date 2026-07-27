@@ -7,7 +7,7 @@ states:
     timer: 15
     source: "Speak( NpcId(), 72 );\r
 
-      \t\tSetScriptTimer( 15 );"
+      \tSetScriptTimer( 15 );"
   "1":
     say:
       - 73
@@ -21,4 +21,4 @@ states:
     speak:
       - 75
     exit: true
-    source: "Speak( NpcId(), 75 );\r\n\t\tExit();"
+    source: "Speak( NpcId(), 75 );\r\n\tExit();"

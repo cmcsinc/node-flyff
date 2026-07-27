@@ -18,9 +18,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 interface Item {
   id: number;
+  name?: string;
   item_kind2?: string;
   item_kind3?: string;
   equip_slot?: number;
+  stack_size?: number;
 }
 
 function loadArmors(): Item[] {
@@ -52,5 +54,40 @@ describe('item converter: fashion / armor slot separation', () => {
     assert.ok(at26.every((it) => it.item_kind3 === 'IK3_HAT'), 'slot 26 is fashion hats only');
     const angel = loadArmors().find((it) => it.id === 16180);
     assert.equal(angel?.equip_slot, 26, 'Angel Hairband -> PARTS_HAT(26), not PARTS_CAP(6)');
+  });
+});
+
+/**
+ * Quest items (IK3_QUEST under IK1_SYSTEM/IK2_SYSTEM) used to be dropped by the
+ * converter -- IK1_SYSTEM has no bucket. Without them in the item index,
+ * `InventoryService.getStackSize` returned 1 for every quest drop, so each
+ * kill created a fresh slot instead of stacking onto the partial pile. This
+ * pins the routing fix: quest items land in questitems.yml with dwPackMax
+ * preserved as stack_size.
+ */
+describe('item converter: quest items bucketed with stack_size', () => {
+  function loadQuestItems(): { kind: string; items: Item[] } {
+    const doc = parse(readFileSync(resolve(__dirname, '../../data/items/questitems.yml'), 'utf8'));
+    return { kind: doc._kind, items: (doc.items ?? []) as Item[] };
+  }
+
+  it('writes IK3_QUEST items to questitems.yml with _kind=quest', () => {
+    const { kind, items } = loadQuestItems();
+    assert.equal(kind, 'quest');
+    assert.ok(items.length > 100, 'expected the full quest item set (243 in v19)');
+    assert.ok(items.every((it) => it.item_kind3 === 'IK3_QUEST'), 'only IK3_QUEST rows');
+  });
+
+  it('preserves dwPackMax as stack_size (Vision Stone=20)', () => {
+    const { items } = loadQuestItems();
+    const vision = items.find((it) => it.id === 6001);
+    assert.equal(vision?.name, 'Vision Stone');
+    assert.equal(vision?.stack_size, 20, 'Vision Stone must stack to 20');
+  });
+
+  it('non-stacking quest items keep stack_size=1 (Boboku Letter)', () => {
+    const { items } = loadQuestItems();
+    const letter = items.find((it) => it.id === 6002);
+    assert.equal(letter?.stack_size, 1, 'Boboku Letter is a unique quest item');
   });
 });

@@ -1,0 +1,32 @@
+_version: "1.0"
+prefix: mafl_ranggo
+states:
+  "0":
+    speak:
+      - 1705
+    timer: 15
+    source: "Speak( NpcId(), 1705 );\r
+
+      \tSetScriptTimer( 15 );"
+  "1":
+    launch_quest: true
+  "2":
+    keys:
+      - label: 9
+      - label: 10
+  "3": {}
+  "4":
+    say:
+      - 1706
+  "5": {}
+  "6": {}
+  "7": {}
+  "8": {}
+  "9":
+    say:
+      - 1707
+  "10":
+    speak:
+      - 1708
+    exit: true
+    source: "Speak( NpcId(),1708);\r\n\tExit();"
