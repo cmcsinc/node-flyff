@@ -47,7 +47,7 @@ commands:
   - cmd: SetBeginCondJob
     args:
       - type: sym
-        value: 5
+        value: 0
   - cmd: SetEndCondItem
     args:
       - type: num

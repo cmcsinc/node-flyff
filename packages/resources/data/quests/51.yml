@@ -28,7 +28,7 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 23
+  - mover: 71
     item: 6317
     prob: 750000000
     num: 1
@@ -48,11 +48,19 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
+  - mover: 23
+    item: 6317
+    prob: 750000000
+    num: 1
   - mover: 24
     item: 6317
     prob: 750000000
     num: 1
   - mover: 25
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 72
     item: 6317
     prob: 750000000
     num: 1
@@ -68,15 +76,7 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 29
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 30
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 31
+  - mover: 73
     item: 6317
     prob: 750000000
     num: 1
@@ -112,6 +112,22 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
+  - mover: 29
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 30
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 31
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 74
+    item: 6317
+    prob: 750000000
+    num: 1
   - mover: 32
     item: 6317
     prob: 750000000
@@ -121,6 +137,26 @@ quest_items:
     prob: 750000000
     num: 1
   - mover: 34
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 75
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 50
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 51
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 52
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 81
     item: 6317
     prob: 750000000
     num: 1
@@ -136,6 +172,10 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
+  - mover: 76
+    item: 6317
+    prob: 750000000
+    num: 1
   - mover: 38
     item: 6317
     prob: 750000000
@@ -144,23 +184,11 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 60
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 61
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 62
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 63
-    item: 6317
-    prob: 750000000
-    num: 1
   - mover: 40
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 77
     item: 6317
     prob: 750000000
     num: 1
@@ -176,35 +204,7 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 44
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 45
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 46
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 47
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 48
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 49
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 50
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 51
+  - mover: 78
     item: 6317
     prob: 750000000
     num: 1
@@ -224,35 +224,35 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 68
+  - mover: 53
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 69
+  - mover: 54
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 70
+  - mover: 55
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 71
+  - mover: 82
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 64
+  - mover: 56
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 65
+  - mover: 57
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 66
+  - mover: 58
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 67
+  - mover: 83
     item: 6317
     prob: 750000000
     num: 1
@@ -336,35 +336,35 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 103
+  - mover: 47
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 104
+  - mover: 48
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 105
+  - mover: 49
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 106
+  - mover: 80
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 84
+  - mover: 62
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 63
+    item: 6317
+    prob: 750000000
+    num: 1
+  - mover: 64
     item: 6317
     prob: 750000000
     num: 1
   - mover: 85
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 86
-    item: 6317
-    prob: 750000000
-    num: 1
-  - mover: 87
     item: 6317
     prob: 750000000
     num: 1
@@ -384,51 +384,51 @@ quest_items:
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 72
+  - mover: 59
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 73
+  - mover: 60
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 74
+  - mover: 61
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 75
+  - mover: 84
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 80
+  - mover: 65
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 81
+  - mover: 66
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 82
+  - mover: 67
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 83
+  - mover: 86
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 52
+  - mover: 44
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 53
+  - mover: 45
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 54
+  - mover: 46
     item: 6317
     prob: 750000000
     num: 1
-  - mover: 55
+  - mover: 79
     item: 6317
     prob: 750000000
     num: 1
