@@ -5,7 +5,7 @@
  *   OPENSHOPWND  0x00ff00b1 (:2744): `OBJID objid` (the vendor NPC)
  *   CLOSESHOPWND 0x00ff00b2 (:2793): bodyless
  *   BUYITEM      0x00ff00b3 (:2804):  `CHAR cTab, BYTE nId, short nNum, DWORD dwItemId`
- *   SELLITEM     0x00ff00b4 (:3074):  `BYTE nId, short nNum` (nId = player inv slot)
+ *   SELLITEM     0x00ff00b4 (:3074):  `BYTE nId, short nNum` (nId = item objid / STABLE m_dwObjId)
  *
  * Open validates the vendor + acks with SNAPSHOTTYPE_OPENSHOPWND (4 empty shop
  * tabs). Close just clears the player's interacting-other. Buy/sell delegate to
@@ -83,7 +83,7 @@ export class ShopHandler {
     logger.info({ charId: p.m_idPlayer, itemId: res.itemId, count: res.count, slot: res.slot, gold: res.gold }, 'BUYITEM ok');
   }); }
 
-  /** SELLITEM -- `BYTE nId, short nNum` (nId = player inventory slot). */
+  /** SELLITEM -- `BYTE nId, short nNum` (nId = item objid / STABLE m_dwObjId). */
   handleSell(socket: ClientSocket, reader: PacketReader): void { this.run(socket, reader, (p, r) => {
     const nId = r.readByte();
     const nNum = r.readWord();

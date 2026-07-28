@@ -10,7 +10,6 @@
  * in-memory and swept by `BuffSystem`.
  *
  * Deviations from C++:
- *  - **1s rate-limit** (C++ has none); `OnNPCBuff` is client-spammable.
  *  - **Generic-vs-cheer conflict** + duration override live in `applyNpcBuff`.
  *
  * @module services/npcBuff
@@ -23,9 +22,6 @@ import type { SkillService } from '@flyff/skills';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'npcBuff-service' });
-
-/** Rate limit (C++ has none -- see file header). */
-const NPC_BUFF_COOLDOWN_MS = 1000;
 
 /** C++ `MAX_LEN_MOVER_MENU` (npchecker.h:4) -- squared distance gate. */
 const MAX_LEN_MOVER_MENU_SQ = 1024;
@@ -44,7 +40,7 @@ export interface NpcBuffDeps {
 
 export type NpcBuffResult =
   | { ok: true; applied: number; refreshed: number; replaced: number; conflicts: number; skipped: number }
-  | { ok: false; reason: 'rate_limited' | 'unknown_npc' | 'not_buff_npc' | 'no_nearby_buff_npc' };
+  | { ok: false; reason: 'unknown_npc' | 'not_buff_npc' | 'no_nearby_buff_npc' };
 
 /**
  * Squared distance on the XZ ground plane. `CNpcChecker::IsCloseNpc` zeroes Y
@@ -66,10 +62,6 @@ export class NpcBuffService {
    * tally of outcomes so the handler can log without poking the buff runtime.
    */
   buff(player: CPlayer, key: string, now: number): NpcBuffResult {
-    if (now - player.m_tickNpcBuff < NPC_BUFF_COOLDOWN_MS) {
-      return { ok: false, reason: 'rate_limited' };
-    }
-
     const block = this.deps.characterInc.byKey.get(key);
     if (!block) {
       return { ok: false, reason: 'unknown_npc' };
@@ -85,8 +77,6 @@ export class NpcBuffService {
     if (!nearby) {
       return { ok: false, reason: 'no_nearby_buff_npc' };
     }
-
-    player.m_tickNpcBuff = now;
 
     let applied = 0;
     let refreshed = 0;

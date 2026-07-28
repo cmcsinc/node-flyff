@@ -7,7 +7,7 @@
 // script sets cwd to the repo root explicitly — do not run it from elsewhere.
 
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,6 +35,21 @@ function run(cmd, args, opts = {}) {
     );
   });
 }
+
+/** Load root .env / .env.local into process.env (simple key=value, no override). */
+function loadRootEnv() {
+  for (const name of ['.env', '.env.local']) {
+    const p = join(ROOT, name);
+    if (!existsSync(p)) continue;
+    for (const line of readFileSync(p, 'utf8').split('\n')) {
+      const m = line.match(/^\s*([\w.]+)\s*=\s*(.*)\s*$/);
+      if (m && !(m[1] in process.env)) process.env[m[1]] = m[2];
+    }
+  }
+}
+
+// Pre-load env vars so spawned Next.js process inherits them
+loadRootEnv();
 
 async function main() {
   if (!existsSync(ADMIN)) {

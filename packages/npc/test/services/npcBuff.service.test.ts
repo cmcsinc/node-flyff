@@ -17,7 +17,7 @@ type Outcome = 'applied' | 'refreshed' | 'replaced' | 'ignored' | 'conflict';
 
 function makePlayer(level: number, pos: Vec3): CPlayer {
   return {
-    m_idPlayer: 42, m_nLevel: level, m_nZoneId: 1, m_vPos: pos, m_tickNpcBuff: 0,
+    m_idPlayer: 42, m_nLevel: level, m_nZoneId: 1, m_vPos: pos,
   } as unknown as CPlayer;
 }
 
@@ -193,15 +193,5 @@ describe('NpcBuffService', () => {
     const out = svc.buff(p, 'MaFl_Empty', 1000);
 
     assert.equal(out.ok === false && out.reason, 'not_buff_npc');
-  });
-
-  it('rate-limits within the cooldown window', () => {
-    const p = makePlayer(15, { x: 0, y: 0, z: 0 });
-    p.m_tickNpcBuff = 500;
-    const { svc } = makeService({ npcs: [makeNpc({ x: 0, y: 0, z: 0 }, true)] });
-
-    const out = svc.buff(p, 'MaFl_Helper', 1000); // 1000 - 500 = 500 < 1000
-
-    assert.equal(out.ok === false && out.reason, 'rate_limited');
   });
 });

@@ -259,11 +259,14 @@ export class QuestService {
 
   /**
    * Player-initiated cancel (`PACKETTYPE_REMOVEQUEST`). Drops the active record
-   * + audit log (action 30), returns the QUEST_REMOVE frame. `CMover::SetQuest`
-   * already refuses cancels on quests already at `QS_END`.
+   * + audit log (action 30), returns the QUEST_REMOVE frame. C++
+   * `DPSrvr::OnRemoveQuest` checks `m_nState != QS_END` to block cancelling
+   * completed quests.
    */
   async cancelQuest(player: CPlayer, questId: number): Promise<QuestOpResult> {
-    if (!player.findQuest(questId)) return { ok: false, reason: 'not_found' };
+    const rt = player.findQuest(questId);
+    if (!rt) return { ok: false, reason: 'not_found' };
+    if (rt.state === QS_END) return { ok: false, reason: 'not_found' };
     // C++ DPSrvr.cpp:1656 — pQuestProp->m_bNoRemove == FALSE required.
     const def = this.deps.quests?.byId.get(questId);
     if (def?.no_remove) return { ok: false, reason: 'no_remove' };
