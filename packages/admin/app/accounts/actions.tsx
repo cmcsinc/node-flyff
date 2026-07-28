@@ -1,65 +1,111 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
-async function toggleBan(id: number, banned: boolean) {
+async function patchAccount(body: Record<string, unknown>): Promise<void> {
   const res = await fetch("/api/accounts", {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, banned: !banned }),
-  });
-  if (!res.ok) throw new Error("Failed");
-}
-
-async function toggleGm(id: number, gm: boolean) {
-  const res = await fetch("/api/accounts", {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, gm: !gm }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error("Failed");
 }
 
 export function BanToggleButton({ id, banned }: { id: number; banned: boolean }) {
   const router = useRouter();
+  const [pending, setPending] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  async function handleConfirm() {
+    setPending(true);
+    try {
+      await patchAccount({ id, banned: !banned });
+      toast.success(banned ? "Account unbanned" : "Account banned");
+      router.refresh();
+    } catch {
+      toast.error("Failed to update ban status");
+    } finally {
+      setPending(false);
+    }
+  }
 
   return (
-    <button
-      onClick={async () => {
-        try {
-          await toggleBan(id, banned);
-          toast.success(banned ? "Account unbanned" : "Account banned");
-          router.refresh();
-        } catch {
-          toast.error("Failed to update ban status");
+    <>
+      <Button
+        variant={banned ? "outline" : "ghost"}
+        size="sm"
+        onClick={() => setConfirmOpen(true)}
+        disabled={pending}
+        className={banned ? undefined : "text-destructive hover:text-destructive"}
+      >
+        {pending && <Loader2 className="mr-1 h-3 w-3 animate-spin" />}
+        {banned ? "Unban" : "Ban"}
+      </Button>
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title={banned ? "Unban this account?" : "Ban this account?"}
+        description={
+          banned
+            ? "This account will regain access to the server immediately."
+            : "This account will be unable to log in. You can reverse this at any time."
         }
-      }}
-      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-    >
-      {banned ? "Unban" : "Ban"}
-    </button>
+        confirmLabel={banned ? "Unban" : "Ban"}
+        destructive={!banned}
+        onConfirm={handleConfirm}
+      />
+    </>
   );
 }
 
 export function GmToggleButton({ id, gm }: { id: number; gm: boolean }) {
   const router = useRouter();
+  const [pending, setPending] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  async function handleConfirm() {
+    setPending(true);
+    try {
+      await patchAccount({ id, gm: !gm });
+      toast.success(gm ? "GM removed" : "GM granted");
+      router.refresh();
+    } catch {
+      toast.error("Failed to update GM status");
+    } finally {
+      setPending(false);
+    }
+  }
 
   return (
-    <button
-      onClick={async () => {
-        try {
-          await toggleGm(id, gm);
-          toast.success(gm ? "GM removed" : "GM granted");
-          router.refresh();
-        } catch {
-          toast.error("Failed to update GM status");
+    <>
+      <Button
+        variant={gm ? "outline" : "ghost"}
+        size="sm"
+        onClick={() => setConfirmOpen(true)}
+        disabled={pending}
+        className={gm ? undefined : "text-gold hover:text-gold"}
+      >
+        {pending && <Loader2 className="mr-1 h-3 w-3 animate-spin" />}
+        {gm ? "Revoke GM" : "Grant GM"}
+      </Button>
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title={gm ? "Revoke GM privileges?" : "Grant GM privileges?"}
+        description={
+          gm
+            ? "This account will lose administrative access to the server."
+            : "This account will gain full administrative (GM) access. This is a powerful permission."
         }
-      }}
-      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-    >
-      {gm ? "Revoke GM" : "Grant GM"}
-    </button>
+        confirmLabel={gm ? "Revoke" : "Grant"}
+        destructive={gm}
+        onConfirm={handleConfirm}
+      />
+    </>
   );
 }

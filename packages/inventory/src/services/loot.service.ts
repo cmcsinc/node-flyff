@@ -155,18 +155,20 @@ export class LootService {
     const r = this.deps.inventoryService.addItem(player, item.m_dwItemId, item.m_nItemNum);
     if (!r.ok) return; // bag_full -- ponytail: TID_GAME_LACKSPACE; pile stays lootable
 
-    // Both UPDATE_ITEM (stack merge) and CREATEITEM (new slot) address by the
-    // client's STABLE m_dwObjId (r.objid), NOT the slot index. OnCreateItem does
-    // SetAtId(nId) and C++ Add sends nId = m_apIndex[i] (Item.h:720) -- the
-    // drifted objid, which diverges from the slot after an equip. Keying by slot
-    // lands a looted item in an equipped item's cell (weapon-in-shield-slot bug).
-    this.deps.playerManager.sendTo(
-      player,
-      r.isNew
-        ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.objid)
-        : buildUpdateItemCount(player.m_idPlayer, r.objid, r.count),
-    );
-    this.deps.onAcquireItem?.(player, item.m_dwItemId, r.count);
+    // Each change addresses the client's stable m_dwObjId (ch.objid), NOT the
+    // slot index. OnCreateItem SetAtId(nId) + C++ Add nId = m_apIndex[i]
+    // (Item.h:720) -- the drifted objid, which diverges from the slot after
+    // an equip. Keying by slot lands a looted item in an equipped item's
+    // cell (weapon-in-shield-slot bug).
+    for (const ch of r.changes) {
+      this.deps.playerManager.sendTo(
+        player,
+        ch.isNew
+          ? this.createItemSerializer.buildOne(player.m_idPlayer, ch.itemId, ch.count, ch.objid)
+          : buildUpdateItemCount(player.m_idPlayer, ch.objid, ch.count),
+      );
+    }
+    this.deps.onAcquireItem?.(player, item.m_dwItemId, item.m_nItemNum);
     this.deps.itemManager.remove(item.m_idObject);
     this.motion(player);
   }

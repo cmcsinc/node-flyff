@@ -105,16 +105,18 @@ export class ActMsgHandler {
     const r = this.deps.inventoryService.addItem(player, item.m_dwItemId, item.m_nItemNum);
     if (!r.ok) return; // bag_full -- ponytail: TID_GAME_LACKSPACE; pile stays lootable
 
-    // Both branches address by the client's stable m_dwObjId (r.objid), NOT the
-    // bag index: OnCreateItem SetAtId(nId) + C++ Add nId = m_apIndex[i]
-    // (Item.h:720). The objid drifts from the slot after an equip, so keying by
-    // slot misroutes the item into an equipped cell.
-    this.deps.playerManager.sendTo(
-      player,
-      r.isNew
-        ? this.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.objid)
-        : buildUpdateItemCount(player.m_idPlayer, r.objid, r.count),
-    );
+    // Each change addresses the client's stable m_dwObjId (ch.objid), NOT
+    // the bag index: OnCreateItem SetAtId(nId) + C++ Add nId = m_apIndex[i]
+    // (Item.h:720). The objid drifts from the slot after an equip, so keying
+    // by slot misroutes the item into an equipped cell.
+    for (const ch of r.changes) {
+      this.deps.playerManager.sendTo(
+        player,
+        ch.isNew
+          ? this.createItemSerializer.buildOne(player.m_idPlayer, ch.itemId, ch.count, ch.objid)
+          : buildUpdateItemCount(player.m_idPlayer, ch.objid, ch.count),
+      );
+    }
     this.deps.itemManager.remove(objid);
   }
 

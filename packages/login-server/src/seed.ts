@@ -59,7 +59,7 @@ const MIGRATIONS = [
   { column: ['inventory_item', 'element'], up: migrationUp012 },
   { column: ['characters', 'pk_propensity'], up: migrationUp013 },
   { column: ['characters', 'buffs'], up: migrationUp014 },
-  { table: 'character_buffs', up: migrationUp015 },
+  { marker: 'character_buffs', up: migrationUp015 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';

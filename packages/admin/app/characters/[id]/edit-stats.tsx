@@ -95,8 +95,8 @@ export function EditStatsForm({ characterId, stats }: { characterId: number; sta
         ))}
       </div>
       <div className="flex gap-2">
-        <Button size="sm" onClick={save} disabled={saving}>{saving ? "Saving..." : "Save"}</Button>
-        <Button variant="ghost" size="sm" onClick={() => setEditing(false)}>Cancel</Button>
+        <Button size="sm" onClick={save} disabled={saving}>{saving ? "Saving…" : "Save"}</Button>
+        <Button variant="ghost" size="sm" onClick={() => setEditing(false)} disabled={saving}>Cancel</Button>
       </div>
     </div>
   );

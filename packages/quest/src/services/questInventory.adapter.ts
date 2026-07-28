@@ -51,11 +51,13 @@ export function bindQuestInventory(
     add: (itemId, count) => {
       const r = deps.inventoryService.addItem(player, itemId, count);
       if (!r.ok) return; // bag full / invalid -> reward silently dropped (mirrors tracker)
-      frames.push(
-        r.isNew
-          ? deps.createItemSerializer.buildOne(player.m_idPlayer, r.itemId, r.count, r.objid)
-          : buildUpdateItemCount(player.m_idPlayer, r.objid, r.count),
-      );
+      for (const ch of r.changes) {
+        frames.push(
+          ch.isNew
+            ? deps.createItemSerializer.buildOne(player.m_idPlayer, ch.itemId, ch.count, ch.objid)
+            : buildUpdateItemCount(player.m_idPlayer, ch.objid, ch.count),
+        );
+      }
     },
     remove: (itemId, count) => removeFromBag(player, deps.inventoryService, itemId, count, frames),
   };

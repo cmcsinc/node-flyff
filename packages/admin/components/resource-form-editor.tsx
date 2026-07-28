@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { stringify as stringifyYaml } from "yaml";
-import { ChevronDown, ChevronRight, Plus, X, Save, ArrowLeft } from "lucide-react";
+import { ChevronDown, ChevronRight, Plus, X, Save, ArrowLeft, RotateCcw } from "lucide-react";
 import { DST_NAMES, IK2_LABELS, IK3_LABELS } from "@/lib/game-constants";
 
 // ── Field metadata ─────────────────────────────────────────────────────────
@@ -472,8 +473,9 @@ function ArrayField({ label, desc, value, onChange, fieldKey }: { label: string;
 
 function ObjectField({ label, desc, value, onChange }: { label: string; desc?: string; value: unknown; onChange: (v: unknown) => void }) {
   const [expanded, setExpanded] = useState(false);
-  const json = JSON.stringify(value, null, 2);
-  const preview = json.length > 80 ? json.slice(0, 80) + "…" : json;
+  const [text, setText] = useState(() => JSON.stringify(value, null, 2));
+  const [error, setError] = useState<string | null>(null);
+  const preview = text.length > 80 ? text.slice(0, 80) + "…" : text;
 
   return (
     <div className="space-y-1">
@@ -485,14 +487,27 @@ function ObjectField({ label, desc, value, onChange }: { label: string; desc?: s
         </Button>
       </div>
       {expanded ? (
-        <textarea
-          value={json}
-          onChange={(e) => { try { onChange(JSON.parse(e.target.value)); } catch { /* typing */ } }}
-          className="w-full min-h-[100px] font-mono text-xs p-2 rounded-md border bg-muted/30 resize-y"
-          spellCheck={false}
-        />
+        <>
+          <textarea
+            value={text}
+            onChange={(e) => {
+              const next = e.target.value;
+              setText(next);
+              try {
+                onChange(JSON.parse(next));
+                setError(null);
+              } catch (err) {
+                setError(err instanceof Error ? err.message : "Invalid JSON");
+              }
+            }}
+            className="w-full min-h-[100px] font-mono text-xs p-2 rounded-md border border-input bg-muted/30 resize-y focus-visible:ring-1 focus-visible:ring-ring"
+            spellCheck={false}
+            aria-invalid={error !== null}
+          />
+          {error && <p className="text-xs text-destructive">Invalid JSON — fix before saving: {error}</p>}
+        </>
       ) : (
-        <p className="text-xs font-mono text-muted-foreground bg-muted/30 rounded px-2 py-1 truncate">{preview}</p>
+        <p className="truncate rounded bg-muted/30 px-2 py-1 font-mono text-xs text-muted-foreground">{preview}</p>
       )}
     </div>
   );
@@ -509,6 +524,7 @@ export function ResourceFormEditor({ type, id, entry }: { type: string; id: stri
   const [form, setForm] = useState<Record<string, unknown>>({ ...entry });
   const [saving, setSaving] = useState(false);
   const router = useRouter();
+  const dirty = useMemo(() => JSON.stringify(form) !== JSON.stringify(entry), [form, entry]);
 
   function setField(key: string, value: unknown) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -606,13 +622,11 @@ export function ResourceFormEditor({ type, id, entry }: { type: string; id: stri
 
               if (kind === "boolean") {
                 return (
-                  <div key={key} className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
+                  <div key={key} className="flex items-center gap-3">
+                    <Switch
                       id={key}
                       checked={!!value}
                       onChange={(e) => setField(key, e.target.checked)}
-                      className="h-4 w-4 rounded border"
                     />
                     <div>
                       <Label htmlFor={key} className="text-sm">{meta.label}</Label>
@@ -687,15 +701,20 @@ export function ResourceFormEditor({ type, id, entry }: { type: string; id: stri
 
       <Separator />
 
-      <div className="flex gap-2 sticky bottom-0 bg-background py-3">
-        <Button onClick={handleSave} disabled={saving} className="gap-2">
+      <div className="sticky bottom-0 flex items-center gap-2 bg-background/95 py-3 backdrop-blur">
+        <Button onClick={handleSave} disabled={saving || !dirty} className="gap-2">
           <Save className="h-4 w-4" />
-          {saving ? "Saving..." : "Save Changes"}
+          {saving ? "Saving…" : dirty ? "Save Changes" : "No changes"}
+        </Button>
+        <Button variant="outline" onClick={() => setForm({ ...entry })} disabled={saving || !dirty} className="gap-2">
+          <RotateCcw className="h-4 w-4" />
+          Revert
         </Button>
         <Button variant="ghost" onClick={() => router.back()} className="gap-2">
           <ArrowLeft className="h-4 w-4" />
           Cancel
         </Button>
+        {dirty && <span className="ml-2 text-xs text-muted-foreground">Unsaved changes</span>}
       </div>
     </div>
   );

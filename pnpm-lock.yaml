@@ -32,6 +32,9 @@ importers:
       '@auth/drizzle-adapter':
         specifier: ^1.7.0
         version: 1.11.3
+      '@next/env':
+        specifier: ^16.2.12
+        version: 16.2.12
       '@tanstack/react-table':
         specifier: ^8.21.0
         version: 8.21.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -1263,6 +1266,9 @@ packages:
 
   '@next/env@15.5.22':
     resolution: {integrity: sha512-O5BlKb3KtsHkvO0gjjV66PuJnAgCtIEIzwkt50HRAHsQkU1t77eksIXSZV84/WMtZJjWrnDUPKHVRi0D62nSAA==}
+
+  '@next/env@16.2.12':
+    resolution: {integrity: sha512-d0Z5Bc13Fa4nR8pFAKx2jay2yhJM16vlfHbTzYnUQAxlNb6B6lmn4hjt69lYNt4kRtyYP6gEM49lPRHNbIyneg==}
 
   '@next/swc-darwin-arm64@15.5.22':
     resolution: {integrity: sha512-/VISwtffSg8+fVvBbXdglsvruCsdbBC4dG25iU6xascKVqfQKsj/OtjGnOEkIS7pX5GB9e9/r5QprpicsGL3gw==}
@@ -3641,6 +3647,8 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   '@next/env@15.5.22': {}
+
+  '@next/env@16.2.12': {}
 
   '@next/swc-darwin-arm64@15.5.22':
     optional: true

@@ -40,8 +40,19 @@ export interface InventoryServiceDeps {
   journal?: Journal;
 }
 
+/** One slot mutation emitted by {@link InventoryService.addItem}. */
+export interface AddItemChange {
+  slot: number;
+  objid: number;
+  itemId: number;
+  /** New stack count in this slot after the merge or placement. */
+  count: number;
+  /** `true` = fresh slot (handler sends CREATEITEM); `false` = stack merge (UPDATE_ITEM). */
+  isNew: boolean;
+}
+
 export type AddItemResult =
-  | { ok: true; slot: number; objid: number; itemId: number; count: number; isNew: boolean }
+  | { ok: true; changes: AddItemChange[] }
   | { ok: false; reason: 'bag_full' | 'invalid' };
 
 export type MoveItemResult =
@@ -64,49 +75,70 @@ export class InventoryService {
   constructor(private readonly deps: InventoryServiceDeps) {}
 
   /**
-   * Place `count` of `itemId`. Stacking-aware: if a partial stack of the same
-   * id+flags exists below `stack_size`, merge into it (isNew=false -> handler
-   * sends UPDATE_ITEM); otherwise claim a fresh empty slot (isNew=true ->
-   * CREATEITEM). Returns `bag_full` so the handler can leave the pile lootable.
+   * Place `count` of `itemId`. Two-pass algorithm matching C++
+   * `CItemContainer::Add` (Item.h:687):
+   *
+   * 1. **Merge pass** -- scan existing partial stacks of the same itemId with
+   *    `flags === 0`; fill each up to `stackSize`.
+   * 2. **Empty-slot pass** -- place any remainder in fresh empty slots, each
+   *    capped at `stackSize`.
+   *
+   * Returns `changes[]` (one entry per touched slot) so the handler can send
+   * CREATEITEM / UPDATE_ITEM per slot. On `bag_full` with partial success the
+   * changes placed so far are returned; only a total failure returns
+   * `bag_full`.
    */
   addItem(player: CPlayer, itemId: number, count: number): AddItemResult {
     if (count <= 0) return { ok: false, reason: 'invalid' };
     const stackSize = this.stackSize(itemId);
+    const changes: AddItemChange[] = [];
+    let remaining = count;
 
+    // Pass 1: merge onto existing partial stacks (C++ pElemtmp merge pass).
     if (stackSize > 1) {
-      for (let i = 0; i < MAX_INVENTORY; i++) {
+      for (let i = 0; i < MAX_INVENTORY && remaining > 0; i++) {
         const s = player.m_Inventory[i];
-        if (s && s.itemId === itemId && (s.flags ?? 0) === 0 && s.count < stackSize) {
-          const add = Math.min(count, stackSize - s.count);
-          this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: i, itemId, count: s.count + add } });
-          s.count += add;
-          player._dirty.add('m_Inventory');
-          this.persist(player, i, s);
-          // objid = the client's stable m_dwObjId for this slot (drifts from the
-          // slot index once items cross the bag/equip boundary). UPDATE_ITEM /
-          // CREATEITEM must address by it, not the raw slot -- see clientObjId.
-          return { ok: true, slot: i, objid: s.objid ?? player.clientObjId(i), itemId, count: s.count, isNew: false };
-        }
+        if (!s || s.itemId !== itemId || (s.flags ?? 0) !== 0) continue;
+        const space = stackSize - s.count;
+        if (space <= 0) continue;
+        const add = Math.min(remaining, space);
+        this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: i, itemId, count: s.count + add } });
+        s.count += add;
+        remaining -= add;
+        this.persist(player, i, s);
+        changes.push({ slot: i, objid: s.objid ?? player.clientObjId(i), itemId, count: s.count, isNew: false });
       }
     }
 
-    const slot = this.findEmpty(player);
-    if (slot === -1) return { ok: false, reason: 'bag_full' };
-    // m_dwObjId MUST equal the client's m_apIndex[slot] for CREATEITEM to render
-    // (SetAtId writes m_apItem[objid]; the grid draws m_apItem[m_apIndex[slot]]).
-    // After unequip->sell this is the stale equip objid, not the slot index.
-    // Mirrors vanilla CItemContainer::Add (Item.h:727: m_dwObjId = m_apIndex[i]).
-    const placed: InventorySlot = { objid: player.clientObjId(slot), itemId, count: Math.min(count, Math.max(1, stackSize)) };
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId, count: placed.count } });
-    player.m_Inventory[slot] = placed;
+    // Pass 2: place remainder in empty slots (C++ empty-slot pass).
+    // m_dwObjId MUST equal the client's m_apIndex[slot] for CREATEITEM to
+    // render (SetAtId writes m_apItem[objid]; the grid draws
+    // m_apItem[m_apIndex[slot]]). After unequip->sell this is the stale equip
+    // objid, not the slot index. Mirrors vanilla CItemContainer::Add
+    // (Item.h:727: m_dwObjId = m_apIndex[i]).
+    while (remaining > 0) {
+      const slot = this.findEmpty(player);
+      if (slot === -1) {
+        // bag_full -- if we already placed something, return partial success
+        // so the handler sends the packets for what was placed; the caller
+        // handles the bag_full separately (pile stays lootable, etc.).
+        if (changes.length > 0) {
+          player._dirty.add('m_Inventory');
+          return { ok: true, changes };
+        }
+        return { ok: false, reason: 'bag_full' };
+      }
+      const place = Math.min(remaining, stackSize);
+      const placed: InventorySlot = { objid: player.clientObjId(slot), itemId, count: place };
+      this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId, count: place } });
+      player.m_Inventory[slot] = placed;
+      this.persist(player, slot, placed);
+      remaining -= place;
+      changes.push({ slot, objid: placed.objid, itemId, count: place, isNew: true });
+    }
+
     player._dirty.add('m_Inventory');
-    this.persist(player, slot, placed);
-    // objid = clientObjId(slot): the client renders a CREATEITEM at the slot
-    // whose m_apIndex equals this objid (C++ Add uses nId = m_apIndex[i],
-    // Item.h:720), NOT the raw bag index. After equipping out of a slot the two
-    // diverge -- addressing by slot lands the new item in the equipped item's
-    // cell (weapon-in-shield-slot bug). placed.objid already carries this.
-    return { ok: true, slot, objid: placed.objid, itemId, count: placed.count, isNew: true };
+    return { ok: true, changes };
   }
 
   /** Swap two main-bag slots (v19 MOVEITEM is a pure swap; no split opcode). */

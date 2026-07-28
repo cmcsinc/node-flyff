@@ -71,16 +71,18 @@ export class ShopHandler {
       logger.warn({ charId: p.m_idPlayer, reason: res.reason, cTab, nId, nNum, dwItemId, gold: p.m_nGold, other: p.m_idOther }, 'BUYITEM rejected');
       return;
     }
-    // Both UPDATE_ITEM (stack merge) and CREATEITEM (new slot) address by the
-    // client's STABLE m_dwObjId, NOT the bag index: OnCreateItem does
-    // SetAtId(nId) and C++ Add sends nId = m_apIndex[i] (Item.h:720). After
-    // equipping out of a slot the objid drifts from the slot, so keying by slot
-    // lands the item in the equipped item's cell (weapon-in-shield-slot bug).
-    this.deps.playerManager.sendTo(p, res.isNew
-      ? this.createItemSerializer.buildOne(p.m_idPlayer, res.itemId, res.count, res.objid)
-      : buildUpdateItemCount(p.m_idPlayer, res.objid, res.count));
+    // Each change addresses the client's STABLE m_dwObjId, NOT the bag index:
+    // OnCreateItem does SetAtId(nId) and C++ Add sends nId = m_apIndex[i]
+    // (Item.h:720). After equipping out of a slot the objid drifts from the
+    // slot, so keying by slot lands the item in the equipped item's cell
+    // (weapon-in-shield-slot bug).
+    for (const ch of res.changes) {
+      this.deps.playerManager.sendTo(p, ch.isNew
+        ? this.createItemSerializer.buildOne(p.m_idPlayer, ch.itemId, ch.count, ch.objid)
+        : buildUpdateItemCount(p.m_idPlayer, ch.objid, ch.count));
+    }
     this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_GOLD, res.gold));
-    logger.info({ charId: p.m_idPlayer, itemId: res.itemId, count: res.count, slot: res.slot, gold: res.gold }, 'BUYITEM ok');
+    logger.info({ charId: p.m_idPlayer, changes: res.changes.length, gold: res.gold }, 'BUYITEM ok');
   }); }
 
   /** SELLITEM -- `BYTE nId, short nNum` (nId = item objid / STABLE m_dwObjId). */

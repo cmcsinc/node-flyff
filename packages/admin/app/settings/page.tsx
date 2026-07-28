@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/page-header";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -28,23 +29,29 @@ export default function SettingsPage() {
     { label: "World Server", data: worldConfig },
   ];
 
+  const envVars = [
+    { key: "DB_CLIENT", value: process.env.DB_CLIENT ?? "better-sqlite3 (default)" },
+    { key: "DB_FILENAME", value: process.env.DB_FILENAME ?? "./dev.sqlite3 (default)" },
+    { key: "NODE_ENV", value: process.env.NODE_ENV ?? "development" },
+  ];
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">Server configuration (read-only)</p>
-      </div>
+      <PageHeader title="Settings" description="Server configuration (read-only)" />
 
       <div className="grid gap-4">
         {sections.map((s) => (
           <Card key={s.label}>
             <CardHeader>
-              <CardTitle>{s.label}</CardTitle>
-              <CardDescription>{s.data ? "Loaded from config/*.json" : "Not found"}</CardDescription>
+              <div className="flex items-center gap-2">
+                <CardTitle className="text-sm">{s.label}</CardTitle>
+                <Badge variant={s.data ? "success" : "outline"}>{s.data ? "Loaded" : "Not found"}</Badge>
+              </div>
+              <CardDescription>Loaded from config/*.json</CardDescription>
             </CardHeader>
             <CardContent>
               {s.data ? (
-                <pre className="max-h-96 overflow-auto rounded-lg bg-muted p-4 text-xs">
+                <pre className="max-h-96 overflow-auto rounded-lg border border-border bg-muted/30 p-4 font-mono text-xs">
                   {JSON.stringify(s.data, null, 2)}
                 </pre>
               ) : (
@@ -57,18 +64,18 @@ export default function SettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Environment Variables</CardTitle>
+          <CardTitle className="text-sm">Environment Variables</CardTitle>
           <CardDescription>Key env vars detected at runtime</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <span className="text-muted-foreground">DB_CLIENT</span>
-            <span>{process.env.DB_CLIENT ?? "better-sqlite3 (default)"}</span>
-            <span className="text-muted-foreground">DB_FILENAME</span>
-            <span>{process.env.DB_FILENAME ?? "./dev.sqlite3 (default)"}</span>
-            <span className="text-muted-foreground">NODE_ENV</span>
-            <span>{process.env.NODE_ENV ?? "development"}</span>
-          </div>
+          <dl className="divide-y divide-border">
+            {envVars.map((env) => (
+              <div key={env.key} className="grid grid-cols-1 gap-1 py-2 sm:grid-cols-3 sm:gap-4">
+                <dt className="font-mono text-xs text-muted-foreground">{env.key}</dt>
+                <dd className="font-mono text-xs sm:col-span-2">{env.value}</dd>
+              </div>
+            ))}
+          </dl>
         </CardContent>
       </Card>
     </div>
