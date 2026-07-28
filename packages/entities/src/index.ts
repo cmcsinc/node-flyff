@@ -47,7 +47,7 @@ export { BuffManager, BUFF_SKILL, BUFF_ITEM, MAX_SKILL_BUFF } from './params/Buf
 export type { ActiveBuff, AddBuffOutcome, DoTPayload } from './params/BuffManager';
 
 // Math
-export { EXP_TABLE, MAX_LEVEL } from './math/expTable';
+export { EXP_TABLE, MAX_LEVEL, MAX_JOB_LEVEL, MAX_EXP_LEVEL } from './math/expTable';
 export type { ExpRow } from './math/expTable';
 export type { Rng } from './math/rng';
 export { xRandomRng } from './math/rng';

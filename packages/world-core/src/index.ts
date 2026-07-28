@@ -21,6 +21,8 @@ export * from './snapshot-constants';
 // Shared S->C serializers consumed by 2+ domain packages (kept here so neither
 // domain depends on the other). Currently: doUseSkillPoint (combat + skills).
 export * from './serializers/doUseSkillPoint.serializer';
+export * from './serializers/setJobSkill.serializer';
+export * from './serializers/setNearJobSkill.serializer';
 export * from './serializers/itemElemBody.serializer';
 export * from './serializers/pointParam.serializer';
 export * from './serializers/skillState.serializer';

@@ -54,19 +54,43 @@ export interface ExpGainResult {
  * `AddExperienceSolo` + `LevelUp` cascade. `exp` is **within-level** (progress
  * toward the next level, 0 at each boundary). Adds `amount`, then while enough
  * exp remains to advance, subtracts the per-level cost and levels up -- carrying
- * any excess into the next level. Caps at {@link MAX_LEVEL}.
+ * any excess into the next level. Caps at {@link MAX_LEVEL} by default, or at
+ * `levelCap` when provided (per-job-type cap -- see {@link jobLevelCap}).
+ *
+ * Per-job cap mirrors C++ `AddExperience` (`MoverParam.cpp:1224-1247`): a Vagrant
+ * (`IsBaseJob`) cannot gain exp past `MAX_JOB_LEVEL` (15) -- the exp clamps to 0
+ * and no level-up fires. Pass `levelCap = 15` to reproduce that. At/above the
+ * cap, `amount` is accepted but discarded (exp reset to 0, no progression).
  *
  * Pure: caller mutates the entity + fires side effects (HP/MP refill, packets,
  * persist) based on {@link ExpGainResult.levelsGained}.
  */
-export function addExp(level: number, exp: number, amount: number): ExpGainResult {
+export function addExp(
+  level: number,
+  exp: number,
+  amount: number,
+  levelCap: number = MAX_LEVEL,
+): ExpGainResult {
+  // C++ `AddExperience` pre-check: at/above the job cap, exp clamps to 0 and the
+  // gain is silently accepted (no level-up). Mirrors `m_nExp1 = 0; return TRUE`.
+  if (level >= levelCap) {
+    return { level, exp: 0, levelsGained: 0 };
+  }
   let newExp = exp + amount;
   let newLevel = level;
-  while (newLevel < MAX_LEVEL) {
+  while (newLevel < levelCap) {
     const need = expToNextLevel(newLevel);
     if (need <= 0 || newExp < need) break;
     newExp -= need;
     newLevel++;
+  }
+  // C++ `AddExperience` level-up cascade (MoverParam.cpp:1464): when the cap
+  // blocks further leveling, m_nExp1 is set to 0 (set at line 1455
+  // pre-emptively and the excess nExptmp is discarded because bLevelUp=FALSE
+  // skips the recursive AddExperience call at line 1604). Match that: if the
+  // cascade stopped because we hit the cap, the leftover is discarded.
+  if (newLevel >= levelCap) {
+    newExp = 0;
   }
   return { level: newLevel, exp: newExp, levelsGained: newLevel - level };
 }

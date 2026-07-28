@@ -152,6 +152,18 @@ export const SNAPSHOTTYPE_CLEAR_USESKILL = 0x001a;   // MsgHdr.h:885 -- AddClear
 export const SNAPSHOTTYPE_SETSKILLLEVEL = 0x0026;    // MsgHdr.h:942 -- AddSetSkillLevel (peer skill-level delta)
 export const SNAPSHOTTYPE_DOUSESKILLPOINT = 0x007d;  // MsgHdr.h:996 -- AddDoUseSkillPoint (learn/SP confirm, self)
 /**
+ * Job-change S->C snapshots (`_Network/MsgHdr.h`):
+ * - SET_JOB_SKILL (0x00a7) -- `CUser::AddSetChangeJob` (User.cpp:1157), self only:
+ *   `OBJID | SET_JOB_SKILL | int nJob | m_aJobSkill[0..MAX_SKILL_JOB] (each
+ *   DWORD dwSkill,DWORD dwLevel) | DWORD dwJobLv[MAX_JOB] (zeros)`. Client
+ *   rebuilds its skill window from the new roster + updates the SP counter.
+ * - SET_NEAR_JOB_SKILL (0x00a8) -- `CUserMng::AddNearSetChangeJob`
+ *   (User.cpp:5107), vicinity excl caster: `OBJID | SET_NEAR_JOB_SKILL | int nJob`.
+ *   Peers refresh the mover's job (animation/equipment appearance).
+ */
+export const SNAPSHOTTYPE_SET_JOB_SKILL = 0x00a7;       // MsgHdr.h:1079 -- AddSetChangeJob (job change, self)
+export const SNAPSHOTTYPE_SET_NEAR_JOB_SKILL = 0x00a8;  // MsgHdr.h:1080 -- AddNearSetChangeJob (job change, vicinity)
+/**
  * Skill-buff S->C snapshots (`_Network/MsgHdr.h`):
  * - SETSKILLSTATE (0x004c) -- `CUserMng::AddSetSkillState` (User.cpp:5672):
  *   `OBJID | SETSKILLSTATE | WORD wType | WORD wID | DWORD dwLevel | DWORD dwTime`.

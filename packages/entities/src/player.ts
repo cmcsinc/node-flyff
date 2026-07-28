@@ -18,6 +18,7 @@ import { AUTH } from './constants/authority';
 import { getJobProps } from './tables/job';
 import type { JobProps } from './tables/job';
 import { maxFatiguePoint, maxHitPoint, maxManaPoint } from './math/vitals';
+import { MAX_JOB_LEVEL, MAX_EXP_LEVEL, MAX_LEVEL } from './math/expTable';
 import { DST, CHRSTATE_BITS } from './constants/dst';
 import { ParamModel, type DstEffect } from './params/ParamModel';
 import { BuffManager } from './params/BuffManager';
@@ -687,6 +688,20 @@ export class CPlayer {
 
   /** Current job props (`prj.GetJobProp(GetJob())`). */
   jobProps(): JobProps { return getJobProps(this.m_nJob); }
+
+  /**
+   * Per-job-type level cap -- mirrors C++ `AddExperience` (`MoverParam.cpp:1224`):
+   * `IsBaseJob` (Vagrant, `JTYPE_BASE`, job 0) caps at `MAX_JOB_LEVEL` (15);
+   * `IsExpert` (1st job, `JTYPE_EXPERT`, jobs 1-5) caps at
+   * `MAX_JOB_LEVEL + MAX_EXP_LEVEL` (60); `IsPro`+ (2nd job onward) uses the
+   * global cap. At/above this level the player cannot gain exp (C++ clamps
+   * `m_nExp1 = 0`). The Vagrant cap is the level-gate for the first job change.
+   */
+  jobLevelCap(): number {
+    if (this.m_nJob === 0) return MAX_JOB_LEVEL; // JOB_VAGRANT / JTYPE_BASE
+    if (this.m_nJob <= 5) return MAX_JOB_LEVEL + MAX_EXP_LEVEL; // JTYPE_EXPERT
+    return MAX_LEVEL; // JTYPE_PRO and above
+  }
 
   /**
    * `CMover::GetMaxHitPoint` (`MoverParam.cpp:2788`): origin (STA-derived) base,

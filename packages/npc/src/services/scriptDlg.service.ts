@@ -42,6 +42,7 @@ import {
   type DialogInterpBindings,
   type DialogInterpSink,
 } from './dialogInterpreter';
+import type { ChangeJobService } from './changeJob.service';
 
 const logger = createLogger({ module: 'scriptDlg-service' });
 
@@ -104,6 +105,10 @@ export interface ScriptDlgDeps {
   chat?: ChatSerializer;
   /** RUNSCRIPTFUNC serializer for the per-clicker dialog menu. Testable. */
   scriptDialog?: ScriptDialogSerializer;
+  /** Job-change handler for the `ChangeJob(n)` dialog sink (the 8 `mada_*`
+   *  job masters). Optional: a no-op stub when absent (keeps `@flyff/npc`
+   *  free of the world-server's DB/socket wiring in tests). */
+  changeJobService?: ChangeJobService;
 }
 
 /** Quest action queued by the interpreter -- resolved + executed after the
@@ -310,7 +315,7 @@ export class ScriptDlgService {
       launchQuest: () => { /* bare LaunchQuest(): eager emitQuestOffer covers it */ },
       beginQuest: (id) => { intents.push({ kind: 'begin', id }); },
       endQuest: (id) => { intents.push({ kind: 'end', id }); },
-      changeJob: () => { /* ponytail: job change via dialog */ },
+      changeJob: (jobId: number) => { this.deps.changeJobService?.changeJob(player, jobId); },
       createItem: () => { /* ponytail: inventory grant via dialog */ },
       removeAllItem: () => { /* ponytail: inventory wipe via dialog */ },
     };

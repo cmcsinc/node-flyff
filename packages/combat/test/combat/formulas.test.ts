@@ -478,6 +478,23 @@ describe('combat addExp (level-up cascade)', () => {
     assert.equal(expToNextLevel(2), 20);  // EXP_TABLE[3].nExp1
     assert.equal(expToNextLevel(3), 36);  // EXP_TABLE[4].nExp1
   });
+
+  it('respects a per-job levelCap (vagrant cap 15)', () => {
+    // At the cap (level 15) the gain is silently accepted but discarded -- exp
+    // clamps to 0 and no level-up fires (C++ MoverParam.cpp:1226 m_nExp1 = 0).
+    const r = addExp(15, 50, 1000, 15);
+    assert.deepEqual(r, { level: 15, exp: 0, levelsGained: 0 });
+  });
+
+  it('cannot level past the levelCap from below', () => {
+    // L14 threshold (EXP_TABLE[15].nExp1) = 1928. Gain enough to reach L16
+    // normally, but cap=15 stops the cascade at L15 and discards the excess.
+    const r = addExp(14, 0, 100000, 15);
+    assert.equal(r.level, 15);
+    assert.equal(r.levelsGained, 1);
+    // Remaining exp at the cap is clamped to 0 (C++ m_nExp1 = 0 at the cap).
+    assert.equal(r.exp, 0);
+  });
 });
 
 describe('combat subDieDecExp (death penalty)', () => {

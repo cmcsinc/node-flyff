@@ -228,15 +228,16 @@ describe('QuestTrackerSystem', () => {
     assert.equal(sent.get(1)!.length, 0);
   });
 
-  it('onKill caps the grant at the SetEndCondItem need and stops at objective', () => {
-    // need 2, player already holds 1 -> grant min(num=5, 2-1)=1
+  it('onKill drops the full num without capping at SetEndCondItem need (C++ DropItem)', () => {
+    // C++ DropItem (Mover.cpp:7644) drops unconditionally for active quest
+    // holders -- no SetEndCondItem gate. Grant is always `d.num`.
     const { def, drop } = itemQuest(7, 38, 6001, 2, 3_000_000_000, 5); // 100%, num 5
     const player = mkPlayer({
       m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
       m_Inventory: Object.assign(new Array(73).fill(null), { 0: { itemId: 6001, count: 1 } }),
     });
     const { pm } = fakePm([player]);
-    const { inv, calls } = fakeInv({ ok: true, slot: 1, itemId: 6001, count: 1, isNew: true });
+    const { inv, calls } = fakeInv({ ok: true, slot: 1, itemId: 6001, count: 5, isNew: true });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
       quests: mkQuests([def], drops), playerManager: pm,
@@ -244,16 +245,18 @@ describe('QuestTrackerSystem', () => {
       rng: { int: () => 0 },
     }).onKill(player, 38);
     assert.equal(calls.length, 1);
-    assert.equal(calls[0].count, 1); // granted 1, not 5
+    assert.equal(calls[0].count, 5); // full num=5, not capped at need
   });
 
-  it('onKill drops nothing once the player already meets the item objective', () => {
-    const { def, drop } = itemQuest(7, 38, 6001, 2, 3_000_000_000);
+  it('onKill still drops when player already meets SetEndCondItem objective (C++ DropItem)', () => {
+    // C++ DropItem rolls unconditionally -- even when the player already has
+    // enough items. The TS port previously blocked drops past the need.
+    const { def, drop } = itemQuest(7, 38, 6001, 2, 3_000_000_000, 1);
     const player = mkPlayer({
       m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
       m_Inventory: Object.assign(new Array(73).fill(null), { 0: { itemId: 6001, count: 2 } }), // == need
     });
-    const { pm, sent } = fakePm([player]);
+    const { pm } = fakePm([player]);
     const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
@@ -261,8 +264,7 @@ describe('QuestTrackerSystem', () => {
       inventoryService: inv, createItemSerializer: new CreateItemSnapshotSerializer(),
       rng: { int: () => 0 },
     }).onKill(player, 38);
-    assert.equal(calls.length, 0);
-    assert.equal(sent.get(1)!.length, 0);
+    assert.equal(calls.length, 1, 'drop still fires even when need is met');
   });
 
   it('onKill skips quest-item generators for quests the player does not have', () => {
