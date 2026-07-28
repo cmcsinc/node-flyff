@@ -7,6 +7,8 @@ skills:
     tier: 0
     job: 0
     discipline: 0
+    icon: skill_VagOneCleanh.dds
+    description: A powerful, downward strike.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -93,6 +95,8 @@ skills:
     tier: 0
     job: 0
     discipline: 0
+    icon: skill_VagOneBrandi.dds
+    description: Rapid, stabbing attack.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -182,6 +186,8 @@ skills:
     tier: 0
     job: 0
     discipline: 0
+    icon: skill_VagOneOvercu.dds
+    description: Powerful, upward, finishing move.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -271,6 +277,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleMulAvalan.dds
+    description: Blinded by the flash of light.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -339,6 +347,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: You are stunned and cannot move.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -427,6 +437,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: You are stunned and you cannot move.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -515,6 +527,7 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleMulAvalan.dds
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -578,6 +591,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_JstYoyBackst.dds
+    description: Attack just as an enemy attacks
     weaponType: 13
     handed: 3
     attackRange: 6
@@ -831,6 +846,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_JstYoyBackst.dds
+    description: Pushes the enemy back.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -871,6 +888,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleFirBunfil.dds
+    description: Does damage to the enemy over a period of time
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -948,6 +967,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleFirBunfil.dds
+    description: Damages an enemy over a period of time.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1060,6 +1081,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: You are stunned and cannot move.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1212,6 +1235,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleFirBunfil.dds
+    description: Damages an enemy over a period of time.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1364,6 +1389,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: Drains life from an enemy.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1446,6 +1473,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleFirBunfil.dds
+    description: Damages an enemy over a period of time.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1518,6 +1547,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleFirBunfil.dds
+    description: Damages an enemy over a period of time.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1670,6 +1701,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: Decreases attack speed and cool down time
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1742,6 +1775,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: Decreases attack speed and cool down time
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1819,6 +1854,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: You fainted.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1862,6 +1899,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_JstIntPoison.dds
+    description: Damages an enemy over a period of time.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1902,6 +1941,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
+    description: You are stunned and cannot move.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1945,6 +1986,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_BldSupBerser.dds
+    description: Increases striking power and attack speed.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1985,6 +2028,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MerShieProtec.dds
+    description: Increases defense by wrapping the body in tree bark.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2023,6 +2068,7 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2060,6 +2106,7 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_MagSpekestone.DDS
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2095,6 +2142,7 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_JstYoyBackst.dds
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2132,6 +2180,7 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_JstYoyBackst.dds
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2171,6 +2220,7 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_JstYoyBackst.dds
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2210,6 +2260,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: Skill_Burn.dds
+    description: Damages your target continuously over time.
     weaponType: 13
     handed: 3
     attackRange: 3
@@ -2253,6 +2305,8 @@ skills:
     tier: 0
     job: 0
     discipline: 0
+    icon: skill_AssCheQuicks.dds
+    description: Increases Run speed.
     weaponType: 13
     handed: 2
     attackRange: 4
@@ -2321,6 +2375,8 @@ skills:
     tier: 0
     job: 0
     discipline: 0
+    icon: skill_AssHaste.dds
+    description: Increases Attack speed.
     weaponType: 13
     handed: 2
     attackRange: 4
@@ -2389,6 +2445,8 @@ skills:
     tier: 0
     job: 0
     discipline: 0
+    icon: skill_AssCheHeapup.dds
+    description: Increases STA.
     weaponType: 13
     handed: 2
     attackRange: 4
@@ -2457,6 +2515,8 @@ skills:
     tier: 0
     job: 0
     discipline: 0
+    icon: skill_AssCheAccura.dds
+    description: Increases Hit Rate.
     weaponType: 13
     handed: 2
     attackRange: 4
@@ -2525,6 +2585,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: Skill_ElelSleeping.dds
+    description: Recover 100% HP by certain rate
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2563,6 +2625,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: Skill_ElelSleeping.dds
+    description: Recover 100% FP by certain rate
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2601,6 +2665,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: Skill_ElelSleeping.dds
+    description: Recover 100% MP by certain rate
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2639,6 +2705,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: Skill_ElelSleeping.dds
+    description: Kill enemy with one hit in certain rate
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2675,6 +2743,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_JstIntPoison.dds
+    description: Poison enemy with certain rate
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2714,6 +2784,8 @@ skills:
     tier: 4
     job: 0
     discipline: 0
+    icon: skill_EleFirBunfil.dds
+    description: Give bleeding damage to enemy with certain rate
     weaponType: 13
     handed: 3
     attackRange: 5

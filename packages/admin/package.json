@@ -10,7 +10,11 @@
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "seed": "node ../../scripts/seed-admin.mjs"
+    "seed": "node ../../scripts/seed-admin.mjs",
+    "icons:convert": "tsx scripts/convert-icons.ts",
+    "icons:convert:force": "tsx scripts/convert-icons.ts --force",
+    "skills:convert": "tsx scripts/convert-skill-icons.ts",
+    "skills:convert:force": "tsx scripts/convert-skill-icons.ts --force"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.0",

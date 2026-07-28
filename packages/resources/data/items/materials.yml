@@ -11,6 +11,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr01.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 25
@@ -27,6 +28,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr02.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 50
@@ -43,6 +45,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr03.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 75
@@ -59,6 +62,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr04.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 100
@@ -75,6 +79,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr05.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 125
@@ -91,6 +96,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr06.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 150
@@ -107,6 +113,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr07.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 175
@@ -123,6 +130,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr08.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 200
@@ -139,6 +147,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr09.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 225
@@ -155,6 +164,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotRefr10.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
     mp_restore: 250
@@ -171,6 +181,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotAntido.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -186,6 +197,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_GenPotCureDi.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -201,6 +213,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_GenPotWaterb.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -216,6 +229,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_GenPotOilbot.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -231,6 +245,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitLow.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 30
@@ -247,6 +262,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitLow.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 60
@@ -263,6 +279,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitMid.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 90
@@ -279,6 +296,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitMid.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 120
@@ -295,6 +313,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 150
@@ -311,6 +330,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 170
@@ -327,6 +347,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 195
@@ -343,6 +364,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 220
@@ -359,6 +381,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 250
@@ -375,6 +398,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
     durability: 12000000
@@ -390,6 +414,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -409,6 +434,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -430,6 +456,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -451,6 +478,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -472,6 +500,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -493,6 +522,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -514,6 +544,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -535,6 +566,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -556,6 +588,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -577,6 +610,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -598,6 +632,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -619,6 +654,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -640,6 +676,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -661,6 +698,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -682,6 +720,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -703,6 +742,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -724,6 +764,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -745,6 +786,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -766,6 +808,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -787,6 +830,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -808,6 +852,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -829,6 +874,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -850,6 +896,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -871,6 +918,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -892,6 +940,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -913,6 +962,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -934,6 +984,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -955,6 +1006,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -976,6 +1028,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -997,6 +1050,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -1018,6 +1072,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -1039,6 +1094,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -1060,6 +1116,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -1081,6 +1138,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -1102,6 +1160,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -1123,6 +1182,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1144,6 +1204,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1165,6 +1226,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1186,6 +1248,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1207,6 +1270,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1228,6 +1292,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1249,6 +1314,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1270,6 +1336,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1291,6 +1358,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1312,6 +1380,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1333,6 +1402,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1354,6 +1424,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1375,6 +1446,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1396,6 +1468,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1417,6 +1490,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1438,6 +1512,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1459,6 +1534,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1480,6 +1556,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1501,6 +1578,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1522,6 +1600,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1543,6 +1622,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1564,6 +1644,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1585,6 +1666,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1606,6 +1688,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1627,6 +1710,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1648,6 +1732,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1669,6 +1754,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1690,6 +1776,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1711,6 +1798,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1732,6 +1820,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1753,6 +1842,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1774,6 +1864,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -1795,6 +1886,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1816,6 +1908,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1837,6 +1930,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1858,6 +1952,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1879,6 +1974,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1900,6 +1996,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1921,6 +2018,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1942,6 +2040,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1963,6 +2062,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarHigEar03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -1984,6 +2084,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2005,6 +2106,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2026,6 +2128,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2047,6 +2150,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2068,6 +2172,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2089,6 +2194,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2110,6 +2216,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2131,6 +2238,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2152,6 +2260,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecHigNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -2173,6 +2282,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2194,6 +2304,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2215,6 +2326,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2236,6 +2348,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2257,6 +2370,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2278,6 +2392,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2299,6 +2414,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2320,6 +2436,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2341,6 +2458,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2362,6 +2480,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2383,6 +2502,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -2404,6 +2524,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooLollip.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 70
@@ -2421,6 +2542,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooBiscuit.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 140
@@ -2438,6 +2560,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooChocol.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 200
@@ -2455,6 +2578,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooMilk.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 260
@@ -2472,6 +2596,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooBread.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 330
@@ -2489,6 +2614,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooHotdog.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 429
@@ -2506,6 +2632,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooHotdog.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     cooldown_ms: 2500
@@ -2522,6 +2649,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooInsHodduk.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 552
@@ -2539,6 +2667,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooInsKimbap.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 676
@@ -2556,6 +2685,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooInsChicke.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 812
@@ -2573,6 +2703,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooInsStarca.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 975
@@ -2590,6 +2721,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooMeatsk.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 120
@@ -2607,6 +2739,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooBarbec.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 160
@@ -2624,6 +2757,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooPancak.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 230
@@ -2641,6 +2775,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooFishso.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 300
@@ -2658,6 +2793,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooSausag.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 370
@@ -2675,6 +2811,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooFishst.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 514
@@ -2692,6 +2829,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooSteame.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 670
@@ -2709,6 +2847,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooMeatsa.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 860
@@ -2726,6 +2865,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooGratin.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 1075
@@ -2743,6 +2883,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooPizza.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 1313
@@ -2760,6 +2901,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceOrange.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 60
@@ -2777,6 +2919,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceStrawb.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 110
@@ -2794,6 +2937,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIcePineap.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 160
@@ -2811,6 +2955,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceBanana.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 210
@@ -2828,6 +2973,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceJuice.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 260
@@ -2845,6 +2991,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceWater.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 334
@@ -2862,6 +3009,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceParfai.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 417
@@ -2879,6 +3027,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceSherbe.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 508
@@ -2896,6 +3045,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIceIcecre.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 607
@@ -2913,6 +3063,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooIcePunch.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 714
@@ -2930,6 +3081,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooPilGray.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 975
@@ -2947,6 +3099,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooPilYellow.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 1200
@@ -2964,6 +3117,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooPilBlue.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 2000
@@ -2981,6 +3135,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooPilRed.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 4000
@@ -2998,6 +3153,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooPilGold.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 8000
@@ -3015,6 +3171,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenFooPilSinbi.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
     hp_restore: 12000
@@ -3032,6 +3189,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooDdukhot.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
@@ -3049,6 +3207,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooDdukFre.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     fp_restore: 9999
@@ -3066,6 +3225,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooCooDdukSwe.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     mp_restore: 9999
@@ -3083,6 +3243,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3099,6 +3260,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3115,6 +3277,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3131,6 +3294,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3147,6 +3311,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3163,6 +3328,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatOrichalcum02.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ENCHANT
     mp_restore: 9999
@@ -3179,6 +3345,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatOrichalcum01.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ENCHANT
     mp_restore: 9999
@@ -3195,6 +3362,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatMoonstone.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
     mp_restore: 9999
@@ -3211,6 +3379,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatOrichalcum01.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ENCHANT
     mp_restore: 9999
@@ -3227,6 +3396,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatMoonstone.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
     mp_restore: 9999
@@ -3243,6 +3413,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3259,6 +3430,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3275,6 +3447,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3291,6 +3464,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3307,6 +3481,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3323,6 +3498,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3339,6 +3515,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3355,6 +3532,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3371,6 +3549,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3387,6 +3566,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3403,6 +3583,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3419,6 +3600,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3435,6 +3617,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3451,6 +3634,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3467,6 +3651,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3483,6 +3668,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3499,6 +3685,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3515,6 +3702,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3531,6 +3719,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3547,6 +3736,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3563,6 +3753,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3579,6 +3770,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3595,6 +3787,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3611,6 +3804,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3627,6 +3821,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3643,6 +3838,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3659,6 +3855,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3675,6 +3872,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3691,6 +3889,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3707,6 +3906,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3723,6 +3923,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3739,6 +3940,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3755,6 +3957,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3771,6 +3974,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3787,6 +3991,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3803,6 +4008,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3819,6 +4025,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3835,6 +4042,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3851,6 +4059,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3867,6 +4076,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3883,6 +4093,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3899,6 +4110,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3915,6 +4127,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3931,6 +4144,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3947,6 +4161,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     mp_restore: 9999
@@ -3963,6 +4178,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
+    icon: itm_GenMatSupMinera.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
     mp_restore: 9999
@@ -3979,6 +4195,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
+    icon: itm_GenMatSupErons.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
     mp_restore: 9999
@@ -3995,6 +4212,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
+    icon: itm_GenMatSupKrasec.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
     mp_restore: 9999
@@ -4011,6 +4229,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 250
+    icon: itm_GenMatSupGuru.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SUPSTONE
     mp_restore: 9999
@@ -4027,6 +4246,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4043,6 +4263,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4059,6 +4280,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4075,6 +4297,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4091,6 +4314,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4107,6 +4331,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4123,6 +4348,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4139,6 +4365,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4155,6 +4382,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4171,6 +4399,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
     mp_restore: 9999
@@ -4187,6 +4416,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDieFour.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
     mp_restore: 9999
@@ -4203,6 +4433,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDieSix.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
     mp_restore: 9999
@@ -4219,6 +4450,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDieEight.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
     mp_restore: 9999
@@ -4235,6 +4467,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDieTen.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
     mp_restore: 9999
@@ -4251,6 +4484,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDieTwelve.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
     mp_restore: 9999
@@ -4267,6 +4501,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4283,6 +4518,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4299,6 +4535,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4315,6 +4552,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4331,6 +4569,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4347,6 +4586,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4363,6 +4603,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4379,6 +4620,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4395,6 +4637,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4411,6 +4654,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4427,6 +4671,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4443,6 +4688,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4459,6 +4705,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4475,6 +4722,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4491,6 +4739,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4507,6 +4756,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4523,6 +4773,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4539,6 +4790,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4555,6 +4807,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4571,6 +4824,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4587,6 +4841,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4603,6 +4858,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4619,6 +4875,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4635,6 +4892,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4651,6 +4909,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4667,6 +4926,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4683,6 +4943,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4699,6 +4960,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4715,6 +4977,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4731,6 +4994,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4747,6 +5011,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4763,6 +5028,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4779,6 +5045,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4795,6 +5062,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4811,6 +5079,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4827,6 +5096,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4843,6 +5113,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4859,6 +5130,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4875,6 +5147,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4891,6 +5164,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
     mp_restore: 9999
@@ -4907,6 +5181,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDieEight.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
     mp_restore: 9999
@@ -4923,6 +5198,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenMatDieTen.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
     mp_restore: 9999
@@ -4939,6 +5215,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4955,6 +5232,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4971,6 +5249,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -4987,6 +5266,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5003,6 +5283,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5019,6 +5300,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5035,6 +5317,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5051,6 +5334,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5067,6 +5351,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5083,6 +5368,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5099,6 +5385,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5115,6 +5402,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5131,6 +5419,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5147,6 +5436,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5163,6 +5453,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5179,6 +5470,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5195,6 +5487,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5211,6 +5504,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5227,6 +5521,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5243,6 +5538,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5259,6 +5555,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5275,6 +5572,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5291,6 +5589,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5307,6 +5606,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5323,6 +5623,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5339,6 +5640,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5355,6 +5657,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5371,6 +5674,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5387,6 +5691,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5403,6 +5708,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5419,6 +5725,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5435,6 +5742,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5451,6 +5759,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5467,6 +5776,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5483,6 +5793,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5499,6 +5810,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5515,6 +5827,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5531,6 +5844,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5547,6 +5861,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5563,6 +5878,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5579,6 +5895,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5595,6 +5912,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5611,6 +5929,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5627,6 +5946,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5643,6 +5963,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5659,6 +5980,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5675,6 +5997,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5691,6 +6014,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5707,6 +6031,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5723,6 +6048,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5739,6 +6065,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
     mp_restore: 9999
@@ -5755,6 +6082,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
+    icon: itm_WeaSecBilCharm.dds
     item_kind2: IK2_CHARM
     item_kind3: IK3_BCHARM
     mp_restore: 9999
@@ -5771,6 +6099,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
+    icon: itm_WeaSecRinCharm.dds
     item_kind2: IK2_CHARM
     item_kind3: IK3_RCHARM
     mp_restore: 9999
@@ -5787,6 +6116,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
+    icon: Itm_WeaSecArrowBox.dds
     item_kind2: IK2_BULLET
     item_kind3: IK3_ARROW
     mp_restore: 9999
@@ -5803,6 +6133,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenTooColNormal.dds
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
     mp_restore: 9999
@@ -5819,6 +6150,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenTooColVthree.dds
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
     mp_restore: 9999
@@ -5835,6 +6167,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenTooColPower.dds
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
     mp_restore: 9999
@@ -5851,6 +6184,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenTooColUltra.dds
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
     mp_restore: 9999
@@ -5867,6 +6201,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenTooColVthree.dds
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
     mp_restore: 9999
@@ -5883,6 +6218,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenTooColVthree.dds
     item_kind2: IK2_TOOLS
     item_kind3: IK3_COLLECTER
     mp_restore: 9999
@@ -5899,6 +6235,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenColNormalBattery.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_SCROLL
     mp_restore: 9999
@@ -5915,6 +6252,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGem.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5930,6 +6268,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemForfor.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5945,6 +6284,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemPalin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5960,6 +6300,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemChupim.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5975,6 +6316,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemPeakyR.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -5990,6 +6332,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemMop.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6005,6 +6348,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemPopora.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6020,6 +6364,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemSlain.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6035,6 +6380,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemTarinr.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6050,6 +6396,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemStarst.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6065,6 +6412,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGoldWi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6080,6 +6428,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemBlueho.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6095,6 +6444,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemMiaDol.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6110,6 +6460,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemFuriou.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6125,6 +6476,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemCardri.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6140,6 +6492,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemHammar.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6155,6 +6508,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGiggla.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6170,6 +6524,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemMoonSt.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6185,6 +6540,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemBoband.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6200,6 +6556,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemDumbli.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6215,6 +6572,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemKalin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6230,6 +6588,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemClockH.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6245,6 +6604,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemTombMa.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6260,6 +6620,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGoldFi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6275,6 +6636,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemOrbrin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6290,6 +6652,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGoldCu.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6305,6 +6668,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemToma.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6320,6 +6684,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemSteamT.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6335,6 +6700,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemKnight.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6350,6 +6716,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemWheels.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6365,6 +6732,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemDroil.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6380,6 +6748,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemAmpere.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6395,6 +6764,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGuardi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6410,6 +6780,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGarbag.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6425,6 +6796,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemEronio.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6440,6 +6812,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemBearBa.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6455,6 +6828,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemSycale.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6470,6 +6844,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemMongTe.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6485,6 +6860,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemBombTi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6500,6 +6876,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemZombyH.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6515,6 +6892,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemNuctuW.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6530,6 +6908,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemZemMar.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6545,6 +6924,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemBucron.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6560,6 +6940,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemScotoo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6575,6 +6956,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemRangla.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6590,6 +6972,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemBathoo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6605,6 +6988,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGrband.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6620,6 +7004,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemDumpti.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6635,6 +7020,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemRepygl.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6650,6 +7036,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBoopos.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6665,6 +7052,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemPrewin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6680,6 +7068,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemPoiesp.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6695,6 +7084,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemRenyke.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6710,6 +7100,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemTangka.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6725,6 +7116,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemRootio.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6740,6 +7132,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLuches.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6755,6 +7148,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemEronsi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6770,6 +7164,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemHamma.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6785,6 +7180,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemRnamon.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6800,6 +7196,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemPhanbu.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6815,6 +7212,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemFFuris.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6830,6 +7228,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemScotoo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6845,6 +7244,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueJackBe.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6860,6 +7260,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrSwSoul.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6875,6 +7276,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemFFuris.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6890,6 +7292,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemDragonHeart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6905,6 +7308,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemDragonCanine.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6920,6 +7324,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemStrangeEyes.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6935,6 +7340,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemRedCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6950,6 +7356,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemYellowCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6965,6 +7372,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGreenCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6980,6 +7388,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBlueCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -6995,6 +7404,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemCatBell.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7010,6 +7420,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemHarpyFeather.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7025,6 +7436,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemPolevikMud.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7040,6 +7452,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBadTongue.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7055,6 +7468,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemhagNail.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7070,6 +7484,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemThothBeak.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7085,6 +7500,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemKhnemuCornu.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7100,6 +7516,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemDantalBall.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7115,6 +7532,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGanesaIvory.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7130,6 +7548,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemAsuraheart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7145,6 +7564,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGiantForceps.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7160,6 +7580,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemInkSac.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7175,6 +7596,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemCarapace.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7190,6 +7612,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemCrispHair.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7205,6 +7628,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBrokenWings.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7220,6 +7644,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGreatCrown.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7235,6 +7660,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemCanineTooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7250,6 +7676,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemSharpTooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7265,6 +7692,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGoggloo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7280,6 +7708,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemPoisonbag.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7295,6 +7724,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBlad.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7310,6 +7740,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemNecklace.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7325,6 +7756,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemFlower.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7340,6 +7772,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemDogtooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7355,6 +7788,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemAntEgg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7370,6 +7804,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemOilLeg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7385,6 +7820,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemNiceCheese.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7400,6 +7836,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBigToeNail.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7415,6 +7852,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemVempireGlass.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7430,6 +7868,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemAntEgg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7445,6 +7884,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemOilLeg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7460,6 +7900,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemNiceCheese.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7475,6 +7916,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBigToeNail.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7490,6 +7932,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemVempireGlass.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7505,6 +7948,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGriffinFeather.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7520,6 +7964,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBackBoneLeader.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7535,6 +7980,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBackBoneSpain.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7550,6 +7996,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemMagicBook.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7565,6 +8012,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemDarkBead.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7580,6 +8028,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemDevilPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7595,6 +8044,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemWolftooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7610,6 +8060,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemSkelSkin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7625,6 +8076,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemSkelPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7640,6 +8092,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemSkelStaffPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7655,6 +8108,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemSkelWeaPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7670,6 +8124,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemSkeltoolbox.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7685,6 +8140,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemGeneralPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7700,6 +8156,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemPoisontooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7715,6 +8172,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemCobraScale.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7730,6 +8188,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemSoftFur.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7745,6 +8204,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemTwohandBlade.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7760,6 +8220,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBraceLet.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7775,6 +8236,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLusikaMask.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7790,6 +8252,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemBigfootHeart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7805,6 +8268,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLightPoisontooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7820,6 +8284,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLightCobraScale.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7835,6 +8300,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLightSoftFur.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7850,6 +8316,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLightTwohandBlade.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7865,6 +8332,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLightBraceLet.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7880,6 +8348,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLightLusikaMask.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7895,6 +8364,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLightBigfootHeart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 4500000
@@ -7910,6 +8380,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooInsKimbap.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 265
@@ -7927,6 +8398,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemTarinr.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7942,6 +8414,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemStarst.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7957,6 +8430,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGoldWi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7972,6 +8446,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemWormveduque.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -7987,6 +8462,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemSerusUriel.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 3200000
@@ -8002,6 +8478,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -8025,6 +8502,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -8048,6 +8526,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemAxKeakoon1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8063,6 +8542,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemSwKeakoon1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8078,6 +8558,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemAxKeakoon2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8093,6 +8574,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemSwKeakoon2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8108,6 +8590,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemAxKeakoon3.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8123,6 +8606,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemSwKeakoon3.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8138,6 +8622,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemRoachFl1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8153,6 +8638,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemRoachFl2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8168,6 +8654,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemTrilipy1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8183,6 +8670,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemTrilipy2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8198,6 +8686,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemTrilipy3.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8213,6 +8702,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemKimeradon.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
     durability: 280000
@@ -8228,6 +8718,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
+    icon: itm_SysSysEveSeed01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 126
@@ -8245,6 +8736,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
+    icon: itm_SysSysEveSeed02.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 202
@@ -8262,6 +8754,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
+    icon: itm_SysSysEveSeed03.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 270
@@ -8279,6 +8772,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
+    icon: itm_SysSysEveSeed04.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 507
@@ -8296,6 +8790,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 50
+    icon: itm_SysSysEveSeed05.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 747
@@ -8313,6 +8808,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetLawolf1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8329,6 +8825,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetAibatt1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8345,6 +8842,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetLeyena1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8361,6 +8859,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetLuia1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8377,6 +8876,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetDog1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8393,6 +8893,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetCat1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8409,6 +8910,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetCola.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8425,6 +8927,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetPenguin.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8441,6 +8944,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetIguana.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8457,6 +8961,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetCobra.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8473,6 +8978,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetFrog.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8489,6 +8995,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetHamburger.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8505,6 +9012,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetTurtle.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8521,6 +9029,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetChicken.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8537,6 +9046,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetCow.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8553,6 +9063,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetDog2.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8569,6 +9080,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetDragon.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8585,6 +9097,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetDragon-et01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8601,6 +9114,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetHamster.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8617,6 +9131,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetHorse.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8633,6 +9148,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetMonkey.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8649,6 +9165,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetPig.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8665,6 +9182,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetRabbit.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8681,6 +9199,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetSheep.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8697,6 +9216,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetTiger.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8713,6 +9233,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetCardpuppet1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8729,6 +9250,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetMia1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8745,6 +9267,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetYeti.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8761,6 +9284,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetBulldog.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8777,6 +9301,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetGhost.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8793,6 +9318,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetHaetae.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8809,6 +9335,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetOwl.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8825,6 +9352,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetRagdoll.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8841,6 +9369,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetRobot.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8857,6 +9386,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetBang1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8873,6 +9403,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetPanda.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8889,6 +9420,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetTaiga01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8905,6 +9437,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetTaiga02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8921,6 +9454,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetTaiga03.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -8937,6 +9471,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_WARP
     item_kind3: IK3_EVENTSUB
     hp_restore: 747
@@ -8953,6 +9488,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_WARP
     item_kind3: IK3_EVENTSUB
     hp_restore: 747
@@ -8969,6 +9505,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysplaliss.dds
     item_kind2: IK2_SKILL
     item_kind3: IK3_GENERAL
     hp_restore: 747
@@ -9020,6 +9557,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_foosongpyunHP.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
@@ -9037,6 +9575,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_foosongpyunMP.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     mp_restore: 9999
@@ -9054,6 +9593,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_foosongpyunFP.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     fp_restore: 9999
@@ -9071,6 +9611,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinHigRin03.dds
     item_kind2: IK2_WARP
     item_kind3: IK3_EVENTSUB
     fp_restore: 9999
@@ -9104,6 +9645,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Item_GenChristmasCookies.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
@@ -9138,6 +9680,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEvePumpkin02.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 5000
@@ -9155,6 +9698,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetEgg.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9170,6 +9714,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetWhiteTiger01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9185,6 +9730,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetBarbaryLion01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9200,6 +9746,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetRabbit02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9215,6 +9762,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetDragon01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9230,6 +9778,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetUnicorn01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9245,6 +9794,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetNineFox01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9260,6 +9810,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetEagle01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_EGG
     durability: 50000
@@ -9275,6 +9826,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 9999
+    icon: Itm_ChpRed.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
     durability: 50000
@@ -9290,6 +9842,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveSnow01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 508
@@ -9307,6 +9860,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveSowonroll01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
@@ -9324,6 +9878,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveBeansoju01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 2000
@@ -9341,6 +9896,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveChocolate03.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 2000
@@ -9358,6 +9914,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveChocolate04.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
@@ -9375,6 +9932,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveChocolate07.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     fp_restore: 2000
@@ -9392,6 +9950,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveHerbage01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     hp_restore: 2000
@@ -9409,6 +9968,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveDrink01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 2000
@@ -9426,6 +9986,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_Danishmelon.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     hp_restore: 2000
@@ -9443,6 +10004,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_Wafflemelon.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
     mp_restore: 2000
@@ -9460,6 +10022,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetParrot.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9475,6 +10038,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetDaringRaccon.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 7200000
@@ -9490,6 +10054,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetRobot01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 50000
@@ -9505,6 +10070,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EventVanilla.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
@@ -9520,6 +10086,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_Santa.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 9999
@@ -9534,6 +10101,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_Snowman02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 9999
@@ -9548,6 +10116,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetHybridRican.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 7200000
@@ -9561,6 +10130,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -9582,6 +10152,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -9603,6 +10174,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -9624,6 +10196,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewRinNorRin03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_RING
     equip_slot: 20
@@ -9645,6 +10218,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -9666,6 +10240,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewEarNorEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -9687,6 +10262,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_GenJewEarHigEar02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -9708,6 +10284,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_GenJewEarHigEar01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_EARRING
     equip_slot: 22
@@ -9729,6 +10306,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec01.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -9750,6 +10328,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec02.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -9771,6 +10350,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenJewNecNorNec03.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -9792,6 +10372,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_GenJewNecNorNec04.dds
     item_kind2: IK2_JEWELRY
     item_kind3: IK3_NECKLACE
     equip_slot: 19
@@ -9813,6 +10394,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveSardine.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
@@ -9828,6 +10410,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveMelonsoda.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     mp_restore: 2000
@@ -9843,6 +10426,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EveBalLucBag.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 2000
@@ -9858,6 +10442,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetDesertFox.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 2000
@@ -9872,6 +10457,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetDoberman.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 2000
@@ -9886,6 +10472,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetIceQueen.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 2000
@@ -9900,6 +10487,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_PetWrongKoala.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 2000
@@ -9914,6 +10502,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetCheshireCat.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9927,6 +10516,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetWhiteRabbit.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9940,6 +10530,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetWhiteTiger02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 4500000
@@ -9953,6 +10544,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_PetRemains01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 50000

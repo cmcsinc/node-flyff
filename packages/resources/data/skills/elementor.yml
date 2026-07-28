@@ -7,6 +7,8 @@ skills:
     tier: 2
     job: 13
     discipline: 15
+    icon: skill_EleFirFirbrd.dds
+    description: Damages the enemy with a fire blast.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -110,6 +112,8 @@ skills:
     tier: 2
     job: 13
     discipline: 15
+    icon: skill_EleFirFirmst.dds
+    description: Increases the striking power of fire spells,
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -223,6 +227,8 @@ skills:
     tier: 2
     job: 13
     discipline: 15
+    icon: skill_EleFirBunfil.dds
+    description: Does damage to the enemy over a period of time
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -377,6 +383,8 @@ skills:
     tier: 2
     job: 13
     discipline: 24
+    icon: skill_EleEleThunst.dds
+    description: Damages the enemy with a bolt of lightning.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -480,6 +488,8 @@ skills:
     tier: 2
     job: 13
     discipline: 24
+    icon: skill_EleEleElemst.dds
+    description: Increases the striking power of electric spells.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -593,6 +603,9 @@ skills:
     tier: 2
     job: 13
     discipline: 24
+    icon: skill_EleEleEleshk.dds
+    description: Damage surrounding enemies with electricity. Defense of the enemies
+      decreases.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -756,6 +769,8 @@ skills:
     tier: 2
     job: 13
     discipline: 18
+    icon: skill_EleEarStnspr.dds
+    description: Damages an enemy with a stone spear.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -859,6 +874,8 @@ skills:
     tier: 2
     job: 13
     discipline: 18
+    icon: skill_EleEarEarmst.dds
+    description: Increases the striking power of earth spells.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -972,6 +989,8 @@ skills:
     tier: 2
     job: 13
     discipline: 18
+    icon: skill_EleEarEarsqk.dds
+    description: Damages surrounding enemies area.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1085,6 +1104,8 @@ skills:
     tier: 2
     job: 13
     discipline: 17
+    icon: skill_EleWatIceshk.dds
+    description: Ranged attack that fires an ice projectile.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1188,6 +1209,8 @@ skills:
     tier: 2
     job: 13
     discipline: 17
+    icon: skill_EleWatWatmst.dds
+    description: Increases striking power of water spells.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1301,6 +1324,8 @@ skills:
     tier: 2
     job: 13
     discipline: 17
+    icon: skill_EleWatPoicld.dds
+    description: Damages enemies in the surrounding area.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1515,6 +1540,8 @@ skills:
     tier: 2
     job: 13
     discipline: 16
+    icon: skill_EleWinVoid.dds
+    description: To attack the enemy by generating a perfect vacuum.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1618,6 +1645,8 @@ skills:
     tier: 2
     job: 13
     discipline: 16
+    icon: skill_EleWinWinmst.dds
+    description: Increases the striking power of wind spells.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1731,6 +1760,9 @@ skills:
     tier: 2
     job: 13
     discipline: 16
+    icon: skill_EleWinWinfil.dds
+    description: Damages surrounding enemies with a wind attack. The speed of the
+      enemies will be reduced.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1914,6 +1946,8 @@ skills:
     tier: 2
     job: 13
     discipline: 23
+    icon: skill_EleMulMeteos.dds
+    description: Damages surrounding enemies with a falling meteor.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2038,6 +2072,8 @@ skills:
     tier: 2
     job: 13
     discipline: 23
+    icon: skill_EleMulLgtstm.dds
+    description: Damages surrounding enemies with electric blasts.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2162,6 +2198,8 @@ skills:
     tier: 2
     job: 13
     discipline: 23
+    icon: skill_EleMulSanstm.dds
+    description: Damages surrounding enemies with a sandstorm.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -2286,6 +2324,8 @@ skills:
     tier: 2
     job: 13
     discipline: 23
+    icon: skill_EleMulAvalan.dds
+    description: Damages surrounding enemies with a snowstorm.
     weaponType: 13
     handed: 3
     attackRange: 5

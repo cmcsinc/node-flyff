@@ -218,7 +218,7 @@
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\questText.loader.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\quest.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\items.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\items.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\questConditions.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\serializers\\party.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\party\\test\\managers\\party.manager.test.ts": "pass",
@@ -234,5 +234,7 @@
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\target.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\npcBuff.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\changeJob.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\quest\\test\\systems\\questTracker.system.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\quest\\test\\systems\\questTracker.system.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\inventory.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\handlers\\shop.handler.test.ts": "pass"
 }

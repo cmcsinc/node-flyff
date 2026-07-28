@@ -112,6 +112,10 @@ export const SkillDefinitionSchema = z.object({
   useMotion: z.number().int().optional(),
   /** `dwSfxElemental` XI_SKILL_* visual/sfx. */
   sfx: z.number().int().optional(),
+  /** `szIcon` — DDS texture filename (e.g. `"skill_VagOneBrandi.dds"`). */
+  icon: z.string().max(128).optional(),
+  /** Display description from propSkill.txt.txt (IDS_PROPSKILL_TXT offset +1). */
+  description: z.string().max(256).optional(),
   /** Per-level scaling rows (sorted by `level`). Empty for passive/non-scaling. */
   levels: z.array(SkillLevelSchema).default([]),
 });

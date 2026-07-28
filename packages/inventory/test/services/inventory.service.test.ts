@@ -64,8 +64,9 @@ describe('InventoryService', () => {
 
     assert.equal(r.ok, true);
     if (r.ok) {
-      assert.equal(r.slot, 0, 'first empty slot');
-      assert.equal(r.itemId, 2950);
+      assert.equal(r.changes.length, 1);
+      assert.equal(r.changes[0]!.slot, 0, 'first empty slot');
+      assert.equal(r.changes[0]!.itemId, 2950);
     }
     assert.deepEqual(player.m_Inventory[0], { objid: 0, itemId: 2950, count: 1 });
     assert.ok(player._dirty.has('m_Inventory'));
@@ -150,9 +151,10 @@ describe('InventoryService -- stacking', () => {
 
     assert.equal(r.ok, true);
     if (r.ok) {
-      assert.equal(r.isNew, false, 'merged, not a new slot');
-      assert.equal(r.slot, 0);
-      assert.equal(r.count, 50);
+      assert.equal(r.changes.length, 1);
+      assert.equal(r.changes[0]!.isNew, false, 'merged, not a new slot');
+      assert.equal(r.changes[0]!.slot, 0);
+      assert.equal(r.changes[0]!.count, 50);
     }
     assert.equal(player.m_Inventory[0]!.count, 50);
   });
@@ -165,8 +167,90 @@ describe('InventoryService -- stacking', () => {
     const r = svc.addItem(player, 2001, 5);
 
     assert.equal(r.ok, true);
-    if (r.ok) assert.equal(r.isNew, true);
+    if (r.ok) {
+      assert.equal(r.changes.length, 1);
+      assert.equal(r.changes[0]!.isNew, true);
+    }
     assert.equal(player.m_Inventory[0]!.count, 5);
+  });
+
+  it('remainder overflows into a new slot when partial stack is filled', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 15, objid: 0 };
+    const ctx = makeFullDeps(() => 20);
+    const svc = new InventoryService(ctx.deps);
+
+    // 15/20 existing + add 10 -> fills to 20 (5 merged), remainder 5 -> new slot
+    const r = svc.addItem(player, 2001, 10);
+
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.changes.length, 2, 'two slots touched');
+      assert.equal(r.changes[0]!.isNew, false, 'first change merges');
+      assert.equal(r.changes[0]!.slot, 0);
+      assert.equal(r.changes[0]!.count, 20, 'filled to stack_size');
+      assert.equal(r.changes[1]!.isNew, true, 'second change is new slot');
+      assert.equal(r.changes[1]!.count, 5, 'remainder placed');
+    }
+    assert.equal(player.m_Inventory[0]!.count, 20);
+    assert.equal(player.m_Inventory[1]!.count, 5);
+  });
+
+  it('fills multiple partial stacks before placing in empty slots', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 5, objid: 0 };
+    player.m_Inventory[3] = { itemId: 2001, count: 10, objid: 3 };
+    const ctx = makeFullDeps(() => 20);
+    const svc = new InventoryService(ctx.deps);
+
+    // two partials: 5/20 (space 15) + 10/20 (space 10) = 25 space. Add 12.
+    const r = svc.addItem(player, 2001, 12);
+
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.changes.length, 1, 'only first partial needed (12 <= 15)');
+      assert.equal(r.changes[0]!.isNew, false);
+      assert.equal(r.changes[0]!.slot, 0);
+      assert.equal(r.changes[0]!.count, 17, '5 + 12 = 17');
+    }
+    assert.equal(player.m_Inventory[0]!.count, 17);
+    assert.equal(player.m_Inventory[3]!.count, 10, 'second partial untouched');
+  });
+
+  it('skips full stacks and places in empty slot', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[0] = { itemId: 2001, count: 20, objid: 0 }; // full
+    const ctx = makeFullDeps(() => 20);
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.addItem(player, 2001, 5);
+
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.changes.length, 1);
+      assert.equal(r.changes[0]!.isNew, true, 'new slot because existing is full');
+      assert.equal(r.changes[0]!.slot, 1);
+    }
+    assert.equal(player.m_Inventory[0]!.count, 20, 'full stack unchanged');
+    assert.equal(player.m_Inventory[1]!.count, 5, 'new slot');
+  });
+
+  it('split-count items fill multiple new slots when stack_size < count', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const ctx = makeFullDeps(() => 10);
+    const svc = new InventoryService(ctx.deps);
+
+    // stack_size=10, add 25 -> 3 slots: 10 + 10 + 5
+    const r = svc.addItem(player, 2001, 25);
+
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.changes.length, 3);
+      assert.equal(r.changes[0]!.count, 10);
+      assert.equal(r.changes[1]!.count, 10);
+      assert.equal(r.changes[2]!.count, 5);
+      assert.ok(r.changes.every((c) => c.isNew), 'all new slots');
+    }
   });
 });
 
@@ -192,6 +276,70 @@ describe('InventoryService -- moveItem / dropItem / dropGold', () => {
     const svc = new InventoryService(ctx.deps);
     assert.equal(svc.moveItem(player, 0, MAX_INVENTORY).ok, false);
     assert.equal(svc.moveItem(player, 0, 0).ok, false, 'src===dst');
+  });
+
+  it('moveItem merges src fully into a partial dst stack (CItemContainer::Swap)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[1] = { itemId: 2001, count: 5, objid: 1 };
+    player.m_Inventory[2] = { itemId: 2001, count: 10, objid: 2 };
+    const ctx = makeFullDeps(() => 99);
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.moveItem(player, 1, 2);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_Inventory[1], null, 'src emptied after full merge');
+    assert.equal(player.m_Inventory[2]!.itemId, 2001);
+    assert.equal(player.m_Inventory[2]!.count, 15, 'dst absorbed the full src count');
+    assert.equal(ctx.removed[0], 1, 'src row removed from DB');
+    assert.deepEqual(ctx.setItem[0], { slot: 2, itemId: 2001, quantity: 15 });
+  });
+
+  it('moveItem partial-merges when src exceeds dst space, leaving remainder in src', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    // dst 15/20 (space 5), src 10 -- only 5 merge, 5 remain in src.
+    player.m_Inventory[1] = { itemId: 2001, count: 10, objid: 1 };
+    player.m_Inventory[2] = { itemId: 2001, count: 15, objid: 2 };
+    const ctx = makeFullDeps(() => 20);
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.moveItem(player, 1, 2);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_Inventory[1]!.count, 5, 'remainder stays in src');
+    assert.equal(player.m_Inventory[2]!.count, 20, 'dst filled to stack_size');
+    assert.equal(ctx.moved.length, 0, 'no pure-swap persist on a merge');
+    assert.deepEqual(ctx.setItem[0], { slot: 2, itemId: 2001, quantity: 20 });
+    assert.deepEqual(ctx.setItem[1], { slot: 1, itemId: 2001, quantity: 5 });
+  });
+
+  it('moveItem does NOT merge when flags differ (rarity/element bits)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[1] = { itemId: 2001, count: 5, objid: 1, flags: 0x80 };
+    player.m_Inventory[2] = { itemId: 2001, count: 10, objid: 2, flags: 0 };
+    const ctx = makeFullDeps(() => 99);
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.moveItem(player, 1, 2);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_Inventory[1]!.itemId, 2001, 'no merge -- swap instead');
+    assert.equal(player.m_Inventory[2]!.flags, 0x80);
+    assert.deepEqual(ctx.moved[0], { src: 1, dst: 2 }, 'pure swap persisted');
+  });
+
+  it('moveItem does NOT merge non-stackable items (stack_size 1)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[1] = { itemId: 2001, count: 1, objid: 1 };
+    player.m_Inventory[2] = { itemId: 2001, count: 1, objid: 2 };
+    const ctx = makeFullDeps(() => 1);
+    const svc = new InventoryService(ctx.deps);
+
+    const r = svc.moveItem(player, 1, 2);
+
+    assert.equal(r.ok, true);
+    assert.equal(player.m_Inventory[1]!.itemId, 2001, 'non-stackable -> swap');
+    assert.deepEqual(ctx.moved[0], { src: 1, dst: 2 });
   });
 
   it('dropItem partial-decrements the stack', () => {

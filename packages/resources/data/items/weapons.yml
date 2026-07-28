@@ -11,6 +11,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCurin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -32,6 +33,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeSteel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -53,6 +55,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCrenil.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -74,6 +77,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeSephir.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -95,6 +99,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeGorn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -116,6 +121,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeVain.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -137,6 +143,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeToorin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -158,6 +165,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeKarm.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -179,6 +187,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeBattle.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -200,6 +209,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeAction.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -221,6 +231,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeWar.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -242,6 +253,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeZailon.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -263,6 +275,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeForge.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -284,6 +297,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeGalaxy.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -305,6 +319,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeRibten.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -326,6 +341,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCantes.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -347,6 +363,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeStormp.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -368,6 +385,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeNeedre.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -389,6 +407,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxePhante.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -410,6 +429,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeButerf.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -431,6 +451,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeDriff.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -452,6 +473,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeSaints.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -473,6 +495,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeFlaper.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -494,6 +517,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeWitche.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -515,6 +539,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtTwoHan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -536,6 +561,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtGreatA.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -557,6 +583,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtKergni.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -578,6 +605,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtLurkni.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -599,6 +627,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtAvniti.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -620,6 +649,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtKanain.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -641,6 +671,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtOrcani.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -662,6 +693,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtLiniti.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -683,6 +715,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtHardin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -704,6 +737,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowWoode.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -725,6 +759,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowGreen.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -746,6 +781,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowStinge.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -767,6 +803,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowClassi.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -788,6 +825,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowRedwin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -809,6 +847,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowCrysta.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -830,6 +869,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowIron.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -851,6 +891,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowLayere.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -872,6 +913,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowCrusad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -893,6 +935,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowSiege.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -914,6 +957,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowMetal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -935,6 +979,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowSentin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -956,6 +1001,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowVelinj.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -977,6 +1023,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowDarkne.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -998,6 +1045,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowHydra.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1019,6 +1067,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowSaint.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1040,6 +1089,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowCiclon.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1061,6 +1111,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowSaythp.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1082,6 +1133,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowRagonat.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1103,6 +1155,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowPhioni.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1124,6 +1177,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowBrikie.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1145,6 +1199,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowSeinti.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -1166,6 +1221,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheMay.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1190,6 +1246,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheSirin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1214,6 +1271,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheTim.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1238,6 +1296,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheBopol.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1262,6 +1321,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheSpim.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1286,6 +1346,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePero.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1310,6 +1371,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheGogo.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1334,6 +1396,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheGale.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1358,6 +1421,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheZanne.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1382,6 +1446,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheHein.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1406,6 +1471,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePepper.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1430,6 +1496,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheExtrem.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1454,6 +1521,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheMarple.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1478,6 +1546,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheCherry.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1502,6 +1571,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheFairmi.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1526,6 +1596,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheShaber.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1550,6 +1621,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheRequer.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1574,6 +1646,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheMorain.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1598,6 +1671,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePierli.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1622,6 +1696,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheLabad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1646,6 +1721,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheVailem.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1670,6 +1746,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheMaret.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -1694,6 +1771,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_item.dds
     item_kind2: IK2_WEAPON_HAND
     item_kind3: IK3_HAND
     equip_slot: 10
@@ -1716,6 +1794,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuCram.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1740,6 +1819,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSpeck.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1764,6 +1844,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuBeetle.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1788,6 +1869,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSledge.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1812,6 +1894,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSpike.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1836,6 +1919,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuMega.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1860,6 +1944,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuWedge.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1884,6 +1969,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuRobin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1908,6 +1994,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuTrocal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1932,6 +2019,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuShark.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1956,6 +2044,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSplin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -1980,6 +2069,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuAzuma.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2004,6 +2094,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuScalem.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2028,6 +2119,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuRedorn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2052,6 +2144,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSamure.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2076,6 +2169,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuNecryn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2100,6 +2194,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuCrossa.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2124,6 +2219,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuClawre.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2148,6 +2244,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuCrecen.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2172,6 +2269,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuViolek.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2196,6 +2294,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuMetilv.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2220,6 +2319,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuBlarmo.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -2244,6 +2344,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaCron.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2268,6 +2369,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaSailwi.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2292,6 +2394,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaId.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2316,6 +2419,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaSeer.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2340,6 +2444,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaEgo.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2364,6 +2469,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaSorain.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2388,6 +2494,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaSpecto.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2412,6 +2519,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaJessy.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2436,6 +2544,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaCosmo.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2460,6 +2569,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaWaterp.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2484,6 +2594,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaOlin.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2508,6 +2619,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaWiz.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2532,6 +2644,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaBishap.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2556,6 +2669,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaGuadfo.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2580,6 +2694,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaFlorel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2604,6 +2719,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaBirdin.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2628,6 +2744,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaCrosse.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2652,6 +2769,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaMazeri.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2676,6 +2794,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaDarkhi.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2700,6 +2819,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaHexago.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2724,6 +2844,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaFairel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2748,6 +2869,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaAngeli.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -2772,6 +2894,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoWooden.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2796,6 +2919,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoNormal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2820,6 +2944,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoHandsa.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2844,6 +2969,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoLeaf.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2868,6 +2994,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoPenel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2892,6 +3019,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoFlower.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2916,6 +3044,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoStar.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2940,6 +3069,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSlogge.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2964,6 +3094,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoFairli.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -2988,6 +3119,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoTurtle.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3012,6 +3144,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoOval.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3036,6 +3169,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoJaim.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3060,6 +3194,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoHansel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3084,6 +3219,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoComet.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3108,6 +3244,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoPricke.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3132,6 +3269,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSubbla.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3156,6 +3294,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBigmas.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3180,6 +3319,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSavage.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3204,6 +3344,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoKnocke.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3228,6 +3369,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBlueSh.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3252,6 +3394,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoShyer.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3276,6 +3419,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoRowben.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3300,6 +3444,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoKhaica.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3324,6 +3469,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoAxilow.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3348,6 +3494,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBreake.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3372,6 +3519,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoRunaic.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3396,6 +3544,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoFireis.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3420,6 +3569,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtBastar.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3444,6 +3594,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtTwoHan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3468,6 +3619,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtDarkon.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3492,6 +3644,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtAdapti.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3516,6 +3669,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtZweiga.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3540,6 +3694,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtKaleon.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3564,6 +3719,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtGootni.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3588,6 +3744,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtHaunti.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3612,6 +3769,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtClockS.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -3636,6 +3794,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanGlass.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3660,6 +3819,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanCrystal.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3684,6 +3844,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanPearl.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3708,6 +3869,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanTopaz.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3732,6 +3894,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanCatsey.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3756,6 +3919,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanBloody.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3780,6 +3944,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanMerr.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3804,6 +3969,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanAurora.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3828,6 +3994,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanOpel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3852,6 +4019,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanMisty.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3876,6 +4044,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanRainbo.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3924,6 +4093,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanIllusi.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3948,6 +4118,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanFlupim.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3972,6 +4143,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanDivine.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -3996,6 +4168,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanNeplus.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4020,6 +4193,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanTripal.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4044,6 +4218,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanEruld.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4068,6 +4243,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanRismil.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4092,6 +4268,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanFacus.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4116,6 +4293,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanBlackw.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4140,6 +4318,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanHollat.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4164,6 +4343,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyIron.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4188,6 +4368,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoySleepe.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4212,6 +4393,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyCleepe.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4236,6 +4418,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyTripin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4260,6 +4443,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyImperial.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4284,6 +4468,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyDeathf.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4308,6 +4493,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyMirage.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4332,6 +4518,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyRidert.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4356,6 +4543,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyFreeha.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4380,6 +4568,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyHiper.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4404,6 +4593,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyStealth.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4428,6 +4618,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyRedeye.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4452,6 +4643,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyGoldbu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4476,6 +4668,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyWingfo.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4500,6 +4693,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyAquabr.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4524,6 +4718,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyCisica.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4548,6 +4743,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyHander.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4572,6 +4768,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoySharpn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4596,6 +4793,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyAranet.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4620,6 +4818,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyClipeus.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4644,6 +4843,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyEclips.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4668,6 +4868,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyCorses.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -4692,6 +4893,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSet01.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -4718,6 +4920,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeSet01.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -4744,6 +4947,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheSet01.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -4770,6 +4974,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanSet01.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4796,6 +5001,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaSet01.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -4822,6 +5028,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSet01.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -4848,6 +5055,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoPericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -4874,6 +5082,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxePericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -4900,6 +5109,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -4926,6 +5136,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuPericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -4952,6 +5163,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanPericuum.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -4978,6 +5190,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyPericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -5004,6 +5217,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowPericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -5030,6 +5244,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaPericuum.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -5056,6 +5271,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoPericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -5082,6 +5298,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxePericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -5108,6 +5325,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -5134,6 +5352,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuPericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -5160,6 +5379,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanPericuum.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -5186,6 +5406,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaPericuum.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -5212,6 +5433,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoLeaf.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -5238,6 +5460,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCurin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -5264,6 +5487,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoTurtle.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -5290,6 +5514,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeToorin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -5316,6 +5541,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSledge.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -5342,6 +5568,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBroad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -5368,6 +5595,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSavage.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -5394,6 +5622,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCrenil.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -5420,6 +5649,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeGorn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -5446,6 +5676,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuRobin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -5472,6 +5703,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuAzuma.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -5498,6 +5730,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyDeathf.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -5524,6 +5757,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyFreeha.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -5550,6 +5784,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyRedeye.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -5576,6 +5811,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowCrysta.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -5602,6 +5838,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowCrusad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -5628,6 +5865,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowVelinj.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -5654,6 +5892,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePero.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -5680,6 +5919,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheZanne.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -5706,6 +5946,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheMarple.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -5732,6 +5973,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanBloody.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -5758,6 +6000,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanOpel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -5784,6 +6027,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanIllusi.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -5810,6 +6054,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaSorain.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -5836,6 +6081,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaCosmo.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -5862,6 +6108,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaBishap.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -5888,6 +6135,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -5914,6 +6162,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -5940,6 +6189,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -5966,6 +6216,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -5992,6 +6243,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -6018,6 +6270,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -6044,6 +6297,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanSuho.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -6070,6 +6324,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaSuho.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -6096,6 +6351,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -6122,6 +6378,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoySuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -6148,6 +6405,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6174,6 +6432,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6200,6 +6459,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -6226,6 +6486,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -6252,6 +6513,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -6278,6 +6540,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -6304,6 +6567,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanUsu.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -6330,6 +6594,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaUsu.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -6356,6 +6621,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -6382,6 +6648,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -6408,6 +6675,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6434,6 +6702,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6460,6 +6729,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -6486,6 +6756,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -6512,6 +6783,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -6538,6 +6810,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -6564,6 +6837,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanAngel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -6590,6 +6864,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaAngel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -6616,6 +6891,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -6642,6 +6918,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -6668,6 +6945,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6694,6 +6972,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6720,6 +6999,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -6746,6 +7026,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -6772,6 +7053,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -6798,6 +7080,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -6824,6 +7107,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanLegendG.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -6850,6 +7134,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaLegendG.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -6876,6 +7161,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -6902,6 +7188,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -6928,6 +7215,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6956,6 +7244,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -6984,6 +7273,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7012,6 +7302,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7040,6 +7331,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -7068,6 +7360,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -7096,6 +7389,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanBloody2.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -7124,6 +7418,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaBloody.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -7152,6 +7447,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -7180,6 +7476,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -7208,6 +7505,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -7234,6 +7532,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -7260,6 +7559,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7286,6 +7586,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7312,6 +7613,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -7338,6 +7640,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -7364,6 +7667,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanAncient.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -7390,6 +7694,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaAncient.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -7416,6 +7721,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -7442,6 +7748,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyAncient.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -7468,6 +7775,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -7494,6 +7802,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -7522,6 +7831,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7548,6 +7858,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7576,6 +7887,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -7604,6 +7916,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -7632,6 +7945,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanVempire.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -7660,6 +7974,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaVempire.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -7688,6 +8003,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -7716,6 +8032,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyVempire.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -7744,6 +8061,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -7772,6 +8090,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -7800,6 +8119,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7828,6 +8148,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -7856,6 +8177,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -7884,6 +8206,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -7912,6 +8235,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanSuho.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -7940,6 +8264,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaSuho.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -7968,6 +8293,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowSuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -7996,6 +8322,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoySuho.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -8024,6 +8351,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8052,6 +8380,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8080,6 +8409,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8108,6 +8438,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8136,6 +8467,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -8164,6 +8496,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -8192,6 +8525,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanUsu.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -8220,6 +8554,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaUsu.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -8248,6 +8583,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -8276,6 +8612,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyUsu.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -8304,6 +8641,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8332,6 +8670,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8360,6 +8699,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8388,6 +8728,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8416,6 +8757,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -8444,6 +8786,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -8472,6 +8815,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanAngel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -8500,6 +8844,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaAngel.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -8528,6 +8873,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -8556,6 +8902,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyAngel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -8584,6 +8931,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8612,6 +8960,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8640,6 +8989,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8668,6 +9018,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8696,6 +9047,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -8724,6 +9076,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -8752,6 +9105,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanLegendG.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -8780,6 +9134,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaLegendG.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -8808,6 +9163,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -8836,6 +9192,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyLegendG.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -8864,6 +9221,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8892,6 +9250,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -8920,6 +9279,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8948,6 +9308,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -8976,6 +9337,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -9004,6 +9366,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9032,6 +9395,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanBloody2.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -9060,6 +9424,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaBloody.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -9088,6 +9453,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -9116,6 +9482,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyBloody.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -9144,6 +9511,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwtPeace.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9172,6 +9540,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwtLaster.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9200,6 +9569,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxtPeace.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -9228,6 +9598,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxtLaster.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -9256,6 +9627,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoRunaic.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9284,6 +9656,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtBastar.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9312,6 +9685,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxePericuum.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -9340,6 +9714,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuNecryn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -9368,6 +9743,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheShaber.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9396,6 +9772,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanNeplus.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -9424,6 +9801,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyHander.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -9452,6 +9830,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowCiclon.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -9480,6 +9859,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaBirdin.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -9508,6 +9888,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoKehin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9536,6 +9917,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoComet.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9564,6 +9946,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoZirkan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9592,6 +9975,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoStrad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9620,6 +10004,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSibak.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9648,6 +10033,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBroad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9676,6 +10062,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoKarmel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9704,6 +10091,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoGemini.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -9732,6 +10120,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheMeryl.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9760,6 +10149,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheSpim.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9788,6 +10178,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePaPang.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9816,6 +10207,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheDain.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9844,6 +10236,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheSephy.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9872,6 +10265,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePero.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9900,6 +10294,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheBosl.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9928,6 +10323,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheFairmi.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -9956,6 +10352,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanNefume.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -9984,6 +10381,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanTopaz.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -10012,6 +10410,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanDazzle.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -10040,6 +10439,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanPeny.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -10068,6 +10468,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanEclips.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -10096,6 +10497,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanMisty.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -10124,6 +10526,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanSaint.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -10152,6 +10555,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanRainbo.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -10180,6 +10584,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaShupri.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10208,6 +10613,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaWaterp.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10236,6 +10642,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaPapane.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10264,6 +10671,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaPinsi.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10292,6 +10700,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaLeafga.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10320,6 +10729,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaJessy.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10348,6 +10758,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaVenhil.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10376,6 +10787,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaEgo.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -10404,6 +10816,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuPazion.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10432,6 +10845,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuAzuma.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10460,6 +10874,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuPrenil.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10488,6 +10903,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSalama.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10516,6 +10932,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuGigato.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10544,6 +10961,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuSplin.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10572,6 +10990,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuAppel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10600,6 +11019,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuTrocal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -10628,6 +11048,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeGrabbe.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10656,6 +11077,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeKarm.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10684,6 +11106,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCrest.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10712,6 +11135,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCanine.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10740,6 +11164,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCrawle.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10768,6 +11193,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeCrenil.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10796,6 +11222,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeFrenet.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10824,6 +11251,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeGorn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -10852,6 +11280,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoPenel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -10880,6 +11309,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoPenel.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -10908,6 +11338,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBroad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -10936,6 +11367,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBroad.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -10964,6 +11396,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSeed.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -10992,6 +11425,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoSeed.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11020,6 +11454,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoGemini.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11048,6 +11483,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoGemini.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11076,6 +11512,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoFlower.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11104,6 +11541,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheMay.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -11132,6 +11570,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanGlass.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -11160,6 +11599,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoZirkan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11188,6 +11628,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoZirkan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11216,6 +11657,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoZirkan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11244,6 +11686,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoZirkan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11272,6 +11715,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoZirkan.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11300,6 +11744,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaChePaPang.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -11328,6 +11773,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtBastar.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11356,6 +11802,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoShyer.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -11384,6 +11831,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuNecryn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -11412,6 +11860,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheShaber.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -11440,6 +11889,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanNeplus.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -11468,6 +11918,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaBirdin.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -18835,6 +19286,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoShyer.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -18863,6 +19315,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwtZweiga.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -18891,6 +19344,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxeNeedre.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -18919,6 +19373,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaAxtAvniti.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -18947,6 +19402,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaKnuNecryn.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -18975,6 +19431,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaCheShaber.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -19003,6 +19460,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanNeplus.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -19031,6 +19489,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaStaBirdin.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -19059,6 +19518,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaBowSaint.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -19087,6 +19547,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaYoyCisica.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -19115,6 +19576,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoApple.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19143,6 +19605,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaSwoBamboo.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19171,6 +19634,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoUmbrella01.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19199,6 +19663,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoParasol.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19227,6 +19692,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19255,6 +19721,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwtLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19283,6 +19750,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -19311,6 +19779,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxtLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -19339,6 +19808,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -19367,6 +19837,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -19395,6 +19866,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaWanLusika.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -19423,6 +19895,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaLusika.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -19451,6 +19924,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -19479,6 +19953,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyLusika.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10
@@ -19507,6 +19982,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwoCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19533,6 +20009,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaSwtCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_SWD
     equip_slot: 10
@@ -19559,6 +20036,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxeCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -19585,6 +20063,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaAxtCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_AXE
     equip_slot: 10
@@ -19611,6 +20090,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaKnuCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_KNUCKLEHAMMER
     equip_slot: 10
@@ -19637,6 +20117,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaCheCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_CHEERSTICK
     equip_slot: 10
@@ -19663,6 +20144,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_WeaWanRustiaCrystal.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_WAND
     equip_slot: 10
@@ -19689,6 +20171,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaStaCrystal.dds
     item_kind2: IK2_WEAPON_MAGIC
     item_kind3: IK3_STAFF
     equip_slot: 10
@@ -19715,6 +20198,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaBowCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_BOW
     equip_slot: 10
@@ -19741,6 +20225,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_WeaYoyCrystal.dds
     item_kind2: IK2_WEAPON_DIRECT
     item_kind3: IK3_YOYO
     equip_slot: 10

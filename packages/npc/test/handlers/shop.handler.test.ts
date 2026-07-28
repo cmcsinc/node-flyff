@@ -120,7 +120,7 @@ function makeTradeHandler(opts: {
 describe('ShopHandler -- BUYITEM', () => {
   it('acks a fresh-slot buy with CREATEITEM + SETPOINTPARAM(DST_GOLD)', () => {
     const { handler, sent } = makeTradeHandler({
-      buy: { ok: true, slot: 3, itemId: 81, count: 5, isNew: true, gold: 950 },
+      buy: { ok: true, changes: [{ slot: 3, objid: 3, itemId: 81, count: 5, isNew: true }], gold: 950 },
     });
     handler.handleBuy(mockSocket(), new PacketReader(writeBuy(0, 0, 5, 81)));
     assert.equal(sent.length, 2);
@@ -133,7 +133,7 @@ describe('ShopHandler -- BUYITEM', () => {
 
   it('acks a stack-merge buy with UPDATE_ITEM instead of CREATEITEM', () => {
     const { handler, sent } = makeTradeHandler({
-      buy: { ok: true, slot: 3, itemId: 81, count: 5, isNew: false, gold: 950 },
+      buy: { ok: true, changes: [{ slot: 3, objid: 3, itemId: 81, count: 5, isNew: false }], gold: 950 },
     });
     handler.handleBuy(mockSocket(), new PacketReader(writeBuy(0, 0, 5, 81)));
     assert.equal(sent.length, 2);

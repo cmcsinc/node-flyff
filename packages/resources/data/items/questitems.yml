@@ -11,6 +11,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueVision.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -26,6 +27,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLetterB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -41,6 +43,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLetterJ.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -56,6 +59,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueDScale.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -71,6 +75,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueBTooth.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -86,6 +91,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueArcard.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -101,6 +107,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueEpicst.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -116,6 +123,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueCrBulrox.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -131,6 +139,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueScollg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -146,6 +155,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueForges.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -161,6 +171,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLekari.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -176,6 +187,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLeTina.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -191,6 +203,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLunchL.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -206,6 +219,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBladeB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -221,6 +235,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueLuxsto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -236,6 +251,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLeRoon.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -251,6 +267,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLeLui.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -266,6 +283,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBookMu.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -281,6 +299,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -296,6 +315,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueWandBo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -311,6 +331,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueLuxsto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -326,6 +347,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueLuxsto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -341,6 +363,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueBlueM.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -356,6 +379,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueAibatW.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -371,6 +395,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: itm_SysSysQueNyangT.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -386,6 +411,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenFooBiscuit.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -401,6 +427,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBookMu.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -416,6 +443,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenPotRefr01.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -431,6 +459,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -446,6 +475,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -461,6 +491,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 10
+    icon: itm_SysSysQueForges.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -476,6 +507,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 15
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -491,6 +523,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBroomH.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -506,6 +539,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBroomB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -521,6 +555,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueBroomT.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -626,6 +661,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueNyangH.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -641,6 +677,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueHairCo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -656,6 +693,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_RidRidStiMagic.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -671,6 +709,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQuePumpKH.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -686,6 +725,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueRediEg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -701,6 +741,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueRediFo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -716,6 +757,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueLoriPa.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -731,6 +773,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueJackBe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -746,6 +789,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueHerthC.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -761,6 +805,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueIsmerC.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -776,6 +821,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueSaintH.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -791,6 +837,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueHelpRi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -806,6 +853,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueBearHe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -821,6 +869,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueBoneBw.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -836,6 +885,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueLiveTe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -851,6 +901,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueMonBK1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -866,6 +917,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueMonBK2.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -881,6 +933,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueMonBK3.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -896,6 +949,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueWarDID.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -911,6 +965,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLeygall.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -926,6 +981,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRadora.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -941,6 +997,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLemeat.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -956,6 +1013,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSteamW.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -971,6 +1029,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSteamT.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -986,6 +1045,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueKniMin.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1001,6 +1061,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueNyaNya.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1016,6 +1077,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueUnkLet.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1031,6 +1093,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueUnkID.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1046,6 +1109,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1061,6 +1125,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueTarinr.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1076,6 +1141,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueAstrop.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1091,6 +1157,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMoonpa.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1106,6 +1173,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueShinst.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1121,6 +1189,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRattoo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1136,6 +1205,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSnakeb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1151,6 +1221,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSprinp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1166,6 +1237,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueTestim.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1181,6 +1253,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBigblu.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1196,6 +1269,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSealed.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1211,6 +1285,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueNerbal.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1226,6 +1301,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMedala.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1241,6 +1317,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFaithp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1256,6 +1333,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQuePardon.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1271,6 +1349,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQuePromis.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1286,6 +1365,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSilver.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1301,6 +1381,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHolybr.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1316,6 +1397,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFirefe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1331,6 +1413,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueCrestm.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1346,6 +1429,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueTroupe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1361,6 +1445,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRecopa.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1376,6 +1461,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHeabon.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1391,6 +1477,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueClockm.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1406,6 +1493,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBatpol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1421,6 +1509,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMiadol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1436,6 +1525,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFPumpK.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1451,6 +1541,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFRecop.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1466,6 +1557,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFuriou.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1481,6 +1573,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueCardri.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1496,6 +1589,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRangla.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1511,6 +1605,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueKnight.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1526,6 +1621,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueDroil.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1541,6 +1637,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueGuardi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1556,6 +1653,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueAmpere.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1571,6 +1669,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSycale.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1586,6 +1685,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMongte.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1601,6 +1701,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBombTi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1616,6 +1717,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueReqFor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1631,6 +1733,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFlaSto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1646,6 +1749,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSaiSto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1661,6 +1765,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueDarSto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1676,6 +1781,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQuePrfCon.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1691,6 +1797,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRecGot.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1706,6 +1813,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueStrClo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1721,6 +1829,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueUnkMar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1736,6 +1845,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueUnkClo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1751,6 +1861,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueTroHis.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1766,6 +1877,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueExmDat.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1781,6 +1893,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueAncBoo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1796,6 +1909,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBlkGem.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1811,6 +1925,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRedGem.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1826,6 +1941,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBkLaol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1841,6 +1957,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueScrGot.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1856,6 +1973,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife01.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1871,6 +1989,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife02.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1886,6 +2005,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife03.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1901,6 +2021,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife04.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1916,6 +2037,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife05.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1931,6 +2053,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife06.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1946,6 +2069,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHTrace01.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1961,6 +2085,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHTrace02.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1976,6 +2101,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHTrace03.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -1991,6 +2117,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHTrace04.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2006,6 +2133,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHTrace05.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2021,6 +2149,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHTrace06.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2036,6 +2165,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife01.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2051,6 +2181,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife02.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2066,6 +2197,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife03.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2081,6 +2213,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife04.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2096,6 +2229,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife05.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2111,6 +2245,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHLife06.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2126,6 +2261,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueVenSta.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2141,6 +2277,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLuelRi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2156,6 +2293,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueChaCha.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2171,6 +2309,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueOliSig.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2186,6 +2325,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBulSig.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2201,6 +2341,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLoSign.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2216,6 +2357,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHeroAu.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2231,6 +2373,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBkskil.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2246,6 +2389,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHeadRB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2261,6 +2405,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLudSaf.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2276,6 +2421,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMeteor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2291,6 +2437,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQuePepScr.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2306,6 +2453,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLes1Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2321,6 +2469,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLes2Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2336,6 +2485,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLes3Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2351,6 +2501,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueClueP1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2366,6 +2517,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueClueP2.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2381,6 +2533,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRadpor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2396,6 +2549,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBonWag.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2411,6 +2565,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueDnaWag.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2426,6 +2581,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBlkMar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2441,6 +2597,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBlkSpl.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2456,6 +2613,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBlkHer.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2471,6 +2629,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueDisSec.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2486,6 +2645,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueJindol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2501,6 +2661,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueDisTru.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2516,6 +2677,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMiaRep.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2531,6 +2693,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMisPrf.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2546,6 +2709,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBkDre1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2561,6 +2725,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMpDre1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2576,6 +2741,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHrtThy.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2591,6 +2757,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBkDre2.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2606,6 +2773,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMpDre2.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2621,6 +2789,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHrtDas.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2636,6 +2805,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBkDre3.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2651,6 +2821,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMpDre3.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2666,6 +2837,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHrtArv.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -2681,6 +2853,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_WeaSwoRunaic.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -2696,6 +2869,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueRBSymb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -2711,6 +2885,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueNeckLB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -2726,6 +2901,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueEmerSp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -2741,6 +2917,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_PetDog1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -2756,6 +2933,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemPeakyR.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -2771,6 +2949,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemForfor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -2786,6 +2965,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_mKin05Cap.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2802,6 +2982,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueHerEar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2818,6 +2999,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueTrcOpe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2834,6 +3016,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFirefe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2850,6 +3033,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQuePerLyl.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2866,6 +3050,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysKeyGold.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2882,6 +3067,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueBlkMar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2898,6 +3084,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueFRecop.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2914,6 +3101,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueMonBK3.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2930,6 +3118,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenGemLuches.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2946,6 +3135,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysred.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2962,6 +3152,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSyspurple.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -2978,6 +3169,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysgreen.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 265
@@ -3009,6 +3201,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLekari.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3024,6 +3217,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLekari.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3039,6 +3233,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLekari.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3054,6 +3249,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3069,6 +3265,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueSprinp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3084,6 +3281,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueSprinp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3099,6 +3297,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueSprinp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3114,6 +3313,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysKeyGate1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3144,6 +3344,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueHerthC.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3159,6 +3360,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3174,6 +3376,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3189,6 +3392,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenPotCureDi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3204,6 +3408,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3219,6 +3424,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3234,6 +3440,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3249,6 +3456,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueSaintH.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3264,6 +3472,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueScollg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3279,6 +3488,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueScollg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3294,6 +3504,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3309,6 +3520,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueScollg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3324,6 +3536,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_GenMatEleWind.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3339,6 +3552,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysKeyGate1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 280000
@@ -3354,6 +3568,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenGemGem.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     hp_restore: 747
@@ -3370,6 +3585,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 8800000
@@ -3385,6 +3601,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 8800000
@@ -3400,6 +3617,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 8800000
@@ -3415,6 +3633,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 8800000
@@ -3430,6 +3649,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 8800000
@@ -3445,6 +3665,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueAncBoo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 8800000
@@ -3460,6 +3681,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueLes3Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 8800000
@@ -3475,6 +3697,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: itm_SysSysQueLetterB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 4500000
@@ -3490,6 +3713,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 4500000
@@ -3505,6 +3729,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 4500000
@@ -3520,6 +3745,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueBearHe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 4500000
@@ -3535,6 +3761,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueRecGot.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 4500000
@@ -3550,6 +3777,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -3565,6 +3793,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrForgive.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -3580,6 +3809,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysQueStrClo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -3595,6 +3825,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -3610,6 +3841,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueScrStm.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -3625,6 +3857,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueMaju.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -3640,6 +3873,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueLeregaru.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -3655,6 +3889,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_GenGemSkeltoolbox.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000

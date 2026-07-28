@@ -19,6 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 interface Item {
   id: number;
   name?: string;
+  icon?: string;
   item_kind2?: string;
   item_kind3?: string;
   equip_slot?: number;
@@ -54,6 +55,33 @@ describe('item converter: fashion / armor slot separation', () => {
     assert.ok(at26.every((it) => it.item_kind3 === 'IK3_HAT'), 'slot 26 is fashion hats only');
     const angel = loadArmors().find((it) => it.id === 16180);
     assert.equal(angel?.equip_slot, 26, 'Angel Hairband -> PARTS_HAT(26), not PARTS_CAP(6)');
+  });
+});
+
+/**
+ * The icon texture filename (propItem `szIcon`) is needed so the admin panel can
+ * render real item art. It is emitted verbatim minus the triple-quotes, ending in
+ * `.dds`. Pinned on a known weapon so a converter regression (e.g. missing the
+ * column under an encoding change) fails loudly.
+ */
+describe('item converter: icon filename populated', () => {
+  it('Rodney Axe carries its .dds icon filename', () => {
+    const weapons = parse(readFileSync(resolve(__dirname, '../../data/items/weapons.yml'), 'utf8'));
+    const items = (weapons.items ?? []) as Item[];
+    const rodney = items.find((it) => it.id === 81);
+    assert.equal(rodney?.name, 'Rodney Axe');
+    assert.equal(rodney?.icon, 'itm_WeaAxeCurin.dds', 'szIcon must be stripped of triple-quotes');
+  });
+
+  it('icons end in .dds and carry no stray quotes', () => {
+    const weapons = parse(readFileSync(resolve(__dirname, '../../data/items/weapons.yml'), 'utf8'));
+    const items = (weapons.items ?? []) as Item[];
+    const withIcon = items.filter((it) => it.icon);
+    assert.ok(withIcon.length > 50, 'most weapons reference a .dds icon');
+    assert.ok(
+      withIcon.every((it) => it.icon!.endsWith('.dds') && !it.icon!.includes('"')),
+      'icons are bare .dds filenames',
+    );
   });
 });
 

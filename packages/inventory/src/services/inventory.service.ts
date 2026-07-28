@@ -141,16 +141,69 @@ export class InventoryService {
     return { ok: true, changes };
   }
 
-  /** Swap two main-bag slots (v19 MOVEITEM is a pure swap; no split opcode). */
+  /**
+   * Move `src` onto `dst` (v19 MOVEITEM -- no split opcode).
+   *
+   * Ports `CItemContainer::Swap` (`Item.h:741`): NOT always a pure swap. When
+   * both slots hold the same stackable item (same itemId, plain flags, no
+   * keep-time, `dwPackMax > 1`), `src` pours into `dst`:
+   *   - src count <= dst space  -> dst absorbs it, src slot empties.
+   *   - src count >  dst space  -> dst fills to stack_size, remainder stays in src.
+   * Otherwise it falls through to a pure slot swap.
+   *
+   * The client runs the identical merge on the `AddMoveItem` echo
+   * (`DPClient.cpp:2148` -> `m_Inventory.Swap`), so the wire response is the
+   * same either way -- only persistence differs. Without the merge branch the
+   * DB keeps two stacks and relog reverts a client-side merge.
+   */
   moveItem(player: CPlayer, src: number, dst: number): MoveItemResult {
     if (src === dst || !this.inMainBag(src) || !this.inMainBag(dst)) return { ok: false, reason: 'invalid' };
     const a = player.m_Inventory[src];
     if (!a) return { ok: false, reason: 'invalid' };
+    const b = player.m_Inventory[dst];
+
+    const stackSize = this.stackSize(a.itemId);
+    if (
+      b &&
+      b.itemId === a.itemId &&
+      (a.flags ?? 0) === 0 &&
+      (b.flags ?? 0) === 0 &&
+      !a.keepTime &&
+      !b.keepTime &&
+      stackSize > 1
+    ) {
+      const space = stackSize - b.count;
+      if (space > 0) {
+        const move = Math.min(a.count, space);
+        if (move >= a.count) {
+          // Src fully absorbed into dst -- dst gains the count, src empties.
+          this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: b.itemId, count: b.count + a.count } });
+          this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: src, itemId: 0, count: 0 } });
+          b.count += a.count;
+          player.m_Inventory[src] = null;
+          this.persist(player, dst, b);
+          this.deps.inventoryRepo
+            .removeItem(player.m_idPlayer, src)
+            .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot: src }, 'inventory removeItem failed'));
+        } else {
+          // Partial: dst fills to stack_size, remainder stays in src.
+          this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: b.itemId, count: stackSize } });
+          this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: src, itemId: a.itemId, count: a.count - move } });
+          b.count += move;
+          a.count -= move;
+          this.persist(player, dst, b);
+          this.persist(player, src, a);
+        }
+        player._dirty.add('m_Inventory');
+        return { ok: true, src, dst };
+      }
+    }
+
+    // Pure slot swap (no stack merge possible).
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'ITEM_MOVE', payload: { src, dst } });
-    const b = player.m_Inventory[dst] ?? null;
     player.m_Inventory[src] = b;
     player.m_Inventory[dst] = a;
-    // Mirror CItemContainer::Swap -- m_apIndex entries travel with the items, so
+    // Mirror CItemContainer::Swap2 -- m_apIndex entries travel with the items, so
     // future CREATEITEM objids stay aligned with the client's grid after swaps.
     player.onInvSlotsSwapped(src, dst);
     player._dirty.add('m_Inventory');

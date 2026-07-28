@@ -7,6 +7,8 @@ skills:
     tier: 1
     job: 1
     discipline: 1
+    icon: skill_MerOneSplmas.dds
+    description: Strikes the enemy two times, in rapid succession.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -156,6 +158,8 @@ skills:
     tier: 1
     job: 1
     discipline: 1
+    icon: skill_MerOneKeenwh.dds
+    description: A continuous spinning attack.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -305,6 +309,8 @@ skills:
     tier: 1
     job: 1
     discipline: 1
+    icon: skill_MerOneBlinds.dds
+    description: A spinning, finishing move.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -454,6 +460,8 @@ skills:
     tier: 1
     job: 1
     discipline: 8
+    icon: skill_MerShieProtec.dds
+    description: Increases the defense of a Shield against melee attacks.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -644,6 +652,8 @@ skills:
     tier: 1
     job: 1
     discipline: 8
+    icon: skill_MerShiePanbar.dds
+    description: Increases the defense of a shield against ranged attacks.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -834,6 +844,8 @@ skills:
     tier: 1
     job: 1
     discipline: 23
+    icon: skill_MerSupBlazin.dds
+    description: Increases the accuracy and striking power of a sword.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -1064,6 +1076,8 @@ skills:
     tier: 1
     job: 1
     discipline: 23
+    icon: skill_MerSupSmitea.dds
+    description: Increases your Defense Rate and Striking Power of an axe.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -1294,6 +1308,8 @@ skills:
     tier: 1
     job: 1
     discipline: 23
+    icon: skill_MerSupImpowe.dds
+    description: Strengthens the elemental damage of a weapon.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -1484,6 +1500,8 @@ skills:
     tier: 1
     job: 1
     discipline: 1
+    icon: skill_MerOneBloody.dds
+    description: Drains life from an enemy.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -1734,6 +1752,8 @@ skills:
     tier: 1
     job: 1
     discipline: 23
+    icon: skill_MerOneSmaste.dds
+    description: Increases the striking power of a sword.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -1924,6 +1944,8 @@ skills:
     tier: 1
     job: 1
     discipline: 23
+    icon: skill_MeroneAmaster.dds
+    description: Increases the striking power of an axe.
     weaponType: 13
     handed: 1
     attackRange: 1
@@ -2114,6 +2136,8 @@ skills:
     tier: 1
     job: 1
     discipline: 1
+    icon: skill_MerOneSpHit.dds
+    description: A single, powerful strike.
     weaponType: 13
     handed: 1
     attackRange: 3
@@ -2284,6 +2308,8 @@ skills:
     tier: 1
     job: 1
     discipline: 1
+    icon: skill_MerOneGuillo.dds
+    description: A powerful, ranged attack.
     weaponType: 13
     handed: 1
     attackRange: 3
@@ -2454,6 +2480,8 @@ skills:
     tier: 1
     job: 1
     discipline: 23
+    icon: skill_MerOneSenake.dds
+    description: Stops an enemy.
     weaponType: 13
     handed: 1
     attackRange: 4
@@ -2643,6 +2671,8 @@ skills:
     tier: 1
     job: 1
     discipline: 1
+    icon: skill_MerOneReflex.dds
+    description: This skill absorbs one attack and releases back at an enemy.
     weaponType: 13
     handed: 1
     attackRange: 4

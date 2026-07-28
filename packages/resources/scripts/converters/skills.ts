@@ -217,12 +217,24 @@ function applyInheritRules(
   return lvl;
 }
 
+/** Strip Flyff's triple-quote wrapping from a cell value (e.g. `"""file.dds"""` → `file.dds`). */
+function stripTripleQuotes(val: string): string {
+  if (!val) return '';
+  return val.replace(/^"{1,3}/, '').replace(/"{1,3}$/, '');
+}
+
+/** Derive the description key from a name_id (e.g. `IDS_PROPSKILL_TXT_000000` → `...001`). */
+function descriptionKey(nameId: string): string {
+  return nameId.replace(/(\d+)$/, (m, d) => String(Number(d) + 1).padStart(m.length, '0'));
+}
+
 function rowToSkill(
   row: Row,
   id: number,
   name: string,
   defines: Map<string, number>,
   levels: LevelRow[],
+  names: Map<string, string>,
 ): Record<string, unknown> {
   const out: Record<string, unknown> = {
     id,
@@ -232,6 +244,18 @@ function rowToSkill(
     job: symbol(defines, row.dwItemKind2) ?? 0,
     discipline: symbol(defines, row.dwItemKind3) ?? 0,
   };
+
+  // Skill icon filename from propSkill.txt col `szIcon` (triple-quoted DDS name).
+  const rawIcon = stripTripleQuotes(row.szIcon ?? '');
+  if (rawIcon) out.icon = rawIcon;
+
+  // Description is the entry immediately after the name in propSkill.txt.txt
+  // (paired: even index = name, odd = description).
+  if (row.szName) {
+    const descId = descriptionKey(row.szName);
+    const desc = names.get(descId);
+    if (desc) out.description = desc;
+  }
 
   const wt = symbol(defines, row.dwWeaponType);
   if (wt !== undefined) out.weaponType = wt;
@@ -388,7 +412,7 @@ export async function convertSkills(rawDir: string, dataDir: string): Promise<vo
     const name = names.get(row.szName) ?? row.dwID;
     const levels = levelsByParent.get(row.dwID) ?? [];
     totalLevels += levels.length;
-    bucket.skills.push(rowToSkill(row, id, name, defines, levels));
+    bucket.skills.push(rowToSkill(row, id, name, defines, levels, names));
     used++;
   }
 

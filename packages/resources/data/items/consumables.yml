@@ -11,6 +11,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenColSilverBattery.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     mp_restore: 9999
@@ -31,6 +32,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenColGoldBattery.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     mp_restore: 9999
@@ -51,6 +53,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_ChrMagTriRocket.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 12000000
@@ -66,6 +69,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_ChrMagTriHeart.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 12000000
@@ -81,6 +85,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_ChrMagTriWingAn.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_MAGICTRICK
     effects:
@@ -104,6 +109,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_ChrMagTriTwiste.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 12000000
@@ -119,6 +125,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrPumkSo.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -142,6 +149,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrUriCNo.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -165,6 +173,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSquarePoison02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -188,6 +197,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpPoison02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -211,6 +221,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSquarePoison03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -234,6 +245,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSquarePoison01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -257,6 +269,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotCylinderPoison03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STR
     effects:
@@ -280,6 +293,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotCylinderPoison04.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEX
     effects:
@@ -303,6 +317,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotCylinderPoison01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_INT
     effects:
@@ -326,6 +341,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotCylinderPoison02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STA
     effects:
@@ -349,6 +365,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotCylinderPoison05.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEFENSE
     effects:
@@ -372,6 +389,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpPoison03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -395,6 +413,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpPoison01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -418,6 +437,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotWingPoison03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -441,6 +461,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotWingPoison02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -464,6 +485,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotWingPoison01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -487,6 +509,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpherePoison03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STR
     effects:
@@ -510,6 +533,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpherePoison04.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEX
     effects:
@@ -533,6 +557,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpherePoison01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_INT
     effects:
@@ -556,6 +581,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpherePoison02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STA
     effects:
@@ -579,6 +605,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenPotSpherePoison05.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEFENSE
     effects:
@@ -602,6 +629,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMagTriNe2003.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -617,6 +645,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMagTriFiresh.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -632,6 +661,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMagTriNe2003.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -647,6 +677,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMagTriNe2003.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -662,6 +693,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenMagTriFiresh.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 4500000
@@ -677,6 +709,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysplaliss.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_BINDS
     effects:
@@ -700,6 +733,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysSaint.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_BINDS
     effects:
@@ -723,6 +757,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysdacon.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_BINDS
     effects:
@@ -746,6 +781,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrDefense20.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -769,6 +805,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrDefense50.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -792,6 +829,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_ChrMagTriWingAn.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_MAGICTRICK
     effects:
@@ -815,6 +853,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_Sys_Sys_Que_AngelRed.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_ANGEL_BUFF
     hp_restore: 100
@@ -837,6 +876,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_Sys_Sys_Que_AngelBlue.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_ANGEL_BUFF
     hp_restore: 60
@@ -859,6 +899,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_Sys_Sys_Que_AngelGreen.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_ANGEL_BUFF
     hp_restore: 30
@@ -881,6 +922,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_Sys_Sys_Que_AngelWhite.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_ANGEL_BUFF
     hp_restore: 10
@@ -903,6 +945,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveChocolate02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -926,6 +969,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrPetFeedPocket.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -949,6 +993,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveNescafe01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEFENSE
     effects:
@@ -972,6 +1017,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveNescafe02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -995,6 +1041,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveNescafe03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1018,6 +1065,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyViolet.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STA
     effects:
@@ -1041,6 +1089,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyBlue.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_INT
     effects:
@@ -1064,6 +1113,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyGreen.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEX
     effects:
@@ -1087,6 +1137,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyRed.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STR
     effects:
@@ -1110,6 +1161,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyBlueSky.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1133,6 +1185,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyPink.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1156,6 +1209,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyYellow.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1179,6 +1233,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyWhite.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1202,6 +1257,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyGray.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEFENSE
     effects:
@@ -1225,6 +1281,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyOrange.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1248,6 +1305,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyViolet.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STA
     effects:
@@ -1271,6 +1329,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyBlue.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_INT
     effects:
@@ -1294,6 +1353,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyGreen.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEX
     effects:
@@ -1317,6 +1377,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyRed.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_STR
     effects:
@@ -1340,6 +1401,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyBlueSky.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1363,6 +1425,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyPink.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1386,6 +1449,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyYellow.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1409,6 +1473,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyWhite.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1432,6 +1497,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyGray.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_DEFENSE
     effects:
@@ -1455,6 +1521,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrCottonCandyOrange.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1478,6 +1545,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrPartyExpup01.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     effects:
@@ -1501,6 +1569,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrPartyExpup02.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     effects:
@@ -1524,6 +1593,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrPartySkillup01.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     effects:
@@ -1547,6 +1617,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrPartySkillup02.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     effects:
@@ -1570,6 +1641,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrSpetGood.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     effects:
@@ -1593,6 +1665,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_GenColSilverBattery.dds
     item_kind2: IK2_BUFF2
     item_kind3: IK3_SCROLL
     effects:
@@ -1616,6 +1689,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_sklKing01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1639,6 +1713,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_sklKing02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1662,6 +1737,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_sklKing03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1685,6 +1761,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_sklKing04.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1708,6 +1785,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_sklKing05.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1731,6 +1809,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveCorn01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1754,6 +1833,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveOctopus01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1777,6 +1857,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Skill_EventUpUp.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1800,6 +1881,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveSalt01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -1823,6 +1905,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveStatue01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1846,6 +1929,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveFly01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1869,6 +1953,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveFor01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1892,6 +1977,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveFun01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -1915,6 +2001,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_Couple01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_COUPLE_BUFF
     effects:
@@ -1938,6 +2025,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_Couple01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_COUPLE_BUFF
     effects:
@@ -1961,6 +2049,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_Couple01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_COUPLE_BUFF
     effects:
@@ -1984,6 +2073,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_Couple01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_COUPLE_BUFF
     effects:
@@ -2007,6 +2097,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_Couple02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_COUPLE_BUFF
     effects:
@@ -2030,6 +2121,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_Couple02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_COUPLE_BUFF
     effects:
@@ -2053,6 +2145,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_Couple03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_COUPLE_BUFF
     effects:
@@ -2076,6 +2169,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveGreenpeas01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2099,6 +2193,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveChocolate05.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2122,6 +2217,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_GenFooInsStarca.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2145,6 +2241,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EveIce01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2168,6 +2265,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EveIce02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2191,6 +2289,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EveIce03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2214,6 +2313,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysScrVelJum.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2237,6 +2337,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveChocolate04.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION_BUFF_INT
     effects:
@@ -2260,6 +2361,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_Reddrop01_32.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2283,6 +2385,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_Cleardrop01_32.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2306,6 +2409,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_Yellowdrop01_32.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2329,6 +2433,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_MacaronIndigo.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2352,6 +2457,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_MacaronAzalea.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2375,6 +2481,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_MacaronYgeern.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2398,6 +2505,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_MacaronRedbean.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2421,6 +2529,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_MacaronGold.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2444,6 +2553,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_ChrMagAmericalonglife_32.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 50000
@@ -2459,6 +2569,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: itm_ChrMagtaiwanlonglife_32.dds
     item_kind2: IK2_MAGIC
     item_kind3: IK3_MAGICTRICK
     durability: 50000
@@ -2474,6 +2585,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_TS01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_TS_BUFF
     effects:
@@ -2497,6 +2609,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_TS01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_TS_BUFF
     effects:
@@ -2520,6 +2633,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: skill_TS01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_TS_BUFF
     effects:
@@ -2543,6 +2657,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EventChristmascake.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2564,6 +2679,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EventFitapieceF.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2585,6 +2701,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EventFitapieceI.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2606,6 +2723,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EventFitapieceT.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2627,6 +2745,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_EventFitapieceA.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_POTION
     effects:
@@ -2648,6 +2767,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveBeer01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2669,6 +2789,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg01.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2690,6 +2811,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg02.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2711,6 +2833,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg03.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2732,6 +2855,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg04.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2753,6 +2877,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg05.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2774,6 +2899,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg06.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2795,6 +2921,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg07.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2816,6 +2943,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg08.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2837,6 +2965,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg09.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
@@ -2858,6 +2987,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 99
+    icon: Itm_SysSysEveEgg10.dds
     item_kind2: IK2_BUFF
     item_kind3: IK3_SCROLL
     effects:
