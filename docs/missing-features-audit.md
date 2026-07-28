@@ -1,5 +1,9 @@
 # Missing Features Audit — node-flyff
 
+> **Superseded for fidelity:** For TS↔C++ behavioral deviations (formulas, packets,
+> guards), see [`c++-fidelity-audit.md`](c++-fidelity-audit.md) (2026-07-27). This
+> file remains for broader feature-gap coverage (systems not yet ported at all).
+>
 > **Generated:** 2026-07-21 (enriched from v19 C++ source scan)
 > **Scope:** All gameplay systems the v19 Flyff C++ server ships vs. what node-flyff has implemented.
 > **C++ source roots:** `h:\flyff\v19\Source\Source\` — `WORLDSERVER\DPSrvr.cpp` (C→S dispatch), `_Common\*` (game logic), `_AIInterface\*` (NPC FSM), `_Network\MsgHdr.h` (opcodes), `Neuz\DPClient.cpp` (S→C Send* callers), `_Database\DbManagerSave.cpp` (persistence).
