@@ -397,7 +397,7 @@ export class JoinService {
  * exactly as C++ skips `JTYPE_COMMON` from `m_aJobSkill`.
  */
 const JTYPE_COMMON = 4;
-function rosterIdsForJob(skills: SkillIndex, job: number): number[] {
+export function rosterIdsForJob(skills: SkillIndex, job: number): number[] {
   const roster = [];
   for (const skill of skills.skills.values()) {
     if (skill.tier === JTYPE_COMMON) continue;

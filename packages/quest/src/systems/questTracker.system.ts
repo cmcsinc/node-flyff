@@ -132,22 +132,23 @@ export class QuestTrackerSystem {
     if (drops.length === 0) return;
     for (const d of drops) {
       if (!killer.findQuest(d.questId)) continue; // only active quest holders
-      const def = this.deps.quests.byId.get(d.questId);
-      if (!def) continue;
-      const need = itemNeed(def, d.item);
-      if (need <= 0) continue; // not a collection target -- ponytail
-      const have = countItem(killer, d.item);
-      if (have >= need) continue; // objective already satisfied
-      if (this.rng.int(QUEST_DROP_SCALE) >= d.prob) continue;
-      const grant = Math.min(Math.max(1, d.num), need - have);
+      // C++ DropItem (Mover.cpp:7644): `xRandom(3000000000) <= dwProbability`.
+      // No SetEndCondItem gate -- drops unconditionally for any active quest
+      // holder. The TS port previously blocked drops where the item ≠ the
+      // SetEndCondItem target (e.g. QUEST_CHANGEJOB1's VISIONSTONE ≠
+      // BLADEBRAVERY), matching the C++ where drops always roll.
+      if (this.rng.int(QUEST_DROP_SCALE) > d.prob) continue;
+      const grant = Math.max(1, d.num);
       const r = inv.addItem(killer, d.item, grant);
       if (!r.ok) continue; // bag full -- drop silently skipped
-      this.deps.playerManager.sendTo(
-        killer,
-        r.isNew
-          ? createItem.buildOne(killer.m_idPlayer, r.itemId, r.count, r.objid)
-          : buildUpdateItemCount(killer.m_idPlayer, r.objid, r.count),
-      );
+      for (const ch of r.changes) {
+        this.deps.playerManager.sendTo(
+          killer,
+          ch.isNew
+            ? createItem.buildOne(killer.m_idPlayer, ch.itemId, ch.count, ch.objid)
+            : buildUpdateItemCount(killer.m_idPlayer, ch.objid, ch.count),
+        );
+      }
     }
   }
 

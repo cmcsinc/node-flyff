@@ -165,7 +165,7 @@ function grantGold(player: CPlayer, amount: number, sink: RewardSink): void {
 
 function grantExp(player: CPlayer, amount: number, sink: RewardSink): void {
   // m_nExp is within-level; addExp carries excess across level boundaries.
-  const gain = addExp(player.m_nLevel, player.m_nExp, amount);
+  const gain = addExp(player.m_nLevel, player.m_nExp, amount, player.jobLevelCap());
   // Journal the ABSOLUTE post-state (within-level exp -- the wire/DB value)
   // before the mutation (rule 04). Quest-granted exp has no write-through
   // persist today, so this WAL row is the ONLY crash recovery for it --

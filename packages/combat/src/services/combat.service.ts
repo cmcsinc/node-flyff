@@ -406,7 +406,7 @@ export class CombatService {
     if (amount <= 0) return;
     // m_nExp is within-level (resets at each boundary); addExp carries excess.
     const prevLevel = player.m_nLevel;
-    const gain = addExp(player.m_nLevel, player.m_nExp, amount);
+    const gain = addExp(player.m_nLevel, player.m_nExp, amount, player.jobLevelCap());
     player.m_nExp = gain.exp;
     player.m_nLevel = gain.level;
     player._dirty.add('m_nExp');

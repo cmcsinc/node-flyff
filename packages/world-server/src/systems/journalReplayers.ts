@@ -25,7 +25,7 @@ import type { Logger } from '@flyff/core';
 import type { JournalReplayer } from './journalReplayer';
 
 export interface ReplayerRegistryDeps {
-  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats' | 'updateSkillPoints'>;
+  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats' | 'updateSkillPoints' | 'updateClass'>;
   readonly inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem' | 'setGold'>;
   readonly bankRepo: Pick<BankRepository, 'setBankPass'>;
   readonly skillRepo: Pick<SkillRepository, 'saveAll'>;
@@ -104,5 +104,14 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     await deps.charRepo.updateSkillPoints(row.char_id, p.skillPoint, p.skillLevel);
   });
 
-  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS', 'SKILL_LEARN'] }, 'Journal replay handlers registered');
+  // Character class/job (C++ m_nJob). Emitted by ChangeJobService on AddChangeJob;
+  // absolute so replay is idempotent. Persists both the job id AND the new
+  // roster (AddChangeJob re-seeds m_aJobSkill for the new job's tier).
+  r.register('CHAR_JOB', async (row) => {
+    const p = payload<{ class: number; roster: Array<{ slot: number; skillId: number; level: number }> }>(row);
+    await deps.charRepo.updateClass(row.char_id, p.class);
+    await deps.skillRepo.saveAll(row.char_id, p.roster);
+  });
+
+  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS', 'SKILL_LEARN', 'CHAR_JOB'] }, 'Journal replay handlers registered');
 }

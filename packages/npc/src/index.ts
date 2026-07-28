@@ -13,6 +13,7 @@
 
 export * from './services/npcSpeech.service';
 export * from './services/scriptDlg.service';
+export * from './services/changeJob.service';
 export * from './services/shop.service';
 export * from './services/bank.service';
 export * from './services/target.service';

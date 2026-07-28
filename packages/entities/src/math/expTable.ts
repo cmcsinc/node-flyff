@@ -77,3 +77,18 @@ export const EXP_TABLE: readonly ExpRow[] = [...BASE, ...TAIL];
 
 /** Hard level cap (max reachable). */
 export const MAX_LEVEL = EXP_TABLE.length - 1; // 199
+
+/**
+ * `defineJob.h:32` -- base job (Vagrant, `JTYPE_BASE`) level cap. A Vagrant
+ * cannot gain exp past this level (`MoverParam.cpp:1226`: `m_nLevel >=
+ * MAX_JOB_LEVEL` -> `m_nExp1 = 0`). Must change job at exactly this level to
+ * progress.
+ */
+export const MAX_JOB_LEVEL = 15;
+
+/**
+ * `defineJob.h:33` -- expert job (1st job, `JTYPE_EXPERT`) level cap, added on
+ * top of {@link MAX_JOB_LEVEL}. `MoverParam.cpp:1234`: an Expert cannot gain exp
+ * past `MAX_JOB_LEVEL + MAX_EXP_LEVEL` (60).
+ */
+export const MAX_EXP_LEVEL = 45;

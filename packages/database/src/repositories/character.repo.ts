@@ -314,6 +314,24 @@ export class CharacterRepository {
   }
 
   /**
+   * Update character class (job id, C++ `m_nJob`). Fire-and-forget at the
+   * call site -- the world-server's job-change service WAL-journals the
+   * transition for crash recovery. Mirrors C++ `AddChangeJob` setting
+   * `m_nJob = nJob` and `g_dpDBClient.SaveSkill` persisting the roster.
+   *
+   * @param id      - Character ID
+   * @param classId - New job id (1-15: expert/pro tier; 0 = vagrant)
+   */
+  async updateClass(id: number, classId: number): Promise<void> {
+    await this.db('characters')
+      .where({ id })
+      .update({
+        class: classId,
+        updated_at: new Date(),
+      });
+  }
+
+  /**
    * Update character PK state (C++ `m_dwPKPropensity`/`m_nSlaughter`/
    * `m_dwPKTime`/`m_dwPKExp`). Fire-and-forget at call sites -- WAL `PK_KILL`
    * is the crash-recovery backup for the propensity/value/time write.
