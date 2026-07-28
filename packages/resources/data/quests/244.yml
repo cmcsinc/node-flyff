@@ -26,10 +26,6 @@ commands:
         value: 7250
       - type: num
         value: 9181
-  - cmd: SetRemove
-    args:
-      - type: bool
-        value: 0
   - cmd: SetBeginCondLevel
     args:
       - type: num
@@ -265,3 +261,4 @@ states:
     desc: IDS_PROPQUEST_INC_003455
 quest_items: []
 title: IDS_PROPQUEST_INC_003446
+no_remove: true
