@@ -48,7 +48,7 @@ drops:
         level: 0
         count: 1
   - key: MI_AIBATT4
-    modelIdx: 23
+    modelIdx: 71
     maxItem: 5
     gold:
       min: 78
@@ -199,7 +199,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BURUDENG1
-    modelIdx: 24
+    modelIdx: 23
     maxItem: 2
     gold:
       min: 11
@@ -210,7 +210,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BURUDENG2
-    modelIdx: 25
+    modelIdx: 24
     maxItem: 2
     gold:
       min: 11
@@ -221,7 +221,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BURUDENG3
-    modelIdx: 26
+    modelIdx: 25
     maxItem: 2
     gold:
       min: 12
@@ -232,7 +232,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BURUDENG4
-    modelIdx: 27
+    modelIdx: 72
     maxItem: 5
     gold:
       min: 123
@@ -267,7 +267,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PUKEPUKE1
-    modelIdx: 28
+    modelIdx: 26
     maxItem: 2
     gold:
       min: 14
@@ -278,7 +278,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PUKEPUKE2
-    modelIdx: 29
+    modelIdx: 27
     maxItem: 2
     gold:
       min: 14
@@ -289,7 +289,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PUKEPUKE3
-    modelIdx: 30
+    modelIdx: 28
     maxItem: 2
     gold:
       min: 16
@@ -300,7 +300,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PUKEPUKE4
-    modelIdx: 31
+    modelIdx: 73
     maxItem: 5
     gold:
       min: 145
@@ -523,7 +523,7 @@ drops:
         level: 0
         count: 1
   - key: MI_DORIDOMA1
-    modelIdx: 32
+    modelIdx: 29
     maxItem: 2
     gold:
       min: 20
@@ -534,7 +534,7 @@ drops:
         level: 0
         count: 1
   - key: MI_DORIDOMA2
-    modelIdx: 33
+    modelIdx: 30
     maxItem: 2
     gold:
       min: 20
@@ -545,7 +545,7 @@ drops:
         level: 0
         count: 1
   - key: MI_DORIDOMA3
-    modelIdx: 34
+    modelIdx: 31
     maxItem: 2
     gold:
       min: 22
@@ -556,7 +556,7 @@ drops:
         level: 0
         count: 1
   - key: MI_DORIDOMA4
-    modelIdx: 35
+    modelIdx: 74
     maxItem: 5
     gold:
       min: 196
@@ -623,7 +623,7 @@ drops:
         level: 0
         count: 1
   - key: MI_LAWOLF1
-    modelIdx: 36
+    modelIdx: 32
     maxItem: 2
     gold:
       min: 24
@@ -634,7 +634,7 @@ drops:
         level: 0
         count: 1
   - key: MI_LAWOLF2
-    modelIdx: 37
+    modelIdx: 33
     maxItem: 2
     gold:
       min: 24
@@ -645,7 +645,7 @@ drops:
         level: 0
         count: 1
   - key: MI_LAWOLF3
-    modelIdx: 38
+    modelIdx: 34
     maxItem: 2
     gold:
       min: 26
@@ -656,7 +656,7 @@ drops:
         level: 0
         count: 1
   - key: MI_LAWOLF4
-    modelIdx: 39
+    modelIdx: 75
     maxItem: 5
     gold:
       min: 201
@@ -751,7 +751,7 @@ drops:
         level: 0
         count: 1
   - key: MI_FEFERN1
-    modelIdx: 60
+    modelIdx: 50
     maxItem: 2
     gold:
       min: 28
@@ -762,7 +762,7 @@ drops:
         level: 0
         count: 1
   - key: MI_FEFERN2
-    modelIdx: 61
+    modelIdx: 51
     maxItem: 2
     gold:
       min: 28
@@ -773,7 +773,7 @@ drops:
         level: 0
         count: 1
   - key: MI_FEFERN3
-    modelIdx: 62
+    modelIdx: 52
     maxItem: 2
     gold:
       min: 28
@@ -784,7 +784,7 @@ drops:
         level: 0
         count: 1
   - key: MI_FEFERN4
-    modelIdx: 63
+    modelIdx: 81
     maxItem: 5
     gold:
       min: 207
@@ -879,7 +879,7 @@ drops:
         level: 0
         count: 1
   - key: MI_NYANGNYANG1
-    modelIdx: 40
+    modelIdx: 35
     maxItem: 2
     gold:
       min: 28
@@ -890,7 +890,7 @@ drops:
         level: 0
         count: 1
   - key: MI_NYANGNYANG2
-    modelIdx: 41
+    modelIdx: 36
     maxItem: 2
     gold:
       min: 28
@@ -901,7 +901,7 @@ drops:
         level: 0
         count: 1
   - key: MI_NYANGNYANG3
-    modelIdx: 42
+    modelIdx: 37
     maxItem: 2
     gold:
       min: 28
@@ -912,7 +912,7 @@ drops:
         level: 0
         count: 1
   - key: MI_NYANGNYANG4
-    modelIdx: 43
+    modelIdx: 76
     maxItem: 3
     gold:
       min: 212
@@ -995,7 +995,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BANG1
-    modelIdx: 44
+    modelIdx: 38
     maxItem: 2
     gold:
       min: 29
@@ -1006,7 +1006,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BANG2
-    modelIdx: 45
+    modelIdx: 39
     maxItem: 2
     gold:
       min: 29
@@ -1017,7 +1017,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BANG3
-    modelIdx: 46
+    modelIdx: 40
     maxItem: 2
     gold:
       min: 29
@@ -1028,7 +1028,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BANG4
-    modelIdx: 47
+    modelIdx: 77
     maxItem: 5
     gold:
       min: 218
@@ -1119,7 +1119,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WAGSAAC1
-    modelIdx: 48
+    modelIdx: 41
     maxItem: 2
     gold:
       min: 30
@@ -1130,7 +1130,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WAGSAAC2
-    modelIdx: 49
+    modelIdx: 42
     maxItem: 2
     gold:
       min: 30
@@ -1141,7 +1141,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WAGSAAC3
-    modelIdx: 50
+    modelIdx: 43
     maxItem: 2
     gold:
       min: 30
@@ -1152,7 +1152,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WAGSAAC4
-    modelIdx: 51
+    modelIdx: 78
     maxItem: 5
     gold:
       min: 224
@@ -1558,7 +1558,7 @@ drops:
         level: 0
         count: 1
   - key: MI_MRPUMPKIN1
-    modelIdx: 68
+    modelIdx: 53
     maxItem: 2
     gold:
       min: 32
@@ -1569,7 +1569,7 @@ drops:
         level: 0
         count: 1
   - key: MI_MRPUMPKIN2
-    modelIdx: 69
+    modelIdx: 54
     maxItem: 2
     gold:
       min: 32
@@ -1580,7 +1580,7 @@ drops:
         level: 0
         count: 1
   - key: MI_MRPUMPKIN3
-    modelIdx: 70
+    modelIdx: 55
     maxItem: 2
     gold:
       min: 32
@@ -1591,7 +1591,7 @@ drops:
         level: 0
         count: 1
   - key: MI_MRPUMPKIN4
-    modelIdx: 71
+    modelIdx: 82
     maxItem: 5
     gold:
       min: 240
@@ -1650,7 +1650,7 @@ drops:
         level: 0
         count: 1
   - key: MI_REDMANTIS1
-    modelIdx: 64
+    modelIdx: 56
     maxItem: 2
     gold:
       min: 32
@@ -1661,7 +1661,7 @@ drops:
         level: 0
         count: 1
   - key: MI_REDMANTIS2
-    modelIdx: 65
+    modelIdx: 57
     maxItem: 2
     gold:
       min: 32
@@ -1672,7 +1672,7 @@ drops:
         level: 0
         count: 1
   - key: MI_REDMANTIS3
-    modelIdx: 66
+    modelIdx: 58
     maxItem: 2
     gold:
       min: 33
@@ -1683,7 +1683,7 @@ drops:
         level: 0
         count: 1
   - key: MI_REDMANTIS4
-    modelIdx: 67
+    modelIdx: 83
     maxItem: 5
     gold:
       min: 246
@@ -2777,7 +2777,7 @@ drops:
         level: 0
         count: 1
   - key: MI_TOTEMIA1
-    modelIdx: 103
+    modelIdx: 47
     maxItem: 2
     gold:
       min: 40
@@ -2788,7 +2788,7 @@ drops:
         level: 0
         count: 1
   - key: MI_TOTEMIA2
-    modelIdx: 104
+    modelIdx: 48
     maxItem: 2
     gold:
       min: 40
@@ -2799,7 +2799,7 @@ drops:
         level: 0
         count: 1
   - key: MI_TOTEMIA3
-    modelIdx: 105
+    modelIdx: 49
     maxItem: 2
     gold:
       min: 40
@@ -2810,7 +2810,7 @@ drops:
         level: 0
         count: 1
   - key: MI_TOTEMIA4
-    modelIdx: 106
+    modelIdx: 80
     maxItem: 4
     gold:
       min: 296
@@ -2901,7 +2901,7 @@ drops:
         level: 0
         count: 1
   - key: MI_CARDPUPPET1
-    modelIdx: 84
+    modelIdx: 62
     maxItem: 2
     gold:
       min: 40
@@ -2912,7 +2912,7 @@ drops:
         level: 0
         count: 1
   - key: MI_CARDPUPPET2
-    modelIdx: 85
+    modelIdx: 63
     maxItem: 2
     gold:
       min: 40
@@ -2923,7 +2923,7 @@ drops:
         level: 0
         count: 1
   - key: MI_CARDPUPPET3
-    modelIdx: 86
+    modelIdx: 64
     maxItem: 2
     gold:
       min: 41
@@ -2934,7 +2934,7 @@ drops:
         level: 0
         count: 1
   - key: MI_CARDPUPPET4
-    modelIdx: 87
+    modelIdx: 85
     maxItem: 5
     gold:
       min: 302
@@ -3400,7 +3400,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BASQUE1
-    modelIdx: 72
+    modelIdx: 59
     maxItem: 2
     gold:
       min: 43
@@ -3411,7 +3411,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BASQUE2
-    modelIdx: 73
+    modelIdx: 60
     maxItem: 2
     gold:
       min: 43
@@ -3422,7 +3422,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BASQUE3
-    modelIdx: 74
+    modelIdx: 61
     maxItem: 2
     gold:
       min: 44
@@ -3433,7 +3433,7 @@ drops:
         level: 0
         count: 1
   - key: MI_BASQUE4
-    modelIdx: 75
+    modelIdx: 84
     maxItem: 5
     gold:
       min: 324
@@ -3516,7 +3516,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PRANKSTER1
-    modelIdx: 80
+    modelIdx: 65
     maxItem: 2
     gold:
       min: 44
@@ -3527,7 +3527,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PRANKSTER2
-    modelIdx: 81
+    modelIdx: 66
     maxItem: 2
     gold:
       min: 44
@@ -3538,7 +3538,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PRANKSTER3
-    modelIdx: 82
+    modelIdx: 67
     maxItem: 2
     gold:
       min: 45
@@ -3549,7 +3549,7 @@ drops:
         level: 0
         count: 1
   - key: MI_PRANKSTER4
-    modelIdx: 83
+    modelIdx: 86
     maxItem: 5
     gold:
       min: 330
@@ -3632,7 +3632,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WHEELEM1
-    modelIdx: 52
+    modelIdx: 44
     maxItem: 2
     gold:
       min: 46
@@ -3643,7 +3643,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WHEELEM2
-    modelIdx: 53
+    modelIdx: 45
     maxItem: 2
     gold:
       min: 46
@@ -3654,7 +3654,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WHEELEM3
-    modelIdx: 54
+    modelIdx: 46
     maxItem: 2
     gold:
       min: 46
@@ -3665,7 +3665,7 @@ drops:
         level: 0
         count: 1
   - key: MI_WHEELEM4
-    modelIdx: 55
+    modelIdx: 79
     maxItem: 5
     gold:
       min: 341
