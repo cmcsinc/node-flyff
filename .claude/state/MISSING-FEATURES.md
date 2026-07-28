@@ -1,5 +1,9 @@
 # Flyff v19 — Missing Features Checklist
 
+> **Fidelity audit (2026-07-27):** All 64 TS↔C++ behavioral deviations found in
+> the C++ fidelity audit (`docs/c++-fidelity-audit.md`) have been resolved. This
+> checklist covers features not yet ported at all (wider scope).
+
 Generated 2026-07-23 from a full-source sweep (3 parallel domain maps + every
 `ponytail:` comment). Re-verified 2026-07-24 against live code (3 parallel
 explorers, 57 items audited). Compares the emulator against full retail v19.
