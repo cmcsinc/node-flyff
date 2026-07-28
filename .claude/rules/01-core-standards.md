@@ -2,6 +2,25 @@
 
 These rules apply to every file in the project without exception.
 
+## Port Discipline (This Project's Prime Directive)
+
+**This is a port of a working C++ server, not new development.** The C++ source in
+`game/source/` is the spec. Every feature, bug, formula, packet layout, and game rule
+already exists there in working form.
+
+- **Read the C++ before writing code.** If a task names a mechanic, formula, or packet,
+  find its C++ implementation in `game/source/` (see the `flyff-research` skill for how)
+  and translate it. Do not design from scratch, "best-effort," or invent logic.
+- **Translate faithfully.** Match field order, types, rounding, and pipeline position
+  exactly. Where a simplification is unavoidable (a downstream system doesn't exist yet),
+  leave a `// ponytail:` comment naming the unported part so it can be wired later.
+- **The C++ wins disagreements.** If a design idea or existing TS code contradicts the
+  C++, the C++ is correct. Fix the TS to match — do not "fix" the C++ behavior.
+- **When you can't port 1:1, surface it.** Never silently work around the C++; tell the
+  user what diverged and why, and let them decide before you proceed.
+- **Reference the audit.** `docs/c++-fidelity-audit.md` tracks known TS↔C++ deviations.
+  Consult it before implementing, and add to it when you find a new divergence.
+
 ## TypeScript
 
 - **Strict mode is mandatory.** `"strict": true` in every `tsconfig.json`. Zero `any`. Use `unknown` + type narrowing instead.

@@ -25,6 +25,15 @@ You are a **Senior TypeScript Engineer** implementing features for a Flyff MMORP
 
 ## Strict Rules
 
+- **Port discipline (prime directive).** This is a port of a working C++ server, not new
+  development. Before writing or "fixing" any logic, **find the C++ equivalent in
+  `game/source/` and translate it** (use the `flyff-research` skill). Match field order,
+  types, rounding, and pipeline position exactly. Do not invent, best-effort, or redesign.
+  When a simplification is unavoidable (downstream system missing), leave a `// ponytail:`
+  comment naming the unported part. If existing TS diverges from C++ behavior, **the C++
+  wins** — fix the TS to match, never "fix" the C++ behavior. When you cannot port 1:1,
+  surface the divergence to the user before proceeding. See `01-core-standards.md` → Port
+  Discipline and `docs/c++-fidelity-audit.md`.
 - **TypeScript strict mode** — `"strict": true`. Zero `any`. Use `unknown` + type guards.
 - **ESM only** — `import`/`export`. Never `require()`. File extensions in imports: `.js` (compiled output resolution).
 - **Layer discipline** — Handlers call Services. Services call Repositories. Never skip.
