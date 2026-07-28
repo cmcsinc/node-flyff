@@ -7,6 +7,7 @@ import { SearchInput } from "@/components/search-input";
 import { EmptyRow } from "@/components/empty-state";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Map } from "lucide-react";
+import { worldName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +62,7 @@ export default async function ZonesPage({ searchParams }: { searchParams: Promis
                   <TableRow key={z.id}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{z.id}</TableCell>
                     <TableCell className="font-medium">{z.name}</TableCell>
-                    <TableCell><Badge variant="secondary">{z.worldId}</Badge></TableCell>
+                    <TableCell><Badge variant="secondary">{worldName(z.worldId)}</Badge></TableCell>
                     <TableCell className="max-w-md truncate text-muted-foreground">{z.description || "—"}</TableCell>
                   </TableRow>
                 ))}

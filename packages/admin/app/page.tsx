@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/page-header";
 import { StatCard } from "@/components/stat-card";
 import { Users, Swords, Shield, Ban, Crown, Trophy } from "lucide-react";
-import { formatNumber, jobName } from "@/lib/utils";
+import { formatNumber, jobName, worldName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -97,7 +97,7 @@ export default async function DashboardPage() {
                     <div>
                       <p className="text-sm font-medium">{char.name}</p>
                       <p className="text-xs text-muted-foreground">
-                        {jobName(char.class)} &middot; World {char.worldId}
+                        {jobName(char.class)} &middot; World {worldName(char.worldId)}
                       </p>
                     </div>
                   </div>

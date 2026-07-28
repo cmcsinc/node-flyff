@@ -11,7 +11,7 @@ import { EmptyRow } from "@/components/empty-state";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
-import { formatNumber, formatDate, jobName } from "@/lib/utils";
+import { formatNumber, formatDate, jobName, worldName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -100,7 +100,7 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
                       </TableCell>
                       <TableCell>{jobName(char.class)}</TableCell>
                       <TableCell>{char.level}</TableCell>
-                      <TableCell>{char.worldId}</TableCell>
+                      <TableCell>{worldName(char.worldId)}</TableCell>
                       <TableCell className="text-xs text-muted-foreground">
                         {char.x.toFixed(1)}, {char.z.toFixed(1)}
                       </TableCell>

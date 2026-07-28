@@ -7,6 +7,8 @@ skills:
     tier: 2
     job: 10
     discipline: 11
+    icon: skill_RinHeaHealra.dds
+    description: Recovers HP for party members near you.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -116,6 +118,8 @@ skills:
     tier: 2
     job: 10
     discipline: 26
+    icon: skill_RinSupCross.dds
+    description: Target enemy takes double damage for a limited time.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -153,6 +157,8 @@ skills:
     tier: 2
     job: 10
     discipline: 23
+    icon: skill_RinSupProtec.dds
+    description: Decreases the damage from physical attacks on a target.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -262,6 +268,8 @@ skills:
     tier: 2
     job: 10
     discipline: 23
+    icon: skill_RinSupHguard.dds
+    description: Decreases the damage from magical attacks on a target.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -371,6 +379,8 @@ skills:
     tier: 2
     job: 10
     discipline: 23
+    icon: skill_RinSupSpirit.dds
+    description: Increases striking power of a target.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -480,6 +490,8 @@ skills:
     tier: 2
     job: 10
     discipline: 11
+    icon: skill_RinCureGvur.dds
+    description: Removes de-buffs from a target.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -527,6 +539,9 @@ skills:
     tier: 2
     job: 10
     discipline: 26
+    icon: skill_RinSquGebura.dds
+    description: This ability draws upon the inner strength of nearby party members,
+      increasing both Attack Power and Attack Speed for a limited time.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -668,6 +683,8 @@ skills:
     tier: 2
     job: 10
     discipline: 26
+    icon: skill_RinSupAnzelr.dds
+    description: Enemies take damage in an area around you.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -801,6 +818,7 @@ skills:
     tier: 2
     job: 10
     discipline: 26
+    icon: skill_RinSupCross.dds
     weaponType: 13
     handed: 3
     attackRange: 4

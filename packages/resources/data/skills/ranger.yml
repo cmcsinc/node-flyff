@@ -7,6 +7,8 @@ skills:
     tier: 2
     job: 9
     discipline: 23
+    icon: Skill_RagSupFastsh.dds
+    description: Increase Bow attack speed for a limited time.
     weaponType: 13
     handed: 3
     attackRange: 6
@@ -121,6 +123,8 @@ skills:
     tier: 2
     job: 9
     discipline: 32
+    icon: Skill_RagBowIcearr.dds
+    description: Slows an enemy down by shooting it with arrows covered in ice.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -325,6 +329,8 @@ skills:
     tier: 2
     job: 9
     discipline: 32
+    icon: Skill_RagBowFlamea.dds
+    description: Gives the fire element to arrows and damages surrounding enemies.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -439,6 +445,8 @@ skills:
     tier: 2
     job: 9
     discipline: 32
+    icon: Skill_RagBowPierci.dds
+    description: Increased arrow strike.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -543,6 +551,8 @@ skills:
     tier: 2
     job: 9
     discipline: 32
+    icon: Skill_RagBowPoison.dds
+    description: Adds poison damage to Bow and increase your striking damage.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -737,6 +747,8 @@ skills:
     tier: 2
     job: 9
     discipline: 32
+    icon: Skill_RagBowSltaro.dds
+    description: Attacks the enemy and prevents him from casting spells.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -891,6 +903,8 @@ skills:
     tier: 2
     job: 9
     discipline: 23
+    icon: Skill_RagSupNature.dds
+    description: Increases resistance to magic.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -1005,6 +1019,8 @@ skills:
     tier: 2
     job: 9
     discipline: 32
+    icon: Skill_RagBowTriple.dds
+    description: Fires three arrows at once.
     weaponType: 13
     handed: 3
     attackRange: 5

@@ -113,6 +113,16 @@ function rowToItem(
     stack_size: Math.max(1, num(row, 'dwPackMax', 1)),
   };
 
+  // Icon texture filename (propItem `szIcon`, e.g. `"""itm_WeaAxeCurin.dds"""`).
+  // Strips the surrounding triple-quotes. Falls back to scanning the row for any
+  // `.dds` cell -- the column header is Korean and can mis-split under an encoding
+  // mismatch, but the icon value is always plain ASCII.
+  const iconRaw = row.szIcon ?? Object.values(row).find((v) => v.endsWith('.dds'));
+  if (iconRaw) {
+    const icon = iconRaw.replace(/"/g, '');
+    if (icon.endsWith('.dds')) item.icon = icon;
+  }
+
   // Kind routing -- read before equip_slot so consumables can be excluded.
   if (row.dwItemKind2) item.item_kind2 = row.dwItemKind2;
   if (row.dwItemKind3) item.item_kind3 = row.dwItemKind3;

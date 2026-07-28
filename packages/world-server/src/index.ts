@@ -97,6 +97,7 @@ async function main(): Promise<void> {
     partyManager,
     partyService,
     partyHandler,
+    playerManager,
     actMsgHandler,
     moveItemHandler,
     dropItemHandler,

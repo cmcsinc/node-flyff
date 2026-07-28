@@ -7,6 +7,8 @@ skills:
     tier: 1
     job: 3
     discipline: 11
+    icon: skill_AssHeaHealin.dds
+    description: Recover the HP of a target.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -176,6 +178,8 @@ skills:
     tier: 1
     job: 3
     discipline: 21
+    icon: skill_AssKnuTampin.dds
+    description: Powerful, straight punch.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -346,6 +350,8 @@ skills:
     tier: 1
     job: 3
     discipline: 11
+    icon: skill_AssHeaResurr.dds
+    description: Resurrects a dead player.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -595,6 +601,8 @@ skills:
     tier: 1
     job: 3
     discipline: 11
+    icon: skill_AssHeaPatien.dds
+    description: Increase the Max. HP of a target for a limited time.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -784,6 +792,8 @@ skills:
     tier: 1
     job: 3
     discipline: 11
+    icon: skill_AssHeaPreven.dds
+    description: Target recovers HP when it reaches below a certain point.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1034,6 +1044,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheHeapup.dds
+    description: Increases the physical strength of the target.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1223,6 +1235,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheCannon.dds
+    description: Increases the DEX of the target.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1412,6 +1426,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheCircle.dds
+    description: Heals party members close to you.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1601,6 +1617,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheMental.dds
+    description: Increases INT of a target
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1790,6 +1808,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheBeefup.dds
+    description: Increases striking power of a target.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -1979,6 +1999,8 @@ skills:
     tier: 1
     job: 3
     discipline: 21
+    icon: skill_AssKnuBurstC.dds
+    description: Pounds the ground and damages enemies around you.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -2169,6 +2191,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheStoneh.dds
+    description: All attacks gain the chance to stun.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -2359,6 +2383,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheQuicks.dds
+    description: Increases the walk speed of a target.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -2548,6 +2574,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheCatsre.dds
+    description: Increases the block rate of a target.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -2737,6 +2765,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssCheAccura.dds
+    description: Increases the accuracy of a target.
     weaponType: 13
     handed: 3
     attackRange: 4
@@ -2926,6 +2956,8 @@ skills:
     tier: 1
     job: 3
     discipline: 21
+    icon: skill_AssKnuPowerf.dds
+    description: Concentrated power strike.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -3096,6 +3128,8 @@ skills:
     tier: 1
     job: 3
     discipline: 12
+    icon: skill_AssHaste.dds
+    description: Increases attack speed of a target.
     weaponType: 13
     handed: 3
     attackRange: 4

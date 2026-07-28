@@ -7,6 +7,8 @@ skills:
     tier: 2
     job: 12
     discipline: 24
+    icon: skill_PsyDnolgy.dds
+    description: Damages the enemy with a mental blast.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -110,6 +112,8 @@ skills:
     tier: 2
     job: 12
     discipline: 25
+    icon: skill_PsySnolgy.dds
+    description: Prevents an enemy from approaching.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -222,6 +226,8 @@ skills:
     tier: 2
     job: 12
     discipline: 24
+    icon: skill_PsyPsyBomb.dds
+    description: Damages the enemy the with a ball of mental energy.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -395,6 +401,8 @@ skills:
     tier: 2
     job: 12
     discipline: 25
+    icon: skill_PsyPsyWall.dds
+    description: Creates a wall that pushes an enemy back and damages them if they touch it.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -508,6 +516,8 @@ skills:
     tier: 2
     job: 12
     discipline: 24
+    icon: skill_PsySpirits.dds
+    description: Does damage to an enemy based on your remaining MP amount.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -621,6 +631,8 @@ skills:
     tier: 2
     job: 12
     discipline: 25
+    icon: skill_PsyCrucioSpell.dds
+    description: Deals damage to an enemy equal to twice the amount the enemy deals.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -754,6 +766,8 @@ skills:
     tier: 2
     job: 12
     discipline: 24
+    icon: skill_PsyMaxCrisis.dds
+    description: Surrounds and damages the enemy in a strong mental barrier.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -887,6 +901,8 @@ skills:
     tier: 2
     job: 12
     discipline: 24
+    icon: skill_PsyPsySquare.dds
+    description: Damages the enemies around you with a psychic blast.
     weaponType: 13
     handed: 3
     attackRange: 5

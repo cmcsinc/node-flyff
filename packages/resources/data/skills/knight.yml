@@ -7,6 +7,8 @@ skills:
     tier: 2
     job: 6
     discipline: 23
+    icon: skill_KntSupGuard.dds
+    description: Increases defense by lowering attack power. Requires a two-handed weapon.
     weaponType: 13
     handed: 2
     attackRange: 4
@@ -148,6 +150,8 @@ skills:
     tier: 2
     job: 6
     discipline: 23
+    icon: skill_KntSupPairef.dds
+    description: Reflects a part of the damage received by an enemy.
     weaponType: 13
     handed: 2
     attackRange: 4
@@ -258,6 +262,9 @@ skills:
     tier: 2
     job: 6
     discipline: 23
+    icon: skill_KntSupRage.dds
+    description: Increases striking power and HP. Lowers defense and accuracy rate.
+      Requires a two-handed weapon.
     weaponType: 13
     handed: 2
     attackRange: 4
@@ -388,6 +395,9 @@ skills:
     tier: 2
     job: 6
     discipline: 27
+    icon: skill_KntTwoPwswng.dds
+    description: To strike a blow at the enemy by flourishing a weapon. Requires a
+      two-handed weapon.
     weaponType: 13
     handed: 2
     attackRange: 1
@@ -509,6 +519,8 @@ skills:
     tier: 2
     job: 6
     discipline: 28
+    icon: skill_KntTswEthdvd.dds
+    description: Powerful, downward strike.
     weaponType: 13
     handed: 2
     attackRange: 1
@@ -619,6 +631,8 @@ skills:
     tier: 2
     job: 6
     discipline: 28
+    icon: skill_KntTswCharge.dds
+    description: Powerful, upward strike.
     weaponType: 13
     handed: 2
     attackRange: 3
@@ -719,6 +733,9 @@ skills:
     tier: 2
     job: 6
     discipline: 29
+    icon: skill_KntTaxPaidea.dds
+    description: Powerful, downward strike. Lowers the defense of the target.
+      Requires two-handed axe.
     weaponType: 13
     handed: 2
     attackRange: 1
@@ -869,6 +886,8 @@ skills:
     tier: 2
     job: 6
     discipline: 29
+    icon: skill_KntTaxPwstum.dds
+    description: Pounds the ground, stunning nearby enemies. Requires two-handed axe.
     weaponType: 13
     handed: 2
     attackRange: 1

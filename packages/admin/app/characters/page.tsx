@@ -11,7 +11,7 @@ import { EmptyRow } from "@/components/empty-state";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
-import { formatNumber, jobName } from "@/lib/utils";
+import { formatNumber, jobName, worldName } from "@/lib/utils";
 import { Swords } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -98,7 +98,7 @@ export default async function CharactersPage({
                     <TableCell className="text-right">{char.stamina}</TableCell>
                     <TableCell className="text-right">{char.dexterity}</TableCell>
                     <TableCell className="text-right">{char.intelligence}</TableCell>
-                    <TableCell>{char.worldId}</TableCell>
+                    <TableCell>{worldName(char.worldId)}</TableCell>
                     <TableCell>
                       <Link href={`/accounts/${char.accountId}`} className="text-xs text-muted-foreground hover:text-primary hover:underline">
                         {char.accountUsername}

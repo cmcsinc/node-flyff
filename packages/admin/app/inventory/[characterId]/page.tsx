@@ -3,13 +3,13 @@ import { characters, inventory, inventoryItems } from "@/../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/page-header";
-import { EmptyRow } from "@/components/empty-state";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
-import { GoldEditor, ItemActions } from "./actions";
+import { formatNumber, jobName, worldName } from "@/lib/utils";
+import { getIk3Label } from "@/lib/game-constants";
+import { getItem, getAllItems, itemIconUrl } from "@/lib/item-catalog";
+import { InventoryExplorer } from "./inventory-explorer";
+import { GoldEditor } from "./actions";
+import type { PickerItem, SlotItem } from "./types";
 
 export const dynamic = "force-dynamic";
 
@@ -22,20 +22,69 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
   if (!char) notFound();
 
   const invRow = await db.select().from(inventory).where(eq(inventory.characterId, charId)).limit(1);
-  const items = await db
+  const rows = await db
     .select()
     .from(inventoryItems)
     .where(eq(inventoryItems.characterId, charId))
     .orderBy(inventoryItems.slot);
 
-  const bagItems = items.filter((i) => i.slot < 42);
-  const equipItems = items.filter((i) => i.slot >= 42);
+  // Resolve each inventory row into a rich, serializable SlotItem for the client.
+  const slotItems: SlotItem[] = [];
+  for (const r of rows) {
+    const def = await getItem(r.itemId);
+    slotItems.push({
+      id: r.id,
+      slot: r.slot,
+      itemId: r.itemId,
+      quantity: r.quantity,
+      refine: r.refine,
+      element: r.element,
+      elementLevel: r.elementLevel,
+      durability: r.durability,
+      flags: r.flags,
+      name: def?.name ?? `Item #${r.itemId}`,
+      iconUrl: itemIconUrl(def?.icon),
+      category: def?.item_kind3 ? getIk3Label(def.item_kind3) : "Unknown",
+      kind2: def?.item_kind2 ?? "",
+      rarity: def?.rarity,
+      attackMin: def?.attack_min,
+      attackMax: def?.attack_max,
+      defense: def?.defense,
+      defenseMax: def?.defense_max,
+      magicDefense: def?.magic_defense,
+      hitRate: def?.hit_rate,
+      parry: def?.parry,
+      effects: def?.effects,
+      levelReq: def?.level_req,
+      jobReq: def?.job_req,
+      genderReq: def?.gender_req,
+      price: def?.price,
+      stackSize: def?.stack_size,
+      twoHanded: def?.two_handed,
+    });
+  }
+
+  // Lightweight picker list for the "Add item" control.
+  const allItems = await getAllItems();
+  const pickerItems: PickerItem[] = allItems
+    .filter((it) => it.icon)
+    .map((it) => ({
+      id: it.id,
+      name: it.name,
+      iconUrl: itemIconUrl(it.icon),
+      category: it.item_kind3 ? getIk3Label(it.item_kind3) : "",
+      stackSize: it.stack_size,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const bagItems = slotItems.filter((i) => i.slot < 42);
+  const equipItems = slotItems.filter((i) => i.slot >= 42);
 
   return (
     <div className="space-y-6">
       <PageHeader
         title={`${char.name} — Inventory`}
-        description={`Level ${char.level} · ${items.length} items`}
+        description={`Level ${char.level} ${jobName(char.class)} · ${worldName(char.worldId)} · ${slotItems.length} items`}
         backHref={`/characters/${charId}`}
       />
 
@@ -48,91 +97,29 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
             <GoldEditor characterId={charId} currentGold={Number(invRow[0]?.gold ?? 0)} />
           </CardContent>
         </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm text-muted-foreground">Summary</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            {bagItems.length} in bag · {equipItems.length} equipped ·{" "}
+            {formatNumber(invRow[0]?.gold ?? "0")} penya
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Equipment Slots */}
       <Card>
         <CardHeader>
-          <CardTitle>Equipment (slots 42+)</CardTitle>
-          <CardDescription>{equipItems.length} equipped items</CardDescription>
+          <CardTitle>Equipment &amp; Bag</CardTitle>
+          <CardDescription>Hover an item to see its stats. Click × to remove.</CardDescription>
         </CardHeader>
-        <CardContent className="p-0">
-          <div className="max-h-[60vh] overflow-auto">
-            <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead>Slot</TableHead>
-                  <TableHead>Item ID</TableHead>
-                  <TableHead className="text-right">Qty</TableHead>
-                  <TableHead>Refine</TableHead>
-                  <TableHead>Element</TableHead>
-                  <TableHead>Durability</TableHead>
-                  <TableHead>Flags</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {equipItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-mono text-xs">{item.slot}</TableCell>
-                    <TableCell className="font-medium">{item.itemId}</TableCell>
-                    <TableCell className="text-right">{item.quantity}</TableCell>
-                    <TableCell>{item.refine > 0 ? `+${item.refine}` : "—"}</TableCell>
-                    <TableCell>{item.element > 0 ? `${item.element}/${item.elementLevel}` : "—"}</TableCell>
-                    <TableCell>{item.durability === -1 ? "∞" : item.durability}</TableCell>
-                    <TableCell><Badge variant="outline">{item.flags}</Badge></TableCell>
-                    <TableCell className="text-right"><ItemActions characterId={charId} slot={item.slot} /></TableCell>
-                  </TableRow>
-                ))}
-                {equipItems.length === 0 && (
-                  <EmptyRow colSpan={8}>Nothing equipped</EmptyRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Bag Slots */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Bag (slots 0–41)</CardTitle>
-          <CardDescription>{bagItems.length} items in bag</CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="max-h-[60vh] overflow-auto">
-            <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead>Slot</TableHead>
-                  <TableHead>Item ID</TableHead>
-                  <TableHead className="text-right">Qty</TableHead>
-                  <TableHead>Refine</TableHead>
-                  <TableHead>Element</TableHead>
-                  <TableHead>Durability</TableHead>
-                  <TableHead>Flags</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {bagItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-mono text-xs">{item.slot}</TableCell>
-                    <TableCell className="font-medium">{item.itemId}</TableCell>
-                    <TableCell className="text-right">{item.quantity}</TableCell>
-                    <TableCell>{item.refine > 0 ? `+${item.refine}` : "—"}</TableCell>
-                    <TableCell>{item.element > 0 ? `${item.element}/${item.elementLevel}` : "—"}</TableCell>
-                    <TableCell>{item.durability === -1 ? "∞" : item.durability}</TableCell>
-                    <TableCell><Badge variant="outline">{item.flags}</Badge></TableCell>
-                    <TableCell className="text-right"><ItemActions characterId={charId} slot={item.slot} /></TableCell>
-                  </TableRow>
-                ))}
-                {bagItems.length === 0 && (
-                  <EmptyRow colSpan={8}>Bag is empty</EmptyRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
+        <CardContent>
+          <InventoryExplorer
+            characterId={charId}
+            bagItems={bagItems}
+            equipItems={equipItems}
+            pickerItems={pickerItems}
+          />
         </CardContent>
       </Card>
     </div>

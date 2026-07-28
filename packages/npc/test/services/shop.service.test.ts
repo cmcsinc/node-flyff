@@ -96,7 +96,7 @@ function makeSvc(
 function addOk(slot = 0): InventoryService['addItem'] {
   return ((player, itemId, count) => {
     (player.m_Inventory as (InventorySlot | null)[])[slot] = { itemId, count };
-    return { ok: true, slot, itemId, count, isNew: true };
+    return { ok: true, changes: [{ slot, objid: slot, itemId, count, isNew: true }] };
   }) as InventoryService['addItem'];
 }
 
@@ -180,9 +180,10 @@ describe('ShopService -- buy', () => {
     const res = svc.buy(p, 0, 0, 5, 81); // 5 * price 10 = 50
     assert.equal(res.ok, true);
     if (res.ok) {
-      assert.equal(res.slot, 3);
-      assert.equal(res.itemId, 81);
-      assert.equal(res.count, 5);
+      assert.equal(res.changes.length, 1);
+      assert.equal(res.changes[0]!.slot, 3);
+      assert.equal(res.changes[0]!.itemId, 81);
+      assert.equal(res.changes[0]!.count, 5);
       assert.equal(spent, 50);
       assert.equal(res.gold, 1000); // mock spendGold doesn't mutate m_nGold
     }
@@ -230,7 +231,7 @@ describe('ShopService -- buy', () => {
     const res = svc.buy(p, 0, 0, 5, 81);
     assert.equal(res.ok, true);
     if (res.ok) {
-      assert.equal(res.count, 2);
+      assert.equal(res.changes[0]!.count, 2);
       assert.equal(res.gold, 5); // 25 - 20
     }
   });
@@ -253,7 +254,7 @@ describe('ShopService -- buy', () => {
     const res = svc.buy(p, 0, 0, 999, 81);
     assert.equal(res.ok, true);
     if (res.ok) {
-      assert.equal(res.count, 10); // clamped from 999 to stock 10
+      assert.equal(res.changes[0]!.count, 10); // clamped from 999 to stock 10
       assert.equal(spent, 100); // 10 * 10
     }
   });
@@ -274,7 +275,7 @@ describe('ShopService -- buy', () => {
     const res = svc.buy(p, 0, 0, 3, 81);
     assert.equal(res.ok, true);
     if (res.ok) {
-      assert.equal(res.count, 3);
+      assert.equal(res.changes[0]!.count, 3);
       assert.equal(spent, 45); // floor(1.5*10)=15 * 3
     }
   });
@@ -294,7 +295,7 @@ describe('ShopService -- buy', () => {
     const res = svc.buy(p, 0, 0, 4, 81);
     assert.equal(res.ok, true);
     if (res.ok) {
-      assert.equal(res.count, 4);
+      assert.equal(res.changes[0]!.count, 4);
       assert.equal(spent, 20); // floor(0.5*10)=5 * 4
     }
   });

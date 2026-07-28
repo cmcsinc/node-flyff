@@ -7,6 +7,8 @@ skills:
     tier: 2
     job: 8
     discipline: 5
+    icon: skill_JstSupSwing.dds
+    description: Increases chance of critical strike.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -121,6 +123,8 @@ skills:
     tier: 2
     job: 8
     discipline: 23
+    icon: skill_JstIntPoison.dds
+    description: Adds poison damage to your yo-yo and increases striking power.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -255,6 +259,8 @@ skills:
     tier: 2
     job: 8
     discipline: 23
+    icon: skill_JstIntBleedi.dds
+    description: Adds blood damage to your yo-yo and increases striking power.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -398,6 +404,8 @@ skills:
     tier: 2
     job: 8
     discipline: 23
+    icon: skill_JstIntAbsorb.dds
+    description: Adds the ability to drain HP to your yo-yo.
     weaponType: 13
     handed: 3
     attackRange: 5
@@ -532,6 +540,8 @@ skills:
     tier: 2
     job: 8
     discipline: 5
+    icon: skill_JstYoyBackst.dds
+    description: Attack a target from behind. Chance to stun target.
     weaponType: 13
     handed: 3
     attackRange: 1
@@ -706,6 +716,8 @@ skills:
     tier: 2
     job: 8
     discipline: 5
+    icon: skill_JstYoyPenya.dds
+    description: Strengthens the attack of a yo-yo by consuming penya.
     weaponType: 13
     handed: 3
     attackRange: 6
@@ -830,6 +842,8 @@ skills:
     tier: 2
     job: 8
     discipline: 23
+    icon: skill_JstSupEscape.dds
+    description: Removes the effects of Ice Missile, Slow Step, and Ice Arrow.
     weaponType: 13
     handed: 3
     attackRange: 6
@@ -994,6 +1008,8 @@ skills:
     tier: 2
     job: 8
     discipline: 5
+    icon: skill_JstSupVatals.dds
+    description: Surprise attack while in Dark Illusion.
     weaponType: 13
     handed: 3
     attackRange: 6

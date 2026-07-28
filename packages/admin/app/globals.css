@@ -183,6 +183,51 @@
       var(--color-primary)
     );
   }
+
+  /* ── Flyff-style inventory slot: recessed beveled cell ──────────────────
+     Mirrors the in-game inventory/ equip cells: a dark inset well with a
+     1px highlight on the top-left edge and a shadow on the bottom-right,
+     sitting on a subtly textured panel. */
+  .flyff-slot {
+    position: relative;
+    border-radius: 3px;
+    background:
+      linear-gradient(168deg, #0c1322 0%, #0a0f1c 100%);
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.06),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.6),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+    border: 1px solid #243049;
+    transition: box-shadow 0.12s ease, border-color 0.12s ease;
+    flex: none;
+  }
+  .flyff-slot:hover,
+  .flyff-slot:focus-visible {
+    border-color: var(--color-primary);
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.08),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.6),
+      0 0 8px -1px var(--color-primary);
+    outline: none;
+  }
+
+  /* The textured panel behind a grid of slots (the bag window body). */
+  .flyff-panel {
+    background:
+      radial-gradient(120% 100% at 50% 0%, #131c30 0%, #0e1524 60%, #0b1120 100%);
+    border: 1px solid #243049;
+    border-radius: var(--radius);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Ornate gold-trimmed header bar for the inventory/equip windows. */
+  .flyff-window-header {
+    background: linear-gradient(180deg, #1c2740 0%, #131c30 100%);
+    border-bottom: 1px solid #2c3a55;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
 }
 
 /* Respect reduced-motion preferences */
