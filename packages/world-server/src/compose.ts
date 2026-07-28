@@ -16,6 +16,7 @@ import { NpcSnapshotSerializer } from '@flyff/npc';
 import { DestObjSerializer } from '@flyff/combat';
 import { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import { JoinService } from './services/join.service';
+import { ChangeJobServiceImpl } from './services/changeJob.service';
 import { QuestService } from '@flyff/quest';
 import { JoinHandler } from './handlers/join.handler';
 import { MapKeyService } from '@flyff/npc';
@@ -487,6 +488,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
     inventoryService, charRepo, inventoryRepo, zoneManager, vicinityService,
+    getItemByName: (name: string) => resources.items.byName.get(name),
   });
   const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
@@ -503,9 +505,13 @@ export async function compose(): Promise<WorldComposeResult> {
   const queryGetDestObjService = new QueryGetDestObjService(playerManager, new DestObjSerializer());
   const queryGetDestObjHandler = new QueryGetDestObjHandler(playerManager, queryGetDestObjService);
   const getPosHandler = new GetPosHandler(playerManager, movementService);
+  const changeJobService = new ChangeJobServiceImpl({
+    charRepo, skills: resources.skills, playerManager, zoneManager, journal,
+  });
   const scriptDlgService = new ScriptDlgService({
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
     defines: resources.defines, questText: resources.questText,
+    changeJobService,
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalHandler = new RevivalHandler(playerManager, revivalService);
