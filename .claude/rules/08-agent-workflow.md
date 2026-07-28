@@ -2,6 +2,14 @@
 
 Rules for how sub-agents operate, checkpoint, and hand off work.
 
+## Port Discipline (read first — applies to every agent)
+
+This is a port of a working C++ server. The C++ source in `game/source/` is the spec.
+Before implementing or "fixing" anything, **find the C++ equivalent and translate it** —
+do not invent, best-effort, or redesign. See `01-core-standards.md` → Port Discipline
+and the `flyff-cpp-to-nodejs` / `flyff-research` skills. When existing TS diverges from
+C++ behavior, the C++ wins; surface the divergence rather than working around it.
+
 ## Branch-First is Mandatory
 
 Before touching any file for a task, create a working branch off `master` — **never work on or commit to `master` directly**. When the work is ready, open a PR on GitHub for review; do not self-merge unless the user says so. See [common/git-workflow.md](./common/git-workflow.md) → Branch-First Workflow for the exact commands.
