@@ -200,7 +200,7 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\endSkillQueue.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\spawn.manager.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\handlers\\skillTaskbar.handler.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\formulas.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\formulas.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\questRewards.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\actionSlot.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\skills\\test\\services\\skill.service.test.ts": "pass",
@@ -217,7 +217,7 @@
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\dialogInterpreter.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\questText.loader.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\quest.service.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\quest.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\items.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\questConditions.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\serializers\\party.serializer.test.ts": "pass",
@@ -231,5 +231,8 @@
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\shop.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\bank.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\cluster-server\\test\\handlers\\char.handler.test.ts": "fail",
-  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\target.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\target.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\npcBuff.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\changeJob.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\quest\\test\\systems\\questTracker.system.test.ts": "pass"
 }

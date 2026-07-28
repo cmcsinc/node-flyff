@@ -6,11 +6,12 @@ import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
+import { EmptyRow } from "@/components/empty-state";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { formatNumber, formatDate, jobName } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -29,19 +30,17 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Link href="/accounts" className="text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{account.username}</h1>
-          <p className="text-muted-foreground">Account ID: {account.id}</p>
-        </div>
-        <div className="flex gap-2 ml-auto">
-          {account.gm && <Badge variant="default">GM</Badge>}
-          {account.banned && <Badge variant="destructive">Banned</Badge>}
-        </div>
-      </div>
+      <PageHeader
+        title={account.username}
+        description={`Account ID: ${account.id}`}
+        backHref="/accounts"
+        actions={
+          <div className="flex gap-2">
+            {account.gm && <Badge variant="gold">GM</Badge>}
+            {account.banned && <Badge variant="destructive">Banned</Badge>}
+          </div>
+        }
+      />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -108,11 +107,7 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
                     </TableRow>
                   ))}
                   {chars.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                        No characters
-                      </TableCell>
-                    </TableRow>
+                    <EmptyRow colSpan={6}>No characters</EmptyRow>
                   )}
                 </TableBody>
               </Table>

@@ -1,15 +1,18 @@
 import { db } from "@/lib/db";
 import { characters, accounts } from "@/../drizzle/schema";
-import { eq, desc, like, sql } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/page-header";
+import { SearchInput } from "@/components/search-input";
+import { EmptyRow } from "@/components/empty-state";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { formatNumber, jobName } from "@/lib/utils";
-import { Search } from "lucide-react";
+import { Swords } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -53,80 +56,67 @@ export default async function CharactersPage({
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Characters</h1>
-        <p className="text-muted-foreground">{filtered.length} characters</p>
-      </div>
+      <PageHeader title="Characters" description={`${filtered.length} characters`} />
 
-      <form className="flex gap-2 items-center" method="GET">
-        <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            name="search"
-            placeholder="Search by name..."
-            defaultValue={search}
-            className="pl-8 h-9 w-64"
-          />
-        </div>
-        <button
-          type="submit"
-          className="h-9 rounded-md bg-primary px-4 py-1 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
-        >
-          Search
-        </button>
+      <form className="flex flex-wrap gap-2" method="GET">
+        <SearchInput name="search" placeholder="Search by name..." defaultValue={search} className="w-full sm:w-64" />
+        <Button type="submit">Search</Button>
       </form>
 
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Class</TableHead>
-                <TableHead>Level</TableHead>
-                <TableHead>STR</TableHead>
-                <TableHead>STA</TableHead>
-                <TableHead>DEX</TableHead>
-                <TableHead>INT</TableHead>
-                <TableHead>World</TableHead>
-                <TableHead>Account</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filtered.map((char) => (
-                <TableRow key={char.id}>
-                  <TableCell className="font-mono text-xs">{char.id}</TableCell>
-                  <TableCell>
-                    <Link href={`/characters/${char.id}`} className="font-medium hover:underline">
-                      {char.name}
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="secondary">{jobName(char.class)}</Badge>
-                  </TableCell>
-                  <TableCell className="font-bold">{char.level}</TableCell>
-                  <TableCell>{char.strength}</TableCell>
-                  <TableCell>{char.stamina}</TableCell>
-                  <TableCell>{char.dexterity}</TableCell>
-                  <TableCell>{char.intelligence}</TableCell>
-                  <TableCell>{char.worldId}</TableCell>
-                  <TableCell>
-                    <Link href={`/accounts/${char.accountId}`} className="text-muted-foreground hover:underline text-xs">
-                      {char.accountUsername}
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {filtered.length === 0 && (
+          <div className="max-h-[70vh] overflow-auto">
+            <Table>
+              <TableHeader className="sticky top-0 bg-background">
                 <TableRow>
-                  <TableCell colSpan={10} className="text-center py-8 text-muted-foreground">
-                    No characters found
-                  </TableCell>
+                  <TableHead className="w-16">ID</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Class</TableHead>
+                  <TableHead className="text-right">Level</TableHead>
+                  <TableHead className="text-right">STR</TableHead>
+                  <TableHead className="text-right">STA</TableHead>
+                  <TableHead className="text-right">DEX</TableHead>
+                  <TableHead className="text-right">INT</TableHead>
+                  <TableHead>World</TableHead>
+                  <TableHead>Account</TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((char) => (
+                  <TableRow key={char.id}>
+                    <TableCell className="font-mono text-xs text-muted-foreground">{char.id}</TableCell>
+                    <TableCell>
+                      <Link href={`/characters/${char.id}`} className="font-medium text-primary hover:underline">
+                        {char.name}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">{jobName(char.class)}</Badge>
+                    </TableCell>
+                    <TableCell className="text-right font-bold text-gold">{char.level}</TableCell>
+                    <TableCell className="text-right">{char.strength}</TableCell>
+                    <TableCell className="text-right">{char.stamina}</TableCell>
+                    <TableCell className="text-right">{char.dexterity}</TableCell>
+                    <TableCell className="text-right">{char.intelligence}</TableCell>
+                    <TableCell>{char.worldId}</TableCell>
+                    <TableCell>
+                      <Link href={`/accounts/${char.accountId}`} className="text-xs text-muted-foreground hover:text-primary hover:underline">
+                        {char.accountUsername}
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {filtered.length === 0 && (
+                  <EmptyRow colSpan={10}>
+                    <div className="flex flex-col items-center gap-1">
+                      <Swords className="h-5 w-5 opacity-40" />
+                      No characters found
+                    </div>
+                  </EmptyRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

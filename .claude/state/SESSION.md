@@ -43,9 +43,21 @@ C++ fidelity audit fixes — all tiers
 - M16 — DOEQUIP nPart validation order
 - M17 — updateItem nId rename
 
+### LOW (all resolved)
+- L1 — PvP immunity (DST_IGNORE_DMG_PVP) guard pipe
+- L2 — enemy-state damage bonuses guard pipe
+- L3+L4+L6 — ponytail comments for unported features
+- L5 — returning-to-begin invulnerability
+- L7 — DST_ADJ_HITRATE buff in hit rate
+- L11 — quest cancel QS_END check
+- L12 — removed invented NPC buff rate limit
+- L13 — SELLITEM comment fix (slot → objid)
+- L14+L15 — already correct
+- Prerequisite: MAX_ADJPARAMARY bumped 94→117 (DST indices >=94 were silently dropped)
+
 ## Remaining
-- 17 LOW findings (cosmetic, no gameplay impact)
 - H10: CERTIFY __SECURITY_0628 (needs build flag confirmation)
+- All 64 fidelity findings resolved (7 CRIT + 17 HIGH + 23 MED + 17 LOW)
 
 ## Audit Doc
 `docs/c++-fidelity-audit.md`

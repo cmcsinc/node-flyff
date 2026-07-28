@@ -2,14 +2,13 @@ import { db } from "@/lib/db";
 import { characters, inventory, inventoryItems } from "@/../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/page-header";
+import { EmptyRow } from "@/components/empty-state";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
-import { formatNumber } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
 import { GoldEditor, ItemActions } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -34,17 +33,11 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Link href={`/characters/${charId}`} className="text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{char.name} — Inventory</h1>
-          <p className="text-muted-foreground">
-            Level {char.level} &middot; {items.length} items
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        title={`${char.name} — Inventory`}
+        description={`Level ${char.level} · ${items.length} items`}
+        backHref={`/characters/${charId}`}
+      />
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
@@ -64,37 +57,39 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
           <CardDescription>{equipItems.length} equipped items</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Slot</TableHead>
-                <TableHead>Item ID</TableHead>
-                <TableHead>Qty</TableHead>
-                <TableHead>Refine</TableHead>
-                <TableHead>Element</TableHead>
-                <TableHead>Durability</TableHead>
-                <TableHead>Flags</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {equipItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-mono text-xs">{item.slot}</TableCell>
-                  <TableCell className="font-medium">{item.itemId}</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{item.refine > 0 ? `+${item.refine}` : "—"}</TableCell>
-                  <TableCell>{item.element > 0 ? `${item.element}/${item.elementLevel}` : "—"}</TableCell>
-                  <TableCell>{item.durability === -1 ? "∞" : item.durability}</TableCell>
-                  <TableCell><Badge variant="outline">{item.flags}</Badge></TableCell>
-                  <TableCell><ItemActions characterId={charId} slot={item.slot} /></TableCell>
+          <div className="max-h-[60vh] overflow-auto">
+            <Table>
+              <TableHeader className="sticky top-0 bg-background">
+                <TableRow>
+                  <TableHead>Slot</TableHead>
+                  <TableHead>Item ID</TableHead>
+                  <TableHead className="text-right">Qty</TableHead>
+                  <TableHead>Refine</TableHead>
+                  <TableHead>Element</TableHead>
+                  <TableHead>Durability</TableHead>
+                  <TableHead>Flags</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              ))}
-              {equipItems.length === 0 && (
-                <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">Nothing equipped</TableCell></TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {equipItems.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="font-mono text-xs">{item.slot}</TableCell>
+                    <TableCell className="font-medium">{item.itemId}</TableCell>
+                    <TableCell className="text-right">{item.quantity}</TableCell>
+                    <TableCell>{item.refine > 0 ? `+${item.refine}` : "—"}</TableCell>
+                    <TableCell>{item.element > 0 ? `${item.element}/${item.elementLevel}` : "—"}</TableCell>
+                    <TableCell>{item.durability === -1 ? "∞" : item.durability}</TableCell>
+                    <TableCell><Badge variant="outline">{item.flags}</Badge></TableCell>
+                    <TableCell className="text-right"><ItemActions characterId={charId} slot={item.slot} /></TableCell>
+                  </TableRow>
+                ))}
+                {equipItems.length === 0 && (
+                  <EmptyRow colSpan={8}>Nothing equipped</EmptyRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
@@ -105,37 +100,39 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
           <CardDescription>{bagItems.length} items in bag</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Slot</TableHead>
-                <TableHead>Item ID</TableHead>
-                <TableHead>Qty</TableHead>
-                <TableHead>Refine</TableHead>
-                <TableHead>Element</TableHead>
-                <TableHead>Durability</TableHead>
-                <TableHead>Flags</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {bagItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-mono text-xs">{item.slot}</TableCell>
-                  <TableCell className="font-medium">{item.itemId}</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{item.refine > 0 ? `+${item.refine}` : "—"}</TableCell>
-                  <TableCell>{item.element > 0 ? `${item.element}/${item.elementLevel}` : "—"}</TableCell>
-                  <TableCell>{item.durability === -1 ? "∞" : item.durability}</TableCell>
-                  <TableCell><Badge variant="outline">{item.flags}</Badge></TableCell>
-                  <TableCell><ItemActions characterId={charId} slot={item.slot} /></TableCell>
+          <div className="max-h-[60vh] overflow-auto">
+            <Table>
+              <TableHeader className="sticky top-0 bg-background">
+                <TableRow>
+                  <TableHead>Slot</TableHead>
+                  <TableHead>Item ID</TableHead>
+                  <TableHead className="text-right">Qty</TableHead>
+                  <TableHead>Refine</TableHead>
+                  <TableHead>Element</TableHead>
+                  <TableHead>Durability</TableHead>
+                  <TableHead>Flags</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              ))}
-              {bagItems.length === 0 && (
-                <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">Bag is empty</TableCell></TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {bagItems.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="font-mono text-xs">{item.slot}</TableCell>
+                    <TableCell className="font-medium">{item.itemId}</TableCell>
+                    <TableCell className="text-right">{item.quantity}</TableCell>
+                    <TableCell>{item.refine > 0 ? `+${item.refine}` : "—"}</TableCell>
+                    <TableCell>{item.element > 0 ? `${item.element}/${item.elementLevel}` : "—"}</TableCell>
+                    <TableCell>{item.durability === -1 ? "∞" : item.durability}</TableCell>
+                    <TableCell><Badge variant="outline">{item.flags}</Badge></TableCell>
+                    <TableCell className="text-right"><ItemActions characterId={charId} slot={item.slot} /></TableCell>
+                  </TableRow>
+                ))}
+                {bagItems.length === 0 && (
+                  <EmptyRow colSpan={8}>Bag is empty</EmptyRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

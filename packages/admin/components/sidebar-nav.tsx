@@ -7,7 +7,6 @@ import {
   Users,
   Swords,
   Package,
-  Landmark,
   ScrollText,
   Sparkles,
   Settings,
@@ -17,15 +16,26 @@ import {
   Map,
   Gem,
   MessageSquareText,
+  type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useAppShell } from "@/components/app-shell";
 
-interface NavItem {
+interface NavLeaf {
   label: string;
-  href?: string;
-  icon: React.ComponentType<{ className?: string }>;
-  children?: NavItem[];
+  href: string;
+  icon: LucideIcon;
+}
+interface NavGroup {
+  label: string;
+  icon: LucideIcon;
+  children: NavLeaf[];
+}
+type NavItem = NavLeaf | NavGroup;
+
+function isGroup(item: NavItem): item is NavGroup {
+  return (item as NavGroup).children !== undefined;
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -49,63 +59,89 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
-function NavItemComponent({ item, depth = 0 }: { item: NavItem; depth?: number }) {
+function pathMatches(pathname: string, href: string): boolean {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
+function LeafLink({ item }: { item: NavLeaf }) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(true);
-  const isActive = item.href ? pathname === item.href : false;
-  const hasChildren = item.children && item.children.length > 0;
+  const active = pathMatches(pathname, item.href);
   const Icon = item.icon;
-
-  if (hasChildren) {
-    return (
-      <div>
-        <button
-          onClick={() => setOpen(!open)}
-          className={cn(
-            "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
-          )}
-        >
-          <Icon className="h-4 w-4 shrink-0" />
-          <span className="flex-1 text-left">{item.label}</span>
-          <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform", !open && "-rotate-90")} />
-        </button>
-        {open && (
-          <div className="ml-4 mt-1 space-y-1 border-l border-border pl-3">
-            {item.children!.map((child) => (
-              <NavItemComponent key={child.label} item={child} depth={depth + 1} />
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
-
+  const { setMobileOpen } = useAppShell();
   return (
     <Link
-      href={item.href!}
+      href={item.href}
+      aria-current={active ? "page" : undefined}
+      onClick={() => setMobileOpen(false)}
       className={cn(
-        "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-        isActive
-          ? "bg-accent text-accent-foreground"
-          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+        "group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+        active
+          ? "bg-primary/15 text-primary"
+          : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
       )}
     >
+      {/* active accent bar */}
+      {active && (
+        <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-primary glow-primary" />
+      )}
       <Icon className="h-4 w-4 shrink-0" />
-      {item.label}
+      <span className="flex-1 truncate">{item.label}</span>
     </Link>
+  );
+}
+
+function GroupNav({ item }: { item: NavGroup }) {
+  const pathname = usePathname();
+  const childActive = item.children.some((c) => pathMatches(pathname, c.href));
+  const [open, setOpen] = useState(childActive);
+  const Icon = item.icon;
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        className={cn(
+          "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+          childActive
+            ? "text-foreground"
+            : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+        )}
+      >
+        <Icon className="h-4 w-4 shrink-0" />
+        <span className="flex-1 text-left">{item.label}</span>
+        <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform", !open && "-rotate-90")} />
+      </button>
+      {open && (
+        <div className="ml-4 mt-1 space-y-0.5 border-l border-sidebar-border pl-3">
+          {item.children.map((child) => (
+            <LeafLink key={child.href} item={child} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
 export function SidebarNav() {
   return (
-    <nav className="flex flex-col gap-1 px-3 py-4">
+    <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4" aria-label="Primary">
       <div className="mb-4 px-3">
-        <h1 className="text-lg font-bold tracking-tight">Flyff Admin</h1>
-        <p className="text-xs text-muted-foreground">Server Management</p>
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/20 glow-primary">
+            <Sword className="h-4 w-4 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-base font-bold leading-none tracking-tight">Flyff Admin</h1>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">Server Management</p>
+          </div>
+        </div>
       </div>
-      {NAV_ITEMS.map((item) => (
-        <NavItemComponent key={item.label} item={item} />
-      ))}
+      <div className="space-y-0.5">
+        {NAV_ITEMS.map((item) =>
+          isGroup(item) ? <GroupNav key={item.label} item={item} /> : <LeafLink key={item.href} item={item} />,
+        )}
+      </div>
     </nav>
   );
 }

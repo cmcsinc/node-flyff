@@ -52,6 +52,7 @@ import type { PlayerManager } from '@flyff/world-core';
 import type { SpawnManager } from '@flyff/world-core';
 import type { QuestService } from '@flyff/quest';
 import type { InventoryService } from '@flyff/inventory';
+import { buildUpdateItemCount } from '@flyff/inventory';
 import type { CharacterRepository, InventoryRepository } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 import { AUTH, hasAuthority } from '@flyff/entities';
@@ -626,8 +627,14 @@ export class CommandService {
 
     const res = inv.addItem(player, resolved.itemId, count);
     if (!res.ok) return;
-    const buf = this.createItemSer.buildOne(player.m_idPlayer, res.itemId, res.count, res.objid);
-    this.deps.playerManager.sendTo(player, buf);
+    for (const ch of res.changes) {
+      this.deps.playerManager.sendTo(
+        player,
+        ch.isNew
+          ? this.createItemSer.buildOne(player.m_idPlayer, ch.itemId, ch.count, ch.objid)
+          : buildUpdateItemCount(player.m_idPlayer, ch.objid, ch.count),
+      );
+    }
   }
 
   /**

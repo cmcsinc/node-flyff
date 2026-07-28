@@ -1,9 +1,11 @@
 import { db } from "@/lib/db";
-import { accounts, characters, inventory } from "@/../drizzle/schema";
-import { count, eq, sql, desc } from "drizzle-orm";
+import { accounts, characters } from "@/../drizzle/schema";
+import { count, eq, desc } from "drizzle-orm";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Swords, Shield, TrendingUp } from "lucide-react";
+import { PageHeader } from "@/components/page-header";
+import { StatCard } from "@/components/stat-card";
+import { Users, Swords, Shield, Ban, Crown, Trophy } from "lucide-react";
 import { formatNumber, jobName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -39,37 +41,38 @@ export default async function DashboardPage() {
     .limit(5);
 
   const stats = [
-    { label: "Total Accounts", value: totalAccounts.value, icon: Users, color: "text-blue-500" },
-    { label: "Total Characters", value: totalCharacters.value, icon: Swords, color: "text-green-500" },
-    { label: "GM Accounts", value: totalGm.value, icon: Shield, color: "text-yellow-500" },
-    { label: "Banned Accounts", value: totalBanned.value, icon: TrendingUp, color: "text-red-500" },
+    { label: "Total Accounts", value: totalAccounts.value, icon: Users, tone: "accent" as const },
+    { label: "Total Characters", value: totalCharacters.value, icon: Swords, tone: "success" as const },
+    { label: "GM Accounts", value: totalGm.value, icon: Shield, tone: "gold" as const },
+    { label: "Banned Accounts", value: totalBanned.value, icon: Ban, tone: "destructive" as const },
   ];
 
   return (
     <div className="space-y-8">
+      <PageHeader title="Dashboard" description="Server overview at a glance" />
+
       {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <Card key={stat.label}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">{stat.label}</CardTitle>
-                <Icon className={`h-4 w-4 ${stat.color}`} />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{formatNumber(stat.value)}</div>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, i) => (
+          <StatCard
+            key={stat.label}
+            label={stat.label}
+            value={stat.value}
+            icon={stat.icon}
+            tone={stat.tone}
+            index={i}
+          />
+        ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         {/* Top Characters */}
-        <Card>
+        <Card className="animate-[fade-in-up_0.4s_ease-out_both]">
           <CardHeader>
-            <CardTitle>Top Characters by Level</CardTitle>
+            <div className="flex items-center gap-2">
+              <Trophy className="h-4 w-4 text-gold" />
+              <CardTitle>Top Characters by Level</CardTitle>
+            </div>
             <CardDescription>Highest level characters on the server</CardDescription>
           </CardHeader>
           <CardContent>
@@ -77,46 +80,68 @@ export default async function DashboardPage() {
               {topCharacters.map((char, i) => (
                 <div key={char.id} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-muted-foreground w-5">{i + 1}</span>
+                    <span
+                      className={
+                        "flex h-6 w-6 items-center justify-center rounded-md text-xs font-bold " +
+                        (i === 0
+                          ? "bg-gold/20 text-gold"
+                          : i === 1
+                            ? "bg-muted text-muted-foreground"
+                            : i === 2
+                              ? "bg-warning/20 text-warning"
+                              : "text-muted-foreground")
+                      }
+                    >
+                      {i + 1}
+                    </span>
                     <div>
                       <p className="text-sm font-medium">{char.name}</p>
                       <p className="text-xs text-muted-foreground">
-                        {jobName(char.class)} &middot; {char.worldId}
+                        {jobName(char.class)} &middot; World {char.worldId}
                       </p>
                     </div>
                   </div>
-                  <Badge variant="secondary">Lv. {char.level}</Badge>
+                  <Badge variant="secondary">Lv. {formatNumber(char.level)}</Badge>
                 </div>
               ))}
               {topCharacters.length === 0 && (
-                <p className="text-sm text-muted-foreground">No characters yet</p>
+                <p className="py-8 text-center text-sm text-muted-foreground">No characters yet</p>
               )}
             </div>
           </CardContent>
         </Card>
 
         {/* Recent Accounts */}
-        <Card>
+        <Card className="animate-[fade-in-up_0.4s_ease-out_both]" style={{ animationDelay: "80ms" }}>
           <CardHeader>
-            <CardTitle>Recent Accounts</CardTitle>
+            <div className="flex items-center gap-2">
+              <Crown className="h-4 w-4 text-primary" />
+              <CardTitle>Recent Accounts</CardTitle>
+            </div>
             <CardDescription>Latest registered accounts</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {recentAccounts.map((acc) => (
                 <div key={acc.id} className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium">{acc.username}</p>
-                    <p className="text-xs text-muted-foreground">ID: {acc.id}</p>
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary">
+                      {acc.username.charAt(0).toUpperCase()}
+                    </span>
+                    <div>
+                      <p className="text-sm font-medium">{acc.username}</p>
+                      <p className="text-xs text-muted-foreground">ID: {acc.id}</p>
+                    </div>
                   </div>
                   <div className="flex gap-1">
-                    {acc.gm && <Badge variant="default">GM</Badge>}
+                    {acc.gm && <Badge variant="gold">GM</Badge>}
                     {acc.banned && <Badge variant="destructive">Banned</Badge>}
+                    {!acc.gm && !acc.banned && <Badge variant="success">Active</Badge>}
                   </div>
                 </div>
               ))}
               {recentAccounts.length === 0 && (
-                <p className="text-sm text-muted-foreground">No accounts yet</p>
+                <p className="py-8 text-center text-sm text-muted-foreground">No accounts yet</p>
               )}
             </div>
           </CardContent>

@@ -6,15 +6,21 @@ import { cn } from "@/lib/utils";
 interface TabsContextValue {
   value: string;
   onValueChange: (value: string) => void;
+  baseId: string;
 }
 
-const TabsContext = React.createContext<TabsContextValue>({ value: "", onValueChange: () => {} });
+const TabsContext = React.createContext<TabsContextValue>({
+  value: "",
+  onValueChange: () => {},
+  baseId: "tabs",
+});
 
 const Tabs = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { value?: string; defaultValue?: string; onValueChange?: (v: string) => void }
 >(({ className, value: controlledValue, defaultValue, onValueChange, children, ...props }, ref) => {
   const [internalValue, setInternalValue] = React.useState(defaultValue || "");
+  const baseId = React.useId();
   const value = controlledValue ?? internalValue;
   const handleValueChange = React.useCallback(
     (v: string) => {
@@ -25,7 +31,7 @@ const Tabs = React.forwardRef<
   );
 
   return (
-    <TabsContext.Provider value={{ value, onValueChange: handleValueChange }}>
+    <TabsContext.Provider value={{ value, onValueChange: handleValueChange, baseId }}>
       <div ref={ref} className={cn("", className)} {...props}>
         {children}
       </div>
@@ -38,6 +44,7 @@ const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
+      role="tablist"
       className={cn(
         "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
         className,
@@ -53,15 +60,43 @@ const TabsTrigger = React.forwardRef<
   React.ButtonHTMLAttributes<HTMLButtonElement> & { value: string }
 >(({ className, value, ...props }, ref) => {
   const ctx = React.useContext(TabsContext);
+  const active = ctx.value === value;
+  const tabId = `${ctx.baseId}-trigger-${value}`;
+  const panelId = `${ctx.baseId}-panel-${value}`;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    props.onKeyDown?.(e);
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      const list = e.currentTarget.parentElement;
+      if (!list) return;
+      const triggers = Array.from(list.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      const idx = triggers.indexOf(e.currentTarget);
+      if (idx === -1) return;
+      const dir = e.key === "ArrowRight" ? 1 : -1;
+      const next = triggers[(idx + dir + triggers.length) % triggers.length];
+      next?.focus();
+      ctx.onValueChange(next.dataset.value ?? "");
+    }
+  };
+
   return (
     <button
       ref={ref}
+      type="button"
+      role="tab"
+      id={tabId}
+      aria-selected={active}
+      aria-controls={panelId}
+      data-value={value}
+      tabIndex={active ? 0 : -1}
       className={cn(
         "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-        ctx.value === value && "bg-background text-foreground shadow",
+        active && "bg-background text-foreground shadow",
         className,
       )}
       onClick={() => ctx.onValueChange(value)}
+      onKeyDown={handleKeyDown}
       {...props}
     />
   );
@@ -73,10 +108,17 @@ const TabsContent = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & { value: string }
 >(({ className, value, ...props }, ref) => {
   const ctx = React.useContext(TabsContext);
-  if (ctx.value !== value) return null;
+  const active = ctx.value === value;
+  const panelId = `${ctx.baseId}-panel-${value}`;
+  const tabId = `${ctx.baseId}-trigger-${value}`;
+  if (!active) return null;
   return (
     <div
       ref={ref}
+      role="tabpanel"
+      id={panelId}
+      aria-labelledby={tabId}
+      tabIndex={0}
       className={cn(
         "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         className,

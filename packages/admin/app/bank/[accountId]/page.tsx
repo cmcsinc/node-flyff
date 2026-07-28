@@ -4,13 +4,13 @@ import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
+import { EmptyRow } from "@/components/empty-state";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { formatNumber } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
 import { BankGoldEditor } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -39,17 +39,11 @@ export default async function BankPage({ params }: { params: Promise<{ accountId
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Link href={`/accounts/${accId}`} className="text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{account.username} — Bank</h1>
-          <p className="text-muted-foreground">
-            {items.length} items across 3 tabs &middot; Password: {bankRow[0]?.bankPass === "0000" ? "Not set" : "****"}
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        title={`${account.username} — Bank`}
+        description={`${items.length} items across 3 tabs · Password: ${bankRow[0]?.bankPass === "0000" ? "Not set" : "****"}`}
+        backHref={`/accounts/${accId}`}
+      />
 
       <Card>
         <CardHeader className="pb-2">
@@ -96,7 +90,7 @@ export default async function BankPage({ params }: { params: Promise<{ accountId
                       </TableRow>
                     ))}
                     {tabItems[t].length === 0 && (
-                      <TableRow><TableCell colSpan={5} className="text-center py-8 text-muted-foreground">Empty tab</TableCell></TableRow>
+                      <EmptyRow colSpan={5}>Empty tab</EmptyRow>
                     )}
                   </TableBody>
                 </Table>
