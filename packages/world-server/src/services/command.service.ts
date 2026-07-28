@@ -619,14 +619,24 @@ export class CommandService {
    */
   private createItem({ args, player }: CommandCtx): void {
     const inv = this.deps.inventoryService;
-    if (inv === undefined) return;
+    if (inv === undefined) {
+      logger.warn({ charId: player.m_idPlayer, args }, '/ci: inventoryService unavailable');
+      return;
+    }
 
     const resolved = resolveItemId(args, this.deps.getItemByName);
-    if (!resolved) return;
+    if (!resolved) {
+      logger.warn({ charId: player.m_idPlayer, args }, '/ci: could not resolve item (unknown name/id)');
+      return;
+    }
     const count = Math.max(1, resolved.count);
+    logger.info({ charId: player.m_idPlayer, args, itemId: resolved.itemId, count }, '/ci resolved');
 
     const res = inv.addItem(player, resolved.itemId, count);
-    if (!res.ok) return;
+    if (!res.ok) {
+      logger.warn({ charId: player.m_idPlayer, itemId: resolved.itemId, reason: res.reason }, '/ci: addItem failed');
+      return;
+    }
     for (const ch of res.changes) {
       this.deps.playerManager.sendTo(
         player,
