@@ -61,6 +61,13 @@ export interface LootServiceDeps {
    */
   onAcquireItem?: (player: CPlayer, itemId: number, count: number) => void;
   /**
+   * `CUser::AddGoldText` seam -- `CMover::PickupGoldCore` (`MoverEquip.cpp:2423`)
+   * calls it right after a successful `AddGold`, so `total` is the post-add
+   * balance. Wired in `compose.ts` to a `SNAPSHOTTYPE_DEFINEDTEXT`
+   * (`TID_GAME_REAPMONEY`) emit. Optional -- no-op in tests.
+   */
+  onGoldPickup?: (player: CPlayer, plus: number, total: number) => void;
+  /**
    * Optional party-share seam (wired to a `partyManager`-backed check in
    * `compose.ts`). When non-null, a party member may loot an owner-locked pile
    * before the {@link LOOT_FFA_MS} timeout. Keeps `@flyff/inventory` free of
@@ -147,6 +154,9 @@ export class LootService {
         player,
         buildSetPointParam(player.m_idPlayer, DST_GOLD, player.m_nGold),
       );
+      // `PickupGoldCore`: AddGold first, then AddGoldText(nGold) -- so the
+      // "(Total: N)" half is the already-updated balance.
+      this.deps.onGoldPickup?.(player, item.m_nItemNum, player.m_nGold);
       this.deps.itemManager.remove(item.m_idObject);
       this.motion(player);
       return;

@@ -251,6 +251,7 @@ export const SNAPSHOTTYPE_CREATEITEM = 0x0003;
 // peer-broadcast serializers use.
 export const SNAPSHOTTYPE_CHAT = 0x0001;              // msghdr.h:733  -- AddChat vicinity chat (objid + text only)
 export const SNAPSHOTTYPE_TEXT = 0x00a0;              // msghdr.h:877  -- AddText per-user color text (notice/system)
+export const SNAPSHOTTYPE_DEFINEDTEXT = 0x0095;       // MsgHdr.h:1059 -- AddDefinedText (defineText.h id + printf args)
 export const SNAPSHOTTYPE_RETURNSAY = 0x00a9;         // msghdr.h:885  -- AddReturnSay whisper error reply
 export const SNAPSHOTTYPE_SHOUT = 0x00d0;             // msghdr.h:923  -- AddShout server-wide shout
 export const SNAPSHOTTYPE_REPLACE = 0x00f2;           // msghdr.h:948  -- AddReplace teleport notify
@@ -301,6 +302,18 @@ export const TEXT_COLOR_NOTICE = 0xffffff00;
  */
 export const TEXT_GENERAL = 0x01; // PutString (normal notice)
 export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
+
+/**
+ * `TID_GAME_REAPMONEY` (`game/resource/defineText.h:249`) -- the penya-pickup
+ * line. Client template (`textClient.txt`): `You received %s Penya (Total: %s
+ * Penya).`; color `0xffccffcc` comes from `textClient.inc`, resolved client-side.
+ *
+ * `CDPClient::OnDefinedText` (`Neuz/DPClient.cpp:4171`) special-cases this id and
+ * splits the payload string on a single SPACE into exactly 2 args, because
+ * `GetNumberFormatEx` inserts commas and the default `CScanner` tokenizer treats
+ * a comma as a separator. So the payload must be `"<plus> <total>"`.
+ */
+export const TID_GAME_REAPMONEY = 631;
 
 // NULL_ID moved to @flyff/entities -- re-exported at bottom.
 
