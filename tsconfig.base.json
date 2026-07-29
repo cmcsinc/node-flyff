@@ -36,7 +36,9 @@
       "@flyff/quest": ["packages/quest/src/index.ts"],
       "@flyff/quest/*": ["packages/quest/src/*"],
       "@flyff/npc": ["packages/npc/src/index.ts"],
-      "@flyff/npc/*": ["packages/npc/src/*"]
+      "@flyff/npc/*": ["packages/npc/src/*"],
+      "@flyff/mail": ["packages/mail/src/index.ts"],
+      "@flyff/mail/*": ["packages/mail/src/*"]
     }
   }
 }

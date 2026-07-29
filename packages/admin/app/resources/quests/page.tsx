@@ -1,87 +1,127 @@
 import { loadQuests } from "@/lib/resources";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
+import { FilterBar } from "@/components/filter-bar";
+import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
+import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
+import { ScrollText } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-interface SearchParams {
+type SearchParams = {
   search?: string;
+  npc?: string;
+  minLevel?: string;
+  maxLevel?: string;
+  page?: string;
+  perPage?: string;
+}
+
+/** First argument value of the named quest command, or "" when absent. */
+function firstArg(cmds: unknown[], name: string): string {
+  const cmd = cmds.find(
+    (c): c is Record<string, unknown> =>
+      typeof c === "object" && c !== null && (c as Record<string, unknown>).cmd === name,
+  );
+  if (!cmd || !Array.isArray(cmd.args) || cmd.args.length === 0) return "";
+  const arg = cmd.args[0] as Record<string, unknown>;
+  return String(arg.value ?? "");
 }
 
 export default async function QuestsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
   const search = params.search ?? "";
+  const npc = params.npc ?? "";
+  const minLevel = params.minLevel ?? "";
+  const maxLevel = params.maxLevel ?? "";
+  const perPage = parsePerPage(params.perPage);
   const data = loadQuests();
 
-  const quests: Array<{ id: number; title: string; level: number; type: string }> = [];
-  for (const file of data) {
-    if (typeof file !== "object" || file === null) continue;
-    const v = file as Record<string, unknown>;
-    const id = Number(v.id ?? 0);
-    let level = 0;
+  const quests: Array<{ id: number; title: string; level: number; npc: string; cmds: number }> = [];
+  for (const doc of data) {
+    if (typeof doc !== "object" || doc === null) continue;
+    const v = doc as Record<string, unknown>;
     const cmds = Array.isArray(v.commands) ? v.commands : [];
-    const lvlCmd = cmds.find((c: Record<string, unknown>) => c.cmd === "SetBeginCondLevel");
-    if (lvlCmd && Array.isArray((lvlCmd as Record<string, unknown>).args)) {
-      const args = (lvlCmd as Record<string, unknown>).args as Array<Record<string, unknown>>;
-      if (args.length > 0) level = Number(args[0].value ?? 0);
-    }
+    const id = Number(v.id ?? 0);
     quests.push({
       id,
       title: String(v.symbol ?? `Quest ${id}`),
-      level,
-      type: cmds.length > 0 ? `${cmds.length} cmds` : "—",
+      level: Number(firstArg(cmds, "SetBeginCondLevel") || 0),
+      npc: firstArg(cmds, "SetCharacter"),
+      cmds: cmds.length,
     });
   }
 
   quests.sort((a, b) => a.id - b.id);
 
-  const filtered = search
-    ? quests.filter((q) => q.title.toLowerCase().includes(search.toLowerCase()) || String(q.id).includes(search))
-    : quests;
+  const min = Number(minLevel);
+  const max = Number(maxLevel);
+  const needle = search.toLowerCase();
+  const npcNeedle = npc.toLowerCase();
+
+  const filtered = quests.filter((q) => {
+    if (minLevel && Number.isFinite(min) && q.level < min) return false;
+    if (maxLevel && Number.isFinite(max) && q.level > max) return false;
+    if (npcNeedle && !q.npc.toLowerCase().includes(npcNeedle)) return false;
+    if (needle && !q.title.toLowerCase().includes(needle) && !String(q.id).includes(needle)) return false;
+    return true;
+  });
+
+  const page = paginate(filtered, parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Quests" description={`${filtered.length} quest definitions from ${data.length} files`} />
+      <PageHeader title="Quests" description={`${filtered.length} of ${quests.length} quest definitions`} />
 
-      <form className="flex flex-wrap gap-2" method="GET">
+      <FilterBar perPage={perPage} active={Boolean(search || npc || minLevel || maxLevel)}>
         <SearchInput name="search" placeholder="Search by title or ID..." defaultValue={search} className="w-full sm:w-72" />
-        <Button type="submit">Search</Button>
-      </form>
+        <Input name="npc" defaultValue={npc} placeholder="NPC key" aria-label="Filter by NPC character key" className="w-40" />
+        <Input name="minLevel" type="number" min={0} defaultValue={minLevel} placeholder="Min Lv" aria-label="Minimum level" className="w-24" />
+        <Input name="maxLevel" type="number" min={0} defaultValue={maxLevel} placeholder="Max Lv" aria-label="Maximum level" className="w-24" />
+      </FilterBar>
 
       <Card>
         <CardContent className="p-0">
-          <div className="max-h-[70vh] overflow-auto">
+          <div className="overflow-auto">
             <Table>
               <TableHeader className="sticky top-0 bg-background">
                 <TableRow>
                   <TableHead className="w-20">ID</TableHead>
                   <TableHead>Title</TableHead>
+                  <TableHead>NPC</TableHead>
                   <TableHead>Commands</TableHead>
                   <TableHead className="text-right">Level</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filtered.map((q) => (
+                {page.rows.map((q) => (
                   <TableRow key={q.id}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{q.id}</TableCell>
                     <TableCell className="font-medium">{q.title}</TableCell>
-                    <TableCell className="text-muted-foreground">{q.type}</TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">{q.npc || "—"}</TableCell>
+                    <TableCell className="text-muted-foreground">{q.cmds > 0 ? `${q.cmds} cmds` : "—"}</TableCell>
                     <TableCell className="text-right">{q.level > 0 ? <Badge variant="secondary">Lv. {q.level}</Badge> : "—"}</TableCell>
                   </TableRow>
                 ))}
                 {filtered.length === 0 && (
-                  <EmptyRow colSpan={4}>{search ? "No quests match your search" : "No quest data found"}</EmptyRow>
+                  <EmptyRow colSpan={5}>
+                    <div className="flex flex-col items-center gap-1">
+                      <ScrollText className="h-5 w-5 opacity-40" />
+                      {search || npc || minLevel || maxLevel ? "No quests match your filters" : "No quest data found"}
+                    </div>
+                  </EmptyRow>
                 )}
               </TableBody>
             </Table>
           </div>
+          <Pagination {...page} params={params} unit="quests" />
         </CardContent>
       </Card>
     </div>

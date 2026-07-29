@@ -3,18 +3,20 @@ import { IpcBus, createLocalBus } from '@flyff/ipc';
 import { buildWorldClientServer } from './clientServer';
 
 /**
- * Connect the ClusterListener to an `IpcBus`.
+ * Connect the IPC listeners to a shared `IpcBus`.
  *
  * Two transports, picked by `cacheAdapter`:
  *   - `redis` (production): `ioredis` loaded dynamically.
  *   - anything else (dev): `LocalBus` -- localhost TCP pub/sub, same redis-like
  *     shape. Lets cluster + world exchange `player:handoff` with no Redis.
  *
- * `ioredis` is loaded dynamically so the server still boots in `memory` cache
- * mode. Bus setup is best-effort -- a failure logs a warning and the world keeps
- * running without the `player:handoff` listener (joins rejected until recovered).
+ * One bus instance serves every channel: `player:handoff` (cluster->world) and
+ * `admin:command` (admin panel->world). `ioredis` is loaded dynamically so the
+ * server still boots in `memory` cache mode. Bus setup is best-effort -- a
+ * failure logs a warning and the world keeps running without either listener
+ * (joins rejected and admin commands ignored until recovered).
  */
-async function startClusterListener(
+async function startIpcListeners(
   cfg: {
     cacheAdapter: string;
     redisUrl: string;
@@ -45,7 +47,7 @@ async function startClusterListener(
       const bus = new IpcBus(redis, cfg.ipcSecret, cfg.serverId);
       setBus(bus);
       await start();
-      log.info({ serverId: cfg.serverId }, 'IPC bus connected (redis) -- listening for player:handoff');
+      log.info({ serverId: cfg.serverId }, 'IPC bus connected (redis) -- listeners started');
     } else {
       const localBus = await createLocalBus({
         host: cfg.localBusHost,
@@ -57,11 +59,11 @@ async function startClusterListener(
       await start();
       log.info(
         { serverId: cfg.serverId, host: cfg.localBusHost, port: cfg.localBusPort },
-        'IPC bus connected (local) -- listening for player:handoff',
+        'IPC bus connected (local) -- listeners started',
       );
     }
   } catch (err) {
-    log.warn({ err }, 'IPC bus setup failed -- player:handoff listener not started');
+    log.warn({ err }, 'IPC bus setup failed -- IPC listeners not started');
   }
 }
 
@@ -71,6 +73,8 @@ async function main(): Promise<void> {
     logger,
     clusterRegistrar,
     clusterListener,
+    adminListener,
+    mailHandler,
     joinService,
     joinHandler,
     mapKeyHandler,
@@ -165,7 +169,7 @@ async function main(): Promise<void> {
   process.on('SIGTERM', () => shutdown('SIGTERM'));
 
   clusterRegistrar.start();
-  await startClusterListener(
+  await startIpcListeners(
     {
       cacheAdapter: config.cache.adapter,
       redisUrl: config.cache.redisUrl,
@@ -174,8 +178,15 @@ async function main(): Promise<void> {
       localBusHost: config.ipc.localBusHost,
       localBusPort: config.ipc.localBusPort,
     },
-    (bus) => clusterListener.setBus(bus),
-    () => clusterListener.start(),
+    (bus) => {
+      // One bus, two channels: `player:handoff` and `admin:command`.
+      clusterListener.setBus(bus);
+      adminListener.setBus(bus);
+    },
+    async () => {
+      await clusterListener.start();
+      await adminListener.start();
+    },
     logger,
   );
 
@@ -223,6 +234,7 @@ async function main(): Promise<void> {
     useSkillHandler,
     doUseSkillPointHandler,
     modifyStatusHandler,
+    mailHandler,
     onDisconnect: (socket) => {
       // Party cleanup FIRST -- needs the live player object to clear m_idParty
       // + re-broadcast roster / disband. After disconnectByCharId drops the

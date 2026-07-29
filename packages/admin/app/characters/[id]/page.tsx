@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { characters, accounts, inventory, inventoryItems, skills, characterQuests, characterCompletedQuests } from "@/../drizzle/schema";
+import { characters, accounts, inventory, inventoryItems, skills, characterQuests, characterCompletedQuests, onlinePlayers } from "@/../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -18,6 +18,9 @@ import { resolveQuests } from "./quests/resolve";
 import { SkillExplorer } from "./skills/skill-explorer";
 import { QuestExplorer } from "./quests/quest-explorer";
 import { EditStatsForm } from "./edit-stats";
+import { LiveOpsButton } from "./live-ops";
+import { OnlineIndicator } from "@/components/online-indicator";
+import { isOnline } from "@/lib/presence";
 import { MeterBar, DataRow } from "@/components/ui/meter";
 import { ResponsiveSections } from "./responsive-sections";
 
@@ -37,6 +40,8 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
   const charSkills = await db.select().from(skills).where(eq(skills.characterId, charId));
   const activeQuests = await db.select().from(characterQuests).where(eq(characterQuests.characterId, charId));
   const completedQuests = await db.select().from(characterCompletedQuests).where(eq(characterCompletedQuests.characterId, charId));
+  const [presence] = await db.select().from(onlinePlayers).where(eq(onlinePlayers.characterId, charId)).limit(1);
+  const online = isOnline(presence);
 
   const resolvedInv = await resolveSlotItems(invItems);
   const resolvedSkills = await resolveSkills(charSkills);
@@ -123,6 +128,13 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
         backHref="/characters"
         actions={
           <>
+            <OnlineIndicator online={online} />
+            <LiveOpsButton
+              characterId={char.id}
+              characterName={char.name}
+              online={online}
+              pickerItems={pickerItems}
+            />
             <EditStatsForm characterId={char.id} stats={char} />
             {account ? (
               <Link href={`/accounts/${account.id}`}>

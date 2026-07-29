@@ -32,6 +32,9 @@ importers:
       '@auth/drizzle-adapter':
         specifier: ^1.7.0
         version: 1.11.3
+      '@flyff/ipc':
+        specifier: workspace:*
+        version: link:../ipc
       '@next/env':
         specifier: ^16.2.12
         version: 16.2.12
@@ -59,6 +62,9 @@ importers:
       drizzle-orm:
         specifier: ^0.36.0
         version: 0.36.4(@types/better-sqlite3@7.6.13)(@types/pg@8.20.0)(@types/react@19.2.17)(better-sqlite3@12.11.1)(knex@3.2.4(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7))(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(react@19.2.8)(sqlite3@5.1.7)
+      ioredis:
+        specifier: ^5.4.1
+        version: 5.10.1
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@19.2.8)
@@ -388,6 +394,34 @@ importers:
         specifier: ^5.4.5
         version: 5.9.3
 
+  packages/mail:
+    dependencies:
+      '@flyff/core':
+        specifier: workspace:*
+        version: link:../core
+      '@flyff/database':
+        specifier: workspace:*
+        version: link:../database
+      '@flyff/entities':
+        specifier: workspace:*
+        version: link:../entities
+      '@flyff/inventory':
+        specifier: workspace:*
+        version: link:../inventory
+      '@flyff/world-core':
+        specifier: workspace:*
+        version: link:../world-core
+    devDependencies:
+      '@types/node':
+        specifier: ^20.12.7
+        version: 20.19.37
+      tsx:
+        specifier: ^4.7.2
+        version: 4.21.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.9.3
+
   packages/npc:
     dependencies:
       '@flyff/combat':
@@ -585,6 +619,9 @@ importers:
       '@flyff/ipc':
         specifier: workspace:*
         version: link:../ipc
+      '@flyff/mail':
+        specifier: workspace:*
+        version: link:../mail
       '@flyff/npc':
         specifier: workspace:*
         version: link:../npc

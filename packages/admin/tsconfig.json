@@ -20,6 +20,7 @@
       "@/lib/*": ["./lib/*"],
       "@flyff/resources": ["../../packages/resources/src/index.ts"],
       "@flyff/resources/*": ["../../packages/resources/src/*"],
+      "@flyff/ipc": ["../../packages/ipc/src/index.ts"],
       "@flyff/entities/*": ["../../packages/entities/src/*"]
     }
   },

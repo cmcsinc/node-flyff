@@ -51,7 +51,8 @@
     "@flyff/skills": "workspace:*",
     "@flyff/quest": "workspace:*",
     "@flyff/npc": "workspace:*",
-    "@flyff/party": "workspace:*"
+    "@flyff/party": "workspace:*",
+    "@flyff/mail": "workspace:*"
   },
   "devDependencies": {
     "@flyff/cluster-server": "workspace:*",

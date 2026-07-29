@@ -165,3 +165,7 @@ packages/resources/qt-*/
 # Admin server-manager: instance registry + generated per-instance configs
 config/instances.json
 config/instances/
+
+# Supervisor daemon runtime state (pid/port handle + shared secret)
+data/supervisor.json
+data/supervisor.token

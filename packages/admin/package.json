@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.0",
+    "@flyff/ipc": "workspace:*",
     "@next/env": "^16.2.12",
     "@tanstack/react-table": "^8.21.0",
     "bcryptjs": "^2.4.3",
@@ -28,6 +29,7 @@
     "cmdk": "^1.0.4",
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.36.0",
+    "ioredis": "^5.4.1",
     "lucide-react": "^0.460.0",
     "next": "^15.3.0",
     "next-auth": "^5.0.0-beta.25",

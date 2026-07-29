@@ -15,7 +15,7 @@
  * @module services/join.service
  */
 
-import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, PersistableBuff } from '@flyff/database';
+import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, PersistableBuff, PresenceRepository } from '@flyff/database';
 import type { ItemDefinition, SetItemDef, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
@@ -72,6 +72,16 @@ export interface JoinServiceDeps {
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   handoffSource: HandoffSource;
+  /**
+   * Live-session registry. Upserted on JOIN, deleted on disconnect, heartbeated
+   * by the 30 s checkpoint pass -- so a separate process (the admin panel) can
+   * read who is online. Optional: presence is simply not tracked if absent.
+   */
+  presenceRepo?: Pick<PresenceRepository, 'upsert' | 'remove' | 'touch'>;
+  /** This world process's id, stored on the presence row for crash cleanup. */
+  serverId?: string;
+  /** Push the mailbox + set MODE_MAILBOX on JOIN (`CUser::AdjustMailboxState`). */
+  mailHandler?: { sendMailBox(player: CPlayer): Promise<void> };
 }
 
 export type JoinOutcome =
@@ -128,6 +138,20 @@ export class JoinService {
     this.loadTaskBar(player, row.taskbar);
     this.deps.playerManager.add(player);
     this.deps.zoneManager.place(player);
+    // Presence + mailbox: both are best-effort side effects -- a failure here
+    // must never block a join, so each swallows its own rejection.
+    this.deps.presenceRepo
+      ?.upsert({
+        character_id: player.m_idPlayer,
+        account_id: player.m_accountId,
+        world_id: row.world_id,
+        zone_id: player.m_nZoneId,
+        server_id: this.deps.serverId ?? 'world',
+      })
+      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'presence upsert failed'));
+    // Port of `CUser::AdjustMailboxState` (User.cpp:3689) -- recompute
+    // MODE_MAILBOX from unclaimed mail and hand the player their mailbox.
+    void this.deps.mailHandler?.sendMailBox(player);
     return { ok: true, player };
   }
 
@@ -229,6 +253,9 @@ export class JoinService {
   leave(player: CPlayer): void {
     this.deps.zoneManager.remove(player);
     this.deps.playerManager.remove(player.m_idPlayer);
+    this.deps.presenceRepo
+      ?.remove(player.m_idPlayer)
+      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'presence remove failed'));
   }
 
   /**
@@ -318,6 +345,12 @@ export class JoinService {
       void this.flushPlayer(p).catch((err) =>
         logger.error({ err, charId: p.m_idPlayer }, 'Checkpoint flush failed'),
       );
+      // Presence heartbeat rides the same 30 s pass. Readers treat a row as
+      // online only while `last_seen_ms` is fresh, so a crashed world's rows
+      // age out instead of pinning characters online forever.
+      this.deps.presenceRepo
+        ?.touch(p.m_idPlayer)
+        .catch((err: unknown) => logger.warn({ err, charId: p.m_idPlayer }, 'presence touch failed'));
     }
   }
 

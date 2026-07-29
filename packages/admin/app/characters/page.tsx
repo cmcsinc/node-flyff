@@ -12,6 +12,8 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { formatNumber, jobName, worldName } from "@/lib/utils";
+import { getOnlineCharacterIds } from "@/lib/presence";
+import { OnlineIndicator } from "@/components/online-indicator";
 import { Swords } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -54,6 +56,8 @@ export default async function CharactersPage({
     ? rows.filter((r) => r.name.toLowerCase().includes(search.toLowerCase()))
     : rows;
 
+  const onlineIds = await getOnlineCharacterIds();
+
   return (
     <div className="space-y-6">
       <PageHeader title="Characters" description={`${filtered.length} characters`} />
@@ -76,6 +80,7 @@ export default async function CharactersPage({
                 <TableRow>
                   <TableHead className="w-16">ID</TableHead>
                   <TableHead>Name</TableHead>
+                  <TableHead className="w-24">Status</TableHead>
                   <TableHead>Class</TableHead>
                   <TableHead className="text-right">Level</TableHead>
                   <TableHead className="hidden text-right md:table-cell">STR</TableHead>
@@ -100,6 +105,9 @@ export default async function CharactersPage({
                       </span>
                     </TableCell>
                     <TableCell>
+                      <OnlineIndicator online={onlineIds.has(char.id)} />
+                    </TableCell>
+                    <TableCell>
                       <Badge variant="secondary">{jobName(char.class)}</Badge>
                     </TableCell>
                     <TableCell className="text-right font-bold text-gold">{char.level}</TableCell>
@@ -116,7 +124,7 @@ export default async function CharactersPage({
                   </TableRow>
                 ))}
                 {filtered.length === 0 && (
-                  <EmptyRow colSpan={10}>
+                  <EmptyRow colSpan={11}>
                     <div className="flex flex-col items-center gap-1">
                       <Swords className="h-5 w-5 opacity-40" />
                       No characters found

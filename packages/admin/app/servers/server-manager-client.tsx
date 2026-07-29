@@ -2,35 +2,17 @@
 
 import * as React from "react";
 import { toast } from "sonner";
-import { Play, Square, Trash2, Plus, Terminal, Settings2 } from "lucide-react";
+import { Play, Square, Trash2, Plus, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import type { ServerType } from "@/lib/config-fields";
 import { cn } from "@/lib/utils";
-
-type ServerType = "login" | "cluster" | "world";
-type RunState = "stopped" | "starting" | "running" | "exited";
-
-interface InstanceStatus {
-  id: string;
-  type: ServerType;
-  label: string;
-  port: number;
-  overrides?: Record<string, unknown>;
-  state: RunState;
-  pid: number | null;
-  startedAt: number | null;
-  exitCode: number | null;
-}
-
-interface LogLine {
-  seq: number;
-  ts: number;
-  line: string;
-}
+import { ConfigEditor } from "./config-editor";
+import { post, type InstanceStatus, type LogLine, type RunState } from "./types";
 
 const STATE_VARIANT: Record<RunState, "success" | "warning" | "outline" | "destructive"> = {
   running: "success",
@@ -38,17 +20,6 @@ const STATE_VARIANT: Record<RunState, "success" | "warning" | "outline" | "destr
   stopped: "outline",
   exited: "destructive",
 };
-
-async function post(body: unknown): Promise<{ instances?: InstanceStatus[] }> {
-  const res = await fetch("/api/servers", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const json = await res.json();
-  if (!res.ok) throw new Error(json.error ?? `Request failed (${res.status})`);
-  return json;
-}
 
 export function ServerManager({ initial }: { initial: InstanceStatus[] }) {
   const [instances, setInstances] = React.useState(initial);
@@ -82,6 +53,19 @@ export function ServerManager({ initial }: { initial: InstanceStatus[] }) {
     }
   };
 
+  const setAutoStart = async (id: string, enabled: boolean) => {
+    setBusy(id);
+    try {
+      const { instances: next } = await post({ action: "autostart", id, enabled });
+      if (next) setInstances(next);
+      toast.success(`${id}: autostart ${enabled ? "on" : "off"}`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setBusy(null);
+    }
+  };
+
   const active = instances.find((i) => i.id === selected) ?? null;
 
   return (
@@ -96,6 +80,7 @@ export function ServerManager({ initial }: { initial: InstanceStatus[] }) {
               busy={busy === inst.id}
               onSelect={() => setSelected(inst.id)}
               onAction={act}
+              onAutoStart={setAutoStart}
             />
           ))}
           {instances.length === 0 && (
@@ -114,6 +99,7 @@ export function ServerManager({ initial }: { initial: InstanceStatus[] }) {
         {active && (
           <ConfigEditor
             inst={active}
+            instances={instances}
             onSaved={(next) => {
               setInstances(next);
               toast.success("Config saved");
@@ -132,12 +118,14 @@ function InstanceCard({
   busy,
   onSelect,
   onAction,
+  onAutoStart,
 }: {
   inst: InstanceStatus;
   selected: boolean;
   busy: boolean;
   onSelect: () => void;
   onAction: (action: "start" | "stop" | "delete", id: string) => void;
+  onAutoStart: (id: string, enabled: boolean) => void;
 }) {
   const live = inst.state === "running" || inst.state === "starting";
   return (
@@ -162,6 +150,19 @@ function InstanceCard({
             </CardDescription>
           </div>
           <div className="flex shrink-0 items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+            <label
+              className="mr-1 flex cursor-pointer items-center gap-1.5 text-xs text-muted-foreground"
+              title="Boot this instance automatically when the supervisor starts (e.g. after a host reboot)"
+            >
+              <input
+                type="checkbox"
+                className="h-3.5 w-3.5 accent-primary"
+                checked={inst.autoStart === true}
+                disabled={busy}
+                onChange={(e) => onAutoStart(inst.id, e.target.checked)}
+              />
+              auto
+            </label>
             {live ? (
               <Button size="sm" variant="destructive" disabled={busy} onClick={() => onAction("stop", inst.id)}>
                 <Square className="mr-1.5 h-3.5 w-3.5" /> Stop
@@ -266,87 +267,6 @@ function CreateInstanceForm({ onCreated }: { onCreated: (next: InstanceStatus[])
   );
 }
 
-function ConfigEditor({
-  inst,
-  onSaved,
-}: {
-  inst: InstanceStatus;
-  onSaved: (next: InstanceStatus[]) => void;
-}) {
-  const [text, setText] = React.useState(() => JSON.stringify(inst.overrides ?? {}, null, 2));
-  const [port, setPort] = React.useState(String(inst.port));
-  const [saving, setSaving] = React.useState(false);
-  const live = inst.state === "running" || inst.state === "starting";
-
-  // Reset the form when a different instance is selected.
-  React.useEffect(() => {
-    setText(JSON.stringify(inst.overrides ?? {}, null, 2));
-    setPort(String(inst.port));
-  }, [inst.id, inst.overrides, inst.port]);
-
-  const save = async () => {
-    let overrides: unknown;
-    try {
-      overrides = JSON.parse(text || "{}");
-    } catch {
-      toast.error("Overrides must be valid JSON");
-      return;
-    }
-    setSaving(true);
-    try {
-      const { instances } = await post({
-        action: "update",
-        id: inst.id,
-        patch: { port: Number(port), overrides },
-      });
-      if (instances) onSaved(instances);
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <Settings2 className="h-4 w-4" /> Config — {inst.id}
-        </CardTitle>
-        <CardDescription>
-          Merged over config/default.json + config/{inst.type}-server.json. Stop the server to edit.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="space-y-1.5">
-          <Label htmlFor="cfg-port">Port</Label>
-          <Input
-            id="cfg-port"
-            type="number"
-            value={port}
-            disabled={live}
-            onChange={(e) => setPort(e.target.value)}
-          />
-        </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="cfg-overrides">Overrides (JSON)</Label>
-          <textarea
-            id="cfg-overrides"
-            value={text}
-            disabled={live}
-            spellCheck={false}
-            onChange={(e) => setText(e.target.value)}
-            rows={12}
-            className="w-full rounded-md border border-input bg-transparent p-3 font-mono text-xs shadow-sm focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-50"
-          />
-        </div>
-        <Button onClick={save} disabled={saving || live}>
-          Save
-        </Button>
-      </CardContent>
-    </Card>
-  );
-}
 
 function LogViewer({ id }: { id: string | null }) {
   const [lines, setLines] = React.useState<LogLine[]>([]);
