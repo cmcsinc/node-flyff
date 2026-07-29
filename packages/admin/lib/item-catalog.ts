@@ -1,41 +1,26 @@
 /**
  * Server-side item catalog resolver.
  *
- * Provides memoized access to item definitions + icon URL resolution for the
- * admin inventory UI. Uses `@flyff/resources` (pure JS, no native bindings) so
- * it's safe for any server component -- just keep it out of the middleware
- * import chain (which runs in Edge Runtime where fs is unavailable).
+ * Provides access to item definitions + icon URL resolution for the admin
+ * inventory UI, backed by the process-wide cache in `lib/resource-cache.ts`
+ * (loaded once at server boot, not per request). Keep it out of the middleware
+ * import chain (Edge Runtime has no `fs`).
  *
  * @module lib/item-catalog
  */
 
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { loadAllResources, type ItemDefinition, type ResourceIndex } from "@flyff/resources";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(__dirname, "..", "..", "..");
-const DATA_DIR = resolve(REPO_ROOT, "packages/resources/data");
-
-/** Singleton promise -- resolved once, never re-loaded within the same process. */
-let _catalog: Promise<ResourceIndex> | null = null;
-
-function getCatalog(): Promise<ResourceIndex> {
-  if (!_catalog) {
-    _catalog = loadAllResources(DATA_DIR);
-  }
-  return _catalog;
-}
+import type { ItemDefinition } from "@flyff/resources";
+import { getResourceIndex } from "./resource-cache";
 
 /** Look up an item definition by numeric id. */
 export async function getItem(itemId: number): Promise<ItemDefinition | undefined> {
-  const res = await getCatalog();
+  const res = await getResourceIndex();
   return res.items.items.get(itemId);
 }
 
 /** All item definitions as an array (for the "Add item" picker). */
 export async function getAllItems(): Promise<ItemDefinition[]> {
-  const res = await getCatalog();
+  const res = await getResourceIndex();
   return [...res.items.items.values()];
 }
 

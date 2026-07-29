@@ -1,6 +1,18 @@
 "11":
   file: weapons.yml
   name: Hand
+"12":
+  file: misc.yml
+  name: Penya
+"13":
+  file: misc.yml
+  name: Penya
+"14":
+  file: misc.yml
+  name: Penya
+"15":
+  file: misc.yml
+  name: Penya
 "21":
   file: weapons.yml
   name: Wooden Sword
@@ -4072,6 +4084,126 @@
 "4765":
   file: armors.yml
   name: St. Patrick's Day Cloak
+"5000":
+  file: misc.yml
+  name: Magic Broom
+"5001":
+  file: misc.yml
+  name: Kestrel Broom
+"5002":
+  file: misc.yml
+  name: Flicker Broom
+"5003":
+  file: misc.yml
+  name: Projan Broom
+"5004":
+  file: misc.yml
+  name: Hera Hoverbike
+"5005":
+  file: misc.yml
+  name: Hera Hoverbike (Black)
+"5101":
+  file: misc.yml
+  name: Hover Board
+"5102":
+  file: misc.yml
+  name: Aero Board
+"5103":
+  file: misc.yml
+  name: Wilduck Board
+"5104":
+  file: misc.yml
+  name: Ignice Board
+"5105":
+  file: misc.yml
+  name: Tiger Board
+"5106":
+  file: misc.yml
+  name: Tiger Board (Bind)
+"5200":
+  file: misc.yml
+  name: Wooden Rocking Horse
+"5201":
+  file: misc.yml
+  name: Syila Hoverbike
+"5800":
+  file: misc.yml
+  name: Riding Cloud (Sky Blue)
+"5801":
+  file: misc.yml
+  name: Disposable Lawolf Sled
+"5802":
+  file: misc.yml
+  name: Lawolf Sled
+"5803":
+  file: misc.yml
+  name: Sword Board
+"5804":
+  file: misc.yml
+  name: Assassin Board
+"5805":
+  file: misc.yml
+  name: Hunter Bow Board
+"5806":
+  file: misc.yml
+  name: Collection Board
+"5807":
+  file: misc.yml
+  name: Andante-Arrow Board
+"5808":
+  file: misc.yml
+  name: Board of Apricot
+"5809":
+  file: misc.yml
+  name: Board of Pineapple
+"5810":
+  file: misc.yml
+  name: Board of Salmon
+"5811":
+  file: misc.yml
+  name: Board of Silver Ring
+"5812":
+  file: misc.yml
+  name: Board of Angel Pang Pang
+"5813":
+  file: misc.yml
+  name: Board of Haruki
+"5814":
+  file: misc.yml
+  name: Board of Sun Melee
+"5815":
+  file: misc.yml
+  name: Dragon Stick
+"5816":
+  file: misc.yml
+  name: Limousine Bike
+"5817":
+  file: misc.yml
+  name: Flying Cloud(Bind)
+"5818":
+  file: misc.yml
+  name: Sword Board (Bind)
+"5819":
+  file: misc.yml
+  name: Elegant White Wings
+"5820":
+  file: misc.yml
+  name: Elegant Black Wings
+"5821":
+  file: misc.yml
+  name: Angelic Wings
+"5822":
+  file: misc.yml
+  name: Gray Wings of the Divine Prophet
+"5823":
+  file: misc.yml
+  name: Air Shark Board
+"5824":
+  file: misc.yml
+  name: Smile Board
+"5902":
+  file: misc.yml
+  name: Accelor Fuel
 "6001":
   file: questitems.yml
   name: Vision Stone
@@ -4396,6 +4528,9 @@
 "6237":
   file: questitems.yml
   name: Red Socks
+"6315":
+  file: misc.yml
+  name: Hover Board
 "6319":
   file: consumables.yml
   name: Cupid Wings
@@ -4609,6 +4744,150 @@
 "7005":
   file: armors.yml
   name: Ancient Shield
+"7006":
+  file: materials.yml
+  name: Hundur Skull
+"7007":
+  file: materials.yml
+  name: Samoset's Skull
+"7008":
+  file: materials.yml
+  name: Kyouchish Claw
+"7009":
+  file: materials.yml
+  name: Kanonicus Sludge
+"7010":
+  file: materials.yml
+  name: Redcloud Skull
+"7011":
+  file: materials.yml
+  name: Devil's Tooth
+"7012":
+  file: materials.yml
+  name: Heart of Chief  Keokuk
+"7013":
+  file: materials.yml
+  name: Orcus's Tablet
+"7014":
+  file: materials.yml
+  name: Bead of Nergal
+"7015":
+  file: materials.yml
+  name: Hel's charm
+"7016":
+  file: materials.yml
+  name: Morrigan's Crystal
+"7017":
+  file: materials.yml
+  name: Mara's Mane
+"7018":
+  file: materials.yml
+  name: Armor of Ghed
+"7019":
+  file: materials.yml
+  name: Ankou's Scale
+"7020":
+  file: materials.yml
+  name: Spirit Sword
+"7021":
+  file: materials.yml
+  name: Sleeping Powder
+"7022":
+  file: questitems.yml
+  name: Cloak for the Disciple
+"7023":
+  file: questitems.yml
+  name: Branka's Heirloom
+"7024":
+  file: questitems.yml
+  name: Branka's Leather Ball
+"7025":
+  file: questitems.yml
+  name: Cave Reed
+"7026":
+  file: questitems.yml
+  name: Bato's Letter
+"7027":
+  file: questitems.yml
+  name: Healers Salve
+"7028":
+  file: questitems.yml
+  name: Rainbow Blossom
+"7029":
+  file: questitems.yml
+  name: Rune Stone
+"7030":
+  file: questitems.yml
+  name: Almighty Magnifying Glass
+"7031":
+  file: questitems.yml
+  name: Chief's Letter
+"7032":
+  file: questitems.yml
+  name: Decoded Letter
+"7033":
+  file: questitems.yml
+  name: Last Diary of Bartholomew Hunt
+"7034":
+  file: questitems.yml
+  name: Restored Diary
+"7035":
+  file: questitems.yml
+  name: Shiny Gold Nugget
+"7036":
+  file: questitems.yml
+  name: Tarin Drink
+"7037":
+  file: misc.yml
+  name: Crystal of Order
+"7038":
+  file: misc.yml
+  name: Pieces of Order
+"7039":
+  file: misc.yml
+  name: Divine Potion of Binding
+"7040":
+  file: misc.yml
+  name: Chaos Gem
+"7041":
+  file: misc.yml
+  name: Dregs of Chaos
+"7042":
+  file: misc.yml
+  name: Tar of Chaos
+"7043":
+  file: materials.yml
+  name: Bareum Powder
+"7044":
+  file: misc.yml
+  name: Extract Tool
+"7045":
+  file: misc.yml
+  name: Shards of Order
+"7046":
+  file: misc.yml
+  name: Splinters of Order
+"7047":
+  file: misc.yml
+  name: Fragments of Order
+"7048":
+  file: misc.yml
+  name: Remnants of Order
+"7049":
+  file: misc.yml
+  name: Stone of Balance
+"7056":
+  file: misc.yml
+  name: Superior Potion of Binding
+"7057":
+  file: misc.yml
+  name: Fine Potion of Binding
+"7058":
+  file: misc.yml
+  name: Advanced Potion of Binding
+"7059":
+  file: misc.yml
+  name: Inferior Potion of Binding
 "8000":
   file: weapons.yml
   name: Penel Sword
@@ -5515,6 +5794,60 @@
 "9277":
   file: weapons.yml
   name: Skelton Devil Weapon 3
+"9278":
+  file: weapons.yml
+  name: Rycan Barga Weapon 1
+"9279":
+  file: weapons.yml
+  name: Rycan Barga Weapon 2
+"9280":
+  file: weapons.yml
+  name: Rycan Barga Weapon 3
+"9281":
+  file: weapons.yml
+  name: Anger Behemoth Weapon 1
+"9282":
+  file: weapons.yml
+  name: Anger Behemoth Weapon 2
+"9283":
+  file: weapons.yml
+  name: Anger Behemoth Weapon 3
+"9284":
+  file: weapons.yml
+  name: Zombie Weapon 1
+"9285":
+  file: weapons.yml
+  name: Zombie Weapon 2
+"9286":
+  file: weapons.yml
+  name: Zombie Weapon 3
+"9287":
+  file: weapons.yml
+  name: QEEN ENTANESS Weapon 1
+"9288":
+  file: weapons.yml
+  name: QEEN ENTANESS Weapon 2
+"9289":
+  file: weapons.yml
+  name: QEEN ENTANESS Weapon 3
+"9290":
+  file: weapons.yml
+  name: KRAKEN Weapon 1
+"9291":
+  file: weapons.yml
+  name: KRAKEN Weapon 2
+"9292":
+  file: weapons.yml
+  name: KRAKEN Weapon 3
+"9293":
+  file: weapons.yml
+  name: HARPYNESS Weapon 1
+"9294":
+  file: weapons.yml
+  name: HARPYNESS Weapon 2
+"9295":
+  file: weapons.yml
+  name: HARPYNESS Weapon 3
 "10000":
   file: armors.yml
   name: Shamutra Helmet
@@ -5629,6 +5962,51 @@
 "10205":
   file: weapons.yml
   name: Yakadain Knuckle
+"10206":
+  file: misc.yml
+  name: Remantis Laccotte
+"10207":
+  file: misc.yml
+  name: Refresher Hold
+"10208":
+  file: misc.yml
+  name: Vital Drink X
+"10209":
+  file: misc.yml
+  name: Bull Hamstern
+"10210":
+  file: misc.yml
+  name: Grilled Eel
+"10211":
+  file: misc.yml
+  name: Re-Stat
+"10212":
+  file: misc.yml
+  name: 15 Day Full Shout
+"10213":
+  file: misc.yml
+  name: 30 Day Full Shout
+"10214":
+  file: misc.yml
+  name: Enhanced Party Skill Range 15
+"10215":
+  file: misc.yml
+  name: Enhanced Party Skill Range 30
+"10216":
+  file: misc.yml
+  name: 15 Day Common Bank
+"10217":
+  file: misc.yml
+  name: 30 Day Common Bank
+"10218":
+  file: misc.yml
+  name: Activition
+"10219":
+  file: misc.yml
+  name: Areaket
+"10220":
+  file: misc.yml
+  name: Transy
 "10221":
   file: consumables.yml
   name: Rocket Cracker
@@ -5758,6 +6136,15 @@
 "10266":
   file: weapons.yml
   name: Pericuum Staff
+"10270":
+  file: misc.yml
+  name: Upcut Stone
+"10271":
+  file: misc.yml
+  name: Liriff Pouch 1
+"10272":
+  file: misc.yml
+  name: Ffrilly Pouch 1
 "10273":
   file: armors.yml
   name: Cloak of Strong
@@ -5767,6 +6154,45 @@
 "10275":
   file: armors.yml
   name: Cloak of Wisdom
+"10276":
+  file: misc.yml
+  name: Tineined Stone
+"10277":
+  file: misc.yml
+  name: Firea Stone
+"10278":
+  file: misc.yml
+  name: Wateil Stone
+"10279":
+  file: misc.yml
+  name: Windyo Stone
+"10280":
+  file: misc.yml
+  name: Lightine Stone
+"10281":
+  file: misc.yml
+  name: Earthy Stone
+"10282":
+  file: misc.yml
+  name: Def-Firea Stone
+"10283":
+  file: misc.yml
+  name: Def-Wateil Stone
+"10284":
+  file: misc.yml
+  name: Def-Windyo Stone
+"10285":
+  file: misc.yml
+  name: Def-Lightine Stone
+"10286":
+  file: misc.yml
+  name: Def-Earthy Stone
+"10287":
+  file: misc.yml
+  name: Liriff Pouch 7
+"10288":
+  file: misc.yml
+  name: Ffrilly Pouch 7
 "10294":
   file: armors.yml
   name: Hileitine Shield
@@ -5968,6 +6394,21 @@
 "10361":
   file: weapons.yml
   name: Tritium Staff
+"10366":
+  file: misc.yml
+  name: P.K STR Penalty
+"10367":
+  file: misc.yml
+  name: P.K STA Penalty
+"10368":
+  file: misc.yml
+  name: P.K INT Penalty
+"10369":
+  file: misc.yml
+  name: P.K DEX Penalty
+"10382":
+  file: misc.yml
+  name: P.K Reward
 "10386":
   file: questitems.yml
   name: Bead of Sin
@@ -6061,6 +6502,39 @@
 "10423":
   file: questitems.yml
   name: Roach Zone Card
+"10424":
+  file: misc.yml
+  name: Scroll of Name Change
+"10425":
+  file: misc.yml
+  name: Scroll of Class Change
+"10426":
+  file: misc.yml
+  name: Scroll of Holy
+"10427":
+  file: misc.yml
+  name: Scroll of Forgive
+"10428":
+  file: misc.yml
+  name: Scroll of Selected Party
+"10429":
+  file: misc.yml
+  name: Box of Change
+"10430":
+  file: misc.yml
+  name: Scroll of Blessing
+"10431":
+  file: misc.yml
+  name: Scroll of Resurrection
+"10432":
+  file: misc.yml
+  name: Scroll of Velocity
+"10434":
+  file: misc.yml
+  name: Re-Skill
+"10435":
+  file: misc.yml
+  name: Return
 "10436":
   file: materials.yml
   name: ArekRing
@@ -6118,6 +6592,15 @@
 "10462":
   file: consumables.yml
   name: Uriel Cold noodle
+"10468":
+  file: misc.yml
+  name: Scroll of Smelting
+"10473":
+  file: misc.yml
+  name: Scroll of Amplification ES
+"10474":
+  file: misc.yml
+  name: Scroll of Amplification EM
 "10481":
   file: armors.yml
   name: Cloak of Quick
@@ -6136,6 +6619,84 @@
 "10490":
   file: consumables.yml
   name: Scroll of Sprint
+"10492":
+  file: weapons.yml
+  name: Guardian Staff (7Days)
+"10493":
+  file: weapons.yml
+  name: Guardian Wand (7Days)
+"10494":
+  file: weapons.yml
+  name: Guardian Sword (7Days)
+"10495":
+  file: weapons.yml
+  name: Guardian Axe (7Days)
+"10496":
+  file: weapons.yml
+  name: Guardian Yo-Yo (7Days)
+"10497":
+  file: weapons.yml
+  name: Guardian Bow (7Days)
+"10498":
+  file: weapons.yml
+  name: Guardian Knuckle (7Days)
+"10499":
+  file: weapons.yml
+  name: Guardian Stick (7Days)
+"10500":
+  file: weapons.yml
+  name: Guardian Staff (30Days)
+"10501":
+  file: weapons.yml
+  name: Guardian Wand (30Days)
+"10502":
+  file: weapons.yml
+  name: Guardian Sword (30Days)
+"10503":
+  file: weapons.yml
+  name: Guardian Axe (30Days)
+"10504":
+  file: weapons.yml
+  name: Guardian Yo-Yo (30Days)
+"10505":
+  file: weapons.yml
+  name: Guardian Bow (30Days)
+"10506":
+  file: weapons.yml
+  name: Guardian Knuckle (30Days)
+"10507":
+  file: weapons.yml
+  name: Guardian Stick (30Days)
+"10508":
+  file: weapons.yml
+  name: Historic Big Sword (7Days)
+"10509":
+  file: weapons.yml
+  name: Historic Ambidextrous Axe (7Days)
+"10510":
+  file: weapons.yml
+  name: Historic Sword (7Days)
+"10511":
+  file: weapons.yml
+  name: Historic Axe (7Days)
+"10512":
+  file: weapons.yml
+  name: Historic Staff (7Days)
+"10513":
+  file: weapons.yml
+  name: Historic Wand (7Days)
+"10514":
+  file: weapons.yml
+  name: Historic Yo-Yo (7Days)
+"10515":
+  file: weapons.yml
+  name: Historic Bow (7Days)
+"10516":
+  file: weapons.yml
+  name: Historic Knuckle (7Days)
+"10517":
+  file: weapons.yml
+  name: Historic Stick (7Days)
 "15001":
   file: armors.yml
   name: Cloth Santa Hat (M)
@@ -6469,6 +7030,12 @@
 "15167":
   file: armors.yml
   name: Police Shoes (F)
+"15168":
+  file: misc.yml
+  name: The Hot One
+"15169":
+  file: misc.yml
+  name: Model TR-ex
 "15206":
   file: armors.yml
   name: Dark Vader Hat (M)
@@ -6778,6 +7345,12 @@
 "16317":
   file: armors.yml
   name: Snowboarder Shoes (F)
+"16319":
+  file: misc.yml
+  name: Snowboard
+"16320":
+  file: misc.yml
+  name: Magic Carpet
 "16321":
   file: armors.yml
   name: Snowman Hat (M)
@@ -8539,6 +9112,12 @@
 "20023":
   file: consumables.yml
   name: Lord's Anger
+"20024":
+  file: misc.yml
+  name: Scroll of Pet Awakening (Raised Pets)
+"20025":
+  file: misc.yml
+  name: Scroll of Pet Reversion (Raised Pets)
 "20026":
   file: armors.yml
   name: Helmet of Dignity (M)
@@ -8566,6 +9145,9 @@
 "20036":
   file: consumables.yml
   name: Voter's Buff
+"20038":
+  file: misc.yml
+  name: Grilled Eel (Event)
 "20044":
   file: armors.yml
   name: Red Cherry Blossom Yukata (F)
@@ -8659,6 +9241,12 @@
 "20102":
   file: armors.yml
   name: Champion's Cloak
+"20103":
+  file: misc.yml
+  name: Angel's Wings (White)
+"20104":
+  file: misc.yml
+  name: White Wings of the Divine Prophet
 "20105":
   file: consumables.yml
   name: 하트폭죽(태국01)
@@ -8677,6 +9265,12 @@
 "20113":
   file: materials.yml
   name: Johnny Four-Wheels
+"20115":
+  file: misc.yml
+  name: Guild Bed
+"20116":
+  file: misc.yml
+  name: Guild Table
 "20121":
   file: armors.yml
   name: Rays and Clouds Cloak
@@ -8686,6 +9280,63 @@
 "20123":
   file: armors.yml
   name: Yin-Yang Cloak
+"20124":
+  file: misc.yml
+  name: "Summon: Apprentice Teleporter"
+"20125":
+  file: misc.yml
+  name: Crimson Butterfly Wings
+"20126":
+  file: misc.yml
+  name: Alabaster Butterfly Wings
+"20127":
+  file: misc.yml
+  name: Indigo Butterfly Wings
+"20128":
+  file: misc.yml
+  name: Translucent Butterfly Wings
+"20129":
+  file: misc.yml
+  name: Translucent Dragonfly Wings
+"20130":
+  file: misc.yml
+  name: DE 3rd Anniversary FLYFF Board
+"20136":
+  file: misc.yml
+  name: Guild Bed(LV2)
+"20137":
+  file: misc.yml
+  name: Guild house floor(Test)
+"20138":
+  file: misc.yml
+  name: Guild house wallpaper(Test)
+"20139":
+  file: misc.yml
+  name: Furniture of Rest
+"20140":
+  file: misc.yml
+  name: Guild Sofa(LV1)
+"20141":
+  file: misc.yml
+  name: Guild Desk(LV1)
+"20142":
+  file: misc.yml
+  name: Guild Chair(LV1)
+"20143":
+  file: misc.yml
+  name: Guild Bookshelf(LV1)
+"20144":
+  file: misc.yml
+  name: Guild Dresser(LV1)
+"20145":
+  file: misc.yml
+  name: Guild Closet(LV1)
+"20146":
+  file: misc.yml
+  name: Guild Bathtub(LV1)
+"20147":
+  file: misc.yml
+  name: Guild Table(LV1)
 "20148":
   file: weapons.yml
   name: Lusaka's Sword
@@ -8746,18 +9397,75 @@
 "20167":
   file: weapons.yml
   name: Lusaka's Crystal Yo-Yo
+"20169":
+  file: misc.yml
+  name: Guild House Return Scroll
 "20180":
   file: consumables.yml
   name: Christmas Cake
+"20181":
+  file: consumables.yml
+  name: Gingerbread
 "20182":
   file: materials.yml
   name: Vanilla Cupcakes
+"20183":
+  file: misc.yml
+  name: Christmas Tea
+"20185":
+  file: misc.yml
+  name: "Summon: Master Teleporter"
 "20186":
   file: materials.yml
   name: Mini Santa
 "20187":
   file: materials.yml
   name: Mini Snowman
+"20196":
+  file: misc.yml
+  name: Bubble's EXP Crystal
+"20197":
+  file: misc.yml
+  name: Elegant Guild Couch [PERM]
+"20198":
+  file: misc.yml
+  name: Elegant Guild Bookshelf [PERM]
+"20199":
+  file: misc.yml
+  name: Elegant Guild End Table [PERM]
+"20200":
+  file: misc.yml
+  name: Elegant Guild Chair [PERM]
+"20201":
+  file: misc.yml
+  name: Elegant Guild Table [PERM]
+"20202":
+  file: misc.yml
+  name: Elegant Guild Carpet [PERM]
+"20203":
+  file: misc.yml
+  name: Elegant Guild Wallpaper [PERM]
+"20204":
+  file: misc.yml
+  name: Common Guild House Sofa
+"20205":
+  file: misc.yml
+  name: Common Guild House Bookshelf
+"20206":
+  file: misc.yml
+  name: Common Guild House End Table
+"20207":
+  file: misc.yml
+  name: Common Guild House Chair
+"20208":
+  file: misc.yml
+  name: Common Guild House Table
+"20209":
+  file: misc.yml
+  name: Common Guild House Flooring
+"20210":
+  file: misc.yml
+  name: Common Guild House Wallpaper
 "20211":
   file: materials.yml
   name: Champion's Ring
@@ -8833,6 +9541,474 @@
 "20242":
   file: armors.yml
   name: Cloak of Petals
+"20246":
+  file: misc.yml
+  name: "Summon: Apprentice Teleporter (1 Day)"
+"20247":
+  file: misc.yml
+  name: Bubble's EXP Crystal (1 Day)
+"20248":
+  file: misc.yml
+  name: Elegant Guild House Sofa (1 Day)
+"20249":
+  file: misc.yml
+  name: Elegant Guild House Bookshelf  (1 Day)
+"20250":
+  file: misc.yml
+  name: Elegant Guild House End Table  (1 Day)
+"20251":
+  file: misc.yml
+  name: Elegant Guild House Chair  (1 Day)
+"20252":
+  file: misc.yml
+  name: Elegant Guild House Table  (1 Day)
+"20253":
+  file: misc.yml
+  name: Elegant Guild House Carpet  (1 Day)
+"20254":
+  file: misc.yml
+  name: Elegant Guild House Wallpaper  (1 Day)
+"20255":
+  file: misc.yml
+  name: Granite Floor  (1 Day)
+"20256":
+  file: misc.yml
+  name: Shabby-Chic Wallpaper  (1 Day)
+"20257":
+  file: misc.yml
+  name: Single Bed  (1 Day)
+"20258":
+  file: misc.yml
+  name: Yellow Drawer (1 Day)
+"20259":
+  file: misc.yml
+  name: Yellow Dresser (1 Day)
+"20260":
+  file: misc.yml
+  name: Yellow Long Chair (1 Day)
+"20261":
+  file: misc.yml
+  name: Yellow Table (1 Day)
+"20262":
+  file: misc.yml
+  name: Blue Drawer (1 Day)
+"20263":
+  file: misc.yml
+  name: Blue Single Bed (1 Day)
+"20264":
+  file: misc.yml
+  name: Blue Drawer (1 Day)
+"20265":
+  file: misc.yml
+  name: Blue Dresser (1 Day)
+"20266":
+  file: misc.yml
+  name: Blue Long Chair (1 Day)
+"20267":
+  file: misc.yml
+  name: Blue Table (1 Day)
+"20268":
+  file: misc.yml
+  name: Blue Wardrobe (1 Day)
+"20269":
+  file: misc.yml
+  name: Red Single Bed (1 Day)
+"20270":
+  file: misc.yml
+  name: Red Drawer (1 Day)
+"20271":
+  file: misc.yml
+  name: Red Dresser (1 Day)
+"20272":
+  file: misc.yml
+  name: Red Long Chair (1 Day)
+"20273":
+  file: misc.yml
+  name: Red Table (1 Day)
+"20274":
+  file: misc.yml
+  name: Red Wardrobe (1 Day)
+"20296":
+  file: consumables.yml
+  name: 1 Day Scroll of Party EXP
+"20297":
+  file: consumables.yml
+  name: 1 Day Scroll of Party Skill
+"20321":
+  file: consumables.yml
+  name: Pink Soccer Ball
+"20322":
+  file: consumables.yml
+  name: Black Soccer Ball
+"20323":
+  file: consumables.yml
+  name: Blue Soccer Ball
+"20325":
+  file: consumables.yml
+  name: Pride of Victory
+"20330":
+  file: armors.yml
+  name: Cloak of Korea
+"20331":
+  file: armors.yml
+  name: Cloak of Greece
+"20332":
+  file: materials.yml
+  name: Soul Dancer
+"20333":
+  file: weapons.yml
+  name: Cross Bow (TEST)
+"20334":
+  file: materials.yml
+  name: Cross Bow Arrow
+"20336":
+  file: armors.yml
+  name: Demon Hat (M)
+"20337":
+  file: armors.yml
+  name: Demon Suit (M)
+"20338":
+  file: armors.yml
+  name: Demon Gloves (M)
+"20339":
+  file: armors.yml
+  name: Demon Shoes (M)
+"20341":
+  file: armors.yml
+  name: Enchantress Hat (F)
+"20342":
+  file: armors.yml
+  name: Enchantress Suit (F)
+"20343":
+  file: armors.yml
+  name: Enchantress Gloves (F)
+"20344":
+  file: armors.yml
+  name: Enchantress Shoes (F)
+"20346":
+  file: misc.yml
+  name: Wings of the Malevolent Dragon
+"20347":
+  file: armors.yml
+  name: Cloak of Cameroon
+"20348":
+  file: armors.yml
+  name: Cloak of Denmark
+"20349":
+  file: armors.yml
+  name: Cloak of Ghana
+"20350":
+  file: armors.yml
+  name: Cloak of Netherlands
+"20351":
+  file: armors.yml
+  name: Cloak of Nigeria
+"20352":
+  file: armors.yml
+  name: Cloak of Paraguay
+"20353":
+  file: armors.yml
+  name: Cloak of Portugal
+"20354":
+  file: armors.yml
+  name: Cloak of South Africa
+"20355":
+  file: armors.yml
+  name: Offerep's Spellbook
+"20356":
+  file: armors.yml
+  name: Force Gem of Roentel
+"20357":
+  file: armors.yml
+  name: Demonic Eye
+"20358":
+  file: armors.yml
+  name: Grimore of the Risen
+"20359":
+  file: armors.yml
+  name: The Doom Guard
+"20360":
+  file: weapons.yml
+  name: Vorpal Blade
+"20361":
+  file: weapons.yml
+  name: Curtana
+"20362":
+  file: weapons.yml
+  name: Celestial Edge
+"20363":
+  file: weapons.yml
+  name: Harbinger
+"20364":
+  file: armors.yml
+  name: Heavens Gate
+"20365":
+  file: weapons.yml
+  name: K Fang
+"20366":
+  file: weapons.yml
+  name: Butcher's Carnage
+"20367":
+  file: weapons.yml
+  name: Dragon's Rain
+"20368":
+  file: weapons.yml
+  name: Dementia
+"20369":
+  file: weapons.yml
+  name: Maw of Judgment
+"20370":
+  file: armors.yml
+  name: Heart of Rhisis
+"20371":
+  file: weapons.yml
+  name: Oracle
+"20372":
+  file: weapons.yml
+  name: Scepter of Disorder
+"20373":
+  file: weapons.yml
+  name: Roika's Stave
+"20374":
+  file: armors.yml
+  name: Tome of Obeah
+"20375":
+  file: armors.yml
+  name: Cloak of Slovakia
+"20376":
+  file: armors.yml
+  name: Cloak of Switzerland
+"20377":
+  file: armors.yml
+  name: Cloak of Uruguay
+"20379":
+  file: armors.yml
+  name: Matador’s Cloak
+"20380":
+  file: consumables.yml
+  name: Dumb Bull Steak
+"20386":
+  file: materials.yml
+  name: Magpie feather
+"20387":
+  file: materials.yml
+  name: Broken Stone Piece
+"20388":
+  file: materials.yml
+  name: Star Piece
+"20389":
+  file: materials.yml
+  name: Glass Bottle
+"20391":
+  file: armors.yml
+  name: Bushido Yukata Hair
+"20392":
+  file: armors.yml
+  name: Bushido Yukata Suit
+"20393":
+  file: armors.yml
+  name: Bushido Yukata Gloves
+"20394":
+  file: armors.yml
+  name: Bushido Yukata Shoes
+"20396":
+  file: armors.yml
+  name: Bijin Yukata Hair
+"20397":
+  file: armors.yml
+  name: Bijin Yukata Suit
+"20398":
+  file: armors.yml
+  name: Bijin Yukata Gloves
+"20399":
+  file: armors.yml
+  name: Bijin Yukata Shoes
+"20413":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Sword"
+"20414":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Big Sword"
+"20415":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Axe"
+"20416":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Big  Axe"
+"20417":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Gloves"
+"20418":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Stick"
+"20419":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Wand"
+"20420":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Staff"
+"20421":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Bow"
+"20422":
+  file: weapons.yml
+  name: "[EVENT] Legendary Golden Yo-Yo"
+"20424":
+  file: materials.yml
+  name: "[Upgrade Spirit] Piyo"
+"20425":
+  file: materials.yml
+  name: "[Upgrade Spirit] Udi"
+"20426":
+  file: materials.yml
+  name: "[Event] Baby Sheep"
+"20428":
+  file: questitems.yml
+  name: Sign of Hero
+"20437":
+  file: weapons.yml
+  name: 검설이 준 수호의 검
+"20438":
+  file: weapons.yml
+  name: 검설이 준 수호의 도끼
+"20439":
+  file: weapons.yml
+  name: 주몽이 준 수호의 활
+"20440":
+  file: weapons.yml
+  name: 주몽이 준 수호의 요요
+"20441":
+  file: weapons.yml
+  name: 현자가 준 수호의 스틱
+"20442":
+  file: weapons.yml
+  name: 현자가 준 수호의 너클
+"20443":
+  file: weapons.yml
+  name: 해리가 준 수호의 스태프
+"20444":
+  file: weapons.yml
+  name: 해리가 준 수호의 완드
+"20445":
+  file: misc.yml
+  name: Amplification Scroll from Myorang
+"20454":
+  file: armors.yml
+  name: Nipedot Suit
+"20455":
+  file: armors.yml
+  name: Nipedot Helmet
+"20456":
+  file: armors.yml
+  name: Nipedot Gauntlet
+"20457":
+  file: armors.yml
+  name: Nipedot Boots
+"20458":
+  file: armors.yml
+  name: Nirufy Suit
+"20459":
+  file: armors.yml
+  name: Nirufy Helmet
+"20460":
+  file: armors.yml
+  name: Nirufy Gauntlet
+"20461":
+  file: armors.yml
+  name: Nirufy Boots
+"20462":
+  file: armors.yml
+  name: Shurib Suit
+"20463":
+  file: armors.yml
+  name: Shurib Helmet
+"20464":
+  file: armors.yml
+  name: Shurib Gauntlet
+"20465":
+  file: armors.yml
+  name: Shurib Boots
+"20466":
+  file: armors.yml
+  name: Sumifos Suit
+"20467":
+  file: armors.yml
+  name: Sumifos Helmet
+"20468":
+  file: armors.yml
+  name: Sumifos Gauntlet
+"20469":
+  file: armors.yml
+  name: Sumifos Boots
+"20470":
+  file: armors.yml
+  name: Khin Suit
+"20471":
+  file: armors.yml
+  name: Khin Helmet
+"20472":
+  file: armors.yml
+  name: Khin Gauntlet
+"20473":
+  file: armors.yml
+  name: Khin Boots
+"20474":
+  file: armors.yml
+  name: Khinyker Suit
+"20475":
+  file: armors.yml
+  name: Khinyker Helmet
+"20476":
+  file: armors.yml
+  name: Khinyker Gauntlet
+"20477":
+  file: armors.yml
+  name: Khinyker Boots
+"20478":
+  file: armors.yml
+  name: Rukips Suit
+"20479":
+  file: armors.yml
+  name: Rukips Helmet
+"20480":
+  file: armors.yml
+  name: Rukips Gauntlet
+"20481":
+  file: armors.yml
+  name: Rukips Boots
+"20482":
+  file: armors.yml
+  name: Rufoen Suit
+"20483":
+  file: armors.yml
+  name: Rufoen Helmet
+"20484":
+  file: armors.yml
+  name: Rufoen Gauntlet
+"20485":
+  file: armors.yml
+  name: Rufoen Boots
+"20486":
+  file: misc.yml
+  name: Blessing of Baruna
+"20490":
+  file: armors.yml
+  name: OMG Cloak (3 days)
+"20491":
+  file: armors.yml
+  name: OMG Cloak (7 days)
+"20492":
+  file: armors.yml
+  name: OMG Cloak
+"20493":
+  file: armors.yml
+  name: Chameleon Cloak (3 days)
+"20494":
+  file: armors.yml
+  name: Chameleon Cloak (7 days)
+"20495":
+  file: armors.yml
+  name: OMG Clock Box (3 days)
 "20500":
   file: materials.yml
   name: Merahook
@@ -8845,6 +10021,741 @@
 "20503":
   file: materials.yml
   name: Popshift
+"20507":
+  file: materials.yml
+  name: Chameleon
+"20515":
+  file: misc.yml
+  name: Enhanced Activition
+"20517":
+  file: materials.yml
+  name: Training Spirit of the Smelting Udi
+"20518":
+  file: misc.yml
+  name: Training fifth-Grade Cid Crystal
+"20519":
+  file: misc.yml
+  name: Training Fourth-Grade Cid Crystal
+"20520":
+  file: misc.yml
+  name: Training Inferior Cid Combiner
+"20521":
+  file: misc.yml
+  name: Training Cid
+"20522":
+  file: misc.yml
+  name: Training Oper
+"20523":
+  file: misc.yml
+  name: Training Oper Cid
+"20524":
+  file: materials.yml
+  name: Training Bareum Powder
+"20621":
+  file: misc.yml
+  name: Special Scroll of Amplification (120)
+"20624":
+  file: materials.yml
+  name: White Stone
+"20625":
+  file: materials.yml
+  name: Black Stone
+"20626":
+  file: materials.yml
+  name: Symbol of Bubble
+"20627":
+  file: materials.yml
+  name: Symbol of Shade
+"20628":
+  file: materials.yml
+  name: Stone of Bravery
+"20629":
+  file: armors.yml
+  name: Suit of the Setting Sun (M)
+"20630":
+  file: armors.yml
+  name: Helmet of the Setting Sun (M)
+"20631":
+  file: armors.yml
+  name: Gauntlets of the Setting Sun (M)
+"20632":
+  file: armors.yml
+  name: Boots of the Setting Sun (M)
+"20633":
+  file: armors.yml
+  name: Suit of the Setting Sun (F)
+"20634":
+  file: armors.yml
+  name: Helmet of the Setting Sun (F)
+"20635":
+  file: armors.yml
+  name: Gauntlets of the Setting Sun (F)
+"20636":
+  file: armors.yml
+  name: Boots of the Setting Sun (F)
+"20637":
+  file: armors.yml
+  name: Suit of the Rising Sun (F)
+"20638":
+  file: armors.yml
+  name: Helmet of the Rising Sun (F)
+"20639":
+  file: armors.yml
+  name: Gauntlets of the Rising Sun (F)
+"20640":
+  file: armors.yml
+  name: Boots of the Rising Sun (F)
+"20641":
+  file: armors.yml
+  name: Suit of the Rising Sun (M)
+"20642":
+  file: armors.yml
+  name: Helmet of the Rising Sun (M)
+"20643":
+  file: armors.yml
+  name: Gauntlets of the Rising Sun (M)
+"20644":
+  file: armors.yml
+  name: Boots of the Rising Sun (M)
+"20645":
+  file: armors.yml
+  name: German Cloak
+"20657":
+  file: materials.yml
+  name: Gas Can
+"20658":
+  file: materials.yml
+  name: Chainsaw
+"20659":
+  file: misc.yml
+  name: Scroll of Amplification ES A3
+"20660":
+  file: misc.yml
+  name: Scroll of Amplification ES A4
+"20661":
+  file: misc.yml
+  name: Scroll of Amplification ES B3
+"20662":
+  file: misc.yml
+  name: Scroll of Amplification ES B4
+"20663":
+  file: misc.yml
+  name: Scroll of Amplification ES (S)3
+"20664":
+  file: misc.yml
+  name: Scroll of Amplification ES (S)4
+"20672":
+  file: armors.yml
+  name: Survivor’s Cloak
+"20673":
+  file: armors.yml
+  name: Zombie Hunter’s Cloak
+"20676":
+  file: materials.yml
+  name: Braaaaains
+"20680":
+  file: armors.yml
+  name: Ghastly Ghoul Hat (Male)
+"20681":
+  file: armors.yml
+  name: Ghastly Ghoul Clothes (Male)
+"20682":
+  file: armors.yml
+  name: Ghastly Ghoul Gloves (Male)
+"20683":
+  file: armors.yml
+  name: Ghastly Ghoul Shoes (Male)
+"20685":
+  file: armors.yml
+  name: Ghastly Ghoul Hat (Female)
+"20686":
+  file: armors.yml
+  name: Ghastly Ghoul Clothes (Female)
+"20687":
+  file: armors.yml
+  name: Ghastly Ghoul Gloves (Female)
+"20688":
+  file: armors.yml
+  name: Ghastly Ghoul Shoes (Female)
+"20702":
+  file: weapons.yml
+  name: Moldy Wooden Sword
+"20721":
+  file: misc.yml
+  name: Blue Fairie Wings
+"20722":
+  file: misc.yml
+  name: Pink Fairie Wings
+"20725":
+  file: misc.yml
+  name: Wooden Guild Sofa (Advanced)
+"20726":
+  file: misc.yml
+  name: Wooden Guild Cabinet  (Advanced)
+"20727":
+  file: misc.yml
+  name: Wooden Guild End Table  (Advanced)
+"20728":
+  file: misc.yml
+  name: Wooden Guild Chair  (Advanced)
+"20729":
+  file: misc.yml
+  name: Wooden Guild Table (Advanced)
+"20730":
+  file: misc.yml
+  name: Wooden Guild Bathtub (Advanced)
+"20731":
+  file: misc.yml
+  name: Wooden Guild Bookshelf (Advanced)
+"20732":
+  file: misc.yml
+  name: Wooden Guild Dressing Table (Advanced)
+"20733":
+  file: misc.yml
+  name: Wooden Guild Bed (Advanced)
+"20734":
+  file: misc.yml
+  name: Wooden Guild Desk (Advanced)
+"20735":
+  file: misc.yml
+  name: Wooden Guild Floor (Advanced)
+"20736":
+  file: misc.yml
+  name: Wooden Guild Wallpaper (Advanced)
+"20737":
+  file: misc.yml
+  name: Plush Guild Sofa (Advanced)
+"20738":
+  file: misc.yml
+  name: Plush Guild Cabinet (Advanced)
+"20739":
+  file: misc.yml
+  name: Plush Guild End Table (Advanced)
+"20740":
+  file: misc.yml
+  name: Plush Guild Chair (Advanced)
+"20741":
+  file: misc.yml
+  name: Plush Guild Table (Advanced)
+"20742":
+  file: misc.yml
+  name: Plush Guild Bathtub (Advanced)
+"20743":
+  file: misc.yml
+  name: Plush Guild Bookshelf (Advanced)
+"20744":
+  file: misc.yml
+  name: Plush Guild Dressing Table (Advanced)
+"20745":
+  file: misc.yml
+  name: Plush Guild Bed (Advanced)
+"20746":
+  file: misc.yml
+  name: Plush Guild Desk (Advanced)
+"20747":
+  file: misc.yml
+  name: Plush Guild Floor (Advanced)
+"20748":
+  file: misc.yml
+  name: Plush Guild Wallpaper (Advanced)
+"20749":
+  file: misc.yml
+  name: Wooden Sofa [ADV - 7 day]
+"20750":
+  file: misc.yml
+  name: Wooden Cabinet [ADV - 7 day]
+"20751":
+  file: misc.yml
+  name: Wooden End Table [ADV - 7 day]
+"20752":
+  file: misc.yml
+  name: Wooden Chair [ADV - 7 day]
+"20753":
+  file: misc.yml
+  name: Wooden Table [ADV - 7 day]
+"20754":
+  file: misc.yml
+  name: Wooden Bathtub [ADV - 7 day]
+"20755":
+  file: misc.yml
+  name: Wooden Bookshelf [ADV - 7 day]
+"20756":
+  file: misc.yml
+  name: Wooden Dressing Table [ADV - 7 day]
+"20757":
+  file: misc.yml
+  name: Wooden Single Bed [ADV - 7 day]
+"20758":
+  file: misc.yml
+  name: Wooden Desk [ADV - 7 day]
+"20759":
+  file: misc.yml
+  name: Wooden Floor [ADV - 7 day]
+"20760":
+  file: misc.yml
+  name: Wooden Wallpaper [ADV - 7 day]
+"20761":
+  file: misc.yml
+  name: Plush Sofa [ADV - 7 day]
+"20762":
+  file: misc.yml
+  name: Plush Cabinet [ADV - 7 day]
+"20763":
+  file: misc.yml
+  name: Plush End Table [ADV - 7 day]
+"20764":
+  file: misc.yml
+  name: Plush Chair [ADV - 7 day]
+"20765":
+  file: misc.yml
+  name: Plush Table [ADV - 7 day]
+"20766":
+  file: misc.yml
+  name: Plush  Bathtub [ADV - 7 day]
+"20767":
+  file: misc.yml
+  name: Plush Bookshelf [ADV - 7 day]
+"20768":
+  file: misc.yml
+  name: Plush Dressing Table [ADV - 7 day]
+"20769":
+  file: misc.yml
+  name: Plush Single Bed [ADV - 7 day]
+"20770":
+  file: misc.yml
+  name: Plush Desk [ADV - 7 day]
+"20771":
+  file: misc.yml
+  name: Plush Floor [ADV - 7 day]
+"20772":
+  file: misc.yml
+  name: Plush Wallpaper [ADV - 7 day]
+"20773":
+  file: misc.yml
+  name: Scroll of Amplification V (7 days)
+"20774":
+  file: misc.yml
+  name: Scroll of Amplification V (30 days)
+"20775":
+  file: misc.yml
+  name: Scroll of Amplification P (7 days)
+"20776":
+  file: misc.yml
+  name: Scroll of Amplification P (30 days)
+"20777":
+  file: misc.yml
+  name: Scroll of Weapon Smelting (S)
+"20778":
+  file: misc.yml
+  name: Scroll of Weapon Smelting (V)
+"20779":
+  file: misc.yml
+  name: Scroll of Weapon Smelting (P)
+"20780":
+  file: misc.yml
+  name: Scroll of Ultimate Success
+"20781":
+  file: misc.yml
+  name: Plume of the Dove
+"20782":
+  file: misc.yml
+  name: Mantle of the Raven
+"20783":
+  file: misc.yml
+  name: Angelic Wings (3 days)
+"20784":
+  file: misc.yml
+  name: Wings of the Malevolent Dragon (3 days)
+"20785":
+  file: misc.yml
+  name: Translucent Dragonfly Wings (3 days).
+"20786":
+  file: misc.yml
+  name: Crimson Butterfly Wings (3 days)
+"20787":
+  file: materials.yml
+  name: Mocomochi (3 days)
+"20788":
+  file: materials.yml
+  name: Baby Bang (3 days)
+"20789":
+  file: materials.yml
+  name: Tiny Tanuki (3 days)
+"20792":
+  file: materials.yml
+  name: Chainsaw
+"20793":
+  file: misc.yml
+  name: Scroll of Unbinding
+"20813":
+  file: materials.yml
+  name: Big Red
+"20814":
+  file: materials.yml
+  name: Bone Golem
+"20815":
+  file: misc.yml
+  name: Ultimate Blessing of Baruna
+"20817":
+  file: misc.yml
+  name: 1 day Traseia Ticket
+"20829":
+  file: questitems.yml
+  name: Rudas's Bracelet
+"20830":
+  file: questitems.yml
+  name: Dusty Old Rock
+"20831":
+  file: questitems.yml
+  name: Strange Fruit
+"20832":
+  file: questitems.yml
+  name: Pendant of Eternity
+"20833":
+  file: armors.yml
+  name: Majestic Bileire Helmet (M)
+"20834":
+  file: armors.yml
+  name: Majestic Bilari Helmet (F)
+"20835":
+  file: armors.yml
+  name: Piercing Heraud Helmet (M)
+"20836":
+  file: armors.yml
+  name: Piercing Herainn Helmet (F)
+"20837":
+  file: armors.yml
+  name: Trickster's Curio Helmet (M)
+"20838":
+  file: armors.yml
+  name: Trickster's Curena Helmet (F)
+"20839":
+  file: armors.yml
+  name: Deadeye's Hainure Helmet (M)
+"20840":
+  file: armors.yml
+  name: Deadeye's Hanira Helmet (F)
+"20841":
+  file: armors.yml
+  name: Purifier's Reine Helmet (M)
+"20842":
+  file: armors.yml
+  name: Purifier's Rayne Helmet (F)
+"20843":
+  file: armors.yml
+  name: Vigorous Roenier Helmet (M)
+"20844":
+  file: armors.yml
+  name: Vigorous Roelayne Helmet (F)
+"20845":
+  file: armors.yml
+  name: Cryptic Reffiro Helmet (M)
+"20846":
+  file: armors.yml
+  name: Cryptic Rephira Helmet (F)
+"20847":
+  file: armors.yml
+  name: Mystical Lippin Helmet (M)
+"20848":
+  file: armors.yml
+  name: Mystical Lypine Helmet (F)
+"20849":
+  file: armors.yml
+  name: Majestic Bileire Suit (M)
+"20850":
+  file: armors.yml
+  name: Majestic Bilari Suit (F)
+"20851":
+  file: armors.yml
+  name: Piercing Heraud Suit (M)
+"20852":
+  file: armors.yml
+  name: Piercing Herainn Suit (F)
+"20853":
+  file: armors.yml
+  name: Trickster's Curio Suit (M)
+"20854":
+  file: armors.yml
+  name: Trickster's Curena Suit (F)
+"20855":
+  file: armors.yml
+  name: Deadeye's Hainure Suit (M)
+"20856":
+  file: armors.yml
+  name: Deadeye's Hanira Suit (F)
+"20857":
+  file: armors.yml
+  name: Purifier's Reine Suit (M)
+"20858":
+  file: armors.yml
+  name: Purifier's Rayne Suit (F)
+"20859":
+  file: armors.yml
+  name: Vigorous Roenier Suit (M)
+"20860":
+  file: armors.yml
+  name: Vigorous Roelayne Suit (F)
+"20861":
+  file: armors.yml
+  name: Cryptic Reffiro Suit (M)
+"20862":
+  file: armors.yml
+  name: Cryptic Rephira Suit (F)
+"20863":
+  file: armors.yml
+  name: Mystical Lippin Suit (M)
+"20864":
+  file: armors.yml
+  name: Mystical Lypine Suit (F)
+"20865":
+  file: armors.yml
+  name: Majestic Bileire Gauntlets (M)
+"20866":
+  file: armors.yml
+  name: Majestic Bilari Gauntlets (F)
+"20867":
+  file: armors.yml
+  name: Piercing Heraud Gauntlets (M)
+"20868":
+  file: armors.yml
+  name: Piercing Herainn Gauntlets (F)
+"20869":
+  file: armors.yml
+  name: Trickster's Curio Gauntlets (M)
+"20870":
+  file: armors.yml
+  name: Trickster's Curena Gauntlets (F)
+"20871":
+  file: armors.yml
+  name: Deadeye's Hainure Gauntlets (M)
+"20872":
+  file: armors.yml
+  name: Deadeye's Hanira Gauntlets (F)
+"20873":
+  file: armors.yml
+  name: Purifier's Reine Gauntlets (M)
+"20874":
+  file: armors.yml
+  name: Purifier's Rayne Gauntlets (F)
+"20875":
+  file: armors.yml
+  name: Vigorous Roenier Gauntlets (M)
+"20876":
+  file: armors.yml
+  name: Vigorous Roelayne Gauntlets (F)
+"20877":
+  file: armors.yml
+  name: Cryptic Reffiro Gauntlets (M)
+"20878":
+  file: armors.yml
+  name: Cryptic Rephira Gauntlets (F)
+"20879":
+  file: armors.yml
+  name: Mystical Lippin Gauntlets (M)
+"20880":
+  file: armors.yml
+  name: Mystical Lypine Gauntlets (F)
+"20881":
+  file: armors.yml
+  name: Majestic Bileire Boots (M)
+"20882":
+  file: armors.yml
+  name: Majestic Bilari Boots (F)
+"20883":
+  file: armors.yml
+  name: Piercing Heraud Boots (M)
+"20884":
+  file: armors.yml
+  name: Piercing Herainn Boots (F)
+"20885":
+  file: armors.yml
+  name: Trickster's Curio Boots (M)
+"20886":
+  file: armors.yml
+  name: Trickster's Curena Boots (F)
+"20887":
+  file: armors.yml
+  name: Deadeye's Hainure Boots (M)
+"20888":
+  file: armors.yml
+  name: Deadeye's Hanira Boots (F)
+"20889":
+  file: armors.yml
+  name: Purifier's Reine Boots (M)
+"20890":
+  file: armors.yml
+  name: Purifier's Rayne Boots (F)
+"20891":
+  file: armors.yml
+  name: Vigorous Roenier Boots (M)
+"20892":
+  file: armors.yml
+  name: Vigorous Roelayne Boots (F)
+"20893":
+  file: armors.yml
+  name: Cryptic Reffiro Boots (M)
+"20894":
+  file: armors.yml
+  name: Cryptic Rephira Boots (F)
+"20895":
+  file: armors.yml
+  name: Mystical Lippin Boots (M)
+"20896":
+  file: armors.yml
+  name: Mystical Lypine Boots (F)
+"20897":
+  file: misc.yml
+  name: Ancient Rune (Sigel)
+"20898":
+  file: misc.yml
+  name: Scroll of RProtect
+"20899":
+  file: misc.yml
+  name: Scroll of Rune Socketing Success
+"20901":
+  file: materials.yml
+  name: GM Fruitcake
+"20909":
+  file: materials.yml
+  name: Jimbo the Snowman
+"20913":
+  file: misc.yml
+  name: Ancient Rune (Armor)
+"20920":
+  file: armors.yml
+  name: Giraffe Mask
+"20921":
+  file: armors.yml
+  name: Dreamweaver Mask
+"20922":
+  file: armors.yml
+  name: Twilight Mask
+"20923":
+  file: armors.yml
+  name: Sentinel Mask
+"20926":
+  file: consumables.yml
+  name: 5 Year Anniversery Firework
+"20927":
+  file: materials.yml
+  name: GM Fruitcake
+"20928":
+  file: misc.yml
+  name: Piyoko
+"20929":
+  file: armors.yml
+  name: Mistletoe Suit (M)
+"20930":
+  file: armors.yml
+  name: Mistletoe Hat (M)
+"20931":
+  file: armors.yml
+  name: Mistletoe Gloves (M)
+"20932":
+  file: armors.yml
+  name: Mistletoe Shoes (M)
+"20933":
+  file: armors.yml
+  name: Mistletoe Suit (F)
+"20934":
+  file: armors.yml
+  name: Mistletoe Hat (F)
+"20935":
+  file: armors.yml
+  name: Mistletoe Glove (F)
+"20936":
+  file: armors.yml
+  name: Mistletoe Shoes (F)
+"20939":
+  file: materials.yml
+  name: Jack Frost
+"20940":
+  file: materials.yml
+  name: Mr. Grinchie
+"20941":
+  file: misc.yml
+  name: Gladiator's Parchment
+"20942":
+  file: misc.yml
+  name: Gladiator's Retribution
+"20956":
+  file: materials.yml
+  name: Rudolph
+"20962":
+  file: misc.yml
+  name: Ancient Rune (Berk)
+"20963":
+  file: misc.yml
+  name: Ancient Rune (Zera)
+"20964":
+  file: misc.yml
+  name: Ancient Rune (Manaz)
+"20966":
+  file: armors.yml
+  name: Angel Hairband
+"20967":
+  file: armors.yml
+  name: Devil Hairband
+"20968":
+  file: armors.yml
+  name: Mushroom Hat
+"20969":
+  file: armors.yml
+  name: Star Hair Band
+"20973":
+  file: armors.yml
+  name: Road Hog Suit (M)
+"20974":
+  file: armors.yml
+  name: Road Hog Hat (M)
+"20975":
+  file: armors.yml
+  name: Road Hog Gloves (M)
+"20976":
+  file: armors.yml
+  name: Road Hog Boots (M)
+"20977":
+  file: armors.yml
+  name: Road Hog Suit (F)
+"20978":
+  file: armors.yml
+  name: Road Hog Hat (F)
+"20979":
+  file: armors.yml
+  name: Road Hog Gloves (F)
+"20980":
+  file: armors.yml
+  name: Road Hog Boots (F)
+"20981":
+  file: armors.yml
+  name: Reconnaissance Suit (M)
+"20982":
+  file: armors.yml
+  name: Reconnaissance Hat (M)
+"20983":
+  file: armors.yml
+  name: Reconnaissance Gloves (M)
+"20984":
+  file: armors.yml
+  name: Reconnaissance Shoes (M)
+"20985":
+  file: armors.yml
+  name: Reconnaissance Suit (F)
+"20986":
+  file: armors.yml
+  name: Reconnaissance Hat (F)
+"20987":
+  file: armors.yml
+  name: Reconnaissance Gloves (F)
+"20988":
+  file: armors.yml
+  name: Reconnaissance Shoes (F)
+"20989":
+  file: misc.yml
+  name: Ancient Rune (Aeo)
+"20990":
+  file: misc.yml
+  name: Ancient Rune (Tir)
 "21000":
   file: materials.yml
   name: Baby Lawolf
@@ -8863,6 +10774,9 @@
 "21005":
   file: materials.yml
   name: Kitty
+"21006":
+  file: materials.yml
+  name: Soccerball Angel
 "21007":
   file: materials.yml
   name: Polar Bear
@@ -9016,6 +10930,12 @@
 "21089":
   file: materials.yml
   name: Bone Golem
+"21090":
+  file: materials.yml
+  name: Mocomochi
+"21091":
+  file: materials.yml
+  name: Observing Producer Kim Cage
 "22000":
   file: weapons.yml
   name: Sword of BoBoKu
@@ -10753,6 +12673,2517 @@
 "22597":
   file: questitems.yml
   name: Fighter's Mysterious Toolbox
+"23000":
+  file: misc.yml
+  name: Scroll of Amplification ES (S)
+"23009":
+  file: armors.yml
+  name: Recorn Helmet (Male) (7Days)
+"23010":
+  file: armors.yml
+  name: Recorn Suit (Male) (7Days)
+"23011":
+  file: armors.yml
+  name: Recorn Glove (Male) (7Days)
+"23012":
+  file: armors.yml
+  name: Recorn Boot (Male) (7Days)
+"23013":
+  file: armors.yml
+  name: Recorn Helmet (Female) (7Days)
+"23014":
+  file: armors.yml
+  name: Recorn Suit (Female) (7Days)
+"23015":
+  file: armors.yml
+  name: Recorn Glove (Female) (7Days)
+"23016":
+  file: armors.yml
+  name: Recorn Boot (Female) (7Days)
+"23017":
+  file: armors.yml
+  name: Ahes Helmet (Male) (7Days)
+"23018":
+  file: armors.yml
+  name: Ahes Suit (Male) (7Days)
+"23019":
+  file: armors.yml
+  name: Ahes Glove (Male) (7Days)
+"23020":
+  file: armors.yml
+  name: Ahes Boot (Male) (7Days)
+"23021":
+  file: armors.yml
+  name: Ahes Helmet (Female) (7Days)
+"23022":
+  file: armors.yml
+  name: Ahes Suit (Female) (7Days)
+"23023":
+  file: armors.yml
+  name: Ahes Glove (Female) (7Days)
+"23024":
+  file: armors.yml
+  name: Ahes Boot (Female) (7Days)
+"23025":
+  file: armors.yml
+  name: Shuran Helmet (Male) (7Days)
+"23026":
+  file: armors.yml
+  name: Shuran Suit (Male) (7Days)
+"23027":
+  file: armors.yml
+  name: Shuran Glove (Male) (7Days)
+"23028":
+  file: armors.yml
+  name: Shuran Boot (Male) (7Days)
+"23029":
+  file: armors.yml
+  name: Shuran Helmet (Female) (7Days)
+"23030":
+  file: armors.yml
+  name: Shuran Suit (Female) (7Days)
+"23031":
+  file: armors.yml
+  name: Shuran Glove (Female) (7Days)
+"23032":
+  file: armors.yml
+  name: Shuran Boot (Female) (7Days)
+"23033":
+  file: armors.yml
+  name: Restron Helmet (Male) (7Days)
+"23034":
+  file: armors.yml
+  name: Restron Suit (Male) (7Days)
+"23035":
+  file: armors.yml
+  name: Restron Glove (Male) (7Days)
+"23036":
+  file: armors.yml
+  name: Restron Boot (Male) (7Days)
+"23037":
+  file: armors.yml
+  name: Restron Helmet (Female) (7Days)
+"23038":
+  file: armors.yml
+  name: Restron Suit (Female) (7Days)
+"23039":
+  file: armors.yml
+  name: Restron Glove (Female) (7Days)
+"23040":
+  file: armors.yml
+  name: Restron Boot (Female) (7Days)
+"23043":
+  file: materials.yml
+  name: Penguin Buff Pet
+"23044":
+  file: armors.yml
+  name: Kuma Cloak
+"23045":
+  file: misc.yml
+  name: Event Traseia(7 Days)
+"23048":
+  file: consumables.yml
+  name: Russia 1 Year Anniversary Firework
+"23049":
+  file: materials.yml
+  name: Kuma
+"23050":
+  file: materials.yml
+  name: "[Upgrade Spirit] Coby"
+"23051":
+  file: materials.yml
+  name: "[Upgrade Spirit] Pierce"
+"23055":
+  file: questitems.yml
+  name: Angel Ticket
+"23056":
+  file: questitems.yml
+  name: Demon Ticket
+"23059":
+  file: materials.yml
+  name: Usagi
+"23060":
+  file: armors.yml
+  name: Casanova Suit (M)
+"23061":
+  file: armors.yml
+  name: Casanova Hat (M)
+"23062":
+  file: armors.yml
+  name: Casanova Gloves (M)
+"23063":
+  file: armors.yml
+  name: Casanova Shoes (M)
+"23064":
+  file: armors.yml
+  name: Heartbreaker Suit (F)
+"23065":
+  file: armors.yml
+  name: Heartbreaker Hat (F)
+"23066":
+  file: armors.yml
+  name: Heartbreaker Gloves (F)
+"23067":
+  file: armors.yml
+  name: Heartbreaker Shoes (F)
+"23070":
+  file: weapons.yml
+  name: Historic Big Sword (30Days)
+"23071":
+  file: weapons.yml
+  name: Historic Ambidextrous Axe (30Days)
+"23072":
+  file: weapons.yml
+  name: Historic Sword (30Days)
+"23073":
+  file: weapons.yml
+  name: Historic Axe (30Days)
+"23074":
+  file: weapons.yml
+  name: Historic Staff (30Days)
+"23075":
+  file: weapons.yml
+  name: Historic Wand (30Days)
+"23076":
+  file: weapons.yml
+  name: Historic Yo-Yo (30Days)
+"23077":
+  file: weapons.yml
+  name: Historic Bow (30Days)
+"23078":
+  file: weapons.yml
+  name: Historic Knuckle (30Days)
+"23079":
+  file: weapons.yml
+  name: Historic Stick (30Days)
+"23080":
+  file: armors.yml
+  name: Recorn Helmet (Male) (30Days)
+"23081":
+  file: armors.yml
+  name: Recorn Suit (Male) (30Days)
+"23082":
+  file: armors.yml
+  name: Recorn Glove (Male) (30Days)
+"23083":
+  file: armors.yml
+  name: Recorn Boot (Male) (30Days)
+"23084":
+  file: armors.yml
+  name: Recorn Helmet (Female) (30Days)
+"23085":
+  file: armors.yml
+  name: Recorn Suit (Female) (30Days)
+"23086":
+  file: armors.yml
+  name: Recorn Glove (Female) (30Days)
+"23087":
+  file: armors.yml
+  name: Recorn Boot (Female) (30Days)
+"23088":
+  file: armors.yml
+  name: Ahes Helmet (Male) (30Days)
+"23089":
+  file: armors.yml
+  name: Ahes Suit (Male) (30Days)
+"23090":
+  file: armors.yml
+  name: Ahes Glove (Male) (30Days)
+"23091":
+  file: armors.yml
+  name: Ahes Boot (Male) (30Days)
+"23092":
+  file: armors.yml
+  name: Ahes Helmet (Female) (30Days)
+"23093":
+  file: armors.yml
+  name: Ahes Suit (Female) (30Days)
+"23094":
+  file: armors.yml
+  name: Ahes Glove (Female) (30Days)
+"23095":
+  file: armors.yml
+  name: Ahes Boot (Female) (30Days)
+"23096":
+  file: armors.yml
+  name: Shuran Helmet (Male) (30Days)
+"23097":
+  file: armors.yml
+  name: Shuran Suit (Male) (30Days)
+"23098":
+  file: armors.yml
+  name: Shuran Glove (Male) (30Days)
+"23099":
+  file: armors.yml
+  name: Shuran Boot (Male) (30Days)
+"23100":
+  file: armors.yml
+  name: Shuran Helmet (Female) (30Days)
+"23101":
+  file: armors.yml
+  name: Shuran Suit (Female) (30Days)
+"23102":
+  file: armors.yml
+  name: Shuran Glove (Female) (30Days)
+"23103":
+  file: armors.yml
+  name: Shuran Boot (Female) (30Days)
+"23104":
+  file: armors.yml
+  name: Restron Helmet (Male) (30Days)
+"23105":
+  file: armors.yml
+  name: Restron Suit (Male) (30Days)
+"23106":
+  file: armors.yml
+  name: Restron Glove (Male) (30Days)
+"23107":
+  file: armors.yml
+  name: Restron Boot (Male) (30Days)
+"23108":
+  file: armors.yml
+  name: Restron Helmet (Female) (30Days)
+"23109":
+  file: armors.yml
+  name: Restron Suit (Female) (30Days)
+"23110":
+  file: armors.yml
+  name: Restron Glove (Female) (30Days)
+"23111":
+  file: armors.yml
+  name: Restron Boot (Female) (30Days)
+"23112":
+  file: armors.yml
+  name: Warspon Helmet (Male) (7Days)
+"23113":
+  file: armors.yml
+  name: Warspon Suit (Male) (7Days)
+"23114":
+  file: armors.yml
+  name: Warspon Glove (Male) (7Days)
+"23115":
+  file: armors.yml
+  name: Warspon Boot (Male) (7Days)
+"23116":
+  file: armors.yml
+  name: Warspon Helmet (Female) (7Days)
+"23117":
+  file: armors.yml
+  name: Warspon Suit (Female) (7Days)
+"23118":
+  file: armors.yml
+  name: Warspon Glove (Female) (7Days)
+"23119":
+  file: armors.yml
+  name: Warspon Boot (Female) (7Days)
+"23120":
+  file: armors.yml
+  name: Warspon Helmet (Male) (30Days)
+"23121":
+  file: armors.yml
+  name: Warspon Suit (Male) (30Days)
+"23122":
+  file: armors.yml
+  name: Warspon Glove (Male) (30Days)
+"23123":
+  file: armors.yml
+  name: Warspon Boot (Male) (30Days)
+"23124":
+  file: armors.yml
+  name: Warspon Helmet (Female) (30Days)
+"23125":
+  file: armors.yml
+  name: Warspon Suit (Female) (30Days)
+"23126":
+  file: armors.yml
+  name: Warspon Glove (Female) (30Days)
+"23127":
+  file: armors.yml
+  name: Warspon Boot (Female) (30Days)
+"23128":
+  file: armors.yml
+  name: Einy Helmet (Male) (7Days)
+"23129":
+  file: armors.yml
+  name: Einy Suit (Male) (7Days)
+"23130":
+  file: armors.yml
+  name: Einy Glove (Male) (7Days)
+"23131":
+  file: armors.yml
+  name: Einy Boot (Male) (7Days)
+"23132":
+  file: armors.yml
+  name: Einy Helmet (Female) (7Days)
+"23133":
+  file: armors.yml
+  name: Einy Suit (Female) (7Days)
+"23134":
+  file: armors.yml
+  name: Einy Glove (Female) (7Days)
+"23135":
+  file: armors.yml
+  name: Einy Boot (Female) (7Days)
+"23136":
+  file: armors.yml
+  name: Einy Helmet (Male) (30Days)
+"23137":
+  file: armors.yml
+  name: Einy Suit (Male) (30Days)
+"23138":
+  file: armors.yml
+  name: Einy Glove (Male) (30Days)
+"23139":
+  file: armors.yml
+  name: Einy Boot (Male) (30Days)
+"23140":
+  file: armors.yml
+  name: Einy Helmet (Female) (30Days)
+"23141":
+  file: armors.yml
+  name: Einy Suit (Female) (30Days)
+"23142":
+  file: armors.yml
+  name: Einy Glove (Female) (30Days)
+"23143":
+  file: armors.yml
+  name: Einy Boot (Female) (30Days)
+"23144":
+  file: armors.yml
+  name: Ropang Helmet (Male) (7Days)
+"23145":
+  file: armors.yml
+  name: Ropang Suit (Male) (7Days)
+"23146":
+  file: armors.yml
+  name: Ropang Glove (Male) (7Days)
+"23147":
+  file: armors.yml
+  name: Ropang Boot (Male) (7Days)
+"23148":
+  file: armors.yml
+  name: Ropang Helmet (Female) (7Days)
+"23149":
+  file: armors.yml
+  name: Ropang Suit (Female) (7Days)
+"23150":
+  file: armors.yml
+  name: Ropang Glove (Female) (7Days)
+"23151":
+  file: armors.yml
+  name: Ropang Boot (Female) (7Days)
+"23152":
+  file: armors.yml
+  name: Ropang Helmet (Male) (30Days)
+"23153":
+  file: armors.yml
+  name: Ropang Suit (Male) (30Days)
+"23154":
+  file: armors.yml
+  name: Ropang Glove (Male) (30Days)
+"23155":
+  file: armors.yml
+  name: Ropang Boot (Male) (30Days)
+"23156":
+  file: armors.yml
+  name: Ropang Helmet (Female) (30Days)
+"23157":
+  file: armors.yml
+  name: Ropang Suit (Female) (30Days)
+"23158":
+  file: armors.yml
+  name: Ropang Glove (Female) (30Days)
+"23159":
+  file: armors.yml
+  name: Ropang Boot (Female) (30Days)
+"23160":
+  file: armors.yml
+  name: Myuran Helmet (Male) (7Days)
+"23161":
+  file: armors.yml
+  name: Myuran Suit (Male) (7Days)
+"23162":
+  file: armors.yml
+  name: Myuran Glove (Male) (7Days)
+"23163":
+  file: armors.yml
+  name: Myuran Boot (Male) (7Days)
+"23164":
+  file: armors.yml
+  name: Myuran Helmet (Female) (7Days)
+"23165":
+  file: armors.yml
+  name: Myuran Suit (Female) (7Days)
+"23166":
+  file: armors.yml
+  name: Myuran Glove (Female) (7Days)
+"23167":
+  file: armors.yml
+  name: Myuran Boot (Female) (7Days)
+"23168":
+  file: armors.yml
+  name: Myuran Helmet (Male) (30Days)
+"23169":
+  file: armors.yml
+  name: Myuran Suit (Male) (30Days)
+"23170":
+  file: armors.yml
+  name: Myuran Glove (Male) (30Days)
+"23171":
+  file: armors.yml
+  name: Myuran Boot (Male) (30Days)
+"23172":
+  file: armors.yml
+  name: Myuran Helmet (Female) (30Days)
+"23173":
+  file: armors.yml
+  name: Myuran Suit (Female) (30Days)
+"23174":
+  file: armors.yml
+  name: Myuran Glove (Female) (30Days)
+"23175":
+  file: armors.yml
+  name: Myuran Boot (Female) (30Days)
+"23176":
+  file: armors.yml
+  name: Ales Helmet (Male) (7Days)
+"23177":
+  file: armors.yml
+  name: Ales Suit (Male) (7Days)
+"23178":
+  file: armors.yml
+  name: Ales Glove (Male) (7Days)
+"23179":
+  file: armors.yml
+  name: Ales Boot (Male) (7Days)
+"23180":
+  file: armors.yml
+  name: Ales Helmet (Female) (7Days)
+"23181":
+  file: armors.yml
+  name: Ales Suit (Female) (7Days)
+"23182":
+  file: armors.yml
+  name: Ales Glove (Female) (7Days)
+"23183":
+  file: armors.yml
+  name: Ales Boot (Female) (7Days)
+"23184":
+  file: armors.yml
+  name: Ales Helmet (Male) (30Days)
+"23185":
+  file: armors.yml
+  name: Ales Suit (Male) (30Days)
+"23186":
+  file: armors.yml
+  name: Ales Glove (Male) (30Days)
+"23187":
+  file: armors.yml
+  name: Ales Boot (Male) (30Days)
+"23188":
+  file: armors.yml
+  name: Ales Helmet (Female) (30Days)
+"23189":
+  file: armors.yml
+  name: Ales Suit (Female) (30Days)
+"23190":
+  file: armors.yml
+  name: Ales Glove (Female) (30Days)
+"23192":
+  file: armors.yml
+  name: Ales Boot (Female) (30Days)
+"23193":
+  file: armors.yml
+  name: Paxt Helmet (Male) (7Days)
+"23194":
+  file: armors.yml
+  name: Paxt Suit (Male) (7Days)
+"23195":
+  file: armors.yml
+  name: Paxt Glove (Male) (7Days)
+"23196":
+  file: armors.yml
+  name: Paxt Boot (Male) (7Days)
+"23197":
+  file: armors.yml
+  name: Paxt Helmet (Female) (7Days)
+"23198":
+  file: armors.yml
+  name: Paxt Suit (Female) (7Days)
+"23199":
+  file: armors.yml
+  name: Paxt Glove (Female) (7Days)
+"23200":
+  file: armors.yml
+  name: Paxt Boot (Female) (7Days)
+"23201":
+  file: armors.yml
+  name: Paxt Helmet (Male) (30Days)
+"23202":
+  file: armors.yml
+  name: Paxt Suit (Male) (30Days)
+"23203":
+  file: armors.yml
+  name: Paxt Glove (Male) (30Days)
+"23204":
+  file: armors.yml
+  name: Paxt Boot (Male) (30Days)
+"23205":
+  file: armors.yml
+  name: Paxt Helmet (Female) (30Days)
+"23206":
+  file: armors.yml
+  name: Paxt Suit (Female) (30Days)
+"23207":
+  file: armors.yml
+  name: Paxt Glove (Female) (30Days)
+"23208":
+  file: armors.yml
+  name: Paxt Boot (Female) (30Days)
+"23209":
+  file: armors.yml
+  name: Kanarin Helmet (Male) (7Days)
+"23210":
+  file: armors.yml
+  name: Kanarin Suit (Male) (7Days)
+"23211":
+  file: armors.yml
+  name: Kanarin Glove (Male) (7Days)
+"23212":
+  file: armors.yml
+  name: Kanarin Boot (Male) (7Days)
+"23213":
+  file: armors.yml
+  name: Kanarin Helmet (Female) (7Days)
+"23214":
+  file: armors.yml
+  name: Kanarin Suit (Female) (7Days)
+"23215":
+  file: armors.yml
+  name: Kanarin Glove (Female) (7Days)
+"23216":
+  file: armors.yml
+  name: Kanarin Boot (Female) (7Days)
+"23217":
+  file: armors.yml
+  name: Kanarin Helmet (Male) (30Days)
+"23218":
+  file: armors.yml
+  name: Kanarin Suit (Male) (30Days)
+"23219":
+  file: armors.yml
+  name: Kanarin Glove (Male) (30Days)
+"23220":
+  file: armors.yml
+  name: Kanarin Boot (Male) (30Days)
+"23221":
+  file: armors.yml
+  name: Kanarin Helmet (Female) (30Days)
+"23222":
+  file: armors.yml
+  name: Kanarin Suit (Female) (30Days)
+"23223":
+  file: armors.yml
+  name: Kanarin Glove (Female) (30Days)
+"23224":
+  file: armors.yml
+  name: Kanarin Boot (Female) (30Days)
+"23225":
+  file: armors.yml
+  name: Oska Helmet (Male) (7Days)
+"23226":
+  file: armors.yml
+  name: Oska Suit (Male) (7Days)
+"23227":
+  file: armors.yml
+  name: Oska Glove (Male) (7Days)
+"23228":
+  file: armors.yml
+  name: Oska Boot (Male) (7Days)
+"23229":
+  file: armors.yml
+  name: Oska Helmet (Female) (7Days)
+"23230":
+  file: armors.yml
+  name: Oska Suit (Female) (7Days)
+"23231":
+  file: armors.yml
+  name: Oska Glove (Female) (7Days)
+"23232":
+  file: armors.yml
+  name: Oska Boot (Female) (7Days)
+"23233":
+  file: armors.yml
+  name: Oska Helmet (Male) (30Days)
+"23234":
+  file: armors.yml
+  name: Oska Suit (Male) (30Days)
+"23235":
+  file: armors.yml
+  name: Oska Glove (Male) (30Days)
+"23236":
+  file: armors.yml
+  name: Oska Boot (Male) (30Days)
+"23237":
+  file: armors.yml
+  name: Oska Helmet (Female) (30Days)
+"23238":
+  file: armors.yml
+  name: Oska Suit (Female) (30Days)
+"23239":
+  file: armors.yml
+  name: Oska Glove (Female) (30Days)
+"23240":
+  file: armors.yml
+  name: Oska Boot (Female) (30Days)
+"23246":
+  file: misc.yml
+  name: Plume of the Dove(7Days)
+"23247":
+  file: misc.yml
+  name: Mantle of the Raven(7Days)
+"23252":
+  file: armors.yml
+  name: Samba Suit (M)
+"23253":
+  file: armors.yml
+  name: Samba Hat (M)
+"23254":
+  file: armors.yml
+  name: Samba Gloves (M)
+"23255":
+  file: armors.yml
+  name: Samba Shoes (M)
+"23256":
+  file: armors.yml
+  name: Samba Suit (F)
+"23257":
+  file: armors.yml
+  name: Samba Hat (F)
+"23258":
+  file: armors.yml
+  name: Samba Gloves (F)
+"23259":
+  file: armors.yml
+  name: Samba Shoes (F)
+"23267":
+  file: misc.yml
+  name: Scroll of FProtect
+"23268":
+  file: misc.yml
+  name: Torch of Raon
+"23269":
+  file: misc.yml
+  name: Torch of Isilrute
+"23271":
+  file: misc.yml
+  name: Scroll of Amplification R (7 Days)
+"23272":
+  file: misc.yml
+  name: Scroll of Amplification R (30 Days)
+"23273":
+  file: misc.yml
+  name: Scroll of Amplification Q (7 Days)
+"23274":
+  file: misc.yml
+  name: Scroll of Amplification Q (30 Days)
+"23275":
+  file: armors.yml
+  name: Colosseum Champion's Hat (M)
+"23276":
+  file: armors.yml
+  name: Colosseum Champion's Cloth (M)
+"23277":
+  file: armors.yml
+  name: Colosseum Champion's Gloves (M)
+"23278":
+  file: armors.yml
+  name: Colosseum Champion's Shoes (M)
+"23279":
+  file: armors.yml
+  name: Colosseum Champion's Hat (F)
+"23280":
+  file: armors.yml
+  name: Colosseum Champion's Cloth (F)
+"23281":
+  file: armors.yml
+  name: Colosseum Champion's Gloves (F)
+"23282":
+  file: armors.yml
+  name: Colosseum Champion's Shoes (F)
+"23283":
+  file: armors.yml
+  name: Colosseum Champion's Cloak
+"23286":
+  file: questitems.yml
+  name: Love Spirit Angel's Letter
+"23287":
+  file: questitems.yml
+  name: A Black Ribbon (Present)
+"23289":
+  file: armors.yml
+  name: Forest Faerie Suit (F)
+"23290":
+  file: armors.yml
+  name: Forest Faerie Hat (F)
+"23291":
+  file: armors.yml
+  name: Forest Faerie Gloves (F)
+"23292":
+  file: armors.yml
+  name: Forest Faerie Shoes (F)
+"23293":
+  file: armors.yml
+  name: Flower Faerie Suit (F)
+"23294":
+  file: armors.yml
+  name: Flower Faerie Hat (F)
+"23295":
+  file: armors.yml
+  name: Flower Faerie Glove (F)
+"23296":
+  file: armors.yml
+  name: Flower Faerie Shoe (F)
+"23299":
+  file: materials.yml
+  name: X900 EvilTron
+"23302":
+  file: armors.yml
+  name: Blue Corsage (F)
+"23303":
+  file: armors.yml
+  name: White Corsage (F)
+"23304":
+  file: armors.yml
+  name: Pink Corsage (F)
+"23305":
+  file: armors.yml
+  name: Yellow Corsage (F)
+"23306":
+  file: armors.yml
+  name: Decorative Black Ribbon
+"23307":
+  file: materials.yml
+  name: Mister Grizz
+"23313":
+  file: armors.yml
+  name: Cloak of Hope(No-Trade)
+"23372":
+  file: armors.yml
+  name: Steam Punk Suit (F)
+"23373":
+  file: armors.yml
+  name: Steam Punk Hat (F)
+"23374":
+  file: armors.yml
+  name: Steam Punk Gloves (F)
+"23375":
+  file: armors.yml
+  name: Steam Punk Shoes (F)
+"23376":
+  file: armors.yml
+  name: Steam Punk Suit (M)
+"23377":
+  file: armors.yml
+  name: Steam Punk Hat (M)
+"23378":
+  file: armors.yml
+  name: Steam Punk Gloves (M)
+"23379":
+  file: armors.yml
+  name: Steam Punk Shoes (M)
+"23384":
+  file: materials.yml
+  name: Fir Seed
+"23385":
+  file: materials.yml
+  name: Pear Seed
+"23386":
+  file: materials.yml
+  name: Pine Seed
+"23387":
+  file: materials.yml
+  name: Persimmon Seeding
+"23390":
+  file: weapons.yml
+  name: Ankou Wooden Sword
+"23391":
+  file: materials.yml
+  name: Usagi(7 Days)
+"23392":
+  file: questitems.yml
+  name: Little Rabbit
+"23393":
+  file: questitems.yml
+  name: Easter Charm A
+"23394":
+  file: questitems.yml
+  name: Easter Charm B
+"23395":
+  file: questitems.yml
+  name: Easter Charm C
+"23408":
+  file: armors.yml
+  name: Hipster Glasses (Black)
+"23409":
+  file: armors.yml
+  name: Hipster Glasses (Red)
+"23410":
+  file: armors.yml
+  name: Hipster Glasses (White)
+"23413":
+  file: questitems.yml
+  name: Wonder Coupon
+"23414":
+  file: questitems.yml
+  name: OMG Curtain - Taiwan
+"23415":
+  file: armors.yml
+  name: OMG Cameleon Cap(Green)(7Days)
+"23416":
+  file: armors.yml
+  name: OMG Cameleon Cap(Red)(7Days)
+"23417":
+  file: armors.yml
+  name: OMG Cameleon Cap(Blue)(7Days)
+"23418":
+  file: armors.yml
+  name: OMG Cameleon Cap(Yellow)(7Days)
+"23419":
+  file: armors.yml
+  name: OMG Cameleon Cap(Green)
+"23421":
+  file: misc.yml
+  name: Piyoco (30Days)
+"23424":
+  file: materials.yml
+  name: Ghost Buff Pet(Event)
+"23425":
+  file: misc.yml
+  name: Red Bike
+"23426":
+  file: misc.yml
+  name: 2nd Grade - Master Teleporter
+"23429":
+  file: misc.yml
+  name: Baruna Grace
+"23430":
+  file: misc.yml
+  name: Blessed Baruna Grace
+"23431":
+  file: misc.yml
+  name: Baruna Oblivion
+"23432":
+  file: misc.yml
+  name: Elemental Energizer
+"23433":
+  file: misc.yml
+  name: Flame Ove
+"23434":
+  file: misc.yml
+  name: Dessert Ove
+"23435":
+  file: misc.yml
+  name: Generator Ove
+"23436":
+  file: misc.yml
+  name: River Ove
+"23437":
+  file: misc.yml
+  name: Cyclone Ove
+"23445":
+  file: questitems.yml
+  name: Director's Coupon
+"23446":
+  file: materials.yml
+  name: Old Ring
+"23447":
+  file: weapons.yml
+  name: Sword of Whisper
+"23448":
+  file: weapons.yml
+  name: Phantasmal Slayer
+"23449":
+  file: weapons.yml
+  name: Spectre's Axe
+"23450":
+  file: weapons.yml
+  name: Cleaver of the Mist
+"23451":
+  file: weapons.yml
+  name: Knuckle of Madness
+"23452":
+  file: weapons.yml
+  name: Mirage
+"23453":
+  file: weapons.yml
+  name: Wand of Apparitions
+"23454":
+  file: weapons.yml
+  name: Staff of Ethereal Dreams
+"23455":
+  file: weapons.yml
+  name: Bow of Echoes
+"23456":
+  file: weapons.yml
+  name: Jewel of Nightmares
+"23457":
+  file: consumables.yml
+  name: 30 Day Potent Flask of the Warrior
+"23458":
+  file: consumables.yml
+  name: 30 Day Potent Flask of the Magician
+"23459":
+  file: consumables.yml
+  name: 30 Day Potent Flask of the Acrobat
+"23460":
+  file: consumables.yml
+  name: 30 Day Unstable Flask of the Warrior
+"23461":
+  file: consumables.yml
+  name: 30 Day Unstable Flask of the Magician
+"23462":
+  file: consumables.yml
+  name: 30 Day Unstable Flask of the Acrobat
+"23463":
+  file: materials.yml
+  name: Carbonara
+"23464":
+  file: materials.yml
+  name: Penne
+"23465":
+  file: materials.yml
+  name: Lasagna
+"23466":
+  file: weapons.yml
+  name: Coral Cutlass
+"23467":
+  file: weapons.yml
+  name: Leviathan
+"23468":
+  file: weapons.yml
+  name: Nautilus
+"23469":
+  file: weapons.yml
+  name: Abyss
+"23470":
+  file: weapons.yml
+  name: Fist of Tides
+"23471":
+  file: weapons.yml
+  name: Song of Sirens
+"23472":
+  file: weapons.yml
+  name: Lamprey's Wand
+"23473":
+  file: weapons.yml
+  name: Conch Stave
+"23474":
+  file: weapons.yml
+  name: Nemo's Fury
+"23475":
+  file: weapons.yml
+  name: Typhoon
+"23476":
+  file: weapons.yml
+  name: Regalia
+"23477":
+  file: weapons.yml
+  name: Kingslayer
+"23478":
+  file: weapons.yml
+  name: Bishop
+"23479":
+  file: weapons.yml
+  name: Monarch
+"23480":
+  file: weapons.yml
+  name: Godhand
+"23481":
+  file: weapons.yml
+  name: Duchess
+"23482":
+  file: weapons.yml
+  name: Archduke
+"23483":
+  file: weapons.yml
+  name: Queen's Mercy
+"23484":
+  file: weapons.yml
+  name: Baroness
+"23485":
+  file: weapons.yml
+  name: Viceroy
+"23490":
+  file: consumables.yml
+  name: 1 Day Potent Flask of the Warrior
+"23491":
+  file: consumables.yml
+  name: 1 Day Potent Flask of the Magician
+"23492":
+  file: consumables.yml
+  name: 1 Day Potent Flask of the Acrobat
+"23493":
+  file: consumables.yml
+  name: 1 Day Unstable Flask of the Warrior
+"23494":
+  file: consumables.yml
+  name: 1 Day Unstable Flask of the Magician
+"23495":
+  file: consumables.yml
+  name: 1 Day Unstable Flask of the Acrobat
+"23499":
+  file: materials.yml
+  name: Lil' gPotato
+"23501":
+  file: armors.yml
+  name: Winner Cloak
+"23502":
+  file: armors.yml
+  name: Champion Cloak
+"23505":
+  file: misc.yml
+  name: Premium Hunting License
+"23507":
+  file: questitems.yml
+  name: Toadstool
+"23508":
+  file: questitems.yml
+  name: Treasure Box
+"23509":
+  file: questitems.yml
+  name: Nail of Nightmist
+"23510":
+  file: questitems.yml
+  name: Siren's Harp
+"23511":
+  file: questitems.yml
+  name: Garuda Feather
+"23512":
+  file: questitems.yml
+  name: Marble Hairband
+"23513":
+  file: questitems.yml
+  name: Sweat Pumpkin
+"23514":
+  file: questitems.yml
+  name: Mia's Shackles
+"23515":
+  file: questitems.yml
+  name: Memory Shard
+"23516":
+  file: questitems.yml
+  name: Hero's Pendant
+"23517":
+  file: questitems.yml
+  name: Ancient Inscription
+"23518":
+  file: questitems.yml
+  name: Essence of Bubble
+"23519":
+  file: questitems.yml
+  name: Essence of Shade
+"23520":
+  file: questitems.yml
+  name: Forsaken Soul
+"23521":
+  file: questitems.yml
+  name: Steel Piece
+"23522":
+  file: questitems.yml
+  name: Hard Steel Piece
+"23523":
+  file: questitems.yml
+  name: Hard Steel Dust
+"23524":
+  file: questitems.yml
+  name: Hard Drill
+"23525":
+  file: questitems.yml
+  name: Prison Key
+"23526":
+  file: questitems.yml
+  name: Promise Ring
+"23527":
+  file: questitems.yml
+  name: Wastebasket
+"23528":
+  file: questitems.yml
+  name: Syliaca Fillet
+"23529":
+  file: questitems.yml
+  name: Greemong Jelly
+"23530":
+  file: questitems.yml
+  name: Boo Petal
+"23531":
+  file: questitems.yml
+  name: Pink Roach Queen Sap
+"23532":
+  file: questitems.yml
+  name: Agony Ore
+"23534":
+  file: weapons.yml
+  name: Mystic Sword of Whisper
+"23535":
+  file: weapons.yml
+  name: Mystic Phantasmal Slayer
+"23536":
+  file: weapons.yml
+  name: Mystic Spectre's Axe
+"23537":
+  file: weapons.yml
+  name: Mystic Cleaver of the Mist
+"23538":
+  file: weapons.yml
+  name: Mystic Knuckle of Madness
+"23539":
+  file: weapons.yml
+  name: Mystic Mirage
+"23540":
+  file: weapons.yml
+  name: Mystic Wand of Apparitions
+"23541":
+  file: weapons.yml
+  name: Mystic Staff of Ethereal Dreams
+"23542":
+  file: weapons.yml
+  name: Mystic Bow of Echoes
+"23543":
+  file: weapons.yml
+  name: Mystic Jewel of Nightmares
+"23544":
+  file: weapons.yml
+  name: Majestic Coral Cutlass
+"23545":
+  file: weapons.yml
+  name: Majestic Leviathan
+"23546":
+  file: weapons.yml
+  name: Majestic Nautilus
+"23547":
+  file: weapons.yml
+  name: Majestic Abyss
+"23548":
+  file: weapons.yml
+  name: Majestic Fist of Tides
+"23549":
+  file: weapons.yml
+  name: Majestic Song of Sirens
+"23550":
+  file: weapons.yml
+  name: Majestic Lamprey's Wand
+"23551":
+  file: weapons.yml
+  name: Majestic Conch Stave
+"23552":
+  file: weapons.yml
+  name: Majestic Nemo's Fury
+"23553":
+  file: weapons.yml
+  name: Majestic Typhoon
+"23554":
+  file: weapons.yml
+  name: Mastercraft Regalia
+"23555":
+  file: weapons.yml
+  name: Mastercraft Kingslayer
+"23556":
+  file: weapons.yml
+  name: Mastercraft Bishop
+"23557":
+  file: weapons.yml
+  name: Mastercraft Monarch
+"23558":
+  file: weapons.yml
+  name: Mastercraft Godhand
+"23559":
+  file: weapons.yml
+  name: Mastercraft Duchess
+"23560":
+  file: weapons.yml
+  name: Mastercraft Archduke
+"23561":
+  file: weapons.yml
+  name: Mastercraft Queen's Mercy
+"23562":
+  file: weapons.yml
+  name: Mastercraft Baroness
+"23563":
+  file: weapons.yml
+  name: Mastercraft Viceroy
+"23568":
+  file: misc.yml
+  name: Masquerpet Treasure Box Lvl. 15
+"23569":
+  file: misc.yml
+  name: Masquerpet Treasure Box Lvl. 60
+"23570":
+  file: misc.yml
+  name: Masquerpet Treasure Box Lvl. 90
+"23571":
+  file: misc.yml
+  name: Masquerpet Treasure Box Lvl. 120
+"23572":
+  file: misc.yml
+  name: Masquerpet Treasure Box Lvl. 150
+"23573":
+  file: misc.yml
+  name: Bronze Masquerpet Treasure Key (Lvl. 15)
+"23574":
+  file: misc.yml
+  name: Silver Masquerpet Treasure Key (Lvl. 15)
+"23575":
+  file: misc.yml
+  name: Gold Masquerpet Treasure Key (Lvl. 15)
+"23576":
+  file: misc.yml
+  name: Bronze Masquerpet Treasure Key (Lvl. 60)
+"23577":
+  file: misc.yml
+  name: Silver Masquerpet Treasure Key (Lvl. 60)
+"23578":
+  file: misc.yml
+  name: Gold Masquerpet Treasure Key (Lvl. 60)
+"23579":
+  file: misc.yml
+  name: Bronze Masquerpet Treasure Key (Lvl. 90)
+"23580":
+  file: misc.yml
+  name: Silver Masquerpet Treasure Key (Lvl. 90)
+"23581":
+  file: misc.yml
+  name: Gold Masquerpet Treasure Key (Lvl. 90)
+"23582":
+  file: misc.yml
+  name: Bronze Masquerpet Treasure Key (Lvl. 120)
+"23583":
+  file: misc.yml
+  name: Silver Masquerpet Treasure Key (Lvl. 120)
+"23584":
+  file: misc.yml
+  name: Gold Masquerpet Treasure Key (Lvl. 120)
+"23585":
+  file: misc.yml
+  name: Bronze Masquerpet Treasure Key (Lvl. 150)
+"23586":
+  file: misc.yml
+  name: Silver Masquerpet Treasure Key (Lvl. 150)
+"23587":
+  file: misc.yml
+  name: Golden Masquerpet Treasure Key (Lvl. 150)
+"23588":
+  file: materials.yml
+  name: Friendly Baby Kargo
+"23589":
+  file: consumables.yml
+  name: 2011 Card
+"23591":
+  file: consumables.yml
+  name: 2011 FWC Card
+"23592":
+  file: materials.yml
+  name: Lil'gPotato
+"23593":
+  file: questitems.yml
+  name: Fragment of Memories
+"23594":
+  file: questitems.yml
+  name: Trust Pendant
+"23595":
+  file: questitems.yml
+  name: Letter of Zoro
+"23596":
+  file: questitems.yml
+  name: Letter of Elaine
+"23597":
+  file: questitems.yml
+  name: Blue Roach Queen Sap
+"23598":
+  file: questitems.yml
+  name: Parchment of War
+"23599":
+  file: questitems.yml
+  name: Decoded Parchment of War
+"23600":
+  file: questitems.yml
+  name: Time Lapse Flower
+"23601":
+  file: questitems.yml
+  name: Elemental Hero's Pendant
+"23632":
+  file: questitems.yml
+  name: Howbow Sword
+"23633":
+  file: questitems.yml
+  name: Sharp Edge
+"23634":
+  file: questitems.yml
+  name: Anti-Root
+"23635":
+  file: questitems.yml
+  name: Infernal Stone
+"23636":
+  file: questitems.yml
+  name: Angelic Stone
+"23637":
+  file: questitems.yml
+  name: Enlightenment Shard
+"23660":
+  file: misc.yml
+  name: Scroll of Amplification R (1 Days)
+"23661":
+  file: misc.yml
+  name: Scroll of Amplification Q (1 Days)
+"23680":
+  file: armors.yml
+  name: Vengeful Cloak of the Wyrm
+"23681":
+  file: armors.yml
+  name: Venerable Cloak of the Wyrm
+"23682":
+  file: armors.yml
+  name: Cloak of the Wyrm
+"23683":
+  file: armors.yml
+  name: 용왕의 망토 더미
+"23684":
+  file: questitems.yml
+  name: Shinig Stone
+"23685":
+  file: questitems.yml
+  name: Popom Powder
+"23686":
+  file: materials.yml
+  name: 깨진 문스톤 상자
+"23688":
+  file: armors.yml
+  name: 영웅의 선글라스
+"23691":
+  file: materials.yml
+  name: Charming Babushka Doll
+"23695":
+  file: armors.yml
+  name: Indonesia Cloak 1
+"23696":
+  file: armors.yml
+  name: Indonesia Cloak 2
+"23697":
+  file: weapons.yml
+  name: Old Guardian's Sword
+"23698":
+  file: weapons.yml
+  name: Old Guardian's Two-Handed Sword
+"23699":
+  file: weapons.yml
+  name: Old Guardian's Axe
+"23700":
+  file: weapons.yml
+  name: Old Guardian's Two-Handed Axe
+"23701":
+  file: weapons.yml
+  name: Old Guardian's Knuckle
+"23702":
+  file: weapons.yml
+  name: Old Guardian's Stick
+"23703":
+  file: weapons.yml
+  name: Old Guardian's Wand
+"23704":
+  file: weapons.yml
+  name: Old Guardian's Staff
+"23705":
+  file: weapons.yml
+  name: Old Guardian's Bow
+"23706":
+  file: weapons.yml
+  name: Old Guardian's Yoyo
+"23708":
+  file: misc.yml
+  name: Server Transfer Scroll
+"23714":
+  file: armors.yml
+  name: "[귀속] 패션 종결자의 선글라스(레드)"
+"23721":
+  file: misc.yml
+  name: 카멜레온 비행체
+"23726":
+  file: consumables.yml
+  name: 대만 5주년 기념 폭죽
+"23730":
+  file: armors.yml
+  name: II_ARM_M_MOMGWARRIORCLOTH
+"23731":
+  file: armors.yml
+  name: II_ARM_M_MOMGWARRIORGLOVE
+"23732":
+  file: armors.yml
+  name: II_ARM_M_MOMGWARRIORSHOES
+"23733":
+  file: armors.yml
+  name: II_ARM_M_MOMGWARRIORHAT
+"23734":
+  file: armors.yml
+  name: II_ARM_F_FOMGWARRIORCLOTH
+"23735":
+  file: armors.yml
+  name: II_ARM_F_FOMGWARRIORGLOVE
+"23736":
+  file: armors.yml
+  name: II_ARM_F_FOMGWARRIORSHOES
+"23737":
+  file: armors.yml
+  name: II_ARM_F_FOMGWARRIORHAT
+"23740":
+  file: armors.yml
+  name: II_ARM_M_MFWCLOOKCLOTH
+"23741":
+  file: armors.yml
+  name: II_ARM_M_MFWCLOOKGLOVE
+"23742":
+  file: armors.yml
+  name: II_ARM_M_MFWCLOOKSHOES
+"23743":
+  file: armors.yml
+  name: II_ARM_M_MFWCLOOKHAT
+"23744":
+  file: armors.yml
+  name: II_ARM_F_FFWCLOOKCLOTH
+"23745":
+  file: armors.yml
+  name: II_ARM_F_FFWCLOOKGLOVE
+"23746":
+  file: armors.yml
+  name: II_ARM_F_FFWCLOOKSHOES
+"23747":
+  file: armors.yml
+  name: II_ARM_F_FFWCLOOKHAT
+"23748":
+  file: misc.yml
+  name: Merchant's Permit (7 Days)
+"23749":
+  file: misc.yml
+  name: Merchant's Permit (15 Days)
+"23756":
+  file: armors.yml
+  name: FWC Regional Winner Suit(M)
+"23757":
+  file: armors.yml
+  name: FWC Regional Winner Glove(M)
+"23758":
+  file: armors.yml
+  name: FWC Regional Winner Shoe(M)
+"23759":
+  file: armors.yml
+  name: FWC Regional Winner Hat(M)
+"23760":
+  file: armors.yml
+  name: FWC Regional Winner Suit(F)
+"23761":
+  file: armors.yml
+  name: FWC Regional Winner Glove(F)
+"23762":
+  file: armors.yml
+  name: FWC Regional Winner Shoe(F)
+"23763":
+  file: armors.yml
+  name: FWC Regional Winner Hat(F)
+"23764":
+  file: armors.yml
+  name: Mizu Yukata 2011 (M)
+"23765":
+  file: armors.yml
+  name: Mizu Yukata Hands 2011 (M)
+"23766":
+  file: armors.yml
+  name: Mizu Yukata Hat 2011 (M)
+"23767":
+  file: armors.yml
+  name: Mizu Yukata 2011 (F)
+"23768":
+  file: armors.yml
+  name: Mizu Yukata Hands 2011 (F)
+"23769":
+  file: armors.yml
+  name: Mizu Yukata Hat 2011 (F)
+"23772":
+  file: misc.yml
+  name: Eldin's Jar (7 Days)
+"23773":
+  file: misc.yml
+  name: Eldin's Magical Scissors
+"23774":
+  file: misc.yml
+  name: Eldin's Candy
+"23775":
+  file: misc.yml
+  name: II_CHR_POT_SAV_ELLDIN
+"23776":
+  file: armors.yml
+  name: II_ARM_M_MFWCFINAL3CLOTH
+"23777":
+  file: armors.yml
+  name: II_ARM_M_MFWCFINAL3GLOVE
+"23778":
+  file: armors.yml
+  name: II_ARM_M_MFWCFINAL3SHOES
+"23779":
+  file: armors.yml
+  name: II_ARM_M_MFWCFINAL3HAT
+"23780":
+  file: armors.yml
+  name: II_ARM_F_FFWCFINAL3CLOTH
+"23781":
+  file: armors.yml
+  name: II_ARM_F_FFWCFINAL3GLOVE
+"23782":
+  file: armors.yml
+  name: II_ARM_F_FFWCFINAL3SHOES
+"23783":
+  file: armors.yml
+  name: II_ARM_F_FFWCFINAL3HAT
+"23784":
+  file: armors.yml
+  name: FWC 2011 Silver Suit (M)
+"23785":
+  file: armors.yml
+  name: FWC 2011 Silver Gloves (M)
+"23786":
+  file: armors.yml
+  name: FWC 2011 Silver Boots (M)
+"23787":
+  file: armors.yml
+  name: FWC 2011 Silver Crown (M)
+"23788":
+  file: armors.yml
+  name: FWC 2011 Silver Suit (F)
+"23789":
+  file: armors.yml
+  name: FWC 2011 Silver Gloves (F)
+"23790":
+  file: armors.yml
+  name: FWC 2011 Silver Boots (F)
+"23791":
+  file: armors.yml
+  name: FWC 2011 Silver Crown (F)
+"23792":
+  file: armors.yml
+  name: FWC 2011 Golden Suit (M)
+"23793":
+  file: armors.yml
+  name: FWC 2011 Golden Gloves (M)
+"23794":
+  file: armors.yml
+  name: FWC 2011 Golden Boots (M)
+"23795":
+  file: armors.yml
+  name: FWC 2011 Golden Crown (M)
+"23796":
+  file: armors.yml
+  name: FWC 2011 Golden Suit (F)
+"23797":
+  file: armors.yml
+  name: FWC 2011 Golden Gloves (F)
+"23798":
+  file: armors.yml
+  name: FWC 2011 Golden Boots (F)
+"23799":
+  file: armors.yml
+  name: FWC 2011 Golden Crown (F)
+"23800":
+  file: armors.yml
+  name: Fire Dragon Face Mask
+"23801":
+  file: armors.yml
+  name: II_ARM_S_CLO_CLO_FWCFINAL3
+"23802":
+  file: armors.yml
+  name: FWC 2011 Silver Cloak
+"23803":
+  file: armors.yml
+  name: FWC 2011 Champions Cloak
+"23804":
+  file: misc.yml
+  name: Sweet Dragonfly Wings
+"23805":
+  file: weapons.yml
+  name: Gladiator's Bronze 1H Sword
+"23806":
+  file: weapons.yml
+  name: Gladiator's Bronze 2H Sword
+"23807":
+  file: weapons.yml
+  name: Gladiator's Bronze 1H Axe
+"23808":
+  file: weapons.yml
+  name: Gladiator's Bronze 2H Axe
+"23809":
+  file: weapons.yml
+  name: Gladiator's Bronze Knuckle
+"23810":
+  file: weapons.yml
+  name: Gladiator's Bronze Stick
+"23811":
+  file: weapons.yml
+  name: Gladiator's Bronze Wand
+"23812":
+  file: weapons.yml
+  name: Gladiator's Bronze Staff
+"23813":
+  file: weapons.yml
+  name: Gladiator's Bronze Bow
+"23814":
+  file: weapons.yml
+  name: Gladiator's Bronze Yoyo
+"23815":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze 1H Sword
+"23816":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze 2H Sword
+"23817":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze 1H Axe
+"23818":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze 2H Axe
+"23819":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze Knuckle
+"23820":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze Stick
+"23821":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze Wand
+"23822":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze Staff
+"23823":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze Bow
+"23824":
+  file: weapons.yml
+  name: Ultimate Gladiator's Bronze Yoyo
+"23825":
+  file: weapons.yml
+  name: Gladiator's Silver 1H Sword
+"23826":
+  file: weapons.yml
+  name: Gladiator's Silver 2H Sword
+"23827":
+  file: weapons.yml
+  name: Gladiator's Silver 1H Axe
+"23828":
+  file: weapons.yml
+  name: Gladiator's Silver 2H Axe
+"23829":
+  file: weapons.yml
+  name: Gladiator's Silver Knuckle
+"23830":
+  file: weapons.yml
+  name: Gladiator's Silver Stick
+"23831":
+  file: weapons.yml
+  name: Gladiator's Silver Wand
+"23832":
+  file: weapons.yml
+  name: Gladiator's Silver Staff
+"23833":
+  file: weapons.yml
+  name: Gladiator's Silver Bow
+"23834":
+  file: weapons.yml
+  name: Gladiator's Silver Yoyo
+"23835":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver 1H Sword
+"23836":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver 2H Sword
+"23837":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver 1H Axe
+"23838":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver 2H Axe
+"23839":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver Knuckle
+"23840":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver Stick
+"23841":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver Wand
+"23842":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver Staff
+"23843":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver Bow
+"23844":
+  file: weapons.yml
+  name: Ultimate Gladiator's Silver Yoyo
+"23845":
+  file: weapons.yml
+  name: Gladiator's Gold 1H Sword
+"23846":
+  file: weapons.yml
+  name: Gladiator's Gold 2H Sword
+"23847":
+  file: weapons.yml
+  name: Gladiator's Gold 1H Axe
+"23848":
+  file: weapons.yml
+  name: Gladiator's Gold 2H Axe
+"23849":
+  file: weapons.yml
+  name: Gladiator's Gold Knuckle
+"23850":
+  file: weapons.yml
+  name: Gladiator's Gold Stick
+"23851":
+  file: weapons.yml
+  name: Gladiator's Gold Wand
+"23852":
+  file: weapons.yml
+  name: Gladiator's Gold Staff
+"23853":
+  file: weapons.yml
+  name: Gladiator's Gold Bow
+"23854":
+  file: weapons.yml
+  name: Gladiator's Gold Yoyo
+"23855":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold 1H Sword
+"23856":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold 2H Sword
+"23857":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold 1H Axe
+"23858":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold 2H Axe
+"23859":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold Knuckle
+"23860":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold Stick
+"23861":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold Wand
+"23862":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold Staff
+"23863":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold Bow
+"23864":
+  file: weapons.yml
+  name: Ultimate Gladiator's Gold Yoyo
+"23865":
+  file: armors.yml
+  name: II_ARM_F_SEAKINGCROWN
+"23866":
+  file: armors.yml
+  name: II_ARM_M_SEAKINGCROWN
+"23867":
+  file: armors.yml
+  name: Traditional Taiwan Outfit (M)
+"23868":
+  file: armors.yml
+  name: Traditional Taiwan Gloves (M)
+"23869":
+  file: armors.yml
+  name: Traditional Taiwan Shoes (M)
+"23870":
+  file: armors.yml
+  name: Traditional Taiwan Hat (M)
+"23871":
+  file: armors.yml
+  name: Traditional Taiwan Outfit (F)
+"23872":
+  file: armors.yml
+  name: Traditional Taiwan Gloves (F)
+"23873":
+  file: armors.yml
+  name: Traditional Taiwan Shoes (F)
+"23874":
+  file: armors.yml
+  name: Traditional Taiwan Hat (F)
+"23876":
+  file: armors.yml
+  name: Wind Dragon Face Mask
+"23877":
+  file: armors.yml
+  name: Earth Dragon Face Mask
+"23881":
+  file: armors.yml
+  name: FWC Regional Winner Cloak
+"23885":
+  file: misc.yml
+  name: Rune of Weapon Protection (2H Weapons)
+"23886":
+  file: misc.yml
+  name: Scroll of Past Self (60)
+"23887":
+  file: misc.yml
+  name: Scroll of Past Self (75)
+"23888":
+  file: misc.yml
+  name: Scroll of Past Self (80)
+"23889":
+  file: misc.yml
+  name: Scroll of Past Self (90)
+"23890":
+  file: misc.yml
+  name: Scroll of Past Self (105)
+"23891":
+  file: misc.yml
+  name: Scroll of Past Self (120)
+"23892":
+  file: misc.yml
+  name: Scroll of Past Self (60 M)
+"23893":
+  file: misc.yml
+  name: Scroll of Past Self (75 M)
+"23894":
+  file: misc.yml
+  name: Scroll of Past Self (80 M)
+"23895":
+  file: misc.yml
+  name: Scroll of Past Self (90 M)
+"23896":
+  file: misc.yml
+  name: Scroll of Past Self (105 M)
+"23897":
+  file: misc.yml
+  name: Scroll of Past Self (120 M)
+"23898":
+  file: misc.yml
+  name: Scroll of Past Self (130 H)
+"23907":
+  file: misc.yml
+  name: Scroll of Amplification R (1 Day)
+"23908":
+  file: misc.yml
+  name: Scroll of Amplification Q (1 Day)
+"23909":
+  file: misc.yml
+  name: Refresher Hold (Event)
+"23910":
+  file: misc.yml
+  name: Vital Drink X (Event)
+"23911":
+  file: misc.yml
+  name: Eldin's Royal Jelly
+"23912":
+  file: misc.yml
+  name: Eldin's Chocolate
+"23913":
+  file: questitems.yml
+  name: Present Box
+"23915":
+  file: misc.yml
+  name: Revert Transmutation Scroll
+"23916":
+  file: misc.yml
+  name: Eldin's Jar (1 Days)
+"23917":
+  file: misc.yml
+  name: Eldin's Jar (15 Days)
+"23918":
+  file: misc.yml
+  name: Eldin's Jar (30 Days)
+"23919":
+  file: materials.yml
+  name: Mysterious Ring
+"23920":
+  file: materials.yml
+  name: Rudolph Ring
+"23921":
+  file: materials.yml
+  name: Rudolph Necklace
+"23922":
+  file: materials.yml
+  name: Rudolph Earing
+"23925":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_LOVEBRIQUETTE
+"23929":
+  file: armors.yml
+  name: Helm of Kalgas (M)
+"23930":
+  file: armors.yml
+  name: Helm of Kalgas (F)
+"23931":
+  file: armors.yml
+  name: Helm of Ankou (M)
+"23932":
+  file: armors.yml
+  name: Helm of Ankou (F)
+"23933":
+  file: armors.yml
+  name: Head of Drakul the Diabolic (M)
+"23934":
+  file: armors.yml
+  name: Head of Drakul the Diabolic (F)
+"23935":
+  file: armors.yml
+  name: Keokuk's Headdress (M)
+"23936":
+  file: armors.yml
+  name: Keokuk's Headdress (F)
+"23937":
+  file: armors.yml
+  name: Helm of Entaness (M)
+"23938":
+  file: armors.yml
+  name: Helm of Entaness (F)
+"23939":
+  file: armors.yml
+  name: Terror King Chiton's Head (M)
+"23940":
+  file: armors.yml
+  name: Terror King Chiton's Head (F)
+"23941":
+  file: armors.yml
+  name: Helm of the Silverwing Duchess (M)
+"23942":
+  file: armors.yml
+  name: Helm of the Silverwing Duchess (F)
+"23943":
+  file: armors.yml
+  name: Khan's Mask (M)
+"23944":
+  file: armors.yml
+  name: Khan's Mask (F)
+"23945":
+  file: armors.yml
+  name: The Head of Deathbringer Kheldor (M)
+"23946":
+  file: armors.yml
+  name: The Head of Deathbringer Kheldor (F)
+"23947":
+  file: armors.yml
+  name: Clockworks Helm (M)
+"23948":
+  file: armors.yml
+  name: Clockworks Helm (F)
+"23949":
+  file: armors.yml
+  name: gPotato Mask (M)
+"23950":
+  file: armors.yml
+  name: gPotato Mask (F)
+"23951":
+  file: armors.yml
+  name: Head of the Basilisk (M)
+"23952":
+  file: armors.yml
+  name: Head of the Basilisk (F)
+"23953":
+  file: armors.yml
+  name: "[General] Razgul's Head (M)"
+"23954":
+  file: armors.yml
+  name: "[General] Razgul's Head (F)"
+"23955":
+  file: armors.yml
+  name: Guan Yu's Shell
+"23957":
+  file: misc.yml
+  name: Artifact Fragment - Nosferatu
+"23958":
+  file: misc.yml
+  name: Artifact Fragment - Sufference
+"23959":
+  file: misc.yml
+  name: Artifact Fragment - Vanguard
+"23960":
+  file: misc.yml
+  name: Artifact Fragment - Vindication
+"23961":
+  file: misc.yml
+  name: Artifact Fragment - Luminescense
+"23962":
+  file: misc.yml
+  name: Artifact Fragment - Mistral
+"23963":
+  file: misc.yml
+  name: Artifact Fragment - Decimation
+"23964":
+  file: misc.yml
+  name: Artifact Fragment - Malevolence
+"23965":
+  file: misc.yml
+  name: Artifact Fragment - Vigilence
+"23966":
+  file: misc.yml
+  name: Artifact Fragment - Belligerence
+"23967":
+  file: misc.yml
+  name: Artifact Fragment - Clarity
+"23968":
+  file: misc.yml
+  name: Artifact Fragment - Brawn
+"23969":
+  file: misc.yml
+  name: Artifact Fragment - Expertise
+"23970":
+  file: misc.yml
+  name: Artifact Fragment - Preception
+"23976":
+  file: consumables.yml
+  name: II_SYS_SYS_SCR_CARD_2011_NOTTRADE
+"23977":
+  file: consumables.yml
+  name: II_SYS_SYS_SCR_CARD_2011FWC_NOTTRADE
+"23978":
+  file: consumables.yml
+  name: II_SYS_SYS_EVE_VICTORYPRIDE01_NOTTRADE
+"23979":
+  file: materials.yml
+  name: II_PET_KIMPD_NOTTRADE
+"23980":
+  file: misc.yml
+  name: II_CHR_POT_SAV_LOCKELLDIN7
+"23981":
+  file: misc.yml
+  name: II_CHR_POT_SAV_LOCKELLDIN15
+"23982":
+  file: misc.yml
+  name: II_CHR_POT_SAV_LOCKELLDIN30
+"23983":
+  file: armors.yml
+  name: Vengeful Dragon Crown (M)
+"23984":
+  file: armors.yml
+  name: Vengeful Dragon Boots (M)
+"23985":
+  file: armors.yml
+  name: Vengeful Dragon Gloves (M)
+"23986":
+  file: armors.yml
+  name: Vengeful Dragon Suit (M)
+"23987":
+  file: armors.yml
+  name: Vengeful Dragon Crown (F)
+"23988":
+  file: armors.yml
+  name: Vengeful Dragon Boots (F)
+"23989":
+  file: armors.yml
+  name: Vengeful Dragon Gloves (F)
+"23990":
+  file: armors.yml
+  name: Vengeful Dragon Suit (F)
+"23991":
+  file: armors.yml
+  name: Venerable Dragon Crown (M)
+"23992":
+  file: armors.yml
+  name: Venerable Dragon Boots (M)
+"23993":
+  file: armors.yml
+  name: Venerable Dragon Gloves (M)
+"23994":
+  file: armors.yml
+  name: Venerable Dragon Suit (M)
+"23995":
+  file: armors.yml
+  name: Venerable Dragon Crown (F)
+"23996":
+  file: armors.yml
+  name: Venerable Dragon Boots (F)
+"23997":
+  file: armors.yml
+  name: Venerable Dragon Gloves (F)
+"23998":
+  file: armors.yml
+  name: Venerable Dragon Suit (F)
+"23999":
+  file: armors.yml
+  name: Wise Dragon Crown (M)
+"24000":
+  file: armors.yml
+  name: Wise Dragon Boots (M)
+"24001":
+  file: armors.yml
+  name: Wise Dragon Gloves (M)
+"24002":
+  file: armors.yml
+  name: Wise Dragon Suit (M)
+"24003":
+  file: armors.yml
+  name: Wise Dragon Crown (F)
+"24004":
+  file: armors.yml
+  name: Wise Dragon Boots (F)
+"24005":
+  file: armors.yml
+  name: Wise Dragon Gloves (F)
+"24006":
+  file: armors.yml
+  name: Wise Dragon Suit (F)
+"24037":
+  file: armors.yml
+  name: Vengeful Dragon Mask (M)
+"24038":
+  file: armors.yml
+  name: Vengeful Dragon Mask (F)
+"24039":
+  file: armors.yml
+  name: Venerable Dragon Mask (M)
+"24040":
+  file: armors.yml
+  name: Venerable Dragon Mask (F)
+"24041":
+  file: armors.yml
+  name: Wise Dragon Mask (M)
+"24042":
+  file: armors.yml
+  name: Wise Dragon Mask (F)
+"24043":
+  file: armors.yml
+  name: Vengeful Dragon Cloak (M)
+"24044":
+  file: armors.yml
+  name: Vengeful Dragon Cloak (F)
+"24045":
+  file: armors.yml
+  name: Venerable Dragon Cloak (M)
+"24046":
+  file: armors.yml
+  name: Venerable Dragon Cloak (F)
+"24047":
+  file: armors.yml
+  name: Wise Dragon Cloak (M)
+"24048":
+  file: armors.yml
+  name: Wise Dragon Cloak (F)
+"24061":
+  file: weapons.yml
+  name: II_TESTITEM1
+"24062":
+  file: weapons.yml
+  name: II_TESTITEM2
+"24063":
+  file: weapons.yml
+  name: II_TESTITEM3
+"24064":
+  file: weapons.yml
+  name: II_TESTITEM4
+"24065":
+  file: weapons.yml
+  name: II_TESTITEM5
+"24079":
+  file: misc.yml
+  name: Dark Traseia (7 Days)
+"24080":
+  file: armors.yml
+  name: Shinigami Horns (M)
+"24081":
+  file: armors.yml
+  name: Shinigami Suit (M)
+"24082":
+  file: armors.yml
+  name: Shinigami Gloves (M)
+"24083":
+  file: armors.yml
+  name: Shinigami Shoes (M)
+"24084":
+  file: armors.yml
+  name: Shinigami Horns (F)
+"24085":
+  file: armors.yml
+  name: Shinigami Suit (F)
+"24086":
+  file: armors.yml
+  name: Shinigami Gloves (F)
+"24087":
+  file: armors.yml
+  name: Shinigami Shoes (F)
+"24097":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_FURYPOTION
+"24098":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_POWERFURYPOTION
+"24099":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_RAGEOFWINDELEMENTAL
+"24100":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_RAGEOFFIREELEMENTAL
+"24101":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_RAGEOFWATERELEMENTAL
+"24102":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_RAGEOFELECTRICELEMENTAL
+"24103":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_RAGEOFEARTHELEMENTAL
+"24121":
+  file: misc.yml
+  name: 1 Day Dark Traseia Ticket
+"24122":
+  file: misc.yml
+  name: Blessing of Madrigal
+"24123":
+  file: misc.yml
+  name: Scroll of Awakening Augmentation
+"24124":
+  file: misc.yml
+  name: Scroll of Server Transfer
+"24125":
+  file: misc.yml
+  name: 1 Day Dark Traseia Ticket (Event)
+"24126":
+  file: misc.yml
+  name: 7 Day Dark Traseia Ticket (Event)
+"24127":
+  file: misc.yml
+  name: 15 Day Dark Traseia Ticket (Event)
+"24134":
+  file: misc.yml
+  name: Scroll of Party Growth
+"24135":
+  file: misc.yml
+  name: Scroll of Party Amplification (7 Days)
+"24136":
+  file: misc.yml
+  name: Scroll of Party Amplification (15 Days)
+"24137":
+  file: armors.yml
+  name: Wind Dragon Face Mask (M)
+"24138":
+  file: armors.yml
+  name: Earth Dragon Face Mask (M)
+"24139":
+  file: armors.yml
+  name: Wind Dragon Face Mask (F)
+"24140":
+  file: armors.yml
+  name: Earth Dragon Face Mask (F)
+"24141":
+  file: questitems.yml
+  name: II_SYS_SYS_QUE_2012CHILDRENWEEK_QUEST01
+"24143":
+  file: materials.yml
+  name: II_PET_BABYCAT
+"24144":
+  file: materials.yml
+  name: Flyff Piece (F)
+"24145":
+  file: materials.yml
+  name: Flyff Piece (L)
+"24146":
+  file: materials.yml
+  name: Flyff Piece (Y)
+"24147":
+  file: materials.yml
+  name: Flyff Piece (O)
+"24148":
+  file: materials.yml
+  name: Flyff Piece (R)
+"24149":
+  file: materials.yml
+  name: Flyff Piece (U)
+"24150":
+  file: materials.yml
+  name: Flyff Piece (N)
+"24151":
+  file: materials.yml
+  name: Flyff Coupon (FLY)
+"24152":
+  file: materials.yml
+  name: Flyff Coupon (FOR)
+"24153":
+  file: materials.yml
+  name: Flyff Coupon (FUN)
+"24154":
+  file: misc.yml
+  name: II_SYS_SYS_SCR_RANDOMOPTIONRETRY_01
+"24155":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_MSEAKINGCROWN_1_02
+"24156":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_MSEAKINGCROWN_2_02
+"24157":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_FSEAKINGCROWN_1_02
+"24158":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_FSEAKINGCROWN_2_02
+"24159":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_MSEAKINGCROWN_01
+"24160":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_MSEAKINGCROWN_02
+"24161":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_FSEAKINGCROWN_01
+"24162":
+  file: armors.yml
+  name: II_ARM_S_CLO_MAS_FSEAKINGCROWN_02
+"24167":
+  file: armors.yml
+  name: Garb of the Aibatt (M)
+"24168":
+  file: armors.yml
+  name: Gloves of the Aibatt (M)
+"24169":
+  file: armors.yml
+  name: Boots of the Aibatt (M)
+"24170":
+  file: armors.yml
+  name: Garb of the Aibatt (F)
+"24171":
+  file: armors.yml
+  name: Gloves of the Aibatt (F)
+"24172":
+  file: armors.yml
+  name: Boots of the Aibatt (F)
+"24173":
+  file: misc.yml
+  name: Scroll of PK Acquittal Lv.1
+"24174":
+  file: misc.yml
+  name: Scroll of PK Acquittal Lv.2
+"24175":
+  file: misc.yml
+  name: Scroll of PK Acquittal Lv.3
+"24176":
+  file: misc.yml
+  name: Scroll of Atonement Lv.1
+"24177":
+  file: misc.yml
+  name: Scroll of Atonement Lv.2
+"24178":
+  file: misc.yml
+  name: Scroll of Atonement Lv.3
+"24179":
+  file: misc.yml
+  name: Scroll of Atonement Lv.4
+"24180":
+  file: misc.yml
+  name: Scroll of Privileged PK Lv.1
+"24181":
+  file: misc.yml
+  name: Scroll of Privileged PK Lv.2
+"24182":
+  file: materials.yml
+  name: Fire Card (S)
+"24183":
+  file: materials.yml
+  name: Water Card (S)
+"24184":
+  file: materials.yml
+  name: Wind Card (S)
+"24185":
+  file: materials.yml
+  name: Electric Card (S)
+"24186":
+  file: materials.yml
+  name: Land Card (S)
+"24187":
+  file: materials.yml
+  name: Volcano Card(10%)
+"24188":
+  file: materials.yml
+  name: Ocean Card(10%)
+"24189":
+  file: materials.yml
+  name: Vacuum Card(10%)
+"24190":
+  file: materials.yml
+  name: Lightening Card(10%)
+"24191":
+  file: materials.yml
+  name: Earthquake Card(10%)
+"24192":
+  file: materials.yml
+  name: Little Muran
+"24193":
+  file: misc.yml
+  name: Gold Aura (7 Days)
+"24194":
+  file: misc.yml
+  name: Scarlet Aura (7 Days)
+"24195":
+  file: misc.yml
+  name: Black Aura (7 Days)
+"24196":
+  file: misc.yml
+  name: Purple Aura (7 Days)
+"24197":
+  file: misc.yml
+  name: Green Aura(7days)
+"24198":
+  file: misc.yml
+  name: White Aura(7days)
+"24199":
+  file: misc.yml
+  name: Golden Aura(15days)
+"24200":
+  file: misc.yml
+  name: Scarlet Aura(15days)
+"24201":
+  file: misc.yml
+  name: Black Aura(15days)
+"24202":
+  file: misc.yml
+  name: Purple Aura(15days)
+"24203":
+  file: misc.yml
+  name: Green Aura(15days)
+"24204":
+  file: misc.yml
+  name: White Aura(15days)
+"24211":
+  file: misc.yml
+  name: Golden Glory wings
+"24212":
+  file: misc.yml
+  name: Silver Glory Wings
+"24213":
+  file: misc.yml
+  name: Bronze Glory Wings
+"24216":
+  file: questitems.yml
+  name: II_SYS_SYS_MUSICFESTIVALDROPITEM_YELLOW
+"24217":
+  file: questitems.yml
+  name: II_SYS_SYS_MUSICFESTIVALDROPITEM_RED
+"24218":
+  file: questitems.yml
+  name: II_SYS_SYS_MUSICFESTIVALDROPITEM_BLUE
+"24219":
+  file: questitems.yml
+  name: II_SYS_SYS_MUSICFESTIVALDROPITEM_GREEN
+"24220":
+  file: misc.yml
+  name: II_SYS_SYS_MUSICFESTIVALREWARD_GUITAR
+"24223":
+  file: questitems.yml
+  name: Flami's Guitar
+"24236":
+  file: armors.yml
+  name: Blessed Cloak of the Light
+"24239":
+  file: misc.yml
+  name: Mystic Broom of the Wind
+"26100":
+  file: misc.yml
+  name: Fplanet Board
 "26104":
   file: armors.yml
   name: Cats Hat+ (M)
@@ -10783,6 +15214,48 @@
 "26115":
   file: consumables.yml
   name: Scroll of Combat 50
+"26203":
+  file: misc.yml
+  name: Scroll of Smelting (High)
+"26205":
+  file: misc.yml
+  name: Scroll of Amplification ES20
+"26206":
+  file: misc.yml
+  name: Scroll of Amplification ES1
+"26207":
+  file: misc.yml
+  name: Scroll of Amplification ES2
+"26208":
+  file: misc.yml
+  name: Scroll of Amplification ES40
+"26209":
+  file: misc.yml
+  name: Scroll of Amplification ES1
+"26210":
+  file: misc.yml
+  name: Scroll of Amplification ES2
+"26211":
+  file: misc.yml
+  name: Scroll of Amplification ES60
+"26212":
+  file: misc.yml
+  name: Scroll of Amplification ES1
+"26213":
+  file: misc.yml
+  name: Scroll of Amplification ES2
+"26214":
+  file: misc.yml
+  name: Scroll of Amplification ES80
+"26215":
+  file: misc.yml
+  name: Scroll of Amplification ES1
+"26216":
+  file: misc.yml
+  name: Scroll of Amplification ES2
+"26219":
+  file: misc.yml
+  name: Scroll of Amplification ES120
 "26220":
   file: consumables.yml
   name: Potion of Recklessness
@@ -10858,6 +15331,9 @@
 "26247":
   file: armors.yml
   name: Shield of Ivillnes
+"26314":
+  file: misc.yml
+  name: Ex Scroll of Amplification ES (A)
 "26322":
   file: materials.yml
   name: White Cake
@@ -10867,6 +15343,9 @@
 "26324":
   file: materials.yml
   name: Pink Cake
+"26331":
+  file: misc.yml
+  name: Scroll of Amplification ES(Event)
 "26334":
   file: materials.yml
   name: 小重量杯
@@ -11086,9 +15565,24 @@
 "26457":
   file: materials.yml
   name: Mysterious Pill
+"26458":
+  file: misc.yml
+  name: Scroll of Reduction B
+"26459":
+  file: misc.yml
+  name: Scroll of Reduction A
 "26460":
   file: materials.yml
   name: Red Chips
+"26461":
+  file: misc.yml
+  name: Scroll of Awakening
+"26462":
+  file: misc.yml
+  name: Scroll of Reversion
+"26463":
+  file: misc.yml
+  name: Blessing of the Goddess
 "26464":
   file: materials.yml
   name: Vigor Ring
@@ -11146,6 +15640,9 @@
 "26512":
   file: consumables.yml
   name: Orange Cotton Candy
+"26514":
+  file: misc.yml
+  name: Magic Broom for Beginners (Event)
 "26525":
   file: materials.yml
   name: Red Crystal
@@ -11158,9 +15655,24 @@
 "26528":
   file: materials.yml
   name: Blue Crystal
+"26529":
+  file: misc.yml
+  name: 7 Day Azria Ticket
+"26530":
+  file: misc.yml
+  name: 15 Day Azria Ticket
 "26531":
   file: consumables.yml
   name: Feed Bag (6 hrs)
+"26532":
+  file: misc.yml
+  name: Flyff Board
+"26533":
+  file: misc.yml
+  name: Angel Board
+"26534":
+  file: misc.yml
+  name: Boddy Board
 "26535":
   file: armors.yml
   name: Cloak of Bravery
@@ -11209,15 +15721,48 @@
 "26553":
   file: consumables.yml
   name: Orange Cotton Candy (Event)
+"26557":
+  file: misc.yml
+  name: 1 Day Full Shout
+"26558":
+  file: misc.yml
+  name: 1 Day Azria Ticket
+"26559":
+  file: misc.yml
+  name: 1 Day Common Bank
 "26560":
   file: consumables.yml
   name: Copper Battery (1 day)
+"26563":
+  file: misc.yml
+  name: Scroll of Reversion (Event)
+"26564":
+  file: misc.yml
+  name: Blessing of Goddess (Event)
 "26565":
   file: materials.yml
   name: Collector (14 days)
 "26573":
   file: consumables.yml
   name: Feed for (S)class pet
+"26588":
+  file: misc.yml
+  name: Clock Bike(Orange)
+"26589":
+  file: misc.yml
+  name: Clock Bike(White)
+"26590":
+  file: misc.yml
+  name: Clock Bike(Violet)
+"26591":
+  file: misc.yml
+  name: Meteo Bike(Yellow)
+"26592":
+  file: misc.yml
+  name: Meteo Bike(Red)
+"26593":
+  file: misc.yml
+  name: Meteo Bike(Green)
 "26594":
   file: materials.yml
   name: Fire Card (D)
@@ -11278,6 +15823,9 @@
 "26613":
   file: materials.yml
   name: Land Card (A)
+"26614":
+  file: misc.yml
+  name: Scroll of Pet Blessing (Pick-Up Pets)
 "26615":
   file: consumables.yml
   name: Cooked Corn
@@ -11332,6 +15880,138 @@
 "26668":
   file: consumables.yml
   name: FUN
+"26674":
+  file: misc.yml
+  name: Single Bed (Yellow)
+"26675":
+  file: misc.yml
+  name: Long Chair (Yellow)
+"26676":
+  file: misc.yml
+  name: Wardrobe (Yellow)
+"26677":
+  file: misc.yml
+  name: Dresser with mirror (Yellow)
+"26678":
+  file: misc.yml
+  name: Table (Yellow)
+"26679":
+  file: misc.yml
+  name: Drawer (Yellow)
+"26681":
+  file: misc.yml
+  name: 1 Day Coral Island Ticket
+"26682":
+  file: misc.yml
+  name: 15 Day Coral Island Ticket
+"26683":
+  file: misc.yml
+  name: Single Bed (Blue)
+"26684":
+  file: misc.yml
+  name: Long Chair (Blue)
+"26685":
+  file: misc.yml
+  name: Wardrobe (Blue)
+"26686":
+  file: misc.yml
+  name: Dresser with mirror (Blue)
+"26687":
+  file: misc.yml
+  name: Table (Blue)
+"26688":
+  file: misc.yml
+  name: Drawer (Blue)
+"26689":
+  file: misc.yml
+  name: Single Bed (Red)
+"26690":
+  file: misc.yml
+  name: Long Chair (Red)
+"26691":
+  file: misc.yml
+  name: Wardrobe (Red)
+"26692":
+  file: misc.yml
+  name: Dresser with mirror (Red)
+"26693":
+  file: misc.yml
+  name: Table (Red)
+"26694":
+  file: misc.yml
+  name: Drawer (Red)
+"26695":
+  file: misc.yml
+  name: Modern Style Bed
+"26696":
+  file: misc.yml
+  name: Modern Drawer
+"26697":
+  file: misc.yml
+  name: Modern Dresser
+"26698":
+  file: misc.yml
+  name: Modern Sofa
+"26699":
+  file: misc.yml
+  name: Modern Table
+"26700":
+  file: misc.yml
+  name: Modern Wardrobe
+"26701":
+  file: misc.yml
+  name: Single Bed (Green)
+"26702":
+  file: misc.yml
+  name: Drawer (Green)
+"26703":
+  file: misc.yml
+  name: Dresser with mirror (Green)
+"26704":
+  file: misc.yml
+  name: Long Chair (Green)
+"26705":
+  file: misc.yml
+  name: Table (Green)
+"26706":
+  file: misc.yml
+  name: Wardrobe (Green)
+"26707":
+  file: misc.yml
+  name: Natural Bed (7 days)
+"26708":
+  file: misc.yml
+  name: Natural Shelf (7 days)
+"26709":
+  file: misc.yml
+  name: Natural Mirror (7 days)
+"26710":
+  file: misc.yml
+  name: Natural Long Chair (7 days)
+"26711":
+  file: misc.yml
+  name: Natural Table (7 days)
+"26712":
+  file: misc.yml
+  name: Natural Wardrobe (7 days)
+"26713":
+  file: misc.yml
+  name: Lovely Bed (7 days)
+"26714":
+  file: misc.yml
+  name: Lovely Storage (7 days)
+"26715":
+  file: misc.yml
+  name: Lovely Mirror (7days)
+"26716":
+  file: misc.yml
+  name: Lovely Sofa (7 days)
+"26717":
+  file: misc.yml
+  name: Lovely Table (7 days)
+"26718":
+  file: misc.yml
+  name: Lovely Wardrobe (7 days)
 "26720":
   file: consumables.yml
   name: Power of Love
@@ -11353,6 +16033,18 @@
 "26740":
   file: consumables.yml
   name: Miracle of Love
+"26741":
+  file: misc.yml
+  name: Granite Floor (7 days)
+"26742":
+  file: misc.yml
+  name: 바닥02
+"26743":
+  file: misc.yml
+  name: Shabby-Chic Wallpaper (7 days)
+"26744":
+  file: misc.yml
+  name: 벽지02
 "26745":
   file: materials.yml
   name: Snow Flake
@@ -11374,6 +16066,18 @@
 "26759":
   file: materials.yml
   name: Chocolate of Love
+"26761":
+  file: misc.yml
+  name: 1000 퍼니
+"26762":
+  file: misc.yml
+  name: 3000 퍼니
+"26763":
+  file: misc.yml
+  name: 5000 퍼니
+"26764":
+  file: misc.yml
+  name: 10000 퍼니
 "26765":
   file: consumables.yml
   name: Love Chocolate
@@ -11386,9 +16090,66 @@
 "26773":
   file: materials.yml
   name: Peach Punch
+"26788":
+  file: misc.yml
+  name: Flyff Board(Bind)
 "26789":
   file: armors.yml
   name: Cloak of Brave(Bind)
+"26822":
+  file: misc.yml
+  name: Single Bed (Yellow) (7 Days)
+"26823":
+  file: misc.yml
+  name: Long Chair (Yellow) (7 Days)
+"26824":
+  file: misc.yml
+  name: Wardrobe (Yellow) (7 Days)
+"26825":
+  file: misc.yml
+  name: Dresser with mirror (Yellow) (7 Days)
+"26826":
+  file: misc.yml
+  name: Table (Yellow) (7 Days)
+"26827":
+  file: misc.yml
+  name: Drawer (Yellow) (7 Days)
+"26828":
+  file: misc.yml
+  name: Single Bed (Blue) (7 Days)
+"26829":
+  file: misc.yml
+  name: Long Chair (Blue) (7 Days)
+"26830":
+  file: misc.yml
+  name: Wardrobe (Blue) (7 Days)
+"26831":
+  file: misc.yml
+  name: Dresser with mirror (Blue) (7 Days)
+"26832":
+  file: misc.yml
+  name: Table (Blue) (7 Days)
+"26833":
+  file: misc.yml
+  name: Drawer (Blue) (7 Days)
+"26834":
+  file: misc.yml
+  name: Single Bed (Red) (7 Days)
+"26835":
+  file: misc.yml
+  name: Long Chair (Red) (7 Days)
+"26836":
+  file: misc.yml
+  name: Wardrobe (Red) (7 Days)
+"26837":
+  file: misc.yml
+  name: Dresser with mirror (Red) (7 Days)
+"26838":
+  file: misc.yml
+  name: Table (Red) (7 Days)
+"26839":
+  file: misc.yml
+  name: Drawer (Red) (7 Days)
 "26854":
   file: materials.yml
   name: Tiny Tanuki
@@ -11428,6 +16189,66 @@
 "26957":
   file: consumables.yml
   name: Green Root Beer
+"26961":
+  file: misc.yml
+  name: Scroll of Awakening Protection
+"26962":
+  file: misc.yml
+  name: 7 Day Traseia Ticket
+"26963":
+  file: misc.yml
+  name: 15 Day Traseia Ticket
+"26964":
+  file: armors.yml
+  name: Geiler Helmet
+"26965":
+  file: armors.yml
+  name: Geiler Suit
+"26966":
+  file: armors.yml
+  name: Geiler Gauntlet
+"26967":
+  file: armors.yml
+  name: Geiler Boots
+"26968":
+  file: armors.yml
+  name: Gesanan Helmet
+"26969":
+  file: armors.yml
+  name: Gesanan Suit
+"26970":
+  file: armors.yml
+  name: Gesanan Gauntlet
+"26971":
+  file: armors.yml
+  name: Gesanan Boots
+"26972":
+  file: armors.yml
+  name: Havey Boots
+"26973":
+  file: armors.yml
+  name: Havey Helmet
+"26974":
+  file: armors.yml
+  name: Havey Suit
+"26975":
+  file: armors.yml
+  name: Havey Gauntlet
+"26976":
+  file: armors.yml
+  name: Hanel Boots
+"26977":
+  file: armors.yml
+  name: Hanel Helmet
+"26978":
+  file: armors.yml
+  name: Hanel Suit
+"26979":
+  file: armors.yml
+  name: Hanel Gauntlet
+"30011":
+  file: misc.yml
+  name: Font Editor
 "30016":
   file: consumables.yml
   name: Flask of the Tiger
@@ -11443,6 +16264,12 @@
 "30020":
   file: consumables.yml
   name: Flask of Stone
+"30024":
+  file: misc.yml
+  name: Beauty Shop
+"30025":
+  file: misc.yml
+  name: Personal Shop
 "30026":
   file: materials.yml
   name: Secret Medicine 1
@@ -11461,6 +16288,15 @@
 "30038":
   file: consumables.yml
   name: White Angel
+"30053":
+  file: misc.yml
+  name: Catsin (M) Set
+"30054":
+  file: misc.yml
+  name: Catsin (F) Set
+"30057":
+  file: misc.yml
+  name: 1 Day Enhanced Party Skill Range
 "30071":
   file: consumables.yml
   name: Nescafe 3 in1 Potion (Original)
@@ -11530,6 +16366,90 @@
 "30102":
   file: armors.yml
   name: Green Beach Shoes (M)
+"30113":
+  file: misc.yml
+  name: Riding Cloud (Light pink)
+"30114":
+  file: misc.yml
+  name: Riding Cloud (Orange)
+"30115":
+  file: misc.yml
+  name: Scroll of Acquisition (Low)
+"30116":
+  file: misc.yml
+  name: Scroll of acquisition (High)
+"30117":
+  file: misc.yml
+  name: Riding Cloud (Blood Red)
+"30118":
+  file: misc.yml
+  name: Hera Hoverbike S
+"30119":
+  file: misc.yml
+  name: Syila Hoverbike S
+"30120":
+  file: misc.yml
+  name: Tiger board
+"30121":
+  file: misc.yml
+  name: Wood Horse S
+"30122":
+  file: misc.yml
+  name: Riding Cloud S
+"30123":
+  file: misc.yml
+  name: Disposable Hoverboard
+"30124":
+  file: misc.yml
+  name: Disposable Lawolf Sled S
+"30125":
+  file: misc.yml
+  name: Speedy Lawolf Sled
+"30126":
+  file: misc.yml
+  name: Sword Board S
+"30127":
+  file: misc.yml
+  name: Dragon Stick S
+"30128":
+  file: misc.yml
+  name: Snowboard S
+"30129":
+  file: misc.yml
+  name: Magic Carpet S
+"30144":
+  file: misc.yml
+  name: NESCAFE 3-in-1 Original Hoverboard
+"30145":
+  file: misc.yml
+  name: NESCAFE 3-in-1 Sweet 'n Creamy Hoverboard
+"30146":
+  file: misc.yml
+  name: NESCAFE 3-in-1 Intense Hoverboard
+"30147":
+  file: misc.yml
+  name: NESCAFE Ultimate 3-in-1 Hoverbike
+"30148":
+  file: misc.yml
+  name: Scroll of Amplification ES (S)
+"30149":
+  file: misc.yml
+  name: Scroll of Amplification ES (S)1
+"30150":
+  file: misc.yml
+  name: Scroll of Amplification ES (S)2
+"30151":
+  file: misc.yml
+  name: Re-Stat(STR)
+"30152":
+  file: misc.yml
+  name: Re-Stat(DEX)
+"30153":
+  file: misc.yml
+  name: Re-Stat(STA)
+"30154":
+  file: misc.yml
+  name: Re-Stat(INT)
 "30196":
   file: armors.yml
   name: Red Summer Sneakers (M)
@@ -11563,3 +16483,18 @@
 "30325":
   file: questitems.yml
   name: Completed recipe
+"30326":
+  file: misc.yml
+  name: Tofu Salad
+"30337":
+  file: misc.yml
+  name: "Strength Re-Stat: Low"
+"30338":
+  file: misc.yml
+  name: "Dexterity Re-Stat: Low"
+"30339":
+  file: misc.yml
+  name: "Stamina Re-Stat: Low"
+"30340":
+  file: misc.yml
+  name: "Intelligence Re-Stat: Low"

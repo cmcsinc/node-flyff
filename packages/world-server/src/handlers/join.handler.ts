@@ -106,14 +106,17 @@ export class JoinHandler {
     ));
 
     // Replay active skill buffs restored by JoinService.loadBuffs: SETSKILLSTATE
-    // adds the icon + countdown timer (remainMs = totalMs -- C++ resets the
-    // timer to full on relog), per-effect SETDESTPARAM repopulates the stat
-    // window. Self-only -- peers have not seen this player yet; vicinity-on-
-    // spawn rides the ADD_OBJ buff list (ponytail). Buff DST already landed in
-    // m_params during join() so getMaxHp/Fp were correct from the snapshot.
+    // adds the icon + countdown timer (remaining time from the persisted
+    // deadline -- the countdown continues across relog, it does not restart),
+    // per-effect SETDESTPARAM repopulates the stat window. Self-only -- peers
+    // have not seen this player yet; vicinity-on-spawn rides the ADD_OBJ buff
+    // list (ponytail). Buff DST already landed in m_params during join() so
+    // getMaxHp/Fp were correct from the snapshot.
     const pid = outcome.player.m_idPlayer;
+    const nowMs = Date.now();
     for (const buff of outcome.player.m_buffs.getAll()) {
-      sendPacket(socket, buildSetSkillState(pid, buff.type, buff.skillId, buff.level, buff.totalMs));
+      const remainMs = Math.max(0, buff.expiresAtMs - nowMs);
+      sendPacket(socket, buildSetSkillState(pid, buff.type, buff.skillId, buff.level, remainMs));
       for (const e of buff.effects) {
         sendPacket(socket, buildSetDestParam(pid, e.dst, e.adj, e.chg ?? CHG_SENTINEL));
       }

@@ -25,7 +25,7 @@ export function formatDate(ts: string | number | Date | null | undefined): strin
 }
 
 /** Flyff job ID to class name. */
-const JOB_NAMES: Record<number, string> = {
+export const JOB_NAMES: Record<number, string> = {
   0: "Vagrant",
   1: "Mercenary",
   2: "Acrobat",

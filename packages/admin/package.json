@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "tsx --test test/**/*.test.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "seed": "node ../../scripts/seed-admin.mjs",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@flyff/core": "workspace:*",
     "@flyff/database": "workspace:*",
+    "@flyff/entities": "workspace:*",
     "@flyff/resources": "workspace:*",
     "@tailwindcss/postcss": "^4.1.0",
     "@types/bcryptjs": "^2.4.6",

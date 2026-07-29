@@ -96,6 +96,9 @@ importers:
       '@flyff/database':
         specifier: workspace:*
         version: link:../database
+      '@flyff/entities':
+        specifier: workspace:*
+        version: link:../entities
       '@flyff/resources':
         specifier: workspace:*
         version: link:../resources

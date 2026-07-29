@@ -28,6 +28,8 @@ export const ItemKindEnum = z.enum([
   'earring',
   'cloak',
   'cash',
+  /** Catch-all for kinds with no dedicated bucket (IK1_EFFECT, IK1_RIDE, IK1_HOUSING, ...). */
+  'misc',
 ]);
 
 /**
@@ -70,8 +72,11 @@ export const ItemDefinitionSchema = z.object({
     message: "must start with 'ITEM_' or 'IDS_PROPITEM_'",
   }),
 
-  /** Icon filename (optional) */
-  icon: z.string().endsWith('.dds').optional(),
+  /** Icon filename (optional). Case-insensitive extension -- propItem spells both `.dds` and `.DDS`. */
+  icon: z
+    .string()
+    .refine((s) => /\.dds$/i.test(s), { message: 'must end with .dds' })
+    .optional(),
 
   /** 3D model filename (optional) */
   model: z.string().endsWith('.o3d').optional(),

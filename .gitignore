@@ -161,3 +161,7 @@ game.zip
 # Temp propQuest extraction dumps (qt-<pid>-<ts>/propQuest.txt.txt)
 qt-*/
 packages/resources/qt-*/
+
+# Admin server-manager: instance registry + generated per-instance configs
+config/instances.json
+config/instances/

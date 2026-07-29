@@ -10,7 +10,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr01.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -27,7 +27,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr02.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -44,7 +44,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr03.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -61,7 +61,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr04.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -78,7 +78,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr05.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -95,7 +95,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr06.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -112,7 +112,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr07.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -129,7 +129,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr08.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -146,7 +146,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr09.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -163,7 +163,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotRefr10.dds
     item_kind2: IK2_REFRESHER
     item_kind3: IK3_REFRESHER
@@ -180,7 +180,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotAntido.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
@@ -244,7 +244,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitLow.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -261,7 +261,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitLow.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -278,7 +278,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitMid.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -295,7 +295,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitMid.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -312,7 +312,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -329,7 +329,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -346,7 +346,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -363,7 +363,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -380,7 +380,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -397,7 +397,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotDriVitHig.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_POTION
@@ -419,8 +419,8 @@ items:
     item_kind3: IK3_EARRING
     equip_slot: 22
     effects:
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -441,8 +441,8 @@ items:
     effects:
       - dst: 63
         adj: 8
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -463,8 +463,8 @@ items:
     effects:
       - dst: 63
         adj: 13
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -485,8 +485,8 @@ items:
     effects:
       - dst: 63
         adj: 19
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -507,8 +507,8 @@ items:
     effects:
       - dst: 63
         adj: 22
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -529,8 +529,8 @@ items:
     effects:
       - dst: 63
         adj: 26
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -551,8 +551,8 @@ items:
     effects:
       - dst: 63
         adj: 31
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -573,8 +573,8 @@ items:
     effects:
       - dst: 63
         adj: 31
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -595,8 +595,8 @@ items:
     effects:
       - dst: 26
         adj: 39
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -617,8 +617,8 @@ items:
     effects:
       - dst: 26
         adj: 60
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -639,8 +639,8 @@ items:
     effects:
       - dst: 26
         adj: 80
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -661,8 +661,8 @@ items:
     effects:
       - dst: 26
         adj: 94
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -683,8 +683,8 @@ items:
     effects:
       - dst: 26
         adj: 109
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -705,8 +705,8 @@ items:
     effects:
       - dst: 26
         adj: 128
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -727,8 +727,8 @@ items:
     effects:
       - dst: 26
         adj: 128
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -749,8 +749,8 @@ items:
     effects:
       - dst: 35
         adj: 82
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -771,8 +771,8 @@ items:
     effects:
       - dst: 35
         adj: 118
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -793,8 +793,8 @@ items:
     effects:
       - dst: 35
         adj: 166
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -815,8 +815,8 @@ items:
     effects:
       - dst: 35
         adj: 226
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -837,8 +837,8 @@ items:
     effects:
       - dst: 35
         adj: 286
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -859,8 +859,8 @@ items:
     effects:
       - dst: 35
         adj: 358
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -881,8 +881,8 @@ items:
     effects:
       - dst: 35
         adj: 358
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -903,8 +903,8 @@ items:
     effects:
       - dst: 36
         adj: 57
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -925,8 +925,8 @@ items:
     effects:
       - dst: 36
         adj: 79
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -947,8 +947,8 @@ items:
     effects:
       - dst: 36
         adj: 108
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -969,8 +969,8 @@ items:
     effects:
       - dst: 36
         adj: 144
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -991,8 +991,8 @@ items:
     effects:
       - dst: 36
         adj: 180
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1013,8 +1013,8 @@ items:
     effects:
       - dst: 36
         adj: 223
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1035,8 +1035,8 @@ items:
     effects:
       - dst: 36
         adj: 223
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1057,8 +1057,8 @@ items:
     effects:
       - dst: 37
         adj: 65
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1079,8 +1079,8 @@ items:
     effects:
       - dst: 37
         adj: 84
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1101,8 +1101,8 @@ items:
     effects:
       - dst: 37
         adj: 109
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1123,8 +1123,8 @@ items:
     effects:
       - dst: 37
         adj: 141
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1145,8 +1145,8 @@ items:
     effects:
       - dst: 37
         adj: 173
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1167,8 +1167,8 @@ items:
     effects:
       - dst: 37
         adj: 212
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1189,8 +1189,8 @@ items:
     effects:
       - dst: 37
         adj: 212
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1211,8 +1211,8 @@ items:
     effects:
       - dst: 1
         adj: 2
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1233,8 +1233,8 @@ items:
     effects:
       - dst: 1
         adj: 3
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1255,8 +1255,8 @@ items:
     effects:
       - dst: 1
         adj: 4
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1277,8 +1277,8 @@ items:
     effects:
       - dst: 1
         adj: 5
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1299,8 +1299,8 @@ items:
     effects:
       - dst: 1
         adj: 6
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1321,8 +1321,8 @@ items:
     effects:
       - dst: 1
         adj: 7
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1343,8 +1343,8 @@ items:
     effects:
       - dst: 1
         adj: 7
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1365,8 +1365,8 @@ items:
     effects:
       - dst: 3
         adj: 2
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1387,8 +1387,8 @@ items:
     effects:
       - dst: 3
         adj: 3
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1409,8 +1409,8 @@ items:
     effects:
       - dst: 3
         adj: 4
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1431,8 +1431,8 @@ items:
     effects:
       - dst: 3
         adj: 5
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1453,8 +1453,8 @@ items:
     effects:
       - dst: 3
         adj: 6
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1475,8 +1475,8 @@ items:
     effects:
       - dst: 3
         adj: 7
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1497,8 +1497,8 @@ items:
     effects:
       - dst: 3
         adj: 7
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1519,8 +1519,8 @@ items:
     effects:
       - dst: 2
         adj: 2
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1541,8 +1541,8 @@ items:
     effects:
       - dst: 2
         adj: 3
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1563,8 +1563,8 @@ items:
     effects:
       - dst: 2
         adj: 4
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1585,8 +1585,8 @@ items:
     effects:
       - dst: 2
         adj: 5
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1607,8 +1607,8 @@ items:
     effects:
       - dst: 2
         adj: 6
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1629,8 +1629,8 @@ items:
     effects:
       - dst: 2
         adj: 7
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1651,8 +1651,8 @@ items:
     effects:
       - dst: 2
         adj: 7
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1673,8 +1673,8 @@ items:
     effects:
       - dst: 4
         adj: 2
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1695,8 +1695,8 @@ items:
     effects:
       - dst: 4
         adj: 3
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1717,8 +1717,8 @@ items:
     effects:
       - dst: 4
         adj: 4
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1739,8 +1739,8 @@ items:
     effects:
       - dst: 4
         adj: 5
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1761,8 +1761,8 @@ items:
     effects:
       - dst: 4
         adj: 6
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1783,8 +1783,8 @@ items:
     effects:
       - dst: 4
         adj: 7
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1805,8 +1805,8 @@ items:
     effects:
       - dst: 1
         adj: 1
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1827,8 +1827,8 @@ items:
     effects:
       - dst: 3
         adj: 1
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1849,8 +1849,8 @@ items:
     effects:
       - dst: 4
         adj: 1
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1871,8 +1871,8 @@ items:
     effects:
       - dst: 2
         adj: 1
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1893,8 +1893,8 @@ items:
     effects:
       - dst: 63
         adj: 100
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1915,8 +1915,8 @@ items:
     effects:
       - dst: 63
         adj: 150
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1937,8 +1937,8 @@ items:
     effects:
       - dst: 63
         adj: 200
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1959,8 +1959,8 @@ items:
     effects:
       - dst: 26
         adj: 100
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -1981,8 +1981,8 @@ items:
     effects:
       - dst: 26
         adj: 150
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -2003,8 +2003,8 @@ items:
     effects:
       - dst: 26
         adj: 200
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - knight
@@ -2025,8 +2025,8 @@ items:
     effects:
       - dst: 14
         adj: 3
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2047,8 +2047,8 @@ items:
     effects:
       - dst: 14
         adj: 6
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2069,8 +2069,8 @@ items:
     effects:
       - dst: 14
         adj: 10
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2091,8 +2091,8 @@ items:
     effects:
       - dst: 35
         adj: 105
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2113,8 +2113,8 @@ items:
     effects:
       - dst: 35
         adj: 120
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2135,8 +2135,8 @@ items:
     effects:
       - dst: 35
         adj: 240
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2157,8 +2157,8 @@ items:
     effects:
       - dst: 36
         adj: 105
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2179,8 +2179,8 @@ items:
     effects:
       - dst: 36
         adj: 120
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2201,8 +2201,8 @@ items:
     effects:
       - dst: 36
         adj: 240
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2223,8 +2223,8 @@ items:
     effects:
       - dst: 37
         adj: 50
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2245,8 +2245,8 @@ items:
     effects:
       - dst: 37
         adj: 75
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2267,8 +2267,8 @@ items:
     effects:
       - dst: 37
         adj: 90
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2289,8 +2289,8 @@ items:
     effects:
       - dst: 1
         adj: 10
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2311,8 +2311,8 @@ items:
     effects:
       - dst: 1
         adj: 20
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2333,8 +2333,8 @@ items:
     effects:
       - dst: 1
         adj: 30
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2355,8 +2355,8 @@ items:
     effects:
       - dst: 3
         adj: 10
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2377,8 +2377,8 @@ items:
     effects:
       - dst: 3
         adj: 20
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2399,8 +2399,8 @@ items:
     effects:
       - dst: 3
         adj: 30
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2421,8 +2421,8 @@ items:
     effects:
       - dst: 2
         adj: 10
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2443,8 +2443,8 @@ items:
     effects:
       - dst: 2
         adj: 20
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2465,8 +2465,8 @@ items:
     effects:
       - dst: 2
         adj: 30
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2487,8 +2487,8 @@ items:
     effects:
       - dst: 10003
         adj: 1
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2509,8 +2509,8 @@ items:
     effects:
       - dst: 10003
         adj: 3
-      - dst: 52
-        adj: 15
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - vagrant
@@ -2523,7 +2523,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooLollip.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2541,7 +2541,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooBiscuit.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2559,7 +2559,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooChocol.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2577,7 +2577,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooMilk.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2595,7 +2595,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooBread.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2613,7 +2613,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooHotdog.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2631,7 +2631,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooHotdog.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2648,7 +2648,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooInsHodduk.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2666,7 +2666,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooInsKimbap.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2684,7 +2684,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooInsChicke.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2702,7 +2702,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooInsStarca.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -2720,7 +2720,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooMeatsk.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2738,7 +2738,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooBarbec.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2756,7 +2756,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooPancak.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2774,7 +2774,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooFishso.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2792,7 +2792,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooSausag.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2810,7 +2810,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooFishst.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2828,7 +2828,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooSteame.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2846,7 +2846,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooMeatsa.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2864,7 +2864,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooGratin.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2882,7 +2882,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooPizza.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -2900,7 +2900,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceOrange.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -2918,7 +2918,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceStrawb.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -2936,7 +2936,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIcePineap.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -2954,7 +2954,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceBanana.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -2972,7 +2972,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceJuice.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -2990,7 +2990,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceWater.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -3008,7 +3008,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceParfai.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -3026,7 +3026,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceSherbe.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -3044,7 +3044,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIceIcecre.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -3062,7 +3062,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooIcePunch.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -3080,7 +3080,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooPilGray.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
@@ -3098,7 +3098,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooPilYellow.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
@@ -3116,7 +3116,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooPilBlue.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
@@ -3134,7 +3134,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooPilRed.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
@@ -3152,7 +3152,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooPilGold.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
@@ -3170,7 +3170,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenFooPilSinbi.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_PILL
@@ -3188,12 +3188,12 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooDdukhot.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
-    cooldown_ms: 1500
+    cooldown_ms: 1000
     durability: 12000000
     job_req:
       - vagrant
@@ -3206,12 +3206,12 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooDdukFre.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     fp_restore: 9999
-    cooldown_ms: 1500
+    cooldown_ms: 1000
     durability: 12000000
     job_req:
       - vagrant
@@ -3224,12 +3224,12 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooCooDdukSwe.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     mp_restore: 9999
-    cooldown_ms: 1500
+    cooldown_ms: 1000
     durability: 12000000
     job_req:
       - vagrant
@@ -3242,7 +3242,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3259,7 +3259,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3276,7 +3276,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3293,7 +3293,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3310,7 +3310,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3327,10 +3327,10 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatOrichalcum02.dds
     item_kind2: IK2_MATERIAL
-    item_kind3: IK3_ENCHANT
+    item_kind3: IK3_SMELT_ULTIMATE_MATERIAL
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -3344,10 +3344,10 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatOrichalcum01.dds
     item_kind2: IK2_MATERIAL
-    item_kind3: IK3_ENCHANT
+    item_kind3: IK3_SMELT_GENERAL_MATERIAL
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -3361,10 +3361,10 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatMoonstone.dds
     item_kind2: IK2_MATERIAL
-    item_kind3: IK3_PIERDICE
+    item_kind3: IK3_SMELT_ACCESSORY_MATERIAL
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -3378,10 +3378,10 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatOrichalcum01.dds
     item_kind2: IK2_MATERIAL
-    item_kind3: IK3_ENCHANT
+    item_kind3: IK3_SMELT_GENERAL_MATERIAL
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -3395,10 +3395,10 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatMoonstone.dds
     item_kind2: IK2_MATERIAL
-    item_kind3: IK3_PIERDICE
+    item_kind3: IK3_SMELT_ACCESSORY_MATERIAL
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -3412,7 +3412,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3429,7 +3429,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3446,7 +3446,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3463,7 +3463,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3480,7 +3480,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3497,7 +3497,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3514,7 +3514,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3531,7 +3531,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3548,7 +3548,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3565,7 +3565,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3582,7 +3582,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3599,7 +3599,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3616,7 +3616,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3633,7 +3633,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3650,7 +3650,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3667,7 +3667,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3684,7 +3684,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3701,7 +3701,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3718,7 +3718,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3735,7 +3735,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3752,7 +3752,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3769,7 +3769,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3786,7 +3786,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3803,7 +3803,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3820,7 +3820,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3837,7 +3837,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3854,7 +3854,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3871,7 +3871,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3888,7 +3888,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3905,7 +3905,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3922,7 +3922,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3939,7 +3939,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3956,7 +3956,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3973,7 +3973,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -3990,7 +3990,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4007,7 +4007,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4024,7 +4024,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4041,7 +4041,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4058,7 +4058,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4075,7 +4075,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4092,7 +4092,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDiamond.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4109,7 +4109,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEmerald.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4126,7 +4126,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatSapphire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4143,7 +4143,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatRuby.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4160,7 +4160,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatTopaz.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ULTIMATE
@@ -4245,7 +4245,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4262,7 +4262,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4279,7 +4279,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4296,7 +4296,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4313,7 +4313,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4330,7 +4330,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4347,7 +4347,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4364,7 +4364,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4381,7 +4381,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4398,7 +4398,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_ELECARD
@@ -4415,7 +4415,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDieFour.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
@@ -4432,7 +4432,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDieSix.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
@@ -4449,7 +4449,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDieEight.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
@@ -4466,7 +4466,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDieTen.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
@@ -4483,7 +4483,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDieTwelve.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_DICE
@@ -4500,7 +4500,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4517,7 +4517,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4534,7 +4534,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4551,7 +4551,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleFlame.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4568,7 +4568,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4585,7 +4585,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4602,7 +4602,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4619,7 +4619,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRiver.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4636,7 +4636,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4653,7 +4653,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4670,7 +4670,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4687,7 +4687,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCyclon.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4704,7 +4704,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4721,7 +4721,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4738,7 +4738,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4755,7 +4755,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleGenerator.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4772,7 +4772,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4789,7 +4789,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4806,7 +4806,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4823,7 +4823,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleDesert.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -4840,7 +4840,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4857,7 +4857,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4874,7 +4874,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4891,7 +4891,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleCandle.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4908,7 +4908,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4925,7 +4925,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4942,7 +4942,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4959,7 +4959,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleRainatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4976,7 +4976,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -4993,7 +4993,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5010,7 +5010,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5027,7 +5027,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleBreezeatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5044,7 +5044,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5061,7 +5061,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5078,7 +5078,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5095,7 +5095,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSparkatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5112,7 +5112,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5129,7 +5129,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5146,7 +5146,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5163,7 +5163,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatEleSandatk.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD2
@@ -5180,7 +5180,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDieEight.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
@@ -5197,7 +5197,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenMatDieTen.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_PIERDICE
@@ -5214,7 +5214,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5231,7 +5231,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5248,7 +5248,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5265,7 +5265,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5282,7 +5282,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5299,7 +5299,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5316,7 +5316,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5333,7 +5333,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleFire.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5350,7 +5350,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5367,7 +5367,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5384,7 +5384,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5401,7 +5401,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5418,7 +5418,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5435,7 +5435,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5452,7 +5452,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5469,7 +5469,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5486,7 +5486,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5503,7 +5503,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEarth.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5520,7 +5520,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5537,7 +5537,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5554,7 +5554,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5571,7 +5571,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5588,7 +5588,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5605,7 +5605,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5622,7 +5622,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5639,7 +5639,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5656,7 +5656,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5673,7 +5673,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5690,7 +5690,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5707,7 +5707,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5724,7 +5724,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5741,7 +5741,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5758,7 +5758,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5775,7 +5775,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5792,7 +5792,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5809,7 +5809,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5826,7 +5826,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5843,7 +5843,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5860,7 +5860,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleEletri.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5877,7 +5877,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5894,7 +5894,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWind.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5911,7 +5911,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5928,7 +5928,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5945,7 +5945,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5962,7 +5962,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5979,7 +5979,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -5996,7 +5996,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -6013,7 +6013,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -6030,7 +6030,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -6047,7 +6047,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -6064,7 +6064,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenMatEleWater.dds
     item_kind2: IK2_MATERIAL
     item_kind3: IK3_SOCKETCARD
@@ -6234,7 +6234,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenColNormalBattery.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_SCROLL
@@ -6251,7 +6251,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGem.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6267,7 +6267,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemForfor.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6283,7 +6283,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemPalin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6299,7 +6299,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemChupim.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6315,7 +6315,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemPeakyR.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6331,7 +6331,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemMop.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6347,7 +6347,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemPopora.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6363,7 +6363,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemSlain.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6379,7 +6379,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemTarinr.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6395,7 +6395,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemStarst.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6411,7 +6411,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGoldWi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6427,7 +6427,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemBlueho.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6443,7 +6443,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemMiaDol.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6459,7 +6459,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemFuriou.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6475,7 +6475,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemCardri.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6491,7 +6491,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemHammar.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6507,7 +6507,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGiggla.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6523,7 +6523,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemMoonSt.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6539,7 +6539,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemBoband.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6555,7 +6555,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemDumbli.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6571,7 +6571,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemKalin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6587,7 +6587,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemClockH.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6603,7 +6603,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemTombMa.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6619,7 +6619,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGoldFi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6635,7 +6635,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemOrbrin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6651,7 +6651,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGoldCu.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6667,7 +6667,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemToma.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6683,7 +6683,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemSteamT.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6699,7 +6699,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemKnight.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6715,7 +6715,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemWheels.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6731,7 +6731,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemDroil.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6747,7 +6747,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemAmpere.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6763,7 +6763,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGuardi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6779,7 +6779,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGarbag.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6795,7 +6795,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemEronio.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6811,7 +6811,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemBearBa.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6827,7 +6827,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemSycale.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6843,7 +6843,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemMongTe.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6859,7 +6859,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemBombTi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6875,7 +6875,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemZombyH.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6891,7 +6891,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemNuctuW.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6907,7 +6907,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemZemMar.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6923,7 +6923,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemBucron.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6939,7 +6939,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemScotoo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6955,7 +6955,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemRangla.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6971,7 +6971,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemBathoo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -6987,7 +6987,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGrband.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7003,7 +7003,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemDumpti.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7019,7 +7019,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemRepygl.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7035,7 +7035,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBoopos.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7051,7 +7051,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemPrewin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7067,7 +7067,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemPoiesp.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7083,7 +7083,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemRenyke.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7099,7 +7099,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemTangka.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7115,7 +7115,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemRootio.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7131,7 +7131,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLuches.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7147,7 +7147,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemEronsi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7163,7 +7163,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemHamma.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7179,7 +7179,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemRnamon.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7195,7 +7195,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemPhanbu.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7211,7 +7211,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemFFuris.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7227,7 +7227,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemScotoo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7243,7 +7243,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueJackBe.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7259,7 +7259,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysScrSwSoul.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7275,7 +7275,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemFFuris.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7291,7 +7291,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemDragonHeart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7307,7 +7307,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemDragonCanine.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7323,7 +7323,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemStrangeEyes.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7339,7 +7339,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemRedCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7355,7 +7355,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemYellowCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7371,7 +7371,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGreenCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7387,7 +7387,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBlueCrystal.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7403,7 +7403,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemCatBell.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7419,7 +7419,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemHarpyFeather.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7435,7 +7435,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemPolevikMud.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7451,7 +7451,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBadTongue.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7467,7 +7467,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemhagNail.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7483,7 +7483,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemThothBeak.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7499,7 +7499,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemKhnemuCornu.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7515,7 +7515,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemDantalBall.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7531,7 +7531,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGanesaIvory.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7547,7 +7547,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemAsuraheart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7563,7 +7563,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGiantForceps.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7579,7 +7579,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemInkSac.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7595,7 +7595,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemCarapace.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7611,7 +7611,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemCrispHair.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7627,7 +7627,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBrokenWings.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7643,7 +7643,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGreatCrown.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7659,7 +7659,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemCanineTooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7675,7 +7675,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemSharpTooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7691,7 +7691,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGoggloo.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7707,7 +7707,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemPoisonbag.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7723,7 +7723,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBlad.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7739,7 +7739,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemNecklace.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7755,7 +7755,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemFlower.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7771,7 +7771,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemDogtooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7787,7 +7787,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemAntEgg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7803,7 +7803,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemOilLeg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7819,7 +7819,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemNiceCheese.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7835,7 +7835,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBigToeNail.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7851,7 +7851,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemVempireGlass.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7867,7 +7867,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemAntEgg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7883,7 +7883,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemOilLeg.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7899,7 +7899,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemNiceCheese.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7915,7 +7915,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBigToeNail.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7931,7 +7931,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemVempireGlass.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7947,7 +7947,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGriffinFeather.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7963,7 +7963,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBackBoneLeader.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7979,7 +7979,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBackBoneSpain.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -7995,7 +7995,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemMagicBook.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8011,7 +8011,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemDarkBead.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8027,7 +8027,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemDevilPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8043,7 +8043,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemWolftooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8059,7 +8059,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemSkelSkin.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8075,7 +8075,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemSkelPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8091,7 +8091,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemSkelStaffPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8107,7 +8107,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemSkelWeaPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8123,7 +8123,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemSkeltoolbox.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8139,7 +8139,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemGeneralPiece.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8155,7 +8155,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemPoisontooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8171,7 +8171,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemCobraScale.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8187,7 +8187,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemSoftFur.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8203,7 +8203,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemTwohandBlade.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8219,7 +8219,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBraceLet.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8235,7 +8235,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLusikaMask.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8251,7 +8251,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemBigfootHeart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8267,7 +8267,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLightPoisontooth.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8283,7 +8283,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLightCobraScale.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8299,7 +8299,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLightSoftFur.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8315,7 +8315,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLightTwohandBlade.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8331,7 +8331,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLightBraceLet.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8347,7 +8347,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLightLusikaMask.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8363,7 +8363,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLightBigfootHeart.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8379,7 +8379,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenFooInsKimbap.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -8397,7 +8397,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemTarinr.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8413,7 +8413,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemStarst.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8429,7 +8429,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGoldWi.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8445,7 +8445,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemWormveduque.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8461,7 +8461,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemSerusUriel.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8525,7 +8525,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemAxKeakoon1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8541,7 +8541,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemSwKeakoon1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8557,7 +8557,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemAxKeakoon2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8573,7 +8573,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemSwKeakoon2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8589,7 +8589,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemAxKeakoon3.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8605,7 +8605,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemSwKeakoon3.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8621,7 +8621,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemRoachFl1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8637,7 +8637,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemRoachFl2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8653,7 +8653,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemTrilipy1.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8669,7 +8669,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemTrilipy2.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8685,7 +8685,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemTrilipy3.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8701,7 +8701,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemKimeradon.dds
     item_kind2: IK2_GEM
     item_kind3: IK3_GEM
@@ -8894,6 +8894,23 @@ items:
     destroyable: true
     stack_size: 1
     icon: itm_PetCat1.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    hp_restore: 747
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 21006
+    name: Soccerball Angel
+    name_id: IDS_PROPITEM_TXT_007166
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_PetSoccerBall.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     hp_restore: 747
@@ -9504,7 +9521,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysplaliss.dds
     item_kind2: IK2_SKILL
     item_kind3: IK3_GENERAL
@@ -9522,7 +9539,8 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
+    icon: Itm_GenPotMPCola02.DDS
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
     hp_restore: 1000
@@ -9539,7 +9557,8 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
+    icon: Itm_GenPotMPCola.DDS
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
     mp_restore: 1000
@@ -9556,7 +9575,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_foosongpyunHP.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -9574,7 +9593,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_foosongpyunMP.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -9592,7 +9611,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_foosongpyunFP.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -9627,7 +9646,8 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
+    icon: Itm_GenPotMPCola02.DDS
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
     hp_restore: 110
@@ -9644,7 +9664,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Item_GenChristmasCookies.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -9662,7 +9682,8 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
+    icon: itm_SysSysEveHeartPi.DDS
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
     hp_restore: 9999
@@ -9679,7 +9700,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEvePumpkin02.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -9841,7 +9862,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveSnow01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_ICECEARM
@@ -9859,7 +9880,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveSowonroll01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -9877,7 +9898,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveBeansoju01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
@@ -9895,7 +9916,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveChocolate03.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
@@ -9913,7 +9934,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveChocolate04.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -9931,7 +9952,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveChocolate07.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -9949,7 +9970,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveHerbage01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
@@ -9967,7 +9988,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveDrink01.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_DRINK
@@ -9985,7 +10006,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_Danishmelon.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -10003,7 +10024,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_Wafflemelon.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_INSTANT
@@ -10069,7 +10090,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_EventVanilla.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -10139,8 +10160,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20212
     name: Defender's Ring
@@ -10161,8 +10182,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20213
     name: Adept's Ring
@@ -10183,8 +10204,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20214
     name: Marksman's Ring
@@ -10205,8 +10226,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20215
     name: Champion's Demol Earring
@@ -10227,8 +10248,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20216
     name: Defender's Plug Earring
@@ -10249,8 +10270,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20221
     name: Adept's Earring of Power
@@ -10271,8 +10292,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20222
     name: Marksman's Earring of Power
@@ -10293,8 +10314,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20217
     name: Champion's Gore Necklace
@@ -10315,8 +10336,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20218
     name: Adept's Mental Necklace
@@ -10337,8 +10358,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20219
     name: Marksman's Peision Necklace
@@ -10359,8 +10380,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 20220
     name: Defender's Necklace of Protection
@@ -10381,8 +10402,8 @@ items:
         adj: 40
       - dst: 75
         adj: 1
-      - dst: 24
-        adj: 200
+      - dst: 77
+        adj: 82
     durability: 7200000
   - id: 26905
     name: Sardine Roll
@@ -10393,7 +10414,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveSardine.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -10409,7 +10430,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysEveMelonsoda.dds
     item_kind2: IK2_POTION
     item_kind3: IK3_DRINK
@@ -10425,7 +10446,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_EveBalLucBag.dds
     item_kind2: IK2_FOOD
     item_kind3: IK3_COOKING
@@ -10548,3 +10569,1609 @@ items:
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
     durability: 50000
+  - id: 21090
+    name: Mocomochi
+    name_id: IDS_PROPITEM_TXT_012180
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Mokomochi.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+  - id: 20332
+    name: Soul Dancer
+    name_id: IDS_PROPITEM_TXT_012226
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetDance.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+  - id: 20334
+    name: Cross Bow Arrow
+    name_id: IDS_PROPITEM_TXT_012230
+    weight: 1
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_WeaSecArrowBox.dds
+    item_kind2: IK2_BULLET
+    item_kind3: IK3_CROSSARROW
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20386
+    name: Magpie feather
+    name_id: IDS_PROPITEM_TXT_012334
+    weight: 1
+    price: 10915
+    sell_price: 2728
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenGemGriffinFeather.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 20387
+    name: Broken Stone Piece
+    name_id: IDS_PROPITEM_TXT_012336
+    weight: 1
+    price: 2270
+    sell_price: 567
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_GenGemTombMa.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7006
+    name: Hundur Skull
+    name_id: IDS_PROPITEM_TXT_012338
+    weight: 1
+    price: 11281
+    sell_price: 2820
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Skullmask.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7007
+    name: Samoset's Skull
+    name_id: IDS_PROPITEM_TXT_012340
+    weight: 1
+    price: 11464
+    sell_price: 2866
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Leathercape.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7008
+    name: Kyouchish Claw
+    name_id: IDS_PROPITEM_TXT_012342
+    weight: 1
+    price: 11647
+    sell_price: 2911
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Lycanclaw.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7009
+    name: Kanonicus Sludge
+    name_id: IDS_PROPITEM_TXT_012344
+    weight: 1
+    price: 11830
+    sell_price: 2957
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Bloodantidote.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7010
+    name: Redcloud Skull
+    name_id: IDS_PROPITEM_TXT_012346
+    weight: 1
+    price: 12013
+    sell_price: 3003
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Magicskull.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7011
+    name: Devil's Tooth
+    name_id: IDS_PROPITEM_TXT_012348
+    weight: 1
+    price: 12196
+    sell_price: 3049
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Devilhorn.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7012
+    name: Heart of Chief  Keokuk
+    name_id: IDS_PROPITEM_TXT_012350
+    weight: 1
+    price: 17182
+    sell_price: 4295
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Chiefheart.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7013
+    name: Orcus's Tablet
+    name_id: IDS_PROPITEM_TXT_012352
+    weight: 1
+    price: 11830
+    sell_price: 2957
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Stetuepiece.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7014
+    name: Bead of Nergal
+    name_id: IDS_PROPITEM_TXT_012354
+    weight: 1
+    price: 12013
+    sell_price: 3003
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Tulazam.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7015
+    name: Hel's charm
+    name_id: IDS_PROPITEM_TXT_012356
+    weight: 1
+    price: 12196
+    sell_price: 3049
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Umtulazam.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7016
+    name: Morrigan's Crystal
+    name_id: IDS_PROPITEM_TXT_012358
+    weight: 1
+    price: 12379
+    sell_price: 3094
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Obniscrystal.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7017
+    name: Mara's Mane
+    name_id: IDS_PROPITEM_TXT_012360
+    weight: 1
+    price: 12562
+    sell_price: 3140
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Bagnishair.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7018
+    name: Armor of Ghed
+    name_id: IDS_PROPITEM_TXT_012362
+    weight: 1
+    price: 12745
+    sell_price: 3186
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Armorshard.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7019
+    name: Ankou's Scale
+    name_id: IDS_PROPITEM_TXT_012364
+    weight: 1
+    price: 17869
+    sell_price: 4467
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Behemothscales.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7020
+    name: Spirit Sword
+    name_id: IDS_PROPITEM_TXT_012366
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Ghostsword.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7021
+    name: Sleeping Powder
+    name_id: IDS_PROPITEM_TXT_012368
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Sleepdust.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 7043
+    name: Bareum Powder
+    name_id: IDS_PROPITEM_TXT_012412
+    weight: 1
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_NewBareumMeal.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_MEAL
+    durability: 50000
+  - id: 20388
+    name: Star Piece
+    name_id: IDS_PROPITEM_TXT_012416
+    weight: 1
+    price: 10915
+    sell_price: 2728
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_EventStarpiece.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 20389
+    name: Glass Bottle
+    name_id: IDS_PROPITEM_TXT_012418
+    weight: 1
+    price: 2270
+    sell_price: 567
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_EventBottle01.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+  - id: 20424
+    name: "[Upgrade Spirit] Piyo"
+    name_id: IDS_PROPITEM_TXT_012516
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_Smeltpiyo.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_SUMMON_NPC
+    durability: 7200000
+    job_req:
+      - acrobat
+  - id: 20425
+    name: "[Upgrade Spirit] Udi"
+    name_id: IDS_PROPITEM_TXT_012518
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_Smeltudi.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_SUMMON_NPC
+    durability: 7200000
+    job_req:
+      - acrobat
+  - id: 20524
+    name: Training Bareum Powder
+    name_id: IDS_PROPITEM_TXT_012528
+    weight: 1
+    price: 8000
+    sell_price: 2000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_NewBareumMeal.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_MEAL
+    durability: 7200000
+    job_req:
+      - acrobat
+  - id: 20517
+    name: Training Spirit of the Smelting Udi
+    name_id: IDS_PROPITEM_TXT_012522
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_Smeltudi.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_SUMMON_NPC
+    durability: 7200000
+    job_req:
+      - acrobat
+  - id: 20426
+    name: "[Event] Baby Sheep"
+    name_id: IDS_PROPITEM_TXT_012520
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetSheep.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - acrobat
+  - id: 20507
+    name: Chameleon
+    name_id: IDS_PROPITEM_TXT_012654
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetChamelon.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+    job_req:
+      - mercenary
+  - id: 20624
+    name: White Stone
+    name_id: IDS_PROPITEM_TXT_012882
+    weight: 1
+    price: 2620
+    sell_price: 655
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_WhiteStone.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - mercenary
+  - id: 20625
+    name: Black Stone
+    name_id: IDS_PROPITEM_TXT_012884
+    weight: 1
+    price: 2620
+    sell_price: 655
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_BlackStone.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - mercenary
+  - id: 20626
+    name: Symbol of Bubble
+    name_id: IDS_PROPITEM_TXT_012886
+    weight: 1
+    price: 2620
+    sell_price: 655
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Symbolofthebubble.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - mercenary
+  - id: 20627
+    name: Symbol of Shade
+    name_id: IDS_PROPITEM_TXT_012888
+    weight: 1
+    price: 2620
+    sell_price: 655
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_SymboloftheShaded.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - mercenary
+  - id: 20628
+    name: Stone of Bravery
+    name_id: IDS_PROPITEM_TXT_012890
+    weight: 1
+    price: 2270
+    sell_price: 567
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_KnownpieceofValor.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - mercenary
+  - id: 20657
+    name: Gas Can
+    name_id: IDS_PROPITEM_TXT_012948
+    weight: 1
+    price: 2620
+    sell_price: 655
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Gaseukaen.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - mercenary
+  - id: 20658
+    name: Chainsaw
+    name_id: IDS_PROPITEM_TXT_012950
+    weight: 1
+    price: 8
+    sell_price: 2
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Chainsaw.dds
+    item_kind2: IK2_WEAPON_DIRECT
+    item_kind3: IK3_SWD
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20676
+    name: Braaaaains
+    name_id: IDS_PROPITEM_TXT_012986
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetZombie.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 20787
+    name: Mocomochi (3 days)
+    name_id: IDS_PROPITEM_TXT_013204
+    weight: 1
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Mokomochi.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20788
+    name: Baby Bang (3 days)
+    name_id: IDS_PROPITEM_TXT_013206
+    weight: 1
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetBang1.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20789
+    name: Tiny Tanuki (3 days)
+    name_id: IDS_PROPITEM_TXT_013208
+    weight: 1
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetDaringRaccon.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20792
+    name: Chainsaw
+    name_id: IDS_PROPITEM_TXT_012950
+    weight: 1
+    price: 8
+    sell_price: 2
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Chainsawkr.dds
+    item_kind2: IK2_WEAPON_DIRECT
+    item_kind3: IK3_SWD
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20813
+    name: Big Red
+    name_id: IDS_PROPITEM_TXT_013252
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetPaang.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20814
+    name: Bone Golem
+    name_id: IDS_PROPITEM_TXT_013254
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetRemains01.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20901
+    name: GM Fruitcake
+    name_id: IDS_PROPITEM_TXT_013428
+    weight: 1
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenFooGmcake.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
+    hp_restore: 1
+    cooldown_ms: 50000
+    durability: 3600000
+  - id: 20909
+    name: Jimbo the Snowman
+    name_id: IDS_PROPITEM_TXT_013444
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Snowman02.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    hp_restore: 1
+    durability: 3600000
+  - id: 20927
+    name: GM Fruitcake
+    name_id: IDS_PROPITEM_TXT_013428
+    weight: 1
+    price: 1
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenFooGmcake.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_PILL
+    hp_restore: 25000
+    cooldown_ms: 1000
+    durability: 50000
+  - id: 20939
+    name: Jack Frost
+    name_id: IDS_PROPITEM_TXT_013502
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetSnowman.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    hp_restore: 25000
+    durability: 4500000
+  - id: 20940
+    name: Mr. Grinchie
+    name_id: IDS_PROPITEM_TXT_013504
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetChrisfairy.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    hp_restore: 25000
+    durability: 4500000
+  - id: 20956
+    name: Rudolph
+    name_id: IDS_PROPITEM_TXT_013536
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetRudolf.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    hp_restore: 25000
+    durability: 4500000
+  - id: 21091
+    name: Observing Producer Kim Cage
+    name_id: IDS_PROPITEM_TXT_013668
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Petkimpd.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - acrobat
+  - id: 23043
+    name: Penguin Buff Pet
+    name_id: IDS_PROPITEM_TXT_013754
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_PetPenguin.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 4500000
+    job_req:
+      - acrobat
+  - id: 23049
+    name: Kuma
+    name_id: IDS_PROPITEM_TXT_013766
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetcuteBear-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 23050
+    name: "[Upgrade Spirit] Coby"
+    name_id: IDS_PROPITEM_TXT_013768
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_SmeltCobi-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_SUMMON_NPC
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 23051
+    name: "[Upgrade Spirit] Pierce"
+    name_id: IDS_PROPITEM_TXT_013770
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_SmeltPierce-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_SUMMON_NPC
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 23059
+    name: Usagi
+    name_id: IDS_PROPITEM_TXT_013786
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetRabbitfairy-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 23299
+    name: X900 EvilTron
+    name_id: IDS_PROPITEM_TXT_014264
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Petdeviltoy-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 4500000
+    job_req:
+      - ranger
+  - id: 23307
+    name: Mister Grizz
+    name_id: IDS_PROPITEM_TXT_014280
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Pettaddybear-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 3600000
+    job_req:
+      - ranger
+  - id: 23384
+    name: Fir Seed
+    name_id: IDS_PROPITEM_TXT_014442
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1000
+    icon: itm_SysSysEveSeed02.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
+    hp_restore: 202
+    cooldown_ms: 1000
+    durability: 4500000
+    job_req:
+      - ranger
+  - id: 23385
+    name: Pear Seed
+    name_id: IDS_PROPITEM_TXT_014444
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1000
+    icon: itm_SysSysEveSeed04.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
+    hp_restore: 507
+    cooldown_ms: 1000
+    durability: 4500000
+    job_req:
+      - ranger
+  - id: 23386
+    name: Pine Seed
+    name_id: IDS_PROPITEM_TXT_014446
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1000
+    icon: itm_SysSysEveSeed05.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
+    hp_restore: 747
+    cooldown_ms: 1000
+    durability: 4500000
+    job_req:
+      - ranger
+  - id: 23387
+    name: Persimmon Seeding
+    name_id: IDS_PROPITEM_TXT_014448
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1000
+    icon: itm_SysSysEveSeed03.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_INSTANT
+    hp_restore: 270
+    cooldown_ms: 1000
+    durability: 4500000
+    job_req:
+      - ranger
+  - id: 23391
+    name: Usagi(7 Days)
+    name_id: IDS_PROPITEM_TXT_014456
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetRabbitfairy-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    hp_restore: 270
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 23424
+    name: Ghost Buff Pet(Event)
+    name_id: IDS_PROPITEM_TXT_014522
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetGhost.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 3600000
+    job_req:
+      - vagrant
+  - id: 23446
+    name: Old Ring
+    name_id: IDS_PROPITEM_TXT_014566
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
+    equip_slot: 20
+    effects:
+      - dst: 10003
+        adj: 5
+      - dst: 72
+        adj: 5
+      - dst: 10003
+        adj: 1
+    durability: 3600000
+    job_req:
+      - vagrant
+  - id: 23463
+    name: Carbonara
+    name_id: IDS_PROPITEM_TXT_014600
+    weight: 1
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_GenFooCarbonara.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
+    mp_restore: 20000
+    cooldown_ms: 1500
+    durability: 7200000
+    job_req:
+      - jester
+  - id: 23464
+    name: Penne
+    name_id: IDS_PROPITEM_TXT_014602
+    weight: 1
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_GenFooPenne.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
+    fp_restore: 20000
+    cooldown_ms: 1500
+    durability: 7200000
+    job_req:
+      - jester
+  - id: 23465
+    name: Lasagna
+    name_id: IDS_PROPITEM_TXT_014604
+    weight: 1
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_GenFooLasagne.dds
+    item_kind2: IK2_FOOD
+    item_kind3: IK3_COOKING
+    hp_restore: 20000
+    cooldown_ms: 1500
+    durability: 7200000
+    job_req:
+      - jester
+  - id: 23499
+    name: Lil' gPotato
+    name_id: IDS_PROPITEM_TXT_014672
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetGpotato-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+    job_req:
+      - jester
+  - id: 23588
+    name: Friendly Baby Kargo
+    name_id: IDS_PROPITEM_TXT_014850
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetBabykargo-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+  - id: 23592
+    name: Lil'gPotato
+    name_id: IDS_PROPITEM_TXT_014858
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetGpotato-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 7200000
+  - id: 23686
+    name: 깨진 문스톤 상자
+    name_id: IDS_PROPITEM_TXT_015064
+    weight: 1
+    price: 400
+    sell_price: 100
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_SysSysScrBxLuck.dds
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
+    equip_slot: 20
+    effects:
+      - dst: 62
+        adj: 100
+      - dst: 11
+        adj: 17
+      - dst: 75
+        adj: 13
+    durability: 50000
+  - id: 23691
+    name: Charming Babushka Doll
+    name_id: IDS_PROPITEM_TXT_015074
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetMatryoshka-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+  - id: 23919
+    name: Mysterious Ring
+    name_id: IDS_PROPITEM_TXT_015531
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_GenJewRinNorRin01.dds
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
+    equip_slot: 20
+    hp_restore: 1000000
+    effects:
+      - dst: 38
+        adj: 1000000
+      - dst: 14
+        adj: 5
+      - dst: 77
+        adj: 51
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23920
+    name: Rudolph Ring
+    name_id: IDS_PROPITEM_TXT_015533
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_RudolphRing.dds
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_RING
+    equip_slot: 20
+    effects:
+      - dst: 1
+        adj: 40
+      - dst: 2
+        adj: 40
+      - dst: 77
+        adj: 51
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23921
+    name: Rudolph Necklace
+    name_id: IDS_PROPITEM_TXT_015535
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_RudolphNecklace.dds
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_NECKLACE
+    equip_slot: 19
+    effects:
+      - dst: 35
+        adj: 1100
+      - dst: 26
+        adj: 400
+      - dst: 77
+        adj: 51
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23922
+    name: Rudolph Earing
+    name_id: IDS_PROPITEM_TXT_015537
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_RudolphEarring.dds
+    item_kind2: IK2_JEWELRY
+    item_kind3: IK3_EARRING
+    equip_slot: 22
+    effects:
+      - dst: 63
+        adj: 400
+      - dst: 3
+        adj: 40
+      - dst: 77
+        adj: 51
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23979
+    name: II_PET_KIMPD_NOTTRADE
+    name_id: IDS_PROPITEM_TXT_015651
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_Petkimpd.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 6570000
+    job_req:
+      - vagrant
+  - id: 24143
+    name: II_PET_BABYCAT
+    name_id: IDS_PROPITEM_TXT_015979
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_BabyCat-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24144
+    name: Flyff Piece (F)
+    name_id: IDS_PROPITEM_TXT_015981
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffPieceF-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24145
+    name: Flyff Piece (L)
+    name_id: IDS_PROPITEM_TXT_015983
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffPieceL-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24146
+    name: Flyff Piece (Y)
+    name_id: IDS_PROPITEM_TXT_015985
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffPieceY-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24147
+    name: Flyff Piece (O)
+    name_id: IDS_PROPITEM_TXT_015987
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffPieceO-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24148
+    name: Flyff Piece (R)
+    name_id: IDS_PROPITEM_TXT_015989
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffPieceR-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24149
+    name: Flyff Piece (U)
+    name_id: IDS_PROPITEM_TXT_015991
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffPieceU-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24150
+    name: Flyff Piece (N)
+    name_id: IDS_PROPITEM_TXT_015993
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffPieceN-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24151
+    name: Flyff Coupon (FLY)
+    name_id: IDS_PROPITEM_TXT_015995
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffCouponFLY-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24152
+    name: Flyff Coupon (FOR)
+    name_id: IDS_PROPITEM_TXT_015997
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffCouponFOR-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24153
+    name: Flyff Coupon (FUN)
+    name_id: IDS_PROPITEM_TXT_015999
+    weight: 1
+    price: 10000
+    sell_price: 2500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 9999
+    icon: Itm_FlyffCouponFUN-32.dds
+    item_kind2: IK2_GEM
+    item_kind3: IK3_GEM
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24182
+    name: Fire Card (S)
+    name_id: IDS_PROPITEM_TXT_016057
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleCandle.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24183
+    name: Water Card (S)
+    name_id: IDS_PROPITEM_TXT_016059
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleRainatk.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24184
+    name: Wind Card (S)
+    name_id: IDS_PROPITEM_TXT_016061
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleBreezeatk.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24185
+    name: Electric Card (S)
+    name_id: IDS_PROPITEM_TXT_016063
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleSparkatk.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24186
+    name: Land Card (S)
+    name_id: IDS_PROPITEM_TXT_016065
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleSandatk.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD2
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24187
+    name: Volcano Card(10%)
+    name_id: IDS_PROPITEM_TXT_016067
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleFlame.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24188
+    name: Ocean Card(10%)
+    name_id: IDS_PROPITEM_TXT_016069
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleRiver.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24189
+    name: Vacuum Card(10%)
+    name_id: IDS_PROPITEM_TXT_016071
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleCyclon.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24190
+    name: Lightening Card(10%)
+    name_id: IDS_PROPITEM_TXT_016073
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleGenerator.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24191
+    name: Earthquake Card(10%)
+    name_id: IDS_PROPITEM_TXT_016075
+    weight: 1
+    price: 20000
+    sell_price: 5000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_GenMatEleDesert.dds
+    item_kind2: IK2_MATERIAL
+    item_kind3: IK3_SOCKETCARD
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24192
+    name: Little Muran
+    name_id: IDS_PROPITEM_TXT_016077
+    weight: 1
+    price: 5000
+    sell_price: 1250
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_BabyCat02-32.dds
+    item_kind2: IK2_GENERAL
+    item_kind3: IK3_PET
+    durability: 4500000
+    job_req:
+      - vagrant

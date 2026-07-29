@@ -15,103 +15,103 @@
   name: Captain Aibatt
 "23":
   file: monsters.yml
-  name: Giant Aibatt
+  name: Small Burudeng
 "24":
   file: monsters.yml
-  name: Small Burudeng
+  name: Burudeng
 "25":
   file: monsters.yml
-  name: Burudeng
+  name: Captain Burudeng
 "26":
   file: monsters.yml
-  name: Captain Burudeng
+  name: Small Pukepuke
 "27":
   file: monsters.yml
-  name: Giant Burudeng
+  name: Pukepuke
 "28":
   file: monsters.yml
-  name: Small Pukepuke
+  name: Captain Pukepuke
 "29":
   file: monsters.yml
-  name: Pukepuke
+  name: Small Doridoma
 "30":
   file: monsters.yml
-  name: Captain Pukepuke
+  name: Doridoma
 "31":
   file: monsters.yml
-  name: Giant Pukepuke
+  name: Captain Doridoma
 "32":
   file: monsters.yml
-  name: Small Doridoma
+  name: Young Lawolf
 "33":
   file: monsters.yml
-  name: Doridoma
+  name: Lawolf
 "34":
   file: monsters.yml
-  name: Captain Doridoma
+  name: Grownup Lawolf
 "35":
   file: monsters.yml
-  name: Giant Doridoma
+  name: Cute Nyangnyang
 "36":
   file: monsters.yml
-  name: Young Lawolf
+  name: Nyangnyang
 "37":
   file: monsters.yml
-  name: Lawolf
+  name: Creep Nyangnyang
 "38":
   file: monsters.yml
-  name: Grownup Lawolf
+  name: Bang
 "39":
   file: monsters.yml
-  name: Giant Lawolf
+  name: Captain Bang
 "40":
   file: monsters.yml
-  name: Cute Nyangnyang
+  name: Boss Bang
 "41":
   file: monsters.yml
-  name: Nyangnyang
+  name: Small Wagsaac
 "42":
   file: monsters.yml
-  name: Creep Nyangnyang
+  name: Wagsaac
 "43":
   file: monsters.yml
-  name: Giant Nyangnyang
+  name: Captain Wagsaac
 "44":
   file: monsters.yml
-  name: Bang
+  name: Rough Wheelem
 "45":
   file: monsters.yml
-  name: Captain Bang
+  name: Wheelem
 "46":
   file: monsters.yml
-  name: Boss Bang
+  name: Bouncing Wheelem
 "47":
   file: monsters.yml
-  name: Giant Bang
+  name: Small Totemia
 "48":
   file: monsters.yml
-  name: Small Wagsaac
+  name: Totemia
 "49":
   file: monsters.yml
-  name: Wagsaac
+  name: Captain Totemia
 "50":
   file: monsters.yml
-  name: Captain Wagsaac
+  name: 1st Class Fefern
 "51":
   file: monsters.yml
-  name: Giant Wagsaac
+  name: Fefern
 "52":
   file: monsters.yml
-  name: Rough Wheelem
+  name: 2nd Class Fefern
 "53":
   file: monsters.yml
-  name: Wheelem
+  name: Stale Mr. Pumpkin
 "54":
   file: monsters.yml
-  name: Bouncing Wheelem
+  name: Mr. Pumpkin
 "55":
   file: monsters.yml
-  name: Giant Wheelem
+  name: Rotten Mr Pumpkin
 "56":
   file: monsters.yml
   name: Small Tombstone Bearer
@@ -123,79 +123,79 @@
   name: Captain Tombstone Bearer
 "59":
   file: monsters.yml
-  name: Giant Tombstone Bearer
+  name: Phantom Basque
 "60":
   file: monsters.yml
-  name: 1st Class Fefern
+  name: Basque
 "61":
   file: monsters.yml
-  name: Fefern
+  name: Lumping Basque
 "62":
   file: monsters.yml
-  name: 2nd Class Fefern
+  name: Maid Cardpuppet
 "63":
   file: monsters.yml
-  name: Giant Fefern
+  name: Cardpuppet
 "64":
   file: monsters.yml
-  name: Red Mantis C
+  name: Manager Cardpuppet
 "65":
   file: monsters.yml
-  name: Red Mantis B
+  name: Small Mage Prankster
 "66":
   file: monsters.yml
-  name: Red Mantis A
+  name: Prankster
 "67":
   file: monsters.yml
-  name: Giant Red Mantis
-"68":
-  file: monsters.yml
-  name: Stale Mr. Pumpkin
-"69":
-  file: monsters.yml
-  name: Mr. Pumpkin
-"70":
-  file: monsters.yml
-  name: Rotten Mr Pumpkin
+  name: Master Mage Prankster
 "71":
   file: monsters.yml
-  name: Giant Mr. Pumpkin
+  name: Giant Aibatt
 "72":
   file: monsters.yml
-  name: Phantom Basque
+  name: Giant Burudeng
 "73":
   file: monsters.yml
-  name: Basque
+  name: Giant Pukepuke
 "74":
   file: monsters.yml
-  name: Lumping Basque
+  name: Giant Doridoma
 "75":
   file: monsters.yml
-  name: Giant Basque
+  name: Giant Lawolf
+"76":
+  file: monsters.yml
+  name: Giant Nyangnyang
+"77":
+  file: monsters.yml
+  name: Giant Bang
+"78":
+  file: monsters.yml
+  name: Giant Wagsaac
+"79":
+  file: monsters.yml
+  name: Giant Wheelem
 "80":
   file: monsters.yml
-  name: Small Mage Prankster
+  name: Giant Totemia
 "81":
   file: monsters.yml
-  name: Prankster
+  name: Giant Fefern
 "82":
   file: monsters.yml
-  name: Master Mage Prankster
+  name: Giant Mr. Pumpkin
 "83":
   file: monsters.yml
-  name: Giantmage Prankster
+  name: Giant Red Mantis
 "84":
   file: monsters.yml
-  name: Maid Cardpuppet
+  name: Giant Basque
 "85":
   file: monsters.yml
-  name: Cardpuppet
+  name: Boss Cardpuppet
 "86":
   file: monsters.yml
-  name: Manager Cardpuppet
-"87":
-  file: monsters.yml
-  name: Boss Cardpuppet
+  name: Giantmage Prankster
 "88":
   file: monsters.yml
   name: Urchin Demian
@@ -241,18 +241,6 @@
 "102":
   file: monsters.yml
   name: Tough Rock Muscle
-"103":
-  file: monsters.yml
-  name: Small Totemia
-"104":
-  file: monsters.yml
-  name: Totemia
-"105":
-  file: monsters.yml
-  name: Captain Totemia
-"106":
-  file: monsters.yml
-  name: Giant Totemia
 "107":
   file: monsters.yml
   name: Small Steam Walker

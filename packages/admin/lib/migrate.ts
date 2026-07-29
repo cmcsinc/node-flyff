@@ -263,9 +263,13 @@ const MIGRATIONS: readonly Migration[] = [
       type INTEGER NOT NULL,
       skill_id INTEGER NOT NULL,
       level INTEGER NOT NULL,
-      total_ms INTEGER NOT NULL,
+      expires_at_ms INTEGER NOT NULL DEFAULT 0,
       UNIQUE(character_id, type, skill_id)
     )`,
+  ]},
+  // 016 — buff timer: persist absolute deadline instead of total duration
+  { column: ['character_buffs', 'expires_at_ms'], sql: [
+    `ALTER TABLE character_buffs ADD COLUMN expires_at_ms INTEGER NOT NULL DEFAULT 0`,
   ]},
 ] as const;
 

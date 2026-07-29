@@ -115,6 +115,20 @@
     letter-spacing: -0.02em;
   }
 
+  /* Tabular numbers everywhere data is aligned in columns (tables, stat tiles). */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Every interactive control gets a pointer cursor + a visible focus ring. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  label[for] {
+    cursor: pointer;
+  }
+
   /* Visible, accent focus rings on keyboard navigation */
   :focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
@@ -239,5 +253,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  /* Press-scale feedback is motion; drop it entirely rather than snapping. */
+  button:active,
+  [role="button"]:active {
+    transform: none !important;
   }
 }

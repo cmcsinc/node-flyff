@@ -520,7 +520,13 @@ export async function compose(): Promise<WorldComposeResult> {
   const pkModeService = new PkModeService({ playerManager, zoneManager });
   const pkModeHandler = new PkModeHandler(playerManager, pkModeService);
 
-  const dropService = new DropService({ resources, itemManager });
+  // `needsItem` lets a slot skip the level-difference nerf when the killer has
+  // an unsatisfied `SetEndCondItem` for that item -- quest pieces stay farmable
+  // after you out-level the mob (C++ regular-drop roll has no level term).
+  const dropService = new DropService({
+    resources, itemManager,
+    needsItem: (killer, itemId) => questTracker.needsItem(killer, itemId),
+  });
   // Duel manager + service -- created before CombatService so the PvP-kill seam
   // can clear active-duel flags on a lethal blow (in addition to revival).
   const duelManager = new DuelManager();

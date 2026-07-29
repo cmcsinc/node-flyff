@@ -61,28 +61,33 @@ export default async function AccountsPage({
       <PageHeader title="Accounts" description={`${filtered.length} of ${rows.length} accounts`} />
 
       {/* Filters */}
-      <form className="flex flex-wrap gap-2" method="GET">
-        <SearchInput name="search" placeholder="Search username..." defaultValue={search} className="w-full sm:w-64" />
-        <Select name="filter" defaultValue={filter} className="w-full sm:w-44">
+      <form className="flex flex-col gap-2 sm:flex-row sm:items-end" method="GET">
+        <SearchInput
+          name="search"
+          placeholder="Search username…"
+          defaultValue={search}
+          className="w-full sm:w-64"
+        />
+        <Select name="filter" defaultValue={filter} aria-label="Filter accounts" className="w-full sm:w-44">
           <option value="all">All Accounts</option>
           <option value="gm">GM Only</option>
           <option value="banned">Banned Only</option>
         </Select>
-        <Button type="submit">Search</Button>
+        <Button type="submit" variant="secondary" className="w-full sm:w-auto">Search</Button>
       </form>
 
       <Card>
         <CardContent className="p-0">
-          <div className="max-h-[70vh] overflow-auto">
+          <div className="max-h-[70vh] overflow-y-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background">
+              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
                 <TableRow>
                   <TableHead className="w-16">ID</TableHead>
                   <TableHead>Username</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead className="text-center">Characters</TableHead>
+                  <TableHead className="hidden md:table-cell">Email</TableHead>
+                  <TableHead className="hidden text-center sm:table-cell">Characters</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Created</TableHead>
+                  <TableHead className="hidden lg:table-cell">Created</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -94,19 +99,23 @@ export default async function AccountsPage({
                       <Link href={`/accounts/${acc.id}`} className="font-medium text-primary hover:underline">
                         {acc.username}
                       </Link>
+                      {/* Email/char-count fold in here below md. */}
+                      <span className="block truncate text-xs text-muted-foreground md:hidden">
+                        {acc.email ?? "no email"} · {acc.charCount} chars
+                      </span>
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{acc.email ?? "—"}</TableCell>
-                    <TableCell className="text-center">{acc.charCount}</TableCell>
+                    <TableCell className="hidden text-muted-foreground md:table-cell">{acc.email ?? "—"}</TableCell>
+                    <TableCell className="hidden text-center sm:table-cell">{acc.charCount}</TableCell>
                     <TableCell>
-                      <div className="flex gap-1">
+                      <div className="flex flex-wrap gap-1">
                         {acc.gm && <Badge variant="gold">GM</Badge>}
                         {acc.banned && <Badge variant="destructive">Banned</Badge>}
                         {!acc.gm && !acc.banned && <Badge variant="success">Active</Badge>}
                       </div>
                     </TableCell>
-                    <TableCell className="text-xs text-muted-foreground">{formatDate(acc.createdAt)}</TableCell>
+                    <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">{formatDate(acc.createdAt)}</TableCell>
                     <TableCell>
-                      <div className="flex justify-end gap-2">
+                      <div className="flex flex-wrap justify-end gap-2">
                         <BanToggleButton id={acc.id} banned={acc.banned} />
                         <GmToggleButton id={acc.id} gm={acc.gm} />
                       </div>

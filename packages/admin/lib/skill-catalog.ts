@@ -1,40 +1,25 @@
 /**
  * Server-side skill catalog resolver.
  *
- * Provides memoized access to skill definitions + icon URL resolution for the
- * admin character-detail UI. Mirrors `item-catalog.ts` — same singleton-promise
- * pattern, same placeholder fallback.
+ * Provides access to skill definitions + icon URL resolution for the admin
+ * character-detail UI, backed by the process-wide cache in
+ * `lib/resource-cache.ts` (loaded once at server boot, not per request).
  *
  * @module lib/skill-catalog
  */
 
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { loadAllResources, type SkillDefinition, type ResourceIndex } from "@flyff/resources";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(__dirname, "..", "..", "..");
-const DATA_DIR = resolve(REPO_ROOT, "packages", "resources", "data");
-
-/** Singleton promise -- resolved once, never re-loaded within the same process. */
-let _catalog: Promise<ResourceIndex> | null = null;
-
-function getCatalog(): Promise<ResourceIndex> {
-  if (!_catalog) {
-    _catalog = loadAllResources(DATA_DIR);
-  }
-  return _catalog;
-}
+import type { SkillDefinition } from "@flyff/resources";
+import { getResourceIndex } from "./resource-cache";
 
 /** Look up a skill definition by numeric id. */
 export async function getSkill(skillId: number): Promise<SkillDefinition | undefined> {
-  const res = await getCatalog();
+  const res = await getResourceIndex();
   return res.skills.skills.get(skillId);
 }
 
 /** All skill definitions as an array (for potential pickers). */
 export async function getAllSkills(): Promise<SkillDefinition[]> {
-  const res = await getCatalog();
+  const res = await getResourceIndex();
   return [...res.skills.skills.values()];
 }
 

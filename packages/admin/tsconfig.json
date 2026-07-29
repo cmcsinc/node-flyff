@@ -19,7 +19,8 @@
       "@/components/*": ["./components/*"],
       "@/lib/*": ["./lib/*"],
       "@flyff/resources": ["../../packages/resources/src/index.ts"],
-      "@flyff/resources/*": ["../../packages/resources/src/*"]
+      "@flyff/resources/*": ["../../packages/resources/src/*"],
+      "@flyff/entities/*": ["../../packages/entities/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

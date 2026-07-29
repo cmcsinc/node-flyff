@@ -33,6 +33,7 @@ import { up as migrationUp012 } from '@flyff/database/migrations/012_item_elemen
 import { up as migrationUp013 } from '@flyff/database/migrations/013_pk_state';
 import { up as migrationUp014 } from '@flyff/database/migrations/014_character_buffs';
 import { up as migrationUp015 } from '@flyff/database/migrations/015_normalize_buffs';
+import { up as migrationUp016 } from '@flyff/database/migrations/016_buff_expires_at';
 import { hashPassword } from '@flyff/core/utils/password';
 
 /**
@@ -60,6 +61,7 @@ const MIGRATIONS = [
   { column: ['characters', 'pk_propensity'], up: migrationUp013 },
   { column: ['characters', 'buffs'], up: migrationUp014 },
   { marker: 'character_buffs', up: migrationUp015 },
+  { column: ['character_buffs', 'expires_at_ms'], up: migrationUp016 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';

@@ -234,7 +234,11 @@
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\target.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\npcBuff.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\changeJob.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\quest\\test\\systems\\questTracker.system.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\quest\\test\\systems\\questTracker.system.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\inventory.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\npc\\test\\handlers\\shop.handler.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\handlers\\shop.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\drop.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\repositories\\buff.repo.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\admin\\test\\dds.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\admin\\test\\exp-percent.test.ts": "pass"
 }

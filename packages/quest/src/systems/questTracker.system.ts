@@ -153,6 +153,25 @@ export class QuestTrackerSystem {
   }
 
   /**
+   * True if `player` has an active quest whose `SetEndCondItem` targets
+   * `itemId` and they still hold fewer than the required count.
+   *
+   * Used by `DropService` to drop the level-difference nerf on quest-collection
+   * items: C++ `CDropItemGenerator::GetAt` (`Project.cpp:189`) has no level term
+   * at all, so a high-level player farming a low-level mob for a quest piece is
+   * not penalized. Once the objective count is met the nerf reapplies.
+   */
+  needsItem(player: CPlayer, itemId: number): boolean {
+    for (const q of player.m_aQuest) {
+      const def = this.deps.quests.byId.get(q.id);
+      if (!def) continue;
+      const need = itemNeed(def, itemId);
+      if (need > 0 && countItem(player, itemId) < need) return true;
+    }
+    return false;
+  }
+
+  /**
    * Movement hook -- set `QUEST_FLAG.PATROL` on each active quest whose
    * `SetEndCondPatrolZone(world, l, t, r, b)` rect contains the player. Emits
    * one SETQUEST per newly-satisfied quest. The world id is not gated here

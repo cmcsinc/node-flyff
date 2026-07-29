@@ -78,10 +78,20 @@ describe('item converter: icon filename populated', () => {
     const items = (weapons.items ?? []) as Item[];
     const withIcon = items.filter((it) => it.icon);
     assert.ok(withIcon.length > 50, 'most weapons reference a .dds icon');
+    // Extension match is case-insensitive: 229 propItem rows spell it `.DDS`.
+    // A case-sensitive check here mirrored the converter bug that dropped every
+    // one of those icons, leaving those items with no art in the admin UI.
     assert.ok(
-      withIcon.every((it) => it.icon!.endsWith('.dds') && !it.icon!.includes('"')),
+      withIcon.every((it) => /\.dds$/i.test(it.icon!) && !it.icon!.includes('"')),
       'icons are bare .dds filenames',
     );
+  });
+
+  it('keeps .DDS-spelled icons (case-insensitive extension)', () => {
+    const armors = parse(readFileSync(resolve(__dirname, '../../data/items/armors.yml'), 'utf8'));
+    const items = (armors.items ?? []) as Item[];
+    const ponycat = items.find((it) => it.id === 4427);
+    assert.equal(ponycat?.icon, 'itm_ArmCloMasBall05.DDS');
   });
 });
 

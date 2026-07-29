@@ -48,12 +48,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AppShellProvider>
           {session ? (
             <div className="flex min-h-screen">
+              {/* Keyboard users can jump past the sidebar to page content. */}
+              <a
+                href="#content"
+                className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
+              >
+                Skip to content
+              </a>
               <SidebarBackdrop />
               <SidebarContainer>
                 <SidebarNav />
               </SidebarContainer>
 
-              <main className="flex min-h-screen flex-1 flex-col lg:pl-64">
+              <main id="content" className="flex min-h-screen flex-1 flex-col lg:pl-64">
                 <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                   <div className="flex h-14 items-center gap-3 px-4 md:px-8">
                     <MobileNavToggle />

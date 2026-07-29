@@ -17,6 +17,8 @@ interface InventoryExplorerProps {
   pickerItems: PickerItem[];
   /** Hide add/remove — read-only compact mode (character-detail tab). */
   readOnly?: boolean;
+  /** Narrow-column layout: equipment + bag stacked vertically, smaller tiles. */
+  compact?: boolean;
 }
 
 /** Hovered tile + its viewport rect, or null when the tooltip is closed. */
@@ -36,6 +38,7 @@ export function InventoryExplorer({
   equipItems,
   pickerItems,
   readOnly = false,
+  compact = false,
 }: InventoryExplorerProps) {
   const router = useRouter();
   const [active, setActive] = React.useState<ActiveTooltip | null>(null);
@@ -85,10 +88,10 @@ export function InventoryExplorer({
         </div>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-[auto_1fr]">
+      <div className={compact ? "flex flex-col gap-3" : "grid gap-4 lg:grid-cols-[auto_1fr]"}>
         {/* Equipment window (paper doll) */}
         <div className="flyff-panel overflow-hidden">
-          <div className="flyff-window-header px-4 py-2 text-sm font-semibold tracking-wide text-foreground">
+          <div className="flyff-window-header px-3 py-1.5 text-xs font-semibold tracking-wide text-foreground sm:px-4 sm:py-2 sm:text-sm">
             Equipment
           </div>
           <EquipmentPaperDoll
@@ -97,24 +100,26 @@ export function InventoryExplorer({
             onLeave={close}
             onRemove={readOnly ? undefined : handleRemove}
             interactive={!readOnly}
+            compact={compact}
           />
         </div>
 
         {/* Inventory window (bag) */}
         <div className="flyff-panel overflow-hidden">
-          <div className="flyff-window-header flex items-center justify-between px-4 py-2 text-sm font-semibold tracking-wide text-foreground">
+          <div className="flyff-window-header flex items-center justify-between px-3 py-1.5 text-xs font-semibold tracking-wide text-foreground sm:px-4 sm:py-2 sm:text-sm">
             <span>Inventory</span>
-            <span className="text-xs font-normal text-muted-foreground">
-              {bagItems.length}/{42} slots
+            <span className="text-[10px] font-normal text-muted-foreground sm:text-xs">
+              {bagItems.length}/{42}
             </span>
           </div>
-          <div className="p-4">
+          <div className={compact ? "p-2" : "p-4"}>
             <InventoryGrid
               items={bagItems}
               onHover={scheduleOpen}
               onLeave={close}
               onRemove={readOnly ? undefined : handleRemove}
               interactive={!readOnly}
+              compact={compact}
             />
           </div>
         </div>

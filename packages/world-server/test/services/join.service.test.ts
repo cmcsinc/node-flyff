@@ -293,7 +293,7 @@ describe('JoinService', () => {
 });
 
 describe('buff persistence (collectPersistedBuffs)', () => {
-  it('collects BUFF_SKILL entries with total duration + filters BUFF_ITEM', () => {
+  it('collects BUFF_SKILL entries with absolute deadline + filters BUFF_ITEM', () => {
     const buffs = new BuffManager(new ParamModel());
     const eff: DstEffect = { dst: DST.STA, adj: 20 };
     buffs.addSkillBuff(150, 4, 3_600_000, [eff], 1_000);   // persisted
@@ -301,7 +301,7 @@ describe('buff persistence (collectPersistedBuffs)', () => {
 
     const result = collectPersistedBuffs({ m_buffs: buffs } as unknown as CPlayer);
     assert.equal(result.length, 1);
-    assert.deepEqual(result[0], { type: BUFF_SKILL, skillId: 150, level: 4, totalMs: 3_600_000 });
+    assert.deepEqual(result[0], { type: BUFF_SKILL, skillId: 150, level: 4, expiresAtMs: 1_000 + 3_600_000 });
   });
 
   it('returns empty array when no buffs are active', () => {
@@ -318,7 +318,7 @@ describe('buff persistence (collectPersistedBuffs)', () => {
       update: async () => {},
     };
     const buffRepo: any = {
-      loadByCharacter: async () => [{ type: BUFF_SKILL, skillId: 150, level: 4, totalMs: 3_600_000 }],
+      loadByCharacter: async () => [{ type: BUFF_SKILL, skillId: 150, level: 4, remainingMs: 900_000 }],
       saveAll: async () => {},
     };
     const svc = new JoinService({

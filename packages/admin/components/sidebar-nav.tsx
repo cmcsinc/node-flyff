@@ -16,6 +16,7 @@ import {
   Map,
   Gem,
   MessageSquareText,
+  Server,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", href: "/", icon: LayoutDashboard },
   { label: "Accounts", href: "/accounts", icon: Users },
   { label: "Characters", href: "/characters", icon: Swords },
+  { label: "Servers", href: "/servers", icon: Server },
   {
     label: "Resources",
     icon: Package,
@@ -75,7 +77,8 @@ function LeafLink({ item }: { item: NavLeaf }) {
       aria-current={active ? "page" : undefined}
       onClick={() => setMobileOpen(false)}
       className={cn(
-        "group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+        // py-2.5 on touch (44px row), tightened on desktop where the pointer is fine.
+        "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2",
         active
           ? "bg-primary/15 text-primary"
           : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
@@ -102,7 +105,7 @@ function GroupNav({ item }: { item: NavGroup }) {
         onClick={() => setOpen(!open)}
         aria-expanded={open}
         className={cn(
-          "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+          "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2",
           childActive
             ? "text-foreground"
             : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
@@ -113,7 +116,7 @@ function GroupNav({ item }: { item: NavGroup }) {
         <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform", !open && "-rotate-90")} />
       </button>
       {open && (
-        <div className="ml-4 mt-1 space-y-0.5 border-l border-sidebar-border pl-3">
+        <div className="ml-4 mt-1 space-y-0.5 border-l border-sidebar-border pl-3" role="group" aria-label={item.label}>
           {item.children.map((child) => (
             <LeafLink key={child.href} item={child} />
           ))}

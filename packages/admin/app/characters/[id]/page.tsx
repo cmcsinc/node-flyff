@@ -5,21 +5,21 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/page-header";
-import { EmptyRow } from "@/components/empty-state";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
 import { formatNumber, jobName, worldName } from "@/lib/utils";
 import { getIk3Label } from "@/lib/game-constants";
-import { getItem, itemIconUrl } from "@/lib/item-catalog";
+import { getAllItems, getItem, itemIconUrl } from "@/lib/item-catalog";
 import { getSkill, skillIconUrl } from "@/lib/skill-catalog";
 import { InventoryExplorer } from "../../inventory/[characterId]/inventory-explorer";
-import type { SlotItem } from "../../inventory/[characterId]/types";
+import { GoldEditor } from "../../inventory/[characterId]/actions";
+import type { PickerItem, SlotItem } from "../../inventory/[characterId]/types";
 import type { SkillSlotItem } from "./skills/types";
+import { resolveQuests } from "./quests/resolve";
 import { SkillExplorer } from "./skills/skill-explorer";
+import { QuestExplorer } from "./quests/quest-explorer";
 import { EditStatsForm } from "./edit-stats";
+import { MeterBar, DataRow } from "@/components/ui/meter";
+import { ResponsiveSections } from "./responsive-sections";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +40,80 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
 
   const resolvedInv = await resolveSlotItems(invItems);
   const resolvedSkills = await resolveSkills(charSkills);
+  const resolvedActiveQuests = await resolveQuests(activeQuests);
+  const resolvedCompletedQuests = await resolveQuests(completedQuests, true);
+
+  // Build picker list for the add-item control (editable inventory).
+  const allItems = await getAllItems();
+  const pickerItems: PickerItem[] = allItems
+    .filter((it) => it.icon)
+    .map((it) => ({
+      id: it.id,
+      name: it.name,
+      iconUrl: itemIconUrl(it.icon),
+      category: it.item_kind3 ? getIk3Label(it.item_kind3) : "",
+      stackSize: it.stack_size,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const bagItems = resolvedInv.filter((i) => i.slot < 42);
+  const equipItems = resolvedInv.filter((i) => i.slot >= 42);
+
+  const inventorySection = (
+    <Card>
+      <CardHeader className="pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <CardTitle className="text-base">Inventory</CardTitle>
+            <CardDescription className="text-xs">
+              {formatNumber(invRow[0]?.gold ?? "0")} gold · {invItems.length} items
+            </CardDescription>
+          </div>
+          <GoldEditor characterId={charId} currentGold={Number(invRow[0]?.gold ?? 0)} />
+        </div>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <InventoryExplorer
+          characterId={charId}
+          bagItems={bagItems}
+          equipItems={equipItems}
+          pickerItems={pickerItems}
+          compact
+        />
+      </CardContent>
+    </Card>
+  );
+
+  const skillsSection = (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base">Skills</CardTitle>
+        <CardDescription className="text-xs">
+          SP: {formatNumber(char.skillPoint)} · {charSkills.length} learned
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <SkillExplorer items={resolvedSkills} />
+      </CardContent>
+    </Card>
+  );
+
+  const questsSection = (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base">Quests</CardTitle>
+        <CardDescription className="text-xs">
+          {activeQuests.length} active · {completedQuests.length} done
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <QuestExplorer
+          activeItems={resolvedActiveQuests}
+          completedItems={resolvedCompletedQuests}
+        />
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div className="space-y-6">
@@ -48,155 +122,92 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
         description={`${jobName(char.class)} · Level ${char.level} · ${worldName(char.worldId)}`}
         backHref="/characters"
         actions={
-          account ? (
-            <Link href={`/accounts/${account.id}`}>
-              <Badge variant="secondary">Account: {account.username}</Badge>
-            </Link>
-          ) : undefined
+          <>
+            <EditStatsForm characterId={char.id} stats={char} />
+            {account ? (
+              <Link href={`/accounts/${account.id}`}>
+                <Badge variant="secondary">Account: {account.username}</Badge>
+              </Link>
+            ) : null}
+          </>
         }
       />
 
-      {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Summary tiles */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card className="card-top-accent">
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Level / EXP</CardTitle></CardHeader>
-          <CardContent><p className="text-xl font-bold">Lv. {char.level}</p><p className="text-xs text-muted-foreground">{formatNumber(char.exp)} exp</p></CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">HP / MP</CardTitle></CardHeader>
-          <CardContent><p className="text-sm">{char.hp} / {char.maxHp} HP</p><p className="text-sm">{char.mp} / {char.maxMp} MP</p></CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Stats</CardTitle></CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-1 text-sm">
-              <span>STR: {char.strength}</span><span>STA: {char.stamina}</span>
-              <span>DEX: {char.dexterity}</span><span>INT: {char.intelligence}</span>
-            </div>
-            <p className="mt-1 text-xs text-muted-foreground">Unspent GP: {char.remainGp}</p>
+          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Level / EXP</CardTitle></CardHeader>
+          <CardContent className="space-y-2">
+            <p className="tabular text-2xl font-bold leading-none">Lv. {char.level}</p>
+            <p className="tabular text-xs text-muted-foreground">{formatNumber(char.exp)} exp in level</p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Position</CardTitle></CardHeader>
+          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Vitals</CardTitle></CardHeader>
+          <CardContent className="space-y-2.5">
+            <MeterBar label="HP" value={char.hp} max={char.maxHp} tone="destructive" />
+            <MeterBar label="MP" value={char.mp} max={char.maxMp} tone="primary" />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Stats</CardTitle></CardHeader>
           <CardContent>
-            <p className="text-sm">{worldName(char.worldId)} (zone {char.zoneId})</p>
-            <p className="text-xs text-muted-foreground">X: {char.x.toFixed(1)} Y: {char.y.toFixed(1)} Z: {char.z.toFixed(1)}</p>
+            <div className="grid grid-cols-2 gap-x-4">
+              <DataRow label="STR" value={char.strength} />
+              <DataRow label="STA" value={char.stamina} />
+              <DataRow label="DEX" value={char.dexterity} />
+              <DataRow label="INT" value={char.intelligence} />
+            </div>
+            <div className="mt-1.5 border-t border-border pt-1.5">
+              <DataRow label="Unspent GP" value={char.remainGp} />
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Position</CardTitle></CardHeader>
+          <CardContent>
+            <DataRow label="World" value={`${worldName(char.worldId)} · zone ${char.zoneId}`} />
+            <DataRow label="X" value={char.x.toFixed(1)} mono />
+            <DataRow label="Y" value={char.y.toFixed(1)} mono />
+            <DataRow label="Z" value={char.z.toFixed(1)} mono />
           </CardContent>
         </Card>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">PK State</CardTitle></CardHeader>
+          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">PK state</CardTitle></CardHeader>
           <CardContent>
-            <div className="space-y-1 text-sm">
-              <p>Propensity: {char.pkPropensity}</p>
-              <p>Value: {char.pkValue}</p>
-              <p>PK Exp: {char.pkExp}</p>
-            </div>
+            <DataRow label="Propensity" value={char.pkPropensity} />
+            <DataRow label="Value" value={char.pkValue} />
+            <DataRow label="PK exp" value={char.pkExp} />
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Skills</CardTitle></CardHeader>
+          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Progression</CardTitle></CardHeader>
           <CardContent>
-            <p className="text-sm">SP: {char.skillPoint} (earned: {char.skillLevel})</p>
-            <p className="text-sm">{charSkills.length} learned skills</p>
+            <DataRow label="Skill points" value={formatNumber(char.skillPoint)} />
+            <DataRow label="SP earned (lifetime)" value={formatNumber(char.skillLevel)} />
+            <DataRow label="Skills learned" value={charSkills.length} />
+            <DataRow label="Active quests" value={activeQuests.length} />
           </CardContent>
         </Card>
       </div>
 
-      <div className="flex items-center justify-between rounded-lg border border-border bg-card/50 p-4">
-        <h2 className="text-base font-semibold">Edit Character Stats</h2>
-        <EditStatsForm characterId={char.id} stats={char} />
-      </div>
-
-      <Tabs defaultValue="inventory">
-        <TabsList>
-          <TabsTrigger value="inventory">Inventory ({invItems.length})</TabsTrigger>
-          <TabsTrigger value="skills">Skills ({charSkills.length})</TabsTrigger>
-          <TabsTrigger value="quests">Quests ({activeQuests.length} active)</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="inventory">
-          <Card>
-            <CardHeader>
-              <CardTitle>Inventory</CardTitle>
-              <CardDescription>
-                Gold: {formatNumber(invRow[0]?.gold ?? "0")} · {invItems.length} items · hover for stats
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <InventoryExplorer
-                characterId={charId}
-                bagItems={resolvedInv.filter((i) => i.slot < 42)}
-                equipItems={resolvedInv.filter((i) => i.slot >= 42)}
-                pickerItems={[]}
-                readOnly
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="skills">
-          <Card>
-            <CardHeader>
-              <CardTitle>Skills</CardTitle>
-              <CardDescription>
-                SP: {formatNumber(char.skillPoint)} · {charSkills.length} learned skills · hover for stats
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <SkillExplorer items={resolvedSkills} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="quests">
-          <Card>
-            <CardHeader>
-              <CardTitle>Active Quests</CardTitle>
-              <CardDescription>{completedQuests.length} completed</CardDescription>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="max-h-[60vh] overflow-auto">
-                <Table>
-                  <TableHeader className="sticky top-0 bg-background">
-                    <TableRow>
-                      <TableHead>Quest ID</TableHead>
-                      <TableHead>State</TableHead>
-                      <TableHead className="text-right">Kill 0</TableHead>
-                      <TableHead className="text-right">Kill 1</TableHead>
-                      <TableHead>Time</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {activeQuests.map((q) => (
-                      <TableRow key={q.id}>
-                        <TableCell>{q.questId}</TableCell>
-                        <TableCell><Badge variant="secondary">{q.state}</Badge></TableCell>
-                        <TableCell className="text-right">{q.killNpcNum0}</TableCell>
-                        <TableCell className="text-right">{q.killNpcNum1}</TableCell>
-                        <TableCell>{q.time}</TableCell>
-                      </TableRow>
-                    ))}
-                    {activeQuests.length === 0 && (
-                      <EmptyRow colSpan={5}>No active quests</EmptyRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      <ResponsiveSections
+        sections={[
+          { key: "inventory", label: "Inventory", badge: invItems.length, content: inventorySection },
+          { key: "skills", label: "Skills", badge: charSkills.length, content: skillsSection },
+          { key: "quests", label: "Quests", badge: activeQuests.length, content: questsSection },
+        ]}
+      />
     </div>
   );
 }
 
 /**
- * Resolve inventory DB rows into rich `SlotItem`s for the read-only grid. Shared
- * shape with the dedicated inventory page so the same client components render
- * both surfaces.
+ * Resolve inventory DB rows into rich `SlotItem`s for the InventoryExplorer.
+ * Shared shape with the standalone inventory page.
  */
 async function resolveSlotItems(
   rows: Array<{

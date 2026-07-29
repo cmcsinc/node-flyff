@@ -18,7 +18,7 @@ server-side edits don't touch the client's files.
 | File | Enc | Produces |
 | --- | --- | --- |
 | `propMover.txt` + `propMover.txt.txt` + `defineObj.h` | UTF-8 / UTF-16LE | `data/movers/{monsters,npcs,player}.yml` |
-| `propItem.txt` + `propItem.txt.txt` + `defineItem.h` | UTF-8 / UTF-16LE | `data/items/{weapons,armors,consumables,materials}.yml` |
+| `Spec_Item.txt` + `propItem.txt.txt` + `defineItem.h` | UTF-8 / UTF-16LE | `data/items/{weapons,armors,consumables,materials,questitems}.yml` (v19 superset of `propItem.txt`; see `converters/items.ts`) |
 | `propSkill.txt` + `propSkill.txt.txt` + `defineSkill.h` | UTF-16LE | `data/skills/<job>.yml` |
 | `WorldDialog.txt` | UTF-8 | `data/dialogues/_strings.yml` |
 | `character.inc` | UTF-16LE | `data/dialogues/_npc-map.yml` (block key → `szNpc` prefix) |

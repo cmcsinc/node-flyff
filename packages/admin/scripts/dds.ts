@@ -255,6 +255,29 @@ export function decodeDds(buf: Buffer): DecodedImage {
   throw new Error(`Unsupported DDS pixel format (flags=0x${pfFlags.toString(16)})`);
 }
 
+/**
+ * Punch out the client's D3D color key: opaque magenta (`0xffff00ff`) means
+ * "transparent", not "pink". The client passes that key to
+ * `D3DXCreateTextureFromFileInMemoryEx` for every icon
+ * (`game/source/_Common/Item.cpp:113`, `lordskill.cpp:65`), so the alpha bit in
+ * these A1R5G5B5 surfaces is set on *all* pixels and carries no information.
+ * Without this the PNG keeps the magenta and the UI shows a purple background.
+ *
+ * Exact-match only, mirroring D3DX color-key semantics.
+ */
+export function applyColorKey(img: DecodedImage, key = { r: 255, g: 0, b: 255 }): DecodedImage {
+  const { data } = img;
+  for (let p = 0; p < data.length; p += 4) {
+    if (data[p] === key.r && data[p + 1] === key.g && data[p + 2] === key.b) {
+      data[p] = 0;
+      data[p + 1] = 0;
+      data[p + 2] = 0;
+      data[p + 3] = 0;
+    }
+  }
+  return img;
+}
+
 // --- PNG encoder ----------------------------------------------------------
 
 const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);

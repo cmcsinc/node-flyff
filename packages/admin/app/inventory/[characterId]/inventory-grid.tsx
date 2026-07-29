@@ -10,6 +10,8 @@ interface InventoryGridProps {
   onLeave?: () => void;
   onRemove?: (slot: number, item: SlotItem) => void;
   interactive?: boolean;
+  /** Narrow-column mode: 6 cols with 34px tiles. */
+  compact?: boolean;
 }
 
 /**
@@ -23,17 +25,20 @@ export function InventoryGrid({
   onLeave,
   onRemove,
   interactive = true,
+  compact = false,
 }: InventoryGridProps) {
   const bySlot = new Map<number, SlotItem>();
   for (const it of items) bySlot.set(it.slot, it);
 
+  const tileSize = compact ? 34 : 42;
+
   return (
-    <div className="grid grid-cols-8 gap-1.5 sm:grid-cols-10">
+    <div className="grid grid-cols-6 gap-1.5">
       {Array.from({ length: BAG_SLOTS }, (_, slot) => {
         const item = bySlot.get(slot);
         return (
           <div key={slot} className="group relative">
-            <ItemTile item={item} slot={slot} size={42} onHover={onHover} onLeave={onLeave} />
+            <ItemTile item={item} slot={slot} size={tileSize} onHover={onHover} onLeave={onLeave} />
             {interactive && item && onRemove && (
               <button
                 type="button"
@@ -42,7 +47,7 @@ export function InventoryGrid({
                   onRemove(item.slot, item);
                 }}
                 aria-label={`Remove ${item.name}`}
-                className="absolute -right-1.5 -top-1.5 hidden h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-white shadow group-hover:flex hover:bg-destructive/80"
+                className="absolute -right-1 -top-1 hidden h-3.5 w-3.5 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-white shadow group-hover:flex hover:bg-destructive/80"
               >
                 ×
               </button>

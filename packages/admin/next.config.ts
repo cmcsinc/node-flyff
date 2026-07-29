@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 loadEnvConfig(resolve(__dirname, "..", ".."));
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@flyff/core", "@flyff/database", "@flyff/resources"],
+  transpilePackages: ["@flyff/core", "@flyff/database", "@flyff/resources", "@flyff/entities"],
   serverExternalPackages: ["better-sqlite3"],
   eslint: {
     ignoreDuringBuilds: true,

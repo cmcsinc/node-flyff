@@ -65,6 +65,8 @@ interface EquipmentPaperDollProps {
   onLeave?: () => void;
   onRemove?: (slot: number, item: SlotItem) => void;
   interactive?: boolean;
+  /** Narrow-column mode: 36px tiles, tighter spacing. */
+  compact?: boolean;
 }
 
 export function EquipmentPaperDoll({
@@ -73,16 +75,20 @@ export function EquipmentPaperDoll({
   onLeave,
   onRemove,
   interactive = true,
+  compact = false,
 }: EquipmentPaperDollProps) {
   const byPart = new Map<number, SlotItem>();
   for (const it of items) byPart.set(it.slot - MAX_INVENTORY, it);
+
+  const tileSize = compact ? 36 : 46;
+  const labelMaxW = compact ? "max-w-[44px]" : "max-w-[56px]";
 
   const cell = (def: SlotDef) => {
     const item = byPart.get(def.part);
     return (
       <div
         key={def.part}
-        className="flex flex-col items-center gap-1"
+        className="flex flex-col items-center gap-0.5"
         style={{ gridColumn: def.col, gridRow: def.row }}
       >
         <div className="group relative">
@@ -90,7 +96,7 @@ export function EquipmentPaperDoll({
             item={item}
             slot={MAX_INVENTORY + def.part}
             emptyLabel={def.label}
-            size={46}
+            size={tileSize}
             onHover={onHover}
             onLeave={onLeave}
           />
@@ -102,13 +108,13 @@ export function EquipmentPaperDoll({
                 onRemove(item.slot, item);
               }}
               aria-label={`Remove ${item.name}`}
-              className="absolute -right-1.5 -top-1.5 hidden h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-white shadow group-hover:flex hover:bg-destructive/80"
+              className="absolute -right-1 -top-1 hidden h-3.5 w-3.5 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-white shadow group-hover:flex hover:bg-destructive/80"
             >
               ×
             </button>
           )}
         </div>
-        <span className="max-w-[56px] truncate text-[9px] text-muted-foreground/70" title={def.label}>
+        <span className={`${labelMaxW} truncate text-[8px] text-muted-foreground/70`} title={def.label}>
           {def.label}
         </span>
       </div>
@@ -122,9 +128,9 @@ export function EquipmentPaperDoll({
   };
 
   return (
-    <div className="relative p-6">
-      <BodySilhouette />
-      <div className="relative grid gap-y-2 gap-x-4" style={gridStyle}>
+    <div className={compact ? "relative p-3" : "relative p-6"}>
+      {!compact && <BodySilhouette />}
+      <div className="relative grid gap-y-1 gap-x-2" style={gridStyle}>
         {LAYOUT.map(cell)}
       </div>
     </div>

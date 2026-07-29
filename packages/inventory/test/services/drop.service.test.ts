@@ -110,6 +110,74 @@ describe('DropService', () => {
     assert.equal(spawns.length, 0);
   });
 
+  it('needsItem bypasses the level nerf for an unsatisfied quest item', () => {
+    // Same setup as the suppression test above (d=49 -> factor 0.1), but the
+    // killer is on a quest for item 2950 -> gate 1.0 instead of 0.1.
+    // int(3e9)=200M; prob*0.1 = 30M would miss, prob*1.0 = 300M hits.
+    const mover = CMover.spawn(0x40000003, { modelIndex: 21, name: 'Aibatt', level: 1, hp: 10, expValue: 1 }, { x: 0, y: 0, z: 0 }, 1);
+    const player = CPlayer.fromRow(makeRow({ level: 50 }), { write: () => true });
+    mover.m_idEnemies.set(1, 10);
+
+    const spawns: Array<{ itemId: number; count: number; ownerId: number }> = [];
+    const itemManager = { spawn: (_i: { itemId: number; count: number; ownerId: number }) => { spawns.push(_i); return 0; } };
+    const resources = {
+      drops: {
+        drops: new Map([[21, {
+          key: 'MI_AIBATT2', modelIdx: 21, maxItem: 2, gold: null,
+          items: [{ itemId: 2950, prob: 300_000_000, level: 0, count: 1 }],
+        }]]),
+        probScale: 3_000_000_000,
+      },
+    } as unknown as Pick<ResourceIndex, 'drops'>;
+
+    const rng = scriptedRng([200_000_000], [0]);
+    // Without the seam: 200M >= 300M*0.1 -> miss.
+    const nerfed = new DropService({ resources, itemManager: itemManager as never, rng: scriptedRng([200_000_000], [0]) });
+    nerfed.roll(mover, player);
+    assert.equal(spawns.length, 0, 'level nerf still applies to non-quest items');
+
+    // With the seam reporting an unsatisfied quest for 2950: 200M < 300M*1.0 -> hit.
+    const svc = new DropService({
+      resources, itemManager: itemManager as never, rng,
+      needsItem: (_p, itemId) => itemId === 2950,
+    });
+    svc.roll(mover, player);
+    assert.equal(spawns.length, 1);
+    assert.equal(spawns[0]!.itemId, 2950);
+  });
+
+  it('spawns piles at the mover XZ but the killer (ground) Y', () => {
+    // Monster m_vPos.y is frozen at its spawn-point Y (no server heightmap), so
+    // using it puts piles in the air and the client never ground-snaps them.
+    const mover = CMover.spawn(0x40000004, { modelIndex: 20, name: 'Aibatt', level: 1, hp: 30, expValue: 2 }, { x: 5, y: 300, z: 7 }, 1);
+    const player = CPlayer.fromRow(makeRow({ y: 71.5 }), { write: () => true });
+    player.m_vPos = { x: 4, y: 71.5, z: 6 };
+    mover.m_idEnemies.set(1, 30);
+
+    const spawns: Array<{ pos: { x: number; y: number; z: number } }> = [];
+    const itemManager = { spawn: (i: { pos: { x: number; y: number; z: number } }) => { spawns.push(i); return 0; } };
+    const resources = {
+      drops: {
+        drops: new Map([[20, {
+          key: 'MI_AIBATT1', modelIdx: 20, maxItem: 2,
+          gold: { min: 10, max: 10 },
+          items: [{ itemId: 2950, prob: 300_000_000, level: 0, count: 1 }],
+        }]]),
+        probScale: 3_000_000_000,
+      },
+    } as unknown as Pick<ResourceIndex, 'drops'>;
+
+    const svc = new DropService({ resources, itemManager: itemManager as never, rng: scriptedRng([0], [10]) });
+    svc.roll(mover, player);
+
+    assert.equal(spawns.length, 2);
+    for (const s of spawns) {
+      assert.equal(s.pos.x, 5, 'XZ stays at the corpse');
+      assert.equal(s.pos.z, 7);
+      assert.equal(s.pos.y, 71.5, 'Y comes from the killer (on the ground)');
+    }
+  });
+
   it('returns no spawns when the mover has no drop table', () => {
     const mover = CMover.spawn(0x40000002, { modelIndex: 999, name: 'X', level: 1, hp: 1, expValue: 0 }, { x: 0, y: 0, z: 0 }, 1);
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
