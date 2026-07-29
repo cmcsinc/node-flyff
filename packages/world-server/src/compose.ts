@@ -102,7 +102,7 @@ import { NpcBuffHandler } from '@flyff/npc';
 import { RemoveQuestHandler } from '@flyff/quest';
 import { QuestCheckHandler } from '@flyff/quest';
 import { QuestHelperHandler } from '@flyff/quest';
-import { NoticeSerializer } from './net/snapshot/notice.serializer';
+import { NoticeSerializer, buildGoldText } from './net/snapshot/notice.serializer';
 import { JournalReplayer } from './systems/journalReplayer';
 import { registerReplayers } from './systems/journalReplayers';
 import { QuestTrackerSystem } from '@flyff/quest';
@@ -469,6 +469,8 @@ export async function compose(): Promise<WorldComposeResult> {
   const lootService = new LootService({
     inventoryService, itemManager, playerManager, zoneManager,
     onAcquireItem: (player, itemId, count) => notifyItemAcquire(player, itemId, count),
+    onGoldPickup: (player, plus, total) =>
+      playerManager.sendTo(player, buildGoldText(player.m_idPlayer, plus, total)),
     sameParty: (a, b) => {
       const pa = partyManager.getByMember(a);
       return pa !== undefined && pa.members.includes(b);
