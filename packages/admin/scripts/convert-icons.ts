@@ -22,7 +22,7 @@ import { existsSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadAllResources } from '@flyff/resources';
-import { decodeDds, encodePng } from './dds.js';
+import { decodeDds, encodePng, applyColorKey } from './dds.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(__dirname, '..');
@@ -51,6 +51,15 @@ interface Tally {
 async function findDds(icon: string): Promise<string | null> {
   for (const dir of DDS_DIRS) {
     const candidate = join(dir, icon);
+    if (existsSync(candidate)) return candidate;
+  }
+  // Pet cages ship per-grade art only: `Itm_PetUnicorn01_00/_01/_02.dds` with no
+  // base file. The client rewrites the name at draw time from the pet's level
+  // (`game/source/_Common/Item.cpp:95-111`); with no pet instance in the admin
+  // panel, fall back to the lowest grade (`_00`, PL_D/PL_C).
+  const graded = icon.replace(/(\.dds)$/i, '_00$1');
+  for (const dir of DDS_DIRS) {
+    const candidate = join(dir, graded);
     if (existsSync(candidate)) return candidate;
   }
   return null;
@@ -90,7 +99,7 @@ async function main(): Promise<void> {
 
     try {
       const buf = await readFile(ddsPath);
-      const img = decodeDds(buf);
+      const img = applyColorKey(decodeDds(buf));
       const png = encodePng(img);
       await writeFile(outPath, png);
       tally.converted++;

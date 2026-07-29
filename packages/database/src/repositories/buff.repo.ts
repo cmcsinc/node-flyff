@@ -2,8 +2,8 @@ import type { Knex } from '../types';
 
 /**
  * One persisted active buff row (C++ `IBuff` → `SaveSkillInfluence` 4-int
- * shape: `{ type, id, level, total }`). `totalMs` is the originally-applied
- * TOTAL duration — the timer resets to full on relog.
+ * shape: `{ type, id, level, total }`, with the 4th field re-purposed from
+ * total duration to an absolute deadline — see migration `016`).
  */
 export interface BuffRow {
   readonly id: number;
@@ -14,19 +14,36 @@ export interface BuffRow {
   readonly skill_id: number;
   /** Skill level (dwLevel). 0 for item buffs. */
   readonly level: number;
-  /** Originally-applied total duration in ms (GetTotal). */
-  readonly total_ms: number;
+  /** Absolute expiry timestamp in epoch ms (`inst + total`). */
+  readonly expires_at_ms: number;
 }
 
 /**
  * Domain view returned by {@link BuffRepository.loadByCharacter} — strips the
  * DB surrogate key and FK, keeping only the fields the service layer needs.
+ *
+ * `remainingMs` is computed at load time from the persisted deadline, so a
+ * buff's countdown survives relog instead of resetting to full. Rows already
+ * lapsed are filtered out by the repository, so `remainingMs > 0` always.
  */
 export interface PersistedBuff {
   readonly type: number;
   readonly skillId: number;
   readonly level: number;
-  readonly totalMs: number;
+  /** Milliseconds left until expiry, at the moment of load. */
+  readonly remainingMs: number;
+}
+
+/**
+ * Write-side view accepted by {@link BuffRepository.saveAll} — the caller passes
+ * the absolute deadline it already tracks (`ActiveBuff.expiresAtMs`).
+ */
+export interface PersistableBuff {
+  readonly type: number;
+  readonly skillId: number;
+  readonly level: number;
+  /** Absolute expiry timestamp in epoch ms. */
+  readonly expiresAtMs: number;
 }
 
 /**
@@ -44,20 +61,25 @@ export class BuffRepository {
   constructor(private db: Knex) {}
 
   /**
-   * Load all active buffs for a character.
+   * Load all still-active buffs for a character, converting the persisted
+   * deadline into the remaining duration. Rows whose deadline already passed
+   * are skipped (and left for the next `saveAll` to prune).
    *
    * @param characterId - Character ID
-   * @returns Persisted buffs (empty if none)
+   * @param nowMs - Reference clock (defaults to `Date.now()`); injectable for tests
+   * @returns Persisted buffs with `remainingMs > 0` (empty if none)
    */
-  async loadByCharacter(characterId: number): Promise<PersistedBuff[]> {
+  async loadByCharacter(characterId: number, nowMs = Date.now()): Promise<PersistedBuff[]> {
     const rows: BuffRow[] = await this.db('character_buffs')
       .where({ character_id: characterId });
-    return rows.map((r) => ({
-      type: r.type,
-      skillId: r.skill_id,
-      level: r.level,
-      totalMs: r.total_ms,
-    }));
+    return rows
+      .map((r) => ({
+        type: r.type,
+        skillId: r.skill_id,
+        level: r.level,
+        remainingMs: r.expires_at_ms - nowMs,
+      }))
+      .filter((b) => b.remainingMs > 0);
   }
 
   /**
@@ -70,7 +92,7 @@ export class BuffRepository {
    * @param characterId - Character ID
    * @param buffs - Active buffs to persist (only BUFF_SKILL entries)
    */
-  async saveAll(characterId: number, buffs: PersistedBuff[]): Promise<void> {
+  async saveAll(characterId: number, buffs: PersistableBuff[]): Promise<void> {
     await this.db.transaction(async (trx: any) => {
       await trx('character_buffs').where({ character_id: characterId }).del();
       if (buffs.length === 0) return;
@@ -79,7 +101,7 @@ export class BuffRepository {
         type: b.type,
         skill_id: b.skillId,
         level: b.level,
-        total_ms: b.totalMs,
+        expires_at_ms: b.expiresAtMs,
       }));
       await trx('character_buffs').insert(rows);
     });

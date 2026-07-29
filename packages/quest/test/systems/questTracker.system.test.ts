@@ -193,13 +193,46 @@ describe('QuestTrackerSystem', () => {
 
   // --- Quest-item drops (onKill -> roll -> addItem -> CREATEITEM/UPDATE_ITEM) ---
 
+  // --- needsItem (DropService level-nerf bypass seam) ---
+
+  it('needsItem is true while an active SetEndCondItem quest is unsatisfied', () => {
+    const { def } = itemQuest(7, 38, 6001, 5, 1_500_000_000); // need 5
+    const player = mkPlayer({
+      m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
+      m_Inventory: [{ itemId: 6001, count: 2 }, ...new Array(72).fill(null)] as never,
+    });
+    const { pm } = fakePm([player]);
+    const t = new QuestTrackerSystem({ quests: mkQuests([def]), playerManager: pm });
+    assert.equal(t.needsItem(player, 6001), true);
+    assert.equal(t.needsItem(player, 9999), false, 'unrelated item');
+  });
+
+  it('needsItem is false once the objective count is held', () => {
+    const { def } = itemQuest(7, 38, 6001, 5, 1_500_000_000);
+    const player = mkPlayer({
+      m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
+      m_Inventory: [{ itemId: 6001, count: 5 }, ...new Array(72).fill(null)] as never,
+    });
+    const { pm } = fakePm([player]);
+    const t = new QuestTrackerSystem({ quests: mkQuests([def]), playerManager: pm });
+    assert.equal(t.needsItem(player, 6001), false);
+  });
+
+  it('needsItem is false with no active quest for the item', () => {
+    const { def } = itemQuest(7, 38, 6001, 5, 1_500_000_000);
+    const player = mkPlayer({ m_aQuest: [] });
+    const { pm } = fakePm([player]);
+    const t = new QuestTrackerSystem({ quests: mkQuests([def]), playerManager: pm });
+    assert.equal(t.needsItem(player, 6001), false);
+  });
+
   it('onKill drops a quest item on a successful roll and notifies CREATEITEM', () => {
     const { def, drop } = itemQuest(7, 38, 6001, 5, 1_500_000_000); // 50% roll
     const player = mkPlayer({
       m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
     });
     const { pm, sent } = fakePm([player]);
-    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const { inv, calls } = fakeInv({ ok: true, changes: [{ slot: 0, objid: 0, itemId: 6001, count: 1, isNew: true }] });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
       quests: mkQuests([def], drops), playerManager: pm,
@@ -217,7 +250,7 @@ describe('QuestTrackerSystem', () => {
       m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
     });
     const { pm, sent } = fakePm([player]);
-    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const { inv, calls } = fakeInv({ ok: true, changes: [{ slot: 0, objid: 0, itemId: 6001, count: 1, isNew: true }] });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
       quests: mkQuests([def], drops), playerManager: pm,
@@ -237,7 +270,7 @@ describe('QuestTrackerSystem', () => {
       m_Inventory: Object.assign(new Array(73).fill(null), { 0: { itemId: 6001, count: 1 } }),
     });
     const { pm } = fakePm([player]);
-    const { inv, calls } = fakeInv({ ok: true, slot: 1, itemId: 6001, count: 5, isNew: true });
+    const { inv, calls } = fakeInv({ ok: true, changes: [{ slot: 1, objid: 1, itemId: 6001, count: 5, isNew: true }] });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
       quests: mkQuests([def], drops), playerManager: pm,
@@ -257,7 +290,7 @@ describe('QuestTrackerSystem', () => {
       m_Inventory: Object.assign(new Array(73).fill(null), { 0: { itemId: 6001, count: 2 } }), // == need
     });
     const { pm } = fakePm([player]);
-    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const { inv, calls } = fakeInv({ ok: true, changes: [{ slot: 0, objid: 0, itemId: 6001, count: 1, isNew: true }] });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
       quests: mkQuests([def], drops), playerManager: pm,
@@ -271,7 +304,7 @@ describe('QuestTrackerSystem', () => {
     const { def, drop } = itemQuest(7, 38, 6001, 5, 3_000_000_000);
     const player = mkPlayer({ m_aQuest: [] }); // no active quest
     const { pm, sent } = fakePm([player]);
-    const { inv, calls } = fakeInv({ ok: true, slot: 0, itemId: 6001, count: 1, isNew: true });
+    const { inv, calls } = fakeInv({ ok: true, changes: [{ slot: 0, objid: 0, itemId: 6001, count: 1, isNew: true }] });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
       quests: mkQuests([def], drops), playerManager: pm,
@@ -288,7 +321,7 @@ describe('QuestTrackerSystem', () => {
       m_aQuest: [{ state: 0, time: 0, id: 7, killNpcNum: [0, 0], flags: 0 } as never],
     });
     const { pm, sent } = fakePm([player]);
-    const { inv } = fakeInv({ ok: true, slot: 3, itemId: 6001, count: 2, isNew: false });
+    const { inv } = fakeInv({ ok: true, changes: [{ slot: 3, objid: 3, itemId: 6001, count: 2, isNew: false }] });
     const drops = new Map<number, QuestDrop[]>([[38, [drop]]]);
     new QuestTrackerSystem({
       quests: mkQuests([def], drops), playerManager: pm,

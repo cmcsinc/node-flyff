@@ -21,7 +21,7 @@ import { existsSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadAllResources } from '@flyff/resources';
-import { decodeDds, encodePng } from './dds.js';
+import { decodeDds, encodePng, applyColorKey } from './dds.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(__dirname, '..');
@@ -87,7 +87,7 @@ async function main(): Promise<void> {
 
     try {
       const buf = await readFile(ddsPath);
-      const img = decodeDds(buf);
+      const img = applyColorKey(decodeDds(buf));
       const png = encodePng(img);
       await writeFile(outPath, png);
       tally.converted++;

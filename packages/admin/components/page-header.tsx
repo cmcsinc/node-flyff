@@ -18,22 +18,22 @@ interface PageHeaderProps {
  */
 export function PageHeader({ title, description, backHref, actions, className }: PageHeaderProps) {
   return (
-    <div className="space-y-3">
+    <div className={cn("space-y-3", className)}>
       {backHref && (
         <Link
           href={backHref}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-primary"
+          className="-ml-1 inline-flex items-center gap-1.5 rounded-md px-1 py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
         </Link>
       )}
-      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-4">
         <div className="min-w-0">
-          <h1 className="truncate text-2xl font-bold tracking-tight md:text-3xl">{title}</h1>
+          <h1 className="truncate text-xl font-bold tracking-tight sm:text-2xl md:text-3xl">{title}</h1>
           {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
         </div>
-        {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+        {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
       </div>
     </div>
   );

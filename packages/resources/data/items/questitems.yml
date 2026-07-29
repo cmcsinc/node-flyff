@@ -571,6 +571,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueLawToo.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -586,6 +587,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQuePukeKl.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -601,6 +603,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueFefeLe.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -616,6 +619,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueBangCh.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -631,6 +635,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueNpcld.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -646,6 +651,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 20
+    icon: Itm_SysSysQueNpcld.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
@@ -964,7 +970,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLeygall.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -980,7 +986,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRadora.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -996,7 +1002,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLemeat.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1012,7 +1018,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSteamW.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1028,7 +1034,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSteamT.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1044,7 +1050,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueKniMin.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1060,7 +1066,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueNyaNya.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1076,7 +1082,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueUnkLet.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1092,7 +1098,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueUnkID.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1108,7 +1114,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1124,7 +1130,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueTarinr.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1140,7 +1146,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueAstrop.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1156,7 +1162,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMoonpa.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1172,7 +1178,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueShinst.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1188,7 +1194,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRattoo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1204,7 +1210,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSnakeb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1220,7 +1226,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSprinp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1236,7 +1242,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueTestim.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1252,7 +1258,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBigblu.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1268,7 +1274,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSealed.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1284,7 +1290,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueNerbal.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1300,7 +1306,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMedala.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1316,7 +1322,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFaithp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1332,7 +1338,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQuePardon.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1348,7 +1354,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQuePromis.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1364,7 +1370,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSilver.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1380,7 +1386,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHolybr.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1396,7 +1402,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFirefe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1412,7 +1418,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueCrestm.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1428,7 +1434,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueTroupe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1444,7 +1450,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRecopa.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1460,7 +1466,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHeabon.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1476,7 +1482,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueClockm.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1492,7 +1498,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBatpol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1508,7 +1514,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMiadol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1524,7 +1530,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFPumpK.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1540,7 +1546,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFRecop.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1556,7 +1562,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFuriou.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1572,7 +1578,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueCardri.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1588,7 +1594,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRangla.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1604,7 +1610,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueKnight.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1620,7 +1626,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueDroil.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1636,7 +1642,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueGuardi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1652,7 +1658,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueAmpere.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1668,7 +1674,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSycale.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1684,7 +1690,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMongte.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1700,7 +1706,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBombTi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1716,7 +1722,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueReqFor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1732,7 +1738,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFlaSto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1748,7 +1754,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSaiSto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1764,7 +1770,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueDarSto.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1780,7 +1786,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQuePrfCon.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1796,7 +1802,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRecGot.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1812,7 +1818,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueStrClo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1828,7 +1834,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueUnkMar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1844,7 +1850,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueUnkClo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1860,7 +1866,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueTroHis.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1876,7 +1882,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueExmDat.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1892,7 +1898,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueAncBoo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1908,7 +1914,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBlkGem.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1924,7 +1930,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRedGem.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1940,7 +1946,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBkLaol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1956,7 +1962,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueScrGot.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1972,7 +1978,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife01.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -1988,7 +1994,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife02.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2004,7 +2010,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife03.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2020,7 +2026,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife04.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2036,7 +2042,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife05.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2052,7 +2058,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife06.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2068,7 +2074,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHTrace01.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2084,7 +2090,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHTrace02.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2100,7 +2106,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHTrace03.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2116,7 +2122,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHTrace04.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2132,7 +2138,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHTrace05.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2148,7 +2154,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHTrace06.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2164,7 +2170,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife01.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2180,7 +2186,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife02.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2196,7 +2202,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife03.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2212,7 +2218,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife04.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2228,7 +2234,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife05.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2244,7 +2250,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHLife06.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2260,7 +2266,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueVenSta.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2276,7 +2282,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLuelRi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2292,7 +2298,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueChaCha.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2308,7 +2314,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueOliSig.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2324,7 +2330,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBulSig.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2340,7 +2346,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLoSign.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2356,7 +2362,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHeroAu.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2372,7 +2378,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBkskil.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2388,7 +2394,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHeadRB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2404,7 +2410,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLudSaf.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2420,7 +2426,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMeteor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2436,7 +2442,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQuePepScr.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2452,7 +2458,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLes1Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2468,7 +2474,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLes2Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2484,7 +2490,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLes3Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2500,7 +2506,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueClueP1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2516,7 +2522,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueClueP2.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2532,7 +2538,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRadpor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2548,7 +2554,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBonWag.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2564,7 +2570,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueDnaWag.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2580,7 +2586,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBlkMar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2596,7 +2602,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBlkSpl.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2612,7 +2618,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBlkHer.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2628,7 +2634,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueDisSec.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2644,7 +2650,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueJindol.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2660,7 +2666,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueDisTru.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2676,7 +2682,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMiaRep.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2692,7 +2698,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMisPrf.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2708,7 +2714,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBkDre1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2724,7 +2730,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMpDre1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2740,7 +2746,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHrtThy.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2756,7 +2762,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBkDre2.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2772,7 +2778,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMpDre2.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2788,7 +2794,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHrtDas.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2804,7 +2810,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBkDre3.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2820,7 +2826,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMpDre3.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2836,7 +2842,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHrtArv.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2852,7 +2858,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_WeaSwoRunaic.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2868,7 +2874,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueRBSymb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2884,7 +2890,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueNeckLB.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2900,7 +2906,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueEmerSp.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2916,7 +2922,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_PetDog1.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2932,7 +2938,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemPeakyR.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2948,7 +2954,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemForfor.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2964,7 +2970,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_mKin05Cap.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2981,7 +2987,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueHerEar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -2998,7 +3004,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueTrcOpe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3015,7 +3021,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFirefe.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3032,7 +3038,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQuePerLyl.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3049,7 +3055,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysKeyGold.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3066,7 +3072,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueBlkMar.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3083,7 +3089,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueFRecop.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3100,7 +3106,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueMonBK3.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3117,7 +3123,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_GenGemLuches.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3134,7 +3140,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysred.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3151,7 +3157,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSyspurple.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3168,7 +3174,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysgreen.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3186,6 +3192,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 10
+    icon: itm_SysEveRedsocks.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3329,6 +3336,7 @@ items:
     dropable: true
     destroyable: true
     stack_size: 1
+    icon: Itm_SysSysQueNpcld.DDS
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 3200000
@@ -3359,7 +3367,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3375,7 +3383,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3407,7 +3415,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3423,7 +3431,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenPotWaterb.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3455,7 +3463,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueSaintH.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3471,7 +3479,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueScollg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3487,7 +3495,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueScollg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3519,7 +3527,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueScollg.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3567,7 +3575,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_GenGemGem.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3584,7 +3592,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3600,7 +3608,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3616,7 +3624,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3632,7 +3640,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3648,7 +3656,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueBookPi.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3664,7 +3672,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueAncBoo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3680,7 +3688,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueLes3Ma.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3712,7 +3720,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3728,7 +3736,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3776,7 +3784,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3792,7 +3800,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysScrForgive.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3808,7 +3816,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: Itm_SysSysQueStrClo.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3824,7 +3832,7 @@ items:
     tradeable: true
     dropable: true
     destroyable: true
-    stack_size: 99
+    stack_size: 999
     icon: itm_SysSysQueOffice.dds
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
@@ -3893,5 +3901,1242 @@ items:
     item_kind2: IK2_SYSTEM
     item_kind3: IK3_QUEST
     durability: 50000
+    job_req:
+      - vagrant
+  - id: 7022
+    name: Cloak for the Disciple
+    name_id: IDS_PROPITEM_TXT_012370
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Teacherclo.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7023
+    name: Branka's Heirloom
+    name_id: IDS_PROPITEM_TXT_012372
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Zemchoker.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7024
+    name: Branka's Leather Ball
+    name_id: IDS_PROPITEM_TXT_012374
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Hideboll.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7025
+    name: Cave Reed
+    name_id: IDS_PROPITEM_TXT_012376
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Memorypipe.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7026
+    name: Bato's Letter
+    name_id: IDS_PROPITEM_TXT_012378
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Loveletter.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7027
+    name: Healers Salve
+    name_id: IDS_PROPITEM_TXT_012380
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Medicine.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7028
+    name: Rainbow Blossom
+    name_id: IDS_PROPITEM_TXT_012382
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Rainbowflo.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7029
+    name: Rune Stone
+    name_id: IDS_PROPITEM_TXT_012384
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Magicsstone.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7030
+    name: Almighty Magnifying Glass
+    name_id: IDS_PROPITEM_TXT_012386
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Magnifier.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7031
+    name: Chief's Letter
+    name_id: IDS_PROPITEM_TXT_012388
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: itm_SysSysQueLetterB.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7032
+    name: Decoded Letter
+    name_id: IDS_PROPITEM_TXT_012390
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: itm_SysSysQueLetterB.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7033
+    name: Last Diary of Bartholomew Hunt
+    name_id: IDS_PROPITEM_TXT_012392
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_SysSysQueRecGot.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7034
+    name: Restored Diary
+    name_id: IDS_PROPITEM_TXT_012394
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_SysSysQueRecGot.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7035
+    name: Shiny Gold Nugget
+    name_id: IDS_PROPITEM_TXT_012396
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: itm_Shinegold.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 7036
+    name: Tarin Drink
+    name_id: IDS_PROPITEM_TXT_012398
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Tarindrink.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 20428
+    name: Sign of Hero
+    name_id: IDS_PROPITEM_TXT_012556
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_SysSysQueHolybr.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+    job_req:
+      - acrobat
+  - id: 20829
+    name: Rudas's Bracelet
+    name_id: IDS_PROPITEM_TXT_013284
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_RudasBracelet.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20830
+    name: Dusty Old Rock
+    name_id: IDS_PROPITEM_TXT_013286
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_DesertStone.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20831
+    name: Strange Fruit
+    name_id: IDS_PROPITEM_TXT_013288
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_BasiliskFruit.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 20832
+    name: Pendant of Eternity
+    name_id: IDS_PROPITEM_TXT_013290
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_DesertPendant.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 23055
+    name: Angel Ticket
+    name_id: IDS_PROPITEM_TXT_013778
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_AngelTicket.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 23056
+    name: Demon Ticket
+    name_id: IDS_PROPITEM_TXT_013780
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_DevilTicket.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - acrobat
+  - id: 23286
+    name: Love Spirit Angel's Letter
+    name_id: IDS_PROPITEM_TXT_014238
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysQueLeRoon.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - ranger
+  - id: 23287
+    name: A Black Ribbon (Present)
+    name_id: IDS_PROPITEM_TXT_014240
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_MasBlackRibbon-32.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - ranger
+  - id: 23392
+    name: Little Rabbit
+    name_id: IDS_PROPITEM_TXT_014458
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_PetEggrabbit.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 270
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 23393
+    name: Easter Charm A
+    name_id: IDS_PROPITEM_TXT_014460
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_SysSysQueMIncFe.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 270
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 23394
+    name: Easter Charm B
+    name_id: IDS_PROPITEM_TXT_014462
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_SysSysQueMIncFe.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 270
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 23395
+    name: Easter Charm C
+    name_id: IDS_PROPITEM_TXT_014464
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_SysSysQueMIncFe.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 270
+    durability: 7200000
+    job_req:
+      - vagrant
+  - id: 23413
+    name: Wonder Coupon
+    name_id: IDS_PROPITEM_TXT_014500
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_AngelTicket.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 23414
+    name: OMG Curtain - Taiwan
+    name_id: IDS_PROPITEM_TXT_014502
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Anniversary4omgcoin.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 23445
+    name: Director's Coupon
+    name_id: IDS_PROPITEM_TXT_014564
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_AngelTicket.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 3600000
+    job_req:
+      - vagrant
+  - id: 23507
+    name: Toadstool
+    name_id: IDS_PROPITEM_TXT_014688
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_PoisonMushroom01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23508
+    name: Treasure Box
+    name_id: IDS_PROPITEM_TXT_014690
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_TreasureBox01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23509
+    name: Nail of Nightmist
+    name_id: IDS_PROPITEM_TXT_014692
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_NightmistNail01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23510
+    name: Siren's Harp
+    name_id: IDS_PROPITEM_TXT_014694
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SirenHalf01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23511
+    name: Garuda Feather
+    name_id: IDS_PROPITEM_TXT_014696
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_HarpineesPlume01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23512
+    name: Marble Hairband
+    name_id: IDS_PROPITEM_TXT_014698
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Hairband01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23513
+    name: Sweat Pumpkin
+    name_id: IDS_PROPITEM_TXT_014700
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Pumpkin01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23514
+    name: Mia's Shackles
+    name_id: IDS_PROPITEM_TXT_014702
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Miafetter01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23515
+    name: Memory Shard
+    name_id: IDS_PROPITEM_TXT_014704
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Memoryshard01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23516
+    name: Hero's Pendant
+    name_id: IDS_PROPITEM_TXT_014706
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Heropendant01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23517
+    name: Ancient Inscription
+    name_id: IDS_PROPITEM_TXT_014708
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Slavestamp01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23518
+    name: Essence of Bubble
+    name_id: IDS_PROPITEM_TXT_014710
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Risistrace01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23519
+    name: Essence of Shade
+    name_id: IDS_PROPITEM_TXT_014712
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Eblestrace01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23520
+    name: Forsaken Soul
+    name_id: IDS_PROPITEM_TXT_014714
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Ghostbead01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23521
+    name: Steel Piece
+    name_id: IDS_PROPITEM_TXT_014716
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Steelpiece01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23522
+    name: Hard Steel Piece
+    name_id: IDS_PROPITEM_TXT_014718
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Steelpiece02.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23523
+    name: Hard Steel Dust
+    name_id: IDS_PROPITEM_TXT_014720
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Steeldust01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23524
+    name: Hard Drill
+    name_id: IDS_PROPITEM_TXT_014722
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Harddrill01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23525
+    name: Prison Key
+    name_id: IDS_PROPITEM_TXT_014724
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Prisonkey01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23526
+    name: Promise Ring
+    name_id: IDS_PROPITEM_TXT_014726
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Hinelring01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23527
+    name: Wastebasket
+    name_id: IDS_PROPITEM_TXT_014728
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Wastebasket01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23528
+    name: Syliaca Fillet
+    name_id: IDS_PROPITEM_TXT_014730
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_sielakafish01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23529
+    name: Greemong Jelly
+    name_id: IDS_PROPITEM_TXT_014732
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Grimongjelly01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23530
+    name: Boo Petal
+    name_id: IDS_PROPITEM_TXT_014734
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Bowoopetal01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23531
+    name: Pink Roach Queen Sap
+    name_id: IDS_PROPITEM_TXT_014736
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Rociqeensap01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23532
+    name: Agony Ore
+    name_id: IDS_PROPITEM_TXT_014738
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Agonyore01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - jester
+  - id: 23593
+    name: Fragment of Memories
+    name_id: IDS_PROPITEM_TXT_014860
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_Memoryshard01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23594
+    name: Trust Pendant
+    name_id: IDS_PROPITEM_TXT_014862
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Heropendant01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23595
+    name: Letter of Zoro
+    name_id: IDS_PROPITEM_TXT_014864
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysQueLeRoon.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23596
+    name: Letter of Elaine
+    name_id: IDS_PROPITEM_TXT_014866
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysQueLeRoon.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23597
+    name: Blue Roach Queen Sap
+    name_id: IDS_PROPITEM_TXT_014868
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Rociqeensap01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23598
+    name: Parchment of War
+    name_id: IDS_PROPITEM_TXT_014870
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysQueLeRoon.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23599
+    name: Decoded Parchment of War
+    name_id: IDS_PROPITEM_TXT_014872
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysQueLeRoon.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23600
+    name: Time Lapse Flower
+    name_id: IDS_PROPITEM_TXT_014874
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 20
+    icon: Itm_Rainbowflo.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23601
+    name: Elemental Hero's Pendant
+    name_id: IDS_PROPITEM_TXT_014876
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_Heropendant01.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23632
+    name: Howbow Sword
+    name_id: IDS_PROPITEM_TXT_014942
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: itm_SysSysQueBladeB.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23633
+    name: Sharp Edge
+    name_id: IDS_PROPITEM_TXT_014944
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysQueBladeB.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23634
+    name: Anti-Root
+    name_id: IDS_PROPITEM_TXT_014946
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_GenGemTarinr.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23635
+    name: Infernal Stone
+    name_id: IDS_PROPITEM_TXT_014948
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_DesertStone.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23636
+    name: Angelic Stone
+    name_id: IDS_PROPITEM_TXT_014950
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_DesertStone.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23637
+    name: Enlightenment Shard
+    name_id: IDS_PROPITEM_TXT_014952
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 1
+    icon: Itm_EventStarpiece.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 7200000
+  - id: 23684
+    name: Shinig Stone
+    name_id: IDS_PROPITEM_TXT_015060
+    weight: 1
+    price: 160
+    sell_price: 40
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_GenGemGem.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 23685
+    name: Popom Powder
+    name_id: IDS_PROPITEM_TXT_015062
+    weight: 1
+    price: 230
+    sell_price: 57
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_GenGemForfor.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+  - id: 23913
+    name: Present Box
+    name_id: IDS_PROPITEM_TXT_015519
+    weight: 1
+    price: 2000
+    sell_price: 500
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_EveBalPbox.DDS
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    hp_restore: 20000
+    durability: 50000
+    job_req:
+      - jester
+  - id: 24141
+    name: II_SYS_SYS_QUE_2012CHILDRENWEEK_QUEST01
+    name_id: IDS_PROPITEM_TXT_015975
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: Itm_PetEggrabbit.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 50000
+    job_req:
+      - vagrant
+  - id: 24216
+    name: II_SYS_SYS_MUSICFESTIVALDROPITEM_YELLOW
+    name_id: IDS_PROPITEM_TXT_016125
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysYellowNote.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24217
+    name: II_SYS_SYS_MUSICFESTIVALDROPITEM_RED
+    name_id: IDS_PROPITEM_TXT_016127
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysRedNote.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24218
+    name: II_SYS_SYS_MUSICFESTIVALDROPITEM_BLUE
+    name_id: IDS_PROPITEM_TXT_016129
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysBlueNote.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24219
+    name: II_SYS_SYS_MUSICFESTIVALDROPITEM_GREEN
+    name_id: IDS_PROPITEM_TXT_016131
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysGreenNote.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
+    job_req:
+      - vagrant
+  - id: 24223
+    name: Flami's Guitar
+    name_id: IDS_PROPITEM_TXT_016139
+    weight: 1
+    price: 4
+    sell_price: 1
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysSysSpaceGuitar.dds
+    item_kind2: IK2_SYSTEM
+    item_kind3: IK3_QUEST
+    durability: 4500000
     job_req:
       - vagrant

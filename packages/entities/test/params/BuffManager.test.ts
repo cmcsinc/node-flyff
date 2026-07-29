@@ -215,8 +215,8 @@ describe('BuffManager.tickDots (DoT)', () => {
   });
 });
 
-describe('BuffManager.totalMs + getAll (persistence surface)', () => {
-  it('stores the originally-applied totalMs on add', () => {
+describe('BuffManager.expiresAtMs + getAll (persistence surface)', () => {
+  it('stores the absolute deadline on add', () => {
     const buffs = new BuffManager(new ParamModel());
     buffs.addSkillBuff(100, 4, 3_600_000, [buffEffect(DST.STR, 20)], 1_000);
     const all = buffs.getAll();
@@ -224,15 +224,21 @@ describe('BuffManager.totalMs + getAll (persistence surface)', () => {
     assert.equal(all[0]!.skillId, 100);
     assert.equal(all[0]!.level, 4);
     assert.equal(all[0]!.type, BUFF_SKILL);
-    assert.equal(all[0]!.totalMs, 3_600_000); // total, not remaining
     assert.equal(all[0]!.expiresAtMs, 1_000 + 3_600_000); // absolute deadline
   });
 
-  it('refreshes totalMs on same-level re-cast', () => {
+  it('extends the deadline on same-level re-cast', () => {
     const buffs = new BuffManager(new ParamModel());
     buffs.addSkillBuff(100, 1, 30_000, [buffEffect(DST.STR, 20)], 0);
     buffs.addSkillBuff(100, 1, 7_200_000, [buffEffect(DST.STR, 20)], 10_000);
-    assert.equal(buffs.getAll()[0]!.totalMs, 7_200_000);
+    assert.equal(buffs.getAll()[0]!.expiresAtMs, 10_000 + 7_200_000);
+  });
+
+  it('keeps the later deadline when a re-cast would shorten it', () => {
+    const buffs = new BuffManager(new ParamModel());
+    buffs.addSkillBuff(100, 1, 600_000, [buffEffect(DST.STR, 20)], 0);
+    buffs.addSkillBuff(100, 1, 30_000, [buffEffect(DST.STR, 20)], 1_000);
+    assert.equal(buffs.getAll()[0]!.expiresAtMs, 600_000);
   });
 
   it('getAll() returns entries in insertion order', () => {

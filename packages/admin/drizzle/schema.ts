@@ -139,7 +139,7 @@ export const characterBuffs = sqliteTable("character_buffs", {
   type: integer("type").notNull(),         // BUFF_ITEM=0, BUFF_SKILL=1
   skillId: integer("skill_id").notNull(),  // skill id or item id
   level: integer("level").notNull(),       // skill level
-  totalMs: integer("total_ms").notNull(),  // original total duration (ms)
+  expiresAtMs: integer("expires_at_ms").notNull(),  // absolute expiry (epoch ms)
 });
 
 export const characterBuffsRelations = relations(characterBuffs, ({ one }) => ({

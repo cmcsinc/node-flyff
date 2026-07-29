@@ -137,6 +137,17 @@ export interface CharacterIncOutfit {
 /** Parsed character.inc block -- one per `MaFl_*` / `MaDa_*` / ... header. */
 export interface CharacterIncBlock {
   readonly key: string;
+  /**
+   * `SetName( IDS_* )` string-table token -- C++ `Project.cpp:3023` does
+   * `lpCharacter->m_strName = GetLangScript(script)`, and `CMover::InitCharacter`
+   * (`Mover.cpp:1011`) copies it into `m_szName`. This is the authoritative NPC
+   * display name source; propMover's name is the shared *model* name and is wrong
+   * for NPCs (e.g. `MaFl_SsoTta` rides model `MI_MADA_BOLPOR`).
+   * Resolve via `CharacterTextIndex`.
+   */
+  readonly nameId: string | undefined;
+  /** `SetImage( IDS_* )` token -- resolves to a portrait `.tga` filename. */
+  readonly imageId: string | undefined;
   /** MMI_* ids from AddMenu/AddMenuLang, deduped + ascending. */
   readonly menus: readonly number[];
   /** `true` when `AddMenu( MMI_DIALOG )` fired. */
@@ -184,6 +195,27 @@ export interface CharacterIncIndex {
   readonly byKey: Map<string, CharacterIncBlock>;
   /** Lowercased stem (e.g. `mafl_marche`) -> block. */
   readonly byStem: Map<string, CharacterIncBlock>;
+  /** `IDS_CHARACTER_INC_* -> text` from `raw/character.txt.txt`. Resolves
+   *  `SetName` / `SetImage` tokens. Empty when the file is absent. */
+  readonly text: Map<string, string>;
+}
+
+/**
+ * Resolve an NPC's display name for a character.inc block key.
+ *
+ * Follows the C++ chain: block -> `SetName(IDS_*)` -> `character.txt.txt` text
+ * (`Project.cpp:3023` + `Mover.cpp:1011`). Returns `undefined` when the block is
+ * unknown, has no `SetName`, or the token is missing from the string table --
+ * callers fall back to the raw charKey rather than showing a wrong model name.
+ */
+export function npcNameForKey(
+  idx: CharacterIncIndex,
+  charKey: string | undefined,
+): string | undefined {
+  if (!charKey) return undefined;
+  const block = idx.byKey.get(charKey) ?? idx.byStem.get(charKey.toLowerCase());
+  if (!block?.nameId) return undefined;
+  return idx.text.get(block.nameId);
 }
 
 /**
@@ -248,6 +280,11 @@ function parseBlock(
   const dlg = body.match(/m_szDialog\s*=\s*"([^"]+)"/);
   const dialogFile = dlg?.[1];
 
+  // `SetName( IDS_* )` / `SetImage( IDS_* )` -- the token may sit on its own line
+  // (character.inc formats these multi-line), hence the `\s*` around the arg.
+  const nameId = body.match(/\bSetName\s*\(\s*([A-Za-z0-9_]+)\s*\)/)?.[1];
+  const imageId = body.match(/\bSetImage\s*\(\s*([A-Za-z0-9_]+)\s*\)/)?.[1];
+
   const vendorTabs = parseVendorTabs(body);
   const vendorItems = parseVendorItems(body, ik3Ids);
   const vendorItemIds = parseVendorItemIds(body);
@@ -288,6 +325,8 @@ function parseBlock(
   const menuArr = [...menus].sort((a, b) => a - b);
   return {
     key,
+    nameId,
+    imageId,
     menus: menuArr,
     hasDialog: menus.has(MMI_DIALOG),
     outfit,
@@ -431,9 +470,26 @@ export function parseCharacterInc(
 }
 
 /**
- * Load + index `rawDir/character.inc`. Reads `defineItem.h` (II_*) and
- * `defineNeuz.h` (MMI_*) alongside so symbolic names resolve to numbers.
- * Missing files -> empty index (servers still boot, outfits disabled).
+ * Parse a tab-separated `IDS_* \t text` string table (`character.txt.txt`).
+ * Same shape as `propQuest.txt.txt` -- UTF-16LE with BOM, one entry per line.
+ */
+function parseTextTable(content: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const line of content.split(/\r?\n/)) {
+    const tab = line.indexOf('\t');
+    if (tab <= 0) continue;
+    const key = line.slice(0, tab).trim();
+    if (!key) continue;
+    out.set(key, line.slice(tab + 1).trim());
+  }
+  return out;
+}
+
+/**
+ * Load + index `rawDir/character.inc`. Reads `defineItem.h` (II_*),
+ * `defineNeuz.h` (MMI_*), and `character.txt.txt` (NPC display names) alongside
+ * so symbolic names resolve. Missing files -> empty index (servers still boot,
+ * outfits + names disabled).
  */
 export async function loadCharacterInc(rawDir: string): Promise<CharacterIncIndex> {
   const incPath = resolve(rawDir, 'character.inc');
@@ -442,19 +498,22 @@ export async function loadCharacterInc(rawDir: string): Promise<CharacterIncInde
     buf = await readFile(incPath);
   } catch {
     logger.warn({ incPath }, 'character.inc not found -- NPC outfits/menus disabled');
-    return { byKey: new Map(), byStem: new Map() };
+    return { byKey: new Map(), byStem: new Map(), text: new Map() };
   }
 
-  const [iiBuf, ik3Buf, mmiBuf, siBuf] = await Promise.all([
+  const [iiBuf, ik3Buf, mmiBuf, siBuf, txtBuf] = await Promise.all([
     readFile(resolve(rawDir, 'defineItem.h')).catch(() => null),
     readFile(resolve(rawDir, 'defineItemkind.h')).catch(() => null),
     readFile(resolve(rawDir, 'defineNeuz.h')).catch(() => null),
     readFile(resolve(rawDir, 'defineSkill.h')).catch(() => null),
+    readFile(resolve(rawDir, 'character.txt.txt')).catch(() => null),
   ]);
   const iiIds = iiBuf ? parseDefines(decode(iiBuf), 'II_') : new Map<string, number>();
   const ik3Ids = ik3Buf ? parseDefines(decode(ik3Buf), 'IK3_') : new Map<string, number>();
   const mmiIds = mmiBuf ? parseDefines(decode(mmiBuf), 'MMI_') : new Map<string, number>();
   const siIds = siBuf ? parseDefines(decode(siBuf), 'SI_') : new Map<string, number>();
+  const text = txtBuf ? parseTextTable(decode(txtBuf)) : new Map<string, string>();
+  if (!txtBuf) logger.warn('character.txt.txt not found -- NPC display names unresolved');
 
   const blocks = parseCharacterInc(decode(buf), iiIds, ik3Ids, mmiIds, siIds);
   const byKey = new Map<string, CharacterIncBlock>();
@@ -464,8 +523,13 @@ export async function loadCharacterInc(rawDir: string): Promise<CharacterIncInde
     byStem.set(b.key.toLowerCase(), b);
   }
   logger.info(
-    { blocks: blocks.length, dialog: blocks.filter((b) => b.hasDialog).length, ii: iiIds.size, ik3: ik3Ids.size, mmi: mmiIds.size },
+    {
+      blocks: blocks.length,
+      dialog: blocks.filter((b) => b.hasDialog).length,
+      named: blocks.filter((b) => b.nameId !== undefined).length,
+      ii: iiIds.size, ik3: ik3Ids.size, mmi: mmiIds.size, text: text.size,
+    },
     'character.inc loaded',
   );
-  return { byKey, byStem };
+  return { byKey, byStem, text };
 }

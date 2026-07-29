@@ -203,6 +203,7 @@ export {
   loadCharacterInc,
   parseCharacterInc,
   blockForMover,
+  npcNameForKey,
   MMI_DIALOG,
   MMI_TRADE,
   MMI_NPC_BUFF,

@@ -27,6 +27,20 @@ const KIND_BUCKETS: Record<string, { file: string; kind: string }> = {
   // treats every quest drop as non-stacking (stack_size=1), so each kill lands
   // in a fresh slot instead of merging onto the existing partial stack.
   _QUEST: { file: 'questitems', kind: 'quest' },
+  // Player-ownable kinds that previously had no bucket and so were absent from
+  // the catalog entirely -- the admin UI rendered `undefined` with a placeholder
+  // icon, and the server had no name or stack_size for them. Bull Hamstern
+  // (10209) is IK1_EFFECT/IK2_KEEP in Spec_Item.txt and sits in a real bag.
+  // IK1_SYSTEM is deliberately NOT here: its ~2100 IK2_SYSTEM rows are internal,
+  // and its ownable subsets (IK2_BUFF/BUFF2, IK3_QUEST) are already routed above.
+  IK1_CHARGED: { file: 'misc', kind: 'misc' },
+  IK1_EFFECT: { file: 'misc', kind: 'misc' },
+  IK1_ACTIVE: { file: 'misc', kind: 'misc' },
+  IK1_PASSIVE: { file: 'misc', kind: 'misc' },
+  IK1_ACTIVEUI: { file: 'misc', kind: 'misc' },
+  IK1_RIDE: { file: 'misc', kind: 'misc' },
+  IK1_HOUSING: { file: 'misc', kind: 'misc' },
+  IK1_GOLD: { file: 'misc', kind: 'misc' },
 };
 
 /** IK2_WEAPON_DIRECT etc. are sub-kinds; bucket still keyed by IK1. */
@@ -117,10 +131,13 @@ function rowToItem(
   // Strips the surrounding triple-quotes. Falls back to scanning the row for any
   // `.dds` cell -- the column header is Korean and can mis-split under an encoding
   // mismatch, but the icon value is always plain ASCII.
-  const iconRaw = row.szIcon ?? Object.values(row).find((v) => v.endsWith('.dds'));
+  const iconRaw = row.szIcon ?? Object.values(row).find((v) => /\.dds"*$/i.test(v));
   if (iconRaw) {
     const icon = iconRaw.replace(/"/g, '');
-    if (icon.endsWith('.dds')) item.icon = icon;
+    // Case-insensitive: 229 rows spell the extension `.DDS` (e.g.
+    // `"""itm_ArmCloMasBall05.DDS"""`). A `.dds`-only check silently dropped
+    // every one of them, so those items reached the UI with no icon at all.
+    if (/\.dds$/i.test(icon)) item.icon = icon;
   }
 
   // Kind routing -- read before equip_slot so consumables can be excluded.
@@ -253,8 +270,18 @@ function rowToItem(
 }
 
 export async function convertItems(rawDir: string, dataDir: string): Promise<void> {
-  const [propItem, defineItem, defineNeuz, defineAttr, txtTxt] = await Promise.all([
+  // v19 (`__VER >= 16`) loads `Spec_Item.txt`, NOT `propItem.txt`
+  // (`_Common/Project.cpp:552`). Spec_Item is a superset: same header layout by
+  // column NAME (parsePropTable is name-keyed, so the extra dwDestParam4-6 /
+  // shifted szIcon columns resolve correctly) plus ~2072 rows that only exist
+  // there -- e.g. `II_GEN_GEM_GEM_FORFORM_1` (23685), which is defined in
+  // defineItem.h and dropped by propMoverEx.inc but absent from propItem.txt,
+  // so it resolved to no definition and rendered the placeholder icon.
+  // Fall back to propItem.txt when the v19 table isn't present.
+  const propItem = await readSource(resolve(rawDir, 'Spec_Item.txt')).catch(() =>
     readSource(resolve(rawDir, 'propItem.txt')),
+  );
+  const [defineItem, defineNeuz, defineAttr, txtTxt] = await Promise.all([
     readSource(resolve(rawDir, 'defineItem.h')),
     readSource(resolve(rawDir, 'defineNeuz.h')),
     readSource(resolve(rawDir, 'defineAttribute.h')),

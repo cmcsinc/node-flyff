@@ -12,7 +12,12 @@ const Select = React.forwardRef<
     <select
       ref={ref}
       className={cn(
-        "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 appearance-none",
+        "flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent py-2 pl-3 pr-9 text-sm shadow-sm transition-colors",
+        "hover:border-ring/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+        "disabled:cursor-not-allowed disabled:opacity-50 appearance-none",
+        // Native dropdown list renders with the OS palette by default — force
+        // the dark popover colours so options aren't white-on-white.
+        "[&>option]:bg-popover [&>option]:text-popover-foreground",
         className,
       )}
       {...props}

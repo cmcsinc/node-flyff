@@ -28,11 +28,39 @@ export interface DropServiceDeps {
   resources: Pick<ResourceIndex, 'drops'>;
   itemManager: ItemManager;
   rng?: Rng;
+  /**
+   * Quest-collection seam -- true if `killer` has an active quest whose
+   * `SetEndCondItem` targets `itemId` and is not yet satisfied. When true the
+   * level-difference nerf is skipped for that slot (C++ `CDropItemGenerator::
+   * GetAt`, `Project.cpp:189`, has no level term; the nerf is an emulator
+   * addition that made quest pieces unfarmable once you out-level the mob).
+   * Structural type -- `compose.ts` binds `QuestTrackerSystem.needsItem`, so
+   * `@flyff/inventory` keeps no `@flyff/quest` import.
+   */
+  needsItem?: (killer: CPlayer, itemId: number) => boolean;
 }
 
 /** `xRandom(scale)` analogue -- `[0, scale)`. Reuses the combat `Rng` shape. */
 function dropRoll(rng: Rng, scale: number): number {
   return rng.int(scale);
+}
+
+/**
+ * Ground Y for a pile dropped by `mover`, killed by `killer`.
+ *
+ * The client only applies its gravity/ground-snap to a new pile when the
+ * server-sent Y is within 1.0 of terrain (`CDPClient::OnAddObj`,
+ * `DPClient.cpp:1430`); outside that window the item hangs in the air forever
+ * and is unlootable. The C++ server's `GetPos().y` is accurate because it loads
+ * the `.lnd` heightmap; we don't, so a monster's `m_vPos.y` stays frozen at its
+ * spawn-point Y while it wanders across elevation.
+ *
+ * ponytail: terrain proxy -- the killer's Y is client-reported and therefore on
+ * the ground. Replace with `world.getLandHeight(x, z)` once `.lnd` heightmaps
+ * are loaded server-side (then mover Y is authoritative and this can go away).
+ */
+function groundY(mover: CMover, killer: CPlayer): number {
+  return Number.isFinite(killer.m_vPos.y) ? killer.m_vPos.y : mover.m_vPos.y;
 }
 
 /** C++ level-diff factor (Mover.cpp:7728-7733). */
@@ -66,17 +94,24 @@ export class DropService {
 
     const scale = this.deps.resources.drops.probScale;
     const factor = dropLevelFactor(killer.m_nLevel, mover.m_nLevel);
+    // Pile Y must be ground-level or the client never snaps it down -> unlootable.
+    const dropPos = { x: mover.m_vPos.x, y: groundY(mover, killer), z: mover.m_vPos.z };
 
     let dropped = 0;
     for (const slot of table.items) {
       if (table.maxItem > 0 && dropped >= table.maxItem) break;
       // C++ gates by fItemDropRate too; we treat factor as the combined gate.
-      if (dropRoll(this.rng, scale) < slot.prob * factor) {
+      // Quest-collection pieces bypass the level nerf: the C++ regular-drop
+      // roll (`Project.cpp:189`) has no level term at all, so out-leveling the
+      // mob must not make a quest item unfarmable (a lv15 player vs a lv3
+      // Mushpang otherwise saw Forform fall from 6.7% to 0.67%).
+      const gate = this.deps.needsItem?.(killer, slot.itemId) ? 1.0 : factor;
+      if (dropRoll(this.rng, scale) < slot.prob * gate) {
         const id = this.deps.itemManager.spawn({
           itemId: slot.itemId,
           count: slot.count,
           ownerId: looter,
-          pos: mover.m_vPos,
+          pos: dropPos,
           zoneId: mover.m_nZoneId,
         });
         spawned.push(id);
@@ -92,7 +127,7 @@ export class DropService {
           itemId: goldSeedId(gold),
           count: gold,
           ownerId: looter,
-          pos: mover.m_vPos,
+          pos: dropPos,
           zoneId: mover.m_nZoneId,
         });
         spawned.push(id);

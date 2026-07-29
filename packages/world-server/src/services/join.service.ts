@@ -15,7 +15,7 @@
  * @module services/join.service
  */
 
-import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, PersistedBuff } from '@flyff/database';
+import type { CharacterRepository, AccountRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, PersistableBuff } from '@flyff/database';
 import type { ItemDefinition, SetItemDef, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
@@ -358,11 +358,13 @@ export class JoinService {
   /**
    * Hydrate active timed buffs from the `character_buffs` table (C++
    * `GetSKillInfluence`, `DbManagerFun.cpp:1384`). Each persisted entry is
-   * `{ type, skillId, level, totalMs }`; the DST effects are re-derived from
-   * the skill definition via {@link buffEffects} / {@link dotFromSkill} (C++
-   * re-derives from `prj.skillProp` on `CreateBuff` -- effects are not
-   * persisted). The timer resets to the full `totalMs` (C++ stores total, not
-   * remaining). Applies state to `m_params` only; the JOIN handler broadcasts
+   * `{ type, skillId, level, remainingMs }` — the repo stores an absolute
+   * deadline and converts it to the remaining time at load, so a buff's
+   * countdown continues across relog instead of restarting (lapsed rows are
+   * dropped by the repo). The DST effects are re-derived from the skill
+   * definition via {@link buffEffects} / {@link dotFromSkill} (C++ re-derives
+   * from `prj.skillProp` on `CreateBuff` -- effects are not persisted).
+   * Applies state to `m_params` only; the JOIN handler broadcasts
    * SETSKILLSTATE + SETDESTPARAM to self after the snapshot.
    *
    * Only `BUFF_SKILL` entries are restored. `BUFF_ITEM` entries are dropped on
@@ -382,7 +384,7 @@ export class JoinService {
       if (levelRow === undefined) continue;
       const effects = buffEffects(levelRow);
       const dot = dotFromSkill(levelRow, now);
-      player.m_buffs.addSkillBuff(e.skillId, e.level, e.totalMs, effects, now, dot);
+      player.m_buffs.addSkillBuff(e.skillId, e.level, e.remainingMs, effects, now, dot);
     }
   }
 }
@@ -414,10 +416,13 @@ export function rosterIdsForJob(skills: SkillIndex, job: number): number[] {
  * equip and housing skips (equip buffs are never in `m_buffs`; housing doesn't
  * ship). `BUFF_ITEM` entries are excluded -- their effects are not re-derivable
  * from the skill index on restore (ponytail: add item-def effect derivation).
+ *
+ * Persists the absolute deadline (`expiresAtMs`), not the total duration, so the
+ * countdown survives relog instead of restarting at full (migration `016`).
  */
-export function collectPersistedBuffs(player: CPlayer): PersistedBuff[] {
+export function collectPersistedBuffs(player: CPlayer): PersistableBuff[] {
   return player.m_buffs
     .getAll()
     .filter((b) => b.type === BUFF_SKILL)
-    .map((b) => ({ type: b.type, skillId: b.skillId, level: b.level, totalMs: b.totalMs }));
+    .map((b) => ({ type: b.type, skillId: b.skillId, level: b.level, expiresAtMs: b.expiresAtMs }));
 }

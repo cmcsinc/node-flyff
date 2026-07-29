@@ -50,6 +50,7 @@ export {
 export {
   BuffRepository,
   type PersistedBuff,
+  type PersistableBuff,
   type BuffRow,
 } from './repositories/buff.repo';
 
