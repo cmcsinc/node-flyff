@@ -1,25 +1,35 @@
 /**
- * ServerManager — spawns / stops / monitors game-server child processes.
+ * ServerManager — instance registry + config generation for the game servers.
+ *
+ * The child processes themselves are owned by the supervisor daemon
+ * (`supervisor-daemon.ts`), NOT by this module — that is what lets the servers
+ * keep running when the admin app is restarted or down. This module holds the
+ * parts that belong to the admin side: the instance registry
+ * (`config/instances.json`), the generated per-instance config files, and thin
+ * async wrappers over the daemon API.
  *
  * Each managed instance gets a self-contained config file written to
  * `config/instances/<id>.json` and is booted with `CONFIG_FILE` pointing at it.
  * `loadConfig` treats CONFIG_FILE as the sole config layer (see
  * packages/core/src/config/loader.ts), which is what lets us run N cluster or
  * world servers off one repo without touching the committed config/*.json.
- *
- * State lives on `globalThis` so Next.js dev HMR does not orphan children.
- *
- * ponytail: single-host supervisor (no docker/pm2, no remote hosts). Upgrade
- * path = swap spawnInstance/stopInstance for a container/pm2 driver.
  */
 
-import { spawn, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 
-export type ServerType = 'login' | 'cluster' | 'world';
-export type RunState = 'stopped' | 'starting' | 'running' | 'exited';
+import {
+  fetchLogs,
+  fetchStatuses,
+  requestShutdown,
+  requestStart,
+  requestStop,
+} from './supervisor-client';
+import { CONFIG_DIR, ROOT, isValidInstanceId, stripAnsi } from './supervisor-shared';
+import type { LogLine, ProcStatus, RunState, ServerType } from './supervisor-shared';
+
+export { isValidInstanceId, stripAnsi, requestShutdown };
+export type { ServerType, RunState, LogLine };
 
 export interface ServerInstance {
   /** Slug + `server.id` for this process. Unique. */
@@ -28,34 +38,21 @@ export interface ServerInstance {
   label: string;
   /** Client-facing TCP port (`server.port`). */
   port: number;
+  /** Boot this instance when the supervisor daemon starts (e.g. host reboot). */
+  autoStart?: boolean;
   /** Deep-merged into the generated config, last-wins. */
   overrides?: Record<string, unknown>;
 }
 
-export interface LogLine {
-  seq: number;
-  ts: number;
-  line: string;
+export interface InstanceStatus extends ServerInstance, ProcStatus {
+  /** Merged config the process would boot with (defaults → base → derived → overrides). */
+  effective?: Record<string, unknown>;
+  /** Same merge without overrides — rendered as form placeholders. */
+  inherited?: Record<string, unknown>;
 }
 
-export interface InstanceStatus extends ServerInstance {
-  state: RunState;
-  pid: number | null;
-  startedAt: number | null;
-  exitCode: number | null;
-}
-
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
-const CONFIG_DIR = resolve(ROOT, 'config');
 const INSTANCES_FILE = resolve(CONFIG_DIR, 'instances.json');
 const GENERATED_DIR = resolve(CONFIG_DIR, 'instances');
-const LOG_RING = 500;
-
-const ENTRY: Record<ServerType, string> = {
-  login: 'packages/login-server/src/index.ts',
-  cluster: 'packages/cluster-server/src/index.ts',
-  world: 'packages/world-server/src/index.ts',
-};
 
 /** Config file name the committed per-type defaults live in. */
 const BASE_CONFIG: Record<ServerType, string> = {
@@ -82,17 +79,6 @@ export function deepMerge(...layers: Plain[]): Plain {
     }
   }
   return out;
-}
-
-/** `id` must be filesystem- and `server.id`-safe. */
-export function isValidInstanceId(id: unknown): id is string {
-  return typeof id === 'string' && /^[a-z0-9][a-z0-9_-]{1,31}$/i.test(id);
-}
-
-/** Drops ANSI colour codes so log lines render cleanly in the browser. */
-export function stripAnsi(s: string): string {
-  // eslint-disable-next-line no-control-regex
-  return s.replace(/\[[0-9;]*m/g, '');
 }
 
 /**
@@ -166,139 +152,62 @@ export function writeInstanceConfig(inst: ServerInstance): string {
   return path;
 }
 
-/** Minimal `.env` reader — same contract as scripts/start-servers.mjs. */
-function loadDotEnv(): Record<string, string> {
-  const out: Record<string, string> = {};
-  const path = resolve(ROOT, '.env');
-  if (!existsSync(path)) return out;
-  for (const line of readFileSync(path, 'utf-8').split(/\r?\n/)) {
-    if (line.trim().startsWith('#')) continue;
-    const m = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*)\s*$/);
-    if (m) out[m[1]!] = m[2]!.replace(/^["']|["']$/g, '');
-  }
-  return out;
+/**
+ * Effective config for an instance = what `writeInstanceConfig` would emit,
+ * plus the committed base (no overrides) so the form can show "inherited"
+ * values as placeholders.
+ */
+export function readInstanceConfig(
+  inst: ServerInstance,
+): { effective: Plain; inherited: Plain } {
+  const defaults = readJson(resolve(CONFIG_DIR, 'default.json'));
+  const base = readJson(resolve(CONFIG_DIR, BASE_CONFIG[inst.type]));
+  const inherited = buildInstanceConfig({ ...inst, overrides: {} }, defaults, base);
+  return { effective: buildInstanceConfig(inst, defaults, base), inherited };
 }
 
 // ---------------------------------------------------------------------------
-// Live process registry (globalThis-backed so HMR keeps children)
+// Daemon-backed status / lifecycle
 // ---------------------------------------------------------------------------
 
-interface Running {
-  child: ChildProcess;
-  state: RunState;
-  startedAt: number;
-  exitCode: number | null;
-}
-
-interface ManagerState {
-  procs: Map<string, Running>;
-  logs: Map<string, LogLine[]>;
-  subs: Map<string, Set<(l: LogLine) => void>>;
-  seq: number;
-}
-
-const g = globalThis as unknown as { __flyffServerManager?: ManagerState };
-const state: ManagerState =
-  g.__flyffServerManager ??
-  (g.__flyffServerManager = { procs: new Map(), logs: new Map(), subs: new Map(), seq: 0 });
-
-function pushLog(id: string, raw: string): void {
-  const ring = state.logs.get(id) ?? [];
-  for (const l of stripAnsi(raw).split(/\r?\n/)) {
-    if (!l.length) continue;
-    const entry: LogLine = { seq: ++state.seq, ts: Date.now(), line: l };
-    ring.push(entry);
-    for (const fn of state.subs.get(id) ?? []) fn(entry);
-  }
-  if (ring.length > LOG_RING) ring.splice(0, ring.length - LOG_RING);
-  state.logs.set(id, ring);
-}
-
-export function getLogs(id: string): LogLine[] {
-  return state.logs.get(id) ?? [];
-}
-
-export function subscribeLogs(id: string, fn: (l: LogLine) => void): () => void {
-  const set = state.subs.get(id) ?? new Set();
-  set.add(fn);
-  state.subs.set(id, set);
-  return () => set.delete(fn);
-}
-
-export function getStatuses(): InstanceStatus[] {
-  return listInstances().map((inst) => {
-    const run = state.procs.get(inst.id);
-    return {
-      ...inst,
-      state: run?.state ?? 'stopped',
-      pid: run?.child.pid ?? null,
-      startedAt: run?.startedAt ?? null,
-      exitCode: run?.exitCode ?? null,
-    };
-  });
-}
-
-export function isRunning(id: string): boolean {
-  const run = state.procs.get(id);
-  return run !== undefined && (run.state === 'running' || run.state === 'starting');
-}
+const STOPPED: ProcStatus = { state: 'stopped', pid: null, startedAt: null, exitCode: null };
 
 /**
- * Boots an instance. Runs the TS entry in-process via `node --import tsx`
- * (no shell, no intermediate tsx CLI child) so kill() reliably reaches it.
+ * Registry rows joined with live process state from the daemon. The daemon is
+ * the sole source of truth for `state`/`pid`, so this survives an admin
+ * restart: whatever was running before is still reported as running.
  */
-export function startInstance(id: string): InstanceStatus | { error: string } {
+export async function getStatuses(): Promise<InstanceStatus[]> {
+  const procs = await fetchStatuses();
+  return listInstances().map((inst) => {
+    const { effective, inherited } = readInstanceConfig(inst);
+    return { ...inst, ...(procs[inst.id] ?? STOPPED), effective, inherited };
+  });
+}
+
+export async function isRunning(id: string): Promise<boolean> {
+  const st = (await fetchStatuses())[id];
+  return st !== undefined && (st.state === 'running' || st.state === 'starting');
+}
+
+export function getLogs(id: string, since = 0): Promise<LogLine[]> {
+  return fetchLogs(id, since);
+}
+
+/** Boots an instance in the daemon (survives admin restarts). */
+export async function startInstance(id: string): Promise<InstanceStatus | { error: string }> {
   const inst = listInstances().find((i) => i.id === id);
   if (!inst) return { error: `Unknown instance: ${id}` };
-  if (isRunning(id)) return { error: `${id} is already running` };
 
   const configFile = writeInstanceConfig(inst);
-  const env: NodeJS.ProcessEnv = {
-    ...process.env,
-    ...loadDotEnv(),
-    CONFIG_FILE: configFile,
-    SERVER_ID: inst.id,
-    LOG_PRETTY: '1',
-  };
-  if (!env.DB_FILENAME) env.DB_FILENAME = './data/flyff_dev.sqlite3';
-
-  const child = spawn(process.execPath, ['--import', 'tsx', ENTRY[inst.type]], {
-    cwd: ROOT,
-    env,
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
-
-  const run: Running = { child, state: 'starting', startedAt: Date.now(), exitCode: null };
-  state.procs.set(id, run);
-  pushLog(id, `[manager] spawned pid=${child.pid ?? '?'} config=${configFile}`);
-
-  child.stdout?.on('data', (c: Buffer) => {
-    run.state = 'running';
-    pushLog(id, c.toString());
-  });
-  child.stderr?.on('data', (c: Buffer) => pushLog(id, c.toString()));
-  child.on('error', (err) => pushLog(id, `[manager] spawn error: ${err.message}`));
-  child.on('exit', (code, signal) => {
-    run.state = 'exited';
-    run.exitCode = code;
-    pushLog(id, `[manager] exited code=${code} signal=${signal ?? 'none'}`);
-  });
-
-  return { ...inst, state: run.state, pid: child.pid ?? null, startedAt: run.startedAt, exitCode: null };
+  const res = await requestStart({ id: inst.id, type: inst.type, configFile });
+  if ('error' in res) return res;
+  return { ...inst, ...res.status };
 }
 
-/** Graceful stop, escalating to SIGKILL after `graceMs`. */
-export function stopInstance(id: string, graceMs = 4000): { ok: true } | { error: string } {
-  const run = state.procs.get(id);
-  if (!run || run.state === 'exited') return { error: `${id} is not running` };
-  pushLog(id, '[manager] stopping…');
-  run.child.kill('SIGTERM');
-  const timer = setTimeout(() => {
-    if (run.state !== 'exited') {
-      pushLog(id, '[manager] grace expired — SIGKILL');
-      run.child.kill('SIGKILL');
-    }
-  }, graceMs);
-  timer.unref?.();
-  return { ok: true };
+/** Graceful stop, escalating to SIGKILL after the daemon's grace window. */
+export function stopInstance(id: string): Promise<{ ok: true } | { error: string }> {
+  return requestStop(id);
 }
+
+export { ROOT };

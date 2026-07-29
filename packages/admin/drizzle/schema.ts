@@ -193,6 +193,46 @@ export const quickSlots = sqliteTable("quick_slots", {
   targetId: integer("target_id").notNull(),
 });
 
+// ── Online Players (live-session presence, migration 017) ────────────────────
+export const onlinePlayers = sqliteTable("online_players", {
+  characterId: integer("character_id").primaryKey().references(() => characters.id, { onDelete: "cascade" }),
+  accountId: integer("account_id").notNull(),
+  worldId: text("world_id", { length: 32 }).notNull(),
+  zoneId: integer("zone_id").notNull(),
+  serverId: text("server_id", { length: 64 }).notNull(),
+  lastSeenMs: integer("last_seen_ms").notNull(),  // online iff > now - 60s
+});
+
+export const onlinePlayersRelations = relations(onlinePlayers, ({ one }) => ({
+  character: one(characters, { fields: [onlinePlayers.characterId], references: [characters.id] }),
+}));
+
+// ── Mail (CMail, migration 017) ───────────────────────────────────────────────
+export const mail = sqliteTable("mail", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  receiverId: integer("receiver_id").notNull().references(() => characters.id, { onDelete: "cascade" }),
+  senderId: integer("sender_id").default(0).notNull(),   // 0 renders as "FLYFF"
+  senderName: text("sender_name", { length: 32 }).default("").notNull(),
+  title: text("title", { length: 32 }).default("").notNull(),   // <=31 chars on the wire
+  text: text("text").default("").notNull(),                     // <=255 chars on the wire
+  gold: text("gold").default("0").notNull(),                    // __int64 penya as string
+  itemId: integer("item_id"),                                   // NULL = no attachment
+  itemCount: integer("item_count").default(0).notNull(),
+  itemFlags: integer("item_flags").default(0).notNull(),
+  itemRefine: integer("item_refine").default(0).notNull(),
+  itemElement: integer("item_element").default(0).notNull(),
+  itemElementLevel: integer("item_element_level").default(0).notNull(),
+  itemDurability: integer("item_durability").default(-1).notNull(),
+  read: integer("read", { mode: "boolean" }).default(false).notNull(),
+  takenItem: integer("taken_item", { mode: "boolean" }).default(false).notNull(),
+  takenGold: integer("taken_gold", { mode: "boolean" }).default(false).notNull(),
+  createdAtMs: integer("created_at_ms").notNull(),   // absolute; wire field is an AGE
+});
+
+export const mailRelations = relations(mail, ({ one }) => ({
+  receiver: one(characters, { fields: [mail.receiverId], references: [characters.id] }),
+}));
+
 // ── Admin Audit Log (new) ─────────────────────────────────────────────────────
 export const adminAuditLog = sqliteTable("admin_audit_log", {
   id: integer("id").primaryKey({ autoIncrement: true }),

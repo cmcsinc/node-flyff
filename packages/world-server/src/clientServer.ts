@@ -57,6 +57,7 @@ import type { EndSkillQueueHandler } from './handlers/endSkillQueue.handler';
 import type { RemoveQuestHandler } from '@flyff/quest';
 import type { QuestCheckHandler } from '@flyff/quest';
 import type { QuestHelperHandler } from '@flyff/quest';
+import type { MailHandler } from '@flyff/mail';
 
 export interface WorldClientServerDeps {
   joinHandler: JoinHandler;
@@ -105,6 +106,7 @@ export interface WorldClientServerDeps {
   removeQuestHandler: RemoveQuestHandler;
   questCheckHandler: QuestCheckHandler;
   questHelperHandler: QuestHelperHandler;
+  mailHandler: MailHandler;
   /**
    * Connection-close lifecycle hook. The dispatcher fires this on every
    * disconnect (LEAVE, alt-F4, reset); the world uses it to flush the live
@@ -190,5 +192,12 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
   dispatcher.register(PACKETTYPE.QUEST_CHECK, (s, r) => deps.questCheckHandler.handleQuestCheck(s, r));
   dispatcher.register(PACKETTYPE.QUESTHELPER_REQNPCPOS, (s, r) => deps.questHelperHandler.handleQuestHelper(s, r));
+  // Mail (post) -- the Post window's five packets. QUERYMAILBOX carries no
+  // payload (SendQueryMailBox, DPClient.cpp:15923); the rest are `[nMail:DWORD]`.
+  dispatcher.register(PACKETTYPE.QUERYMAILBOX, (s) => deps.mailHandler.handleQueryMailBox(s));
+  dispatcher.register(PACKETTYPE.READMAIL, (s, r) => deps.mailHandler.handleReadMail(s, r));
+  dispatcher.register(PACKETTYPE.QUERYGETMAILITEM, (s, r) => deps.mailHandler.handleGetMailItem(s, r));
+  dispatcher.register(PACKETTYPE.QUERYGETMAILGOLD, (s, r) => deps.mailHandler.handleGetMailGold(s, r));
+  dispatcher.register(PACKETTYPE.QUERYREMOVEMAIL, (s, r) => deps.mailHandler.handleRemoveMail(s, r));
   return { server, dispatcher };
 }

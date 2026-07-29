@@ -271,6 +271,53 @@ const MIGRATIONS: readonly Migration[] = [
   { column: ['character_buffs', 'expires_at_ms'], sql: [
     `ALTER TABLE character_buffs ADD COLUMN expires_at_ms INTEGER NOT NULL DEFAULT 0`,
   ]},
+  // 017 — presence + mail (mirrors database/src/migrations/017_presence_and_mail.ts)
+  { table: 'online_players', sql: [
+    `CREATE TABLE IF NOT EXISTS online_players (
+      character_id INTEGER PRIMARY KEY REFERENCES characters(id) ON DELETE CASCADE,
+      account_id INTEGER NOT NULL,
+      world_id TEXT NOT NULL,
+      zone_id INTEGER NOT NULL,
+      server_id TEXT NOT NULL,
+      last_seen_ms INTEGER NOT NULL
+    )`,
+  ]},
+  { table: 'mail', sql: [
+    `CREATE TABLE IF NOT EXISTS mail (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      receiver_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+      sender_id INTEGER NOT NULL DEFAULT 0,
+      sender_name TEXT NOT NULL DEFAULT '',
+      title TEXT NOT NULL DEFAULT '',
+      text TEXT NOT NULL DEFAULT '',
+      gold TEXT NOT NULL DEFAULT '0',
+      item_id INTEGER,
+      item_count INTEGER NOT NULL DEFAULT 0,
+      item_flags INTEGER NOT NULL DEFAULT 0,
+      item_refine INTEGER NOT NULL DEFAULT 0,
+      item_element INTEGER NOT NULL DEFAULT 0,
+      item_element_level INTEGER NOT NULL DEFAULT 0,
+      item_durability INTEGER NOT NULL DEFAULT -1,
+      read INTEGER NOT NULL DEFAULT 0,
+      taken_item INTEGER NOT NULL DEFAULT 0,
+      taken_gold INTEGER NOT NULL DEFAULT 0,
+      created_at_ms INTEGER NOT NULL
+    )`,
+    `CREATE INDEX IF NOT EXISTS mail_receiver_idx ON mail(receiver_id)`,
+  ]},
+  // Admin-only: GM action trail. No game-server counterpart — the admin panel
+  // owns this table, so it is not mirrored in login-server/seed.ts.
+  { table: 'admin_audit_log', sql: [
+    `CREATE TABLE IF NOT EXISTS admin_audit_log (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      account_id INTEGER NOT NULL,
+      action TEXT NOT NULL,
+      target_type TEXT NOT NULL,
+      target_id INTEGER,
+      details TEXT,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )`,
+  ]},
 ] as const;
 
 function hasTable(db: Database.Database, name: string): boolean {

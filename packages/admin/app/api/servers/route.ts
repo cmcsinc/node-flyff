@@ -20,7 +20,7 @@ const TYPES: ServerType[] = ["login", "cluster", "world"];
 export async function GET() {
   const session = await auth();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  return NextResponse.json({ instances: getStatuses() });
+  return NextResponse.json({ instances: await getStatuses() });
 }
 
 /**
@@ -42,9 +42,9 @@ export async function POST(req: NextRequest) {
 
   if (action === "start" || action === "stop") {
     if (!isValidInstanceId(id)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
-    const res = action === "start" ? startInstance(id) : stopInstance(id);
+    const res = action === "start" ? await startInstance(id) : await stopInstance(id);
     if ("error" in res) return NextResponse.json(res, { status: 409 });
-    return NextResponse.json({ ok: true, instances: getStatuses() });
+    return NextResponse.json({ ok: true, instances: await getStatuses() });
   }
 
   if (action === "create") {
@@ -63,19 +63,19 @@ export async function POST(req: NextRequest) {
       );
     }
     saveInstances([...instances, parsed.instance]);
-    return NextResponse.json({ ok: true, instances: getStatuses() });
+    return NextResponse.json({ ok: true, instances: await getStatuses() });
   }
 
   if (action === "delete") {
     if (!isValidInstanceId(id)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
-    if (isRunning(id)) return NextResponse.json({ error: "Stop the server first" }, { status: 409 });
+    if (await isRunning(id)) return NextResponse.json({ error: "Stop the server first" }, { status: 409 });
     saveInstances(listInstances().filter((i) => i.id !== id));
-    return NextResponse.json({ ok: true, instances: getStatuses() });
+    return NextResponse.json({ ok: true, instances: await getStatuses() });
   }
 
   if (action === "update") {
     if (!isValidInstanceId(id)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
-    if (isRunning(id)) {
+    if (await isRunning(id)) {
       return NextResponse.json({ error: "Stop the server before editing config" }, { status: 409 });
     }
     const patch = (body as { patch?: unknown }).patch;
@@ -90,7 +90,22 @@ export async function POST(req: NextRequest) {
     if ("error" in parsed) return NextResponse.json(parsed, { status: 400 });
     instances[idx] = parsed.instance;
     saveInstances(instances);
-    return NextResponse.json({ ok: true, instances: getStatuses() });
+    return NextResponse.json({ ok: true, instances: await getStatuses() });
+  }
+
+  if (action === "autostart") {
+    if (!isValidInstanceId(id)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
+    const enabled = (body as { enabled?: unknown }).enabled;
+    if (typeof enabled !== "boolean") {
+      return NextResponse.json({ error: "enabled must be a boolean" }, { status: 400 });
+    }
+    const instances = listInstances();
+    const idx = instances.findIndex((i) => i.id === id);
+    if (idx < 0) return NextResponse.json({ error: "Unknown instance" }, { status: 404 });
+    // Deliberately allowed while running — it only affects the next daemon boot.
+    instances[idx] = { ...instances[idx], autoStart: enabled };
+    saveInstances(instances);
+    return NextResponse.json({ ok: true, instances: await getStatuses() });
   }
 
   return NextResponse.json({ error: "Unknown action" }, { status: 400 });
@@ -99,7 +114,7 @@ export async function POST(req: NextRequest) {
 /** Validates an untrusted instance descriptor from the client. */
 function parseInstance(raw: unknown): { instance: ServerInstance } | { error: string } {
   if (typeof raw !== "object" || raw === null) return { error: "Missing instance" };
-  const { id, type, label, port, overrides } = raw as Record<string, unknown>;
+  const { id, type, label, port, autoStart, overrides } = raw as Record<string, unknown>;
   if (!isValidInstanceId(id)) {
     return { error: "id must be 2-32 chars, alphanumeric/dash/underscore" };
   }
@@ -112,6 +127,9 @@ function parseInstance(raw: unknown): { instance: ServerInstance } | { error: st
   if (typeof label !== "string" || label.length < 1 || label.length > 64) {
     return { error: "label must be 1-64 chars" };
   }
+  if (autoStart !== undefined && typeof autoStart !== "boolean") {
+    return { error: "autoStart must be a boolean" };
+  }
   if (overrides !== undefined && (typeof overrides !== "object" || overrides === null || Array.isArray(overrides))) {
     return { error: "overrides must be an object" };
   }
@@ -121,6 +139,7 @@ function parseInstance(raw: unknown): { instance: ServerInstance } | { error: st
       type: type as ServerType,
       label,
       port,
+      ...(autoStart === undefined ? {} : { autoStart }),
       ...(overrides ? { overrides: overrides as Record<string, unknown> } : {}),
     },
   };

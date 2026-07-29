@@ -1,29 +1,42 @@
 import { loadMovers } from "@/lib/resources";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Select } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
+import { FilterBar } from "@/components/filter-bar";
+import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
+import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { Bug } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-interface SearchParams {
+type SearchParams = {
   search?: string;
+  type?: string;
+  minLevel?: string;
+  maxLevel?: string;
+  page?: string;
+  perPage?: string;
 }
 
 export default async function MoversPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
   const search = params.search ?? "";
+  const type = params.type ?? "";
+  const minLevel = params.minLevel ?? "";
+  const maxLevel = params.maxLevel ?? "";
+  const perPage = parsePerPage(params.perPage);
   const data = loadMovers();
 
-  const movers: Array<{ id: number; name: string; kind: string }> = [];
-  for (const file of data) {
-    if (typeof file !== "object" || file === null) continue;
-    const entries = (file as Record<string, unknown>).movers;
+  const movers: Array<{ id: number; name: string; kind: string; type: string; level: number }> = [];
+  for (const doc of data) {
+    if (typeof doc !== "object" || doc === null) continue;
+    const entries = (doc as Record<string, unknown>).movers;
     if (!Array.isArray(entries)) continue;
     for (const entry of entries) {
       if (typeof entry !== "object" || entry === null) continue;
@@ -32,69 +45,100 @@ export default async function MoversPage({ searchParams }: { searchParams: Promi
         id: Number(v.id ?? 0),
         name: String(v.name ?? "?"),
         kind: String(v.key ?? v.dwKind ?? "—"),
+        type: String(v.type ?? "—"),
+        level: Number(v.level ?? 0),
       });
     }
   }
 
   movers.sort((a, b) => a.id - b.id);
 
-  const filtered = search
-    ? movers.filter((m) => m.name.toLowerCase().includes(search.toLowerCase()) || String(m.id).includes(search))
-    : movers;
+  const types = [...new Set(movers.map((m) => m.type))].sort();
+  const min = Number(minLevel);
+  const max = Number(maxLevel);
+  const needle = search.toLowerCase();
 
-  const MAX = 500;
-  const capped = filtered.slice(0, MAX);
+  const filtered = movers.filter((m) => {
+    if (type && m.type !== type) return false;
+    if (Number.isFinite(min) && minLevel && m.level < min) return false;
+    if (Number.isFinite(max) && maxLevel && m.level > max) return false;
+    if (needle && !m.name.toLowerCase().includes(needle) && !String(m.id).includes(needle) && !m.kind.toLowerCase().includes(needle)) return false;
+    return true;
+  });
+
+  const page = paginate(filtered, parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
       <PageHeader title="Movers" description={`${filtered.length} of ${movers.length} movers from ${data.length} files`} />
 
-      <form className="flex flex-wrap gap-2" method="GET">
-        <SearchInput name="search" placeholder="Search by name or ID..." defaultValue={search} className="w-full sm:w-72" />
-        <Button type="submit">Search</Button>
-      </form>
+      <FilterBar perPage={perPage} active={Boolean(search || type || minLevel || maxLevel)}>
+        <SearchInput name="search" placeholder="Search by name, key, or ID..." defaultValue={search} className="w-full sm:w-72" />
+        <Select name="type" defaultValue={type} className="w-36" aria-label="Filter by mover type">
+          <option value="">All types</option>
+          {types.map((t) => (
+            <option key={t} value={t}>{t}</option>
+          ))}
+        </Select>
+        <Input
+          name="minLevel"
+          type="number"
+          min={0}
+          defaultValue={minLevel}
+          placeholder="Min Lv"
+          aria-label="Minimum level"
+          className="w-24"
+        />
+        <Input
+          name="maxLevel"
+          type="number"
+          min={0}
+          defaultValue={maxLevel}
+          placeholder="Max Lv"
+          aria-label="Maximum level"
+          className="w-24"
+        />
+      </FilterBar>
 
       <Card>
         <CardContent className="p-0">
-          <div className="max-h-[70vh] overflow-auto">
+          <div className="overflow-auto">
             <Table>
               <TableHeader className="sticky top-0 bg-background">
                 <TableRow>
                   <TableHead className="w-20">ID</TableHead>
                   <TableHead>Name</TableHead>
-                  <TableHead>Kind</TableHead>
+                  <TableHead>Key</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead className="text-right">Level</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {capped.map((m) => (
+                {page.rows.map((m) => (
                   <TableRow key={m.id}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{m.id}</TableCell>
                     <TableCell className="font-medium">{m.name}</TableCell>
-                    <TableCell><Badge variant="secondary">{m.kind}</Badge></TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">{m.kind}</TableCell>
+                    <TableCell><Badge variant="secondary">{m.type}</Badge></TableCell>
+                    <TableCell className="text-right">{m.level > 0 ? m.level : "—"}</TableCell>
                     <TableCell className="text-right">
                       <Link href={`/resources/movers/${m.id}/edit`} className="text-xs text-primary hover:underline">Edit</Link>
                     </TableCell>
                   </TableRow>
                 ))}
                 {filtered.length === 0 && (
-                  <EmptyRow colSpan={4}>
+                  <EmptyRow colSpan={6}>
                     <div className="flex flex-col items-center gap-1">
                       <Bug className="h-5 w-5 opacity-40" />
-                      {search ? "No movers match your search" : "No mover data"}
+                      {search || type || minLevel || maxLevel ? "No movers match your filters" : "No mover data"}
                     </div>
                   </EmptyRow>
-                )}
-                {filtered.length > MAX && (
-                  <TableRow>
-                    <TableCell colSpan={4} className="py-3 text-center text-xs text-muted-foreground">
-                      Showing {MAX} of {filtered.length} movers — refine your search to see more
-                    </TableCell>
-                  </TableRow>
                 )}
               </TableBody>
             </Table>
           </div>
+          <Pagination {...page} params={params} unit="movers" />
         </CardContent>
       </Card>
     </div>

@@ -4,8 +4,8 @@ import { ServerManager } from "./server-manager-client";
 
 export const dynamic = "force-dynamic";
 
-export default function ServersPage() {
-  const instances = getStatuses();
+export default async function ServersPage() {
+  const instances = await getStatuses();
   return (
     <div className="space-y-6">
       <PageHeader

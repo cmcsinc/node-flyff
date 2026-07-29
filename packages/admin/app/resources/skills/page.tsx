@@ -1,30 +1,43 @@
 import { loadSkills } from "@/lib/resources";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Select } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
+import { FilterBar } from "@/components/filter-bar";
+import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
+import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-interface SearchParams {
+type SearchParams = {
   search?: string;
+  job?: string;
+  tier?: string;
+  maxReqLevel?: string;
+  page?: string;
+  perPage?: string;
 }
 
 export default async function SkillsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
   const search = params.search ?? "";
+  const job = params.job ?? "";
+  const tier = params.tier ?? "";
+  const maxReqLevel = params.maxReqLevel ?? "";
+  const perPage = parsePerPage(params.perPage);
   const data = loadSkills();
 
-  const skills: Array<{ id: number; name: string; job: string; tier: number; reqLevel: number; maxLevel: number; levels: number }> = [];
-  for (const file of data) {
-    if (typeof file !== "object" || file === null) continue;
-    const job = String((file as Record<string, unknown>)._job ?? "unknown");
-    const entries = (file as Record<string, unknown>).skills;
+  const skills: Array<{ id: number; name: string; job: string; tier: number; reqLevel: number; maxLevel: number }> = [];
+  for (const doc of data) {
+    if (typeof doc !== "object" || doc === null) continue;
+    const jobName = String((doc as Record<string, unknown>)._job ?? "unknown");
+    const entries = (doc as Record<string, unknown>).skills;
     if (!Array.isArray(entries)) continue;
     for (const entry of entries) {
       if (typeof entry !== "object" || entry === null) continue;
@@ -33,36 +46,63 @@ export default async function SkillsPage({ searchParams }: { searchParams: Promi
       skills.push({
         id: Number(v.id ?? 0),
         name: String(v.name ?? "?"),
-        job,
+        job: jobName,
         tier: Number(v.tier ?? 0),
         reqLevel: Number(v.reqLevel ?? 0),
         maxLevel: Number(v.maxLevel ?? lvlArr.length),
-        levels: lvlArr.length,
       });
     }
   }
 
   skills.sort((a, b) => a.id - b.id);
 
-  const filtered = search
-    ? skills.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()) || String(s.id).includes(search) || s.job.toLowerCase().includes(search.toLowerCase()))
-    : skills;
+  const jobs = [...new Set(skills.map((s) => s.job))].sort();
+  const tiers = [...new Set(skills.map((s) => s.tier))].sort((a, b) => a - b);
+  const cap = Number(maxReqLevel);
+  const needle = search.toLowerCase();
 
-  const MAX = 500;
-  const capped = filtered.slice(0, MAX);
+  const filtered = skills.filter((s) => {
+    if (job && s.job !== job) return false;
+    if (tier && s.tier !== Number(tier)) return false;
+    if (maxReqLevel && Number.isFinite(cap) && s.reqLevel > cap) return false;
+    if (needle && !s.name.toLowerCase().includes(needle) && !String(s.id).includes(needle)) return false;
+    return true;
+  });
+
+  const page = paginate(filtered, parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
       <PageHeader title="Skills" description={`${filtered.length} of ${skills.length} skills from ${data.length} job files`} />
 
-      <form className="flex flex-wrap gap-2" method="GET">
-        <SearchInput name="search" placeholder="Search by name, job, or ID..." defaultValue={search} className="w-full sm:w-72" />
-        <Button type="submit">Search</Button>
-      </form>
+      <FilterBar perPage={perPage} active={Boolean(search || job || tier || maxReqLevel)}>
+        <SearchInput name="search" placeholder="Search by name or ID..." defaultValue={search} className="w-full sm:w-72" />
+        <Select name="job" defaultValue={job} className="w-40" aria-label="Filter by job">
+          <option value="">All jobs</option>
+          {jobs.map((j) => (
+            <option key={j} value={j}>{j}</option>
+          ))}
+        </Select>
+        <Select name="tier" defaultValue={tier} className="w-28" aria-label="Filter by tier">
+          <option value="">All tiers</option>
+          {tiers.map((t) => (
+            <option key={t} value={t}>Tier {t}</option>
+          ))}
+        </Select>
+        <Input
+          name="maxReqLevel"
+          type="number"
+          min={0}
+          defaultValue={maxReqLevel}
+          placeholder="Max req Lv"
+          aria-label="Maximum required level"
+          className="w-32"
+        />
+      </FilterBar>
 
       <Card>
         <CardContent className="p-0">
-          <div className="max-h-[70vh] overflow-auto">
+          <div className="overflow-auto">
             <Table>
               <TableHeader className="sticky top-0 bg-background">
                 <TableRow>
@@ -76,7 +116,7 @@ export default async function SkillsPage({ searchParams }: { searchParams: Promi
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {capped.map((s) => (
+                {page.rows.map((s) => (
                   <TableRow key={`${s.job}-${s.id}`}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{s.id}</TableCell>
                     <TableCell className="font-medium">{s.name}</TableCell>
@@ -93,20 +133,14 @@ export default async function SkillsPage({ searchParams }: { searchParams: Promi
                   <EmptyRow colSpan={7}>
                     <div className="flex flex-col items-center gap-1">
                       <Sparkles className="h-5 w-5 opacity-40" />
-                      {search ? "No skills match your search" : "No skill data"}
+                      {search || job || tier || maxReqLevel ? "No skills match your filters" : "No skill data"}
                     </div>
                   </EmptyRow>
-                )}
-                {filtered.length > MAX && (
-                  <TableRow>
-                    <TableCell colSpan={7} className="py-3 text-center text-xs text-muted-foreground">
-                      Showing {MAX} of {filtered.length} skills — refine your search to see more
-                    </TableCell>
-                  </TableRow>
                 )}
               </TableBody>
             </Table>
           </div>
+          <Pagination {...page} params={params} unit="skills" />
         </CardContent>
       </Card>
     </div>

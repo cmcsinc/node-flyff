@@ -208,6 +208,31 @@ export const SNAPSHOTTYPE_RESETDESTPARAM = 0x001d; // MsgHdr.h -- AddResetDestPa
 export const SNAPSHOTTYPE_MODIFYMODE = 0x00d3;       // MsgHdr.h:1105 -- AddModifyMode
 
 /**
+ * Mail snapshots (`MsgHdr.h:1147-1149`).
+ *
+ * - `QUERYMAILBOX` (0x00e9) -- `CUser::AddMailBox` (User.cpp:6734). Body is one
+ *   `CMailBox::Serialize` (post.cpp:335): `idReceiver:DWORD`, `count:int`, then
+ *   `count` x `CMail::Serialize` (post.cpp:93). The client `Clear()`s its local
+ *   mailbox first (post.cpp:349) -- this is a FULL REPLACE, not a delta.
+ *   NOTE the DB<->world form (`CMailBox::Write`, post.cpp:231) prefixes each
+ *   mail with an extra `m_nMail` DWORD. The client form does NOT. Emitting the
+ *   DB form shifts every subsequent field by 4 bytes.
+ * - `REMOVEMAIL` (0x00e7) -- `CUser::AddRemoveMail` (User.cpp:6723):
+ *   `nMail:DWORD`, `nType:int` (4B, not BYTE). `nType` is the `CMail::{mail,
+ *   item, gold, read}` enum = 0/1/2/3 (post.h:35): 0 deletes the mail
+ *   client-side, 1 clears the attachment, 2 clears the penya, 3 marks read.
+ *
+ * `SNAPSHOTTYPE_POSTMAIL` (0x00e6) is deliberately absent: `CUser::SetPosting`
+ * has no caller anywhere in the v19 tree, so vanilla never pushes a live
+ * new-mail body -- the client learns of new mail from the `MODE_MAILBOX` bit
+ * (MODIFYMODE) and then pulls the whole box. `SNAPSHOTTYPE_QUERYMAILBOX_REQ`
+ * (0x8860) is likewise absent on purpose: sending it with TRUE sets
+ * `m_bWaitRequestMail` and starts a 5s client poll loop (WndManager.cpp:3516).
+ */
+export const SNAPSHOTTYPE_QUERYMAILBOX = 0x00e9;     // MsgHdr.h:1149 -- AddMailBox (full mailbox)
+export const SNAPSHOTTYPE_REMOVEMAIL = 0x00e7;       // MsgHdr.h:1148 -- AddRemoveMail (nMail + nType)
+
+/**
  * `SNAPSHOTTYPE_DISGUISE` / `NODISGUISE` (MsgHdr.h:1133-1134) --
  * `CUserMng::AddDisguise/AddNoDisguise` (User.cpp:4455/4466). DISGUISE body is
  * one DWORD (the propMover index to render as); NODISGUISE is bodyless. The

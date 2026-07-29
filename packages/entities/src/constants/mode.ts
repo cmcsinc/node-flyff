@@ -40,6 +40,17 @@ export const MODE = Object.freeze({
    */
   OBSERVE: 0x000000c0,
   /**
+   * Unclaimed mail waiting. authorization.h:35 -- `MODE_MAILBOX`. This bit IS
+   * the new-mail indicator: there is no dedicated mail-count packet. C++ sets
+   * it when a mail arrives (`DPDatabaseClient.cpp:2624`) and broadcasts
+   * MODIFYMODE; the client's `OnModifyMode` (DPClient.cpp:12389) pops the
+   * `TID_MAIL_RECEIVE` notice and lights the messenger envelope purely off
+   * `IsMode(MODE_MAILBOX)`. Cleared once nothing is left unclaimed
+   * (`IsStampedMailExists()==FALSE`, DPDatabaseClient.cpp:2678).
+   * Recomputed on JOIN, mirroring `CUser::AdjustMailboxState` (User.cpp:3689).
+   */
+  MAILBOX: 0x00008000,
+  /**
    * Exp-gain frozen. authorization.h:40 -- `MODE_EXPUP_STOP`. Toggled (no /no
    * pair) by `/es` (`TextCmd_ExpUpStop`, FuncTextCmd.cpp:2989). Honored by the
    * exp-grant path (ponytail: `CombatService.grantExp` early-out once wired).

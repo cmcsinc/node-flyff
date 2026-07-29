@@ -54,6 +54,18 @@ export {
   type BuffRow,
 } from './repositories/buff.repo';
 
+export {
+  PresenceRepository,
+  type PresenceRow,
+  type PresenceUpsertData,
+} from './repositories/presence.repo';
+
+export {
+  MailRepository,
+  type MailRow,
+  type MailCreateData,
+} from './repositories/mail.repo';
+
 // WAL journal -- embedded SQLite crash-recovery log
 export {
   Journal,

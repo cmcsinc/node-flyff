@@ -14,6 +14,17 @@ export const PACKETTYPE = Object.freeze({
   SRVR_LIST:            0x000000fd,
   ERROR:                0x000000fe,
 
+  // --- Mail / post (MsgHdr.h:30-37) ---------------------------------------
+  // Admin->player mail only: the player-to-player send path
+  // (`PACKETTYPE_QUERYPOSTMAIL` 0x1a) is deliberately NOT wired.
+  // QUERYMAILBOX has an EMPTY payload (`SendQueryMailBox`, DPClient.cpp:15923);
+  // the other four all carry a single `[nMail:DWORD]`.
+  QUERYREMOVEMAIL:      0x0000001b, // MsgHdr.h:32 -- delete a mail (OnQueryRemoveMail, DPSrvr.cpp:7389)
+  QUERYGETMAILITEM:     0x0000001c, // MsgHdr.h:33 -- pull the attached item (DPSrvr.cpp:7417)
+  QUERYMAILBOX:         0x0000001d, // MsgHdr.h:34 -- request the full mailbox (DPSrvr.cpp:7526)
+  QUERYGETMAILGOLD:     0x0000001f, // MsgHdr.h:36 -- pull the attached penya (DPSrvr.cpp:7470)
+  READMAIL:             0x00000024, // MsgHdr.h:37 -- mark read (DPSrvr.cpp:7498)
+
   JOIN:                 0x0000ff00,
   LEAVE:                0x0000ff01,
   DESTROY_ALLPLAYERS:   0x0000ff02,

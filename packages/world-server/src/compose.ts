@@ -1,8 +1,13 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
+import { AdminListener } from './ipc/adminListener';
+import { AdminCommandService } from './services/adminCommand.service';
+import { MailService, MailHandler } from '@flyff/mail';
+import { SetPosSerializer } from './net/snapshot/setPos.serializer';
+import { ModifyModeSerializer } from './net/snapshot/modifyMode.serializer';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
 import type { CPlayer } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
@@ -117,6 +122,10 @@ export interface WorldComposeResult {
   logger: Logger;
   clusterRegistrar: ClusterRegistrar;
   clusterListener: ClusterListener;
+  adminListener: AdminListener;
+  adminCommandService: AdminCommandService;
+  mailService: MailService;
+  mailHandler: MailHandler;
   resources: ResourceIndex;
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
@@ -254,6 +263,14 @@ export async function compose(): Promise<WorldComposeResult> {
   const bankRepo = new BankRepository(db);
   const skillRepo = new SkillRepository(db);
   const buffRepo = new BuffRepository(db);
+  const mailRepo = new MailRepository(db);
+  const presenceRepo = new PresenceRepository(db);
+  // A hard crash leaves this process's presence rows behind. Clearing them at
+  // boot means the admin panel never shows a ghost as online for the 60 s the
+  // staleness window would otherwise take to expire them.
+  void presenceRepo
+    .clearByServer(config.server.id)
+    .catch((err: unknown) => logger.warn({ err }, 'stale presence cleanup failed'));
 
   // WAL journal -- embedded SQLite, opened once per process. Critical mutations
   // (items, gold, exp, level) append here before ack so a crash never dupes or
@@ -412,6 +429,12 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
+    presenceRepo,
+    serverId: config.server.id,
+    // mailHandler is constructed further down (it needs inventoryService).
+    // Wrapped in a closure so the reference resolves at call time, after
+    // compose() has returned -- never during this constructor.
+    mailHandler: { sendMailBox: (player: CPlayer) => mailHandler.sendMailBox(player) },
   });
   const joinHandler = new JoinHandler(
     joinService,
@@ -652,11 +675,43 @@ export async function compose(): Promise<WorldComposeResult> {
   const questCheckHandler = new QuestCheckHandler(playerManager, questService);
   const questHelperHandler = new QuestHelperHandler(playerManager, spawnManager);
 
+  // Mail (post) -- admin->player only. The mailbox is pulled by the client
+  // (QUERYMAILBOX on window open) and pushed on JOIN / after an admin insert.
+  // MODE_MAILBOX is the only new-mail indicator (no push packet in vanilla).
+  const mailService = new MailService({ mailRepo, inventoryService });
+  const modifyModeSerializer = new ModifyModeSerializer();
+  const adminSetPosSerializer = new SetPosSerializer();
+  const mailHandler = new MailHandler({
+    playerManager,
+    mailService,
+    onModeChanged: (player, mode) =>
+      playerManager.broadcastAll(modifyModeSerializer.build(player.m_idPlayer, mode)),
+  });
+
+  // Admin-panel commands over `admin:command` (HMAC-signed via IpcBus). The
+  // route in @flyff/admin is the only authorization gate -- the world trusts
+  // any correctly-signed envelope (see adminListener's security note).
+  const adminCommandService = new AdminCommandService({
+    playerManager,
+    setPosSer: adminSetPosSerializer,
+    zones: resources.zones,
+    resendVicinity: (player) => {
+      const res = vicinityService.resendAt(player.m_idPlayer);
+      if (res !== null) playerManager.sendTo(player, res.snapshot);
+    },
+    mailHandler,
+  });
+  const adminListener = new AdminListener({ sink: adminCommandService });
+
   return {
     config,
     logger,
     clusterRegistrar,
     clusterListener,
+    adminListener,
+    adminCommandService,
+    mailService,
+    mailHandler,
     resources,
     playerManager,
     zoneManager,
