@@ -166,6 +166,7 @@ packages/resources/qt-*/
 config/instances.json
 config/instances/
 
-# Supervisor daemon runtime state (pid/port handle + shared secret)
+# Supervisor daemon runtime state (pid/port handle + shared secret + child list)
 data/supervisor.json
 data/supervisor.token
+data/supervisor-children.json

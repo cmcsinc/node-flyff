@@ -66,6 +66,8 @@ interface SpeechEntry {
   readonly lines: readonly string[];
   lineIdx: number;
   nextAt: number;
+  /** Set once the mover is no longer spawned; entry is swept after the pass. */
+  dead?: boolean;
 }
 
 /** Next fire time for a fresh entry (60-90 s from `now`). */
@@ -115,6 +117,10 @@ export class NpcSpeechService {
     const total = this.spawnManager.size;
     let scheduled = 0;
     const now = this.now();
+    // Re-bootstrap (e.g. `/rn`) must REPLACE the schedule, not append to it —
+    // otherwise the array doubles and every NPC speaks twice as often while
+    // strong refs to the previous, now-killed movers are retained.
+    this.schedule.length = 0;
     for (const mover of this.spawnManager.all()) {
       const lines = this.greetingLines(mover);
       if (lines.length === 0) continue;
@@ -146,8 +152,17 @@ export class NpcSpeechService {
   /** Emit due speeches and re-arm. Sync -- no `await` (rule 05). */
   tick(): void {
     const now = this.now();
+    let dead = false;
     for (const entry of this.schedule) {
       if (entry.nextAt > now) continue;
+      // A mover the SpawnManager has dropped must stop talking, and its entry
+      // must stop pinning the CMover alive. Checked lazily (only when the entry
+      // is due) so the common path stays a single timestamp compare.
+      if (this.spawnManager.get(entry.mover.m_idMover) !== entry.mover) {
+        entry.dead = true;
+        dead = true;
+        continue;
+      }
       const text = entry.lines[entry.lineIdx % entry.lines.length];
       if (text === undefined) continue; // unreachable: entries always carry >=1 line
       entry.lineIdx++;
@@ -159,6 +174,11 @@ export class NpcSpeechService {
         packet,
       );
       entry.nextAt = reArmAt(now, this.random);
+    }
+    if (dead) {
+      const live = this.schedule.filter((e) => e.dead !== true);
+      this.schedule.length = 0;
+      this.schedule.push(...live);
     }
   }
 }
