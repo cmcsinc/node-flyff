@@ -31,7 +31,7 @@ import type { CPlayer } from '@flyff/entities';
 import type { CMover } from '@flyff/entities';
 import { MAX_INVENTORY } from '@flyff/entities';
 import type { QuestService } from '@flyff/quest';
-import { QS_END, QUEST_FLAG } from '@flyff/core/constants/quest';
+import { QS_END, QUEST_FLAG, QSAY } from '@flyff/core/constants/quest';
 import { createLogger } from '@flyff/core/logger';
 import { buildSetQuest, canBegin, isComplete, isNextLevel } from '@flyff/quest';
 import type { InventoryOps } from '@flyff/quest';
@@ -486,51 +486,56 @@ export class ScriptDlgService {
     void npc;
   }
 
-  /** `__QuestBegin` confirmation: quest title + YES/NO answer buttons
-   *  (keys round-trip `QUEST_BEGIN_YES` / `QUEST_BEGIN_NO` with questId). */
+  /** `__QuestBegin` (`ScriptHelper.cpp:498-506`): say the quest's `QSAY_BEGIN1..5`
+   *  `SetDialog` lines, then the YES/NO answer buttons (round-tripping
+   *  `QUEST_BEGIN_YES` / `QUEST_BEGIN_NO` with the quest id). Quests with no
+   *  `SetDialog` text fall back to the title + a generic prompt so the button
+   *  is never a blank window. */
   private questBeginConfirm(player: CPlayer, questId: number, frames: Buffer[]): void {
-    frames.push(this.scriptDialog.build(player.m_idPlayer, [
-      { type: 'removeAllKeys' },
-      { type: 'say', text: this.questLabel(questId) },
-      { type: 'say', text: 'Will you accept this quest?' },
-      { type: 'addAnswer', word: 'Yes', key: QUEST_KEY.BEGIN_YES, quest: questId },
-      { type: 'addAnswer', word: 'No', key: QUEST_KEY.BEGIN_NO, quest: questId },
-    ]));
+    const funcs: ScriptFunc[] = [{ type: 'removeAllKeys' }];
+    if (this.pushQuestSays(funcs, questId, QSAY.BEGIN) === 0) {
+      funcs.push({ type: 'say', text: this.questLabel(questId) });
+      funcs.push({ type: 'say', text: 'Will you accept this quest?' });
+    }
+    funcs.push({ type: 'addAnswer', word: 'Yes', key: QUEST_KEY.BEGIN_YES, quest: questId });
+    funcs.push({ type: 'addAnswer', word: 'No', key: QUEST_KEY.BEGIN_NO, quest: questId });
+    frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
   }
 
-  /** `__QuestEnd` confirmation: complete-eligible -> OK=>`QUEST_END_COMPLETE`;
-   *  not yet eligible -> OK=>`QUEST_END_FAIL` (closes). */
+  /** `__QuestEnd` (`ScriptHelper.cpp:603-613`): complete-eligible -> say
+   *  `QSAY_END_COMPLETE1..3` + OK=>`QUEST_END_COMPLETE`; not yet eligible ->
+   *  `QSAY_END_FAILURE1..3` + OK=>`QUEST_END_FAIL` (closes). */
   private questEndConfirm(player: CPlayer, questId: number, frames: Buffer[]): void {
     const def = this.deps.quests.byId.get(questId);
     const q = player.findQuest(questId);
     const eligible = def && q ? isComplete(player, q, def, this.questInv(player)).ok : false;
-    const label = this.questLabel(questId);
-    if (eligible) {
-      frames.push(this.scriptDialog.build(player.m_idPlayer, [
-        { type: 'removeAllKeys' },
-        { type: 'say', text: `${label} -- quest complete!` },
-        { type: 'addAnswer', word: 'OK', key: QUEST_KEY.END_COMPLETE, quest: questId },
-      ]));
-    } else {
-      frames.push(this.scriptDialog.build(player.m_idPlayer, [
-        { type: 'removeAllKeys' },
-        { type: 'say', text: `${label} -- conditions not yet met.` },
-        { type: 'addAnswer', word: 'OK', key: QUEST_KEY.END_FAIL, quest: questId },
-      ]));
+    const funcs: ScriptFunc[] = [{ type: 'removeAllKeys' }];
+    const slots = eligible ? QSAY.END_COMPLETE : QSAY.END_FAILURE;
+    const key = eligible ? QUEST_KEY.END_COMPLETE : QUEST_KEY.END_FAIL;
+    if (this.pushQuestSays(funcs, questId, slots) === 0) {
+      const label = this.questLabel(questId);
+      funcs.push({
+        type: 'say',
+        text: eligible ? `${label} -- quest complete!` : `${label} -- conditions not yet met.`,
+      });
     }
+    funcs.push({ type: 'addAnswer', word: 'OK', key, quest: questId });
+    frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
   }
 
-  /** Grant a quest; append SETQUEST + reward frames, then close. Logs the
-   *  `QuestFailReason` when `canBegin` rejects so the click isn't silent. */
+  /** Grant a quest; append SETQUEST + reward frames, then close. Says the
+   *  quest's `QSAY_BEGIN_YES` line first (`__QuestBeginYes`,
+   *  `ScriptHelper.cpp:782`). Logs the `QuestFailReason` when `canBegin`
+   *  rejects so the click isn't silent. */
   private async applyBegin(player: CPlayer, questId: number, frames: Buffer[]): Promise<void> {
     const res = await this.deps.questService.beginQuest(player, questId);
     if (res.ok) {
       frames.push(...res.frames);
-      frames.push(this.scriptDialog.build(player.m_idPlayer, [
-        { type: 'removeAllKeys' },
-        { type: 'say', text: 'Quest accepted.' },
-        { type: 'exit' },
-      ]));
+      const funcs: ScriptFunc[] = [{ type: 'removeAllKeys' }];
+      const text = this.sayQuest(questId, QSAY.BEGIN_YES);
+      funcs.push({ type: 'say', text: text ?? 'Quest accepted.' });
+      funcs.push({ type: 'exit' });
+      frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
     } else {
       logger.info({ charId: player.m_idPlayer, questId, reason: res.reason }, 'quest begin rejected');
       frames.push(this.scriptDialog.build(player.m_idPlayer, [
@@ -677,6 +682,28 @@ export class ScriptDlgService {
     if (!token || !token.startsWith('IDS_')) return token;
     const t = this.deps.questText?.get(token);
     return t && t.length > 0 ? t : undefined;
+  }
+
+  /**
+   * `__SayQuest( nQuestId, nIdx )` (`ScriptHelper.cpp:192-208`) -- the quest's
+   * own `SetDialog(nIdx, IDS_*)` line, resolved through the propQuest text
+   * table. Returns undefined when the slot is unset or resolves empty, which is
+   * C++'s `return FALSE` (no RUNSCRIPTFUNC queued -- the line is skipped, not
+   * emitted blank).
+   */
+  private sayQuest(qid: number, slot: number): string | undefined {
+    const text = this.deps.quests.byId.get(qid)?.dialog?.[String(slot)];
+    return this.resolveText(text);
+  }
+
+  /** Push one `say` func per non-empty `SetDialog` slot in `slots`. */
+  private pushQuestSays(funcs: ScriptFunc[], qid: number, slots: readonly number[]): number {
+    let n = 0;
+    for (const slot of slots) {
+      const text = this.sayQuest(qid, slot);
+      if (text !== undefined) { funcs.push({ type: 'say', text }); n++; }
+    }
+    return n;
   }
 
   /**

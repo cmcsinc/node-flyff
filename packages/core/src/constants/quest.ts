@@ -78,3 +78,22 @@ export const QUEST_FLAG = Object.freeze({
   PATROL: 1 << 0,
   DIALOG: 1 << 1,
 } as const);
+
+/**
+ * `SetDialog(n, IDS_*)` slot indices (`resource/definequest.h` `QSAY_*`), i.e.
+ * the index into `QuestProp::m_apQuestDialog[32]` that `__SayQuest` reads.
+ *
+ * `__QuestBegin` says BEGIN1..BEGIN5 then adds the YES/NO answers
+ * (`ScriptHelper.cpp:498-506`); `__QuestBeginYes`/`No` say BEGIN_YES/BEGIN_NO
+ * (`:782`, `:846`); `__QuestEnd` says END_COMPLETE1..3 with an OK answer when
+ * the turn-in NPC matches and conditions pass, else END_FAILURE1..3
+ * (`:603-613`). Empty slots are skipped -- `__SayQuest` returns FALSE on an
+ * absent entry rather than emitting a blank line.
+ */
+export const QSAY = Object.freeze({
+  BEGIN: [0, 1, 2, 3, 4],
+  BEGIN_YES: 5,
+  BEGIN_NO: 6,
+  END_COMPLETE: [7, 8, 9],
+  END_FAILURE: [10, 11, 12],
+} as const);

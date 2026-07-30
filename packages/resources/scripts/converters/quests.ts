@@ -145,10 +145,18 @@ class QuestParser {
     // C++ Project.cpp:2433 — SetRemove(N) → m_bNoRemove = !N.  Extracted as
     // `noRemove` on the def so runtime can check without scanning commands.
     if (cmd === 'SetRemove' && args[0]?.type === 'bool') { acc.noRemove = !args[0].value; return; }
-    if (cmd === 'SetDialog' && args[0]?.type === 'num') {
+    // C++ Project.cpp:2356-2368 — SetDialog(n, IDS_*) → m_apQuestDialog[n].
+    // `n` is written both as a literal and as a `QSAY_*` symbol (definequest.h),
+    // which `toArg` resolves to `{type:'sym', value:<number>}` — accept both or
+    // the 398 symbol-form quests lose all their dialog.
+    if (cmd === 'SetDialog') {
+      const slot = args[0];
       const t = asString(args[1]);
-      if (t !== undefined) acc.dialog[String(args[0].value)] = t;
-      return;
+      if (slot !== undefined && t !== undefined && typeof slot.value === 'number' &&
+          (slot.type === 'num' || slot.type === 'sym')) {
+        acc.dialog[String(slot.value)] = t;
+        return;
+      }
     }
     acc.commands.push({ cmd, args });
   }

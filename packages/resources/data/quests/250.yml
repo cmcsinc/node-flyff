@@ -136,46 +136,17 @@ commands:
         value: 5270194952
       - type: num
         value: 5270194952
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 0
-      - type: sym
-        value: IDS_PROPQUEST_INC_003681
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 1
-      - type: sym
-        value: IDS_PROPQUEST_INC_003682
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 5
-      - type: sym
-        value: IDS_PROPQUEST_INC_003683
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 6
-      - type: sym
-        value: IDS_PROPQUEST_INC_003684
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 7
-      - type: sym
-        value: IDS_PROPQUEST_INC_003685
-  - cmd: SetDialog
-    args:
-      - type: sym
-        value: 10
-      - type: sym
-        value: IDS_PROPQUEST_INC_003686
 states:
   "0":
     desc: IDS_PROPQUEST_INC_003687
   "14":
     desc: IDS_PROPQUEST_INC_003688
+dialog:
+  "0": IDS_PROPQUEST_INC_003681
+  "1": IDS_PROPQUEST_INC_003682
+  "5": IDS_PROPQUEST_INC_003683
+  "6": IDS_PROPQUEST_INC_003684
+  "7": IDS_PROPQUEST_INC_003685
+  "10": IDS_PROPQUEST_INC_003686
 quest_items: []
 title: IDS_PROPQUEST_INC_003680
