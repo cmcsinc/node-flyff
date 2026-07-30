@@ -14,7 +14,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src",
     "test": "tsx --test test/**/*.test.ts",
     "migrate": "tsx src/migrate.ts",
     "migrate:rollback": "tsx src/migrate.ts rollback",

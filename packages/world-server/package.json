@@ -32,7 +32,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsx src/index.ts",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src",
     "test": "tsx --test test/**/*.test.ts",
     "start": "node dist/index.js",
     "clean": "rm -rf dist"
