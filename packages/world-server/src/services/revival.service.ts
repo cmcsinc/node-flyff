@@ -29,6 +29,7 @@ import type { ZoneDefinition } from '@flyff/resources';
 import type { CPlayer, Vec3 } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
+import type { VisibilityService } from '@flyff/world-core';
 import { subDieDecExp } from '@flyff/combat';
 import {
   II_SYS_SYS_SCR_RESURRECTION, OBJMSG_DIE, OBJMSG_STOP,
@@ -60,6 +61,12 @@ export interface RevivalServiceDeps {
   readonly playerManager: Pick<PlayerManager, 'sendTo'>;
   /** Zone revival-position lookup by numeric zone id (resources `byNumericId`). */
   readonly zones: { byNumericId: Map<number, ZoneDefinition> };
+  /**
+   * View re-diff after the revival teleport -- SETPOS relocates the player
+   * without reloading the world, so the death-site spawns must be DEL_OBJ'd and
+   * the town's ADD_OBJ'd. Optional for tests.
+   */
+  readonly visibilityService?: Pick<VisibilityService, 'refresh'>;
 }
 
 const REVIVE_HP_RATE = 0.2; // v19 non-chaotic v9+ default (DPSrvr.cpp:997,1100)
@@ -223,6 +230,7 @@ export class RevivalService {
     player.m_vPos = { ...revivePos };
     player._dirty.add('m_vPos');
     this.deps.playerManager.sendTo(player, this.setPos.build(player.m_idPlayer, revivePos));
+    this.deps.visibilityService?.refresh(player.m_idPlayer, true);
   }
 
   private findScrollSlot(player: CPlayer): number {

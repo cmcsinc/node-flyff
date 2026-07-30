@@ -13,7 +13,9 @@ import type { CPlayer } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
 import { ZoneManager } from '@flyff/world-core';
 import { SpawnManager } from '@flyff/world-core';
+import { VisibilityService } from '@flyff/world-core';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer';
+import { PeerSnapshotSerializer } from './net/snapshot/peerSnapshot.serializer';
 import { SetExperienceSerializer } from '@flyff/combat';
 import { SetLevelSerializer } from '@flyff/combat';
 import { TaskBarSnapshotSerializer } from './net/snapshot/taskbar.serializer';
@@ -26,7 +28,6 @@ import { QuestService } from '@flyff/quest';
 import { JoinHandler } from './handlers/join.handler';
 import { MapKeyService } from '@flyff/npc';
 import { MapKeyHandler } from '@flyff/npc';
-import { VicinityService } from '@flyff/npc';
 import { QueryPlayerDataService } from './services/queryPlayerData.service';
 import { QueryPlayerDataHandler } from './handlers/queryPlayerData.handler';
 import { SnapshotService } from './services/snapshot.service';
@@ -138,7 +139,7 @@ export interface WorldComposeResult {
   joinHandler: JoinHandler;
   mapKeyService: MapKeyService;
   mapKeyHandler: MapKeyHandler;
-  vicinityService: VicinityService;
+  visibilityService: VisibilityService;
   queryPlayerDataService: QueryPlayerDataService;
   queryPlayerDataHandler: QueryPlayerDataHandler;
   snapshotService: SnapshotService;
@@ -291,27 +292,31 @@ export async function compose(): Promise<WorldComposeResult> {
   const setExperienceSerializer = new SetExperienceSerializer();
   const taskbarSerializer = new TaskBarSnapshotSerializer();
   const npcSnapshotSerializer = new NpcSnapshotSerializer();
+  const peerSnapshotSerializer = new PeerSnapshotSerializer();
+
+  // SpawnManager <-> VisibilityService is mutually referential: spawn/despawn
+  // must go through the visibility tracker (so `m_known` stays truthful), and
+  // the tracker queries the spawn table for the zone's movers. The slot breaks
+  // the construction cycle -- both callbacks fire only after both exist.
+  const visibilitySlot: { svc: VisibilityService | null } = { svc: null };
 
   // Boot the spawn table before the TCP listener opens so the first JOIN sees a
   // populated zone. Static NPCs (with outfit) + monster spawn points come from
   // the loaded zone YAML + mover resource index.
   const spawnManager = new SpawnManager({
     resources,
-    // Respawn broadcast: push a 1-entry ADD_OBJ snapshot to players already in
-    // the zone so they see the monster reappear. zoneManager + npcSnapshot
-    // exist above, so the closure captures them by reference.
-    onSpawn: (mover) => {
-      const pkt = npcSnapshotSerializer.build([mover]);
-      zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, pkt);
-    },
-    // Corpse despawn: after CORPSE_DESPAWN_MS, push DEL_OBJ so clients drop the
-    // death-animation corpse. Mirrors onSpawn; the mover is captured by the
-    // SpawnManager timer closure (already gone from the live table).
-    onDespawn: (mover) => {
-      const pkt = npcSnapshotSerializer.buildRemove(mover.m_idMover);
-      zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, pkt);
-    },
+    // Respawn: ADD_OBJ to in-range players that don't already know the mover.
+    onSpawn: (mover) => visibilitySlot.svc?.onMoverSpawn(mover),
+    // Corpse despawn: after CORPSE_DESPAWN_MS, DEL_OBJ to everyone tracking it.
+    onDespawn: (mover) => visibilitySlot.svc?.onMoverDespawn(mover),
   });
+  const visibilityService = new VisibilityService({
+    playerManager, zoneManager, spawnManager,
+    buildAddMovers: (movers) => npcSnapshotSerializer.build(movers),
+    buildAddPeers: (players) => peerSnapshotSerializer.build(players),
+    buildRemove: (objids) => peerSnapshotSerializer.buildRemove(objids),
+  });
+  visibilitySlot.svc = visibilityService;
   spawnManager.bootstrap();
   logger.info(
     { movers: spawnManager.size, zoneId: 1 },
@@ -390,6 +395,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // player damage to `onPlayerDeath` (flag dead + broadcast + open revive dlg).
   const revivalService = new RevivalService({
     charRepo, inventoryRepo, journal, zoneManager, playerManager, zones: resources.zones,
+    visibilityService,
   });
 
   // Monster idle-wander FSM (C++ CAIMonster::StateIdle). Emits one DESTPOS per
@@ -464,17 +470,12 @@ export async function compose(): Promise<WorldComposeResult> {
   pkDecaySystem.start();
 
   const mapKeyService = new MapKeyService({ playerManager });
-  const vicinityService = new VicinityService({
-    playerManager,
-    spawnManager,
-    npcSnapshotSerializer,
-  });
-  const mapKeyHandler = new MapKeyHandler(mapKeyService, vicinityService);
+  const mapKeyHandler = new MapKeyHandler(mapKeyService, visibilityService);
   const queryPlayerDataService = new QueryPlayerDataService({ playerManager });
   const queryPlayerDataHandler = new QueryPlayerDataHandler(queryPlayerDataService);
 
   // In-world movement + peer-broadcast handlers (Phases 3-5).
-  const snapshotService = new SnapshotService({ zoneManager });
+  const snapshotService = new SnapshotService({ zoneManager, visibilityService });
   const snapshotHandler = new SnapshotHandler(playerManager, snapshotService);
   // ItemManager + LootService created before MovementService: movement runs the
   // dest-obj arrival check (v19 pickup has no packet -- client walks to the pile
@@ -504,6 +505,7 @@ export async function compose(): Promise<WorldComposeResult> {
     zoneManager,
     onMoved: (p) => questTracker.onPlayerMoved(p),
     lootService,
+    visibilityService,
   });
   const playerMovedHandler = new PlayerMovedHandler(playerManager, movementService);
   const playerBehaviorHandler = new PlayerBehaviorHandler(playerManager, movementService);
@@ -513,7 +515,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // the audit that scoped these.
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
-    inventoryService, charRepo, inventoryRepo, zoneManager, vicinityService,
+    inventoryService, charRepo, inventoryRepo, zoneManager, visibilityService,
     getItemByName: (name: string) => resources.items.byName.get(name),
   });
   const chatService = new ChatService({ zoneManager, commandService });
@@ -700,10 +702,7 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager,
     setPosSer: adminSetPosSerializer,
     zones: resources.zones,
-    resendVicinity: (player) => {
-      const res = vicinityService.resendAt(player.m_idPlayer);
-      if (res !== null) playerManager.sendTo(player, res.snapshot);
-    },
+    refreshVisibility: (player) => visibilityService.refresh(player.m_idPlayer, true),
     mailHandler,
   });
   const adminListener = new AdminListener({ sink: adminCommandService });
@@ -735,7 +734,7 @@ export async function compose(): Promise<WorldComposeResult> {
     questService,
     mapKeyService,
     mapKeyHandler,
-    vicinityService,
+    visibilityService,
     queryPlayerDataService,
     queryPlayerDataHandler,
     snapshotService,

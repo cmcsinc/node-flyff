@@ -41,8 +41,8 @@ export interface AdminCommandServiceDeps {
   playerManager: PlayerManager;
   setPosSer: SetPosSerializer;
   zones: { byNumericId: Map<number, ZoneDefinition> };
-  /** Re-emits the destination ADD_OBJ snapshot after a teleport. */
-  resendVicinity: (player: CPlayer) => void;
+  /** Re-diffs the player's view (ADD_OBJ/DEL_OBJ) after a teleport. */
+  refreshVisibility: (player: CPlayer) => void;
   mailHandler?: MailHandler;
 }
 
@@ -88,7 +88,7 @@ export class AdminCommandService implements AdminCommandSink {
     player._dirty.add('y');
     player._dirty.add('z');
     this.deps.playerManager.sendTo(player, this.deps.setPosSer.build(player.m_idPlayer, pos));
-    this.deps.resendVicinity(player);
+    this.deps.refreshVisibility(player);
     logger.info({ charId, pos }, 'admin teleport');
   }
 

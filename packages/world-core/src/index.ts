@@ -9,6 +9,8 @@
 export { PlayerManager } from './managers/player.manager';
 export { ZoneManager } from './managers/zone.manager';
 export { SpawnManager, CORPSE_DESPAWN_MS } from './managers/spawn.manager';
+export { VisibilityService } from './services/visibility.service';
+export type { VisibilityServiceDeps } from './services/visibility.service';
 
 export type { QuestHooks } from './quest-hooks';
 

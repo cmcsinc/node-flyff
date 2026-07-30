@@ -102,6 +102,7 @@ async function main(): Promise<void> {
     partyService,
     partyHandler,
     playerManager,
+    visibilityService,
     actMsgHandler,
     moveItemHandler,
     dropItemHandler,
@@ -244,7 +245,12 @@ async function main(): Promise<void> {
       const charId = socket.session?.charId;
       if (charId !== undefined) {
         const player = playerManager.get(charId);
-        if (player) partyService.onDisconnect(player);
+        if (player) {
+          partyService.onDisconnect(player);
+          // DEL_OBJ the leaver from every peer that still has them in scene, and
+          // clear their own known-set (rule 05 -- no dangling Set entries).
+          visibilityService.remove(player);
+        }
       }
       // Flush player state (position, vitals, stats, bank gold) + drop from
       // managers. disconnectByCharId swallows its own errors so this never
