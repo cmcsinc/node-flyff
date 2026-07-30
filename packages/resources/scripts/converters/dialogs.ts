@@ -65,8 +65,14 @@ const LAUNCH_RE = /\bLaunchQuest\s*\(\s*\)/;
  */
 const SIMPLE_BODY = /^(?:\s*(?:Say|Speak|AddKey|Exit|SetScriptTimer|LaunchQuest|NpcId)\s*\([^)]*\)\s*;?|[\s();{}0-9])*$/;
 
-/** Convert one function body string -> DialogState. */
-function parseState(body: string): Record<string, unknown> {
+/**
+ * Convert one function body string -> DialogState.
+ *
+ * Exported so the `NpcScript.cpp` writer's round-trip test can assert against
+ * the real reducer rather than a copy of it — a copy would let this function
+ * drift while the test still passed.
+ */
+export function parseState(body: string): Record<string, unknown> {
   const state: Record<string, unknown> = {};
 
   const say: number[] = [];

@@ -55,6 +55,59 @@ export function writeEmptyBuffs(w: PacketWriter): void {
  * Prefix fields (1-43) then METHOD_NONE branch (45-87) then buffs.
  */
 export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
+  writeMoverPrefix(w, p);
+  writeMethodNoneBody(w, p);
+  // --- buffs (always active, __BUFF_1107) ---
+  writeEmptyBuffs(w);
+}
+
+/**
+ * CMover::Serialize -- `METHOD_EXCLUDE_ITEM` PLAYER branch
+ * (`ObjSerializeOpt.cpp:277-323`). This is the frame OTHER players' clients
+ * read: the same prefix, then only what is needed to render a peer (private-
+ * shop title, visible equipment, pet), NOT the full inventory/bank/quest state.
+ *
+ * Body after the prefix:
+ *   [m_vtInfo.GetTitle():String]   private-shop sign ("" when not vending)
+ *   [uSize:BYTE]                   count of occupied equip parts
+ *   per part: [uParts:BYTE][m_dwItemId:WORD][m_byFlag:BYTE]
+ *   [dwPetId:DWORD] = NULL_ID      MAKELONG(petIndex, petLevel) when summoned
+ *   [petName:String] = ""          __PET_1024 (defined in Neuz + WORLDSERVER)
+ *   CBuffMgr: [count:DWORD]
+ *
+ * ponytail: buff count is 0 -- a peer arriving mid-buff sees no buff icons on
+ * the other player until the next SETSKILLSTATE. Same simplification the self
+ * frame makes; wire both together when `CBuffMgr::Serialize` is ported.
+ */
+export function writeMoverExcludeItem(w: PacketWriter, p: CPlayer): void {
+  writeMoverPrefix(w, p);
+
+  // m_vtInfo.GetTitle() -- private-shop ("vendor") sign text.
+  // ponytail: empty until player vending ships.
+  w.writeString('');
+
+  // Visible equipment: uSize then uSize * { uParts:BYTE, itemId:WORD, flag:BYTE }.
+  // C++ back-patches uSize after the loop; we count first instead.
+  const parts: { part: number; itemId: number; flag: number }[] = [];
+  for (let i = 0; i < MAX_HUMAN_PARTS; i++) {
+    const eq = p.m_Inventory[MAX_INVENTORY + i];
+    if (eq) parts.push({ part: i, itemId: eq.itemId, flag: eq.flags ?? 0 });
+  }
+  w.writeByte(parts.length);
+  for (const e of parts) {
+    w.writeByte(e.part);
+    w.writeWord(e.itemId);
+    w.writeByte(e.flag);
+  }
+
+  w.writeDword(NULL_ID);       // dwPetId (__VER>=9) -- NULL_ID = no summoned pet
+  w.writeString('');           // pet name (__PET_1024)
+
+  writeEmptyBuffs(w);
+}
+
+/** Shared `CMover::Serialize` prefix -- everything before the method branch. */
+function writeMoverPrefix(w: PacketWriter, p: CPlayer): void {
   // --- prefix ---
   w.writeWord(0);              // m_dwMotion
   w.writeByte(1);              // m_bPlayer
@@ -103,7 +156,10 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   }
   w.writeDword(0);             // m_nGuildCombatState
   for (let j = 0; j < SM_MAX; j++) w.writeDword(0);          // m_dwSMTime *26
+}
 
+/** METHOD_NONE branch -- full self state (fields 45-87). */
+function writeMethodNoneBody(w: PacketWriter, p: CPlayer): void {
   // --- METHOD_NONE branch ---
   w.writeWord(p.m_nMp);        // m_nManaPoint
   w.writeWord(p.m_nFp);        // m_nFatiguePoint
@@ -175,7 +231,4 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   for (let i = 0; i < MAX_HONOR_TITLE; i++) w.writeDword(0); // m_aHonorTitle *150 (__VER>=13)
   w.writeDword(0);             // m_idCampus (__VER>=15)
   w.writeDword(0);             // m_nCampusPoint (__VER>=15)
-
-  // --- buffs (always active, __BUFF_1107) ---
-  writeEmptyBuffs(w);
 }

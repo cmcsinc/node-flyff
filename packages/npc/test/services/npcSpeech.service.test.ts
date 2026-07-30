@@ -32,6 +32,9 @@ function mockSpawnManager(movers: CMover[]): SpawnManager {
   return {
     size: movers.length,
     all: function* () { yield* movers; },
+    // tick() liveness-checks each due entry against the manager, so the fake
+    // must resolve objid -> mover the same way the real one does.
+    get: (id: number) => movers.find((m) => m.m_idMover === id),
   } as unknown as SpawnManager;
 }
 

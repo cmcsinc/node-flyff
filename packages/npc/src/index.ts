@@ -1,8 +1,8 @@
 /**
  * @flyff/npc -- NPC domain. NPC speech/scripted dialog/shop/bank/target/
- * vicinity/mapKey services, their handlers, and NPC S->C serializers
- * (npcSnapshot/scriptDialog/shop/bank). mapKey.handler + vicinity.service are
- * the NPC ADD_OBJ entry point (fired on the player's first MAP_KEY).
+ * mapKey services, their handlers, and NPC S->C serializers
+ * (npcSnapshot/scriptDialog/shop/bank). mapKey.handler is the ADD_OBJ entry
+ * point: it flips `VisibilityService.enterWorld` on the player's first MAP_KEY.
  *
  * Depends on `@flyff/{core,entities,world-core,combat,inventory,quest,database,
  * resources}`. All outbound edges (npc->inventory via shop, npc->quest via
@@ -17,7 +17,6 @@ export * from './services/changeJob.service';
 export * from './services/shop.service';
 export * from './services/bank.service';
 export * from './services/target.service';
-export * from './services/vicinity.service';
 export * from './services/mapKey.service';
 export * from './services/npcBuff.service';
 export * from './handlers/scriptDlg.handler';

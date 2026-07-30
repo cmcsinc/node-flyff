@@ -36,10 +36,13 @@ import {
   isValidInstanceId,
   loadDotEnv,
   parseSpawnRequest,
+  pidAlive,
   pushRing,
+  readChildren,
   readOrCreateToken,
   stripAnsi,
   tokensMatch,
+  writeChildren,
   writeHandle,
   type LogLine,
   type ProcStatus,
@@ -49,11 +52,13 @@ import {
 import { listInstances, writeInstanceConfig } from './server-manager';
 
 interface Running {
-  child: ChildProcess;
+  /** Absent for an ADOPTED child — we hold its pid but not a handle to it. */
+  child: ChildProcess | null;
+  pid: number;
   state: ProcStatus['state'];
   startedAt: number;
   exitCode: number | null;
-  logFile: WriteStream;
+  logFile: WriteStream | null;
 }
 
 const TOKEN = readOrCreateToken();
@@ -68,9 +73,70 @@ function pushLog(id: string, raw: string): void {
   for (const line of stripAnsi(raw).split(/\r?\n/)) {
     if (!line.length) continue;
     pushRing(ring, { seq: ++seq, ts: Date.now(), line });
-    procs.get(id)?.logFile.write(`${new Date().toISOString()} ${line}\n`);
+    procs.get(id)?.logFile?.write(`${new Date().toISOString()} ${line}\n`);
   }
   logs.set(id, ring);
+}
+
+/** Mirrors the live child set to disk so a successor daemon can adopt it. */
+function persistChildren(): void {
+  const out = [];
+  for (const [id, run] of procs) {
+    if (run.state === 'exited') continue;
+    out.push({ id, pid: run.pid, startedAt: run.startedAt });
+  }
+  try {
+    writeChildren(out);
+  } catch (err) {
+    process.stdout.write(
+      `[supervisor] could not persist child list: ${err instanceof Error ? err.message : String(err)}\n`,
+    );
+  }
+}
+
+/**
+ * Re-attaches to game servers left running by a previous daemon.
+ *
+ * Without this, a daemon crash (or `EADDRINUSE` race, or a `Stop-Process` on
+ * the daemon) strands its children: they hold their client TCP port and ~240 MB
+ * each, `/status` reports `stopped`, and `/stop` answers "not running" — the
+ * exact "clicked stop but it's still running" symptom.
+ *
+ * Adopted entries have no `ChildProcess`, so exit is detected by polling rather
+ * than an `exit` event, and stop signals go through `process.kill(pid)`.
+ */
+function adoptOrphans(): void {
+  for (const rec of readChildren()) {
+    if (procs.has(rec.id) || !pidAlive(rec.pid)) continue;
+    procs.set(rec.id, {
+      child: null,
+      pid: rec.pid,
+      state: 'running',
+      startedAt: rec.startedAt,
+      exitCode: null,
+      logFile: createWriteStream(resolve(LOG_DIR, `${rec.id}.log`), { flags: 'a' }),
+    });
+    pushLog(rec.id, `[supervisor] adopted orphaned pid=${rec.pid} from a previous daemon`);
+  }
+  persistChildren();
+}
+
+/**
+ * Reaps adopted children, which have no `exit` event to tell us they died.
+ * Cheap (a signal-0 probe per adopted pid) and only touches `child === null`
+ * entries, so spawned children keep using their real exit handler.
+ */
+function reapAdopted(): void {
+  let changed = false;
+  for (const [id, run] of procs) {
+    if (run.child !== null || run.state === 'exited') continue;
+    if (pidAlive(run.pid)) continue;
+    run.state = 'exited';
+    pushLog(id, '[supervisor] adopted child is gone');
+    run.logFile?.end();
+    changed = true;
+  }
+  if (changed) persistChildren();
 }
 
 function statusOf(id: string): ProcStatus {
@@ -78,19 +144,21 @@ function statusOf(id: string): ProcStatus {
   if (!run) return { state: 'stopped', pid: null, startedAt: null, exitCode: null };
   return {
     state: run.state,
-    pid: run.child.pid ?? null,
+    pid: run.pid,
     startedAt: run.startedAt,
     exitCode: run.exitCode,
   };
 }
 
 function allStatuses(): Record<string, ProcStatus> {
+  reapAdopted();
   const out: Record<string, ProcStatus> = {};
   for (const id of procs.keys()) out[id] = statusOf(id);
   return out;
 }
 
 function isRunning(id: string): boolean {
+  reapAdopted();
   const run = procs.get(id);
   return run !== undefined && (run.state === 'running' || run.state === 'starting');
 }
@@ -123,12 +191,14 @@ function start(body: unknown): { status: ProcStatus } | { error: string } {
 
   const run: Running = {
     child,
+    pid: child.pid ?? -1,
     state: 'starting',
     startedAt: Date.now(),
     exitCode: null,
     logFile: createWriteStream(resolve(LOG_DIR, `${id}.log`), { flags: 'a' }),
   };
   procs.set(id, run);
+  persistChildren();
   pushLog(id, `[supervisor] spawned pid=${child.pid ?? '?'} config=${configFile}`);
 
   child.stdout?.on('data', (c: Buffer) => {
@@ -141,25 +211,71 @@ function start(body: unknown): { status: ProcStatus } | { error: string } {
     run.state = 'exited';
     run.exitCode = code;
     pushLog(id, `[supervisor] exited code=${code} signal=${signal ?? 'none'}`);
-    run.logFile.end();
+    run.logFile?.end();
+    persistChildren();
   });
 
   return { status: statusOf(id) };
 }
 
+/**
+ * Graceful stop, escalating to a hard kill after `graceMs`.
+ *
+ * On Windows `ChildProcess.kill('SIGTERM')` is `TerminateProcess` — the child's
+ * `process.on('SIGTERM')` handler never runs, so the world server's `shutdown()`
+ * (journal close, system teardown) is skipped. We therefore ask for a clean exit
+ * over stdin-less IPC-free means available to us: send the signal AND, on
+ * Windows, `taskkill /T` at escalation so the whole child tree dies rather than
+ * just the parent node process.
+ *
+ * ponytail: a real graceful stop on Windows needs a control channel to the child
+ * (e.g. a `process.on('message')` handler + `spawn(..., { stdio: [...,'ipc'] })`).
+ * Upgrade path = add an `ipc` stdio slot and send `{cmd:'shutdown'}` here.
+ */
 function stop(id: string, graceMs: number): { ok: true } | { error: string } {
+  reapAdopted();
   const run = procs.get(id);
   if (!run || run.state === 'exited') return { error: `${id} is not running` };
   pushLog(id, '[supervisor] stopping…');
-  run.child.kill('SIGTERM');
+  signal(run, 'SIGTERM');
   const timer = setTimeout(() => {
     if (run.state !== 'exited') {
-      pushLog(id, '[supervisor] grace expired — SIGKILL');
-      run.child.kill('SIGKILL');
+      pushLog(id, '[supervisor] grace expired — hard kill');
+      hardKill(run);
     }
   }, graceMs);
   timer.unref();
   return { ok: true };
+}
+
+/** Best-effort signal to a spawned OR adopted child. */
+function signal(run: Running, sig: NodeJS.Signals): void {
+  try {
+    if (run.child) run.child.kill(sig);
+    else process.kill(run.pid, sig);
+  } catch {
+    /* already gone */
+  }
+}
+
+/**
+ * Last resort. On Windows a bare SIGKILL to the node process can leave
+ * grandchildren (tsx/npx shims) behind, so use `taskkill /T /F` to take the
+ * whole tree — this is what stops "clicked stop, still running" recurring.
+ */
+function hardKill(run: Running): void {
+  if (process.platform === 'win32' && run.pid > 0) {
+    try {
+      spawn('taskkill', ['/PID', String(run.pid), '/T', '/F'], {
+        stdio: 'ignore',
+        windowsHide: true,
+      }).unref();
+      return;
+    } catch {
+      /* fall through to signal */
+    }
+  }
+  signal(run, 'SIGKILL');
 }
 
 // ---------------------------------------------------------------------------
@@ -275,7 +391,21 @@ function autoStartInstances(): void {
 server.listen(DEFAULT_PORT, '127.0.0.1', () => {
   writeHandle({ pid: process.pid, port: DEFAULT_PORT, startedAt: STARTED_AT });
   process.stdout.write(`[supervisor] listening on 127.0.0.1:${DEFAULT_PORT} pid=${process.pid}\n`);
+  // Reclaim children stranded by a previous daemon BEFORE autostart, so an
+  // already-running instance is adopted instead of double-spawned on its port.
+  adoptOrphans();
   autoStartInstances();
+});
+
+// Two admin requests can race ensureDaemon(); the loser must exit quietly, not
+// die on an unhandled 'error' and leave a half-initialised daemon behind.
+server.on('error', (err: NodeJS.ErrnoException) => {
+  if (err.code === 'EADDRINUSE') {
+    process.stdout.write(`[supervisor] port ${DEFAULT_PORT} already served — exiting\n`);
+    process.exit(0);
+  }
+  process.stdout.write(`[supervisor] server error: ${err.message}\n`);
+  process.exit(1);
 });
 
 // A supervisor that dies on SIGINT would take its children with it, which is
