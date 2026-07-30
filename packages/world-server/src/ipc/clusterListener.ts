@@ -108,6 +108,7 @@ export class ClusterListener {
       worldId: payload.worldId,
       expiresAt: Date.now() + this.ttlMs,
     });
+    this.sweepExpired();
     this.log.debug({ charId: payload.charId, from }, 'Player handoff received');
   }
 
@@ -119,10 +120,28 @@ export class ClusterListener {
    * Returns null if `charId` is unknown or the handoff expired.
    */
   consumeByCharId(charId: number): ConsumedHandoff | null {
+    this.sweepExpired();
     const entry = this.pending.get(charId);
     if (!entry) return null;
     this.pending.delete(charId);
     if (Date.now() > entry.expiresAt) return null;
     return { charId, worldId: entry.worldId };
+  }
+
+  /**
+   * Drops handoffs whose TTL has passed.
+   *
+   * The TTL used to be checked only on read, so a handoff for a client that
+   * never arrived (crash at the select screen, cluster→world network drop, kill
+   * during load) stayed in the map forever — unbounded and trivially farmable
+   * by repeatedly entering and abandoning. Swept on every read/write instead of
+   * on a timer: no interval to leak, and the map is only ever touched on those
+   * two low-frequency paths.
+   */
+  private sweepExpired(): void {
+    const now = Date.now();
+    for (const [id, entry] of this.pending) {
+      if (now > entry.expiresAt) this.pending.delete(id);
+    }
   }
 }
