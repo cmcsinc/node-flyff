@@ -51,6 +51,8 @@ export interface ChangeJobServiceDeps {
   zoneManager: ZoneManager;
   /** Optional WAL journal -- crash-recovery backup for the fire-and-forget persist. */
   journal?: Journal;
+  /** Stat reset for the `InitStat()` dialog call that follows `ChangeJob(n)`. */
+  statService?: { initStat(player: CPlayer): void };
 }
 
 export class ChangeJobServiceImpl implements ChangeJobService {
@@ -114,5 +116,14 @@ export class ChangeJobServiceImpl implements ChangeJobService {
     this.deps.charRepo.updateClass(player.m_idPlayer, targetJob).catch((err: unknown) =>
       logger.error({ err, charId: player.m_idPlayer }, 'changeJob class persist failed'),
     );
+  }
+
+  /**
+   * `InitStat()` -- delegates to StatService (C++ `ScriptLib.cpp:570`). Lives on
+   * this service because the dialog sink already holds a `ChangeJobService`
+   * reference and the two calls always run as a pair in the job-master bodies.
+   */
+  initStat(player: CPlayer): void {
+    this.deps.statService?.initStat(player);
   }
 }

@@ -410,4 +410,73 @@ describe('SpawnManager', () => {
       assert.equal(despawned.length, 0); // /rn-style kill does its own DEL_OBJ
     });
   });
+
+  // C++ CWorld::IsUsableDYO / IsUsableDYO2 (WorldFile.cpp:1109, :1181) -- retail
+  // drops these placements at world load. Unported, ~177 hidden Flaris blocks
+  // spawned and visually stacked on the live NPCs.
+  describe('IsUsableDYO placement gate', () => {
+    /** Push an NPC placement onto flaris and return its resources. */
+    function withNpc(key: string, block: unknown): ResourceIndex {
+      const resources = makeResources();
+      if (block !== undefined) {
+        (resources.characterInc.byKey as Map<string, unknown>).set(key, block);
+      }
+      const flaris = resources.zones.zones.get('flaris') as never as {
+        npcs: Array<Record<string, unknown>>;
+      };
+      flaris.npcs.push({
+        id: 60, mover_id: 1006, character_key: key,
+        position: { x: 7100, y: 100, z: 3200 }, angle: 0, functions: [],
+      });
+      return resources;
+    }
+
+    const blk = (key: string, output: boolean, langs: readonly string[] = []): unknown => ({
+      key, menus: [], hasDialog: false, outfit: undefined, dialogFile: undefined,
+      vendorTabs: [], vendorItems: [], vendorItemIds: [], venderType: undefined,
+      vendorSlotCount: 0, output, langs,
+    });
+
+    it('skips a placement whose character block has SetOutput(FALSE)', () => {
+      const mgr = new SpawnManager({ resources: withNpc('MaEw_Mewrang', blk('MaEw_Mewrang', false)) });
+      mgr.bootstrap();
+      assert.equal(mgr.inZone(1).some((m) => m.m_szCharacterKey === 'MaEw_Mewrang'), false);
+    });
+
+    it('spawns a placement whose character block has SetOutput(TRUE)', () => {
+      const mgr = new SpawnManager({ resources: withNpc('MaFl_Zandark', blk('MaFl_Zandark', true)) });
+      mgr.bootstrap();
+      assert.equal(mgr.inZone(1).some((m) => m.m_szCharacterKey === 'MaFl_Zandark'), true);
+    });
+
+    it('judges a SetLang block on bOutput alone (language half deliberately unported)', () => {
+      // MaFl_Devil: SetOutput(FALSE) + every LANG_*. Applying the C++ language
+      // flip would resurrect exactly the block retail hides.
+      const mgr = new SpawnManager({ resources: withNpc('MaFl_Devil', blk('MaFl_Devil', false, ['LANG_USA'])) });
+      mgr.bootstrap();
+      assert.equal(mgr.inZone(1).some((m) => m.m_szCharacterKey === 'MaFl_Devil'), false);
+    });
+
+    it('skips an event-gated key even when its block says SetOutput(TRUE)', () => {
+      // EVE_GUILDCOMBAT is off (no event system) -> IsUsableDYO returns FALSE
+      // before it ever consults bOutput.
+      const mgr = new SpawnManager({ resources: withNpc('MaFl_GuildWar', blk('MaFl_GuildWar', true)) });
+      mgr.bootstrap();
+      assert.equal(mgr.inZone(1).some((m) => m.m_szCharacterKey === 'MaFl_GuildWar'), false);
+    });
+
+    it('matches event-gated keys case-insensitively (C++ uses stricmp)', () => {
+      const mgr = new SpawnManager({ resources: withNpc('mafl_donaris', blk('mafl_donaris', true)) });
+      mgr.bootstrap();
+      assert.equal(mgr.inZone(1).some((m) => m.m_szCharacterKey === 'mafl_donaris'), false);
+    });
+
+    it('keeps a placement with no resolvable character block (no bOutput to consult)', () => {
+      // Homeit from the base fixture carries no character_key on its placement;
+      // it must still spawn via the MI-key fallback.
+      const mgr = new SpawnManager({ resources: makeResources() });
+      mgr.bootstrap();
+      assert.equal(mgr.inZone(1).some((m) => m.m_dwIndex === 12), true);
+    });
+  });
 });

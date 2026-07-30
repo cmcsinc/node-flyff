@@ -80,6 +80,8 @@ export interface DialogInterpSink {
   beginQuest(questId: number): void;
   endQuest(questId: number): void;
   changeJob(jobId: number): void;
+  /** `InitStat()` -- reset base stats + refund GP (`ScriptLib.cpp:570`). */
+  initStat(): void;
   createItem(itemId: number, count: number): void;
   removeAllItem(itemId: number): void;
 }
@@ -342,6 +344,7 @@ function execCall(s: Stmt, b: DialogInterpBindings, sink: DialogInterpSink): voi
     case 'BeginQuest': sink.beginQuest(arg(0)); return;
     case 'EndQuest': sink.endQuest(arg(0)); return;
     case 'ChangeJob': sink.changeJob(arg(0)); return;
+    case 'InitStat': sink.initStat(); return;
     case 'CreateItem': sink.createItem(arg(0), arg(1)); return;
     case 'RemoveAllItem': sink.removeAllItem(arg(0)); return;
     case 'SetScriptTimer':

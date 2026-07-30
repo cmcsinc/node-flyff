@@ -172,6 +172,7 @@ export interface WorldComposeResult {
   rangeAttackService: RangeAttackService;
   combatService: CombatService;
   itemManager: ItemManager;
+  lootService: LootService;
   dropService: DropService;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
@@ -530,8 +531,12 @@ export async function compose(): Promise<WorldComposeResult> {
   const queryGetDestObjService = new QueryGetDestObjService(playerManager, new DestObjSerializer());
   const queryGetDestObjHandler = new QueryGetDestObjHandler(playerManager, queryGetDestObjService);
   const getPosHandler = new GetPosHandler(playerManager, movementService);
+  // Stats -- MODIFY_STATUS allocates STR/STA/DEX/INT from m_nRemainGP (OnModifyStatus).
+  // Declared here (ahead of the skill handlers that follow) because
+  // ChangeJobServiceImpl needs it for the `InitStat()` dialog call.
+  const statService = new StatService({ playerManager, charRepo, journal });
   const changeJobService = new ChangeJobServiceImpl({
-    charRepo, skills: resources.skills, playerManager, zoneManager, journal,
+    charRepo, skills: resources.skills, playerManager, zoneManager, journal, statService,
   });
   const scriptDlgService = new ScriptDlgService({
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
@@ -587,8 +592,8 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const useSkillHandler = new UseSkillHandler(playerManager, skillService);
   const doUseSkillPointHandler = new DoUseSkillPointHandler(playerManager, skillService);
-  // Stats -- MODIFY_STATUS allocates STR/STA/DEX/INT from m_nRemainGP (OnModifyStatus).
-  const statService = new StatService({ playerManager, charRepo, journal });
+  // MODIFY_STATUS allocation handler -- `statService` is created earlier (it is a
+  // dependency of ChangeJobServiceImpl's `InitStat()` path).
   const modifyStatusHandler = new ModifyStatusHandler(playerManager, statService);
   // Phase E -- ground-item pickup (PACKETTYPE_ACTMSG / OBJMSG_PICKUP).
   const actMsgHandler = new ActMsgHandler({ playerManager, itemManager, inventoryService });
@@ -764,6 +769,7 @@ export async function compose(): Promise<WorldComposeResult> {
     rangeAttackService,
     combatService,
     itemManager,
+    lootService,
     dropService,
     playerSetDestObjHandler,
     meleeAttackHandler,

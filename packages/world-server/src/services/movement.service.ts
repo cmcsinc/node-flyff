@@ -173,9 +173,10 @@ export class MovementService {
       player.m_fArrivalRange = fRange;
     }
     // v19 pickup has no packet -- check immediately in case the player is already
-    // on the pile (click a drop at your feet); otherwise the arrival check fires
-    // on the next accepted position update.
-    this.deps.lootService?.checkArrival(player);
+    // on the pile (click a drop at your feet). Otherwise `onSetDestObj` starts a
+    // QUERYGETPOS poll: during a client-driven walk to a dest object the client
+    // sends NO movement packet, so no other arrival check would ever fire.
+    this.deps.lootService?.onSetDestObj(player);
     if (isReTarget || player.m_idDestObj === NULL_ID) {
       // __TRAFIC_1223 dedup, or the pile was looted on contact -- no peer broadcast.
       return { ok: true, reached: 0 };

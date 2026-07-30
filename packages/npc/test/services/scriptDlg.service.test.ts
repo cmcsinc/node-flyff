@@ -315,6 +315,34 @@ describe('ScriptDlgService.dialog', () => {
     assert.deepEqual(began, []); // LaunchQuest branch not taken
   });
 
+  it('`source:` body: a COMPLETED quest reports QS_END so a ChangeJob gate fires', async () => {
+    // Regression: the mercenary job change gates on
+    // `GetQuestState(QUEST_VOCMER_TRN2) == QS_END`. A completed quest lives in
+    // m_aCompleteQuest (not m_aQuest), so the binding must return QS_END there
+    // -- matching C++ GetQuestState's MakeCompleteQuest fallback
+    // (ScriptLib.cpp:281). Before the fix it returned -1 and the gate never fired.
+    const { svc } = fakeQuestService();
+    const { serializer } = fakeScriptDialog();
+    const changed: number[] = [];
+    const dialogs = mkDialogs([]);
+    dialogs.byPrefix.set('mafl_test', {
+      _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+      states: { '1': { source: 'if(GetQuestState(QUEST_VOCMER_TRN2) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15) { ChangeJob( 1 ); } else { Exit(); }' } },
+    } as never);
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs, quests: mkQuests([]), questService: svc,
+      defines: new Map([['QUEST_VOCMER_TRN2', 153]]),
+      chat: fakeChat as never, scriptDialog: serializer as never,
+      changeJobService: { changeJob: (_p, job) => changed.push(job) } as never,
+    });
+    // Vagrant, level 15, VOCMER_TRN2 completed -> ChangeJob(1) fires.
+    const player = mkPlayer({ m_nJob: 0, m_nLevel: 15, m_aCompleteQuest: [153] });
+    const out = await s.dialog(player, { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    assert.deepEqual(changed, [1]);
+  });
+
   it('offer scan: single begin-eligible quest opens the begin confirmation (C++ shortcut)', async () => {
     const { svc } = fakeQuestService();
     const { serializer, calls } = fakeScriptDialog();

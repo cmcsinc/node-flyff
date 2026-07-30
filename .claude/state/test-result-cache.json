@@ -215,5 +215,6 @@
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\systems\\ai.system.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\byte-count-check.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\cluster-server\\test\\handlers\\char.handler.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\database\\test\\migrate.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\migrate.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\loot.service.test.ts": "fail"
 }

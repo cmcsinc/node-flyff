@@ -174,6 +174,21 @@ export interface CharacterIncBlock {
   readonly buffSkills: readonly NpcBuffSkillEntry[];
   /** `m_nStructure` value (SRT_* define). `undefined` when not set (default -1). */
   readonly structure: number | undefined;
+  /**
+   * `bOutput` from `SetOutput( TRUE|FALSE )` (`Project.cpp:2975` default TRUE,
+   * `:3256` sets FALSE). `CWorld::IsUsableDYO2` (`WorldFile.cpp:1181`) drops
+   * every `.dyo` placement whose character block has this FALSE, so retail
+   * never renders them. 177 of 397 Flaris blocks are FALSE -- unported, they
+   * all spawn and visually stack on the live NPCs.
+   */
+  readonly output: boolean;
+  /**
+   * `LANG_*` tokens from `SetLang(...)` (`Project.cpp:3248`). C++ flips the
+   * `bOutput` verdict when the running client's language is NOT in this list.
+   * Kept for fidelity; see the gate in `spawn.manager.ts` for why it currently
+   * has no effect.
+   */
+  readonly langs: readonly string[];
 }
 
 /**
@@ -298,6 +313,14 @@ function parseBlock(
     else structure = SRT_MAP[sr[1]] ?? undefined;
   }
 
+  // `SetOutput( TRUE|FALSE )` -- default TRUE (Project.cpp:2975); only the
+  // literal FALSE flips it (`:3256` compares the uppercased token).
+  const so = body.match(/\bSetOutput\s*\(\s*([A-Za-z]+)\s*\)/);
+  const output = so?.[1] === undefined ? true : so[1].toUpperCase() !== 'FALSE';
+  const langs = [...body.matchAll(/\bSetLang\s*\(\s*(LANG_[A-Z]+)\s*\)/g)]
+    .map((m) => m[1])
+    .filter((l): l is string => l !== undefined);
+
   const fig = body.match(
     /SetFigure\s*\(\s*MI_[A-Z0-9_]+\s*,\s*(\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(\d+)\s*\)/,
   );
@@ -338,6 +361,8 @@ function parseBlock(
     vendorSlotCount: vendorTabs.length,
     buffSkills,
     structure,
+    output,
+    langs,
   };
 }
 

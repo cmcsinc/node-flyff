@@ -41,8 +41,6 @@ export function ConfigEditor({
   const [overrides, setOverrides] = React.useState<Record<string, unknown>>(inst.overrides ?? {});
   const [port, setPort] = React.useState(String(inst.port));
   const [saving, setSaving] = React.useState(false);
-  const [raw, setRaw] = React.useState(false);
-  const [rawText, setRawText] = React.useState(() => JSON.stringify(inst.overrides ?? {}, null, 2));
   const live = inst.state === "running" || inst.state === "starting";
 
   // Reset the form only when a different instance is selected. `inst` is a
@@ -50,27 +48,17 @@ export function ConfigEditor({
   // edits mid-typing.
   React.useEffect(() => {
     setOverrides(inst.overrides ?? {});
-    setRawText(JSON.stringify(inst.overrides ?? {}, null, 2));
     setPort(String(inst.port));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inst.id]);
 
   const save = async () => {
-    let next: unknown = overrides;
-    if (raw) {
-      try {
-        next = JSON.parse(rawText || "{}");
-      } catch {
-        toast.error("Overrides must be valid JSON");
-        return;
-      }
-    }
     setSaving(true);
     try {
       const { instances } = await post({
         action: "update",
         id: inst.id,
-        patch: { port: Number(port), overrides: next },
+        patch: { port: Number(port), overrides },
       });
       if (instances) onSaved(instances);
     } catch (e) {
@@ -80,40 +68,42 @@ export function ConfigEditor({
     }
   };
 
-  const toggleRaw = () => {
-    // Keep both views in sync when switching.
-    if (!raw) setRawText(JSON.stringify(overrides, null, 2));
-    else {
-      try {
-        setOverrides(JSON.parse(rawText || "{}"));
-      } catch {
-        toast.error("Fix the JSON before switching back to the form");
-        return;
-      }
-    }
-    setRaw((r) => !r);
-  };
-
   const setField = (path: string, value: unknown) =>
     setOverrides((prev) => setAtPath(prev, path, value));
+
+  /**
+   * Override paths this instance type has no generated field for — hand-written
+   * or left over from an older schema. Shown read-only with a remove control so
+   * they are visible and clearable without a JSON escape hatch.
+   */
+  const unmapped = React.useMemo(() => {
+    const known = new Set(CONFIG_FIELDS[inst.type].flatMap((s) => s.fields.map((f) => f.path)));
+    const out: Array<[string, unknown]> = [];
+    const walk = (node: unknown, prefix: string) => {
+      if (node === null || typeof node !== "object" || Array.isArray(node)) {
+        if (prefix && !known.has(prefix)) out.push([prefix, node]);
+        return;
+      }
+      for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+        const path = prefix ? `${prefix}.${k}` : k;
+        if (known.has(path)) continue;
+        walk(v, path);
+      }
+    };
+    walk(overrides, "");
+    return out;
+  }, [overrides, inst.type]);
 
   return (
     <Card>
       <CardHeader className="pb-3">
-        <div className="flex flex-wrap items-start justify-between gap-2">
-          <div>
-            <CardTitle className="flex items-center gap-2 text-sm">
-              <Settings2 className="h-4 w-4" /> Config — {inst.id}
-            </CardTitle>
-            <CardDescription>
-              Placeholders show the value inherited from config/default.json + config/
-              {inst.type}-server.json. Stop the server to edit.
-            </CardDescription>
-          </div>
-          <Button size="sm" variant="outline" onClick={toggleRaw}>
-            {raw ? "Form" : "Raw JSON"}
-          </Button>
-        </div>
+        <CardTitle className="flex items-center gap-2 text-sm">
+          <Settings2 className="h-4 w-4" /> Config — {inst.id}
+        </CardTitle>
+        <CardDescription>
+          Placeholders show the value inherited from config/default.json + config/
+          {inst.type}-server.json. Stop the server to edit.
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="space-y-1.5">
@@ -129,48 +119,62 @@ export function ConfigEditor({
           />
         </div>
 
-        {raw ? (
-          <div className="space-y-1.5">
-            <Label htmlFor="cfg-overrides">Overrides (JSON)</Label>
-            <textarea
-              id="cfg-overrides"
-              value={rawText}
-              disabled={live}
-              spellCheck={false}
-              onChange={(e) => setRawText(e.target.value)}
-              rows={16}
-              className="w-full rounded-md border border-input bg-transparent p-3 font-mono text-xs shadow-sm focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-50"
-            />
-          </div>
-        ) : (
-          CONFIG_FIELDS[inst.type].map((section) => (
-            <fieldset key={section.title} className="space-y-3" disabled={live}>
-              <legend className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {section.title}
-              </legend>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {section.fields.map((f) => (
-                  <ConfigField
-                    key={f.path}
-                    spec={f}
-                    value={getAtPath(overrides, f.path)}
-                    inherited={getAtPath(inst.inherited ?? {}, f.path)}
-                    choices={
-                      f.optionsFrom
-                        ? instances.filter((i) => i.type === f.optionsFrom).map((i) => i.id)
-                        : undefined
-                    }
+        {CONFIG_FIELDS[inst.type].map((section) => (
+          <fieldset key={section.title} className="space-y-3" disabled={live}>
+            <legend className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              {section.title}
+            </legend>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {section.fields.map((f) => (
+                <ConfigField
+                  key={f.path}
+                  spec={f}
+                  value={getAtPath(overrides, f.path)}
+                  inherited={getAtPath(inst.inherited ?? {}, f.path)}
+                  choices={
+                    f.optionsFrom
+                      ? instances.filter((i) => i.type === f.optionsFrom).map((i) => i.id)
+                      : undefined
+                  }
+                  disabled={live}
+                  onChange={(v) => setField(f.path, v)}
+                />
+              ))}
+            </div>
+          </fieldset>
+        ))}
+
+        {unmapped.length > 0 && (
+          <fieldset className="space-y-2" disabled={live}>
+            <legend className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Other overrides
+            </legend>
+            <p className="text-[11px] text-muted-foreground">
+              Set outside this form and not covered by a generated field. Remove one to fall back to
+              the inherited value.
+            </p>
+            <ul className="divide-y divide-border rounded-md border border-border">
+              {unmapped.map(([path, value]) => (
+                <li key={path} className="flex items-center gap-2 px-3 py-2">
+                  <span className="min-w-0 flex-1 truncate font-mono text-xs">{path}</span>
+                  <span className="font-mono text-xs text-muted-foreground">{fmt(value)}</span>
+                  <button
+                    type="button"
                     disabled={live}
-                    onChange={(v) => setField(f.path, v)}
-                  />
-                ))}
-              </div>
-            </fieldset>
-          ))
+                    aria-label={`Remove override ${path}`}
+                    onClick={() => setField(path, undefined)}
+                    className="cursor-pointer rounded p-1 text-muted-foreground transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </fieldset>
         )}
 
-        <Button onClick={save} disabled={saving || live}>
-          Save
+        <Button onClick={save} disabled={saving || live} className="cursor-pointer">
+          {saving ? "Saving…" : "Save"}
         </Button>
 
         <details className="rounded-md border border-border">

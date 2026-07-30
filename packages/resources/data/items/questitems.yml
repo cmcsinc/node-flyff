@@ -5000,7 +5000,7 @@ items:
     item_kind3: IK3_QUEST
     durability: 7200000
   - id: 23684
-    name: Shinig Stone
+    name: Twinkle Stone
     name_id: IDS_PROPITEM_TXT_015060
     weight: 1
     price: 160

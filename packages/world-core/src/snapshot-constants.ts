@@ -107,6 +107,7 @@ export const SNAPSHOTTYPE_SETPOS = 0x0010;           // MsgHdr.h:874 -- same-wor
 export const SNAPSHOTTYPE_DESTPOS = 0x00c1;          // MsgHdr.h:1086 -- click-to-move echo
 export const SNAPSHOTTYPE_MOVERSETDESTOBJ = 0x00c2;  // MsgHdr.h:1087 -- PLAYERSETDESTOBJ echo
 export const SNAPSHOTTYPE_GETDESTOBJ = 0x004a;       // MsgHdr.h:947 -- AddGetDestObj query reply (dest objid + fRange)
+export const SNAPSHOTTYPE_QUERYGETPOS = 0x001b;      // MsgHdr.h:913 -- AddQueryGetPos ("report your position"; client answers PACKETTYPE_GETPOS)
 export const SNAPSHOTTYPE_MOVERMOVED = 0x00ca;       // MsgHdr.h:1095 -- 60B movement frame
 export const SNAPSHOTTYPE_MOVERBEHAVIOR = 0x00cb;    // MsgHdr.h:1096 -- 60B motion frame (same body)
 export const SNAPSHOTTYPE_QUERY_PLAYER_DATA = 0x0141; // MsgHdr.h:1195

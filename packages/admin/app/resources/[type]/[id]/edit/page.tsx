@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ResourceFormEditor } from "@/components/resource-form-editor";
 import { PageHeader } from "@/components/page-header";
 import { loadEntryById } from "@/lib/resources";
@@ -30,14 +29,7 @@ export default async function ResourceEditPage({ params }: { params: Promise<{ t
         description={`${type} #${id} · ${result.file.split(/[/\\]/).pop()}`}
         backHref={`/resources/${type}`}
       />
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">Edit Fields</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ResourceFormEditor type={type} id={id} entry={result.entry} />
-        </CardContent>
-      </Card>
+      <ResourceFormEditor type={type} id={id} entry={result.entry} />
     </div>
   );
 }

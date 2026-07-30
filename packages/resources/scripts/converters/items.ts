@@ -73,6 +73,19 @@ interface ItemYml {
   items: Record<string, unknown>[];
 }
 
+/**
+ * Typo fixes for `propItem.txt.txt` display names, keyed by the string id
+ * (`szName`). The official client data ships these misspelled; the C++ server
+ * never reads item names (it sends ids and the client resolves from its own
+ * table), so correcting them here is display-only and cannot desync anything.
+ * Keep this list minimal -- only unambiguous misspellings of a known item.
+ */
+const NAME_OVERRIDES: Record<string, string> = {
+  // II_GEN_GEM_GEM_TWINKLESTONE_1 (23684) -- "Shinig Stone" is a typo; every
+  // quest text referring to this item calls it a Twinkle Stone.
+  IDS_PROPITEM_TXT_015060: 'Twinkle Stone',
+};
+
 const buckets = new Map<string, ItemYml>();
 
 function bucketFor(kind1: string, kind2: string, kind3: string): ItemYml | null {
@@ -307,7 +320,7 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
     const bucket = bucketFor(kind1, kind2, kind3);
     if (!bucket) { noBucket++; continue; }
 
-    const name = names.get(row.szName) ?? row.dwID;
+    const name = NAME_OVERRIDES[row.szName] ?? names.get(row.szName) ?? row.dwID;
     bucket.items.push(rowToItem(row, id, name, kind1, partsMap, dstMap));
     used++;
   }

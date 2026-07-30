@@ -20,4 +20,10 @@ import type { CPlayer } from '@flyff/entities';
 export interface ChangeJobService {
   /** Apply a job change to `player` for `targetJob`. Validates + emits packets. */
   changeJob(player: CPlayer, targetJob: number): void;
+  /**
+   * `InitStat()` -- reset STR/STA/DEX/INT to 15 and refund `(level-1)*2` GP
+   * (C++ `ScriptLib.cpp:570`). The job-master bodies run it immediately after
+   * `ChangeJob(n)`, so a fresh 1st-class character re-picks its build.
+   */
+  initStat(player: CPlayer): void;
 }

@@ -115,8 +115,11 @@ export default async function MoversPage({ searchParams }: { searchParams: Promi
                 </TableRow>
               </TableHeader>
               <TableBody>
+                {/* ponytail: key on the MI symbol, not id -- defineObj.h reuses 56-59
+                    across two MI_* blocks so ids collide. Upgrade: dedupe the converter
+                    output so ids are unique, then key on m.id. */}
                 {page.rows.map((m) => (
-                  <TableRow key={m.id}>
+                  <TableRow key={m.kind}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{m.id}</TableCell>
                     <TableCell className="font-medium">{m.name}</TableCell>
                     <TableCell className="font-mono text-xs text-muted-foreground">{m.kind}</TableCell>

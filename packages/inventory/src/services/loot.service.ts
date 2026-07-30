@@ -34,7 +34,7 @@ import { isGoldSeed } from './drop.service';
 import { CreateItemSnapshotSerializer } from '../net/snapshot/createItem.serializer';
 import { ActMsgSerializer } from '../net/snapshot/actMsg.serializer';
 import { buildUpdateItemCount } from '../net/snapshot/updateItem.serializer';
-import { buildSetPointParam, DST_GOLD } from '@flyff/world-core';
+import { buildSetPointParam, DST_GOLD, buildQueryGetPos } from '@flyff/world-core';
 import { NULL_ID, LOOT_FFA_MS, VISIBILITY_RADIUS } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
@@ -42,6 +42,26 @@ const logger = createLogger({ module: 'loot-service' });
 
 /** `OBJMSG_PICKUP` (`_Common/MoverMsg.h:118`) -- pickup motion broadcast. */
 const OBJMSG_PICKUP = 11;
+
+/**
+ * Poll cadence for the walk-to-pile position query, and how long to keep asking.
+ *
+ * The C++ server simulates the walk itself (`CMover::ProcessMove`) and so needs
+ * no poll. We are client-authoritative for position, and while the client
+ * auto-walks to a dest object it sends NO movement packet at all -- the walk is
+ * driven entirely by its own `ProcessMove`. Without a poll the only arrival
+ * check that ever runs is the one at `PLAYERSETDESTOBJ` time, so clicking a pile
+ * you are not already standing on never loots ("pickup not proceeding").
+ *
+ * `SNAPSHOTTYPE_QUERYGETPOS` is the vanilla mechanism for exactly this
+ * (`CMover::OnActDrop`, `MoverActEvent.cpp:2015`): ask the client to report its
+ * position, and it answers `PACKETTYPE_GETPOS`, which lands in
+ * `MovementService.applyGetPos` -> `checkArrival`.
+ */
+const WALK_POLL_MS = 250;
+/** Give up after this long -- the client stopped short, or the player walked off. */
+const WALK_POLL_TIMEOUT_MS = 15_000;
+
 
 export interface LootServiceDeps {
   inventoryService: InventoryService;
@@ -91,9 +111,69 @@ export class LootService {
   private readonly createItemSerializer: CreateItemSnapshotSerializer;
   private readonly motionSerializer = new ActMsgSerializer();
   private readonly now: () => number;
+  /** Active walk-to-pile position polls, keyed by char id (rule 05 -- all cleared). */
+  private readonly polls = new Map<number, NodeJS.Timeout>();
   constructor(private readonly deps: LootServiceDeps) {
     this.createItemSerializer = deps.createItemSerializer ?? new CreateItemSnapshotSerializer();
     this.now = deps.now ?? Date.now;
+  }
+
+  /**
+   * Called from `MovementService.applySetDestObj`. Runs the immediate arrival
+   * check (click a pile at your feet), and when the dest IS a live ground item
+   * the player has not reached yet, starts polling the client for its position
+   * so the arrival is detected during the client-driven auto-walk.
+   */
+  onSetDestObj(player: CPlayer): void {
+    this.checkArrival(player);
+    if (player.m_idDestObj === NULL_ID) return;              // looted on contact
+    if (!this.deps.itemManager.get(player.m_idDestObj)) return; // monster/NPC dest
+    this.startWalkPoll(player);
+  }
+
+  /** Clear a player's poll (disconnect, or the dest changed). */
+  cancelWalkPoll(charId: number): void {
+    const t = this.polls.get(charId);
+    if (t) { clearInterval(t); this.polls.delete(charId); }
+  }
+
+  /** Clear every poll (world shutdown). */
+  shutdown(): void {
+    for (const t of this.polls.values()) clearInterval(t);
+    this.polls.clear();
+  }
+
+  /**
+   * Ask the client for its position every {@link WALK_POLL_MS} until it arrives
+   * at the pile (or the dest/pile is gone, or {@link WALK_POLL_TIMEOUT_MS}).
+   * Each reply is a `PACKETTYPE_GETPOS`, handled by `MovementService.applyGetPos`
+   * which calls {@link checkArrival}.
+   *
+   * The timer holds `player.m_idPlayer`, not the `CPlayer`, and re-looks it up
+   * through `PlayerManager` each tick so a disconnected player cannot be pinned
+   * in memory by this interval (rule 05).
+   */
+  private startWalkPoll(player: CPlayer): void {
+    const charId = player.m_idPlayer;
+    this.cancelWalkPoll(charId);
+    const deadline = this.now() + WALK_POLL_TIMEOUT_MS;
+    const timer = setInterval(() => {
+      const p = this.deps.playerManager.get(charId);
+      if (!p || p.m_idDestObj === NULL_ID
+        || !this.deps.itemManager.get(p.m_idDestObj)
+        || this.now() > deadline) {
+        this.cancelWalkPoll(charId);
+        return;
+      }
+      // idFrom = NULL_ID: the client echoes it back as `objid` in GETPOS, and
+      // `OnGetPos` (`DPSrvr.cpp:1463`) only treats the position as the sender's
+      // own when `objid == NULL_ID`. Passing the char id instead would make
+      // `applyGetPos` take the "report about another mover" branch and drop it.
+      this.deps.playerManager.sendTo(p, buildQueryGetPos(charId, NULL_ID));
+    }, WALK_POLL_MS);
+    // Never keep the process alive for a pickup poll.
+    timer.unref?.();
+    this.polls.set(charId, timer);
   }
 
   /**
@@ -129,6 +209,7 @@ export class LootService {
     // Arrived -- `ProcessMoveArrival` clears the dest before `OnArrive`->`DoLoot`.
     player.m_idDestObj = NULL_ID;
     player.m_fArrivalRange = 0;
+    this.cancelWalkPoll(player.m_idPlayer);
     this.pickup(player, item);
   }
 
