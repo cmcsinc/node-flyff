@@ -24,9 +24,9 @@
  */
 
 import type { ResourceIndex } from '@flyff/resources';
-import { blockForMover, type CharacterIncBlock } from '@flyff/resources';
-import type { Vec3, InventorySlot } from '@flyff/entities';
-import { CMover, type MoverSpawnSource, type MoverOutfit, type VendorStock, EMPTY_VENDOR_STOCK } from '@flyff/entities';
+import { blockForMover, resolveVendorStock, type CharacterIncBlock } from '@flyff/resources';
+import type { Vec3 } from '@flyff/entities';
+import { CMover, type MoverSpawnSource, type MoverOutfit } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'spawn-manager' });
@@ -45,8 +45,42 @@ export const CORPSE_DESPAWN_MS = 10_000;
 /** Cap on monsters materialized per spawn point -- bounds memory on bad data. */
 const MAX_PER_SPAWN = 50;
 
-/** Per-tab slot cap -- `MAX_VENDOR_INVENTORY` (`ProjectCmn.h:21`, 100). */
-const VENDOR_TAB_SLOTS = 100;
+/**
+ * Character keys `CWorld::IsUsableDYO` (`WorldFile.cpp:1109-1170`) hides unless
+ * a specific `EVE_*` event flag is on. No event system exists here, so every
+ * flag reads off and all of these stay hidden -- which is also how a retail
+ * server looks outside the matching event window.
+ *
+ * Lowercased: the C++ compares with `stricmp`.
+ */
+const EVENT_GATED_KEYS: ReadonlySet<string> = new Set([
+  'npc_reward', 'mama_pknpc01',            // EVE_PK
+  'mafl_guildwar', 'mafl_donaris',         // EVE_GUILDCOMBAT
+  'mafl_annie', 'mafl_amos',               // EVE_GUILDCOMBAT1TO1
+  'mafl_ray',                              // EVE_ARENA
+  'mafl_secretroom_east', 'mada_secretroom_west', // EVE_SECRETROOM
+  'mafl_rainbowstart',                     // EVE_RAINBOWRACE
+]);
+
+/**
+ * `CWorld::IsUsableDYO` + `IsUsableDYO2` (`WorldFile.cpp:1109`, `:1181`) -- true
+ * when this placement should materialize at all. Retail applies this at world
+ * load, so an unported gate makes ~177 hidden Flaris blocks spawn and visually
+ * stack on top of the live NPCs.
+ *
+ * The language half of `IsUsableDYO2` is deliberately NOT applied: it flips the
+ * `bOutput` verdict when the client's `LANG_*` is absent from the block's
+ * `SetLang` list, so porting it without knowing the client's configured
+ * language would resurrect exactly the blocks retail hides. Blocks carrying
+ * `SetLang` are judged on `bOutput` alone (the in-list branch).
+ *
+ * A placement with no resolvable character block is kept -- plain models
+ * (`character_key` absent from the .dyo) have no `bOutput` to consult.
+ */
+function isUsableDyo(charKey: string | undefined, block: CharacterIncBlock | undefined): boolean {
+  if (charKey !== undefined && EVENT_GATED_KEYS.has(charKey.toLowerCase())) return false;
+  return block?.output ?? true;
+}
 
 /** Everything needed to re-materialize a mover on respawn. */
 interface SpawnDesc {
@@ -96,6 +130,7 @@ export class SpawnManager {
   /** Instantiate every zone NPC + monster spawn once, at boot. */
   bootstrap(): void {
     const { zones, movers } = this.resources;
+    let hidden = 0;
     for (const zone of zones.zones.values()) {
       // Static NPCs (shopkeepers, quest NPCs) -- carry outfit if defined.
       for (const npcSpawn of zone.npcs) {
@@ -121,6 +156,12 @@ export class SpawnManager {
         const charBlock = (npcSpawn.character_key
           && this.resources.characterInc.byKey.get(npcSpawn.character_key))
           || blockForMover(this.resources.characterInc, def.key);
+        // C++ IsUsableDYO -- retail drops these at world load. Skipping here
+        // keeps the event/seasonal duplicates from stacking on the live NPCs.
+        if (!isUsableDyo(npcSpawn.character_key, charBlock)) {
+          hidden++;
+          continue;
+        }
         this.materialize({
           src: {
             modelIndex: def.dwObjIndex,
@@ -187,7 +228,7 @@ export class SpawnManager {
         }
       }
     }
-    logger.info({ count: this.movers.size }, 'Movers spawned');
+    logger.info({ count: this.movers.size, hidden }, 'Movers spawned');
   }
 
   /** Create + register a mover from a respawn descriptor. */
@@ -305,66 +346,6 @@ function toOutfit(
     headMesh: o.headMesh,
     equip: o.equip.map((e) => ({ parts: e.parts, itemId: e.itemId })),
   };
-}
-
-/**
- * Resolve a character.inc vendor block into 4 tabs of concrete stock.
- *
- * `AddVendorItem(slot, IK3_*, job, minU, maxU, totalNum)` expands to the items
- * tagged with that IK3 symbol in {@link ItemIndex.byKind3}, sorted by
- * `level_req` ascending and capped at `totalNum`. `AddVendorItem2(slot, dwId)`
- * appends the explicit propItem id directly. Each placed slot carries the
- * item's `stack_size` (propItem `dwPackMax`) as its count: the v19 client's
- * shop window (`WndShop.cpp:106`) clamps the buy-quantity edit box to this
- * value, so `count: 1` made every vendor item effectively single-purchase
- * ("can't buy more than 1"). Setting it to the natural stack size matches
- * vanilla vendor display -- potions show 100, non-stackable gear shows 1.
- * The server's BUYITEM path does NOT enforce this cap (no stock decrement),
- * so it is purely the client-side input clamp.
- *
- * ponytail: permissive expansion -- the `job`/`nUniqueMin`/`nUniqueMax` band is
- * NOT filtered today (level_req 15-27 would wrongly exclude vagrant-tier stock).
- * Restore the band + sex filter once the C++ expansion in `_Common/Project.cpp`
- * (`AddVendorItem` -> `m_venderItemAry`) is confirmed.
- */
-function resolveVendorStock(
-  charBlock: CharacterIncBlock | undefined,
-  items: ResourceIndex['items'],
-): VendorStock {
-  if (!charBlock || (charBlock.vendorItems.length === 0 && charBlock.vendorItemIds.length === 0)) {
-    return EMPTY_VENDOR_STOCK;
-  }
-  // Tabs start empty; items are pushed then each row is padded to the slot cap
-  // with nulls so every tab is exactly MAX_VENDOR_INVENTORY wide.
-  const tabs: (InventorySlot | null)[][] = Array.from({ length: 4 }, () => []);
-  const place = (tab: number, itemId: number): void => {
-    if (tab < 0 || tab >= tabs.length) return;
-    const row = tabs[tab]!;
-    if (row.length >= VENDOR_TAB_SLOTS) return;
-    const count = Math.max(1, items.items.get(itemId)?.stack_size ?? 1);
-    row.push({ itemId, count });
-  };
-
-  for (const v of charBlock.vendorItems) {
-    if (!v.itemKind3Symbol) continue;
-    const matches = items.byKind3.get(v.itemKind3Symbol) ?? [];
-    // Whitelist by defineItem.h II_* ids: the client resolves item ids via raw
-    // m_aPropItem[id] array lookup, so any id that is not a defined II_* value
-    // is a null hole -> SetTexture null-deref crash (Mover.cpp:4591 dwShopAble
-    // gate + the array-index lookup in CProject::GetItemProp, Project.h:1322).
-    const picked = [...matches]
-      .filter((m) => items.definedIds.has(m.id))
-      .sort((a, b) => a.level_req - b.level_req)
-      .slice(0, Math.max(0, v.totalNum));
-    for (const m of picked) place(v.slot, m.id);
-  }
-  for (const v of charBlock.vendorItemIds) {
-    if (items.definedIds.has(v.itemId)) place(v.slot, v.itemId);
-  }
-  for (const row of tabs) {
-    while (row.length < VENDOR_TAB_SLOTS) row.push(null);
-  }
-  return Object.freeze(tabs.map((row) => Object.freeze(row))) as VendorStock;
 }
 
 /**

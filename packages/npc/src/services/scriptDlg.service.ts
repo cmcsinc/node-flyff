@@ -316,6 +316,7 @@ export class ScriptDlgService {
       beginQuest: (id) => { intents.push({ kind: 'begin', id }); },
       endQuest: (id) => { intents.push({ kind: 'end', id }); },
       changeJob: (jobId: number) => { this.deps.changeJobService?.changeJob(player, jobId); },
+      initStat: () => { this.deps.changeJobService?.initStat(player); },
       createItem: () => { /* ponytail: inventory grant via dialog */ },
       removeAllItem: () => { /* ponytail: inventory wipe via dialog */ },
     };
@@ -570,7 +571,12 @@ export class ScriptDlgService {
     const defines = this.deps.defines ?? new Map<string, number>();
     return {
       resolveSymbol: (sym) => defines.get(sym),
-      questState: (id) => player.findQuest(id)?.state ?? -1,
+      // C++ `GetQuestState` (ScriptLib.cpp:274): active quest -> m_nState;
+      // else `MakeCompleteQuest` -> QS_END for a completed quest; else -1.
+      // Job-change gates (`GetQuestState(QUEST_VOCMER_TRN2) == QS_END`) fire
+      // only after the quest leaves the active list for m_aCompleteQuest.
+      questState: (id) =>
+        player.findQuest(id)?.state ?? (player.isCompleteQuest(id) ? QS_END : -1),
       isSetQuest: (id) => (player.findQuest(id) !== undefined || player.isCompleteQuest(id)) ? 1 : 0,
       playerJob: () => player.m_nJob,
       playerLvl: () => player.m_nLevel,

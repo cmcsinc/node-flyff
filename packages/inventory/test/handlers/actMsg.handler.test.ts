@@ -79,7 +79,7 @@ describe('ActMsgHandler', () => {
   it('item pickup: CREATEITEM to self + remove (DEL_OBJ) called', () => {
     const { handler, sent } = makeHandler({
       item: groundItem(2950, 1, NULL_ID),
-      addItemResult: { ok: true, slot: 3, itemId: 2950, count: 1, isNew: true },
+      addItemResult: { ok: true, changes: [{ slot: 3, objid: 3, itemId: 2950, count: 1, isNew: true }] },
     });
     handler.handleActMsg(mockSocket(), new PacketReader(body(OBJMSG_PICKUP, 0x80000000)));
     assert.equal(sent.length, 1, 'one self-snapshot (CREATEITEM)');
@@ -106,7 +106,7 @@ describe('ActMsgHandler', () => {
     let removed = false;
     const { handler, sent } = makeHandler({
       item: groundItem(2950, 1, 99, Date.now()), // owned by char 99, fresh drop -- locked
-      addItemResult: { ok: true, slot: 0, itemId: 2950, count: 1 },
+      addItemResult: { ok: true, changes: [{ slot: 0, objid: 0, itemId: 2950, count: 1, isNew: true }] },
       onRemove: () => { removed = true; },
     });
     handler.handleActMsg(mockSocket(), new PacketReader(body(OBJMSG_PICKUP, 0x80000002)));
@@ -119,7 +119,7 @@ describe('ActMsgHandler', () => {
     const { handler, sent } = makeHandler({
       // owned by char 99, but dropped 8s ago -- past the LOOT_FFA_MS gate
       item: groundItem(2950, 1, 99, Date.now() - 8_000),
-      addItemResult: { ok: true, slot: 0, itemId: 2950, count: 1 },
+      addItemResult: { ok: true, changes: [{ slot: 0, objid: 0, itemId: 2950, count: 1, isNew: true }] },
       onRemove: () => { removed = true; },
     });
     handler.handleActMsg(mockSocket(), new PacketReader(body(OBJMSG_PICKUP, 0x80000002)));

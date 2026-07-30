@@ -218,6 +218,21 @@ export {
   type NpcBuffSkillEntry,
 } from './loaders/characterInc.loader';
 export {
+  resolveVendorStock,
+  VENDOR_TAB_SLOTS,
+  EMPTY_VENDOR_TABS,
+  type VendorSlot,
+  type VendorStockTabs,
+} from './vendorStock';
+export {
+  applyCharacterEdit,
+  setTextEntry,
+  writeCharacterEdit,
+  loadSymbols,
+  type CharacterEdit,
+  type WriterSymbols,
+} from './writers/characterInc.writer';
+export {
   loadSetItems,
   type SetItemIndex,
   type SetItemDef,

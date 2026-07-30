@@ -25,6 +25,11 @@ import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'stat-service' });
 
+/** `ScriptLib.cpp:573` -- `InitStat` resets each base stat to this floor. */
+const BASE_STAT = 15;
+/** `ScriptLib.cpp:577` -- `m_nRemainGP = (GetLevel() - 1) * 2`. */
+const GP_PER_LEVEL = 2;
+
 export interface StatAllocation {
   readonly str: number;
   readonly sta: number;
@@ -111,5 +116,72 @@ export class StatService {
 
     logger.debug({ charId: player.m_idPlayer, alloc, remainGP: player.m_nRemainGP }, 'stat allocated');
     return { ok: true };
+  }
+
+  /**
+   * `InitStat()` -- reset the four base stats to 15 and refund every point as
+   * spendable GP. Ports `ScriptLib.cpp:570`: `SetStr/Int/Dex/Sta(15)` then
+   * `m_nRemainGP = (GetLevel() - 1) * 2`.
+   *
+   * Called from the dialog sink: the job-master `source:` bodies run
+   * `ChangeJob(n); InitStat();` together, so a fresh 1st-class character
+   * re-picks its build from scratch instead of carrying the Vagrant spread.
+   *
+   * Reuses the same echo path as {@link applyStatPoints} (SETSTATE +
+   * SETPOINTPARAM refill) so the client's stat window and vitals stay in sync.
+   *
+   * ponytail: C++ also emits `FUNCTYPE_INITSTAT` in the RunScriptFunc stream
+   * (a UI hint carrying the new remainGP). SETSTATE already carries remainGP,
+   * so the window updates without it -- add the func if a client desync shows.
+   */
+  initStat(player: CPlayer): void {
+    player.m_nStr = BASE_STAT;
+    player.m_nSta = BASE_STAT;
+    player.m_nDex = BASE_STAT;
+    player.m_nInt = BASE_STAT;
+    player.m_nRemainGP = Math.max(0, (player.m_nLevel - 1) * GP_PER_LEVEL);
+    player._dirty.add('strength');
+    player._dirty.add('stamina');
+    player._dirty.add('dexterity');
+    player._dirty.add('intelligence');
+    player._dirty.add('remain_gp');
+
+    this.deps.journal?.append({
+      charId: player.m_idPlayer, type: 'CHAR_STATS',
+      payload: {
+        strength: player.m_nStr, stamina: player.m_nSta,
+        dexterity: player.m_nDex, intelligence: player.m_nInt,
+        remain_gp: player.m_nRemainGP,
+      },
+    });
+
+    this.deps.playerManager.sendTo(
+      player,
+      this.setState.build(player.m_idPlayer, {
+        str: player.m_nStr, sta: player.m_nSta,
+        dex: player.m_nDex, int: player.m_nInt,
+        remainGP: player.m_nRemainGP,
+      }),
+    );
+
+    // Same client-mirror refill as applyStatPoints (`OnSetState` recomputes and
+    // refills) -- dropping STA back to 15 lowers max HP, so resync current too.
+    player.m_nMaxHp = player.getMaxHp();
+    player.m_nMaxMp = player.getMaxMp();
+    player.m_nMaxFp = player.getMaxFp();
+    player.m_nHp = player.m_nMaxHp;
+    player.m_nMp = player.m_nMaxMp;
+    player.m_nFp = player.m_nMaxFp;
+    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, player.m_nHp));
+    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp));
+    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp));
+
+    this.deps.charRepo.updateStats(player.m_idPlayer, {
+      strength: player.m_nStr, stamina: player.m_nSta,
+      dexterity: player.m_nDex, intelligence: player.m_nInt,
+      remain_gp: player.m_nRemainGP,
+    }).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'initStat persist failed'));
+
+    logger.debug({ charId: player.m_idPlayer, remainGP: player.m_nRemainGP }, 'stats reset (InitStat)');
   }
 }

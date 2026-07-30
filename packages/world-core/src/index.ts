@@ -25,6 +25,7 @@ export * from './serializers/setJobSkill.serializer';
 export * from './serializers/setNearJobSkill.serializer';
 export * from './serializers/itemElemBody.serializer';
 export * from './serializers/pointParam.serializer';
+export * from './serializers/queryGetPos.serializer';
 export * from './serializers/skillState.serializer';
 export * from './serializers/chat.serializer';
 export * from './serializers/itemContainer';

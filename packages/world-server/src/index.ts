@@ -133,6 +133,7 @@ async function main(): Promise<void> {
     buffSystem,
     pkDecaySystem,
     itemManager,
+    lootService,
   } = await compose();
 
   process.on('unhandledRejection', err => {
@@ -162,6 +163,7 @@ async function main(): Promise<void> {
     pkDecaySystem.stop();
     spawnManager.shutdown();
     itemManager.shutdown();
+    lootService.shutdown();
     journal.close();
     process.exit(0);
   };
