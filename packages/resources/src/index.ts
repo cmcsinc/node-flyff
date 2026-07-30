@@ -175,6 +175,7 @@ export async function reloadResources(
 
 // Re-export types for convenience
 export type { ItemDefinition } from './schemas/item.schema';
+export type { ItemIndex } from './loaders/item.loader';
 export type { MoverDefinition } from './schemas/mover.schema';
 export type { SkillDefinition, SkillLevel } from './schemas/skill.schema';
 export { loadSkills, type SkillIndex } from './loaders/skill.loader';
@@ -228,10 +229,35 @@ export {
   applyCharacterEdit,
   setTextEntry,
   writeCharacterEdit,
+  nextTextToken,
+  allocTextTokens,
   loadSymbols,
   type CharacterEdit,
   type WriterSymbols,
 } from './writers/characterInc.writer';
+export {
+  applyNpcScriptEdit,
+  writeNpcScriptEdit,
+  type NpcScriptEdit,
+} from './writers/npcScript.writer';
+export {
+  applyDialogStringEdits,
+  appendDialogStrings,
+  dialogStringCount,
+  writeDialogStrings,
+  type DialogStringEdit,
+} from './writers/worldDialog.writer';
+export {
+  applyQuestEdit,
+  writeQuestEdit,
+  findQuestTitleToken,
+  setQuestText,
+  nextQuestTextToken,
+  QUEST_TEXT_PREFIX,
+  type QuestEdit,
+  type QuestWriterSymbols,
+} from './writers/propQuest.writer';
+export { loadQuestSymbols } from './writers/questSymbols';
 export {
   loadSetItems,
   type SetItemIndex,

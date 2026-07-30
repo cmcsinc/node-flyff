@@ -63,7 +63,7 @@ class QuestParser {
       if (
         (idTok.t === 'ident' || idTok.t === 'num') &&
         after?.t === 'punct' && after.v === '{' &&
-        !(idTok.t === 'ident' && (idTok.v === 'setting' || idTok.v === 'state'))
+        !(idTok.t === 'ident' && (idTok.v.toLowerCase() === 'setting' || idTok.v === 'state'))
       ) {
         const rec = this.parseQuest(idTok);
         if (rec) out.push(rec);
@@ -98,7 +98,13 @@ class QuestParser {
       const tok = this.toks[this.i];
       if (tok.t === 'punct' && tok.v === '}') { this.i++; return; }
       if (tok.t === 'punct') { this.i++; continue; }
-      if (tok.t === 'ident' && tok.v === 'setting') {
+      // Scope keyword, case-INSENSITIVE: 26 blocks write `Setting`, 465 write
+      // `setting`. The C++ loader (Project.cpp:1457-1464) only counts braces and
+      // ignores tokens it does not recognize, so both casings work there. Matching
+      // only the lowercase form here made `Setting` fall through to parseCommand,
+      // which swallowed the group's braces and inner call as one command's
+      // argument list -- those 26 quests parsed to garbage.
+      if (tok.t === 'ident' && tok.v.toLowerCase() === 'setting') {
         this.i++; // consume 'setting'
         if (this.toks[this.i]?.t === 'punct' && this.toks[this.i].v === '{') this.i++;
         this.parseBody(acc); // recurse -- inner commands merge into the quest
@@ -185,6 +191,17 @@ class QuestParser {
       acc.questItems.push({ mover: num(a[0]), item: num(a[1]), prob: num(a[2]), num: num(a[3]) });
     }
   }
+}
+
+/**
+ * Parse a token stream with the real {@link QuestParser}.
+ *
+ * Exported for the `propQuest.inc` writer's round-trip test, which must assert
+ * "parse -> emit -> parse yields the identical QuestDef" against THIS parser --
+ * a private copy in the test would let the two drift apart silently.
+ */
+export function __parseForTest(toks: Token[], defines: Map<string, number>): QuestDef[] {
+  return new QuestParser(toks, defines).parseAll();
 }
 
 export async function convertQuests(rawDir: string, dataDir: string): Promise<void> {

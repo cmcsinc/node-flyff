@@ -53,6 +53,16 @@ export interface CharacterEdit {
   structure?: number | null;
   /** `AddVendorSlot( n, IDS_* )` entries. Replaces all existing. */
   vendorTabs?: readonly { slot: number; label: string }[];
+  /**
+   * `IDS_* -> text` entries written into `character.txt.txt`.
+   *
+   * The `.inc` file only ever carries string-table *tokens*; the text itself
+   * lives in the `.txt.txt` sibling that the client reads too. A new shop tab
+   * therefore needs both halves — an `AddVendorSlot( n, IDS_NEW )` line here and
+   * an `IDS_NEW <tab>Label` row there — or the client renders a blank tab.
+   * Existing tokens are overwritten in place; absent ones are appended.
+   */
+  texts?: Readonly<Record<string, string>>;
   /** `AddVendorItem( n, IK3_*, job, minU, maxU, totalNum )` entries. Replaces all existing. */
   vendorItems?: readonly CharacterIncVendorItem[];
   /** `AddVendorItem2( n, dwId )` entries. Replaces all existing. */
@@ -378,6 +388,15 @@ export async function writeCharacterEdit(
     txtText = setTextEntry(txtText, nameToken, edit.name);
   }
 
+  // Apply string-table entries (shop tab labels and any other IDS_* text). The
+  // `.inc` half only stores tokens, so a caller adding a token MUST supply its
+  // text here or the client shows an empty string.
+  if (edit.texts) {
+    for (const [token, text] of Object.entries(edit.texts)) {
+      txtText = setTextEntry(txtText, token, text);
+    }
+  }
+
   // Apply all inc edits.
   const syms = await loadSymbols(rawDir);
   const newIncText = applyCharacterEdit(incText, key, edit, syms);
@@ -389,6 +408,51 @@ export async function writeCharacterEdit(
     writeFile(incPath, incOut),
     txtBuf.length > 0 ? writeFile(txtPath, txtOut) : Promise.resolve(),
   ]);
+}
+
+/**
+ * Lowest unused `<prefix>NNNNNN` token in a decoded string table.
+ *
+ * Shop tab labels are `IDS_CHARACTER_INC_*` tokens, and a new tab needs one that
+ * no existing row claims. Scanning the file rather than tracking a counter means
+ * a token freed by a later hand-edit gets reused and two callers can never mint
+ * the same id from stale state. The numeric part is zero-padded to the width the
+ * file already uses (6 digits).
+ */
+export function nextTextToken(txtText: string, prefix = 'IDS_CHARACTER_INC_'): string {
+  const re = new RegExp(`^${escapeRe(prefix)}(\\d+)`, 'gm');
+  const used = new Set<number>();
+  for (let m = re.exec(txtText); m !== null; m = re.exec(txtText)) {
+    const n = Number.parseInt(m[1] ?? '', 10);
+    if (!Number.isNaN(n)) used.add(n);
+  }
+  let n = 0;
+  while (used.has(n)) n++;
+  return `${prefix}${String(n).padStart(6, '0')}`;
+}
+
+/**
+ * Mint `count` fresh string-table tokens, reading the on-disk table first.
+ *
+ * A caller adding shop tabs needs tokens that nothing already uses; doing the
+ * read here keeps the "what is free" question answered against the real file
+ * rather than a cached parse that a hand-edit could have invalidated.
+ */
+export async function allocTextTokens(
+  rawDir: string,
+  count: number,
+  prefix = 'IDS_CHARACTER_INC_',
+): Promise<string[]> {
+  const buf = await readFile(resolve(rawDir, 'character.txt.txt')).catch(() => Buffer.alloc(0));
+  let text = buf.length > 0 ? decode(buf) : '';
+  const out: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const token = nextTextToken(text, prefix);
+    out.push(token);
+    // Append the claim so the next iteration cannot pick the same token.
+    text += `\n${token}\t`;
+  }
+  return out;
 }
 
 /** Find the `SetName( IDS_* )` token in a block, operating on decoded text. */

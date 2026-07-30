@@ -22,6 +22,8 @@ import {
   applyCharacterEdit,
   setTextEntry,
   writeCharacterEdit,
+  nextTextToken,
+  allocTextTokens,
   loadSymbols,
   type WriterSymbols,
 } from '../../src/writers/characterInc.writer';
@@ -442,6 +444,85 @@ describe('writeCharacterEdit', () => {
 
       assert.deepEqual(await readFile(join(dir, 'character.inc')), incBefore);
       assert.deepEqual(await readFile(join(dir, 'character.txt.txt')), txtBefore);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  // A new shop tab needs BOTH halves: the `AddVendorSlot( n, IDS_* )` line in
+  // the .inc and the `IDS_* <tab> label` row in the .txt.txt the client reads.
+  // Writing only one half is the bug this pair of tests exists to catch.
+  it('writes a new tab token to BOTH the inc and the string table', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'inc-writer-'));
+    try {
+      await writeFile(join(dir, 'character.inc'), enc(INC));
+      await writeFile(join(dir, 'character.txt.txt'), enc(TXT));
+
+      const [token] = await allocTextTokens(dir, 1);
+      assert.ok(token, 'allocated a token');
+      await writeCharacterEdit(dir, 'MaFl_Marche', {
+        vendorTabs: [
+          { slot: 0, label: 'IDS_CHARACTER_INC_000052' },
+          { slot: 1, label: token! },
+        ],
+        texts: { [token!]: 'Potions' },
+      });
+
+      const incText = (await readFile(join(dir, 'character.inc'))).subarray(2).toString('utf16le');
+      const txtText = (await readFile(join(dir, 'character.txt.txt'))).subarray(2).toString('utf16le');
+
+      assert.ok(incText.includes(`AddVendorSlot( 1,`), 'inc carries the new slot');
+      assert.ok(incText.includes(token!), 'inc carries the new token');
+      assert.ok(txtText.includes(`${token!}\tPotions`), 'string table carries its label');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('preserves the string table trailing newline when appending a token', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'inc-writer-'));
+    try {
+      await writeFile(join(dir, 'character.inc'), enc(INC));
+      await writeFile(join(dir, 'character.txt.txt'), enc(TXT));
+
+      await writeCharacterEdit(dir, 'MaFl_Marche', {
+        texts: { IDS_CHARACTER_INC_000999: 'Appended' },
+      });
+
+      const txtText = (await readFile(join(dir, 'character.txt.txt'))).subarray(2).toString('utf16le');
+      assert.ok(txtText.includes('IDS_CHARACTER_INC_000999\tAppended'));
+      assert.ok(txtText.endsWith('\r\n'), 'trailing CRLF survives');
+      // Existing rows are untouched.
+      assert.ok(txtText.includes('IDS_CHARACTER_INC_000051\tMarche'));
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('nextTextToken / allocTextTokens', () => {
+  it('picks the lowest unused numeric suffix', () => {
+    // TXT uses 50, 51, 52, 60 — so 0 is the lowest free id.
+    assert.equal(nextTextToken(TXT), 'IDS_CHARACTER_INC_000000');
+  });
+
+  it('skips every id already claimed', () => {
+    const dense = ['IDS_X_000000\ta', 'IDS_X_000001\tb', 'IDS_X_000003\tc', ''].join('\r\n');
+    assert.equal(nextTextToken(dense, 'IDS_X_'), 'IDS_X_000002');
+  });
+
+  it('zero-pads to the six digits the real file uses', () => {
+    assert.match(nextTextToken('', 'IDS_X_'), /^IDS_X_\d{6}$/);
+  });
+
+  it('never mints the same token twice in one batch', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'inc-token-'));
+    try {
+      await writeFile(join(dir, 'character.txt.txt'), enc(TXT));
+      const tokens = await allocTextTokens(dir, 5);
+      assert.equal(tokens.length, 5);
+      assert.equal(new Set(tokens).size, 5, 'all distinct');
+      for (const t of tokens) assert.ok(!TXT.includes(t), `${t} is not already used`);
     } finally {
       await rm(dir, { recursive: true, force: true });
     }
