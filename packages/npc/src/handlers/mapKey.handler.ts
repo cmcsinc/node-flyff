@@ -18,9 +18,8 @@ import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { Validate } from '@flyff/core/utils/validate';
 import { createLogger } from '@flyff/core/logger';
-import { sendPacket } from '@flyff/core/net/dispatcher';
+import type { VisibilityService } from '@flyff/world-core';
 import type { MapKeyService } from '../services/mapKey.service';
-import type { VicinityService } from '../services/vicinity.service';
 
 const logger = createLogger({ module: 'mapKey-handler' });
 
@@ -30,7 +29,7 @@ const MAP_KEY_MAX_LEN = 64;
 export class MapKeyHandler {
   constructor(
     private mapKeyService: MapKeyService,
-    private vicinityService: VicinityService,
+    private visibilityService: Pick<VisibilityService, 'enterWorld'>,
   ) {}
 
   handleMapKey(socket: ClientSocket, reader: PacketReader): void {
@@ -69,20 +68,12 @@ export class MapKeyHandler {
     logger.debug({ charId, fileName, remaining: reader.remaining }, 'MAP_KEY accepted');
 
     // First MAP_KEY = client finished loading the world (g_pWorld + g_pPlayer
-    // set). This is the earliest safe point to stream the zone's NPC/monster
-    // ADD_OBJ snapshot -- JOIN was too early (raced the world load, desync,
-    // OnAddObj null-deref). Fire once per player; MAP_KEY repeats per .wld.
-    this.maybeSendVicinity(socket, charId);
-  }
-
-  private maybeSendVicinity(socket: ClientSocket, charId: number): void {
-    const result = this.vicinityService.enterZone(charId);
-    if (result === null) return; // empty zone -- nothing to send
-    if ('ok' in result) {
-      logger.warn({ charId, reason: result.reason }, 'vicinity lookup failed -- dropping');
+    // set). This is the earliest safe point to stream ADD_OBJ -- JOIN was too
+    // early (raced the world load, desync, OnAddObj null-deref). VisibilityService
+    // owns the one-shot gate; MAP_KEY repeats per .wld are no-ops.
+    if (!this.visibilityService.enterWorld(charId)) {
+      logger.warn({ charId }, 'visibility enterWorld failed -- dropping');
       socket.destroy();
-      return;
     }
-    sendPacket(socket, result.snapshot);
   }
 }

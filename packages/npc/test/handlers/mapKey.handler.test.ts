@@ -5,7 +5,7 @@ import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { MapKeyHandler } from '../../src/handlers/mapKey.handler';
 import type { MapKeyService, MapKeyOutcome } from '../../src/services/mapKey.service';
-import type { VicinityService } from '../../src/services/vicinity.service';
+import type { VisibilityService } from '@flyff/world-core';
 
 function mockSocket(state: number = SessionState.IN_WORLD) {
   let destroyed = false;
@@ -31,62 +31,57 @@ function fakeService(outcome: MapKeyOutcome): MapKeyService {
   return { check: () => outcome } as unknown as MapKeyService;
 }
 
-/** Vicinity stub: returns the queued result each call (null = empty/skip). */
-function fakeVicinity(result: ReturnType<VicinityService['enterZone']>): VicinityService {
-  return { enterZone: () => result } as unknown as VicinityService;
+/**
+ * Visibility stub. `ok=false` = unknown charId (session desync). Records calls
+ * so a test can assert the handler did (or did not) open the player's view.
+ */
+function fakeVisibility(ok = true) {
+  const calls: number[] = [];
+  const svc = { enterWorld: (charId: number) => { calls.push(charId); return ok; } };
+  return { svc: svc as unknown as Pick<VisibilityService, 'enterWorld'>, calls };
 }
 
 describe('MapKeyHandler', () => {
-  it('accepts a well-formed key from an IN_WORLD session', () => {
-    const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVicinity(null));
+  it('opens the player view on an accepted key from an IN_WORLD session', () => {
+    // The client finished loading the world (g_pWorld/g_pPlayer set) once it
+    // sends MAP_KEY -- this is the safe point to stream ADD_OBJ. JOIN was too
+    // early (raced world load -> OnAddObj null-deref at DPClient.cpp:1160).
+    const vis = fakeVisibility();
+    const handler = new MapKeyHandler(fakeService({ ok: true }), vis.svc);
     const sock = mockSocket();
     handler.handleMapKey(sock as unknown as never, new PacketReader(mapKeyPayload('W1.wld', 'abc123')));
     assert.equal(sock._destroyed, false);
+    assert.deepEqual(vis.calls, [42]);
+    // The handler writes nothing itself -- VisibilityService owns the sends.
     assert.equal(sock._written.length, 0);
   });
 
-  it('sends the vicinity ADD_OBJ snapshot on the first accepted MAP_KEY', () => {
-    // The client finished loading the world (g_pWorld/g_pPlayer set) once it
-    // sends MAP_KEY -- this is the safe point to stream zone movers. JOIN was
-    // too early (raced world load -> OnAddObj null-deref at DPClient.cpp:1160).
-    const snap = Buffer.from([0xfe, 0xff, 0xff, 0xff, 0x2b, 0x00]); // fake SNAPSHOT head + cb=43
-    const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVicinity({ snapshot: snap }));
-    const sock = mockSocket();
-    handler.handleMapKey(sock as unknown as never, new PacketReader(mapKeyPayload('W1.wld', 'abc123')));
-    assert.equal(sock._destroyed, false);
-    assert.equal(sock._written.length, 1);
-    // sendPacket wraps in the 0x5E + size frame (5-byte header); payload follows.
-    assert.ok(sock._written[0]!.subarray(0, 5).equals(Buffer.from([0x5e, 0x06, 0x00, 0x00, 0x00])));
-    assert.ok(sock._written[0]!.subarray(5).equals(snap));
-  });
-
   it('destroys when the socket is not IN_WORLD', () => {
-    const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVicinity(null));
+    const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVisibility().svc);
     const sock = mockSocket(SessionState.CONNECTED);
     handler.handleMapKey(sock as unknown as never, new PacketReader(mapKeyPayload('W1.wld', 'abc123')));
     assert.equal(sock._destroyed, true);
     assert.equal(sock._written.length, 0);
   });
 
-  it('destroys on a mismatch verdict (no vicinity send)', () => {
-    const handler = new MapKeyHandler(fakeService({ ok: false, reason: 'mismatch' }), fakeVicinity(null));
+  it('destroys on a mismatch verdict without opening the view', () => {
+    const vis = fakeVisibility();
+    const handler = new MapKeyHandler(fakeService({ ok: false, reason: 'mismatch' }), vis.svc);
     const sock = mockSocket();
     handler.handleMapKey(sock as unknown as never, new PacketReader(mapKeyPayload('W1.wld', 'abc123')));
     assert.equal(sock._destroyed, true);
+    assert.deepEqual(vis.calls, []);
   });
 
   it('destroys when the service reports not_in_world', () => {
-    const handler = new MapKeyHandler(fakeService({ ok: false, reason: 'not_in_world' }), fakeVicinity(null));
+    const handler = new MapKeyHandler(fakeService({ ok: false, reason: 'not_in_world' }), fakeVisibility().svc);
     const sock = mockSocket();
     handler.handleMapKey(sock as unknown as never, new PacketReader(mapKeyPayload('W1.wld', 'abc123')));
     assert.equal(sock._destroyed, true);
   });
 
-  it('destroys when vicinity reports no_player (session desync)', () => {
-    const handler = new MapKeyHandler(
-      fakeService({ ok: true }),
-      fakeVicinity({ ok: false, reason: 'no_player' }),
-    );
+  it('destroys when visibility cannot resolve the player (session desync)', () => {
+    const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVisibility(false).svc);
     const sock = mockSocket();
     handler.handleMapKey(sock as unknown as never, new PacketReader(mapKeyPayload('W1.wld', 'abc123')));
     assert.equal(sock._destroyed, true);
@@ -94,7 +89,7 @@ describe('MapKeyHandler', () => {
   });
 
   it('destroys on a truncated payload (missing second string)', () => {
-    const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVicinity(null));
+    const handler = new MapKeyHandler(fakeService({ ok: true }), fakeVisibility().svc);
     const sock = mockSocket();
     const w = new PacketWriter();
     w.writeString('only-one'); // missing szMapKey

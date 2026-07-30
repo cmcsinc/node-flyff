@@ -33,6 +33,7 @@ import {
 } from '../net/snapshot/moverBroadcast.serializer';
 import { DestObjSerializer } from '@flyff/combat';
 import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
+import type { VisibilityService } from '@flyff/world-core';
 import type { LootService } from '@flyff/inventory';
 
 export interface MovementServiceDeps {
@@ -51,6 +52,13 @@ export interface MovementServiceDeps {
    * tests/standalone movement can omit it.
    */
   lootService?: LootService;
+  /**
+   * View re-diff hook (`CLinkMap::ModifyView`, LinkMap.cpp:404). C++ calls it
+   * from `CMover::SetPos` on every position change; every accepted movement path
+   * here does the same so peers and movers stream in/out of view as the player
+   * walks. Optional so bare movement tests can omit it.
+   */
+  visibilityService?: Pick<VisibilityService, 'refresh'>;
 }
 
 export type MovementOutcome =
@@ -85,6 +93,7 @@ export class MovementService {
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
     this.deps.lootService?.checkArrival(player);
+    this.deps.visibilityService?.refresh(player.m_idPlayer);
     return this.broadcast(player, this.serializer.buildMoved(player.m_idPlayer, frame));
   }
 
@@ -108,6 +117,7 @@ export class MovementService {
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
     this.deps.lootService?.checkArrival(player);
+    this.deps.visibilityService?.refresh(player.m_idPlayer);
     return this.broadcast(player, this.serializer.buildCorr(player.m_idPlayer, frame));
   }
 
@@ -125,6 +135,7 @@ export class MovementService {
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
     this.deps.lootService?.checkArrival(player);
+    this.deps.visibilityService?.refresh(player.m_idPlayer);
     return this.broadcast(player, this.serializer.buildMoved2(player.m_idPlayer, frame));
   }
 
@@ -156,6 +167,7 @@ export class MovementService {
       player._dirty.add('m_vPos');
       player._dirty.add('m_fAngle');
       this.deps.lootService?.checkArrival(player);
+      this.deps.visibilityService?.refresh(player.m_idPlayer);
     }
     return { ok: true };
   }
