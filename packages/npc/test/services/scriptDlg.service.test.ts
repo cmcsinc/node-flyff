@@ -544,3 +544,129 @@ describe('ScriptDlgService.dialog', () => {
     assert.equal((yes as { quest?: number }).quest, 7001);
   });
 });
+
+/**
+ * `SetDialog(QSAY_*, IDS_*)` -> `__SayQuest` (`ScriptHelper.cpp:192-208`).
+ * BEGIN1..5 on the begin confirm, BEGIN_YES on accept, END_COMPLETE1..3 /
+ * END_FAILURE1..3 on the turn-in confirm. Unset slots are skipped, not blank.
+ */
+describe('scriptDlg.service -- SetDialog quest text', () => {
+  /** Quest 900 with a `dialog` map + the propQuest text table that resolves it. */
+  function dialogQuest(dialog: Record<string, string>): {
+    quests: QuestIndex; questText: Map<string, string>;
+  } {
+    const def = {
+      _version: '1.0', id: 900, symbol: 'Q900', title: 'IDS_TITLE',
+      commands: [], states: {}, quest_items: [], dialog,
+    } as unknown as QuestDef;
+    return {
+      quests: {
+        byId: new Map([[900, def]]), drops: new Map(),
+        byNpc: { begin: new Map([['mafl_test', [900]]]), end: new Map([['mafl_test', [900]]]) },
+      } as unknown as QuestIndex,
+      questText: new Map([
+        ['IDS_TITLE', 'The Test Quest'],
+        ['IDS_B1', 'You have reached level 15.'],
+        ['IDS_B3', 'Will you join us?'],
+        ['IDS_YES', 'Good choice! Go find the master.'],
+        ['IDS_DONE', 'You brought the stones!'],
+        ['IDS_FAIL', 'Come back with 5 stones.'],
+      ]),
+    };
+  }
+
+  it('begin confirm says QSAY_BEGIN1..5 in slot order, skipping unset slots', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    // Slots 0 and 2 set, 1/3/4 absent -- C++ __SayQuest returns FALSE on those.
+    const { quests, questText } = dialogQuest({ '0': 'IDS_B1', '2': 'IDS_B3' });
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs: mkDialogs(), quests, questService: svc, questText,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: 'QUEST_BEGIN', nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const says = calls.flat().filter((f) => f.type === 'say').map((f) => (f as { text: string }).text);
+    assert.deepEqual(says, ['You have reached level 15.', 'Will you join us?']);
+    assert.ok(calls.flat().some((f) => f.type === 'addAnswer' && f.key === 'QUEST_BEGIN_YES'));
+  });
+
+  it('begin confirm falls back to the title when the quest has no SetDialog text', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const { quests, questText } = dialogQuest({});
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs: mkDialogs(), quests, questService: svc, questText,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: 'QUEST_BEGIN', nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const says = calls.flat().filter((f) => f.type === 'say').map((f) => (f as { text: string }).text);
+    assert.deepEqual(says, ['The Test Quest', 'Will you accept this quest?']);
+  });
+
+  it('accept says QSAY_BEGIN_YES instead of the generic "Quest accepted."', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const { quests, questText } = dialogQuest({ '5': 'IDS_YES' });
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs: mkDialogs(), quests, questService: svc, questText,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: 'QUEST_BEGIN_YES', nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const says = calls.flat().filter((f) => f.type === 'say').map((f) => (f as { text: string }).text);
+    assert.ok(says.includes('Good choice! Go find the master.'));
+    assert.equal(says.includes('Quest accepted.'), false);
+  });
+
+  it('turn-in says QSAY_END_COMPLETE when eligible, QSAY_END_FAILURE when not', async () => {
+    const { svc } = fakeQuestService();
+    const { quests, questText } = dialogQuest({ '7': 'IDS_DONE', '10': 'IDS_FAIL' });
+    // Active quest with no end conditions -> isComplete passes -> COMPLETE branch.
+    const complete = fakeScriptDialog();
+    const sOk = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs: mkDialogs(), quests, questService: svc, questText,
+      chat: fakeChat as never, scriptDialog: complete.serializer as never,
+    });
+    const active = mkPlayer({ m_aQuest: [{ id: 900, state: 0 }] as never });
+    const outOk = await sOk.dialog(active, { objid: NPC_ID, key: 'QUEST_END', nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!outOk.ok) throw new Error('expected ok');
+    const okSays = complete.calls.flat().filter((f) => f.type === 'say').map((f) => (f as { text: string }).text);
+    assert.deepEqual(okSays, ['You brought the stones!']);
+    assert.ok(complete.calls.flat().some((f) => f.type === 'addAnswer' && f.key === 'QUEST_END_COMPLETE'));
+
+    // No active quest -> not eligible -> FAILURE branch.
+    const failed = fakeScriptDialog();
+    const sFail = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs: mkDialogs(), quests, questService: svc, questText,
+      chat: fakeChat as never, scriptDialog: failed.serializer as never,
+    });
+    const outFail = await sFail.dialog(mkPlayer(), { objid: NPC_ID, key: 'QUEST_END', nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!outFail.ok) throw new Error('expected ok');
+    const failSays = failed.calls.flat().filter((f) => f.type === 'say').map((f) => (f as { text: string }).text);
+    assert.deepEqual(failSays, ['Come back with 5 stones.']);
+    assert.ok(failed.calls.flat().some((f) => f.type === 'addAnswer' && f.key === 'QUEST_END_FAIL'));
+  });
+
+  it('a SetDialog slot whose IDS token resolves empty is skipped (C++ __SayQuest FALSE)', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer, calls } = fakeScriptDialog();
+    const { quests, questText } = dialogQuest({ '0': 'IDS_B1', '1': 'IDS_EMPTY' });
+    questText.set('IDS_EMPTY', ''); // propQuest.txt.txt ships many blank rows.
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Test') },
+      dialogs: mkDialogs(), quests, questService: svc, questText,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const out = await s.dialog(mkPlayer(), { objid: NPC_ID, key: 'QUEST_BEGIN', nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    const says = calls.flat().filter((f) => f.type === 'say').map((f) => (f as { text: string }).text);
+    assert.deepEqual(says, ['You have reached level 15.']);
+  });
+});
