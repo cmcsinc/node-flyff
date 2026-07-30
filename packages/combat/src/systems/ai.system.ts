@@ -394,6 +394,11 @@ private pursue(m: CMover, now: number, dtMs: number): void {
       // "unkillable sliver" reports, a DEL_OBJ + fresh ADD_OBJ re-broadcast on
       // heal is the upgrade path (ponytail).
       m.m_nHitPoint = m.m_nMaxHitPoint;
+      // v19: `DoReturnToBegin(FALSE)` full-heals AND drops the hit-share table
+      // (`AIMonster.cpp:306` -> `RemoveAllEnemies()`). Without this the map
+      // keeps one entry per unique attacker charId for the mover's whole life —
+      // an unbounded per-(mover, attacker) leak on any tag-and-abandon.
+      m.m_idEnemies.clear();
       m.m_tmNextWander = now + stopInterval();
       return;
     }

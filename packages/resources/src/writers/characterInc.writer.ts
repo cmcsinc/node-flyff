@@ -13,6 +13,14 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import type { CharacterIncEquipPart, CharacterIncVendorTab, CharacterIncVendorItem, CharacterIncVendorItemId } from '../loaders/characterInc.loader';
+import {
+  detectEol,
+  escapeRe,
+  findStatements,
+  replaceStatements,
+  settingEnd,
+  splitLines,
+} from './incStatements';
 
 /** Reverse-lookup maps needed by the writer to emit SYMBOL names, not raw ids. */
 export interface WriterSymbols {
@@ -45,6 +53,16 @@ export interface CharacterEdit {
   structure?: number | null;
   /** `AddVendorSlot( n, IDS_* )` entries. Replaces all existing. */
   vendorTabs?: readonly { slot: number; label: string }[];
+  /**
+   * `IDS_* -> text` entries written into `character.txt.txt`.
+   *
+   * The `.inc` file only ever carries string-table *tokens*; the text itself
+   * lives in the `.txt.txt` sibling that the client reads too. A new shop tab
+   * therefore needs both halves — an `AddVendorSlot( n, IDS_NEW )` line here and
+   * an `IDS_NEW <tab>Label` row there — or the client renders a blank tab.
+   * Existing tokens are overwritten in place; absent ones are appended.
+   */
+  texts?: Readonly<Record<string, string>>;
   /** `AddVendorItem( n, IK3_*, job, minU, maxU, totalNum )` entries. Replaces all existing. */
   vendorItems?: readonly CharacterIncVendorItem[];
   /** `AddVendorItem2( n, dwId )` entries. Replaces all existing. */
@@ -55,180 +73,49 @@ export interface CharacterEdit {
 
 /**
  * Find the `[start, end)` range of a `<key> { ... }` block in decoded text.
- * Operates on ORIGINAL text (comments preserved) -- unlike `parseCharacterInc`
- * which strips comments first. Nested braces inside the block body are counted
- * so an inner `if(...) { }` inside a block does not prematurely close it.
  *
- * Returns `[startOfKey, positionAfterClosingBrace]`, or `undefined` if the
- * block key is not found.
+ * Operates on the ORIGINAL text (comments intact) -- unlike `parseCharacterInc`,
+ * which strips comments first -- because the writer's whole purpose is to leave
+ * comments where they are. That means both hazards below have to be handled here
+ * rather than inherited from the loader:
+ *
+ * - The header may carry a trailing comment before the brace:
+ *   `Mada_Guildcombatshop // 길드대전 상인` then `{` on the next line.
+ * - A `//` comment inside the body may contain a stray `{` or `}`, which would
+ *   otherwise unbalance the depth scan and return the wrong range.
+ *
+ * Returns `[startOfKey, indexAfterOpeningBrace, positionAfterClosingBrace]`, or
+ * `undefined` when the key is absent or its braces never balance. The middle
+ * value is handed back rather than re-found with `indexOf('{')`, which would land
+ * on a brace inside the header comment.
  */
-function findBlockRange(text: string, key: string): [number, number] | undefined {
-  const re = new RegExp(`^${escapeRe(key)}\\s*\\{`, 'gm');
+function findBlockRange(text: string, key: string): [number, number, number] | undefined {
+  // Header: key, then optional trailing `//` comment, then `{` (same or later line).
+  const re = new RegExp(`^${escapeRe(key)}[ \\t]*(?://[^\\r\\n]*)?\\s*\\{`, 'gm');
   const m = re.exec(text);
   if (!m?.[0] || m.index === undefined) return undefined;
-  const openIdx = text.indexOf('{', m.index + m[0].length - 1);
-  if (openIdx < 0) return undefined;
+  const openIdx = m.index + m[0].length - 1;
+
   let depth = 1;
   let i = openIdx + 1;
-  while (i < text.length && depth > 0) {
+  let inComment = false;
+  for (; i < text.length && depth > 0; i++) {
     const c = text[i];
+    if (inComment) {
+      if (c === '\n') inComment = false;
+      continue;
+    }
+    if (c === '/' && text[i + 1] === '/') { inComment = true; i++; continue; }
     if (c === '{') depth++;
     else if (c === '}') depth--;
-    i++;
   }
   if (depth !== 0) return undefined;
-  return [m.index, i];
+  return [m.index, openIdx + 1, i];
 }
 
-/** Escape a string for use inside a `RegExp`. */
-function escapeRe(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-// ── Line-based helpers (normalized to LF) ──
-
-/** Split decoded text on any newline variant, preserving the content of each line. */
-function splitLines(s: string): string[] {
-  return s.split(/\r\n|\r|\n/);
-}
-
-/** Join lines with a single LF. */
-function joinLines(lines: string[]): string {
-  return lines.join('\n');
-}
-
-/** Regex that matches a statement on one or two consecutive lines. */
-function stmtRe(firstLine: string): RegExp {
-  return new RegExp(escapeRe(firstLine) + '(?:\\s*\\n\\s*\\S[^\n]*)?', 'g');
-}
-
-/**
- * Find a statement in `lines` that matches `stmtPattern` (single-line form).
- * Handles two-line forms where the first line ends with an unclosed `(` by
- * joining the two lines before matching.
- *
- * Returns `[startLine, matchedText]` or `undefined`.
- */
-function findStatement(lines: string[], stmtPattern: string): [number, string] | undefined {
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]!;
-    const trimmed = line.replace(/\s+$/, '');
-    const endsWithOpen = trimmed.endsWith('(') && !trimmed.includes(')');
-    if (endsWithOpen && i + 1 < lines.length) {
-      const joined = trimmed + ' ' + lines[i + 1]!.replace(/^\s+/, '');
-      const re = stmtRe(stmtPattern);
-      const m = re.exec(joined);
-      if (m) return [i, m[0]];
-    }
-    const re = stmtRe(stmtPattern);
-    const m = re.exec(line);
-    if (m) return [i, m[0]];
-  }
-  return undefined;
-}
-
-/**
- * Find ALL occurrences of a statement pattern in `lines`.
- * Returns an array of `[startLineIndex, lineCount]` for each match.
- */
-function findAllStatements(lines: string[], stmtPattern: string): Array<[number, number]> {
-  const results: Array<[number, number]> = [];
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i]!;
-    const trimmed = line.replace(/\s+$/, '');
-    const endsWithOpen = trimmed.endsWith('(') && !trimmed.includes(')');
-    if (endsWithOpen && i + 1 < lines.length) {
-      const joined = trimmed + ' ' + lines[i + 1]!.replace(/^\s+/, '');
-      const re = stmtRe(stmtPattern);
-      const m = re.exec(joined);
-      if (m) { results.push([i, 2]); i += 2; continue; }
-    }
-    const re = stmtRe(stmtPattern);
-    const m = re.exec(line);
-    if (m) { results.push([i, 1]); i += 1; continue; }
-    i++;
-  }
-  return results;
-}
-
-/** Remove lines `[startLine, startLine+lineCount)` from `lines`, mutating in place. */
-function removeLines(lines: string[], startLine: number, lineCount: number): void {
-  lines.splice(startLine, lineCount);
-}
-
-/** Insert `newLines` at `pos` into `lines`, mutating in place. */
-function insertLines(lines: string[], pos: number, newLines: readonly string[]): void {
-  lines.splice(pos, 0, ...newLines);
-}
-
-/** Remove ALL occurrences of a statement pattern from `lines`. Returns the line index of the first removed occurrence (or -1). */
-function removeAllStatements(lines: string[], stmtPattern: string): number {
-  const matches = findAllStatements(lines, stmtPattern);
-  let firstIdx = -1;
-  for (let j = matches.length - 1; j >= 0; j--) {
-    const [startLine, lineCount] = matches[j]!;
-    if (j === 0) firstIdx = startLine;
-    removeLines(lines, startLine, lineCount);
-  }
-  return firstIdx;
-}
-
-/** Escape a string for use inside a regex pattern (meta-characters only, no boundary). */
-function reEscape(s: string): string {
-  return s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, (ch) => {
-    if (/\s/.test(ch)) return '\\s+';
-    return '\\' + ch;
-  });
-}
-
-/** Build a regex from a generator-produced single-line statement. */
-function patternRe(pattern: string): RegExp {
-  const parts = pattern.trim().split(/\s+/);
-  const reBody = parts.map(reEscape).join('\\s+');
-  return new RegExp(reBody, 'g');
-}
-
-/**
- * Find the first occurrence of `oldPattern` (generator-produced single-line form)
- * in the decoded block body, then replace it with `newText`.
- *
- * Handles two-line forms in the original text by joining continuation lines
- * before matching.
- *
- * Returns the modified block body, or `undefined` if the pattern was not found.
- */
-function replaceFirstStatement(
-  decodedBody: string,
-  oldPattern: string,
-  newText: string,
-): string | undefined {
-  const lines = splitLines(decodedBody);
-  const oldRe = patternRe(oldPattern);
-  let cumLen = 0;
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]!;
-    const trimmed = line.replace(/\s+$/, '');
-    const endsWithOpen = trimmed.endsWith('(') && !trimmed.includes(')');
-
-    if (endsWithOpen && i + 1 < lines.length) {
-      const joined = trimmed + ' ' + lines[i + 1]!.replace(/^\s+/, '');
-      const m = oldRe.exec(joined);
-      if (m) {
-        const lineStart = cumLen;
-        const line2Start = cumLen + line.length + 1; // +1 for the \n
-        const line2End = line2Start + (lines[i + 1]?.length ?? 0);
-        return decodedBody.slice(0, lineStart) + newText + decodedBody.slice(line2End);
-      }
-    }
-
-    const m = oldRe.exec(line);
-    if (m) {
-      return decodedBody.slice(0, cumLen) + newText + decodedBody.slice(cumLen + line.length);
-    }
-    cumLen += line.length + 1; // +1 for LF
-  }
-  return undefined;
+/** Join lines with the EOL detected from the original text. */
+function joinLinesEol(lines: string[], eol: '\r\n' | '\n'): string {
+  return lines.join(eol);
 }
 
 // ── Symbol resolution helpers ──
@@ -246,39 +133,48 @@ function srtSym(id: number, syms: WriterSymbols): string {
 }
 
 // ── Statement generators ──
+//
+// None of these carry leading indentation: `replaceStatements` re-applies the
+// indentation of the statement it is replacing, so a generator that indented
+// itself would double it.
 
 function genMenuLine(id: number, syms: WriterSymbols): string {
-  return `\t\tAddMenu( ${mmiSym(id, syms)} );`;
+  return `AddMenu( ${mmiSym(id, syms)} );`;
 }
 
 function genStructureLine(id: number, syms: WriterSymbols): string {
-  return `\t\tm_nStructure= ${srtSym(id, syms)};`;
+  return `m_nStructure= ${srtSym(id, syms)};`;
 }
 
 function genDialogLine(file: string): string {
-  return `\t\tm_szDialog= "${file}";`;
+  return `m_szDialog= "${file}";`;
 }
 
 function genOutputLine(b: boolean): string {
-  return `\t\tSetOutput( ${b ? 'TRUE' : 'FALSE'} );`;
+  return `SetOutput( ${b ? 'TRUE' : 'FALSE'} );`;
 }
 
 function genSetEquipLine(equip: readonly CharacterIncEquipPart[], syms: WriterSymbols): string {
   const args = equip.map((e) => iiSym(e.itemId, syms)).join(', ');
-  return `\t\tSetEquip( ${args} );`;
+  return `SetEquip( ${args} );`;
 }
 
+/**
+ * Multi-line form, matching how the raw file authors it. Split on LF by the
+ * caller; only the first line gets the source indentation, the continuation
+ * lines keep the raw file's own shallower indent.
+ */
 function genVendorSlotLine(tab: CharacterIncVendorTab): string {
-  return `\t\tAddVendorSlot( ${tab.slot},\r\n\t${tab.label}\r\n\t);`;
+  return `AddVendorSlot( ${tab.slot},\n\t${tab.label}\n\t);`;
 }
 
 function genVendorItemLine(v: CharacterIncVendorItem): string {
   const sym = v.itemKind3Symbol || String(v.itemKind3);
-  return `\t\tAddVendorItem( ${v.slot}, ${sym}, ${v.itemJob}, ${v.uniqueMin}, ${v.uniqueMax}, ${v.totalNum} );`;
+  return `AddVendorItem( ${v.slot}, ${sym}, ${v.itemJob}, ${v.uniqueMin}, ${v.uniqueMax}, ${v.totalNum} );`;
 }
 
 function genVendorItemIdLine(v: CharacterIncVendorItemId): string {
-  return `\t\tAddVendorItem2( ${v.slot}, ${v.itemId} );`;
+  return `AddVendorItem2( ${v.slot}, ${v.itemId} );`;
 }
 
 // ── Public API ──
@@ -301,109 +197,86 @@ export function applyCharacterEdit(
 ): string {
   const range = findBlockRange(incText, key);
   if (!range) throw new Error(`character.inc: block "${key}" not found`);
-  const [blockStart, blockEnd] = range;
-  const blockBody = incText.slice(
-    incText.indexOf('{', blockStart) + 1,
-    blockEnd - 1,
-  );
-  let body = blockBody;
-  const lines = splitLines(body);
-  const origLines = [...lines];
+  const [, bodyStart, blockEnd] = range;
+  const eol = detectEol(incText);
+  const lines = splitLines(incText.slice(bodyStart, blockEnd - 1));
 
-  // ── menus ──
+  // Absent statements are appended just before the `setting { }` group closes --
+  // that is where the raw file keeps all of them, and appending after the group
+  // would put them in the block's outer scope where the client's parser ignores
+  // them.
+  const at = () => settingEnd(lines);
+
   if (edit.menus) {
-    const firstIdx = removeAllStatements(lines, 'AddMenu(');
-    removeAllStatements(lines, 'AddMenuLang(');
-    if (edit.menus.length > 0) {
-      const newLines = edit.menus.map((id) => genMenuLine(id, syms));
-      const pos = firstIdx >= 0 ? firstIdx : lines.length;
-      // Use the indentation of the original first AddMenu line, if it existed.
-      if (firstIdx >= 0 && origLines[firstIdx] !== undefined) {
-        const indent = (origLines[firstIdx] as string).match(/^\s*/)?.[0] ?? '\t\t';
-        for (let j = 0; j < newLines.length; j++) {
-          newLines[j] = indent + newLines[j]!.trimStart();
-        }
-      }
-      insertLines(lines, pos, newLines);
-    }
+    // AddMenuLang is the localized variant; both are replaced by the plain form.
+    replaceStatements(lines, 'AddMenuLang', [], at());
+    replaceStatements(lines, 'AddMenu', edit.menus.map((id) => genMenuLine(id, syms)), at());
   }
 
-  // ── structure ──
   if (edit.structure !== undefined) {
-    removeAllStatements(lines, 'm_nStructure=');
-    if (edit.structure !== null) {
-      insertLines(lines, lines.length, [genStructureLine(edit.structure, syms)]);
-    }
+    const repl = edit.structure === null ? [] : [genStructureLine(edit.structure, syms)];
+    replaceStatements(lines, 'm_nStructure', repl, at());
   }
 
-  // ── dialogFile ──
   if (edit.dialogFile !== undefined) {
-    removeAllStatements(lines, 'm_szDialog=');
-    if (edit.dialogFile !== null) {
-      insertLines(lines, lines.length, [genDialogLine(edit.dialogFile)]);
-    }
+    const repl = edit.dialogFile === null ? [] : [genDialogLine(edit.dialogFile)];
+    replaceStatements(lines, 'm_szDialog', repl, at());
   }
 
-  // ── output ──
   if (edit.output !== undefined) {
-    removeAllStatements(lines, 'SetOutput(');
-    insertLines(lines, lines.length, [genOutputLine(edit.output)]);
+    replaceStatements(lines, 'SetOutput', [genOutputLine(edit.output)], at());
   }
 
-  // ── vendorTabs ──
   if (edit.vendorTabs) {
-    removeAllStatements(lines, 'AddVendorSlot(');
-    removeAllStatements(lines, 'AddVenderSlot(');
-    if (edit.vendorTabs.length > 0) {
-      const newLines: string[] = [];
-      for (const tab of edit.vendorTabs) {
-        newLines.push(...genVendorSlotLine(tab).split('\n'));
-      }
-      insertLines(lines, lines.length, newLines);
-    }
+    // `AddVenderSlot` is the raw file's own misspelling; both spellings occur.
+    replaceStatements(lines, 'AddVenderSlot', [], at());
+    replaceStatements(
+      lines,
+      'AddVendorSlot',
+      edit.vendorTabs.flatMap((t) => genVendorSlotLine(t).split('\n')),
+      at(),
+    );
   }
 
-  // ── vendorItems ──
   if (edit.vendorItems) {
-    removeAllStatements(lines, 'AddVendorItem(');
-    if (edit.vendorItems.length > 0) {
-      const newLines = edit.vendorItems.map((v) => genVendorItemLine(v));
-      insertLines(lines, lines.length, newLines);
-    }
+    replaceStatements(lines, 'AddVendorItem', edit.vendorItems.map(genVendorItemLine), at());
   }
 
-  // ── vendorItemIds ──
   if (edit.vendorItemIds) {
-    removeAllStatements(lines, 'AddVendorItem2(');
-    if (edit.vendorItemIds.length > 0) {
-      const newLines = edit.vendorItemIds.map((v) => genVendorItemIdLine(v));
-      insertLines(lines, lines.length, newLines);
-    }
+    replaceStatements(lines, 'AddVendorItem2', edit.vendorItemIds.map(genVendorItemIdLine), at());
   }
 
-  // ── outfit ──
   if (edit.outfit !== undefined) {
     if (edit.outfit === null) {
-      removeAllStatements(lines, 'SetFigure(');
-      removeAllStatements(lines, 'SetEquip(');
+      replaceStatements(lines, 'SetFigure', [], at());
+      replaceStatements(lines, 'SetEquip', [], at());
     } else {
-      rewriteOutfit(lines, edit.outfit, syms);
+      rewriteOutfit(lines, edit.outfit, syms, at);
     }
   }
 
-  body = joinLines(lines);
-
-  // ── Splice modified body back into incText ──
-  const bodyStart = incText.indexOf('{', blockStart) + 1;
-  return incText.slice(0, bodyStart) + body + incText.slice(blockEnd - 1);
+  return incText.slice(0, bodyStart) + joinLinesEol(lines, eol) + incText.slice(blockEnd - 1);
 }
 
+/**
+ * Rewrite `SetFigure` + `SetEquip` in place.
+ *
+ * `SetEquip` is positional -- the loader derives each part's slot from the
+ * argument's index -- so a gap in `parts` would silently shift every later item
+ * onto the wrong body slot. Rejected rather than guessed.
+ *
+ * `SetFigure`'s first argument is the `MI_*` model index, which the loader's
+ * regex discards. It is therefore read back out of the existing statement and
+ * re-emitted verbatim. A block with `SetEquip` but no `SetFigure` still reports an
+ * outfit (hair/head 0); writing those zeros back is accepted as a no-op, but a
+ * real hair/head value is rejected since no model token can be synthesized.
+ */
 function rewriteOutfit(
   lines: string[],
   outfit: NonNullable<CharacterEdit['outfit']>,
   syms: WriterSymbols,
+  at: () => number,
 ): void {
-  // ── SetEquip ──
   const sortedEquip = [...outfit.equip].sort((a, b) => a.parts - b.parts);
   for (let i = 1; i < sortedEquip.length; i++) {
     if (sortedEquip[i]!.parts !== sortedEquip[i - 1]!.parts + 1) {
@@ -417,26 +290,16 @@ function rewriteOutfit(
     (e) => ({ parts: e.parts, itemId: e.itemId }),
   );
 
-  // Remove old SetEquip, insert new at same position (or at end if none existed).
-  const oldEquipIdx = removeAllStatements(lines, 'SetEquip(');
-  const newEquipLine = genSetEquipLine(equipParts, syms);
-  const equipPos = oldEquipIdx >= 0 ? oldEquipIdx : lines.length;
-  if (oldEquipIdx >= 0) {
-    const indent = '\t\t';
-    insertLines(lines, equipPos, [indent + newEquipLine.trimStart()]);
-  } else {
-    insertLines(lines, lines.length, [newEquipLine]);
-  }
+  // Recover the model token BEFORE any statement is removed.
+  const fig = findStatements(lines, 'SetFigure')[0];
 
-  // ── SetFigure ──
-  // Find existing SetFigure to extract the MI_* model token (the loader discards it).
-  const figFound = findStatement(lines, 'SetFigure(');
-  let miToken = 'MI_UNKNOWN';
-  if (figFound) {
-    const [, matchedText] = figFound;
-    const miMatch = matchedText.match(/\b(MI_[A-Z0-9_]+)\b/);
-    if (miMatch) miToken = miMatch[1]!;
-  } else {
+  replaceStatements(lines, 'SetEquip', [genSetEquipLine(equipParts, syms)], at());
+
+  if (!fig) {
+    // A block can carry SetEquip with no SetFigure -- the loader still reports an
+    // outfit, with hair/head defaulting to 0. Writing those zeros back is a no-op,
+    // so stay silent; only a real hair/head value needs a model token we don't have.
+    if (outfit.hairMesh === 0 && outfit.hairColor === 0 && outfit.headMesh === 0) return;
     throw new Error(
       `SetFigure: no existing SetFigure found in block -- cannot determine the MI_* model token. ` +
       `The loader discards it during parse; without a prior SetFigure the model is unknown. ` +
@@ -444,10 +307,20 @@ function rewriteOutfit(
     );
   }
 
-  removeAllStatements(lines, 'SetFigure(');
+  const miToken = /\b(MI_[A-Za-z0-9_]+)\b/.exec(fig.text)?.[1];
+  if (!miToken) {
+    throw new Error(
+      `SetFigure: existing statement has no MI_* model token: ${fig.text.trim()}`,
+    );
+  }
+
   const colorHex = `0x${outfit.hairColor.toString(16).padStart(8, '0')}`;
-  const newFigLine = `\t\tSetFigure( ${miToken}, ${outfit.hairMesh}, ${colorHex}, ${outfit.headMesh} );`;
-  insertLines(lines, lines.length, [newFigLine]);
+  replaceStatements(
+    lines,
+    'SetFigure',
+    [`SetFigure( ${miToken}, ${outfit.hairMesh}, ${colorHex}, ${outfit.headMesh} );`],
+    at(),
+  );
 }
 
 /**
@@ -456,17 +329,25 @@ function rewriteOutfit(
  * Does NOT disturb any other lines.
  */
 export function setTextEntry(txtText: string, token: string, text: string): string {
+  const eol = detectEol(txtText);
   const lines = splitLines(txtText);
   const prefix = `${token}\t`;
   for (let i = 0; i < lines.length; i++) {
     if (lines[i]!.startsWith(prefix)) {
       lines[i] = `${token}\t${text}`;
-      return joinLines(lines);
+      return joinLinesEol(lines, eol);
     }
   }
-  // Append: preserve trailing newline if present.
-  lines.push(`${token}\t${text}`);
-  return joinLines(lines);
+  // Append. When the file ends with a newline, `splitLines` leaves a trailing
+  // empty element -- overwrite it so the new entry lands on that blank final
+  // line and the trailing newline is re-added by the join.
+  if (lines.length > 0 && lines[lines.length - 1] === '') {
+    lines[lines.length - 1] = `${token}\t${text}`;
+    lines.push('');
+  } else {
+    lines.push(`${token}\t${text}`);
+  }
+  return joinLinesEol(lines, eol);
 }
 
 /**
@@ -507,6 +388,15 @@ export async function writeCharacterEdit(
     txtText = setTextEntry(txtText, nameToken, edit.name);
   }
 
+  // Apply string-table entries (shop tab labels and any other IDS_* text). The
+  // `.inc` half only stores tokens, so a caller adding a token MUST supply its
+  // text here or the client shows an empty string.
+  if (edit.texts) {
+    for (const [token, text] of Object.entries(edit.texts)) {
+      txtText = setTextEntry(txtText, token, text);
+    }
+  }
+
   // Apply all inc edits.
   const syms = await loadSymbols(rawDir);
   const newIncText = applyCharacterEdit(incText, key, edit, syms);
@@ -520,12 +410,56 @@ export async function writeCharacterEdit(
   ]);
 }
 
+/**
+ * Lowest unused `<prefix>NNNNNN` token in a decoded string table.
+ *
+ * Shop tab labels are `IDS_CHARACTER_INC_*` tokens, and a new tab needs one that
+ * no existing row claims. Scanning the file rather than tracking a counter means
+ * a token freed by a later hand-edit gets reused and two callers can never mint
+ * the same id from stale state. The numeric part is zero-padded to the width the
+ * file already uses (6 digits).
+ */
+export function nextTextToken(txtText: string, prefix = 'IDS_CHARACTER_INC_'): string {
+  const re = new RegExp(`^${escapeRe(prefix)}(\\d+)`, 'gm');
+  const used = new Set<number>();
+  for (let m = re.exec(txtText); m !== null; m = re.exec(txtText)) {
+    const n = Number.parseInt(m[1] ?? '', 10);
+    if (!Number.isNaN(n)) used.add(n);
+  }
+  let n = 0;
+  while (used.has(n)) n++;
+  return `${prefix}${String(n).padStart(6, '0')}`;
+}
+
+/**
+ * Mint `count` fresh string-table tokens, reading the on-disk table first.
+ *
+ * A caller adding shop tabs needs tokens that nothing already uses; doing the
+ * read here keeps the "what is free" question answered against the real file
+ * rather than a cached parse that a hand-edit could have invalidated.
+ */
+export async function allocTextTokens(
+  rawDir: string,
+  count: number,
+  prefix = 'IDS_CHARACTER_INC_',
+): Promise<string[]> {
+  const buf = await readFile(resolve(rawDir, 'character.txt.txt')).catch(() => Buffer.alloc(0));
+  let text = buf.length > 0 ? decode(buf) : '';
+  const out: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const token = nextTextToken(text, prefix);
+    out.push(token);
+    // Append the claim so the next iteration cannot pick the same token.
+    text += `\n${token}\t`;
+  }
+  return out;
+}
+
 /** Find the `SetName( IDS_* )` token in a block, operating on decoded text. */
 function findSetNameToken(text: string, key: string): string | undefined {
   const range = findBlockRange(text, key);
   if (!range) return undefined;
-  const bodyStart = text.indexOf('{', range[0]) + 1;
-  const body = text.slice(bodyStart, range[1] - 1);
+  const body = text.slice(range[1], range[2] - 1);
   // Multi-line SetName form: SetName\r\n(\r\nIDS_...\r\n)
   const m = body.match(/\bSetName\s*\(\s*([A-Za-z0-9_]+)\s*\)/);
   return m?.[1];

@@ -73,9 +73,9 @@ import { NoticeSerializer } from '../net/snapshot/notice.serializer';
 import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer';
 import { DisguiseSerializer } from '../net/snapshot/disguise.serializer';
 import { CreateItemSnapshotSerializer } from '@flyff/inventory';
-import type { VicinityService } from '@flyff/npc';
 import { SetStateSerializer, SetExperienceSerializer, SetLevelSerializer } from '@flyff/combat';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
+import type { VisibilityService } from '@flyff/world-core';
 import { MODE } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
 
@@ -105,13 +105,12 @@ export interface CommandServiceDeps {
   /** Zone manager -- `/lv` vicinity SETLEVEL broadcast. Optional: self-only update if absent. */
   zoneManager?: { broadcastAround(pos: Vec3, zoneId: number, radius: number, pkt: Buffer, except?: unknown): number };
   /**
-   * Vicinity service -- same-world teleport (`/te` `/teleport` `/su`) must
-   * re-emit the ADD_OBJ snapshot for the destination: the one-shot `enterZone`
-   * guard already fired at MAP_KEY time and the client does not reload the
-   * world on SETPOS, so without a resend no NPC/monster spawns at the new spot.
-   * Optional: teleport skips the resend silently if absent.
+   * Visibility service -- same-world teleport (`/te` `/teleport` `/su`) must
+   * re-diff the player's view at the destination: the client does not reload the
+   * world on SETPOS, so without a refresh the old spawns linger and nothing at
+   * the new spot appears. Optional: teleport skips the refresh if absent.
    */
-  vicinityService?: Pick<VicinityService, 'resendAt'>;
+  visibilityService?: Pick<VisibilityService, 'refresh'>;
 }
 
 export type CommandOutcome =
@@ -312,7 +311,7 @@ export class CommandService {
     // (OnReplace DPClient.cpp:2352 -> CWndQuestQuickInfo::Process:259 crash).
     const buf = this.setPosSer.build(target.m_idPlayer, pos);
     this.deps.playerManager.sendTo(target, buf);
-    this.resendVicinity(target);
+    this.refreshVisibility(target);
   }
 
   /** `/sys <msg>` -- TextCmd_System (FuncTextCmd.cpp:2840). Yellow notice to all. */
@@ -710,19 +709,15 @@ export class CommandService {
     player._dirty.add('z');
     const buf = this.setPosSer.build(player.m_idPlayer, pos);
     this.deps.playerManager.sendTo(player, buf);
-    // Re-emit NPC/monster ADD_OBJ at the destination -- without this, no spawns
-    // appear after a same-world teleport (m_vicinitySent one-shot already true,
-    // and SETPOS does not reload the world so no new MAP_KEY fires).
-    this.resendVicinity(player);
+    // Re-diff the view at the destination -- without this, spawns from the old
+    // position linger and nothing at the new spot appears (SETPOS does not
+    // reload the world, so no new MAP_KEY fires).
+    this.refreshVisibility(player);
   }
 
-  /** Forward the destination vicinity snapshot to a post-teleport player. */
-  private resendVicinity(player: CPlayer): void {
-    const v = this.deps.vicinityService;
-    if (!v) return;
-    const res = v.resendAt(player.m_idPlayer);
-    if (res === null) return;
-    this.deps.playerManager.sendTo(player, res.snapshot);
+  /** Re-diff the post-teleport player's view (ADD_OBJ new, DEL_OBJ stale). */
+  private refreshVisibility(player: CPlayer): void {
+    this.deps.visibilityService?.refresh(player.m_idPlayer, true);
   }
 
   private findPlayer(name: string): CPlayer | undefined {

@@ -196,9 +196,8 @@ declares a feature fixed by testing on a real v19 client.
 - [ ] ❌ Zone transitions / cross-world transfer (REPLACE handoff not wired)
 - [ ] ❌ World map
 - [ ] 🟡 Map key accept-all (no manifest) — `mapKey.service.ts:40`
-- [ ] 🟡 Vicinity radius query (`playersNear` exists; not used for streaming — whole-zone burst) — `zone.manager.ts:91`
-- [ ] 🟡 NPC/mob ADD_OBJ one-shot full-zone on MAP_KEY; no enter/leave streaming — `vicinity.service.ts:46`
-- [ ] ❌ Player-to-player ADD_OBJ on join (broadcastEnter) — `join.handler.ts:109`
+- [ ] 🟡→impl Vicinity radius streaming — `VisibilityService` (port of `CLinkMap::ModifyView`, LinkMap.cpp:404) diffs a per-player `m_known` objid set against a live radius query and streams ADD_OBJ/DEL_OBJ deltas. Replaces the one-shot whole-zone burst (`VicinityService` deleted). Wired into MAP_KEY, all 5 movement paths, DESTPOS, `/te` `/su` `/teleport`, admin teleport, revival, disconnect. Build + tests green (world-core 75/0, npc 162/0, world-server 253/2 — the 2 fails are a pre-existing `/ci` mock defect, unrelated), awaiting user test — `world-core/services/visibility.service.ts` (2026-07-30)
+- [ ] 🟡→impl Player-to-player ADD_OBJ — `METHOD_EXCLUDE_ITEM` PLAYER branch ported (`ObjSerializeOpt.cpp:277-323`): vendor title, visible equip parts, petId, buff count. Peers now appear/disappear as either side walks. Awaiting user test — `world-server/net/snapshot/peerSnapshot.serializer.ts`, `mover.serializer.ts:writeMoverExcludeItem` (2026-07-30). Remaining: buff list is empty on the peer frame (no buff icons on others until the next SETSKILLSTATE); monster movement does not re-link (only player moves drive a diff — the 30 m leash bounds the error)
 
 ---
 

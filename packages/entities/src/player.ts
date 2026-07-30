@@ -290,6 +290,16 @@ export class CPlayer {
    */
   m_vicinitySent: boolean = false;
   /**
+   * Objids this player's client currently has in its scene (peer players AND
+   * NPC/monster movers). The port of C++ `CUser::m_mapPC` + `m_mapNPC`
+   * (`User.h`), which `CLinkMap::ModifyView` maintains via `PCSetAt`/`NPCSetAt`
+   * and `PCRemoveKey`/`NPCRemoveKey`. `VisibilityService` diffs this against the
+   * live radius query to decide what ADD_OBJ / DEL_OBJ to stream.
+   *
+   * Cleared on disconnect (rule 05 -- never leave a Map holding references).
+   */
+  m_known: Set<number> = new Set();
+  /**
    * Per-player quest state -- in-memory mirror of the C++ per-mover arrays
    * (`_Common/Mover.h:702-709`). Loaded from the DB on JOIN; mutated by the
    * quest service; persisted via dirty-flag flush + `QuestRepository`.

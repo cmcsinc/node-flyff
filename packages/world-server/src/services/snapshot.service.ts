@@ -26,9 +26,16 @@ import {
   DestPosSerializer, type DestPosFrame,
 } from '@flyff/combat';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
+import type { VisibilityService } from '@flyff/world-core';
 
 export interface SnapshotServiceDeps {
   zoneManager: ZoneManager;
+  /**
+   * View re-diff hook -- DESTPOS is an authoritative position change, so peers
+   * and movers must stream in/out of view the same way they do on PLAYERMOVED
+   * (`CLinkMap::ModifyView`, LinkMap.cpp:404). Optional for tests.
+   */
+  visibilityService?: Pick<VisibilityService, 'refresh'>;
 }
 
 export type DestPosOutcome =
@@ -52,6 +59,7 @@ export class SnapshotService {
     }
     player.m_vPos = { ...frame.vPos };
     player._dirty.add('m_vPos');
+    this.deps.visibilityService?.refresh(player.m_idPlayer);
 
     const packet = this.destPosSerializer.build(player.m_idPlayer, frame);
     const reached = this.deps.zoneManager.broadcastAround(

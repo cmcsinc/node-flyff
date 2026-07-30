@@ -20,6 +20,13 @@ export const LOG_DIR = resolve(DATA_DIR, 'logs');
 export const HANDLE_FILE = resolve(DATA_DIR, 'supervisor.json');
 /** Random shared secret; every daemon request must present it. */
 export const TOKEN_FILE = resolve(DATA_DIR, 'supervisor.token');
+/**
+ * `[{ id, pid, startedAt }]` — the children a daemon owns, refreshed on every
+ * spawn/exit. A replacement daemon reads this to ADOPT game servers left behind
+ * by a previous daemon that died, so they stay stoppable instead of becoming
+ * invisible orphans holding a client port (and ~240 MB) forever.
+ */
+export const CHILDREN_FILE = resolve(DATA_DIR, 'supervisor-children.json');
 export const DAEMON_ENTRY = resolve(ROOT, 'packages', 'admin', 'lib', 'supervisor-daemon.ts');
 export const DEFAULT_PORT = Number(process.env.SUPERVISOR_PORT ?? 28900);
 export const AUTH_HEADER = 'x-supervisor-token';
@@ -148,6 +155,47 @@ export function readHandle(): DaemonHandle | null {
 export function writeHandle(handle: DaemonHandle): void {
   mkdirSync(DATA_DIR, { recursive: true });
   writeFileSync(HANDLE_FILE, `${JSON.stringify(handle, null, 2)}\n`, 'utf-8');
+}
+
+/** One owned child, as persisted for cross-daemon adoption. */
+export interface ChildRecord {
+  id: string;
+  pid: number;
+  startedAt: number;
+}
+
+/** Children recorded by whichever daemon ran last. `[]` when none/unreadable. */
+export function readChildren(): ChildRecord[] {
+  if (!existsSync(CHILDREN_FILE)) return [];
+  try {
+    const parsed: unknown = JSON.parse(readFileSync(CHILDREN_FILE, 'utf-8'));
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (r): r is ChildRecord =>
+        typeof r === 'object' &&
+        r !== null &&
+        isValidInstanceId((r as ChildRecord).id) &&
+        Number.isInteger((r as ChildRecord).pid),
+    );
+  } catch {
+    return [];
+  }
+}
+
+export function writeChildren(records: ChildRecord[]): void {
+  mkdirSync(DATA_DIR, { recursive: true });
+  writeFileSync(CHILDREN_FILE, `${JSON.stringify(records, null, 2)}\n`, 'utf-8');
+}
+
+/** True when `pid` is a live process. Signal 0 probes without delivering. */
+export function pidAlive(pid: number): boolean {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (err) {
+    // EPERM = alive but owned by another user; only ESRCH means gone.
+    return (err as NodeJS.ErrnoException).code === 'EPERM';
+  }
 }
 
 /** Minimal `.env` reader — same contract as scripts/start-servers.mjs. */
