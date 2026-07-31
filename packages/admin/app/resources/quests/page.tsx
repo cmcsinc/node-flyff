@@ -12,6 +12,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { ScrollText } from "lucide-react";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -104,7 +105,14 @@ export default async function QuestsPage({ searchParams }: { searchParams: Promi
                 {page.rows.map((q) => (
                   <TableRow key={q.id}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{q.id}</TableCell>
-                    <TableCell className="font-medium">{q.title}</TableCell>
+                    <TableCell className="font-medium">
+                      <Link
+                        href={`/resources/quests/${String(q.id)}/edit`}
+                        className="rounded underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                      >
+                        {q.title}
+                      </Link>
+                    </TableCell>
                     <TableCell className="font-mono text-xs text-muted-foreground">{q.npc || "—"}</TableCell>
                     <TableCell className="text-muted-foreground">{q.cmds > 0 ? `${q.cmds} cmds` : "—"}</TableCell>
                     <TableCell className="text-right">{q.level > 0 ? <Badge variant="secondary">Lv. {q.level}</Badge> : "—"}</TableCell>
