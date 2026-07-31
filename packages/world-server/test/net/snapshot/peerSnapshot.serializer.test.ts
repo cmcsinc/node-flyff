@@ -72,6 +72,13 @@ describe('PeerSnapshotSerializer', () => {
       assert.equal(buf.readUInt8(ENTRY_AT + 38), 1);                   // m_bPlayer
     });
 
+    it('writes BELLI_PEACEFUL so alt+click opens the player menu', () => {
+      // [m_dwMotion:WORD][m_bPlayer:BYTE][m_nHitPoint:DWORD][GetState:DWORD]
+      // [GetStateFlag:DWORD][m_dwBelligerence:BYTE]. 0 here => IsPeaceful() false
+      // on the peer copy => WndWorld.cpp:7248 never calls ShowMoverMenu.
+      assert.equal(buf.readUInt8(ENTRY_AT + 51), 1);                   // BELLI_PEACEFUL
+    });
+
     it('picks the female model for gender 1', () => {
       const female = serializer.build([makePlayer({ gender: 1 })]);
       assert.equal(female.readUInt32LE(ENTRY_AT + 7), MI_FEMALE);
