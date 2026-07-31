@@ -27,8 +27,12 @@ import {
 import { writeQuestStruct } from '@flyff/quest';
 import { writeCItemElemBody, writeItemContainer } from '@flyff/world-core';
 import type { InventorySlot } from '@flyff/entities';
+import { MAX_CHEERPOINT } from '@flyff/entities';
 
 const NULL_ID = 0xffffffff;
+
+/** `BELLI_PEACEFUL` (`resource/defineAttribute.h:248`) -- every player mover. */
+const BELLI_PEACEFUL = 1;
 
 /**
  * CItemContainer<CItemElem> -- `slots`-wide, populated or empty. `slots` MUST
@@ -114,7 +118,12 @@ function writeMoverPrefix(w: PacketWriter, p: CPlayer): void {
   w.writeDword(p.m_nHp);       // m_nHitPoint
   w.writeDword(0);             // GetState()
   w.writeDword(0);             // GetStateFlag()
-  w.writeByte(0);              // m_dwBelligerence
+  // m_dwBelligerence -- BELLI_PEACEFUL. C++ `CMover::InitProp` (Mover.cpp:1519)
+  // seeds every player mover from propMover MI_MALE/MI_FEMALE, both BELLI_PEACEFUL.
+  // The wire byte OVERWRITES that seed on load (ObjSerializeOpt.cpp:401), so a 0
+  // here makes `IsPeaceful()` (Mover.h:1120) false on the peer copy and the client
+  // never opens the alt+click player menu (WndWorld.cpp:7248 gates on it).
+  w.writeByte(BELLI_PEACEFUL);
   w.writeDword(0);             // m_dwMoverSfxId (__VER>=15)
   w.writeString(p.m_szName);   // m_szName
   w.writeByte(p.m_nSex);       // GetSex()
@@ -208,8 +217,14 @@ function writeMethodNoneBody(w: PacketWriter, p: CPlayer): void {
     w.writeDword(s.skillId === NULL_ID ? NULL_ID : s.skillId);
     w.writeDword(s.level);
   }
-  w.writeByte(0);              // m_nCheerPoint
-  w.writeDword(0);             // m_dwTickCheer - GetTickCount()
+  // m_nCheerPoint (BYTE) + m_dwTickCheer as a RELATIVE remaining-ms DWORD --
+  // C++ writes `m_dwTickCheer - GetTickCount()` because the client has its own
+  // tick base. We hold an absolute wall-clock deadline, so subtract now. Clamped
+  // to DWORD: the value is a duration (<= 1 h in practice), but a player object
+  // built under a different clock base than this call (real Date.now() vs a
+  // test's mocked one) can produce an epoch-sized delta that overflows the field.
+  w.writeByte(Math.max(0, Math.min(MAX_CHEERPOINT, p.m_nCheerPoint)));
+  w.writeDword(Math.min(0xffffffff, Math.max(0, p.m_dwTickCheer - Date.now())));
   w.writeByte(0);              // m_nSlot
   for (let k = 0; k < 3; k++) w.writeDword(p.m_BankGold[k] ?? 0); // m_dwGoldBank *3
   for (let k = 0; k < 3; k++) w.writeDword(0);               // m_idPlayerBank *3
