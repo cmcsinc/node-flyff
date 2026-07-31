@@ -1,24 +1,24 @@
-import { loadMovers } from "@/lib/resources";
-import { Card, CardContent } from "@/components/ui/card";
+import type * as React from "react";
+import { moverRows, BELLI_INFO } from "@/lib/resource-rows";
 import { Badge } from "@/components/ui/badge";
 import { Select } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
-import { Pagination } from "@/components/pagination";
-import { EmptyRow } from "@/components/empty-state";
+import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
+import { IdCell, NameWithSymbol, TagCell, NumCell, EditLink, Dash } from "@/components/resource-cells";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
-import { parseSort, sortRows } from "@/lib/sort";
-import Link from "next/link";
+import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
 import { Bug } from "lucide-react";
+import type { MoverRow } from "@/lib/resource-rows";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = {
+interface SearchParams extends QueryParams {
   search?: string;
   type?: string;
+  belli?: string;
   minLevel?: string;
   maxLevel?: string;
   page?: string;
@@ -27,47 +27,77 @@ type SearchParams = {
   dir?: string;
 }
 
-const SORT_KEYS = ["id", "name", "kind", "type", "level"] as const;
+const SORT_KEYS = ["id", "name", "key", "type", "level", "hp", "exp", "belliLabel"] as const;
 
-export default async function MoversPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+const COLUMNS: readonly ResourceColumn<MoverRow>[] = [
+  { key: "id", header: "ID", sortable: true, className: "w-20", cell: (r) => <IdCell value={r.id} /> },
+  {
+    key: "name",
+    header: "Name",
+    sortable: true,
+    cell: (r) => <NameWithSymbol name={r.name} symbol={r.key} />,
+  },
+  { key: "type", header: "Type", sortable: true, cell: (r) => <TagCell label={r.type} /> },
+  { key: "level", header: "Level", sortable: true, align: "right", cell: (r) => <NumCell value={r.level} /> },
+  { key: "hp", header: "HP", sortable: true, align: "right", cell: (r) => <NumCell value={r.hp} /> },
+  { key: "exp", header: "EXP", sortable: true, align: "right", cell: (r) => <NumCell value={r.exp} /> },
+  {
+    key: "belliLabel",
+    header: "Behaviour",
+    sortable: true,
+    // Sight-aggro mobs get the warning variant: this column decides whether a
+    // mob attacks unprovoked, worth spotting before the word is read. Never
+    // colour-only — the label says it too, and the C++ symbol is in the tooltip
+    // so a GM can match the row against defineAttribute.h.
+    cell: (r) =>
+      r.belliLabel ? (
+        <Badge
+          variant={r.aggro ? "warning" : "secondary"}
+          title={r.belliSym ? `${r.belliSym} (${String(r.belli)})` : `dwBelligerence ${String(r.belli)}`}
+        >
+          {r.belliLabel}
+        </Badge>
+      ) : (
+        <Dash />
+      ),
+  },
+  {
+    key: "actions",
+    header: "Actions",
+    align: "right",
+    cell: (r) => <EditLink href={`/resources/movers/${String(r.id)}/edit`} label={`mover ${r.key}`} />,
+  },
+];
+
+export default async function MoversPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
   const params = await searchParams;
   const search = params.search ?? "";
   const type = params.type ?? "";
+  const belli = params.belli ?? "";
   const minLevel = params.minLevel ?? "";
   const maxLevel = params.maxLevel ?? "";
   const perPage = parsePerPage(params.perPage);
-  const data = loadMovers();
 
-  const movers: Array<{ id: number; name: string; kind: string; type: string; level: number }> = [];
-  for (const doc of data) {
-    if (typeof doc !== "object" || doc === null) continue;
-    const entries = (doc as Record<string, unknown>).movers;
-    if (!Array.isArray(entries)) continue;
-    for (const entry of entries) {
-      if (typeof entry !== "object" || entry === null) continue;
-      const v = entry as Record<string, unknown>;
-      movers.push({
-        id: Number(v.id ?? 0),
-        name: String(v.name ?? "?"),
-        kind: String(v.key ?? v.dwKind ?? "—"),
-        type: String(v.type ?? "—"),
-        level: Number(v.level ?? 0),
-      });
-    }
-  }
+  const movers = moverRows();
+  const types = [...new Set(movers.map((m) => m.type).filter(Boolean))].sort();
+  const bellis = [...new Set(movers.map((m) => m.belli).filter(Boolean))].sort((a, b) => a - b);
 
-  movers.sort((a, b) => a.id - b.id);
-
-  const types = [...new Set(movers.map((m) => m.type))].sort();
   const min = Number(minLevel);
   const max = Number(maxLevel);
   const needle = search.toLowerCase();
 
   const filtered = movers.filter((m) => {
     if (type && m.type !== type) return false;
-    if (Number.isFinite(min) && minLevel && m.level < min) return false;
-    if (Number.isFinite(max) && maxLevel && m.level > max) return false;
-    if (needle && !m.name.toLowerCase().includes(needle) && !String(m.id).includes(needle) && !m.kind.toLowerCase().includes(needle)) return false;
+    if (belli && m.belli !== Number(belli)) return false;
+    if (minLevel && Number.isFinite(min) && m.level < min) return false;
+    if (maxLevel && Number.isFinite(max) && m.level > max) return false;
+    if (
+      needle &&
+      !m.name.toLowerCase().includes(needle) &&
+      !m.key.toLowerCase().includes(needle) &&
+      !String(m.id).includes(needle)
+    )
+      return false;
     return true;
   });
 
@@ -75,17 +105,36 @@ export default async function MoversPage({ searchParams }: { searchParams: Promi
   // not just the rows already on the current page.
   const sort = parseSort(params.sort, params.dir, SORT_KEYS);
   const page = paginate(sortRows(filtered, sort), parsePage(params.page), perPage);
+  const active = Boolean(search || type || belli || minLevel || maxLevel);
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Movers" description={`${filtered.length} of ${movers.length} movers from ${data.length} files`} />
+      <PageHeader
+        title="Movers"
+        description={`${filtered.length.toLocaleString()} of ${movers.length.toLocaleString()} mover definitions`}
+      />
 
-      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || type || minLevel || maxLevel)}>
-        <SearchInput name="search" placeholder="Search by name, key, or ID..." defaultValue={search} className="w-full sm:w-72" />
+      <FilterBar perPage={perPage} sort={sort} active={active}>
+        <SearchInput
+          name="search"
+          placeholder="Search by name, MI_ key, or ID..."
+          defaultValue={search}
+          className="w-full sm:w-72"
+        />
         <Select name="type" defaultValue={type} className="w-36" aria-label="Filter by mover type">
           <option value="">All types</option>
           {types.map((t) => (
-            <option key={t} value={t}>{t}</option>
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
+        </Select>
+        <Select name="belli" defaultValue={belli} className="w-52" aria-label="Filter by behaviour">
+          <option value="">All behaviours</option>
+          {bellis.map((b) => (
+            <option key={b} value={b}>
+              {BELLI_INFO.get(b)?.label ?? `BELLI ${String(b)}`}
+            </option>
           ))}
         </Select>
         <Input
@@ -108,50 +157,17 @@ export default async function MoversPage({ searchParams }: { searchParams: Promi
         />
       </FilterBar>
 
-      <Card>
-        <CardContent className="p-0">
-          <div className="overflow-auto">
-            <Table>
-              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
-                <TableRow className="hover:bg-transparent">
-                  <SortableHead sortKey="id" sort={sort} params={params} className="w-20">ID</SortableHead>
-                  <SortableHead sortKey="name" sort={sort} params={params}>Name</SortableHead>
-                  <SortableHead sortKey="kind" sort={sort} params={params}>Key</SortableHead>
-                  <SortableHead sortKey="type" sort={sort} params={params}>Type</SortableHead>
-                  <SortableHead sortKey="level" sort={sort} params={params} align="right">Level</SortableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {/* ponytail: key on the MI symbol, not id -- defineObj.h reuses 56-59
-                    across two MI_* blocks so ids collide. Upgrade: dedupe the converter
-                    output so ids are unique, then key on m.id. */}
-                {page.rows.map((m) => (
-                  <TableRow key={m.kind}>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{m.id}</TableCell>
-                    <TableCell className="font-medium">{m.name}</TableCell>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{m.kind}</TableCell>
-                    <TableCell><Badge variant="secondary">{m.type}</Badge></TableCell>
-                    <TableCell className="text-right">{m.level > 0 ? m.level : "—"}</TableCell>
-                    <TableCell className="text-right">
-                      <Link href={`/resources/movers/${m.id}/edit`} className="text-xs text-primary hover:underline">Edit</Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                {filtered.length === 0 && (
-                  <EmptyRow colSpan={6}>
-                    <div className="flex flex-col items-center gap-1">
-                      <Bug className="h-5 w-5 opacity-40" />
-                      {search || type || minLevel || maxLevel ? "No movers match your filters" : "No mover data"}
-                    </div>
-                  </EmptyRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <Pagination {...page} params={params} unit="movers" />
-        </CardContent>
-      </Card>
+      {/* Keyed on the MI_* symbol, not id: defineObj.h reuses ids 56-59 across
+          two MI_* blocks, so ids collide but keys never do. */}
+      <ResourceTable
+        columns={COLUMNS}
+        page={page}
+        rowKey={(r) => r.key || String(r.id)}
+        sort={sort}
+        params={params}
+        unit="movers"
+        empty={{ icon: Bug, message: active ? "No movers match your filters" : "No mover data" }}
+      />
     </div>
   );
 }

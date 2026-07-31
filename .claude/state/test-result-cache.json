@@ -223,5 +223,6 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\queryEquip.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\cheer.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\trade.service.test.ts": "fail",
-  "H:\\flyff\\node-flyff\\packages\\social\\test\\services\\friend.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\social\\test\\services\\friend.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\admin\\test\\resource-rows.test.ts": "pass"
 }

@@ -48,7 +48,11 @@ export function Pagination({ page, totalPages, total, perPage, params, unit = "r
       className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-4 py-3 text-sm"
     >
       <p className="text-xs text-muted-foreground">
-        {total === 0 ? `No ${unit}` : `${from}–${to} of ${total} ${unit}`}
+        {/* Grouped digits, matching the page header's count — a footer reading
+            "of 5500" beside a header reading "5,500" looks like two figures. */}
+        {total === 0
+          ? `No ${unit}`
+          : `${from.toLocaleString()}–${to.toLocaleString()} of ${total.toLocaleString()} ${unit}`}
       </p>
 
       {totalPages > 1 && (

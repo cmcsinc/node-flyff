@@ -1,26 +1,20 @@
+import type * as React from "react";
 import { loadQuests } from "@/lib/resources";
 import { getResourceIndex } from "@/lib/resource-cache";
 import { npcNameForKey } from "@flyff/resources";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
-import { Pagination } from "@/components/pagination";
-import { EmptyRow } from "@/components/empty-state";
+import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
+import { IdCell, NameCell, SymbolCell, NameWithSymbol, NumCell, EditLink } from "@/components/resource-cells";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead,
-} from "@/components/ui/table";
-import { parseSort, sortRows } from "@/lib/sort";
-import { Pencil, ScrollText } from "lucide-react";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
+import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
+import { ScrollText } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = {
+interface SearchParams extends QueryParams {
   search?: string;
   npc?: string;
   minLevel?: string;
@@ -31,20 +25,69 @@ type SearchParams = {
   dir?: string;
 }
 
-/** First argument value of the named quest command, or "" when absent. */
+/**
+ * First argument value of the named quest command, or "" when absent.
+ *
+ * A quest arg is `{ value: string | number }` (a symbol like `MaFl_Rin`, or a
+ * level). Anything else in that slot is malformed data, and coercing it would
+ * print `[object Object]` into the table, so it degrades to "" instead.
+ */
 function firstArg(cmds: unknown[], name: string): string {
   const cmd = cmds.find(
     (c): c is Record<string, unknown> =>
       typeof c === "object" && c !== null && (c as Record<string, unknown>).cmd === name,
   );
   if (!cmd || !Array.isArray(cmd.args) || cmd.args.length === 0) return "";
-  const arg = cmd.args[0] as Record<string, unknown>;
-  return String(arg.value ?? "");
+  const value = (cmd.args[0] as Record<string, unknown>).value;
+  if (typeof value === "string") return value;
+  return typeof value === "number" ? String(value) : "";
+}
+
+interface QuestRow {
+  id: number;
+  title: string;
+  titleToken: string;
+  symbol: string;
+  level: number;
+  npcKey: string;
+  npcName: string;
 }
 
 const SORT_KEYS = ["id", "title", "symbol", "titleToken", "npcName", "level"] as const;
 
-export default async function QuestsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+const COLUMNS: readonly ResourceColumn<QuestRow>[] = [
+  { key: "id", header: "ID", sortable: true, className: "w-20", cell: (r) => <IdCell value={r.id} /> },
+  { key: "title", header: "Title", sortable: true, cell: (r) => <NameCell value={r.title} /> },
+  { key: "symbol", header: "Symbol", sortable: true, cell: (r) => <SymbolCell value={r.symbol} /> },
+  {
+    key: "titleToken",
+    header: "Title ID",
+    sortable: true,
+    // Trimmed of its shared prefix; the full token is in the tooltip.
+    cell: (r) => (
+      <SymbolCell value={r.titleToken.replace(/^IDS_PROPQUEST_INC_/, "")} title={r.titleToken} />
+    ),
+  },
+  {
+    key: "npcName",
+    header: "NPC",
+    sortable: true,
+    // Unresolved: show the key de-prefixed rather than the propMover model name,
+    // which is the shared model and wrong for NPCs.
+    cell: (r) => (
+      <NameWithSymbol name={r.npcName || r.npcKey.replace(/^[A-Za-z]{2,4}_/, "")} symbol={r.npcKey} />
+    ),
+  },
+  { key: "level", header: "Req Lv", sortable: true, align: "right", cell: (r) => <NumCell value={r.level} /> },
+  {
+    key: "actions",
+    header: "Actions",
+    align: "right",
+    cell: (r) => <EditLink href={`/resources/quests/${String(r.id)}/edit`} label={`quest ${String(r.id)}`} />,
+  },
+];
+
+export default async function QuestsPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
   const params = await searchParams;
   const search = params.search ?? "";
   const npc = params.npc ?? "";
@@ -57,37 +100,25 @@ export default async function QuestsPage({ searchParams }: { searchParams: Promi
   // resolves it through `propQuest.txt.txt` at load (`ProjectCmn.cpp:985`), and
   // so does the client. Resolve it here so the table shows what a player sees.
   // Of 474 quests: 464 resolve, 10 have a token whose table entry is an empty
-  // string, so the display falls back to `—` rather than a blank cell.
+  // string, so the display falls back to a dash rather than a blank cell.
   //
   // `SetCharacter` likewise stores a character.inc block key (`MaFl_Rin`), not a
   // name. `npcNameForKey` follows the C++ chain (`Project.cpp:3023` ->
-  // `Mover.cpp:1011`): block -> `SetName(IDS_*)` -> `character.txt.txt`. The
-  // propMover name is the shared *model* name and is wrong for NPCs, so an
-  // unresolved key falls back to the de-prefixed key, never the model name.
+  // `Mover.cpp:1011`): block -> `SetName(IDS_*)` -> `character.txt.txt`.
   const { questText, characterInc } = await getResourceIndex();
 
-  const quests: {
-    id: number;
-    title: string;
-    titleToken: string;
-    symbol: string;
-    level: number;
-    npcKey: string;
-    npcName: string;
-  }[] = [];
+  const quests: QuestRow[] = [];
   for (const doc of data) {
-    if (typeof doc !== "object" || doc === null) continue;
-    const v = doc as Record<string, unknown>;
-    const cmds = Array.isArray(v.commands) ? v.commands : [];
-    const id = Number(v.id ?? 0);
-    const symbol = typeof v.symbol === "string" ? v.symbol : `Quest ${String(id)}`;
-    const titleToken = typeof v.title === "string" ? v.title : "";
+    if (typeof doc !== "object") continue;
+    const cmds = Array.isArray(doc.commands) ? doc.commands : [];
+    const id = Number(doc.id ?? 0);
+    const titleToken = typeof doc.title === "string" ? doc.title : "";
     const npcKey = firstArg(cmds, "SetCharacter");
     quests.push({
       id,
       title: questText.get(titleToken) ?? "",
       titleToken,
-      symbol,
+      symbol: typeof doc.symbol === "string" ? doc.symbol : `Quest ${String(id)}`,
       level: Number(firstArg(cmds, "SetBeginCondLevel") || 0),
       npcKey,
       npcName: npcNameForKey(characterInc, npcKey) ?? "",
@@ -128,99 +159,63 @@ export default async function QuestsPage({ searchParams }: { searchParams: Promi
   // Sorting runs before paging so a column sort spans the whole result set,
   // not just the rows already on the current page.
   const sort = parseSort(params.sort, params.dir, SORT_KEYS);
-  const page = paginate(sortRows(filtered, sort, { npcName: (q) => q.npcName || q.npcKey }), parsePage(params.page), perPage);
+  const page = paginate(
+    sortRows(filtered, sort, { npcName: (q) => q.npcName || q.npcKey }),
+    parsePage(params.page),
+    perPage,
+  );
+  const active = Boolean(search || npc || minLevel || maxLevel);
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Quests" description={`${filtered.length} of ${quests.length} quest definitions`} />
+      <PageHeader
+        title="Quests"
+        description={`${filtered.length.toLocaleString()} of ${quests.length.toLocaleString()} quest definitions`}
+      />
 
-      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || npc || minLevel || maxLevel)}>
-        <SearchInput name="search" placeholder="Search title, symbol, token, or ID..." defaultValue={search} className="w-full sm:w-72" />
-        <Input name="npc" defaultValue={npc} placeholder="NPC name or key" aria-label="Filter by NPC name or character key" className="w-40" />
-        <Input name="minLevel" type="number" min={0} defaultValue={minLevel} placeholder="Min Lv" aria-label="Minimum level" className="w-24" />
-        <Input name="maxLevel" type="number" min={0} defaultValue={maxLevel} placeholder="Max Lv" aria-label="Maximum level" className="w-24" />
+      <FilterBar perPage={perPage} sort={sort} active={active}>
+        <SearchInput
+          name="search"
+          placeholder="Search title, symbol, token, or ID..."
+          defaultValue={search}
+          className="w-full sm:w-72"
+        />
+        <Input
+          name="npc"
+          defaultValue={npc}
+          placeholder="NPC name or key"
+          aria-label="Filter by NPC name or character key"
+          className="w-40"
+        />
+        <Input
+          name="minLevel"
+          type="number"
+          min={0}
+          defaultValue={minLevel}
+          placeholder="Min Lv"
+          aria-label="Minimum level"
+          className="w-24"
+        />
+        <Input
+          name="maxLevel"
+          type="number"
+          min={0}
+          defaultValue={maxLevel}
+          placeholder="Max Lv"
+          aria-label="Maximum level"
+          className="w-24"
+        />
       </FilterBar>
 
-      <Card>
-        <CardContent className="p-0">
-          <div className="overflow-auto">
-            <Table>
-              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
-                <TableRow className="hover:bg-transparent">
-                  <SortableHead sortKey="id" sort={sort} params={params} className="w-20">ID</SortableHead>
-                  <SortableHead sortKey="title" sort={sort} params={params}>Title</SortableHead>
-                  <SortableHead sortKey="symbol" sort={sort} params={params}>Symbol</SortableHead>
-                  <SortableHead sortKey="titleToken" sort={sort} params={params}>Title ID</SortableHead>
-                  <SortableHead sortKey="npcName" sort={sort} params={params}>NPC</SortableHead>
-                  <SortableHead sortKey="level" sort={sort} params={params} align="right">Level</SortableHead>
-                  <TableHead className="text-right">Edit</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {page.rows.map((q) => (
-                  <TableRow key={q.id}>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{q.id}</TableCell>
-                    <TableCell className="font-medium">
-                      {q.title || <span className="text-muted-foreground">—</span>}
-                    </TableCell>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{q.symbol}</TableCell>
-                    <TableCell className="font-mono text-xs text-muted-foreground">
-                      {/* Trimmed of its shared prefix; the full token is in the tooltip. */}
-                      {q.titleToken ? (
-                        <span title={q.titleToken}>{q.titleToken.replace(/^IDS_PROPQUEST_INC_/, "")}</span>
-                      ) : (
-                        "—"
-                      )}
-                    </TableCell>
-                    <TableCell className="text-xs">
-                      {q.npcKey ? (
-                        <>
-                          {q.npcName || (
-                            /* Unresolved: show the key de-prefixed rather than the
-                               propMover model name, which is wrong for NPCs. */
-                            <span className="text-muted-foreground">
-                              {q.npcKey.replace(/^[A-Za-z]{2,4}_/, "")}
-                            </span>
-                          )}
-                          <span className="ml-1 font-mono text-muted-foreground">({q.npcKey})</span>
-                        </>
-                      ) : (
-                        <span className="text-muted-foreground">—</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">{q.level > 0 ? <Badge variant="secondary">Lv. {q.level}</Badge> : "—"}</TableCell>
-                    <TableCell className="text-right">
-                      {/*
-                        Button styling on a Link, not a Button: this navigates, so
-                        it must stay an anchor (middle-click, open-in-new-tab,
-                        keyboard). `Button` renders a bare <button> with no
-                        asChild, so the variant classes are applied directly.
-                      */}
-                      <Link
-                        href={`/resources/quests/${String(q.id)}/edit`}
-                        aria-label={`Edit quest ${String(q.id)}`}
-                        className={buttonVariants({ variant: "outline", size: "sm" })}
-                      >
-                        <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
-                        Edit
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                {filtered.length === 0 && (
-                  <EmptyRow colSpan={7}>
-                    <div className="flex flex-col items-center gap-1">
-                      <ScrollText className="h-5 w-5 opacity-40" />
-                      {search || npc || minLevel || maxLevel ? "No quests match your filters" : "No quest data found"}
-                    </div>
-                  </EmptyRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <Pagination {...page} params={params} unit="quests" />
-        </CardContent>
-      </Card>
+      <ResourceTable
+        columns={COLUMNS}
+        page={page}
+        rowKey={(r) => r.id}
+        sort={sort}
+        params={params}
+        unit="quests"
+        empty={{ icon: ScrollText, message: active ? "No quests match your filters" : "No quest data found" }}
+      />
     </div>
   );
 }
