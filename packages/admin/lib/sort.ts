@@ -10,6 +10,16 @@
 
 export type SortDir = "asc" | "desc";
 
+/**
+ * A page's URL query string.
+ *
+ * The sort links, pagination links, and filter form all rebuild the query from
+ * whatever the page received, so they need to enumerate its keys. A page's own
+ * `SearchParams` should `extends QueryParams` — an interface without an index
+ * signature is not assignable to a `Record`, which is what those helpers take.
+ */
+export type QueryParams = Record<string, string | undefined>;
+
 export interface Sort<K extends string> {
   key: K | "";
   dir: SortDir;

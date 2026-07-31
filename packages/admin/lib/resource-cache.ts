@@ -30,14 +30,23 @@ export interface YamlDoc {
   doc: Record<string, unknown>;
 }
 
+/** `raw/` — the string tables and `.inc` sources the converters read from. */
+export const RAW_DIR = resolve(REPO_ROOT, "packages", "resources", "raw");
+
 interface CacheState {
   index: Promise<ResourceIndex> | null;
   /** Raw YAML docs per resource directory, keyed by directory name. */
   yamlDirs: Map<string, YamlDoc[]>;
+  /** `IDS_* -> text` string tables from `raw/`, keyed by file name. */
+  textTables: Map<string, Map<string, string>>;
 }
 
 const g = globalThis as typeof globalThis & { __flyffResourceCache?: CacheState };
-const cache: CacheState = (g.__flyffResourceCache ??= { index: null, yamlDirs: new Map() });
+const cache: CacheState = (g.__flyffResourceCache ??= {
+  index: null,
+  yamlDirs: new Map(),
+  textTables: new Map(),
+});
 
 /** The shared `ResourceIndex`. Loaded on first call, then reused forever. */
 export function getResourceIndex(): Promise<ResourceIndex> {
@@ -86,10 +95,43 @@ export function getYamlDir(dir: string): YamlDoc[] {
   return docs;
 }
 
+/**
+ * A tab-separated `IDS_* \t display text` string table from `raw/`, cached.
+ *
+ * The YAML resource files keep `name_id` / `nameId` tokens verbatim — the C++
+ * resolves them through these tables at load (`ProjectCmn.cpp:985`), and so
+ * must the panel, or the UI shows `IDS_PROPITEMETC_INC_000001` where a GM
+ * expects "Leaf Set". Files ship UTF-16LE with a BOM (same as
+ * `questText.loader`); a missing file yields an empty map so the caller falls
+ * back to the raw token rather than throwing.
+ */
+export function getTextTable(fileName: string): Map<string, string> {
+  const hit = cache.textTables.get(fileName);
+  if (hit) return hit;
+
+  const table = new Map<string, string>();
+  const path = join(RAW_DIR, fileName);
+  if (existsSync(path)) {
+    const buf = readFileSync(path);
+    const text =
+      buf[0] === 0xff && buf[1] === 0xfe ? buf.subarray(2).toString("utf16le") : buf.toString("utf8");
+    for (const line of text.split(/\r?\n/)) {
+      const tab = line.indexOf("\t");
+      if (tab <= 0) continue;
+      const key = line.slice(0, tab).trim();
+      if (key) table.set(key, line.slice(tab + 1).trim());
+    }
+  }
+
+  cache.textTables.set(fileName, table);
+  return table;
+}
+
 /** Drop all cached resource state. Call after any write to `resources/data`. */
 export function invalidateResourceCache(): void {
   cache.index = null;
   cache.yamlDirs.clear();
+  cache.textTables.clear();
 }
 
 /** Warm every cache up front so the first request pays no load cost. */

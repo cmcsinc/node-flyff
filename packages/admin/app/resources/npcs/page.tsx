@@ -1,65 +1,106 @@
+import type * as React from "react";
 import { loadNpcs, loadZoneRefs } from "@/lib/npcs";
-import { loadMovers } from "@/lib/resources";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { moverNamesById } from "@/lib/resource-rows";
+import { getResourceIndex } from "@/lib/resource-cache";
+import { npcNameForKey } from "@flyff/resources";
 import { Select } from "@/components/ui/select";
+import { buttonVariants } from "@/components/ui/button";
 import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
-import { Pagination } from "@/components/pagination";
-import { EmptyRow } from "@/components/empty-state";
+import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
+import { IdCell, NameWithSymbol, TagCell, PosCell, EditLink } from "@/components/resource-cells";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
-import { parseSort, sortRows } from "@/lib/sort";
+import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
 import Link from "next/link";
-import { Users } from "lucide-react";
+import { Plus, Users } from "lucide-react";
+import type { NpcRow } from "@/lib/npcs";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = {
+interface SearchParams extends QueryParams {
   search?: string;
   zone?: string;
   page?: string;
   perPage?: string;
   sort?: string;
   dir?: string;
-};
-
-/** mover id → display name, so the table shows "Dr. Estern" not just 220. */
-function moverNames(): Map<number, string> {
-  const names = new Map<number, string>();
-  for (const doc of loadMovers()) {
-    const entries = doc.movers;
-    if (!Array.isArray(entries)) continue;
-    for (const entry of entries) {
-      if (typeof entry !== "object" || entry === null) continue;
-      const v = entry as Record<string, unknown>;
-      names.set(Number(v.id ?? 0), String(v.name ?? v.key ?? "?"));
-    }
-  }
-  return names;
 }
 
-const SORT_KEYS = ["id", "zoneName", "characterKey", "mover", "x", "functions"] as const;
+/** A placement plus the two names resolved for display. */
+interface Row extends NpcRow {
+  /** character.inc `SetName` → `character.txt.txt`; the name a player sees. */
+  npcName: string;
+  /** propMover model name — the shared 3D model, NOT the NPC's own name. */
+  moverName: string;
+}
 
-export default async function NpcsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+const SORT_KEYS = ["id", "zoneName", "npcName", "characterKey", "moverName", "x"] as const;
+
+const COLUMNS: readonly ResourceColumn<Row>[] = [
+  { key: "id", header: "ID", sortable: true, className: "w-16", cell: (r) => <IdCell value={r.id} /> },
+  { key: "zoneName", header: "Zone", sortable: true, cell: (r) => <TagCell label={r.zoneName} /> },
+  {
+    key: "npcName",
+    header: "NPC",
+    sortable: true,
+    // The character key is the NPC's real identity — vendor stock, dialog, and
+    // outfit all hang off it, not off the placement. Shown under the name so a
+    // GM can cross-reference character.inc without a second page.
+    cell: (r) => <NameWithSymbol name={r.npcName} symbol={r.characterKey} />,
+  },
+  {
+    key: "moverName",
+    header: "Model",
+    sortable: true,
+    cell: (r) => <NameWithSymbol name={r.moverName} symbol={`#${String(r.moverId)}`} />,
+  },
+  {
+    key: "x",
+    header: "Position",
+    sortable: true,
+    cell: (r) => <PosCell x={r.x} y={r.y} z={r.z} />,
+  },
+  {
+    key: "actions",
+    header: "Actions",
+    align: "right",
+    cell: (r) => (
+      <EditLink
+        href={`/resources/npcs/${encodeURIComponent(r.ref)}/edit`}
+        label={`NPC ${r.characterKey || String(r.id)} in ${r.zoneName}`}
+      />
+    ),
+  },
+];
+
+export default async function NpcsPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
   const params = await searchParams;
   const search = params.search ?? "";
   const zone = params.zone ?? "";
   const perPage = parsePerPage(params.perPage);
 
-  const npcs = loadNpcs();
   const zones = loadZoneRefs();
-  const names = moverNames();
-  const needle = search.toLowerCase();
+  const models = moverNamesById();
+  const { characterInc } = await getResourceIndex();
 
+  // An NPC's display name comes from its character.inc block, never from the
+  // propMover row: the mover name is the shared model ("Cute Girl") and is wrong
+  // as an NPC label. Unresolved stays empty so the key shows instead.
+  const npcs: Row[] = loadNpcs().map((n) => ({
+    ...n,
+    npcName: npcNameForKey(characterInc, n.characterKey) ?? "",
+    moverName: models.get(n.moverId) ?? "",
+  }));
+
+  const needle = search.toLowerCase();
   const filtered = npcs.filter((n) => {
     if (zone && n.zoneId !== zone) return false;
     if (!needle) return true;
-    const mover = names.get(n.moverId) ?? "";
     return (
+      n.npcName.toLowerCase().includes(needle) ||
       n.characterKey.toLowerCase().includes(needle) ||
-      mover.toLowerCase().includes(needle) ||
+      n.moverName.toLowerCase().includes(needle) ||
       String(n.moverId).includes(needle) ||
       String(n.id).includes(needle)
     );
@@ -69,84 +110,58 @@ export default async function NpcsPage({ searchParams }: { searchParams: Promise
   // Sorting runs before paging so a column sort spans the whole result set,
   // not just the rows already on the current page.
   const sort = parseSort(params.sort, params.dir, SORT_KEYS);
-  const page = paginate(sortRows(filtered, sort, { mover: (n) => names.get(n.moverId) ?? "" }), parsePage(params.page), perPage);
+  const page = paginate(
+    sortRows(filtered, sort, { npcName: (n) => n.npcName || n.characterKey }),
+    parsePage(params.page),
+    perPage,
+  );
   const newZone = zone || zones[0]?.id;
+  const active = Boolean(search || zone);
 
   return (
     <div className="space-y-6">
       <PageHeader
         title="NPCs"
-        description={`${filtered.length} of ${npcs.length} placements across ${zones.length} zones`}
+        description={`${filtered.length.toLocaleString()} of ${npcs.length.toLocaleString()} placements across ${String(zones.length)} zones`}
         actions={
           newZone ? (
             <Link
               href={`/resources/npcs/${encodeURIComponent(`${newZone}:new`)}/edit`}
-              className="rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:opacity-90"
+              className={buttonVariants({ size: "sm" })}
             >
+              <Plus className="h-3.5 w-3.5" aria-hidden="true" />
               Add NPC
             </Link>
           ) : undefined
         }
       />
 
-      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || zone)}>
-        <SearchInput name="search" placeholder="Search by character key, mover, or ID..." defaultValue={search} className="w-full sm:w-80" />
+      <FilterBar perPage={perPage} sort={sort} active={active}>
+        <SearchInput
+          name="search"
+          placeholder="Search by NPC name, character key, or ID..."
+          defaultValue={search}
+          className="w-full sm:w-80"
+        />
         <Select name="zone" defaultValue={zone} className="w-44" aria-label="Filter by zone">
           <option value="">All zones</option>
           {zones.map((z) => (
-            <option key={z.id} value={z.id}>{z.name}</option>
+            <option key={z.id} value={z.id}>
+              {z.name}
+            </option>
           ))}
         </Select>
       </FilterBar>
 
-      <Card>
-        <CardContent className="p-0">
-          <div className="overflow-auto">
-            <Table>
-              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
-                <TableRow className="hover:bg-transparent">
-                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">ID</SortableHead>
-                  <SortableHead sortKey="zoneName" sort={sort} params={params}>Zone</SortableHead>
-                  <SortableHead sortKey="characterKey" sort={sort} params={params}>Character Key</SortableHead>
-                  <SortableHead sortKey="mover" sort={sort} params={params}>Mover</SortableHead>
-                  <SortableHead sortKey="x" sort={sort} params={params}>Position</SortableHead>
-                  <SortableHead sortKey="functions" sort={sort} params={params} align="right">Functions</SortableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {page.rows.map((n) => (
-                  <TableRow key={n.ref}>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{n.id}</TableCell>
-                    <TableCell><Badge variant="secondary">{n.zoneName}</Badge></TableCell>
-                    <TableCell className="font-medium">{n.characterKey || "—"}</TableCell>
-                    <TableCell className="text-xs">
-                      {names.get(n.moverId) ?? "?"}
-                      <span className="ml-1 font-mono text-muted-foreground">#{n.moverId}</span>
-                    </TableCell>
-                    <TableCell className="font-mono text-xs text-muted-foreground">
-                      {n.x.toFixed(0)}, {n.y.toFixed(0)}, {n.z.toFixed(0)}
-                    </TableCell>
-                    <TableCell className="text-right">{n.functions}</TableCell>
-                    <TableCell className="text-right">
-                      <Link href={`/resources/npcs/${encodeURIComponent(n.ref)}/edit`} className="text-xs text-primary hover:underline">Edit</Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                {filtered.length === 0 && (
-                  <EmptyRow colSpan={7}>
-                    <div className="flex flex-col items-center gap-1">
-                      <Users className="h-5 w-5 opacity-40" />
-                      {search || zone ? "No NPCs match your filters" : "No NPC placements"}
-                    </div>
-                  </EmptyRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <Pagination {...page} params={params} unit="NPCs" />
-        </CardContent>
-      </Card>
+      <ResourceTable
+        columns={COLUMNS}
+        page={page}
+        rowKey={(r) => r.ref}
+        sort={sort}
+        params={params}
+        unit="NPCs"
+        empty={{ icon: Users, message: active ? "No NPCs match your filters" : "No NPC placements" }}
+      />
     </div>
   );
 }
