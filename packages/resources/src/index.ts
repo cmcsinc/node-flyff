@@ -259,6 +259,14 @@ export {
 } from './writers/propQuest.writer';
 export { loadQuestSymbols } from './writers/questSymbols';
 export {
+  parseResArchive,
+  readResMember,
+  repackResArchive,
+  writePatchedResArchive,
+  type ResArchive,
+  type ResEntry,
+} from './writers/resArchive.writer';
+export {
   loadSetItems,
   type SetItemIndex,
   type SetItemDef,
