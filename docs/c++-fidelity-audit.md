@@ -236,6 +236,70 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 
 ### M18–M21. (see NPC/quest and combat sections above)
 
+### M-SOCIAL1. Friend handlers trust a client-supplied actor id (HARDENED, deliberate)
+- **File**: `packages/social/src/handlers/friend.handler.ts`
+- **C++** (`WORLDSERVER/DPSrvr.cpp:1526/1578/1613`): `OnAddFriendReqest`,
+  `OnAddFriendNameReqest` and `OnAddFriendCancel` all resolve the ACTOR via
+  `g_UserMng.GetUserByPlayerID( uLeaderid )` — the id comes from the packet body,
+  so any client can act as another player (send invites, cancel someone else's
+  dialog). `OnAddFriend` / `GETFRIENDSTATE` / `SETFRIENDSTATE` / `REMOVEFRIEND` on
+  the core server read the id and then correctly ignore it, using the socket.
+- **TS**: actor is always resolved from the socket session; the packet's id is
+  advisory and a mismatch is logged at `warn`. Rule 03.
+- **Impact**: none on legitimate clients; closes a spoof.
+
+### M-SOCIAL2. SETFRIENDSTATE accepts an unvalidated state in C++ (CLAMPED)
+- **File**: `packages/social/src/services/friend.service.ts` (`clampState`)
+- **C++** (`CORESERVER/DPCacheSrvr.cpp:2086`): `ar >> state` then
+  `m_RTMessenger.SetState( state )` with no range check, so an arbitrary int is
+  stored and relayed to every friend.
+- **TS**: clamped to `0 <= state < MAX_FRIENDSTAT` (12), out-of-range falls back
+  to `FRS_ONLINE`.
+
+### M-SOCIAL3. Trade stakes are re-validated at commit (SAFER, deliberate)
+- **File**: `packages/inventory/src/services/trade.service.ts` (`collectOutgoing`)
+- **C++** (`_Common/MoverItem.cpp:126 TradeConsent`): staged items are raw
+  `CItemBase*` pointers plus a `SetExtra(count)` marker; the commit trusts the
+  pointer still being valid and the count still being available.
+- **TS**: stages `{slot, objid, itemId, count}` and re-reads the live bag at
+  commit; a mismatch (slot emptied, item swapped, count shrunk) aborts with
+  `TRADE_CONFIRM_ERROR` instead of materialising an item that no longer exists.
+- **Impact**: no change on the success path; removes a dupe vector.
+
+### M-SOCIAL4. TRADEPUTGOLD re-stake refunds the prior stake (BUGFIX vs C++)
+- **File**: `packages/inventory/src/services/trade.service.ts` (`putGold`)
+- **C++** (`WORLDSERVER/DPSrvr.cpp:8827`): `TradeSetGold( nGold )` REPLACES the
+  staked amount but `AddGold( -nGold )` debits the new amount again — staking
+  twice silently destroys the first stake.
+- **TS**: refunds the previous stake before debiting the new one. Identical for
+  the normal single-stake flow.
+
+### M-SOCIAL5. Campus tiers collapsed; no DB-server round-trip
+- **File**: `packages/social/src/services/campus.service.ts`
+- **C++**: the world server performs ZERO local campus mutation — every
+  membership/point change is `g_dpDBClient.Send*` and only applied when the DB
+  server broadcasts `PACKETTYPE_CAMPUS_ADD_MEMBER` / `REMOVE_MEMBER` /
+  `UPDATE_POINT` back. `PACKETTYPE_CAMPUS_ALL` seeds the world at boot.
+- **TS**: single process, so the service writes to the DB and then does what the
+  broadcast handler would have done, preserving the persist-then-notify order.
+  `CAMPUS_ALL` becomes `CampusService.bootstrap()`.
+- Not a behaviour divergence, but the reason the DB-driven opcodes are absent
+  from the dispatcher.
+
+### M-SOCIAL6. QUERYEQUIP clamps nParts (client-side OOB in C++)
+- **File**: `packages/world-server/src/services/queryEquip.service.ts`
+- **C++** (`WORLDSERVER/User.cpp:2635` + `Neuz/DPClient.cpp:15781`): the server
+  writes the loop index unbounded and the client indexes
+  `aEquipInfoAdd[nParts]` with the wire value — a hostile server could write past
+  a client stack array.
+- **TS**: only emits `0 <= nParts < MAX_HUMAN_PARTS`, guaranteed by the loop bound.
+
+### M-SOCIAL7. Awakening / piercing / pet-vis unmodelled in QUERYEQUIP
+- **File**: `packages/world-server/src/net/snapshot/queryEquip.serializer.ts`
+- `GetRandomOptItemId()` goes out as 0 and all three `CPiercing` counts as 0 —
+  a valid empty round-trip. Marked `ponytail:`; wire up when piercing/awakening
+  data exists.
+
 ---
 
 ## LOW / Verified Correct
