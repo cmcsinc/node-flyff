@@ -39,10 +39,10 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <div className="grid w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl md:grid-cols-2">
+      <div className="grid w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-overlay md:grid-cols-2">
         {/* Brand panel */}
-        <div className="relative hidden flex-col justify-between bg-gradient-to-br from-primary/20 via-card to-background p-10 md:flex">
-          <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(circle_at_30%_20%,var(--color-primary),transparent_60%)]" />
+        <div className="relative hidden flex-col justify-between bg-gradient-to-br from-accent via-card to-background p-10 md:flex">
+          <div className="pointer-events-none absolute inset-0 opacity-20 [background:radial-gradient(circle_at_30%_20%,var(--color-primary),transparent_60%)]" />
           <div className="relative flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 glow-primary">
               <Sword className="h-6 w-6 text-primary" />
@@ -82,7 +82,7 @@ export default function LoginPage() {
             {error && (
               <div
                 role="alert"
-                className="flex items-center gap-2 rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2.5 text-sm text-red-400"
+                className="flex items-center gap-2 rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2.5 text-sm text-destructive"
               >
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 <span>{error}</span>

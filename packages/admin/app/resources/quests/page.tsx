@@ -11,8 +11,9 @@ import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead,
 } from "@/components/ui/table";
+import { parseSort, sortRows } from "@/lib/sort";
 import { Pencil, ScrollText } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
@@ -26,6 +27,8 @@ type SearchParams = {
   maxLevel?: string;
   page?: string;
   perPage?: string;
+  sort?: string;
+  dir?: string;
 }
 
 /** First argument value of the named quest command, or "" when absent. */
@@ -38,6 +41,8 @@ function firstArg(cmds: unknown[], name: string): string {
   const arg = cmd.args[0] as Record<string, unknown>;
   return String(arg.value ?? "");
 }
+
+const SORT_KEYS = ["id", "title", "symbol", "titleToken", "npcName", "level"] as const;
 
 export default async function QuestsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
@@ -120,13 +125,16 @@ export default async function QuestsPage({ searchParams }: { searchParams: Promi
     return true;
   });
 
-  const page = paginate(filtered, parsePage(params.page), perPage);
+  // Sorting runs before paging so a column sort spans the whole result set,
+  // not just the rows already on the current page.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const page = paginate(sortRows(filtered, sort, { npcName: (q) => q.npcName || q.npcKey }), parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
       <PageHeader title="Quests" description={`${filtered.length} of ${quests.length} quest definitions`} />
 
-      <FilterBar perPage={perPage} active={Boolean(search || npc || minLevel || maxLevel)}>
+      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || npc || minLevel || maxLevel)}>
         <SearchInput name="search" placeholder="Search title, symbol, token, or ID..." defaultValue={search} className="w-full sm:w-72" />
         <Input name="npc" defaultValue={npc} placeholder="NPC name or key" aria-label="Filter by NPC name or character key" className="w-40" />
         <Input name="minLevel" type="number" min={0} defaultValue={minLevel} placeholder="Min Lv" aria-label="Minimum level" className="w-24" />
@@ -137,14 +145,14 @@ export default async function QuestsPage({ searchParams }: { searchParams: Promi
         <CardContent className="p-0">
           <div className="overflow-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead className="w-20">ID</TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Symbol</TableHead>
-                  <TableHead>Title ID</TableHead>
-                  <TableHead>NPC</TableHead>
-                  <TableHead className="text-right">Level</TableHead>
+              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-20">ID</SortableHead>
+                  <SortableHead sortKey="title" sort={sort} params={params}>Title</SortableHead>
+                  <SortableHead sortKey="symbol" sort={sort} params={params}>Symbol</SortableHead>
+                  <SortableHead sortKey="titleToken" sort={sort} params={params}>Title ID</SortableHead>
+                  <SortableHead sortKey="npcName" sort={sort} params={params}>NPC</SortableHead>
+                  <SortableHead sortKey="level" sort={sort} params={params} align="right">Level</SortableHead>
                   <TableHead className="text-right">Edit</TableHead>
                 </TableRow>
               </TableHeader>

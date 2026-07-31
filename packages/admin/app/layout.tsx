@@ -8,7 +8,8 @@ import {
   SidebarContainer,
 } from "@/components/app-shell";
 import { auth } from "@/lib/auth";
-import { Toaster } from "sonner";
+import { ThemedToaster } from "@/components/themed-toaster";
+import { ThemeToggle, THEME_INIT_SCRIPT } from "@/components/theme-toggle";
 import { LogOut } from "lucide-react";
 import "./globals.css";
 
@@ -43,7 +44,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const session = await auth();
 
   return (
-    <html lang="en" className={`dark ${displayFont.variable} ${bodyFont.variable}`}>
+    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Applies the stored theme before first paint — no flash of wrong palette. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="min-h-screen bg-background antialiased">
         <AppShellProvider>
           {session ? (
@@ -65,9 +70,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   <div className="flex h-14 items-center gap-3 px-4 md:px-8">
                     <MobileNavToggle />
                     <div className="flex-1" />
+                    <ThemeToggle />
                     {session.user && (
                       <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2 rounded-full border border-border bg-muted/50 py-1 pl-1 pr-3">
+                        <div className="flex items-center gap-2 rounded-full border border-border bg-muted/60 py-1 pl-1 pr-3">
                           <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold text-primary">
                             {initials(session.user.name)}
                           </span>
@@ -93,9 +99,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </main>
             </div>
           ) : (
-            children
+            <>
+              {/* Signed-out (login) pages have no header, so the switch floats. */}
+              <ThemeToggle className="fixed right-4 top-4 z-50" />
+              {children}
+            </>
           )}
-          <Toaster position="top-right" theme="dark" richColors closeButton />
+          <ThemedToaster />
         </AppShellProvider>
       </body>
     </html>

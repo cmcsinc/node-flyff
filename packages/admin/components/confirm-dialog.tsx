@@ -87,10 +87,10 @@ export function ConfirmDialog({
       aria-describedby="confirm-desc"
     >
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-[fade-in-up_0.15s_ease-out]"
+        className="absolute inset-0 bg-scrim backdrop-blur-sm animate-[fade-in-up_0.15s_ease-out]"
         onClick={() => !pending && onOpenChange(false)}
       />
-      <div className="relative w-full max-w-md rounded-xl border border-border bg-popover p-6 shadow-2xl animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]">
+      <div className="relative w-full max-w-md rounded-xl border border-border bg-popover p-6 shadow-overlay animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]">
         <h2 id="confirm-title" className="text-lg font-semibold tracking-tight">
           {title}
         </h2>

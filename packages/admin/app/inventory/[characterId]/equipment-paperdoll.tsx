@@ -108,7 +108,7 @@ export function EquipmentPaperDoll({
                 onRemove(item.slot, item);
               }}
               aria-label={`Remove ${item.name}`}
-              className="absolute -right-1 -top-1 hidden h-3.5 w-3.5 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-white shadow group-hover:flex hover:bg-destructive/80"
+              className="absolute -right-1 -top-1 hidden h-3.5 w-3.5 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-destructive-foreground shadow-card group-hover:flex hover:bg-destructive/80"
             >
               ×
             </button>

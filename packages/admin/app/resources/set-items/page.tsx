@@ -8,7 +8,8 @@ import { FilterBar } from "@/components/filter-bar";
 import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
+import { parseSort, sortRows } from "@/lib/sort";
 import { Gem } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +20,11 @@ type SearchParams = {
   minPieces?: string;
   page?: string;
   perPage?: string;
+  sort?: string;
+  dir?: string;
 }
+
+const SORT_KEYS = ["id", "name", "pieces", "bonuses"] as const;
 
 export default async function SetItemsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
@@ -61,13 +66,16 @@ export default async function SetItemsPage({ searchParams }: { searchParams: Pro
     return true;
   });
 
-  const page = paginate(filtered, parsePage(params.page), perPage);
+  // Sorting runs before paging so a column sort spans the whole result set,
+  // not just the rows already on the current page.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const page = paginate(sortRows(filtered, sort), parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
       <PageHeader title="Set Items" description={`${filtered.length} of ${sets.length} set definitions`} />
 
-      <FilterBar perPage={perPage} active={Boolean(search || itemId || minPieces)}>
+      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || itemId || minPieces)}>
         <SearchInput name="search" placeholder="Search by name or ID..." defaultValue={search} className="w-full sm:w-72" />
         <Input name="itemId" type="number" min={0} defaultValue={itemId} placeholder="Contains item ID" aria-label="Filter by member item ID" className="w-40" />
         <Input name="minPieces" type="number" min={0} defaultValue={minPieces} placeholder="Min pieces" aria-label="Minimum piece count" className="w-32" />
@@ -77,12 +85,12 @@ export default async function SetItemsPage({ searchParams }: { searchParams: Pro
         <CardContent className="p-0">
           <div className="overflow-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead className="w-20">ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="text-right">Pieces</TableHead>
-                  <TableHead className="text-right">Bonuses</TableHead>
+              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-20">ID</SortableHead>
+                  <SortableHead sortKey="name" sort={sort} params={params}>Name</SortableHead>
+                  <SortableHead sortKey="pieces" sort={sort} params={params} align="right">Pieces</SortableHead>
+                  <SortableHead sortKey="bonuses" sort={sort} params={params} align="right">Bonuses</SortableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

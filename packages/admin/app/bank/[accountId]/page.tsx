@@ -2,15 +2,10 @@ import { db } from "@/lib/db";
 import { accounts, bank, bankItems } from "@/../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/page-header";
-import { EmptyRow } from "@/components/empty-state";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
-import { formatNumber } from "@/lib/utils";
+import { BankItemsTable } from "./bank-items-table";
 import { BankGoldEditor } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -69,31 +64,7 @@ export default async function BankPage({ params }: { params: Promise<{ accountId
           <TabsContent key={t} value={`tab${t}`}>
             <Card>
               <CardContent className="p-0">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Slot</TableHead>
-                      <TableHead>Item ID</TableHead>
-                      <TableHead>Qty</TableHead>
-                      <TableHead>Refine</TableHead>
-                      <TableHead>Durability</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {tabItems[t].map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell className="font-mono text-xs">{item.slot}</TableCell>
-                        <TableCell className="font-medium">{item.itemId}</TableCell>
-                        <TableCell>{item.quantity}</TableCell>
-                        <TableCell>{item.refine > 0 ? `+${item.refine}` : "—"}</TableCell>
-                        <TableCell>{item.durability === -1 ? "∞" : item.durability}</TableCell>
-                      </TableRow>
-                    ))}
-                    {tabItems[t].length === 0 && (
-                      <EmptyRow colSpan={5}>Empty tab</EmptyRow>
-                    )}
-                  </TableBody>
-                </Table>
+                <BankItemsTable rows={tabItems[t]} />
               </CardContent>
             </Card>
           </TabsContent>

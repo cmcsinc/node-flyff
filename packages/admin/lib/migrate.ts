@@ -20,6 +20,8 @@ interface Migration {
   readonly column?: readonly [string, string];
   /** GATE: `hasTable(name)` — CREATE TABLE migrations. */
   readonly table?: string;
+  /** GATE (inverted): done when the column is ABSENT — DROP COLUMN migrations. */
+  readonly dropColumn?: readonly [string, string];
   readonly sql: string[];
 }
 
@@ -271,6 +273,12 @@ const MIGRATIONS: readonly Migration[] = [
   { column: ['character_buffs', 'expires_at_ms'], sql: [
     `ALTER TABLE character_buffs ADD COLUMN expires_at_ms INTEGER NOT NULL DEFAULT 0`,
   ]},
+  // 016b — drop the superseded total_ms. DBs created before 016 kept it NOT NULL
+  // with no default, so every insert from the new (expires_at_ms-only) write path
+  // fails with SQLITE_CONSTRAINT_NOTNULL.
+  { dropColumn: ['character_buffs', 'total_ms'], sql: [
+    `ALTER TABLE character_buffs DROP COLUMN total_ms`,
+  ]},
   // 017 — presence + mail (mirrors database/src/migrations/017_presence_and_mail.ts)
   { table: 'online_players', sql: [
     `CREATE TABLE IF NOT EXISTS online_players (
@@ -343,14 +351,18 @@ function hasColumn(db: Database.Database, table: string, col: string): boolean {
  */
 export function runMigrations(sqlite: Database.Database): void {
   for (const m of MIGRATIONS) {
-    const done = m.column
-      ? hasColumn(sqlite, m.column[0], m.column[1])
-      : hasTable(sqlite, m.table!);
+    const done = m.dropColumn
+      ? !hasColumn(sqlite, m.dropColumn[0], m.dropColumn[1])
+      : m.column
+        ? hasColumn(sqlite, m.column[0], m.column[1])
+        : hasTable(sqlite, m.table!);
     if (done) continue;
 
-    const label = m.column
-      ? `${m.column[0]}.${m.column[1]}`
-      : m.table!;
+    const label = m.dropColumn
+      ? `${m.dropColumn[0]}.${m.dropColumn[1]} (drop)`
+      : m.column
+        ? `${m.column[0]}.${m.column[1]}`
+        : m.table!;
     console.log(`[admin/migrate] ${label} missing — applying migration`);
     for (const stmt of m.sql) {
       sqlite.exec(stmt);

@@ -314,7 +314,7 @@ function LogViewer({ id }: { id: string | null }) {
           role="log"
           aria-live="polite"
           aria-label="Server log output"
-          className="h-[26rem] overflow-auto rounded-lg border border-border bg-black/40 p-3 font-mono text-[11px] leading-relaxed"
+          className="h-[26rem] overflow-auto rounded-lg border border-border bg-muted/60 p-3 font-mono text-[11px] leading-relaxed"
         >
           {lines.length === 0 ? (
             <p className="text-muted-foreground">

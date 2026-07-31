@@ -1,56 +1,181 @@
 @import "tailwindcss";
 
-@theme {
-  /* ── Surfaces: deep blue-navy dark ─────────────────────────── */
-  --color-background: #0a0e1a;
-  --color-foreground: #e7ecf5;
+/* `dark:` utilities key off a class on <html>, set by ThemeToggle plus the
+   no-flash script in layout.tsx. Without this Tailwind v4 defaults to the OS
+   media query, which would ignore an explicit user choice. */
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --color-card: #111827;
-  --color-card-foreground: #e7ecf5;
+/* ── Design tokens ──────────────────────────────────────────────────────────
+   Two layers, deliberately:
 
-  --color-popover: #0f1626;
-  --color-popover-foreground: #e7ecf5;
+   1. `:root` / `.dark` hold the raw values. Light is the base; `.dark` only
+      re-points the same names.
+   2. `@theme inline` maps them into Tailwind's namespace. `inline` is load
+      bearing — without it Tailwind resolves each token to its literal value at
+      build time, so `bg-primary/15` and `shadow-card` would bake the LIGHT
+      colour into the class and never invert. With `inline` the utility emits
+      `var(--p-primary)`, which the `.dark` block can actually override. */
+:root {
+  /* Surfaces */
+  --p-background: #f6f8fc;
+  --p-foreground: #0e1626;
 
-  /* ── Signature accent (blue) ───────────────────────────────── */
-  --color-primary: #3b82f6;
-  --color-primary-foreground: #ffffff;
+  --p-card: #ffffff;
+  --p-card-foreground: #0e1626;
 
-  --color-secondary: #1a2236;
-  --color-secondary-foreground: #e7ecf5;
+  --p-popover: #ffffff;
+  --p-popover-foreground: #0e1626;
 
-  --color-muted: #1a2236;
-  --color-muted-foreground: #93a0b8;
+  /* Signature accent (blue) */
+  --p-primary: #2563eb;
+  --p-primary-foreground: #ffffff;
 
-  --color-accent: #1e3a8a;
-  --color-accent-foreground: #e7ecf5;
+  --p-secondary: #e7edf8;
+  --p-secondary-foreground: #1b2740;
 
-  /* ── Semantic status ───────────────────────────────────────── */
-  --color-success: #22c55e;
-  --color-success-foreground: #052e16;
-  --color-warning: #f59e0b;
-  --color-warning-foreground: #1a1300;
-  --color-gold: #f5b042;
-  --color-gold-foreground: #1a1300;
-  --color-destructive: #dc2626;
-  --color-destructive-foreground: #ffffff;
+  --p-muted: #eaeff7;
+  --p-muted-foreground: #55637b;
 
-  --color-border: #1f2a40;
-  --color-input: #1f2a40;
-  --color-ring: #3b82f6;
+  --p-accent: #dce7fb;
+  --p-accent-foreground: #1a3a86;
 
-  /* ── Sidebar ───────────────────────────────────────────────── */
-  --color-sidebar-background: #0c1220;
-  --color-sidebar-foreground: #e7ecf5;
-  --color-sidebar-primary: #3b82f6;
-  --color-sidebar-primary-foreground: #ffffff;
-  --color-sidebar-accent: #1e3a8a;
-  --color-sidebar-accent-foreground: #e7ecf5;
-  --color-sidebar-border: #1f2a40;
-  --color-sidebar-ring: #3b82f6;
+  /* Semantic status — each ≥4.5:1 against --p-card in light mode */
+  --p-success: #15803d;
+  --p-success-foreground: #ffffff;
+  --p-warning: #b45309;
+  --p-warning-foreground: #ffffff;
+  --p-gold: #a16207;
+  --p-gold-foreground: #ffffff;
+  --p-destructive: #dc2626;
+  --p-destructive-foreground: #ffffff;
+
+  /* `border` is a decorative separator (exempt from 1.4.11); `input` is a
+     control boundary and so clears 3:1 against the card. */
+  --p-border: #dbe3ef;
+  --p-input: #7f90ad;
+  --p-ring: #2563eb;
+
+  /* Sidebar */
+  --p-sidebar-background: #ffffff;
+  --p-sidebar-foreground: #0e1626;
+  --p-sidebar-primary: #2563eb;
+  --p-sidebar-primary-foreground: #ffffff;
+  --p-sidebar-accent: #dce7fb;
+  --p-sidebar-accent-foreground: #1a3a86;
+  --p-sidebar-border: #dbe3ef;
+  --p-sidebar-ring: #2563eb;
+
+  /* Surface depth + modal scrim. Components use these instead of
+     `shadow-black/20`, which is invisible in light and crushing in dark. */
+  --sd-card: 0 1px 2px rgba(14, 22, 38, 0.06), 0 1px 3px rgba(14, 22, 38, 0.04);
+  --sd-raised: 0 4px 12px -2px rgba(14, 22, 38, 0.1);
+  --sd-overlay: 0 24px 48px -12px rgba(14, 22, 38, 0.25);
+  --p-scrim: rgba(14, 22, 38, 0.45);
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────────────────
+   Deep blue-navy, same hue family as light so the brand reads identical. */
+.dark {
+  --p-background: #0a0e1a;
+  --p-foreground: #e7ecf5;
+
+  --p-card: #111827;
+  --p-card-foreground: #e7ecf5;
+
+  --p-popover: #0f1626;
+  --p-popover-foreground: #e7ecf5;
+
+  --p-primary: #4d8bf8;
+  --p-primary-foreground: #06122b;
+
+  --p-secondary: #1a2236;
+  --p-secondary-foreground: #e7ecf5;
+
+  --p-muted: #1a2236;
+  --p-muted-foreground: #9aa8c0;
+
+  --p-accent: #1e3a8a;
+  --p-accent-foreground: #dce7fb;
+
+  --p-success: #34d399;
+  --p-success-foreground: #052e16;
+  --p-warning: #fbbf24;
+  --p-warning-foreground: #1a1300;
+  --p-gold: #f5b042;
+  --p-gold-foreground: #1a1300;
+  --p-destructive: #f87171;
+  --p-destructive-foreground: #2a0606;
+
+  --p-border: #1f2a40;
+  --p-input: #55658c;
+  --p-ring: #4d8bf8;
+
+  --p-sidebar-background: #0c1220;
+  --p-sidebar-foreground: #e7ecf5;
+  --p-sidebar-primary: #4d8bf8;
+  --p-sidebar-primary-foreground: #06122b;
+  --p-sidebar-accent: #1e3a8a;
+  --p-sidebar-accent-foreground: #dce7fb;
+  --p-sidebar-border: #1f2a40;
+  --p-sidebar-ring: #4d8bf8;
+
+  --sd-card: 0 1px 0 rgba(255, 255, 255, 0.03), 0 8px 20px -12px rgba(0, 0, 0, 0.7);
+  --sd-raised: 0 12px 28px -12px rgba(0, 0, 0, 0.8);
+  --sd-overlay: 0 32px 64px -16px rgba(0, 0, 0, 0.85);
+  --p-scrim: rgba(3, 6, 14, 0.7);
+}
+
+@theme inline {
+  --color-background: var(--p-background);
+  --color-foreground: var(--p-foreground);
+
+  --color-card: var(--p-card);
+  --color-card-foreground: var(--p-card-foreground);
+
+  --color-popover: var(--p-popover);
+  --color-popover-foreground: var(--p-popover-foreground);
+
+  --color-primary: var(--p-primary);
+  --color-primary-foreground: var(--p-primary-foreground);
+
+  --color-secondary: var(--p-secondary);
+  --color-secondary-foreground: var(--p-secondary-foreground);
+
+  --color-muted: var(--p-muted);
+  --color-muted-foreground: var(--p-muted-foreground);
+
+  --color-accent: var(--p-accent);
+  --color-accent-foreground: var(--p-accent-foreground);
+
+  --color-success: var(--p-success);
+  --color-success-foreground: var(--p-success-foreground);
+  --color-warning: var(--p-warning);
+  --color-warning-foreground: var(--p-warning-foreground);
+  --color-gold: var(--p-gold);
+  --color-gold-foreground: var(--p-gold-foreground);
+  --color-destructive: var(--p-destructive);
+  --color-destructive-foreground: var(--p-destructive-foreground);
+
+  --color-border: var(--p-border);
+  --color-input: var(--p-input);
+  --color-ring: var(--p-ring);
+  --color-scrim: var(--p-scrim);
+
+  --color-sidebar-background: var(--p-sidebar-background);
+  --color-sidebar-foreground: var(--p-sidebar-foreground);
+  --color-sidebar-primary: var(--p-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--p-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--p-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--p-sidebar-accent-foreground);
+  --color-sidebar-border: var(--p-sidebar-border);
+  --color-sidebar-ring: var(--p-sidebar-ring);
+
+  --shadow-card: var(--sd-card);
+  --shadow-raised: var(--sd-raised);
+  --shadow-overlay: var(--sd-overlay);
 
   --radius: 0.625rem;
 
-  /* ── Animations ────────────────────────────────────────────── */
   --animate-fade-in-up: fade-in-up 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
   --animate-count-pop: count-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -83,11 +208,11 @@
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-success) 50%, transparent);
   }
   50% {
     opacity: 0.8;
-    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-success) 0%, transparent);
   }
 }
 
@@ -103,6 +228,12 @@
 @layer base {
   * {
     @apply border-border;
+  }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
   }
   body {
     @apply bg-background text-foreground;
@@ -136,11 +267,11 @@
 
   /* Brand-tinted selection */
   ::selection {
-    background-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
     color: var(--color-foreground);
   }
 
-  /* Refined dark scrollbars */
+  /* Scrollbars follow the token palette, so they invert with the theme. */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -149,7 +280,7 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: var(--color-border);
+    background-color: var(--color-input);
     border-radius: 9999px;
     border: 2px solid transparent;
     background-clip: content-box;
@@ -168,8 +299,8 @@
   /* Accent glow for focused/active/primary elements */
   .glow-primary {
     box-shadow:
-      0 0 0 1px var(--color-primary),
-      0 0 16px -2px color-mix(in srgb, var(--color-primary) 50%, transparent);
+      0 0 0 1px color-mix(in srgb, var(--color-primary) 70%, transparent),
+      0 0 16px -4px color-mix(in srgb, var(--color-primary) 45%, transparent);
   }
   /* Gradient top border for stat/feature cards */
   .card-top-accent {
@@ -181,32 +312,25 @@
     inset: 0 0 auto 0;
     height: 2px;
     border-radius: inherit;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      var(--color-primary),
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
     opacity: 0.7;
   }
   /* Subtle gradient sheen for primary buttons */
   .btn-sheen {
     background-image: linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--color-primary) 100%, white 12%),
+      color-mix(in srgb, var(--color-primary) 90%, white),
       var(--color-primary)
     );
   }
 
   /* ── Flyff-style inventory slot: recessed beveled cell ──────────────────
-     Mirrors the in-game inventory/ equip cells: a dark inset well with a
-     1px highlight on the top-left edge and a shadow on the bottom-right,
-     sitting on a subtly textured panel. */
+     Mirrors the in-game inventory/equip cells. Deliberately dark in BOTH
+     themes — it reproduces the game window, not the admin chrome. */
   .flyff-slot {
     position: relative;
     border-radius: 3px;
-    background:
-      linear-gradient(168deg, #0c1322 0%, #0a0f1c 100%);
+    background: linear-gradient(168deg, #0c1322 0%, #0a0f1c 100%);
     box-shadow:
       inset 1px 1px 0 rgba(255, 255, 255, 0.06),
       inset -1px -1px 0 rgba(0, 0, 0, 0.6),
@@ -217,30 +341,31 @@
   }
   .flyff-slot:hover,
   .flyff-slot:focus-visible {
-    border-color: var(--color-primary);
+    border-color: #4d8bf8;
     box-shadow:
       inset 1px 1px 0 rgba(255, 255, 255, 0.08),
       inset -1px -1px 0 rgba(0, 0, 0, 0.6),
-      0 0 8px -1px var(--color-primary);
+      0 0 8px -1px #4d8bf8;
     outline: none;
   }
 
   /* The textured panel behind a grid of slots (the bag window body). */
   .flyff-panel {
-    background:
-      radial-gradient(120% 100% at 50% 0%, #131c30 0%, #0e1524 60%, #0b1120 100%);
+    background: radial-gradient(120% 100% at 50% 0%, #131c30 0%, #0e1524 60%, #0b1120 100%);
     border: 1px solid #243049;
     border-radius: var(--radius);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.04),
       0 8px 24px -12px rgba(0, 0, 0, 0.6);
+    color: #e7ecf5;
   }
 
-  /* Ornate gold-trimmed header bar for the inventory/equip windows. */
+  /* Ornate header bar for the inventory/equip windows. */
   .flyff-window-header {
     background: linear-gradient(180deg, #1c2740 0%, #131c30 100%);
     border-bottom: 1px solid #2c3a55;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    color: #e7ecf5;
   }
 }
 

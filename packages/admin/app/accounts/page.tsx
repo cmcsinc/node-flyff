@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { accounts, characters } from "@/../drizzle/schema";
-import { count, eq, desc, sql } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,10 +10,12 @@ import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
 import { EmptyRow } from "@/components/empty-state";
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead,
 } from "@/components/ui/table";
+import { parseSort, sortRows } from "@/lib/sort";
 import { formatDate } from "@/lib/utils";
 import { BanToggleButton, GmToggleButton } from "./actions";
+import { CreateAccountButton } from "./account-form";
 import { Users } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +23,13 @@ export const dynamic = "force-dynamic";
 interface SearchParams {
   search?: string;
   filter?: string;
+  sort?: string;
+  dir?: string;
+  /** Index signature so the whole bag can be handed to the sort/page links. */
+  [key: string]: string | undefined;
 }
+
+const SORT_KEYS = ["id", "username", "email", "charCount", "status", "createdAt"] as const;
 
 export default async function AccountsPage({
   searchParams,
@@ -56,12 +64,29 @@ export default async function AccountsPage({
     return true;
   });
 
+  // Default order is newest-first (the SQL `ORDER BY`), so no fallback sort key.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const sorted = sortRows(filtered, sort, {
+    charCount: (r) => Number(r.charCount),
+    createdAt: (r) => r.createdAt,
+    // "Status" is three mutually exclusive badges; rank them rather than sorting
+    // by a column that doesn't exist: banned → GM → active.
+    status: (r) => (r.banned ? 0 : r.gm ? 1 : 2),
+  });
+
   return (
     <div className="space-y-6">
-      <PageHeader title="Accounts" description={`${filtered.length} of ${rows.length} accounts`} />
+      <PageHeader
+        title="Accounts"
+        description={`${filtered.length} of ${rows.length} accounts`}
+        actions={<CreateAccountButton />}
+      />
 
       {/* Filters */}
       <form className="flex flex-col gap-2 sm:flex-row sm:items-end" method="GET">
+        {/* Filtering must not silently reset the column sort. */}
+        {sort.key && <input type="hidden" name="sort" value={sort.key} />}
+        {sort.key && <input type="hidden" name="dir" value={sort.dir} />}
         <SearchInput
           name="search"
           placeholder="Search username…"
@@ -81,18 +106,18 @@ export default async function AccountsPage({
           <div className="max-h-[70vh] overflow-y-auto">
             <Table>
               <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
-                <TableRow>
-                  <TableHead className="w-16">ID</TableHead>
-                  <TableHead>Username</TableHead>
-                  <TableHead className="hidden md:table-cell">Email</TableHead>
-                  <TableHead className="hidden text-center sm:table-cell">Characters</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden lg:table-cell">Created</TableHead>
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">ID</SortableHead>
+                  <SortableHead sortKey="username" sort={sort} params={params}>Username</SortableHead>
+                  <SortableHead sortKey="email" sort={sort} params={params} className="hidden md:table-cell">Email</SortableHead>
+                  <SortableHead sortKey="charCount" sort={sort} params={params} align="center" className="hidden sm:table-cell">Characters</SortableHead>
+                  <SortableHead sortKey="status" sort={sort} params={params}>Status</SortableHead>
+                  <SortableHead sortKey="createdAt" sort={sort} params={params} className="hidden lg:table-cell">Created</SortableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filtered.map((acc) => (
+                {sorted.map((acc) => (
                   <TableRow key={acc.id}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{acc.id}</TableCell>
                     <TableCell>

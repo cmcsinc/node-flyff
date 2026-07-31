@@ -116,7 +116,7 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
       aria-labelledby="add-item-title"
     >
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-scrim backdrop-blur-sm"
         onClick={() => !pending && onOpenChange(false)}
       />
       <div className="relative flex max-h-[85vh] w-full max-w-lg flex-col rounded-xl border border-border bg-popover shadow-2xl animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]">

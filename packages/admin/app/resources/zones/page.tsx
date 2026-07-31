@@ -8,7 +8,8 @@ import { FilterBar } from "@/components/filter-bar";
 import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
+import { parseSort, sortRows } from "@/lib/sort";
 import { Map } from "lucide-react";
 import { worldName } from "@/lib/utils";
 
@@ -19,7 +20,11 @@ type SearchParams = {
   world?: string;
   page?: string;
   perPage?: string;
+  sort?: string;
+  dir?: string;
 }
+
+const SORT_KEYS = ["id", "name", "worldId", "spawns", "npcs"] as const;
 
 export default async function ZonesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
@@ -52,13 +57,16 @@ export default async function ZonesPage({ searchParams }: { searchParams: Promis
     return true;
   });
 
-  const page = paginate(filtered, parsePage(params.page), perPage);
+  // Sorting runs before paging so a column sort spans the whole result set,
+  // not just the rows already on the current page.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const page = paginate(sortRows(filtered, sort, { worldId: (z) => worldName(z.worldId) }), parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
       <PageHeader title="Zones" description={`${filtered.length} of ${zones.length} zone definitions`} />
 
-      <FilterBar perPage={perPage} active={Boolean(search || world)}>
+      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || world)}>
         <SearchInput name="search" placeholder="Search by name or ID..." defaultValue={search} className="w-full sm:w-72" />
         <Select name="world" defaultValue={world} className="w-40" aria-label="Filter by world">
           <option value="">All worlds</option>
@@ -72,13 +80,13 @@ export default async function ZonesPage({ searchParams }: { searchParams: Promis
         <CardContent className="p-0">
           <div className="overflow-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead className="w-20">ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>World</TableHead>
-                  <TableHead className="text-right">Spawns</TableHead>
-                  <TableHead className="text-right">NPCs</TableHead>
+              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-20">ID</SortableHead>
+                  <SortableHead sortKey="name" sort={sort} params={params}>Name</SortableHead>
+                  <SortableHead sortKey="worldId" sort={sort} params={params}>World</SortableHead>
+                  <SortableHead sortKey="spawns" sort={sort} params={params} align="right">Spawns</SortableHead>
+                  <SortableHead sortKey="npcs" sort={sort} params={params} align="right">NPCs</SortableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
