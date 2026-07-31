@@ -11,8 +11,9 @@ import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
-import { ScrollText } from "lucide-react";
+import { Pencil, ScrollText } from "lucide-react";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 
@@ -111,10 +112,18 @@ export default async function QuestsPage({ searchParams }: { searchParams: Promi
                     <TableCell className="text-muted-foreground">{q.cmds > 0 ? `${q.cmds} cmds` : "—"}</TableCell>
                     <TableCell className="text-right">{q.level > 0 ? <Badge variant="secondary">Lv. {q.level}</Badge> : "—"}</TableCell>
                     <TableCell className="text-right">
+                      {/*
+                        Button styling on a Link, not a Button: this navigates, so
+                        it must stay an anchor (middle-click, open-in-new-tab,
+                        keyboard). `Button` renders a bare <button> with no
+                        asChild, so the variant classes are applied directly.
+                      */}
                       <Link
                         href={`/resources/quests/${String(q.id)}/edit`}
-                        className="text-xs text-primary hover:underline"
+                        aria-label={`Edit quest ${String(q.id)}`}
+                        className={buttonVariants({ variant: "outline", size: "sm" })}
                       >
+                        <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
                         Edit
                       </Link>
                     </TableCell>
