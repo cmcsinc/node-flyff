@@ -82,6 +82,12 @@ export interface JoinServiceDeps {
   serverId?: string;
   /** Push the mailbox + set MODE_MAILBOX on JOIN (`CUser::AdjustMailboxState`). */
   mailHandler?: { sendMailBox(player: CPlayer): Promise<void> };
+  /**
+   * Friend + campus JOIN pushes, bound in `compose.ts`. A structural seam rather
+   * than a `@flyff/social` import so the world server's join path does not depend
+   * on the social package's shape (same pattern as `mailHandler`).
+   */
+  socialJoin?: (player: CPlayer) => Promise<void>;
 }
 
 export type JoinOutcome =
@@ -152,6 +158,11 @@ export class JoinService {
     // Port of `CUser::AdjustMailboxState` (User.cpp:3689) -- recompute
     // MODE_MAILBOX from unclaimed mail and hand the player their mailbox.
     void this.deps.mailHandler?.sendMailBox(player);
+    // Social JOIN pushes: the friend roster blob + "I'm online" fan-out
+    // (`CUser::AddFriendGameJoin`, User.cpp:326) and the campus roster + point
+    // value. Both best-effort for the same reason as presence/mail above.
+    void this.deps.socialJoin?.(player)
+      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'social join failed'));
     return { ok: true, player };
   }
 

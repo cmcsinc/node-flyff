@@ -41,6 +41,20 @@ const COMBAT_GATE_MS = 10_000;
 
 export interface RecoverySystemDeps {
   readonly playerManager: PlayerManager;
+  /**
+   * Cheer-point regen. C++ drives `CMover::CheckTickCheer` from the same
+   * per-user tick as `ProcessRecovery` (`WORLDSERVER/User.cpp:438`), so it
+   * rides this loop rather than owning a second timer. Optional so existing
+   * tests can construct the system without it.
+   */
+  readonly cheerService?: { tick(player: CPlayer, now: number): void };
+  /**
+   * Campus point regen. C++ calls `CCampusHelper::RecoveryCampusPoint` from the
+   * same per-user tick as `ProcessRecovery` (`WORLDSERVER/User.cpp:433`), so it
+   * rides this loop too. Only regenerates while a player's campus points are
+   * negative -- the service owns that check.
+   */
+  readonly campusService?: { recoverPoints(player: CPlayer, now: number): void };
 }
 
 export class RecoverySystem {
@@ -64,6 +78,12 @@ export class RecoverySystem {
   tick(now: number): void {
     for (const p of this.deps.playerManager.all()) {
       this.recoverOne(p, now);
+      // Cheer points regen regardless of combat state (CheckTickCheer has no
+      // IsAttackMode gate, unlike ProcessRecovery), so it sits outside recoverOne.
+      this.deps.cheerService?.tick(p, now);
+      // Campus points: also outside recoverOne (no combat gate), and a no-op
+      // unless the balance is negative.
+      this.deps.campusService?.recoverPoints(p, now);
     }
   }
 

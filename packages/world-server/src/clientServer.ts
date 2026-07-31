@@ -20,6 +20,12 @@ import type { PlayerMovedHandler } from './handlers/playerMoved.handler';
 import type { PlayerBehaviorHandler } from './handlers/playerBehavior.handler';
 import type { ChatHandler } from './handlers/chat.handler';
 import type { MotionHandler } from './handlers/motion.handler';
+import type { MoverFocusHandler } from './handlers/moverFocus.handler';
+import type { GmChatLogHandler } from './handlers/gmChatLog.handler';
+import type { QueryEquipHandler } from './handlers/queryEquip.handler';
+import type { CheeringHandler } from './handlers/cheering.handler';
+import type { TradeHandler } from '@flyff/inventory';
+import type { FriendHandler, CampusHandler } from '@flyff/social';
 import type { SetTargetHandler } from '@flyff/npc';
 import type { LeaveHandler } from './handlers/leave.handler';
 import type { PlayerCorrHandler } from './handlers/playerCorr.handler';
@@ -68,6 +74,13 @@ export interface WorldClientServerDeps {
   playerBehaviorHandler: PlayerBehaviorHandler;
   chatHandler: ChatHandler;
   motionHandler: MotionHandler;
+  moverFocusHandler: MoverFocusHandler;
+  gmChatLogHandler: GmChatLogHandler;
+  queryEquipHandler: QueryEquipHandler;
+  cheeringHandler: CheeringHandler;
+  tradeHandler: TradeHandler;
+  friendHandler: FriendHandler;
+  campusHandler: CampusHandler;
   setTargetHandler: SetTargetHandler;
   leaveHandler: LeaveHandler;
   playerCorrHandler: PlayerCorrHandler;
@@ -187,6 +200,38 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.ADDITEMTASKBAR, (s, r) => deps.taskbarHandler.handleAddItem(s, r));
   dispatcher.register(PACKETTYPE.REMOVEITEMTASKBAR, (s, r) => deps.taskbarHandler.handleRemoveItem(s, r));
   dispatcher.register(PACKETTYPE.SKILLTASKBAR, (s, r) => deps.skillTaskbarHandler.handleSkillTaskBar(s, r));
+  dispatcher.register(PACKETTYPE.MOVERFOCOUS, (s, r) => deps.moverFocusHandler.handleMoverFocus(s, r));
+  dispatcher.register(PACKETTYPE.LOG_GAMEMASTER_CHAT, (s, r) => deps.gmChatLogHandler.handleGmChatLog(s, r));
+  dispatcher.register(PACKETTYPE.QUERYEQUIP, (s, r) => deps.queryEquipHandler.handleQueryEquip(s, r));
+  dispatcher.register(PACKETTYPE.QUERYEQUIPSETTING, (s, r) => deps.queryEquipHandler.handleQueryEquipSetting(s, r));
+  dispatcher.register(PACKETTYPE.CHEERING, (s, r) => deps.cheeringHandler.handleCheering(s, r));
+  // Trade -- 10 opcodes. TRADECLEARGOLD has no v19 C++ handler (DPSrvr.cpp:8838
+  // commented out); registered so it stops logging as unknown, then dropped.
+  dispatcher.register(PACKETTYPE.CONFIRMTRADE, (s, r) => deps.tradeHandler.handleConfirmTrade(s, r));
+  dispatcher.register(PACKETTYPE.CONFIRMTRADECANCEL, (s, r) => deps.tradeHandler.handleConfirmTradeCancel(s, r));
+  dispatcher.register(PACKETTYPE.TRADE, (s, r) => deps.tradeHandler.handleTrade(s, r));
+  dispatcher.register(PACKETTYPE.TRADEPUT, (s, r) => deps.tradeHandler.handleTradePut(s, r));
+  dispatcher.register(PACKETTYPE.TRADEPULL, (s, r) => deps.tradeHandler.handleTradePull(s, r));
+  dispatcher.register(PACKETTYPE.TRADEPUTGOLD, (s, r) => deps.tradeHandler.handleTradePutGold(s, r));
+  dispatcher.register(PACKETTYPE.TRADECLEARGOLD, (s) => deps.tradeHandler.handleTradeClearGold(s));
+  dispatcher.register(PACKETTYPE.TRADEOK, (s) => deps.tradeHandler.handleTradeOk(s));
+  dispatcher.register(PACKETTYPE.TRADECONFIRM, (s) => deps.tradeHandler.handleTradeConfirm(s));
+  dispatcher.register(PACKETTYPE.TRADECANCEL, (s, r) => deps.tradeHandler.handleTradeCancel(s, r));
+  // Friend roster -- 6 opcodes. C++ splits these across the world and core
+  // servers; one process handles all of them.
+  dispatcher.register(PACKETTYPE.ADDFRIEND, (s, r) => deps.friendHandler.handleAddFriend(s, r));
+  dispatcher.register(PACKETTYPE.ADDFRIENDREQEST, (s, r) => deps.friendHandler.handleRequest(s, r));
+  dispatcher.register(PACKETTYPE.ADDFRIENDNAMEREQEST, (s, r) => deps.friendHandler.handleRequestByName(s, r));
+  dispatcher.register(PACKETTYPE.ADDFRIENDCANCEL, (s, r) => deps.friendHandler.handleCancel(s, r));
+  dispatcher.register(PACKETTYPE.GETFRIENDSTATE, (s, r) => deps.friendHandler.handleGetState(s, r));
+  dispatcher.register(PACKETTYPE.SETFRIENDSTATE, (s, r) => deps.friendHandler.handleSetState(s, r));
+  dispatcher.register(PACKETTYPE.REMOVEFRIEND, (s, r) => deps.friendHandler.handleRemove(s, r));
+  // Campus -- only these 4 are client packets (DPSrvr.cpp:540-543). ALL /
+  // ADD_MEMBER / UPDATE_POINT are DB-server->world and are not registered here.
+  dispatcher.register(PACKETTYPE.CAMPUS_INVITE, (s, r) => deps.campusHandler.handleInvite(s, r));
+  dispatcher.register(PACKETTYPE.CAMPUS_ACCEPT, (s, r) => deps.campusHandler.handleAccept(s, r));
+  dispatcher.register(PACKETTYPE.CAMPUS_REFUSE, (s, r) => deps.campusHandler.handleRefuse(s, r));
+  dispatcher.register(PACKETTYPE.CAMPUS_REMOVE_MEMBER, (s, r) => deps.campusHandler.handleRemoveMember(s, r));
   dispatcher.register(PACKETTYPE.ENDSKILLQUEUE, (s) => deps.endSkillQueueHandler.handleEndSkillQueue(s));
   dispatcher.register(PACKETTYPE.REQ_LEAVE, (s) => deps.reqLeaveHandler.handleReqLeave(s));
   dispatcher.register(PACKETTYPE.REMOVEQUEST, (s, r) => deps.removeQuestHandler.handleRemoveQuest(s, r));
