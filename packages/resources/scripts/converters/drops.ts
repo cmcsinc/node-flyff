@@ -2,16 +2,21 @@
  * propMoverEx.inc -> data/drops.yml converter.
  *
  * Source: one `MI_<name> { ... }` block per mover. Drop-relevant lines:
- *   Maxitem = N;                         // max simultaneous drops
- *   DropGold(min, max);                  // penya pile
- *   DropItem(II_..., prob, level, count); // 1 slot, prob is DWORD / 3,000,000,000
- *   QuestItem(...) / DropKind(...)       // ponytail -- skipped in v1
- *   AI { ... } / SetCallHelper(...)      // ignored (AI is a separate system)
+ *   Maxitem = N;                            // max simultaneous item drops
+ *   DropGold(min, max);                     // penya pile
+ *   DropItem(II_..., prob, enchant, count); // 1 slot, prob is DWORD out of 3e9
+ *   QuestItem(...) / DropKind(...)          // ponytail -- skipped in v1
+ *   AI { ... } / SetCallHelper(...)         // ignored (AI is a separate system)
  *
  * `II_*` item symbols resolve to numeric ids via defineItem.h; `MI_*` resolves
  * to the numeric model index (dwObjIndex) via defineObj.h -- the same map the
  * mover converter uses -- so the loader can key drops by `m_dwIndex` for O(1)
  * lookup at death.
+ *
+ * The raw `prob` DWORD does NOT survive conversion: it is calibrated to the
+ * percent the C++ actually fires at (see {@link calibratePct}) so the data is
+ * editable and the runtime can roll it with an unbiased RNG. The third arg is
+ * emitted as `enchant`, its real meaning.
  *
  * @module scripts/converters/drops
  */
@@ -21,16 +26,60 @@ import { resolve } from 'node:path';
 import { stringify } from 'yaml';
 import { parseDefines, readSource } from './parse.js';
 
-/** Per-slot roll denominator -- `DropItem` probability is DWORD out of this. */
+/** The C++ roll denominator -- `xRandom( 3000000000 )` (`Project.cpp:184`). */
 export const DROP_TOTAL = 3_000_000_000;
 
-/** Probability scalar (researcher: propMoverEx probabilities are /3,000,000,000). */
-const DROP_PROB_SCALE = DROP_TOTAL;
+/**
+ * 2^32 mod DROP_TOTAL -- the width of the doubled residue band.
+ *
+ * `xRandom(n)` is `xRand() % n` over a full-period 32-bit LCG
+ * (`_Common/xUtil.h:14-28`). With n = 3e9 and 2^32 = 3e9 + 1,294,967,296, the
+ * residues `[0, 1294967295]` are produced by two distinct LCG states each while
+ * `[1294967296, 2999999999]` are produced by one. Low residues are therefore
+ * exactly twice as likely.
+ */
+const DOUBLED_BAND = 2 ** 32 - DROP_TOTAL; // 1,294,967,296
+
+/**
+ * The percent a raw C++ `prob` **actually** fires at, accounting for the modulo
+ * bias of `xRandom(3e9)`.
+ *
+ * `P(xRand() % 3e9 < prob)` = (number of 32-bit states mapping below `prob`) /
+ * 2^32. States below the doubled band count twice:
+ *
+ *   prob <= band:  2 * prob            / 2^32
+ *   prob >  band:  (band + prob)       / 2^32
+ *
+ * Every probability in the shipped file is under the band, so in practice this
+ * is a flat 1.3968x uplift -- `300000000` ("10%") is really 13.97%. Clamped to
+ * 100 because three slots ship `prob` above 3e9 (`MI_*` with 30000000000, a data
+ * typo the C++ silently treats as always-drop).
+ *
+ * Exported for the migration script and its tests.
+ */
+export function calibratePct(prob: number): number {
+  if (prob <= 0) return 0;
+  if (prob >= DROP_TOTAL) return 100;
+  const states = prob <= DOUBLED_BAND ? 2 * prob : DOUBLED_BAND + prob;
+  return Math.min(100, (states / 2 ** 32) * 100);
+}
+
+/**
+ * Round a calibrated percent for storage.
+ *
+ * 6 significant figures, not a fixed number of decimals: the range spans
+ * 0.0000140% to 100%, so `toFixed(4)` would flatten the whole low tail to zero
+ * and `toFixed(10)` would give 100% eight meaningless digits. `Number()` drops
+ * the trailing zeros `toPrecision` leaves behind, keeping the YAML clean.
+ */
+export function roundPct(pct: number): number {
+  return Number(pct.toPrecision(6));
+}
 
 interface DropItem {
   itemId: number;
-  prob: number;
-  level: number;
+  chance: number;
+  enchant: number;
   count: number;
 }
 
@@ -97,10 +146,15 @@ export function parseDropTables(
       if (mm) {
         const itemId = iiIds.get(mm[1]);
         if (itemId === undefined) { droppedNoItem++; continue; }
+        // The raw DWORD becomes the percent it really fires at. A `prob: 0` slot
+        // can never drop in the C++ either (`dwRand < 0` is never true), so it is
+        // dead data -- skipped rather than emitted as an unrepresentable 0%.
+        const chance = roundPct(calibratePct(Number(mm[2])));
+        if (chance <= 0) continue;
         items.push({
           itemId,
-          prob: Number(mm[2]),
-          level: Number(mm[3]),
+          chance,
+          enchant: Number(mm[3]),
           count: Number(mm[4]),
         });
         continue;
@@ -131,12 +185,15 @@ export async function convertDrops(rawDir: string, dataDir: string): Promise<voi
   await mkdir(out, { recursive: true });
   const doc = {
     _version: '1.0',
-    _prob_scale: DROP_PROB_SCALE,
     drops: tables,
   };
   await writeFile(
     resolve(out, 'drops.yml'),
-    '# Drop tables -- generated from propMoverEx.inc\n' + stringify(doc),
+    '# Drop tables -- generated from propMoverEx.inc\n' +
+      '# `chance` is a percent. It is the rate the C++ roll ACTUALLY fires at,\n' +
+      '# not the nominal prob/3e9: xRandom(3e9) is modulo-biased and every shipped\n' +
+      '# probability lands ~1.3968x high. See src/schemas/drop.schema.ts.\n' +
+      stringify(doc),
   );
 
   console.log(

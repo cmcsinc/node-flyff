@@ -10,9 +10,11 @@ import { describe, it } from "node:test";
 import * as assert from "node:assert/strict";
 import {
   coerce,
+  fractionToPercent,
   getMeta,
   getOptions,
   optionLabel,
+  percentToFraction,
   resolveKind,
   stepFor,
   GROUP_ORDER,
@@ -131,5 +133,53 @@ describe("getMeta", () => {
     for (const key of ["id", "position", "angle", "effects", "gold", "job_req"]) {
       assert.ok(GROUP_ORDER.includes(getMeta(key).group), `${key} → ${getMeta(key).group}`);
     }
+  });
+});
+
+describe("weather fields", () => {
+  it("renders the weather type as an enum, not free text", () => {
+    assert.equal(resolveKind("default", "sunny"), "enum");
+    assert.equal(getMeta("default").options, "weather");
+    // Every schema value is pickable, and nothing else is.
+    const values = getOptions("weather")!.map((o) => o.value);
+    assert.deepEqual(values, ["sunny", "rain", "snow", "fog", "thunder"]);
+  });
+
+  it("types the variations table columns, with type scoped to weather", () => {
+    const meta = getMeta("variations");
+    assert.deepEqual(meta.columns, { type: "enum", chance: "percent", duration: "int" });
+    // `type` globally is a plain Classification field — the column override is
+    // what makes it a weather picker inside this table.
+    assert.equal(meta.columnOptions?.type, "weather");
+    assert.equal(getMeta("type").options, undefined);
+  });
+
+  it("edits chance as a percent", () => {
+    assert.equal(resolveKind("chance", 0.1), "percent");
+  });
+});
+
+describe("percent conversion", () => {
+  it("round-trips the on-disk fractions without float noise", () => {
+    assert.equal(fractionToPercent(0.1), 10);
+    assert.equal(fractionToPercent(0.02), 2);
+    assert.equal(percentToFraction(10), 0.1);
+    assert.equal(percentToFraction(2), 0.02);
+    assert.equal(percentToFraction(fractionToPercent(0.075)), 0.075);
+  });
+
+  it("clamps to the schema's 0-1 range", () => {
+    assert.equal(percentToFraction(150), 1);
+    assert.equal(percentToFraction(-5), 0);
+  });
+
+  it("treats a missing value as zero rather than NaN", () => {
+    assert.equal(fractionToPercent(undefined), 0);
+    assert.equal(percentToFraction(Number.NaN), 0);
+  });
+
+  it("keeps a half-typed percent from collapsing to 0", () => {
+    assert.equal(coerce("percent", ""), null);
+    assert.equal(coerce("percent", "2.5"), 2.5);
   });
 });

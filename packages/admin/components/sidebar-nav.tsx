@@ -51,6 +51,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Items", href: "/resources/items", icon: Sword },
       { label: "Movers", href: "/resources/movers", icon: Bug },
       { label: "NPCs", href: "/resources/npcs", icon: Users },
+      { label: "Spawns", href: "/resources/spawns", icon: Bug },
       { label: "Skills", href: "/resources/skills", icon: Sparkles },
       { label: "Quests", href: "/resources/quests", icon: ScrollText },
       { label: "Drops", href: "/resources/drops", icon: Gem },

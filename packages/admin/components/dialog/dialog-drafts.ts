@@ -9,7 +9,7 @@
  * string-table row. A line with an index is replaced in place. Nothing is ever
  * inserted or deleted, because 4,244 script functions reference rows by number.
  *
- * @module app/resources/npcs/[ref]/edit/dialog-drafts
+ * @module components/dialog/dialog-drafts
  */
 
 import type { DialogPrefixView, DialogStateView } from "@/lib/dialog-inc";

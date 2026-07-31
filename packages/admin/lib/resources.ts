@@ -45,6 +45,19 @@ export const loadDialogues = () => loadByType("dialogues");
 const COLLECTION_KEYS = ["items", "movers", "skills", "drops", "sets", "zones"] as const;
 
 /**
+ * Does this collection entry answer to `id`?
+ *
+ * Most collections key on a numeric `id`. Drop tables have none — a drop table
+ * is identified by the `MI_*` mover symbol it hangs off (`key`), which is what
+ * the browser page links to. Matching `id` first keeps the numeric path
+ * unchanged for items/movers/skills, which also carry a `key`.
+ */
+export function entryMatches(entry: Record<string, unknown>, id: string): boolean {
+  if (entry.id !== undefined && String(entry.id) === id) return true;
+  return typeof entry.key === "string" && entry.key === id;
+}
+
+/**
  * Find a single resource entry by id/type from the cached directory scan.
  * Used by both the edit page and the resource API route.
  */
@@ -58,7 +71,7 @@ export function loadEntryById(
       if (Array.isArray(list)) {
         const found = list.find((e): e is Record<string, unknown> => {
           if (typeof e !== "object" || e === null) return false;
-          return String((e as Record<string, unknown>).id) === id;
+          return entryMatches(e as Record<string, unknown>, id);
         });
         if (found) return { file, entry: found };
       }

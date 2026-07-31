@@ -17,7 +17,7 @@ import {
   isDirty,
   type LineDraft,
   type StateDraft,
-} from "../app/resources/npcs/[ref]/edit/dialog-drafts";
+} from "../components/dialog/dialog-drafts";
 
 function state(over: Partial<StateDraft> = {}): StateDraft {
   return {

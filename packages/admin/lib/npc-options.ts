@@ -51,3 +51,20 @@ export async function npcMoverOptions(): Promise<EnumOption[]> {
     .sort((a, b) => a.id - b.id)
     .map((m) => ({ value: String(m.id), label: `${m.name} (#${m.id})` }));
 }
+
+/**
+ * Every propMover entry a `spawns:` row can point at — everything that is not an
+ * NPC, labelled `<name> · Lv <level> (#<id>)`.
+ *
+ * Not just `type: "monster"`: pets, guards, and summons are spawnable too, and
+ * ~all of `propMover` carries no `type` at all (the field is optional), so an
+ * allowlist would hide most of the table. The level is in the label because it
+ * is what a GM balances a spawn point by.
+ */
+export async function spawnMoverOptions(): Promise<EnumOption[]> {
+  const res = await getResourceIndex();
+  return [...res.movers.movers.values()]
+    .filter((m) => m.type !== "npc")
+    .sort((a, b) => a.id - b.id)
+    .map((m) => ({ value: String(m.id), label: `${m.name} · Lv ${String(m.level)} (#${String(m.id)})` }));
+}

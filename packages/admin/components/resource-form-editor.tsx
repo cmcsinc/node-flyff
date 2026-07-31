@@ -170,7 +170,7 @@ export function ResourceFormEditor({
     return ordered;
   }, [form]);
 
-  return (
+  const body = (
     <div className="space-y-4">
       {sections.map(([group, fields], si) => (
         <Section key={group} title={group} count={fields.length} defaultOpen={si < 3}>
@@ -225,5 +225,13 @@ export function ResourceFormEditor({
         </div>
       </div>
     </div>
+  );
+
+  // Runtime option lists (item names, mover lists) come from the server-only
+  // resource index; without them an id field degrades to a numeric input.
+  return fieldOptions ? (
+    <FieldOptionsProvider options={fieldOptions}>{body}</FieldOptionsProvider>
+  ) : (
+    body
   );
 }

@@ -109,6 +109,17 @@ describe("setItemRows", () => {
       "a set name must never surface as its IDS_ token",
     );
   });
+
+  it("resolves every piece to an item name, index-aligned with the ids", () => {
+    const rows = setItemRows();
+    for (const r of rows) {
+      assert.equal(r.itemNames.length, r.itemIds.length, `set ${String(r.id)} lost a piece name`);
+    }
+    // The picker and the piece filter are name-driven, so an all-blank column
+    // would silently make both useless.
+    const named = rows.filter((r) => r.itemNames.some((n) => n.length > 0));
+    assert.ok(named.length > 100, `only ${String(named.length)} sets resolved any piece name`);
+  });
 });
 
 describe("zoneRows", () => {

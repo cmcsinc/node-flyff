@@ -162,8 +162,28 @@ function stateView(
  */
 export async function readDialogForKey(characterKey: string): Promise<DialogPrefixView> {
   const idx = await getResourceIndex();
-  const dialogs = idx.dialogs;
-  const prefix = characterKey ? prefixForNpc(dialogs, characterKey) : undefined;
+  const prefix = characterKey ? prefixForNpc(idx.dialogs, characterKey) : undefined;
+  return buildView(idx.dialogs, characterKey, prefix);
+}
+
+/**
+ * Read one dialog script group by its own prefix (`mafl_andy`).
+ *
+ * The dialogues browser lists files, not placements, so it has a prefix in hand
+ * and no `character_key` to map from — 0 of the 401 shipped dialogue files carry
+ * one. Same view, entered from the other end.
+ */
+export async function readDialogForPrefix(prefix: string): Promise<DialogPrefixView> {
+  const idx = await getResourceIndex();
+  const characterKey = idx.dialogs.byPrefix.get(prefix)?.character_key ?? "";
+  return buildView(idx.dialogs, characterKey, prefix);
+}
+
+function buildView(
+  dialogs: DialogIndex,
+  characterKey: string,
+  prefix: string | undefined,
+): DialogPrefixView {
   const file = prefix ? dialogs.byPrefix.get(prefix) : undefined;
 
   if (!prefix || !file) {

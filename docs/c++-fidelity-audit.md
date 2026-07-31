@@ -222,6 +222,53 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 - **File**: `packages/quest/src/handlers/removeQuest.handler.ts`
 - **C++**: 400ms debounce
 
+### M-DROP1. Drop probability stored as a percent, not the raw DWORD (DELIBERATE)
+- **Files**: `packages/resources/src/schemas/drop.schema.ts`,
+  `packages/resources/scripts/converters/drops.ts`,
+  `packages/inventory/src/services/drop.service.ts`
+- **C++**: `CDropItemGenerator::GetAt` (`_Common/Project.cpp:184-206`) rolls
+  `xRandom( 3000000000 ) < dwProbability`, and `propMoverEx.inc` stores
+  `dwProbability` raw (`Project.cpp:2882`).
+- **TS**: `drops.yml` stores `chance` as a percent and the roll is unbiased.
+- **Why**: `xRandom(n)` is `xRand() % n` over a 32-bit LCG (`_Common/xUtil.h:14-28`).
+  2^32 = 3e9 + 1,294,967,296, so residues below that band have two preimages and
+  fire twice as often. Every probability in the shipped file is inside the band,
+  so every drop actually lands at **1.3968x** its nominal `prob / 3e9`. The stored
+  percent is calibrated to that real rate (`calibratePct`), so observable drop
+  rates are unchanged while the number is finally readable and editable. Porting
+  the bias instead would have kept the admin panel's % permanently wrong.
+- **Also renamed**: `level` → `enchant`. The third `DropItem(...)` arg is not a
+  level requirement; its only live use is
+  `pItemElem->SetAbilityOption( lpDropItem->dwLevel )` (`Mover.cpp:8005`).
+
+### M-DROP2. Level-difference gate now rolls once per kill (BUGFIX vs prior TS)
+- **File**: `packages/inventory/src/services/drop.service.ts`
+- **C++**: one `xRandom(100) < nProbability * GetItemDropRateFactor()` before the
+  slot loop (`Mover.cpp:7948`); `nProbability` is the 100/80/60/30/10 bucket
+  (`Mover.cpp:7940-7946`). A miss suppresses items **and** gold — the
+  DROPTYPE_SEED branch is inside the same `if` (`Mover.cpp:8286`).
+- **Prior TS**: multiplied *every slot's* prob by the factor, compounding a nerf
+  the original never had, and paid gold even on a "miss".
+- Penya additionally uses its own shallower bucket (`nPenyaRate`, 100/100/80/65/50).
+
+### M-DROP3. `count` is a maximum, and `maxItem` excludes gold (BUGFIX vs prior TS)
+- **File**: `packages/inventory/src/services/drop.service.ts`
+- **C++**: `m_nItemNum = xRandom( dwNumber ) + 1` (`Mover.cpp:7970`) — a `count: 10`
+  slot is a uniform 1..10 stack, not a guaranteed 10. The `Maxitem` counter is
+  bumped only in the DROPTYPE_NORMAL branch (`Mover.cpp:8046`), so gold never
+  consumes a slot; prior TS dropped exactly `count` and gated gold on `maxItem`.
+
+### M-DROP4. Drop-rate multipliers wired; per-mover rate is data, not DB
+- **Files**: `packages/inventory/src/services/drop.service.ts`,
+  `packages/world-server/src/compose.ts`, `config/world-server.json`
+- **C++**: `GetItemDropRateFactor` (`MoverParam.cpp:4248-4264`) is the product of
+  `prj.m_fItemDropRate`, `GetProp()->m_fItemDrop_Rate`, and two event scalars.
+- **TS**: `sim.dropRate` × the table's optional `dropRate`. The per-mover value is
+  a `drops.yml` field rather than a back-end DB column (no such DB exists here).
+- **Unported** (`ponytail:`): `CEventGeneric` / `EventLua` timed-event scalars,
+  `GetPieceItemDropRateFactor` (couple Miracle buff), `nloop` giftbox multi-pass,
+  `DropKind`, `QuestItem` in this service (quest drops live in `@flyff/quest`).
+
 ### M15. Dialog interpreter: missing QS_* constants
 - **File**: `packages/npc/src/services/dialogInterpreter.ts`
 - **C++**: has `QS_BEGIN_ENABLED=1, QS_END_ENABLED=2, etc.` — TS may be missing some

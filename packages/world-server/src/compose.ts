@@ -611,6 +611,9 @@ export async function compose(): Promise<WorldComposeResult> {
   // after you out-level the mob (C++ regular-drop roll has no level term).
   const dropService = new DropService({
     resources, itemManager,
+    // A thunk, not a value: a GM changing the rate at runtime (or a future
+    // hot-reload of world config) takes effect on the next kill, no restart.
+    rates: () => ({ dropRate: config.world.dropRate, goldRate: config.world.goldRate }),
     needsItem: (killer, itemId) => questTracker.needsItem(killer, itemId),
   });
   // Duel manager + service -- created before CombatService so the PvP-kill seam

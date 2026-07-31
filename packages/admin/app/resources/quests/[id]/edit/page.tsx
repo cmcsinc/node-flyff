@@ -43,7 +43,7 @@ export default async function QuestEditPage({
   // the C++ define while picking (rule 12).
   const options = {
     characterKey: charKeys,
-    npcMover: movers,
+    mover: movers,
     item: items
       .map((d) => ({ value: String(d.id), label: `${d.name} (${String(d.id)})` }))
       .sort((a, b) => a.label.localeCompare(b.label)),

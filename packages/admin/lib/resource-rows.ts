@@ -88,6 +88,20 @@ export function itemRows(): ItemRow[] {
   return rows.sort((a, b) => a.id - b.id);
 }
 
+/**
+ * Numeric item id → display name.
+ *
+ * Set pieces, drop entries and quest rewards all reference items by bare id;
+ * a table showing `4587` where the client says "Leaf Hat" is unreadable.
+ */
+export function itemNamesById(): Map<number, string> {
+  const out = new Map<number, string>();
+  for (const doc of loadItems()) {
+    for (const v of entriesOf(doc, "items")) out.set(num(v.id), str(v.name));
+  }
+  return out;
+}
+
 // --- Movers -------------------------------------------------------------------
 
 /**
@@ -237,12 +251,25 @@ export interface DropRow {
   maxItem: number;
   count: number;
   itemIds: number[];
+  /** Resolved drop names, index-aligned with {@link itemIds}. */
+  itemNames: string[];
+  /**
+   * The table's best drop chance, as a percent.
+   *
+   * The *maximum*, not a sum or an average: a table's identity to a GM is its
+   * headline drop ("what does this mob give you"), and summing 20 slots produces
+   * a number above 100 that means nothing.
+   */
+  bestChance: number;
+  /** Per-mover rate multiplier; 1 when the table has none. */
+  dropRate: number;
 }
 
 export function dropRows(): DropRow[] {
   // Resolve MI_* -> model name so the table reads "Small Aibatt", not just the
   // symbol. Built from the same cached mover docs the movers page uses.
   const byKey = moverNamesByKey();
+  const itemNames = itemNamesById();
 
   const rows: DropRow[] = [];
   for (const doc of loadDrops()) {
@@ -250,6 +277,7 @@ export function dropRows(): DropRow[] {
       const gold = typeof v.gold === "object" && v.gold !== null ? (v.gold as Record<string, unknown>) : {};
       const items = entriesOf(v, "items");
       const key = str(v.key);
+      const itemIds = items.map((i) => num(i.itemId));
       rows.push({
         key,
         moverName: byKey.get(key) ?? "",
@@ -258,7 +286,10 @@ export function dropRows(): DropRow[] {
         goldMax: num(gold.max),
         maxItem: num(v.maxItem),
         count: items.length,
-        itemIds: items.map((i) => num(i.itemId)),
+        itemIds,
+        itemNames: itemIds.map((id) => itemNames.get(id) ?? ""),
+        bestChance: items.reduce((best, i) => Math.max(best, num(i.chance)), 0),
+        dropRate: num(v.dropRate) || 1,
       });
     }
   }
@@ -276,22 +307,27 @@ export interface SetItemRow {
   pieces: number;
   bonuses: number;
   itemIds: number[];
+  /** Resolved piece names, index-aligned with {@link itemIds}. */
+  itemNames: string[];
 }
 
 export function setItemRows(): SetItemRow[] {
   const text = getTextTable("propItemEtc.txt.txt");
+  const names = itemNamesById();
   const rows: SetItemRow[] = [];
   for (const doc of loadSetItems()) {
     for (const v of entriesOf(doc, "sets")) {
       const nameId = str(v.nameId);
       const elems = entriesOf(v, "elems");
+      const itemIds = elems.map((e) => num(e.itemId));
       rows.push({
         id: num(v.id),
         name: text.get(nameId) ?? "",
         nameId,
         pieces: elems.length,
         bonuses: Array.isArray(v.avails) ? v.avails.length : 0,
-        itemIds: elems.map((e) => num(e.itemId)),
+        itemIds,
+        itemNames: itemIds.map((id) => names.get(id) ?? ""),
       });
     }
   }

@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
 import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { NameWithSymbol, CountCell, NumCell } from "@/components/resource-cells";
+import { NameWithSymbol, CountCell, NumCell, EditLink } from "@/components/resource-cells";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
 import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
 import { MessageSquareText } from "lucide-react";
@@ -47,6 +47,17 @@ const COLUMNS: readonly ResourceColumn<DialogueRow>[] = [
     // NPC. A plain figure, not a chip: it is a number to sort by, and a chip
     // beside the States chip would make two competing emphases in one row.
     cell: (r) => <NumCell value={r.inert} />,
+  },
+  {
+    key: "actions",
+    header: "Actions",
+    align: "right",
+    cell: (r) => (
+      <EditLink
+        href={`/resources/dialogues/${encodeURIComponent(r.prefix)}/edit`}
+        label={`dialogue ${r.prefix}`}
+      />
+    ),
   },
 ];
 
