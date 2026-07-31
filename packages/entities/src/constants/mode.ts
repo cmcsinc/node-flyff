@@ -51,6 +51,15 @@ export const MODE = Object.freeze({
    */
   MAILBOX: 0x00008000,
   /**
+   * Equip-inspect refused. authorization.h:38 -- `EQUIP_DENIAL_MODE`. Toggled
+   * by `PACKETTYPE_QUERYEQUIPSETTING` (the client's "allow others to see my
+   * equipment" option). When set, `OnQueryEquip` (DPSrvr.cpp:7137) refuses the
+   * inspect with `TID_DIAG_0088` unless the requester is `AUTH_GAMEMASTER`.
+   * Transient like every other mode bit -- resets to allowed each session
+   * (matches C++: `m_dwMode` is not in the DB row).
+   */
+  EQUIP_DENIAL: 0x00020000,
+  /**
    * Exp-gain frozen. authorization.h:40 -- `MODE_EXPUP_STOP`. Toggled (no /no
    * pair) by `/es` (`TextCmd_ExpUpStop`, FuncTextCmd.cpp:2989). Honored by the
    * exp-grant path (ponytail: `CombatService.grantExp` early-out once wired).

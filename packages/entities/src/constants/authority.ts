@@ -28,6 +28,13 @@
 export const AUTH = Object.freeze({
   /** Player -- default. v19 `AUTH_GENERAL` = 'F'. */
   GENERAL: 0x46,
+  /**
+   * Chat-log tier -- v19 `AUTH_LOGCHATTING` = 'G'. A normal account whose chat
+   * is audited: `DPSrvr::OnChat` (DPSrvr.cpp:703) logs every line at this rank
+   * or higher, and the client self-reports received whispers via
+   * `PACKETTYPE_LOG_GAMEMASTER_CHAT` (`Neuz/DPClient.cpp:11922`).
+   */
+  LOGCHATTING: 0x47,
   /** GM tier 1 -- teleport/summon/invisible. v19 `AUTH_GAMEMASTER` = 'L'. */
   GAMEMASTER: 0x4c,
   /** GM tier 2 -- disconnect/notice/system. v19 `AUTH_GAMEMASTER2` = 'M'. */
