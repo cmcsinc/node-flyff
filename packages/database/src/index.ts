@@ -66,6 +66,20 @@ export {
   type MailCreateData,
 } from './repositories/mail.repo';
 
+export {
+  FriendRepository,
+  MAX_FRIEND,
+  type FriendRow,
+} from './repositories/friend.repo';
+
+export {
+  CampusRepository,
+  MAX_PUPIL_NUM,
+  type CampusRow,
+  type CampusMemberRow,
+  type CampusWithMembers,
+} from './repositories/campus.repo';
+
 // WAL journal -- embedded SQLite crash-recovery log
 export {
   Journal,
