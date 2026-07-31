@@ -39,10 +39,17 @@ export {
 } from './constants/slots';
 export { DST, MAX_ADJPARAMARY, CHG_SENTINEL, CHRSTATE_BITS } from './constants/dst';
 export type { DstId } from './constants/dst';
+export {
+  MAX_CHEERPOINT, TICK_CHEERPOINT_MS, MTI_CHEERSAME, MTI_CHEEROTHER,
+  XI_CHEERSENDEFFECT, XI_CHEERRECEIVEEFFECT, II_CHEERUP, CHEERUP_DURATION_MS,
+  TID_CHEER_MESSAGE3, TID_CHEER_MESSAGE4, TID_CHEER_NO1, TID_CHEER_NO2,
+} from './constants/cheer';
 
 // DST parameter model (equip + future buffs)
 export { ParamModel, EMPTY_PARAM_VIEW } from './params/ParamModel';
 export type { ParamView, DstEffect } from './params/ParamModel';
+export { VTInfo, MAX_TRADE, TRADE_STEP, TID_GAME_CANNOTTRADE_ITEM, TID_GAME_CANNOT_DO_USINGITEM } from './params/VTInfo';
+export type { TradeStake, TradeStep } from './params/VTInfo';
 export { BuffManager, BUFF_SKILL, BUFF_ITEM, MAX_SKILL_BUFF } from './params/BuffManager';
 export type { ActiveBuff, AddBuffOutcome, DoTPayload } from './params/BuffManager';
 

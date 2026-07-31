@@ -22,6 +22,7 @@ import { MAX_JOB_LEVEL, MAX_EXP_LEVEL, MAX_LEVEL } from './math/expTable';
 import { DST, CHRSTATE_BITS } from './constants/dst';
 import { ParamModel, type DstEffect } from './params/ParamModel';
 import { BuffManager } from './params/BuffManager';
+import { VTInfo } from './params/VTInfo';
 import { NULL_ID, INVENTORY_SLOTS, MAX_INVENTORY, BANK_SLOTS, MAX_SKILL_JOB, MAX_SLOT_ITEM_COUNT, MAX_SLOT_ITEM, MAX_SLOT_QUEUE, SHORTCUT, MAX_COOLTIME_GROUP } from './constants/slots';
 import { MAX_QUEST, MAX_COMPLETE_QUEST, MAX_CHECKED_QUEST, QS_END } from '@flyff/core/constants/quest';
 import type { RuntimeQuest } from './state/quest';
@@ -481,6 +482,33 @@ export class CPlayer {
    * Groups: 1 food, 2 pill, 3 skill, 4 potion (our addition).
    */
   m_cooltime: number[] = new Array(MAX_COOLTIME_GROUP).fill(0);
+  /**
+   * Cheer points held (C++ `CMover::m_nCheerPoint`, `_Common/Mover.h:645`).
+   * Capped at `MAX_CHEERPOINT` (3). **Not persisted** -- `DPDatabaseClient.cpp
+   * :725` resets it to 0 with a full timer on every load, so a relog costs you
+   * your stock. Matches C++ exactly; do not add a DB column.
+   */
+  m_nCheerPoint: number = 0;
+  /**
+   * Trade / private-vendor state (C++ `CMover::m_vtInfo`, `_Common/Mover.h:354`).
+   * `m_vtInfo.otherId !== null` is the "busy" gate every trade entry point
+   * checks on BOTH sides. Transient -- an in-flight trade dies with the session
+   * (matches C++, which has no trade persistence).
+   */
+  readonly m_vtInfo: VTInfo = new VTInfo();
+  /**
+   * Absolute ms timestamp when the next cheer point accrues (C++
+   * `m_dwTickCheer`, `Mover.h:646`). C++ stores `GetTickCount() + dwRest`;
+   * we store `Date.now() + restMs` -- same semantics, wall-clock base.
+   *
+   * `0` means "not seeded yet": the first `CheerService.tick` seeds it to a full
+   * timer WITHOUT granting a point, mirroring the C++ load path
+   * (`DPDatabaseClient.cpp:725`, which resets to 0 points + a full timer).
+   * Seeding here in the constructor instead would make the JOIN snapshot's
+   * relative `m_dwTickCheer - now` field depend on construction time, so two
+   * otherwise-identical players would serialize to different bytes.
+   */
+  m_dwTickCheer: number = 0;
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
   readonly _dirty: Set<string> = new Set();

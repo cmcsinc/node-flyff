@@ -142,6 +142,20 @@ export const PACKETTYPE = Object.freeze({
   PLAYERSETDESTOBJ:     0xffffff07,
   MOVERDESTPOS:         0xffffff0f,
   PLAYERANGLE:          0xffffff29,
+  // v19 GM target-inspect -- `WORLDSERVER/DPSrvr.cpp:2154` OnMoverFocus.
+  // Body: `[DWORD uidPlayer]`. Client sends it from `CWorld::SetObjFocus`
+  // (`_Common/World.cpp:355`) ONLY when `g_pPlayer->IsAuthHigher(AUTH_GAMEMASTER)`
+  // and the clicked object is a player -- the GM needs that player's live gold
+  // and exp, which the ADD_OBJ snapshot does not carry. Reply is
+  // SNAPSHOTTYPE_MOVERFOCUS (0x003b), self-only.
+  MOVERFOCOUS:          0xffffff2d,
+  // v19 GM whisper audit log -- `WORLDSERVER/DPSrvr.cpp:6677` OnGameMasterWhisper.
+  // Body: `[String sPlayerFrom(<=42)][String lpString(<=260)]`. The CLIENT sends
+  // it from `OnWhisper` (`Neuz/DPClient.cpp:11922`) when the RECEIVING player
+  // `IsAuthHigher(AUTH_LOGCHATTING)` ('G') -- i.e. a GM-ish account that received
+  // a whisper self-reports it so the server can log it. Server-side it only
+  // forwards `"<from> -> <msg>"` to the DB log server; no reply, no game effect.
+  LOG_GAMEMASTER_CHAT:  0x0f000f09,
   QUERYGETPOS:          0xffffff08,
   GETPOS:               0xffffff09,
   // v19 `WORLDSERVER/DPSrvr.cpp:1355` OnQueryGetDestObj -- OBJID objid. Client
@@ -213,12 +227,60 @@ export const PACKETTYPE = Object.freeze({
   REMOVEFRIEND:         0xffffff6a,
   GETFRIENDSTATE:       0xffffff64,
   SETFRIENDSTATE:       0xffffff67,
+  // MsgHdr.h:359/365-372 -- friend opcodes that are SERVER->CLIENT despite living
+  // in the PACKETTYPE space (they are their own packets, not snapshot blocks).
+  // ADDFRIEND (0xffffff60) is the client's accept leg AND, in C++, a core-server
+  // relay; here it is client->server only. JOIN/LOGOUT are presence pushes:
+  // `u_long idFriend, DWORD dwState, u_long uLogin` / `u_long idFriend`.
+  // REMOVEFRIENDSTATE tells the other side its roster shrank: `u_long uRemoveid`.
+  ADDFRIEND:            0xffffff60,
+  ADDFRIENDJOIN:        0xffffff65,
+  ADDFRIENDLOGOUT:      0xffffff66,
+  REMOVEFRIENDSTATE:    0xffffff6d,
   // MsgHdr.h:665 -- `CDPSrvr::OnNPCBuff` (DPSrvr.cpp:11242) under `__NPC_BUFF`.
   // Body: DWORD-prefixed string `szKey[64]` -- the character.inc block key of the
   // buff-pang NPC the player right-clicked (`MMI_NPC_BUFF`). Server resolves the
   // block, validates proximity to any spawned buff NPC, and applies its
   // `SetBuffSkill` list (skill id/level/player-level-range/duration) to self.
   NPC_BUFF:             0xf000f813,
+
+  // ── Phase 2 v19 systems ───────────────────────────────────────────────────
+  // MsgHdr.h:515-516 -- `CDPSrvr::OnQueryEquip` (DPSrvr.cpp:7128) /
+  // `OnQueryEquipSetting` (DPSrvr.cpp:7150). QUERYEQUIP body: `OBJID objid`
+  // (the player to inspect). QUERYEQUIPSETTING body: `BOOL bAllow` (4 B) --
+  // TRUE clears `EQUIP_DENIAL_MODE`, FALSE sets it, then AddModifyMode.
+  QUERYEQUIP:           0xf000d009,
+  QUERYEQUIPSETTING:    0xf000d00a,
+  // MsgHdr.h:391 -- `CDPSrvr::OnCheering` (DPSrvr.cpp:7068). Body: `OBJID objid`
+  // (target player). Spends one of MAX_CHEERPOINT(3) points, turns the cheerer to
+  // face the target, plays MTI_CHEERSAME/OTHER, and applies the II_CHEERUP buff.
+  CHEERING:             0xffffff7c,
+  // MsgHdr.h:154-163 -- Trade (CVTInfo state machine). TRADE/CONFIRMTRADE/
+  // CONFIRMTRADECANCEL bodies: `OBJID objidTrader`. TRADEPUT: `BYTE i, BYTE
+  // nItemType, BYTE nId, short nItemNum`. TRADEPULL: `BYTE i`. TRADEPUTGOLD:
+  // `DWORD dwGold`. TRADECANCEL: `int nMode`. TRADEOK / TRADECONFIRM bodyless.
+  // TRADECLEARGOLD is commented out server-side in v19 (kept for the opcode map).
+  TRADECONFIRM:         0x00ff002f,
+  TRADE:                0x00ff00a0,
+  TRADEPUT:             0x00ff00a1,
+  TRADEPULL:            0x00ff00a2,
+  TRADEOK:              0x00ff00a3,
+  TRADECANCEL:          0x00ff00a4,
+  TRADEPUTGOLD:         0x00ff00a5,
+  TRADECLEARGOLD:       0x00ff00a6,
+  CONFIRMTRADE:         0x00ff00a7,
+  CONFIRMTRADECANCEL:   0x00ff00a8,
+  // MsgHdr.h:821-827 -- Campus (master/pupil mentoring) under `__VER >= 15 //
+  // __CAMPUS`. INVITE/ACCEPT/REFUSE bodies: `u_long idTarget` (playerId, NOT
+  // objid). REMOVE_MEMBER: `u_long idMember`. ALL/ADD_MEMBER/UPDATE_POINT are
+  // DB-server driven -- see campus handlers.
+  CAMPUS_ALL:           0x88100120,
+  CAMPUS_INVITE:        0x88100121,
+  CAMPUS_ACCEPT:        0x88100122,
+  CAMPUS_REFUSE:        0x88100123,
+  CAMPUS_ADD_MEMBER:    0x88100124,
+  CAMPUS_REMOVE_MEMBER: 0x88100125,
+  CAMPUS_UPDATE_POINT:  0x88100126,
 } as const);
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];
@@ -342,6 +404,46 @@ export const SNAPSHOTTYPE = Object.freeze({
   PARTYCHAT:              0x0069,
   PARTYCHANGEITEMMODE:    0x008f,
   PARTYCHANGEEXPMODE:     0x0090,
+
+  // ── Phase 2 v19 systems S->C ──────────────────────────────────────────────
+  // MsgHdr.h:1084 -- `CUser::AddQueryEquip` (User.cpp:2635), self only:
+  // `objid(inspected) | QUERYEQUIP | int cbEquip | cbEquip x { int nParts,
+  // __int64 randomOptItemId, CPiercing::Serialize, BYTE bItemResist,
+  // int nResistAbilityOption }`. Carries NO item ids -- refinement data only.
+  QUERYEQUIP:             0x00ac,
+  // MsgHdr.h:1093 -- `CUser::AddSetCheerParam` (User.cpp:2623), self only:
+  // `objid | SETCHEERPARAM | int nCheerPoint | DWORD dwRest | BOOL bAdd`.
+  SETCHEERPARAM:          0x00b4,
+  // MsgHdr.h:900 -- `CUserMng::AddCreateSfxObj` (User.cpp:5012), vicinity:
+  // `objid | CREATESFXOBJ | DWORD dwSfxObj | float x | float y | float z |
+  // BOOL bFlag`. The 3-arg overload passes x=y=z=0.
+  CREATESFXOBJ:           0x000f,
+  // MsgHdr.h:1058 -- `CUser::AddDefinedText(int dwText)` (User.cpp:2246), self:
+  // `objid | DEFINEDTEXT1 | int dwText`. The no-format-args sibling of
+  // DEFINEDTEXT (0x0095) -- NO trailing string. Emitting the string form for an
+  // arg-less text shifts the client's read by a DWORD.
+  DEFINEDTEXT1:           0x0094,
+  // MsgHdr.h:890-939 -- Trade snapshots (see trade serializers for bodies).
+  TRADEPUTERROR:          0x0005,
+  TRADE_SNAPSHOT:         0x0007,
+  TRADEPUT:               0x0008,
+  TRADEPULL:              0x0009,
+  TRADEOK:                0x000a,
+  TRADECANCEL:            0x000b,
+  TRADECONSENT:           0x000c,
+  TRADEPUTGOLD:           0x0020,
+  TRADECLEARGOLD:         0x0021,
+  CONFIRMTRADE:           0x0022,
+  CONFIRMTRADECANCEL:     0x0023,
+  TRADELASTCONFIRM:       0x002b,
+  TRADELASTCONFIRMOK:     0x002c,
+  // MsgHdr.h:1324-1327 -- Campus snapshots. INVITE is the invite popup
+  // (`u_long idRequest` + name); UPDATE ships a whole CCampus; REMOVE drops a
+  // member; UPDATE_POINT is the campus-point delta.
+  CAMPUS_INVITE:          0x8830,
+  CAMPUS_UPDATE:          0x8831,
+  CAMPUS_REMOVE:          0x8832,
+  CAMPUS_UPDATE_POINT:    0x8833,
 } as const);
 
 export type SnapshotType = typeof SNAPSHOTTYPE[keyof typeof SNAPSHOTTYPE];

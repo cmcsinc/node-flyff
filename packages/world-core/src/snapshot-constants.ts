@@ -120,6 +120,17 @@ export const SNAPSHOTTYPE_MELEE_ATTACK = 0x00e0;     // MsgHdr.h:1110 -- MELEE_A
 export const SNAPSHOTTYPE_RANGE_ATTACK = 0x00e2;    // MsgHdr.h:1112 -- RANGE_ATTACK projectile swing echo
 export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 -- PLAYERCORR echo (60B body)
 export const SNAPSHOTTYPE_MOVERMOVED2 = 0x00cc;      // MsgHdr.h:1097 -- PLAYERMOVED2 echo (73B body)
+/**
+ * `SNAPSHOTTYPE_MOVERFOCUS` (MsgHdr.h:957) -- `CUser::AddMoverFocus`
+ * (`WORLDSERVER/User.cpp:2534`): `OBJID(NULL_ID) | MOVERFOCUS |
+ * DWORD m_idPlayer | DWORD GetGold() | __int64 GetExp1()`.
+ *
+ * Self-only reply to `PACKETTYPE_MOVERFOCOUS`. The client
+ * (`Neuz/DPClient.cpp:6198` OnMoverFocus) looks the peer up by `uidPlayer` and
+ * writes the gold/exp onto its local `CMover` copy -- the GM target window then
+ * shows live values. Note the objid slot is `NULL_ID`, not the focused player.
+ */
+export const SNAPSHOTTYPE_MOVERFOCUS = 0x003b;
 
 // --- Combat S->C snapshot sub-types (`_Network/MsgHdr.h`) ----------------------
 // DAMAGE is the per-mover HP-sync mechanism (all nearby clients decrement HP
