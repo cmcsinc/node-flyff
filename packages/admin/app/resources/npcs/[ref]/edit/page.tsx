@@ -2,9 +2,10 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/page-header";
 import { NpcEditor } from "./npc-editor";
 import { CapabilityPanel } from "./capability-panel";
-import { DialogPanel } from "./dialog-panel";
+import { DialogPanel } from "@/components/dialog/dialog-panel";
 import { blankNpc, findNpc, loadNpcs, nextNpcId, parseNpcRef, loadZoneRefs } from "@/lib/npcs";
 import { kind3Options, mmiOptions, readIncBlock } from "@/lib/character-inc";
+import { characterKeyOptions, npcMoverOptions } from "@/lib/npc-options";
 import { readDialogForKey } from "@/lib/dialog-inc";
 import { getAllItems } from "@/lib/item-catalog";
 import { getOptions } from "@/lib/field-schema";
@@ -24,10 +25,11 @@ export default async function NpcEditPage({ params }: { params: Promise<{ ref: s
   if (parsed.npcId === null) {
     const used = loadNpcs().filter((n) => n.zoneId === parsed.zoneId).map((n) => n.id);
     const entry = { ...blankNpc(), id: nextNpcId(used) };
+    const [movers, charKeys] = await Promise.all([npcMoverOptions(), characterKeyOptions()]);
     return (
       <div className="space-y-6">
         <PageHeader title="New NPC" description={`${zone.name} · next free id #${String(entry.id)}`} backHref="/resources/npcs" />
-        <NpcEditor ref_={ref} entry={entry} isNew />
+        <NpcEditor ref_={ref} entry={entry} moverOptions={movers} characterKeyOptions={charKeys} isNew />
       </div>
     );
   }
@@ -40,12 +42,14 @@ export default async function NpcEditPage({ params }: { params: Promise<{ ref: s
   const charKey = typeof found.npc.character_key === "string" ? found.npc.character_key : "";
   const key = charKey || `#${String(parsed.npcId)}`;
 
-  const [block, options, kind3Opts, itemDefs, dialog] = await Promise.all([
+  const [block, options, kind3Opts, itemDefs, dialog, movers, charKeys] = await Promise.all([
     readIncBlock(charKey),
     mmiOptions(),
     kind3Options(),
     getAllItems(),
     readDialogForKey(charKey),
+    npcMoverOptions(),
+    characterKeyOptions(),
   ]);
 
   // Explicit-item picker. Sorted by name so it is searchable, and labelled with
@@ -64,7 +68,7 @@ export default async function NpcEditPage({ params }: { params: Promise<{ ref: s
         description={`${zone.name} · NPC #${String(parsed.npcId)} · ${found.file.split(/[/\\]/).pop() ?? ""}`}
         backHref="/resources/npcs"
       />
-      <NpcEditor ref_={ref} entry={found.npc} />
+      <NpcEditor ref_={ref} entry={found.npc} moverOptions={movers} characterKeyOptions={charKeys} />
       <CapabilityPanel
         block={block}
         options={options}

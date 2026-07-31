@@ -11,13 +11,18 @@ import { Field } from "@/components/ui/field";
 import { SearchableSelect } from "@/components/form/searchable-select";
 import {
   coerce,
+  fractionToPercent,
   getMeta,
   getOptions,
   optionLabel,
+  percentToFraction,
   resolveKind,
+  roundPercentValue,
   stepFor,
   type FieldKind,
+  type EnumOption,
 } from "@/lib/field-schema";
+import { formatChanceOdds } from "@/components/chance-cell";
 import { useFieldOptions } from "./field-options";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +40,18 @@ import { cn } from "@/lib/utils";
 /** Stable DOM id from a nested field path. */
 function pathId(path: readonly string[]): string {
   return `f-${path.join("-").replace(/[^\w-]/g, "_")}`;
+}
+
+/**
+ * Does an option list hold numeric values?
+ *
+ * Decides whether a picked value is written back as a number or a string. Read
+ * from the options rather than from the current cell value, which is `""` in a
+ * freshly added table row and would type an id field as a string.
+ */
+function numericOptions(options: readonly EnumOption[]): boolean {
+  const first = options[0];
+  return first !== undefined && first.value !== "" && !Number.isNaN(Number(first.value));
 }
 
 // ── Leaf controls ──────────────────────────────────────────────────────────
@@ -77,6 +94,118 @@ function NumberInput({
       onBlur={() => setText(null)}
       className={cn("h-9", className)}
     />
+  );
+}
+
+/**
+ * A 0–100 percent that is already a percent on disk.
+ *
+ * Distinct from {@link PercentInput}, which converts to a 0–1 fraction: a drop
+ * chance is stored as the percent itself. Beyond the `%` adornment it shows the
+ * reciprocal ("1 in 7,158") live, because "one drop per ~7,000 kills" is what a
+ * GM is actually trying to set — a bare `0.0139698` gives no such feel.
+ */
+function PctInput({
+  id,
+  value,
+  min,
+  max,
+  onChange,
+  className,
+}: {
+  id?: string;
+  value: unknown;
+  min?: number;
+  max?: number;
+  onChange: (v: number) => void;
+  className?: string;
+}) {
+  const [text, setText] = useState<string | null>(null);
+  const display = text ?? (value === null || value === undefined ? "" : String(value));
+  const odds = formatChanceOdds(Number(value));
+
+  return (
+    <div className="space-y-1">
+      <div className="relative">
+        <Input
+          id={id}
+          type="number"
+          inputMode="decimal"
+          step="any"
+          min={min ?? 0}
+          max={max ?? 100}
+          value={display}
+          onChange={(e) => {
+            setText(e.target.value);
+            const next = coerce("pct", e.target.value);
+            if (typeof next === "number") onChange(roundPercentValue(next));
+          }}
+          onBlur={() => setText(null)}
+          className={cn("h-9 pr-7", className)}
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 select-none text-xs text-muted-foreground"
+        >
+          %
+        </span>
+      </div>
+      {odds && (
+        <p className="text-[11px] leading-none text-muted-foreground" aria-live="polite">
+          {odds}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A 0–1 fraction edited as 0–100.
+ *
+ * The zone schema stores weather chance as a fraction (`chance: 0.1`), which
+ * reads as "0.1%" to anyone who has not read the schema. The control shows the
+ * percentage and converts on the way out, so what lands on disk is still the
+ * fraction the game parses.
+ */
+function PercentInput({
+  id,
+  value,
+  onChange,
+  className,
+}: {
+  id?: string;
+  value: unknown;
+  onChange: (v: number) => void;
+  className?: string;
+}) {
+  const [text, setText] = useState<string | null>(null);
+  const display = text ?? (value === null || value === undefined ? "" : String(fractionToPercent(value)));
+
+  return (
+    <div className="relative">
+      <Input
+        id={id}
+        type="number"
+        inputMode="decimal"
+        step="any"
+        min={0}
+        max={100}
+        value={display}
+        onChange={(e) => {
+          setText(e.target.value);
+          const next = coerce("percent", e.target.value);
+          if (typeof next === "number") onChange(percentToFraction(next));
+        }}
+        onBlur={() => setText(null)}
+        className={cn("h-9 pr-7", className)}
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 select-none text-xs text-muted-foreground"
+      >
+        %
+      </span>
+    </div>
   );
 }
 
@@ -129,7 +258,10 @@ function RangeField({
             axis={bound}
             kind={typeof raw === "number" && !Number.isInteger(raw) ? "float" : "int"}
             value={raw ?? 0}
-            onChange={(n) => onChange({ ...(v as Record<string, number>), [bound]: n })}
+            // Both bounds are always written: the source value may be `null`
+            // (a mob with no penya drop), and emitting a half range would fail
+            // the schema's `{min, max}` shape on save.
+            onChange={(n) => onChange({ min: 0, max: 0, ...(v as Record<string, number>), [bound]: n })}
           />
         );
       })}
@@ -268,11 +400,13 @@ function ListField({
 /** One editable cell in an object-array table — typed by its column key. */
 function TableCellControl({
   path,
+  parentKey,
   column,
   row,
   onChange,
 }: {
   path: readonly string[];
+  parentKey: string;
   column: string;
   row: Record<string, unknown>;
   onChange: (v: unknown) => void;
@@ -280,8 +414,13 @@ function TableCellControl({
   const ctxOpts = useFieldOptions();
   const raw = row[column];
   const meta = getMeta(column);
-  const kind = resolveKind(column, raw);
-  const options = ctxOpts[meta.options!] ?? getOptions(meta.options);
+  const parent = getMeta(parentKey);
+  // The parent table's column template wins: a key like `type` means one thing
+  // in a weather variation and another in an NPC function, so the column
+  // declaration is more specific than the global entry for that key.
+  const kind = parent.columns?.[column] ?? resolveKind(column, raw);
+  const optionsKey = parent.columnOptions?.[column] ?? meta.options;
+  const options = ctxOpts[optionsKey!] ?? getOptions(optionsKey);
   const id = pathId([...path, column]);
 
   if (options) {
@@ -290,7 +429,10 @@ function TableCellControl({
         id={id}
         value={String(raw ?? "")}
         options={options}
-        onChange={(v) => onChange(kind === "int" || typeof raw === "number" ? Number(v) : v)}
+        // `typeof raw` is not enough: a freshly added row's cell is `""`, and an
+        // id field would then be written back as a string the schema rejects.
+        // The option list's own values decide the type.
+        onChange={(v) => onChange(kind === "int" || numericOptions(options) ? Number(v) : v)}
         placeholder="—"
         className="min-w-[11rem]"
       />
@@ -303,9 +445,36 @@ function TableCellControl({
     );
   }
 
+  if (kind === "percent") {
+    return (
+      <PercentInput id={id} value={raw} onChange={onChange} className="h-8 min-w-[6rem] text-xs" />
+    );
+  }
+
+  if (kind === "pct") {
+    return (
+      <PctInput
+        id={id}
+        value={raw}
+        min={meta.min}
+        max={meta.max}
+        onChange={onChange}
+        className="h-8 min-w-[7rem] text-xs"
+      />
+    );
+  }
+
   if (kind === "int" || kind === "float") {
     return (
-      <NumberInput id={id} kind={kind} value={raw} onChange={onChange} className="h-8 min-w-[6rem] text-xs" />
+      <NumberInput
+        id={id}
+        kind={kind}
+        value={raw}
+        min={meta.min}
+        max={meta.max}
+        onChange={onChange}
+        className="h-8 min-w-[6rem] text-xs"
+      />
     );
   }
 
@@ -396,19 +565,33 @@ function ObjectTableField({
     return keys;
   }, [value, meta.columns]);
 
-  /** A new row mirrors the first row's shape so types stay consistent. */
+  /**
+   * A new row mirrors the first row's shape so types stay consistent.
+   *
+   * Numeric cells seed from the column's declared `min` rather than 0: a drop
+   * slot's `chance` and `count` both have positive lower bounds, and a row of
+   * zeroes is one the server-side schema rejects on save — the user would have to
+   * discover that by failing.
+   */
   function addRow() {
     if (!hasTemplate) return;
     const template = value[0];
     const blank: Record<string, unknown> = {};
+    const seedNumber = (k: string): number => getMeta(k).min ?? 0;
     if (template) {
       for (const [k, v] of Object.entries(template)) {
-        blank[k] = typeof v === "number" ? 0 : typeof v === "boolean" ? false : Array.isArray(v) ? [] : v && typeof v === "object" ? {} : "";
+        blank[k] = typeof v === "number"
+          ? seedNumber(k)
+          : typeof v === "boolean" ? false
+          : Array.isArray(v) ? []
+          : v && typeof v === "object" ? {} : "";
       }
     } else if (meta.columns) {
       // No row to copy — build from the declared column types.
       for (const [k, kKind] of Object.entries(meta.columns)) {
-        blank[k] = kKind === "int" || kKind === "float" ? 0 : kKind === "bool" ? false : "";
+        blank[k] = kKind === "int" || kKind === "float" || kKind === "percent" || kKind === "pct"
+          ? seedNumber(k)
+          : kKind === "bool" ? false : "";
       }
     }
     onChange([...value, blank]);
@@ -490,6 +673,7 @@ function ObjectTableField({
                     <td key={col} className="px-2 py-1.5">
                       <TableCellControl
                         path={[...path, String(ri)]}
+                        parentKey={fieldKey}
                         column={col}
                         row={row}
                         onChange={(v) => {
@@ -613,7 +797,11 @@ export function TypedField({
         id={id}
         value={String(value ?? "")}
         options={options ?? []}
-        onChange={(v) => onChange(typeof value === "number" || kind === "int" ? Number(v) : v)}
+        // The option list's values decide the type, not the current value: an
+        // unset field is `undefined` and would otherwise be typed as a string.
+        onChange={(v) =>
+          onChange(kind === "int" || (options !== null && numericOptions(options)) ? Number(v) : v)
+        }
         placeholder={`Select ${meta.label.toLowerCase()}…`}
       />
     );
@@ -628,6 +816,10 @@ export function TypedField({
         </div>
       </div>
     );
+  } else if (kind === "percent") {
+    control = <PercentInput id={id} value={value} onChange={onChange} />;
+  } else if (kind === "pct") {
+    control = <PctInput id={id} value={value} min={meta.min} max={meta.max} onChange={onChange} />;
   } else if (kind === "int" || kind === "float") {
     control = (
       <NumberInput id={id} kind={kind} value={value} min={meta.min} max={meta.max} onChange={onChange} />

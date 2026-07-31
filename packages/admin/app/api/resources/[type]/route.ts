@@ -1,8 +1,52 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readFileSync, writeFileSync } from "fs";
-import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
+import { parse as parseYaml, parseDocument, stringify as stringifyYaml, isSeq } from "yaml";
+import {
+  DropTableSchema,
+  ItemDefinitionSchema,
+  MoverDefinitionSchema,
+  SetItemDefSchema,
+  SkillDefinitionSchema,
+} from "@flyff/resources";
 import { auth } from "@/lib/auth";
-import { loadEntryById, invalidateResourceCache } from "@/lib/resources";
+import { loadEntryById, invalidateResourceCache, entryMatches } from "@/lib/resources";
+
+/**
+ * Canonical schema per resource type, applied server-side before the write.
+ *
+ * Client-side typing is UX; this is the guarantee. Every collection type the
+ * editor can reach is listed — a malformed mover null-derefs the client's
+ * `OnAddObj`, and a malformed item breaks the JOIN serializer, so neither may
+ * reach disk on the strength of client-side typing alone.
+ *
+ * `quests`, `dialogues`, and `zones` are absent by design: they are whole-file
+ * documents, not collection entries, and each has its own route with a writer
+ * that understands the file's raw counterpart.
+ */
+const ENTRY_SCHEMAS = {
+  drops: DropTableSchema,
+  items: ItemDefinitionSchema,
+  movers: MoverDefinitionSchema,
+  skills: SkillDefinitionSchema,
+  "set-items": SetItemDefSchema,
+} as const;
+
+/**
+ * Gate the entry on its canonical schema.
+ *
+ * Returns the **submitted** value, never `parsed.data`: several schemas carry
+ * `.default()`s (mover `scale`/`mp`/`fp`, drop `radius`), and writing the parsed
+ * object would inject those keys into entries that legitimately omit them.
+ * A key absent from the source entry stays absent — rule 12.
+ */
+function validateEntry(type: string, entry: unknown): { ok: true; value: unknown } | { ok: false; error: string } {
+  const schema = ENTRY_SCHEMAS[type as keyof typeof ENTRY_SCHEMAS];
+  if (!schema) return { ok: true, value: entry };
+  const parsed = schema.safeParse(entry);
+  if (parsed.success) return { ok: true, value: entry };
+  const first = parsed.error.issues[0];
+  return { ok: false, error: `${first.path.join(".") || "entry"}: ${first.message}` };
+}
 
 export async function GET(
   req: NextRequest,
@@ -58,12 +102,20 @@ export async function PUT(
     return NextResponse.json({ error: "Invalid source file" }, { status: 500 });
   }
 
+  const checked = validateEntry(type, parsed);
+  if (!checked.ok) return NextResponse.json({ error: checked.error }, { status: 400 });
+
   for (const key of ["items", "movers", "skills", "drops", "sets"]) {
     if (Array.isArray(fileData[key])) {
-      const idx = fileData[key].findIndex((e: Record<string, unknown>) => String(e.id) === String(id));
+      const idx = fileData[key].findIndex((e: Record<string, unknown>) => entryMatches(e, String(id)));
       if (idx >= 0) {
-        fileData[key][idx] = parsed;
-        writeFileSync(filePath, stringifyYaml(fileData, { lineWidth: 120 }), "utf-8");
+        // Document API, not stringify(parse(...)): these files carry
+        // hand-written header comments that a full re-serialize would drop.
+        const doc = parseDocument(readFileSync(filePath, "utf-8"));
+        const seq = doc.get(key);
+        if (!isSeq(seq)) return NextResponse.json({ error: "Unusable collection node" }, { status: 500 });
+        seq.set(idx, doc.createNode(checked.value));
+        writeFileSync(filePath, doc.toString({ lineWidth: 120 }), "utf-8");
         invalidateResourceCache();
         return NextResponse.json({ ok: true });
       }

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { ResourceFormEditor } from "@/components/resource-form-editor";
 import { PageHeader } from "@/components/page-header";
 import { loadEntryById } from "@/lib/resources";
+import { itemOptions } from "@/lib/item-options";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,8 @@ export default async function ResourceEditPage({ params }: { params: Promise<{ t
   }
   if (!result) notFound();
   const displayName = getEntryDisplayName(type, result.entry);
+  // `itemId` fields (set pieces, drop entries) pick from item names, not ids.
+  const items = await itemOptions();
 
   return (
     <div className="space-y-6">
@@ -29,7 +32,7 @@ export default async function ResourceEditPage({ params }: { params: Promise<{ t
         description={`${type} #${id} · ${result.file.split(/[/\\]/).pop()}`}
         backHref={`/resources/${type}`}
       />
-      <ResourceFormEditor type={type} id={id} entry={result.entry} />
+      <ResourceFormEditor type={type} id={id} entry={result.entry} fieldOptions={{ item: items }} />
     </div>
   );
 }

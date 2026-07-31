@@ -25,6 +25,10 @@ export interface EnumOption {
 export type FieldKind =
   | "int"
   | "float"
+  /** 0–1 on disk, edited as 0–100. */
+  | "percent"
+  /** Already 0–100 on disk; shown with a % adornment and `1 in N` odds. */
+  | "pct"
   | "bool"
   | "text"
   | "prose"
@@ -57,6 +61,12 @@ export interface FieldMeta {
    * shapeless row, which renders as a row with zero editable cells.
    */
   columns?: Record<string, FieldKind>;
+  /**
+   * Enum registry key per `table` column, for columns whose key is too generic
+   * to carry a registry globally (`type` means one thing in a weather variation
+   * and another in an NPC function).
+   */
+  columnOptions?: Record<string, string>;
   min?: number;
   max?: number;
 }
@@ -186,10 +196,10 @@ export const FIELD_META: Record<string, FieldMeta> = {
   world_id:      { label: "World", group: "Identity" },
   // `mover_id`/`character_key` pick from lists that only exist behind the
   // server-only resource index, so they are injected per page via
-  // `FieldOptionsProvider`. With no injected list both degrade to a plain
-  // input — which is what the zone editor wants, where a `spawns:` row's
-  // `mover_id` is a *monster* id and the NPC list would be wrong.
-  mover_id:      { label: "Mover", hint: "propMover NPC entry this placement renders as", group: "Identity", kind: "int", min: 1, options: "npcMover" },
+  // `FieldOptionsProvider`. The `mover` list is page-specific on purpose: an
+  // NPC placement picks from NPC movers, a `spawns:` row from monsters. With no
+  // injected list both degrade to a plain input.
+  mover_id:      { label: "Mover", hint: "propMover entry this placement renders as", group: "Identity", kind: "int", min: 1, options: "mover" },
   character_key: { label: "Character Key", hint: "character.inc block — drives the NPC's name, shop stock, dialog, and outfit", group: "Identity", options: "characterKey" },
 
   // Classification
@@ -291,11 +301,15 @@ export const FIELD_META: Record<string, FieldMeta> = {
 
   // Loot
   gold:         { label: "Penya Drop", group: "Loot", kind: "range" },
-  items:        { label: "Item Drops", group: "Loot", kind: "table", columns: { itemId: "int", prob: "int", count: "int" } },
-  maxItem:      { label: "Max Item Drops", group: "Loot", kind: "int", min: 0 },
-  itemId:       { label: "Item", group: "Loot", kind: "int", min: 1 },
-  prob:         { label: "Probability", hint: "Out of the table's _prob_scale", group: "Loot", kind: "int", min: 0 },
-  count:        { label: "Count", group: "Loot", kind: "int", min: 1 },
+  items:        { label: "Item Drops", group: "Loot", kind: "table", columns: { itemId: "enum", chance: "pct", count: "int", enchant: "int" } },
+  maxItem:      { label: "Max Item Drops", hint: "Cap per kill. Penya does not count toward it; 0 = uncapped", group: "Loot", kind: "int", min: 0 },
+  dropRate:     { label: "Table Drop Rate", hint: "Multiplier for this monster alone, on top of the server rate. 1 = normal, 2 = double", group: "Loot", kind: "float", min: 0 },
+  // Picked by name, never by id: the `item` list is injected per page (it lives
+  // behind the server-only resource index). With no injected list it degrades to
+  // a plain numeric input.
+  itemId:       { label: "Item", hint: "Search by item name", group: "Loot", kind: "enum", options: "item" },
+  enchant:      { label: "Enchant +", hint: "Ability option stamped on the dropped item (C++ SetAbilityOption); 0 = plain", group: "Loot", kind: "int", min: 0 },
+  count:        { label: "Max Stack", hint: "Rolls 1..N per drop, not exactly N", group: "Loot", kind: "int", min: 1 },
 
   // World / placement
   bounds:       { label: "Bounds", group: "World", kind: "object" },
@@ -305,6 +319,14 @@ export const FIELD_META: Record<string, FieldMeta> = {
   npcs:         { label: "NPC Placements", group: "World", kind: "table", columns: { mover_id: "int", character_key: "text", position: "vector3", angle: "float" } },
   regions:      { label: "Regions", group: "World", kind: "table" },
   weather:      { label: "Weather", group: "World", kind: "object" },
+  // `weather:` children. `default`/`type` are only ever weather keys in the
+  // resource YAML, so the registry can hang off them globally.
+  default:      { label: "Default Weather", hint: "Weather the zone sits in when no variation is active", group: "World", kind: "enum", options: "weather" },
+  variations:   { label: "Weather Variations", hint: "Chance is per roll; duration is how long the weather holds", group: "World", kind: "table", columns: { type: "enum", chance: "percent", duration: "int" }, columnOptions: { type: "weather" } },
+  chance:       { label: "Chance %", group: "World", kind: "percent" },
+  // `duration` deliberately has no entry: it is a weather-variation column here
+  // but an item buff length in `consumables.yml`, and a global label/group would
+  // be wrong in one of the two. The column template types it.
   min:          { label: "Min", group: "World", kind: "vector3" },
   max:          { label: "Max", group: "World", kind: "vector3" },
   position:     { label: "Position", group: "Placement", kind: "vector3" },
@@ -369,10 +391,50 @@ export function coerce(kind: FieldKind, raw: string): number | string | null {
     const n = Number(raw);
     return Number.isFinite(n) ? n : null;
   }
+  // `percent` and `pct` differ only in what lands on disk (fraction vs 0–100);
+  // both parse as a plain float here so a half-typed "0." is not clobbered.
+  if (kind === "percent" || kind === "pct") {
+    if (raw.trim() === "") return null;
+    const n = Number(raw);
+    return Number.isFinite(n) ? n : null;
+  }
   return raw;
 }
 
-/** `step` for a numeric input — integers snap to 1, floats stay free. */
+/** `step` for a numeric input — integers snap to 1, everything else stays free. */
 export function stepFor(kind: FieldKind): string {
   return kind === "int" ? "1" : "any";
+}
+
+/**
+ * Round a 0–100 percent for storage: 6 significant figures.
+ *
+ * Not a fixed number of decimals. A drop chance spans 0.0000140% to 100%, so
+ * `toFixed(4)` flattens the whole low tail to zero while `toFixed(10)` gives 100%
+ * eight meaningless digits. Mirrors `roundPct` in the drops converter so a
+ * hand-edited value and a converted one are formatted identically.
+ */
+export function roundPercentValue(percent: number): number {
+  // NaN would serialize into the YAML and fail the server-side schema; Infinity
+  // is a real (if unreachable) over-range value and clamps like any other.
+  if (Number.isNaN(percent)) return 0;
+  return Number(Math.min(100, Math.max(0, percent)).toPrecision(6));
+}
+
+/**
+ * A 0–1 fraction as the 0–100 the form shows.
+ *
+ * Rounded to 6 decimals so `0.1 → 10`, not `10.000000000000002`: a raw float
+ * multiply would round-trip a value the user never typed back into the file.
+ */
+export function fractionToPercent(value: unknown): number {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 0;
+  return Number((n * 100).toFixed(6));
+}
+
+/** 0–100 back to the 0–1 fraction on disk, clamped to the schema's range. */
+export function percentToFraction(percent: number): number {
+  if (!Number.isFinite(percent)) return 0;
+  return Number((Math.min(100, Math.max(0, percent)) / 100).toFixed(8));
 }

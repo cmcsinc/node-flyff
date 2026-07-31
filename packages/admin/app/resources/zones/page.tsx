@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
 import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { IdCell, NameWithSymbol, TagCell, CountCell } from "@/components/resource-cells";
+import { IdCell, NameWithSymbol, TagCell, CountCell, EditLink } from "@/components/resource-cells";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
 import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
 import { Map } from "lucide-react";
@@ -42,6 +42,16 @@ const COLUMNS: readonly ResourceColumn<ZoneRow>[] = [
     cell: (r) => <CountCell value={r.spawns} />,
   },
   { key: "npcs", header: "NPCs", sortable: true, align: "right", cell: (r) => <CountCell value={r.npcs} /> },
+  {
+    key: "actions",
+    header: "Actions",
+    align: "right",
+    // Metadata only — the spawn/NPC collections in the same file have their own
+    // pages, reachable from the zone editor's header.
+    cell: (r) => (
+      <EditLink href={`/resources/zones/${encodeURIComponent(r.slug)}/edit`} label={`zone ${r.slug}`} />
+    ),
+  },
 ];
 
 export default async function ZonesPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {

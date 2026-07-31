@@ -2,8 +2,9 @@
  * Drop table loader -- reads `data/drops/drops.yml` into a model-index index.
  *
  * Keyed by `modelIdx` (== `CMover.m_dwIndex`) so the death roll is an O(1)
- * lookup. The probability scale is read from the file's `_prob_scale` and
- * re-exported so the roll math and the data stay in sync.
+ * lookup. Slots carry a percent `chance`; there is no probability scale to
+ * re-export any more (see `schemas/drop.schema.ts` for why the raw DWORD went
+ * away).
  *
  * @module loaders/drop.loader
  */
@@ -19,8 +20,6 @@ const logger = createResourceLogger('drop.loader');
 export interface DropIndex {
   /** modelIdx (== CMover.m_dwIndex) -> drop table. */
   drops: Map<number, DropTable>;
-  /** Probability denominator from the file (`_prob_scale`). */
-  probScale: number;
 }
 
 /**
@@ -36,12 +35,12 @@ export async function loadDrops(dataDir: string): Promise<DropIndex> {
     content = await readFile(filePath, 'utf-8');
   } catch {
     logger.warn({ filePath }, 'No drops.yml found -- drops disabled');
-    return { drops, probScale: 3_000_000_000 };
+    return { drops };
   }
 
   const validated = DropFileSchema.parse(parse(content));
   for (const t of validated.drops) drops.set(t.modelIdx, t);
 
   logger.info({ count: drops.size }, 'Drop tables loaded');
-  return { drops, probScale: validated._prob_scale };
+  return { drops };
 }

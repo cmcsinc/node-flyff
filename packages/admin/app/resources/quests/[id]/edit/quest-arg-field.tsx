@@ -31,7 +31,7 @@ import type { QuestArg } from "@flyff/resources";
 /** Which option registry an arg kind picks from, if any. */
 const KIND_OPTIONS: Partial<Record<QuestArgKind, string>> = {
   item: "item",
-  mover: "npcMover",
+  mover: "mover",
   job: "job",
   "character-key": "characterKey",
   "skill-id": "skill",
