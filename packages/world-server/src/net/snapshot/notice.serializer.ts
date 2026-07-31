@@ -19,7 +19,7 @@
  */
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
-import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import {
   NULL_ID,
   SNAPSHOTTYPE_TEXT,
@@ -71,5 +71,46 @@ export function buildGoldText(objid: number, plus: number, total: number): Buffe
   w.writeWord(SNAPSHOTTYPE_DEFINEDTEXT);
   w.writeDword(TID_GAME_REAPMONEY);
   w.writeString(`${plus.toLocaleString('en-US')} ${total.toLocaleString('en-US')}`);
+  return w.build();
+}
+
+/**
+ * `CUser::AddDefinedText( int dwText, LPCSTR lpszFormat, ... )`
+ * (`User.cpp:2200`) -- the printf-args form:
+ *   ar << GetId() << SNAPSHOTTYPE_DEFINEDTEXT << dwText;
+ *   ar.WriteString( szBuffer );   // formatted args
+ * Client resolves the template + colour from `textClient.inc` by `dwText`.
+ *
+ * @param objid  recipient's own objid (C++ passes `GetId()`)
+ * @param tid    `defineText.h` id
+ * @param args   pre-formatted argument string (C++ vsnprintf output)
+ */
+export function buildDefinedText(objid: number, tid: number, args: string): Buffer {
+  const w = new PacketWriter();
+  w.writeDword(PACKETTYPE.SNAPSHOT);
+  w.writeDword(objid);
+  w.writeWord(1);
+  w.writeDword(objid);
+  w.writeWord(SNAPSHOTTYPE_DEFINEDTEXT);
+  w.writeDword(tid);
+  w.writeString(args);
+  return w.build();
+}
+
+/**
+ * `CUser::AddDefinedText( int dwText )` (`User.cpp:2246`) -- the arg-less form.
+ * Different sub-type (`SNAPSHOTTYPE_DEFINEDTEXT1` 0x0094) and **no trailing
+ * string**; sending the 0x0095 body for an arg-less text shifts the client's
+ * read by a DWORD.
+ *   ar << GetId() << SNAPSHOTTYPE_DEFINEDTEXT1 << dwText;
+ */
+export function buildDefinedText1(objid: number, tid: number): Buffer {
+  const w = new PacketWriter();
+  w.writeDword(PACKETTYPE.SNAPSHOT);
+  w.writeDword(objid);
+  w.writeWord(1);
+  w.writeDword(objid);
+  w.writeWord(SNAPSHOTTYPE.DEFINEDTEXT1);
+  w.writeDword(tid);
   return w.build();
 }
