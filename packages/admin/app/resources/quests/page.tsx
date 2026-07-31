@@ -99,27 +99,29 @@ export default async function QuestsPage({ searchParams }: { searchParams: Promi
                   <TableHead>NPC</TableHead>
                   <TableHead>Commands</TableHead>
                   <TableHead className="text-right">Level</TableHead>
+                  <TableHead className="text-right">Edit</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {page.rows.map((q) => (
                   <TableRow key={q.id}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{q.id}</TableCell>
-                    <TableCell className="font-medium">
-                      <Link
-                        href={`/resources/quests/${String(q.id)}/edit`}
-                        className="rounded underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                      >
-                        {q.title}
-                      </Link>
-                    </TableCell>
+                    <TableCell className="font-medium">{q.title}</TableCell>
                     <TableCell className="font-mono text-xs text-muted-foreground">{q.npc || "—"}</TableCell>
                     <TableCell className="text-muted-foreground">{q.cmds > 0 ? `${q.cmds} cmds` : "—"}</TableCell>
                     <TableCell className="text-right">{q.level > 0 ? <Badge variant="secondary">Lv. {q.level}</Badge> : "—"}</TableCell>
+                    <TableCell className="text-right">
+                      <Link
+                        href={`/resources/quests/${String(q.id)}/edit`}
+                        className="text-xs text-primary hover:underline"
+                      >
+                        Edit
+                      </Link>
+                    </TableCell>
                   </TableRow>
                 ))}
                 {filtered.length === 0 && (
-                  <EmptyRow colSpan={5}>
+                  <EmptyRow colSpan={6}>
                     <div className="flex flex-col items-center gap-1">
                       <ScrollText className="h-5 w-5 opacity-40" />
                       {search || npc || minLevel || maxLevel ? "No quests match your filters" : "No quest data found"}
