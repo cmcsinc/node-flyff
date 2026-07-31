@@ -2,16 +2,13 @@ import { db } from "@/lib/db";
 import { accounts, characters, inventory, inventoryItems, bank, bankItems } from "@/../drizzle/schema";
 import { eq, count } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/page-header";
-import { EmptyRow } from "@/components/empty-state";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
-import { formatNumber, formatDate, jobName, worldName } from "@/lib/utils";
+import { CharacterTable } from "./character-table";
+import { formatNumber, formatDate } from "@/lib/utils";
+import { EditAccountButton } from "../account-form";
 
 export const dynamic = "force-dynamic";
 
@@ -35,9 +32,19 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
         description={`Account ID: ${account.id}`}
         backHref="/accounts"
         actions={
-          <div className="flex gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {account.gm && <Badge variant="gold">GM</Badge>}
             {account.banned && <Badge variant="destructive">Banned</Badge>}
+            <EditAccountButton
+              account={{
+                id: account.id,
+                username: account.username,
+                email: account.email,
+                gm: account.gm,
+                banned: account.banned,
+                bannedUntil: account.bannedUntil,
+              }}
+            />
           </div>
         }
       />
@@ -78,39 +85,7 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
         <TabsContent value="characters">
           <Card>
             <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Slot</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Class</TableHead>
-                    <TableHead>Level</TableHead>
-                    <TableHead>World</TableHead>
-                    <TableHead>Position</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {chars.map((char) => (
-                    <TableRow key={char.id}>
-                      <TableCell>{char.slot}</TableCell>
-                      <TableCell>
-                        <Link href={`/characters/${char.id}`} className="font-medium hover:underline">
-                          {char.name}
-                        </Link>
-                      </TableCell>
-                      <TableCell>{jobName(char.class)}</TableCell>
-                      <TableCell>{char.level}</TableCell>
-                      <TableCell>{worldName(char.worldId)}</TableCell>
-                      <TableCell className="text-xs text-muted-foreground">
-                        {char.x.toFixed(1)}, {char.z.toFixed(1)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {chars.length === 0 && (
-                    <EmptyRow colSpan={6}>No characters</EmptyRow>
-                  )}
-                </TableBody>
-              </Table>
+              <CharacterTable rows={chars} />
             </CardContent>
           </Card>
         </TabsContent>

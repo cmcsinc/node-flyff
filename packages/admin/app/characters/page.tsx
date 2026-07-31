@@ -9,9 +9,10 @@ import { PageHeader } from "@/components/page-header";
 import { SearchInput } from "@/components/search-input";
 import { EmptyRow } from "@/components/empty-state";
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+  Table, TableBody, TableCell, TableHeader, TableRow, SortableHead,
 } from "@/components/ui/table";
-import { formatNumber, jobName, worldName } from "@/lib/utils";
+import { parseSort, sortRows } from "@/lib/sort";
+import { jobName, worldName } from "@/lib/utils";
 import { getOnlineCharacterIds } from "@/lib/presence";
 import { OnlineIndicator } from "@/components/online-indicator";
 import { Swords } from "lucide-react";
@@ -21,7 +22,16 @@ export const dynamic = "force-dynamic";
 interface SearchParams {
   search?: string;
   class?: string;
+  sort?: string;
+  dir?: string;
+  /** Index signature so the whole bag can be handed to the sort/page links. */
+  [key: string]: string | undefined;
 }
+
+const SORT_KEYS = [
+  "id", "name", "online", "class", "level",
+  "strength", "stamina", "dexterity", "intelligence", "worldId", "accountUsername",
+] as const;
 
 export default async function CharactersPage({
   searchParams,
@@ -58,11 +68,23 @@ export default async function CharactersPage({
 
   const onlineIds = await getOnlineCharacterIds();
 
+  // Default order is the SQL level-desc, so no fallback key.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const sorted = sortRows(filtered, sort, {
+    class: (r) => jobName(r.class),
+    worldId: (r) => worldName(r.worldId),
+    online: (r) => (onlineIds.has(r.id) ? 0 : 1),
+    accountUsername: (r) => r.accountUsername ?? "",
+  });
+
   return (
     <div className="space-y-6">
       <PageHeader title="Characters" description={`${filtered.length} characters`} />
 
       <form className="flex flex-col gap-2 sm:flex-row sm:items-end" method="GET">
+        {/* Searching must not silently reset the column sort. */}
+        {sort.key && <input type="hidden" name="sort" value={sort.key} />}
+        {sort.key && <input type="hidden" name="dir" value={sort.dir} />}
         <SearchInput
           name="search"
           placeholder="Search by name…"
@@ -77,22 +99,22 @@ export default async function CharactersPage({
           <div className="max-h-[70vh] overflow-y-auto">
             <Table>
               <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
-                <TableRow>
-                  <TableHead className="w-16">ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="w-24">Status</TableHead>
-                  <TableHead>Class</TableHead>
-                  <TableHead className="text-right">Level</TableHead>
-                  <TableHead className="hidden text-right md:table-cell">STR</TableHead>
-                  <TableHead className="hidden text-right md:table-cell">STA</TableHead>
-                  <TableHead className="hidden text-right md:table-cell">DEX</TableHead>
-                  <TableHead className="hidden text-right md:table-cell">INT</TableHead>
-                  <TableHead className="hidden lg:table-cell">World</TableHead>
-                  <TableHead className="hidden sm:table-cell">Account</TableHead>
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">ID</SortableHead>
+                  <SortableHead sortKey="name" sort={sort} params={params}>Name</SortableHead>
+                  <SortableHead sortKey="online" sort={sort} params={params} className="w-28">Status</SortableHead>
+                  <SortableHead sortKey="class" sort={sort} params={params}>Class</SortableHead>
+                  <SortableHead sortKey="level" sort={sort} params={params} align="right">Level</SortableHead>
+                  <SortableHead sortKey="strength" sort={sort} params={params} align="right" className="hidden md:table-cell">STR</SortableHead>
+                  <SortableHead sortKey="stamina" sort={sort} params={params} align="right" className="hidden md:table-cell">STA</SortableHead>
+                  <SortableHead sortKey="dexterity" sort={sort} params={params} align="right" className="hidden md:table-cell">DEX</SortableHead>
+                  <SortableHead sortKey="intelligence" sort={sort} params={params} align="right" className="hidden md:table-cell">INT</SortableHead>
+                  <SortableHead sortKey="worldId" sort={sort} params={params} className="hidden lg:table-cell">World</SortableHead>
+                  <SortableHead sortKey="accountUsername" sort={sort} params={params} className="hidden sm:table-cell">Account</SortableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filtered.map((char) => (
+                {sorted.map((char) => (
                   <TableRow key={char.id}>
                     <TableCell className="font-mono text-xs text-muted-foreground">{char.id}</TableCell>
                     <TableCell>

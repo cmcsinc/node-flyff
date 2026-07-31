@@ -8,7 +8,8 @@ import { FilterBar } from "@/components/filter-bar";
 import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
+import { parseSort, sortRows } from "@/lib/sort";
 import { MessageSquareText } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +19,11 @@ type SearchParams = {
   minStates?: string;
   page?: string;
   perPage?: string;
+  sort?: string;
+  dir?: string;
 }
+
+const SORT_KEYS = ["prefix", "states"] as const;
 
 export default async function DialoguesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
@@ -48,13 +53,16 @@ export default async function DialoguesPage({ searchParams }: { searchParams: Pr
     return true;
   });
 
-  const page = paginate(filtered, parsePage(params.page), perPage);
+  // Sorting runs before paging so a column sort spans the whole result set,
+  // not just the rows already on the current page.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const page = paginate(sortRows(filtered, sort), parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
       <PageHeader title="Dialogues" description={`${filtered.length} of ${rows.length} dialogue files`} />
 
-      <FilterBar perPage={perPage} active={Boolean(search || minStates)}>
+      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || minStates)}>
         <SearchInput name="search" placeholder="Search by NPC / file..." defaultValue={search} className="w-full sm:w-72" />
         <Input name="minStates" type="number" min={0} defaultValue={minStates} placeholder="Min states" aria-label="Minimum state count" className="w-32" />
       </FilterBar>
@@ -63,10 +71,10 @@ export default async function DialoguesPage({ searchParams }: { searchParams: Pr
         <CardContent className="p-0">
           <div className="overflow-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead>NPC / File</TableHead>
-                  <TableHead className="text-right">States</TableHead>
+              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="prefix" sort={sort} params={params}>NPC / File</SortableHead>
+                  <SortableHead sortKey="states" sort={sort} params={params} align="right">States</SortableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

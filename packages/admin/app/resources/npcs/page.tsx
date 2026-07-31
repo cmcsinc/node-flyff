@@ -9,7 +9,8 @@ import { FilterBar } from "@/components/filter-bar";
 import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
+import { parseSort, sortRows } from "@/lib/sort";
 import Link from "next/link";
 import { Users } from "lucide-react";
 
@@ -20,6 +21,8 @@ type SearchParams = {
   zone?: string;
   page?: string;
   perPage?: string;
+  sort?: string;
+  dir?: string;
 };
 
 /** mover id → display name, so the table shows "Dr. Estern" not just 220. */
@@ -36,6 +39,8 @@ function moverNames(): Map<number, string> {
   }
   return names;
 }
+
+const SORT_KEYS = ["id", "zoneName", "characterKey", "mover", "x", "functions"] as const;
 
 export default async function NpcsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
@@ -61,7 +66,10 @@ export default async function NpcsPage({ searchParams }: { searchParams: Promise
   });
 
   filtered.sort((a, b) => a.zoneId.localeCompare(b.zoneId) || a.id - b.id);
-  const page = paginate(filtered, parsePage(params.page), perPage);
+  // Sorting runs before paging so a column sort spans the whole result set,
+  // not just the rows already on the current page.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const page = paginate(sortRows(filtered, sort, { mover: (n) => names.get(n.moverId) ?? "" }), parsePage(params.page), perPage);
   const newZone = zone || zones[0]?.id;
 
   return (
@@ -81,7 +89,7 @@ export default async function NpcsPage({ searchParams }: { searchParams: Promise
         }
       />
 
-      <FilterBar perPage={perPage} active={Boolean(search || zone)}>
+      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || zone)}>
         <SearchInput name="search" placeholder="Search by character key, mover, or ID..." defaultValue={search} className="w-full sm:w-80" />
         <Select name="zone" defaultValue={zone} className="w-44" aria-label="Filter by zone">
           <option value="">All zones</option>
@@ -95,14 +103,14 @@ export default async function NpcsPage({ searchParams }: { searchParams: Promise
         <CardContent className="p-0">
           <div className="overflow-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead className="w-16">ID</TableHead>
-                  <TableHead>Zone</TableHead>
-                  <TableHead>Character Key</TableHead>
-                  <TableHead>Mover</TableHead>
-                  <TableHead>Position</TableHead>
-                  <TableHead className="text-right">Functions</TableHead>
+              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">ID</SortableHead>
+                  <SortableHead sortKey="zoneName" sort={sort} params={params}>Zone</SortableHead>
+                  <SortableHead sortKey="characterKey" sort={sort} params={params}>Character Key</SortableHead>
+                  <SortableHead sortKey="mover" sort={sort} params={params}>Mover</SortableHead>
+                  <SortableHead sortKey="x" sort={sort} params={params}>Position</SortableHead>
+                  <SortableHead sortKey="functions" sort={sort} params={params} align="right">Functions</SortableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>

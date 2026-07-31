@@ -9,7 +9,8 @@ import { FilterBar } from "@/components/filter-bar";
 import { Pagination } from "@/components/pagination";
 import { EmptyRow } from "@/components/empty-state";
 import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
+import { parseSort, sortRows } from "@/lib/sort";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 
@@ -22,7 +23,11 @@ type SearchParams = {
   maxReqLevel?: string;
   page?: string;
   perPage?: string;
+  sort?: string;
+  dir?: string;
 }
+
+const SORT_KEYS = ["id", "name", "job", "tier", "reqLevel", "maxLevel"] as const;
 
 export default async function SkillsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
@@ -69,13 +74,16 @@ export default async function SkillsPage({ searchParams }: { searchParams: Promi
     return true;
   });
 
-  const page = paginate(filtered, parsePage(params.page), perPage);
+  // Sorting runs before paging so a column sort spans the whole result set,
+  // not just the rows already on the current page.
+  const sort = parseSort(params.sort, params.dir, SORT_KEYS);
+  const page = paginate(sortRows(filtered, sort), parsePage(params.page), perPage);
 
   return (
     <div className="space-y-6">
       <PageHeader title="Skills" description={`${filtered.length} of ${skills.length} skills from ${data.length} job files`} />
 
-      <FilterBar perPage={perPage} active={Boolean(search || job || tier || maxReqLevel)}>
+      <FilterBar perPage={perPage} sort={sort} active={Boolean(search || job || tier || maxReqLevel)}>
         <SearchInput name="search" placeholder="Search by name or ID..." defaultValue={search} className="w-full sm:w-72" />
         <Select name="job" defaultValue={job} className="w-40" aria-label="Filter by job">
           <option value="">All jobs</option>
@@ -104,14 +112,14 @@ export default async function SkillsPage({ searchParams }: { searchParams: Promi
         <CardContent className="p-0">
           <div className="overflow-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background">
-                <TableRow>
-                  <TableHead className="w-20">ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Job</TableHead>
-                  <TableHead className="text-center">Tier</TableHead>
-                  <TableHead className="text-right">Req Lv</TableHead>
-                  <TableHead className="text-right">Max Lv</TableHead>
+              <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
+                <TableRow className="hover:bg-transparent">
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-20">ID</SortableHead>
+                  <SortableHead sortKey="name" sort={sort} params={params}>Name</SortableHead>
+                  <SortableHead sortKey="job" sort={sort} params={params}>Job</SortableHead>
+                  <SortableHead sortKey="tier" sort={sort} params={params} align="center">Tier</SortableHead>
+                  <SortableHead sortKey="reqLevel" sort={sort} params={params} align="right">Req Lv</SortableHead>
+                  <SortableHead sortKey="maxLevel" sort={sort} params={params} align="right">Max Lv</SortableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>

@@ -87,7 +87,7 @@ export function Modal({
       aria-describedby={description ? descId : undefined}
     >
       <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm animate-[fade-in-up_0.15s_ease-out]"
+        className="fixed inset-0 bg-scrim backdrop-blur-sm animate-[fade-in-up_0.15s_ease-out]"
         onClick={() => onOpenChange(false)}
         aria-hidden
       />
@@ -95,7 +95,7 @@ export function Modal({
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "relative my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col rounded-xl border border-border bg-popover shadow-2xl outline-none animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]",
+          "relative my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col rounded-xl border border-border bg-popover shadow-overlay outline-none animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]",
           className,
         )}
       >

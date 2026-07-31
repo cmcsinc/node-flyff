@@ -49,7 +49,7 @@ export function SidebarBackdrop() {
   if (!mobileOpen) return null;
   return (
     <div
-      className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+      className="fixed inset-0 z-40 bg-scrim backdrop-blur-sm lg:hidden"
       onClick={() => setMobileOpen(false)}
       aria-hidden
     />

@@ -1,5 +1,8 @@
 import * as React from "react";
+import Link from "next/link";
+import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { sortHref, type Sort } from "@/lib/sort";
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
@@ -39,7 +42,11 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
   ({ className, ...props }, ref) => (
     <tr
       ref={ref}
-      className={cn("border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted", className)}
+      className={cn(
+        "border-b border-border transition-colors hover:bg-accent/40 data-[state=selected]:bg-accent/60",
+        className,
+      )}
+
       {...props}
     />
   ),
@@ -78,4 +85,70 @@ const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttribu
 );
 TableCaption.displayName = "TableCaption";
 
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+  SortableHead,
+};
+
+interface SortableHeadProps extends Omit<React.ThHTMLAttributes<HTMLTableCellElement>, "children"> {
+  /** Sort key this column writes to `?sort=`. */
+  sortKey: string;
+  /** Currently active sort, from `parseSort`. */
+  sort: Sort<string>;
+  /** Current query params, preserved in the link (minus `sort`/`dir`/`page`). */
+  params: Record<string, string | undefined>;
+  /** Right-align the label for numeric columns. */
+  align?: "left" | "right" | "center";
+  /** Plain text — it doubles as the `aria-label` of the sort control. */
+  children: string;
+}
+
+/**
+ * Header cell that sorts by query string. The whole cell is one link — so the
+ * hit area is the full header, not just the text — and carries `aria-sort` so
+ * screen readers announce the direction, plus a text-visible arrow so the state
+ * never depends on colour alone.
+ */
+function SortableHead({
+  sortKey,
+  sort,
+  params,
+  align = "left",
+  className,
+  children,
+  ...props
+}: SortableHeadProps): React.JSX.Element {
+  const active = sort.key === sortKey;
+  const ariaSort = active ? (sort.dir === "asc" ? "ascending" : "descending") : "none";
+  const Icon = active ? (sort.dir === "asc" ? ArrowUp : ArrowDown) : ChevronsUpDown;
+  const next = active && sort.dir === "asc" ? "descending" : "ascending";
+
+  return (
+    <TableHead aria-sort={ariaSort} className={cn("p-0", className)} {...props}>
+      <Link
+        href={sortHref(params, sortKey, sort)}
+        aria-label={`Sort by ${children}, ${next}`}
+        className={cn(
+          "flex h-10 w-full items-center gap-1.5 px-3 transition-colors hover:text-foreground",
+          align === "right" && "justify-end",
+          align === "center" && "justify-center",
+          active && "text-foreground",
+        )}
+      >
+        <span className="truncate">{children}</span>
+        <Icon
+          aria-hidden
+          className={cn("h-3.5 w-3.5 shrink-0", active ? "text-primary" : "opacity-40")}
+        />
+      </Link>
+    </TableHead>
+  );
+}
+
