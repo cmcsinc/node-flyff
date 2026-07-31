@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
 import { AdminListener } from './ipc/adminListener';
@@ -40,6 +40,14 @@ import { ChatHandler } from './handlers/chat.handler';
 import { CommandService } from './services/command.service';
 import { MotionService } from './services/motion.service';
 import { MotionHandler } from './handlers/motion.handler';
+import { MoverFocusService } from './services/moverFocus.service';
+import { MoverFocusHandler } from './handlers/moverFocus.handler';
+import { GmChatLogService } from './services/gmChatLog.service';
+import { GmChatLogHandler } from './handlers/gmChatLog.handler';
+import { QueryEquipService } from './services/queryEquip.service';
+import { QueryEquipHandler } from './handlers/queryEquip.handler';
+import { CheerService } from './services/cheer.service';
+import { CheeringHandler } from './handlers/cheering.handler';
 import { TargetService } from '@flyff/npc';
 import { SetTargetHandler } from '@flyff/npc';
 import { LeaveHandler } from './handlers/leave.handler';
@@ -94,6 +102,9 @@ import { DoUseItemHandler } from '@flyff/inventory';
 import { EnchantHandler } from '@flyff/inventory';
 import { RepairService } from '@flyff/inventory';
 import { RepairHandler } from '@flyff/inventory';
+import { TradeService } from '@flyff/inventory';
+import { TradeHandler } from '@flyff/inventory';
+import { FriendService, FriendHandler, CampusService, CampusHandler, CAMPUS_BUFF_BY_LEVEL } from '@flyff/social';
 import { BankService } from '@flyff/npc';
 import { BankHandler } from '@flyff/npc';
 import { TaskBarService } from './services/taskbar.service';
@@ -108,7 +119,7 @@ import { NpcBuffHandler } from '@flyff/npc';
 import { RemoveQuestHandler } from '@flyff/quest';
 import { QuestCheckHandler } from '@flyff/quest';
 import { QuestHelperHandler } from '@flyff/quest';
-import { NoticeSerializer, buildGoldText } from './net/snapshot/notice.serializer';
+import { NoticeSerializer, buildGoldText, buildDefinedText } from './net/snapshot/notice.serializer';
 import { JournalReplayer } from './systems/journalReplayer';
 import { registerReplayers } from './systems/journalReplayers';
 import { QuestTrackerSystem } from '@flyff/quest';
@@ -152,6 +163,20 @@ export interface WorldComposeResult {
   commandService: CommandService;
   motionService: MotionService;
   motionHandler: MotionHandler;
+  moverFocusService: MoverFocusService;
+  moverFocusHandler: MoverFocusHandler;
+  gmChatLogService: GmChatLogService;
+  gmChatLogHandler: GmChatLogHandler;
+  queryEquipService: QueryEquipService;
+  queryEquipHandler: QueryEquipHandler;
+  cheerService: CheerService;
+  cheeringHandler: CheeringHandler;
+  tradeService: TradeService;
+  tradeHandler: TradeHandler;
+  friendService: FriendService;
+  friendHandler: FriendHandler;
+  campusService: CampusService;
+  campusHandler: CampusHandler;
   targetService: TargetService;
   setTargetHandler: SetTargetHandler;
   leaveHandler: LeaveHandler;
@@ -267,6 +292,8 @@ export async function compose(): Promise<WorldComposeResult> {
   const buffRepo = new BuffRepository(db);
   const mailRepo = new MailRepository(db);
   const presenceRepo = new PresenceRepository(db);
+  const friendRepo = new FriendRepository(db);
+  const campusRepo = new CampusRepository(db);
   // A hard crash leaves this process's presence rows behind. Clearing them at
   // boot means the admin panel never shows a ghost as online for the 60 s the
   // staleness window would otherwise take to expire them.
@@ -442,6 +469,12 @@ export async function compose(): Promise<WorldComposeResult> {
     // Wrapped in a closure so the reference resolves at call time, after
     // compose() has returned -- never during this constructor.
     mailHandler: { sendMailBox: (player: CPlayer) => mailHandler.sendMailBox(player) },
+    // Same late-resolution trick: friendService/campusService are composed below.
+    // Friend first -- the roster blob is what makes the messenger window usable.
+    socialJoin: async (player: CPlayer) => {
+      await friendService.onJoin(player);
+      await campusService.onJoin(player);
+    },
   });
   const joinHandler = new JoinHandler(
     joinService,
@@ -459,10 +492,23 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   checkpointSystem.start();
 
+  const cheerService = new CheerService({
+    playerManager, zoneManager,
+    getItemProp: (id: number) => resources.items.items.get(id),
+  });
   // Passive HP/MP/FP regen -- C++ `CMover::ProcessRecovery` stand branch. Fires
   // every 3 s for players untouched by combat for 10 s. Self-driven 1 s timer
   // (public `tick(now)` for the future unified 50 ms loop); stopped on shutdown.
-  const recoverySystem = new RecoverySystem({ playerManager });
+  // Also drives `CMover::CheckTickCheer` (cheer-point regen, Mover.cpp:9069) --
+  // C++ calls it from the same per-user tick (User.cpp:438).
+  // Campus point regen rides the recovery loop, as C++ drives
+  // `RecoveryCampusPoint` from the same per-user tick as `ProcessRecovery`
+  // (`WORLDSERVER/User.cpp:432-433`). Late-bound -- campusService is built below.
+  const campusRecoverSlot: { fn: ((p: CPlayer, now: number) => void) | null } = { fn: null };
+  const recoverySystem = new RecoverySystem({
+    playerManager, cheerService,
+    campusService: { recoverPoints: (p, now) => campusRecoverSlot.fn?.(p, now) },
+  });
   recoverySystem.start();
   const buffSystem = new BuffSystem({ playerManager, zoneManager });
   const pkDecaySystem = new PkDecaySystem({ playerManager, charRepo });
@@ -487,6 +533,9 @@ export async function compose(): Promise<WorldComposeResult> {
   // built further below; capture it via a slot that's filled once combat exists.
   const partyManager = new PartyManager();
   const combatGrantSlot: { fn: ((p: CPlayer, amount: number) => void) | null } = { fn: null };
+  // CampusService is composed after CombatService (it needs the repos wired
+  // below), so the level-up seam is late-bound the same way `combatGrantSlot` is.
+  const campusLevelUpSlot: { fn: ((p: CPlayer) => void) | null } = { fn: null };
   const partyService = new PartyService({
     playerManager, partyManager,
     grantExpAmount: (p, amount) => combatGrantSlot.fn!(p, amount),
@@ -522,6 +571,13 @@ export async function compose(): Promise<WorldComposeResult> {
   const chatHandler = new ChatHandler(playerManager, chatService);
   const motionService = new MotionService({ zoneManager });
   const motionHandler = new MotionHandler(playerManager, motionService);
+  const moverFocusService = new MoverFocusService({ playerManager });
+  const moverFocusHandler = new MoverFocusHandler(playerManager, moverFocusService);
+  const gmChatLogService = new GmChatLogService();
+  const gmChatLogHandler = new GmChatLogHandler(playerManager, gmChatLogService);
+  const queryEquipService = new QueryEquipService({ playerManager, zoneManager });
+  const queryEquipHandler = new QueryEquipHandler(playerManager, queryEquipService);
+  const cheeringHandler = new CheeringHandler(playerManager, cheerService);
   const targetService = new TargetService({ spawnManager });
   const setTargetHandler = new SetTargetHandler(playerManager, targetService);
   const leaveHandler = new LeaveHandler();
@@ -575,6 +631,8 @@ export async function compose(): Promise<WorldComposeResult> {
     // splits the kill exp among nearby party members (proximity + level gate).
     // Returns null when the killer has no party -> combat runs its solo grant.
     partyExp: (killer, mover, baseExp) => partyService.distributeExp(killer, mover, baseExp),
+    // Campus reward + graduation on level-up (CCampusHelper::SetLevelUpReward).
+    onLevelUp: (player) => campusLevelUpSlot.fn?.(player),
   });
   // Fill the late-bound exp-applier slot so party share routes through the
   // SAME grantExpAmount path as solo kills (one exp-application code path).
@@ -645,6 +703,66 @@ export async function compose(): Promise<WorldComposeResult> {
     spendGold: (player, amount) => inventoryService.spendGold(player, amount),
   });
   const repairHandler = new RepairHandler({ playerManager, repairService });
+
+  // Trade -- the 10-opcode CVTInfo state machine. Items stay in the bag until
+  // commit (re-validated then); gold is debited at stake time and refunded by
+  // every abort path, so TradeService.onDisconnect must run on leave.
+  const tradeService = new TradeService({
+    playerManager, inventoryRepo, journal,
+    getItemProp: (id: number) => resources.items.items.get(id),
+    sendDefinedText: (player, tid) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
+  const tradeHandler = new TradeHandler(playerManager, tradeService);
+
+  // Friend roster (CRTMessenger) -- 6 opcodes + presence pushes. Roster edges are
+  // written through immediately (no WAL, matching C++ which has no batch save).
+  const friendService = new FriendService({
+    playerManager, friendRepo, charRepo,
+    sendDefinedText: (player, tid) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
+  const friendHandler = new FriendHandler(playerManager, friendService);
+
+  // Campus / mentoring (CCampusHelper) -- 4 client opcodes. C++ round-trips every
+  // mutation through the DB server; with one process the service writes directly
+  // but keeps the persist-then-notify order.
+  const campusService = new CampusService({
+    playerManager, campusRepo, charRepo,
+    isQuestComplete: (player, questId) => player.isCompleteQuest(questId),
+    applyCampusBuff: (player, itemId) => {
+      // IK3_TS_BUFF campus buff -- rides the existing item-buff path. The buff
+      // items (II_TS_BUFF_POWER_LOVE01-03) carry their own DST effects.
+      const prop = resources.items.items.get(itemId);
+      if (!prop?.effects?.length) return;
+      const effects = prop.effects.map((e) =>
+        e.chg === undefined ? { dst: e.dst, adj: e.adj } : { dst: e.dst, adj: e.adj, chg: e.chg });
+      player.m_buffs.addItemBuff(itemId, (prop.duration ?? 0) * 1_000, effects, Date.now());
+    },
+    removeCampusBuff: (player) => {
+      for (const id of Object.values(CAMPUS_BUFF_BY_LEVEL)) player.m_buffs.remove(id);
+    },
+    sendDefinedText: (player, tid, args) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
+  });
+  const campusHandler = new CampusHandler(playerManager, campusService);
+  // Close the level-up seam now that campusService exists. Fire-and-forget: a
+  // reward write must never block or reject the exp grant that triggered it.
+  campusRecoverSlot.fn = (player: CPlayer, now: number) => {
+    void campusService.recoverPoints(player, now)
+      .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer },
+        'campus point recovery failed'));
+  };
+  campusLevelUpSlot.fn = (player: CPlayer) => {
+    void campusService.onLevelUp(player)
+      .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer },
+        'campus level-up reward failed'));
+  };
+  // Boot-time campus load -- the equivalent of the DB server pushing
+  // PACKETTYPE_CAMPUS_ALL into each world. Fire-and-forget: an empty campus map
+  // is a valid state, and a failure must not block the listener.
+  void campusService.bootstrap()
+    .catch((err: unknown) => logger.warn({ err }, 'campus bootstrap failed'));
 
   // Bank -- open + deposit/withdraw item & gold (account-shared).
   const bankService = new BankService({ bankRepo, inventoryRepo, journal });
@@ -747,6 +865,14 @@ export async function compose(): Promise<WorldComposeResult> {
     commandService,
     motionService,
     motionHandler,
+    moverFocusService,
+    moverFocusHandler,
+    gmChatLogService,
+    gmChatLogHandler,
+    queryEquipService,
+    queryEquipHandler,
+    cheerService,
+    cheeringHandler,
     targetService,
     setTargetHandler,
     leaveHandler,
@@ -791,6 +917,12 @@ export async function compose(): Promise<WorldComposeResult> {
     doUseItemHandler,
     enchantHandler,
     repairHandler,
+    tradeService,
+    tradeHandler,
+    friendService,
+    friendHandler,
+    campusService,
+    campusHandler,
     bankHandler,
     shopHandler,
     npcBuffHandler,

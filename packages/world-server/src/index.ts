@@ -75,6 +75,14 @@ async function main(): Promise<void> {
     clusterListener,
     adminListener,
     mailHandler,
+    queryEquipHandler,
+    cheeringHandler,
+    tradeService,
+    tradeHandler,
+    friendService,
+    friendHandler,
+    campusService,
+    campusHandler,
     joinService,
     joinHandler,
     mapKeyHandler,
@@ -84,6 +92,8 @@ async function main(): Promise<void> {
     playerBehaviorHandler,
     chatHandler,
     motionHandler,
+    moverFocusHandler,
+    gmChatLogHandler,
     setTargetHandler,
     leaveHandler,
     playerCorrHandler,
@@ -202,6 +212,8 @@ async function main(): Promise<void> {
     playerBehaviorHandler,
     chatHandler,
     motionHandler,
+    moverFocusHandler,
+    gmChatLogHandler,
     setTargetHandler,
     leaveHandler,
     playerCorrHandler,
@@ -238,6 +250,11 @@ async function main(): Promise<void> {
     doUseSkillPointHandler,
     modifyStatusHandler,
     mailHandler,
+    queryEquipHandler,
+    cheeringHandler,
+    tradeHandler,
+    friendHandler,
+    campusHandler,
     onDisconnect: (socket) => {
       // Party cleanup FIRST -- needs the live player object to clear m_idParty
       // + re-broadcast roster / disband. After disconnectByCharId drops the
@@ -247,6 +264,14 @@ async function main(): Promise<void> {
         const player = playerManager.get(charId);
         if (player) {
           partyService.onDisconnect(player);
+          // Trade teardown before the player leaves PlayerManager: refunds any
+          // staged gold on BOTH sides and unwedges the surviving partner
+          // (C++ `CMover::~CMover` -> `pOther->m_vtInfo.TradeClear()`).
+          tradeService.onDisconnect(player);
+          // Friend + campus presence: tell online friends we left and refresh
+          // campus buff levels (a master's buff level is the ONLINE pupil count).
+          friendService.onDisconnect(charId);
+          campusService.onDisconnect(charId);
           // DEL_OBJ the leaver from every peer that still has them in scene, and
           // clear their own known-set (rule 05 -- no dangling Set entries).
           visibilityService.remove(player);

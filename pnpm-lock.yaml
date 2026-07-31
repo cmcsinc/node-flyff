@@ -586,6 +586,31 @@ importers:
         specifier: ^5.4.5
         version: 5.9.3
 
+  packages/social:
+    dependencies:
+      '@flyff/core':
+        specifier: workspace:*
+        version: link:../core
+      '@flyff/database':
+        specifier: workspace:*
+        version: link:../database
+      '@flyff/entities':
+        specifier: workspace:*
+        version: link:../entities
+      '@flyff/world-core':
+        specifier: workspace:*
+        version: link:../world-core
+    devDependencies:
+      '@types/node':
+        specifier: ^20.12.7
+        version: 20.19.37
+      tsx:
+        specifier: ^4.7.2
+        version: 4.21.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.9.3
+
   packages/world-core:
     dependencies:
       '@flyff/core':
@@ -646,6 +671,9 @@ importers:
       '@flyff/skills':
         specifier: workspace:*
         version: link:../skills
+      '@flyff/social':
+        specifier: workspace:*
+        version: link:../social
       '@flyff/world-core':
         specifier: workspace:*
         version: link:../world-core

@@ -84,6 +84,15 @@ export interface CombatServiceDeps {
    * `@flyff/party` import (structural type -- closure satisfies the signature).
    */
   partyExp?: (killer: CPlayer, mover: CMover, baseExp: number) => number | null;
+  /**
+   * Optional level-up hook (wired to `CampusService.onLevelUp` in `compose.ts`).
+   * Fires once per exp grant that crossed at least one level boundary, AFTER
+   * `m_nLevel` is final -- campus rewards key on the exact new level
+   * (`CCampusHelper::SetLevelUpReward`, `CampusHelper.cpp:418`), so an early call
+   * would read the old value. Same structural-seam pattern as `partyExp`, keeping
+   * `@flyff/combat` free of a `@flyff/social` import.
+   */
+  onLevelUp?: (player: CPlayer, prevLevel: number) => void;
 }
 
 export type CombatOutcome =
@@ -419,6 +428,9 @@ export class CombatService {
       player._dirty.add('m_nMp');
       this.grantSkillPoints(player, prevLevel);
       this.grantGrowthPoints(player, prevLevel);
+      // Campus level-up rewards. Runs last so `m_nLevel` is final -- rewards key
+      // on the exact new level and graduation (level 75) dissolves the pairing.
+      this.deps.onLevelUp?.(player, prevLevel);
     }
 
     // WAL journal the ABSOLUTE post-state before the client ack (rule 04).
