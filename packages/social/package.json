@@ -1,0 +1,29 @@
+{
+  "name": "@flyff/social",
+  "version": "1.0.0",
+  "description": "Flyff social domain -- friend roster (CRTMessenger) + campus/mentor system (CCampusHelper)",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src",
+    "test": "tsx --test test/**/*.test.ts",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@flyff/core": "workspace:*",
+    "@flyff/entities": "workspace:*",
+    "@flyff/world-core": "workspace:*",
+    "@flyff/database": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}
