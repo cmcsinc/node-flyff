@@ -85,6 +85,16 @@ export interface CombatServiceDeps {
    */
   partyExp?: (killer: CPlayer, mover: CMover, baseExp: number) => number | null;
   /**
+   * Optional same-party predicate (wired to a `PartyManager` lookup in
+   * `compose.ts`, the same closure `LootService` gets). Used by the hit-share
+   * exp split to pool co-party attackers' damage into ONE share before handing
+   * it to {@link CombatServiceDeps.partyExp}. Without it every attacker is
+   * treated as unaffiliated, so a 3-member party splitting a mob three ways
+   * would each run their own party split on a third of the exp. Structural
+   * type -- keeps `@flyff/combat` free of any `@flyff/party` import.
+   */
+  sameParty?: (a: number, b: number) => boolean;
+  /**
    * Optional level-up hook (wired to `CampusService.onLevelUp` in `compose.ts`).
    * Fires once per exp grant that crossed at least one level boundary, AFTER
    * `m_nLevel` is final -- campus rewards key on the exact new level
@@ -93,6 +103,12 @@ export interface CombatServiceDeps {
    * `@flyff/combat` free of a `@flyff/social` import.
    */
   onLevelUp?: (player: CPlayer, prevLevel: number) => void;
+}
+
+/** One `m_idEnemies` row: an attacker and their cumulative recorded damage. */
+interface HitShare {
+  readonly id: number;
+  readonly hit: number;
 }
 
 export type CombatOutcome =
@@ -369,37 +385,118 @@ export class CombatService {
   }
 
   /**
-   * `SubExperience` -> `AddExperienceSolo` (Mover.cpp:5992/6085).
-   * base = nExpValue * level-diff mult; cap = min(base, LimitExp); journal
-   * before ack; cascade level-ups (within-level exp resets to 0, excess carries
-   * over); persist async.
+   * `CMover::SubExperience` -> `AddExperienceKillMember` (`Mover.cpp:6204/6297`).
    *
-   * Party share seam: if `deps.partyExp` is wired and the killer is in a party,
-   * it returns the count of members who received a share (>0) and we skip the
-   * solo grant entirely -- the party service applied each member's exp itself
-   * via {@link grantExpAmount}. Returns `null`/0 when there is no party (or no
-   * eligible member) and we fall through to the solo grant unchanged.
+   * The kill's exp is NOT the killer's alone: it is divided by damage
+   * contribution across every attacker in `m_idEnemies` who is still a live
+   * player within 64m of the corpse. Attackers who share a party pool their
+   * hits into ONE share, which then goes through the party split.
+   *
+   * Faithful order (the previous implementation skipped steps 1-3 and paid the
+   * killer 100%, so a healer/support or a lower-damage party member got nothing
+   * and a helper from outside the party stole the whole kill):
+   *   1. `dwMaxEnemyHit` = sum of all recorded damage. 0 -> nobody gets exp.
+   *   2. Per attacker in insertion order: skip if consumed, dead, out of 64m,
+   *      or no longer online.
+   *   3. If they are in a party, fold in the hits of every LATER attacker in the
+   *      same party and mark those consumed (so the party is paid once).
+   *   4. `share = rawExp * (hits / dwMaxEnemyHit)`.
+   *   5. Pooled (party) -> `partyExp` seam; it returns null when the party split
+   *      does not apply (only one member nearby) and we fall back to the solo
+   *      grant, exactly as C++ calls `AddExperienceSolo(..., bParty=TRUE)`.
+   *   6. Unpooled -> solo grant.
+   *
+   * `rawExp` is the mover's unmodified `nExpValue`: the level-difference
+   * multiplier is applied per recipient (solo curve for a solo grant, the
+   * separate party curve inside the party split), so it must NOT be pre-applied.
    */
-  private grantExp(player: CPlayer, mover: CMover): void {
-    const base = Math.floor(mover.m_nExpValue * expLevelDiffMult(player.m_nLevel, mover.m_nLevel));
+  private grantExp(killer: CPlayer, mover: CMover): void {
+    const rawExp = mover.m_nExpValue;
+    if (rawExp <= 0) {
+      logger.debug(
+        { charId: killer.m_idPlayer, monsterLevel: mover.m_nLevel, mi: mover.m_dwIndex },
+        'no exp granted (mover nExpValue is 0)',
+      );
+      return;
+    }
+
+    // 1. Total recorded damage. `m_idEnemies` is keyed by attacker objid; only
+    // player attackers are ever recorded (recordHit is on the player paths).
+    const attackers: HitShare[] = [];
+    let totalHit = 0;
+    for (const [id, hit] of mover.m_idEnemies) {
+      attackers.push({ id, hit });
+      totalHit += hit;
+    }
+    if (totalHit <= 0) {
+      // Killed with 0 recorded damage (GM /ok one-shot writes the kill without a
+      // hit row on some paths) -- pay the killer the whole thing rather than
+      // dropping the exp on the floor.
+      this.grantSoloExp(killer, mover, rawExp);
+      return;
+    }
+
+    const consumed = new Set<number>();
+    // The killer is already resolved; only OTHER attackers need a manager lookup.
+    const resolve = (id: number): CPlayer | undefined =>
+      id === killer.m_idPlayer ? killer : this.deps.playerManager.get(id);
+    for (const [i, { id: attackerId, hit: ownHit }] of attackers.entries()) {
+      if (consumed.has(attackerId)) continue;
+      const attacker = resolve(attackerId);
+      // `IsValidObj(pEnemy) && pDead->IsValidArea(pEnemy, 64.0f) &&
+      // pEnemy->IsPlayer()` -- offline or walked-away attackers forfeit.
+      if (!attacker || !inExpRange(attacker, mover)) continue;
+
+      // 3. Pool same-party attackers' hits into this one share.
+      let hits = ownHit;
+      if (this.deps.sameParty) {
+        for (const { id: otherId, hit: otherHit } of attackers.slice(i + 1)) {
+          if (consumed.has(otherId)) continue;
+          const other = resolve(otherId);
+          // C++ also drops out-of-range LATER attackers from the list entirely
+          // (`adwEnemy[k] = 0`) so they cannot be paid on their own turn.
+          if (!other || !inExpRange(other, mover)) { consumed.add(otherId); continue; }
+          if (!this.deps.sameParty(attackerId, otherId)) continue;
+          hits += otherHit;
+          consumed.add(otherId);
+        }
+      }
+
+      // 4. This attacker's (or party's) slice of the kill.
+      const share = rawExp * (hits / totalHit);
+      if (share <= 0) continue;
+
+      // 5/6. Party split first -- it returns null when this attacker has no
+      // party or is the only member nearby, which is exactly C++'s
+      // `AddExperienceSolo(..., bParty = TRUE)` fallback.
+      if (this.deps.partyExp) {
+        const handled = this.deps.partyExp(attacker, mover, share);
+        if (handled !== null) continue; // party owned this share (0 paid included)
+      }
+      this.grantSoloExp(attacker, mover, share);
+    }
+  }
+
+  /**
+   * `AddExperienceSolo` (`Mover.cpp:6379`): apply the solo level-difference
+   * multiplier to `rawShare`, clamp to this player's own `nLimitExp`, then grant.
+   */
+  private grantSoloExp(player: CPlayer, mover: CMover, rawShare: number): void {
+    const base = Math.floor(rawShare * expLevelDiffMult(player.m_nLevel, mover.m_nLevel));
     const cap = Math.min(base, EXP_TABLE[player.m_nLevel]?.nLimitExp ?? base);
     if (cap <= 0) {
       // Debug (LOG_LEVEL=debug): explains "killed but no exp" -- either the
-      // monster's nExpValue is 0 or the player out-levels it (mult floors 0).
+      // share rounded to 0 or the player out-levels the mob (mult floors 0.1).
       logger.debug(
         {
           charId: player.m_idPlayer,
-          monsterExp: mover.m_nExpValue,
+          rawShare,
           monsterLevel: mover.m_nLevel,
           playerLevel: player.m_nLevel,
         },
         'no exp granted (cap 0)',
       );
       return;
-    }
-    if (this.deps.partyExp) {
-      const handled = this.deps.partyExp(player, mover, cap);
-      if (handled !== null && handled > 0) return; // party share applied; skip solo
     }
     this.grantExpAmount(player, cap);
   }
@@ -547,6 +644,22 @@ function applyDamage(mover: CMover, result: MeleeResult): number {
 function recordHit(mover: CMover, attackerId: number, damage: number): void {
   if (damage <= 0) return;
   mover.m_idEnemies.set(attackerId, (mover.m_idEnemies.get(attackerId) ?? 0) + damage);
+}
+
+/** `pDead->IsValidArea(pEnemy, 64.0f)` -- exp radius from the CORPSE, 3-D. */
+const EXP_SHARE_RADIUS = 64;
+
+/**
+ * `IsValidArea(pEnemy, 64.0f)` (`Mover.cpp:6238`) for the hit-share scan:
+ * same world (zone) and full 3-D squared distance from the corpse under 64².
+ * Strict `<` matches C++.
+ */
+function inExpRange(player: CPlayer, mover: CMover): boolean {
+  if (player.m_nZoneId !== mover.m_nZoneId) return false;
+  const dx = player.m_vPos.x - mover.m_vPos.x;
+  const dy = player.m_vPos.y - mover.m_vPos.y;
+  const dz = player.m_vPos.z - mover.m_vPos.z;
+  return dx * dx + dy * dy + dz * dz < EXP_SHARE_RADIUS * EXP_SHARE_RADIUS;
 }
 
 /**

@@ -6,15 +6,23 @@
  * the session player), and delegated to {@link PartyService}. All send paths
  * are inside the service (member-loop) -- handlers never call `socket.write`.
  *
- * Wire layouts (Neuz/DPClient.cpp:9583-9637):
- *   MEMBERREQUEST        `u_long uLeaderId, u_long uMemberId, BYTE bTroup`
- *   MEMBERREQUESTCANCLE  `u_long uLeader, u_long uMember, int nMode`
- *   ADDPARTYMEMBER       `u_long uLeaderId, u_long uMemberId` (accept)
- *   REMOVEPARTYMEMBER    `u_long uLeaderId, u_long uMemberId` (leave/kick)
- *   PARTYCHANGELEADER    `u_long uLeaderId, u_long uChangerLeaderid`
- *   PARTYCHANGEITEMMODE  `u_long idPlayer, int nItemMode`
- *   PARTYCHANGEEXPMODE   `u_long idPlayer, int nExpMode`
- *   PARTYCHAT            `DWORD dpidUser, u_long idParty, String msg`
+ * Wire layouts (`Neuz/DPClient.cpp` senders; every param is 4 bytes -- the live
+ * `CAr` template writes `sizeof(T)` and `u_long`/`LONG`/`DWORD`/`int`/`BOOL`
+ * are all 4 on Win32, so there is NO byte field in any of these):
+ *   MEMBERREQUEST        `u_long uLeaderId, u_long uMemberId, BOOL bTroup`      (:9506)
+ *   MEMBERREQUESTCANCLE  `u_long uLeader, u_long uMember, int nMode`           (:9513)
+ *   ADDPARTYMEMBER       `u_long uLeader, LONG nLLevel, LONG nLJob, DWORD dwLSex,
+ *                         u_long uMember, LONG nMLevel, LONG nMJob, DWORD dwMSex` (:9520)
+ *   REMOVEPARTYMEMBER    `u_long LeaderId, u_long MemberId`                    (:9528)
+ *   PARTYCHANGELEADER    `u_long uLeaderId, u_long uChangerLeaderid`           (:9555)
+ *   PARTYCHANGEITEMMODE  `u_long idPlayer, int nItemMode`                      (:9485)
+ *   PARTYCHANGEEXPMODE   `u_long idPlayer, int nExpMode`                       (:9492)
+ *   PARTYCHAT            `OBJID objid, u_long idPlayer, String msg`
+ *
+ * Note ADDPARTYMEMBER is NOT `(uLeader, uMember)` -- the second DWORD is the
+ * leader's LEVEL. The invitee id is field 5. We resolve the member from the
+ * session anyway (C++ CoreServer does the same, `DPCacheSrvr.cpp:790`), so only
+ * field 1 is read.
  *
  * Guards (rule 03): session IN_WORLD, player resolves, ids match session.
  *
@@ -47,7 +55,7 @@ export class PartyHandler {
     try {
       const uLeaderId = reader.readDword();
       const uMemberId = reader.readDword();
-      reader.readByte(); // bTroup (ignored -- solo only)
+      reader.readDword(); // BOOL bTroup -- 4 bytes, ignored (solo party only)
       if (uLeaderId !== player.m_idPlayer) return;
       this.deps.partyService.invite(player, uMemberId);
     } catch (error) {
@@ -56,13 +64,18 @@ export class PartyHandler {
     }
   }
 
-  /** MEMBERREQUESTCANCLE (0xffffff18) -- target declines the pending invite. */
+  /**
+   * MEMBERREQUESTCANCLE (0xffffff18) -- the invitee declines.
+   * `CWndPartyConfirm::OnChildNotify` (WndPartyConfirm.cpp:114) calls
+   * `SendPartyMemberCancle(m_uLeader, m_uMember)`, so field 1 is the LEADER
+   * and field 2 is the invitee (self). We validate field 2 against the session.
+   */
   handleMemberRequestCancle(socket: ClientSocket, reader: PacketReader): void {
     const player = this.resolve(socket);
     if (!player) return;
     try {
-      const uMember = reader.readDword(); // first field is uLeader in C++ but Neuz sends self
-      void reader.readDword(); // uLeader (unused -- resolved from pending slot)
+      void reader.readDword(); // uLeader (resolved from the pending slot instead)
+      const uMember = reader.readDword();
       void reader.readDword(); // nMode
       if (uMember !== player.m_idPlayer) return;
       this.deps.partyService.decline(player);
@@ -72,13 +85,19 @@ export class PartyHandler {
     }
   }
 
-  /** ADDPARTYMEMBER (0xffffff11) -- target accepts the invite from `uLeaderId`. */
+  /**
+   * ADDPARTYMEMBER (0xffffff11) -- the invitee accepts. Only field 1
+   * (`uLeader`) is used; the accepting member is the session player, matching
+   * `CDPCacheSrvr::OnAddPartyMember` which uses `GetPlayerBySerial(dpidUser)`
+   * rather than the client-sent member id.
+   */
   handleAddPartyMember(socket: ClientSocket, reader: PacketReader): void {
     const player = this.resolve(socket);
     if (!player) return;
     try {
       const uLeaderId = reader.readDword();
-      void reader.readDword(); // uMemberId (echoed; we use the session player)
+      // Remaining 7 DWORDs (leader lv/job/sex, member id/lv/job/sex) are echoed
+      // client state -- ignored, all party facts come from server-side players.
       this.deps.partyService.accept(player, uLeaderId);
     } catch (error) {
       if (error instanceof PacketError) { logger.warn({ err: error, charId: player.m_idPlayer }, 'ADDPARTYMEMBER parse failed'); return; }

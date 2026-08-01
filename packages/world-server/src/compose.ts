@@ -377,6 +377,15 @@ export async function compose(): Promise<WorldComposeResult> {
     const name = resources.items.items.get(itemId)?.name ?? `Item ${itemId}`;
     playerManager.sendTo(player, noticeSerializer.build(count > 1 ? `${name} x${count}` : name));
   };
+  // `TID_GAME_TROUPEREAPITEM` equivalent: tell a party peer who received a
+  // distributed drop. Same emulator-side text channel as `notifyItemAcquire`.
+  const notifyPeerItemAcquire = (
+    peer: CPlayer, receiver: CPlayer, itemId: number, count: number,
+  ) => {
+    const name = resources.items.items.get(itemId)?.name ?? `Item ${itemId}`;
+    const label = count > 1 ? `${name} x${count}` : name;
+    playerManager.sendTo(peer, noticeSerializer.build(`${receiver.m_szName}: ${label}`));
+  };
 
   const questSetLevelSerializer = new SetLevelSerializer();
   const questService = new QuestService({
@@ -540,15 +549,22 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager, partyManager,
     grantExpAmount: (p, amount) => combatGrantSlot.fn!(p, amount),
   });
+  // Shared same-party predicate: loot ownership (IsLoot), the combat hit-share
+  // pooling, and anything else that asks "are these two in one party".
+  const sameParty = (a: number, b: number): boolean => {
+    const pa = partyManager.getByMember(a);
+    return pa !== undefined && pa.members.includes(b);
+  };
   const lootService = new LootService({
     inventoryService, itemManager, playerManager, zoneManager,
     onAcquireItem: (player, itemId, count) => notifyItemAcquire(player, itemId, count),
+    onPeerAcquireItem: notifyPeerItemAcquire,
     onGoldPickup: (player, plus, total) =>
       playerManager.sendTo(player, buildGoldText(player.m_idPlayer, plus, total)),
-    sameParty: (a, b) => {
-      const pa = partyManager.getByMember(a);
-      return pa !== undefined && pa.members.includes(b);
-    },
+    sameParty,
+    // Party item/gold distribution (`SubLootDropMobParty` + `PickupGold` party
+    // branch). PartyService satisfies the structural `PartyLootShare` surface.
+    party: partyService,
   });
   const movementService = new MovementService({
     zoneManager,
@@ -634,6 +650,8 @@ export async function compose(): Promise<WorldComposeResult> {
     // splits the kill exp among nearby party members (proximity + level gate).
     // Returns null when the killer has no party -> combat runs its solo grant.
     partyExp: (killer, mover, baseExp) => partyService.distributeExp(killer, mover, baseExp),
+    // Pools co-party attackers' recorded damage into one share before the split.
+    sameParty,
     // Campus reward + graduation on level-up (CCampusHelper::SetLevelUpReward).
     onLevelUp: (player) => campusLevelUpSlot.fn?.(player),
   });

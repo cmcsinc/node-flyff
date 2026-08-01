@@ -243,6 +243,144 @@ describe('LootService', () => {
 });
 
 /**
+ * Party distribution (`SubLootDropMobParty` + `PickupGold` party branch). The
+ * `party` seam decides WHO receives; LootService's job is to credit that player
+ * (not the finder), address their snapshots to them, and notify the peers.
+ */
+describe('LootService party distribution', () => {
+  const finder = { m_idPlayer: 42, m_szName: 'Finder', m_nGold: 0 } as unknown as CPlayer;
+  const mate = { m_idPlayer: 99, m_szName: 'Mate', m_nGold: 0 } as unknown as CPlayer;
+
+  /** Pile + service wired to a stub `party` seam. */
+  function partySetup(seam: {
+    receiver?: CPlayer | null;
+    gold?: Array<{ player: CPlayer; amount: number }> | null;
+    peers?: CPlayer[];
+  }, opts: { itemId?: number; count?: number; dropMob?: boolean } = {}) {
+    const item = {
+      m_idObject: 0x8000000a,
+      m_dwItemId: opts.itemId ?? 2950,
+      m_nItemNum: opts.count ?? 1,
+      m_idOwn: NULL_ID,
+      m_dwDropTime: Date.now(),
+      m_vPos: { x: 0, y: 0, z: 0 },
+      m_nZoneId: 1,
+      m_bDropMob: opts.dropMob ?? true,
+    };
+    const player = {
+      m_idPlayer: 42, m_szName: 'Finder', m_nGold: 0,
+      m_idDestObj: item.m_idObject, m_fArrivalRange: 0,
+      m_nZoneId: 1, m_vPos: { x: 0, y: 0, z: 0 },
+    } as unknown as CPlayer;
+    const sentTo: Array<{ id: number; buf: Buffer }> = [];
+    const added: Array<{ id: number; itemId: number; count: number }> = [];
+    const goldAdds: Array<{ id: number; amount: number }> = [];
+    const peerNotices: Array<{ peer: number; receiver: number; itemId: number }> = [];
+    const dropMobSeen: boolean[] = [];
+    const loot = new LootService({
+      inventoryService: {
+        addItem: (p: CPlayer, itemId: number, count: number) => {
+          added.push({ id: p.m_idPlayer, itemId, count });
+          return { ok: true, changes: [{ slot: 0, objid: 1, itemId, count, isNew: true }] };
+        },
+        addGold: (p: CPlayer, n: number) => { goldAdds.push({ id: p.m_idPlayer, amount: n }); },
+      } as unknown as InventoryService,
+      itemManager: { get: () => item, remove: () => item } as unknown as ItemManager,
+      playerManager: {
+        sendTo: (p: CPlayer, buf: Buffer) => { sentTo.push({ id: p.m_idPlayer, buf }); },
+      } as unknown as PlayerManager,
+      zoneManager: { broadcastAround: () => 1 } as unknown as ZoneManager,
+      party: {
+        pickItemReceiver: (_f: CPlayer, dropMob: boolean) => {
+          dropMobSeen.push(dropMob);
+          return seam.receiver ?? null;
+        },
+        splitGold: (_f: CPlayer, _a: number, dropMob: boolean) => {
+          dropMobSeen.push(dropMob);
+          return seam.gold ?? null;
+        },
+        itemNoticePeers: () => seam.peers ?? [],
+      },
+      onPeerAcquireItem: (peer, receiver, itemId) => {
+        peerNotices.push({ peer: peer.m_idPlayer, receiver: receiver.m_idPlayer, itemId });
+      },
+    });
+    return { loot, player, item, sentTo, added, goldAdds, peerNotices, dropMobSeen };
+  }
+
+  it('credits the party-selected receiver, not the finder', () => {
+    const { loot, player, added, sentTo } = partySetup({ receiver: mate });
+    loot.checkArrival(player);
+    assert.deepEqual(added, [{ id: 99, itemId: 2950, count: 1 }], 'item went to the mate');
+    assert.deepEqual(sentTo.map((s) => s.id), [99], 'CREATEITEM addressed to the receiver');
+    assert.equal(subtype(sentTo[0].buf), SNAPSHOTTYPE_CREATEITEM);
+  });
+
+  it('finder keeps it when the seam returns null', () => {
+    const { loot, player, added, peerNotices } = partySetup({ receiver: null, peers: [mate] });
+    loot.checkArrival(player);
+    assert.deepEqual(added, [{ id: 42, itemId: 2950, count: 1 }]);
+    assert.equal(peerNotices.length, 0, 'no "X got Y" when the finder kept it');
+  });
+
+  it('notifies nearby peers when someone else received the drop', () => {
+    const { loot, player, peerNotices } = partySetup({ receiver: mate, peers: [finder] });
+    loot.checkArrival(player);
+    assert.deepEqual(peerNotices, [{ peer: 42, receiver: 99, itemId: 2950 }]);
+  });
+
+  it('passes m_bDropMob through so player-dropped piles skip distribution', () => {
+    const { loot, player, dropMobSeen } = partySetup({ receiver: mate }, { dropMob: false });
+    loot.checkArrival(player);
+    assert.deepEqual(dropMobSeen, [false]);
+  });
+
+  it('splits gold across every share the seam returns', () => {
+    const { loot, player, goldAdds, sentTo } = partySetup(
+      { gold: [{ player: finder, amount: 34 }, { player: mate, amount: 33 }] },
+      { itemId: 13, count: 67 },
+    );
+    loot.checkArrival(player);
+    assert.deepEqual(goldAdds, [{ id: 42, amount: 34 }, { id: 99, amount: 33 }]);
+    // Each recipient gets their own DST_GOLD sync.
+    assert.deepEqual(sentTo.map((s) => s.id), [42, 99]);
+    for (const s of sentTo) assert.equal(subtype(s.buf), SNAPSHOTTYPE_SETPOINTPARAM);
+  });
+
+  it('gold with no party split goes wholly to the finder', () => {
+    const { loot, player, goldAdds } = partySetup({ gold: null }, { itemId: 13, count: 67 });
+    loot.checkArrival(player);
+    assert.deepEqual(goldAdds, [{ id: 42, amount: 67 }]);
+  });
+
+  it('no party seam at all: finder takes everything (solo build)', () => {
+    const item = {
+      m_idObject: 0x8000000b, m_dwItemId: 2950, m_nItemNum: 2, m_idOwn: NULL_ID,
+      m_dwDropTime: Date.now(), m_vPos: { x: 0, y: 0, z: 0 }, m_nZoneId: 1,
+      m_bDropMob: true,
+    };
+    const player = {
+      m_idPlayer: 42, m_nGold: 0, m_idDestObj: item.m_idObject, m_fArrivalRange: 0,
+      m_nZoneId: 1, m_vPos: { x: 0, y: 0, z: 0 },
+    } as unknown as CPlayer;
+    const added: number[] = [];
+    const loot = new LootService({
+      inventoryService: {
+        addItem: (p: CPlayer, itemId: number, count: number) => {
+          added.push(p.m_idPlayer);
+          return { ok: true, changes: [{ slot: 0, objid: 1, itemId, count, isNew: true }] };
+        },
+      } as unknown as InventoryService,
+      itemManager: { get: () => item, remove: () => item } as unknown as ItemManager,
+      playerManager: { sendTo: () => {} } as unknown as PlayerManager,
+      zoneManager: { broadcastAround: () => 1 } as unknown as ZoneManager,
+    });
+    loot.checkArrival(player);
+    assert.deepEqual(added, [42]);
+  });
+});
+
+/**
  * Walk-poll: the fix for "pickup not proceeding". While the client auto-walks to
  * a dest object it sends NO movement packet, so the ONLY arrival check that ever
  * ran was the immediate one at PLAYERSETDESTOBJ time. `onSetDestObj` now arms a

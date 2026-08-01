@@ -32,6 +32,24 @@ export function expLevelDiffMult(playerLevel: number, monsterLevel: number): num
 }
 
 /**
+ * `CMover::GetExperienceReduceFactor` (Mover.cpp:6650) -- the **party** exp
+ * reduction, which is a DIFFERENT curve from the solo {@link expLevelDiffMult}.
+ *
+ * Keyed on `nMaxLevel - monsterLevel` where `nMaxLevel` is the highest level
+ * among the party members NEARBY the kill (not the killer's level), clamped to
+ * 9. Non-KOR table (`::GetLanguage() != LANG_KOR` branch); the KOR branch is a
+ * coarser 4-value curve we do not use.
+ *
+ * ponytail: KOR table selection -- add when a locale switch exists.
+ */
+export function expPartyReduceFactor(monsterLevel: number, maxPartyLevel: number): number {
+  const delta = maxPartyLevel - monsterLevel;
+  if (delta <= 0) return 1.0;
+  const factors = [0.8, 0.8, 0.6, 0.35, 0.2, 0.12, 0.08, 0.04, 0.02, 0.01];
+  return factors[Math.min(delta, 9)];
+}
+
+/**
  * Within-level exp threshold to advance FROM `level` TO `level+1`. Per C++
  * `MoverParam.cpp:1326`, this is **the next level's raw `nExp1`** (the table
  * is indexed "exp needed at level N-1 to reach N"), NOT a delta. 0 at/above

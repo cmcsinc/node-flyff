@@ -21,15 +21,20 @@
  */
 
 import type { CPlayer, CMover } from '@flyff/entities';
+import { EXP_TABLE, expPartyReduceFactor } from '@flyff/entities';
 import { NULL_ID } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 import {
   buildPartyMember, buildPartyRequest, buildPartyRequestCancel,
-  buildPartyChangeLeader, buildPartyChat, buildSetNaviPoint,
+  buildPartyChangeLeader, buildPartyChat, PARTY_NO_DUEL,
+  buildSetNaviPoint,
+  buildPartyChangeItemMode, buildPartyChangeExpMode,
   type PartySnapshotMember,
 } from '@flyff/world-core';
 import {
   PartyManager, PARTY_INVITE_TIMEOUT_MS,
+  PARTY_ITEM_MODE_SEQUENTIAL, PARTY_ITEM_MODE_LEADER, PARTY_ITEM_MODE_RANDOM,
+  PARTY_ITEM_MODE_MAX, PARTY_EXP_MODE_CONTRIBUTION,
 } from '../managers/party.manager';
 import { createLogger } from '@flyff/core/logger';
 import type { Party } from '../managers/party.manager';
@@ -38,9 +43,19 @@ const logger = createLogger({ module: 'party-service' });
 
 /** Shared-EXP proximity gate -- members within 64m of the dead mover share. */
 const PARTY_EXP_PROXIMITY = 64;
-/** Level gate: members must be within 20 levels of the highest nearby member. */
+/**
+ * Item/gold distribution proximity -- `IsValidArea(pMember, 32.0f)` in
+ * `SubLootDropMobParty` (`MoverActEvent.cpp:2424`) and `PickupGold`
+ * (`MoverEquip.cpp:2378`). Tighter than the 64m exp radius, and measured from
+ * the LOOTING member (C++ `this`), not from the corpse.
+ */
+const PARTY_ITEM_PROXIMITY = 32;
+/**
+ * Level band: `GetPartyMemberFind` computes `nMaxLevel10 = max(0, maxLv - 20)`
+ * and each split branch pays only members with `level > nMaxLevel10`.
+ */
 const PARTY_EXP_LEVEL_BAND = 20;
-/** Bonus factor per C++ `AddExperiencePartyLevel` (Mover.cpp:6525): 0.2 per extra member. */
+/** `fAddExp = fExpValue * 0.2 * (nMemberSize - 1)` (Mover.cpp:6612). */
 const PARTY_EXP_BONUS_PER_MEMBER = 0.2;
 
 export interface PartyServiceDeps {
@@ -55,12 +70,16 @@ export interface PartyServiceDeps {
   grantExpAmount: (player: CPlayer, amount: number) => void;
   /** Injector seam for tests. */
   now?: () => number;
+  /** `[0,1)` source for the random/remainder picks. Injector seam for tests. */
+  random?: () => number;
 }
 
 export class PartyService {
   private readonly now: () => number;
+  private readonly random: () => number;
   constructor(private readonly deps: PartyServiceDeps) {
     this.now = deps.now ?? Date.now;
+    this.random = deps.random ?? Math.random;
   }
 
   /**
@@ -172,20 +191,42 @@ export class PartyService {
     this.broadcastRosterOnly(updated);
   }
 
-  /** Leader-only: change exp share mode. (Re-broadcasts roster so UI refreshes.) */
+  /**
+   * Leader-only: change exp share mode (`OnPartyChangeExpMode`,
+   * `DPCoreClient.cpp:1254`). Echoes `SNAPSHOTTYPE_PARTYCHANGEEXPMODE` to every
+   * member -- that snapshot is what the client assigns into
+   * `g_Party.m_nTroupsShareExp`; a roster resend does not update the radio.
+   *
+   * Mode is range-checked: only 0 (level split) and 1 (contribution) exist, and
+   * contribution is guild-party-only in C++, so it is accepted + echoed but the
+   * level split still runs (see {@link distributeExp}).
+   */
   changeExpMode(leader: CPlayer, mode: number): void {
     const party = this.deps.partyManager.getByMember(leader.m_idPlayer);
     if (!party || party.members[0] !== leader.m_idPlayer) return;
+    if (mode < 0 || mode > PARTY_EXP_MODE_CONTRIBUTION) return;
     party.expMode = mode;
-    this.broadcastRosterOnly(party);
+    for (const id of party.members) {
+      const p = this.deps.playerManager.get(id);
+      if (p) this.deps.playerManager.sendTo(p, buildPartyChangeExpMode(p.m_idPlayer, mode));
+    }
   }
 
-  /** Leader-only: change item share mode (FFA <-> round-robin). */
+  /**
+   * Leader-only: change item share mode (`OnPartyChangeItemMode`,
+   * `DPCoreClient.cpp:1234`) -- 0 finder / 1 sequential / 2 leader / 3 random.
+   * Echoes `SNAPSHOTTYPE_PARTYCHANGEITEMMODE` to every member (see
+   * {@link changeExpMode} on why the roster resend is not enough).
+   */
   changeItemMode(leader: CPlayer, mode: number): void {
     const party = this.deps.partyManager.getByMember(leader.m_idPlayer);
     if (!party || party.members[0] !== leader.m_idPlayer) return;
+    if (mode < 0 || mode > PARTY_ITEM_MODE_MAX) return;
     party.itemMode = mode;
-    this.broadcastRosterOnly(party);
+    for (const id of party.members) {
+      const p = this.deps.playerManager.get(id);
+      if (p) this.deps.playerManager.sendTo(p, buildPartyChangeItemMode(p.m_idPlayer, mode));
+    }
   }
 
   /** Member-loop PARTYCHAT to every party member. ponytail: mute check. */
@@ -206,9 +247,7 @@ export class PartyService {
    *     this branch on `g_Party.IsMember`).
    *   - otherwise -> a direct ping at one focused player: BOTH the pinger and
    *     that player get the marker, regardless of party membership.
-   * The marker record's objid is the PINGER's id in both branches -- the client
-   * keys `m_vOtherPoint` by it (`DPClient.cpp:15358`), so sending the recipient
-   * id would make every pinger overwrite the same single marker.
+   * The marker record's objid is the PINGER's id in both branches.
    */
   naviPoint(sender: CPlayer, pos: { x: number; y: number; z: number }, targetId: number): void {
     const marker = (): Buffer => buildSetNaviPoint(sender.m_idPlayer, pos, sender.m_szName);
@@ -246,40 +285,206 @@ export class PartyService {
   }
 
   /**
-   * `AddExperiencePartyLevel` (Mover.cpp:6503-6546) + proximity gate (6184-6218).
-   * Collects party members within 64m of the dead mover, applies the level band
-   * gate (>maxLv-20), splits `(base + bonus) * (lv² / Σlv²)` per member, and
-   * applies each member's share via the shared `grantExpAmount` seam. Returns
-   * the count of members who received exp (null if `killer` has no party).
+   * `AddExperienceParty` -> `AddExperiencePartyLevel` (`Mover.cpp:6470/6607`),
+   * with the nearby-member scan of `GetPartyMemberFind` (`Mover.cpp:6261`).
+   *
+   * `baseExp` is the ATTACKER's hit-share of the mover's raw `nExpValue`
+   * (pooled across same-party attackers by `AddExperienceKillMember`), with NO
+   * level multiplier applied yet -- party kills use their own reduce curve
+   * ({@link expPartyReduceFactor}) keyed on the highest NEARBY member's level,
+   * not the solo `expLevelDiffMult` keyed on the killer's.
+   *
+   * Faithful order of operations:
+   *   1. nearby = members within 64m **of the attacker** (3-D, same zone).
+   *   2. `nMaxLevel` = highest nearby level; `nMaxLevel10 = max(0, nMaxLevel-20)`.
+   *   3. `fExpValue = baseExp * GetExperienceReduceFactor(moverLv, nMaxLevel)`.
+   *   4. `fAddExp   = fExpValue * 0.2 * (nMemberSize - 1)`   <- ALL nearby.
+   *   5. `fMaxMemberLevel = sum(lv^2)` over ALL nearby        <- ALL nearby.
+   *   6. each nearby with `lv > nMaxLevel10` gets
+   *      `(fExpValue + fAddExp) * lv^2 / fMaxMemberLevel`, capped at that
+   *      member's own `nLimitExp` (`AddPartyMemberExperience`, Mover.cpp:6047).
+   *
+   * Steps 4 and 5 counting ALL nearby members (not only the paid ones) is what
+   * makes an out-of-band low-level member DILUTE the share instead of being
+   * ignored -- the C++ behaviour, and the opposite of what filtering first does.
+   *
+   * Returns the number of members paid, or `null` when the party path does not
+   * apply (no party, or `nMemberSize <= 1` -- C++ falls back to
+   * `AddExperienceSolo(..., bParty=TRUE)`) so the caller runs its solo grant.
+   *
+   * ponytail: `m_nTroupsShareExp == 1` contribution split
+   * (`AddExperiencePartyContribution`) is guild-party-only (`m_nKindTroup`),
+   * and guild parties are not ported; the mode is accepted + echoed but the
+   * level split is always used, exactly as C++ does for a solo party.
    */
   distributeExp(killer: CPlayer, mover: CMover, baseExp: number): number | null {
     const party = this.deps.partyManager.getByMember(killer.m_idPlayer);
     if (!party) return null;
+
+    // 1. GetPartyMemberFind -- IsValidArea(pMember, 64.0f) measured from the
+    // ATTACKER (C++ `this` is pEnemy), full 3-D distance, same world.
     const nearby: CPlayer[] = [];
     let maxLevel = 0;
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
       if (!p) continue;
-      if (p.m_nZoneId !== mover.m_nZoneId) continue;
-      if (distSqXZ(p.m_vPos, mover.m_vPos) > PARTY_EXP_PROXIMITY * PARTY_EXP_PROXIMITY) continue;
+      if (p.m_nZoneId !== killer.m_nZoneId) continue;
+      if (distSq3(p.m_vPos, killer.m_vPos) >= PARTY_EXP_PROXIMITY * PARTY_EXP_PROXIMITY) continue;
       nearby.push(p);
       if (p.m_nLevel > maxLevel) maxLevel = p.m_nLevel;
     }
-    if (nearby.length === 0) return 0;
-    const eligible = nearby.filter((p) => p.m_nLevel > maxLevel - PARTY_EXP_LEVEL_BAND);
-    if (eligible.length === 0) return 0;
-    const bonus = baseExp * PARTY_EXP_BONUS_PER_MEMBER * (eligible.length - 1);
-    const total = baseExp + bonus;
+    // C++ `if (1 < nMemberSize)` -- a lone nearby member (or none) is a SOLO
+    // grant, which keeps the solo level-diff multiplier. Returning null hands
+    // it back to the caller rather than silently paying an unmultiplied share.
+    if (nearby.length <= 1) return null;
+
+    // 2. nMaxLevel10 -- the "too far below the top level" cutoff.
+    const maxLevel10 = Math.max(0, maxLevel - PARTY_EXP_LEVEL_BAND);
+
+    // 3. Party reduce factor: keyed on the highest NEARBY level vs the mover.
+    const expValue = baseExp * expPartyReduceFactor(mover.m_nLevel, maxLevel);
+    if (expValue <= 0) return 0;
+
+    // 4-5. Bonus + level-square denominator over ALL nearby members.
+    const addExp = expValue * PARTY_EXP_BONUS_PER_MEMBER * (nearby.length - 1);
     let levelSqSum = 0;
-    for (const p of eligible) levelSqSum += p.m_nLevel * p.m_nLevel;
+    for (const p of nearby) levelSqSum += p.m_nLevel * p.m_nLevel;
     if (levelSqSum <= 0) return 0;
+
+    // 6. Pay the in-band members.
     let granted = 0;
-    for (const p of eligible) {
-      const share = Math.floor(total * (p.m_nLevel * p.m_nLevel) / levelSqSum);
-      if (share > 0) { this.deps.grantExpAmount(p, share); granted++; }
+    for (const p of nearby) {
+      if (p.m_nLevel <= maxLevel10) continue;
+      let share = Math.floor((expValue + addExp) * (p.m_nLevel * p.m_nLevel) / levelSqSum);
+      // AddPartyMemberExperience caps each member individually at their own
+      // level's nLimitExp -- NOT at the killer's (the solo path's cap).
+      const limit = EXP_TABLE[p.m_nLevel]?.nLimitExp;
+      if (limit !== undefined && share > limit) share = limit;
+      if (share <= 0) continue;
+      this.deps.grantExpAmount(p, share);
+      granted++;
     }
-    logger.debug({ partyId: party.id, killer: killer.m_idPlayer, base: baseExp, granted }, 'party exp split');
+    logger.debug(
+      { partyId: party.id, killer: killer.m_idPlayer, base: baseExp, maxLevel, maxLevel10, nearby: nearby.length, granted },
+      'party exp split',
+    );
+    // 0 paid (everyone below the band, or every share rounded to 0) is still a
+    // party-handled kill -- C++ pays nobody in that case and does NOT fall back
+    // to a solo grant, so report a handled kill rather than null.
     return granted;
+  }
+
+  /**
+   * `SubLootDropMobParty` receiver pick (`MoverActEvent.cpp:2395-2480`).
+   * Returns the party member who should RECEIVE a pile `finder` just walked
+   * onto, or `null` when the party path does not apply (no party, player-dropped
+   * pile, or no member in range -- all of which give the item to the finder).
+   *
+   * `dropMob` is `CItem::m_bDropMob`: only monster drops are redistributed.
+   * A pile a player threw on the ground goes through `SubLootDropNotMob`, which
+   * never consults the party.
+   *
+   * Candidates are members within 32m of the FINDER (`IsValidArea(pMember,
+   * 32.0f)`, 3-D) in leader-first roster order -- the same order the C++ walks
+   * `m_aMember` into `pListMember`.
+   */
+  pickItemReceiver(finder: CPlayer, dropMob: boolean): CPlayer | null {
+    if (!dropMob) return null;
+    const party = this.deps.partyManager.getByMember(finder.m_idPlayer);
+    if (!party) return null;
+    const candidates = this.nearbyForItems(finder, party);
+    // `nMaxListMember == 0` -> pGetUser = this (the finder). Cannot happen in
+    // practice (the finder is always in range of themself) but C++ guards it.
+    if (candidates.length === 0) return null;
+
+    const receiver = this.selectReceiver(party, candidates, finder);
+    // C++ records the getter unconditionally (`pParty->m_nGetItemPlayerId =
+    // pGetUser->m_idPlayer`), including in FFA/leader mode -- so switching to
+    // sequential mid-session continues from whoever last got something.
+    this.deps.partyManager.setLastItemGetter(party.id, receiver.m_idPlayer);
+    return receiver.m_idPlayer === finder.m_idPlayer ? null : receiver;
+  }
+
+  /** The `m_nTroupeShareItem` switch (`MoverActEvent.cpp:2432-2477`). */
+  private selectReceiver(party: Party, candidates: CPlayer[], finder: CPlayer): CPlayer {
+    switch (party.itemMode) {
+      case PARTY_ITEM_MODE_SEQUENTIAL: {
+        const id = this.deps.partyManager.nextSequentialLooter(
+          party.id, candidates.map((p) => p.m_idPlayer),
+        );
+        const next = id !== undefined ? this.deps.playerManager.get(id) : undefined;
+        return next ?? candidates[0];
+      }
+      case PARTY_ITEM_MODE_LEADER:
+        // C++ checks `IsLeader(pListMember[0])` -- i.e. the leader takes it only
+        // when the leader is IN RANGE (they are candidates[0] when present,
+        // roster order being leader-first); otherwise the finder keeps it.
+        return party.members[0] === candidates[0].m_idPlayer ? candidates[0] : finder;
+      case PARTY_ITEM_MODE_RANDOM:
+        return candidates[Math.floor(this.random() * candidates.length)];
+      default:
+        return finder; // 0 = finder keeps ("free order" in C++ comments)
+    }
+  }
+
+  /**
+   * `CMover::PickupGold` party branch (`MoverEquip.cpp:2374-2412`). Returns the
+   * per-member gold split for a monster-dropped pile of `amount`, or `null` when
+   * the party path does not apply (no party, player-dropped pile, nobody in
+   * range) and the finder should take the whole pile.
+   *
+   * Split: `floor(amount / n)` to every member in range, and the remainder
+   * (`amount % n`) to ONE randomly chosen member. Gold ignores
+   * `m_nTroupeShareItem` entirely -- it is always split, in every mode.
+   */
+  splitGold(finder: CPlayer, amount: number, dropMob: boolean): { player: CPlayer; amount: number }[] | null {
+    if (!dropMob || amount <= 0) return null;
+    const party = this.deps.partyManager.getByMember(finder.m_idPlayer);
+    if (!party) return null;
+    const candidates = this.nearbyForItems(finder, party);
+    if (candidates.length === 0) return null;
+
+    const share = Math.floor(amount / candidates.length);
+    const rest = amount % candidates.length;
+    const out: { player: CPlayer; amount: number }[] = [];
+    if (share > 0) for (const p of candidates) out.push({ player: p, amount: share });
+    if (rest > 0) {
+      const luckyIdx = Math.floor(this.random() * candidates.length);
+      const lucky = candidates[luckyIdx];
+      const existing = out.find((e) => e.player.m_idPlayer === lucky.m_idPlayer);
+      if (existing) existing.amount += rest;
+      else out.push({ player: lucky, amount: rest });
+    }
+    return out.length > 0 ? out : null;
+  }
+
+  /**
+   * `pListMember` build for item/gold distribution: members within
+   * {@link PARTY_ITEM_PROXIMITY} of the FINDER, 3-D, same zone, roster order
+   * (leader first). Shared by {@link pickItemReceiver} and {@link splitGold} --
+   * C++ duplicates this loop in both places with identical semantics.
+   */
+  private nearbyForItems(finder: CPlayer, party: Party): CPlayer[] {
+    const out: CPlayer[] = [];
+    for (const id of party.members) {
+      const p = this.deps.playerManager.get(id);
+      if (!p) continue;
+      if (p.m_nZoneId !== finder.m_nZoneId) continue;
+      if (distSq3(p.m_vPos, finder.m_vPos) >= PARTY_ITEM_PROXIMITY * PARTY_ITEM_PROXIMITY) continue;
+      out.push(p);
+    }
+    return out;
+  }
+
+  /**
+   * Members of `finder`'s party within item range, EXCLUDING `exclude` -- the
+   * peers who should be told "<name> got <item>" (`TID_GAME_TROUPEREAPITEM`,
+   * `MoverActEvent.cpp:2495`). Empty when there is no party.
+   */
+  itemNoticePeers(finder: CPlayer, exclude: number): CPlayer[] {
+    const party = this.deps.partyManager.getByMember(finder.m_idPlayer);
+    if (!party) return [];
+    return this.nearbyForItems(finder, party).filter((p) => p.m_idPlayer !== exclude);
   }
 
   // --- Roster broadcast helpers ---------------------------------------------
@@ -292,7 +497,7 @@ export class PartyService {
       const snapshotMembers: PartySnapshotMember[] = party.members.map((m) => ({ id: m, remove: false }));
       const snapshot = {
         partyId: party.id, size: party.members.length, expMode: party.expMode,
-        itemMode: party.itemMode, duelPartyId: NULL_ID, members: snapshotMembers,
+        itemMode: party.itemMode, duelPartyId: PARTY_NO_DUEL, members: snapshotMembers,
       };
       this.deps.playerManager.sendTo(
         p, buildPartyMember(p.m_idPlayer, leader.m_szName, newMember.m_szName, snapshot),
@@ -311,7 +516,7 @@ export class PartyService {
       const snapshotMembers: PartySnapshotMember[] = party.members.map((m) => ({ id: m, remove: false }));
       const snapshot = {
         partyId: party.id, size: party.members.length, expMode: party.expMode,
-        itemMode: party.itemMode, duelPartyId: NULL_ID, members: snapshotMembers,
+        itemMode: party.itemMode, duelPartyId: PARTY_NO_DUEL, members: snapshotMembers,
       };
       this.deps.playerManager.sendTo(p, buildPartyMember(p.m_idPlayer, leader.m_szName, memberName, snapshot));
     }
@@ -337,9 +542,15 @@ export class PartyService {
 }
 
 interface Vec3 { x: number; y: number; z: number }
-/** Horizontal (XZ) squared distance -- proximity gate ignores height. */
-function distSqXZ(a: Vec3, b: Vec3): number {
+/**
+ * Full 3-D squared distance -- `D3DXVec3LengthSq` in `CMover::IsValidArea`
+ * (`Mover.cpp:6241`), which both the 64m exp scan and the 32m item/gold scan
+ * go through. NOT horizontal-only: a member on a cliff above the fight is out
+ * of range in C++, and flattening the check would silently widen both radii.
+ */
+function distSq3(a: Vec3, b: Vec3): number {
   const dx = a.x - b.x;
+  const dy = a.y - b.y;
   const dz = a.z - b.z;
-  return dx * dx + dz * dz;
+  return dx * dx + dy * dy + dz * dz;
 }

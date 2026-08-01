@@ -27,6 +27,15 @@ export interface GroundItemInit {
   readonly ownerId: number;
   readonly pos: Vec3;
   readonly zoneId: number;
+  /**
+   * `CItem::m_bDropMob` -- TRUE when a monster dropped this pile, FALSE when a
+   * player threw it on the ground. `DoLoot` (`MoverActEvent.cpp:2669`) branches
+   * on it: mob drops go through `SubLootDropMob` (party item distribution +
+   * party gold split), player drops through `SubLootDropNotMob` (always the
+   * finder). Defaults FALSE -- a party must never redistribute an item a member
+   * dropped for a specific person.
+   */
+  readonly dropMob?: boolean;
 }
 
 export class GroundItem {
@@ -40,6 +49,8 @@ export class GroundItem {
   readonly m_dwDropTime: number;
   readonly m_vPos: Vec3;
   readonly m_nZoneId: number;
+  /** `m_bDropMob` -- monster drop (party-distributed) vs player drop. */
+  readonly m_bDropMob: boolean;
 
   private constructor(id: number, init: GroundItemInit, now: number) {
     this.m_idObject = id;
@@ -49,6 +60,7 @@ export class GroundItem {
     this.m_dwDropTime = now;
     this.m_vPos = { ...init.pos };
     this.m_nZoneId = init.zoneId;
+    this.m_bDropMob = init.dropMob ?? false;
   }
 
   /** Allocate a ground item with `id` (caller owns the id counter). */

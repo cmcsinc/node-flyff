@@ -19,7 +19,10 @@
 export {
   PartyManager,
   PARTY_INVITE_TIMEOUT_MS, MAX_PARTY_MEMBERS,
-  PARTY_EXP_MODE_LEVEL, PARTY_ITEM_MODE_FFA, PARTY_ITEM_MODE_ROUND_ROBIN,
+  PARTY_EXP_MODE_LEVEL, PARTY_EXP_MODE_CONTRIBUTION,
+  PARTY_ITEM_MODE_FFA, PARTY_ITEM_MODE_SEQUENTIAL,
+  PARTY_ITEM_MODE_LEADER, PARTY_ITEM_MODE_RANDOM, PARTY_ITEM_MODE_MAX,
+  PARTY_ITEM_MODE_ROUND_ROBIN,
 } from './managers/party.manager';
 export type { Party, PendingPartyInvite } from './managers/party.manager';
 export { PartyService } from './services/party.service';

@@ -50,10 +50,18 @@ function makeService(): { svc: PartyService; calls: Array<{ method: string; args
   return { svc, calls };
 }
 
-/** MEMBERREQUEST body: uLeaderId, uMemberId, BYTE bTroup. */
+/** MEMBERREQUEST body: uLeaderId, uMemberId, BOOL bTroup (4 bytes). */
 const memberReq = (leader: number, member: number) => {
   const w = new PacketWriter();
-  w.writeDword(leader); w.writeDword(member); w.writeByte(0);
+  w.writeDword(leader); w.writeDword(member); w.writeDword(0);
+  return w.build();
+};
+
+/** ADDPARTYMEMBER body: uLeader, lLv, lJob, lSex, uMember, mLv, mJob, mSex. */
+const addPartyMember = (leader: number, member: number) => {
+  const w = new PacketWriter();
+  w.writeDword(leader); w.writeDword(15); w.writeDword(2); w.writeDword(0);
+  w.writeDword(member); w.writeDword(12); w.writeDword(1); w.writeDword(1);
   return w.build();
 };
 
@@ -93,10 +101,8 @@ describe('PartyHandler', () => {
     assert.deepEqual(harness.calls[0].args, [p, 2]);
   });
 
-  it('handleAddPartyMember delegates accept(leaderId)', () => {
-    const w = new PacketWriter();
-    w.writeDword(7); w.writeDword(PLAYER_ID);
-    handler.handleAddPartyMember(mockSocket() as never, new PacketReader(w.build()));
+  it('handleAddPartyMember delegates accept(leaderId) from the 8-DWORD body', () => {
+    handler.handleAddPartyMember(mockSocket() as never, new PacketReader(addPartyMember(7, PLAYER_ID)));
     assert.equal(harness.calls[0].method, 'accept');
     assert.deepEqual(harness.calls[0].args, [p, 7]);
   });
@@ -135,10 +141,18 @@ describe('PartyHandler', () => {
     assert.deepEqual(harness.calls[0].args, [p, 'hi']);
   });
 
-  it('handleMemberRequestCancle declines when uMember = session player', () => {
+  it('handleMemberRequestCancle declines when field 2 (uMember) = session player', () => {
+    // Neuz sends (m_uLeader, m_uMember) -- leader first, invitee second.
+    const w = new PacketWriter();
+    w.writeDword(7); w.writeDword(PLAYER_ID); w.writeDword(0);
+    handler.handleMemberRequestCancle(mockSocket() as never, new PacketReader(w.build()));
+    assert.equal(harness.calls[0].method, 'decline');
+  });
+
+  it('handleMemberRequestCancle drops when uMember is not the session player', () => {
     const w = new PacketWriter();
     w.writeDword(PLAYER_ID); w.writeDword(7); w.writeDword(0);
     handler.handleMemberRequestCancle(mockSocket() as never, new PacketReader(w.build()));
-    assert.equal(harness.calls[0].method, 'decline');
+    assert.equal(harness.calls.length, 0);
   });
 });

@@ -58,13 +58,32 @@ describe('PartyManager', () => {
     assert.equal(mgr.members(p.id)[0], 3);
   });
 
-  it('nextRoundRobin cycles through members', () => {
+  it('nextSequentialLooter advances past the recorded getter and wraps', () => {
     const p = mgr.create(1, 2);
     mgr.addMember(p.id, 3);
-    const first = mgr.nextRoundRobin(p.id);
-    const second = mgr.nextRoundRobin(p.id);
-    const third = mgr.nextRoundRobin(p.id);
-    assert.deepEqual([first, second, third], [1, 2, 3]);
+    const all = [1, 2, 3];
+    // No recorded getter yet -> candidates[0].
+    assert.equal(mgr.nextSequentialLooter(p.id, all), 1);
+    mgr.setLastItemGetter(p.id, 1);
+    assert.equal(mgr.nextSequentialLooter(p.id, all), 2);
+    mgr.setLastItemGetter(p.id, 2);
+    assert.equal(mgr.nextSequentialLooter(p.id, all), 3);
+    mgr.setLastItemGetter(p.id, 3);
+    assert.equal(mgr.nextSequentialLooter(p.id, all), 1, 'wraps to the first');
+  });
+
+  it('nextSequentialLooter falls back to candidates[0] when the getter is out of range', () => {
+    const p = mgr.create(1, 2);
+    mgr.addMember(p.id, 3);
+    mgr.setLastItemGetter(p.id, 2);
+    // 2 is not among the candidates (walked away) -> first candidate takes it.
+    assert.equal(mgr.nextSequentialLooter(p.id, [1, 3]), 1);
+  });
+
+  it('nextSequentialLooter is undefined with no candidates or unknown party', () => {
+    const p = mgr.create(1, 2);
+    assert.equal(mgr.nextSequentialLooter(p.id, []), undefined);
+    assert.equal(mgr.nextSequentialLooter(9999, [1]), undefined);
   });
 
   it('pending invite CRUD + TTL constant', () => {
