@@ -69,7 +69,8 @@ export class SnapshotService {
     // loot share) passing continuously between DESTPOS packets (~500ms gap).
     // Also bypasses anti-teleport since the snap is intentional.
     if (this.deps.playerManager) {
-      for (const [id, other] of this.deps.playerManager) {
+      for (const other of this.deps.playerManager.all()) {
+        const id = other.m_idPlayer;
         if (id === player.m_idPlayer) continue;
         if (other.m_nZoneId !== player.m_nZoneId) continue;
         if (distSq3(other.m_vPos, frame.vPos) < FOLLOW_DETECT_SQ) {
