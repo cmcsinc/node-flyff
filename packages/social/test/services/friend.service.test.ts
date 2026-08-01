@@ -12,7 +12,7 @@ import { CPlayer } from '@flyff/entities';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import { PacketReader } from '@flyff/core/net/PacketReader';
 import { FriendService } from '../../src/services/friend.service';
-import { FRS, FRIEND_ERROR, OFFLINE_ID_OF_MULTI } from '../../src/constants/friend';
+import { FRS, FRIEND_ERROR, OFFLINE_ID_OF_MULTI, TID_GAME_MSGINVATECOM } from '../../src/constants/friend';
 
 interface Frame { readonly to: number; readonly buf: Buffer }
 interface Row { character_id: number; friend_id: number; blocked: boolean }
@@ -68,10 +68,10 @@ function makeCtx(players: readonly CPlayer[], seed: readonly Row[] = []) {
     findById: async (id: number) => names.get(id) ?? null,
   } as unknown as ConstructorParameters<typeof FriendService>[0]['charRepo'];
 
-  const notices: { to: number; tid: number }[] = [];
+  const notices: { to: number; tid: number; args?: string }[] = [];
   const svc = new FriendService({
     playerManager, friendRepo, charRepo,
-    sendDefinedText: (p, tid) => { notices.push({ to: p.m_idPlayer, tid }); },
+    sendDefinedText: (p, tid, args) => { notices.push({ to: p.m_idPlayer, tid, args }); },
   });
   return { svc, sent, rows, notices, states };
 }
@@ -177,8 +177,21 @@ describe('FriendService', () => {
       assert.equal(toA.r.remaining, 0);
     });
 
-    it('is idempotent -- a duplicate accept does not double-insert', async () => {
-      const a = makePlayer(1); const b = makePlayer(2);
+    it('notifies BOTH sides with TID_GAME_MSGINVATECOM + the other name', async () => {
+      const a = makePlayer(1, { m_szName: 'Alice' } as Partial<CPlayer>);
+      const b = makePlayer(2, { m_szName: 'Bob' } as Partial<CPlayer>);
+      const ctx = makeCtx([a, b]);
+      await ctx.svc.onJoin(a); await ctx.svc.onJoin(b);
+      ctx.notices.length = 0;
+
+      await ctx.svc.accept(b, 1);
+      assert.deepEqual(ctx.notices, [
+        { to: 1, tid: TID_GAME_MSGINVATECOM, args: 'Bob' },
+        { to: 2, tid: TID_GAME_MSGINVATECOM, args: 'Alice' },
+      ]);
+    });
+
+    it('is idempotent -- a duplicate accept does not double-insert', async () => {      const a = makePlayer(1); const b = makePlayer(2);
       const ctx = makeCtx([a, b]);
       await ctx.svc.onJoin(a); await ctx.svc.onJoin(b);
       await ctx.svc.accept(b, 1);

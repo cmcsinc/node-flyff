@@ -53,5 +53,13 @@ export const FRIEND_ERROR = Object.freeze({
   NAME_NOT_FOUND: 2,
 } as const);
 
-/** `TID_GAME_BATTLE_NOTFRIEND` -- target took damage in the last 10 s. */
-export const TID_GAME_BATTLE_NOTFRIEND = 1925;
+/** `TID_GAME_BATTLE_NOTFRIEND` (`defineText.h:1369`) -- target damaged < 10 s ago. */
+export const TID_GAME_BATTLE_NOTFRIEND = 2100;
+
+/**
+ * `TID_GAME_MSGINVATECOM` (`defineText.h:1049`) -- the "X was added to your
+ * messenger" notice both sides get on a successful accept
+ * (`WORLDSERVER/DPCoreClient.cpp:1480-1484`). One printf arg: the OTHER
+ * player's name.
+ */
+export const TID_GAME_MSGINVATECOM = 1202;

@@ -43,7 +43,7 @@ import { MAX_FRIEND } from '@flyff/database';
 import { createLogger } from '@flyff/core/logger';
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
-import { FRS, MAX_FRIENDSTAT, FRIEND_ERROR, TID_GAME_BATTLE_NOTFRIEND } from '../constants/friend';
+import { FRS, MAX_FRIENDSTAT, FRIEND_ERROR, TID_GAME_BATTLE_NOTFRIEND, TID_GAME_MSGINVATECOM } from '../constants/friend';
 import {
   buildAddFriend, buildFriendRequest, buildFriendCancel, buildFriendError,
   buildRemoveFriend, buildFriendGameJoin, buildGetFriendState, buildSetFriendState,
@@ -57,8 +57,8 @@ export interface FriendServiceDeps {
   playerManager: PlayerManager;
   friendRepo: FriendRepository;
   charRepo: Pick<CharacterRepository, 'findByName' | 'findById'>;
-  /** Emits a `TID_*` notice to one player (DEFINEDTEXT). */
-  sendDefinedText?: (player: CPlayer, tid: number) => void;
+  /** Emits a `TID_*` notice with printf args to one player (DEFINEDTEXT). */
+  sendDefinedText?: (player: CPlayer, tid: number, args?: string) => void;
 }
 
 export type FriendResult =
@@ -192,7 +192,17 @@ export class FriendService {
       buildAddFriend(leader.m_idPlayer, accepter.m_idPlayer, accepter.m_szName));
     this.deps.playerManager.sendTo(accepter,
       buildAddFriend(accepter.m_idPlayer, leaderId, leader.m_szName));
-    logger.info({ a: leaderId, b: accepter.m_idPlayer }, 'friendship formed');
+
+    // `DPCoreClient.cpp:1480-1484` -- each side gets TID_GAME_MSGINVATECOM with
+    // the OTHER player's name. Both branches fire because we only reach here
+    // when both inserts succeeded (C++ `bAdd == 3`).
+    this.deps.sendDefinedText?.(leader, TID_GAME_MSGINVATECOM, accepter.m_szName);
+    this.deps.sendDefinedText?.(accepter, TID_GAME_MSGINVATECOM, leader.m_szName);
+
+    logger.info(
+      { leaderId, leaderName: leader.m_szName, accepterId: accepter.m_idPlayer, accepterName: accepter.m_szName },
+      'friend request accepted',
+    );
     return OK;
   }
 
