@@ -23,6 +23,15 @@
  *     28  float  m_vPos.z   (world = raw * OLD_MPU)
  *     48  DWORD  m_dwIndex  (MI_* from defineObj.h)
  *     160 char[] m_szCharacterKey (C-string; e.g. "MaFl_DrEstern")
+ *     192 DWORD  m_dwBelligerence (BELLI_*; Mover.cpp:3092)
+ *
+ * `m_dwBelligerence` is per-PLACEMENT and OVERRIDES the propMover row:
+ * `CMover::Read` calls `InitProp(FALSE)` (Obj.cpp:511) precisely so the prop's
+ * AI + belligerence are skipped, then applies the file's values
+ * (Obj.cpp:513-517). 329 of the 347 Flaris placements are `BELLI_PEACEFUL` --
+ * including event NPCs on monster models (MaFl_Demian_EVENT on MI_DEMIAN1) --
+ * and the remaining 18 are editor-placed monsters. Dropping this field is what
+ * made SpawnManager discard 19 placements as "monster-type mover".
  *
  * .rgn `respawn7` line (WorldFile.cpp ReadRespawn):
  *     respawn7 <layer> <MI> <x> <y> <z> <count> <delaySec> <flag>
@@ -61,6 +70,8 @@ const M_DWTYPE_OFF = 44;
 const M_DWINDEX_OFF = 48;
 /** Offset of the `m_szCharacterKey` C-string (character.inc key). */
 const M_CHARKEY_OFF = 160;
+/** Offset of `m_dwBelligerence` -- the placement's belligerence (Mover.cpp:3092). */
+const M_BELLI_OFF = 192;
 
 /** Player-template MIs (defineObj.h:961-963) -- not placeable town NPCs. */
 const SKIP_MI = new Set([10, 11, 12]); // MI_DEFAULT, MI_MALE, MI_FEMALE
@@ -73,6 +84,7 @@ interface NpcEntry {
   readonly angle: number;
   readonly functions: readonly never[];
   readonly character_key?: string | undefined;
+  readonly belligerence?: number | undefined;
 }
 interface SpawnEntry {
   readonly id: number;
@@ -123,6 +135,7 @@ function decodeMovers(buf: Buffer): NpcEntry[] {
       angle,
       functions: [],
       character_key: characterKey.length > 0 ? characterKey : undefined,
+      belligerence: buf.readUInt32LE(o + M_BELLI_OFF),
     });
   }
   return out;

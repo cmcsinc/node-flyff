@@ -28,6 +28,7 @@ import { blockForMover, resolveVendorStock, type CharacterIncBlock } from '@flyf
 import type { Vec3 } from '@flyff/entities';
 import { CMover, type MoverSpawnSource, type MoverOutfit } from '@flyff/entities';
 import { createLogger } from '@flyff/core/logger';
+import { BELLI_PEACEFUL } from '../snapshot-constants';
 
 const logger = createLogger({ module: 'spawn-manager' });
 
@@ -139,14 +140,23 @@ export class SpawnManager {
           logger.warn({ moverId: npcSpawn.mover_id, zone: zone._id }, 'NPC mover def missing -- skipping');
           continue;
         }
-        // An NPC placement that resolves to a monster-type mover is a quest/event
-        // NPC reusing a monster model (e.g. MaFl_Demian, modeled on MI_DEMIAN1).
-        // Without a peaceful NPC overlay it would materialize as an attackable
-        // monster standing in town -- skip it until the overlay exists.
-        if (def.type === 'monster') {
-          logger.warn({ moverId: npcSpawn.mover_id, zone: zone._id }, 'NPC placement resolves to monster-type mover -- skipping');
-          continue;
-        }
+        // A monster-typed mover def placed in the `npcs:` (.dyo) list is NOT
+        // automatically a monster: `CMover::Read` skips
+        // `SetAIInterface(pProp->dwAI)` via `InitProp(FALSE)` (Obj.cpp:511) and
+        // applies the .dyo's own `dwAI` + `m_dwBelligerence` instead
+        // (Obj.cpp:513-517, Mover.cpp:3092). In Flaris 329 of 347 placements are
+        // `AII_NONE` + `BELLI_PEACEFUL` (event NPCs on monster models, e.g.
+        // MaFl_Demian_EVENT on MI_DEMIAN1); the other 18 are genuine editor-
+        // placed monsters -- attackable, retaliate-only (`m_bActiveAttack` is
+        // set only by the respawner, Respawn.cpp:634), and with
+        // `m_lRespawn == -1` they never come back once killed.
+        //
+        // Only belligerence is carried: it is what gates attackability, and the
+        // AI system's own gate is `m_bAttackable`. ponytail: the record's `dwAI`
+        // / `dwAI2` (initial FSM state) are not read, so the 14 MaEw guardian
+        // placements stored as `STATE_STAND` wander instead of standing.
+        const belli = npcSpawn.belligerence ?? def.belligerence ?? 0;
+        const peaceful = belli === BELLI_PEACEFUL;
         // Resolve the character.inc block by the placement's character_key when
         // present -- multiple NPCs can share one mover model (e.g. Boboku /
         // Boboko / Bobochan all MI 211) yet have distinct shop stock, dialog,
@@ -175,9 +185,12 @@ export class SpawnManager {
             menus: charBlock?.menus,
             vendorStock: resolveVendorStock(charBlock, this.resources.items),
             structure: charBlock?.structure,
-            attackable: def.attackable,
+            // `IsAttackAbleNPC` (Mover.cpp:6806-6810): `bKillable == 0` or
+            // `BELLI_PEACEFUL` -> unattackable. `def.attackable` already carries
+            // bKillable for monster-typed defs (false for npc-typed ones).
+            attackable: (def.attackable ?? false) && !peaceful,
             guard: def.guard ?? false,
-            belligerence: def.belligerence ?? 0,
+            belligerence: belli,
             atkMin: def.attack,
             atkMax: def.attack,
             armor: def.defense,
@@ -189,7 +202,7 @@ export class SpawnManager {
             reAttackDelay: def.attack_speed,
           },
           pos: npcSpawn.position, angle: npcSpawn.angle, zoneId: zone._id_numeric,
-          delayMs: 0, // static NPC -- never respawns
+          delayMs: 0, // DYO placement -- m_lRespawn is -1, so it never respawns
         });
       }
 

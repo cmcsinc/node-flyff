@@ -8590,6 +8590,7 @@ npcs:
       x: 7940.799
       y: 159.076
       z: 2405.927
+    belligerence: 1
     angle: 0
     functions: []
   - id: 2
@@ -8599,6 +8600,7 @@ npcs:
       x: 8197.681
       y: 84.793
       z: 2805.672
+    belligerence: 1
     angle: 0.48
     functions: []
   - id: 3
@@ -8608,6 +8610,7 @@ npcs:
       x: 8279
       y: 81.204
       z: 2812.229
+    belligerence: 1
     angle: 1.58
     functions: []
   - id: 4
@@ -8617,6 +8620,7 @@ npcs:
       x: 8279.326
       y: 81.118
       z: 2810.451
+    belligerence: 1
     angle: 1.98
     functions: []
   - id: 5
@@ -8626,6 +8630,7 @@ npcs:
       x: 8203.597
       y: 85.382
       z: 2981.205
+    belligerence: 1
     angle: 3.07
     functions: []
   - id: 6
@@ -8634,6 +8639,7 @@ npcs:
       x: 5686.163
       y: 85
       z: 3436.717
+    belligerence: 12
     angle: 0
     functions: []
   - id: 7
@@ -8643,6 +8649,7 @@ npcs:
       x: 6958.434
       y: 100
       z: 3211.789
+    belligerence: 1
     angle: 3.183
     functions: []
   - id: 8
@@ -8652,6 +8659,7 @@ npcs:
       x: 6975.657
       y: 100
       z: 3266.874
+    belligerence: 1
     angle: 5.273
     functions: []
   - id: 9
@@ -8661,6 +8669,7 @@ npcs:
       x: 6956.898
       y: 100.2
       z: 3236.677
+    belligerence: 1
     angle: 5.633
     functions: []
   - id: 10
@@ -8670,6 +8679,7 @@ npcs:
       x: 6960.071
       y: 100
       z: 3266.104
+    belligerence: 1
     angle: 0.06
     functions: []
   - id: 11
@@ -8679,6 +8689,7 @@ npcs:
       x: 7042.263
       y: 99.494
       z: 3244.289
+    belligerence: 1
     angle: 4.713
     functions: []
   - id: 12
@@ -8688,6 +8699,7 @@ npcs:
       x: 7160.067
       y: 100
       z: 3221.458
+    belligerence: 1
     angle: 3.123
     functions: []
   - id: 13
@@ -8697,6 +8709,7 @@ npcs:
       x: 6937.835
       y: 100
       z: 3243.339
+    belligerence: 1
     angle: 1.49
     functions: []
   - id: 14
@@ -8706,6 +8719,7 @@ npcs:
       x: 6926.101
       y: 100
       z: 3232.107
+    belligerence: 1
     angle: 1.653
     functions: []
   - id: 15
@@ -8715,6 +8729,7 @@ npcs:
       x: 6926.547
       y: 100
       z: 3229.595
+    belligerence: 1
     angle: 1.883
     functions: []
   - id: 16
@@ -8724,6 +8739,7 @@ npcs:
       x: 6954.721
       y: 100
       z: 3274.097
+    belligerence: 1
     angle: 1.6
     functions: []
   - id: 17
@@ -8733,6 +8749,7 @@ npcs:
       x: 7129.189
       y: 99.958
       z: 3252.483
+    belligerence: 1
     angle: 1.403
     functions: []
   - id: 18
@@ -8742,6 +8759,7 @@ npcs:
       x: 6703.289
       y: 135.965
       z: 3327.764
+    belligerence: 1
     angle: 1.49
     functions: []
   - id: 19
@@ -8751,6 +8769,7 @@ npcs:
       x: 6927.303
       y: 100
       z: 3236.48
+    belligerence: 1
     angle: 0.59
     functions: []
   - id: 20
@@ -8760,6 +8779,7 @@ npcs:
       x: 6930.12
       y: 100.3
       z: 3323.379
+    belligerence: 1
     angle: 1.61
     functions: []
   - id: 21
@@ -8769,6 +8789,7 @@ npcs:
       x: 7152.161
       y: 100.197
       z: 3244.602
+    belligerence: 1
     angle: 4.373
     functions: []
   - id: 22
@@ -8778,6 +8799,7 @@ npcs:
       x: 7152.352
       y: 100.199
       z: 3242.404
+    belligerence: 1
     angle: 4.513
     functions: []
   - id: 23
@@ -8787,6 +8809,7 @@ npcs:
       x: 7155.677
       y: 100.2
       z: 3250.552
+    belligerence: 1
     angle: 3.753
     functions: []
   - id: 24
@@ -8796,6 +8819,7 @@ npcs:
       x: 6960.414
       y: 100
       z: 3204.269
+    belligerence: 1
     angle: 3.07
     functions: []
   - id: 25
@@ -8805,6 +8829,7 @@ npcs:
       x: 6998.787
       y: 100
       z: 3203.146
+    belligerence: 1
     angle: 2.963
     functions: []
   - id: 26
@@ -8814,6 +8839,7 @@ npcs:
       x: 6835.973
       y: 108.616
       z: 3132.558
+    belligerence: 1
     angle: 1.57
     functions: []
   - id: 27
@@ -8823,6 +8849,7 @@ npcs:
       x: 6988.322
       y: 100
       z: 3326.006
+    belligerence: 1
     angle: 4.693
     functions: []
   - id: 28
@@ -8832,6 +8859,7 @@ npcs:
       x: 6988.117
       y: 100
       z: 3321.666
+    belligerence: 1
     angle: 4.623
     functions: []
   - id: 29
@@ -8841,6 +8869,7 @@ npcs:
       x: 6960.132
       y: 100.2
       z: 3339.728
+    belligerence: 1
     angle: 0
     functions: []
   - id: 30
@@ -8850,6 +8879,7 @@ npcs:
       x: 6703.564
       y: 136.085
       z: 3326.786
+    belligerence: 1
     angle: 2.26
     functions: []
   - id: 31
@@ -8859,6 +8889,7 @@ npcs:
       x: 6957.511
       y: 100
       z: 3211.723
+    belligerence: 1
     angle: 3.143
     functions: []
   - id: 32
@@ -8868,6 +8899,7 @@ npcs:
       x: 6989.561
       y: 100
       z: 3256.066
+    belligerence: 1
     angle: 5.183
     functions: []
   - id: 33
@@ -8877,6 +8909,7 @@ npcs:
       x: 6961.313
       y: 100
       z: 3349.829
+    belligerence: 1
     angle: 0
     functions: []
   - id: 34
@@ -8886,6 +8919,7 @@ npcs:
       x: 6958.221
       y: 100
       z: 3349.968
+    belligerence: 1
     angle: 0
     functions: []
   - id: 35
@@ -8895,6 +8929,7 @@ npcs:
       x: 6927.54
       y: 100
       z: 3227.029
+    belligerence: 1
     angle: 2.14
     functions: []
   - id: 36
@@ -8904,6 +8939,7 @@ npcs:
       x: 6932.14
       y: 100
       z: 3259.181
+    belligerence: 1
     angle: 1.08
     functions: []
   - id: 37
@@ -8913,6 +8949,7 @@ npcs:
       x: 6982.488
       y: 100
       z: 3351.127
+    belligerence: 1
     angle: 5.533
     functions: []
   - id: 38
@@ -8922,6 +8959,7 @@ npcs:
       x: 6943.974
       y: 100.138
       z: 3101.107
+    belligerence: 1
     angle: 3.193
     functions: []
   - id: 39
@@ -8931,6 +8969,7 @@ npcs:
       x: 6989.697
       y: 100
       z: 3231.317
+    belligerence: 1
     angle: 4.313
     functions: []
   - id: 40
@@ -8940,6 +8979,7 @@ npcs:
       x: 7130.349
       y: 99.955
       z: 3257.222
+    belligerence: 1
     angle: 1.02
     functions: []
   - id: 41
@@ -8949,6 +8989,7 @@ npcs:
       x: 6930.677
       y: 100
       z: 3226.022
+    belligerence: 1
     angle: 3.55
     functions: []
   - id: 42
@@ -8958,6 +8999,7 @@ npcs:
       x: 6981.303
       y: 100
       z: 3305.344
+    belligerence: 1
     angle: 4.02
     functions: []
   - id: 43
@@ -8967,6 +9009,7 @@ npcs:
       x: 6982.605
       y: 100
       z: 3306.908
+    belligerence: 1
     angle: 4.093
     functions: []
   - id: 44
@@ -8976,6 +9019,7 @@ npcs:
       x: 6960.913
       y: 100
       z: 3211.651
+    belligerence: 1
     angle: 3.133
     functions: []
   - id: 45
@@ -8985,6 +9029,7 @@ npcs:
       x: 6988.44
       y: 100
       z: 3335.072
+    belligerence: 1
     angle: 4.673
     functions: []
   - id: 46
@@ -8994,6 +9039,7 @@ npcs:
       x: 6988.448
       y: 100
       z: 3331.129
+    belligerence: 1
     angle: 4.723
     functions: []
   - id: 47
@@ -9003,6 +9049,7 @@ npcs:
       x: 6960.532
       y: 100.3
       z: 3227.768
+    belligerence: 1
     angle: 0
     functions: []
   - id: 48
@@ -9012,6 +9059,7 @@ npcs:
       x: 6953.646
       y: 100
       z: 3213.32
+    belligerence: 1
     angle: 3.11
     functions: []
   - id: 49
@@ -9021,6 +9069,7 @@ npcs:
       x: 6962.043
       y: 100.2
       z: 3250.788
+    belligerence: 1
     angle: 2.86
     functions: []
   - id: 50
@@ -9030,6 +9079,7 @@ npcs:
       x: 6928.914
       y: 100
       z: 3252.167
+    belligerence: 1
     angle: 1.4
     functions: []
   - id: 51
@@ -9039,6 +9089,7 @@ npcs:
       x: 6947.779
       y: 100
       z: 3274.473
+    belligerence: 1
     angle: 0.36
     functions: []
   - id: 52
@@ -9048,6 +9099,7 @@ npcs:
       x: 6966.337
       y: 100.2
       z: 3239.639
+    belligerence: 1
     angle: 0.97
     functions: []
   - id: 53
@@ -9057,6 +9109,7 @@ npcs:
       x: 6963.875
       y: 100.2
       z: 3237.248
+    belligerence: 1
     angle: 0.57
     functions: []
   - id: 54
@@ -9066,6 +9119,7 @@ npcs:
       x: 6962.229
       y: 100
       z: 3227.542
+    belligerence: 1
     angle: 0
     functions: []
   - id: 55
@@ -9075,6 +9129,7 @@ npcs:
       x: 6968.859
       y: 100.3
       z: 3325.083
+    belligerence: 1
     angle: 0.98
     functions: []
   - id: 56
@@ -9084,6 +9139,7 @@ npcs:
       x: 6976.623
       y: 100
       z: 3318.762
+    belligerence: 1
     angle: 4.133
     functions: []
   - id: 57
@@ -9093,6 +9149,7 @@ npcs:
       x: 6962.144
       y: 100.2
       z: 3227.943
+    belligerence: 1
     angle: 0
     functions: []
   - id: 58
@@ -9102,6 +9159,7 @@ npcs:
       x: 7024.833
       y: 100
       z: 3280.066
+    belligerence: 1
     angle: 0.48
     functions: []
   - id: 59
@@ -9111,6 +9169,7 @@ npcs:
       x: 7028.452
       y: 100
       z: 3279.519
+    belligerence: 1
     angle: 0.55
     functions: []
   - id: 60
@@ -9120,6 +9179,7 @@ npcs:
       x: 6925.239
       y: 100
       z: 3252.267
+    belligerence: 1
     angle: 4.503
     functions: []
   - id: 61
@@ -9129,6 +9189,7 @@ npcs:
       x: 6927.477
       y: 100
       z: 3254.243
+    belligerence: 1
     angle: 1.41
     functions: []
   - id: 62
@@ -9138,6 +9199,7 @@ npcs:
       x: 6984.001
       y: 100
       z: 3288.399
+    belligerence: 1
     angle: 2.953
     functions: []
   - id: 63
@@ -9147,6 +9209,7 @@ npcs:
       x: 6986.547
       y: 100
       z: 3285.81
+    belligerence: 1
     angle: 6.063
     functions: []
   - id: 64
@@ -9156,6 +9219,7 @@ npcs:
       x: 7003.698
       y: 100
       z: 3221.112
+    belligerence: 1
     angle: 6.083
     functions: []
   - id: 65
@@ -9165,6 +9229,7 @@ npcs:
       x: 7001.195
       y: 100
       z: 3222.956
+    belligerence: 1
     angle: 3.013
     functions: []
   - id: 66
@@ -9174,6 +9239,7 @@ npcs:
       x: 6972.673
       y: 100.101
       z: 3421.975
+    belligerence: 1
     angle: 4.523
     functions: []
   - id: 67
@@ -9183,6 +9249,7 @@ npcs:
       x: 6975.249
       y: 100.049
       z: 3424.059
+    belligerence: 1
     angle: 4.563
     functions: []
   - id: 68
@@ -9192,6 +9259,7 @@ npcs:
       x: 6965.305
       y: 100.2
       z: 3238.362
+    belligerence: 1
     angle: 0.76
     functions: []
   - id: 69
@@ -9201,6 +9269,7 @@ npcs:
       x: 6955.155
       y: 100
       z: 3246.952
+    belligerence: 1
     angle: 4.363
     functions: []
   - id: 70
@@ -9210,6 +9279,7 @@ npcs:
       x: 6976.072
       y: 100
       z: 3233.792
+    belligerence: 1
     angle: 4.133
     functions: []
   - id: 71
@@ -9219,6 +9289,7 @@ npcs:
       x: 6958.884
       y: 100
       z: 3227.856
+    belligerence: 1
     angle: 0
     functions: []
   - id: 72
@@ -9228,6 +9299,7 @@ npcs:
       x: 6958.894
       y: 100.3
       z: 3250.709
+    belligerence: 1
     angle: 3.383
     functions: []
   - id: 73
@@ -9237,6 +9309,7 @@ npcs:
       x: 6962.077
       y: 100
       z: 3236.613
+    belligerence: 1
     angle: 0.26
     functions: []
   - id: 74
@@ -9246,6 +9319,7 @@ npcs:
       x: 7154.064
       y: 100.296
       z: 3249.172
+    belligerence: 1
     angle: 4.033
     functions: []
   - id: 75
@@ -9255,6 +9329,7 @@ npcs:
       x: 7167.911
       y: 100.2
       z: 3245.336
+    belligerence: 1
     angle: 1.9
     functions: []
   - id: 76
@@ -9264,6 +9339,7 @@ npcs:
       x: 7167.915
       y: 100.3
       z: 3243.039
+    belligerence: 1
     angle: 1.16
     functions: []
   - id: 77
@@ -9273,6 +9349,7 @@ npcs:
       x: 7166.517
       y: 100.2
       z: 3239.422
+    belligerence: 1
     angle: 0.91
     functions: []
   - id: 78
@@ -9282,6 +9359,7 @@ npcs:
       x: 7164.836
       y: 100.3
       z: 3237.801
+    belligerence: 1
     angle: 0.64
     functions: []
   - id: 79
@@ -9291,6 +9369,7 @@ npcs:
       x: 6929.724
       y: 100.3
       z: 3327.48
+    belligerence: 1
     angle: 1.77
     functions: []
   - id: 80
@@ -9300,6 +9379,7 @@ npcs:
       x: 6929.995
       y: 100.3
       z: 3325.39
+    belligerence: 1
     angle: 1.56
     functions: []
   - id: 81
@@ -9309,6 +9389,7 @@ npcs:
       x: 6929.389
       y: 100.3
       z: 3329.426
+    belligerence: 1
     angle: 1.77
     functions: []
   - id: 82
@@ -9318,6 +9399,7 @@ npcs:
       x: 6969.177
       y: 100
       z: 3214.399
+    belligerence: 1
     angle: 3.443
     functions: []
   - id: 83
@@ -9327,6 +9409,7 @@ npcs:
       x: 6972.245
       y: 100
       z: 3216.119
+    belligerence: 1
     angle: 3.863
     functions: []
   - id: 84
@@ -9336,6 +9419,7 @@ npcs:
       x: 6953.708
       y: 100.3
       z: 3239.704
+    belligerence: 1
     angle: 5.123
     functions: []
   - id: 85
@@ -9345,6 +9429,7 @@ npcs:
       x: 6965.013
       y: 100.2
       z: 3249.177
+    belligerence: 1
     angle: 2.413
     functions: []
   - id: 86
@@ -9354,6 +9439,7 @@ npcs:
       x: 7157.301
       y: 100.2
       z: 3236.983
+    belligerence: 1
     angle: 5.993
     functions: []
   - id: 87
@@ -9363,6 +9449,7 @@ npcs:
       x: 6954.772
       y: 100.2
       z: 3238.652
+    belligerence: 1
     angle: 5.411
     functions: []
   - id: 88
@@ -9372,6 +9459,7 @@ npcs:
       x: 6958.786
       y: 100.3
       z: 3227.947
+    belligerence: 1
     angle: 0
     functions: []
   - id: 89
@@ -9381,6 +9469,7 @@ npcs:
       x: 6973.04
       y: 100
       z: 3215.894
+    belligerence: 1
     angle: 3.603
     functions: []
   - id: 90
@@ -9390,6 +9479,7 @@ npcs:
       x: 6974.984
       y: 100
       z: 3216.533
+    belligerence: 1
     angle: 3.563
     functions: []
   - id: 91
@@ -9399,6 +9489,7 @@ npcs:
       x: 6961.091
       y: 100
       z: 3231.911
+    belligerence: 1
     angle: 0
     functions: []
   - id: 92
@@ -9408,6 +9499,7 @@ npcs:
       x: 6962.205
       y: 100.3
       z: 3227.41
+    belligerence: 1
     angle: 0
     functions: []
   - id: 93
@@ -9417,6 +9509,7 @@ npcs:
       x: 6966.939
       y: 100
       z: 3213.849
+    belligerence: 1
     angle: 3.583
     functions: []
   - id: 94
@@ -9426,6 +9519,7 @@ npcs:
       x: 6959.303
       y: 100
       z: 3236.456
+    belligerence: 1
     angle: 0
     functions: []
   - id: 95
@@ -9435,6 +9529,7 @@ npcs:
       x: 6965.293
       y: 100
       z: 3297.559
+    belligerence: 1
     angle: 3.283
     functions: []
   - id: 96
@@ -9444,6 +9539,7 @@ npcs:
       x: 6955.465
       y: 100.3
       z: 3237.56
+    belligerence: 1
     angle: 5.453
     functions: []
   - id: 97
@@ -9453,6 +9549,7 @@ npcs:
       x: 6966.277
       y: 100
       z: 3213.705
+    belligerence: 1
     angle: 3.453
     functions: []
   - id: 98
@@ -9462,6 +9559,7 @@ npcs:
       x: 6959.296
       y: 100.3
       z: 3227.73
+    belligerence: 1
     angle: 0
     functions: []
   - id: 99
@@ -9471,6 +9569,7 @@ npcs:
       x: 6956.982
       y: 100.2
       z: 3228.085
+    belligerence: 1
     angle: 0
     functions: []
   - id: 100
@@ -9480,6 +9579,7 @@ npcs:
       x: 7160.324
       y: 100.4
       z: 3237.211
+    belligerence: 1
     angle: 0
     functions: []
   - id: 101
@@ -9489,6 +9589,7 @@ npcs:
       x: 6962.534
       y: 100.3
       z: 3227.627
+    belligerence: 1
     angle: 0
     functions: []
   - id: 102
@@ -9498,6 +9599,7 @@ npcs:
       x: 6973.872
       y: 100
       z: 3216.632
+    belligerence: 1
     angle: 3.653
     functions: []
   - id: 103
@@ -9507,6 +9609,7 @@ npcs:
       x: 6951.434
       y: 100
       z: 3214.036
+    belligerence: 1
     angle: 3.04
     functions: []
   - id: 104
@@ -9516,6 +9619,7 @@ npcs:
       x: 6974.916
       y: 100
       z: 3217.307
+    belligerence: 1
     angle: 3.543
     functions: []
   - id: 105
@@ -9525,6 +9629,7 @@ npcs:
       x: 6963.458
       y: 100.2
       z: 3228.162
+    belligerence: 1
     angle: 0
     functions: []
   - id: 106
@@ -9534,6 +9639,7 @@ npcs:
       x: 6974.252
       y: 100
       z: 3268.514
+    belligerence: 1
     angle: 5.873
     functions: []
   - id: 107
@@ -9543,6 +9649,7 @@ npcs:
       x: 6970.858
       y: 100
       z: 3215.084
+    belligerence: 1
     angle: 3.51
     functions: []
   - id: 108
@@ -9552,6 +9659,7 @@ npcs:
       x: 6964.207
       y: 100.2
       z: 3228.18
+    belligerence: 1
     angle: 0
     functions: []
   - id: 109
@@ -9561,6 +9669,7 @@ npcs:
       x: 6969.138
       y: 100
       z: 3214.661
+    belligerence: 1
     angle: 3.44
     functions: []
   - id: 110
@@ -9570,6 +9679,7 @@ npcs:
       x: 6958.741
       y: 100
       z: 3236.105
+    belligerence: 1
     angle: 0
     functions: []
   - id: 111
@@ -9579,6 +9689,7 @@ npcs:
       x: 6960.749
       y: 100
       z: 3236.153
+    belligerence: 1
     angle: 0
     functions: []
   - id: 112
@@ -9588,6 +9699,7 @@ npcs:
       x: 7169.168
       y: 100
       z: 3271.165
+    belligerence: 1
     angle: 5.993
     functions: []
   - id: 113
@@ -9597,6 +9709,7 @@ npcs:
       x: 7172.419
       y: 100
       z: 3212.385
+    belligerence: 1
     angle: 3.44
     functions: []
   - id: 114
@@ -9606,6 +9719,7 @@ npcs:
       x: 7219.015
       y: 108.631
       z: 3190.55
+    belligerence: 1
     angle: 3.253
     functions: []
   - id: 115
@@ -9615,6 +9729,7 @@ npcs:
       x: 7169.417
       y: 100
       z: 3208.961
+    belligerence: 1
     angle: 2.9
     functions: []
   - id: 116
@@ -9624,6 +9739,7 @@ npcs:
       x: 7179.42
       y: 100
       z: 3216.337
+    belligerence: 1
     angle: 4.463
     functions: []
   - id: 117
@@ -9633,6 +9749,7 @@ npcs:
       x: 7202.364
       y: 100
       z: 3228.752
+    belligerence: 1
     angle: 1.41
     functions: []
   - id: 118
@@ -9642,6 +9759,7 @@ npcs:
       x: 7204.369
       y: 100
       z: 3227.884
+    belligerence: 1
     angle: 4.593
     functions: []
   - id: 119
@@ -9651,6 +9769,7 @@ npcs:
       x: 7204.204
       y: 100
       z: 3229.8
+    belligerence: 1
     angle: 5.183
     functions: []
   - id: 120
@@ -9660,6 +9779,7 @@ npcs:
       x: 7204.647
       y: 100
       z: 3226.729
+    belligerence: 1
     angle: 4.21
     functions: []
   - id: 121
@@ -9669,6 +9789,7 @@ npcs:
       x: 7203.204
       y: 100
       z: 3231.362
+    belligerence: 1
     angle: 5.493
     functions: []
   - id: 122
@@ -9678,6 +9799,7 @@ npcs:
       x: 7168.2
       y: 100.036
       z: 3208.87
+    belligerence: 1
     angle: 3.303
     functions: []
   - id: 123
@@ -9687,6 +9809,7 @@ npcs:
       x: 7175.457
       y: 100
       z: 3260.532
+    belligerence: 1
     angle: 5.583
     functions: []
   - id: 124
@@ -9696,6 +9819,7 @@ npcs:
       x: 8638.007
       y: 100
       z: 3569.618
+    belligerence: 1
     angle: 0
     functions: []
   - id: 125
@@ -9705,6 +9829,7 @@ npcs:
       x: 8447.493
       y: 100
       z: 3576.305
+    belligerence: 1
     angle: 4.733
     functions: []
   - id: 126
@@ -9714,6 +9839,7 @@ npcs:
       x: 8439.945
       y: 100.025
       z: 3547.745
+    belligerence: 1
     angle: 0
     functions: []
   - id: 127
@@ -9722,6 +9848,7 @@ npcs:
       x: 8438.407
       y: 105.608
       z: 3206.013
+    belligerence: 13
     angle: 0
     functions: []
   - id: 128
@@ -9731,6 +9858,7 @@ npcs:
       x: 8529.557
       y: 95.343
       z: 3476.616
+    belligerence: 1
     angle: 1.6
     functions: []
   - id: 129
@@ -9740,6 +9868,7 @@ npcs:
       x: 8529.301
       y: 95.385
       z: 3474.441
+    belligerence: 1
     angle: 1.95
     functions: []
   - id: 130
@@ -9749,6 +9878,7 @@ npcs:
       x: 6552.239
       y: 108.244
       z: 3618.515
+    belligerence: 1
     angle: 3.533
     functions: []
   - id: 131
@@ -9758,6 +9888,7 @@ npcs:
       x: 6589.828
       y: 100.1
       z: 3822.047
+    belligerence: 1
     angle: 0
     functions: []
   - id: 132
@@ -9767,6 +9898,7 @@ npcs:
       x: 6955.456
       y: 149.134
       z: 3848.429
+    belligerence: 1
     angle: 3.043
     functions: []
   - id: 133
@@ -9776,6 +9908,7 @@ npcs:
       x: 6995.009
       y: 125.335
       z: 3897.01
+    belligerence: 1
     angle: 0
     functions: []
   - id: 134
@@ -9785,6 +9918,7 @@ npcs:
       x: 6998.488
       y: 125.05
       z: 3897.479
+    belligerence: 1
     angle: 6.073
     functions: []
   - id: 135
@@ -9794,6 +9928,7 @@ npcs:
       x: 6991.909
       y: 124.603
       z: 3891.937
+    belligerence: 1
     angle: 0.93
     functions: []
   - id: 136
@@ -9803,6 +9938,7 @@ npcs:
       x: 7002.028
       y: 124.395
       z: 3894.994
+    belligerence: 1
     angle: 5.433
     functions: []
   - id: 137
@@ -9812,6 +9948,7 @@ npcs:
       x: 7036.381
       y: 118.339
       z: 3728.501
+    belligerence: 1
     angle: 0
     functions: []
   - id: 138
@@ -9821,6 +9958,7 @@ npcs:
       x: 6691.423
       y: 120.054
       z: 3619.134
+    belligerence: 1
     angle: 3.903
     functions: []
   - id: 139
@@ -9830,6 +9968,7 @@ npcs:
       x: 7186.78
       y: 156.2
       z: 4090.626
+    belligerence: 1
     angle: 0
     functions: []
   - id: 140
@@ -9839,6 +9978,7 @@ npcs:
       x: 7453.871
       y: 130.719
       z: 3670.846
+    belligerence: 1
     angle: 1.56
     functions: []
   - id: 141
@@ -9848,6 +9988,7 @@ npcs:
       x: 7214.24
       y: 109.498
       z: 3673.458
+    belligerence: 1
     angle: 5.643
     functions: []
   - id: 142
@@ -9857,6 +9998,7 @@ npcs:
       x: 7351.099
       y: 155.903
       z: 3926.167
+    belligerence: 1
     angle: 5.803
     functions: []
   - id: 143
@@ -9866,6 +10008,7 @@ npcs:
       x: 7340.922
       y: 155.977
       z: 3933.153
+    belligerence: 1
     angle: 5.483
     functions: []
   - id: 144
@@ -9874,6 +10017,7 @@ npcs:
       x: 7341.455
       y: 111.762
       z: 3624.289
+    belligerence: 11
     angle: 0
     functions: []
   - id: 145
@@ -9883,6 +10027,7 @@ npcs:
       x: 7741.04
       y: 95.515
       z: 4074.891
+    belligerence: 1
     angle: 3.09
     functions: []
   - id: 146
@@ -9892,6 +10037,7 @@ npcs:
       x: 8463.478
       y: 100
       z: 3600.757
+    belligerence: 1
     angle: 3.18
     functions: []
   - id: 147
@@ -9901,6 +10047,7 @@ npcs:
       x: 8478.097
       y: 100
       z: 3634.131
+    belligerence: 1
     angle: 0
     functions: []
   - id: 148
@@ -9910,6 +10057,7 @@ npcs:
       x: 8359.337
       y: 100
       z: 3640.241
+    belligerence: 1
     angle: 2.38
     functions: []
   - id: 149
@@ -9919,6 +10067,7 @@ npcs:
       x: 8536.5
       y: 100
       z: 3643.722
+    belligerence: 1
     angle: 0
     functions: []
   - id: 150
@@ -9928,6 +10077,7 @@ npcs:
       x: 8374.658
       y: 100
       z: 3659.452
+    belligerence: 1
     angle: 3.21
     functions: []
   - id: 151
@@ -9937,6 +10087,7 @@ npcs:
       x: 8375.102
       y: 100
       z: 3673.197
+    belligerence: 1
     angle: 0.08
     functions: []
   - id: 152
@@ -9946,6 +10097,7 @@ npcs:
       x: 8372.59
       y: 100
       z: 3671.628
+    belligerence: 1
     angle: 0.1
     functions: []
   - id: 153
@@ -9955,6 +10107,7 @@ npcs:
       x: 8461.95
       y: 100
       z: 3709.779
+    belligerence: 1
     angle: 0
     functions: []
   - id: 154
@@ -9964,6 +10117,7 @@ npcs:
       x: 8360.62
       y: 100
       z: 3751.038
+    belligerence: 1
     angle: 0
     functions: []
   - id: 155
@@ -9973,6 +10127,7 @@ npcs:
       x: 8412.976
       y: 140.249
       z: 3974.41
+    belligerence: 1
     angle: 0
     functions: []
   - id: 156
@@ -9982,6 +10137,7 @@ npcs:
       x: 8315.521
       y: 100
       z: 3728.628
+    belligerence: 1
     angle: 0
     functions: []
   - id: 157
@@ -9991,6 +10147,7 @@ npcs:
       x: 8410.16
       y: 100
       z: 3680.759
+    belligerence: 1
     angle: 5.513
     functions: []
   - id: 158
@@ -10000,6 +10157,7 @@ npcs:
       x: 8403.951
       y: 100
       z: 3657.744
+    belligerence: 1
     angle: 1.9
     functions: []
   - id: 159
@@ -10009,6 +10167,7 @@ npcs:
       x: 8386.912
       y: 100
       z: 3651.859
+    belligerence: 1
     angle: 0.19
     functions: []
   - id: 160
@@ -10018,6 +10177,7 @@ npcs:
       x: 8396.128
       y: 100.2
       z: 3655.721
+    belligerence: 1
     angle: 1.97
     functions: []
   - id: 161
@@ -10027,6 +10187,7 @@ npcs:
       x: 8398.086
       y: 100.1
       z: 3657.5
+    belligerence: 1
     angle: 5.913
     functions: []
   - id: 162
@@ -10036,6 +10197,7 @@ npcs:
       x: 8396.88
       y: 100.1
       z: 3654.479
+    belligerence: 1
     angle: 3.263
     functions: []
   - id: 163
@@ -10045,6 +10207,7 @@ npcs:
       x: 8385.096
       y: 100
       z: 3653.676
+    belligerence: 1
     angle: 3.883
     functions: []
   - id: 164
@@ -10054,6 +10217,7 @@ npcs:
       x: 8480.749
       y: 100
       z: 3660.423
+    belligerence: 1
     angle: 5.503
     functions: []
   - id: 165
@@ -10063,6 +10227,7 @@ npcs:
       x: 8369.506
       y: 100
       z: 3675.497
+    belligerence: 1
     angle: 0.12
     functions: []
   - id: 166
@@ -10072,6 +10237,7 @@ npcs:
       x: 8341.125
       y: 100.6
       z: 3750.59
+    belligerence: 1
     angle: 0.75
     functions: []
   - id: 167
@@ -10081,6 +10247,7 @@ npcs:
       x: 8483.716
       y: 100.6
       z: 3810.268
+    belligerence: 1
     angle: 3.193
     functions: []
   - id: 168
@@ -10090,6 +10257,7 @@ npcs:
       x: 8481.515
       y: 100
       z: 3810.405
+    belligerence: 1
     angle: 3.123
     functions: []
   - id: 169
@@ -10099,6 +10267,7 @@ npcs:
       x: 8449.088
       y: 100
       z: 3638.129
+    belligerence: 1
     angle: 1.41
     functions: []
   - id: 170
@@ -10108,6 +10277,7 @@ npcs:
       x: 8334.948
       y: 100
       z: 3713.428
+    belligerence: 1
     angle: 3.933
     functions: []
   - id: 171
@@ -10117,6 +10287,7 @@ npcs:
       x: 8532.436
       y: 100
       z: 3607.489
+    belligerence: 1
     angle: 5.863
     functions: []
   - id: 172
@@ -10126,6 +10297,7 @@ npcs:
       x: 8353.016
       y: 99.775
       z: 3983.67
+    belligerence: 1
     angle: 5.583
     functions: []
   - id: 173
@@ -10135,6 +10307,7 @@ npcs:
       x: 8414.342
       y: 140.141
       z: 3974.805
+    belligerence: 1
     angle: 0
     functions: []
   - id: 174
@@ -10144,6 +10317,7 @@ npcs:
       x: 8462.629
       y: 100
       z: 3600.31
+    belligerence: 1
     angle: 3.133
     functions: []
   - id: 175
@@ -10153,6 +10327,7 @@ npcs:
       x: 8465.417
       y: 100
       z: 3622.853
+    belligerence: 1
     angle: 0
     functions: []
   - id: 176
@@ -10162,6 +10337,7 @@ npcs:
       x: 8636.335
       y: 100.195
       z: 3738.453
+    belligerence: 1
     angle: 4.563
     functions: []
   - id: 177
@@ -10171,6 +10347,7 @@ npcs:
       x: 8437.869
       y: 100
       z: 3616.031
+    belligerence: 1
     angle: 1.493
     functions: []
   - id: 178
@@ -10180,6 +10357,7 @@ npcs:
       x: 8444.201
       y: 100
       z: 3602.293
+    belligerence: 1
     angle: 3.11
     functions: []
   - id: 179
@@ -10189,6 +10367,7 @@ npcs:
       x: 8464.083
       y: 100
       z: 3651.99
+    belligerence: 1
     angle: 0
     functions: []
   - id: 180
@@ -10198,6 +10377,7 @@ npcs:
       x: 8484.061
       y: 100
       z: 3601.587
+    belligerence: 1
     angle: 3.14
     functions: []
   - id: 181
@@ -10207,6 +10387,7 @@ npcs:
       x: 8490.877
       y: 100
       z: 3615.658
+    belligerence: 1
     angle: 4.723
     functions: []
   - id: 182
@@ -10216,6 +10397,7 @@ npcs:
       x: 8464.635
       y: 100
       z: 3643.523
+    belligerence: 1
     angle: 3.18
     functions: []
   - id: 183
@@ -10225,6 +10407,7 @@ npcs:
       x: 8450.182
       y: 100
       z: 3670.172
+    belligerence: 1
     angle: 4.743
     functions: []
   - id: 184
@@ -10234,6 +10417,7 @@ npcs:
       x: 8452.517
       y: 100
       z: 3672.039
+    belligerence: 1
     angle: 1.623
     functions: []
   - id: 185
@@ -10243,6 +10427,7 @@ npcs:
       x: 8434.058
       y: 100
       z: 3661.942
+    belligerence: 1
     angle: 0
     functions: []
   - id: 186
@@ -10252,6 +10437,7 @@ npcs:
       x: 8450.093
       y: 100
       z: 3692.583
+    belligerence: 1
     angle: 4.703
     functions: []
   - id: 187
@@ -10261,6 +10447,7 @@ npcs:
       x: 8452.638
       y: 100
       z: 3694.597
+    belligerence: 1
     angle: 1.58
     functions: []
   - id: 188
@@ -10270,6 +10457,7 @@ npcs:
       x: 8430.387
       y: 100
       z: 3703.538
+    belligerence: 1
     angle: 3.123
     functions: []
   - id: 189
@@ -10279,6 +10467,7 @@ npcs:
       x: 8432.463
       y: 100
       z: 3701.597
+    belligerence: 1
     angle: 0
     functions: []
   - id: 190
@@ -10288,6 +10477,7 @@ npcs:
       x: 8480.655
       y: 100
       z: 3728.323
+    belligerence: 1
     angle: 4.723
     functions: []
   - id: 191
@@ -10297,6 +10487,7 @@ npcs:
       x: 8477.867
       y: 100
       z: 3725.721
+    belligerence: 1
     angle: 4.783
     functions: []
   - id: 192
@@ -10306,6 +10497,7 @@ npcs:
       x: 8477.942
       y: 100
       z: 3681.743
+    belligerence: 1
     angle: 4.763
     functions: []
   - id: 193
@@ -10315,6 +10507,7 @@ npcs:
       x: 8480.785
       y: 100
       z: 3684.459
+    belligerence: 1
     angle: 4.723
     functions: []
   - id: 194
@@ -10324,6 +10517,7 @@ npcs:
       x: 8508.85
       y: 100
       z: 3657.801
+    belligerence: 1
     angle: 0
     functions: []
   - id: 195
@@ -10333,6 +10527,7 @@ npcs:
       x: 8510.961
       y: 100
       z: 3655.827
+    belligerence: 1
     angle: 0
     functions: []
   - id: 196
@@ -10342,6 +10537,7 @@ npcs:
       x: 8525.12
       y: 100
       z: 3631.84
+    belligerence: 1
     angle: 3.09
     functions: []
   - id: 197
@@ -10351,6 +10547,7 @@ npcs:
       x: 8527.529
       y: 100
       z: 3629.283
+    belligerence: 1
     angle: 0
     functions: []
   - id: 198
@@ -10360,6 +10557,7 @@ npcs:
       x: 8546.685
       y: 100
       z: 3605.286
+    belligerence: 1
     angle: 4.753
     functions: []
   - id: 199
@@ -10369,6 +10567,7 @@ npcs:
       x: 8543.913
       y: 100
       z: 3603.013
+    belligerence: 1
     angle: 4.633
     functions: []
   - id: 200
@@ -10378,6 +10577,7 @@ npcs:
       x: 8431.582
       y: 100
       z: 3664.761
+    belligerence: 1
     angle: 0
     functions: []
   - id: 201
@@ -10387,6 +10587,7 @@ npcs:
       x: 8474.995
       y: 100
       z: 3626.715
+    belligerence: 1
     angle: 1.28
     functions: []
   - id: 202
@@ -10396,6 +10597,7 @@ npcs:
       x: 8350.419
       y: 100
       z: 3690.824
+    belligerence: 1
     angle: 5.503
     functions: []
   - id: 203
@@ -10405,6 +10607,7 @@ npcs:
       x: 8355.971
       y: 100
       z: 3701.982
+    belligerence: 1
     angle: 5.513
     functions: []
   - id: 204
@@ -10414,6 +10617,7 @@ npcs:
       x: 8466.038
       y: 100
       z: 3643.548
+    belligerence: 1
     angle: 3.273
     functions: []
   - id: 205
@@ -10423,6 +10627,7 @@ npcs:
       x: 8383.244
       y: 145
       z: 4084.909
+    belligerence: 1
     angle: 0.06
     functions: []
   - id: 206
@@ -10432,6 +10637,7 @@ npcs:
       x: 8465.491
       y: 100
       z: 3652.007
+    belligerence: 1
     angle: 0
     functions: []
   - id: 207
@@ -10441,6 +10647,7 @@ npcs:
       x: 6133.405
       y: 100
       z: 4168.766
+    belligerence: 1
     angle: 0
     functions: []
   - id: 208
@@ -10450,6 +10657,7 @@ npcs:
       x: 5852.805
       y: 200.176
       z: 4316.906
+    belligerence: 1
     angle: 1.48
     functions: []
   - id: 209
@@ -10459,6 +10667,7 @@ npcs:
       x: 5776.152
       y: 147.047
       z: 4206.248
+    belligerence: 1
     angle: 5.423
     functions: []
   - id: 210
@@ -10468,6 +10677,7 @@ npcs:
       x: 6082.313
       y: 153.543
       z: 4224.653
+    belligerence: 1
     angle: 0.82
     functions: []
   - id: 211
@@ -10477,6 +10687,7 @@ npcs:
       x: 7640.476
       y: 175.12
       z: 4254.254
+    belligerence: 1
     angle: 3.183
     functions: []
   - id: 212
@@ -10486,6 +10697,7 @@ npcs:
       x: 7635.669
       y: 169.02
       z: 4227.667
+    belligerence: 1
     angle: 1.62
     functions: []
   - id: 213
@@ -10495,6 +10707,7 @@ npcs:
       x: 7635.963
       y: 168.84
       z: 4226.413
+    belligerence: 1
     angle: 1.65
     functions: []
   - id: 214
@@ -10504,6 +10717,7 @@ npcs:
       x: 7677.855
       y: 179.378
       z: 4250.386
+    belligerence: 1
     angle: 5.693
     functions: []
   - id: 215
@@ -10513,6 +10727,7 @@ npcs:
       x: 7679.144
       y: 179.091
       z: 4250.078
+    belligerence: 1
     angle: 5.533
     functions: []
   - id: 216
@@ -10522,6 +10737,7 @@ npcs:
       x: 7655.598
       y: 161.675
       z: 4191.633
+    belligerence: 1
     angle: 3.113
     functions: []
   - id: 217
@@ -10531,6 +10747,7 @@ npcs:
       x: 7657.554
       y: 161.695
       z: 4191.509
+    belligerence: 1
     angle: 3.073
     functions: []
   - id: 218
@@ -10540,6 +10757,7 @@ npcs:
       x: 7644.777
       y: 236.285
       z: 4349.111
+    belligerence: 1
     angle: 4.413
     functions: []
   - id: 219
@@ -10549,6 +10767,7 @@ npcs:
       x: 7693.445
       y: 170.711
       z: 4227.503
+    belligerence: 1
     angle: 4.703
     functions: []
   - id: 220
@@ -10558,6 +10777,7 @@ npcs:
       x: 7693.286
       y: 170.203
       z: 4225.888
+    belligerence: 1
     angle: 4.693
     functions: []
   - id: 221
@@ -10567,6 +10787,7 @@ npcs:
       x: 7686.093
       y: 165.598
       z: 4209.019
+    belligerence: 1
     angle: 0
     functions: []
   - id: 222
@@ -10576,6 +10797,7 @@ npcs:
       x: 6590.087
       y: 100
       z: 5084.873
+    belligerence: 1
     angle: 5.283
     functions: []
   - id: 223
@@ -10585,6 +10807,7 @@ npcs:
       x: 8247.269
       y: 95.585
       z: 2525.551
+    belligerence: 1
     angle: 2.33
     functions: []
   - id: 224
@@ -10594,6 +10817,7 @@ npcs:
       x: 9560.335
       y: 90.535
       z: 4020.011
+    belligerence: 1
     angle: 4.773
     functions: []
   - id: 225
@@ -10603,6 +10827,7 @@ npcs:
       x: 9007.022
       y: 82.866
       z: 4367.152
+    belligerence: 1
     angle: 0
     functions: []
   - id: 226
@@ -10612,6 +10837,7 @@ npcs:
       x: 6064.092
       y: 74.288
       z: 9189.792
+    belligerence: 1
     angle: 3.11
     functions: []
   - id: 227
@@ -10620,6 +10846,7 @@ npcs:
       x: 6104.979
       y: 71.918
       z: 9172.46
+    belligerence: 12
     angle: 3.24
     functions: []
   - id: 228
@@ -10628,6 +10855,7 @@ npcs:
       x: 7165.205
       y: 65.761
       z: 9099.068
+    belligerence: 12
     angle: 0.37
     functions: []
   - id: 229
@@ -10637,6 +10865,7 @@ npcs:
       x: 7252.963
       y: 66
       z: 9135.119
+    belligerence: 1
     angle: 4.593
     functions: []
   - id: 230
@@ -10646,6 +10875,7 @@ npcs:
       x: 7249.822
       y: 66
       z: 9141.887
+    belligerence: 1
     angle: 4.723
     functions: []
   - id: 231
@@ -10655,6 +10885,7 @@ npcs:
       x: 7249.974
       y: 66
       z: 9137.542
+    belligerence: 1
     angle: 5.173
     functions: []
   - id: 232
@@ -10664,6 +10895,7 @@ npcs:
       x: 7311.456
       y: 66
       z: 9113.923
+    belligerence: 1
     angle: 0.8
     functions: []
   - id: 233
@@ -10673,6 +10905,7 @@ npcs:
       x: 7331.794
       y: 66
       z: 9125.463
+    belligerence: 1
     angle: 0.76
     functions: []
   - id: 234
@@ -10682,6 +10915,7 @@ npcs:
       x: 7345.967
       y: 66
       z: 9147.785
+    belligerence: 1
     angle: 0.81
     functions: []
   - id: 235
@@ -10691,6 +10925,7 @@ npcs:
       x: 7339.913
       y: 66
       z: 9186.187
+    belligerence: 1
     angle: 2.01
     functions: []
   - id: 236
@@ -10700,6 +10935,7 @@ npcs:
       x: 7282.619
       y: 66
       z: 9211.241
+    belligerence: 1
     angle: 3.403
     functions: []
   - id: 237
@@ -10709,6 +10945,7 @@ npcs:
       x: 7263.411
       y: 66
       z: 9200.124
+    belligerence: 1
     angle: 3.813
     functions: []
   - id: 238
@@ -10718,6 +10955,7 @@ npcs:
       x: 7305.119
       y: 66
       z: 9212.763
+    belligerence: 1
     angle: 2.96
     functions: []
   - id: 239
@@ -10727,6 +10965,7 @@ npcs:
       x: 7239.59
       y: 66.314
       z: 9092.345
+    belligerence: 1
     angle: 3.05
     functions: []
   - id: 240
@@ -10736,6 +10975,7 @@ npcs:
       x: 7376.755
       y: 66
       z: 9093.107
+    belligerence: 1
     angle: 4.503
     functions: []
   - id: 241
@@ -10745,6 +10985,7 @@ npcs:
       x: 7381.25
       y: 66
       z: 9067.661
+    belligerence: 1
     angle: 4.203
     functions: []
   - id: 242
@@ -10754,6 +10995,7 @@ npcs:
       x: 7368.49
       y: 65.96
       z: 9033.893
+    belligerence: 1
     angle: 4.473
     functions: []
   - id: 243
@@ -10763,6 +11005,7 @@ npcs:
       x: 7192.949
       y: 66
       z: 9136.92
+    belligerence: 1
     angle: 5.353
     functions: []
   - id: 244
@@ -10772,6 +11015,7 @@ npcs:
       x: 7187.383
       y: 65.8
       z: 9143.337
+    belligerence: 1
     angle: 0.77
     functions: []
   - id: 245
@@ -10781,6 +11025,7 @@ npcs:
       x: 7388.662
       y: 65.997
       z: 9152.828
+    belligerence: 1
     angle: 4.343
     functions: []
   - id: 246
@@ -10790,6 +11035,7 @@ npcs:
       x: 7400.923
       y: 66.112
       z: 9182.899
+    belligerence: 1
     angle: 5.173
     functions: []
   - id: 247
@@ -10799,6 +11045,7 @@ npcs:
       x: 7287.133
       y: 66
       z: 9112.825
+    belligerence: 1
     angle: 6.263
     functions: []
   - id: 248
@@ -10808,6 +11055,7 @@ npcs:
       x: 7290.616
       y: 66
       z: 9112.458
+    belligerence: 1
     angle: 5.443
     functions: []
   - id: 249
@@ -10817,6 +11065,7 @@ npcs:
       x: 7250.997
       y: 66
       z: 9182.923
+    belligerence: 1
     angle: 4.823
     functions: []
   - id: 250
@@ -10826,6 +11075,7 @@ npcs:
       x: 7364.404
       y: 66.017
       z: 9023.897
+    belligerence: 1
     angle: 3.033
     functions: []
   - id: 251
@@ -10834,6 +11084,7 @@ npcs:
       x: 7343.03
       y: 66
       z: 9191.627
+    belligerence: 12
     angle: 5.673
     functions: []
   - id: 252
@@ -10842,6 +11093,7 @@ npcs:
       x: 7342.807
       y: 66
       z: 9187.459
+    belligerence: 12
     angle: 5.213
     functions: []
   - id: 253
@@ -10850,6 +11102,7 @@ npcs:
       x: 7341.514
       y: 66
       z: 9189.399
+    belligerence: 12
     angle: 5.343
     functions: []
   - id: 254
@@ -10858,6 +11111,7 @@ npcs:
       x: 7346.222
       y: 66
       z: 9185.523
+    belligerence: 12
     angle: 4.843
     functions: []
   - id: 255
@@ -10867,6 +11121,7 @@ npcs:
       x: 7372.08
       y: 65.944
       z: 9027.686
+    belligerence: 1
     angle: 3.923
     functions: []
   - id: 256
@@ -10876,6 +11131,7 @@ npcs:
       x: 7361.387
       y: 66
       z: 9030.1
+    belligerence: 1
     angle: 3.013
     functions: []
   - id: 257
@@ -10884,6 +11140,7 @@ npcs:
       x: 7169.601
       y: 65.743
       z: 9091.01
+    belligerence: 12
     angle: 3.943
     functions: []
   - id: 258
@@ -10892,6 +11149,7 @@ npcs:
       x: 7345.844
       y: 66
       z: 9187.937
+    belligerence: 12
     angle: 5.193
     functions: []
   - id: 259
@@ -10900,6 +11158,7 @@ npcs:
       x: 7344.615
       y: 66
       z: 9189.995
+    belligerence: 12
     angle: 5.453
     functions: []
   - id: 260
@@ -10908,6 +11167,7 @@ npcs:
       x: 7343.656
       y: 66
       z: 9185.292
+    belligerence: 12
     angle: 4.883
     functions: []
   - id: 261
@@ -10916,6 +11176,7 @@ npcs:
       x: 7391.526
       y: 65.901
       z: 9206.39
+    belligerence: 12
     angle: 4.093
     functions: []
   - id: 262
@@ -10924,6 +11185,7 @@ npcs:
       x: 7204.324
       y: 65.889
       z: 9120.153
+    belligerence: 0
     angle: 0
     functions: []
   - id: 263
@@ -10933,6 +11195,7 @@ npcs:
       x: 7249.301
       y: 66
       z: 9143.484
+    belligerence: 1
     angle: 4.943
     functions: []
   - id: 264
@@ -10942,6 +11205,7 @@ npcs:
       x: 7207.078
       y: 66
       z: 9176.845
+    belligerence: 1
     angle: 1.483
     functions: []
   - id: 265
@@ -10951,6 +11215,7 @@ npcs:
       x: 7202.383
       y: 66
       z: 9174.893
+    belligerence: 1
     angle: 4.593
     functions: []
   - id: 266
@@ -10960,6 +11225,7 @@ npcs:
       x: 7296.425
       y: 66
       z: 9063.723
+    belligerence: 1
     angle: 0
     functions: []
   - id: 267
@@ -10969,6 +11235,7 @@ npcs:
       x: 7293.833
       y: 66
       z: 9068.006
+    belligerence: 1
     angle: 3.203
     functions: []
   - id: 268
@@ -10978,6 +11245,7 @@ npcs:
       x: 7250.64
       y: 66
       z: 9136.163
+    belligerence: 1
     angle: 5.543
     functions: []
   - id: 269
@@ -10987,6 +11255,7 @@ npcs:
       x: 6004.78
       y: 72
       z: 9261.186
+    belligerence: 1
     angle: 1.24
     functions: []
   - id: 270
@@ -10996,6 +11265,7 @@ npcs:
       x: 6009.419
       y: 72.011
       z: 9248.068
+    belligerence: 1
     angle: 2.61
     functions: []
   - id: 271
@@ -11005,6 +11275,7 @@ npcs:
       x: 6069.105
       y: 70
       z: 9234.252
+    belligerence: 1
     angle: 2.24
     functions: []
   - id: 272
@@ -11014,6 +11285,7 @@ npcs:
       x: 7232.739
       y: 66.111
       z: 9296.041
+    belligerence: 1
     angle: 0
     functions: []
   - id: 273
@@ -11023,6 +11295,7 @@ npcs:
       x: 7222.438
       y: 66.01
       z: 9298.962
+    belligerence: 1
     angle: 0.94
     functions: []
   - id: 274
@@ -11032,6 +11305,7 @@ npcs:
       x: 7362.03
       y: 66
       z: 9232.729
+    belligerence: 1
     angle: 0
     functions: []
   - id: 275
@@ -11041,6 +11315,7 @@ npcs:
       x: 7279.133
       y: 66.9
       z: 9269.828
+    belligerence: 1
     angle: 0.3
     functions: []
   - id: 276
@@ -11050,6 +11325,7 @@ npcs:
       x: 7226.08
       y: 65.956
       z: 9292.729
+    belligerence: 1
     angle: 0.96
     functions: []
   - id: 277
@@ -11059,6 +11335,7 @@ npcs:
       x: 7229.772
       y: 66.045
       z: 9302.771
+    belligerence: 1
     angle: 0
     functions: []
   - id: 278
@@ -11067,6 +11344,7 @@ npcs:
       x: 7421.43
       y: 65.734
       z: 9222.521
+    belligerence: 12
     angle: 3.453
     functions: []
   - id: 279
@@ -11075,6 +11353,7 @@ npcs:
       x: 7416.081
       y: 65.769
       z: 9230.394
+    belligerence: 12
     angle: 0.62
     functions: []
   - id: 280
@@ -11084,6 +11363,7 @@ npcs:
       x: 7321.025
       y: 65.489
       z: 9257.362
+    belligerence: 1
     angle: 0.25
     functions: []
   - id: 281
@@ -11093,6 +11373,7 @@ npcs:
       x: 7324.279
       y: 66
       z: 9253.817
+    belligerence: 1
     angle: 0.34
     functions: []
   - id: 282
@@ -11102,6 +11383,7 @@ npcs:
       x: 7360.479
       y: 66
       z: 9232.196
+    belligerence: 1
     angle: 0.61
     functions: []
   - id: 283
@@ -11111,6 +11393,7 @@ npcs:
       x: 5535.894
       y: 97
       z: 3462.183
+    belligerence: 1
     angle: 3.693
     functions: []
   - id: 284
@@ -11120,6 +11403,7 @@ npcs:
       x: 5572.357
       y: 75
       z: 3897.209
+    belligerence: 1
     angle: 3.643
     functions: []
   - id: 285
@@ -11129,6 +11413,7 @@ npcs:
       x: 5580.702
       y: 75
       z: 3901.839
+    belligerence: 1
     angle: 4.063
     functions: []
   - id: 286
@@ -11138,6 +11423,7 @@ npcs:
       x: 5370.744
       y: 75
       z: 3991.255
+    belligerence: 1
     angle: 4.333
     functions: []
   - id: 287
@@ -11147,6 +11433,7 @@ npcs:
       x: 5561.092
       y: 75.029
       z: 3909.131
+    belligerence: 1
     angle: 0
     functions: []
   - id: 288
@@ -11156,6 +11443,7 @@ npcs:
       x: 5600.739
       y: 75
       z: 3767.308
+    belligerence: 1
     angle: 0
     functions: []
   - id: 289
@@ -11165,6 +11453,7 @@ npcs:
       x: 5569.151
       y: 75.019
       z: 3898.975
+    belligerence: 1
     angle: 2.62
     functions: []
   - id: 290
@@ -11174,6 +11463,7 @@ npcs:
       x: 5576.784
       y: 75.002
       z: 3897.412
+    belligerence: 1
     angle: 3.52
     functions: []
   - id: 291
@@ -11183,6 +11473,7 @@ npcs:
       x: 5541.337
       y: 71.62
       z: 4352.409
+    belligerence: 1
     angle: 0
     functions: []
   - id: 292
@@ -11192,6 +11483,7 @@ npcs:
       x: 5482.891
       y: 71.351
       z: 4362.686
+    belligerence: 1
     angle: 1.06
     functions: []
   - id: 293
@@ -11201,6 +11493,7 @@ npcs:
       x: 5164.293
       y: 100
       z: 5267.271
+    belligerence: 1
     angle: 2.33
     functions: []
   - id: 294
@@ -11210,6 +11503,7 @@ npcs:
       x: 5961.892
       y: 100.392
       z: 5387.442
+    belligerence: 1
     angle: 3.813
     functions: []
   - id: 295
@@ -11219,6 +11513,7 @@ npcs:
       x: 5959.499
       y: 100.392
       z: 5406.146
+    belligerence: 1
     angle: 5.11
     functions: []
   - id: 296
@@ -11228,6 +11523,7 @@ npcs:
       x: 5937.609
       y: 100.392
       z: 5431.081
+    belligerence: 1
     angle: 6.123
     functions: []
   - id: 297
@@ -11237,6 +11533,7 @@ npcs:
       x: 5960.862
       y: 100.395
       z: 5404.19
+    belligerence: 1
     angle: 5.223
     functions: []
   - id: 298
@@ -11246,6 +11543,7 @@ npcs:
       x: 5987.453
       y: 100.555
       z: 5457.813
+    belligerence: 1
     angle: 5.643
     functions: []
   - id: 299
@@ -11255,6 +11553,7 @@ npcs:
       x: 6025.444
       y: 100.434
       z: 5346.865
+    belligerence: 1
     angle: 4.433
     functions: []
   - id: 300
@@ -11264,6 +11563,7 @@ npcs:
       x: 3947.286
       y: 117.651
       z: 2748.429
+    belligerence: 1
     angle: 1.68
     functions: []
   - id: 301
@@ -11273,6 +11573,7 @@ npcs:
       x: 3615.347
       y: 167.002
       z: 3003.642
+    belligerence: 1
     angle: 5.313
     functions: []
   - id: 302
@@ -11282,6 +11583,7 @@ npcs:
       x: 3238.182
       y: 11.651
       z: 3421.026
+    belligerence: 1
     angle: 5.483
     functions: []
   - id: 303
@@ -11291,6 +11593,7 @@ npcs:
       x: 3239.983
       y: 11.651
       z: 3417.698
+    belligerence: 1
     angle: 4.793
     functions: []
   - id: 304
@@ -11300,6 +11603,7 @@ npcs:
       x: 3202.744
       y: 10.069
       z: 3437.849
+    belligerence: 1
     angle: 0.52
     functions: []
   - id: 305
@@ -11309,6 +11613,7 @@ npcs:
       x: 3208.391
       y: 10.155
       z: 3437.291
+    belligerence: 1
     angle: 5.583
     functions: []
   - id: 306
@@ -11318,6 +11623,7 @@ npcs:
       x: 2991.348
       y: 56.731
       z: 4063.505
+    belligerence: 1
     angle: 0
     functions: []
   - id: 307
@@ -11326,6 +11632,7 @@ npcs:
       x: 3471.684
       y: 35.018
       z: 3785.145
+    belligerence: 12
     angle: 0
     functions: []
   - id: 308
@@ -11335,6 +11642,7 @@ npcs:
       x: 3889.866
       y: 59
       z: 3923.519
+    belligerence: 1
     angle: 3.16
     functions: []
   - id: 309
@@ -11344,6 +11652,7 @@ npcs:
       x: 5072.615
       y: 55
       z: 3962.481
+    belligerence: 1
     angle: 0
     functions: []
   - id: 310
@@ -11353,6 +11662,7 @@ npcs:
       x: 3890.031
       y: 58.841
       z: 4145.79
+    belligerence: 1
     angle: 3.183
     functions: []
   - id: 311
@@ -11362,6 +11672,7 @@ npcs:
       x: 3748.583
       y: 59
       z: 4412.304
+    belligerence: 1
     angle: 1.36
     functions: []
   - id: 312
@@ -11371,6 +11682,7 @@ npcs:
       x: 3829.779
       y: 59.1
       z: 4457.244
+    belligerence: 1
     angle: 0.09
     functions: []
   - id: 313
@@ -11380,6 +11692,7 @@ npcs:
       x: 3846.71
       y: 59
       z: 4443.019
+    belligerence: 1
     angle: 0
     functions: []
   - id: 314
@@ -11389,6 +11702,7 @@ npcs:
       x: 3879.864
       y: 59
       z: 4458.07
+    belligerence: 1
     angle: 0
     functions: []
   - id: 315
@@ -11398,6 +11712,7 @@ npcs:
       x: 3908.938
       y: 59
       z: 4376.03
+    belligerence: 1
     angle: 4.033
     functions: []
   - id: 316
@@ -11407,6 +11722,7 @@ npcs:
       x: 3831.705
       y: 59
       z: 4356.61
+    belligerence: 1
     angle: 3.783
     functions: []
   - id: 317
@@ -11416,6 +11732,7 @@ npcs:
       x: 3841.457
       y: 59
       z: 4422.948
+    belligerence: 1
     angle: 3.46
     functions: []
   - id: 318
@@ -11425,6 +11742,7 @@ npcs:
       x: 3742.223
       y: 59
       z: 4413.738
+    belligerence: 1
     angle: 2.1
     functions: []
   - id: 319
@@ -11434,6 +11752,7 @@ npcs:
       x: 3733.891
       y: 59
       z: 4525.849
+    belligerence: 1
     angle: 5.733
     functions: []
   - id: 320
@@ -11443,6 +11762,7 @@ npcs:
       x: 3827.019
       y: 59
       z: 4548.456
+    belligerence: 1
     angle: 0
     functions: []
   - id: 321
@@ -11452,6 +11772,7 @@ npcs:
       x: 3831.669
       y: 59
       z: 4457.402
+    belligerence: 1
     angle: 5.883
     functions: []
   - id: 322
@@ -11461,6 +11782,7 @@ npcs:
       x: 3834.107
       y: 59
       z: 4456.45
+    belligerence: 1
     angle: 5.373
     functions: []
   - id: 323
@@ -11470,6 +11792,7 @@ npcs:
       x: 3742.822
       y: 59
       z: 4419.581
+    belligerence: 1
     angle: 1.363
     functions: []
   - id: 324
@@ -11479,6 +11802,7 @@ npcs:
       x: 3824.431
       y: 59
       z: 4462.046
+    belligerence: 1
     angle: 6.073
     functions: []
   - id: 325
@@ -11488,6 +11812,7 @@ npcs:
       x: 3801.5
       y: 59
       z: 4448.122
+    belligerence: 1
     angle: 0.8
     functions: []
   - id: 326
@@ -11497,6 +11822,7 @@ npcs:
       x: 3827.025
       y: 59
       z: 4459.583
+    belligerence: 1
     angle: 5.363
     functions: []
   - id: 327
@@ -11506,6 +11832,7 @@ npcs:
       x: 3793.978
       y: 59
       z: 4444.591
+    belligerence: 1
     angle: 0.11
     functions: []
   - id: 328
@@ -11515,6 +11842,7 @@ npcs:
       x: 3832.407
       y: 60
       z: 4480.829
+    belligerence: 1
     angle: 4.763
     functions: []
   - id: 329
@@ -11524,6 +11852,7 @@ npcs:
       x: 3835.305
       y: 59
       z: 4455.136
+    belligerence: 1
     angle: 5.413
     functions: []
   - id: 330
@@ -11533,6 +11862,7 @@ npcs:
       x: 3806.893
       y: 59
       z: 4431.258
+    belligerence: 1
     angle: 2.38
     functions: []
   - id: 331
@@ -11542,6 +11872,7 @@ npcs:
       x: 3804.64
       y: 59
       z: 4456.074
+    belligerence: 1
     angle: 1.52
     functions: []
   - id: 332
@@ -11551,6 +11882,7 @@ npcs:
       x: 3743.377
       y: 59
       z: 4424.412
+    belligerence: 1
     angle: 1.69
     functions: []
   - id: 333
@@ -11560,6 +11892,7 @@ npcs:
       x: 4297.107
       y: 83.109
       z: 4291.85
+    belligerence: 1
     angle: 5.073
     functions: []
   - id: 334
@@ -11569,6 +11902,7 @@ npcs:
       x: 3851.173
       y: 94.769
       z: 4660.096
+    belligerence: 1
     angle: 5.703
     functions: []
   - id: 335
@@ -11578,6 +11912,7 @@ npcs:
       x: 2776.579
       y: 150
       z: 5254.35
+    belligerence: 1
     angle: 0.38
     functions: []
   - id: 336
@@ -11587,6 +11922,7 @@ npcs:
       x: 2721.214
       y: 150
       z: 5245.908
+    belligerence: 1
     angle: 5.873
     functions: []
   - id: 337
@@ -11596,6 +11932,7 @@ npcs:
       x: 3344.027
       y: 146.956
       z: 2071.1
+    belligerence: 1
     angle: 3.14
     functions: []
   - id: 338
@@ -11605,6 +11942,7 @@ npcs:
       x: 3344.047
       y: 146.952
       z: 2056.097
+    belligerence: 1
     angle: 0.013
     functions: []
   - id: 339
@@ -11614,6 +11952,7 @@ npcs:
       x: 3348.991
       y: 146.967
       z: 2068.673
+    belligerence: 1
     angle: 2.313
     functions: []
   - id: 340
@@ -11623,6 +11962,7 @@ npcs:
       x: 3339.078
       y: 146.882
       z: 2058.45
+    belligerence: 1
     angle: 5.533
     functions: []
   - id: 341
@@ -11632,6 +11972,7 @@ npcs:
       x: 3348.821
       y: 146.927
       z: 2058.485
+    belligerence: 1
     angle: 0.78
     functions: []
   - id: 342
@@ -11641,6 +11982,7 @@ npcs:
       x: 3339.107
       y: 146.917
       z: 2068.671
+    belligerence: 1
     angle: 4.023
     functions: []
   - id: 343
@@ -11650,6 +11992,7 @@ npcs:
       x: 3336.709
       y: 146.9
       z: 2063.72
+    belligerence: 1
     angle: 4.743
     functions: []
   - id: 344
@@ -11659,6 +12002,7 @@ npcs:
       x: 3351.367
       y: 146.986
       z: 2063.716
+    belligerence: 1
     angle: 1.57
     functions: []
   - id: 345
@@ -11668,6 +12012,7 @@ npcs:
       x: 1839.001
       y: 99.833
       z: 2757.802
+    belligerence: 1
     angle: 0
     functions: []
   - id: 346
@@ -11677,6 +12022,7 @@ npcs:
       x: 3343.95
       y: 114.628
       z: 1859.324
+    belligerence: 1
     angle: 3.193
     functions: []
   - id: 347
@@ -11686,6 +12032,7 @@ npcs:
       x: 2030.536
       y: 99.929
       z: 2272.481
+    belligerence: 1
     angle: 0
     functions: []
 regions:

@@ -98,19 +98,66 @@ describe('SpawnManager', () => {
     assert.ok(flaris.every((m) => m.m_nZoneId === 1));
   });
 
-  it('skips NPC placements that resolve to a monster-type mover (MaFl_Demian case)', () => {
+  it('materializes a monster-model NPC placement as unattackable when BELLI_PEACEFUL', () => {
     const resources = makeResources();
     const flaris = resources.zones.zones.get('flaris') as never as {
-      npcs: Array<{ id: number; mover_id: number; position: { x: number; y: number; z: number }; angle: number; functions: never[] }>;
+      npcs: Array<Record<string, unknown>>;
     };
-    // mover_id 1 is type 'monster'. As an NPC placement this is the MaFl_Demian
-    // pattern (quest NPC reusing a monster model); it must NOT materialize as
-    // an attackable monster in town. Baseline fixture is 1 NPC + 2 monsters = 3.
-    flaris.npcs.push({ id: 2, mover_id: 1, position: { x: 7100, y: 100, z: 3300 }, angle: 0, functions: [] });
+    // mover_id 1 is type 'monster' with belligerence 12 (BELLI_MELEE). Placed in
+    // the .dyo with belligerence 1, `CMover::Read` overrides the prop value
+    // (Obj.cpp:511-517) and `IsAttackAbleNPC` (Mover.cpp:6810) returns FALSE --
+    // the MaFl_Demian_EVENT-on-MI_DEMIAN1 pattern. It DOES materialize (retail
+    // loads it), just as a peaceful, unattackable NPC.
+    flaris.npcs.push({
+      id: 2, mover_id: 1, position: { x: 7100, y: 100, z: 3300 }, angle: 0,
+      functions: [], belligerence: 1,
+    });
     const mgr = new SpawnManager({ resources });
     mgr.bootstrap();
 
-    assert.equal(mgr.size, 3, 'monster-type NPC placement contributes 0, not 1');
+    assert.equal(mgr.size, 4, 'peaceful monster-model NPC still materializes');
+    const placed = [...mgr.all()].find((m) => m.m_vPos.x === 7100);
+    assert.ok(placed, 'placement materialized');
+    assert.equal(placed.m_dwBelligerence, 1, 'placement belligerence overrides the prop');
+    assert.equal(placed.m_bAttackable, false, 'BELLI_PEACEFUL -> unattackable');
+    assert.equal(placed.m_bActiveAttack, 0, 'peaceful never aggros on sight');
+  });
+
+  it('keeps a monster-model NPC placement attackable when the .dyo belligerence is hostile', () => {
+    const resources = makeResources();
+    const flaris = resources.zones.zones.get('flaris') as never as {
+      npcs: Array<Record<string, unknown>>;
+    };
+    // The 18 Flaris editor-placed monsters (MI_MaEw_GUARDIAN01/02, MI_FLYBAT3,
+    // ...) carry BELLI_MELEE on the record. They are genuine monsters -- but
+    // retaliate-only: `m_bActiveAttack` is set solely by the respawner
+    // (Respawn.cpp:634), never on a .dyo placement.
+    flaris.npcs.push({
+      id: 2, mover_id: 1, position: { x: 7200, y: 100, z: 3300 }, angle: 0,
+      functions: [], belligerence: 12,
+    });
+    const mgr = new SpawnManager({ resources });
+    mgr.bootstrap();
+
+    const placed = [...mgr.all()].find((m) => m.m_vPos.x === 7200);
+    assert.ok(placed, 'placement materialized');
+    assert.equal(placed.m_bAttackable, true, 'bKillable + non-peaceful -> attackable');
+  });
+
+  it('falls back to the mover definition belligerence when the placement omits it', () => {
+    const resources = makeResources();
+    const flaris = resources.zones.zones.get('flaris') as never as {
+      npcs: Array<Record<string, unknown>>;
+    };
+    // Hand-authored fixtures / non-.dyo zones have no per-placement value.
+    flaris.npcs.push({
+      id: 2, mover_id: 1, position: { x: 7300, y: 100, z: 3300 }, angle: 0, functions: [],
+    });
+    const mgr = new SpawnManager({ resources });
+    mgr.bootstrap();
+
+    const placed = [...mgr.all()].find((m) => m.m_vPos.x === 7300);
+    assert.equal(placed?.m_dwBelligerence, 12, 'inherits the def belligerence');
   });
 
   it('assigns ascending objids from 0x40000000, disjoint from player char ids', () => {

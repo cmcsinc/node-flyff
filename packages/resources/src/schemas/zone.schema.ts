@@ -112,6 +112,16 @@ export const NpcSchema = z.object({
   /** NPC position */
   position: Vector3Schema,
 
+  /**
+   * `m_dwBelligerence` stored on the .dyo record (`Mover.cpp:3092`), which
+   * overrides the propMover value -- `CMover::Read` calls `InitProp(FALSE)`
+   * (Obj.cpp:511) so the prop's own belligerence is never applied. `1` =
+   * `BELLI_PEACEFUL` -> `IsAttackAbleNPC` returns FALSE (Mover.cpp:6810), which
+   * is how an event NPC placed on a monster model (MaFl_Demian_EVENT on
+   * MI_DEMIAN1) stays unattackable. Absent = fall back to the mover definition.
+   */
+  belligerence: z.number().int().nonnegative().optional(),
+
   /** Rotation angle in radians (0-2pi) */
   angle: z.number().min(0).max(2 * Math.PI),
 
