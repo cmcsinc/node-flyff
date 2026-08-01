@@ -13,6 +13,7 @@ function harness() {
     kick: (charId) => calls.push(['kick', charId]),
     teleport: (charId, x, z) => calls.push(['teleport', charId, x, z]),
     mailPushed: (charId) => calls.push(['mailPushed', charId]),
+    kickAll: async (reason) => { calls.push(['kickAll', reason]); },
   };
   let handler: ((payload: unknown, from: string) => void) | undefined;
   const bus = {
@@ -50,6 +51,17 @@ describe('AdminListener', () => {
     ]);
   });
 
+  it('dispatches kick_all, with and without a reason', async () => {
+    const h = harness();
+    await h.start();
+    h.fire({ kind: 'kick_all' });
+    h.fire({ kind: 'kick_all', reason: 'restart for migration 019' });
+    assert.deepEqual(h.calls, [
+      ['kickAll', undefined],
+      ['kickAll', 'restart for migration 019'],
+    ]);
+  });
+
   it('drops malformed payloads instead of dispatching', async () => {
     const h = harness();
     await h.start();
@@ -70,6 +82,8 @@ describe('AdminListener', () => {
       { kind: 'teleport', charId: 7, x: 0, z: 5 },   // VecInWorld: x > 0
       { kind: 'teleport', charId: 7, x: 5, z: -1 },  // VecInWorld: z > 0
       { kind: 'teleport', charId: 7, x: NaN, z: 5 },
+      { kind: 'kick_all', reason: 42 },              // reason must be a string
+      { kind: 'kick_all', reason: 'x'.repeat(201) }, // bounded at 200
     ]) {
       h.fire(bad);
     }
@@ -78,7 +92,12 @@ describe('AdminListener', () => {
 
   it('does not subscribe without a bus, and start() stays a no-op', async () => {
     const listener = new AdminListener({
-      sink: { kick() { throw new Error('unreachable'); }, teleport() {}, mailPushed() {} },
+      sink: {
+        kick() { throw new Error('unreachable'); },
+        teleport() {},
+        mailPushed() {},
+        async kickAll() {},
+      },
     });
     await listener.start();   // must not throw
     listener.stop();          // must not throw
@@ -98,11 +117,37 @@ describe('AdminListener', () => {
         kick() { throw new Error('boom'); },
         teleport() { after++; },
         mailPushed() {},
+        async kickAll() {},
       },
     });
     await listener.start();
     handler!({ kind: 'kick', charId: 1 }, 'admin');
     handler!({ kind: 'teleport', charId: 2 }, 'admin');
     assert.equal(after, 1, 'listener kept working after a sink throw');
+  });
+
+  it('catches a rejected kickAll instead of leaking an unhandled rejection', async () => {
+    let handler: ((p: unknown, from: string) => void) | undefined;
+    let after = 0;
+    const listener = new AdminListener({
+      bus: {
+        async subscribe<T>(_c: string, h: (p: T, from: string) => void | Promise<void>) {
+          handler = h as (p: unknown, from: string) => void;
+        },
+        unsubscribe() {},
+      },
+      sink: {
+        kick() {},
+        teleport() { after++; },
+        mailPushed() {},
+        kickAll: () => Promise.reject(new Error('db down')),
+      },
+    });
+    await listener.start();
+    handler!({ kind: 'kick_all' }, 'admin');
+    // Let the rejection settle -- an uncaught one would fail the test run.
+    await new Promise((r) => setImmediate(r));
+    handler!({ kind: 'teleport', charId: 2 }, 'admin');
+    assert.equal(after, 1, 'listener kept working after a rejected kickAll');
   });
 });

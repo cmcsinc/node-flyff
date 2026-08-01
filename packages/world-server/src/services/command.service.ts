@@ -72,6 +72,7 @@ import { SetPosSerializer } from '../net/snapshot/setPos.serializer';
 import { NoticeSerializer } from '../net/snapshot/notice.serializer';
 import { ModifyModeSerializer } from '../net/snapshot/modifyMode.serializer';
 import { DisguiseSerializer } from '../net/snapshot/disguise.serializer';
+import { buildKickNotice, KICK_CLOSE_DELAY_MS } from '../net/snapshot/kick.serializer';
 import { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import { SetStateSerializer, SetExperienceSerializer, SetLevelSerializer } from '@flyff/combat';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
@@ -565,6 +566,10 @@ export class CommandService {
    * this single-process emulator we destroy the target's socket directly +
    * drop it from the manager so cleanup runs the same path as a natural
    * disconnect. Self-target -> ReturnSay flag 2 (consistent with `/su`/`/te`).
+   *
+   * The forced-logout notice goes out first: the v19 client ignores a bare
+   * socket close on the world connection and freezes in-world instead of
+   * returning to the title screen. See `net/snapshot/kick.serializer.ts`.
    */
   private out({ args, player }: CommandCtx): void {
     const name = args.split(/\s+/)[0];
@@ -578,7 +583,13 @@ export class CommandService {
       this.returnSay(player, RETURN_NOT_FOUND, name);
       return;
     }
-    target.socket.destroy?.();
+    try {
+      this.deps.playerManager.sendTo(target, buildKickNotice(target.m_idPlayer));
+    } catch {
+      // Dead socket -- fall through to the close.
+    }
+    const socket = target.socket;
+    setTimeout(() => socket.destroy?.(), KICK_CLOSE_DELAY_MS).unref?.();
     this.deps.playerManager.remove(target.m_idPlayer);
   }
 

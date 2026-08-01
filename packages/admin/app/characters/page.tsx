@@ -16,6 +16,7 @@ import { jobName, worldName } from "@/lib/utils";
 import { getOnlineCharacterIds } from "@/lib/presence";
 import { OnlineIndicator } from "@/components/online-indicator";
 import { Swords } from "lucide-react";
+import { KickAllButton } from "./kick-all-button";
 
 export const dynamic = "force-dynamic";
 
@@ -79,7 +80,13 @@ export default async function CharactersPage({
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Characters" description={`${filtered.length} characters`} />
+      <PageHeader
+        title="Characters"
+        description={`${filtered.length} characters`}
+        // Count is every online session, not the filtered/limited table rows —
+        // the drain is server-wide, so the button must not understate its reach.
+        actions={<KickAllButton onlineCount={onlineIds.size} />}
+      />
 
       <form className="flex flex-col gap-2 sm:flex-row sm:items-end" method="GET">
         {/* Searching must not silently reset the column sort. */}
