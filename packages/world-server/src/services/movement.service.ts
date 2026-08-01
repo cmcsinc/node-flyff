@@ -75,6 +75,9 @@ const ANTI_TELEPORT_SQ = 1_000_000;
 /** Dead lockout -- a corpse cannot move or echo motion (`CMover::IsDie()` gate). */
 const DEAD: MovementOutcome = { ok: false, reason: 'dead' };
 
+/** Stun lockout -- a stunned/sleeping player cannot move (`CHRSTATE_BITS.STUN|SLEEP`). */
+const STUNNED: MovementOutcome = { ok: false, reason: 'stunned' };
+
 /** C++ `MAX_CORR_SIZE_150`-style frame cap for PLAYERMOVED2 -- not enforced today. */
 // const MAX_CORR_SIZE_150 = 150;
 
@@ -86,6 +89,7 @@ export class MovementService {
   /** Apply a PLAYERMOVED frame: anti-teleport, update pos, echo to peers. */
   applyMovement(player: CPlayer, frame: MovementFrame): MovementOutcome {
     if (player.m_bDead) return DEAD;
+    if (player.isStunned()) return STUNNED;
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -101,6 +105,7 @@ export class MovementService {
   /** Apply a PLAYERBEHAVIOR frame: echo motion to peers (no position mutation). */
   applyBehavior(player: CPlayer, frame: MovementFrame): MovementOutcome {
     if (player.m_bDead) return DEAD;
+    if (player.isStunned()) return STUNNED;
     return this.broadcast(player, this.serializer.buildBehavior(player.m_idPlayer, frame));
   }
 
@@ -111,6 +116,7 @@ export class MovementService {
    */
   applyCorr(player: CPlayer, frame: MovementFrame): MovementOutcome {
     if (player.m_bDead) return DEAD;
+    if (player.isStunned()) return STUNNED;
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -130,6 +136,7 @@ export class MovementService {
    */
   applyMoved2(player: CPlayer, frame: Movement2Frame): MovementOutcome {
     if (player.m_bDead) return DEAD;
+    if (player.isStunned()) return STUNNED;
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }

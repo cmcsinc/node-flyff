@@ -112,7 +112,7 @@ interface HitShare {
 }
 
 export type CombatOutcome =
-  | { ok: true; hit: boolean; damage: number; killed: boolean }
+  | { ok: true; hit: boolean; damage: number; killed: boolean; effectProc?: boolean }
   | { ok: false; reason: 'invalid_target' | 'target_dead' | 'target_not_attackable' | 'pvp_not_enabled' };
 
 /**
@@ -274,7 +274,7 @@ export class CombatService {
     const killed = mover.m_nHitPoint <= 0;
     if (killed) this.onDeath(player, mover);
     else this.triggerRage(mover, player);
-    return { ok: true, hit: eff.hit, damage: dealt, killed };
+    return { ok: true, hit: eff.hit, damage: dealt, killed, effectProc: eff.effectProc };
   }
 
   /**
@@ -298,7 +298,7 @@ export class CombatService {
     this.deps.zoneManager.broadcastAround(target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS, packet);
     const killed = target.m_nHp <= 0 && !target.m_bDead;
     if (killed) this.onPvpKill(player, target);
-    return { ok: true, hit: eff.hit, damage: dealt, killed };
+    return { ok: true, hit: eff.hit, damage: dealt, killed, effectProc: eff.effectProc };
   }
 
   /**

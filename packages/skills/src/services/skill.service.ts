@@ -17,7 +17,7 @@
 
 import type { SkillIndex, SkillDefinition, SkillLevel } from '@flyff/resources';
 import type { SkillRepository, CharacterRepository, Journal } from '@flyff/database';
-import type { CPlayer, CMover, DstEffect, DoTPayload } from '@flyff/entities';
+import type { CPlayer, CMover, DstEffect, DoTPayload, Vec3 } from '@flyff/entities';
 import { isJobMatch, CHG_SENTINEL } from '@flyff/entities';
 import type { SpawnManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
@@ -139,7 +139,8 @@ export type SkillCastOutcome =
         | 'unsupported'
         | 'invalid_target'
         | 'target_dead'
-        | 'target_not_attackable';
+        | 'target_not_attackable'
+        | 'too_far';
     };
 
 export type LearnOutcome =
@@ -316,6 +317,16 @@ export class SkillService {
         : this.resolveDamageTarget(frame.objid);
     if ('reason' in target) { this.clear(player); return target; }
 
+    // Cast-range anti-cheat: C++ `IsRangeObj(pTarget, fRange)` rejects casts
+    // beyond the skill's effective range. `skillRange` is in game-world units
+    // (same scale as `VISIBILITY_RADIUS`); absent means melee range (2 m).
+    const maxRange = levelRow.skillRange ?? 2;
+    const targetPos = this.targetPos(frame.objid);
+    if (targetPos && distSq3(player.m_vPos, targetPos) > maxRange * maxRange) {
+      this.clear(player);
+      return { ok: false, reason: 'too_far' };
+    }
+
     // Resource need is routed by KT (resourceType): magic=MP, skill=FP. The data
     // carries a nonzero "other" cost on some skills (e.g. Heal reqFp:83) that is
     // NOT consumed -- gating both would wrongly block MP skills.
@@ -348,7 +359,7 @@ export class SkillService {
     // (Power Stump = STUN, Sneaker = SLOW) lands BOTH damage AND the debuff on a
     // surviving target. resolveSkill owns damage/death/exp; we tack the debuff on.
     const outcome = this.deps.combatService.resolveSkill(player, frame.objid, skill, levelRow);
-    if (outcome.ok && outcome.hit && !outcome.killed && (levelRow.destParams?.length ?? 0) > 0) {
+    if (outcome.ok && outcome.hit && !outcome.killed && (levelRow.destParams?.length ?? 0) > 0 && outcome.effectProc !== false) {
       const target2 = this.deps.spawnManager.get(frame.objid);
       if (target2 && !target2.m_bDead) this.applyBuffToMover(player, target2, skill, levelRow, now);
     }
@@ -680,6 +691,15 @@ export class SkillService {
   private clear(player: CPlayer): void {
     this.deps.playerManager.sendTo(player, this.useSkill.buildClear(player.m_idPlayer));
   }
+
+  /** Look up target position for cast-range check. Returns null for self-targeted skills. */
+  private targetPos(objid: number): Vec3 | null {
+    if (objid === NULL_ID) return null;
+    const p = this.deps.playerManager.get(objid);
+    if (p) return p.m_vPos;
+    const m = this.deps.spawnManager.get(objid);
+    return m?.m_vPos ?? null;
+  }
 }
 
 /**
@@ -734,4 +754,10 @@ export function dotFromSkill(level: SkillLevel, nowMs: number): DoTPayload | und
   if (damage <= 0) return undefined;
   const intervalMs = level.destData?.[1] ?? DEFAULT_DOT_INTERVAL_MS;
   return { damage, intervalMs, nextTickMs: nowMs + intervalMs };
+}
+
+/** Squared 3D distance — used for cast-range check. */
+function distSq3(a: Vec3, b: Vec3): number {
+  const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
+  return dx * dx + dy * dy + dz * dz;
 }
