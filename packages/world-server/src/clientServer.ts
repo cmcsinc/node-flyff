@@ -228,6 +228,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.GETFRIENDSTATE, (s, r) => deps.friendHandler.handleGetState(s, r));
   dispatcher.register(PACKETTYPE.SETFRIENDSTATE, (s, r) => deps.friendHandler.handleSetState(s, r));
   dispatcher.register(PACKETTYPE.REMOVEFRIEND, (s, r) => deps.friendHandler.handleRemove(s, r));
+  dispatcher.register(PACKETTYPE.BLOCK, (s, r) => deps.friendHandler.handleBlock(s, r));
   // Campus -- only these 4 are client packets (DPSrvr.cpp:540-543). ALL /
   // ADD_MEMBER / UPDATE_POINT are DB-server->world and are not registered here.
   dispatcher.register(PACKETTYPE.CAMPUS_INVITE, (s, r) => deps.campusHandler.handleInvite(s, r));

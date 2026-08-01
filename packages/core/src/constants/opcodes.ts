@@ -234,6 +234,9 @@ export const PACKETTYPE = Object.freeze({
   REMOVEFRIEND:         0xffffff6a,
   GETFRIENDSTATE:       0xffffff64,
   SETFRIENDSTATE:       0xffffff67,
+  // MsgHdr.h:354 -- friend block toggle. `BYTE nGu` (1=chat, 2=friend, 3=trade)
+  // + String szNameTo + String szNameFrom. Core toggles `bBlock` on the friend edge.
+  BLOCK:                0xffffff5a,
   // MsgHdr.h:359/365-372 -- friend opcodes that are SERVER->CLIENT despite living
   // in the PACKETTYPE space (they are their own packets, not snapshot blocks).
   // ADDFRIEND (0xffffff60) is the client's accept leg AND, in C++, a core-server

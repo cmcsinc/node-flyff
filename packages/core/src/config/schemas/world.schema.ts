@@ -31,6 +31,12 @@ export const WorldSimConfigSchema = z.object({
   dropRate: z.number().positive().default(1.0),
   /** Gold (penya) drop rate multiplier (1.0 = retail). */
   goldRate: z.number().positive().default(1.0),
+  /**
+   * NPC shop cost rate (`prj.m_fShopCost`, C++ `Project.h:968`). Multiplied
+   * into every buy price: `floor(rate * propItem.price)`, floored to 1.
+   * 1.0 = retail. Values > 1.0 make shops more expensive.
+   */
+  shopCostRate: z.number().positive().default(1.0),
   /** Spawn density multiplier. Values > 1.0 increase monster population. */
   spawnMultiplier: z.number().positive().default(1.0),
 });
