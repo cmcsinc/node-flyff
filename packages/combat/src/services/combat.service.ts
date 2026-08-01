@@ -440,38 +440,71 @@ export class CombatService {
     // The killer is already resolved; only OTHER attackers need a manager lookup.
     const resolve = (id: number): CPlayer | undefined =>
       id === killer.m_idPlayer ? killer : this.deps.playerManager.get(id);
+
+    // ── Phase 1: pool same-party hits, then route to party or solo. ──
+    // C++ AddExperienceKillMember zeroes every same-party member during a
+    // forward scan (line 6339), then calls AddExperienceParty ONCE for the
+    // combined share.  Mirror that: pool into a per-iteration `hits` total;
+    // if any pooling occurred, queue a single party grant; otherwise queue a
+    // solo grant.  Both are deferred to avoid granting inside the scan.
+    //
+    // Single-pass, no merge logic: the forward scan (slice(i+1)) always finds
+    // ALL later same-party members.  Earlier same-party members are impossible
+    // here because the earlier one's own forward scan already consumed them.
+    const partyGrants: Array<{ representative: CPlayer; hits: number }> = [];
+    const soloGrants: Array<{ attacker: CPlayer; hits: number }> = [];
     for (const [i, { id: attackerId, hit: ownHit }] of attackers.entries()) {
       if (consumed.has(attackerId)) continue;
       const attacker = resolve(attackerId);
-      // `IsValidObj(pEnemy) && pDead->IsValidArea(pEnemy, 64.0f) &&
-      // pEnemy->IsPlayer()` -- offline or walked-away attackers forfeit.
-      if (!attacker || !inExpRange(attacker, mover)) continue;
+      // `IsValidObj(pEnemy) && pDead->IsValidArea(pEnemy, 64.0f)` -- offline
+      // or walked-away attackers are consumed immediately (C++ zeroes them at
+      // line 6344) so later party members cannot pool their hits.
+      if (!attacker || !inExpRange(attacker, mover)) { consumed.add(attackerId); continue; }
 
-      // 3. Pool same-party attackers' hits into this one share.
+      // Pool same-party attackers' hits into this one representative.
       let hits = ownHit;
+      let pooled = false;
       if (this.deps.sameParty) {
         for (const { id: otherId, hit: otherHit } of attackers.slice(i + 1)) {
           if (consumed.has(otherId)) continue;
           const other = resolve(otherId);
-          // C++ also drops out-of-range LATER attackers from the list entirely
-          // (`adwEnemy[k] = 0`) so they cannot be paid on their own turn.
           if (!other || !inExpRange(other, mover)) { consumed.add(otherId); continue; }
           if (!this.deps.sameParty(attackerId, otherId)) continue;
           hits += otherHit;
           consumed.add(otherId);
+          pooled = true;
         }
       }
 
-      // 4. This attacker's (or party's) slice of the kill.
+      if (pooled) {
+        partyGrants.push({ representative: attacker, hits });
+      } else {
+        soloGrants.push({ attacker, hits });
+      }
+    }
+
+    // ── Phase 2: distribute party shares. ──
+    // Each group's combined hit portion goes through the partyExp seam
+    // (PartyService.distributeExp) which splits it among nearby members by
+    // level-squared weighting.
+    if (this.deps.partyExp) {
+      for (const { representative, hits } of partyGrants) {
+        const share = rawExp * (hits / totalHit);
+        if (share > 0) this.deps.partyExp(representative, mover, share);
+      }
+    }
+
+    // ── Phase 3: non-party solo grants. ──
+    // Each attacker who was NOT pooled with same-party members gets their
+    // individual share.  Still try the partyExp seam: it returns null when
+    // the attacker has no party or is the only member nearby (C++
+    // AddExperienceSolo(bParty=TRUE) fallback).
+    for (const { attacker, hits } of soloGrants) {
       const share = rawExp * (hits / totalHit);
       if (share <= 0) continue;
-
-      // 5/6. Party split first -- it returns null when this attacker has no
-      // party or is the only member nearby, which is exactly C++'s
-      // `AddExperienceSolo(..., bParty = TRUE)` fallback.
       if (this.deps.partyExp) {
         const handled = this.deps.partyExp(attacker, mover, share);
-        if (handled !== null) continue; // party owned this share (0 paid included)
+        if (handled !== null) continue;
       }
       this.grantSoloExp(attacker, mover, share);
     }
