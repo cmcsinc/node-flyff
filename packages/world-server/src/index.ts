@@ -240,15 +240,16 @@ async function main(): Promise<void> {
       void shutdown('ipc:shutdown');
     }
   });
-  // Now that the draining shutdown exists, let crashes use it too -- a crash
-  // must still get clients off the wire with their state flushed. The boot-time
+  // Now that the draining shutdown exists, let a CRASH use it -- a crash must
+  // still get clients off the wire with their state flushed. The boot-time
   // handlers above stay registered; `shuttingDown` makes the pair idempotent.
-  process.removeAllListeners('unhandledRejection');
+  //
+  // `unhandledRejection` deliberately does NOT drain: it fires for any stray
+  // floating promise anywhere in the process, and evicting every online player
+  // over one is far too blunt. It stays a loud fast exit -- the supervisor
+  // restarts us, and journal replay recovers state on the next boot. Only
+  // `uncaughtException` (the process is genuinely unsound) drains.
   process.removeAllListeners('uncaughtException');
-  process.on('unhandledRejection', err => {
-    logger.error({ err }, 'Unhandled promise rejection');
-    void shutdown('unhandledRejection', 1);
-  });
   process.on('uncaughtException', err => {
     logger.error({ err }, 'Uncaught exception');
     void shutdown('uncaughtException', 1);

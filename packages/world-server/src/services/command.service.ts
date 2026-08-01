@@ -563,13 +563,20 @@ export class CommandService {
   /**
    * `/out <name>` -- `TextCmd_Out` (FuncTextCmd.cpp:2449). Disconnect a named
    * peer: C++ routes via `g_DPCoreClient.SendKillPlayer` (cluster->world); in
-   * this single-process emulator we destroy the target's socket directly +
-   * drop it from the manager so cleanup runs the same path as a natural
-   * disconnect. Self-target -> ReturnSay flag 2 (consistent with `/su`/`/te`).
+   * this single-process emulator we notify the target then destroy its socket.
+   * Self-target -> ReturnSay flag 2 (consistent with `/su`/`/te`).
    *
    * The forced-logout notice goes out first: the v19 client ignores a bare
    * socket close on the world connection and freezes in-world instead of
    * returning to the title screen. See `net/snapshot/kick.serializer.ts`.
+   *
+   * ponytail: the `remove()` below pre-empts the dispatcher's socket-close hook
+   * -- by the time the deferred destroy fires the player is gone from the
+   * manager, so the hook's teardown (trade gold refund, party/friend/visibility)
+   * and state flush are all skipped. Faithful to C++ (which likewise just kills
+   * the connection) but a mid-trade target loses staked penya. Upgrade path:
+   * take the same `beforeLeave` + `saveAndLeave` seam `AdminCommandService.kick`
+   * uses, or drop the `remove()` and let the close hook own it.
    */
   private out({ args, player }: CommandCtx): void {
     const name = args.split(/\s+/)[0];

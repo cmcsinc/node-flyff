@@ -845,6 +845,17 @@ export async function compose(): Promise<WorldComposeResult> {
     mailHandler,
     // Only `kickAll` uses this -- single kicks let the socket-close hook flush.
     saveAndLeave: (charId) => joinService.disconnectByCharId(charId),
+    // Mirrors the dispatcher's onDisconnect hook (index.ts). `saveAndLeave`
+    // removes the player from PlayerManager, so the hook that fires on the
+    // deferred socket close can no longer resolve them -- without this, a drain
+    // skips the trade gold refund and the staked penya is lost on replay.
+    beforeLeave: (player) => {
+      partyService.onDisconnect(player);
+      tradeService.onDisconnect(player);
+      friendService.onDisconnect(player.m_idPlayer);
+      campusService.onDisconnect(player.m_idPlayer);
+      visibilityService.remove(player);
+    },
   });
   const adminListener = new AdminListener({ sink: adminCommandService });
 
