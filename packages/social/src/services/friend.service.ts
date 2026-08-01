@@ -48,7 +48,7 @@ import {
   buildAddFriend, buildFriendRequest, buildFriendCancel, buildFriendError,
   buildRemoveFriend, buildFriendGameJoin, buildGetFriendState, buildSetFriendState,
   buildFriendJoin, buildFriendLogout, buildRemoveFriendState, buildFriendChangeJob,
-  type FriendEntry,
+  buildBlock, type FriendEntry,
 } from '../net/snapshot/friend.serializer';
 
 const logger = createLogger({ module: 'friend-service' });
@@ -276,6 +276,41 @@ export class FriendService {
       this.notifyFriends(player.m_idPlayer, () =>
         buildSetFriendState(player.m_idPlayer, clamped));
     }
+    return OK;
+  }
+
+  /**
+   * `OnFriendInterceptState` (`DPCacheSrvr.cpp:2734`) -- toggle the per-friend
+   * `bBlock` flag. `nGu=2` for friend block (the only one we implement; chat and
+   * trade blocks are separate systems). Toggling: if currently blocked, unblock
+   * and restore the friend's real presence state; if currently unblocked, block
+   * and zero their state. DB write-through via `friendRepo.setBlocked`.
+   */
+  async toggleBlock(player: CPlayer, targetName: number | string): Promise<FriendResult> {
+    // Resolve target id from name if needed.
+    let targetId: number;
+    if (typeof targetName === 'string') {
+      const row = await this.deps.charRepo.findByName(targetName);
+      if (!row) return fail('no-such-name');
+      targetId = row.id;
+    } else {
+      targetId = targetName;
+    }
+    if (!this.roster(player.m_idPlayer).has(targetId)) return fail('not-friend');
+
+    const currentlyBlocked = this.roster(player.m_idPlayer).get(targetId) ?? false;
+    const newBlocked = !currentlyBlocked;
+    this.roster(player.m_idPlayer).set(targetId, newBlocked);
+
+    await this.deps.friendRepo.setBlocked(player.m_idPlayer, targetId, newBlocked);
+
+    // C++ OnFriendInterceptState:2752-2763 -- when blocking, dwState=0;
+    // when unblocking, restore real state (online or FRS_OFFLINE).
+    if (!newBlocked) {
+      // Unblocked: visible state will naturally resolve via visibleState().
+    }
+
+    this.deps.playerManager.sendTo(player, buildBlock(player.m_idPlayer, 2, String(targetName)));
     return OK;
   }
 
