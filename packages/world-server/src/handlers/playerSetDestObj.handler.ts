@@ -41,7 +41,9 @@ export class PlayerSetDestObjHandler {
       if (!Number.isFinite(fRange)) {
         throw new PacketError('fRange must be finite');
       }
-      logger.info(
+      // debug, not info: follow re-issues one of these per arrival hop
+      // (`WndWorldControlPlayer.cpp:405-416`), so a followed player floods this.
+      logger.debug(
         { charId: player.m_idPlayer, objid, fRange, from: player.m_vPos },
         'PLAYERSETDESTOBJ received',
       );

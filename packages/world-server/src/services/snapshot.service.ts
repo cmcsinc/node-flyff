@@ -25,7 +25,7 @@ import type { CPlayer } from '@flyff/entities';
 import {
   DestPosSerializer, type DestPosFrame,
 } from '@flyff/combat';
-import { VISIBILITY_RADIUS } from '@flyff/world-core';
+import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import type { VisibilityService } from '@flyff/world-core';
 
 export interface SnapshotServiceDeps {
@@ -59,6 +59,14 @@ export class SnapshotService {
     }
     player.m_vPos = { ...frame.vPos };
     player._dirty.add('m_vPos');
+    // `SetDestPos` tail (`_Common/MoverMsg.cpp:105`) calls `ClearDestObj()` --
+    // a position destination and an object destination are mutually exclusive.
+    // `OnPlayerDestPos` (DPSrvr.cpp:4458) goes through it, so click-to-move
+    // cancels an in-progress follow server-side too. Without this the stale
+    // `m_idDestObj` is still reported by QUERYGETDESTOBJ and a peer that walks
+    // into range renders a phantom follow.
+    player.m_idDestObj = NULL_ID;
+    player.m_fArrivalRange = 0;
     this.deps.visibilityService?.refresh(player.m_idPlayer);
 
     const packet = this.destPosSerializer.build(player.m_idPlayer, frame);
