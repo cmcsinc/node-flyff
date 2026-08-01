@@ -58,6 +58,26 @@ describe('PartyManager', () => {
     assert.equal(mgr.members(p.id)[0], 3);
   });
 
+  it('promoteLeader returns undefined for a non-member or the current leader', () => {
+    const p = mgr.create(1, 2);
+    // C++ ChangeLeader feeds FindMember's -1 into SwapPartyMember -> OOB memcpy.
+    assert.equal(mgr.promoteLeader(p.id, 999), undefined);
+    assert.equal(mgr.promoteLeader(p.id, 1), undefined, 'already leader');
+    assert.deepEqual(mgr.members(p.id), [1, 2], 'roster untouched');
+  });
+
+  it('advanceToTroupe sets kindTroup=1 + name, and clamps the name length', () => {
+    const p = mgr.create(1, 2);
+    assert.equal(p.kindTroup, 0);
+    assert.equal(p.name, '');
+    mgr.advanceToTroupe(p.id, 'Braves');
+    assert.equal(mgr.get(p.id)!.kindTroup, 1);
+    assert.equal(mgr.get(p.id)!.name, 'Braves');
+    mgr.advanceToTroupe(p.id, 'x'.repeat(40));
+    assert.equal(mgr.get(p.id)!.name.length, 32, 'clamped to m_sParty capacity');
+    assert.equal(mgr.advanceToTroupe(999, 'Nope'), undefined);
+  });
+
   it('nextSequentialLooter advances past the recorded getter and wraps', () => {
     const p = mgr.create(1, 2);
     mgr.addMember(p.id, 3);

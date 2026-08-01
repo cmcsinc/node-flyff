@@ -38,11 +38,11 @@ describe('buildPartyMember (SNAPSHOTTYPE_PARTYMEMBER)', () => {
       duelPartyId: 0,
       members: [{ id: 1, remove: false }, { id: 2, remove: false }],
     };
-    const buf = buildPartyMember(7, 'Alice', 'Bob', party);
+    const buf = buildPartyMember(7, 2, 'Alice', 'Bob', party);
     assertPrefix(buf, 7, SNAPSHOTTYPE.PARTYMEMBER);
     let off = 16;
-    // idPlayer (recipient objid echo).
-    assert.equal(buf.readUInt32LE(off), 7); off += 4;
+    // idPlayer -- the AFFECTED member (joined/removed), not the recipient.
+    assert.equal(buf.readUInt32LE(off), 2); off += 4;
     // String leader.
     let s: [string, number];
     s = readStr(buf, off); assert.equal(s[0], 'Alice'); off = s[1];
@@ -71,7 +71,7 @@ describe('buildPartyMember (SNAPSHOTTYPE_PARTYMEMBER)', () => {
   });
 
   it('null party writes the int 0 size and skips Serialize', () => {
-    const buf = buildPartyMember(9, 'X', 'Y', null);
+    const buf = buildPartyMember(9, 9, 'X', 'Y', null);
     assertPrefix(buf, 9, SNAPSHOTTYPE.PARTYMEMBER);
     let off = 16 + 4; // prefix + idPlayer
     off = readStr(buf, off)[1]; // leader
@@ -81,12 +81,30 @@ describe('buildPartyMember (SNAPSHOTTYPE_PARTYMEMBER)', () => {
   });
 
   it('flags m_bRemove=TRUE when a member is marked departing', () => {
-    const buf = buildPartyMember(1, 'L', 'M', {
+    const buf = buildPartyMember(1, 99, 'L', 'M', {
       partyId: 5, size: 1, members: [{ id: 99, remove: true }],
     });
     // Last 8 bytes = [u_long playerId][BOOL remove].
     assert.equal(buf.readUInt32LE(buf.length - 8), 99);
     assert.equal(buf.readUInt32LE(buf.length - 4), 1);
+  });
+
+  it('troupe party appends m_sParty after m_nModeTime (kindTroup != 0)', () => {
+    const solo = buildPartyMember(1, 2, 'L', 'M', {
+      partyId: 5, size: 1, members: [{ id: 2, remove: false }],
+    });
+    const troupe = buildPartyMember(1, 2, 'L', 'M', {
+      partyId: 5, kindTroup: 1, size: 1, partyName: 'Braves',
+      members: [{ id: 2, remove: false }],
+    });
+    // Only difference is the inserted DWORD-prefixed name (4 + 6 bytes) and the
+    // kindTroup value, so the troupe frame is exactly 10 bytes longer.
+    assert.equal(troupe.length, solo.length + 4 + 'Braves'.length);
+    // The name sits immediately before the 8-byte member trailer.
+    const nameEnd = troupe.length - 8;
+    const nameLen = troupe.readUInt32LE(nameEnd - 4 - 'Braves'.length);
+    assert.equal(nameLen, 'Braves'.length);
+    assert.equal(troupe.subarray(nameEnd - 'Braves'.length, nameEnd).toString('utf8'), 'Braves');
   });
 });
 

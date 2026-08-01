@@ -28,13 +28,14 @@ import {
   buildPartyMember, buildPartyRequest, buildPartyRequestCancel,
   buildPartyChangeLeader, buildPartyChat, PARTY_NO_DUEL,
   buildSetNaviPoint,
-  buildPartyChangeItemMode, buildPartyChangeExpMode,
-  type PartySnapshotMember,
+  buildPartyChangeItemMode, buildPartyChangeExpMode, buildPartyChangeTroup,
+  type PartySnapshotState,
 } from '@flyff/world-core';
 import {
   PartyManager, PARTY_INVITE_TIMEOUT_MS,
   PARTY_ITEM_MODE_SEQUENTIAL, PARTY_ITEM_MODE_LEADER, PARTY_ITEM_MODE_RANDOM,
   PARTY_ITEM_MODE_MAX, PARTY_EXP_MODE_CONTRIBUTION,
+  PARTY_KIND_SOLO, MAX_PARTY_NAME_LEN,
 } from '../managers/party.manager';
 import { createLogger } from '@flyff/core/logger';
 import type { Party } from '../managers/party.manager';
@@ -166,11 +167,21 @@ export class PartyService {
     if (requester.m_idPlayer !== targetId && !wasRequesterLeader) return; // kick = leader-only
     const target = this.deps.playerManager.get(targetId);
     const wasTargetLeader = party.members[0] === targetId;
+    // Names must be captured BEFORE the removal -- once the target is spliced
+    // out, members[0] is a different player.
+    const leaderName = this.deps.playerManager.get(party.members[0])?.m_szName ?? '';
+    const targetName = target?.m_szName ?? '';
     const res = this.deps.partyManager.removeMember(party.id, targetId);
     if (target) target.m_idParty = NULL_ID;
     if (!res.party) return;
+    // C++ OnRemovePartyMember sends `pRemovd->AddPartyMember(NULL, idMember)` to
+    // the leaver/kicked player in BOTH branches -- an empty PARTYMEMBER that
+    // tears down their party window. Without it the removed player stays "in"
+    // the party client-side. The removed target is no longer in
+    // res.party.members, so the loops below never reach them.
+    if (target) this.notifyRemoved(target, leaderName);
     if (res.disbanded) {
-      this.notifyDisband(res.party);
+      this.notifyDisband(res.party, leaderName, targetName);
       return;
     }
     if (wasTargetLeader) {
@@ -178,17 +189,24 @@ export class PartyService {
       const newLeaderId = res.party.members[0];
       this.broadcastAddPartyChangeLeader(res.party, newLeaderId);
     }
-    this.broadcastRosterOnly(res.party);
+    this.broadcastRosterOnly(res.party, targetId, targetName);
   }
 
-  /** Leader-only: promote `targetId` into slot 0 + ADDPARTYCHANGELEADER. */
+  /**
+   * Leader-only: promote `targetId` into slot 0 + ADDPARTYCHANGELEADER to every
+   * member. Ports `CDPCoreClient::OnPartyChangeLeader` (`DPCoreClient.cpp:2841`),
+   * which sends ONLY the leader-change notice -- the client's
+   * `OnPartyChangeLeader` calls `g_Party.ChangeLeader` itself, so a roster
+   * resend is not part of the C++ path (and would re-run the join/leave message
+   * branch in `OnAddPartyMember` with a stale size).
+   */
   changeLeader(leader: CPlayer, targetId: number): void {
     const party = this.deps.partyManager.getByMember(leader.m_idPlayer);
     if (!party || party.members[0] !== leader.m_idPlayer) return;
+    if (targetId === leader.m_idPlayer) return; // already the leader
     const updated = this.deps.partyManager.promoteLeader(party.id, targetId);
     if (!updated) return;
     this.broadcastAddPartyChangeLeader(updated, targetId);
-    this.broadcastRosterOnly(updated);
   }
 
   /**
@@ -226,6 +244,31 @@ export class PartyService {
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
       if (p) this.deps.playerManager.sendTo(p, buildPartyChangeItemMode(p.m_idPlayer, mode));
+    }
+  }
+
+  /**
+   * CHANGETROUP -- "advance party" (solo party -> troupe). Ports
+   * `CDPCoreClient::OnPartyChangeTroup` (`DPCoreClient.cpp:1348`): set
+   * `m_nKindTroup = 1`, store the name, then `AddPartyChangeTroup(m_sParty)` to
+   * EVERY member. The client gates the button on `m_nKindTroup == 0`
+   * (`WndParty.cpp:376`) so a second advance is a no-op here too.
+   *
+   * The name arrives from `CWndPartyChangeTroup` (`WndPartyChangeTroup.cpp:167`),
+   * which already rejects invalid/reserved names client-side; we still bound the
+   * length (rule 03 -- never trust the client).
+   */
+  changeTroup(leader: CPlayer, name: string): void {
+    const party = this.deps.partyManager.getByMember(leader.m_idPlayer);
+    if (!party || party.members[0] !== leader.m_idPlayer) return;
+    if (party.kindTroup !== PARTY_KIND_SOLO) return; // already a troupe -- one-way
+    const trimmed = name.trim();
+    if (trimmed.length === 0 || trimmed.length > MAX_PARTY_NAME_LEN) return;
+    const updated = this.deps.partyManager.advanceToTroupe(party.id, trimmed);
+    if (!updated) return;
+    for (const id of updated.members) {
+      const p = this.deps.playerManager.get(id);
+      if (p) this.deps.playerManager.sendTo(p, buildPartyChangeTroup(p.m_idPlayer, updated.name));
     }
   }
 
@@ -273,15 +316,17 @@ export class PartyService {
    * the leader dropped, disband if <2 remain.
    */
   onDisconnect(player: CPlayer): void {
+    const party = this.deps.partyManager.getByMember(player.m_idPlayer);
+    const leaderName = party ? this.deps.playerManager.get(party.members[0])?.m_szName ?? '' : '';
     const res = this.deps.partyManager.onDisconnect(player.m_idPlayer);
     player.m_idParty = NULL_ID;
     if (!res.party) return;
-    if (res.disbanded) { this.notifyDisband(res.party); return; }
+    if (res.disbanded) { this.notifyDisband(res.party, leaderName, player.m_szName); return; }
     if (res.wasLeader) {
       const newLeaderId = res.party.members[0];
       this.broadcastAddPartyChangeLeader(res.party, newLeaderId);
     }
-    this.broadcastRosterOnly(res.party);
+    this.broadcastRosterOnly(res.party, player.m_idPlayer, player.m_szName);
   }
 
   /**
@@ -494,41 +539,65 @@ export class PartyService {
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
       if (!p) continue;
-      const snapshotMembers: PartySnapshotMember[] = party.members.map((m) => ({ id: m, remove: false }));
-      const snapshot = {
-        partyId: party.id, size: party.members.length, expMode: party.expMode,
-        itemMode: party.itemMode, duelPartyId: PARTY_NO_DUEL, members: snapshotMembers,
-      };
-      this.deps.playerManager.sendTo(
-        p, buildPartyMember(p.m_idPlayer, leader.m_szName, newMember.m_szName, snapshot),
-      );
+      this.deps.playerManager.sendTo(p, buildPartyMember(
+        p.m_idPlayer, newMember.m_idPlayer, leader.m_szName, newMember.m_szName, this.snapshot(party),
+      ));
     }
   }
 
-  /** Roster refresh (no joiner context) -- uses leader's name for both fields. */
-  private broadcastRosterOnly(party: Party): void {
+  /**
+   * Roster refresh after a member left/was kicked. `affectedId` is the departed
+   * member (C++ `idMember`) -- the client formats "<member> left the party" from
+   * the `pszMember` string, and only when `nOldSize > nSizeofMember`.
+   */
+  private broadcastRosterOnly(party: Party, affectedId: number, affectedName: string): void {
     const leader = this.deps.playerManager.get(party.members[0]);
     if (!leader) return;
-    const memberName = (this.deps.playerManager.get(party.members[party.members.length - 1]) ?? leader).m_szName;
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
       if (!p) continue;
-      const snapshotMembers: PartySnapshotMember[] = party.members.map((m) => ({ id: m, remove: false }));
-      const snapshot = {
-        partyId: party.id, size: party.members.length, expMode: party.expMode,
-        itemMode: party.itemMode, duelPartyId: PARTY_NO_DUEL, members: snapshotMembers,
-      };
-      this.deps.playerManager.sendTo(p, buildPartyMember(p.m_idPlayer, leader.m_szName, memberName, snapshot));
+      this.deps.playerManager.sendTo(p, buildPartyMember(
+        p.m_idPlayer, affectedId, leader.m_szName, affectedName, this.snapshot(party),
+      ));
     }
   }
 
-  /** Disband -- send an empty PARTYMEMBER (size 0) to each remaining member. */
-  private notifyDisband(party: Party): void {
+  /**
+   * `CParty::Serialize` state for a roster broadcast. `kindTroup`/`partyName`
+   * MUST ride along: the client re-reads them on every PARTYMEMBER, so omitting
+   * them silently demotes an advanced party back to solo on the next refresh.
+   */
+  private snapshot(party: Party): PartySnapshotState {
+    return {
+      partyId: party.id, kindTroup: party.kindTroup, size: party.members.length,
+      expMode: party.expMode, itemMode: party.itemMode, duelPartyId: PARTY_NO_DUEL,
+      partyName: party.name,
+      members: party.members.map((m) => ({ id: m, remove: false })),
+    };
+  }
+
+  /**
+   * Empty PARTYMEMBER to a just-removed player -- tears down their party window.
+   * `idPlayer` is the removed player themself, which is what makes the client
+   * print "you left the party" rather than "the party was disbanded".
+   */
+  private notifyRemoved(player: CPlayer, leaderName: string): void {
+    this.deps.playerManager.sendTo(
+      player, buildPartyMember(player.m_idPlayer, player.m_idPlayer, leaderName, player.m_szName, null),
+    );
+  }
+
+  /**
+   * Disband -- empty PARTYMEMBER to each remaining member. C++ passes
+   * `idPlayer = 0` here (`DPCoreClient.cpp:965`), never the recipient's id, so
+   * the client takes the "party was disbanded" branch.
+   */
+  private notifyDisband(party: Party, leaderName: string, memberName: string): void {
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
       if (!p) continue;
       p.m_idParty = NULL_ID;
-      this.deps.playerManager.sendTo(p, buildPartyMember(p.m_idPlayer, '', '', null));
+      this.deps.playerManager.sendTo(p, buildPartyMember(p.m_idPlayer, 0, leaderName, memberName, null));
     }
   }
 
