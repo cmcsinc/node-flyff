@@ -213,6 +213,22 @@ export function buildFriendLogout(friendId: number): Buffer {
 }
 
 /**
+ * `PACKETTYPE_BLOCK` reply (`Neuz/DPClient.cpp:8325 OnBlock`) -- confirm a
+ * block/unblock toggle. The client shows a localized message per `nGu`:
+ *   nGu=1 -> TID_GAME_MSGCHATDENY  (chat block)
+ *   nGu=2 -> TID_GAME_MSGDENY      (friend block)
+ *   nGu=3 -> TID_GAME_TRADEDENY    (trade block)
+ * Wire: `BYTE nGu, String szName`.
+ */
+export function buildBlock(selfObjid: number, nGu: number, targetName: string): Buffer {
+  const w = new PacketWriter();
+  w.writeDword(PACKETTYPE.BLOCK);
+  w.writeByte(nGu & 0xff);
+  w.writeString(targetName);
+  return w.build();
+}
+
+/**
  * `PACKETTYPE_REMOVEFRIENDSTATE` (`DPCacheSrvr.cpp:2215`) -- tells the OTHER
  * side its roster lost an entry: `u_long uRemoveid` (the remover's id).
  */

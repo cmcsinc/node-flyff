@@ -137,6 +137,31 @@ export class FriendHandler {
     }
   }
 
+  /**
+   * BLOCK (0xffffff5a) -- toggle friend block. C++ `DPSrvr.cpp:5062`:
+   *   BYTE nGu; String szNameTo; String szNameFrom;
+   * `nGu` discriminates: 1=chat, 2=friend, 3=trade. We implement friend block
+   * only (nGu=2). The world resolves names to ids; our single-process emulator
+   * resolves `szNameTo` from the character table (matching C++
+   * `CPlayerDataCenter::GetPlayerId`).
+   */
+  handleBlock(socket: ClientSocket, reader: PacketReader): void {
+    const player = this.resolve(socket);
+    if (!player) return;
+    try {
+      const nGu = reader.readByte();
+      const nameTo = reader.readString();
+      const nameFrom = reader.readString();
+      if (nGu !== 2) return; // only friend block implemented
+      this.warnSpoofByName(player, nameFrom, 'BLOCK');
+      void this.friendService.toggleBlock(player, nameTo)
+        .then((out) => logger.debug({ charId: player.m_idPlayer, nameTo, out }, 'BLOCK'))
+        .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'BLOCK failed'));
+    } catch (error) {
+      this.onParseError(error, player, 'BLOCK');
+    }
+  }
+
   /** REMOVEFRIEND -- drop a friend (both directions). */
   handleRemove(socket: ClientSocket, reader: PacketReader): void {
     const player = this.resolve(socket);
@@ -169,6 +194,13 @@ export class FriendHandler {
     if (claimedSelf !== player.m_idPlayer) {
       logger.warn({ charId: player.m_idPlayer, claimedSelf, label },
         'friend packet claims a different actor id -- using session id');
+    }
+  }
+
+  private warnSpoofByName(player: CPlayer, claimedName: string, label: string): void {
+    if (claimedName && claimedName !== player.m_szName) {
+      logger.warn({ charId: player.m_idPlayer, claimedName, label },
+        'BLOCK packet claims a different actor name -- using session');
     }
   }
 

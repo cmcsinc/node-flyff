@@ -804,6 +804,7 @@ export async function compose(): Promise<WorldComposeResult> {
     spawnManager,
     inventoryService,
     getItem: (id: number) => resources.items.items.get(id),
+    shopCostRate: config.world.shopCostRate,
   });
   const shopHandler = new ShopHandler({ playerManager, shopService, createItemSerializer });
 
