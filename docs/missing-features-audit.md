@@ -1,5 +1,29 @@
 # Missing Features Audit — node-flyff
 
+> ## ⚠️ HISTORICAL — do not use for current status (stale as of 2026-08-01)
+>
+> This document is a snapshot of **2026-07-21**, before combat, skills, buffs,
+> inventory, quests, party, social, trade, mail, and the admin panel shipped.
+> Its "Current State" section below describes a server that had 17 handlers and
+> no combat system; the live server now dispatches ~100 opcodes across 19
+> packages.
+>
+> **For current feature status use `.claude/state/MISSING-FEATURES.md`**
+> (re-verified 2026-08-01 against master `c9ae378`).
+> For TS↔C++ behavioral deviations use [`c++-fidelity-audit.md`](c++-fidelity-audit.md).
+>
+> **What is still useful here:** the C++ source citations, opcode hex values,
+> and per-system file/line references in sections 5-10 — those were derived from
+> the v19 source and remain accurate as *research*, even where the "not
+> implemented" framing around them no longer holds. Section 10's opcode-gap list
+> in particular is still a decent shopping list, minus the entries since added.
+>
+> Known-wrong claims retained for provenance: Tier 0 "Combat blocked" (shipped),
+> Tier 1 friend/mail/party (all shipped), Tier 2 inventory/bank (shipped),
+> Tier 3 skills/buffs/exp/drops/AI (shipped), Tier 4 quest (shipped; the
+> `WorldDialog.dll` "needs a VM" blocker was solved with a TS interpreter —
+> `packages/npc/src/services/dialogInterpreter.ts`).
+
 > **Superseded for fidelity:** For TS↔C++ behavioral deviations (formulas, packets,
 > guards), see [`c++-fidelity-audit.md`](c++-fidelity-audit.md) (2026-07-27). This
 > file remains for broader feature-gap coverage (systems not yet ported at all).

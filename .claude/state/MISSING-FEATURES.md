@@ -5,8 +5,10 @@
 > checklist covers features not yet ported at all (wider scope).
 
 Generated 2026-07-23 from a full-source sweep (3 parallel domain maps + every
-`ponytail:` comment). Re-verified 2026-07-24 against live code (3 parallel
-explorers, 57 items audited). Compares the emulator against full retail v19.
+`ponytail:` comment). Re-verified 2026-07-24 (57 items), and **re-verified again
+2026-08-01** against master `c9ae378` — 136 commits later — by 4 parallel
+read-only explorers covering all 16 sections. Compares the emulator against full
+retail v19.
 
 **Status legend**
 - ✅ DONE — implemented + passing on this device's checks (NOT user-confirmed)
@@ -16,6 +18,14 @@ explorers, 57 items audited). Compares the emulator against full retail v19.
 
 **Override rule:** ✅ here = "passes my checks", never "fixed". Only the user
 declares a feature fixed by testing on a real v19 client.
+
+**Companion signal:** there are **187 `ponytail:` markers across 79 files** —
+a denser, line-level gap inventory than this checklist. When a line here says
+PARTIAL, the ponytail at the cited file:line usually names exactly what is
+missing. `grep -rn "ponytail:" packages/*/src` is the authoritative sweep.
+
+**Tally at this refresh** (206 tracked lines across 22 sections):
+✅ 123 · 🟡 48 · ❌ 23 · 🟥 8 · 🚫 4 (retired as not-gaps).
 
 ---
 
@@ -27,26 +37,29 @@ declares a feature fixed by testing on a real v19 client.
 - [x] ✅ Block factor (NPC + player defender) — `formulas.ts:285`
 - [x] ✅ DEF subtract, element factor, level-diff falloff — `formulas.ts:200,252,212`
 - [x] ✅ ATK from weapon + DST_CHR_DMG/ATKPOWER/ATKPOWER_RATE + refine — `formulas.ts:115`
-- [ ] 🟡→impl Equip→stat projection — element string→enum (`elementFromName`), refine→option decode, jewelry HR/ER, atkSpeed. Build+tests green, awaiting user test — `equipStats.ts`
-- [ ] 🟡→impl Targeting policy — `MI_CHAOGUARDIAN` inverse (`m_bChaoGuard`) + `RANK_GUARD`. Build+tests green, awaiting user test. (flying-mismatch deferred — no mount/flight subsystem) — `combat.policy.ts`
+- [x] ✅ Equip→stat projection — element string→enum, refine→option decode, jewelry HR/ER, atkSpeed — `combat/equipStats.ts`
+- [x] ✅ Targeting policy — `MI_CHAOGUARDIAN` inverse (`m_bChaoGuard`) + `RANK_GUARD` — `combat.policy.ts`. Flying-mismatch still deferred (no flight subsystem)
+- [x] ✅ NPC→player min-damage floor (10% of ATK) — `formulas.ts`
 
 ### Ranged / bow
 - [x] ✅ Bow damage curve (STR/DEX) — `formulas.ts:109`
-- [x] ✅ NPC ranged attack (RANGE_ATTACK emit, re-attack delay) — `ai.system.ts:222` (re-verified 2026-07-24)
-- [x] ✅ Player ranged auto-attack as a distinct path — `rangeAttack.handler.ts`, `rangeAttack.service.ts` (re-verified 2026-07-24)
-- [ ] ❌ Ammo / arrow consumption — v19 retail bows are ammo-less by design; no arrow item kind in propItem. Only relevant for later-version quivers.
+- [x] ✅ NPC ranged attack (RANGE_ATTACK emit, re-attack delay) — `ai.system.ts:222`
+- [x] ✅ Player ranged auto-attack as a distinct path — `rangeAttack.handler.ts`, `rangeAttack.service.ts`
+- [ ] 🚫 Ammo / arrow consumption — **N/A by design**, not a gap: v19 retail bows are ammo-less and propItem has no arrow kind. Only relevant to later-version quivers
 
 ### Magic / skill damage
-- [x] ✅ Single-target skill damage (melee + magic, element, magic-factor) — `skillFormulas.ts`
-- [ ] 🟡→impl Skill crit (DEX×fCritical, 2.3×, AF_CRITICAL1) — reuses melee CalcDamage branch; build+tests green, awaiting user test — `skillFormulas.ts` (re-verified 2026-07-24)
-- [ ] 🟡→impl Debuff/secondary-effect gate (nProbability roll — stun/poison) — `effectProc` surfaced, not yet applied (needs status system) — `skillFormulas.ts` (re-verified 2026-07-24)
-- [ ] 🟥 AoE (area skills) — `skillFormulas.ts`
-- [ ] 🟥 DoT (damage-over-time) — `skillFormulas.ts`
-- [ ] 🟡→impl Multi-hit skills (`nSkillCount` chain: N full damage rolls + N DAMAGE snapshots, stops on target death) — build+tests green, awaiting user test — `combat.service.ts` `resolveSkill` (impl 2026-07-24)
-- [ ] 🟥 Projectile skills — `skillFormulas.ts`
-- [x] ✅ Heal skills (RT_HEAL → DST_HP restore, self/other target) — `skill.service.ts:232` (re-verified 2026-07-24)
-- [ ] 🟥 Buff skills (DST buff apply — dwDestParam=0 special-case, not data-driven) — `skill.service.ts:181`
-- [ ] 🟡→impl PvP + PvE skill damage vars (`getDamageMultiplier`: PvP 0.60 + NPC level-diff cosine falloff now applied to skill tail) — build+tests green, awaiting user test — `skillFormulas.ts` (impl 2026-07-24)
+- [x] ✅ Single-target skill damage (melee + magic, element, magic-factor) — `skillFormulas.ts:268` `resolveSkillCast`
+- [x] 🚫 Skill crit — **the old line was semantically wrong and is retired**: skills *never* crit in v19 by design (`MoverAttack.cpp:800` `if (IsSkillAttack(dwAtkFlags)) return FALSE`). The TS states this explicitly at `skillFormulas.ts:294`. Nothing to implement
+- [x] ✅ Debuff/secondary-effect **application** — damage-skill tail calls `applyBuffToMover` on the target — `skills/skill.service.ts:351`
+- [ ] 🟡 **Debuff proc roll is not enforced** — the gate is `(levelRow.destParams?.length ?? 0) > 0`, NOT the rolled `effectProc` from `skillFormulas.ts:321`, so a debuff whose `nProbability` roll *failed* still lands. Fidelity deviation — `skill.service.ts:351`
+- [ ] 🟥 AoE (area skills) — no consumer of `skillRange`/`spellRegion` anywhere in `combat/` or `skills/`
+- [x] ✅ DoT (damage-over-time) — `entities/params/BuffManager.ts:219 tickDots`, `world-server/systems/buff.system.ts:59` (players), `ai.system.ts:126` (monsters); seeded via `dotFromSkill()` `skill.service.ts:732`
+- [ ] 🟡 **DoT death is not a real death** — monster DoT death sets `m_bDead` and `continue`s: no MOVERDEATH broadcast, no exp, no drops (`ai.system.ts:126`). Player DoT death sends no DAMAGE snapshot and never triggers `onPlayerDeath` (`buff.system.ts:67`)
+- [x] ✅ Multi-hit skills (`nSkillCount` chain: N rolls + N DAMAGE snapshots, stops on death) — `combat.service.ts:185-213`
+- [ ] 🟥 Projectile skills — no projectile path in `combat/` or `skills/`
+- [x] ✅ Heal skills (RT_HEAL → DST_HP restore, self/other target) — `skill.service.ts` `applyHeal`
+- [x] ✅ Buff skills — **UPGRADE 🟥→✅**: `effectKind` returns `'buff'` on `RT_TIME` in `referTargets[0|1]` (`skill.service.ts:381`), effects built data-driven by `buffEffects()` (`:705`). The old `dwDestParam=0` special-case is gone
+- [x] ✅ PvP + PvE skill damage vars (PvP 0.60 + NPC level-diff cosine) — `skillFormulas.ts:310`
 
 ---
 
@@ -58,21 +71,27 @@ declares a feature fixed by testing on a real v19 client.
 - [x] ✅ Skill learning (SP spend, tier cost, prereqs, no-decrease) — `skill.service.ts:260`
 - [x] ✅ Skill points granted on level-up — `combat.service.ts:285`
 - [x] ✅ MP/FP consume on cast (routed by KT; gated before spend) — `skill.service.ts:154,191` (re-verified 2026-07-24)
-- [ ] 🟡 Damage + heal cast (EXT_MELEEATK / EXT_MAGICATKSHOT / RT_HEAL); buff/AoE/auto-attack missing — `skill.service.ts:179`
-- [ ] 🟡→impl Job-match gate on learn (isJobMatch lineage: skill's JOB_* must be an ancestor of player's job) — `entities/tables/jobLineage.ts`, gated in `skill.service.ts`; build+tests green, awaiting user test — (2026-07-24)
-- [ ] 🟡→impl WAL `SKILL_LEARN` journal type + replayer (crash-safe learn) — absolute roster+SP journaled before fire-and-forget persist; replayer registered; build+tests green, awaiting user test — `skill.service.ts:304`, `journalReplayers.ts` (2026-07-24)
+- [x] ✅ Damage + heal + **buff** cast — `effectKind` routes all three (`skill.service.ts:381`). AoE still missing (§1); auto-attack-type skills return `'unsupported'`
+- [x] ✅ Job-match gate on learn (isJobMatch lineage) — `entities/tables/jobLineage.ts`, gated `skill.service.ts:617`
+- [x] ✅ WAL `SKILL_LEARN` journal type + replayer — `skill.service.ts:655`, `journalReplayers.ts:98`
+- [x] ✅ Action-slot / skill-queue combo progression — server-driven `SetNextSkill` + tick-spaced advance + `ENDSKILLQUEUE` on exhaust — `skill.service.ts:194-282`
+- [x] ✅ NPC buff casting with conflict table — `skill.service.ts:487 applyNpcBuff`, `NPC_BUFF_CONFLICT:65`
+- [ ] ❌ **Cast-range validation** — `useSkill.handler.ts:44` validates objid + slot only; `resolveDamageTarget` checks existence + alive, never distance. **A client can cast any skill on any objid in the zone from any distance.** Anti-cheat gap, newly identified 2026-08-01
 
 ---
 
 ## 3. BUFF / DEBUFF / STATUS EFFECTS
 
-- [ ] 🟡→impl Buff container + expiry (BuffManager over ParamModel + BuffSystem 1s sweep + SETSKILLSTATE/REMOVESKILLINFULENCE serializers) — build+tests green, awaiting user test — `entities/params/BuffManager.ts`, `world-server/systems/buff.system.ts` (2026-07-24)
-- [ ] 🟡→impl Skill buff apply/expire (RT_TIME → applyBuff arm in cast; refresh/replace/ignore overwrite, 28-cap, SETSKILLSTATE + SETDESTPARAM per-effect sync) — build+tests green, awaiting user test — `skill.service.ts` applyBuff (2026-07-24)
-- [ ] 🟡→impl Buff clear on death (m_buffs.clear() on onPlayerDeath, REMOVESKILLINFULENCE + RESETDESTPARAM per buff broadcast) — build+tests green, awaiting user test — `revival.service.ts:81` (2026-07-24)
-- [ ] 🟡→impl Stun status gate (CHRSTATE_BITS + isStunned() on melee/range/skill input paths) — build+tests green, awaiting user test — `entities/constants/dst.ts`, `player.ts:422` (2026-07-24)
-- [ ] 🟡→impl Poison DoT tick system (BuffManager.tickDots + BuffSystem.onDots for players + AISystem monster HP-loss + death flag; `dotFromSkill` seed via `abilityMin`/`destData`) — build+tests green, awaiting user test — `BuffManager.ts:tickDots`, `buff.system.ts:onDots`, `ai.system.ts:tick` (2026-07-25)
-- [ ] 🟡→impl Buff-grant consumable items (IK2_BUFF/IK2_BUFF2 → addItemBuff + SETSKILLSTATE + SETDESTPARAM; effects+duration from item schema, charge consumed) — build+tests green, awaiting user test — `useItem.service.ts:78` (2026-07-24)
-- [ ] 🟥 `IK3_TEXT_DISGUISE` buff check in AI aggro — `ai.system.ts:355`
+- [x] ✅ Buff container + expiry (BuffManager over ParamModel + 1s BuffSystem sweep + SETSKILLSTATE/REMOVESKILLINFULENCE) — `entities/params/BuffManager.ts:118,139,200,237`, `world-server/systems/buff.system.ts`
+- [x] ✅ Skill buff apply/expire (RT_TIME → applyBuff; refresh/replace/ignore, 28-cap, per-effect SETDESTPARAM sync) — `skill.service.ts` applyBuff, `BuffManager.ts:118`
+- [x] ✅ Buff clear on death (clear + REMOVESKILLINFULENCE + RESETDESTPARAM per buff) — `revival.service.ts:96-107`, `buff.system.ts` `onExpired`
+- [x] ✅ Buff persistence across relog — `join.service.ts:395-473` (`loadBuffs`, `collectPersistedBuffs`) + `character_buffs` (migrations 015/016/018, absolute `expiresAtMs`)
+- [ ] 🟡 **Stun gate has a real type bug** — `player.ts:622` reads `CHRSTATE_BITS.STUN | CHRSTATE_BITS.SLEEP`, but `entities/constants/dst.ts:112-119` **has no `SLEEP` key** (only STUN/DARK/POISON/SLOW/BLEEDING/SILENT). At runtime `8 | undefined` → `8`, so **stun gates and sleep never does**. C++ value is `CHS_SLEEPING 0x00200000`. Build stays green only because tsup/esbuild does not typecheck
+- [ ] 🟡 Stun gate coverage — movement is **not** stun-gated: `world-core/services/movement.service.ts:88,103,113,132` check `m_bDead` only, never `isStunned()`. A stunned player can still walk (attack + cast paths *are* gated)
+- [x] ✅ Poison DoT tick system — `BuffManager.ts:219 tickDots`, `buff.system.ts:59 onDots`, `ai.system.ts:126` (see the DoT-death caveat in §1)
+- [x] ✅ Buff-grant consumable items (IK2_BUFF/IK2_BUFF2 → addItemBuff + SETSKILLSTATE + SETDESTPARAM) — `inventory/services/useItem.service.ts:78`, `BuffManager.ts:160`
+- [ ] 🟥 `IK3_TEXT_DISGUISE` buff check in AI aggro — `ai.system.ts:460 isHidden()` still tests only `MODE.TRANSPARENT`. The ponytail said "when buffs ship" — **buffs have shipped, so this is now actionable**
+- [ ] 🟡 Monster debuff icons never clear — `applyBuffToMover` broadcasts SETSKILLSTATE but `ai.system.ts:122` deliberately skips REMOVESKILLINFULENCE for movers, so a debuff icon appears on a monster and stays forever
 
 ---
 
@@ -80,26 +99,39 @@ declares a feature fixed by testing on a real v19 client.
 
 - [x] ✅ FSM idle/wander/aggro(RAGE)/pursue/return-home — `ai.system.ts`
 - [x] ✅ Leashing (RAGE_LEASH 150m + damage-pos 120m) — `ai.system.ts`
-- [x] ✅ Retaliation on hit (triggerRage) — `combat.service.ts:174`
-- [x] ✅ Spawn + respawn timers (static NPC never respawns) — `spawn.manager.ts`
-- [ ] 🟡 Aggro — single-slot target (`m_idTarget`), no aggro table — `mover.ts:232`
-- [ ] ❌ Flee / low-HP retreat state — `ai.system.ts`
-- [x] ✅ Ranged monster AI (holds at range, RANGE_ATTACK, re-attack cadence) — `ai.system.ts:209` (re-verified 2026-07-24)
-- [ ] ❌ Healer monster AI — `ai.system.ts`
-- [ ] ❌ Flight-capable monster AI
+- [x] ✅ Retaliation on hit (triggerRage) — `combat.service.ts:353`
+- [x] ✅ Spawn + respawn timers (static NPC never respawns) — `world-core/managers/spawn.manager.ts`
+- [ ] 🟡 Aggro — single-slot target (`m_idTarget`) — `entities/mover.ts:320`; `m_idEnemies:344` tallies hit-share for exp only, never target selection. No aggro table
+- [ ] 🟡 Flee / low-HP retreat — **code ✅, data ❌.** Gate `ai.system.ts:213-223`, `startFlee:344` (50 m, `FLEE_SPEED_FACTOR`), `stepFlee:368` all exist, but `spawn.manager.ts:180-236` never passes `fleeHpPct`/`runawayDelay`, so `m_nFleeHpPct` is always 0 and **the branch can never fire**. Source data exists (`resources/raw/propMoverEx.inc`, 19 `SetRunAway(...)` calls) but only `scripts/converters/drops.ts` reads that file
+- [x] ✅ Ranged monster AI (holds at range, RANGE_ATTACK, re-attack cadence) — `ai.system.ts:209`
+- [ ] 🟡 Healer monster AI — **self-heal code ✅, data ❌, ally-heal ❌.** `ai.system.ts:247-253` implements low-HP self-heal, but `spawn.manager.ts` never passes `m_nHealHpPct`/`m_nHealAmount`/`m_nHealCadenceMs` → always 0 → dead code. Source is `propMoverEx.inc` `Recovery 10 50 100 m`, unparsed. Healing *other* monsters is entirely absent
+- [ ] ❌ Flight-capable monster AI — `flyable` is converted into the mover yml but nothing in `ai.system.ts` reads it
 - [ ] ❌ Collision-aware stuck-teleport (return-home has a 20s time cap only, no pathing) — `ai.system.ts:285`
-- [ ] 🟡 Per-mover `dwReAttackDelay` (field read; default 2000ms until resource col 35 exports) — `entities/constants/aiConstants.ts:42`
+- [ ] 🟡 Per-mover `dwReAttackDelay` — **wired to the wrong column.** `spawn.manager.ts` passes `reAttackDelay: def.attack_speed`, and `scripts/converters/movers.ts:86` sets `attack_speed: num(row,'dwAttackSpeed',0)` = propMover col **34** (~1000 for 693 of ~740 movers). The real field is col **35** `dwReAttackDelay` (e.g. 6000), named in the propMover.txt header but never exported. The old "defaults to 2000ms" note was wrong — it reads a real but *incorrect* value
+
 - [ ] 🟡 Return-home HP restore deviation from C++ StateReturn (deliberate: no S→C monster-HP-sync packet) — `ai.system.ts:290`
 
 ---
 
 ## 5. PARTY / EXP-SHARE
 
-- [ ] ❌ Party invite / accept / leave / kick
-- [ ] ❌ Party UI / member list snapshot
-- [ ] 🟥 Party EXP sharing (combat grantExp is single-attacker; `m_idEnemies` tallies damage but unused) — `mover.ts:249`
-- [ ] ❌ Party loot-share + FFA timeout — `loot.service.ts:172`
-- [ ] ❌ `/p` party chat channel — `command.service.ts:37`
+Shipped 2026-07-30 → 08-01 as `@flyff/party` (solo-party MVP, in-memory only —
+matches C++, which keeps party state on the Core server not in the DB).
+
+- [x] ✅ Party invite / accept / decline / leave / kick — `party/services/party.service.ts:91,127,147,163`, handlers `party/handlers/party.handler.ts:52,73,94,109`, dispatch `world-server/clientServer.ts:167-170`
+- [x] ✅ Party member-list snapshot (`PARTYMEMBER` 0x0082 + `CParty::Serialize`) — `world-core/serializers/party.serializer.ts:151`
+- [x] ✅ Party EXP sharing — `party.service.ts:365` `distributeExp` (64 m proximity, 20-level band, 0.2/member bonus); hit-share pooling over `m_idEnemies` at `combat/services/combat.service.ts:423-473`. **`m_idEnemies` is now consumed, not dead**
+- [x] ✅ Party loot-share + FFA timeout — `inventory/services/loot.service.ts:350-358` (`IsLoot` + `sameParty` seam + `LOOT_FFA_MS`), receiver pick `party.service.ts:436`
+- [x] ✅ Item-share modes (0 finder / 1 sequential / 2 leader / 3 random) — `party.service.ts:239,454`, 32 m `PARTY_ITEM_PROXIMITY`
+- [x] ✅ Gold split (mode-independent; floor + remainder to one random member) — `party.service.ts:485`
+- [x] ✅ CHANGETROUP "advance party" (`m_nKindTroup=1` + name) — `party.service.ts:261`
+- [x] ✅ Loot-received notice to peers — `party.service.ts:529`, consumed `loot.service.ts:303`
+- [x] ✅ SETNAVIPOINT party navigator ping — `party.service.ts:295`
+- [x] ✅ Disconnect teardown (auto-promote leader, disband under 2) — `party.service.ts:318`
+- [x] ✅ Party chat via the `PARTYCHAT` opcode (0xffffff59) — `party.service.ts:276`, dispatch `clientServer.ts:176`
+- [ ] ❌ `/p` slash alias for party chat (the opcode path works; only the `/cmd` alias is absent) — `world-server/services/command.service.ts:37`
+- [ ] 🟡 Contribution exp mode — the `m_nTroupsShareExp` toggle is stored + echoed (`party.service.ts:222`) but the contribution split itself is ponytail'd — `party.service.ts:360`
+- [ ] ❌ Guild-party — party level/exp bar, party skills, party finder, party-duel, mute check on party chat — `party.service.ts:15`, `party/managers/party.manager.ts:13`
 
 ---
 
@@ -112,24 +144,35 @@ declares a feature fixed by testing on a real v19 client.
 - [ ] 🟡→impl PvP death/penalties — PK value + propensity increment, WAL PK_KILL journal, persist fire-and-forget, onPvpKill seam → revival loop — `combat.service.ts` onPvpKill (2026-07-25)
 - [ ] 🟡→impl Chaotic/PK revive — isChaotic() gate: 0.1 HP rate vs 0.2 non-chaotic — `revival.service.ts` restoreVitals (2026-07-25)
 - [ ] 🟡→impl PK value decay — PkDecaySystem 60s tick, -1 PK per 5min cooldown since last PK action — `pkDecay.system.ts` (2026-07-25)
-- [ ] ❌ Guild-war revive — `revival.service.ts:21`
-- [ ] ❌ DUEL handshake (0xffffff23-2a) — mutual PvP consent path
-- [ ] ❌ Zone region-type PvP enforcement (safe zones reject PvP)
-- [ ] ❌ PK death item-drop penalty (KarmaProp table)
-- [ ] ❌ Lodelight (PK jail town) respawn
-- [ ] ❌ PK-specific skill damage vars (abilityMinPvp/abilityMaxPvp from propSkillAdd)
+- [x] ✅ DUEL handshake (0xffffff23-2a) — `combat/services/duel.service.ts:48,60,77,94,104` + `combat/managers/duel.manager.ts`, dispatch `clientServer.ts:164-166`; 1v1 request/yes/no/expire/death/disconnect
+- [ ] ❌ **Duel does not bypass the PK-consent gate** — an accepted duel still requires PK mode ON for both, so duel damage cannot land. `combat.policy.ts:47,51` has no duel branch. **Likely a real gameplay bug, not just a gap**
+- [ ] ❌ Guild-war revive — `revival.service.ts:20`
+- [ ] ❌ Zone region-type PvP enforcement (safe zones reject PvP) — `combat.policy.ts:47`
+- [ ] ❌ PK death item-drop penalty (KarmaProp table) — no code path; only `dwKarma` guard reads (`combat.policy.ts:8-9`, `entities/mover.ts:100`)
+- [ ] 🚫 Lodelight (PK jail) respawn — **reclassified from ❌**: C++ `OnRevivalLodelight` is an empty stub, so the reject at `world-server/handlers/revival.handler.ts:52` is the faithful port. Not a gap
+- [ ] ❌ PK-specific skill damage vars — `abilityMinPvp`/`abilityMaxPvp`/`probabilityPvp` are **parsed into the schema** (`resources/schemas/skill.schema.ts:28,30,34`) but read by nothing in `skills` or `combat`
+
+---
+
+## 6b. DEATH-ADJACENT PvP notes
+
+- PvP kill now tears down an active duel via `world-server/compose.ts:647` → `duelService.onPlayerDeath`.
 
 ---
 
 ## 7. DEATH / REVIVAL
 
 - [x] ✅ Monster death (MOVERDEATH, exp, drops, quest, remove) — `combat.service.ts:193`
-- [x] ✅ Player death (dead flag, MOVERDEATH, ACTMSG STOP+DIE) — `revival.service.ts`
-- [x] ✅ Revival (scroll in-place, lodestar town + exp penalty) — `revival.service.ts`
-- [ ] ❌ Other-player resurrection skill — `revival.service.ts:22`
-- [ ] ❌ DiePenalty.inc real table loader (hardcoded bracket) — `entities/math/exp.ts:81`
-- [ ] 🟡→impl 5s dead lockout (`m_nDead`) — movement lockout done: all 4 PLAYERMOVED/BEHAVIOR/CORR/MOVED2 paths now early-return `reason:'dead'` when `m_bDead` (corpses can no longer walk). Attack+skill-cast paths already gated the same flag. Build+tests green (world-server 190/0), awaiting user test — `movement.service.ts` (2026-07-24). Remaining: real `m_nDead` 5s re-spawn timer window (currently `m_bDead` is cleared only on explicit revive)
-- [ ] ❌ Cross-world revive REPLACE teleport snapshot — `revival.service.ts:193`
+- [x] ✅ Player death (dead flag, MOVERDEATH, ACTMSG STOP+DIE) — `revival.service.ts:60`
+- [x] ✅ Revival (scroll in-place, lodestar town + exp penalty) — `revival.service.ts:130`
+- [x] ✅ Buff clear on death (REMOVESKILLINFLUENCE + RESETDESTPARAM per buff) — `revival.service.ts:96-107`
+- [x] ✅ Chaotic/PK revive HP rate (`REVIVE_HP_RATE` 0.2 / `_CHAOTIC` 0.1) — `revival.service.ts:207 restoreVitals`
+- [ ] ❌ Other-player resurrection skill — no RT_HEAL-revive path, no skill hook — `revival.service.ts:20-22`
+- [ ] ❌ DiePenalty.inc real table loader — hardcoded brackets; **no loader exists** (11 loaders in `resources/src/loaders`, none for penalty) and no data file — `entities/math/exp.ts:125,135`
+
+- [ ] 🟡 5s dead lockout (`m_nDead`) — movement lockout done: all 4 move paths early-return `reason:'dead'`; attack + cast gated on the same flag — `world-core/services/movement.service.ts`. Remaining: the real `m_nDead` 5 s countdown (today `m_bDead` clears only on explicit revive)
+- [ ] ❌ Cross-world revive REPLACE teleport snapshot — `teleportToRevival` is SETPOS-only — `revival.service.ts:224-227`
+- [ ] ❌ Guild-war revive — no guild subsystem — `revival.service.ts:21`
 
 ---
 
@@ -137,20 +180,21 @@ declares a feature fixed by testing on a real v19 client.
 
 - [x] ✅ Add/stack/remove/move (swap)/consume/drop — `inventory.service.ts`
 - [x] ✅ Gold spend/add/drop (MAX_GOLD clamp) — `inventory.service.ts:187`
-- [x] ✅ Equip/unequip (server-authoritarian slot, swap, level_req) — `equip.service.ts`
+- [x] ✅ Equip/unequip (server-authoritative slot, swap, level_req) — `equip.service.ts`
 - [x] ✅ DST stat-bonus apply/remove on equip/unequip — `equip.service.ts:89`
-- [ ] ❌ Weight / overweight enforcement (field exists, unused) — `resources/schemas/item.schema.ts:134`
-- [ ] 🟡 Jewelry HR/parry (partial; effects via DST) — `equipStats.ts:86`
-- [x] ✅ Potion / food consumables (full effect via consumableService) — `useItem.service.ts:65`
-- [ ] 🟥 Buff/skill/warp/text usable items (charge consumed, no effect) — `useItem.service.ts:78`
-- [ ] ❌ Set-item bonuses (`set_id` field exists, no logic) — `resources/schemas/item.schema.ts:212`
+- [x] ✅ **Set-item bonuses** — **UPGRADE ❌→✅**: `recomputeSetBonuses` full-recompute over `MAX_HUMAN_PARTS` with an `avails[].equipped` threshold walk, `m_setEffects` diffed through `m_params.applyEffects/removeEffects` — `equip.service.ts:66-96`, wired `compose.ts:471,692`, seeded on login `join.service.ts:228`. The old "field exists, no logic" claim was stale
+- [x] ✅ Potion / food consumables — `useItem.service.ts:65`
+- [ ] 🟡 Buff-grant usable items — **UPGRADE 🟥→🟡**: `IK2_BUFF`/`IK2_BUFF2` → `addItemBuff` + SETSKILLSTATE + per-effect SETDESTPARAM (`useItem.service.ts:86-115`). Skill / warp / text items are still charge-only no-ops — `:117`
+- [x] ✅ Jewelry HR/parry — `hit_rate`/`parry` summed `combat/equipStats.ts:61-102`, consumed `formulas.ts:216,221-227`
+- [ ] ❌ Weight / overweight enforcement — `weight: z.number().int().min(0).default(1)` is parsed with **zero consumers** (grep hits only test fixtures) — `resources/schemas/item.schema.ts:143`
+- [ ] ❌ **Durability decay** — *new line, was missing from this checklist.* Nothing anywhere decrements `slot.durability`, which makes the shipped `RepairService` unreachable in practice — a no-op economy sink — `combat/formulas.ts:152-153`
 
 ### Item enhancement
-- [ ] 🟡→impl Refine level storage + combat read + ACTION — storage/read were done; `PACKETTYPE_ENCHANT` (0xf000b024) refine path now sets `m_nAbilityOption`. Build+tests green, awaiting user test — `enchant.service.ts`
-- [ ] 🟡→impl Refine / upgrade scroll (Sunstone/orichalcum, `IK3_ENCHANT`) — `EnchantService` rolls `ItemUpgrade.lua` tGeneral table (non-KOR ×0.9 at +3+); fail `<3` kept / `>=3` destroyed. No anvil NPC action yet (player-driven scroll only). Awaiting user test — `enchant.service.ts`, `enchant.handler.ts`
-- [ ] 🟡→impl Enchant action + opcode (element card, `IK3_ELECARD`) — sets `m_bItemResist` + bumps `m_nResistAbilityOption` via `UI_IR`+`UI_RAO`; tAttribute table; 2nd-element reject. Awaiting user test — `enchant.service.ts`
-- [ ] ❌ Piercing / sockets (zero-placeholder writes only) — `inventory/net/snapshot/itemSnapshot.serializer.ts:40`
-- [ ] 🟡→impl Elements stored + combat-read + ACTION + persisted — migration 012 (`inventory_item.element`/`element_level`), load path restores them, `writeCItemElemBody` carries on wire. Awaiting user test — `012_item_element.ts`, `join.service.ts`
+- [x] ✅ Refine level storage + combat read + ACTION — storage, `UI_AO` echo, and combat read all live — `enchant.service.ts`, `equipStats.ts:61-102`, consumed `formulas.ts:177`
+- [ ] 🟡 Refine / upgrade scroll (`IK3_ENCHANT`) — `ItemUpgrade.lua` tGeneral roll, non-KOR ×0.9 at +3+, fail `<3` keep / `>=3` destroy. **No anvil-NPC action path** (player-driven scroll only) — `enchant.service.ts`
+- [x] ✅ Enchant element card (`IK3_ELECARD`) — sets `m_bItemResist` + `m_nResistAbilityOption`, `UI_IR`+`UI_RAO` echo, 2nd-element reject — `enchant.service.ts`
+- [ ] ❌ Piercing / sockets — zero-placeholder writes only — `world-core/serializers/itemElemBody.serializer.ts:70-71`, `inventory/net/snapshot/itemSnapshot.serializer.ts:40,48`
+- [x] ✅ Elements stored + combat-read + persisted + on wire — `012_item_element.ts`, `join.service.ts` load path, `itemElemBody.serializer.ts`
 
 ---
 
@@ -159,16 +203,18 @@ declares a feature fixed by testing on a real v19 client.
 - [x] ✅ Shop open/close/buy/sell (gold-clamped, anti-cheat) — `shop.service.ts`
 - [x] ✅ Bank/warehouse open + pin + changepass (account-shared, 3 tabs) — `bank.service.ts`
 - [x] ✅ Bank item deposit/withdraw — `bank.service.ts:108`
-- [ ] 🟡→impl Bank per-tab gold (tabs 1/2) — migration 011 adds `bank.gold_tab1`/`gold_tab2`; `BankRepository.getGold/setGold` now tab-indexed; `depositGold/withdrawGold` take the wire `BYTE nSlot`; JOIN hydrates + checkpoint flushes all 3 pools. Build+tests green (database 97/0, npc 96/0, world-server 179/0), awaiting user test — `bank.service.ts`, `bank.repo.ts`, `011_bank_per_tab_gold.ts`
-- [ ] 🟡 NPC dialog — Speak/LaunchQuest + menu; advanced `source` bodies not ported — `scriptDlg.service.ts:13`
-- [ ] ❌ Shop cost multiplier / event buy factor / perin fixed-price — `shop.service.ts:89`
+- [x] ✅ Bank per-tab gold — **UPGRADE 🟡→✅**: `getGold/setGold` tab-indexed, wire `BYTE nSlot` honored, JOIN hydrates + checkpoint flushes all 3 pools — `bank.service.ts:191`, `011_bank_per_tab_gold.ts`
+- [x] ✅ NPC dialog `source:` bodies — **UPGRADE 🟡→✅ for the interpreter**: real recursive-descent evaluator with C++ int-truthiness, 19-method bindings / 13-method sink — `npc/services/dialogInterpreter.ts` (397 lines)
+- [ ] 🟡 Dialog *bindings* completeness — the interpreter is real but several predicates it can call are constants: `getItemNum: () => 0`, `emptyInventoryNum: () => 32`, `partySize: () => 1`, `isParty: () => 0`, `isGuild: () => 0` — `scriptDlg.service.ts:575 makeBindings`
+- [ ] 🟡 Shop cost multiplier / event buy factor — **UPGRADE ❌→🟡 with a catch**: `unitCost = max(1, floor((shopCostRate ?? 1) * rawPrice))` is implemented *and unit-tested* (`shop.service.ts:57,121`), but `ShopService` is constructed **without `shopCostRate`** at `compose.ts:803-807`, so it silently defaults to 1.0 at runtime. One-line wiring fix. Perin fixed-price still ❌
 
 ---
 
 ## 10. TRADE / VENDING
 
-- [ ] ❌ Player-to-player trade (no TRADE/EXCHANGE opcode/handler)
-- [ ] ❌ Vending / private shop (no OPENSTORE/VENDING opcode/handler)
+- [x] ✅ Player-to-player trade — `inventory/services/trade.service.ts` (650 lines, full `CVTInfo` state machine), handler `inventory/handlers/trade.handler.ts:36-116` (10 opcodes), dispatch `clientServer.ts:214-223`. Gold escrowed at stake; items re-validated against the live bag at commit; WAL `INVENTORY_SLOT` + `CHAR_GOLD` both sides
+- [ ] 🟡 Non-tradeable flags — guild-cloak (`m_idGuild != 0`), quest-item, bound-item — `trade.service.ts:616`
+- [ ] ❌ Vending / private shop — no OPENSTORE/VENDING opcode or handler. The peer ADD_OBJ frame already reserves the vendor-title field but writes `""` — `world-server/net/snapshot/mover.serializer.ts:75,90`
 
 ---
 
@@ -179,25 +225,29 @@ declares a feature fixed by testing on a real v19 client.
 - [x] ✅ Cancel / removeAll / removeComplete / check — `quest.service.ts:209`
 - [ ] 🟡 Begin conditions — party/guild stubbed permissive — `questConditions.ts:133`
 - [ ] 🟡 End conditions — party/guild/state/completeQuest stubbed permissive — `questConditions.ts:196`
-- [ ] 🟡 Rewards — gold/exp/item done; PK/Teleport/Hide/PetLevelup no-op — `questRewards.ts:134`
-- [ ] 🟡 No level-up SETEXPERIENCE/SETLEVEL broadcast on quest reward — `questRewards.ts:170`
-- [ ] 🟡 Dialog-driven turn-in — sweep exists, real EndQuest `source` body not ported — `scriptDlg.service.ts`
+- [ ] 🟡 Rewards — gold/exp/item done; PK/Teleport/Hide/PetLevelup still no-op — `questRewards.ts:149-152`
+- [x] ✅ Level-up SETEXPERIENCE/SETLEVEL broadcast on quest reward — **UPGRADE 🟡→✅**: the `onExpGain` sink always sends SETEXPERIENCE and broadcasts SETLEVEL when `leveled` — `compose.ts:401-413`, fired `questRewards.ts:189`
+- [x] ✅ Dialog-driven turn-in — **UPGRADE 🟡→✅**: `QUEST_END_COMPLETE` (`scriptDlg.service.ts:472`) → `applyEnd:549` → `questService.endQuest`; `questEndConfirm:510` uses the real `isComplete`; `questInv:608` is a live-bag `InventoryOps`
+- [x] ✅ Quest inventory adapter (real item grant/remove on reward) — `quest/services/questInventory.adapter.ts` (101 lines) `bindQuestInventory`; add → CREATEITEM/UPDATE_ITEM, remove → per-slot consume + UPDATE_ITEM. The `PERMISSIVE_INV` comment in `questRewards.ts:193` is itself stale — the bound bag is the live path
+- [x] ✅ Quest offer scan (`FUNCTYPE_NEWQUEST` / `FUNCTYPE_CURRQUEST`, round-trip via `nGlobal2`) — `scriptDlg.service.ts`
 
 ---
 
 ## 12. MOVEMENT / ZONES / WORLD
 
-- [x] ✅ Walk/run apply + broadcast + anti-teleport guard — `movement.service.ts`
-- [x] ✅ GM teleport `/te` (same-world SETPOS) — `command.service.ts:254`
-- [ ] 🟥 PLAYERANGLE accepted + dropped (no effect; flight-dependent) — `movement.service.ts:128`
-- [ ] ❌ Collision / terrain check (only distance anti-cheat)
-- [ ] ❌ Player run/walk speed enforcement
-- [ ] 🟡 Multi-zone (buckets exist; ships one zone per world) — `zone.manager.ts:17`
-- [ ] ❌ Zone transitions / cross-world transfer (REPLACE handoff not wired)
-- [ ] ❌ World map
-- [ ] 🟡 Map key accept-all (no manifest) — `mapKey.service.ts:40`
-- [ ] 🟡→impl Vicinity radius streaming — `VisibilityService` (port of `CLinkMap::ModifyView`, LinkMap.cpp:404) diffs a per-player `m_known` objid set against a live radius query and streams ADD_OBJ/DEL_OBJ deltas. Replaces the one-shot whole-zone burst (`VicinityService` deleted). Wired into MAP_KEY, all 5 movement paths, DESTPOS, `/te` `/su` `/teleport`, admin teleport, revival, disconnect. Build + tests green (world-core 75/0, npc 162/0, world-server 253/2 — the 2 fails are a pre-existing `/ci` mock defect, unrelated), awaiting user test — `world-core/services/visibility.service.ts` (2026-07-30)
-- [ ] 🟡→impl Player-to-player ADD_OBJ — `METHOD_EXCLUDE_ITEM` PLAYER branch ported (`ObjSerializeOpt.cpp:277-323`): vendor title, visible equip parts, petId, buff count. Peers now appear/disappear as either side walks. Awaiting user test — `world-server/net/snapshot/peerSnapshot.serializer.ts`, `mover.serializer.ts:writeMoverExcludeItem` (2026-07-30). Remaining: buff list is empty on the peer frame (no buff icons on others until the next SETSKILLSTATE); monster movement does not re-link (only player moves drive a diff — the 30 m leash bounds the error)
+- [x] ✅ Walk/run apply + broadcast + anti-teleport guard — `world-core/services/movement.service.ts:86,101,116,130`; `ANTI_TELEPORT_SQ = 1_000_000` `:73`; every path calls `visibilityService?.refresh()`
+- [x] ✅ GM teleport `/te` (same-world SETPOS) — `command.service.ts:272`; 3-arg Navigator form `<worldId> <x> <z>` + 2-arg form, `x>0 && z>0` guard (`worldId` accepted and ignored)
+- [ ] 🟥 PLAYERANGLE accepted + dropped — `readAngleFrame` consumes the 45-byte body then discards it; `applyAngle(_player, _now)` returns `{ok:true,reached:0}` — `movement.service.ts:150`, `playerAngle.handler.ts:57`. Flight-dependent
+- [ ] ❌ Collision / terrain check — only the distance anti-cheat
+- [ ] ❌ Player run/walk speed enforcement — no speed clamp anywhere in `movement.service.ts`
+- [ ] 🟡 Multi-zone — buckets are real (`Map<number, Set<CPlayer>>`, `broadcastAround` frames once and reuses) but `resources/data/worlds/zones/flaris.yml` is the **only** zone file, so one zone ships — `world-core/managers/zone.manager.ts:17`
+- [ ] ❌ Zone transitions / cross-world transfer — REPLACE handoff not wired; `/su` and admin teleport deliberately SETPOS (`command.service.ts:311`, `adminCommand.service.ts:208`)
+- [ ] 🟡 World map — **UPGRADE ❌→🟡**: SETNAVIPOINT map-ping works and the Navigator double-click `/teleport worldId x z` path is end-to-end (`command.service.ts:272`). Still no world-map/region data model
+- [ ] 🟡 Map key accept-all (no manifest) — `npc/services/mapKey.service.ts:40,44`
+- [x] ✅ Vicinity radius streaming (`CLinkMap::ModifyView` port) — per-player `m_known` objid set diffed against a live radius query, streaming ADD_OBJ/DEL_OBJ deltas — `world-core/services/visibility.service.ts:110,140,152,175`. Wired into MAP_KEY, all 5 movement paths, DESTPOS, `/te` `/su` `/teleport`, admin teleport, revival, disconnect
+- [ ] 🟡 Vicinity does not re-link on **monster** movement — only player moves, teleport, and spawn/despawn drive a diff; the 30 m leash bounds the error — `visibility.service.ts:27`
+- [x] ✅ Player-to-player ADD_OBJ (`METHOD_EXCLUDE_ITEM` PLAYER branch) — peers appear/disappear as either side walks — `visibility.service.ts:175 diffPeers`, `world-server/net/snapshot/peerSnapshot.serializer.ts`
+- [ ] 🟡 Peer frame carries an **empty buff list** — no buff icons on other players until the next SETSKILLSTATE — `mover.serializer.ts:82`
 
 ---
 
@@ -214,8 +264,9 @@ declares a feature fixed by testing on a real v19 client.
 - [x] ✅ Select / enter-world (PRE_JOIN) — `charSelect.service.ts`
 - [x] ✅ Stats allocation (MODIFY_STATUS, WAL) — `stat.service.ts`
 - [x] ✅ Level / exp (cascade, WAL, SETLEVEL/SETEXPERIENCE) — `entities/math/exp.ts`, `combat.service.ts:211`
-- [ ] 🟡 Delete — account-ownership only, not 2nd-factor delete key — `charCreate.service.ts:126`
-- [ ] ❌ Job / class change 1st→2nd (JOB_TABLE data exists, no CHANGEJOB handler) — `entities/tables/job.ts`
+- [ ] 🟡 Delete — the **second factor arrives on the wire and is thrown away**: `char.handler.ts:124-141` reads `const _password = reader.readString(); const _deleteKey = reader.readString();` and discards both; `charCreate.service.ts:126 delete()` checks account ownership only
+- [x] ✅ Job / class change 1st→2nd — **UPGRADE ❌→✅**: full port of `DPSrvr.cpp:4685-4721` + `CMover::AddChangeJob` — vagrant-only `:67`, exact-level-15 `:75`, range 1..15 `:80`, `seedRoster` `:87`, WAL `CHAR_JOB` `:94` (replayer `journalReplayers.ts:110`), SET_JOB_SKILL self + SET_NEAR_JOB_SKILL vicinity `:101,108`, `updateClass` `:117` — `world-server/services/changeJob.service.ts`. **There is no packet handler because the C++ path is itself dialog-driven**: entry is `npc/services/dialogInterpreter.ts:346 case 'ChangeJob'`, wired `scriptDlg.service.ts:318`, composed `compose.ts:612`. The old "no CHANGEJOB handler" wording was looking for the wrong thing
+- [ ] 🟡 Job change caps at 15 — Master/Hero/Legend (16-39) are rejected by `changeJob.service.ts:80`, but `admin/lib/job-change.ts:21` models all five tiers. **Server and admin panel disagree**
 
 ---
 
@@ -224,12 +275,19 @@ declares a feature fixed by testing on a real v19 client.
 - [x] ✅ Normal/say chat (vicinity) — `chat.service.ts`
 - [x] ✅ Shout (server-wide via PlayerManager.all) — `command.service.ts:231` (re-verified 2026-07-24)
 - [x] ✅ Whisper (direct to target) — `command.service.ts:205` (re-verified 2026-07-24)
-- [ ] ❌ Party / guild / trade chat channels — `command.service.ts:37`
-- [ ] ❌ Guild system (opcode defined, no handler; mover writes zero guild fields)
-- [ ] ❌ Friend list / blocklist (client opens windows, reply is stub) — `queryPlayerData.handler.ts:8`
-- [ ] 🟡 Motion / emote broadcast (verbatim, no OBJMSG validation) — `motion.service.ts`
-- [ ] 🟡 Sit / rest (behavior frame accepted; no recovery multiplier, no sit state) — `recovery.system.ts:12`
-- [ ] 🟡 Taskbar bindings stored; applet + skill-queue grids no handlers — `taskbar.service.ts`
+- [ ] 🟡 Party / guild / trade chat channels — party works via the `PARTYCHAT` **opcode** (`party.service.ts:276`); the `/p` and `/g` slash aliases plus guild/trade channels are absent — `command.service.ts:37`
+- [ ] ❌ Guild system — only inert zero-writes (`inventory/net/snapshot/doEquip.serializer.ts:56` `idGuild=0`, `cluster-server/net/playerList.serializer.ts:64`) and dialog-interpreter stubs returning safe defaults (`npc/services/dialogInterpreter.ts:311-315`). No `guild*` tables. **Largest unstarted system**
+- [x] ✅ Friend list — `social/services/friend.service.ts` (348 lines, 7 opcodes), handler `social/handlers/friend.handler.ts:44-141`, dispatch `clientServer.ts:226-230`; both-direction inserts, presence relay, actor resolved from session not packet
+- [ ] 🟡 Blocklist — **storage + read path exist but nothing can write** — `database/repositories/friend.repo.ts:97 setBlocked` has no calling opcode; the roster ships blocked-aware (`friend.service.ts:251-257`). Dead storage
+- [ ] 🟡 Friend presence states — `FRS_AUTOABSENT` deliberately not emitted (no idle timer) — `friend.service.ts:263`
+- [ ] 🟥 Peer data reply (QUERY_PLAYER_DATA — what the friend/guild/party windows ask for) — always returns `{ reply: null }`; needs per-player `nVer` + the `sPlayerData` layout — `world-server/services/queryPlayerData.service.ts:46`
+- [ ] 🟡 Motion / emote broadcast (verbatim, no `OBJMSG_*` validation) — `motion.service.ts:10`
+- [ ] 🟡 Sit / rest — behavior frame accepted; still no sit state and no Stretching 1.8×/1.5× multiplier even though party now exists — `recovery.system.ts:12`
+- [ ] 🟡 Taskbar — F1-F9 grid **and** the skill-queue grid now persist (v2 `{items,queue}` JSON, SKILLTASKBAR at `clientServer.ts:207`); the applet grid is still absent — `taskbar.service.ts`
+- [x] ✅ Campus / master-pupil mentoring — `social/services/campus.service.ts` (506 lines), handler `social/handlers/campus.handler.ts:36,50,65,79`, dispatch `clientServer.ts:232-236`; level-91 master gate, `IK3_TS_BUFF` campus buff, point recovery on JOIN, level-up reward, boot bootstrap (`compose.ts:516,751-769,777,785`)
+- [x] ✅ Cheering (CHEERING 0xffffff7c) — `world-server/services/cheer.service.ts:82`, dispatch `clientServer.ts:213`; point spend + regen tick + `II_CHEERUP` buff + motion/SFX fan-out. Points not persisted (matches C++)
+- [x] ✅ MOVERFOCOUS GM target-inspect — `world-server/services/moverFocus.service.ts`, dispatch `clientServer.ts:208`; adds an `AUTH_GAMEMASTER` check C++ lacks
+- [x] ✅ QUERYEQUIP / QUERYEQUIPSETTING peer-equipment inspect — dispatch `clientServer.ts:211-212`
 
 ---
 
@@ -238,28 +296,151 @@ declares a feature fixed by testing on a real v19 client.
 - [x] ✅ Login/auth (argon2id, ban, session token) — `auth.service.ts`
 - [x] ✅ Char-select → world handoff (HMAC IPC) — `handoffPublisher.ts` / `clusterListener.ts`
 - [x] ✅ Server / world list — `serverList.service.ts` / `worldList.service.ts`
-- [x] ✅ WAL journal + boot replay (idempotent; BANK_DEPOSIT/WITHDRAW journaled but no replayer registered) — `journalReplayer.ts:52`
-- [x] ✅ 30s checkpoint DB sync + dirty flags — `checkpoint.system.ts:42`
-- [ ] 🟡 argon2id ships stub hash in dev (ceiling: real argon2 in prod) — `password.ts:15`
+- [ ] 🟡 **WAL journal + boot replay has one real hole** — 7 types are registered (`CHAR_EXP`, `CHAR_GOLD`, `INVENTORY_SLOT`, `BANK_PASS`, `CHAR_STATS`, `SKILL_LEARN`, `CHAR_JOB` — `journalReplayers.ts:44-116`), but `BANK_DEPOSIT` / `BANK_WITHDRAW` are emitted at `npc/services/bank.service.ts:141,166` with **no registered replayer**, so `journalReplayer.ts:65-70` tallies them as `missing` and leaves the rows unreplayed. Failure mode is silent loss of a bank move on crash, **not** a dupe
+- [x] ✅ 30s checkpoint DB sync + dirty flags — `checkpoint.system.ts:28` `FLUSH_INTERVAL_MS=30_000`, idempotent `start()` `:40`, try/catch, fire-and-forget; per-player flush `join.service.ts:319`, loop + `presenceRepo.touch` `:355-364`
+- [ ] 🟡 argon2id ships a fallback — argon2id primary via dynamic `require('argon2')`; fallback is a deterministic scrypt PHC-ish hash embedding its own salt. `argon2 ^0.40.1` **is** a declared dep in login-server + world-server, so prod can be real — `core/utils/password.ts:15`
+- [x] ✅ Draining shutdown — stops listener then `adminCommandService.kickAll('shutdown:'+signal)`; `process.on('message',{cmd:'shutdown'})` is the real Windows stop path; `uncaughtException` drains, `unhandledRejection` deliberately does not — `world-server/index.ts:196,206,232-233,238,247,253`
+- [x] ✅ Forced-logout kick (SEALCHARGET_REQ) — `adminCommand.service.ts:101 kick`, `:140 kickAll` (awaited flush); `buildKickNotice` + `KICK_CLOSE_DELAY_MS` — needed because C++ sends nothing and the v19 client silently freezes on a bare close
+- [x] ✅ Boot presence cleanup — `presenceRepo.clearByServer(config.server.id)` so the admin panel shows no ghosts after a crash — `compose.ts:300`
 
 ---
 
-## Biggest gaps, ranked (net-new systems, not sub-features)
+## 17. ADMIN PANEL / LIVE-OPS *(new section 2026-08-01)*
 
-1. **Buff/debuff + status-effect system** — blocks: buff skills, buff items,
-   CC (stun/poison/slow/sleep), disguise, buff-clear-on-death, debuff-skill
-   `effectProc` application. Foundational — the magic debuff gate already
-   computes the proc, it just has nowhere to fire.
-2. **Party system** — blocks: party EXP, party loot, party chat, party quests.
-3. **Skill effect breadth** — AoE/DoT/multi-hit/projectile + buff skills.
-4. **Social** — guild, friend/block, party/guild/trade chat.
-5. **Flying + mounts** — signature Flyff mechanic, entirely absent.
-6. **Player trade + vending** — core economy loop.
-7. **Item enhancement actions** — refine/upgrade/enchant/socket (storage exists,
-   no action opcodes).
-8. **Job change (1st→2nd)** — data exists, no handler.
-9. **Zone transitions / collision / world map.**
-10. **Set-item bonuses, weight, PvP loop.**
+No C++ analogue — grade against its own contract, not v19 fidelity.
+
+- [x] ✅ Auth-gated Next.js 15 panel — `admin/middleware.ts:1` `export { auth as middleware }`, matcher excludes only `login`, `api/auth`, `_next/*`, favicon
+- [x] ✅ 27 pages / 17 API routes — accounts, characters, bank, inventory, servers, settings + 10 resource-editor groups
+- [x] ✅ Live-ops command channel — `world-server/ipc/adminListener.ts:122` on the `admin:command` channel (rule 07 naming), composed `compose.ts:860`
+- [x] ✅ Admin audit log — `admin/lib/audit.ts:34 writeAudit`, `admin_audit_log` table `admin/lib/migrate.ts:318`
+- [x] ✅ Admin teleport is SETPOS-safe (never REPLACE); no-coords falls back to the zone's `revival.position` — `adminCommand.service.ts:208`
+- [ ] 🟡 EXP edited as percent — 0-100% ↔ raw via `EXP_TABLE[level+1].nExp1`; admin depends on `@flyff/entities` for the table — `admin/lib/exp-percent.ts`
+- [ ] 🟡 Job-change autofill disagrees with the server (see §14)
+- [ ] 🟡 `@flyff/admin` is the one package `pnpm -r build` cannot build without `next` installed — it is a Next app, not a tsup bundle
+
+---
+
+## 18. SUPERVISOR DAEMON *(new section 2026-08-01)*
+
+- [x] ✅ Detached daemon owns login/cluster/world children — loopback HTTP API (`/health`, `/status`, `/logs`, `/logs/clear`, `/start`, `/stop`, `/shutdown`), every route requiring `x-supervisor-token` — `admin/lib/supervisor-daemon.ts:13-22`
+- [x] ✅ Shared constants — `DAEMON_ENTRY`, `DEFAULT_PORT=28900`, `AUTH_HEADER`, `LOG_RING=500`, `ENTRY: Record<ServerType,string>` — `admin/lib/supervisor-shared.ts:30-39`
+- [x] ✅ Token file `data/supervisor.token`, shared by the panel and `pnpm sv:*`
+- [ ] 🟡 Single-host, no auto-restart of crashed children and no daemon restart on host reboot — `supervisor-daemon.ts:23`
+- [ ] 🟡 Windows stop is IPC not signal — child stop goes through `{cmd:'shutdown'}` over the stdio channel because a Windows SIGTERM handler never runs — `world-server/index.ts:238`
+
+---
+
+## 19. LOG HUB / SERVER CONSOLE *(new section 2026-08-01)*
+
+- [x] ✅ Ring-buffer log hub (500 lines) — `admin/lib/supervisor-shared.ts:125 class LogHub`, `:133 push`
+- [x] ✅ Long-poll streaming — `/logs?id&since&wait=1` (≤20 s hold); route `admin/app/api/servers/[id]/logs/route.ts`
+- [x] ✅ Level parsing + filtering — `admin/lib/log-line.ts:48 parseLogLine`, `:74 FILTERABLE`, `:81 passesLevel`
+- [x] ✅ Persistent clear — `DELETE` → `/logs/clear`
+
+---
+
+## 20. MAIL / POST *(new section 2026-08-01)*
+
+- [x] ✅ Read path (5 opcodes: QUERYMAILBOX, READMAIL, QUERYGETMAILITEM, QUERYGETMAILGOLD, QUERYREMOVEMAIL) — `mail/handlers/mail.handler.ts:56-78`, dispatch `clientServer.ts:244-248`
+- [x] ✅ Mailbox-state sync (`CUser::AdjustMailboxState` port; MODE_MAILBOX is the only new-mail indicator) — `mail/services/mail.service.ts:143 syncMailboxMode`
+- [x] ✅ Schema — `017_presence_and_mail.ts`, `mail` table with the full C++ `CMail` field mapping
+- [ ] 🚫 Player→player send — `QUERYPOSTMAIL` 0x1a **deliberately** unwired; `SNAPSHOTTYPE_POSTMAIL` intentionally absent. Admin-originated mail only. Postage/custody fees and stamped mail also out of scope by choice
+- [ ] 🟡 Attachment fidelity — refine / element / flags dropped on attachments — `mail.service.ts:90`
+
+---
+
+## 21. ONLINE PRESENCE *(new section 2026-08-01)*
+
+Emulator infrastructure with no C++ analogue.
+
+- [x] ✅ `online_players` table (character_id PK, account_id, world_id, zone_id, server_id, last_seen_ms) — `017_presence_and_mail.ts:39`
+- [x] ✅ Upsert / remove / touch — `join.service.ts:149`, `:267`, checkpoint loop `:355-364`
+- [x] ✅ Staleness window — `PRESENCE_STALE_MS = 60_000`, `isOnline`, `getOnlineCharacterIds` — `admin/lib/presence.ts:20-29`
+- [x] ✅ Boot cleanup — `compose.ts:300`
+
+---
+
+## 22. GATEWAY (unified WebSocket) — recommend delete-or-document
+
+- [ ] 🟥 **Orphaned prototype**, 963 lines across 8 files (`packages/gateway/src/*`). Three independent dead-code signals: zero external references to `@flyff/gateway`; absent from the supervisor `ENTRY` map (`supervisor-shared.ts:39`); last touched by a build refactor only
+- [ ] 🟥 **Divergent duplicate of the real world path** — handles only PRE_JOIN, JOIN, PLAYERMOVED, MOVERDESTPOS, PLAYERANGLE, CHAT, PING, LEAVE (`gateway/src/worldHandlers.ts:20-158`) and hand-rolls its own accounts/characters DDL instead of using `@flyff/database` migrations (`main.ts:14-60 ensureSchema`). A second JOIN/movement implementation that no longer tracks the primary one is a fidelity liability, not just dead weight
+- **Recommendation:** delete it, or add a header stating it is an unshipped experiment and exclude it from fidelity audits
+
+---
+
+## Biggest gaps, ranked (re-ranked 2026-08-01)
+
+The 2026-07-23 ranking is obsolete — items 1, 2, 6, and 8 shipped, and 3 partly
+shipped. Current ranking:
+
+1. **Guild** — the largest wholly unstarted system. Blocks guild chat/`/g`,
+   guild-party, guild-war revive, guild bank, guild quest conditions, the
+   `idGuild` non-tradeable flag, and several dialog predicates that currently
+   return safe constants. No tables exist.
+2. **Flying + mounts** — signature Flyff mechanic, entirely absent, and it is
+   the blocker behind PLAYERANGLE being accepted-and-discarded plus the
+   flying-mismatch targeting deferral.
+3. **Skill effect breadth** — AoE and projectile remain 🟥 (DoT, multi-hit, and
+   buff skills have since shipped).
+4. **Zone transitions / collision / world map** — one zone ships; no REPLACE
+   cross-world handoff; no terrain or speed enforcement.
+5. **Vending / private shop** — the other half of the economy loop now that
+   player trade has landed.
+6. **Pets** — never audited in this checklist, entirely absent, and a signature
+   v19 system (`PET_RELEASE`/`USE_PET_FEED` opcodes are not even declared).
+7. **Weight + durability decay** — both parsed/stored and consumed by nothing;
+   durability's absence makes the shipped `RepairService` a no-op sink.
+8. **Piercing / sockets / awakening** — zero-placeholder writes only.
+9. **Aggro table + flight/collision AI** — plus the data-starvation bugs below.
+10. **Mining / gathering, day-night / weather** — small self-contained systems,
+    never started.
+
+### Fix-first shortlist (small effort, disproportionate effect)
+
+These are *implemented but inert*, so each is a wiring or data fix rather than a
+feature build:
+
+1. `shopCostRate` omitted from the `ShopService` ctor — `compose.ts:803-807`
+2. `partyQuery` never supplied, so quest party conditions fail closed — consumed `quest.service.ts:145`
+3. `CHRSTATE_BITS.SLEEP` does not exist — sleep never gates (`player.ts:622` vs `dst.ts:112-119`)
+4. `BANK_DEPOSIT`/`BANK_WITHDRAW` have no replayer — silent bank loss on crash
+5. Duel does not bypass the PK-consent gate — `combat.policy.ts:51`
+6. Flee + self-heal AI are fully coded but fed zeros — no converter exports `propMoverEx` `SetRunAway`/`Recovery`
+7. `dwReAttackDelay` reads propMover col 34 instead of col 35
+8. Blocklist `setBlocked` has no calling opcode
+9. Movement is not stun-gated — `movement.service.ts:88,103,113,132`
+10. `IK3_TEXT_DISGUISE` aggro check — the "when buffs ship" precondition is met
+
+---
+
+## Re-verification changelog (2026-08-01)
+
+Full re-audit against master `c9ae378` (136 commits after the 2026-07-24 pass),
+4 parallel read-only explorers over all 16 original sections.
+
+**Upgrades ❌/🟥 → ✅:** party invite/list/exp-share/loot-share; DUEL handshake;
+player-to-player trade; friend roster; campus/mentor; set-item bonuses; bank
+per-tab gold; NPC dialog `source:` interpreter; dialog-driven quest turn-in;
+quest level-up broadcast; job change 1st→2nd; buff skills; DoT; multi-hit skills;
+vicinity streaming; peer-player ADD_OBJ; cheering; MOVERFOCOUS; QUERYEQUIP.
+
+**Newly identified gaps (not previously listed):** durability decay (makes
+`RepairService` inert); USESKILL cast-range validation (anti-cheat); the
+`CHRSTATE_BITS.SLEEP` type bug; monster debuff icons never clearing; DoT death
+granting no exp/drops/MOVERDEATH; flee + healer AI starved of data; the
+`dwReAttackDelay` wrong-column bug; the duel/PK-consent interaction; the
+unsettable blocklist; and the orphaned `@flyff/gateway` package.
+
+**Retired as not-gaps:** ammo/arrow consumption (v19 bows are ammo-less by
+design); skill crit (skills never crit — `MoverAttack.cpp:800`); Lodelight
+respawn (C++ `OnRevivalLodelight` is an empty stub, so the reject is faithful);
+player→player mail send (deliberate scope choice).
+
+**Six new sections added:** 17 admin/live-ops, 18 supervisor daemon, 19 log hub,
+20 mail, 21 online presence, 22 gateway (delete-or-document).
+
+**Baseline observed:** `pnpm -r build` → 18/19 `Build success` (only
+`@flyff/admin` needs `next`); 20 migrations, all present in `seed.ts`.
 
 ---
 
@@ -285,3 +466,4 @@ Full re-audit against live code (3 parallel explorers, 57 items). Changes vs the
 - `item.schema.ts` → `packages/resources/src/schemas/`
 
 **No downgrades** — every previously-✅ item held under re-verification.
+
