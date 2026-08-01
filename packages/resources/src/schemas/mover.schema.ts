@@ -132,6 +132,8 @@ export const MoverDefinitionSchema = z.object({
 
   /** Attack speed multiplier (0 = no attacks for NPCs) */
   attack_speed: z.number().nonnegative().default(1.0),
+  /** propMover col 35 `dwReAttackDelay` — NPC swing cadence in ms (NOT the same as `dwAttackSpeed` col 34). */
+  re_attack_delay: z.number().int().nonnegative().default(0),
 
   /**
    * Re-attack delay (ms) -- propMover.txt `dwReAttackDelay` (column 35). Time

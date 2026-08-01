@@ -116,5 +116,6 @@ export const CHRSTATE_BITS = Object.freeze({
   SLOW: 0x00001000,    // CHS_SLOW -- movement slow
   BLEEDING: 0x00008000,// CHS_BLEEDING -- DoT
   SILENT: 0x00010000,  // CHS_SILENT -- silence (no cast)
+  SLEEP: 0x00200000,   // CHS_SLEEPING -- stunned (defineAttribute.h)
 } as const);
 

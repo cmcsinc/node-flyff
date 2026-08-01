@@ -43,12 +43,19 @@ export function isMoverAttackableBy(player: CPlayer, mover: CMover): boolean {
  * attacker cannot strike a player at all; the swing is rejected and the
  * client sees the standard "cannot attack" feedback.
  *
+ * **Duel override:** an accepted 1v1 duel (`m_nDuel === 1`) bypasses the PK
+ * consent gate for the two duelists. The duel handshake is the structured
+ * 1v1 consent mechanism; requiring PK mode ON as well made duels unusable
+ * in practice.
+ *
  * Dead / stunned / same-player targets are rejected upstream by `resolveTarget`.
- * ponytail: zone region-type enforcement (safe zones reject PvP) + duel
- * handshake (`DUELREQUEST` opcode) for structured 1v1 consent.
+ * ponytail: zone region-type enforcement (safe zones reject PvP).
  */
 export function isPlayerAttackableBy(attacker: CPlayer, target: CPlayer): boolean {
-  // Both must have PK mode enabled -- mutual consent.
+  // Duel override -- accepted 1v1 duel pairs are always attackable to each other.
+  if (attacker.m_nDuel === 1 && attacker.m_idDuelTarget === target.m_idPlayer) return true;
+  if (target.m_nDuel === 1 && target.m_idDuelTarget === attacker.m_idPlayer) return true;
+  // Standard PvP: both must have PK mode enabled -- mutual consent.
   if (!attacker.m_bPKMode || !target.m_bPKMode) return false;
   return true;
 }

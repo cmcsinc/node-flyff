@@ -138,7 +138,7 @@ export class BankService {
 
     const take = Math.min(count, src.count);
     const moved = this.cloneSlot(src, take);
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_DEPOSIT', payload: { tab, bankSlot, invSlot, itemId: src.itemId, take } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_DEPOSIT', payload: { accountId: player.m_accountId, tab, bankSlot, invSlot, itemId: src.itemId, take } });
 
     player.m_Bank[tab]![bankSlot] = moved;
     if (take >= src.count) {
@@ -163,7 +163,7 @@ export class BankService {
 
     const take = Math.min(count, src.count);
     const moved = this.cloneSlot(src, take);
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_WITHDRAW', payload: { tab, bankSlot, invSlot, itemId: src.itemId, take } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_WITHDRAW', payload: { accountId: player.m_accountId, tab, bankSlot, invSlot, itemId: src.itemId, take } });
 
     player.m_Inventory[invSlot] = moved;
     if (take >= src.count) {
