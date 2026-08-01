@@ -35,7 +35,7 @@ describe('buildPartyMember (SNAPSHOTTYPE_PARTYMEMBER)', () => {
   it('prefix + body order/widths for a 2-member solo party', () => {
     const party = {
       partyId: 0x10, size: 2, expMode: 0, itemMode: 0,
-      duelPartyId: NULL_ID,
+      duelPartyId: 0,
       members: [{ id: 1, remove: false }, { id: 2, remove: false }],
     };
     const buf = buildPartyMember(7, 'Alice', 'Bob', party);
@@ -54,12 +54,12 @@ describe('buildPartyMember (SNAPSHOTTYPE_PARTYMEMBER)', () => {
     assert.equal(buf.readUInt32LE(off), 0x10); off += 4; // m_uPartyId
     assert.equal(buf.readUInt32LE(off), 0); off += 4;    // m_nKindTroup (solo)
     assert.equal(buf.readUInt32LE(off), 2); off += 4;    // m_nSizeofMember
-    assert.equal(buf.readUInt32LE(off), 0); off += 4;    // m_nLevel
+    assert.equal(buf.readUInt32LE(off), 1); off += 4;    // m_nLevel (ctor seeds 1)
     assert.equal(buf.readUInt32LE(off), 0); off += 4;    // m_nExp
     assert.equal(buf.readUInt32LE(off), 0); off += 4;    // m_nPoint
     assert.equal(buf.readUInt32LE(off), 0); off += 4;    // m_nTroupsShareExp
     assert.equal(buf.readUInt32LE(off), 0); off += 4;    // m_nTroupeShareItem
-    assert.equal(buf.readUInt32LE(off), NULL_ID); off += 4; // m_idDuelParty
+    assert.equal(buf.readUInt32LE(off), 0); off += 4;    // m_idDuelParty (0, NOT NULL_ID)
     // m_nModeTime[5].
     for (let i = 0; i < MAX_PARTYMODE; i++) { assert.equal(buf.readUInt32LE(off), 0); off += 4; }
     // Per-member trailer (v19: u_long m_uPlayerId, BOOL m_bRemove).
@@ -91,21 +91,28 @@ describe('buildPartyMember (SNAPSHOTTYPE_PARTYMEMBER)', () => {
 });
 
 describe('buildPartyRequest (SNAPSHOTTYPE_PARTYREQEST)', () => {
-  it('writes leader/member stat tuples + name + bTroup', () => {
+  it('writes leader/member stat tuples with BYTE sex + name + bTroup', () => {
     const buf = buildPartyRequest(20, 1, 15, 2, 0, 2, 12, 1, 1, 'Leader', 0);
     assertPrefix(buf, 20, SNAPSHOTTYPE.PARTYREQEST);
     let off = 16;
     assert.equal(buf.readUInt32LE(off), 1); off += 4;   // leaderId
     assert.equal(buf.readUInt32LE(off), 15); off += 4;  // lLv
     assert.equal(buf.readUInt32LE(off), 2); off += 4;   // lJob
-    assert.equal(buf.readUInt32LE(off), 0); off += 4;   // lSex (BYTE widened to LONG)
+    assert.equal(buf.readUInt8(off), 0); off += 1;      // lSex -- BYTE, 1 byte
     assert.equal(buf.readUInt32LE(off), 2); off += 4;   // memberId
     assert.equal(buf.readUInt32LE(off), 12); off += 4;
     assert.equal(buf.readUInt32LE(off), 1); off += 4;
-    assert.equal(buf.readUInt32LE(off), 1); off += 4;
+    assert.equal(buf.readUInt8(off), 1); off += 1;      // mSex -- BYTE
     const s = readStr(buf, off); assert.equal(s[0], 'Leader'); off = s[1];
-    assert.equal(buf.readUInt32LE(off), 0); off += 4;   // bTroup
+    assert.equal(buf.readUInt32LE(off), 0); off += 4;   // bTroup (BOOL, 4 bytes)
     assert.equal(off, buf.length);
+  });
+
+  it('body is 13+13 bytes before the name (BYTE sex, not DWORD)', () => {
+    // Regression guard: DWORD sex would make this 16+16 and shift the string.
+    const buf = buildPartyRequest(1, 1, 1, 1, 1, 2, 2, 2, 1, '', 0);
+    // 16 prefix + 13 leader + 13 member + 4 empty-string len + 4 bTroup.
+    assert.equal(buf.length, 16 + 13 + 13 + 4 + 4);
   });
 });
 

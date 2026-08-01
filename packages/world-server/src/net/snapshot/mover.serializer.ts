@@ -142,7 +142,18 @@ function writeMoverPrefix(w: PacketWriter, p: CPlayer): void {
   w.writeDword(0);             // m_tmAccFuel
   w.writeByte(0);              // guild flag (no guild -> skip idGuild/idWar)
   w.writeDword(0);             // m_idGuildCloak (Mover.cpp:381 inits to 0)
-  w.writeByte(0);              // party flag (no party -> skip idparty/idDuelParty)
+  // Party block (ObjSerializeOpt.cpp:141-151). C++ writes literal `(u_char)1`
+  // then `m_idparty`+`m_idDuelParty` when `m_idparty > 0`, else `(u_char)0` and
+  // nothing. The load side (`:453`) matches `u1 == 1` EXACTLY -- any other
+  // nonzero byte skips both reads and desyncs every field after it. Our
+  // m_idParty sentinel is NULL_ID (not C++'s 0), so test against it.
+  if (p.m_idParty !== NULL_ID && p.m_idParty > 0) {
+    w.writeByte(1);
+    w.writeDword(p.m_idParty);   // m_idparty
+    w.writeDword(0);             // m_idDuelParty -- 0 = not duelling (party.h:87)
+  } else {
+    w.writeByte(0);
+  }
   // m_dwAuthorization (1 byte -- ObjSerializeOpt.cpp:147). CRITICAL: the client
   // gates `/cmd` routing on `g_pPlayer->m_dwAuthorization` INSIDE ParsingCommand
   // (FuncTextCmd.cpp:4476) BEFORE it ever sends the chat packet. Writing 0 here
