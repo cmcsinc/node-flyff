@@ -1,6 +1,8 @@
+import type { Server } from 'node:net';
 import { compose } from './compose';
 import { IpcBus, createLocalBus } from '@flyff/ipc';
 import { buildWorldClientServer } from './clientServer';
+import { KICK_CLOSE_DELAY_MS } from './net/snapshot/kick.serializer';
 
 /**
  * Connect the IPC listeners to a shared `IpcBus`.
@@ -135,6 +137,7 @@ async function main(): Promise<void> {
     modifyStatusHandler,
     journal,
     journalReplayer,
+    adminCommandService,
     npcSpeechService,
     questTracker,
     spawnManager,
@@ -151,6 +154,12 @@ async function main(): Promise<void> {
     logger.error({ err }, 'Unhandled promise rejection');
     process.exit(1);
   });
+  // Replaced below with the draining shutdown, once it exists. Kept here so a
+  // boot-time crash (journal recovery) still fails loudly instead of hanging.
+  process.on('uncaughtException', err => {
+    logger.error({ err }, 'Uncaught exception');
+    process.exit(1);
+  });
 
   // Crash recovery: replay any journaled mutations the previous run never
   // flushed to the main DB, BEFORE accepting players. Rule `04-persistence.md`.
@@ -162,9 +171,51 @@ async function main(): Promise<void> {
     );
   }
 
-  // Flush + close the journal cleanly on shutdown.
-  const shutdown = (signal: string): void => {
+  // Assigned below; shutdown() may fire before it exists (a crash during boot).
+  let clientServer: Server | undefined;
+  let shuttingDown = false;
+
+  /**
+   * Ordered teardown. The client-facing half comes FIRST and is the reason this
+   * is async: every online player must get the forced-logout notice and have
+   * their state flushed before the journal closes, or they relog into a world
+   * that rolled back to the last checkpoint.
+   *
+   * `adminCommandService.kickAll` is exactly that sequence (notice -> awaited
+   * `disconnectByCharId` per player -> socket close after the grace window), so
+   * shutdown reuses it rather than re-deriving a drain. Its socket close is on a
+   * timer, hence the `KICK_CLOSE_DELAY_MS` wait before we stop the systems and
+   * close the journal.
+   *
+   * On Windows the SIGTERM handler below never fires -- the supervisor's
+   * `child.kill('SIGTERM')` is `TerminateProcess` there (memory
+   * `supervisor-orphans-and-windows-sigterm`). That is why the daemon asks over
+   * the IPC channel instead, and why `process.on('message')` is the real stop
+   * path on this platform.
+   */
+  const shutdown = async (signal: string, code = 0): Promise<void> => {
+    if (shuttingDown) return;
+    shuttingDown = true;
     logger.info({ signal }, 'Shutting down world server');
+
+    // Stop accepting new connections before draining, so a joiner cannot land
+    // mid-drain and be left un-notified.
+    clientServer?.close();
+
+    try {
+      const drain = await adminCommandService.kickAll(`shutdown:${signal}`);
+      logger.info(
+        { total: drain.total, saved: drain.saved, failed: drain.failed.length },
+        'Shutdown drain complete',
+      );
+      // Let the notices leave the wire + kickAll's deferred socket close run.
+      if (drain.total > 0) {
+        await new Promise<void>(res => setTimeout(res, KICK_CLOSE_DELAY_MS + 100));
+      }
+    } catch (err) {
+      logger.error({ err }, 'Shutdown drain failed -- tearing down anyway');
+    }
+
     npcSpeechService.stop();
     questTracker.stop();
     aiSystem.stop();
@@ -176,10 +227,32 @@ async function main(): Promise<void> {
     itemManager.shutdown();
     lootService.shutdown();
     journal.close();
-    process.exit(0);
+    process.exit(code);
   };
-  process.on('SIGINT', () => shutdown('SIGINT'));
-  process.on('SIGTERM', () => shutdown('SIGTERM'));
+  process.on('SIGINT', () => void shutdown('SIGINT'));
+  process.on('SIGTERM', () => void shutdown('SIGTERM'));
+  // The supervisor's real stop path. On Windows `child.kill('SIGTERM')` is
+  // `TerminateProcess` and the SIGTERM handler above never runs, so the daemon
+  // asks over the IPC channel instead (supervisor-daemon.ts `stop`). This is
+  // what makes "click Stop in the admin panel" tell the clients to log out.
+  process.on('message', (msg: unknown) => {
+    if (typeof msg === 'object' && msg !== null && (msg as { cmd?: unknown }).cmd === 'shutdown') {
+      void shutdown('ipc:shutdown');
+    }
+  });
+  // Now that the draining shutdown exists, let crashes use it too -- a crash
+  // must still get clients off the wire with their state flushed. The boot-time
+  // handlers above stay registered; `shuttingDown` makes the pair idempotent.
+  process.removeAllListeners('unhandledRejection');
+  process.removeAllListeners('uncaughtException');
+  process.on('unhandledRejection', err => {
+    logger.error({ err }, 'Unhandled promise rejection');
+    void shutdown('unhandledRejection', 1);
+  });
+  process.on('uncaughtException', err => {
+    logger.error({ err }, 'Uncaught exception');
+    void shutdown('uncaughtException', 1);
+  });
 
   clusterRegistrar.start();
   await startIpcListeners(
@@ -284,6 +357,7 @@ async function main(): Promise<void> {
     },
     logger,
   });
+  clientServer = server;
   server.listen(config.server.port, () => {
     logger.info({ port: config.server.port }, 'World client server listening');
   });

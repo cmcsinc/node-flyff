@@ -1,10 +1,11 @@
-import { describe, it } from 'node:test';
+import { describe, it, beforeEach, afterEach, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
 import { CommandService } from '../../src/services/command.service';
 import { AUTH } from '@flyff/entities';
 import { NoticeSerializer } from '../../src/net/snapshot/notice.serializer';
+import { KICK_CLOSE_DELAY_MS } from '../../src/net/snapshot/kick.serializer';
 import { TEXT_GENERAL } from '@flyff/world-core';
 import { MODE } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
@@ -624,7 +625,13 @@ describe('CommandService -- mode toggles', () => {
 // --- /out (disconnect) ------------------------------------------------------
 
 describe('CommandService -- out (/out)', () => {
-  it('destroys the target socket + removes it from the manager', () => {
+  // `/out` now sends the forced-logout notice and defers the close by
+  // KICK_CLOSE_DELAY_MS (a bare close leaves the v19 client frozen in-world --
+  // see net/snapshot/kick.serializer.ts), so these need controlled timers.
+  beforeEach(() => { mock.timers.enable({ apis: ['setTimeout'] }); });
+  afterEach(() => { mock.timers.reset(); });
+
+  it('sends the kick notice, then destroys the socket + removes from the manager', () => {
     const { playerManager, commandService } = setup();
     const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER2);
     const bob = makePlayer(2, 'Bob');
@@ -634,8 +641,15 @@ describe('CommandService -- out (/out)', () => {
 
     const result = commandService.route(gm, '/out Bob');
     assert.equal(result.ok, true);
-    assert.equal(destroyed, true, 'target socket destroyed');
-    assert.equal(playerManager.get(2), undefined, 'removed from manager');
+    // Notice first -- SNAPSHOTTYPE_SEALCHARGET_REQ (0x0145) at the sub-type offset.
+    const sent = (bob.socket as unknown as SpySocket)._sent;
+    assert.equal(sent.length, 1, 'kick notice written');
+    assert.equal(sent[0]!.readUInt16LE(19), 0x0145, 'notice is SEALCHARGET_REQ');
+    assert.equal(destroyed, false, 'close must be deferred past the notice write');
+    assert.equal(playerManager.get(2), undefined, 'removed from manager immediately');
+
+    mock.timers.tick(KICK_CLOSE_DELAY_MS);
+    assert.equal(destroyed, true, 'target socket destroyed after the grace window');
   });
 
   it('self-target returns the self ReturnSay and does not disconnect', () => {
@@ -646,6 +660,7 @@ describe('CommandService -- out (/out)', () => {
     playerManager.add(gm);
 
     commandService.route(gm, '/out GM');
+    mock.timers.tick(KICK_CLOSE_DELAY_MS);
     assert.equal(destroyed, false);
     assert.equal(playerManager.size, 1);
   });
@@ -738,7 +753,7 @@ describe('CommandService -- createItem (/ci)', () => {
         const slot = 0;
         added.push({ itemId, count, slot });
         p.m_Inventory[slot] = { itemId, count };
-        return { ok: true as const, slot, itemId, count };
+        return { ok: true as const, changes: [{ slot, objid: slot, itemId, count, isNew: true }] };
       },
     } as unknown as import('../../src/services/inventory.service').InventoryService;
     const commandService = new CommandService({
@@ -761,7 +776,7 @@ describe('CommandService -- createItem (/ci)', () => {
       addItem: (p: CPlayer, itemId: number, count: number) => {
         added.push(itemId);
         p.m_Inventory[0] = { itemId, count };
-        return { ok: true as const, slot: 0, itemId, count };
+        return { ok: true as const, changes: [{ slot: 0, objid: 0, itemId, count, isNew: true }] };
       },
     } as unknown as import('../../src/services/inventory.service').InventoryService;
     const commandService = new CommandService({

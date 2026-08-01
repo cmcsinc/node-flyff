@@ -53,18 +53,43 @@ export interface AdminMailPushedCommand {
   charId: number;
 }
 
-export type AdminCommand = AdminKickCommand | AdminTeleportCommand | AdminMailPushedCommand;
+/**
+ * Disconnect EVERY online player, flushing each one's state first. For
+ * maintenance drains before a restart. `reason` is a free-form audit label.
+ *
+ * Unlike every other command here this one carries no `charId` -- it is
+ * server-wide, so `isCommand` validates it on its own branch.
+ */
+export interface AdminKickAllCommand {
+  kind: 'kick_all';
+  reason?: string;
+}
+
+export type AdminCommand =
+  | AdminKickCommand
+  | AdminTeleportCommand
+  | AdminMailPushedCommand
+  | AdminKickAllCommand;
 
 /** What the listener delegates to. Implemented by `AdminCommandService`. */
 export interface AdminCommandSink {
   kick(charId: number): void;
   teleport(charId: number, x?: number, z?: number): void;
   mailPushed(charId: number): void;
+  kickAll(reason?: string): Promise<unknown>;
 }
+
+/** Free-form audit label; bounded so a bogus payload can't bloat the log. */
+const MAX_REASON_LEN = 200;
 
 function isCommand(p: unknown): p is AdminCommand {
   if (p === null || typeof p !== 'object') return false;
   const o = p as Record<string, unknown>;
+  // Server-wide commands carry no charId -- check them before the charId gate.
+  if (o['kind'] === 'kick_all') {
+    const reason = o['reason'];
+    return reason === undefined || (typeof reason === 'string' && reason.length <= MAX_REASON_LEN);
+  }
   const charId = o['charId'];
   if (typeof charId !== 'number' || !Number.isInteger(charId) || charId <= 0) return false;
   switch (o['kind']) {
@@ -130,7 +155,10 @@ export class AdminListener {
       this.log.warn({ from }, 'Malformed admin:command payload -- dropping');
       return;
     }
-    this.log.info({ from, kind: payload.kind, charId: payload.charId }, 'Admin command received');
+    this.log.info(
+      { from, kind: payload.kind, ...(payload.kind === 'kick_all' ? {} : { charId: payload.charId }) },
+      'Admin command received',
+    );
     try {
       switch (payload.kind) {
         case 'kick':
@@ -142,9 +170,16 @@ export class AdminListener {
         case 'mail_pushed':
           this.deps.sink.mailPushed(payload.charId);
           break;
+        case 'kick_all':
+          // Async, and the bus is fire-and-forget -- catch here or the rejection
+          // escapes to `unhandledRejection`.
+          this.deps.sink.kickAll(payload.reason).catch((err: unknown) => {
+            this.log.error({ err }, 'Admin kick_all failed');
+          });
+          break;
       }
     } catch (err) {
-      this.log.error({ err, kind: payload.kind, charId: payload.charId }, 'Admin command failed');
+      this.log.error({ err, kind: payload.kind }, 'Admin command failed');
     }
   }
 }
