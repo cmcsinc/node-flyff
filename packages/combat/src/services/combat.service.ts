@@ -517,13 +517,7 @@ export class CombatService {
     player.m_nLevel = gain.level;
     player._dirty.add('m_nExp');
     if (gain.levelsGained > 0) {
-      // Refill HP/MP/FP to max on level-up. Use getMaxHp()/getMaxMp() which
-      // recompute from the NEW level + STA + DST bonuses. The cached fields
-      // m_nMaxHp/m_nMaxMp are stale (set once at construction from the mover
-      // definition) -- using them desyncs the client (which always computes via
-      // the formula), breaking follow state + position tracking until re-follow.
-      player.m_nMaxHp = player.getMaxHp();
-      player.m_nMaxMp = player.getMaxMp();
+      // Refill HP/MP/FP to max on level-up (derived max recomputed elsewhere).
       player.m_nHp = player.m_nMaxHp;
       player.m_nMp = player.m_nMaxMp;
       player._dirty.add('m_nLevel');
