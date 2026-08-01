@@ -56,7 +56,7 @@ function harness(opts: { writeThrows?: boolean } = {}) {
  * Multi-player drain harness. `saveAndLeave` appends to the same log as the
  * writes/destroys so notice-before-save-before-close is directly assertable.
  */
-function drainHarness(opts: { count?: number; failOn?: number[]; noSave?: boolean } = {}) {
+function drainHarness(opts: { count?: number; failOn?: number[]; noSave?: boolean; beforeLeave?: boolean } = {}) {
   const count = opts.count ?? 3;
   const failOn = new Set(opts.failOn ?? []);
   const log: string[] = [];
@@ -79,6 +79,9 @@ function drainHarness(opts: { count?: number; failOn?: number[]; noSave?: boolea
     zones: { byNumericId: new Map() },
     refreshVisibility: () => {},
     kickCloseDelayMs: 500,
+    ...(opts.beforeLeave ? {
+      beforeLeave: (p: CPlayer) => { log.push(`before:${p.m_idPlayer}`); },
+    } : {}),
     ...(opts.noSave ? {} : {
       saveAndLeave: async (charId: number) => {
         if (failOn.has(charId)) throw new Error(`flush failed for ${charId}`);
@@ -202,5 +205,45 @@ describe('AdminCommandService.kickAll', () => {
     assert.deepEqual(result, { total: 0, saved: 0, failed: [] });
     mock.timers.tick(500);
     assert.deepEqual(h.log, []);
+  });
+
+  // beforeLeave carries the teardown that needs the live player object -- above
+  // all the trade gold refund. saveAndLeave removes them from PlayerManager, so
+  // running it after would silently no-op and lose the staked penya on replay.
+  it('runs beforeLeave for each player BEFORE its saveAndLeave', async () => {
+    const h = drainHarness({ count: 2, beforeLeave: true });
+    await h.svc.kickAll();
+    assert.deepEqual(h.log, [
+      'write:1', 'write:2',
+      'before:1', 'save:1',
+      'before:2', 'save:2',
+    ]);
+  });
+
+  it('a throwing beforeLeave still saves and drains the rest', async () => {
+    const log: string[] = [];
+    const players = [1, 2].map((id) =>
+      CPlayer.fromRow(makeRow(id, `P${id}`), { write: () => true, destroy: () => {} }, AUTH.GENERAL),
+    );
+    const svc = new AdminCommandService({
+      playerManager: {
+        get: (id: number) => players.find((p) => p.m_idPlayer === id),
+        all: () => [...players],
+        sendTo: () => {},
+      } as unknown as import('@flyff/world-core').PlayerManager,
+      setPosSer: {} as never,
+      zones: { byNumericId: new Map() },
+      refreshVisibility: () => {},
+      kickCloseDelayMs: 500,
+      beforeLeave: (p: CPlayer) => {
+        if (p.m_idPlayer === 1) throw new Error('trade teardown blew up');
+        log.push(`before:${p.m_idPlayer}`);
+      },
+      saveAndLeave: async (charId: number) => { log.push(`save:${charId}`); },
+    });
+
+    const result = await svc.kickAll();
+    assert.deepEqual(result, { total: 2, saved: 2, failed: [] }, 'both still flushed');
+    assert.deepEqual(log, ['save:1', 'before:2', 'save:2']);
   });
 });

@@ -61,6 +61,19 @@ export interface AdminCommandServiceDeps {
    * omit it and `kickAll` disconnects without saving.
    */
   saveAndLeave?: (charId: number) => Promise<void>;
+  /**
+   * Pre-removal teardown for one player -- the same work the dispatcher's
+   * socket-close hook does before `disconnectByCharId` (party, trade, friend,
+   * campus, visibility). `kickAll` MUST run it explicitly: `saveAndLeave` drops
+   * the player from `PlayerManager`, so by the time the deferred socket close
+   * fires the hook can no longer resolve them and the teardown is skipped.
+   *
+   * The one that loses data is trade: `putGold` debits `m_nGold` and journals
+   * the debited `CHAR_GOLD` at stake time, and only `tradeService.onDisconnect`
+   * refunds it. Without this, anyone staging a trade when an operator clicks
+   * Stop has the debit replayed on the next boot -- permanently lost penya.
+   */
+  beforeLeave?: (player: CPlayer) => void;
 }
 
 /** What `kickAll` did, for the caller to log or report. */
@@ -149,9 +162,17 @@ export class AdminCommandService implements AdminCommandSink {
     //    DB with N concurrent multi-table writes is how a drain turns into a
     //    timeout (rule 04 -- no unbounded concurrent DB work).
     const save = this.deps.saveAndLeave;
+    const beforeLeave = this.deps.beforeLeave;
     if (save) {
       for (const player of players) {
         const charId = player.m_idPlayer;
+        // Teardown that needs the live player object (trade gold refund above
+        // all) -- `save` removes them from the manager, so it cannot run after.
+        try {
+          beforeLeave?.(player);
+        } catch (err) {
+          logger.error({ err, charId }, 'admin kickAll: pre-leave teardown failed');
+        }
         try {
           await save(charId);
           result.saved++;

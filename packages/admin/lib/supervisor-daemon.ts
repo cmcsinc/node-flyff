@@ -352,6 +352,10 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
       await hub.wait(id, LOG_WAIT_MS, (cancel) => res.on('close', cancel));
       lines = hub.since(id, since);
     }
+    // The client may have gone away during the hold -- `res.on('close')` resolves
+    // the wait, so writing headers here would throw and send the outer handler's
+    // catch into a second `send` on the same dead response.
+    if (res.writableEnded) return;
     send(res, 200, { lines });
     return;
   }

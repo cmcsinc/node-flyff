@@ -46,6 +46,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       let wait = false;
       while (!closed) {
         try {
+          const startedAt = Date.now();
           const lines: LogLine[] = await getLogs(id, since, wait);
           if (closed) break;
           for (const l of lines) {
@@ -56,6 +57,13 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
           // idle stream and detects a client that went away.
           if (lines.length === 0 && wait && !write(": ping\n\n")) break;
           wait = true;
+          // A waiting read is meant to block (the daemon holds it up to 20s). If
+          // it came back empty in a blink the daemon is unreachable -- `getLogs`
+          // reports that as `[]`, not a throw, so the catch-block backoff below
+          // never fires and the loop would spin flat-out. Floor the interval.
+          if (lines.length === 0 && Date.now() - startedAt < RETRY_MS) {
+            await new Promise((r) => setTimeout(r, RETRY_MS));
+          }
         } catch {
           if (!write(": retry\n\n")) break;
           await new Promise((r) => setTimeout(r, RETRY_MS));
