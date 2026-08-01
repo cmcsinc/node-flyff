@@ -93,6 +93,7 @@ export class MovementService {
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
     this.deps.lootService?.checkArrival(player);
+    this.clearDestObj(player);
     this.deps.visibilityService?.refresh(player.m_idPlayer);
     return this.broadcast(player, this.serializer.buildMoved(player.m_idPlayer, frame));
   }
@@ -117,6 +118,7 @@ export class MovementService {
     player._dirty.add('m_vPos');
     this.deps.onMoved?.(player);
     this.deps.lootService?.checkArrival(player);
+    this.clearDestObj(player);
     this.deps.visibilityService?.refresh(player.m_idPlayer);
     return this.broadcast(player, this.serializer.buildCorr(player.m_idPlayer, frame));
   }
@@ -173,28 +175,69 @@ export class MovementService {
   }
 
   /**
-   * Apply a PLAYERSETDESTOBJ frame (DPSrvr.cpp:2571 OnPlayerSetDestObj). Server
-   * records the destination obj id + stop range; peer clients run their own
-   * pathfinding to the object (NO position is sent). `__TRAFIC_1223` dedup: a
-   * repeat packet for the already-current destination drops without re-broadcast.
+   * Apply a PLAYERSETDESTOBJ frame (DPSrvr.cpp:2598 OnPlayerSetDestObj). Server
+   * records the destination obj id + stop range and echoes MOVERSETDESTOBJ to
+   * vicinity peers, which then run their own pathfinding to the object (NO
+   * position is sent).
+   *
+   * NO `__TRAFIC_1222` dedup (`GetDestId() == objid -> return`). That guard is
+   * safe in C++ only because the world server *simulates* the walk
+   * (`CMover::Process` -> `ProcessMove`, `_Common/MoverMove.cpp:354`) and clears
+   * `m_idDest` itself on arrival (`ProcessMoveArrival`, `MoverMove.cpp:341`), so
+   * a client re-issue never matches the stored dest. We have no server-side
+   * movement simulation, so `m_idDestObj` would stay pinned at the target and
+   * swallow every re-issue.
+   *
+   * That matters because follow is re-issue-driven: the client clears its own
+   * `m_idDest` on arrival (`MoverMove.cpp:267`) and re-sends every frame the
+   * leader is further than `distSq > 16` (`WndWorldControlPlayer.cpp:405-416`),
+   * gated on `m_idDest != objid` (`MoverMsg.cpp:52`). A duplicate PLAYERSETDESTOBJ
+   * is therefore *evidence the follower arrived*, not redundant traffic --
+   * dropping it froze the follow on every observer's screen after the first hop
+   * while the follower's own client kept walking.
+   *
+   * ponytail: restore the dedup once `ProcessMove`/`ProcessMoveArrival` are
+   * ported and the server clears `m_idDestObj` on arrival by itself.
    */
   applySetDestObj(player: CPlayer, destObjid: number, fRange: number): MovementOutcome {
-    const isReTarget = player.m_idDestObj === destObjid;
-    if (!isReTarget) {
-      player.m_idDestObj = destObjid;
-      player.m_fArrivalRange = fRange;
-    }
+    player.m_idDestObj = destObjid;
+    player.m_fArrivalRange = fRange;
     // v19 pickup has no packet -- check immediately in case the player is already
     // on the pile (click a drop at your feet). Otherwise `onSetDestObj` starts a
     // QUERYGETPOS poll: during a client-driven walk to a dest object the client
     // sends NO movement packet, so no other arrival check would ever fire.
     this.deps.lootService?.onSetDestObj(player);
-    if (isReTarget || player.m_idDestObj === NULL_ID) {
-      // __TRAFIC_1223 dedup, or the pile was looted on contact -- no peer broadcast.
+    if (player.m_idDestObj === NULL_ID) {
+      // The pile was looted on contact -- nothing left to walk to, no broadcast.
       return { ok: true, reached: 0 };
     }
     const packet = this.destObjSerializer.build(player.m_idPlayer, destObjid, fRange);
     return this.broadcast(player, packet);
+  }
+
+  /**
+   * `CMover::SetDestPos` tail (`_Common/MoverMsg.cpp:105`) -- taking a position
+   * destination clears the object destination; the two are mutually exclusive.
+   *
+   * C++ reaches it on the normal-latency branch of `OnPlayerMoved`
+   * (`SetDestPos(v, ...)`, DPSrvr.cpp:2367) and unconditionally in
+   * `OnPlayerCorr` (`ClearDest()`, DPSrvr.cpp:2719). The high-latency branch
+   * instead runs `ActionForceSet`, which under `__SYNC_1217` -- set in this build
+   * (`WORLDSERVER/VersionCommon.h:190`) -- clears only the *position* dest
+   * (`MoverParam.cpp:3498`). We model neither `delay` nor `MAX_CORR_SIZE_45`, so
+   * we always clear: the client has already dropped its own dest before it can
+   * send a movement frame (`ClearDest()` on `fMoved || fBehavior`,
+   * `WndWorldControlPlayer.cpp:548`), so clearing on every accepted frame agrees
+   * with the client either way.
+   *
+   * Without this a stale `m_idDestObj` survives a manual walk away and gets
+   * reported to late-arriving observers by QUERYGETDESTOBJ, rendering a phantom
+   * follow. `applyBehavior` deliberately does NOT clear -- C++ routes
+   * `OnPlayerBehavior` only through `ActionForceSet`.
+   */
+  private clearDestObj(player: CPlayer): void {
+    player.m_idDestObj = NULL_ID;
+    player.m_fArrivalRange = 0;
   }
 
   private broadcast(player: CPlayer, packet: Buffer): MovementOutcome {

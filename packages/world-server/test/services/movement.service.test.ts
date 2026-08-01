@@ -10,6 +10,7 @@ import * as assert from 'node:assert/strict';
 import { MovementService } from '../../src/services/movement.service';
 import type { MovementFrame, Movement2Frame } from '../../src/net/snapshot/moverBroadcast.serializer';
 import { CPlayer } from '@flyff/entities';
+import { NULL_ID } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 
 function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
@@ -117,5 +118,83 @@ describe('MovementService death lockout', () => {
 
     assert.equal(out.ok, true);
     assert.equal(broadcasts.length, 1);
+  });
+});
+
+/**
+ * Follow visibility regression: player A follows B, B must keep seeing A walk.
+ *
+ * The client clears its own `m_idDest` on arrival (`MoverMove.cpp:267`) and
+ * re-issues PLAYERSETDESTOBJ for the SAME target every frame the leader is
+ * further than `distSq > 16` (`WndWorldControlPlayer.cpp:405-416`). A
+ * `__TRAFIC_1222`-style dedup on the stored dest therefore swallowed every hop
+ * after the first, freezing the follower on the observer's screen.
+ */
+describe('MovementService dest-obj follow', () => {
+  const LEADER = 77;
+
+  it('broadcasts MOVERSETDESTOBJ on a repeat PLAYERSETDESTOBJ for the same target', () => {
+    const { svc, broadcasts } = makeService();
+    const p = makePlayer();
+
+    const first = svc.applySetDestObj(p, LEADER, 0);
+    const second = svc.applySetDestObj(p, LEADER, 0);
+
+    assert.equal(first.ok, true);
+    assert.equal(second.ok, true);
+    assert.equal(broadcasts.length, 2, 're-issue must reach peers, not be deduped');
+    assert.equal(p.m_idDestObj, LEADER);
+  });
+
+  it('records the dest obj + arrival range', () => {
+    const { svc } = makeService();
+    const p = makePlayer();
+
+    svc.applySetDestObj(p, LEADER, 2.5);
+
+    assert.equal(p.m_idDestObj, LEADER);
+    assert.equal(p.m_fArrivalRange, 2.5);
+  });
+
+  it('PLAYERMOVED clears the dest obj (CMover::SetDestPos -> ClearDestObj)', () => {
+    const { svc } = makeService();
+    const p = makePlayer();
+    svc.applySetDestObj(p, LEADER, 0);
+
+    svc.applyMovement(p, nearFrame(3));
+
+    assert.equal(p.m_idDestObj, NULL_ID);
+    assert.equal(p.m_fArrivalRange, 0);
+  });
+
+  it('PLAYERCORR clears the dest obj (OnPlayerCorr -> ClearDest)', () => {
+    const { svc } = makeService();
+    const p = makePlayer();
+    svc.applySetDestObj(p, LEADER, 0);
+
+    svc.applyCorr(p, nearFrame(3));
+
+    assert.equal(p.m_idDestObj, NULL_ID);
+  });
+
+  it('PLAYERBEHAVIOR leaves the dest obj alone (__SYNC_1217 clears pos dest only)', () => {
+    const { svc } = makeService();
+    const p = makePlayer();
+    svc.applySetDestObj(p, LEADER, 0);
+
+    svc.applyBehavior(p, nearFrame());
+
+    assert.equal(p.m_idDestObj, LEADER);
+  });
+
+  it('a dropped movement frame (anti-teleport) does not clear the dest obj', () => {
+    const { svc } = makeService();
+    const p = makePlayer();
+    svc.applySetDestObj(p, LEADER, 0);
+
+    const out = svc.applyMovement(p, nearFrame(100_000));
+
+    assert.deepEqual(out, { ok: false, reason: 'too_far' });
+    assert.equal(p.m_idDestObj, LEADER);
   });
 });
