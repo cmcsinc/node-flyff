@@ -183,6 +183,7 @@ export class DropService {
         ownerId: looter,
         pos: dropPos,
         zoneId: mover.m_nZoneId,
+        dropMob: true,
       });
       spawned.push(id);
       dropped++;
@@ -200,6 +201,7 @@ export class DropService {
           ownerId: looter,
           pos: dropPos,
           zoneId: mover.m_nZoneId,
+          dropMob: true,
         });
         spawned.push(id);
       }

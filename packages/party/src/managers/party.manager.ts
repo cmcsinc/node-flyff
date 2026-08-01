@@ -16,11 +16,26 @@
  * @module managers/party
  */
 
+import { NULL_ID } from '@flyff/world-core';
+
 /** Exp-mode constants (`m_nTroupsShareExp`). Solo party uses level-split. */
 export const PARTY_EXP_MODE_LEVEL = 0;
-/** Item-mode constants (`m_nTroupeShareItem`). 0 = FFA, 1 = round-robin. */
+/** `m_nTroupsShareExp = 1` -- contribution split (guild party only in C++). */
+export const PARTY_EXP_MODE_CONTRIBUTION = 1;
+/**
+ * Item-mode constants (`m_nTroupeShareItem`, `MoverActEvent.cpp:2432-2477`).
+ * 0 = finder keeps, 1 = sequential (round-robin over nearby members),
+ * 2 = leader takes, 3 = random nearby member.
+ */
 export const PARTY_ITEM_MODE_FFA = 0;
-export const PARTY_ITEM_MODE_ROUND_ROBIN = 1;
+export const PARTY_ITEM_MODE_SEQUENTIAL = 1;
+export const PARTY_ITEM_MODE_LEADER = 2;
+export const PARTY_ITEM_MODE_RANDOM = 3;
+/** Highest valid `m_nTroupeShareItem`. */
+export const PARTY_ITEM_MODE_MAX = PARTY_ITEM_MODE_RANDOM;
+
+/** @deprecated Old name for {@link PARTY_ITEM_MODE_SEQUENTIAL}. */
+export const PARTY_ITEM_MODE_ROUND_ROBIN = PARTY_ITEM_MODE_SEQUENTIAL;
 
 /** 30s invite expiry -- generous C++ has no hard TTL; matches duel pattern. */
 export const PARTY_INVITE_TIMEOUT_MS = 30_000;
@@ -35,10 +50,18 @@ export interface Party {
   members: number[];
   /** `m_nTroupsShareExp` (0 = level-based split). */
   expMode: number;
-  /** `m_nTroupeShareItem` (0 FFA, 1 round-robin). */
+  /** `m_nTroupeShareItem` (0 finder, 1 sequential, 2 leader, 3 random). */
   itemMode: number;
-  /** Round-robin looter cursor (next member index). */
-  roundRobinIdx: number;
+  /**
+   * `CParty::m_nGetItemPlayerId` -- who received the LAST distributed item.
+   * Sequential mode hands the next drop to the member AFTER this one in the
+   * nearby-member list. NULL_ID until the first distributed drop.
+   *
+   * Note this is a member **id**, not an index: C++ stores the id and rescans
+   * the (varying) nearby list each drop, so members walking in and out of range
+   * cannot desync a stored cursor.
+   */
+  lastItemGetterId: number;
 }
 
 /** One pending inbound invite targeting `memberId`. */
@@ -79,7 +102,7 @@ export class PartyManager {
       members: [leaderId, memberId],
       expMode: PARTY_EXP_MODE_LEVEL,
       itemMode: PARTY_ITEM_MODE_FFA,
-      roundRobinIdx: 0,
+      lastItemGetterId: NULL_ID,
     };
     this.parties.set(party.id, party);
     return party;
@@ -135,13 +158,30 @@ export class PartyManager {
   /** List members (leader first). Returns empty for an unknown id. */
   members(partyId: number): number[] { return this.parties.get(partyId)?.members ?? []; }
 
-  /** Advance the round-robin cursor + return the next looter charId (or undefined). */
-  nextRoundRobin(partyId: number): number | undefined {
+  /**
+   * `SubLootDropMobParty` sequential pick (`MoverActEvent.cpp:2434-2456`): find
+   * `lastItemGetterId` in `candidates` (the NEARBY members, leader-ordered) and
+   * return the NEXT one, wrapping to `candidates[0]`. When the last getter is
+   * not in range (or there was none), `candidates[0]` takes it -- exactly the
+   * C++ `pGetUser == NULL` fallback.
+   *
+   * Takes the candidate list rather than the full roster because the C++ walks
+   * `pListMember` (range-filtered), not `m_aMember`. Caller records the winner
+   * via {@link setLastItemGetter}.
+   */
+  nextSequentialLooter(partyId: number, candidates: number[]): number | undefined {
+    if (candidates.length === 0) return undefined;
     const p = this.parties.get(partyId);
-    if (!p || p.members.length === 0) return undefined;
-    const id = p.members[p.roundRobinIdx % p.members.length];
-    p.roundRobinIdx = (p.roundRobinIdx + 1) % p.members.length;
-    return id;
+    if (!p) return undefined;
+    const idx = candidates.indexOf(p.lastItemGetterId);
+    if (idx === -1) return candidates[0];
+    return candidates[(idx + 1) % candidates.length];
+  }
+
+  /** `pParty->m_nGetItemPlayerId = pGetUser->m_idPlayer` after a distribution. */
+  setLastItemGetter(partyId: number, charId: number): void {
+    const p = this.parties.get(partyId);
+    if (p) p.lastItemGetterId = charId;
   }
 
   /**

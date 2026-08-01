@@ -34,6 +34,17 @@ const fixedRng: Rng = {
   range: () => 16,
 };
 
+/**
+ * A FRESH always-hit rng. `fixedRng` above is module-level and its `int`
+ * sequence carries across tests, so any test whose assertions depend on landing
+ * a specific hit must own its own instance.
+ */
+function makeRng(): Rng {
+  const seq = [0, 99, 50];
+  let i = 0;
+  return { int: () => seq[i++ % seq.length], range: () => 16 };
+}
+
 /** Read the snapshot subtype (WORD) from an UNFRAMED serializer payload. */
 function snapshotSubtype(payload: Buffer): number {
   // [SNAPSHOT:4][NULL_ID:4][count:2][objid:4][subtype:2] -> subtype at offset 14.
@@ -199,6 +210,104 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(partyCalls, 1, 'seam invoked on kill');
     assert.equal(player.m_nExp, 2, 'solo grant ran unchanged');
     assert.equal(sends.length, 1, 'SETEXPERIENCE sent');
+  });
+
+  it('hit-share: a helper who out-damaged the killer takes the bigger cut', () => {
+    // Killer (id 1) lands 1/4 of the damage; helper (id 2) lands 3/4. The kill's
+    // exp must split 25/75, not 100/0 to whoever landed the last blow.
+    // Level 30 Mercenary (class 1): nLimitExp is 2083 (above the 300 share) and
+    // the next level needs 57035, so neither side levels or clamps mid-assert.
+    // Class must NOT be 0 -- Vagrant's jobLevelCap is 15, which discards all exp.
+    const player = CPlayer.fromRow(makeRow({ level: 30, class: 1 }), { write: () => true });
+    player.m_nZoneId = 1; player.m_vPos = { x: 0, y: 0, z: 0 };
+    const helper = CPlayer.fromRow(makeRow({ id: 2, name: 'Helper', level: 30, class: 1 }), { write: () => true });
+    helper.m_nZoneId = 1; helper.m_vPos = { x: 0, y: 0, z: 0 };
+
+    const mover = CMover.spawn(
+      0x40000050,
+      { modelIndex: 20, name: 'Aibatt', level: 30, hp: 15, atkMin: 1, atkMax: 1, armor: 0, hr: 40, er: 3, expValue: 400 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    // Pre-seed the helper's damage so the killer's single 15-damage swing is the
+    // last quarter of a 60-damage fight.
+    mover.m_idEnemies.set(helper.m_idPlayer, 45);
+
+    const players = new Map([[1, player], [2, helper]]);
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: () => mover, kill: () => {} },
+      zoneManager: { broadcastAround: () => 1 },
+      playerManager: { get: (id: number) => players.get(id), sendTo: () => {} },
+      charRepo: { updateLevelAndExp: async () => {} },
+      rng: makeRng(),
+    });
+
+    combat.resolveAttack(player, mover.m_idMover);
+    // 400 raw; killer share = 400 * 15/60 = 100, helper = 400 * 45/60 = 300.
+    // mover level == player level -> 1.0x solo multiplier, no cap hit.
+    assert.equal(player.m_nExp, 100, 'killer paid for 1/4 of the damage');
+    assert.equal(helper.m_nExp, 300, 'helper paid for 3/4 of the damage');
+  });
+
+  it('hit-share: an out-of-range attacker forfeits their cut', () => {
+    const player = CPlayer.fromRow(makeRow({ level: 30, class: 1 }), { write: () => true });
+    player.m_nZoneId = 1; player.m_vPos = { x: 0, y: 0, z: 0 };
+    const runner = CPlayer.fromRow(makeRow({ id: 2, name: 'Runner', level: 30, class: 1 }), { write: () => true });
+    runner.m_nZoneId = 1; runner.m_vPos = { x: 500, y: 0, z: 0 }; // way past 64m
+
+    const mover = CMover.spawn(
+      0x40000051,
+      { modelIndex: 20, name: 'Aibatt', level: 30, hp: 15, atkMin: 1, atkMax: 1, armor: 0, hr: 40, er: 3, expValue: 400 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    mover.m_idEnemies.set(runner.m_idPlayer, 45);
+    const players = new Map([[1, player], [2, runner]]);
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: () => mover, kill: () => {} },
+      zoneManager: { broadcastAround: () => 1 },
+      playerManager: { get: (id: number) => players.get(id), sendTo: () => {} },
+      charRepo: { updateLevelAndExp: async () => {} },
+      rng: makeRng(),
+    });
+
+    combat.resolveAttack(player, mover.m_idMover);
+    // The runner's 3/4 is NOT redistributed -- the killer still gets only their
+    // own 1/4 (C++ divides by dwMaxEnemyHit, which includes the forfeited hits).
+    assert.equal(player.m_nExp, 100);
+    assert.equal(runner.m_nExp, 0, 'out of range = no exp');
+  });
+
+  it('hit-share: co-party attackers pool into ONE party share', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nZoneId = 1; player.m_vPos = { x: 0, y: 0, z: 0 };
+    const mate = CPlayer.fromRow(makeRow({ id: 2, name: 'Mate' }), { write: () => true });
+    mate.m_nZoneId = 1; mate.m_vPos = { x: 0, y: 0, z: 0 };
+
+    const mover = CMover.spawn(
+      0x40000052,
+      { modelIndex: 20, name: 'Aibatt', level: 1, hp: 15, atkMin: 1, atkMax: 1, armor: 0, hr: 40, er: 3, expValue: 400 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    mover.m_idEnemies.set(mate.m_idPlayer, 45);
+    const players = new Map([[1, player], [2, mate]]);
+    const partyShares: number[] = [];
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: () => mover, kill: () => {} },
+      zoneManager: { broadcastAround: () => 1 },
+      playerManager: { get: (id: number) => players.get(id), sendTo: () => {} },
+      charRepo: { updateLevelAndExp: async () => {} },
+      rng: makeRng(),
+      sameParty: () => true,
+      partyExp: (_k, _m, share) => { partyShares.push(share); return 2; },
+    });
+
+    combat.resolveAttack(player, mover.m_idMover);
+    // ONE call carrying the WHOLE kill (15 + 45 of 60), not two calls of 100/300.
+    assert.deepEqual(partyShares, [400]);
+    assert.equal(player.m_nExp, 0, 'party service owns the grant');
+    assert.equal(mate.m_nExp, 0);
   });
 
   it('rejects a non-attackable (guard, non-PK player) target', () => {

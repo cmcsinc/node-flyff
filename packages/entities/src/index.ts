@@ -59,7 +59,7 @@ export type { ExpRow } from './math/expTable';
 export type { Rng } from './math/rng';
 export { xRandomRng } from './math/rng';
 export {
-  expLevelDiffMult, expToNextLevel, addExp, subDieDecExp,
+  expLevelDiffMult, expPartyReduceFactor, expToNextLevel, addExp, subDieDecExp,
 } from './math/exp';
 export type { ExpGainResult } from './math/exp';
 export {

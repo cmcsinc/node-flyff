@@ -148,60 +148,220 @@ describe('PartyService', () => {
     for (const s of harness.sent) assert.equal(subtype(s.buf), SNAPSHOTTYPE.PARTYCHAT);
   });
 
-  it('changeExpMode / changeItemMode are leader-only', () => {
+  it('changeExpMode / changeItemMode are leader-only + echo the mode snapshot', () => {
     service.invite(a, 2); service.accept(b, 1);
     service.changeExpMode(b, 1);
     const party = manager.getByMember(1)!;
     assert.equal(party.expMode, 0, 'non-leader change rejected');
+    harness.sent.length = 0;
     service.changeExpMode(a, 1);
     assert.equal(party.expMode, 1, 'leader change applied');
+    assert.equal(harness.sent.length, 2, 'echoed to both members');
+    for (const s of harness.sent) {
+      assert.equal(subtype(s.buf), SNAPSHOTTYPE.PARTYCHANGEEXPMODE);
+    }
     service.changeItemMode(b, 1);
     assert.equal(party.itemMode, 0, 'non-leader change rejected');
+    harness.sent.length = 0;
     service.changeItemMode(a, 1);
     assert.equal(party.itemMode, 1, 'leader change applied');
+    assert.equal(harness.sent.length, 2);
+    for (const s of harness.sent) {
+      assert.equal(subtype(s.buf), SNAPSHOTTYPE.PARTYCHANGEITEMMODE);
+    }
+  });
+
+  it('rejects out-of-range share modes', () => {
+    service.invite(a, 2); service.accept(b, 1);
+    const party = manager.getByMember(1)!;
+    service.changeItemMode(a, 4);  // > PARTY_ITEM_MODE_MAX (3)
+    assert.equal(party.itemMode, 0, 'mode 4 rejected');
+    service.changeItemMode(a, -1);
+    assert.equal(party.itemMode, 0, 'negative rejected');
+    service.changeExpMode(a, 2);   // only 0/1 exist
+    assert.equal(party.expMode, 0, 'exp mode 2 rejected');
   });
 
   describe('distributeExp', () => {
+    /** Mover stub -- level drives `expPartyReduceFactor`, pos/zone the scan. */
+    const mob = (level: number, pos = { x: 0, y: 0, z: 0 }, zone = 1) =>
+      ({ m_nZoneId: zone, m_nLevel: level, m_vPos: pos }) as never;
+
     it('returns null when killer has no party', () => {
-      const mover = { m_nZoneId: 1, m_vPos: { x: 0, y: 0, z: 0 } } as never;
-      assert.equal(service.distributeExp(a, mover, 100), null);
+      assert.equal(service.distributeExp(a, mob(10), 100), null);
     });
 
-    it('proximity gate excludes far member; level gate excludes low member; split sums', () => {
-      // Party of 3: A=10 (killer), B=10 (near), C=10 (far, 100m away).
+    it('returns null when only one member is nearby (C++ falls back to solo)', () => {
+      c.m_vPos = { x: 100, y: 0, z: 0 };
+      service.invite(a, 3); service.accept(c, 1);
+      assert.equal(
+        service.distributeExp(a, mob(10), 100), null,
+        'nMemberSize <= 1 -> AddExperienceSolo(bParty=TRUE)',
+      );
+    });
+
+    it('splits by level^2 with the member-count bonus', () => {
+      // A=10 (killer), B=10 near, C=10 100m away -> nearby = {A,B}.
       a.m_nLevel = 10; b.m_nLevel = 10; c.m_nLevel = 10;
       c.m_vPos = { x: 100, y: 0, z: 0 };
       service.invite(a, 2); service.accept(b, 1);
       service.invite(a, 3); service.accept(c, 1);
       harness.grants.length = 0;
-      const mover = { m_nZoneId: 1, m_vPos: { x: 0, y: 0, z: 0 } } as never;
-      const n = service.distributeExp(a, mover, 100);
+      const n = service.distributeExp(a, mob(10), 100);
       assert.equal(n, 2, 'only A + B (near) granted');
-      const grantedIds = harness.grants.map((g) => g.id).sort();
-      assert.deepEqual(grantedIds, [1, 2]);
-      // bonus = 100*0.2*(2-1) = 20; total = 120; split 50/50 -> 60 each.
+      assert.deepEqual(harness.grants.map((g) => g.id).sort(), [1, 2]);
+      // factor 1.0 (mover lv == maxLv); addExp = 100*0.2*(2-1) = 20;
+      // total 120 split 50/50 -> 60 each (under level-10 nLimitExp 69).
       assert.deepEqual(harness.grants.map((g) => g.amount), [60, 60]);
     });
 
-    it('level gate drops member below maxLv-20', () => {
-      a.m_nLevel = 50; b.m_nLevel = 50; c.m_nLevel = 25; // 50-20=30; C(25) excluded
+    it('an out-of-band member still dilutes the split (C++ denominator)', () => {
+      // maxLv 50 -> nMaxLevel10 = 30, so C(25) is paid nothing -- but its lv^2
+      // IS in fMaxMemberLevel and it DOES count toward fAddExp.
+      a.m_nLevel = 50; b.m_nLevel = 50; c.m_nLevel = 25;
       service.invite(a, 2); service.accept(b, 1);
       service.invite(a, 3); service.accept(c, 1);
       harness.grants.length = 0;
-      const mover = { m_nZoneId: 1, m_vPos: { x: 0, y: 0, z: 0 } } as never;
-      const n = service.distributeExp(a, mover, 100);
-      assert.equal(n, 2, 'C excluded by level gate');
+      const n = service.distributeExp(a, mob(50), 100);
+      assert.equal(n, 2, 'C excluded from payment by the level gate');
       assert.deepEqual(harness.grants.map((g) => g.id).sort(), [1, 2]);
+      // addExp = 100*0.2*(3-1) = 40 -> total 140; denom = 2500+2500+625 = 5625.
+      // share = floor(140 * 2500 / 5625) = 62 (NOT 70, which is what filtering
+      // C out of the denominator would give).
+      assert.deepEqual(harness.grants.map((g) => g.amount), [62, 62]);
     });
 
-    it('different zones excluded by proximity', () => {
+    it('applies the PARTY reduce curve off the highest nearby level', () => {
+      // maxLv 20 vs mover lv 17 -> delta 3 -> factor 0.35 (party curve;
+      // the solo curve would be 0.4 for the same delta).
+      a.m_nLevel = 20; b.m_nLevel = 20;
+      service.invite(a, 2); service.accept(b, 1);
+      harness.grants.length = 0;
+      service.distributeExp(a, mob(17), 1000);
+      // expValue = 350; addExp = 70 -> total 420; 50/50 -> 210 each.
+      assert.deepEqual(harness.grants.map((g) => g.amount), [210, 210]);
+    });
+
+    it('caps each member at their OWN nLimitExp', () => {
+      a.m_nLevel = 10; b.m_nLevel = 10;
+      service.invite(a, 2); service.accept(b, 1);
+      harness.grants.length = 0;
+      service.distributeExp(a, mob(10), 1_000_000);
+      // Level-10 nLimitExp is 69; both shares clamp to it.
+      assert.deepEqual(harness.grants.map((g) => g.amount), [69, 69]);
+    });
+
+    it('members in a different zone are out of range', () => {
       a.m_nLevel = 10; b.m_nLevel = 10; b.m_nZoneId = 2;
       service.invite(a, 2); service.accept(b, 1);
       harness.grants.length = 0;
-      const mover = { m_nZoneId: 1, m_vPos: { x: 0, y: 0, z: 0 } } as never;
-      const n = service.distributeExp(a, mover, 100);
-      assert.equal(n, 1, 'only A (same zone) granted');
-      assert.deepEqual(harness.grants.map((g) => g.id), [1]);
+      assert.equal(
+        service.distributeExp(a, mob(10), 100), null,
+        'A alone nearby -> solo fallback',
+      );
+      assert.equal(harness.grants.length, 0);
+    });
+  });
+
+  describe('item + gold distribution', () => {
+    /** Deterministic `random()` for the random-mode / remainder picks. */
+    function withRandom(value: number): PartyService {
+      return new PartyService({
+        playerManager: harness.pm as never,
+        partyManager: manager,
+        grantExpAmount: harness.grantExpAmount,
+        random: () => value,
+      });
+    }
+
+    it('player-dropped piles are never redistributed', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      service.changeItemMode(a, 3); // random
+      assert.equal(service.pickItemReceiver(a, false), null);
+      assert.equal(service.splitGold(a, 100, false), null);
+    });
+
+    it('mode 0 (finder) keeps the item', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      assert.equal(service.pickItemReceiver(a, true), null, 'null = finder keeps');
+    });
+
+    it('mode 1 (sequential) rotates over nearby members', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      service.invite(a, 3); service.accept(c, 1);
+      service.changeItemMode(a, 1);
+      // No previous getter -> candidates[0] = the leader (A = the finder here).
+      assert.equal(service.pickItemReceiver(a, true), null, 'A first (finder)');
+      // Cursor now on A -> next is B, then C, then wraps to A.
+      assert.equal(service.pickItemReceiver(a, true)?.m_idPlayer, 2);
+      assert.equal(service.pickItemReceiver(a, true)?.m_idPlayer, 3);
+      assert.equal(service.pickItemReceiver(a, true), null, 'wrapped to A');
+    });
+
+    it('mode 1 skips a member who walked out of range', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      service.invite(a, 3); service.accept(c, 1);
+      service.changeItemMode(a, 1);
+      service.pickItemReceiver(a, true);               // A
+      assert.equal(service.pickItemReceiver(a, true)?.m_idPlayer, 2); // B
+      b.m_vPos = { x: 500, y: 0, z: 0 };               // B leaves
+      // Cursor id (B) is no longer a candidate -> falls back to candidates[0].
+      assert.equal(service.pickItemReceiver(a, true), null, 'A takes it');
+    });
+
+    it('mode 2 (leader) gives it to the leader when in range', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      service.changeItemMode(a, 2);
+      // B finds it, A (leader) is in range -> A receives.
+      assert.equal(service.pickItemReceiver(b, true)?.m_idPlayer, 1);
+      // Leader out of range -> the finder keeps it.
+      a.m_vPos = { x: 500, y: 0, z: 0 };
+      assert.equal(service.pickItemReceiver(b, true), null);
+    });
+
+    it('mode 3 (random) picks by the injected rng', () => {
+      const svc = withRandom(0.99);
+      svc.invite(a, 2); svc.accept(b, 1);
+      svc.changeItemMode(a, 3);
+      // 0.99 * 2 candidates -> index 1 = B.
+      assert.equal(svc.pickItemReceiver(a, true)?.m_idPlayer, 2);
+    });
+
+    it('item range is 32m, not the 64m exp radius', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      service.changeItemMode(a, 2); // leader mode
+      b.m_vPos = { x: 0, y: 0, z: 0 };
+      // B finds it at 40m from the leader: inside exp range, outside item range.
+      b.m_vPos = { x: 40, y: 0, z: 0 };
+      assert.equal(service.pickItemReceiver(b, true), null, 'leader out of 32m');
+    });
+
+    it('gold splits evenly regardless of item mode, remainder to one member', () => {
+      const svc = withRandom(0);
+      svc.invite(a, 2); svc.accept(b, 1);
+      svc.invite(a, 3); svc.accept(c, 1);
+      const shares = svc.splitGold(a, 100, true);
+      assert.ok(shares);
+      // 100 / 3 = 33 each, remainder 1 to candidates[0] (rng 0 -> index 0 = A).
+      assert.deepEqual(
+        shares!.map((s) => [s.player.m_idPlayer, s.amount]),
+        [[1, 34], [2, 33], [3, 33]],
+      );
+      assert.equal(shares!.reduce((t, s) => t + s.amount, 0), 100, 'no gold lost');
+    });
+
+    it('gold outside 32m is not shared', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      b.m_vPos = { x: 500, y: 0, z: 0 };
+      const shares = service.splitGold(a, 100, true);
+      assert.deepEqual(shares!.map((s) => [s.player.m_idPlayer, s.amount]), [[1, 100]]);
+    });
+
+    it('itemNoticePeers excludes the receiver and returns [] with no party', () => {
+      assert.deepEqual(service.itemNoticePeers(a, 1), []);
+      service.invite(a, 2); service.accept(b, 1);
+      service.invite(a, 3); service.accept(c, 1);
+      assert.deepEqual(service.itemNoticePeers(a, 2).map((p) => p.m_idPlayer), [1, 3]);
     });
   });
 

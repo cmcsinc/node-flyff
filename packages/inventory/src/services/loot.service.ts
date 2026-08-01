@@ -94,6 +94,35 @@ export interface LootServiceDeps {
    * any `@flyff/party` import (structural type -- closure satisfies the signature).
    */
   sameParty?: (a: number, b: number) => boolean;
+  /**
+   * Party distribution seam (wired to `PartyService` in `compose.ts`). Owns the
+   * `SubLootDropMobParty` receiver pick, the `PickupGold` split, and the peer
+   * notice list. Structural type -- `@flyff/inventory` never imports
+   * `@flyff/party`. Absent (tests, solo-only builds) => the finder keeps
+   * everything, which is the C++ no-party path.
+   */
+  party?: PartyLootShare;
+  /**
+   * `TID_GAME_TROUPEREAPITEM` peer notice (`MoverActEvent.cpp:2495`) -- tells
+   * `peer` that `receiver` got the item. Only fired for distributed drops (the
+   * receiver is not the finder). Optional -- no-op in tests.
+   */
+  onPeerAcquireItem?: (peer: CPlayer, receiver: CPlayer, itemId: number, count: number) => void;
+}
+
+/**
+ * The party-distribution surface `LootService` needs. Implemented by
+ * `PartyService` (`@flyff/party`); every method returns a "no party" answer
+ * (`null` / `[]`) when the looter is not in one, so `LootService` needs no
+ * membership check of its own.
+ */
+export interface PartyLootShare {
+  /** Receiver for a distributed monster drop, or `null` = the finder keeps it. */
+  pickItemReceiver(finder: CPlayer, dropMob: boolean): CPlayer | null;
+  /** Per-member gold shares, or `null` = the finder takes the whole pile. */
+  splitGold(finder: CPlayer, amount: number, dropMob: boolean): { player: CPlayer; amount: number }[] | null;
+  /** Nearby party members to notify, excluding the receiver. */
+  itemNoticePeers(finder: CPlayer, exclude: number): CPlayer[];
 }
 
 /**
@@ -214,10 +243,22 @@ export class LootService {
   }
 
   /**
-   * `DoLoot` (`MoverActEvent.cpp:2575`) -- ownership gate, then gold vs item
-   * routing. Gold -> `addGold` + `SETPOINTPARAM(DST_GOLD)` self; item ->
-   * `addItem` -> `CREATEITEM` (new slot) / `UPDATE_ITEM` (stack merge), bag-full
-   * leaves the pile lootable. Either path removes the pile (broadcasts DEL_OBJ).
+   * `DoLoot` (`MoverActEvent.cpp:2650`) -- ownership gate, then the gold vs item
+   * split, each of which branches again on `m_bDropMob` (monster drop) and party
+   * membership:
+   *
+   * - **Gold**, monster-dropped, in a party -> `PickupGold` party branch
+   *   (`MoverEquip.cpp:2374`): split evenly among members within 32m, remainder
+   *   to one random member. Ignores the item-share mode entirely.
+   * - **Item**, monster-dropped, in a party -> `SubLootDropMobParty`
+   *   (`MoverActEvent.cpp:2395`): the `m_nTroupeShareItem` mode picks WHICH
+   *   member receives it (finder / sequential / leader / random), and the other
+   *   nearby members get a "<name> got <item>" notice.
+   * - Anything else (solo, or a pile a player dropped) -> the finder takes it.
+   *
+   * Bag-full on the receiver leaves the pile on the ground (C++ `bSuccess ==
+   * FALSE` skips `pItem->Delete()`), so a full-bag receiver does not destroy the
+   * drop.
    */
   pickup(player: CPlayer, item: GroundItem): void {
     if (!this.isLoot(player, item)) {
@@ -225,25 +266,19 @@ export class LootService {
       return;
     }
     logger.info(
-      { charId: player.m_idPlayer, itemId: item.m_dwItemId, count: item.m_nItemNum },
+      { charId: player.m_idPlayer, itemId: item.m_dwItemId, count: item.m_nItemNum, dropMob: item.m_bDropMob },
       'DoLoot pickup',
     );
 
     if (isGoldSeed(item.m_dwItemId)) {
-      this.deps.inventoryService.addGold(player, item.m_nItemNum);
-      this.deps.playerManager.sendTo(
-        player,
-        buildSetPointParam(player.m_idPlayer, DST_GOLD, player.m_nGold),
-      );
-      // `PickupGoldCore`: AddGold first, then AddGoldText(nGold) -- so the
-      // "(Total: N)" half is the already-updated balance.
-      this.deps.onGoldPickup?.(player, item.m_nItemNum, player.m_nGold);
-      this.deps.itemManager.remove(item.m_idObject);
-      this.motion(player);
+      this.pickupGold(player, item);
       return;
     }
 
-    const r = this.deps.inventoryService.addItem(player, item.m_dwItemId, item.m_nItemNum);
+    // `SubLootDropMobParty` receiver pick. null = the finder keeps it (no party,
+    // player-dropped pile, or the mode/range resolved back to the finder).
+    const receiver = this.deps.party?.pickItemReceiver(player, item.m_bDropMob) ?? player;
+    const r = this.deps.inventoryService.addItem(receiver, item.m_dwItemId, item.m_nItemNum);
     if (!r.ok) return; // bag_full -- ponytail: TID_GAME_LACKSPACE; pile stays lootable
 
     // Each change addresses the client's stable m_dwObjId (ch.objid), NOT the
@@ -253,15 +288,47 @@ export class LootService {
     // cell (weapon-in-shield-slot bug).
     for (const ch of r.changes) {
       this.deps.playerManager.sendTo(
-        player,
+        receiver,
         ch.isNew
-          ? this.createItemSerializer.buildOne(player.m_idPlayer, ch.itemId, ch.count, ch.objid)
-          : buildUpdateItemCount(player.m_idPlayer, ch.objid, ch.count),
+          ? this.createItemSerializer.buildOne(receiver.m_idPlayer, ch.itemId, ch.count, ch.objid)
+          : buildUpdateItemCount(receiver.m_idPlayer, ch.objid, ch.count),
       );
     }
-    this.deps.onAcquireItem?.(player, item.m_dwItemId, item.m_nItemNum);
+    this.deps.onAcquireItem?.(receiver, item.m_dwItemId, item.m_nItemNum);
+    // `TID_GAME_TROUPEREAPITEM` peer notices (`MoverActEvent.cpp:2495`) -- the
+    // other nearby members are told who got it. Without this a distributed drop
+    // is silent for everyone but the receiver, and the party cannot tell the
+    // sequential rotation from a lost drop.
+    if (receiver.m_idPlayer !== player.m_idPlayer) {
+      for (const peer of this.deps.party?.itemNoticePeers(player, receiver.m_idPlayer) ?? []) {
+        this.deps.onPeerAcquireItem?.(peer, receiver, item.m_dwItemId, item.m_nItemNum);
+      }
+    }
     this.deps.itemManager.remove(item.m_idObject);
     this.motion(player);
+  }
+
+  /**
+   * `CMover::PickupGold` (`MoverEquip.cpp:2366`). Party + monster-dropped gold is
+   * split across nearby members; everything else goes wholly to the finder. Each
+   * recipient gets their own `SETPOINTPARAM(DST_GOLD)` + gold text, matching the
+   * per-member `PickupGoldCore` call.
+   */
+  private pickupGold(finder: CPlayer, item: GroundItem): void {
+    const split = this.deps.party?.splitGold(finder, item.m_nItemNum, item.m_bDropMob);
+    const shares = split ?? [{ player: finder, amount: item.m_nItemNum }];
+    for (const { player, amount } of shares) {
+      this.deps.inventoryService.addGold(player, amount);
+      this.deps.playerManager.sendTo(
+        player,
+        buildSetPointParam(player.m_idPlayer, DST_GOLD, player.m_nGold),
+      );
+      // `PickupGoldCore`: AddGold first, then AddGoldText(nGold) -- so the
+      // "(Total: N)" half is the already-updated balance.
+      this.deps.onGoldPickup?.(player, amount, player.m_nGold);
+    }
+    this.deps.itemManager.remove(item.m_idObject);
+    this.motion(finder);
   }
 
   /**
