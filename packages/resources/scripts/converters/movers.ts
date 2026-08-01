@@ -84,6 +84,7 @@ function rowToMover(row: Row, id: number, name: string): Record<string, unknown>
     dodge_rate: num(row, 'dwER', 0),
     speed: num(row, 'fSpeed', 0),
     attack_speed: num(row, 'dwAttackSpeed', 0),
+    re_attack_delay: num(row, 'dwReAttackDelay', 0),
     exp: num(row, 'dwExpValue', 0),
     flyable: row.bFlying === '1' || row.dwJumpIng === '1',
     boss,

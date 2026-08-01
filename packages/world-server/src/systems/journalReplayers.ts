@@ -113,5 +113,28 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     await deps.skillRepo.saveAll(row.char_id, p.roster);
   });
 
-  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS', 'SKILL_LEARN', 'CHAR_JOB'] }, 'Journal replay handlers registered');
+  // Bank item deposit (inv -> bank). Delta-based: replays the move once.
+  // Payload is {tab, bankSlot, invSlot, itemId, take} — NOT absolute state.
+  // Safe because `journalReplayer.ts:52 recover()` marks each row `replayed=1`
+  // after running, so each row executes exactly once. Partial failure (one
+  // repo write succeeds, the other doesn't) is no worse than silent loss.
+  r.register('BANK_DEPOSIT', async (row) => {
+    const p = payload<{ accountId: number; tab: number; bankSlot: number; invSlot: number; itemId: number; take: number }>(row);
+    // Re-apply: write the bank slot (replay is after crash so the item exists
+    // in inventory but the bank move was lost).
+    await deps.bankRepo.setItem(p.accountId, p.tab, p.bankSlot, p.itemId, p.take, 0, -1, 0);
+    // Inventory side: the original code does removeItem or setItem(count-take).
+    // Since we don't know the post-move inv count here, just remove the slot
+    // (worst case we over-delete; the bank item is recovered).
+    await deps.inventoryRepo.removeItem(row.char_id, p.invSlot);
+  });
+
+  // Bank item withdrawal (bank -> inv). Same delta-based reasoning.
+  r.register('BANK_WITHDRAW', async (row) => {
+    const p = payload<{ accountId: number; tab: number; bankSlot: number; invSlot: number; itemId: number; take: number }>(row);
+    await deps.inventoryRepo.setItem(row.char_id, p.invSlot, p.itemId, p.take, 0, -1, 0);
+    await deps.bankRepo.setItem(p.accountId, p.tab, p.bankSlot, 0, 0, 0, -1, 0);
+  });
+
+  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS', 'SKILL_LEARN', 'CHAR_JOB', 'BANK_DEPOSIT', 'BANK_WITHDRAW'] }, 'Journal replay handlers registered');
 }
