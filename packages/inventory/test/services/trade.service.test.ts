@@ -492,4 +492,65 @@ describe('TradeService', () => {
       assert.deepEqual(ctx.svc.put(a, 0, 0, 0, 1), { ok: false, reason: 'no-partner' });
     });
   });
+
+  describe('nId is an objid, not a slot', () => {
+    it('stakes the item whose objid matches, not m_Inventory[nId]', () => {
+      const a = makePlayer(1); const b = makePlayer(2);
+      // The item the client is dragging lives in slot 5 but kept objid 2 after
+      // an equip/unequip round trip. Slot 2 holds an unrelated item.
+      a.m_Inventory[2] = item(777, 1, 9);
+      a.m_Inventory[5] = item(111, 3, 2);
+      const ctx = makeCtx([a, b]);
+      openTrade(ctx, a, b);
+
+      assert.deepEqual(ctx.svc.put(a, 0, 0, 2, 3), { ok: true });
+      assert.deepEqual(a.m_vtInfo.items[0], { slot: 5, objid: 2, itemId: 111, count: 3 });
+
+      // The echo carries the ORIGINAL nId (the client re-resolves via GetItemId).
+      const { r } = open(ctx.sent[0]!.buf);
+      assert.equal(r.readByte(), 0);       // window index
+      r.readByte();                        // itemType
+      assert.equal(r.readByte(), 2);       // nId, echoed verbatim
+      assert.equal(r.readWord(), 3);       // clamped count
+
+      // And the commit moves the real item, not slot 2's occupant.
+      runCommit(ctx, a, b);
+      assert.equal(a.m_Inventory[5], null);
+      assert.equal(a.m_Inventory[2]!.itemId, 777);   // untouched
+      assert.equal(b.m_Inventory[0]!.itemId, 111);
+      assert.equal(b.m_Inventory[0]!.count, 3);
+    });
+
+    it('refuses a put for an objid no bag slot carries', () => {
+      const a = makePlayer(1); const b = makePlayer(2);
+      a.m_Inventory[0] = item(111, 1, 4);
+      const ctx = makeCtx([a, b]);
+      openTrade(ctx, a, b);
+      // objid 61 is not held by any slot, and 61 is not itself an occupied slot.
+      assert.equal(ctx.svc.put(a, 0, 0, 61, 1).ok, false);
+      assert.equal(a.m_vtInfo.items[0], null);
+    });
+  });
+
+  describe('late cancel after a successful commit', () => {
+    it('is dropped instead of sending TRADECANCEL', () => {
+      // CWndTrade::~CWndTrade fires SendTradeCancel() when OnTradeConsent
+      // destroys the window -- AFTER the commit already cleared both sides.
+      const a = makePlayer(1); const b = makePlayer(2);
+      a.m_Inventory[0] = item(111, 1, 0);
+      const ctx = makeCtx([a, b]);
+      openTrade(ctx, a, b);
+      ctx.svc.put(a, 0, 0, 0, 1);
+      runCommit(ctx, a, b);
+      assert.deepEqual(subtypes(ctx.sent).slice(-2),
+        [SNAPSHOTTYPE.TRADECONSENT, SNAPSHOTTYPE.TRADECONSENT]);
+
+      ctx.sent.length = 0;
+      assert.deepEqual(ctx.svc.cancel(a, 0), { ok: false, reason: 'no-partner' });
+      assert.deepEqual(ctx.svc.cancel(b, 0), { ok: false, reason: 'no-partner' });
+      assert.deepEqual(ctx.sent, []);                // no cancel popup either side
+      // The traded item stays where the commit put it.
+      assert.equal(b.m_Inventory[0]!.itemId, 111);
+    });
+  });
 });

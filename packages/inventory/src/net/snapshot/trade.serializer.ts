@@ -53,6 +53,14 @@ function hdr(objid: number, subtype: number): Buffer {
  * The body is the standard `CItemContainer<CItemElem>::Serialize`, identical to
  * the JOIN inventory blob: 73 slots with `indexNum = MAX_INVENTORY` so the equip
  * tail stays NULL_ID.
+ *
+ * ponytail: `writeItemContainer` stamps each elem's `m_dwObjId` as its SLOT
+ * index, so the partner's copy of this bag keys items by slot. When the owner's
+ * item objid has drifted from its slot (equip/unequip/move), the TRADEPUT echo's
+ * `nId` (a real objid) will not resolve in the partner's copy and the partner's
+ * half of the window renders empty -- the trade itself still commits correctly,
+ * since the server never trusts the client's view. Fixing it needs
+ * `writeItemContainer` to take per-slot objids (shared with the JOIN blob).
  */
 export function buildTrade(
   otherObjid: number, initiatorCharId: number,
@@ -86,18 +94,20 @@ export function buildConfirmTradeCancel(objid: number): Buffer {
  * `CUser::AddTradePut` (`User.cpp:803`):
  *   ar << objid << SNAPSHOTTYPE_TRADEPUT;
  *   ar << i << nItemType << nId << nItemNum;   // BYTE, BYTE, BYTE, short
- * `objid` is the ACTOR. `nId` is the actor's bag slot; `nItemNum` is the staged
+ * `objid` is the ACTOR. `nId` is the item's stable `m_dwObjId` (the client
+ * re-resolves it with `GetItemId(nId)` in `OnTradePut`, `DPClient.cpp:2605`), NOT
+ * a bag slot -- echo back exactly what the client sent. `nItemNum` is the staged
  * count as CLAMPED by the server (`TradeSetItem2` writes it back by reference),
  * not the count the client asked for.
  */
 export function buildTradePut(
   actorObjid: number, windowIndex: number, itemType: number,
-  bagSlot: number, count: number,
+  itemObjId: number, count: number,
 ): Buffer {
   const w = open(actorObjid, SNAPSHOTTYPE.TRADEPUT);
   w.writeByte(windowIndex);
   w.writeByte(itemType);
-  w.writeByte(bagSlot);
+  w.writeByte(itemObjId);
   w.writeWord(count & 0xffff);      // short
   return w.build();
 }
