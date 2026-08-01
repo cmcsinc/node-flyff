@@ -140,6 +140,110 @@ describe('PartyService', () => {
     assert.equal(remaining!.members[0], 2, 'b is new leader');
   });
 
+  it('kicked member gets an empty PARTYMEMBER teardown addressed to themself', () => {
+    service.invite(a, 2); service.accept(b, 1);
+    service.invite(a, 3); service.accept(c, 1);
+    harness.sent.length = 0;
+    service.leaveOrKick(a, 3); // leader kicks c; party of 2 survives
+    const toC = harness.sent.filter((s) => s.id === 3);
+    assert.equal(toC.length, 1, 'removed player notified exactly once');
+    assert.equal(subtype(toC[0].buf), SNAPSHOTTYPE.PARTYMEMBER);
+    // nSizeofMember == 0 -> teardown. idPlayer (offset 16) must be the removed
+    // player so the client says "you left" and not "party disbanded".
+    assert.equal(toC[0].buf.readUInt32LE(16), 3);
+    assert.equal(toC[0].buf.readUInt32LE(toC[0].buf.length - 4), 0, 'size 0');
+    // Survivors got a real roster (size 2), not a teardown.
+    for (const s of harness.sent.filter((x) => x.id !== 3)) {
+      assert.equal(subtype(s.buf), SNAPSHOTTYPE.PARTYMEMBER);
+      assert.equal(s.buf.readUInt32LE(16), 3, 'affected id = the departed member');
+    }
+  });
+
+  it('disband teardown uses idPlayer 0 for survivors, self-id for the leaver', () => {
+    service.invite(a, 2); service.accept(b, 1);
+    harness.sent.length = 0;
+    service.leaveOrKick(b, 2); // b leaves -> party of 1 -> disband
+    const toB = harness.sent.filter((s) => s.id === 2);
+    const toA = harness.sent.filter((s) => s.id === 1);
+    assert.equal(toB.length, 1);
+    assert.equal(toB[0].buf.readUInt32LE(16), 2, 'leaver sees own id -> "you left"');
+    assert.equal(toA.length, 1);
+    assert.equal(toA[0].buf.readUInt32LE(16), 0, 'survivor sees 0 -> "disbanded"');
+    assert.equal(a.m_idParty, NULL_ID);
+    assert.equal(b.m_idParty, NULL_ID);
+  });
+
+  it('changeLeader promotes + sends ONLY the leader notice (no roster resend)', () => {
+    service.invite(a, 2); service.accept(b, 1);
+    harness.sent.length = 0;
+    service.changeLeader(a, 2);
+    assert.equal(manager.getByMember(1)!.members[0], 2, 'b promoted to slot 0');
+    assert.equal(harness.sent.length, 2, 'one notice per member');
+    for (const s of harness.sent) {
+      assert.equal(subtype(s.buf), SNAPSHOTTYPE.ADDPARTYCHANGELEADER);
+      assert.equal(s.buf.readUInt32LE(16), 2, 'new leader id');
+    }
+  });
+
+  it('changeLeader rejects non-leader requester, self, and non-members', () => {
+    service.invite(a, 2); service.accept(b, 1);
+    harness.sent.length = 0;
+    service.changeLeader(b, 1);   // b is not the leader
+    service.changeLeader(a, 1);   // a is already the leader
+    service.changeLeader(a, 999); // not a member (C++ would memcpy OOB)
+    assert.equal(harness.sent.length, 0);
+    assert.equal(manager.getByMember(1)!.members[0], 1, 'leader unchanged');
+  });
+
+  describe('changeTroup (advance party)', () => {
+    it('leader advances the party and every member gets PARTYCHANGETROUP', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      harness.sent.length = 0;
+      service.changeTroup(a, 'Braves');
+      const party = manager.getByMember(1)!;
+      assert.equal(party.kindTroup, 1);
+      assert.equal(party.name, 'Braves');
+      assert.equal(harness.sent.length, 2);
+      for (const s of harness.sent) assert.equal(subtype(s.buf), SNAPSHOTTYPE.PARTYCHANGETROUP);
+    });
+
+    it('rejects non-leader, empty/over-long names, and a second advance', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      const party = manager.getByMember(1)!;
+      harness.sent.length = 0;
+      service.changeTroup(b, 'Nope');            // not leader
+      service.changeTroup(a, '   ');             // empty after trim
+      service.changeTroup(a, 'x'.repeat(33));    // over MAX_PARTY_NAME_LEN
+      assert.equal(party.kindTroup, 0);
+      assert.equal(harness.sent.length, 0);
+      service.changeTroup(a, 'Braves');
+      harness.sent.length = 0;
+      service.changeTroup(a, 'Renamed');         // already a troupe -- one-way
+      assert.equal(party.name, 'Braves');
+      assert.equal(harness.sent.length, 0);
+    });
+
+    it('later roster broadcasts keep kindTroup + name (no silent demotion)', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      service.changeTroup(a, 'Braves');
+      service.invite(a, 3);
+      harness.sent.length = 0;
+      service.accept(c, 1);
+      const roster = harness.sent.find((s) => subtype(s.buf) === SNAPSHOTTYPE.PARTYMEMBER);
+      assert.ok(roster, 'roster broadcast on join');
+      // kindTroup is the 2nd DWORD of CParty::Serialize. Body: prefix(16) +
+      // idPlayer(4) + 2 strings + nSizeofMember(4) then partyId, kindTroup.
+      const buf = roster!.buf;
+      let off = 20;
+      off += 4 + buf.readUInt32LE(off);  // leader name
+      off += 4 + buf.readUInt32LE(off);  // member name
+      off += 4;                          // nSizeofMember
+      off += 4;                          // m_uPartyId
+      assert.equal(buf.readUInt32LE(off), 1, 'kindTroup still 1');
+      assert.ok(buf.includes(Buffer.from('Braves', 'utf8')), 'm_sParty present');
+    });
+  });
+
   it('chat fans out PARTYCHAT to every member', () => {
     service.invite(a, 2); service.accept(b, 1);
     harness.sent.length = 0;
