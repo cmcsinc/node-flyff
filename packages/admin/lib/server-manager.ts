@@ -19,6 +19,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import {
+  clearLogs,
   fetchLogs,
   fetchStatuses,
   requestShutdown,
@@ -190,8 +191,18 @@ export async function isRunning(id: string): Promise<boolean> {
   return st !== undefined && (st.state === 'running' || st.state === 'starting');
 }
 
-export function getLogs(id: string, since = 0): Promise<LogLine[]> {
-  return fetchLogs(id, since);
+export function getLogs(id: string, since = 0, wait = false): Promise<LogLine[]> {
+  return fetchLogs(id, since, wait);
+}
+
+/**
+ * Clears the daemon's buffer for `id`.
+ *
+ * Clearing browser state alone is not a clear: the next page load re-reads the
+ * daemon ring from seq 0 and the "cleared" lines come back.
+ */
+export function clearInstanceLogs(id: string): Promise<{ ok: true } | { error: string }> {
+  return clearLogs(id);
 }
 
 /** Boots an instance in the daemon (survives admin restarts). */

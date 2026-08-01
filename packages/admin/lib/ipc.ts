@@ -20,7 +20,8 @@ import type { IpcBus } from "@flyff/ipc";
 export type AdminCommand =
   | { kind: "kick"; charId: number }
   | { kind: "teleport"; charId: number; x?: number; z?: number }
-  | { kind: "mail_pushed"; charId: number };
+  | { kind: "mail_pushed"; charId: number }
+  | { kind: "kick_all"; reason?: string };
 
 /** Channel name — must match `ADMIN_COMMAND_CHANNEL` on the world side. */
 const ADMIN_COMMAND_CHANNEL = "admin:command";
