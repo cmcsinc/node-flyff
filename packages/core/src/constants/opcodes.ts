@@ -195,6 +195,10 @@ export const PACKETTYPE = Object.freeze({
   DUELREQUEST:          0xffffff23,
   DUELYES:              0xffffff24,
   DUELNO:               0xffffff25,
+  // MsgHdr.h:144 -- navigator map ping. `CWndNavigator::OnLButtonDown`
+  // (WndField.cpp:12123) sends `D3DXVECTOR3 Pos, OBJID objidTarget`: the
+  // focused player's objid when one is focused, else NULL_ID (= ping my party).
+  SETNAVIPOINT:         0x00ff0018,
   // MsgHdr.h:280-316 -- Party C->S (solo party MVP). Bodies (Neuz/DPClient.cpp
   // :9583-9637): MEMBERREQUEST `u_long uLeaderId, u_long uMemberId, BYTE bTroup`
   // (invite); MEMBERREQUESTCANCLE `u_long uLeader, u_long uMember, int nMode`
@@ -404,6 +408,11 @@ export const SNAPSHOTTYPE = Object.freeze({
   PARTYCHAT:              0x0069,
   PARTYCHANGEITEMMODE:    0x008f,
   PARTYCHANGEEXPMODE:     0x0090,
+  // MsgHdr.h:1121 -- navigator map ping echo. `CUser::AddSetNaviPoint`
+  // (User.cpp:2559) body: `D3DXVECTOR3 Pos | String Name`. `objid` (the
+  // snapshot record owner) is the PINGER's id, not the recipient's --
+  // `CDPClient::OnSetNaviPoint` (DPClient.cpp:15358) keys `m_vOtherPoint` by it.
+  SETNAVIPOINT:           0x00c6,
 
   // ── Phase 2 v19 systems S->C ──────────────────────────────────────────────
   // MsgHdr.h:1084 -- `CUser::AddQueryEquip` (User.cpp:2635), self only:

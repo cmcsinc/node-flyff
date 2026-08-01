@@ -172,6 +172,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.PARTYCHANGEITEMMODE, (s, r) => deps.partyHandler.handlePartyChangeItemMode(s, r));
   dispatcher.register(PACKETTYPE.PARTYCHANGEEXPMODE, (s, r) => deps.partyHandler.handlePartyChangeExpMode(s, r));
   dispatcher.register(PACKETTYPE.PARTYCHAT, (s, r) => deps.partyHandler.handlePartyChat(s, r));
+  dispatcher.register(PACKETTYPE.SETNAVIPOINT, (s, r) => deps.partyHandler.handleSetNaviPoint(s, r));
   dispatcher.register(PACKETTYPE.USESKILL, (s, r) => deps.useSkillHandler.handleUseSkill(s, r));
   dispatcher.register(PACKETTYPE.DOUSESKILLPOINT, (s, r) => deps.doUseSkillPointHandler.handleDoUseSkillPoint(s, r));
   dispatcher.register(PACKETTYPE.MODIFY_STATUS, (s, r) => deps.modifyStatusHandler.handleModifyStatus(s, r));

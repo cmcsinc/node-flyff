@@ -229,4 +229,38 @@ describe('PartyService', () => {
       assert.ok(disbanded);
     });
   });
+
+  describe('naviPoint (map ping)', () => {
+    const pos = { x: 100, y: 0, z: 200 };
+
+    it('NULL_ID target fans out to every party member', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      harness.sent.length = 0;
+      service.naviPoint(a, pos, NULL_ID);
+      assert.deepEqual(harness.sent.map((s) => s.id), [1, 2]);
+      assert.equal(subtype(harness.sent[0].buf), SNAPSHOTTYPE.SETNAVIPOINT);
+      // Record objid is the PINGER in every copy, not the recipient.
+      assert.equal(harness.sent[1].buf.readUInt32LE(10), 1);
+    });
+
+    it('NULL_ID target with no party sends nothing', () => {
+      service.naviPoint(a, pos, NULL_ID);
+      assert.equal(harness.sent.length, 0);
+    });
+
+    it('focused target pings both pinger and target, party or not', () => {
+      service.naviPoint(a, pos, 3);
+      assert.deepEqual(harness.sent.map((s) => s.id), [1, 3]);
+    });
+
+    it('focused self pings once', () => {
+      service.naviPoint(a, pos, 1);
+      assert.deepEqual(harness.sent.map((s) => s.id), [1]);
+    });
+
+    it('offline focused target sends nothing', () => {
+      service.naviPoint(a, pos, 999);
+      assert.equal(harness.sent.length, 0);
+    });
+  });
 });

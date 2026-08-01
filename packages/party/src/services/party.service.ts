@@ -25,7 +25,8 @@ import { NULL_ID } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 import {
   buildPartyMember, buildPartyRequest, buildPartyRequestCancel,
-  buildPartyChangeLeader, buildPartyChat, type PartySnapshotMember,
+  buildPartyChangeLeader, buildPartyChat, buildSetNaviPoint,
+  type PartySnapshotMember,
 } from '@flyff/world-core';
 import {
   PartyManager, PARTY_INVITE_TIMEOUT_MS,
@@ -195,6 +196,35 @@ export class PartyService {
       const p = this.deps.playerManager.get(id);
       if (p) this.deps.playerManager.sendTo(p, buildPartyChat(p.m_idPlayer, sender.m_szName, msg, sender.m_idPlayer));
     }
+  }
+
+  /**
+   * SETNAVIPOINT -- navigator map ping. Ports `CDPSrvr::OnSetNaviPoint`
+   * (DPSrvr.cpp:6641) exactly:
+   *   - `targetId === NULL_ID` -> fan out to every member of the pinger's
+   *     party (nothing happens if they have no party; the client already gates
+   *     this branch on `g_Party.IsMember`).
+   *   - otherwise -> a direct ping at one focused player: BOTH the pinger and
+   *     that player get the marker, regardless of party membership.
+   * The marker record's objid is the PINGER's id in both branches -- the client
+   * keys `m_vOtherPoint` by it (`DPClient.cpp:15358`), so sending the recipient
+   * id would make every pinger overwrite the same single marker.
+   */
+  naviPoint(sender: CPlayer, pos: { x: number; y: number; z: number }, targetId: number): void {
+    const marker = (): Buffer => buildSetNaviPoint(sender.m_idPlayer, pos, sender.m_szName);
+    if (targetId === NULL_ID) {
+      const party = this.deps.partyManager.getByMember(sender.m_idPlayer);
+      if (!party) return;
+      for (const id of party.members) {
+        const p = this.deps.playerManager.get(id);
+        if (p) this.deps.playerManager.sendTo(p, marker());
+      }
+      return;
+    }
+    const target = this.deps.playerManager.get(targetId);
+    if (!target) return;
+    this.deps.playerManager.sendTo(sender, marker());
+    if (target.m_idPlayer !== sender.m_idPlayer) this.deps.playerManager.sendTo(target, marker());
   }
 
   /**

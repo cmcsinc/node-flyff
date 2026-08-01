@@ -25,6 +25,7 @@ import { PacketReader } from '@flyff/core/net/PacketReader';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { PacketError } from '@flyff/core/errors';
+import { Validate } from '@flyff/core/utils/validate';
 import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { PartyService } from '../services/party.service';
@@ -152,6 +153,30 @@ export class PartyHandler {
       this.deps.partyService.chat(player, msg);
     } catch (error) {
       if (error instanceof PacketError) { logger.warn({ err: error, charId: player.m_idPlayer }, 'PARTYCHAT parse failed'); return; }
+      throw error;
+    }
+  }
+
+  /**
+   * SETNAVIPOINT (0x00ff0018) -- navigator map ping.
+   * `CWndNavigator::OnLButtonDown` (WndField.cpp:12123) sends
+   * `D3DXVECTOR3 Pos, OBJID objidTarget`. Pos is world coords (client fills
+   * x/z from the click, y stays 0); objidTarget is the focused player's objid,
+   * or NULL_ID to ping the pinger's whole party.
+   */
+  handleSetNaviPoint(socket: ClientSocket, reader: PacketReader): void {
+    const player = this.resolve(socket);
+    if (!player) return;
+    try {
+      const x = reader.readFloat();
+      const y = reader.readFloat();
+      const z = reader.readFloat();
+      const objidTarget = reader.readDword();
+      Validate.pos(x, y, z);
+      Validate.dword(objidTarget);
+      this.deps.partyService.naviPoint(player, { x, y, z }, objidTarget);
+    } catch (error) {
+      if (error instanceof PacketError) { logger.warn({ err: error, charId: player.m_idPlayer }, 'SETNAVIPOINT parse failed'); return; }
       throw error;
     }
   }
