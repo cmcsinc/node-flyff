@@ -722,8 +722,8 @@ export async function compose(): Promise<WorldComposeResult> {
   // written through immediately (no WAL, matching C++ which has no batch save).
   const friendService = new FriendService({
     playerManager, friendRepo, charRepo,
-    sendDefinedText: (player, tid) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    sendDefinedText: (player, tid, args) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
   });
   const friendHandler = new FriendHandler(playerManager, friendService);
 
@@ -825,6 +825,8 @@ export async function compose(): Promise<WorldComposeResult> {
     zones: resources.zones,
     refreshVisibility: (player) => visibilityService.refresh(player.m_idPlayer, true),
     mailHandler,
+    // Only `kickAll` uses this -- single kicks let the socket-close hook flush.
+    saveAndLeave: (charId) => joinService.disconnectByCharId(charId),
   });
   const adminListener = new AdminListener({ sink: adminCommandService });
 
