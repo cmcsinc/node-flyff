@@ -100,6 +100,10 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 1000
+    healHpPct: 10
+    healPct: 50
   - id: 96
     key: MI_MUSHPANG1
     name: Small Mushpang
@@ -200,6 +204,10 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 1000
+    healHpPct: 20
+    healPct: 50
   - id: 23
     key: MI_BURUDENG1
     name: Small Burudeng
@@ -325,6 +333,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 750
   - id: 27
     key: MI_PUKEPUKE2
     name: Pukepuke
@@ -350,6 +360,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 750
   - id: 28
     key: MI_PUKEPUKE3
     name: Captain Pukepuke
@@ -375,6 +387,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 750
   - id: 73
     key: MI_PUKEPUKE4
     name: Giant Pukepuke
@@ -400,6 +414,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 524
     key: MI_PEAKYTURTLE1
     name: Small Peakyturtle
@@ -525,6 +541,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 750
   - id: 89
     key: MI_DEMIAN2
     name: Demian
@@ -575,6 +593,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 750
   - id: 91
     key: MI_DEMIAN4
     name: Giant Demian
@@ -700,6 +720,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 32
     key: MI_LAWOLF1
     name: Young Lawolf
@@ -800,6 +822,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 20
+    runawayDelay: 1000
   - id: 50
     key: MI_FEFERN1
     name: 1st Class Fefern
@@ -950,6 +974,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 37
     key: MI_NYANGNYANG3
     name: Creep Nyangnyang
@@ -1100,6 +1126,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 41
     key: MI_WAGSAAC1
     name: Small Wagsaac
@@ -1200,6 +1228,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 120
     key: MI_MIA1
     name: Small Mia
@@ -2700,6 +2730,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 107
     key: MI_STEAMWALKER1
     name: Small Steam Walker
@@ -2800,6 +2832,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 508
     key: MI_STEELKNIGHT1
     name: Small Steel Knight
@@ -2900,6 +2934,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 548
     key: MI_NUTTYWHEEL1
     name: Small Nutty Wheel
@@ -3000,6 +3036,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 504
     key: MI_DRILLER1
     name: Small Driller
@@ -3100,6 +3138,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 112
     key: MI_VOLT1
     name: Small Volt
@@ -3200,6 +3240,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 512
     key: MI_ELDERGUARD1
     name: Small Elderguard
@@ -3300,6 +3342,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 404
     key: MI_GARBAGEPIDER1
     name: Small Garbagepider
@@ -3400,6 +3444,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 516
     key: MI_CRANEMACHINERY1
     name: Small Crane Machinery
@@ -3500,6 +3546,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 304
     key: MI_MOTHBEE1
     name: Small Mothbee
@@ -3800,6 +3848,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 116
     key: MI_CIRCUSBEAR1
     name: Small Circus Bear
@@ -4000,6 +4050,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 130
     key: MI_PIRE1
     name: Small Pire
@@ -4275,6 +4327,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
+    healHpPct: 10
+    healPct: 20
   - id: 539
     key: MI_CARRIERBOMB4
     name: Giant Carrierbomb
@@ -4300,6 +4354,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
+    healHpPct: 10
+    healPct: 40
   - id: 408
     key: MI_RAMPAGEBUTCHER1
     name: Small Rampage Butcher
@@ -4800,6 +4856,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 568
     key: MI_SYLIACA1
     name: Young Syliaca
@@ -4900,6 +4958,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 564
     key: MI_RISEM1
     name: Small Risem
@@ -5000,6 +5060,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 572
     key: MI_ZOMBIGER1
     name: Small Zombiger
@@ -5100,6 +5162,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 577
     key: MI_FLYBAT1
     name: Small Flybat
@@ -5300,6 +5364,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 585
     key: MI_SCOPICON1
     name: Small Scorpicon
@@ -5400,6 +5466,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 589
     key: MI_TRANGFOMA1
     name: Small Trangfoma
@@ -5500,6 +5568,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 556
     key: MI_MINECATCHER
     name: Mine Catcher
@@ -5700,6 +5770,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 646
     key: MI_DUMP1
     name: Small Dump
@@ -5800,6 +5872,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 30
   - id: 618
     key: MI_NAUTREPY1
     name: Small Nautrepy
@@ -5900,6 +5974,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 20
   - id: 602
     key: MI_BOO1
     name: Small Boo
@@ -6000,6 +6076,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 638
     key: MI_HOPPRE1
     name: Small Hoppre
@@ -6100,6 +6178,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 20
   - id: 630
     key: MI_MUSHPOIE1
     name: Small Mushpoie
@@ -6200,6 +6280,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 598
     key: MI_IREN1
     name: Small Iren
@@ -6300,6 +6382,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 594
     key: MI_WATANGKA1
     name: Small Watangka
@@ -6375,6 +6459,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 10
   - id: 597
     key: MI_WATANGKA4
     name: Giant Watangka
@@ -6500,6 +6586,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 606
     key: MI_LUIA1
     name: Small Luia
@@ -6600,6 +6688,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 642
     key: MI_GONGURY1
     name: Small Gongury
@@ -6675,6 +6765,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 20
   - id: 645
     key: MI_GONGURY4
     name: Giant Gongury
@@ -6700,6 +6792,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 30
   - id: 614
     key: MI_SHUHAMMA1
     name: Small Shuhamma
@@ -6875,6 +6969,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 10
   - id: 653
     key: MI_KERN4
     name: Giant Kern
@@ -6900,6 +6996,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 610
     key: MI_GLAPHAN1
     name: Small Glaphan
@@ -7000,6 +7098,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 654
     key: MI_DUFEFERN1
     name: Mutant Fefern
@@ -7075,6 +7175,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 657
     key: MI_DUNYANGNYANG1
     name: Mutant Nyangnyang
@@ -7275,6 +7377,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 70
   - id: 666
     key: MI_VICEVEDUQUE
     name: Vice Veduque
@@ -8875,6 +8979,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 50
   - id: 699
     key: MI_DU_DKKEAKOON9
     name: Mutant Keakoon Worker
@@ -8975,6 +9081,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 70
   - id: 703
     key: MI_DU_DKROACHFL1
     name: Pink Roach
@@ -9175,6 +9283,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 50
   - id: 709
     key: MI_DU_DKTRILLIPY3
     name: Violet Trillipy
@@ -9225,6 +9335,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 50
   - id: 711
     key: MI_DU_DKTRILLIPY5
     name: Blood Trillipy
@@ -9275,6 +9387,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 50
   - id: 713
     key: MI_DU_DKKIMERADON1
     name: Chimeradon
@@ -9325,6 +9439,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 50
   - id: 715
     key: MI_DU_METEONYKER
     name: Meteonyker
@@ -9550,6 +9666,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    healHpPct: 5
+    healPct: 20
   - id: 824
     key: MI_LIEUTENANT
     name: Lieutenant General Scythoid
@@ -9575,6 +9693,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 5
+    healPct: 20
   - id: 825
     key: MI_SPIKETAIL
     name: Air Marshall Spiketail
@@ -9600,6 +9720,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 5
+    healPct: 20
   - id: 826
     key: MI_GLYPHAXZ
     name: General Glyphaxz
@@ -9875,6 +9997,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 865
     key: MI_IBLREDOTEM
     name: Ivillis Red Otem
@@ -12225,6 +12349,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 967
     key: MI_RANGDA02
     name: Horrible Rangda
@@ -12250,6 +12376,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 968
     key: MI_RANGDA03
     name: Uncanny Rangda
@@ -12275,6 +12403,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 969
     key: MI_RANGDA04
     name: Dreadful Rangda
@@ -12300,6 +12430,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 993
     key: MI_KINGSTER01
     name: Small Kingster
@@ -15700,6 +15832,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 1279
     key: MI_PINATA
     name: Pinata
@@ -15975,6 +16109,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 1360
     key: MI_COLOWAGJAK
     name: "[Mirrored Soul] Giant Wagsaac"
@@ -16000,6 +16136,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 1361
     key: MI_COLOREDMANTIS
     name: "[Mirrored Soul] Giant Red Mantis"
@@ -16075,6 +16213,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 1364
     key: MI_COLOHOWBOW
     name: "[Mirrored Soul] Giant Hobo"
@@ -16125,6 +16265,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 1366
     key: MI_COLOSTIMEWORK
     name: "[Mirrored Soul] Giant Steam Walker"
@@ -16150,6 +16292,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 1367
     key: MI_COLOGRREUNG
     name: "[Mirrored Soul] Giant Grrr"
@@ -16175,6 +16319,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 1368
     key: MI_COLOGRIMONG
     name: "[Mirrored Soul] Giant Greemong"
@@ -16200,6 +16346,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 1369
     key: MI_COLOLUIA
     name: "[Mirrored Soul] Giant Luia"
@@ -16225,6 +16373,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 1370
     key: MI_COLOGONGRI
     name: "[Mirrored Soul] Giant Gongury"
@@ -16250,6 +16400,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 30
   - id: 1371
     key: MI_COLOKEREUN
     name: "[Mirrored Soul] Giant Kern"
@@ -16275,6 +16427,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 1372
     key: MI_COLOMATEONIKER
     name: "[Mirrored Soul] Meteonyker"
@@ -16625,6 +16779,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 1392
     key: MI_COLOWAGJAK_1
     name: "[Inferior Soul] Giant Wagsaac"
@@ -16650,6 +16806,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
+    fleeHpPct: 10
+    runawayDelay: 1000
   - id: 1393
     key: MI_COLOREDMANTIS_1
     name: "[Inferior Soul] Giant Red Mantis"
@@ -16725,6 +16883,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 1396
     key: MI_COLOHOWBOW_1
     name: "[Inferior Soul] Giant Hobo"
@@ -16775,6 +16935,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 1398
     key: MI_COLOSTIMEWORK_1
     name: "[Inferior Soul] Giant Steam Walker"
@@ -16800,6 +16962,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 1399
     key: MI_COLOGRREUNG_1
     name: "[Inferior Soul] Giant Grrr"
@@ -16825,6 +16989,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 30
   - id: 1400
     key: MI_COLOGRIMONG_1
     name: "[Inferior Soul] Giant Greemong"
@@ -16850,6 +17016,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 40
   - id: 1401
     key: MI_COLOLUIA_1
     name: "[Inferior Soul] Giant Luia"
@@ -16875,6 +17043,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 1402
     key: MI_COLOGONGRI_1
     name: "[Inferior Soul] Giant Gongury"
@@ -16900,6 +17070,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 20
+    healPct: 30
   - id: 1403
     key: MI_COLOKEREUN_1
     name: "[Inferior Soul] Giant Kern"
@@ -16925,6 +17097,8 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
+    healHpPct: 10
+    healPct: 50
   - id: 1404
     key: MI_COLOMATEONIKER_1
     name: "[False Soul] Meteonyker"

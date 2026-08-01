@@ -26,6 +26,8 @@ movers:
     attackable: false
     guard: false
     belligerence: 13
+    healHpPct: 5
+    healPct: 20
   - id: 200
     key: MI_INFO_PENG
     name: Infopeng
@@ -1651,6 +1653,8 @@ movers:
     attackable: false
     guard: false
     belligerence: 11
+    healHpPct: 5
+    healPct: 20
   - id: 166
     key: MI_KRRR
     name: Krrr
@@ -1676,6 +1680,8 @@ movers:
     attackable: false
     guard: false
     belligerence: 11
+    healHpPct: 10
+    healPct: 30
   - id: 167
     key: MI_MUSHMOOT
     name: Mushmoot
@@ -1701,6 +1707,8 @@ movers:
     attackable: false
     guard: false
     belligerence: 11
+    healHpPct: 10
+    healPct: 30
   - id: 822
     key: MI_LOADCLOCKWORK
     name: Lord Clockworks Alpha
@@ -1726,6 +1734,8 @@ movers:
     attackable: false
     guard: false
     belligerence: 13
+    healHpPct: 5
+    healPct: 20
   - id: 873
     key: MI_POSTBOX
     name: Post Box
@@ -7326,6 +7336,8 @@ movers:
     attackable: false
     guard: false
     belligerence: 13
+    healHpPct: 5
+    healPct: 20
   - id: 1385
     key: MI_COLOANGRYBEHEMOTH
     name: "[Mirrored Soul] Ankou"
@@ -7451,6 +7463,8 @@ movers:
     attackable: false
     guard: false
     belligerence: 13
+    healHpPct: 5
+    healPct: 20
   - id: 1417
     key: MI_COLOANGRYBEHEMOTH_1
     name: "[False Soul] Ankou"
