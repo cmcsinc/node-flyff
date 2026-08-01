@@ -165,12 +165,24 @@ export class TradeService {
   // ── Staging ───────────────────────────────────────────────────────────────
 
   /**
-   * `OnTradePut` (DPSrvr.cpp:8737) + `TradeSetItem2` (`MoverItem.cpp:210`).
-   * Stakes `count` from bag `slot` into window `index`. The count is clamped to
-   * the slot's live count and echoed back -- the client renders the clamped
-   * value, so echoing the requested one desyncs the window.
+   * `OnTradePut` (DPSrvr.cpp:8739) + `TradeSetItem2` (`MoverItem.cpp:210`).
+   * Stakes `count` from the item whose stable objid is `nId` into window `index`.
+   *
+   * **`nId` is an objid, not a bag slot.** The client sends
+   * `SHORTCUT::m_dwId` (`WndTradeCtrl.cpp:181`), and `m_dwId` is assigned
+   * `pItemElem->m_dwObjId` (`WndItemCtrl.cpp:1283`); the server resolves it with
+   * `pUser->GetItemId( nId )` = `m_Inventory.GetAtId( nId )` (`Mover.cpp:4951`),
+   * an objid lookup. Treating it as a slot index only works while objid == slot;
+   * after any equip/unequip/move the two diverge, so a staked item resolved to
+   * the WRONG slot and the commit's objid re-check then aborted the whole trade.
+   * Same convention as DOEQUIP / DOUSEITEM / DROPITEM (`findSlotByObjId`).
+   *
+   * The count is clamped to the slot's live count and echoed back -- the client
+   * renders the clamped value, so echoing the requested one desyncs the window.
+   * The echo carries the ORIGINAL `nId`, because the client also re-resolves it
+   * through `GetItemId` in `OnTradePut` (`DPClient.cpp:2605`).
    */
-  put(player: CPlayer, index: number, itemType: number, slot: number, count: number): TradeResult {
+  put(player: CPlayer, index: number, itemType: number, nId: number, count: number): TradeResult {
     const other = this.partner(player);
     if (!other) return fail('no-partner');
     if (index < 0 || index >= MAX_TRADE) return fail('bad-index');
@@ -183,16 +195,28 @@ export class TradeService {
     }
     if (player.m_vtInfo.items[index]) return this.refuse(player, TID_GAME_CANNOTTRADE_ITEM);
 
+    const slot = player.findSlotByObjId(nId);
+    if (slot < 0) {
+      logger.warn({ charId: player.m_idPlayer, nId, index }, 'trade put: no item with that objid');
+      return this.refuse(player, TID_GAME_CANNOTTRADE_ITEM);
+    }
+
     const refusal = this.checkStakeable(player, slot);
-    if (refusal !== 0) return this.refuse(player, refusal);
+    if (refusal !== 0) {
+      logger.warn({ charId: player.m_idPlayer, nId, slot, tid: refusal }, 'trade put refused');
+      return this.refuse(player, refusal);
+    }
 
     const item = player.m_Inventory[slot]!;
     const staged = Math.min(count, item.count);
     player.m_vtInfo.items[index] = {
       slot, objid: item.objid ?? slot, itemId: item.itemId, count: staged,
     };
+    logger.info({
+      charId: player.m_idPlayer, index, nId, slot, itemId: item.itemId, staged, asked: count,
+    }, 'trade put staked');
 
-    const packet = buildTradePut(player.m_idPlayer, index, itemType, slot, staged);
+    const packet = buildTradePut(player.m_idPlayer, index, itemType, nId, staged);
     this.deps.playerManager.sendTo(player, packet);
     this.deps.playerManager.sendTo(other, packet);
     return OK;
@@ -265,7 +289,11 @@ export class TradeService {
     if (player.m_vtInfo.state !== TRADE_STEP.ITEM) return fail('wrong-step');
 
     player.m_vtInfo.state = TRADE_STEP.OK;
-    if (other.m_vtInfo.state === TRADE_STEP.OK) {
+    const both = other.m_vtInfo.state === TRADE_STEP.OK;
+    logger.info({
+      charId: player.m_idPlayer, other: other.m_idPlayer, otherStep: other.m_vtInfo.state, both,
+    }, 'trade ok');
+    if (both) {
       const packet = buildTradeLastConfirm();
       this.deps.playerManager.sendTo(player, packet);
       this.deps.playerManager.sendTo(other, packet);
@@ -284,17 +312,34 @@ export class TradeService {
    */
   lastConfirm(player: CPlayer): TradeResult {
     const other = this.partner(player);
-    if (!other) return fail('no-partner');
-    if (player.m_vtInfo.state !== TRADE_STEP.OK) return fail('wrong-step');
+    if (!other) {
+      logger.warn({ charId: player.m_idPlayer }, 'trade confirm: no live partner link');
+      return fail('no-partner');
+    }
+    if (player.m_vtInfo.state !== TRADE_STEP.OK) {
+      logger.warn({
+        charId: player.m_idPlayer, step: player.m_vtInfo.state, otherStep: other.m_vtInfo.state,
+      }, 'trade confirm: self not at OK');
+      return fail('wrong-step');
+    }
 
     if (other.m_vtInfo.state === TRADE_STEP.OK) {
       player.m_vtInfo.state = TRADE_STEP.CONFIRM;
+      logger.info({ charId: player.m_idPlayer, other: other.m_idPlayer },
+        'trade confirm: first side, waiting on partner');
       const packet = buildTradeLastConfirmOk(player.m_idPlayer);
       this.deps.playerManager.sendTo(player, packet);
       this.deps.playerManager.sendTo(other, packet);
       return OK;
     }
-    if (other.m_vtInfo.state !== TRADE_STEP.CONFIRM) return fail('wrong-step');
+    if (other.m_vtInfo.state !== TRADE_STEP.CONFIRM) {
+      logger.warn({
+        charId: player.m_idPlayer, other: other.m_idPlayer, otherStep: other.m_vtInfo.state,
+      }, 'trade confirm: partner step is neither OK nor CONFIRM');
+      return fail('wrong-step');
+    }
+    logger.info({ charId: player.m_idPlayer, other: other.m_idPlayer },
+      'trade confirm: second side, committing');
     return this.commit(player, other);
   }
 
@@ -374,16 +419,27 @@ export class TradeService {
   private planSwap(a: CPlayer, b: CPlayer): TradeSwapPlan | null {
     const sideA = this.collectOutgoing(a);
     const sideB = this.collectOutgoing(b);
-    if (!sideA || !sideB) return null;
+    if (!sideA || !sideB) return null;   // collectOutgoing already logged the stake
 
     // Cross-place: A receives B's outgoing, and vice versa.
-    if (!this.place(a, sideA, sideB.outgoing)) return null;
-    if (!this.place(b, sideB, sideA.outgoing)) return null;
+    if (!this.place(a, sideA, sideB.outgoing)) {
+      logger.warn({ charId: a.m_idPlayer, incoming: sideB.outgoing.length },
+        'trade abort: receiver bag full');
+      return null;
+    }
+    if (!this.place(b, sideB, sideA.outgoing)) {
+      logger.warn({ charId: b.m_idPlayer, incoming: sideA.outgoing.length },
+        'trade abort: receiver bag full');
+      return null;
+    }
 
     // Gold crosses over; overflow on either side aborts the whole trade.
     const goldA = a.m_nGold + b.m_vtInfo.gold;
     const goldB = b.m_nGold + a.m_vtInfo.gold;
-    if (goldA > MAX_GOLD || goldB > MAX_GOLD) return null;
+    if (goldA > MAX_GOLD || goldB > MAX_GOLD) {
+      logger.warn({ goldA, goldB, max: MAX_GOLD }, 'trade abort: gold overflow');
+      return null;
+    }
 
     return {
       a: { ...sideA, gold: goldA },
@@ -403,9 +459,28 @@ export class TradeService {
     for (const index of giver.m_vtInfo.occupied()) {
       const stake = giver.m_vtInfo.items[index]!;
       const live = giver.m_Inventory[stake.slot];
-      if (!live || live.itemId !== stake.itemId) return null;
-      if ((live.objid ?? stake.slot) !== stake.objid) return null;
-      if (live.count < stake.count) return null;
+      // One log per rejection reason -- this is the path a "trade always
+      // cancels" report lands on, and the field that mismatched is the answer.
+      if (!live) {
+        logger.warn({ charId: giver.m_idPlayer, index, stake }, 'trade abort: staked slot now empty');
+        return null;
+      }
+      if (live.itemId !== stake.itemId) {
+        logger.warn({ charId: giver.m_idPlayer, index, staked: stake.itemId, live: live.itemId },
+          'trade abort: staked slot holds a different item');
+        return null;
+      }
+      if ((live.objid ?? stake.slot) !== stake.objid) {
+        logger.warn({ charId: giver.m_idPlayer, index, slot: stake.slot,
+          stakedObjid: stake.objid, liveObjid: live.objid ?? stake.slot },
+          'trade abort: staked objid drifted');
+        return null;
+      }
+      if (live.count < stake.count) {
+        logger.warn({ charId: giver.m_idPlayer, index, staked: stake.count, live: live.count },
+          'trade abort: staked count exceeds live count');
+        return null;
+      }
 
       const remaining = live.count - stake.count;
       slots.set(stake.slot, remaining > 0 ? { ...live, count: remaining } : null);
@@ -457,15 +532,32 @@ export class TradeService {
 
   // ── Teardown ──────────────────────────────────────────────────────────────
 
-  /** `OnTradeCancel` (DPSrvr.cpp:8858) -- explicit cancel from either side. */
+  /**
+   * `OnTradeCancel` (DPSrvr.cpp:8859) -- explicit cancel from either side.
+   *
+   * **Requires a live two-way link**, exactly as C++ does
+   * (`pTrader->m_vtInfo.GetOther() == pUser`, DPSrvr.cpp:8869). This is not a
+   * defensive nicety: `CWndTrade::~CWndTrade` (`WndField.cpp:10564`) fires
+   * `SendTradeCancel()` whenever the trade window closes -- INCLUDING the close
+   * that `OnTradeConsent` performs after a SUCCESSFUL commit. C++ drops that late
+   * cancel because both `CVTInfo`s were already cleared by `TradeConsent`;
+   * echoing TRADECANCEL instead pops `TID_DIAG_0003` ("the trade was cancelled")
+   * on a trade that actually went through.
+   */
   cancel(player: CPlayer, mode = 0): TradeResult {
     const other = this.partner(player);
+    if (!other) {
+      // Late/duplicate cancel (window teardown after commit, or partner gone).
+      logger.debug({ charId: player.m_idPlayer, mode }, 'trade cancel ignored: no live link');
+      return fail('no-partner');
+    }
     this.clearSide(player);
-    if (other) this.clearSide(other);
+    this.clearSide(other);
 
     const packet = buildTradeCancel(player.m_idPlayer, player.m_idPlayer, mode);
     this.deps.playerManager.sendTo(player, packet);
-    if (other) this.deps.playerManager.sendTo(other, packet);
+    this.deps.playerManager.sendTo(other, packet);
+    logger.info({ a: player.m_idPlayer, b: other.m_idPlayer, mode }, 'trade cancelled');
     return OK;
   }
 

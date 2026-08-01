@@ -54,10 +54,10 @@ export class TradeHandler {
     try {
       const index = reader.readByte();
       const itemType = reader.readByte();
-      const slot = reader.readByte();
+      const nId = reader.readByte();       // item's stable m_dwObjId, NOT a slot
       const count = reader.readWord();     // short
-      const out = this.tradeService.put(player, index, itemType, slot, count);
-      logger.debug({ charId: player.m_idPlayer, index, slot, count, out }, 'TRADEPUT');
+      const out = this.tradeService.put(player, index, itemType, nId, count);
+      logger.info({ charId: player.m_idPlayer, index, itemType, nId, count, out }, 'TRADEPUT');
     } catch (error) {
       this.onParseError(error, player, 'TRADEPUT');
     }
@@ -69,7 +69,7 @@ export class TradeHandler {
     try {
       const index = reader.readByte();
       const out = this.tradeService.pull(player, index);
-      logger.debug({ charId: player.m_idPlayer, index, out }, 'TRADEPULL');
+      logger.info({ charId: player.m_idPlayer, index, out }, 'TRADEPULL');
     } catch (error) {
       this.onParseError(error, player, 'TRADEPULL');
     }
@@ -82,7 +82,7 @@ export class TradeHandler {
       const gold = reader.readDword();
       Validate.dword(gold);
       const out = this.tradeService.putGold(player, gold);
-      logger.debug({ charId: player.m_idPlayer, gold, out }, 'TRADEPUTGOLD');
+      logger.info({ charId: player.m_idPlayer, gold, out }, 'TRADEPUTGOLD');
     } catch (error) {
       this.onParseError(error, player, 'TRADEPUTGOLD');
     }
@@ -103,14 +103,14 @@ export class TradeHandler {
     const player = this.resolve(socket);
     if (!player) return;
     const out = this.tradeService.ok(player);
-    logger.debug({ charId: player.m_idPlayer, out }, 'TRADEOK');
+    logger.info({ charId: player.m_idPlayer, out }, 'TRADEOK');
   }
 
   handleTradeConfirm(socket: ClientSocket): void {
     const player = this.resolve(socket);
     if (!player) return;
     const out = this.tradeService.lastConfirm(player);
-    logger.debug({ charId: player.m_idPlayer, out }, 'TRADECONFIRM');
+    logger.info({ charId: player.m_idPlayer, out }, 'TRADECONFIRM');
   }
 
   handleTradeCancel(socket: ClientSocket, reader: PacketReader): void {
@@ -119,7 +119,7 @@ export class TradeHandler {
     try {
       const mode = reader.readDword() | 0;   // int nMode
       const out = this.tradeService.cancel(player, mode);
-      logger.debug({ charId: player.m_idPlayer, mode, out }, 'TRADECANCEL');
+      logger.info({ charId: player.m_idPlayer, mode, out }, 'TRADECANCEL');
     } catch (error) {
       this.onParseError(error, player, 'TRADECANCEL');
     }
@@ -135,7 +135,7 @@ export class TradeHandler {
       const objid = reader.readDword();
       Validate.dword(objid);
       const out = run(player, objid);
-      logger.debug({ charId: player.m_idPlayer, objid, out }, label);
+      logger.info({ charId: player.m_idPlayer, objid, out }, label);
     } catch (error) {
       this.onParseError(error, player, label);
     }
