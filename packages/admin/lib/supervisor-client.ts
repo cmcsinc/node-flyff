@@ -26,6 +26,8 @@ import {
 
 const CONNECT_TIMEOUT_MS = 1500;
 const BOOT_TIMEOUT_MS = 15_000;
+/** Slightly past the daemon's 20s long-poll cap, so the hold isn't aborted. */
+const LOG_WAIT_TIMEOUT_MS = 25_000;
 
 /** In-flight ensureDaemon() promise, deduped across concurrent requests. */
 const g = globalThis as unknown as { __flyffSupervisorBoot?: Promise<DaemonHandle | null> };
@@ -88,6 +90,7 @@ async function call<T>(
   method: 'GET' | 'POST',
   path: string,
   body?: unknown,
+  timeoutMs = CONNECT_TIMEOUT_MS * 4,
 ): Promise<T | { error: string }> {
   const handle = await ensureDaemon();
   const token = readToken();
@@ -100,7 +103,7 @@ async function call<T>(
         ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
       },
       ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      signal: AbortSignal.timeout(CONNECT_TIMEOUT_MS * 4),
+      signal: AbortSignal.timeout(timeoutMs),
     });
     const json: unknown = await res.json();
     if (!res.ok) {
@@ -118,12 +121,21 @@ export async function fetchStatuses(): Promise<Record<string, ProcStatus>> {
   return 'error' in res ? {} : res.procs;
 }
 
-export async function fetchLogs(id: string, since = 0): Promise<LogLine[]> {
+export async function fetchLogs(id: string, since = 0, wait = false): Promise<LogLine[]> {
   const res = await call<{ lines: LogLine[] }>(
     'GET',
-    `/logs?id=${encodeURIComponent(id)}&since=${since}`,
+    `/logs?id=${encodeURIComponent(id)}&since=${since}${wait ? '&wait=1' : ''}`,
+    undefined,
+    // A waiting reader is meant to hang until output arrives; the daemon caps it
+    // at 20s, so allow past that rather than aborting mid-hold.
+    wait ? LOG_WAIT_TIMEOUT_MS : undefined,
   );
   return 'error' in res ? [] : res.lines;
+}
+
+/** Drops the daemon's in-memory ring for `id` — the only durable "clear". */
+export function clearLogs(id: string): Promise<{ ok: true } | { error: string }> {
+  return call('POST', '/logs/clear', { id });
 }
 
 export function requestStart(body: {

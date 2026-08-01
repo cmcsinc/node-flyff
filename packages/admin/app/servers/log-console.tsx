@@ -12,7 +12,7 @@
 import * as React from "react";
 import {
   AlertTriangle,
-  ArrowDownToLine,
+  ArrowUpToLine,
   ChevronRight,
   Copy,
   Download,
@@ -52,31 +52,42 @@ export function LogConsole({ id, state }: { id: string | null; state?: string })
   const [wrap, setWrap] = React.useState(true);
   const [query, setQuery] = React.useState("");
   const [levels, setLevels] = React.useState<ReadonlySet<LogLevel>>(new Set());
+  const [clearing, setClearing] = React.useState(false);
   const boxRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     setRows([]);
     if (!id) return;
+    // Seq is monotonic per daemon, so it doubles as a dedupe key: EventSource
+    // reconnects replay from the start of the ring.
+    let lastSeq = 0;
     const es = new EventSource(`/api/servers/${id}/logs`);
     es.onmessage = (ev) => {
       const l = JSON.parse(ev.data) as LogLine;
+      if (l.seq <= lastSeq) return;
+      lastSeq = l.seq;
       const row: Row = { seq: l.seq, raw: l.line, parsed: parseLogLine(l.line) };
       setRows((prev) => (prev.length > 1500 ? [...prev.slice(-1200), row] : [...prev, row]));
     };
     return () => es.close();
   }, [id]);
 
+  // Newest first — the line you want is the one that just arrived, so it sits
+  // where the eye already is instead of below a scrolling wall.
   const visible = React.useMemo(() => {
     const q = query.trim().toLowerCase();
-    return rows.filter(
+    const kept = rows.filter(
       (r) => passesLevel(r.parsed, levels) && (q === "" || r.raw.toLowerCase().includes(q)),
     );
+    kept.reverse();
+    return kept;
   }, [rows, levels, query]);
 
   // Autoscroll after the filtered list paints, not after the raw list changes —
-  // otherwise a hidden line scrolls the box while the operator reads.
+  // otherwise a hidden line scrolls the box while the operator reads. "Live" is
+  // the top of the box now, so following means pinning scrollTop to 0.
   React.useEffect(() => {
-    if (follow && boxRef.current) boxRef.current.scrollTop = boxRef.current.scrollHeight;
+    if (follow && boxRef.current) boxRef.current.scrollTop = 0;
   }, [visible, follow]);
 
   const errorCount = rows.filter(
@@ -92,9 +103,16 @@ export function LogConsole({ id, state }: { id: string | null; state?: string })
       return next;
     });
 
+  /** Display order is newest-first; a copied/saved log reads chronologically. */
+  const exportText = (): string =>
+    visible
+      .map((r) => r.raw)
+      .reverse()
+      .join("\n");
+
   const copyAll = async () => {
     try {
-      await navigator.clipboard.writeText(visible.map((r) => r.raw).join("\n"));
+      await navigator.clipboard.writeText(exportText());
       toast.success(`Copied ${visible.length} lines`);
     } catch {
       toast.error("Clipboard unavailable");
@@ -102,13 +120,36 @@ export function LogConsole({ id, state }: { id: string | null; state?: string })
   };
 
   const download = () => {
-    const blob = new Blob([visible.map((r) => r.raw).join("\n")], { type: "text/plain" });
+    const blob = new Blob([exportText()], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `${id ?? "server"}-log.txt`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  /**
+   * Clear the daemon's buffer, not just this component's copy.
+   *
+   * Clearing local state only looked like it worked until the next reload or
+   * instance switch, when the stream replayed the ring from seq 0.
+   */
+  const clear = async () => {
+    if (!id) return;
+    setClearing(true);
+    try {
+      const res = await fetch(`/api/servers/${id}/logs`, { method: "DELETE" });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        throw new Error(body.error ?? "Clear failed");
+      }
+      setRows([]);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Clear failed");
+    } finally {
+      setClearing(false);
+    }
   };
 
   return (
@@ -172,7 +213,14 @@ export function LogConsole({ id, state }: { id: string | null; state?: string })
           <Button size="icon" variant="ghost" aria-label="Download visible lines" title="Download" onClick={download}>
             <Download className="h-4 w-4" />
           </Button>
-          <Button size="icon" variant="ghost" aria-label="Clear buffer" title="Clear" onClick={() => setRows([])}>
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label="Clear log buffer"
+            title="Clear buffer (server-side, persists across reloads)"
+            disabled={id === null || clearing}
+            onClick={() => void clear()}
+          >
             <Eraser className="h-4 w-4" />
           </Button>
         </div>
@@ -186,9 +234,9 @@ export function LogConsole({ id, state }: { id: string | null; state?: string })
         aria-label="Server log output"
         tabIndex={0}
         onScroll={(e) => {
-          const el = e.currentTarget;
-          const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 24;
-          if (!atBottom && follow) setFollow(false);
+          // Live = pinned to the top, since newest is first.
+          const atTop = e.currentTarget.scrollTop < 24;
+          if (!atTop && follow) setFollow(false);
         }}
         className="min-h-0 flex-1 overflow-auto bg-muted/40 font-mono text-xs leading-relaxed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
       >
@@ -222,7 +270,7 @@ export function LogConsole({ id, state }: { id: string | null; state?: string })
         <div className="flex-1" />
         {!follow && (
           <Button size="sm" variant="ghost" className="h-6 px-2 text-[11px]" onClick={() => setFollow(true)}>
-            <ArrowDownToLine className="h-3 w-3" /> Jump to live
+            <ArrowUpToLine className="h-3 w-3" /> Jump to live
           </Button>
         )}
       </div>

@@ -110,6 +110,82 @@ export function pushRing(ring: LogLine[], entry: LogLine, max = LOG_RING): LogLi
   return ring;
 }
 
+/**
+ * Per-instance log buffer with long-poll waiters.
+ *
+ * Lives here rather than in the daemon so it is testable without booting the
+ * daemon's HTTP server. Two behaviours matter to callers:
+ *
+ * - `clear()` drops the buffer server-side. A browser-side clear alone is not a
+ *   clear — the next reader replays the ring from seq 0 and the lines come back.
+ * - `wait()` resolves on the next `push` for that id, so a reader that is
+ *   already current is released the instant output appears instead of on a
+ *   fixed poll tick.
+ */
+export class LogHub {
+  private readonly rings = new Map<string, LogLine[]>();
+  private readonly waiters = new Map<string, Set<() => void>>();
+  private seq = 0;
+
+  constructor(private readonly max = LOG_RING) {}
+
+  /** Splits `raw` into lines, appends each, and wakes waiters. Returns the lines. */
+  push(id: string, raw: string, onLine?: (line: string) => void): LogLine[] {
+    const ring = this.rings.get(id) ?? [];
+    const added: LogLine[] = [];
+    for (const line of stripAnsi(raw).split(/\r?\n/)) {
+      if (!line.length) continue;
+      const entry: LogLine = { seq: ++this.seq, ts: Date.now(), line };
+      pushRing(ring, entry, this.max);
+      added.push(entry);
+      onLine?.(line);
+    }
+    this.rings.set(id, ring);
+    if (added.length) this.wake(id);
+    return added;
+  }
+
+  /** Buffered lines for `id` newer than `since`. */
+  since(id: string, since: number): LogLine[] {
+    return (this.rings.get(id) ?? []).filter((l) => l.seq > since);
+  }
+
+  /** Empties `id`'s buffer and releases its waiters so they re-read. */
+  clear(id: string): void {
+    this.rings.set(id, []);
+    this.wake(id);
+  }
+
+  /**
+   * Resolves on the next push/clear for `id`, or after `timeoutMs`.
+   * `onAbort` registers a caller-side cancel (e.g. the HTTP client hanging up).
+   */
+  wait(id: string, timeoutMs: number, onAbort?: (cancel: () => void) => void): Promise<void> {
+    return new Promise<void>((done) => {
+      const set = this.waiters.get(id) ?? new Set<() => void>();
+      let settled = false;
+      const finish = (): void => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        set.delete(finish);
+        done();
+      };
+      const timer = setTimeout(finish, timeoutMs);
+      set.add(finish);
+      this.waiters.set(id, set);
+      onAbort?.(finish);
+    });
+  }
+
+  private wake(id: string): void {
+    const set = this.waiters.get(id);
+    if (!set) return;
+    this.waiters.delete(id);
+    for (const fn of [...set]) fn();
+  }
+}
+
 /** Length-safe constant-time token comparison. */
 export function tokensMatch(a: unknown, b: string): boolean {
   if (typeof a !== 'string' || a.length !== b.length || b.length === 0) return false;

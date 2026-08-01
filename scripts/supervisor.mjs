@@ -82,12 +82,14 @@ const BODIES = {
   `,
   logs: `
     let since = 0;
+    let wait = false;
     for (;;) {
-      for (const l of await getLogs(${JSON.stringify(arg ?? '')}, since)) {
+      for (const l of await getLogs(${JSON.stringify(arg ?? '')}, since, wait)) {
         since = Math.max(since, l.seq);
         console.log(l.line);
       }
-      await new Promise((r) => setTimeout(r, 700));
+      // First pass drains the buffer; after that long-poll so lines print live.
+      wait = true;
     }
   `,
 };

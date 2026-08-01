@@ -13,6 +13,8 @@
  *   GET  /health                      → { ok, pid, startedAt }
  *   GET  /status                      → { procs: Record<id, ProcStatus> }
  *   GET  /logs?id=<id>&since=<seq>    → { lines: LogLine[] }
+ *        &wait=1                      ↳ long-polls (holds until output or 20s)
+ *   POST /logs/clear { id }           → drops that instance's in-memory ring
  *   POST /start  { id, type, configFile, env? }
  *   POST /stop   { id, graceMs? }
  *   POST /shutdown                    → stops all children, then exits
@@ -32,19 +34,17 @@ import {
   DEFAULT_PORT,
   ENTRY,
   LOG_DIR,
+  LogHub,
   ROOT,
   isValidInstanceId,
   loadDotEnv,
   parseSpawnRequest,
   pidAlive,
-  pushRing,
   readChildren,
   readOrCreateToken,
-  stripAnsi,
   tokensMatch,
   writeChildren,
   writeHandle,
-  type LogLine,
   type ProcStatus,
 } from './supervisor-shared';
 // Registry + config generation only — never the client half (that would make
@@ -63,19 +63,16 @@ interface Running {
 
 const TOKEN = readOrCreateToken();
 const procs = new Map<string, Running>();
-const logs = new Map<string, LogLine[]>();
-let seq = 0;
+/** Per-instance log buffer + long-poll waiters (see LogHub). */
+const hub = new LogHub();
+/** Long-poll hold, capped below the client's abort timeout. */
+const LOG_WAIT_MS = 20_000;
 
 mkdirSync(LOG_DIR, { recursive: true });
 
 function pushLog(id: string, raw: string): void {
-  const ring = logs.get(id) ?? [];
-  for (const line of stripAnsi(raw).split(/\r?\n/)) {
-    if (!line.length) continue;
-    pushRing(ring, { seq: ++seq, ts: Date.now(), line });
-    procs.get(id)?.logFile?.write(`${new Date().toISOString()} ${line}\n`);
-  }
-  logs.set(id, ring);
+  const file = procs.get(id)?.logFile;
+  hub.push(id, raw, (line) => file?.write(`${new Date().toISOString()} ${line}\n`));
 }
 
 /** Mirrors the live child set to disk so a successor daemon can adopt it. */
@@ -182,7 +179,12 @@ function start(body: unknown): { status: ProcStatus } | { error: string } {
   const child = spawn(process.execPath, ['--import', 'tsx', ENTRY[type]], {
     cwd: ROOT,
     env,
-    stdio: ['ignore', 'pipe', 'pipe'],
+    // The 4th slot is an IPC channel, and it is the ONLY way a stop actually
+    // reaches the child on Windows: `child.kill('SIGTERM')` is
+    // `TerminateProcess` there, so the child's SIGTERM handler never runs and
+    // its clients are never told to log out. `stop()` sends
+    // `{cmd:'shutdown'}` over this channel first and only falls back to signals.
+    stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
     // The daemon itself has no console (it is spawned DETACHED), so without
     // this Windows allocates a fresh console for every child — an empty black
     // window per game server, since their stdio is piped here.
@@ -221,23 +223,36 @@ function start(body: unknown): { status: ProcStatus } | { error: string } {
 /**
  * Graceful stop, escalating to a hard kill after `graceMs`.
  *
- * On Windows `ChildProcess.kill('SIGTERM')` is `TerminateProcess` — the child's
- * `process.on('SIGTERM')` handler never runs, so the world server's `shutdown()`
- * (journal close, system teardown) is skipped. We therefore ask for a clean exit
- * over stdin-less IPC-free means available to us: send the signal AND, on
- * Windows, `taskkill /T` at escalation so the whole child tree dies rather than
- * just the parent node process.
+ * Three rungs, in order:
+ *   1. `child.send({cmd:'shutdown'})` over the IPC channel opened in `start()`.
+ *      This is the only rung that works on Windows, and the only one that lets
+ *      the world server drain its clients (kick notice + state flush) before
+ *      exiting. Unavailable for an ADOPTED child (no handle) — falls to 2.
+ *   2. `SIGTERM`. Real on POSIX; `TerminateProcess` on Windows, where the
+ *      child's handler never runs — see memory
+ *      `supervisor-orphans-and-windows-sigterm`.
+ *   3. `taskkill /T /F` (or SIGKILL) at `graceMs`, so the whole child tree dies
+ *      rather than just the parent node process.
  *
- * ponytail: a real graceful stop on Windows needs a control channel to the child
- * (e.g. a `process.on('message')` handler + `spawn(..., { stdio: [...,'ipc'] })`).
- * Upgrade path = add an `ipc` stdio slot and send `{cmd:'shutdown'}` here.
+ * `graceMs` must exceed the child's drain window (notice + per-player DB flush),
+ * or rung 3 cuts the drain short. Default is 4000 at the HTTP layer.
  */
 function stop(id: string, graceMs: number): { ok: true } | { error: string } {
   reapAdopted();
   const run = procs.get(id);
   if (!run || run.state === 'exited') return { error: `${id} is not running` };
   pushLog(id, '[supervisor] stopping…');
-  signal(run, 'SIGTERM');
+  let asked = false;
+  if (run.child?.connected) {
+    try {
+      run.child.send({ cmd: 'shutdown' });
+      asked = true;
+      pushLog(id, '[supervisor] sent shutdown over IPC — draining clients');
+    } catch {
+      /* channel died between the check and the send — fall through to signal */
+    }
+  }
+  if (!asked) signal(run, 'SIGTERM');
   const timer = setTimeout(() => {
     if (run.state !== 'exited') {
       pushLog(id, '[supervisor] grace expired — hard kill');
@@ -327,9 +342,29 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
       send(res, 400, { error: 'Invalid id' });
       return;
     }
-    const since = Number(url.searchParams.get('since') ?? 0);
-    const ring = logs.get(id) ?? [];
-    send(res, 200, { lines: Number.isFinite(since) ? ring.filter((l) => l.seq > since) : ring });
+    const raw = Number(url.searchParams.get('since') ?? 0);
+    const since = Number.isFinite(raw) ? raw : 0;
+
+    let lines = hub.since(id, since);
+    // Long-poll: hold an up-to-date reader open until the next line arrives, so
+    // output reaches the browser on write instead of on the next poll tick.
+    if (lines.length === 0 && url.searchParams.get('wait') === '1') {
+      await hub.wait(id, LOG_WAIT_MS, (cancel) => res.on('close', cancel));
+      lines = hub.since(id, since);
+    }
+    send(res, 200, { lines });
+    return;
+  }
+  if (req.method === 'POST' && url.pathname === '/logs/clear') {
+    const body = (await readBody(req)) as { id?: unknown };
+    if (!isValidInstanceId(body.id)) {
+      send(res, 400, { error: 'Invalid id' });
+      return;
+    }
+    // Clearing here (not in the browser) is what makes it stick across a page
+    // reload: the ring is the single source of truth for both.
+    hub.clear(body.id);
+    send(res, 200, { ok: true });
     return;
   }
   if (req.method === 'POST' && url.pathname === '/start') {
@@ -350,8 +385,11 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
   }
   if (req.method === 'POST' && url.pathname === '/shutdown') {
     send(res, 200, { ok: true });
-    for (const id of procs.keys()) stop(id, 2000);
-    setTimeout(() => process.exit(0), 3000).unref();
+    // Same grace as a single /stop: the children drain their clients (kick
+    // notice + per-player state flush) before exiting, and cutting that short
+    // rolls players back to their last checkpoint.
+    for (const id of procs.keys()) stop(id, 4000);
+    setTimeout(() => process.exit(0), 6000).unref();
     return;
   }
   send(res, 404, { error: 'Not found' });
@@ -412,8 +450,8 @@ server.on('error', (err: NodeJS.ErrnoException) => {
 // the exact failure this daemon exists to prevent — so only an explicit
 // /shutdown or SIGTERM tears everything down.
 process.on('SIGTERM', () => {
-  for (const id of procs.keys()) stop(id, 2000);
-  setTimeout(() => process.exit(0), 3000).unref();
+  for (const id of procs.keys()) stop(id, 4000);
+  setTimeout(() => process.exit(0), 6000).unref();
 });
 process.on('SIGINT', () => {
   process.stdout.write('[supervisor] SIGINT ignored — POST /shutdown to stop\n');
