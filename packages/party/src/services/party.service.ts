@@ -372,9 +372,16 @@ export class PartyService {
     let maxLevel = 0;
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
-      if (!p) continue;
-      if (p.m_nZoneId !== killer.m_nZoneId) continue;
-      if (distSq3(p.m_vPos, killer.m_vPos) >= PARTY_EXP_PROXIMITY * PARTY_EXP_PROXIMITY) continue;
+      if (!p) { logger.debug({ id }, 'party exp: member not in playerManager'); continue; }
+      if (p.m_nZoneId !== killer.m_nZoneId) {
+        logger.debug({ id, memberZone: p.m_nZoneId, killerZone: killer.m_nZoneId }, 'party exp: zone mismatch');
+        continue;
+      }
+      const d2 = distSq3(p.m_vPos, killer.m_vPos);
+      if (d2 >= PARTY_EXP_PROXIMITY * PARTY_EXP_PROXIMITY) {
+        logger.debug({ id, distSq: d2, limit: PARTY_EXP_PROXIMITY * PARTY_EXP_PROXIMITY, memberPos: p.m_vPos, killerPos: killer.m_vPos }, 'party exp: too far');
+        continue;
+      }
       nearby.push(p);
       if (p.m_nLevel > maxLevel) maxLevel = p.m_nLevel;
     }
