@@ -230,7 +230,7 @@ pnpm -r test
 
 ### 4. Open a Pull Request
 
-- Target: `main` branch
+- Target: `master` branch
 - Fill in the PR template
 - Ensure CI passes (lint, build, test on SQLite + PostgreSQL)
 

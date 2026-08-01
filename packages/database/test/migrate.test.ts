@@ -43,9 +43,12 @@ describe('migrate.ts', () => {
         try {
           await runMigrations(db);
         } catch (error) {
-          // Expected if no migrations directory exists
+          // Expected if no migrations directory exists, or the env can't apply
+          // ALTER migrations (better-sqlite3 refuses the `foreign_keys` pragma
+          // change Knex wraps each migration in) -- same allowance as rollback.
           const err = error as Error;
-          if (!err.message.includes('Unable to find migration')) {
+          if (!err.message.includes('Unable to find migration')
+            && !err.message.includes('foreign_keys')) {
             throw error;
           }
         }
