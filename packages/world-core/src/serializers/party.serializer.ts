@@ -28,6 +28,11 @@ import { NULL_ID } from '../snapshot-constants';
 
 /** Solo-party kind. Guild-party (`=1`) deferred -- ponytail in the plan. */
 export const PARTY_KIND_TROUP_SOLO = 0;
+/** Troupe ("advance party") kind -- `m_nKindTroup = 1`, carries `m_sParty`. */
+export const PARTY_KIND_TROUP_GUILD = 1;
+
+/** `m_sParty` max length incl. NUL -- `ar.ReadString(sParty, 33)`. */
+export const MAX_PARTY_NAME = 32;
 
 /** `MAX_PARTYMODE` (`_Common/party.h:30`) under v19 (`__PARSKILL1001`). */
 export const MAX_PARTYMODE = 5;
@@ -65,7 +70,7 @@ export interface PartySnapshotMember {
 export interface PartySnapshotState {
   /** `m_uPartyId`. */
   partyId: number;
-  /** `m_nKindTroup` -- 0 solo (we only ship solo). */
+  /** `m_nKindTroup` -- 0 solo, 1 troupe ("advance party"). */
   kindTroup?: number;
   /** `m_nSizeofMember`. */
   size: number;
@@ -89,6 +94,8 @@ export interface PartySnapshotState {
   duelPartyId?: number;
   /** `m_nModeTime[MAX_PARTYMODE]` -- 5 fixed ints. */
   modeTime?: number[];
+  /** `m_sParty` -- only written when `kindTroup !== 0` (troupe party name). */
+  partyName?: string;
   members: PartySnapshotMember[];
 }
 
@@ -116,7 +123,10 @@ function writeCParty(w: PacketWriter, p: PartySnapshotState): void {
   w.writeDword(p.duelPartyId ?? PARTY_NO_DUEL);
   const mt = p.modeTime ?? [];
   for (let i = 0; i < MAX_PARTYMODE; i++) w.writeDword(mt[i] ?? 0);
-  // m_nKindTroup != 0 -> WriteString(m_sParty). Solo skips it.
+  // `if (m_nKindTroup) ar.WriteString(m_sParty)` -- troupe parties only.
+  if ((p.kindTroup ?? PARTY_KIND_TROUP_SOLO) !== PARTY_KIND_TROUP_SOLO) {
+    w.writeString(p.partyName ?? '');
+  }
   for (const m of p.members) {
     w.writeDword(m.id);
     w.writeDword(m.remove ? 1 : 0); // BOOL -> 4 bytes
@@ -127,16 +137,26 @@ function writeCParty(w: PacketWriter, p: PartySnapshotState): void {
  * `SNAPSHOTTYPE_PARTYMEMBER` (0x0082) -- `AddPartyMember` (User.cpp:1250).
  * Body: `idPlayer:DWORD | String leader | String member | int nSizeofMember |
  * CParty::Serialize`. When `party` is null the C++ path writes `nSizeofMember
- * = 0` and skips `Serialize` -- used for the disband self-notice.
+ * = 0` and skips `Serialize` -- the disband/leave teardown notice.
+ *
+ * `affectedPlayerId` is C++'s `idPlayer` argument: the member who JOINED or was
+ * REMOVED, **not** the recipient. Every `AddPartyMember` call site passes
+ * `idMember` (`DPCoreClient.cpp:866-1005`), except the disband broadcast to the
+ * last remaining member which passes literal `0` (:965). The client branches on
+ * it in the empty-roster case (`DPClient.cpp OnAddPartyMember`):
+ * `idPlayer == g_pPlayer->m_idPlayer` -> "you left the party", otherwise
+ * "the party was disbanded". Passing the recipient's own id here makes every
+ * disbanded member read "you left".
  */
 export function buildPartyMember(
   recipientObjid: number,
+  affectedPlayerId: number,
   leaderName: string,
   memberName: string,
   party: PartySnapshotState | null,
 ): Buffer {
   const w = snap(SNAPSHOTTYPE.PARTYMEMBER, recipientObjid);
-  w.writeDword(recipientObjid); // idPlayer -- C++ writes GetId() (the recipient)
+  w.writeDword(affectedPlayerId);
   w.writeString(leaderName);
   w.writeString(memberName);
   if (party === null) {
@@ -240,6 +260,19 @@ export function buildPartyChangeItemMode(recipientObjid: number, itemMode: numbe
 export function buildPartyChangeExpMode(recipientObjid: number, expMode: number): Buffer {
   const w = snap(SNAPSHOTTYPE.PARTYCHANGEEXPMODE, recipientObjid);
   w.writeDword(expMode);
+  return w.build();
+}
+
+/**
+ * `SNAPSHOTTYPE_PARTYCHANGETROUP` (0x0088) -- `AddPartyChangeTroup`
+ * (`User.cpp:1346`). Body: `String szPartyName`. Sent to every member when the
+ * leader advances a solo party to a troupe (guild party). On receipt the client
+ * sets `g_Party.m_nKindTroup = 1` and copies the name into `g_Party.m_sParty`
+ * (`DPClient.cpp:5340 OnPartyChangeTroup`).
+ */
+export function buildPartyChangeTroup(recipientObjid: number, partyName: string): Buffer {
+  const w = snap(SNAPSHOTTYPE.PARTYCHANGETROUP, recipientObjid);
+  w.writeString(partyName);
   return w.build();
 }
 
