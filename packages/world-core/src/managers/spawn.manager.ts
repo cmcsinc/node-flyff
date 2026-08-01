@@ -200,6 +200,12 @@ export class SpawnManager {
             speed: def.speed,
             attackRange: def.attack_range,
             reAttackDelay: def.re_attack_delay || def.attack_speed,
+            fleeHpPct: def.fleeHpPct,
+            runawayDelay: def.runawayDelay,
+            healHpPct: def.healHpPct,
+            healAmount: def.healPct && def.hp
+              ? Math.max(1, Math.floor(def.hp * def.healPct / 100))
+              : undefined,
           },
           pos: npcSpawn.position, angle: npcSpawn.angle, zoneId: zone._id_numeric,
           delayMs: 0, // DYO placement -- m_lRespawn is -1, so it never respawns
@@ -234,6 +240,12 @@ export class SpawnManager {
               speed: def.speed,
               attackRange: def.attack_range,
               reAttackDelay: def.re_attack_delay || def.attack_speed,
+              fleeHpPct: def.fleeHpPct,
+              runawayDelay: def.runawayDelay,
+              healHpPct: def.healHpPct,
+              healAmount: def.healPct && def.hp
+                ? Math.max(1, Math.floor(def.hp * def.healPct / 100))
+                : undefined,
             },
             pos: jitter(spawn.position, spawn.radius, i, count), angle: 0, zoneId: zone._id_numeric,
             delayMs: spawn.delay, // ms until respawn after kill

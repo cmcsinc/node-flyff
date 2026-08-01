@@ -135,6 +135,35 @@ export const MoverDefinitionSchema = z.object({
   /** propMover col 35 `dwReAttackDelay` — NPC swing cadence in ms (NOT the same as `dwAttackSpeed` col 34). */
   re_attack_delay: z.number().int().nonnegative().default(0),
 
+  /**
+   * Re-attack delay (ms) -- propMover.txt `dwReAttackDelay` (column 35). Time
+   * between consecutive monster swings. Distinct from `attack_speed` (col 34)
+   * which is the attack animation speed multiplier.
+   */
+  re_attack_delay: z.number().int().nonnegative().default(0).optional(),
+
+  // AI -- flee/healer (propMoverEx.inc)
+  /**
+   * Flee HP % -- `SetRunAway(HP%)` in propMoverEx.inc. When HP drops to/below
+   * this % of max, the monster drops target and runs away. 0/absent = never flees.
+   */
+  fleeHpPct: z.number().int().min(0).max(100).default(0).optional(),
+  /**
+   * Runaway duration (ms) -- `m_dwRunawayDelay` in propMoverEx.inc.
+   * How long the monster flees before returning home.
+   */
+  runawayDelay: z.number().int().nonnegative().default(1000).optional(),
+  /**
+   * Self-heal HP % -- `Recovery` block in propMoverEx.inc. When HP drops
+   * to/below this % of max, the monster heals itself. 0/absent = never heals.
+   */
+  healHpPct: z.number().int().min(0).max(100).default(0).optional(),
+  /**
+   * Self-heal amount as % of max HP -- `m_nRecvCondHow` from Recovery block.
+   * Per-tick heal = floor(maxHP * healPct / 100).
+   */
+  healPct: z.number().int().min(0).max(100).default(0).optional(),
+
   // AI
   /** AI behavior type */
   ai_type: AiTypeEnum.optional(),

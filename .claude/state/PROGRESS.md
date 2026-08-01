@@ -5,7 +5,27 @@
 
 ---
 
-## Project Phase: Foundation
+## Project Phase: Systems breadth (post-carve-out)
+
+**Refreshed 2026-08-01** against master `c9ae378` (136 commits since the previous
+refresh). The monorepo reorg is complete: **19 packages** in an acyclic DAG, the
+old single `world-server` having been carved into `entities` / `world-core` /
+`combat` / `inventory` / `skills` / `quest` / `npc` / `party` / `social` / `mail`.
+
+Baseline observed on this device 2026-08-01:
+
+- `pnpm -r build` → **18/19 `Build success`**, zero failures.
+- Highest migration `020_campus.ts`; **all 20** are listed in the `MIGRATIONS`
+  array of `packages/login-server/src/seed.ts` (the `dev-db-seed-not-migrate`
+  trap is currently clean).
+- 8 tick systems wired; 121 distinct `PACKETTYPE.*` referenced by handlers.
+- **187 `ponytail:` markers across 79 files** — this is the real per-line gap
+  inventory and it is *denser* than the feature checklist. See
+  `.claude/state/MISSING-FEATURES.md`.
+
+> Per the OVERRIDE RULE in CLAUDE.md, ✅ below means "passes checks on this
+> device", never "fixed". Only the user declares a feature fixed by testing it
+> on a real v19 client.
 
 | Status | Legend |
 |--------|--------|
@@ -97,7 +117,7 @@
 | `handlers/auth.handler.ts` | ✅ Done | implementor | LOGIN_CERTIFY handler with input validation |
 | `handlers/serverList.handler.ts` | ✅ Done | implementor | SERVER_LIST response handler |
 | `compose.ts` | ✅ Done | implementor | DI wiring with MemoryCache and EventBus |
-| `index.ts` | ⏳ Pending | — | Entry point (needs TCP server implementation) |
+| `index.ts` | ✅ Done | implementor | Entry point — TCP listener + seed runner (`seed.ts` MIGRATIONS, all 20) |
 
 ### @flyff/cluster-server
 
@@ -106,10 +126,9 @@
 | `ipc/worldRegistry.ts` | ✅ Done | implementor | World server registry with heartbeat |
 | `ipc/loginRegistrar.ts` | ✅ Done | implementor | Registers with login server |
 | `services/worldList.service.ts` | ✅ Done | implementor | World list management |
-| `handlers/characterSelect.handler.ts` | ⏳ Pending | — | Character selection handler |
-| `handlers/characterCreate.handler.ts` | ⏳ Pending | — | Character creation handler |
-| `index.ts` | ⏳ Pending | — | Entry point |
-| `compose.ts` | ⏳ Pending | — | Composition root / DI |
+| `handlers/char.handler.ts` | ✅ Done | implementor | Char list/create/select/delete — one handler, not the two originally planned. **Delete reads `password` + `deleteKey` off the wire and discards both** (`char.handler.ts:124-141`); ownership is the only real check |
+| `index.ts` | ✅ Done | implementor | Entry point |
+| `compose.ts` | ✅ Done | implementor | Composition root / DI |
 
 ### @flyff/world-server
 
@@ -149,11 +168,35 @@
 
 | Module | Status | Last Agent | Notes |
 |--------|--------|------------|-------|
-| `loaders/propItem.loader.ts` | ⏳ Pending | — | propItem.txt loader |
-| `loaders/propMover.loader.ts` | ⏳ Pending | — | propMover.txt loader |
-| `parsers/defineFile.parser.ts` | ⏳ Pending | — | defineItem.h parser |
-| `parsers/propFile.parser.ts` | ⏳ Pending | — | propItem.txt parser |
-| `loaders/characterInc.loader.ts` | 🔄 In Progress (pending approval) | implementor | Parses raw/character.inc → per-NPC outfit/menus/dialogFile. MMI_DIALOG=0 source: defineNeuz.h:92. 360 blocks, 324 dialog NPCs. |
+| `converters/*` + `scripts/convert.ts` | ✅ Done | implementor | txt→yml pipeline replaced the planned runtime `.txt` loaders: 782 movers, 3494 items, 166 skills, 285 quests, 575 drop tables, 134 set-items |
+| `loaders/{item,mover,skill,zone,quest,drop}.loader.ts` | ✅ Done | implementor | yml loaders + `ResourceIndex`. **Consumers import from `dist/`** — rebuild after any `src`/`data` change or reads go stale |
+| `loaders/propItem.loader.ts` | 🚫 Skipped | — | Superseded by the converter — no runtime `.txt` parse |
+| `loaders/propMover.loader.ts` | 🚫 Skipped | — | Superseded by the converter |
+| `parsers/defineFile.parser.ts` | ✅ Done | implementor | `parseDefines` — **first-write-wins** (last-write-wins picked the wrong `JOB_*` and broke quest offers) |
+| `parsers/propFile.parser.ts` | 🚫 Skipped | — | Folded into `converters/parse.ts` |
+| `loaders/characterInc.loader.ts` | ✅ Done | implementor | 360 blocks / 324 dialog NPCs; statement scanner rewritten + writer tests (PR #19) |
+| `writers/*` | 🔄 In Progress | implementor | character.inc / propQuest / npcScript / worldDialog / `.res` writers — **tested but only partly wired** to the admin editors |
+
+### Packages added since this table was written (carve-out + new domains)
+
+The 2026-03 tables above predate the world-server carve-out. These 10 packages
+now hold most of the gameplay code; per-feature status lives in
+`.claude/state/MISSING-FEATURES.md`, not here.
+
+| Package | Status | Holds |
+|---------|--------|-------|
+| `@flyff/entities` | ✅ Done | `CPlayer`/`CMover`, DST param model, `BuffManager`, exp/vital math, slot + authority constants |
+| `@flyff/world-core` | ✅ Done | Player/Zone/Spawn managers, `VisibilityService` (`CLinkMap::ModifyView` port), shared serializers, `QuestHooks` seam |
+| `@flyff/combat` | ✅ Done | Damage formulas, melee/range/skill pipeline, AI FSM, duel manager+service |
+| `@flyff/inventory` | ✅ Done | Item/bag/equip/consume/drop/loot, enchant+refine, repair, ground items, **trade** (`CVTInfo` state machine) |
+| `@flyff/skills` | ✅ Done | Skill cast + learn, cooldowns, buff arm, action-slot queue |
+| `@flyff/quest` | ✅ Done | Conditions/rewards, `QuestTrackerSystem`, real inventory adapter (`bindQuestInventory`) |
+| `@flyff/npc` | ✅ Done | Dialog/script interpreter, shop, bank, target, mapKey, NPC buff |
+| `@flyff/party` | 🔄 In Progress | Solo-party MVP: invite/leave/kick/leader, exp hit-share, item/gold share modes, party chat, navigator ping. **Guild-party absent** |
+| `@flyff/social` | 🔄 In Progress | Friend roster (7 opcodes) + campus/mentor. **Blocklist is readable but unsettable** — no opcode reaches `friend.repo.ts:97 setBlocked` |
+| `@flyff/mail` | 🔄 In Progress | Read side only (5 opcodes) + `syncMailboxMode`. Player→player `QUERYPOSTMAIL` deliberately unwired; admin-originated mail only |
+| `@flyff/admin` | 🔄 In Progress | Next.js live-ops panel (27 pages / 17 API routes), supervisor daemon, log hub, audit log |
+| `@flyff/gateway` | 🟥 Orphaned | 963-line unshipped WebSocket prototype. Zero external references, absent from the supervisor `ENTRY` map, hand-rolls its own DDL, second divergent JOIN/movement path. **Delete or mark non-authoritative** |
 
 ---
 
@@ -230,8 +273,21 @@
 |---------|---------|-------------|--------|
 | `journal.ts` WAL not implemented | DROPITEM, DOUSEITEM, BUYITEM, MOVEITEM, DOEQUIP handlers | implementor | ✅ Done 2026-07-21 — `Journal` in `@flyff/database`, `JournalReplayer` boots before listener; handlers still need combat/skill for some |
 | Combat system absent | MELEE_ATTACK, MAGIC_ATTACK, RANGE_ATTACK, USESKILL handlers | implementor | ✅ Melee shipped + user-verified 2026-07-21 (damage+death+exp in `src/combat/`). MAGIC_ATTACK/RANGE_ATTACK/USESKILL still 🔴 Blocked on skill system |
-| Skill system absent | USESKILL handler | implementor | 🔴 Blocked — need skill propMover + skill state |
+| Skill system absent | USESKILL handler | implementor | ✅ Done — `@flyff/skills` ships cast + learn + cooldowns + buff arm + action-slot queue. RANGE_ATTACK also shipped; **MAGIC_ATTACK (0x00ff0011) is still unhandled** |
 | `js-yaml` types missing | `packages/core/src/config/loader.ts:42` | pre-existing | 🟡 Low — install `@types/js-yaml` or write `.d.ts` shim |
+
+### Open blockers as of 2026-08-01
+
+| Blocker | Affects | Evidence | Status |
+|---------|---------|----------|--------|
+| `BANK_DEPOSIT` / `BANK_WITHDRAW` journal types have **no registered replayer** | Bank item moves are silently lost (not duped) if the world crashes between journal and DB write | emitted `packages/npc/src/services/bank.service.ts:141,166`; only 7 types registered in `journalReplayers.ts:44-116`; unmatched rows counted as `missing` in `journalReplayer.ts:65-70` | 🔴 Real hole |
+| Accepted duel does **not** bypass the PK-consent gate | Duelists still need PK mode ON for either to land a hit — duel is effectively unusable without it | `packages/combat/src/services/combat.policy.ts:47,51` — `isPlayerAttackableBy` has no duel branch | 🔴 Likely gameplay bug |
+| Blocklist is write-unreachable | Friend roster ships blocked-aware; nothing can set the flag | `packages/database/src/repositories/friend.repo.ts:97 setBlocked` has no calling opcode | 🟠 Dead storage |
+| Job change caps at 15; admin models up to 39 | Server rejects Master/Hero/Legend; admin autofill offers them | `packages/world-server/src/services/changeJob.service.ts:80` vs `packages/admin/lib/job-change.ts:21` | 🟠 Server/panel disagree |
+| No flight state model | Blocks PLAYERANGLE (accepted+discarded), flying-mismatch targeting, mounts | `movement.service.ts:108,150`; `playerAngle.handler.ts:57`; `combat.policy.ts` ponytail | 🟡 Signature Flyff feature absent |
+| Guild system absent | Party guild-mode, `/g` chat, guild-war revive, guild bank, quest guild conditions | no `guild*` tables in `packages/database/src/migrations/`; dialog stubs return safe defaults (`npc/src/services/dialogInterpreter.ts:311-315`) | 🟡 Largest unstarted system |
+| `@flyff/gateway` is an orphaned second world path | Divergent JOIN/movement impl + hand-rolled DDL, drifting from the real one | zero external refs; absent from supervisor `ENTRY` (`supervisor-shared.ts:39`) | 🟠 Delete or mark non-authoritative |
+| Monster movement does not re-link vicinity | Only player moves/teleport/spawn drive an ADD_OBJ/DEL_OBJ diff; the 30 m leash bounds the error | `packages/world-core/src/services/visibility.service.ts:27` | 🟡 Known deviation |
 
 ---
 
