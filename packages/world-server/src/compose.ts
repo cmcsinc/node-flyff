@@ -530,7 +530,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const queryPlayerDataHandler = new QueryPlayerDataHandler(queryPlayerDataService);
 
   // In-world movement + peer-broadcast handlers (Phases 3-5).
-  const snapshotService = new SnapshotService({ zoneManager, visibilityService });
+  const snapshotService = new SnapshotService({ zoneManager, playerManager, visibilityService });
   const snapshotHandler = new SnapshotHandler(playerManager, snapshotService);
   // ItemManager + LootService created before MovementService: movement runs the
   // dest-obj arrival check (v19 pickup has no packet -- client walks to the pile
