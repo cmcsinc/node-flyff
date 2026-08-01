@@ -215,6 +215,9 @@ export const PACKETTYPE = Object.freeze({
   PARTYCHANGEITEMMODE:  0xffffff20,
   PARTYCHANGEEXPMODE:   0xffffff21,
   PARTYCHAT:            0xffffff59,
+  // CHANGETROUP (MsgHdr.h:286) -- "advance to party" (solo -> troupe/guild party).
+  // Body (Neuz/DPClient.cpp:9535): `u_long idPlayer, BOOL bSendName[, String szParty]`.
+  CHANGETROUP:          0xffffff19,
   // MsgHdr.h:776-779 -- Couple (marriage link) under `__VER >= 13 // __COUPLE_1117`.
   // PROPOSE body: DWORD-prefixed string `szPlayer[42]`. REFUSE/COUPLE/DECOUPLE
   // bodyless (SendHdr). Delegates to CCoupleHelper singleton.
@@ -408,6 +411,10 @@ export const SNAPSHOTTYPE = Object.freeze({
   PARTYCHAT:              0x0069,
   PARTYCHANGEITEMMODE:    0x008f,
   PARTYCHANGEEXPMODE:     0x0090,
+  // PARTYCHANGETROUP (MsgHdr.h:1046) -- "advanced to troupe" echo. Body
+  // (User.cpp:1346 AddPartyChangeTroup): `String szPartyName`. Client sets
+  // g_Party.m_nKindTroup=1 on receipt (DPClient.cpp:5340 OnPartyChangeTroup).
+  PARTYCHANGETROUP:       0x0088,
   // MsgHdr.h:1121 -- navigator map ping echo. `CUser::AddSetNaviPoint`
   // (User.cpp:2559) body: `D3DXVECTOR3 Pos | String Name`. `objid` (the
   // snapshot record owner) is the PINGER's id, not the recipient's --

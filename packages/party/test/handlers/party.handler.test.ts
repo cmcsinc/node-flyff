@@ -45,6 +45,7 @@ function makeService(): { svc: PartyService; calls: Array<{ method: string; args
     changeLeader: rec('changeLeader'),
     changeItemMode: rec('changeItemMode'),
     changeExpMode: rec('changeExpMode'),
+    changeTroup: rec('changeTroup'),
     chat: rec('chat'),
   } as unknown as PartyService;
   return { svc, calls };
@@ -153,6 +154,24 @@ describe('PartyHandler', () => {
     const w = new PacketWriter();
     w.writeDword(PLAYER_ID); w.writeDword(7); w.writeDword(0);
     handler.handleMemberRequestCancle(mockSocket() as never, new PacketReader(w.build()));
+    assert.equal(harness.calls.length, 0);
+  });
+
+  it('handleChangeTroup delegates changeTroup(name) when bSendName is TRUE', () => {
+    const w = new PacketWriter();
+    w.writeDword(PLAYER_ID); w.writeDword(1); w.writeString('Braves');
+    handler.handleChangeTroup(mockSocket() as never, new PacketReader(w.build()));
+    assert.equal(harness.calls[0].method, 'changeTroup');
+    assert.deepEqual(harness.calls[0].args, [p, 'Braves']);
+  });
+
+  it('handleChangeTroup drops a forged idPlayer or bSendName=FALSE', () => {
+    const forged = new PacketWriter();
+    forged.writeDword(999); forged.writeDword(1); forged.writeString('X');
+    handler.handleChangeTroup(mockSocket() as never, new PacketReader(forged.build()));
+    const noName = new PacketWriter();
+    noName.writeDword(PLAYER_ID); noName.writeDword(0);
+    handler.handleChangeTroup(mockSocket() as never, new PacketReader(noName.build()));
     assert.equal(harness.calls.length, 0);
   });
 });

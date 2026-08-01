@@ -133,6 +133,29 @@ export class PartyHandler {
     }
   }
 
+  /**
+   * CHANGETROUP (0xffffff19) -- "advance party" to a troupe.
+   * `SendChangeTroup` (`DPClient.cpp:9535`) writes
+   * `u_long idPlayer, BOOL bSendName[, String szParty]` -- the name string is
+   * only present when `bSendName` is TRUE (the party window's advance dialog
+   * always sends TRUE; `SendChangePartyName` is the separate rename opcode).
+   */
+  handleChangeTroup(socket: ClientSocket, reader: PacketReader): void {
+    const player = this.resolve(socket);
+    if (!player) return;
+    try {
+      const idPlayer = reader.readDword();
+      const bSendName = reader.readDword();
+      if (idPlayer !== player.m_idPlayer) return;
+      if (!bSendName) return; // no name -> nothing to advance to
+      const name = reader.readString();
+      this.deps.partyService.changeTroup(player, name);
+    } catch (error) {
+      if (error instanceof PacketError) { logger.warn({ err: error, charId: player.m_idPlayer }, 'CHANGETROUP parse failed'); return; }
+      throw error;
+    }
+  }
+
   /** PARTYCHANGEITEMMODE (0xffffff20) -- leader sets the item share mode. */
   handlePartyChangeItemMode(socket: ClientSocket, reader: PacketReader): void {
     const player = this.resolve(socket);

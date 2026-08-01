@@ -43,6 +43,13 @@ export const PARTY_INVITE_TIMEOUT_MS = 30_000;
 /** Max members in a solo party (mirrors C++ `MAX_PARYMEMBER` default). */
 export const MAX_PARTY_MEMBERS = 8;
 
+/** `m_nKindTroup` -- 0 = solo party, 1 = troupe ("advance party"). */
+export const PARTY_KIND_SOLO = 0;
+export const PARTY_KIND_TROUPE = 1;
+
+/** `m_sParty` capacity -- `ar.ReadString(sParty, 33)` (32 chars + NUL). */
+export const MAX_PARTY_NAME_LEN = 32;
+
 /** One live party. `members[0]` is the leader. */
 export interface Party {
   readonly id: number;
@@ -62,6 +69,13 @@ export interface Party {
    * cannot desync a stored cursor.
    */
   lastItemGetterId: number;
+  /**
+   * `m_nKindTroup` -- 0 solo, 1 troupe ("advance party"). One-way: C++ has no
+   * packet that demotes a troupe back to a solo party.
+   */
+  kindTroup: number;
+  /** `m_sParty` -- troupe name; empty while `kindTroup === 0`. */
+  name: string;
 }
 
 /** One pending inbound invite targeting `memberId`. */
@@ -103,6 +117,8 @@ export class PartyManager {
       expMode: PARTY_EXP_MODE_LEVEL,
       itemMode: PARTY_ITEM_MODE_FFA,
       lastItemGetterId: NULL_ID,
+      kindTroup: PARTY_KIND_SOLO,
+      name: '',
     };
     this.parties.set(party.id, party);
     return party;
@@ -143,12 +159,20 @@ export class PartyManager {
     return { party: p, disbanded: false };
   }
 
-  /** Swap `targetId` into slot 0 -- C++ `CParty::ChangeLeader`. */
+  /**
+   * Swap `targetId` into slot 0 -- C++ `CParty::ChangeLeader`.
+   *
+   * Returns undefined when `targetId` is NOT a member: C++ `ChangeLeader` feeds
+   * `FindMember`'s -1 straight into `SwapPartyMember(0, -1)`, which memcpy's
+   * out of bounds. The client runs the same code on the ADDPARTYCHANGELEADER
+   * notice, so promoting a non-member would corrupt every member's client.
+   * Also undefined for `idx === 0` (already the leader) -- nothing to notify.
+   */
   promoteLeader(partyId: number, targetId: number): Party | undefined {
     const p = this.parties.get(partyId);
     if (!p) return undefined;
     const idx = p.members.indexOf(targetId);
-    if (idx <= 0) return p;
+    if (idx <= 0) return undefined;
     const tmp = p.members[0];
     p.members[0] = p.members[idx];
     p.members[idx] = tmp;
@@ -182,6 +206,19 @@ export class PartyManager {
   setLastItemGetter(partyId: number, charId: number): void {
     const p = this.parties.get(partyId);
     if (p) p.lastItemGetterId = charId;
+  }
+
+  /**
+   * `pParty->m_nKindTroup = 1; strcpy(m_sParty, sParty)` --
+   * `CDPCoreClient::OnPartyChangeTroup` (`DPCoreClient.cpp:1348`). One-way.
+   * Returns the party, or undefined for an unknown id.
+   */
+  advanceToTroupe(partyId: number, name: string): Party | undefined {
+    const p = this.parties.get(partyId);
+    if (!p) return undefined;
+    p.kindTroup = PARTY_KIND_TROUPE;
+    p.name = name.slice(0, MAX_PARTY_NAME_LEN);
+    return p;
   }
 
   /**
