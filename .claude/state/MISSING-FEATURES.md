@@ -214,7 +214,7 @@ matches C++, which keeps party state on the Core server not in the DB).
 
 - [x] ✅ Player-to-player trade — `inventory/services/trade.service.ts` (650 lines, full `CVTInfo` state machine), handler `inventory/handlers/trade.handler.ts:36-116` (10 opcodes), dispatch `clientServer.ts:214-223`. Gold escrowed at stake; items re-validated against the live bag at commit; WAL `INVENTORY_SLOT` + `CHAR_GOLD` both sides
 - [ ] 🟡 Non-tradeable flags — guild-cloak (`m_idGuild != 0`), quest-item, bound-item — `trade.service.ts:616`
-- [ ] ❌ Vending / private shop — no OPENSTORE/VENDING opcode or handler. The peer ADD_OBJ frame already reserves the vendor-title field but writes `""` — `world-server/net/snapshot/mover.serializer.ts:75,90`
+- [ ] 🟡 Vending / private shop — **UPGRADE ❌→🟡**: full 6-opcode PVENDOR port — `inventory/services/vendor.service.ts` (CVTInfo vendor half, sibling of trade), `inventory/handlers/vendor.handler.ts`, `inventory/net/snapshot/vendor.serializer.ts`, dispatch `clientServer.ts:225-232`, compose `:774-783`. Open/register/unregister/query/buy/close + onDisconnect; buy re-validates the listing against the live bag (dupe-safe) and WAL-journals `INVENTORY_SLOT`+`CHAR_GOLD` both sides via `InventoryService`. Peer ADD_OBJ title field populated from `m_vtInfo.title` (`mover.serializer.ts:91`). 12 service tests green. **Ponytail'd C++ guards not enforced**: chaotic-Propensity.nVendor gate (no PK penalty table), guild-war/miniroom/quiz-world rejects (no worlds), fly check (no flight state), bound/guild-cloak/vagrant-ride item flags (not on `InventorySlot` — only quest IK3 + equipped are enforced, same surface trade stubs), chatting-room integration (bState hardcoded 1), CNPC-radius 3m reject (no NPC spatial index). In-memory only — faithful, C++ closes the shop on disconnect
 
 ---
 
@@ -387,8 +387,11 @@ shipped. Current ranking:
    buff skills have since shipped).
 4. **Zone transitions / collision / world map** — one zone ships; no REPLACE
    cross-world handoff; no terrain or speed enforcement.
-5. **Vending / private shop** — the other half of the economy loop now that
-   player trade has landed.
+5. **Vending / private shop** — **shipped 🟡 2026-08-02**: 6-opcode PVENDOR port
+   (open/register/unregister/query/buy/close + disconnect), dupe-safe buy with
+   WAL both sides, peer ADD_OBJ title. C++ guards for unported subsystems
+   (chaotic-Propensity, guild-war/miniroom worlds, fly, bound/guild-cloak/ride
+   flags, chatting room, NPC-radius) ponytail'd. See §10.
 6. **Pets** — never audited in this checklist, entirely absent, and a signature
    v19 system (`PET_RELEASE`/`USE_PET_FEED` opcodes are not even declared).
 7. **Weight + durability decay** — both parsed/stored and consumed by nothing;

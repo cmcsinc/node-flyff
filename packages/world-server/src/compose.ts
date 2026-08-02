@@ -106,6 +106,8 @@ import { RepairService } from '@flyff/inventory';
 import { RepairHandler } from '@flyff/inventory';
 import { TradeService } from '@flyff/inventory';
 import { TradeHandler } from '@flyff/inventory';
+import { VendorService } from '@flyff/inventory';
+import { VendorHandler } from '@flyff/inventory';
 import { FriendService, FriendHandler, CampusService, CampusHandler, CAMPUS_BUFF_BY_LEVEL } from '@flyff/social';
 import { BankService } from '@flyff/npc';
 import { BankHandler } from '@flyff/npc';
@@ -771,6 +773,17 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   const tradeHandler = new TradeHandler(playerManager, tradeService);
 
+  // Vendor (private shop) -- the 6-opcode CVTInfo vendor half, sibling of
+  // trade. In-memory only; the shop closes on disconnect, so
+  // VendorService.onDisconnect must run on leave (next to trade's).
+  const vendorService = new VendorService({
+    playerManager, zoneManager, inventoryService,
+    getItemProp: (id: number) => resources.items.items.get(id),
+    sendDefinedText: (player, tid) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
+  const vendorHandler = new VendorHandler(playerManager, vendorService);
+
   // Friend roster (CRTMessenger) -- 6 opcodes + presence pushes. Roster edges are
   // written through immediately (no WAL, matching C++ which has no batch save).
   const friendService = new FriendService({
@@ -888,6 +901,7 @@ export async function compose(): Promise<WorldComposeResult> {
     beforeLeave: (player) => {
       partyService.onDisconnect(player);
       tradeService.onDisconnect(player);
+      vendorService.onDisconnect(player);
       friendService.onDisconnect(player.m_idPlayer);
       campusService.onDisconnect(player.m_idPlayer);
       visibilityService.remove(player);
@@ -990,6 +1004,8 @@ export async function compose(): Promise<WorldComposeResult> {
     repairHandler,
     tradeService,
     tradeHandler,
+    vendorService,
+    vendorHandler,
     friendService,
     friendHandler,
     campusService,

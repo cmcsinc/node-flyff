@@ -292,6 +292,19 @@ export const PACKETTYPE = Object.freeze({
   CAMPUS_ADD_MEMBER:    0x88100124,
   CAMPUS_REMOVE_MEMBER: 0x88100125,
   CAMPUS_UPDATE_POINT:  0x88100126,
+  // MsgHdr.h:165-170 -- Private shop (vending). PVENDOR is the CVTInfo vendor
+  // half, sibling of trade. OPEN: DWORD-prefixed `szPVendor[48]` title.
+  // CLOSE: `OBJID objidVendor`. REGISTER_PVENDOR_ITEM: `BYTE iIndex, BYTE nType,
+  // BYTE nId, short nNum, int nCost` (nType is wire-only -- server ignores it,
+  // echoes 0). UNREGISTER: `BYTE i`. QUERY: `OBJID objidVendor`. BUY:
+  // `OBJID objidVendor, BYTE nItem, DWORD dwItemId, short nNum`.
+  // Handlers: DPSrvr.cpp:8959,9065,9248,9228,9197,9143.
+  PVENDOR_OPEN:            0x00ff00a9,
+  PVENDOR_CLOSE:           0x00ff00aa,
+  REGISTER_PVENDOR_ITEM:   0x00ff00ab,
+  QUERY_PVENDOR_ITEM:      0x00ff00ac,
+  BUY_PVENDOR_ITEM:        0x00ff00ad,
+  UNREGISTER_PVENDOR_ITEM: 0x00ff00ae,
 } as const);
 
 export type PacketType = typeof PACKETTYPE[keyof typeof PACKETTYPE];
@@ -464,6 +477,20 @@ export const SNAPSHOTTYPE = Object.freeze({
   CAMPUS_UPDATE:          0x8831,
   CAMPUS_REMOVE:          0x8832,
   CAMPUS_UPDATE_POINT:    0x8833,
+  // MsgHdr.h:906-907,966-971 -- Private shop (vending) snapshots.
+  // PVENDOR_OPEN (0x0042) vicinity: `String title`. PVENDOR_CLOSE (0x0043):
+  // `BYTE byClearTitle` (1=vendor closed own shop, 0=buyer closed their view).
+  // REGISTER_PVENDOR_ITEM (0x0044) self: `BYTE iIndex, BYTE nType, BYTE nId,
+  // short nNum, int nCost`. PVENDOR_ITEM (0x0045) buyer: full shop window --
+  // `BYTE count` then per slot `BYTE iIndex, CItemElem blob, short nExtra, int
+  // nCost`, then `BYTE bState`. PVENDOR_ITEM_NUM (0x0046) vendor+browsers:
+  // `BYTE nItem, short nVend, String sBuyer`. UNREGISTER (0x0047) self: `BYTE i`.
+  PVENDOR_OPEN:            0x0042,
+  PVENDOR_CLOSE:           0x0043,
+  REGISTER_PVENDOR_ITEM:   0x0044,
+  PVENDOR_ITEM:            0x0045,
+  PVENDOR_ITEM_NUM:        0x0046,
+  UNREGISTER_PVENDOR_ITEM: 0x0047,
 } as const);
 
 export type SnapshotType = typeof SNAPSHOTTYPE[keyof typeof SNAPSHOTTYPE];

@@ -86,9 +86,9 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
 export function writeMoverExcludeItem(w: PacketWriter, p: CPlayer): void {
   writeMoverPrefix(w, p);
 
-  // m_vtInfo.GetTitle() -- private-shop ("vendor") sign text.
-  // ponytail: empty until player vending ships.
-  w.writeString('');
+  // m_vtInfo.GetTitle() -- private-shop ("vendor") sign text. "" when not
+  // vending; otherwise the seller's overhead shop title (set on PVENDOR_OPEN).
+  w.writeString(p.m_vtInfo.title ?? '');
 
   // Visible equipment: uSize then uSize * { uParts:BYTE, itemId:WORD, flag:BYTE }.
   // C++ back-patches uSize after the loop; we count first instead.

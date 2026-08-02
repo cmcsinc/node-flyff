@@ -49,8 +49,12 @@ export {
 // DST parameter model (equip + future buffs)
 export { ParamModel, EMPTY_PARAM_VIEW } from './params/ParamModel';
 export type { ParamView, DstEffect } from './params/ParamModel';
-export { VTInfo, MAX_TRADE, TRADE_STEP, TID_GAME_CANNOTTRADE_ITEM, TID_GAME_CANNOT_DO_USINGITEM } from './params/VTInfo';
-export type { TradeStake, TradeStep } from './params/VTInfo';
+export {
+  VTInfo, MAX_TRADE, TRADE_STEP,
+  MAX_VENDITEM, MAX_VENDOR_REVISION, MAX_VENDORNAME,
+  TID_GAME_CANNOTTRADE_ITEM, TID_GAME_CANNOT_DO_USINGITEM,
+} from './params/VTInfo';
+export type { TradeStake, TradeStep, VendorListing } from './params/VTInfo';
 export { BuffManager, BUFF_SKILL, BUFF_ITEM, MAX_SKILL_BUFF } from './params/BuffManager';
 export type { ActiveBuff, AddBuffOutcome, DoTPayload } from './params/BuffManager';
 

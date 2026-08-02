@@ -26,6 +26,7 @@ import type { GmChatLogHandler } from './handlers/gmChatLog.handler';
 import type { QueryEquipHandler } from './handlers/queryEquip.handler';
 import type { CheeringHandler } from './handlers/cheering.handler';
 import type { TradeHandler } from '@flyff/inventory';
+import type { VendorHandler } from '@flyff/inventory';
 import type { FriendHandler, CampusHandler } from '@flyff/social';
 import type { SetTargetHandler } from '@flyff/npc';
 import type { LeaveHandler } from './handlers/leave.handler';
@@ -81,6 +82,7 @@ export interface WorldClientServerDeps {
   queryEquipHandler: QueryEquipHandler;
   cheeringHandler: CheeringHandler;
   tradeHandler: TradeHandler;
+  vendorHandler: VendorHandler;
   friendHandler: FriendHandler;
   campusHandler: CampusHandler;
   setTargetHandler: SetTargetHandler;
@@ -222,6 +224,14 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.TRADEOK, (s) => deps.tradeHandler.handleTradeOk(s));
   dispatcher.register(PACKETTYPE.TRADECONFIRM, (s) => deps.tradeHandler.handleTradeConfirm(s));
   dispatcher.register(PACKETTYPE.TRADECANCEL, (s, r) => deps.tradeHandler.handleTradeCancel(s, r));
+  // Vendor (private shop) -- the 6-opcode CVTInfo vendor half. Bodies mirror
+  // DPSrvr.cpp:8959/9065/9248/9228/9197/9143 (see vendor.handler).
+  dispatcher.register(PACKETTYPE.PVENDOR_OPEN, (s, r) => deps.vendorHandler.handlePVendorOpen(s, r));
+  dispatcher.register(PACKETTYPE.PVENDOR_CLOSE, (s, r) => deps.vendorHandler.handlePVendorClose(s, r));
+  dispatcher.register(PACKETTYPE.REGISTER_PVENDOR_ITEM, (s, r) => deps.vendorHandler.handleRegisterPVendorItem(s, r));
+  dispatcher.register(PACKETTYPE.UNREGISTER_PVENDOR_ITEM, (s, r) => deps.vendorHandler.handleUnregisterPVendorItem(s, r));
+  dispatcher.register(PACKETTYPE.QUERY_PVENDOR_ITEM, (s, r) => deps.vendorHandler.handleQueryPVendorItem(s, r));
+  dispatcher.register(PACKETTYPE.BUY_PVENDOR_ITEM, (s, r) => deps.vendorHandler.handleBuyPVendorItem(s, r));
   // Friend roster -- 6 opcodes. C++ splits these across the world and core
   // servers; one process handles all of them.
   dispatcher.register(PACKETTYPE.ADDFRIEND, (s, r) => deps.friendHandler.handleAddFriend(s, r));

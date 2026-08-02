@@ -242,5 +242,7 @@
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\services\\flight.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\combat.policy.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\moverBroadcast.serializer.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\database\\test\\migrations\\001_initial.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\migrations\\001_initial.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\vendor.service.test.ts": "fail"
 }
