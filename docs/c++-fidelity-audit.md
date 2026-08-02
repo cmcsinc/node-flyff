@@ -349,6 +349,32 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 
 ---
 
+## DELIBERATE DIVERGENCE — Hardening Beyond C++
+
+Places where the TS intentionally does NOT match C++, because the C++ behavior
+is exploitable under an untrusted client. Each needs an explicit rationale.
+
+### D1. Quest route validates the NPC owns *this side* of the quest
+- **File**: `packages/npc/src/services/scriptDlg.service.ts` (`handleQuestRoute` → `ownsQuestRoute`)
+- **C++**: `__QuestEndComplete` (`ScriptHelper.cpp:873`) trusts the client's
+  `dwVal2` quest id and never re-checks the NPC. The only NPC gate is the
+  button-emit classification at `ScriptHelper.cpp:601`
+  (`strcmpi(m_szEndCondCharacter, pMover->m_szCharacterKey)`).
+- **TS**: BEGIN / BEGIN_YES require the NPC to be in the quest's `SetCharacter`
+  index; END / END_COMPLETE require the `SetEndCondCharacter` index. The two
+  sides are checked **separately** — a begin-or-end test is not enough, because
+  most quests hand off between two NPCs. `SRT_QUESTOFFICE` still serves the
+  whole catalog.
+- **Why**: `nGlobal2` is client-supplied, so the C++ shape lets any NPC begin or
+  complete any quest. Concretely it broke the 1st job change:
+  `QUEST_VOCACR_TRN1` (54) begins at `MaFl_Pire` and ends at `MaDa_Tailer`, but
+  could be turned in at Pire — consuming the quest without ever reaching the
+  master whose dialog body runs `ChangeJob(n)`, leaving the player a Vagrant.
+- **Tests**: `packages/npc/test/services/scriptDlg.service.test.ts` →
+  "quest route NPC ownership" (5 cases, incl. begin-NPC-cannot-complete).
+
+---
+
 ## LOW / Verified Correct
 
 - All PACKETTYPE/SNAPSHOTTYPE opcodes match C++ hex values

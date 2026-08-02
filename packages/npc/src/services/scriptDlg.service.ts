@@ -451,11 +451,27 @@ export class ScriptDlgService {
    * quest via `questService.beginQuest`; `QUEST_END_COMPLETE` completes it.
    * `QUEST_BEGIN_NO`/`QUEST_END_FAIL`/`QUEST_NEXT_LEVEL` close the window.
    * Quest id comes from `nGlobal2` (C++ `dwVal2` round-trip).
+   *
+   * The quest id is CLIENT-SUPPLIED, so every route re-checks that this NPC is
+   * the right NPC for that route ({@link ownsQuestRoute}). C++ gates
+   * only the button emit (`ScriptHelper.cpp:601`) and trusts `dwVal2` inside
+   * `__QuestEndComplete` (`:873`) -- a deliberate hardening beyond the port,
+   * because otherwise any NPC can begin/complete any quest (e.g. turning in a
+   * job-change quest at the wrong master, which then skips that master's
+   * `ChangeJob(n)` dialog body). Logged in `docs/c++-fidelity-audit.md`.
    */
   private async handleQuestRoute(
     player: CPlayer, npc: CMover, key: string, questId: number, frames: Buffer[],
   ): Promise<void> {
     if (!questId || !this.deps.quests.byId.has(questId)) {
+      this.closeDialog(player, frames);
+      return;
+    }
+    if (!this.ownsQuestRoute(npc, questId, key)) {
+      logger.warn(
+        { charId: player.m_idPlayer, questId, key, lk: npcLookupKey(npc) ?? null },
+        'quest route rejected: NPC is not this quest\'s begin/end NPC for this route',
+      );
       this.closeDialog(player, frames);
       return;
     }
@@ -483,7 +499,39 @@ export class ScriptDlgService {
         // BEGIN_NO / END_FAIL -> close.
         this.closeDialog(player, frames);
     }
-    void npc;
+  }
+
+  /**
+   * True when `npc` is the right NPC for THIS route on `questId`.
+   *
+   * The begin/end sides are checked separately, because most quests hand off
+   * between two different NPCs -- e.g. `QUEST_VOCACR_TRN1` (54) begins at
+   * `MaFl_Pire` and ends at `MaDa_Tailer`. A begin-or-end test would let the
+   * player turn in at Pire, consuming the quest without ever visiting the
+   * master whose dialog body runs `ChangeJob(n)`.
+   *
+   * BEGIN / BEGIN_YES  -> must be in the `SetCharacter` index.
+   * END / END_COMPLETE -> must be in the `SetEndCondCharacter` index.
+   * Anything else (NEXT_LEVEL, BEGIN_NO, END_FAIL) only closes the window, so
+   * either side is enough. `SRT_QUESTOFFICE` legitimately serves the whole
+   * catalog (mirrors the offer scan in {@link emitQuestOffer}).
+   */
+  private ownsQuestRoute(npc: CMover, questId: number, key: string): boolean {
+    if (npc.m_nStructure === SRT_QUESTOFFICE) return true;
+    const lk = npcLookupKey(npc);
+    if (!lk) return false;
+    const isBegin = this.beginByKey.get(lk)?.includes(questId) ?? false;
+    const isEnd = this.endByKey.get(lk)?.includes(questId) ?? false;
+    switch (key) {
+      case QUEST_KEY.BEGIN:
+      case QUEST_KEY.BEGIN_YES:
+        return isBegin;
+      case QUEST_KEY.END:
+      case QUEST_KEY.END_COMPLETE:
+        return isEnd;
+      default:
+        return isBegin || isEnd;
+    }
   }
 
   /** `__QuestBegin` (`ScriptHelper.cpp:498-506`): say the quest's `QSAY_BEGIN1..5`

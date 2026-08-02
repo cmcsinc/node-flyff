@@ -727,3 +727,81 @@ describe('scriptDlg.service -- SetDialog quest text', () => {
     assert.deepEqual(says, ['You have reached level 15.']);
   });
 });
+
+/**
+ * Quest-route NPC ownership. `nGlobal2` is client-supplied, so an NPC that is
+ * neither the begin- nor the end-NPC for that quest must not be able to drive
+ * the route -- otherwise a job-change quest can be turned in at the wrong
+ * master, which skips that master's own `ChangeJob(n)` dialog body and leaves
+ * the player a Vagrant. Hardening beyond C++ (`ScriptHelper.cpp:873` trusts
+ * `dwVal2`); see `docs/c++-fidelity-audit.md`.
+ */
+describe('scriptDlg.service -- quest route NPC ownership', () => {
+  /** Quest 900 that BEGINS at `MaFl_Starter` and ENDS at `MaFl_Finisher` --
+   *  the two-NPC handoff shape of the real job-change chain (quest 54 begins
+   *  at MaFl_Pire, ends at MaDa_Tailer). */
+  function ownedQuest(): QuestIndex {
+    const def = {
+      _version: '1.0', id: 900, symbol: 'Q900', title: 'IDS_TITLE',
+      commands: [], states: {}, quest_items: [], dialog: {},
+    } as unknown as QuestDef;
+    return {
+      byId: new Map([[900, def]]), drops: new Map(),
+      byNpc: {
+        begin: new Map([['mafl_starter', [900]]]),
+        end: new Map([['mafl_finisher', [900]]]),
+      },
+    } as unknown as QuestIndex;
+  }
+
+  /** Drive one quest route at `npcKey`, reporting what the service acted on. */
+  async function routeAt(npcKey: string, key: string): Promise<{
+    ended: number[]; began: number[]; funcs: ScriptFunc[];
+  }> {
+    const began: number[] = [];
+    const ended: number[] = [];
+    const svc = {
+      beginQuest: async (_p: CPlayer, id: number) => { began.push(id); return { ok: true, frames: [] }; },
+      endQuest: async (_p: CPlayer, id: number) => { ended.push(id); return { ok: true, frames: [] }; },
+    } as unknown as QuestService;
+    const { serializer, calls } = fakeScriptDialog();
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc(npcKey) },
+      dialogs: mkDialogs(), quests: ownedQuest(), questService: svc,
+      chat: fakeChat as never, scriptDialog: serializer as never,
+    });
+    const player = mkPlayer({ m_aQuest: [{ id: 900, state: 0 }] as never });
+    const out = await s.dialog(player, { objid: NPC_ID, key, nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    return { ended, began, funcs: calls.flat() };
+  }
+
+  it('the end NPC can complete the quest', async () => {
+    const { ended } = await routeAt('MaFl_Finisher', 'QUEST_END_COMPLETE');
+    assert.deepEqual(ended, [900]);
+  });
+
+  it('the begin NPC can begin the quest', async () => {
+    const { began } = await routeAt('MaFl_Starter', 'QUEST_BEGIN_YES');
+    assert.deepEqual(began, [900]);
+  });
+
+  // The bug that let QUEST_VOCACR_TRN1 be turned in at MaFl_Pire (its BEGIN
+  // NPC) instead of MaDa_Tailer, consuming the quest without ever reaching
+  // the master whose dialog body runs ChangeJob(n).
+  it('the BEGIN NPC cannot complete the quest', async () => {
+    const { ended, funcs } = await routeAt('MaFl_Starter', 'QUEST_END_COMPLETE');
+    assert.deepEqual(ended, [], 'turn-in at the begin NPC must not complete the quest');
+    assert.ok(funcs.some((f) => f.type === 'exit'), 'the dialog must close instead');
+  });
+
+  it('the END NPC cannot begin the quest', async () => {
+    const { began } = await routeAt('MaFl_Finisher', 'QUEST_BEGIN_YES');
+    assert.deepEqual(began, [], 'begin at the end NPC must be rejected');
+  });
+
+  it('a wholly unrelated NPC can do neither', async () => {
+    assert.deepEqual((await routeAt('MaFl_Impostor', 'QUEST_END_COMPLETE')).ended, []);
+    assert.deepEqual((await routeAt('MaFl_Impostor', 'QUEST_BEGIN_YES')).began, []);
+  });
+});
