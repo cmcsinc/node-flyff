@@ -88,6 +88,8 @@ const NAME_OVERRIDES: Record<string, string> = {
 
 const buckets = new Map<string, ItemYml>();
 
+/** C++ `NULL_ID` sentinel -- `dwFlightLimit` uses it to mean "no explicit limit". */
+const NULL_ID = 0xffffffff;
 function bucketFor(kind1: string, kind2: string, kind3: string): ItemYml | null {
   // Refined kind from IK2 for weapons/armors, else IK1 bucket.
   let key = kind1;
@@ -166,6 +168,11 @@ function rowToItem(
   const kind3 = row.dwItemKind3 ?? '';
   const isEquippable =
     kind1 === 'IK1_WEAPON' || kind1 === 'IK1_ARMOR' ||
+    // Ride items (boards/brooms/wings) equip into PARTS_RIDE (13). Without this
+    // they reached the game with no `equip_slot` at all, so `EquipService` and
+    // `UseItemService` both rejected them -- flying was unreachable from data
+    // alone, independent of any server-side gate.
+    kind1 === 'IK1_RIDE' ||
     kind3 === 'IK3_RING' || kind3 === 'IK3_EARRING' || kind3 === 'IK3_NECKLACE';
   if (isEquippable) {
     const partsSym = row.dwParts;
@@ -187,6 +194,33 @@ function rowToItem(
   }
   const weaponType = num(row, 'dwWeaponType', 0);
   if (weaponType > 0) item.weapon_type = weaponType;
+
+  // Flight props -- ride items only (Spec_Item cols 292-298, ProjectCmn.cpp:475-481).
+  // Gated to IK1_RIDE because the propItem `=` inherit rule would otherwise leak a
+  // previous ride row's fFlightSpeed onto every following non-ride item, and the
+  // DOEQUIP anti-cheat compares that float exactly.
+  if (kind1 === 'IK1_RIDE') {
+    // Floats, not ints: fFlightSpeed is ~0.0023 and the client echoes it back
+    // bit-for-bit on mount, so any rounding here rejects every legit mount.
+    const fSpeed = num(row, 'fFlightSpeed', 0);
+    if (fSpeed > 0) item.flight_speed = fSpeed;
+    const fLR = num(row, 'fFlightLRAngle', 0);
+    if (fLR > 0) item.flight_lr_angle = fLR;
+    const fTB = num(row, 'fFlightTBAngle', 0);
+    if (fTB > 0) item.flight_tb_angle = fTB;
+    // C++ normalizes NULL_ID -> 1 (MoverEquip.cpp:1500); do it here so the gate
+    // reads a plain number. Absent column also means 1, not 0 (0 = no gate).
+    const limitRaw = row.dwFlightLimit;
+    item.flight_limit = limitRaw === undefined || Number(limitRaw) === NULL_ID
+      ? 1
+      : num(row, 'dwFlightLimit', 1);
+    const fuelMax = num(row, 'dwFFuelReMax', 0);
+    if (fuelMax > 0) item.fuel_max = fuelMax;
+    const accMax = num(row, 'dwAFuelReMax', 0);
+    if (accMax > 0) item.acc_fuel_max = accMax;
+    const fuelRe = num(row, 'dwFuelRe', 0);
+    if (fuelRe > 0) item.fuel_refill = fuelRe;
+  }
 
   // Consumable vitals -- propItem dwDestParam{1-3} (DST_HP/MP/FP) + nAdjParamVal{1-3}.
   // Without these, ConsumableService heals 0 and the charge is wasted.

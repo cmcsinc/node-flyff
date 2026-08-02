@@ -18,6 +18,7 @@ import type { QueryPlayerDataHandler } from './handlers/queryPlayerData.handler'
 import type { SnapshotHandler } from './handlers/snapshot.handler';
 import type { PlayerMovedHandler } from './handlers/playerMoved.handler';
 import type { PlayerBehaviorHandler } from './handlers/playerBehavior.handler';
+import type { PlayerBehavior2Handler } from './handlers/playerBehavior2.handler';
 import type { ChatHandler } from './handlers/chat.handler';
 import type { MotionHandler } from './handlers/motion.handler';
 import type { MoverFocusHandler } from './handlers/moverFocus.handler';
@@ -72,6 +73,7 @@ export interface WorldClientServerDeps {
   snapshotHandler: SnapshotHandler;
   playerMovedHandler: PlayerMovedHandler;
   playerBehaviorHandler: PlayerBehaviorHandler;
+  playerBehavior2Handler: PlayerBehavior2Handler;
   chatHandler: ChatHandler;
   motionHandler: MotionHandler;
   moverFocusHandler: MoverFocusHandler;
@@ -143,6 +145,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.SNAPSHOT, (s, r) => deps.snapshotHandler.handleSnapshot(s, r));
   dispatcher.register(PACKETTYPE.PLAYERMOVED, (s, r) => deps.playerMovedHandler.handlePlayerMoved(s, r));
   dispatcher.register(PACKETTYPE.PLAYERBEHAVIOR, (s, r) => deps.playerBehaviorHandler.handlePlayerBehavior(s, r));
+  dispatcher.register(PACKETTYPE.PLAYERBEHAVIOR2, (s, r) => deps.playerBehavior2Handler.handlePlayerBehavior2(s, r));
   dispatcher.register(PACKETTYPE.CHAT, (s, r) => deps.chatHandler.handleChat(s, r));
   dispatcher.register(PACKETTYPE.MOTION, (s, r) => deps.motionHandler.handleMotion(s, r));
   dispatcher.register(PACKETTYPE.SETTARGET, (s, r) => deps.setTargetHandler.handleSetTarget(s, r));

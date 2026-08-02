@@ -313,6 +313,51 @@ const MIGRATIONS: readonly Migration[] = [
     )`,
     `CREATE INDEX IF NOT EXISTS mail_receiver_idx ON mail(receiver_id)`,
   ]},
+  // 019 — friends roster (mirrors database/src/migrations/019_friends.ts)
+  { table: 'friends', sql: [
+    `CREATE TABLE IF NOT EXISTS friends (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+      friend_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+      blocked INTEGER NOT NULL DEFAULT 0,
+      created_at_ms INTEGER NOT NULL,
+      UNIQUE(character_id, friend_id)
+    )`,
+    `CREATE INDEX IF NOT EXISTS friends_character_idx ON friends(character_id)`,
+  ]},
+  { column: ['characters', 'messenger_state'], sql: [
+    `ALTER TABLE characters ADD COLUMN messenger_state INTEGER NOT NULL DEFAULT 0`,
+  ]},
+  // 020 — campus (master/pupil) — mirrors 020_campus.ts
+  { table: 'campus', sql: [
+    `CREATE TABLE IF NOT EXISTS campus (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      master_id INTEGER NOT NULL,
+      created_at_ms INTEGER NOT NULL
+    )`,
+    `CREATE INDEX IF NOT EXISTS campus_master_idx ON campus(master_id)`,
+    `CREATE TABLE IF NOT EXISTS campus_member (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      campus_id INTEGER NOT NULL REFERENCES campus(id) ON DELETE CASCADE,
+      character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+      member_level INTEGER NOT NULL,
+      joined_at_ms INTEGER NOT NULL,
+      UNIQUE(character_id)
+    )`,
+    `CREATE INDEX IF NOT EXISTS campus_member_campus_idx ON campus_member(campus_id)`,
+  ]},
+  { column: ['characters', 'campus_point'], sql: [
+    `ALTER TABLE characters ADD COLUMN campus_point INTEGER NOT NULL DEFAULT 0`,
+    `ALTER TABLE characters ADD COLUMN campus_tick_ms INTEGER NOT NULL DEFAULT 0`,
+  ]},
+  // 021 — tiered authority replaces accounts.gm — mirrors 021_account_authority.ts.
+  // authority holds the AUTH_* ASCII code (GENERAL 'F' 0x46 .. ADMINISTRATOR 'P' 0x50).
+  // Backfill maps the old boolean (gm=1 -> ADMINISTRATOR) before dropping gm.
+  { column: ['accounts', 'authority'], sql: [
+    `ALTER TABLE accounts ADD COLUMN authority INTEGER NOT NULL DEFAULT 0x46`,
+    `UPDATE accounts SET authority = 0x50 WHERE gm = 1`,
+    `ALTER TABLE accounts DROP COLUMN gm`,
+  ]},
   // Admin-only: GM action trail. No game-server counterpart — the admin panel
   // owns this table, so it is not mirrored in login-server/seed.ts.
   { table: 'admin_audit_log', sql: [

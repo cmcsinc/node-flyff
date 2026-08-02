@@ -12,10 +12,6 @@
  * Pure predicate so the future `MELEE_ATTACK` handler reuses the same gate as
  * `TargetService` (which rejects the target lock up front).
  *
- * ponytail: the flying-mismatch branch from C++ (`IsFly()` attacker/target
- * parity) is not modeled -- there is no mount/flight subsystem yet; add the
- * check here when one lands.
- *
  * @module services/combat.policy
  */
 
@@ -27,6 +23,11 @@ import type { CMover } from '@flyff/entities';
  * Player-vs-player targeting is out of scope (handled elsewhere).
  */
 export function isMoverAttackableBy(player: CPlayer, mover: CMover): boolean {
+  // C++ `CMover::IsAttackAbleNPC` (Mover.cpp:6822-6825): flight is a separate
+  // combat plane. A board/broom rider can target only `propMover.bFlying` mobs;
+  // ground players cannot target those mobs. `m_bFlyable` is the converted
+  // `bFlying` bit, carried through SpawnManager.
+  if (player.isFly() !== mover.m_bFlyable) return false;
   if (!mover.m_bAttackable) return false;
   if (mover.m_bGuard && !player.isChaotic()) return false;
   if (mover.m_bChaoGuard && player.isChaotic()) return false;
@@ -52,6 +53,10 @@ export function isMoverAttackableBy(player: CPlayer, mover: CMover): boolean {
  * ponytail: zone region-type enforcement (safe zones reject PvP).
  */
 export function isPlayerAttackableBy(attacker: CPlayer, target: CPlayer): boolean {
+  // `CMover::GetHitType` returns HITTYPE_FAIL before any PvP/duel check when
+  // either player flies (`MoverAttack.cpp:1848`, `:1918`). Keep this BEFORE the
+  // duel override: a duel grants consent, not aerial melee.
+  if (attacker.isFly() || target.isFly()) return false;
   // Duel override -- accepted 1v1 duel pairs are always attackable to each other.
   if (attacker.m_nDuel === 1 && attacker.m_idDuelTarget === target.m_idPlayer) return true;
   if (target.m_nDuel === 1 && target.m_idDuelTarget === attacker.m_idPlayer) return true;

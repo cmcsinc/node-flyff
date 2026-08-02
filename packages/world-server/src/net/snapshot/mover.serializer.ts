@@ -117,7 +117,7 @@ function writeMoverPrefix(w: PacketWriter, p: CPlayer): void {
   w.writeByte(1);              // m_bPlayer
   w.writeDword(p.m_nHp);       // m_nHitPoint
   w.writeDword(0);             // GetState()
-  w.writeDword(0);             // GetStateFlag()
+  w.writeDword(p.m_dwStateFlag); // GetStateFlag() -- OBJSTAF.FLY makes peers attach PARTS_RIDE model
   // m_dwBelligerence -- BELLI_PEACEFUL. C++ `CMover::InitProp` (Mover.cpp:1519)
   // seeds every player mover from propMover MI_MALE/MI_FEMALE, both BELLI_PEACEFUL.
   // The wire byte OVERWRITES that seed on load (ObjSerializeOpt.cpp:401), so a 0

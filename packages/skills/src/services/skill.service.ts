@@ -133,6 +133,7 @@ export type SkillCastOutcome =
         | 'unknown_skill'
         | 'dead'
         | 'stunned'
+        | 'flying'
         | 'cooldown'
         | 'no_mp'
         | 'no_fp'
@@ -291,6 +292,10 @@ export class SkillService {
     }
     if (player.m_bDead) { this.clear(player); return { ok: false, reason: 'dead' }; }
     if (player.isStunned()) { this.clear(player); return { ok: false, reason: 'stunned' }; }
+    // C++ `DoUseSkill` returns before the skill loads while airborne
+    // (`MoverSkill.cpp:326` `if (m_pActMover->IsFly()) return FALSE`). No skill
+    // fires on a board/broom; melee/range are gated separately via combat policy.
+    if (player.isFly()) { this.clear(player); return { ok: false, reason: 'flying' }; }
 
     const skill = this.deps.skills.skills.get(slot.skillId);
     if (skill === undefined) { this.clear(player); return { ok: false, reason: 'unknown_skill' }; }

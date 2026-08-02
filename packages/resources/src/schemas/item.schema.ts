@@ -157,6 +157,46 @@ export const ItemDefinitionSchema = z.object({
   /** Raw item kind 3 (propItem dwItemKind3, IK3_*) -- fine category. */
   item_kind3: z.string().optional(),
 
+  // Flight (ride items only -- IK1_RIDE, dwParts == PARTS_RIDE 13).
+  // Columns 292-298 of `Spec_Item.txt`, parsed in this order by C++
+  // `ProjectCmn.cpp:475-481`. Present only on boards/brooms/wings; every other
+  // item omits the whole block.
+  /**
+   * Base flight speed (propItem `fFlightSpeed`, e.g. `0.0023`). Two roles: the
+   * client derives `m_fAccPower = fFlightSpeed * 0.75`
+   * (`ActionMoverState2.cpp:482`), and the client echoes this exact float back on
+   * the DOEQUIP that mounts the item so the server can reject a tampered client
+   * (`__HACK_1023`, `DPSrvr.cpp:793-807`). Float -- do NOT round.
+   */
+  flight_speed: z.number().optional(),
+
+  /** Left/right turn rate (propItem `fFlightLRAngle`). Client-side physics only. */
+  flight_lr_angle: z.number().optional(),
+
+  /** Pitch rate (propItem `fFlightTBAngle`). Client-side physics only. */
+  flight_tb_angle: z.number().optional(),
+
+  /**
+   * Minimum `GetFlightLv()` to mount (propItem `dwFlightLimit`). Every ride item
+   * in v19 ships `1`, and flight level is derived as `level >= 20 ? 1 : 0`
+   * (`Mover.h:549`) -- so in practice this is a level-20 gate. `NULL_ID` in the
+   * source is normalized to `1` by C++ (`MoverEquip.cpp:1500-1502`).
+   */
+  flight_limit: z.number().int().min(0).optional(),
+
+  /**
+   * Flight-fuel capacity (propItem `dwFFuelReMax`). Seeded into `m_nFuel` on
+   * mount. Note v19 NEVER decrements flight fuel -- the only decrement site is
+   * commented out (`ActionMoverMsg2.cpp:262`), so this is a display capacity.
+   */
+  fuel_max: z.number().int().min(0).optional(),
+
+  /** Turbo-fuel capacity in seconds (propItem `dwAFuelReMax`). ponytail: turbo unported. */
+  acc_fuel_max: z.number().int().min(0).optional(),
+
+  /** Refuel amount granted by an `IK2_AIRFUEL` item (propItem `dwFuelRe`). ponytail. */
+  fuel_refill: z.number().int().min(0).optional(),
+
   /** Flat hit-rate bonus % (propItem `nAdjHitRate`) -- jewelry DST_ADJ_HITRATE. */
   hit_rate: z.number().int().optional(),
 

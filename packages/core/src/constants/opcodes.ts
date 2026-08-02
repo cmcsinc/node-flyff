@@ -138,6 +138,7 @@ export const PACKETTYPE = Object.freeze({
   PLAYERMOVED:          0xffffff01,
   PLAYERBEHAVIOR:       0xffffff02,
   PLAYERMOVED2:         0xffffff03,
+  PLAYERBEHAVIOR2:      0xffffff04,
   PLAYERCORR:           0xffffff05,
   PLAYERSETDESTOBJ:     0xffffff07,
   MOVERDESTPOS:         0xffffff0f,

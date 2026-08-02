@@ -2,14 +2,8 @@ _version: "1.0"
 id: 6062
 symbol: "6062"
 commands:
-  - cmd: Setting
+  - cmd: SetHeadQuest
     args:
-      - type: num
-        value: 0
-      - type: sym
-        value: SetHeadQuest
-      - type: num
-        value: 0
       - type: num
         value: 6001
 states: {}

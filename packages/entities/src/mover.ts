@@ -103,6 +103,13 @@ export interface MoverSpawnSource {
    */
   readonly chaoGuard?: boolean | undefined;
   /**
+   * propMover `bFlying` (converted as `flyable`, `converters/movers.ts:179`) --
+   * an air mover. Feeds the air/ground targeting parity gate; a flying player
+   * can only attack these, a grounded player only the others
+   * (`Mover.cpp:6822-6825`).
+   */
+  readonly flyable?: boolean | undefined;
+  /**
    * C++ `m_dwBelligerence` (defineAttribute.h:203-215). 1 = BELLI_PEACEFUL
    * (suppresses client attack cursor); 11/12/13 = aggressive. 0 = unspecified.
    */
@@ -237,6 +244,13 @@ export class CMover {
   m_bGuard: boolean;
   /** `MI_CHAOGUARDIAN` inverse guard -- only NON-chaotic players may attack. */
   m_bChaoGuard: boolean;
+  /**
+   * C++ `MoverProp::dwFlying` (propMover `bFlying`, converted to `flyable`).
+   * Drives the air/ground targeting parity gate: a flying player may only hit
+   * flying movers and a grounded player only grounded ones
+   * (`CMover::IsAttackAbleNPC`, `Mover.cpp:6822-6825`).
+   */
+  m_bFlyable: boolean;
   /** Human-NPC outfit (character.inc). Undefined for monsters -> naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
   /** character.inc AddMenu ids (MMI_*). Carries dialog/trade/bank capability. */
@@ -385,6 +399,7 @@ export class CMover {
     this.m_bAttackable = src.attackable ?? true;
     this.m_bGuard = src.guard ?? false;
     this.m_bChaoGuard = src.chaoGuard ?? false;
+    this.m_bFlyable = src.flyable ?? false;
     this.outfit = src.outfit;
     this.m_abMoverMenu = src.menus ?? [];
     this.m_vendorStock = src.vendorStock ?? EMPTY_VENDOR_STOCK;

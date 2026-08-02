@@ -18,6 +18,7 @@ movers:
     dodge_rate: 10
     speed: 0.1
     attack_speed: 0
+    re_attack_delay: 0
     exp: 0
     flyable: false
     boss: false
@@ -43,6 +44,7 @@ movers:
     dodge_rate: 10
     speed: 0.1
     attack_speed: 0
+    re_attack_delay: 0
     exp: 0
     flyable: false
     boss: false

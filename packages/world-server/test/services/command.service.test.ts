@@ -424,6 +424,76 @@ describe('CommandService -- count (/cnt)', () => {
   });
 });
 
+describe('CommandService -- createNpc (/cn)', () => {
+  /** SpawnManager stub recording `spawnMonster` calls. */
+  function makeSpawner() {
+    const calls: Array<{ id: number; zoneId: number; aggro: boolean }> = [];
+    return {
+      calls,
+      svc: {
+        spawnMonster: (id: number, _pos: unknown, zoneId: number, aggro = false) => {
+          calls.push({ id, zoneId, aggro });
+          return { m_idMover: id };
+        },
+      } as unknown as import('@flyff/world-core').SpawnManager,
+    };
+  }
+
+  const AIBATT = { id: 20, name: 'Small Aibatt', type: 'monster' } as never;
+  const SHOPKEEP = { id: 200, name: 'Marche', type: 'npc' } as never;
+
+  function setupCn(defs: Record<string, unknown>) {
+    const playerManager = new PlayerManager();
+    const spawner = makeSpawner();
+    const commandService = new CommandService({
+      playerManager, spawnManager: spawner.svc, questService: makeQuestService().svc,
+      lookupMover: (t: string) => defs[t] as never,
+    });
+    const gm = makePlayer(1, 'Gm', AUTH.GAMEMASTER3);
+    gm.m_nZoneId = 7;
+    playerManager.add(gm);
+    return { commandService, gm, spawner };
+  }
+
+  it('spawns one monster by id at the caller position', () => {
+    const { commandService, gm, spawner } = setupCn({ '20': AIBATT });
+    commandService.route(gm, '/cn 20');
+    assert.deepEqual(spawner.calls, [{ id: 20, zoneId: 7, aggro: false }]);
+  });
+
+  it('spawns by name and honours the count + activeAttack args', () => {
+    const { commandService, gm, spawner } = setupCn({ 'Small Aibatt': AIBATT });
+    commandService.route(gm, '/cn Small Aibatt');
+    assert.equal(spawner.calls.length, 0, 'multi-word name is not resolvable -- first token only');
+
+    const b = setupCn({ Aibatt: AIBATT });
+    b.commandService.route(b.gm, '/cn Aibatt 3 1');
+    assert.equal(b.spawner.calls.length, 3);
+    assert.ok(b.spawner.calls.every((c) => c.aggro));
+  });
+
+  it('caps count at 100 (TextCmd_CreateNPC: dwNum > 100 -> 100)', () => {
+    const { commandService, gm, spawner } = setupCn({ '20': AIBATT });
+    commandService.route(gm, '/cn 20 500');
+    assert.equal(spawner.calls.length, 100);
+  });
+
+  it('refuses non-monster movers and unknown tokens', () => {
+    const { commandService, gm, spawner } = setupCn({ '200': SHOPKEEP });
+    commandService.route(gm, '/cn 200');
+    commandService.route(gm, '/cn 999');
+    commandService.route(gm, '/cn');
+    assert.equal(spawner.calls.length, 0);
+  });
+
+  it('rejects /cn below GAMEMASTER3', () => {
+    const { commandService, spawner } = setupCn({ '20': AIBATT });
+    const p = makePlayer(2, 'P', AUTH.GAMEMASTER2);
+    assert.deepEqual(commandService.route(p, '/cn 20'), { ok: false, reason: 'no_auth' });
+    assert.equal(spawner.calls.length, 0);
+  });
+});
+
 describe('CommandService -- removeTotalGold (/rtg)', () => {
   it('removes gold, WAL-journals the new total, persists live, sends SetPointParam', () => {
     const playerManager = new PlayerManager();

@@ -25,7 +25,10 @@ function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
   };
 }
 
-function makeSvc(getItem: (id: number) => ItemDefinition | undefined) {
+function makeSvc(
+  getItem: (id: number) => ItemDefinition | undefined,
+  opts: { flight?: { canMount(p: CPlayer, prop: ItemDefinition): { ok: true } | { ok: false; tid: number }; mount(p: CPlayer): void; dismount(p: CPlayer): void } } = {},
+) {
   const setItemCalls: Array<{ slot: number; itemId: number }> = [];
   const removedSlots: number[] = [];
   const journalCalls: Array<{ type: string }> = [];
@@ -39,6 +42,7 @@ function makeSvc(getItem: (id: number) => ItemDefinition | undefined) {
     getItem,
     sendTo: (_p, buf: Buffer) => { sent.push(buf); },
     broadcastAround: (_p, buf: Buffer) => { broadcast.push(buf); },
+    flight: opts.flight,
     journal: { append: (e: { type: string }) => { journalCalls.push(e); } } as never,
   });
   return { svc, setItemCalls, removedSlots, journalCalls, sent, broadcast };
@@ -103,16 +107,46 @@ describe('EquipService.equip', () => {
     assert.equal(player.m_Inventory[0]!.itemId, 5000, 'old weapon swapped back to bag');
   });
 
-  it('rejects RIDE(13) parts as restricted', () => {
-    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+  it('RIDE(13) under level 20 -> restricted with USEAIRCRAFT(612) tid', () => {
+    const player = CPlayer.fromRow(makeRow({ level: 19 }), { write: () => true });
     player.m_Inventory[0] = { itemId: 9000, count: 1 };
     const table = new Map<number, ItemDefinition>([
-      [9000, { id: 9000, name: 'Board', name_id: 'ITEM_B', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 13 }],
+      [9000, { id: 9000, name: 'Board', name_id: 'ITEM_B', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 13, flight_limit: 1 }],
     ]);
-    const { svc } = makeSvc((id) => table.get(id));
+    const { svc } = makeSvc((id) => table.get(id), {
+      flight: {
+        canMount: () => ({ ok: false, tid: 612 }),
+        mount: () => {},
+        dismount: () => {},
+      },
+    });
     const r = svc.equip(player, 0, 13);
     assert.equal(r.ok, false);
-    if (!r.ok) assert.equal(r.reason, 'restricted');
+    if (!r.ok) {
+      assert.equal(r.reason, 'restricted');
+      assert.equal(r.tid, 612, 'level-gate refusal carries the USEAIRCRAFT tid');
+    }
+    assert.equal(player.m_Inventory[0]?.itemId, 9000, 'bag untouched on refusal');
+  });
+
+  it('RIDE(13) at level 20 with passing flight dep -> mounts, sets FLY, clears dest', () => {
+    const player = CPlayer.fromRow(makeRow({ level: 20 }), { write: () => true });
+    player.m_Inventory[0] = { itemId: 9000, count: 1 };
+    player.m_idDestObj = 12345;
+    let mounted = false;
+    const table = new Map<number, ItemDefinition>([
+      [9000, { id: 9000, name: 'Board', name_id: 'ITEM_B', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 13, flight_limit: 1 }],
+    ]);
+    const { svc } = makeSvc((id) => table.get(id), {
+      flight: {
+        canMount: () => ({ ok: true }),
+        mount: () => { mounted = true; },
+        dismount: () => {},
+      },
+    });
+    const r = svc.equip(player, 0, 13);
+    assert.equal(r.ok, true);
+    assert.equal(mounted, true, 'flight.mount called after slot move');
   });
 
   it('equips at the prop equip_slot regardless of client nPart (server-authoritative)', () => {

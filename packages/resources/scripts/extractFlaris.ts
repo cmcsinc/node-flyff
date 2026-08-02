@@ -56,6 +56,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(__dirname, '..');
 const DYO = resolve(PKG_ROOT, '../../game/resource/World/WdMadrigal/WdMadrigal.dyo');
 const RGN = resolve(PKG_ROOT, '../../game/resource/World/WdMadrigal/WdMadrigal.rgn');
+const WLD = resolve(PKG_ROOT, '../../game/resource/World/WdMadrigal/WdMadrigal.wld');
 const FLARIS_YML = resolve(PKG_ROOT, 'data/worlds/zones/flaris.yml');
 
 /** Object types (CreateObj.cpp dispatch order; OT_MOVER empirically confirmed). */
@@ -203,10 +204,20 @@ async function loadKnownMoverIds(): Promise<Set<number>> {
   return ids;
 }
 
+/**
+ * Read the world's `fly <0|1>` permission token (`WorldFile.cpp:89-91`).
+ * Absent token => C++ default `TRUE` (`World.cpp:92`).
+ */
+function parseFlyToken(wld: string): boolean {
+  const m = /(?:^|\s)fly\s+(\d+)/.exec(wld);
+  return m ? m[1] !== '0' : true;
+}
+
 async function main(): Promise<void> {
-  const [dyoBuf, rgnText, existingYml, knownMIs] = await Promise.all([
+  const [dyoBuf, rgnText, wldText, existingYml, knownMIs] = await Promise.all([
     readFile(DYO),
     readText(RGN),
+    readText(WLD),
     readFile(FLARIS_YML, 'utf8'),
     loadKnownMoverIds(),
   ]);
@@ -230,6 +241,7 @@ async function main(): Promise<void> {
   // dialogue_id overrides is a follow-up.
   const next: ZoneDefinition = {
     ...zone,
+    fly: parseFlyToken(wldText),
     npcs,
     spawns,
   };

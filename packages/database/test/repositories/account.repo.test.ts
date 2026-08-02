@@ -7,6 +7,12 @@ import { up, down } from '../../src/migrations/001_initial';
 
 const knex = (knexModule as any).default || knexModule;
 
+// v19 AUTH_* tiers as ASCII codes. Duplicated locally rather than imported from
+// @flyff/entities: @flyff/database must not depend on sibling packages (TS6059
+// rootDir break) -- migration 021_account_authority.ts declares them the same way.
+const AUTH_GENERAL = 0x46;
+const AUTH_ADMINISTRATOR = 0x50;
+
 describe('account.repo.ts', () => {
   let db: Knex;
   let repo: AccountRepository;
@@ -38,7 +44,7 @@ describe('account.repo.ts', () => {
         username: 'testuser',
         password_hash: 'hash123',
         email: 'test@example.com',
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -63,7 +69,7 @@ describe('account.repo.ts', () => {
         username: 'findme',
         password_hash: 'hash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -85,7 +91,7 @@ describe('account.repo.ts', () => {
         username: 'emailuser',
         password_hash: 'hash',
         email: 'found@example.com',
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -102,7 +108,7 @@ describe('account.repo.ts', () => {
         username: 'newuser',
         password_hash: 'hashed',
         email: 'new@example.com',
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -120,7 +126,7 @@ describe('account.repo.ts', () => {
         username: 'noemail',
         password_hash: 'hashed',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -135,14 +141,14 @@ describe('account.repo.ts', () => {
         username: 'gmadmin',
         password_hash: 'hashed',
         email: 'gm@example.com',
-        gm: true,
+        authority: AUTH_ADMINISTRATOR,
         banned: false,
         banned_until: null,
       });
 
       const account = await repo.findById(id);
       assert.ok(account);
-      assert.equal(account.gm, true);
+      assert.equal(account.authority, AUTH_ADMINISTRATOR);
     });
   });
 
@@ -152,7 +158,7 @@ describe('account.repo.ts', () => {
         username: 'pwupdate',
         password_hash: 'oldhash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -171,7 +177,7 @@ describe('account.repo.ts', () => {
         username: 'updateme',
         password_hash: 'hash',
         email: 'old@example.com',
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -188,20 +194,20 @@ describe('account.repo.ts', () => {
         username: 'multiupdate',
         password_hash: 'hash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
 
       await repo.update(id, {
         email: 'multi@example.com',
-        gm: true,
+        authority: AUTH_ADMINISTRATOR,
       });
 
       const account = await repo.findById(id);
       assert.ok(account);
       assert.equal(account.email, 'multi@example.com');
-      assert.equal(account.gm, true);
+      assert.equal(account.authority, AUTH_ADMINISTRATOR);
     });
   });
 
@@ -211,7 +217,7 @@ describe('account.repo.ts', () => {
         username: 'banme',
         password_hash: 'hash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -229,7 +235,7 @@ describe('account.repo.ts', () => {
         username: 'tempban',
         password_hash: 'hash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -248,7 +254,7 @@ describe('account.repo.ts', () => {
         username: 'unbanme',
         password_hash: 'hash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: true,
         banned_until: new Date('2026-12-31'),
       });
@@ -268,7 +274,7 @@ describe('account.repo.ts', () => {
         username: 'deleteme',
         password_hash: 'hash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -291,7 +297,7 @@ describe('account.repo.ts', () => {
         username: 'exists',
         password_hash: 'hash',
         email: null,
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });
@@ -312,7 +318,7 @@ describe('account.repo.ts', () => {
         username: 'emailexists',
         password_hash: 'hash',
         email: 'exists@example.com',
-        gm: false,
+        authority: AUTH_GENERAL,
         banned: false,
         banned_until: null,
       });

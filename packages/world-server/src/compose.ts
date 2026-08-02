@@ -14,6 +14,7 @@ import { PlayerManager } from '@flyff/world-core';
 import { ZoneManager } from '@flyff/world-core';
 import { SpawnManager } from '@flyff/world-core';
 import { VisibilityService } from '@flyff/world-core';
+import { FlightService } from '@flyff/world-core';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer';
 import { PeerSnapshotSerializer } from './net/snapshot/peerSnapshot.serializer';
 import { SetExperienceSerializer } from '@flyff/combat';
@@ -35,6 +36,7 @@ import { SnapshotHandler } from './handlers/snapshot.handler';
 import { MovementService } from './services/movement.service';
 import { PlayerMovedHandler } from './handlers/playerMoved.handler';
 import { PlayerBehaviorHandler } from './handlers/playerBehavior.handler';
+import { PlayerBehavior2Handler } from './handlers/playerBehavior2.handler';
 import { ChatService } from './services/chat.service';
 import { ChatHandler } from './handlers/chat.handler';
 import { CommandService } from './services/command.service';
@@ -158,6 +160,7 @@ export interface WorldComposeResult {
   movementService: MovementService;
   playerMovedHandler: PlayerMovedHandler;
   playerBehaviorHandler: PlayerBehaviorHandler;
+  playerBehavior2Handler: PlayerBehavior2Handler;
   chatService: ChatService;
   chatHandler: ChatHandler;
   commandService: CommandService;
@@ -582,6 +585,14 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager, spawnManager, questService, journal,
     inventoryService, charRepo, inventoryRepo, zoneManager, visibilityService,
     getItemByName: (name: string) => resources.items.byName.get(name),
+    // `/cn <id|name>` -- C++ tries `GetMoverPropEx(id)` on a numeric token,
+    // else `GetMoverProp(name)` (FuncTextCmd.cpp:2940-2946).
+    lookupMover: (token: string) => {
+      const id = Number.parseInt(token, 10);
+      return Number.isInteger(id) && String(id) === token
+        ? resources.movers.movers.get(id)
+        : resources.movers.byName.get(token);
+    },
   });
   const chatService = new ChatService({ zoneManager, commandService });
   const chatHandler = new ChatHandler(playerManager, chatService);
@@ -599,6 +610,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const leaveHandler = new LeaveHandler();
   const playerCorrHandler = new PlayerCorrHandler(playerManager, movementService);
   const playerMoved2Handler = new PlayerMoved2Handler(playerManager, movementService);
+  const playerBehavior2Handler = new PlayerBehavior2Handler(playerManager, movementService);
   const playerAngleHandler = new PlayerAngleHandler(playerManager, movementService);
   const queryGetPosService = new QueryGetPosService();
   const queryGetPosHandler = new QueryGetPosHandler(playerManager, queryGetPosService);
@@ -685,6 +697,10 @@ export async function compose(): Promise<WorldComposeResult> {
   const dropGoldHandler = new DropGoldHandler({ playerManager, itemManager, inventoryService });
   const removeItemHandler = new RemoveItemHandler({ playerManager, inventoryService });
 
+  // Flight is the PARTS_RIDE equip side effect: board/broom mount gate +
+  // OBJSTAF_FLY transition. No separate mount system exists in v19.
+  const flightService = new FlightService({ zones: resources.zones });
+
   // Equipment -- equip/unequip + stat fold into combat.
   const equipService = new EquipService({
     inventoryRepo, journal,
@@ -693,8 +709,14 @@ export async function compose(): Promise<WorldComposeResult> {
     sendTo: (player, buf) => playerManager.sendTo(player, buf),
     broadcastAround: (player, buf) =>
       zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
+    flight: flightService,
   });
-  const doEquipHandler = new DoEquipHandler({ playerManager, zoneManager, equipService });
+  const doEquipHandler = new DoEquipHandler({
+    playerManager, zoneManager, equipService,
+    getItem: (id: number) => resources.items.items.get(id),
+    isFlightSpeedValid: (prop, claimed) => flightService.isFlightSpeedValid(prop, claimed),
+    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
 
   // Use-item -- DOUSEITEM router (equip / potion+food / buff-skill-warp-text).
   const consumableService = new ConsumableService(inventoryService);
@@ -704,7 +726,12 @@ export async function compose(): Promise<WorldComposeResult> {
     potionCooldownMs: config.consumable.potionCooldownMs,
     playerManager, zoneManager,
   });
-  const doUseItemHandler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
+  const doUseItemHandler = new DoUseItemHandler({
+    playerManager, zoneManager, useItemService,
+    getItem: (id: number) => resources.items.items.get(id),
+    isFlightSpeedValid: (prop, claimed) => flightService.isFlightSpeedValid(prop, claimed),
+    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
 
   // Enchant -- PACKETTYPE_ENCHANT refine (Sunstone) + element (card). Reuses
   // inventoryService.consume for the material + journals the target slot's
@@ -913,6 +940,7 @@ export async function compose(): Promise<WorldComposeResult> {
     leaveHandler,
     playerCorrHandler,
     playerMoved2Handler,
+    playerBehavior2Handler,
     playerAngleHandler,
     queryGetPosService,
     queryGetPosHandler,

@@ -28,16 +28,28 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { EquipService } from '../services/equip.service';
-import { MAX_INVENTORY, VISIBILITY_RADIUS } from '@flyff/world-core';
+import { MAX_INVENTORY, VISIBILITY_RADIUS, FLIGHT_TID } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
+import { PARTS_RIDE } from '@flyff/entities';
+import type { ItemDefinition } from '@flyff/resources';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
 
 const logger = createLogger({ module: 'doEquip-handler' });
-const PARTS_RIDE = 13;
 
 export interface DoEquipHandlerDeps {
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   equipService: EquipService;
+  /**
+   * Item prop lookup -- needed BEFORE the trailing float is read, because
+   * whether that float is on the wire depends on the item's own `dwParts`
+   * (C++ resolves `pItemElem->GetProp()` first, `DPSrvr.cpp:794`).
+   */
+  getItem: (itemId: number) => ItemDefinition | undefined;
+  /** `__HACK_1023` speed check (`FlightService.isFlightSpeedValid`). */
+  isFlightSpeedValid?: (prop: ItemDefinition, claimed: number) => boolean;
+  /** Send a `SNAPSHOTTYPE_DEFINEDTEXT` notice to this player (refusal feedback). */
+  notify?: (player: CPlayer, tid: number) => void;
 }
 
 export class DoEquipHandler {
@@ -61,7 +73,6 @@ export class DoEquipHandler {
       if (nPart !== -1 && (nPart < 0 || nPart > 30)) {
         throw new PacketError('DOEQUIP invalid nPart');
       }
-      if (nPart === PARTS_RIDE) reader.readFloat(); // __HACK_1023 trailing float -- consume + reject below
 
       // Client sends the item's STABLE m_dwObjId (DPClient.cpp:9201 SendDoEquip).
       // It does not change across equip/unequip/move (C++ UnEquip only remaps
@@ -73,10 +84,32 @@ export class DoEquipHandler {
       // for an equipped item and we'd misroute to equip + reject (nothing happens).
       const idx = player.findSlotByObjId(nId);
       if (idx < 0) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP item not found by objid'); return; }
+      const isUnequip = idx >= MAX_INVENTORY;
+
+      // `__HACK_1023` trailing FLOAT. Read it iff the item's OWN dwParts is
+      // PARTS_RIDE *and* the item is not already equipped -- exactly the C++
+      // condition (`DPSrvr.cpp:794` resolves the prop, `:791` gates on
+      // `!IsEquip(nId)`). Two bugs this replaces: keying off the client's `nPart`
+      // missed the whole `nPart == -1` double-click path (so the float stayed in
+      // the buffer), and reading it unconditionally would over-read the dismount
+      // frame, where the client sends no float.
+      const prop = this.deps.getItem(player.m_Inventory[idx]?.itemId ?? 0);
+      const isRide = prop?.equip_slot === PARTS_RIDE;
+      if (isRide && !isUnequip) {
+        const claimed = reader.readFloat();
+        if (prop && this.deps.isFlightSpeedValid && !this.deps.isFlightSpeedValid(prop, claimed)) {
+          logger.warn(
+            { charId: player.m_idPlayer, itemId: prop.id, claimed, expected: prop.flight_speed },
+            'DOEQUIP flight-speed mismatch -- possible client tamper',
+          );
+          this.deps.notify?.(player, FLIGHT_TID.MODIFY_FLIGHT_SPEED);
+          return;
+        }
+      }
 
       // Wire nId = the stable objid (echo nId). OnDoEquip's self-path resolves the
       // item via GetAtId(nId) then its DoEquip worker relocates it client-side.
-      if (idx >= MAX_INVENTORY) {
+      if (isUnequip) {
         const r = this.deps.equipService.unequip(player, idx - MAX_INVENTORY);
         if (!r.ok) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP unequip rejected'); return; }
         this.deps.zoneManager.broadcastAround(
@@ -85,7 +118,13 @@ export class DoEquipHandler {
         );
       } else {
         const r = this.deps.equipService.equip(player, idx, nPart);
-        if (!r.ok) { logger.debug({ charId: player.m_idPlayer, nId, nPart }, 'DOEQUIP equip rejected'); return; }
+        if (!r.ok) {
+          logger.debug({ charId: player.m_idPlayer, nId, nPart, reason: r.reason, tid: r.tid }, 'DOEQUIP equip rejected');
+          // A gated mount tells the player why (level too low, no-fly world,
+          // chaotic) -- C++ `AddDefinedText` inside `IsEquipAble`.
+          if (r.tid !== undefined) this.deps.notify?.(player, r.tid);
+          return;
+        }
         this.deps.zoneManager.broadcastAround(
           player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
           buildDoEquipVicinity(player.m_idPlayer, nId, true, { dwId: r.itemId, nOption: 0, byFlag: 0 }, r.parts),

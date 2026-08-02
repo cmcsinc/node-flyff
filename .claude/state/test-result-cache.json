@@ -232,7 +232,15 @@
   "H:\\flyff\\node-flyff\\packages\\party\\test\\services\\party.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\party\\test\\managers\\party.manager.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\combat.service.test.ts": "fail",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\movement.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\movement.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\snapshot.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\adminCommand.service.test.ts": "fail"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\services\\adminCommand.service.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\admin\\test\\account-guard.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\bank.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\handlers\\doEquip.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\handlers\\doUseItem.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-core\\test\\services\\flight.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\combat.policy.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\moverBroadcast.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\migrations\\001_initial.test.ts": "pass"
 }

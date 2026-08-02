@@ -23,7 +23,7 @@
  * @module managers/spawn.manager
  */
 
-import type { ResourceIndex } from '@flyff/resources';
+import type { ResourceIndex, MoverDefinition } from '@flyff/resources';
 import { blockForMover, resolveVendorStock, type CharacterIncBlock } from '@flyff/resources';
 import type { Vec3 } from '@flyff/entities';
 import { CMover, type MoverSpawnSource, type MoverOutfit } from '@flyff/entities';
@@ -190,6 +190,7 @@ export class SpawnManager {
             // bKillable for monster-typed defs (false for npc-typed ones).
             attackable: (def.attackable ?? false) && !peaceful,
             guard: def.guard ?? false,
+            flyable: def.flyable ?? false,
             belligerence: belli,
             atkMin: def.attack,
             atkMax: def.attack,
@@ -222,31 +223,7 @@ export class SpawnManager {
         const count = Math.min(MAX_PER_SPAWN, spawn.count);
         for (let i = 0; i < count; i++) {
           this.materialize({
-            src: {
-              modelIndex: def.dwObjIndex,
-              name: def.name,
-              level: def.level,
-              hp: def.hp,
-              scale: def.scale,
-              attackable: def.attackable,
-              guard: def.guard ?? false,
-              belligerence: def.belligerence ?? 0,
-              atkMin: def.attack,
-              atkMax: def.attack,
-              armor: def.defense,
-              hr: def.attack_rate,
-              er: def.dodge_rate,
-              expValue: def.exp ?? 0,
-              speed: def.speed,
-              attackRange: def.attack_range,
-              reAttackDelay: def.re_attack_delay || def.attack_speed,
-              fleeHpPct: def.fleeHpPct,
-              runawayDelay: def.runawayDelay,
-              healHpPct: def.healHpPct,
-              healAmount: def.healPct && def.hp
-                ? Math.max(1, Math.floor(def.hp * def.healPct / 100))
-                : undefined,
-            },
+            src: monsterSource(def),
             pos: jitter(spawn.position, spawn.radius, i, count), angle: 0, zoneId: zone._id_numeric,
             delayMs: spawn.delay, // ms until respawn after kill
           });
@@ -254,6 +231,25 @@ export class SpawnManager {
       }
     }
     logger.info({ count: this.movers.size, hidden }, 'Movers spawned');
+  }
+
+  /**
+   * Materialize one monster at runtime -- `/cn` (`TextCmd_CreateNPC`,
+   * FuncTextCmd.cpp:2930). `delayMs: 0` mirrors the C++: a GM-created mover is
+   * `ADDOBJ`'d straight into the world with no respawn descriptor behind it, so
+   * it never comes back once killed. `bActiveAttack` forces the aggro-on-sight
+   * flag (the red-name gate) regardless of the def's belligerence.
+   *
+   * Returns undefined when the mover id is unknown. The caller broadcasts the
+   * ADD_OBJ (compose wires that through `onSpawn`).
+   */
+  spawnMonster(moverId: number, pos: Vec3, zoneId: number, activeAttack = false): CMover | undefined {
+    const def = this.resources.movers.movers.get(moverId);
+    if (!def) return undefined;
+    const mover = this.materialize({ src: monsterSource(def), pos, angle: 0, zoneId, delayMs: 0 });
+    if (activeAttack) mover.m_bActiveAttack = 1;
+    this.onSpawn?.(mover);
+    return mover;
   }
 
   /** Create + register a mover from a respawn descriptor. */
@@ -343,6 +339,36 @@ export class SpawnManager {
   get size(): number {
     return this.movers.size;
   }
+}
+
+/** Monster spawn source from a propMover definition (boot spawns + `/cn`). */
+function monsterSource(def: MoverDefinition): MoverSpawnSource {
+  return {
+    modelIndex: def.dwObjIndex,
+    name: def.name,
+    level: def.level,
+    hp: def.hp,
+    scale: def.scale,
+    attackable: def.attackable,
+    guard: def.guard ?? false,
+    flyable: def.flyable ?? false,
+    belligerence: def.belligerence ?? 0,
+    atkMin: def.attack,
+    atkMax: def.attack,
+    armor: def.defense,
+    hr: def.attack_rate,
+    er: def.dodge_rate,
+    expValue: def.exp ?? 0,
+    speed: def.speed,
+    attackRange: def.attack_range,
+    reAttackDelay: def.re_attack_delay || def.attack_speed,
+    fleeHpPct: def.fleeHpPct,
+    runawayDelay: def.runawayDelay,
+    healHpPct: def.healHpPct,
+    healAmount: def.healPct && def.hp
+      ? Math.max(1, Math.floor(def.hp * def.healPct / 100))
+      : undefined,
+  };
 }
 
 /**

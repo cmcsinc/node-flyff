@@ -16,6 +16,9 @@ bounds:
     x: 4000
     y: 500
     z: 4000
+# `fly 1` token in game/resource/World/WdMadrigal/WdMadrigal.wld -- boards allowed.
+# Written by extractFlaris (parseFlyToken); 40 shipped worlds are `fly 0`.
+fly: true
 revival:
   position:
     x: 6978

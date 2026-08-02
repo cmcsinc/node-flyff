@@ -37,7 +37,15 @@ function subtype(buf: Buffer): number {
   return buf.readUInt16LE(14);
 }
 
-function makeHandler(equipStub: { equip: unknown; unequip: unknown }, inventory: Record<number, InventorySlot>) {
+function makeHandler(
+  equipStub: { equip: unknown; unequip: unknown },
+  inventory: Record<number, InventorySlot>,
+  opts: {
+    getItem?: (id: number) => { equip_slot?: number; flight_speed?: number } | undefined;
+    isFlightSpeedValid?: (prop: { flight_speed?: number }, claimed: number) => boolean;
+    notified?: number[];
+  } = {},
+) {
   const broadcasts: Buffer[] = [];
   const m_Inventory = new Array<InventorySlot | null>(INVENTORY_SLOTS).fill(null);
   for (const [k, v] of Object.entries(inventory)) m_Inventory[Number(k)] = v;
@@ -51,7 +59,13 @@ function makeHandler(equipStub: { equip: unknown; unequip: unknown }, inventory:
     equip: () => equipStub.equip,
     unequip: () => equipStub.unequip,
   } as unknown as EquipService;
-  const handler = new DoEquipHandler({ playerManager, zoneManager, equipService });
+  const handler = new DoEquipHandler({
+    playerManager, zoneManager, equipService,
+    getItem: opts.getItem ?? (() => undefined),
+    isFlightSpeedValid: opts.isFlightSpeedValid ?? ((prop, claimed) =>
+      prop.flight_speed === undefined || Math.abs(prop.flight_speed - claimed) < 1e-6),
+    notify: (_p, tid) => { (opts.notified ??= []).push(tid); },
+  });
   return { handler, player, broadcasts };
 }
 
@@ -91,14 +105,39 @@ describe('DoEquipHandler', () => {
     assert.equal(broadcasts.length, 0);
   });
 
-  it('consumes the RIDE(13) trailing float without equipping', () => {
+  it('RIDE(13) item: float read from prop, speed-tamper rejects with a notice', () => {
+    // Client sends nPart=13 + the trailing fFlightSpeed. The handler resolves the
+    // item's OWN equip_slot (not nPart) to decide the float is on the wire, then
+    // compares it to the prop's flight_speed. A mismatch -> MODIFY_FLIGHT_SPEED
+    // (3457) notice, no equip, stream consumed.
+    const notified: number[] = [];
     const { handler, broadcasts } = makeHandler(
-      { equip: { ok: false, reason: 'restricted' }, unequip: { ok: false, reason: 'invalid' } },
-      { 0: { itemId: 1, count: 1, objid: 0 } },
+      { equip: { ok: true, parts: 13, itemId: 5000, invSlot: 0, objid: 0 }, unequip: { ok: false, reason: 'invalid' } },
+      { 0: { itemId: 5000, count: 1, objid: 0 } },
+      {
+        getItem: () => ({ equip_slot: 13, flight_speed: 0.0023 }),
+        notified,
+      },
     );
     const w = new PacketWriter();
-    w.writeDword(0); w.writeDword(13); w.writeFloat(1.5); // RIDE trailing float
+    w.writeDword(0); w.writeDword(13); w.writeFloat(0.099); // tampered speed
     handler.handleDoEquip(mockSocket(), new PacketReader(w.build()));
-    assert.equal(broadcasts.length, 0, 'RIDE rejected, float consumed, stream stays aligned');
+    assert.equal(broadcasts.length, 0, 'tampered speed -> no equip broadcast');
+    assert.deepEqual(notified, [3457], 'MODIFY_FLIGHT_SPEED notice sent');
+  });
+
+  it('RIDE(13) item: double-click (nPart=-1) still reads the float', () => {
+    // nPart=-1 is the normal equip UX; the old `nPart === PARTS_RIDE` check missed
+    // it and left the float in the buffer. The float must be consumed regardless.
+    const { handler, broadcasts } = makeHandler(
+      { equip: { ok: true, parts: 13, itemId: 5000, invSlot: 0, objid: 0 }, unequip: { ok: false, reason: 'invalid' } },
+      { 0: { itemId: 5000, count: 1, objid: 0 } },
+      { getItem: () => ({ equip_slot: 13, flight_speed: 0.0023 }) },
+    );
+    const w = new PacketWriter();
+    w.writeDword(0); w.writeDword(0xffffffff); w.writeFloat(0.0023); // nPart=-1, valid speed
+    handler.handleDoEquip(mockSocket(), new PacketReader(w.build()));
+    assert.equal(broadcasts.length, 1, 'valid speed -> equip proceeds');
+    assert.equal(broadcasts[0]![21], 1, 'fEquip = 1');
   });
 });

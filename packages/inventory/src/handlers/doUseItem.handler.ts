@@ -21,18 +21,26 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { UseItemService } from '../services/useItem.service';
-import { VISIBILITY_RADIUS } from '@flyff/world-core';
+import { VISIBILITY_RADIUS, FLIGHT_TID } from '@flyff/world-core';
+import type { CPlayer } from '@flyff/entities';
+import { PARTS_RIDE } from '@flyff/entities';
+import type { ItemDefinition } from '@flyff/resources';
 import { buildDoEquipVicinity } from '../net/snapshot/doEquip.serializer';
 import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '@flyff/world-core';
 import { buildUpdateItemCount, buildUpdateItemCooltime } from '../net/snapshot/updateItem.serializer';
 
 const logger = createLogger({ module: 'doUseItem-handler' });
-const PARTS_RIDE = 13;
 
 export interface DoUseItemHandlerDeps {
   playerManager: PlayerManager;
   zoneManager: ZoneManager;
   useItemService: UseItemService;
+  /** Item prop lookup -- decides whether the `__HACK_1023` float is on the wire. */
+  getItem: (itemId: number) => ItemDefinition | undefined;
+  /** `__HACK_1023` speed check (`FlightService.isFlightSpeedValid`). */
+  isFlightSpeedValid?: (prop: ItemDefinition, claimed: number) => boolean;
+  /** Send a `SNAPSHOTTYPE_DEFINEDTEXT` notice to this player (refusal feedback). */
+  notify?: (player: CPlayer, tid: number) => void;
 }
 
 export class DoUseItemHandler {
@@ -50,7 +58,6 @@ export class DoUseItemHandler {
       const nPart = reader.readDword();
       Validate.dword(dwData);
       Validate.dword(nPart);
-      if (((dwData >>> 16) & 0xffff) === PARTS_RIDE || nPart === PARTS_RIDE) reader.readFloat();
 
       // HIWORD(dwData) is the item's STABLE m_dwObjId (DPClient SendDoUseItem ->
       // MAKELONG(ITYPE_ITEM, m_dwObjId)), NOT the current slot -- resolve via scan
@@ -59,13 +66,35 @@ export class DoUseItemHandler {
       const objid = (dwData >>> 16) & 0xffff;
       const slot = player.findSlotByObjId(objid);
       if (slot < 0) { logger.debug({ charId: player.m_idPlayer, objid, nPart }, 'DOUSEITEM item not found by objid'); return; }
+
+      // `__HACK_1023` trailing FLOAT -- read iff the item's OWN dwParts is
+      // PARTS_RIDE (`DPSrvr.cpp:2659-2677` resolves the prop first). DOUSEITEM
+      // always addresses a bag slot, so the item is never already equipped and
+      // the float is always present for a ride item. Keying off the client's
+      // `nPart` (the old check) missed every double-click mount, which sends -1.
+      const prop = this.deps.getItem(player.m_Inventory[slot]?.itemId ?? 0);
+      if (prop?.equip_slot === PARTS_RIDE) {
+        const claimed = reader.readFloat();
+        if (this.deps.isFlightSpeedValid && !this.deps.isFlightSpeedValid(prop, claimed)) {
+          logger.warn(
+            { charId: player.m_idPlayer, itemId: prop.id, claimed, expected: prop.flight_speed },
+            'DOUSEITEM flight-speed mismatch -- possible client tamper',
+          );
+          this.deps.notify?.(player, FLIGHT_TID.MODIFY_FLIGHT_SPEED);
+          return;
+        }
+      }
       logger.info({ charId: player.m_idPlayer, objid, slot, nPart, itemId: player.m_Inventory?.[slot]?.itemId }, 'DOUSEITEM recv');
 
       const r = this.deps.useItemService.use(player, slot, nPart);
       logger.info({ charId: player.m_idPlayer, kind: r.kind, slot, cooltime: 'cooltime' in r ? r.cooltime : undefined, remaining: 'remaining' in r ? r.remaining : undefined }, 'DOUSEITEM result');
       if (r.kind === 'equip') {
         const e = r.equip;
-        if (!e.ok) { logger.debug({ charId: player.m_idPlayer, slot, nPart, reason: e.reason }, 'DOUSEITEM equip rejected'); return; }
+        if (!e.ok) {
+          logger.debug({ charId: player.m_idPlayer, slot, nPart, reason: e.reason, tid: e.tid }, 'DOUSEITEM equip rejected');
+          if (e.tid !== undefined) this.deps.notify?.(player, e.tid);
+          return;
+        }
         // 6-field vicinity format, sent to self + peers alike (C++ g_UserMng::
         // AddDoEquip broadcasts to m_2pc incl self -- User.cpp:4515). The 3-field
         // self variant is dead C++ (CUser::AddDoEquip) whose layout desyncs

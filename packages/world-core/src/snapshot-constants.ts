@@ -120,6 +120,8 @@ export const SNAPSHOTTYPE_MELEE_ATTACK = 0x00e0;     // MsgHdr.h:1110 -- MELEE_A
 export const SNAPSHOTTYPE_RANGE_ATTACK = 0x00e2;    // MsgHdr.h:1112 -- RANGE_ATTACK projectile swing echo
 export const SNAPSHOTTYPE_MOVERCORR = 0x00c8;        // MsgHdr.h:1093 -- PLAYERCORR echo (60B body)
 export const SNAPSHOTTYPE_MOVERMOVED2 = 0x00cc;      // MsgHdr.h:1097 -- PLAYERMOVED2 echo (73B body)
+export const SNAPSHOTTYPE_MOVERBEHAVIOR2 = 0x00cd;   // MsgHdr.h:1098 -- PLAYERBEHAVIOR2 echo (72B body)
+export const SNAPSHOTTYPE_MOVERANGLE = 0x00ce;       // MsgHdr.h:1099 -- PLAYERANGLE echo (45B body)
 /**
  * `SNAPSHOTTYPE_MOVERFOCUS` (MsgHdr.h:957) -- `CUser::AddMoverFocus`
  * (`WORLDSERVER/User.cpp:2534`): `OBJID(NULL_ID) | MOVERFOCUS |

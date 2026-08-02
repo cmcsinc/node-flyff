@@ -10,6 +10,7 @@ import * as assert from 'node:assert/strict';
 import { MovementService } from '../../src/services/movement.service';
 import type { MovementFrame, Movement2Frame } from '../../src/net/snapshot/moverBroadcast.serializer';
 import { CPlayer } from '@flyff/entities';
+import { OBJSTAF } from '@flyff/entities';
 import { NULL_ID } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 
@@ -196,5 +197,41 @@ describe('MovementService dest-obj follow', () => {
 
     assert.deepEqual(out, { ok: false, reason: 'too_far' });
     assert.equal(p.m_idDestObj, LEADER);
+  });
+});
+
+
+describe("MovementService flight gate (symmetric)", () => {
+  it("applyMovement drops a flying player (reason flying)", () => {
+    const { svc, broadcasts } = makeService();
+    const p = makePlayer();
+    p.m_dwStateFlag |= OBJSTAF.FLY;
+    const out = svc.applyMovement(p, nearFrame());
+    assert.deepEqual(out, { ok: false, reason: "flying" });
+    assert.equal(broadcasts.length, 0);
+  });
+
+  it("applyMoved2 drops a grounded player (reason not_flying)", () => {
+    const { svc, broadcasts } = makeService();
+    const p = makePlayer();
+    const out = svc.applyMoved2(p, near2Frame());
+    assert.deepEqual(out, { ok: false, reason: "not_flying" });
+    assert.equal(broadcasts.length, 0);
+  });
+
+  it("applyMoved2 accepts a flying player within anti-teleport radius", () => {
+    const { svc, broadcasts } = makeService();
+    const p = makePlayer();
+    p.m_dwStateFlag |= OBJSTAF.FLY;
+    const out = svc.applyMoved2(p, near2Frame(10));
+    assert.equal(out.ok, true);
+    assert.equal(broadcasts.length, 1);
+  });
+
+  it("applyAngle drops a grounded player (reason not_flying)", () => {
+    const { svc } = makeService();
+    const p = makePlayer();
+    const out = svc.applyAngle(p, { v: { x: 0, y: 0, z: 0 }, vd: { x: 0, y: 0, z: 0 }, f: 0, fAngleX: 0.1, fAccPower: 0, fTurnAngle: 0, nTickCount: 0n });
+    assert.deepEqual(out, { ok: false, reason: "not_flying" });
   });
 });

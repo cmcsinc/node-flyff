@@ -56,7 +56,9 @@ describe('001_initial migration', () => {
       assert.ok(columnNames.includes('username'));
       assert.ok(columnNames.includes('password_hash'));
       assert.ok(columnNames.includes('email'));
-      assert.ok(columnNames.includes('gm'));
+      // Tiered AUTH_* code; replaced the old `gm` boolean in migration 021.
+      assert.ok(columnNames.includes('authority'));
+      assert.ok(!columnNames.includes('gm'));
       assert.ok(columnNames.includes('banned'));
       assert.ok(columnNames.includes('banned_until'));
       assert.ok(columnNames.includes('created_at'));

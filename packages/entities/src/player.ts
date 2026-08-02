@@ -20,6 +20,7 @@ import type { JobProps } from './tables/job';
 import { maxFatiguePoint, maxHitPoint, maxManaPoint } from './math/vitals';
 import { MAX_JOB_LEVEL, MAX_EXP_LEVEL, MAX_LEVEL } from './math/expTable';
 import { DST, CHRSTATE_BITS } from './constants/dst';
+import { OBJSTAF, FLIGHT_LV_MIN_LEVEL } from './constants/stateFlag';
 import { ParamModel, type DstEffect } from './params/ParamModel';
 import { BuffManager } from './params/BuffManager';
 import { VTInfo } from './params/VTInfo';
@@ -205,6 +206,25 @@ export class CPlayer {
    * bit must survive reconnect.
    */
   m_dwMode: number = 0;
+  /**
+   * Action-state bitmask (C++ `CActionMover::m_dwStateFlag`, MoverMsg.h:95).
+   * Today only `OBJSTAF.FLY` is driven, by `FlightService.mount/dismount` off a
+   * `PARTS_RIDE` equip toggle. Rides on the wire in the `GetStateFlag()` DWORD of
+   * ADD_OBJ (`ObjSerializeOpt.cpp:100-135`) and every `MOVERMOVED*` frame -- v19
+   * has no flight opcode, this bit IS the signal.
+   *
+   * Transient like `m_dwMode`, but for a different reason: the *ride item* is
+   * persisted in the `PARTS_RIDE` equip slot, so `JoinService` re-derives FLY on
+   * login rather than storing the flag (C++ does the same via `RedoEquip`,
+   * `MoverEquip.cpp:1996-2058`).
+   */
+  m_dwStateFlag: number = 0;
+  /**
+   * Flight pitch (C++ `CMover::m_fAngleX`). Only meaningful while flying; the
+   * client clamps it to +/-45 degrees (`ActionMoverState2.cpp:87-91`). Updated by
+   * PLAYERANGLE / PLAYERMOVED2.
+   */
+  m_fAngleX: number = 0;
   /**
    * Disguise propMover index (C++ disguise `m_dwIndex`). 0 = none. Set by
    * `/dis`, cleared by `/nodis`, broadcast via `SNAPSHOTTYPE_DISGUISE`. The
@@ -620,6 +640,24 @@ export class CPlayer {
   isStunned(): boolean {
     const state = this.m_params.get(DST.CHRSTATE, 0);
     return (state & (CHRSTATE_BITS.STUN | CHRSTATE_BITS.SLEEP)) !== 0;
+  }
+
+  /**
+   * C++ `CActionMover::IsFly()` (`_AIInterface/Action.h:309`) -- airborne on a
+   * board/broom. Gates skills, PvP, air/ground targeting parity, and which
+   * movement packets the server accepts (ground frames are dropped while flying
+   * and vice versa -- `DPSrvr.cpp:2454`, `:2519`).
+   */
+  isFly(): boolean {
+    return (this.m_dwStateFlag & OBJSTAF.FLY) !== 0;
+  }
+
+  /**
+   * C++ `CMover::GetFlightLv()` (`_Common/Mover.h:549`) -- derived from level, not
+   * stored. Compared against a ride item's `flight_limit` in the mount gate.
+   */
+  getFlightLv(): number {
+    return this.m_nLevel >= FLIGHT_LV_MIN_LEVEL ? 1 : 0;
   }
 
   /**

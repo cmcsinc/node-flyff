@@ -17,6 +17,7 @@ movers:
     dodge_rate: 3
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 6000
     exp: 2
     flyable: false
     boss: false
@@ -42,6 +43,7 @@ movers:
     dodge_rate: 3
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 6000
     exp: 2
     flyable: false
     boss: false
@@ -67,6 +69,7 @@ movers:
     dodge_rate: 5
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 5500
     exp: 3
     flyable: false
     boss: false
@@ -92,6 +95,7 @@ movers:
     dodge_rate: 9
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 40
     flyable: false
     boss: true
@@ -121,6 +125,7 @@ movers:
     dodge_rate: 6
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 5500
     exp: 4
     flyable: false
     boss: false
@@ -146,6 +151,7 @@ movers:
     dodge_rate: 6
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 5500
     exp: 5
     flyable: false
     boss: false
@@ -171,6 +177,7 @@ movers:
     dodge_rate: 8
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 5500
     exp: 7
     flyable: false
     boss: false
@@ -196,6 +203,7 @@ movers:
     dodge_rate: 14
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 5500
     exp: 56
     flyable: false
     boss: true
@@ -225,6 +233,7 @@ movers:
     dodge_rate: 9
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 5000
     exp: 9
     flyable: false
     boss: false
@@ -250,6 +259,7 @@ movers:
     dodge_rate: 9
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 5000
     exp: 9
     flyable: false
     boss: false
@@ -275,6 +285,7 @@ movers:
     dodge_rate: 10
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 5000
     exp: 11
     flyable: false
     boss: false
@@ -300,6 +311,7 @@ movers:
     dodge_rate: 24
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 66
     flyable: false
     boss: true
@@ -325,6 +337,7 @@ movers:
     dodge_rate: 11
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4500
     exp: 12
     flyable: false
     boss: false
@@ -352,6 +365,7 @@ movers:
     dodge_rate: 11
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4500
     exp: 13
     flyable: false
     boss: false
@@ -379,6 +393,7 @@ movers:
     dodge_rate: 13
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 4500
     exp: 13
     flyable: false
     boss: false
@@ -406,6 +421,7 @@ movers:
     dodge_rate: 26
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 81
     flyable: false
     boss: true
@@ -433,6 +449,7 @@ movers:
     dodge_rate: 14
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 13
     flyable: false
     boss: false
@@ -458,6 +475,7 @@ movers:
     dodge_rate: 14
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14
     flyable: false
     boss: false
@@ -483,6 +501,7 @@ movers:
     dodge_rate: 14
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14
     flyable: false
     boss: false
@@ -508,6 +527,7 @@ movers:
     dodge_rate: 30
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 91
     flyable: false
     boss: true
@@ -533,6 +553,7 @@ movers:
     dodge_rate: 15
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4500
     exp: 14
     flyable: false
     boss: false
@@ -560,6 +581,7 @@ movers:
     dodge_rate: 15
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4500
     exp: 15
     flyable: false
     boss: false
@@ -585,6 +607,7 @@ movers:
     dodge_rate: 17
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 4500
     exp: 15
     flyable: false
     boss: false
@@ -612,6 +635,7 @@ movers:
     dodge_rate: 34
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 102
     flyable: false
     boss: true
@@ -637,6 +661,7 @@ movers:
     dodge_rate: 18
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 18
     flyable: false
     boss: false
@@ -662,6 +687,7 @@ movers:
     dodge_rate: 18
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 18
     flyable: false
     boss: false
@@ -687,6 +713,7 @@ movers:
     dodge_rate: 19
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 20
     flyable: false
     boss: false
@@ -712,6 +739,7 @@ movers:
     dodge_rate: 36
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 132
     flyable: false
     boss: true
@@ -739,6 +767,7 @@ movers:
     dodge_rate: 20
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 22
     flyable: false
     boss: false
@@ -764,6 +793,7 @@ movers:
     dodge_rate: 20
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 23
     flyable: false
     boss: false
@@ -789,6 +819,7 @@ movers:
     dodge_rate: 21
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 25
     flyable: false
     boss: false
@@ -814,6 +845,7 @@ movers:
     dodge_rate: 38
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 168
     flyable: false
     boss: true
@@ -841,6 +873,7 @@ movers:
     dodge_rate: 22
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 29
     flyable: false
     boss: false
@@ -866,6 +899,7 @@ movers:
     dodge_rate: 22
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 30
     flyable: false
     boss: false
@@ -891,6 +925,7 @@ movers:
     dodge_rate: 24
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 32
     flyable: false
     boss: false
@@ -916,6 +951,7 @@ movers:
     dodge_rate: 41
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 214
     flyable: false
     boss: true
@@ -941,6 +977,7 @@ movers:
     dodge_rate: 24
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 36
     flyable: false
     boss: false
@@ -966,6 +1003,7 @@ movers:
     dodge_rate: 24
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 38
     flyable: false
     boss: false
@@ -993,6 +1031,7 @@ movers:
     dodge_rate: 26
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 41
     flyable: false
     boss: false
@@ -1018,6 +1057,7 @@ movers:
     dodge_rate: 43
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 280
     flyable: false
     boss: true
@@ -1043,6 +1083,7 @@ movers:
     dodge_rate: 26
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 46
     flyable: false
     boss: false
@@ -1068,6 +1109,7 @@ movers:
     dodge_rate: 26
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 48
     flyable: false
     boss: false
@@ -1093,6 +1135,7 @@ movers:
     dodge_rate: 28
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 53
     flyable: false
     boss: false
@@ -1118,6 +1161,7 @@ movers:
     dodge_rate: 45
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 367
     flyable: false
     boss: true
@@ -1145,6 +1189,7 @@ movers:
     dodge_rate: 29
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 61
     flyable: false
     boss: false
@@ -1170,6 +1215,7 @@ movers:
     dodge_rate: 29
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 63
     flyable: false
     boss: false
@@ -1195,6 +1241,7 @@ movers:
     dodge_rate: 31
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 69
     flyable: false
     boss: false
@@ -1220,6 +1267,7 @@ movers:
     dodge_rate: 48
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 479
     flyable: false
     boss: true
@@ -1247,6 +1295,7 @@ movers:
     dodge_rate: 31
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 79
     flyable: false
     boss: false
@@ -1272,6 +1321,7 @@ movers:
     dodge_rate: 31
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 83
     flyable: false
     boss: false
@@ -1297,6 +1347,7 @@ movers:
     dodge_rate: 33
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 90
     flyable: false
     boss: false
@@ -1322,6 +1373,7 @@ movers:
     dodge_rate: 50
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 632
     flyable: false
     boss: true
@@ -1347,6 +1399,7 @@ movers:
     dodge_rate: 34
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 103
     flyable: false
     boss: false
@@ -1372,6 +1425,7 @@ movers:
     dodge_rate: 34
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 108
     flyable: false
     boss: false
@@ -1397,6 +1451,7 @@ movers:
     dodge_rate: 36
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 119
     flyable: false
     boss: false
@@ -1422,6 +1477,7 @@ movers:
     dodge_rate: 53
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 821
     flyable: false
     boss: true
@@ -1447,6 +1503,7 @@ movers:
     dodge_rate: 37
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 136
     flyable: false
     boss: false
@@ -1472,6 +1529,7 @@ movers:
     dodge_rate: 37
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 143
     flyable: false
     boss: false
@@ -1497,6 +1555,7 @@ movers:
     dodge_rate: 38
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 156
     flyable: false
     boss: false
@@ -1522,6 +1581,7 @@ movers:
     dodge_rate: 55
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1060
     flyable: false
     boss: true
@@ -1547,6 +1607,7 @@ movers:
     dodge_rate: 35
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 177
     flyable: false
     boss: false
@@ -1572,6 +1633,7 @@ movers:
     dodge_rate: 35
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 185
     flyable: false
     boss: false
@@ -1597,6 +1659,7 @@ movers:
     dodge_rate: 37
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 201
     flyable: false
     boss: false
@@ -1622,6 +1685,7 @@ movers:
     dodge_rate: 57
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1377
     flyable: false
     boss: true
@@ -1647,6 +1711,7 @@ movers:
     dodge_rate: 38
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 229
     flyable: false
     boss: false
@@ -1672,6 +1737,7 @@ movers:
     dodge_rate: 38
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 239
     flyable: false
     boss: false
@@ -1697,6 +1763,7 @@ movers:
     dodge_rate: 40
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 261
     flyable: false
     boss: false
@@ -1722,6 +1789,7 @@ movers:
     dodge_rate: 57
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1779
     flyable: false
     boss: true
@@ -1747,6 +1815,7 @@ movers:
     dodge_rate: 41
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 297
     flyable: false
     boss: false
@@ -1772,6 +1841,7 @@ movers:
     dodge_rate: 41
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 311
     flyable: false
     boss: false
@@ -1797,6 +1867,7 @@ movers:
     dodge_rate: 43
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 338
     flyable: false
     boss: false
@@ -1822,6 +1893,7 @@ movers:
     dodge_rate: 60
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2305
     flyable: false
     boss: true
@@ -1847,6 +1919,7 @@ movers:
     dodge_rate: 43
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 384
     flyable: false
     boss: false
@@ -1872,6 +1945,7 @@ movers:
     dodge_rate: 43
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 401
     flyable: false
     boss: false
@@ -1897,6 +1971,7 @@ movers:
     dodge_rate: 45
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 437
     flyable: false
     boss: false
@@ -1922,6 +1997,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2993
     flyable: false
     boss: true
@@ -1947,6 +2023,7 @@ movers:
     dodge_rate: 46
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 497
     flyable: false
     boss: false
@@ -1972,6 +2049,7 @@ movers:
     dodge_rate: 46
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 520
     flyable: false
     boss: false
@@ -1997,6 +2075,7 @@ movers:
     dodge_rate: 48
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 567
     flyable: false
     boss: false
@@ -2022,6 +2101,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3748
     flyable: false
     boss: true
@@ -2047,6 +2127,7 @@ movers:
     dodge_rate: 48
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 646
     flyable: false
     boss: false
@@ -2072,6 +2153,7 @@ movers:
     dodge_rate: 48
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 675
     flyable: false
     boss: false
@@ -2097,6 +2179,7 @@ movers:
     dodge_rate: 50
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 723
     flyable: false
     boss: false
@@ -2122,6 +2205,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 4697
     flyable: false
     boss: true
@@ -2147,6 +2231,7 @@ movers:
     dodge_rate: 51
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 809
     flyable: false
     boss: false
@@ -2172,6 +2257,7 @@ movers:
     dodge_rate: 51
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 845
     flyable: false
     boss: false
@@ -2197,6 +2283,7 @@ movers:
     dodge_rate: 53
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 905
     flyable: false
     boss: false
@@ -2222,6 +2309,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5885
     flyable: false
     boss: true
@@ -2247,6 +2335,7 @@ movers:
     dodge_rate: 54
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1013
     flyable: false
     boss: false
@@ -2272,6 +2361,7 @@ movers:
     dodge_rate: 54
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1059
     flyable: false
     boss: false
@@ -2297,6 +2387,7 @@ movers:
     dodge_rate: 55
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1134
     flyable: false
     boss: false
@@ -2322,6 +2413,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7379
     flyable: false
     boss: true
@@ -2347,6 +2439,7 @@ movers:
     dodge_rate: 56
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1269
     flyable: false
     boss: false
@@ -2372,6 +2465,7 @@ movers:
     dodge_rate: 57
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1327
     flyable: false
     boss: false
@@ -2397,6 +2491,7 @@ movers:
     dodge_rate: 58
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1421
     flyable: false
     boss: false
@@ -2422,6 +2517,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9251
     flyable: false
     boss: true
@@ -2447,6 +2543,7 @@ movers:
     dodge_rate: 59
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1592
     flyable: false
     boss: false
@@ -2472,6 +2569,7 @@ movers:
     dodge_rate: 60
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1664
     flyable: false
     boss: false
@@ -2497,6 +2595,7 @@ movers:
     dodge_rate: 60
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1782
     flyable: false
     boss: false
@@ -2522,6 +2621,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11597
     flyable: false
     boss: true
@@ -2547,6 +2647,7 @@ movers:
     dodge_rate: 61
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1995
     flyable: false
     boss: false
@@ -2572,6 +2673,7 @@ movers:
     dodge_rate: 62
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2086
     flyable: false
     boss: false
@@ -2597,6 +2699,7 @@ movers:
     dodge_rate: 63
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2234
     flyable: false
     boss: false
@@ -2622,6 +2725,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14540
     flyable: false
     boss: true
@@ -2647,6 +2751,7 @@ movers:
     dodge_rate: 64
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2501
     flyable: false
     boss: false
@@ -2672,6 +2777,7 @@ movers:
     dodge_rate: 65
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2615
     flyable: false
     boss: false
@@ -2697,6 +2803,7 @@ movers:
     dodge_rate: 65
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2801
     flyable: false
     boss: false
@@ -2722,6 +2829,7 @@ movers:
     dodge_rate: 82
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 18237
     flyable: false
     boss: true
@@ -2749,6 +2857,7 @@ movers:
     dodge_rate: 66
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3136
     flyable: false
     boss: false
@@ -2774,6 +2883,7 @@ movers:
     dodge_rate: 67
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3279
     flyable: false
     boss: false
@@ -2799,6 +2909,7 @@ movers:
     dodge_rate: 68
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3512
     flyable: false
     boss: false
@@ -2824,6 +2935,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 22873
     flyable: false
     boss: true
@@ -2851,6 +2963,7 @@ movers:
     dodge_rate: 69
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3934
     flyable: false
     boss: false
@@ -2876,6 +2989,7 @@ movers:
     dodge_rate: 70
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 4112
     flyable: false
     boss: false
@@ -2901,6 +3015,7 @@ movers:
     dodge_rate: 71
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 4406
     flyable: false
     boss: false
@@ -2926,6 +3041,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 28687
     flyable: false
     boss: true
@@ -2953,6 +3069,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 4934
     flyable: false
     boss: false
@@ -2978,6 +3095,7 @@ movers:
     dodge_rate: 72
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5158
     flyable: false
     boss: false
@@ -3003,6 +3121,7 @@ movers:
     dodge_rate: 73
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5525
     flyable: false
     boss: false
@@ -3028,6 +3147,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 35337
     flyable: false
     boss: true
@@ -3055,6 +3175,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 6188
     flyable: false
     boss: false
@@ -3080,6 +3201,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 6469
     flyable: false
     boss: false
@@ -3105,6 +3227,7 @@ movers:
     dodge_rate: 68
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 6867
     flyable: false
     boss: false
@@ -3130,6 +3253,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 43538
     flyable: false
     boss: true
@@ -3157,6 +3281,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7622
     flyable: false
     boss: false
@@ -3182,6 +3307,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7968
     flyable: false
     boss: false
@@ -3207,6 +3333,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 8460
     flyable: false
     boss: false
@@ -3232,6 +3359,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 53641
     flyable: false
     boss: true
@@ -3259,6 +3387,7 @@ movers:
     dodge_rate: 70
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9391
     flyable: false
     boss: false
@@ -3284,6 +3413,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9818
     flyable: false
     boss: false
@@ -3309,6 +3439,7 @@ movers:
     dodge_rate: 71
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 10424
     flyable: false
     boss: false
@@ -3334,6 +3465,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 66085
     flyable: false
     boss: true
@@ -3361,6 +3493,7 @@ movers:
     dodge_rate: 70
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11570
     flyable: false
     boss: false
@@ -3386,6 +3519,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12096
     flyable: false
     boss: false
@@ -3411,6 +3545,7 @@ movers:
     dodge_rate: 71
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12841
     flyable: false
     boss: false
@@ -3436,6 +3571,7 @@ movers:
     dodge_rate: 94
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 81421
     flyable: false
     boss: true
@@ -3463,6 +3599,7 @@ movers:
     dodge_rate: 72
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14254
     flyable: false
     boss: false
@@ -3488,6 +3625,7 @@ movers:
     dodge_rate: 73
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14902
     flyable: false
     boss: false
@@ -3513,6 +3651,7 @@ movers:
     dodge_rate: 74
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 15821
     flyable: false
     boss: false
@@ -3538,6 +3677,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 100317
     flyable: false
     boss: true
@@ -3565,6 +3705,7 @@ movers:
     dodge_rate: 28
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 53
     flyable: true
     boss: false
@@ -3590,6 +3731,7 @@ movers:
     dodge_rate: 29
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 55
     flyable: true
     boss: false
@@ -3615,6 +3757,7 @@ movers:
     dodge_rate: 30
     speed: 0.18
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 61
     flyable: true
     boss: false
@@ -3640,6 +3783,7 @@ movers:
     dodge_rate: 81
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 479
     flyable: true
     boss: true
@@ -3665,6 +3809,7 @@ movers:
     dodge_rate: 53
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 905
     flyable: true
     boss: false
@@ -3690,6 +3835,7 @@ movers:
     dodge_rate: 54
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 946
     flyable: true
     boss: false
@@ -3715,6 +3861,7 @@ movers:
     dodge_rate: 54
     speed: 0.18
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1013
     flyable: true
     boss: false
@@ -3740,6 +3887,7 @@ movers:
     dodge_rate: 77
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 6589
     flyable: true
     boss: true
@@ -3765,6 +3913,7 @@ movers:
     dodge_rate: 58
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1995
     flyable: true
     boss: false
@@ -3790,6 +3939,7 @@ movers:
     dodge_rate: 58
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2086
     flyable: true
     boss: false
@@ -3815,6 +3965,7 @@ movers:
     dodge_rate: 60
     speed: 0.18
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2234
     flyable: true
     boss: false
@@ -3840,6 +3991,7 @@ movers:
     dodge_rate: 85
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14540
     flyable: true
     boss: true
@@ -3867,6 +4019,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 163152
     flyable: false
     boss: false
@@ -3892,6 +4045,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 189256
     flyable: false
     boss: false
@@ -3917,6 +4071,7 @@ movers:
     dodge_rate: 85
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 187624
     flyable: false
     boss: false
@@ -3942,6 +4097,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1426755
     flyable: false
     boss: true
@@ -3967,6 +4123,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 25964
     flyable: false
     boss: false
@@ -3992,6 +4149,7 @@ movers:
     dodge_rate: 69
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 27145
     flyable: false
     boss: false
@@ -4017,6 +4175,7 @@ movers:
     dodge_rate: 70
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 28819
     flyable: false
     boss: false
@@ -4042,6 +4201,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 182714
     flyable: false
     boss: true
@@ -4069,6 +4229,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 8168119
     flyable: false
     boss: false
@@ -4094,6 +4255,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9475018
     flyable: false
     boss: false
@@ -4119,6 +4281,7 @@ movers:
     dodge_rate: 102
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9393336
     flyable: false
     boss: false
@@ -4144,6 +4307,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 71430440
     flyable: false
     boss: true
@@ -4169,6 +4333,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14286088
     flyable: false
     boss: false
@@ -4194,6 +4359,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 16571862
     flyable: false
     boss: false
@@ -4219,6 +4385,7 @@ movers:
     dodge_rate: 102
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 16429001
     flyable: false
     boss: false
@@ -4244,6 +4411,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 124932275
     flyable: false
     boss: true
@@ -4269,6 +4437,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 31988
     flyable: false
     boss: false
@@ -4294,6 +4463,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 33442
     flyable: false
     boss: false
@@ -4319,6 +4489,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 35506
     flyable: false
     boss: false
@@ -4346,6 +4517,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 225129
     flyable: false
     boss: true
@@ -4373,6 +4545,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 24986455
     flyable: false
     boss: false
@@ -4398,6 +4571,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 28984287
     flyable: false
     boss: false
@@ -4423,6 +4597,7 @@ movers:
     dodge_rate: 102
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 28734423
     flyable: false
     boss: false
@@ -4448,6 +4623,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 218507315
     flyable: false
     boss: true
@@ -4473,6 +4649,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 21
     flyable: false
     boss: false
@@ -4498,6 +4675,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 24
     flyable: false
     boss: false
@@ -4523,6 +4701,7 @@ movers:
     dodge_rate: 102
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 33
     flyable: false
     boss: false
@@ -4548,6 +4727,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 510
     flyable: false
     boss: true
@@ -4573,6 +4753,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 21
     flyable: false
     boss: false
@@ -4598,6 +4779,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 24
     flyable: false
     boss: false
@@ -4623,6 +4805,7 @@ movers:
     dodge_rate: 102
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 33
     flyable: false
     boss: false
@@ -4648,6 +4831,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 510
     flyable: false
     boss: true
@@ -4673,6 +4857,7 @@ movers:
     dodge_rate: 115
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 21
     flyable: false
     boss: false
@@ -4698,6 +4883,7 @@ movers:
     dodge_rate: 115
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 24
     flyable: false
     boss: false
@@ -4723,6 +4909,7 @@ movers:
     dodge_rate: 115
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 33
     flyable: false
     boss: false
@@ -4748,6 +4935,7 @@ movers:
     dodge_rate: 115
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 510
     flyable: false
     boss: true
@@ -4773,6 +4961,7 @@ movers:
     dodge_rate: 69
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5921
     flyable: false
     boss: false
@@ -4798,6 +4987,7 @@ movers:
     dodge_rate: 70
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 6190
     flyable: false
     boss: false
@@ -4823,6 +5013,7 @@ movers:
     dodge_rate: 71
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 6630
     flyable: false
     boss: false
@@ -4848,6 +5039,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 42405
     flyable: false
     boss: true
@@ -4875,6 +5067,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 21074
     flyable: false
     boss: false
@@ -4900,6 +5093,7 @@ movers:
     dodge_rate: 72
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 22032
     flyable: false
     boss: false
@@ -4925,6 +5119,7 @@ movers:
     dodge_rate: 73
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 23391
     flyable: false
     boss: false
@@ -4950,6 +5145,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 148311
     flyable: false
     boss: true
@@ -4977,6 +5173,7 @@ movers:
     dodge_rate: 74
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7425
     flyable: false
     boss: false
@@ -5002,6 +5199,7 @@ movers:
     dodge_rate: 75
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7762
     flyable: false
     boss: false
@@ -5027,6 +5225,7 @@ movers:
     dodge_rate: 94
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 8240
     flyable: false
     boss: false
@@ -5052,6 +5251,7 @@ movers:
     dodge_rate: 60
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 52245
     flyable: false
     boss: true
@@ -5079,6 +5279,7 @@ movers:
     dodge_rate: 60
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5115
     flyable: false
     boss: false
@@ -5104,6 +5305,7 @@ movers:
     dodge_rate: 61
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5346
     flyable: false
     boss: false
@@ -5129,6 +5331,7 @@ movers:
     dodge_rate: 62
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5728
     flyable: false
     boss: false
@@ -5154,6 +5357,7 @@ movers:
     dodge_rate: 94
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 37294
     flyable: false
     boss: true
@@ -5181,6 +5385,7 @@ movers:
     dodge_rate: 29
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 79
     flyable: false
     boss: false
@@ -5206,6 +5411,7 @@ movers:
     dodge_rate: 30
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 81
     flyable: false
     boss: false
@@ -5231,6 +5437,7 @@ movers:
     dodge_rate: 31
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 89
     flyable: false
     boss: false
@@ -5256,6 +5463,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 622
     flyable: false
     boss: true
@@ -5281,6 +5489,7 @@ movers:
     dodge_rate: 43
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 386
     flyable: false
     boss: false
@@ -5306,6 +5515,7 @@ movers:
     dodge_rate: 54
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 404
     flyable: false
     boss: false
@@ -5331,6 +5541,7 @@ movers:
     dodge_rate: 54
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 439
     flyable: false
     boss: false
@@ -5356,6 +5567,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2996
     flyable: false
     boss: true
@@ -5383,6 +5595,7 @@ movers:
     dodge_rate: 64
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1316
     flyable: false
     boss: false
@@ -5408,6 +5621,7 @@ movers:
     dodge_rate: 64
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1376
     flyable: false
     boss: false
@@ -5433,6 +5647,7 @@ movers:
     dodge_rate: 65
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1474
     flyable: false
     boss: false
@@ -5458,6 +5673,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9592
     flyable: false
     boss: true
@@ -5485,6 +5701,7 @@ movers:
     dodge_rate: 64
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3251
     flyable: false
     boss: false
@@ -5510,6 +5727,7 @@ movers:
     dodge_rate: 65
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3399
     flyable: false
     boss: false
@@ -5535,6 +5753,7 @@ movers:
     dodge_rate: 65
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3641
     flyable: false
     boss: false
@@ -5560,6 +5779,7 @@ movers:
     dodge_rate: 89
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 13708
     flyable: false
     boss: true
@@ -5587,6 +5807,7 @@ movers:
     dodge_rate: 13
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -5612,6 +5833,7 @@ movers:
     dodge_rate: 13
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -5637,6 +5859,7 @@ movers:
     dodge_rate: 13
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -5662,6 +5885,7 @@ movers:
     dodge_rate: 13
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -5687,6 +5911,7 @@ movers:
     dodge_rate: 105
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 104443
     flyable: false
     boss: false
@@ -5712,6 +5937,7 @@ movers:
     dodge_rate: 107
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 115931
     flyable: false
     boss: false
@@ -5737,6 +5963,7 @@ movers:
     dodge_rate: 109
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 128683
     flyable: false
     boss: false
@@ -5762,6 +5989,7 @@ movers:
     dodge_rate: 132
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1113294
     flyable: false
     boss: true
@@ -5789,6 +6017,7 @@ movers:
     dodge_rate: 111
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 141551
     flyable: false
     boss: false
@@ -5814,6 +6043,7 @@ movers:
     dodge_rate: 112
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 155706
     flyable: false
     boss: false
@@ -5839,6 +6069,7 @@ movers:
     dodge_rate: 114
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 171276
     flyable: false
     boss: false
@@ -5864,6 +6095,7 @@ movers:
     dodge_rate: 149
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1468311
     flyable: false
     boss: true
@@ -5891,6 +6123,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14383
     flyable: false
     boss: false
@@ -5916,6 +6149,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 15965
     flyable: false
     boss: false
@@ -5941,6 +6175,7 @@ movers:
     dodge_rate: 72
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 17721
     flyable: false
     boss: false
@@ -5966,6 +6201,7 @@ movers:
     dodge_rate: 89
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 182714
     flyable: false
     boss: true
@@ -5993,6 +6229,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 21833
     flyable: false
     boss: false
@@ -6018,6 +6255,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 24234
     flyable: false
     boss: false
@@ -6043,6 +6281,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 26899
     flyable: false
     boss: false
@@ -6068,6 +6307,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 239109
     flyable: false
     boss: true
@@ -6095,6 +6335,7 @@ movers:
     dodge_rate: 78
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 29857
     flyable: false
     boss: false
@@ -6120,6 +6361,7 @@ movers:
     dodge_rate: 79
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 33141
     flyable: false
     boss: false
@@ -6145,6 +6387,7 @@ movers:
     dodge_rate: 81
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 36786
     flyable: false
     boss: false
@@ -6170,6 +6413,7 @@ movers:
     dodge_rate: 109
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 327002
     flyable: false
     boss: true
@@ -6197,6 +6441,7 @@ movers:
     dodge_rate: 90
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 40832
     flyable: false
     boss: false
@@ -6222,6 +6467,7 @@ movers:
     dodge_rate: 92
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 45323
     flyable: false
     boss: false
@@ -6247,6 +6493,7 @@ movers:
     dodge_rate: 94
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 50308
     flyable: false
     boss: false
@@ -6272,6 +6519,7 @@ movers:
     dodge_rate: 115
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 447207
     flyable: false
     boss: true
@@ -6299,6 +6547,7 @@ movers:
     dodge_rate: 95
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 55841
     flyable: false
     boss: false
@@ -6324,6 +6573,7 @@ movers:
     dodge_rate: 97
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 61983
     flyable: false
     boss: false
@@ -6349,6 +6599,7 @@ movers:
     dodge_rate: 99
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 68801
     flyable: false
     boss: false
@@ -6374,6 +6625,7 @@ movers:
     dodge_rate: 123
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 611605
     flyable: false
     boss: true
@@ -6401,6 +6653,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 76369
     flyable: false
     boss: false
@@ -6426,6 +6679,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 84769
     flyable: false
     boss: false
@@ -6451,6 +6705,7 @@ movers:
     dodge_rate: 104
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 94093
     flyable: false
     boss: false
@@ -6478,6 +6733,7 @@ movers:
     dodge_rate: 128
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 836440
     flyable: false
     boss: true
@@ -6503,6 +6759,7 @@ movers:
     dodge_rate: 105
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 104443
     flyable: false
     boss: false
@@ -6528,6 +6785,7 @@ movers:
     dodge_rate: 107
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 115931
     flyable: false
     boss: false
@@ -6553,6 +6811,7 @@ movers:
     dodge_rate: 109
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 128683
     flyable: false
     boss: false
@@ -6578,6 +6837,7 @@ movers:
     dodge_rate: 132
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1113294
     flyable: false
     boss: true
@@ -6605,6 +6865,7 @@ movers:
     dodge_rate: 111
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 141551
     flyable: false
     boss: false
@@ -6630,6 +6891,7 @@ movers:
     dodge_rate: 112
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 155706
     flyable: false
     boss: false
@@ -6655,6 +6917,7 @@ movers:
     dodge_rate: 114
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 171276
     flyable: false
     boss: false
@@ -6680,6 +6943,7 @@ movers:
     dodge_rate: 149
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1468311
     flyable: false
     boss: true
@@ -6707,6 +6971,7 @@ movers:
     dodge_rate: 116
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 188403
     flyable: false
     boss: false
@@ -6732,6 +6997,7 @@ movers:
     dodge_rate: 117
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 207243
     flyable: false
     boss: false
@@ -6757,6 +7023,7 @@ movers:
     dodge_rate: 119
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 225894
     flyable: false
     boss: false
@@ -6784,6 +7051,7 @@ movers:
     dodge_rate: 157
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1901497
     flyable: false
     boss: true
@@ -6811,6 +7079,7 @@ movers:
     dodge_rate: 121
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 246224
     flyable: false
     boss: false
@@ -6836,6 +7105,7 @@ movers:
     dodge_rate: 122
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 268384
     flyable: false
     boss: false
@@ -6861,6 +7131,7 @@ movers:
     dodge_rate: 124
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 292538
     flyable: false
     boss: false
@@ -6886,6 +7157,7 @@ movers:
     dodge_rate: 153
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2439892
     flyable: false
     boss: true
@@ -6911,6 +7183,7 @@ movers:
     dodge_rate: 126
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 318866
     flyable: false
     boss: false
@@ -6936,6 +7209,7 @@ movers:
     dodge_rate: 128
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 347563
     flyable: false
     boss: false
@@ -6961,6 +7235,7 @@ movers:
     dodge_rate: 129
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 375368
     flyable: false
     boss: false
@@ -6988,6 +7263,7 @@ movers:
     dodge_rate: 162
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3073551
     flyable: false
     boss: true
@@ -7015,6 +7291,7 @@ movers:
     dodge_rate: 131
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 405397
     flyable: false
     boss: false
@@ -7040,6 +7317,7 @@ movers:
     dodge_rate: 133
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 437828
     flyable: false
     boss: false
@@ -7065,6 +7343,7 @@ movers:
     dodge_rate: 134
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 472854
     flyable: false
     boss: false
@@ -7090,6 +7369,7 @@ movers:
     dodge_rate: 170
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3871777
     flyable: false
     boss: true
@@ -7117,6 +7397,7 @@ movers:
     dodge_rate: 31
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 100
     flyable: false
     boss: false
@@ -7142,6 +7423,7 @@ movers:
     dodge_rate: 32
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 110
     flyable: false
     boss: false
@@ -7167,6 +7449,7 @@ movers:
     dodge_rate: 43
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 750
     flyable: false
     boss: true
@@ -7194,6 +7477,7 @@ movers:
     dodge_rate: 32
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 130
     flyable: false
     boss: false
@@ -7219,6 +7503,7 @@ movers:
     dodge_rate: 34
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 140
     flyable: false
     boss: false
@@ -7244,6 +7529,7 @@ movers:
     dodge_rate: 47
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 960
     flyable: false
     boss: true
@@ -7269,6 +7555,7 @@ movers:
     dodge_rate: 35
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 170
     flyable: false
     boss: false
@@ -7294,6 +7581,7 @@ movers:
     dodge_rate: 37
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 190
     flyable: false
     boss: false
@@ -7319,6 +7607,7 @@ movers:
     dodge_rate: 49
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1300
     flyable: false
     boss: true
@@ -7344,6 +7633,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2000
     flyable: false
     boss: true
@@ -7369,6 +7659,7 @@ movers:
     dodge_rate: 102
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 1500
     exp: 3500
     flyable: false
     boss: true
@@ -7396,6 +7687,7 @@ movers:
     dodge_rate: 60
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 1000
     exp: 200
     flyable: false
     boss: false
@@ -7421,6 +7713,7 @@ movers:
     dodge_rate: 0
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -7446,6 +7739,7 @@ movers:
     dodge_rate: 0
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -7471,6 +7765,7 @@ movers:
     dodge_rate: 0
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -7496,6 +7791,7 @@ movers:
     dodge_rate: 0
     speed: 0.2
     attack_speed: 1000
+    re_attack_delay: 6000
     exp: 21
     flyable: true
     boss: false
@@ -7521,6 +7817,7 @@ movers:
     dodge_rate: 0
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: true
@@ -7546,6 +7843,7 @@ movers:
     dodge_rate: 20
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: true
@@ -7571,6 +7869,7 @@ movers:
     dodge_rate: 20
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: true
@@ -7596,6 +7895,7 @@ movers:
     dodge_rate: 20
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: true
@@ -7621,6 +7921,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -7646,6 +7947,7 @@ movers:
     dodge_rate: 120
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -7671,6 +7973,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2900
     exp: 0
     flyable: false
     boss: false
@@ -7696,6 +7999,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2900
     exp: 0
     flyable: false
     boss: false
@@ -7721,6 +8025,7 @@ movers:
     dodge_rate: 80
     speed: 0.08
     attack_speed: 950
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -7746,6 +8051,7 @@ movers:
     dodge_rate: 20
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 0
     flyable: false
     boss: false
@@ -7771,6 +8077,7 @@ movers:
     dodge_rate: 15
     speed: 0.085
     attack_speed: 955
+    re_attack_delay: 3500
     exp: 0
     flyable: false
     boss: false
@@ -7796,6 +8103,7 @@ movers:
     dodge_rate: 20
     speed: 0.085
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 0
     flyable: false
     boss: false
@@ -7821,6 +8129,7 @@ movers:
     dodge_rate: 25
     speed: 0.085
     attack_speed: 1200
+    re_attack_delay: 3200
     exp: 0
     flyable: false
     boss: false
@@ -7846,6 +8155,7 @@ movers:
     dodge_rate: 78
     speed: 0.09
     attack_speed: 1050
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -7871,6 +8181,7 @@ movers:
     dodge_rate: 78
     speed: 0.075
     attack_speed: 955
+    re_attack_delay: 2700
     exp: 0
     flyable: false
     boss: false
@@ -7896,6 +8207,7 @@ movers:
     dodge_rate: 80
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2900
     exp: 0
     flyable: false
     boss: false
@@ -7921,6 +8233,7 @@ movers:
     dodge_rate: 82
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2700
     exp: 0
     flyable: false
     boss: false
@@ -7946,6 +8259,7 @@ movers:
     dodge_rate: 75
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2700
     exp: 0
     flyable: false
     boss: false
@@ -7971,6 +8285,7 @@ movers:
     dodge_rate: 37
     speed: 0.08
     attack_speed: 1150
+    re_attack_delay: 2900
     exp: 0
     flyable: false
     boss: false
@@ -7996,6 +8311,7 @@ movers:
     dodge_rate: 88
     speed: 0.08
     attack_speed: 1150
+    re_attack_delay: 2700
     exp: 0
     flyable: false
     boss: false
@@ -8021,6 +8337,7 @@ movers:
     dodge_rate: 92
     speed: 0.085
     attack_speed: 1050
+    re_attack_delay: 2750
     exp: 0
     flyable: false
     boss: false
@@ -8046,6 +8363,7 @@ movers:
     dodge_rate: 20
     speed: 0.075
     attack_speed: 1020
+    re_attack_delay: 3950
     exp: 0
     flyable: false
     boss: false
@@ -8071,6 +8389,7 @@ movers:
     dodge_rate: 115
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -8096,6 +8415,7 @@ movers:
     dodge_rate: 34
     speed: 0.075
     attack_speed: 1120
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -8121,6 +8441,7 @@ movers:
     dodge_rate: 37
     speed: 0.07
     attack_speed: 1160
+    re_attack_delay: 2850
     exp: 0
     flyable: false
     boss: false
@@ -8146,6 +8467,7 @@ movers:
     dodge_rate: 70
     speed: 0.06
     attack_speed: 1180
+    re_attack_delay: 2450
     exp: 0
     flyable: false
     boss: true
@@ -8171,6 +8493,7 @@ movers:
     dodge_rate: 40
     speed: 0.075
     attack_speed: 1170
+    re_attack_delay: 2850
     exp: 0
     flyable: false
     boss: false
@@ -8196,6 +8519,7 @@ movers:
     dodge_rate: 70
     speed: 0.06
     attack_speed: 1150
+    re_attack_delay: 2550
     exp: 0
     flyable: false
     boss: true
@@ -8221,6 +8545,7 @@ movers:
     dodge_rate: 37
     speed: 0.08
     attack_speed: 1120
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -8246,6 +8571,7 @@ movers:
     dodge_rate: 40
     speed: 0.075
     attack_speed: 1170
+    re_attack_delay: 2850
     exp: 0
     flyable: false
     boss: false
@@ -8271,6 +8597,7 @@ movers:
     dodge_rate: 52
     speed: 0.08
     attack_speed: 1120
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -8296,6 +8623,7 @@ movers:
     dodge_rate: 150
     speed: 0.1
     attack_speed: 800
+    re_attack_delay: 1000
     exp: 1
     flyable: false
     boss: false
@@ -8321,6 +8649,7 @@ movers:
     dodge_rate: 150
     speed: 0.1
     attack_speed: 800
+    re_attack_delay: 1000
     exp: 1
     flyable: false
     boss: false
@@ -8346,6 +8675,7 @@ movers:
     dodge_rate: 22
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3500
     exp: 29
     flyable: false
     boss: false
@@ -8371,6 +8701,7 @@ movers:
     dodge_rate: 31
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8396,6 +8727,7 @@ movers:
     dodge_rate: 38
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8421,6 +8753,7 @@ movers:
     dodge_rate: 40
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8446,6 +8779,7 @@ movers:
     dodge_rate: 47
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8471,6 +8805,7 @@ movers:
     dodge_rate: 53
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8496,6 +8831,7 @@ movers:
     dodge_rate: 60
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8521,6 +8857,7 @@ movers:
     dodge_rate: 65
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8546,6 +8883,7 @@ movers:
     dodge_rate: 73
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8571,6 +8909,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8596,6 +8935,7 @@ movers:
     dodge_rate: 73
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8621,6 +8961,7 @@ movers:
     dodge_rate: 70
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8646,6 +8987,7 @@ movers:
     dodge_rate: 83
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8671,6 +9013,7 @@ movers:
     dodge_rate: 99
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8696,6 +9039,7 @@ movers:
     dodge_rate: 106
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8721,6 +9065,7 @@ movers:
     dodge_rate: 114
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8746,6 +9091,7 @@ movers:
     dodge_rate: 123
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8771,6 +9117,7 @@ movers:
     dodge_rate: 134
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1
     flyable: false
     boss: false
@@ -8796,6 +9143,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 80369
     flyable: false
     boss: false
@@ -8821,6 +9169,7 @@ movers:
     dodge_rate: 112
     speed: 0.085
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 86769
     flyable: false
     boss: false
@@ -8846,6 +9195,7 @@ movers:
     dodge_rate: 138
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 536440
     flyable: false
     boss: true
@@ -8871,6 +9221,7 @@ movers:
     dodge_rate: 158
     speed: 0.09
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 936440
     flyable: false
     boss: true
@@ -8896,6 +9247,7 @@ movers:
     dodge_rate: 105
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 114443
     flyable: false
     boss: false
@@ -8921,6 +9273,7 @@ movers:
     dodge_rate: 115
     speed: 0.085
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 175931
     flyable: false
     boss: false
@@ -8946,6 +9299,7 @@ movers:
     dodge_rate: 143
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 586440
     flyable: false
     boss: true
@@ -8971,6 +9325,7 @@ movers:
     dodge_rate: 163
     speed: 0.09
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1036440
     flyable: false
     boss: true
@@ -8998,6 +9353,7 @@ movers:
     dodge_rate: 124
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 265706
     flyable: false
     boss: false
@@ -9023,6 +9379,7 @@ movers:
     dodge_rate: 126
     speed: 0.085
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 305706
     flyable: false
     boss: false
@@ -9048,6 +9405,7 @@ movers:
     dodge_rate: 157
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1036440
     flyable: false
     boss: true
@@ -9073,6 +9431,7 @@ movers:
     dodge_rate: 170
     speed: 0.01
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2001497
     flyable: false
     boss: true
@@ -9100,6 +9459,7 @@ movers:
     dodge_rate: 117
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 205706
     flyable: false
     boss: false
@@ -9125,6 +9485,7 @@ movers:
     dodge_rate: 116
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 191551
     flyable: false
     boss: false
@@ -9150,6 +9511,7 @@ movers:
     dodge_rate: 158
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1301497
     flyable: false
     boss: true
@@ -9175,6 +9537,7 @@ movers:
     dodge_rate: 157
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1201497
     flyable: false
     boss: true
@@ -9200,6 +9563,7 @@ movers:
     dodge_rate: 102
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 77369
     flyable: false
     boss: false
@@ -9225,6 +9589,7 @@ movers:
     dodge_rate: 102
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 75369
     flyable: false
     boss: false
@@ -9250,6 +9615,7 @@ movers:
     dodge_rate: 119
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 215706
     flyable: false
     boss: false
@@ -9275,6 +9641,7 @@ movers:
     dodge_rate: 153
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1401497
     flyable: false
     boss: true
@@ -9302,6 +9669,7 @@ movers:
     dodge_rate: 120
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 235706
     flyable: false
     boss: false
@@ -9327,6 +9695,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1501497
     flyable: false
     boss: true
@@ -9354,6 +9723,7 @@ movers:
     dodge_rate: 123
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 255706
     flyable: false
     boss: false
@@ -9379,6 +9749,7 @@ movers:
     dodge_rate: 157
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1601497
     flyable: false
     boss: true
@@ -9406,6 +9777,7 @@ movers:
     dodge_rate: 128
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 325706
     flyable: false
     boss: false
@@ -9431,6 +9803,7 @@ movers:
     dodge_rate: 158
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1801497
     flyable: false
     boss: true
@@ -9458,6 +9831,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1100000
     flyable: false
     boss: false
@@ -9483,6 +9857,7 @@ movers:
     dodge_rate: 170
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5000000
     flyable: false
     boss: true
@@ -9508,6 +9883,7 @@ movers:
     dodge_rate: 170
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5000000
     flyable: false
     boss: true
@@ -9533,6 +9909,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1250000
     flyable: false
     boss: false
@@ -9558,6 +9935,7 @@ movers:
     dodge_rate: 28
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 53
     flyable: false
     boss: false
@@ -9583,6 +9961,7 @@ movers:
     dodge_rate: 37
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 201
     flyable: false
     boss: false
@@ -9608,6 +9987,7 @@ movers:
     dodge_rate: 43
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 100
     flyable: false
     boss: false
@@ -9633,6 +10013,7 @@ movers:
     dodge_rate: 61
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 327002
     flyable: false
     boss: true
@@ -9658,6 +10039,7 @@ movers:
     dodge_rate: 26
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 500
     flyable: false
     boss: false
@@ -9685,6 +10067,7 @@ movers:
     dodge_rate: 38
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 500
     flyable: false
     boss: false
@@ -9712,6 +10095,7 @@ movers:
     dodge_rate: 53
     speed: 0.16
     attack_speed: 1200
+    re_attack_delay: 3000
     exp: 500
     flyable: true
     boss: false
@@ -9739,6 +10123,7 @@ movers:
     dodge_rate: 128
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 500
     flyable: false
     boss: false
@@ -9764,6 +10149,7 @@ movers:
     dodge_rate: 57
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1692
     flyable: false
     boss: false
@@ -9789,6 +10175,7 @@ movers:
     dodge_rate: 64
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3101
     flyable: false
     boss: false
@@ -9814,6 +10201,7 @@ movers:
     dodge_rate: 70
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5034
     flyable: false
     boss: false
@@ -9839,6 +10227,7 @@ movers:
     dodge_rate: 75
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7591
     flyable: false
     boss: false
@@ -9864,6 +10253,7 @@ movers:
     dodge_rate: 71
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12897
     flyable: false
     boss: false
@@ -9889,6 +10279,7 @@ movers:
     dodge_rate: 68
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 31456
     flyable: false
     boss: false
@@ -9914,6 +10305,7 @@ movers:
     dodge_rate: 85
     speed: 0.06
     attack_speed: 1200
+    re_attack_delay: 3000
     exp: 59050
     flyable: false
     boss: false
@@ -9939,6 +10331,7 @@ movers:
     dodge_rate: 82
     speed: 0.06
     attack_speed: 1200
+    re_attack_delay: 3000
     exp: 182870
     flyable: false
     boss: false
@@ -9964,6 +10357,7 @@ movers:
     dodge_rate: 89
     speed: 0.06
     attack_speed: 1200
+    re_attack_delay: 3000
     exp: 536810
     flyable: false
     boss: false
@@ -9989,6 +10383,7 @@ movers:
     dodge_rate: 94
     speed: 0.06
     attack_speed: 1300
+    re_attack_delay: 3750
     exp: 2000000
     flyable: false
     boss: false
@@ -10016,6 +10411,7 @@ movers:
     dodge_rate: 66
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3706
     flyable: false
     boss: false
@@ -10041,6 +10437,7 @@ movers:
     dodge_rate: 70
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11000
     flyable: false
     boss: false
@@ -10066,6 +10463,7 @@ movers:
     dodge_rate: 71
     speed: 0.06
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 16000
     flyable: false
     boss: false
@@ -10091,6 +10489,7 @@ movers:
     dodge_rate: 71
     speed: 0.06
     attack_speed: 1500
+    re_attack_delay: 3000
     exp: 21774
     flyable: false
     boss: false
@@ -10116,6 +10515,7 @@ movers:
     dodge_rate: 116
     speed: 0.07
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 188403
     flyable: false
     boss: false
@@ -10141,6 +10541,7 @@ movers:
     dodge_rate: 117
     speed: 0.07
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 188403
     flyable: false
     boss: false
@@ -10166,6 +10567,7 @@ movers:
     dodge_rate: 117
     speed: 0.065
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 207243
     flyable: false
     boss: false
@@ -10191,6 +10593,7 @@ movers:
     dodge_rate: 119
     speed: 0.065
     attack_speed: 920
+    re_attack_delay: 2200
     exp: 225894
     flyable: false
     boss: false
@@ -10216,6 +10619,7 @@ movers:
     dodge_rate: 157
     speed: 0.08
     attack_speed: 980
+    re_attack_delay: 2800
     exp: 1901497
     flyable: false
     boss: true
@@ -10241,6 +10645,7 @@ movers:
     dodge_rate: 121
     speed: 0.07
     attack_speed: 1050
+    re_attack_delay: 3050
     exp: 246224
     flyable: false
     boss: false
@@ -10266,6 +10671,7 @@ movers:
     dodge_rate: 122
     speed: 0.07
     attack_speed: 1050
+    re_attack_delay: 3050
     exp: 246224
     flyable: false
     boss: false
@@ -10291,6 +10697,7 @@ movers:
     dodge_rate: 122
     speed: 0.065
     attack_speed: 1050
+    re_attack_delay: 3050
     exp: 268384
     flyable: false
     boss: false
@@ -10316,6 +10723,7 @@ movers:
     dodge_rate: 124
     speed: 0.065
     attack_speed: 1100
+    re_attack_delay: 3100
     exp: 292538
     flyable: false
     boss: false
@@ -10341,6 +10749,7 @@ movers:
     dodge_rate: 153
     speed: 0.08
     attack_speed: 1200
+    re_attack_delay: 3200
     exp: 2439892
     flyable: false
     boss: true
@@ -10366,6 +10775,7 @@ movers:
     dodge_rate: 126
     speed: 0.07
     attack_speed: 1050
+    re_attack_delay: 3000
     exp: 318866
     flyable: false
     boss: false
@@ -10391,6 +10801,7 @@ movers:
     dodge_rate: 128
     speed: 0.07
     attack_speed: 1050
+    re_attack_delay: 3000
     exp: 318866
     flyable: false
     boss: false
@@ -10416,6 +10827,7 @@ movers:
     dodge_rate: 128
     speed: 0.065
     attack_speed: 1050
+    re_attack_delay: 3000
     exp: 347563
     flyable: false
     boss: false
@@ -10441,6 +10853,7 @@ movers:
     dodge_rate: 129
     speed: 0.065
     attack_speed: 1100
+    re_attack_delay: 3000
     exp: 375368
     flyable: false
     boss: false
@@ -10466,6 +10879,7 @@ movers:
     dodge_rate: 162
     speed: 0.08
     attack_speed: 1200
+    re_attack_delay: 3000
     exp: 3073551
     flyable: false
     boss: true
@@ -10491,6 +10905,7 @@ movers:
     dodge_rate: 131
     speed: 0.07
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 405397
     flyable: false
     boss: false
@@ -10516,6 +10931,7 @@ movers:
     dodge_rate: 133
     speed: 0.07
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 405397
     flyable: false
     boss: false
@@ -10541,6 +10957,7 @@ movers:
     dodge_rate: 133
     speed: 0.065
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 437828
     flyable: false
     boss: false
@@ -10566,6 +10983,7 @@ movers:
     dodge_rate: 134
     speed: 0.065
     attack_speed: 1000
+    re_attack_delay: 2200
     exp: 472854
     flyable: false
     boss: false
@@ -10591,6 +11009,7 @@ movers:
     dodge_rate: 170
     speed: 0.08
     attack_speed: 1050
+    re_attack_delay: 2800
     exp: 3871777
     flyable: false
     boss: true
@@ -10616,6 +11035,7 @@ movers:
     dodge_rate: 178
     speed: 0.08
     attack_speed: 1
+    re_attack_delay: 1
     exp: 1
     flyable: false
     boss: true
@@ -10641,6 +11061,7 @@ movers:
     dodge_rate: 178
     speed: 0.08
     attack_speed: 1
+    re_attack_delay: 1
     exp: 1
     flyable: false
     boss: true
@@ -10666,6 +11087,7 @@ movers:
     dodge_rate: 178
     speed: 0.08
     attack_speed: 1
+    re_attack_delay: 1
     exp: 1
     flyable: false
     boss: true
@@ -10691,6 +11113,7 @@ movers:
     dodge_rate: 178
     speed: 0.08
     attack_speed: 1
+    re_attack_delay: 1
     exp: 1
     flyable: false
     boss: true
@@ -10716,6 +11139,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 29081
     flyable: false
     boss: false
@@ -10741,6 +11165,7 @@ movers:
     dodge_rate: 92
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 54388
     flyable: false
     boss: false
@@ -10766,6 +11191,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 101723
     flyable: false
     boss: false
@@ -10791,6 +11217,7 @@ movers:
     dodge_rate: 112
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 186847
     flyable: false
     boss: false
@@ -10816,6 +11243,7 @@ movers:
     dodge_rate: 122
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 322061
     flyable: false
     boss: false
@@ -10841,6 +11269,7 @@ movers:
     dodge_rate: 133
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 525394
     flyable: false
     boss: false
@@ -10866,6 +11295,7 @@ movers:
     dodge_rate: 158
     speed: 0.065
     attack_speed: 1050
+    re_attack_delay: 3050
     exp: 828756
     flyable: false
     boss: false
@@ -10891,6 +11321,7 @@ movers:
     dodge_rate: 176
     speed: 0.065
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 1083722
     flyable: false
     boss: false
@@ -10916,6 +11347,7 @@ movers:
     dodge_rate: 45
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -10941,6 +11373,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -10966,6 +11399,7 @@ movers:
     dodge_rate: 115
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -10991,6 +11425,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7691
     flyable: false
     boss: false
@@ -11016,6 +11451,7 @@ movers:
     dodge_rate: 70
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9476
     flyable: false
     boss: false
@@ -11041,6 +11477,7 @@ movers:
     dodge_rate: 71
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11674
     flyable: false
     boss: false
@@ -11066,6 +11503,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 66085
     flyable: false
     boss: true
@@ -11091,6 +11529,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11116,6 +11555,7 @@ movers:
     dodge_rate: 71
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14383
     flyable: false
     boss: false
@@ -11141,6 +11581,7 @@ movers:
     dodge_rate: 72
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 17721
     flyable: false
     boss: false
@@ -11166,6 +11607,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 21833
     flyable: false
     boss: false
@@ -11191,6 +11633,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 182714
     flyable: false
     boss: true
@@ -11216,6 +11659,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11241,6 +11685,7 @@ movers:
     dodge_rate: 78
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 26899
     flyable: false
     boss: false
@@ -11266,6 +11711,7 @@ movers:
     dodge_rate: 79
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 33141
     flyable: false
     boss: false
@@ -11291,6 +11737,7 @@ movers:
     dodge_rate: 90
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 40832
     flyable: false
     boss: false
@@ -11316,6 +11763,7 @@ movers:
     dodge_rate: 109
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 327002
     flyable: false
     boss: true
@@ -11341,6 +11789,7 @@ movers:
     dodge_rate: 109
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11366,6 +11815,7 @@ movers:
     dodge_rate: 94
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 50308
     flyable: false
     boss: false
@@ -11391,6 +11841,7 @@ movers:
     dodge_rate: 97
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 61983
     flyable: false
     boss: false
@@ -11416,6 +11867,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 76369
     flyable: false
     boss: false
@@ -11441,6 +11893,7 @@ movers:
     dodge_rate: 123
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 611605
     flyable: false
     boss: true
@@ -11466,6 +11919,7 @@ movers:
     dodge_rate: 123
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11491,6 +11945,7 @@ movers:
     dodge_rate: 104
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 94093
     flyable: false
     boss: false
@@ -11516,6 +11971,7 @@ movers:
     dodge_rate: 107
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 115931
     flyable: false
     boss: false
@@ -11541,6 +11997,7 @@ movers:
     dodge_rate: 111
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 141551
     flyable: false
     boss: false
@@ -11566,6 +12023,7 @@ movers:
     dodge_rate: 132
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1113294
     flyable: false
     boss: true
@@ -11591,6 +12049,7 @@ movers:
     dodge_rate: 132
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11616,6 +12075,7 @@ movers:
     dodge_rate: 114
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 171276
     flyable: false
     boss: false
@@ -11641,6 +12101,7 @@ movers:
     dodge_rate: 117
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 207243
     flyable: false
     boss: false
@@ -11666,6 +12127,7 @@ movers:
     dodge_rate: 121
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 246224
     flyable: false
     boss: false
@@ -11691,6 +12153,7 @@ movers:
     dodge_rate: 157
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1901497
     flyable: false
     boss: true
@@ -11716,6 +12179,7 @@ movers:
     dodge_rate: 157
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11741,6 +12205,7 @@ movers:
     dodge_rate: 124
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 292538
     flyable: false
     boss: false
@@ -11766,6 +12231,7 @@ movers:
     dodge_rate: 128
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 347563
     flyable: false
     boss: false
@@ -11791,6 +12257,7 @@ movers:
     dodge_rate: 131
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 405397
     flyable: false
     boss: false
@@ -11816,6 +12283,7 @@ movers:
     dodge_rate: 162
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3073551
     flyable: false
     boss: true
@@ -11841,6 +12309,7 @@ movers:
     dodge_rate: 162
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11866,6 +12335,7 @@ movers:
     dodge_rate: 134
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 472854
     flyable: false
     boss: false
@@ -11891,6 +12361,7 @@ movers:
     dodge_rate: 149
     speed: 0.065
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 579415
     flyable: false
     boss: false
@@ -11916,6 +12387,7 @@ movers:
     dodge_rate: 156
     speed: 0.07
     attack_speed: 1050
+    re_attack_delay: 3050
     exp: 639473
     flyable: false
     boss: false
@@ -11941,6 +12413,7 @@ movers:
     dodge_rate: 172
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5123851
     flyable: false
     boss: true
@@ -11966,6 +12439,7 @@ movers:
     dodge_rate: 172
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -11991,6 +12465,7 @@ movers:
     dodge_rate: 160
     speed: 0.065
     attack_speed: 1100
+    re_attack_delay: 3100
     exp: 756880
     flyable: false
     boss: false
@@ -12016,6 +12491,7 @@ movers:
     dodge_rate: 167
     speed: 0.065
     attack_speed: 1050
+    re_attack_delay: 3050
     exp: 800746
     flyable: false
     boss: false
@@ -12041,6 +12517,7 @@ movers:
     dodge_rate: 174
     speed: 0.07
     attack_speed: 950
+    re_attack_delay: 2400
     exp: 774266
     flyable: false
     boss: false
@@ -12066,6 +12543,7 @@ movers:
     dodge_rate: 176
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7081113
     flyable: false
     boss: true
@@ -12091,6 +12569,7 @@ movers:
     dodge_rate: 176
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -12116,6 +12595,7 @@ movers:
     dodge_rate: 176
     speed: 0.065
     attack_speed: 1000
+    re_attack_delay: 2200
     exp: 975349
     flyable: false
     boss: false
@@ -12141,6 +12621,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1100000
     flyable: false
     boss: false
@@ -12166,6 +12647,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1250000
     flyable: false
     boss: false
@@ -12191,6 +12673,7 @@ movers:
     dodge_rate: 178
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7986262
     flyable: false
     boss: true
@@ -12216,6 +12699,7 @@ movers:
     dodge_rate: 178
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -12241,6 +12725,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 0
     flyable: false
     boss: false
@@ -12266,6 +12751,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 0
     flyable: false
     boss: false
@@ -12291,6 +12777,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 0
     flyable: false
     boss: false
@@ -12316,6 +12803,7 @@ movers:
     dodge_rate: 200
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 0
     flyable: false
     boss: false
@@ -12341,6 +12829,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 132380
     flyable: false
     boss: false
@@ -12368,6 +12857,7 @@ movers:
     dodge_rate: 123
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 733926
     flyable: false
     boss: false
@@ -12395,6 +12885,7 @@ movers:
     dodge_rate: 153
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2927870
     flyable: false
     boss: false
@@ -12422,6 +12913,7 @@ movers:
     dodge_rate: 176
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 8497335
     flyable: false
     boss: false
@@ -12449,6 +12941,7 @@ movers:
     dodge_rate: 54
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1824
     flyable: false
     boss: false
@@ -12474,6 +12967,7 @@ movers:
     dodge_rate: 54
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2042
     flyable: false
     boss: false
@@ -12499,6 +12993,7 @@ movers:
     dodge_rate: 54
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2388
     flyable: false
     boss: false
@@ -12524,6 +13019,7 @@ movers:
     dodge_rate: 58
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2558
     flyable: false
     boss: false
@@ -12549,6 +13045,7 @@ movers:
     dodge_rate: 58
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2865
     flyable: false
     boss: false
@@ -12574,6 +13071,7 @@ movers:
     dodge_rate: 58
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3207
     flyable: false
     boss: false
@@ -12599,6 +13097,7 @@ movers:
     dodge_rate: 61
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3591
     flyable: false
     boss: false
@@ -12624,6 +13123,7 @@ movers:
     dodge_rate: 61
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 4022
     flyable: false
     boss: false
@@ -12649,6 +13149,7 @@ movers:
     dodge_rate: 61
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 4502
     flyable: false
     boss: false
@@ -12674,6 +13175,7 @@ movers:
     dodge_rate: 65
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5042
     flyable: false
     boss: false
@@ -12699,6 +13201,7 @@ movers:
     dodge_rate: 65
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 5645
     flyable: false
     boss: false
@@ -12724,6 +13227,7 @@ movers:
     dodge_rate: 65
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 6321
     flyable: false
     boss: false
@@ -12749,6 +13253,7 @@ movers:
     dodge_rate: 69
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7082
     flyable: false
     boss: false
@@ -12774,6 +13279,7 @@ movers:
     dodge_rate: 69
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 7931
     flyable: false
     boss: false
@@ -12799,6 +13305,7 @@ movers:
     dodge_rate: 69
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 8882
     flyable: false
     boss: false
@@ -12824,6 +13331,7 @@ movers:
     dodge_rate: 73
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 9945
     flyable: false
     boss: false
@@ -12849,6 +13357,7 @@ movers:
     dodge_rate: 73
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11139
     flyable: false
     boss: false
@@ -12874,6 +13383,7 @@ movers:
     dodge_rate: 73
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12360
     flyable: false
     boss: false
@@ -12899,6 +13409,7 @@ movers:
     dodge_rate: 75
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 13719
     flyable: false
     boss: false
@@ -12924,6 +13435,7 @@ movers:
     dodge_rate: 75
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 15228
     flyable: false
     boss: false
@@ -12949,6 +13461,7 @@ movers:
     dodge_rate: 75
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 16904
     flyable: false
     boss: false
@@ -12974,6 +13487,7 @@ movers:
     dodge_rate: 78
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 18764
     flyable: false
     boss: false
@@ -12999,6 +13513,7 @@ movers:
     dodge_rate: 78
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 20826
     flyable: false
     boss: false
@@ -13024,6 +13539,7 @@ movers:
     dodge_rate: 78
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 23114
     flyable: false
     boss: false
@@ -13049,6 +13565,7 @@ movers:
     dodge_rate: 81
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 25658
     flyable: false
     boss: false
@@ -13074,6 +13591,7 @@ movers:
     dodge_rate: 81
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 25890
     flyable: false
     boss: false
@@ -13099,6 +13617,7 @@ movers:
     dodge_rate: 81
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 28737
     flyable: false
     boss: false
@@ -13124,6 +13643,7 @@ movers:
     dodge_rate: 150
     speed: 0.1
     attack_speed: 800
+    re_attack_delay: 1000
     exp: 1
     flyable: false
     boss: false
@@ -13149,6 +13669,7 @@ movers:
     dodge_rate: 176
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 975349
     flyable: false
     boss: false
@@ -13174,6 +13695,7 @@ movers:
     dodge_rate: 180
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1100000
     flyable: false
     boss: false
@@ -13199,6 +13721,7 @@ movers:
     dodge_rate: 178
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1250000
     flyable: false
     boss: false
@@ -13224,6 +13747,7 @@ movers:
     dodge_rate: 180
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 7986262
     flyable: false
     boss: true
@@ -13249,6 +13773,7 @@ movers:
     dodge_rate: 174
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 774266
     flyable: false
     boss: false
@@ -13274,6 +13799,7 @@ movers:
     dodge_rate: 176
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 903102
     flyable: false
     boss: false
@@ -13299,6 +13825,7 @@ movers:
     dodge_rate: 176
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 975349
     flyable: false
     boss: false
@@ -13324,6 +13851,7 @@ movers:
     dodge_rate: 178
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 7986262
     flyable: false
     boss: true
@@ -13349,6 +13877,7 @@ movers:
     dodge_rate: 144
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 496756
     flyable: false
     boss: false
@@ -13374,6 +13903,7 @@ movers:
     dodge_rate: 149
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 579415
     flyable: false
     boss: false
@@ -13399,6 +13929,7 @@ movers:
     dodge_rate: 152
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 625767
     flyable: false
     boss: false
@@ -13424,6 +13955,7 @@ movers:
     dodge_rate: 172
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 5123851
     flyable: false
     boss: true
@@ -13449,6 +13981,7 @@ movers:
     dodge_rate: 164
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 686512
     flyable: false
     boss: false
@@ -13474,6 +14007,7 @@ movers:
     dodge_rate: 167
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 800746
     flyable: false
     boss: false
@@ -13499,6 +14033,7 @@ movers:
     dodge_rate: 168
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 864805
     flyable: false
     boss: false
@@ -13524,6 +14059,7 @@ movers:
     dodge_rate: 176
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 7081113
     flyable: false
     boss: true
@@ -13549,6 +14085,7 @@ movers:
     dodge_rate: 154
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 592105
     flyable: false
     boss: false
@@ -13574,6 +14111,7 @@ movers:
     dodge_rate: 158
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 690630
     flyable: false
     boss: false
@@ -13599,6 +14137,7 @@ movers:
     dodge_rate: 160
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 756880
     flyable: false
     boss: false
@@ -13624,6 +14163,7 @@ movers:
     dodge_rate: 174
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 6107342
     flyable: false
     boss: true
@@ -13649,6 +14189,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 83621
     flyable: false
     boss: false
@@ -13674,6 +14215,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 90311
     flyable: false
     boss: false
@@ -13699,6 +14241,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 97535
     flyable: false
     boss: false
@@ -13724,6 +14267,7 @@ movers:
     dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 798627
     flyable: false
     boss: false
@@ -13749,6 +14293,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 83621
     flyable: false
     boss: false
@@ -13774,6 +14319,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 90311
     flyable: false
     boss: false
@@ -13799,6 +14345,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 97535
     flyable: false
     boss: false
@@ -13824,6 +14371,7 @@ movers:
     dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 798627
     flyable: false
     boss: false
@@ -13849,6 +14397,7 @@ movers:
     dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 83621
     flyable: false
     boss: false
@@ -13874,6 +14423,7 @@ movers:
     dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 90311
     flyable: false
     boss: false
@@ -13899,6 +14449,7 @@ movers:
     dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 97535
     flyable: false
     boss: false
@@ -13924,6 +14475,7 @@ movers:
     dodge_rate: 200
     speed: 0.085
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 798627
     flyable: false
     boss: false
@@ -13949,6 +14501,7 @@ movers:
     dodge_rate: 200
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1597254
     flyable: false
     boss: false
@@ -13974,6 +14527,7 @@ movers:
     dodge_rate: 200
     speed: 0.15
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 3194508
     flyable: false
     boss: false
@@ -13999,6 +14553,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 167242
     flyable: false
     boss: false
@@ -14024,6 +14579,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 180622
     flyable: false
     boss: false
@@ -14049,6 +14605,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 195070
     flyable: false
     boss: false
@@ -14074,6 +14631,7 @@ movers:
     dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1597254
     flyable: false
     boss: false
@@ -14099,6 +14657,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 167242
     flyable: false
     boss: false
@@ -14124,6 +14683,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 180622
     flyable: false
     boss: false
@@ -14149,6 +14709,7 @@ movers:
     dodge_rate: 100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 195070
     flyable: false
     boss: false
@@ -14174,6 +14735,7 @@ movers:
     dodge_rate: 200
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1597254
     flyable: false
     boss: false
@@ -14199,6 +14761,7 @@ movers:
     dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 167242
     flyable: false
     boss: false
@@ -14224,6 +14787,7 @@ movers:
     dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 180622
     flyable: false
     boss: false
@@ -14249,6 +14813,7 @@ movers:
     dodge_rate: 100
     speed: 0.07
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 195070
     flyable: false
     boss: false
@@ -14274,6 +14839,7 @@ movers:
     dodge_rate: 200
     speed: 0.085
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1597254
     flyable: false
     boss: false
@@ -14299,6 +14865,7 @@ movers:
     dodge_rate: 200
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 3194508
     flyable: false
     boss: false
@@ -14324,6 +14891,7 @@ movers:
     dodge_rate: 200
     speed: 0.15
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 6389016
     flyable: false
     boss: false
@@ -14349,6 +14917,7 @@ movers:
     dodge_rate: 0
     speed: 0.03
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -14374,6 +14943,7 @@ movers:
     dodge_rate: 500
     speed: 0.085
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1356336
     flyable: false
     boss: false
@@ -14399,6 +14969,7 @@ movers:
     dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1412850
     flyable: false
     boss: false
@@ -14424,6 +14995,7 @@ movers:
     dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1471719
     flyable: false
     boss: false
@@ -14449,6 +15021,7 @@ movers:
     dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1533041
     flyable: false
     boss: false
@@ -14474,6 +15047,7 @@ movers:
     dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1596917
     flyable: false
     boss: false
@@ -14499,6 +15073,7 @@ movers:
     dodge_rate: 500
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1663456
     flyable: false
     boss: false
@@ -14524,6 +15099,7 @@ movers:
     dodge_rate: 2000
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11068346
     flyable: false
     boss: false
@@ -14549,6 +15125,7 @@ movers:
     dodge_rate: 750
     speed: 0.065
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 319383
     flyable: false
     boss: false
@@ -14574,6 +15151,7 @@ movers:
     dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 332691
     flyable: false
     boss: false
@@ -14599,6 +15177,7 @@ movers:
     dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 346553
     flyable: false
     boss: false
@@ -14624,6 +15203,7 @@ movers:
     dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 360993
     flyable: false
     boss: false
@@ -14649,6 +15229,7 @@ movers:
     dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 376034
     flyable: false
     boss: false
@@ -14674,6 +15255,7 @@ movers:
     dodge_rate: 2000
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12009924
     flyable: false
     boss: false
@@ -14699,6 +15281,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -14724,6 +15307,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -14749,6 +15333,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -14774,6 +15359,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -14799,6 +15385,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -14824,6 +15411,7 @@ movers:
     dodge_rate: 1500
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -14849,6 +15437,7 @@ movers:
     dodge_rate: 140
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 108580
     flyable: false
     boss: false
@@ -14874,6 +15463,7 @@ movers:
     dodge_rate: 142
     speed: 0.065
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 127952
     flyable: false
     boss: false
@@ -14899,6 +15489,7 @@ movers:
     dodge_rate: 144
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 133768
     flyable: false
     boss: false
@@ -14924,6 +15515,7 @@ movers:
     dodge_rate: 146
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 148621
     flyable: false
     boss: false
@@ -14949,6 +15541,7 @@ movers:
     dodge_rate: 148
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 161215
     flyable: false
     boss: false
@@ -14974,6 +15567,7 @@ movers:
     dodge_rate: 150
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 173809
     flyable: false
     boss: false
@@ -14999,6 +15593,7 @@ movers:
     dodge_rate: 444
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15024,6 +15619,7 @@ movers:
     dodge_rate: 210
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 10858
     flyable: false
     boss: false
@@ -15049,6 +15645,7 @@ movers:
     dodge_rate: 213
     speed: 0.065
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 12795
     flyable: false
     boss: false
@@ -15074,6 +15671,7 @@ movers:
     dodge_rate: 216
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 13376
     flyable: false
     boss: false
@@ -15099,6 +15697,7 @@ movers:
     dodge_rate: 219
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 14862
     flyable: false
     boss: false
@@ -15124,6 +15723,7 @@ movers:
     dodge_rate: 222
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 16121
     flyable: false
     boss: false
@@ -15149,6 +15749,7 @@ movers:
     dodge_rate: 225
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 17380
     flyable: false
     boss: false
@@ -15174,6 +15775,7 @@ movers:
     dodge_rate: 592
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15199,6 +15801,7 @@ movers:
     dodge_rate: 81
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -15224,6 +15827,7 @@ movers:
     dodge_rate: 81
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -15249,6 +15853,7 @@ movers:
     dodge_rate: 81
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -15274,6 +15879,7 @@ movers:
     dodge_rate: 81
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -15299,6 +15905,7 @@ movers:
     dodge_rate: 185
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1787500
     flyable: false
     boss: false
@@ -15324,6 +15931,7 @@ movers:
     dodge_rate: 194
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1966250
     flyable: false
     boss: false
@@ -15349,6 +15957,7 @@ movers:
     dodge_rate: 204
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 2162875
     flyable: false
     boss: false
@@ -15374,6 +15983,7 @@ movers:
     dodge_rate: 214
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 2379162
     flyable: false
     boss: false
@@ -15399,6 +16009,7 @@ movers:
     dodge_rate: 225
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 2617079
     flyable: false
     boss: false
@@ -15424,6 +16035,7 @@ movers:
     dodge_rate: 236
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 2878787
     flyable: false
     boss: false
@@ -15449,6 +16061,7 @@ movers:
     dodge_rate: 440
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2491716
     flyable: false
     boss: false
@@ -15474,6 +16087,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15499,6 +16113,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15524,6 +16139,7 @@ movers:
     dodge_rate: 550
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1559786
     flyable: false
     boss: false
@@ -15549,6 +16165,7 @@ movers:
     dodge_rate: 550
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1624778
     flyable: false
     boss: false
@@ -15574,6 +16191,7 @@ movers:
     dodge_rate: 550
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1692477
     flyable: false
     boss: false
@@ -15599,6 +16217,7 @@ movers:
     dodge_rate: 550
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1762997
     flyable: false
     boss: false
@@ -15624,6 +16243,7 @@ movers:
     dodge_rate: 550
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1836455
     flyable: false
     boss: false
@@ -15649,6 +16269,7 @@ movers:
     dodge_rate: 550
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1912974
     flyable: false
     boss: false
@@ -15674,6 +16295,7 @@ movers:
     dodge_rate: 1650
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12728598
     flyable: false
     boss: false
@@ -15699,6 +16321,7 @@ movers:
     dodge_rate: 0
     speed: 0.03
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15724,6 +16347,7 @@ movers:
     dodge_rate: 150
     speed: 0.1
     attack_speed: 800
+    re_attack_delay: 1000
     exp: 1
     flyable: false
     boss: false
@@ -15749,6 +16373,7 @@ movers:
     dodge_rate: 150
     speed: 0.1
     attack_speed: 800
+    re_attack_delay: 1000
     exp: 1
     flyable: false
     boss: false
@@ -15774,6 +16399,7 @@ movers:
     dodge_rate: 50
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15799,6 +16425,7 @@ movers:
     dodge_rate: 85
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15824,6 +16451,7 @@ movers:
     dodge_rate: 123
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15851,6 +16479,7 @@ movers:
     dodge_rate: 5000
     speed: 0.03
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15876,6 +16505,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15901,6 +16531,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -15926,6 +16557,7 @@ movers:
     dodge_rate: 10000
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 250
     flyable: false
     boss: false
@@ -15951,6 +16583,7 @@ movers:
     dodge_rate: 10000
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 250
     flyable: false
     boss: false
@@ -15976,6 +16609,7 @@ movers:
     dodge_rate: 0
     speed: 0.03
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -16001,6 +16635,7 @@ movers:
     dodge_rate: 1210
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1949733
     flyable: false
     boss: false
@@ -16026,6 +16661,7 @@ movers:
     dodge_rate: 1210
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 2115596
     flyable: false
     boss: false
@@ -16051,6 +16687,7 @@ movers:
     dodge_rate: 1210
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 2030972
     flyable: false
     boss: false
@@ -16076,6 +16713,7 @@ movers:
     dodge_rate: 1210
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1871743
     flyable: false
     boss: false
@@ -16101,6 +16739,7 @@ movers:
     dodge_rate: 45
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 367
     flyable: false
     boss: true
@@ -16128,6 +16767,7 @@ movers:
     dodge_rate: 48
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 479
     flyable: false
     boss: true
@@ -16155,6 +16795,7 @@ movers:
     dodge_rate: 55
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1060
     flyable: false
     boss: true
@@ -16180,6 +16821,7 @@ movers:
     dodge_rate: 57
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1377
     flyable: false
     boss: true
@@ -16205,6 +16847,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2996
     flyable: false
     boss: true
@@ -16232,6 +16875,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2993
     flyable: false
     boss: true
@@ -16257,6 +16901,7 @@ movers:
     dodge_rate: 85
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14540
     flyable: true
     boss: true
@@ -16284,6 +16929,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 22873
     flyable: false
     boss: true
@@ -16311,6 +16957,7 @@ movers:
     dodge_rate: 132
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1113294
     flyable: false
     boss: true
@@ -16338,6 +16985,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 182714
     flyable: false
     boss: true
@@ -16365,6 +17013,7 @@ movers:
     dodge_rate: 149
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1468311
     flyable: false
     boss: true
@@ -16392,6 +17041,7 @@ movers:
     dodge_rate: 157
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1901497
     flyable: false
     boss: true
@@ -16419,6 +17069,7 @@ movers:
     dodge_rate: 162
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3073551
     flyable: false
     boss: true
@@ -16446,6 +17097,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1100000
     flyable: false
     boss: false
@@ -16471,6 +17123,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1250000
     flyable: false
     boss: false
@@ -16496,6 +17149,7 @@ movers:
     dodge_rate: 144
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 133768
     flyable: false
     boss: false
@@ -16521,6 +17175,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1100000
     flyable: false
     boss: false
@@ -16546,6 +17201,7 @@ movers:
     dodge_rate: 592
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -16571,6 +17227,7 @@ movers:
     dodge_rate: 200
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 0
     flyable: false
     boss: false
@@ -16596,6 +17253,7 @@ movers:
     dodge_rate: 400
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1597254
     flyable: false
     boss: false
@@ -16621,6 +17279,7 @@ movers:
     dodge_rate: 400
     speed: 0.15
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 3194508
     flyable: false
     boss: false
@@ -16646,6 +17305,7 @@ movers:
     dodge_rate: 2000
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11068346
     flyable: false
     boss: false
@@ -16671,6 +17331,7 @@ movers:
     dodge_rate: 440
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2491716
     flyable: false
     boss: false
@@ -16696,6 +17357,7 @@ movers:
     dodge_rate: 3300
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12728598
     flyable: false
     boss: false
@@ -16721,6 +17383,7 @@ movers:
     dodge_rate: 1100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1559786
     flyable: false
     boss: false
@@ -16746,6 +17409,7 @@ movers:
     dodge_rate: 2000
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12009924
     flyable: false
     boss: false
@@ -16771,6 +17435,7 @@ movers:
     dodge_rate: 45
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 367
     flyable: false
     boss: true
@@ -16798,6 +17463,7 @@ movers:
     dodge_rate: 48
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 479
     flyable: false
     boss: true
@@ -16825,6 +17491,7 @@ movers:
     dodge_rate: 55
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1060
     flyable: false
     boss: true
@@ -16850,6 +17517,7 @@ movers:
     dodge_rate: 57
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1377
     flyable: false
     boss: true
@@ -16875,6 +17543,7 @@ movers:
     dodge_rate: 77
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2996
     flyable: false
     boss: true
@@ -16902,6 +17571,7 @@ movers:
     dodge_rate: 68
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2993
     flyable: false
     boss: true
@@ -16927,6 +17597,7 @@ movers:
     dodge_rate: 85
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 14540
     flyable: true
     boss: true
@@ -16954,6 +17625,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 22873
     flyable: false
     boss: true
@@ -16981,6 +17653,7 @@ movers:
     dodge_rate: 132
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1113294
     flyable: false
     boss: true
@@ -17008,6 +17681,7 @@ movers:
     dodge_rate: 102
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 182714
     flyable: false
     boss: true
@@ -17035,6 +17709,7 @@ movers:
     dodge_rate: 149
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1468311
     flyable: false
     boss: true
@@ -17062,6 +17737,7 @@ movers:
     dodge_rate: 157
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1901497
     flyable: false
     boss: true
@@ -17089,6 +17765,7 @@ movers:
     dodge_rate: 162
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 3073551
     flyable: false
     boss: true
@@ -17116,6 +17793,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1100000
     flyable: false
     boss: false
@@ -17141,6 +17819,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1250000
     flyable: false
     boss: false
@@ -17166,6 +17845,7 @@ movers:
     dodge_rate: 144
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 133768
     flyable: false
     boss: false
@@ -17191,6 +17871,7 @@ movers:
     dodge_rate: 180
     speed: 0.14
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 1100000
     flyable: false
     boss: false
@@ -17216,6 +17897,7 @@ movers:
     dodge_rate: 592
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -17241,6 +17923,7 @@ movers:
     dodge_rate: 200
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 4000
     exp: 0
     flyable: false
     boss: false
@@ -17266,6 +17949,7 @@ movers:
     dodge_rate: 400
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1597254
     flyable: false
     boss: false
@@ -17291,6 +17975,7 @@ movers:
     dodge_rate: 400
     speed: 0.15
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 3194508
     flyable: false
     boss: false
@@ -17316,6 +18001,7 @@ movers:
     dodge_rate: 2000
     speed: 0.1
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 11068346
     flyable: false
     boss: false
@@ -17341,6 +18027,7 @@ movers:
     dodge_rate: 440
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2491716
     flyable: false
     boss: false
@@ -17366,6 +18053,7 @@ movers:
     dodge_rate: 3300
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12728598
     flyable: false
     boss: false
@@ -17391,6 +18079,7 @@ movers:
     dodge_rate: 1100
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1559786
     flyable: false
     boss: false
@@ -17416,6 +18105,7 @@ movers:
     dodge_rate: 2000
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 12009924
     flyable: false
     boss: false
@@ -17441,6 +18131,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -17466,6 +18157,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -17491,6 +18183,7 @@ movers:
     dodge_rate: 750
     speed: 0
     attack_speed: 1000
+    re_attack_delay: 240000000
     exp: 0
     flyable: false
     boss: false
@@ -17516,6 +18209,7 @@ movers:
     dodge_rate: 0
     speed: 0.012
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -17541,6 +18235,7 @@ movers:
     dodge_rate: 0
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -17566,6 +18261,7 @@ movers:
     dodge_rate: 0
     speed: 0.03
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -17591,6 +18287,7 @@ movers:
     dodge_rate: 58
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 2086
     flyable: true
     boss: false
@@ -17616,6 +18313,7 @@ movers:
     dodge_rate: 29
     speed: 0.16
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 55
     flyable: true
     boss: false
@@ -17641,6 +18339,7 @@ movers:
     dodge_rate: 200
     speed: 0.15
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 3194508
     flyable: false
     boss: false
@@ -17666,6 +18365,7 @@ movers:
     dodge_rate: 100
     speed: 0.15
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 1597254
     flyable: false
     boss: true
@@ -17691,6 +18391,7 @@ movers:
     dodge_rate: 0
     speed: 0.03
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 75
     flyable: false
     boss: false
@@ -17716,6 +18417,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -17741,6 +18443,7 @@ movers:
     dodge_rate: 166
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 545484
     flyable: false
     boss: false
@@ -17766,6 +18469,7 @@ movers:
     dodge_rate: 166
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 600033
     flyable: false
     boss: false
@@ -17791,6 +18495,7 @@ movers:
     dodge_rate: 166
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 660036
     flyable: false
     boss: false
@@ -17816,6 +18521,7 @@ movers:
     dodge_rate: 166
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 726039
     flyable: false
     boss: false
@@ -17841,6 +18547,7 @@ movers:
     dodge_rate: 166
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 798642
     flyable: false
     boss: false
@@ -17866,6 +18573,7 @@ movers:
     dodge_rate: 166
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 878506
     flyable: false
     boss: false
@@ -17891,6 +18599,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 191189
     flyable: false
     boss: false
@@ -17916,6 +18625,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 210309
     flyable: false
     boss: false
@@ -17941,6 +18651,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 231339
     flyable: false
     boss: false
@@ -17966,6 +18677,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 254474
     flyable: false
     boss: false
@@ -17991,6 +18703,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 279921
     flyable: false
     boss: false
@@ -18016,6 +18729,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 307913
     flyable: false
     boss: false
@@ -18041,6 +18755,7 @@ movers:
     dodge_rate: 161
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 307913
     flyable: false
     boss: false
@@ -18066,6 +18781,7 @@ movers:
     dodge_rate: 161
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 338704
     flyable: false
     boss: false
@@ -18091,6 +18807,7 @@ movers:
     dodge_rate: 161
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 372574
     flyable: false
     boss: false
@@ -18116,6 +18833,7 @@ movers:
     dodge_rate: 161
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 409831
     flyable: false
     boss: false
@@ -18141,6 +18859,7 @@ movers:
     dodge_rate: 161
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 450814
     flyable: false
     boss: false
@@ -18166,6 +18885,7 @@ movers:
     dodge_rate: 161
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 495895
     flyable: false
     boss: false
@@ -18191,6 +18911,7 @@ movers:
     dodge_rate: 151
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 545484
     flyable: false
     boss: false
@@ -18216,6 +18937,7 @@ movers:
     dodge_rate: 151
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 600033
     flyable: false
     boss: false
@@ -18241,6 +18963,7 @@ movers:
     dodge_rate: 151
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 660036
     flyable: false
     boss: false
@@ -18266,6 +18989,7 @@ movers:
     dodge_rate: 151
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 726039
     flyable: false
     boss: false
@@ -18291,6 +19015,7 @@ movers:
     dodge_rate: 151
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 798642
     flyable: false
     boss: false
@@ -18316,6 +19041,7 @@ movers:
     dodge_rate: 151
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 878506
     flyable: false
     boss: false
@@ -18341,6 +19067,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 210309
     flyable: false
     boss: false
@@ -18366,6 +19093,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 191189
     flyable: false
     boss: false
@@ -18391,6 +19119,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 231339
     flyable: false
     boss: false
@@ -18416,6 +19145,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 254474
     flyable: false
     boss: false
@@ -18441,6 +19171,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 279921
     flyable: false
     boss: false
@@ -18466,6 +19197,7 @@ movers:
     dodge_rate: 155
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 307913
     flyable: false
     boss: false
@@ -18491,6 +19223,7 @@ movers:
     dodge_rate: 146
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 307913
     flyable: false
     boss: false
@@ -18516,6 +19249,7 @@ movers:
     dodge_rate: 146
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 338704
     flyable: false
     boss: false
@@ -18541,6 +19275,7 @@ movers:
     dodge_rate: 146
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 372574
     flyable: false
     boss: false
@@ -18566,6 +19301,7 @@ movers:
     dodge_rate: 146
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 409831
     flyable: false
     boss: false
@@ -18591,6 +19327,7 @@ movers:
     dodge_rate: 146
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 450814
     flyable: false
     boss: false
@@ -18616,6 +19353,7 @@ movers:
     dodge_rate: 146
     speed: 0.08
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 495895
     flyable: false
     boss: false
@@ -18641,6 +19379,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -18666,6 +19405,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -18691,6 +19431,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -18716,6 +19457,7 @@ movers:
     dodge_rate: 0
     speed: 0.05
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false
@@ -18741,6 +19483,7 @@ movers:
     dodge_rate: 57
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 1000
     flyable: false
     boss: false
@@ -18766,6 +19509,7 @@ movers:
     dodge_rate: 670
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 3324998
     flyable: false
     boss: false
@@ -18791,6 +19535,7 @@ movers:
     dodge_rate: 700
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 4023248
     flyable: false
     boss: false
@@ -18816,6 +19561,7 @@ movers:
     dodge_rate: 750
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 4868131
     flyable: false
     boss: false
@@ -18841,6 +19587,7 @@ movers:
     dodge_rate: 800
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 5890438
     flyable: false
     boss: false
@@ -18866,6 +19613,7 @@ movers:
     dodge_rate: 850
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 7127430
     flyable: false
     boss: false
@@ -18891,6 +19639,7 @@ movers:
     dodge_rate: 900
     speed: 0.075
     attack_speed: 1000
+    re_attack_delay: 2400
     exp: 8624191
     flyable: false
     boss: false
@@ -18916,6 +19665,7 @@ movers:
     dodge_rate: 3300
     speed: 0.12
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 43120955
     flyable: false
     boss: false
@@ -18941,6 +19691,7 @@ movers:
     dodge_rate: 0
     speed: 0.03
     attack_speed: 1000
+    re_attack_delay: 3000
     exp: 0
     flyable: false
     boss: false

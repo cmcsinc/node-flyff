@@ -19,7 +19,8 @@ import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import type { Vec3 } from '@flyff/entities';
 import {
   SNAPSHOTTYPE_MOVERMOVED, SNAPSHOTTYPE_MOVERBEHAVIOR,
-  SNAPSHOTTYPE_MOVERCORR, SNAPSHOTTYPE_MOVERMOVED2, NULL_ID,
+  SNAPSHOTTYPE_MOVERCORR, SNAPSHOTTYPE_MOVERMOVED2, SNAPSHOTTYPE_MOVERBEHAVIOR2,
+  SNAPSHOTTYPE_MOVERANGLE, NULL_ID,
 } from '@flyff/world-core';
 
 /**
@@ -64,12 +65,48 @@ export class MoverBroadcastSerializer {
    * after `f`, and a trailing `nFrame:BYTE`.
    */
   buildMoved2(senderObjid: number, frame: Movement2Frame): Buffer {
+    return this.build2(SNAPSHOTTYPE_MOVERMOVED2, senderObjid, frame, true);
+  }
+
+  /**
+   * Build `SNAPSHOTTYPE_MOVERBEHAVIOR2` (72-byte flight motion body).
+   * Byte-identical to MOVED2 except it has NO trailing `nFrame` byte -- C++
+   * `CUserMng::AddMoverBehavior2` (`User.cpp:4930`).
+   */
+  buildBehavior2(senderObjid: number, frame: Movement2Frame): Buffer {
+    return this.build2(SNAPSHOTTYPE_MOVERBEHAVIOR2, senderObjid, frame, false);
+  }
+
+  /**
+   * Build `SNAPSHOTTYPE_MOVERANGLE` (`User.cpp:4949`). Unlike the moved/behavior
+   * frames, angle has no dwState/dwMotion block: only `v, vd, f, fAngleX,
+   * fAccPower, fTurnAngle, nTickCount` (44-byte body).
+   */
+  buildAngle(senderObjid: number, frame: AngleFrame): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);
     w.writeDword(NULL_ID);
     w.writeWord(1);
     w.writeDword(senderObjid);
-    w.writeWord(SNAPSHOTTYPE_MOVERMOVED2);
+    w.writeWord(SNAPSHOTTYPE_MOVERANGLE);
+    w.writeFloat(frame.v.x);  w.writeFloat(frame.v.y);  w.writeFloat(frame.v.z);
+    w.writeFloat(frame.vd.x); w.writeFloat(frame.vd.y); w.writeFloat(frame.vd.z);
+    w.writeFloat(frame.f);
+    w.writeFloat(frame.fAngleX);
+    w.writeFloat(frame.fAccPower);
+    w.writeFloat(frame.fTurnAngle);
+    w.writeQword(frame.nTickCount);
+    return w.build();
+  }
+
+  /** Shared MOVED2/BEHAVIOR2 wire layout; behavior2 omits only `nFrame`. */
+  private build2(subtype: number, senderObjid: number, frame: Movement2Frame, writeFrame: boolean): Buffer {
+    const w = new PacketWriter();
+    w.writeDword(PACKETTYPE.SNAPSHOT);
+    w.writeDword(NULL_ID);
+    w.writeWord(1);
+    w.writeDword(senderObjid);
+    w.writeWord(subtype);
     w.writeFloat(frame.v.x);  w.writeFloat(frame.v.y);  w.writeFloat(frame.v.z);
     w.writeFloat(frame.vd.x); w.writeFloat(frame.vd.y); w.writeFloat(frame.vd.z);
     w.writeFloat(frame.f);
@@ -83,7 +120,7 @@ export class MoverBroadcastSerializer {
     w.writeLong(frame.nLoop);
     w.writeDword(frame.dwMotionOption);
     w.writeQword(frame.nTickCount);
-    w.writeByte(frame.nFrame);
+    if (writeFrame) w.writeByte(frame.nFrame);
     return w.build();
   }
 
@@ -117,4 +154,15 @@ export interface Movement2Frame extends MovementFrame {
   fAccPower: number;   // float
   fTurnAngle: number;  // float
   nFrame: number;      // BYTE
+}
+
+/** Parsed 48-byte PLAYERANGLE body (`DPSrvr.cpp:2536 OnPlayerAngle`). */
+export interface AngleFrame {
+  v: Vec3;              // position (Vec3, 12B)
+  vd: Vec3;             // velocity/delta (Vec3, 12B)
+  f: number;            // angle (float)
+  fAngleX: number;      // pitch (float)
+  fAccPower: number;    // acceleration (float)
+  fTurnAngle: number;   // turn angle (float)
+  nTickCount: bigint;   // __int64 echoed verbatim
 }

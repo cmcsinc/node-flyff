@@ -21,6 +21,7 @@
  *   `/count` `/cnt`       GAMEMASTER    report live player + monster counts
  *   `/rtg <n>`            ADMINISTRATOR remove n gold
  *   `/rn <objid>`         GAMEMASTER3   despawn an NPC/mover (DEL_OBJ)
+ *   `/cn <id|name> [n] [aggro]` GAMEMASTER3 spawn n monsters at own position
  *   `/disguise` `/dis` <id> ADMINISTRATOR transform into propMover id
  *   `/nodisguise` `/nodis` ADMINISTRATOR clear disguise
  *   `/bq /eq /rq /raq /rcq` GAMEMASTER3 quest admin; `/qs` ADMINISTRATOR
@@ -56,7 +57,7 @@ import type { QuestService } from '@flyff/quest';
 import type { InventoryService } from '@flyff/inventory';
 import { buildUpdateItemCount } from '@flyff/inventory';
 import type { CharacterRepository, InventoryRepository } from '@flyff/database';
-import type { ItemDefinition } from '@flyff/resources';
+import type { ItemDefinition, MoverDefinition } from '@flyff/resources';
 import { AUTH, hasAuthority } from '@flyff/entities';
 import { Validate } from '@flyff/core/utils/validate';
 import { PacketError } from '@flyff/core/errors';
@@ -93,6 +94,8 @@ export interface CommandServiceDeps {
   playerManager: PlayerManager;
   /** Spawn manager -- `/rn` (despawn) + `/cnt` (monster count) + `/ak` (radius kill). */
   spawnManager: SpawnManager;
+  /** Mover id/name -> definition lookup for `/cn` resolution. */
+  lookupMover?: (token: string) => MoverDefinition | undefined;
   /** Quest service -- `/bq /eq /qs /rq /raq /rcq` admin. */
   questService: QuestService;
   /** Inventory service -- `/ci` (create item into main bag). */
@@ -140,6 +143,16 @@ const MIN_LEVEL = 1;
 const MAX_LEVEL = 150;
 /** `TextCmd_AroundKill` radius (FuncTextCmd.cpp:373 -- `SendDamageAround(...,64.0f)`). */
 const AROUND_KILL_RADIUS = 64.0;
+/** `/cn` instance cap -- `TextCmd_CreateNPC`: `if( dwNum > 100 ) dwNum = 100`. */
+const MAX_CREATE_NPC = 100;
+/**
+ * Mover `type`s `/cn` may spawn. C++ gates on `dwAI` being one of the monster
+ * AI families (AII_MONSTER / CLOCKWORKS / BIGMUSCLE / KRRR / BEAR /
+ * METEONYKER / ARENA_REAPER) -- i.e. anything that fights. Our converted data
+ * carries `type`, not `dwAI`; `monster` + `boss` are its equivalent span
+ * (`npc`/`pet`/`player` are the excluded rest).
+ */
+const SPAWNABLE_MOVER_TYPES: ReadonlySet<string> = new Set(['monster', 'boss', 'giant', 'raid']);
 /** Single-stat ceiling for `/stat` -- C++ clamps via the broader stat pipeline. */
 const MAX_STAT = 999;
 
@@ -175,6 +188,7 @@ export class CommandService {
       { names: ['count', 'cnt'], auth: AUTH.GAMEMASTER, run: (c) => this.count(c) },
       { names: ['rtg'], auth: AUTH.ADMINISTRATOR, run: (c) => this.removeTotalGold(c) },
       { names: ['rmvnpc', 'rn'], auth: AUTH.GAMEMASTER3, run: (c) => this.removeNpc(c) },
+      { names: ['createnpc', 'cn'], auth: AUTH.GAMEMASTER3, run: (c) => this.createNpc(c) },
       { names: ['disguise', 'dis'], auth: AUTH.ADMINISTRATOR, run: (c) => this.disguise(c, true) },
       { names: ['nodisguise', 'nodis'], auth: AUTH.ADMINISTRATOR, run: (c) => this.disguise(c, false) },
       { names: ['onekill', 'ok'], auth: AUTH.GAMEMASTER3, run: (c) => this.onekill(c, true) },
@@ -459,6 +473,34 @@ export class CommandService {
    * respawn, then `DEL_OBJ` broadcasts the removal. C++ gates on `IsNPC()`; we
    * accept any spawned mover (monsters included) -- the GM picks the target.
    */
+  /**
+   * `/cn <id|name> [count] [activeAttack]` -- `TextCmd_CreateNPC`
+   * (FuncTextCmd.cpp:2930). Resolves the mover by numeric id or by name, gates
+   * on it being a monster-AI type (C++ checks `dwAI == AII_MONSTER` and the
+   * boss variants -- we use the yml `type`, the converted equivalent), then
+   * materializes `count` (1..100) instances at the caller's position and
+   * broadcasts each ADD_OBJ via `SpawnManager.spawnMonster` -> `onSpawn`.
+   *
+   * ponytail: C++ also seeds `SetGold(level*15)` on each mover; we have no
+   * per-mover gold model (drops come from the drop table), so it is skipped.
+   */
+  private createNpc({ args, player }: CommandCtx): void {
+    const [token, countTok, activeTok] = args.trim().split(/\s+/);
+    if (!token) return;
+    const def = this.deps.lookupMover?.(token);
+    if (!def) return;
+    if (!SPAWNABLE_MOVER_TYPES.has(def.type ?? '')) return;
+
+    let count = Number.parseInt(countTok ?? '', 10);
+    if (!Number.isInteger(count) || count <= 0) count = 1;
+    if (count > MAX_CREATE_NPC) count = MAX_CREATE_NPC;
+    const activeAttack = Number.parseInt(activeTok ?? '', 10) > 0;
+
+    for (let i = 0; i < count; i++) {
+      this.deps.spawnManager.spawnMonster(def.id, player.m_vPos, player.m_nZoneId, activeAttack);
+    }
+  }
+
   private removeNpc({ args, player }: CommandCtx): void {
     const objid = Number.parseInt(args.split(/\s+/)[0] ?? '', 10);
     if (!Number.isInteger(objid) || objid <= 0) return;

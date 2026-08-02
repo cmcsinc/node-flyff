@@ -20,6 +20,8 @@ import type { InventoryRepository, Journal } from '@flyff/database';
 import type { ItemDefinition, SetItemDef } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import type { CPlayer, DstEffect, InventorySlot } from '@flyff/entities';
+import { PARTS_RIDE } from '@flyff/entities';
+import type { MountCheck } from '@flyff/world-core';
 import {
   buildSetDestParam,
   buildResetDestParam,
@@ -32,7 +34,6 @@ import {
 } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'equip-service' });
-const PARTS_RIDE = 13; // __HACK_1023 ride-speed slot -- reject for now
 
 export interface EquipServiceDeps {
   inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem'>;
@@ -49,6 +50,19 @@ export interface EquipServiceDeps {
    * (`MoverParam.cpp:2506`). Optional only because tests stub it.
    */
   broadcastAround?: (player: CPlayer, buf: Buffer) => void;
+  /**
+   * Flight state hook (`@flyff/world-core` `FlightService`). Consulted only for
+   * `PARTS_RIDE` (13) items: `canMount` gates the equip, `mount`/`dismount` flip
+   * `OBJSTAF_FLY`. Optional so equip tests that never touch a ride item can
+   * construct the service bare -- when absent, mounting a ride item still
+   * performs the slot move but no flight state changes (which is what a
+   * flight-less build should do).
+   */
+  flight?: {
+    canMount(player: CPlayer, prop: ItemDefinition): MountCheck;
+    mount(player: CPlayer): void;
+    dismount(player: CPlayer): void;
+  };
   journal?: Journal;
 }
 
@@ -97,7 +111,16 @@ export function recomputeSetBonuses(
 
 export type EquipResult =
   | { ok: true; parts: number; itemId: number; invSlot: number; objid: number }
-  | { ok: false; reason: 'invalid' | 'not_equippable' | 'bag_full' | 'restricted' };
+  | {
+      ok: false;
+      reason: 'invalid' | 'not_equippable' | 'bag_full' | 'restricted';
+      /**
+       * `defineText.h` id to show the player. Present when the refusal has a C++
+       * notice (today only the ride-item mount gates -- level, world, chaotic);
+       * absent for silent refusals.
+       */
+      tid?: number;
+    };
 
 export type UnequipResult =
   | { ok: true; parts: number; itemId: number; invSlot: number; objid: number }
@@ -128,7 +151,18 @@ export class EquipService {
     // Treating client nPart as authoritative would reject those equips; the item
     // always lands in its real (server-defined) slot, which is the anti-cheat.
     void parts;
-    if (equipSlot === PARTS_RIDE) return { ok: false, reason: 'restricted' };
+    // Ride items (board/broom/wing) enter flight rather than just occupying a
+    // slot, so their gate runs BEFORE any mutation -- C++ checks the same block
+    // in `IsEquipAble` ahead of `EquipItem` (`MoverEquip.cpp:1498`). A refusal
+    // must leave the bag untouched.
+    if (equipSlot === PARTS_RIDE && this.deps.flight) {
+      const check = this.deps.flight.canMount(player, prop);
+      if (!check.ok) {
+        return 'tid' in check
+          ? { ok: false, reason: 'restricted', tid: check.tid }
+          : { ok: false, reason: 'restricted' };
+      }
+    }
     if (prop.level_req && player.m_nLevel < prop.level_req) return { ok: false, reason: 'restricted' };
 
     const equipIdx = MAX_INVENTORY + equipSlot;
@@ -160,6 +194,9 @@ export class EquipService {
     this.persistSlot(player, equipIdx, item);
     if (prev) this.persistSlot(player, invSlot, prev);
     else this.deps.inventoryRepo.removeItem(player.m_idPlayer, invSlot).catch((e: unknown) => logger.warn({ err: e }, 'equip removeItem failed'));
+    // Enter flight AFTER the slot move -- `mount` clears the walk-to destination,
+    // mirroring the C++ equip tail's `ClearDest()` (`MoverEquip.cpp:1843`).
+    if (equipSlot === PARTS_RIDE) this.deps.flight?.mount(player);
     return { ok: true, parts: equipSlot, itemId: item.itemId, invSlot, objid: item.objid ?? invSlot };
   }
 
@@ -189,6 +226,10 @@ export class EquipService {
     this.clampVitals(player);
     this.deps.inventoryRepo.removeItem(player.m_idPlayer, equipIdx).catch((e: unknown) => logger.warn({ err: e }, 'unequip remove equipSlot failed'));
     this.persistSlot(player, dst, item);
+    // Leaving the ride slot grounds the player (`OBJMSG_MODE_GROUND` in the C++
+    // equip tail). Unlike mounting there is no gate -- C++ only refuses a
+    // dismount over `HATTR_NOWALK` terrain, which we cannot evaluate (ponytail).
+    if (parts === PARTS_RIDE) this.deps.flight?.dismount(player);
     return { ok: true, parts, itemId: item.itemId, invSlot: dst, objid: item.objid ?? equipIdx };
   }
 

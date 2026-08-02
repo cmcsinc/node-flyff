@@ -238,6 +238,17 @@ export const ZoneDefinitionSchema = z.object({
   /** Zone boundaries */
   bounds: BoundsSchema,
 
+  /**
+   * Whether ride items (boards/brooms) may be mounted in this zone.
+   *
+   * C++ `CWorld::m_bFly`, read from the `fly <0|1>` token of the world's `.wld`
+   * script (`WorldFile.cpp:89-91`) and defaulting to `TRUE` (`World.cpp:92`).
+   * 40 of the shipped worlds set `fly 0` -- every dungeon, the arenas, guild
+   * houses, the market, and the Heaven maps. `WdMadrigal` (Flaris/Saint
+   * Morning/...) is `fly 1`. A refused mount emits `TID_ERROR_NOFLY` (2405).
+   */
+  fly: z.boolean().default(true),
+
   /** Default revival point */
   revival: RevivalSchema,
 

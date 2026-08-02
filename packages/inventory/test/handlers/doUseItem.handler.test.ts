@@ -31,17 +31,24 @@ function body(slot: number, nPart: number): Buffer {
   return w.build();
 }
 
-function makeHandler(result: UseResult) {
+function makeHandler(
+  result: UseResult,
+  opts: { getItem?: (id: number) => { equip_slot?: number; flight_speed?: number } | undefined } = {},
+) {
   const sent: Buffer[] = [];
   const broadcasts: Buffer[] = [];
   const player = {
     m_idPlayer: 0xbbbb, m_vPos: { x: 0, y: 0, z: 0 }, m_nZoneId: 1, m_bDead: false,
+    m_Inventory: new Array(73).fill(null),
     findSlotByObjId: () => 0,
   } as unknown as CPlayer;
   const playerManager = { get: () => player, sendTo: (_p: CPlayer, b: Buffer) => { sent.push(b); } } as unknown as PlayerManager;
   const zoneManager = { broadcastAround: (_pos: unknown, _z: unknown, _r: unknown, b: Buffer) => { broadcasts.push(b); } } as unknown as ZoneManager;
   const useItemService = { use: () => result } as unknown as UseItemService;
-  const handler = new DoUseItemHandler({ playerManager, zoneManager, useItemService });
+  const handler = new DoUseItemHandler({
+    playerManager, zoneManager, useItemService,
+    getItem: opts.getItem ?? (() => undefined),
+  });
   return { handler, sent, broadcasts };
 }
 

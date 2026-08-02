@@ -1258,6 +1258,20 @@ items:
     icon: itm_RidRidStiMagic.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.6
+    flight_tb_angle: 1
+    flight_limit: 1
+    fuel_max: 1200
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1274,6 +1288,20 @@ items:
     icon: itm_RidRidStiKestre.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0026
+    flight_lr_angle: 0.62
+    flight_tb_angle: 1.2
+    flight_limit: 1
+    fuel_max: 1800
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1290,6 +1318,20 @@ items:
     icon: itm_RidRidStiFlicke.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.64
+    flight_tb_angle: 1.4
+    flight_limit: 1
+    fuel_max: 2400
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1306,6 +1348,20 @@ items:
     icon: itm_RidRidStiProjan.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1322,6 +1378,20 @@ items:
     icon: itm_RidRidStiBike1.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1338,6 +1408,20 @@ items:
     icon: itm_RidRidStiBike01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0032
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1354,6 +1438,20 @@ items:
     icon: itm_RidRidStiBike2.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1370,6 +1468,20 @@ items:
     icon: Itm_RidRidStiBike03.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1386,6 +1498,20 @@ items:
     icon: Itm_RidRidStiBike04.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1402,6 +1528,20 @@ items:
     icon: Itm_RidRidStiBike05.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1418,6 +1558,20 @@ items:
     icon: Itm_RidRidStiBike06.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1434,6 +1588,20 @@ items:
     icon: Itm_RidRidStiBike07.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1450,6 +1618,20 @@ items:
     icon: Itm_RidRidStiBike08.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1466,6 +1648,20 @@ items:
     icon: itm_RidRidStiMajestyBike.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.004
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1482,6 +1678,20 @@ items:
     icon: itm_RidRidBoaHover.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 1
+    fuel_max: 1200
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1498,6 +1708,20 @@ items:
     icon: itm_RidRidBoaFPlanetBoard.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 1
+    fuel_max: 1200
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1514,6 +1738,20 @@ items:
     icon: itm_RidRidBoaAero.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0026
+    flight_lr_angle: 0.72
+    flight_tb_angle: 1.4
+    flight_limit: 1
+    fuel_max: 1800
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1530,6 +1768,20 @@ items:
     icon: itm_RidRidBoaWilduck.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.74
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 2400
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1546,6 +1798,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1562,6 +1828,20 @@ items:
     icon: itm_RidRidBoaTiger.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.74
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 2400
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1578,6 +1858,20 @@ items:
     icon: itm_RidRidBoaTiger.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.74
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 2400
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1594,6 +1888,20 @@ items:
     icon: itm_RidRidStiWoodHorse.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1610,6 +1918,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1626,6 +1948,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1642,6 +1978,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1658,6 +2008,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1674,6 +2038,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1690,6 +2068,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1706,6 +2098,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1722,6 +2128,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1738,6 +2158,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1754,6 +2188,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1770,6 +2218,20 @@ items:
     icon: itm_RidRidBoaIgnice.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1786,6 +2248,20 @@ items:
     icon: itm_RidRidBoaRCloud.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1802,6 +2278,20 @@ items:
     icon: itm_RidRidBoaRCloud.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1818,6 +2308,20 @@ items:
     icon: itm_RidRidBoaRCloud02.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1834,6 +2338,20 @@ items:
     icon: itm_RidRidBoaRCloud03.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1850,6 +2368,20 @@ items:
     icon: itm_RidRidBoaRCloud04.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1866,6 +2398,20 @@ items:
     icon: itm_RidRidStiMagic.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.6
+    flight_tb_angle: 1
+    flight_limit: 1
+    fuel_max: 1200
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1882,6 +2428,20 @@ items:
     icon: Itm_RidRidWinFeather01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1898,6 +2458,20 @@ items:
     icon: Itm_RidRidWinFeather02.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1914,6 +2488,20 @@ items:
     icon: Itm_RidRidWinAngel01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1930,6 +2518,20 @@ items:
     icon: Itm_RidRidWinProphet01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1946,6 +2548,20 @@ items:
     icon: itm_RidRidBoaShark.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1962,6 +2578,20 @@ items:
     icon: itm_RidRidBoaSmile.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1978,6 +2608,21 @@ items:
     icon: itm_RidAfuAccSpeed.dds
     item_kind2: IK2_AIRFUEL
     item_kind3: IK3_ACCEL
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 11
+        adj: 15
+      - dst: 9
+        adj: 5
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - acrobat
@@ -1994,6 +2639,21 @@ items:
     icon: itm_RidRidBoaHover.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 0
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 22
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 3200000
     job_req:
       - vagrant
@@ -2010,6 +2670,21 @@ items:
     icon: itm_SysEveSled.DDS
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 0
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 22
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 3200000
     job_req:
       - vagrant
@@ -2026,6 +2701,21 @@ items:
     icon: itm_SysEveSled.DDS
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 1
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 22
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 3200000
     job_req:
       - vagrant
@@ -2042,6 +2732,21 @@ items:
     icon: itm_SysEveFlysword.DDS
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 22
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 3200000
     job_req:
       - vagrant
@@ -2058,6 +2763,21 @@ items:
     icon: itm_SysEveFlysword.DDS
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 22
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 3200000
     job_req:
       - vagrant
@@ -2074,6 +2794,21 @@ items:
     icon: Itm_RidRidStiDragon.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 22
+        adj: 50
+      - dst: 10010
+        adj: 50
+      - dst: 75
+        adj: 5
     durability: 3200000
     job_req:
       - vagrant
@@ -2090,7 +2825,22 @@ items:
     icon: itm_RidRidBoaSnow.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
     fp_restore: 9999
+    effects:
+      - dst: 40
+        adj: 9999
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     durability: 6570000
     job_req:
       - vagrant
@@ -2107,7 +2857,22 @@ items:
     icon: itm_RidRidStiCarpet.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
     fp_restore: 9999
+    effects:
+      - dst: 40
+        adj: 9999
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     durability: 6570000
     job_req:
       - vagrant
@@ -2124,7 +2889,22 @@ items:
     icon: itm_RidRidBoaFlyFlyff.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 0
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
     fp_restore: 9999
+    effects:
+      - dst: 40
+        adj: 9999
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     durability: 6570000
     job_req:
       - vagrant
@@ -2141,7 +2921,22 @@ items:
     icon: itm_RidRidBoaFlyFlyff.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 0
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
     fp_restore: 9999
+    effects:
+      - dst: 40
+        adj: 9999
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     durability: 6570000
     job_req:
       - vagrant
@@ -2158,7 +2953,22 @@ items:
     icon: itm_RidRidBoaAngelFlyff.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 0
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
     fp_restore: 9999
+    effects:
+      - dst: 40
+        adj: 9999
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     durability: 6570000
     job_req:
       - vagrant
@@ -2175,7 +2985,22 @@ items:
     icon: itm_RidRidBoaBuddyFlyff.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 0
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
     fp_restore: 9999
+    effects:
+      - dst: 40
+        adj: 9999
+      - dst: 4
+        adj: 1
+      - dst: 75
+        adj: 5
     durability: 6570000
     job_req:
       - vagrant
@@ -2293,6 +3118,21 @@ items:
     icon: itm_RidRidBoaNescafe01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2309,6 +3149,21 @@ items:
     icon: itm_RidRidBoaNescafe02.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2325,6 +3180,21 @@ items:
     icon: itm_RidRidBoaNescafe03.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2341,6 +3211,21 @@ items:
     icon: itm_RidRidStiNescafe01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0032
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2389,6 +3274,21 @@ items:
     icon: itm_RidRidStiBike1.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2405,6 +3305,21 @@ items:
     icon: itm_RidRidStiBike2.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2421,6 +3336,21 @@ items:
     icon: itm_RidRidBoaTiger.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.003
+    flight_lr_angle: 0.74
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 2400
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2437,6 +3367,21 @@ items:
     icon: itm_RidRidStiWoodHorse.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2453,6 +3398,21 @@ items:
     icon: itm_RidRidBoaRCloud.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2469,6 +3429,21 @@ items:
     icon: itm_RidRidBoaHover.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 0
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2485,6 +3460,21 @@ items:
     icon: itm_SysEveSled.DDS
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 0
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2501,6 +3491,21 @@ items:
     icon: itm_SysEveSled.DDS
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0023
+    flight_lr_angle: 0.7
+    flight_tb_angle: 1.2
+    flight_limit: 1
+    fuel_max: 1200
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2517,6 +3522,21 @@ items:
     icon: itm_SysEveFlysword.DDS
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2533,6 +3553,21 @@ items:
     icon: Itm_RidRidStiDragon.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2549,6 +3584,21 @@ items:
     icon: itm_RidRidBoaSnow.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -2565,6 +3615,21 @@ items:
     icon: itm_RidRidStiCarpet.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 100
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 5
     durability: 50000
     job_req:
       - vagrant
@@ -3963,6 +5028,21 @@ items:
     icon: Itm_RidRidWinAngel01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 10003
+        adj: 8
+      - dst: 52
+        adj: 10
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -3979,6 +5059,21 @@ items:
     icon: Itm_RidRidWinProphet01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 10003
+        adj: 8
+      - dst: 52
+        adj: 10
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -4171,6 +5266,21 @@ items:
     icon: Itm_RidRidButterPeaCock01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 67
+        adj: 5
+      - dst: 35
+        adj: 30
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -4187,6 +5297,21 @@ items:
     icon: Itm_RidRidButterBuJun01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 67
+        adj: 5
+      - dst: 35
+        adj: 30
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -4203,6 +5328,21 @@ items:
     icon: Itm_RidRidButterMolPo01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 67
+        adj: 5
+      - dst: 35
+        adj: 30
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -4219,6 +5359,21 @@ items:
     icon: Itm_RidRidButterTrans01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 67
+        adj: 5
+      - dst: 35
+        adj: 30
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -4235,6 +5390,21 @@ items:
     icon: Itm_RidRidDragonfly01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 67
+        adj: 5
+      - dst: 35
+        adj: 30
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -4251,6 +5421,21 @@ items:
     icon: Itm_RidRidflyffger01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 9
+        adj: 5
+      - dst: 77
+        adj: 5
+      - dst: 67
+        adj: 10
     durability: 50000
     job_req:
       - vagrant
@@ -5061,6 +6246,21 @@ items:
     icon: Itm_RidRidWinDragon01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 11
+        adj: 10
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
     durability: 4500000
     job_req:
       - vagrant
@@ -5301,6 +6501,21 @@ items:
     icon: Itm_RidRidCarfire.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_CAR
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 35
+        adj: 500
+      - dst: 9
+        adj: 5
+      - dst: 26
+        adj: 1
     durability: 4500000
   - id: 15169
     name: Model TR-ex
@@ -5315,6 +6530,21 @@ items:
     icon: Itm_RidRidBikelect.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 35
+        adj: 500
+      - dst: 9
+        adj: 5
+      - dst: 26
+        adj: 1
     durability: 4500000
   - id: 26962
     name: 7 Day Traseia Ticket
@@ -5613,6 +6843,21 @@ items:
     icon: Itm_RidRidWinMSylvia01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 44
+        adj: 140
+      - dst: 11
+        adj: 10
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -5629,6 +6874,21 @@ items:
     icon: Itm_RidRidWinFSylvia01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 44
+        adj: 140
+      - dst: 11
+        adj: 10
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -6541,6 +7801,21 @@ items:
     icon: Itm_RidRidWinFeather01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 260
+      - dst: 75
+        adj: 7
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -6557,6 +7832,21 @@ items:
     icon: Itm_RidRidWinFeather02.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 260
+      - dst: 75
+        adj: 7
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -6573,6 +7863,21 @@ items:
     icon: Itm_RidRidWinAngel01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 0
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 260
+      - dst: 75
+        adj: 7
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -6589,6 +7894,21 @@ items:
     icon: Itm_RidRidWinDragon01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 0
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 260
+      - dst: 75
+        adj: 7
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -6605,6 +7925,21 @@ items:
     icon: Itm_RidRidDragonfly01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 0
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 260
+      - dst: 75
+        adj: 7
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -6621,6 +7956,21 @@ items:
     icon: Itm_RidRidButterPeaCock01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 0
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 24
+        adj: 260
+      - dst: 75
+        adj: 7
+      - dst: 83
+        adj: 100
     durability: 7200000
     job_req:
       - vagrant
@@ -6741,7 +8091,22 @@ items:
     icon: Itm_RidRidAnipiyoco01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.004
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
     hp_restore: 25000
+    effects:
+      - dst: 38
+        adj: 25000
+      - dst: 4
+        adj: 5
+      - dst: 83
+        adj: 100
     durability: 50000
   - id: 20941
     name: Gladiator's Parchment
@@ -6893,6 +8258,21 @@ items:
     icon: Itm_RidRidWinFeather01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 36
+        adj: 20
+      - dst: 66
+        adj: 6
+      - dst: 77
+        adj: 31
     durability: 4500000
     job_req:
       - ranger
@@ -6909,6 +8289,21 @@ items:
     icon: Itm_RidRidWinFeather02.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 36
+        adj: 20
+      - dst: 66
+        adj: 6
+      - dst: 77
+        adj: 31
     durability: 4500000
     job_req:
       - ranger
@@ -7037,6 +8432,21 @@ items:
     icon: Itm_RidRidAnipiyoco01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.004
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 10003
+        adj: 5
+      - dst: 72
+        adj: 5
+      - dst: 10003
+        adj: 1
     durability: 3600000
     job_req:
       - vagrant
@@ -7053,6 +8463,21 @@ items:
     icon: Itm_RidRidRSBike01_32.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 10003
+        adj: 5
+      - dst: 72
+        adj: 5
+      - dst: 10003
+        adj: 1
     durability: 3600000
     job_req:
       - vagrant
@@ -7569,6 +8994,21 @@ items:
     icon: item_RidRidAniCameleon01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_BOARD
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.76
+    flight_tb_angle: 1.8
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 10003
+        adj: 7
+      - dst: 35
+        adj: 100
+      - dst: 75
+        adj: 13
     durability: 50000
     job_req:
       - vagrant
@@ -7685,6 +9125,21 @@ items:
     icon: Itm_RidRidDragonfly01.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0037
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 10003
+        adj: 10
+      - dst: 52
+        adj: 10
+      - dst: 75
+        adj: 13
     durability: 50000
     job_req:
       - vagrant
@@ -9022,6 +10477,21 @@ items:
     icon: itm_FWCVictoryGoldWing-32.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.004
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 62
+        adj: 60
+      - dst: 24
+        adj: 180
+      - dst: 35
+        adj: 100
     durability: 4500000
     job_req:
       - vagrant
@@ -9038,6 +10508,21 @@ items:
     icon: itm_FWCVictorySilverWing-32.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0038
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 62
+        adj: 60
+      - dst: 24
+        adj: 180
+      - dst: 35
+        adj: 100
     durability: 4500000
     job_req:
       - vagrant
@@ -9054,6 +10539,21 @@ items:
     icon: itm_itm_FWCVictoryBronz-32.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_WING
+    equip_slot: 13
+    flight_speed: 0.0035
+    flight_lr_angle: 0.8
+    flight_tb_angle: 2
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 62
+        adj: 60
+      - dst: 24
+        adj: 180
+      - dst: 35
+        adj: 100
     durability: 4500000
     job_req:
       - vagrant
@@ -9070,6 +10570,21 @@ items:
     icon: itm_SysSysSpaceGuitar.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0043
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 62
+        adj: 60
+      - dst: 24
+        adj: 180
+      - dst: 35
+        adj: 100
     durability: 4500000
     job_req:
       - vagrant
@@ -9086,6 +10601,21 @@ items:
     icon: itm_RidRidStiMagic.dds
     item_kind2: IK2_RIDING
     item_kind3: IK3_STICK
+    equip_slot: 13
+    flight_speed: 0.0045
+    flight_lr_angle: 0.66
+    flight_tb_angle: 1.6
+    flight_limit: 1
+    fuel_max: 3000
+    acc_fuel_max: 12
+    fuel_refill: 12
+    effects:
+      - dst: 10003
+        adj: 20
+      - dst: 11
+        adj: 15
+      - dst: 77
+        adj: 15
     durability: 50000
     job_req:
       - vagrant

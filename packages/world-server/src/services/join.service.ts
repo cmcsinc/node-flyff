@@ -24,6 +24,7 @@ import { AUTH, toAuthority, BUFF_SKILL, isJobMatch } from '@flyff/entities';
 import { buffEffects, dotFromSkill } from '@flyff/skills';
 import { recomputeSetBonuses } from '@flyff/inventory';
 import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam, buildSetSkillState } from '@flyff/world-core';
+import { OBJSTAF, PARTS_RIDE } from '@flyff/entities';
 import { decodeTaskBar, decodeTaskBarQueue } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
@@ -195,6 +196,15 @@ export class JoinService {
     // m_apIndex[equip] = slot-if-equipped, so the server must match the client
     // or an immediate unequip->sell->buy would desync (see addItem objid note).
     player.syncInvIndexAfterLoad();
+    // C++ `RedoEquip` replays the PARTS_RIDE action state when inventory loads
+    // (`MoverEquip.cpp:1996-2058`). State flags themselves are transient, but
+    // the ride item persists in the equip slot. Re-derive FLY BEFORE the ADD_OBJ
+    // snapshot is built or a relogged rider's client reattaches the board while
+    // the server accepts only ground packets (then they freeze under the symmetric
+    // movement-frame gate).
+    if (player.m_Inventory[MAX_INVENTORY + PARTS_RIDE]) {
+      player.m_dwStateFlag |= OBJSTAF.FLY;
+    }
     // Apply equipped items' DST effects (C++ `SetEquipDstParam`, MoverParam.cpp:
     // 1903) so buffed STR/STA/DEF/HP_MAX/etc count from the first tick. Must
     // precede the max recompute so JOIN snapshot + regen start from buffed maxes.

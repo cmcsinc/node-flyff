@@ -29,7 +29,7 @@ import type { ZoneManager } from '@flyff/world-core';
 import type { Vec3 } from '@flyff/entities';
 import type { CPlayer } from '@flyff/entities';
 import {
-  MoverBroadcastSerializer, type MovementFrame, type Movement2Frame,
+  MoverBroadcastSerializer, type MovementFrame, type Movement2Frame, type AngleFrame,
 } from '../net/snapshot/moverBroadcast.serializer';
 import { DestObjSerializer } from '@flyff/combat';
 import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
@@ -63,7 +63,7 @@ export interface MovementServiceDeps {
 
 export type MovementOutcome =
   | { ok: true; reached: number }
-  | { ok: false; reason: 'too_far' | 'dead' };
+  | { ok: false; reason: 'too_far' | 'dead' | 'stunned' | 'flying' | 'not_flying' };
 
 export type GetPosOutcome =
   | { ok: true }
@@ -90,6 +90,9 @@ export class MovementService {
   applyMovement(player: CPlayer, frame: MovementFrame): MovementOutcome {
     if (player.m_bDead) return DEAD;
     if (player.isStunned()) return STUNNED;
+    // C++ `OnPlayerMoved` refuses ground frames from a flying mover; without this
+    // a patched client could use ground frames to teleport/attack while airborne.
+    if (player.isFly()) return { ok: false, reason: 'flying' };
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -106,6 +109,7 @@ export class MovementService {
   applyBehavior(player: CPlayer, frame: MovementFrame): MovementOutcome {
     if (player.m_bDead) return DEAD;
     if (player.isStunned()) return STUNNED;
+    if (player.isFly()) return { ok: false, reason: 'flying' };
     return this.broadcast(player, this.serializer.buildBehavior(player.m_idPlayer, frame));
   }
 
@@ -117,6 +121,7 @@ export class MovementService {
   applyCorr(player: CPlayer, frame: MovementFrame): MovementOutcome {
     if (player.m_bDead) return DEAD;
     if (player.isStunned()) return STUNNED;
+    if (player.isFly()) return { ok: false, reason: 'flying' };
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -130,13 +135,15 @@ export class MovementService {
   }
 
   /**
-   * Apply a PLAYERMOVED2 frame (DPSrvr.cpp:2397 OnPlayerMoved2). 73-byte body.
-   * C++ only acts when flying; we always broadcast (no flight model yet).
-   * ponytail: gate on `player.m_pActMover?.IsFly()` once flight state exists.
+   * Apply a PLAYERMOVED2 frame (DPSrvr.cpp:2423 OnPlayerMoved2). 73-byte body.
+   * C++ hard-drops this flight layout for a grounded mover (`if (!IsFly())
+   * return`, DPSrvr.cpp:2454). That symmetric rejection with the ground methods
+   * is the anti-desync guard: a client cannot mix frame layouts to change state.
    */
   applyMoved2(player: CPlayer, frame: Movement2Frame): MovementOutcome {
     if (player.m_bDead) return DEAD;
     if (player.isStunned()) return STUNNED;
+    if (!player.isFly()) return { ok: false, reason: 'not_flying' };
     if (distSq3(player.m_vPos, frame.v) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -149,14 +156,32 @@ export class MovementService {
   }
 
   /**
-   * Apply a PLAYERANGLE frame (DPSrvr.cpp:2513 OnPlayerAngle). 45-byte body --
-   * `v, vd, f, fAngleX, fAccPower, fTurnAngle, nTickCount`. C++ only acts when
-   * flying. No `g_UserMng.Add*` call in the source -- server-side state only.
-   * We accept + log without broadcast (no peer-visible effect documented).
+   * Apply a PLAYERBEHAVIOR2 frame (`DPSrvr.cpp:2490`). Same flight layout as
+   * MOVED2, except no trailing `nFrame`; it changes animation only, never the
+   * authoritative position (same rule as ground `applyBehavior`).
    */
-  applyAngle(_player: CPlayer, _now: number): MovementOutcome {
-    // ponytail: implement flight correction once ActMover/flight state exists.
-    return { ok: true, reached: 0 };
+  applyBehavior2(player: CPlayer, frame: Movement2Frame): MovementOutcome {
+    if (player.m_bDead) return DEAD;
+    if (player.isStunned()) return STUNNED;
+    if (!player.isFly()) return { ok: false, reason: 'not_flying' };
+    return this.broadcast(player, this.serializer.buildBehavior2(player.m_idPlayer, frame));
+  }
+
+  /**
+   * Apply a PLAYERANGLE frame (DPSrvr.cpp:2536). Flight pitch/correction is a
+   * peer-visible snapshot (`MOVERANGLE`, `CUserMng::AddMoverAngle`, User.cpp:4949),
+   * so retain the pitch and echo it to the same zone. C++ drops it while grounded.
+   *
+   * Dead/stunned gates are deliberately stricter than C++ (`OnPlayerAngle` has no
+   * `IsDie()` early-return): a corpse sending pitch is meaningless and rejecting
+   * it costs nothing. Matches the guard every other movement method uses.
+   */
+  applyAngle(player: CPlayer, frame: AngleFrame): MovementOutcome {
+    if (player.m_bDead) return DEAD;
+    if (player.isStunned()) return STUNNED;
+    if (!player.isFly()) return { ok: false, reason: 'not_flying' };
+    player.m_fAngleX = frame.fAngleX;
+    return this.broadcast(player, this.serializer.buildAngle(player.m_idPlayer, frame));
   }
 
   /**
