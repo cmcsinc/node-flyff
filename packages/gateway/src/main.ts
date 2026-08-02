@@ -61,22 +61,6 @@ async function ensureSchema(db: any): Promise<void> {
   }
 }
 
-async function seedTestAccount(accountRepo: AccountRepository): Promise<void> {
-  const existing = await accountRepo.findByUsername('admin');
-  if (existing) return;
-
-  const md5pw = crypto.createHash('md5').update('admin').digest('hex');
-  await accountRepo.create({
-    username: 'admin',
-    password_hash: md5pw,
-    email: 'admin@localhost',
-    authority: 0x50, // AUTH_ADMINISTRATOR
-    banned: false,
-    banned_until: null,
-  });
-  logger.info('Seeded test account: admin / admin');
-}
-
 async function main(): Promise<void> {
   const port = parseInt(process.env['PORT'] ?? '28000', 10);
   const dbPath = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';
@@ -101,8 +85,6 @@ async function main(): Promise<void> {
   const accountRepo = new AccountRepository(db);
   const characterRepo = new CharacterRepository(db);
 
-  await seedTestAccount(accountRepo);
-
   const world = new World();
   world.start();
 
@@ -119,7 +101,9 @@ async function main(): Promise<void> {
 
   await gateway.start();
 
-  logger.info({ port, account: 'admin', password: 'admin' }, 'Gateway ready -- connect via WebSocket');
+  // Accounts come from the login-server seed (`pnpm --filter @flyff/login-server
+  // exec tsx src/seed.ts`) -- the gateway shares that DB and never mints its own.
+  logger.info({ port }, 'Gateway ready -- connect via WebSocket');
 
   process.on('SIGINT', async () => {
     logger.info('Shutting down...');

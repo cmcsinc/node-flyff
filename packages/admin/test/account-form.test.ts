@@ -10,6 +10,7 @@ import {
   UpdateAccountSchema,
   fieldErrors,
 } from "../lib/account-form";
+import { AUTH } from "@flyff/entities/constants/authority";
 
 describe("CreateAccountSchema", () => {
   it("accepts a minimal valid account and defaults the flags", () => {
@@ -18,7 +19,7 @@ describe("CreateAccountSchema", () => {
       username: "tester",
       password: "test",
       email: null,
-      gm: false,
+      authority: AUTH.GENERAL,
       banned: false,
     });
   });
@@ -49,11 +50,16 @@ describe("CreateAccountSchema", () => {
 describe("UpdateAccountSchema", () => {
   it("requires at least one field besides the id", () => {
     assert.equal(UpdateAccountSchema.safeParse({ id: 1 }).success, false);
-    assert.equal(UpdateAccountSchema.safeParse({ id: 1, gm: true }).success, true);
+    assert.equal(UpdateAccountSchema.safeParse({ id: 1, authority: AUTH.GAMEMASTER }).success, true);
+  });
+
+  it("rejects an authority value outside the AUTH_* ladder", () => {
+    assert.equal(UpdateAccountSchema.safeParse({ id: 1, authority: 0x99 }).success, false);
+    assert.equal(UpdateAccountSchema.safeParse({ id: 1, authority: 0 }).success, false);
   });
 
   it("treats an omitted password as unchanged (absent, not empty)", () => {
-    const r = UpdateAccountSchema.parse({ id: 1, gm: true });
+    const r = UpdateAccountSchema.parse({ id: 1, authority: AUTH.GAMEMASTER });
     assert.equal("password" in r, false);
   });
 

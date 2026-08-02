@@ -1,4 +1,5 @@
 import { PacketReader, PacketWriter, PACKETTYPE, createLogger } from '@flyff/core';
+import { verifyPassword } from '@flyff/core/utils/password';
 import type { ClientSession } from '../ClientSession';
 import type { Gateway } from '../Gateway';
 import type { CharacterRepository, AccountRepository } from '@flyff/database';
@@ -7,6 +8,15 @@ import crypto from 'node:crypto';
 const logger = createLogger({ module: 'auth-handler' });
 
 const STARTING_POS = { x: 6967, y: 100, z: 3333 };
+
+/**
+ * Client-side pepper the Neuz login field applies before hashing. The
+ * login-server's CERTIFY path stores `KDF(md5("kikugalanet" + typed))`
+ * (`login-server/src/seed.ts`, `admin/lib/password.ts`); the gateway shares the
+ * same `accounts` table, so it must derive the same digest or a row minted by
+ * one path fails to verify on the other.
+ */
+const SALT = 'kikugalanet';
 
 type GatewayGetter = () => Gateway;
 
@@ -32,8 +42,17 @@ export function createAuthHandlers(
         return;
       }
 
-      const hashed = crypto.createHash('md5').update(password).digest('hex');
-      if (hashed !== account.password_hash && password !== account.password_hash) {
+      // Derive the same digest the login-server stores. A 32-char hex field is
+      // already an MD5 from a Neuz-style client; anything else is a typed
+      // plaintext password and gets the client-side pepper applied here.
+      const md5hex = /^[0-9a-f]{32}$/i.test(password)
+        ? password.toLowerCase()
+        : crypto.createHash('md5').update(SALT + password).digest('hex');
+      // Verify through the shared KDF (argon2id, or the deterministic scrypt
+      // fallback). NEVER compare the submitted value against the stored hash
+      // directly -- that accepts the hash itself as a password (pass-the-hash).
+      const valid = await verifyPassword(md5hex, account.password_hash);
+      if (!valid) {
         logger.info({ username }, 'Certify failed: wrong password');
         const writer = new PacketWriter();
         writer.writeDword(PACKETTYPE.ERROR);
