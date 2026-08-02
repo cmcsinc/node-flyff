@@ -78,7 +78,8 @@ describe('BankService.deposit', () => {
     }
     assert.equal(player.m_Inventory[3], null, 'inv slot cleared');
     assert.equal(player.m_Bank[0]![0]!.itemId, 2950, 'bank slot populated');
-    assert.equal(journalCalls[0]!.type, 'BANK_DEPOSIT', 'journal before persist');
+    assert.equal(journalCalls[0]!.type, 'BANK_SLOT', 'journal before persist');
+    assert.equal(journalCalls[1]!.type, 'INVENTORY_SLOT', 'inv side journaled too');
     assert.deepEqual(bankSet[0], { tab: 0, slot: 0, itemId: 2950, qty: 5 });
     assert.ok(player._dirty.has('m_Inventory'));
     // Microtask flush for fire-and-forget removeItem.

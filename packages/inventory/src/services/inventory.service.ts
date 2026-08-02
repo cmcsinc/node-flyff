@@ -199,8 +199,12 @@ export class InventoryService {
       }
     }
 
-    // Pure slot swap (no stack merge possible).
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'ITEM_MOVE', payload: { src, dst } });
+    // Pure slot swap (no stack merge possible). Journal the ABSOLUTE post-swap
+    // contents of both slots, not the {src,dst} delta -- rule 04 / the
+    // idempotency contract in `journalReplayers.ts`. A delta row cannot be
+    // replayed safely (re-applying a swap undoes it) and had no replayer at all.
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: src, itemId: b?.itemId ?? 0, count: b?.count ?? 0 } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: a.itemId, count: a.count } });
     player.m_Inventory[src] = b;
     player.m_Inventory[dst] = a;
     // Mirror CItemContainer::Swap2 -- m_apIndex entries travel with the items, so
@@ -220,7 +224,9 @@ export class InventoryService {
     if (!s || count <= 0) return { ok: false, reason: 'invalid' };
     const take = Math.min(count, s.count);
     const remaining = s.count - take;
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'ITEM_DROP', payload: { slot, itemId: s.itemId, take } });
+    // Absolute post-drop slot state (itemId 0 => cleared) so WAL replay is
+    // idempotent -- the old `ITEM_DROP` delta had no replayer at all.
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: remaining > 0 ? { slot, itemId: s.itemId, count: remaining } : { slot, itemId: 0, count: 0 } });
     if (take >= s.count) {
       player.m_Inventory[slot] = null;
       this.deps.inventoryRepo
@@ -268,7 +274,8 @@ export class InventoryService {
   /** Remove `amount` gold for a ground penya drop. Rejects over-spend. */
   dropGold(player: CPlayer, amount: number, pos: Vec3): DropGoldResult {
     if (amount <= 0 || amount > player.m_nGold) return { ok: false, reason: 'invalid' };
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'GOLD_DROP', payload: { amount } });
+    // Canonical absolute CHAR_GOLD (the old `GOLD_DROP` delta had no replayer).
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold - amount } });
     player.m_nGold -= amount;
     player._dirty.add('m_nGold');
     this.deps.inventoryRepo
@@ -312,7 +319,10 @@ export class InventoryService {
     if (!this.inMainBag(slot)) return null;
     const s = player.m_Inventory[slot];
     if (!s || s.count < count) return null;
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'ITEM_CONSUME', payload: { slot, itemId: s.itemId, take: count } });
+    // Absolute post-consume slot state (the old `ITEM_CONSUME` delta had no
+    // replayer, so a crash mid-consume silently lost the charge).
+    const left = s.count - count;
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: left > 0 ? { slot, itemId: s.itemId, count: left } : { slot, itemId: 0, count: 0 } });
     s.count -= count;
     if (s.count <= 0) {
       player.m_Inventory[slot] = null;

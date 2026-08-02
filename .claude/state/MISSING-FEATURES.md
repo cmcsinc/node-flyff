@@ -296,7 +296,7 @@ matches C++, which keeps party state on the Core server not in the DB).
 - [x] ✅ Login/auth (argon2id, ban, session token) — `auth.service.ts`
 - [x] ✅ Char-select → world handoff (HMAC IPC) — `handoffPublisher.ts` / `clusterListener.ts`
 - [x] ✅ Server / world list — `serverList.service.ts` / `worldList.service.ts`
-- [ ] 🟡 **WAL journal + boot replay has one real hole** — 7 types are registered (`CHAR_EXP`, `CHAR_GOLD`, `INVENTORY_SLOT`, `BANK_PASS`, `CHAR_STATS`, `SKILL_LEARN`, `CHAR_JOB` — `journalReplayers.ts:44-116`), but `BANK_DEPOSIT` / `BANK_WITHDRAW` are emitted at `npc/services/bank.service.ts:141,166` with **no registered replayer**, so `journalReplayer.ts:65-70` tallies them as `missing` and leaves the rows unreplayed. Failure mode is silent loss of a bank move on crash, **not** a dupe
+- [x] ✅ **WAL journal + boot replay — hole closed 2026-08-02.** 10 types registered (`CHAR_EXP`, `CHAR_GOLD`, `INVENTORY_SLOT`, `BANK_PASS`, `CHAR_STATS`, `SKILL_LEARN`, `CHAR_JOB`, `BANK_SLOT`, `BANK_GOLD`, `PK_KILL` — `journalReplayers.ts`) and **every type any service emits now has one**, guarded by a test that appends one row per emitted type and asserts `summary.skipped === 0`. Five delta-shaped types that had no replayer were rewritten as absolute end-state rows per rule 04: `ITEM_MOVE`/`ITEM_DROP`/`ITEM_CONSUME` → paired `INVENTORY_SLOT`, `GOLD_DROP` → `CHAR_GOLD`, `BANK_DEPOSIT`/`BANK_WITHDRAW` → `BANK_SLOT` + `INVENTORY_SLOT`. `BANK_GOLD` and `PK_KILL` are new replayers
 - [x] ✅ 30s checkpoint DB sync + dirty flags — `checkpoint.system.ts:28` `FLUSH_INTERVAL_MS=30_000`, idempotent `start()` `:40`, try/catch, fire-and-forget; per-player flush `join.service.ts:319`, loop + `presenceRepo.touch` `:355-364`
 - [ ] 🟡 argon2id ships a fallback — argon2id primary via dynamic `require('argon2')`; fallback is a deterministic scrypt PHC-ish hash embedding its own salt. `argon2 ^0.40.1` **is** a declared dep in login-server + world-server, so prod can be real — `core/utils/password.ts:15`
 - [x] ✅ Draining shutdown — stops listener then `adminCommandService.kickAll('shutdown:'+signal)`; `process.on('message',{cmd:'shutdown'})` is the real Windows stop path; `uncaughtException` drains, `unhandledRejection` deliberately does not — `world-server/index.ts:196,206,232-233,238,247,253`
@@ -339,13 +339,16 @@ No C++ analogue — grade against its own contract, not v19 fidelity.
 
 ---
 
-## 20. MAIL / POST *(new section 2026-08-01)*
+## 20. MAIL / POST *(new section 2026-08-01)* — **USER-CONFIRMED 2026-08-02**
+
+Every line below was tested on a real v19 client by the user and confirmed
+working. This is the one section where ✅ means *fixed*, not "passes my checks".
 
 - [x] ✅ Read path (5 opcodes: QUERYMAILBOX, READMAIL, QUERYGETMAILITEM, QUERYGETMAILGOLD, QUERYREMOVEMAIL) — `mail/handlers/mail.handler.ts:56-78`, dispatch `clientServer.ts:244-248`
 - [x] ✅ Mailbox-state sync (`CUser::AdjustMailboxState` port; MODE_MAILBOX is the only new-mail indicator) — `mail/services/mail.service.ts:143 syncMailboxMode`
 - [x] ✅ Schema — `017_presence_and_mail.ts`, `mail` table with the full C++ `CMail` field mapping
 - [ ] 🚫 Player→player send — `QUERYPOSTMAIL` 0x1a **deliberately** unwired; `SNAPSHOTTYPE_POSTMAIL` intentionally absent. Admin-originated mail only. Postage/custody fees and stamped mail also out of scope by choice
-- [ ] 🟡 Attachment fidelity — refine / element / flags dropped on attachments — `mail.service.ts:90`
+- [x] ✅ Attachment fidelity — refine / element / flags dropped on attachments. **User-confirmed acceptable** — admin-originated mail is the only sender and the admin form does not set those fields — `mail.service.ts:90`
 
 ---
 
@@ -403,7 +406,7 @@ feature build:
 1. `shopCostRate` omitted from the `ShopService` ctor — `compose.ts:803-807`
 2. `partyQuery` never supplied, so quest party conditions fail closed — consumed `quest.service.ts:145`
 3. `CHRSTATE_BITS.SLEEP` does not exist — sleep never gates (`player.ts:622` vs `dst.ts:112-119`)
-4. `BANK_DEPOSIT`/`BANK_WITHDRAW` have no replayer — silent bank loss on crash
+4. ~~`BANK_DEPOSIT`/`BANK_WITHDRAW` have no replayer~~ — **fixed 2026-08-02** (§16); five delta types converted to absolute rows, `BANK_SLOT`/`BANK_GOLD`/`PK_KILL` replayers added, coverage now test-guarded
 5. Duel does not bypass the PK-consent gate — `combat.policy.ts:51`
 6. Flee + self-heal AI are fully coded but fed zeros — no converter exports `propMoverEx` `SetRunAway`/`Recovery`
 7. `dwReAttackDelay` reads propMover col 34 instead of col 35

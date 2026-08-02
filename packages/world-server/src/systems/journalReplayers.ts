@@ -25,9 +25,9 @@ import type { Logger } from '@flyff/core';
 import type { JournalReplayer } from './journalReplayer';
 
 export interface ReplayerRegistryDeps {
-  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats' | 'updateSkillPoints' | 'updateClass'>;
+  readonly charRepo: Pick<CharacterRepository, 'updateLevelAndExp' | 'updateStats' | 'updateSkillPoints' | 'updateClass' | 'updatePKState'>;
   readonly inventoryRepo: Pick<InventoryRepository, 'setItem' | 'removeItem' | 'setGold'>;
-  readonly bankRepo: Pick<BankRepository, 'setBankPass'>;
+  readonly bankRepo: Pick<BankRepository, 'setBankPass' | 'setItem' | 'removeItem' | 'setGold'>;
   readonly skillRepo: Pick<SkillRepository, 'saveAll'>;
   readonly logger: Logger;
 }
@@ -113,28 +113,38 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
     await deps.skillRepo.saveAll(row.char_id, p.roster);
   });
 
-  // Bank item deposit (inv -> bank). Delta-based: replays the move once.
-  // Payload is {tab, bankSlot, invSlot, itemId, take} — NOT absolute state.
-  // Safe because `journalReplayer.ts:52 recover()` marks each row `replayed=1`
-  // after running, so each row executes exactly once. Partial failure (one
-  // repo write succeeds, the other doesn't) is no worse than silent loss.
-  r.register('BANK_DEPOSIT', async (row) => {
-    const p = payload<{ accountId: number; tab: number; bankSlot: number; invSlot: number; itemId: number; take: number }>(row);
-    // Re-apply: write the bank slot (replay is after crash so the item exists
-    // in inventory but the bank move was lost).
-    await deps.bankRepo.setItem(p.accountId, p.tab, p.bankSlot, p.itemId, p.take, 0, -1, 0);
-    // Inventory side: the original code does removeItem or setItem(count-take).
-    // Since we don't know the post-move inv count here, just remove the slot
-    // (worst case we over-delete; the bank item is recovered).
-    await deps.inventoryRepo.removeItem(row.char_id, p.invSlot);
+  // One bank slot's absolute contents (C++ `m_BankItem[tab][slot]`).
+  // `itemId: 0` => slot cleared. Emitted by BankService deposit/withdraw
+  // alongside the matching INVENTORY_SLOT row, so replaying both restores the
+  // whole move idempotently.
+  r.register('BANK_SLOT', async (row) => {
+    const p = payload<{
+      accountId: number; tab: number; slot: number; itemId: number; count: number;
+      flags?: number; durability?: number; refine?: number;
+    }>(row);
+    if (p.itemId === 0) {
+      await deps.bankRepo.removeItem(p.accountId, p.tab, p.slot);
+    } else {
+      await deps.bankRepo.setItem(
+        p.accountId, p.tab, p.slot, p.itemId, p.count,
+        p.flags ?? 0, p.durability ?? -1, p.refine ?? 0,
+      );
+    }
   });
 
-  // Bank item withdrawal (bank -> inv). Same delta-based reasoning.
-  r.register('BANK_WITHDRAW', async (row) => {
-    const p = payload<{ accountId: number; tab: number; bankSlot: number; invSlot: number; itemId: number; take: number }>(row);
-    await deps.inventoryRepo.setItem(row.char_id, p.invSlot, p.itemId, p.take, 0, -1, 0);
-    await deps.bankRepo.setItem(p.accountId, p.tab, p.bankSlot, 0, 0, 0, -1, 0);
+  // One bank tab's absolute gold pool (C++ `m_dwGoldBank[tab]`). The inventory
+  // side of a gold move rides on the canonical CHAR_GOLD row.
+  r.register('BANK_GOLD', async (row) => {
+    const p = payload<{ accountId: number; tab: number; gold: number }>(row);
+    await deps.bankRepo.setGold(p.accountId, p.gold, p.tab);
   });
 
-  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS', 'SKILL_LEARN', 'CHAR_JOB', 'BANK_DEPOSIT', 'BANK_WITHDRAW'] }, 'Journal replay handlers registered');
+  // Absolute PK state of the killer (C++ m_dwPKPropensity/m_nPKValue/m_dwPKTime).
+  // Emitted by CombatService.onPvpKill; `victimId` is audit context only.
+  r.register('PK_KILL', async (row) => {
+    const p = payload<{ pkPropensity: number; pkValue: number; pkTime: number }>(row);
+    await deps.charRepo.updatePKState(row.char_id, p.pkPropensity, p.pkValue, p.pkTime);
+  });
+
+  deps.logger.debug({ types: ['CHAR_EXP', 'CHAR_GOLD', 'INVENTORY_SLOT', 'BANK_PASS', 'CHAR_STATS', 'SKILL_LEARN', 'CHAR_JOB', 'BANK_SLOT', 'BANK_GOLD', 'PK_KILL'] }, 'Journal replay handlers registered');
 }

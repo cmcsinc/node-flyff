@@ -138,7 +138,13 @@ export class BankService {
 
     const take = Math.min(count, src.count);
     const moved = this.cloneSlot(src, take);
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_DEPOSIT', payload: { accountId: player.m_accountId, tab, bankSlot, invSlot, itemId: src.itemId, take } });
+    // Absolute end-state on BOTH sides (rule 04 / `journalReplayers.ts`
+    // idempotency contract): the bank slot gains the moved stack, the inv slot
+    // keeps the remainder (or clears). The old `BANK_DEPOSIT` delta row could
+    // only be replayed once and guessed at the inventory remainder.
+    const invLeft = src.count - take;
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_SLOT', payload: { accountId: player.m_accountId, tab, slot: bankSlot, itemId: moved.itemId, count: moved.count, flags: moved.flags ?? 0, durability: moved.durability ?? -1, refine: moved.refine ?? 0 } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: invLeft > 0 ? { slot: invSlot, itemId: src.itemId, count: invLeft, flags: src.flags ?? 0, durability: src.durability ?? -1, refine: src.refine ?? 0 } : { slot: invSlot, itemId: 0, count: 0 } });
 
     player.m_Bank[tab]![bankSlot] = moved;
     if (take >= src.count) {
@@ -163,7 +169,10 @@ export class BankService {
 
     const take = Math.min(count, src.count);
     const moved = this.cloneSlot(src, take);
-    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_WITHDRAW', payload: { accountId: player.m_accountId, tab, bankSlot, invSlot, itemId: src.itemId, take } });
+    // Absolute end-state on both sides (see `deposit`).
+    const bankLeft = src.count - take;
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: invSlot, itemId: moved.itemId, count: moved.count, flags: moved.flags ?? 0, durability: moved.durability ?? -1, refine: moved.refine ?? 0 } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_SLOT', payload: bankLeft > 0 ? { accountId: player.m_accountId, tab, slot: bankSlot, itemId: src.itemId, count: bankLeft, flags: src.flags ?? 0, durability: src.durability ?? -1, refine: src.refine ?? 0 } : { accountId: player.m_accountId, tab, slot: bankSlot, itemId: 0, count: 0 } });
 
     player.m_Inventory[invSlot] = moved;
     if (take >= src.count) {
@@ -201,6 +210,7 @@ export class BankService {
     // replay restores the inventory side too -- without this the inventory
     // container keeps the pre-deposit value and a relog dupes the penya back.
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_GOLD', payload: { accountId: player.m_accountId, tab, gold: player.m_BankGold[tab] } });
     this.persistGold(player, tab);
     return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] };
   }
@@ -212,6 +222,7 @@ export class BankService {
     player.m_BankGold[tab] -= amount;
     player.m_nGold += amount;
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
+    this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_GOLD', payload: { accountId: player.m_accountId, tab, gold: player.m_BankGold[tab] } });
     this.persistGold(player, tab);
     return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] };
   }

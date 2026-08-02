@@ -15,6 +15,9 @@ interface SlotCall { id: number; slot: number; itemId?: number; count?: number; 
 interface PassCall { accountId: number; bankPass: string; }
 interface SkillRosterCall { id: number; roster: Array<{ slot: number; skillId: number; level: number }>; }
 interface SkillPointCall { id: number; skillPoint: number; skillLevel: number; }
+interface BankSlotCall { accountId: number; tab: number; slot: number; itemId?: number; count?: number; op: 'set' | 'remove'; }
+interface BankGoldCall { accountId: number; tab: number; gold: number; }
+interface PkCall { id: number; prop: number; value: number; time: number; }
 
 function makeRepos() {
   const expCalls: ExpCall[] = [];
@@ -23,9 +26,13 @@ function makeRepos() {
   const passCalls: PassCall[] = [];
   const skillRosterCalls: SkillRosterCall[] = [];
   const skillPointCalls: SkillPointCall[] = [];
+  const bankSlotCalls: BankSlotCall[] = [];
+  const bankGoldCalls: BankGoldCall[] = [];
+  const pkCalls: PkCall[] = [];
   const logs: string[] = [];
   return {
     expCalls, goldCalls, slotCalls, passCalls, skillRosterCalls, skillPointCalls, logs,
+    bankSlotCalls, bankGoldCalls, pkCalls,
     charRepo: {
       updateLevelAndExp: async (id: number, level: number, exp: bigint) => {
         expCalls.push({ id, level, exp });
@@ -33,6 +40,11 @@ function makeRepos() {
       updateSkillPoints: async (id: number, skillPoint: number, skillLevel: number) => {
         skillPointCalls.push({ id, skillPoint, skillLevel });
       },
+      updatePKState: async (id: number, prop: number, value: number, time: number) => {
+        pkCalls.push({ id, prop, value, time });
+      },
+      updateStats: async () => {},
+      updateClass: async () => {},
     },
     inventoryRepo: {
       setItem: async (id: number, slot: number, itemId: number, count: number) => {
@@ -48,6 +60,15 @@ function makeRepos() {
     bankRepo: {
       setBankPass: async (accountId: number, bankPass: string) => {
         passCalls.push({ accountId, bankPass });
+      },
+      setItem: async (accountId: number, tab: number, slot: number, itemId: number, count: number) => {
+        bankSlotCalls.push({ accountId, tab, slot, itemId, count, op: 'set' });
+      },
+      removeItem: async (accountId: number, tab: number, slot: number) => {
+        bankSlotCalls.push({ accountId, tab, slot, op: 'remove' });
+      },
+      setGold: async (accountId: number, gold: number, tab: number) => {
+        bankGoldCalls.push({ accountId, tab, gold });
       },
     },
     skillRepo: {
@@ -158,6 +179,74 @@ describe('registerReplayers', () => {
       { id: 5, skillPoint: 9, skillLevel: 2 },
       { id: 5, skillPoint: 5, skillLevel: 2 },
     ]);
+    journal.close();
+  });
+
+  it('BANK_SLOT set vs remove (itemId===0 => removeItem) and is idempotent', async () => {
+    const journal = new Journal({ path: ':memory:' });
+    const repos = makeRepos();
+    const r = new JournalReplayer({ journal, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, skillRepo: repos.skillRepo as never, logger: repos.logger as never });
+
+    journal.append({ charId: 7, type: 'BANK_SLOT', payload: { accountId: 42, tab: 1, slot: 3, itemId: 2950, count: 5 } });
+    journal.append({ charId: 7, type: 'BANK_SLOT', payload: { accountId: 42, tab: 1, slot: 3, itemId: 0, count: 0 } });
+
+    await r.recover();
+    assert.deepEqual(repos.bankSlotCalls, [
+      { accountId: 42, tab: 1, slot: 3, itemId: 2950, count: 5, op: 'set' },
+      { accountId: 42, tab: 1, slot: 3, op: 'remove' },
+    ]);
+    journal.close();
+  });
+
+  it('BANK_GOLD replays the absolute per-tab pool (tab is the 3rd setGold arg)', async () => {
+    const journal = new Journal({ path: ':memory:' });
+    const repos = makeRepos();
+    const r = new JournalReplayer({ journal, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, skillRepo: repos.skillRepo as never, logger: repos.logger as never });
+
+    journal.append({ charId: 7, type: 'BANK_GOLD', payload: { accountId: 42, tab: 2, gold: 1234 } });
+    await r.recover();
+    assert.deepEqual(repos.bankGoldCalls, [{ accountId: 42, tab: 2, gold: 1234 }]);
+    journal.close();
+  });
+
+  it('PK_KILL replays the killer absolute PK state', async () => {
+    const journal = new Journal({ path: ':memory:' });
+    const repos = makeRepos();
+    const r = new JournalReplayer({ journal, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, skillRepo: repos.skillRepo as never, logger: repos.logger as never });
+
+    journal.append({ charId: 9, type: 'PK_KILL', payload: { pkPropensity: 1, pkValue: 3, pkTime: 1700, victimId: 4 } });
+    await r.recover();
+    assert.deepEqual(repos.pkCalls, [{ id: 9, prop: 1, value: 3, time: 1700 }]);
+    journal.close();
+  });
+
+  it('every type a service emits has a registered replayer (zero skipped)', async () => {
+    const journal = new Journal({ path: ':memory:' });
+    const repos = makeRepos();
+    const r = new JournalReplayer({ journal, logger: repos.logger as never });
+    registerReplayers(r, { charRepo: repos.charRepo as never, inventoryRepo: repos.inventoryRepo as never, bankRepo: repos.bankRepo as never, skillRepo: repos.skillRepo as never, logger: repos.logger as never });
+
+    // Keep this list in sync with `grep -rho "type: '[A-Z_]\+'" packages/*/src`.
+    const emitted = [
+      { type: 'CHAR_EXP', payload: { level: 1, exp: '0' } },
+      { type: 'CHAR_GOLD', payload: { gold: 0 } },
+      { type: 'INVENTORY_SLOT', payload: { slot: 0, itemId: 0, count: 0 } },
+      { type: 'BANK_PASS', payload: { accountId: 1, bankPass: '0000' } },
+      { type: 'CHAR_STATS', payload: { strength: 15, stamina: 15, dexterity: 15, intelligence: 15, remain_gp: 0 } },
+      { type: 'SKILL_LEARN', payload: { roster: [], skillPoint: 0, skillLevel: 0 } },
+      { type: 'CHAR_JOB', payload: { class: 1, roster: [] } },
+      { type: 'BANK_SLOT', payload: { accountId: 1, tab: 0, slot: 0, itemId: 0, count: 0 } },
+      { type: 'BANK_GOLD', payload: { accountId: 1, tab: 0, gold: 0 } },
+      { type: 'PK_KILL', payload: { pkPropensity: 0, pkValue: 0, pkTime: 0 } },
+    ];
+    for (const e of emitted) journal.append({ charId: 1, type: e.type, payload: e.payload });
+
+    const summary = await r.recover();
+    assert.equal(summary.skipped, 0, 'an emitted type has no replayer');
+    assert.equal(summary.replayed, emitted.length);
     journal.close();
   });
 });
