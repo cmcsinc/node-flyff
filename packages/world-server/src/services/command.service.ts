@@ -9,30 +9,32 @@
  * Implemented commands (subset that works without inventory/combat/party):
  *   `/w <name> <msg>`     GENERAL       whisper (both peers receive)
  *   `/s <msg>`            GENERAL       shout (server-wide)
+ * Per-command auth tiers are the exact C++ values (`ON_TEXTCMDFUNC` rows,
+ * FuncTextCmd.cpp 5159-5337; gate `cmd.auth <= player.auth`, WndCommand.cpp:61):
  *   `/te <name|x z>`      GAMEMASTER    teleport self to player or coords
  *   `/su <name>`          GAMEMASTER    summon target to self
  *   `/sys <msg>`          GAMEMASTER2   yellow notice to all
- *   `/lv <level>`         ADMINISTRATOR set own level
- *   `/undying` `/noud`    ADMINISTRATOR toggle MATCHLESS (undying) mode bit
+ *   `/lv <level>`         GAMEMASTER3   set own level
+ *   `/undying` `/noud`    GAMEMASTER3   toggle MATCHLESS (undying) mode bit
  *   `/invisible` `/inv`   GAMEMASTER    toggle TRANSPARENT (invisible) mode bit
  *   `/noinvisible` `/noinv` GAMEMASTER  clear invisibility
  *   `/count` `/cnt`       GAMEMASTER    report live player + monster counts
  *   `/rtg <n>`            ADMINISTRATOR remove n gold
- *   `/rn <objid>`         ADMINISTRATOR despawn an NPC/mover (DEL_OBJ)
+ *   `/rn <objid>`         GAMEMASTER3   despawn an NPC/mover (DEL_OBJ)
  *   `/disguise` `/dis` <id> ADMINISTRATOR transform into propMover id
  *   `/nodisguise` `/nodis` ADMINISTRATOR clear disguise
- *   `/bq /eq /qs /rq /raq /rcq` ADMINISTRATOR quest admin (GM3 in C++)
- *   `/ok` `/nook`         ADMINISTRATOR toggle ONEKILL mode bit (GM3 in C++)
+ *   `/bq /eq /rq /raq /rcq` GAMEMASTER3 quest admin; `/qs` ADMINISTRATOR
+ *   `/ok` `/nook`         GAMEMASTER3   toggle ONEKILL mode bit
  *   `/es`                 ADMINISTRATOR toggle EXPUP_STOP mode bit
  *   `/gmitem` `/gmnotitem` ADMINISTRATOR toggle ITEM mode bit
  *   `/gmattck` `/gmnotattck` ADMINISTRATOR toggle NO_ATTACK mode bit
  *   `/gmcommunity` `/gmnotcommunity` ADMINISTRATOR toggle COMMUNITY mode bit
  *   `/gmobserve` `/gmnotobserve` ADMINISTRATOR toggle OBSERVE composite bits
  *   `/out <name>`         GAMEMASTER2   disconnect a named player
- *   `/ak`                 ADMINISTRATOR kill monsters within 64m (GM3 in C++)
+ *   `/ak`                 GAMEMASTER3   kill monsters within 64m
  *   `/ci <itemId> [n]`    ADMINISTRATOR create item into first free bag slot
- *   `/ul`                 ADMINISTRATOR list live player names (GM2 in C++)
- *   `/stat <str|sta|dex|int|all> <n>` ADMINISTRATOR set + persist an attribute
+ *   `/ul`                 ADMINISTRATOR list live player names
+ *   `/stat <str|sta|dex|int|all> <n>` GAMEMASTER3 set + persist an attribute
  *
  * ponytail: `/p` `/g` need party/guild; `/freeze` `/mute` `/talk` `/notalk`
  * need a per-target mode pipeline (target-named, not self); `/cjob` needs a
@@ -164,19 +166,19 @@ export class CommandService {
       { names: ['te', 'tele', 'teleport'], auth: AUTH.GAMEMASTER, run: (c) => this.teleport(c) },
       { names: ['su', 'summon'], auth: AUTH.GAMEMASTER, run: (c) => this.summon(c) },
       { names: ['sys', 'system'], auth: AUTH.GAMEMASTER2, run: (c) => this.system(c) },
-      { names: ['lv', 'level'], auth: AUTH.ADMINISTRATOR, run: (c) => this.level(c) },
+      { names: ['lv', 'level'], auth: AUTH.GAMEMASTER3, run: (c) => this.level(c) },
       { names: ['gg', 'getgold'], auth: AUTH.ADMINISTRATOR, run: (c) => this.gold(c) },
-      { names: ['undying', 'ud'], auth: AUTH.ADMINISTRATOR, run: (c) => this.undying(c, true) },
-      { names: ['noundying', 'noud'], auth: AUTH.ADMINISTRATOR, run: (c) => this.undying(c, false) },
+      { names: ['undying', 'ud'], auth: AUTH.GAMEMASTER3, run: (c) => this.undying(c, true) },
+      { names: ['noundying', 'noud'], auth: AUTH.GAMEMASTER3, run: (c) => this.undying(c, false) },
       { names: ['invisible', 'inv'], auth: AUTH.GAMEMASTER, run: (c) => this.invisible(c, true) },
       { names: ['noinvisible', 'noinv'], auth: AUTH.GAMEMASTER, run: (c) => this.invisible(c, false) },
       { names: ['count', 'cnt'], auth: AUTH.GAMEMASTER, run: (c) => this.count(c) },
       { names: ['rtg'], auth: AUTH.ADMINISTRATOR, run: (c) => this.removeTotalGold(c) },
-      { names: ['rmvnpc', 'rn'], auth: AUTH.ADMINISTRATOR, run: (c) => this.removeNpc(c) },
+      { names: ['rmvnpc', 'rn'], auth: AUTH.GAMEMASTER3, run: (c) => this.removeNpc(c) },
       { names: ['disguise', 'dis'], auth: AUTH.ADMINISTRATOR, run: (c) => this.disguise(c, true) },
       { names: ['nodisguise', 'nodis'], auth: AUTH.ADMINISTRATOR, run: (c) => this.disguise(c, false) },
-      { names: ['onekill', 'ok'], auth: AUTH.ADMINISTRATOR, run: (c) => this.onekill(c, true) },
-      { names: ['noonekill', 'nook'], auth: AUTH.ADMINISTRATOR, run: (c) => this.onekill(c, false) },
+      { names: ['onekill', 'ok'], auth: AUTH.GAMEMASTER3, run: (c) => this.onekill(c, true) },
+      { names: ['noonekill', 'nook'], auth: AUTH.GAMEMASTER3, run: (c) => this.onekill(c, false) },
       { names: ['expupstop', 'es'], auth: AUTH.ADMINISTRATOR, run: (c) => this.expUpStop(c) },
       { names: ['gmitem'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.ITEM, true) },
       { names: ['gmnotitem'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.ITEM, false) },
@@ -187,16 +189,16 @@ export class CommandService {
       { names: ['gmobserve'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.OBSERVE, true) },
       { names: ['gmnotobserve'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.OBSERVE, false) },
       { names: ['out'], auth: AUTH.GAMEMASTER2, run: (c) => this.out(c) },
-      { names: ['aroundkill', 'ak'], auth: AUTH.ADMINISTRATOR, run: (c) => this.aroundKill(c) },
+      { names: ['aroundkill', 'ak'], auth: AUTH.GAMEMASTER3, run: (c) => this.aroundKill(c) },
       { names: ['createitem', 'ci'], auth: AUTH.ADMINISTRATOR, run: (c) => this.createItem(c) },
       { names: ['userlist', 'ul'], auth: AUTH.ADMINISTRATOR, run: (c) => this.userList(c) },
-      { names: ['stat'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.stat(c); } },
-      { names: ['beginquest', 'bq'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.questCmd(c, 'begin'); } },
-      { names: ['endquest', 'eq'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.questCmd(c, 'end'); } },
+      { names: ['stat'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.stat(c); } },
+      { names: ['beginquest', 'bq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'begin'); } },
+      { names: ['endquest', 'eq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'end'); } },
       { names: ['queststate', 'qs'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.questCmd(c, 'state'); } },
-      { names: ['removequest', 'rq'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.questCmd(c, 'cancel'); } },
-      { names: ['removeallquest', 'raq'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.questCmd(c, 'removeAll'); } },
-      { names: ['removecompletequest', 'rcq'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.questCmd(c, 'removeComplete'); } },
+      { names: ['removequest', 'rq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'cancel'); } },
+      { names: ['removeallquest', 'raq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'removeAll'); } },
+      { names: ['removecompletequest', 'rcq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'removeComplete'); } },
     ];
   }
 
@@ -387,9 +389,7 @@ export class CommandService {
    * tier-2 MATCHLESS2 on enable, clears both on disable. Broadcasts
    * `SNAPSHOTTYPE_MODIFYMODE` so peers re-render the mover.
    *
-   * Auth is `AUTH_GAMEMASTER3` in C++ ('N'); collapsed to ADMINISTRATOR here
-   * until intermediate authority tiers ship (see constants/authority.ts). No
-   * WAL -- `m_dwMode` is transient.
+   * Auth is `AUTH_GAMEMASTER3` ('N'). No WAL -- `m_dwMode` is transient.
    * MATCHLESS effect lives in `AISystem.monsterSwing` -- the invincible check
    * there skips HP subtraction while keeping the swing anim + DAMAGE broadcast.
    * ONEKILL (the `/ok` sibling) is honored in `CombatService.resolveAttack`
@@ -488,7 +488,7 @@ export class CommandService {
 
   /**
    * Quest admin batch -- `/bq /eq /qs /rq /raq /rcq` (FuncTextCmd.cpp:3959+).
-   * Each is `AUTH_GAMEMASTER3` in C++ ('N'); collapsed to ADMINISTRATOR here.
+   * Each is `AUTH_GAMEMASTER3` ('N') except `/qs` (ADMINISTRATOR 'P').
    * Self-targeting (C++ also supports a trailing player name; ponytail). All
    * mutate via QuestService (which persists + audit-logs) and forward the
    * returned snapshot frames to the caller. Silent on failure -- stock v19 sends
@@ -523,7 +523,7 @@ export class CommandService {
    * `/onekill` `/ok` / `/noonekill` `/nook` -- `TextCmd_Onekill` /
    * `TextCmd_NoOnekill` (FuncTextCmd.cpp:3541 / 3567). Toggles the
    * `ONEKILL_MODE` bit (authorization.h:22) + broadcasts MODIFYMODE. C++ gates
-   * at `AUTH_GAMEMASTER3`; collapsed to ADMINISTRATOR. The one-shot kill effect
+   * at `AUTH_GAMEMASTER3` ('N'). The one-shot kill effect
    * is honored in `CombatService.resolveAttack` -- an ONEKILL attacker's swing
    * is forced to the mover's full current HP (lethal regardless of the roll).
    */

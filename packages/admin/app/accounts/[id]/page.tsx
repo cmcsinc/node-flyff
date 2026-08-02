@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/page-header";
 import { CharacterTable } from "./character-table";
 import { formatNumber, formatDate } from "@/lib/utils";
 import { EditAccountButton } from "../account-form";
+import { AUTH, AUTH_LABELS, hasAuthority } from "@flyff/entities/constants/authority";
 
 export const dynamic = "force-dynamic";
 
@@ -33,14 +34,16 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
         backHref="/accounts"
         actions={
           <div className="flex flex-wrap items-center gap-2">
-            {account.gm && <Badge variant="gold">GM</Badge>}
+            {hasAuthority(account.authority, AUTH.GAMEMASTER) && (
+              <Badge variant="gold">{AUTH_LABELS[account.authority] ?? "Staff"}</Badge>
+            )}
             {account.banned && <Badge variant="destructive">Banned</Badge>}
             <EditAccountButton
               account={{
                 id: account.id,
                 username: account.username,
                 email: account.email,
-                gm: account.gm,
+                authority: account.authority,
                 banned: account.banned,
                 bannedUntil: account.bannedUntil,
               }}

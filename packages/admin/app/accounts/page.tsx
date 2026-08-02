@@ -14,8 +14,9 @@ import {
 } from "@/components/ui/table";
 import { parseSort, sortRows } from "@/lib/sort";
 import { formatDate } from "@/lib/utils";
-import { BanToggleButton, GmToggleButton } from "./actions";
+import { BanToggleButton } from "./actions";
 import { CreateAccountButton } from "./account-form";
+import { AUTH, AUTH_LABELS, hasAuthority } from "@flyff/entities/constants/authority";
 import { Users } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -45,7 +46,7 @@ export default async function AccountsPage({
       id: accounts.id,
       username: accounts.username,
       email: accounts.email,
-      gm: accounts.gm,
+      authority: accounts.authority,
       banned: accounts.banned,
       bannedUntil: accounts.bannedUntil,
       createdAt: accounts.createdAt,
@@ -59,7 +60,7 @@ export default async function AccountsPage({
 
   const filtered = rows.filter((r) => {
     if (search && !r.username.toLowerCase().includes(search.toLowerCase())) return false;
-    if (filter === "gm" && !r.gm) return false;
+    if (filter === "gm" && !hasAuthority(r.authority, AUTH.GAMEMASTER)) return false;
     if (filter === "banned" && !r.banned) return false;
     return true;
   });
@@ -71,7 +72,7 @@ export default async function AccountsPage({
     createdAt: (r) => r.createdAt,
     // "Status" is three mutually exclusive badges; rank them rather than sorting
     // by a column that doesn't exist: banned → GM → active.
-    status: (r) => (r.banned ? 0 : r.gm ? 1 : 2),
+    status: (r) => (r.banned ? 0 : hasAuthority(r.authority, AUTH.GAMEMASTER) ? 1 : 2),
   });
 
   return (
@@ -95,7 +96,7 @@ export default async function AccountsPage({
         />
         <Select name="filter" defaultValue={filter} aria-label="Filter accounts" className="w-full sm:w-44">
           <option value="all">All Accounts</option>
-          <option value="gm">GM Only</option>
+          <option value="gm">Staff Only</option>
           <option value="banned">Banned Only</option>
         </Select>
         <Button type="submit" variant="secondary" className="w-full sm:w-auto">Search</Button>
@@ -133,16 +134,19 @@ export default async function AccountsPage({
                     <TableCell className="hidden text-center sm:table-cell">{acc.charCount}</TableCell>
                     <TableCell>
                       <div className="flex flex-wrap gap-1">
-                        {acc.gm && <Badge variant="gold">GM</Badge>}
+                        {hasAuthority(acc.authority, AUTH.GAMEMASTER) && (
+                          <Badge variant="gold">{AUTH_LABELS[acc.authority] ?? "Staff"}</Badge>
+                        )}
                         {acc.banned && <Badge variant="destructive">Banned</Badge>}
-                        {!acc.gm && !acc.banned && <Badge variant="success">Active</Badge>}
+                        {!hasAuthority(acc.authority, AUTH.GAMEMASTER) && !acc.banned && (
+                          <Badge variant="success">Active</Badge>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">{formatDate(acc.createdAt)}</TableCell>
                     <TableCell>
                       <div className="flex flex-wrap justify-end gap-2">
                         <BanToggleButton id={acc.id} banned={acc.banned} />
-                        <GmToggleButton id={acc.id} gm={acc.gm} />
                       </div>
                     </TableCell>
                   </TableRow>

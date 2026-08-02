@@ -38,6 +38,7 @@ import { up as migrationUp017 } from '@flyff/database/migrations/017_presence_an
 import { up as migrationUp018 } from '@flyff/database/migrations/018_drop_buff_total_ms';
 import { up as migrationUp019 } from '@flyff/database/migrations/019_friends';
 import { up as migrationUp020 } from '@flyff/database/migrations/020_campus';
+import { up as migrationUp021 } from '@flyff/database/migrations/021_account_authority';
 import { hashPassword } from '@flyff/core/utils/password';
 
 /**
@@ -70,6 +71,7 @@ const MIGRATIONS = [
   { dropColumn: ['character_buffs', 'total_ms'], up: migrationUp018 },
   { marker: 'friends', up: migrationUp019 },
   { marker: 'campus', up: migrationUp020 },
+  { column: ['accounts', 'authority'], up: migrationUp021 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';
@@ -107,7 +109,7 @@ async function main(): Promise<void> {
       const passwordHash = await hashPassword(md5hex);
       accountId = await accountRepo.create({
         username: ACCOUNT, password_hash: passwordHash, email: `${ACCOUNT}@local`,
-        gm: false, banned: false, banned_until: null,
+        authority: 0x50, banned: false, banned_until: null, // AUTH_ADMINISTRATOR -- testable admin
       });
       console.log(`[seed] created account "${ACCOUNT}" (id=${accountId}) password "${PASSWORD}"`);
     }

@@ -18,9 +18,9 @@
  * F/L/M/N/O/P ladder.) Ordinal order is preserved, so `hasAuthority` keeps
  * working.
  *
- * Mapping today is binary off the `accounts.gm` boolean -- GM accounts land at
- * `ADMINISTRATOR` ('P'), everyone else at `GENERAL` ('F'). ponytail: when a
- * real `account.authority` column ships, populate the intermediate tiers.
+ * The account's tier is stored in the `accounts.authority` column (ASCII code,
+ * migration 021 replaced the binary `gm` boolean). JOIN reads it verbatim into
+ * `m_bAuthority`; each `/cmd` gates on its own required tier (command.service).
  *
  * @module constants/authority
  */
@@ -48,6 +48,31 @@ export const AUTH = Object.freeze({
 } as const);
 
 export type Authority = typeof AUTH[keyof typeof AUTH];
+
+/** Every valid tier value, ascending -- for validation + admin dropdowns. */
+export const AUTH_VALUES: readonly number[] = Object.freeze(
+  Object.values(AUTH).sort((a, b) => a - b),
+);
+
+/** Human labels keyed by tier value -- admin UI (name + raw value, rule 12). */
+// helper: TS infers literal keys from [AUTH.*]; widen to `number` index.
+function makeAuthLabels(): Record<number, string> {
+  return {
+    [AUTH.GENERAL]: 'General',
+    [AUTH.LOGCHATTING]: 'Log Chatting',
+    [AUTH.GAMEMASTER]: 'Game Master',
+    [AUTH.GAMEMASTER2]: 'Game Master 2',
+    [AUTH.GAMEMASTER3]: 'Game Master 3',
+    [AUTH.OPERATOR]: 'Operator',
+    [AUTH.ADMINISTRATOR]: 'Administrator',
+  };
+}
+export const AUTH_LABELS: Record<number, string> = makeAuthLabels();
+
+/** Clamp an arbitrary number to a known tier, defaulting to GENERAL. */
+export function toAuthority(value: number): number {
+  return (AUTH_VALUES as number[]).includes(value) ? value : AUTH.GENERAL;
+}
 
 /**
  * `IsAuthHigher` equivalent -- true if `player` meets the `required` rank.

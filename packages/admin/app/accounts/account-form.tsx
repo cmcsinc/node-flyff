@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { Select } from "@/components/ui/select";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Modal } from "@/components/ui/modal";
 import { toast } from "sonner";
 import { Loader2, AlertCircle, UserPlus, Pencil } from "lucide-react";
+import { AUTH, AUTH_VALUES, AUTH_LABELS } from "@flyff/entities/constants/authority";
 import {
   CreateAccountSchema,
   UpdateAccountSchema,
@@ -19,12 +21,27 @@ import {
   PASSWORD_MAX,
 } from "@/lib/account-form";
 
+/** Tier options for the authority select — name + raw ASCII value (rule 12). */
+function AuthorityOptions() {
+  return (
+    <>
+      {AUTH_VALUES.map((v) => (
+        <option key={v} value={v}>
+          {AUTH_LABELS[v]} ({v})
+        </option>
+      ))}
+    </>
+  );
+}
+
+const AUTHORITY_HINT = "General = player. Game Master tiers gate /cmd access; Administrator = all commands + admin panel login.";
+
 interface FormState {
   username: string;
   password: string;
   confirm: string;
   email: string;
-  gm: boolean;
+  authority: number;
   banned: boolean;
 }
 
@@ -33,7 +50,7 @@ const EMPTY: FormState = {
   password: "",
   confirm: "",
   email: "",
-  gm: false,
+  authority: AUTH.GENERAL,
   banned: false,
 };
 
@@ -82,7 +99,7 @@ function CreateAccountModal({ onClose }: { onClose: () => void }) {
       username: form.username,
       password: form.password,
       email: form.email,
-      gm: form.gm,
+      authority: form.authority,
       banned: form.banned,
     }),
     ...(form.confirm !== form.password ? { confirm: "Passwords do not match" } : {}),
@@ -104,7 +121,7 @@ function CreateAccountModal({ onClose }: { onClose: () => void }) {
         username: form.username,
         password: form.password,
         email: form.email,
-        gm: form.gm,
+        authority: form.authority,
         banned: form.banned,
       }),
     });
@@ -209,8 +226,14 @@ function CreateAccountModal({ onClose }: { onClose: () => void }) {
 
         <FieldGroup title="Access">
           <div className="grid gap-x-6 gap-y-5 md:grid-cols-2">
-            <Field htmlFor="acc-gm" label="GM" hint="Full administrative access in game">
-              <Switch id="acc-gm" checked={form.gm} onChange={(e) => set("gm", e.target.checked)} />
+            <Field htmlFor="acc-authority" label="Authority" hint={AUTHORITY_HINT}>
+              <Select
+                id="acc-authority"
+                value={form.authority}
+                onChange={(e) => set("authority", Number(e.target.value))}
+              >
+                <AuthorityOptions />
+              </Select>
             </Field>
             <Field htmlFor="acc-banned" label="Banned" hint="Blocked from logging in">
               <Switch id="acc-banned" checked={form.banned} onChange={(e) => set("banned", e.target.checked)} />
@@ -228,7 +251,7 @@ export interface EditableAccount {
   id: number;
   username: string;
   email: string | null;
-  gm: boolean;
+  authority: number;
   banned: boolean;
   bannedUntil: string | null;
 }
@@ -251,7 +274,7 @@ interface EditState {
   email: string;
   password: string;
   confirm: string;
-  gm: boolean;
+  authority: number;
   banned: boolean;
   bannedUntil: string;
 }
@@ -262,7 +285,7 @@ function EditAccountModal({ account, onClose }: { account: EditableAccount; onCl
     email: account.email ?? "",
     password: "",
     confirm: "",
-    gm: account.gm,
+    authority: account.authority,
     banned: account.banned,
     bannedUntil: localFromIso(account.bannedUntil),
   };
@@ -278,7 +301,7 @@ function EditAccountModal({ account, onClose }: { account: EditableAccount; onCl
     const body: Record<string, unknown> = { id: account.id };
     if (form.password !== "") body.password = form.password;
     if (form.email !== initial.email) body.email = form.email;
-    if (form.gm !== initial.gm) body.gm = form.gm;
+    if (form.authority !== initial.authority) body.authority = form.authority;
     if (form.banned !== initial.banned) body.banned = form.banned;
     if (form.bannedUntil !== initial.bannedUntil) body.bannedUntil = toIso(form.bannedUntil);
     return body;
@@ -393,8 +416,14 @@ function EditAccountModal({ account, onClose }: { account: EditableAccount; onCl
 
         <FieldGroup title="Access">
           <div className="grid gap-x-6 gap-y-5 md:grid-cols-2">
-            <Field htmlFor="edit-gm" label="GM" hint="Full administrative access in game">
-              <Switch id="edit-gm" checked={form.gm} onChange={(e) => set("gm", e.target.checked)} />
+            <Field htmlFor="edit-authority" label="Authority" hint={AUTHORITY_HINT}>
+              <Select
+                id="edit-authority"
+                value={form.authority}
+                onChange={(e) => set("authority", Number(e.target.value))}
+              >
+                <AuthorityOptions />
+              </Select>
             </Field>
             <Field htmlFor="edit-banned" label="Banned" hint="Blocked from logging in">
               <Switch id="edit-banned" checked={form.banned} onChange={(e) => set("banned", e.target.checked)} />

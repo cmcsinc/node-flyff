@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { accounts, characters } from "@/../drizzle/schema";
-import { count, eq, desc } from "drizzle-orm";
+import { AUTH, AUTH_LABELS, hasAuthority } from "@flyff/entities/constants/authority";
+import { count, eq, desc, sql, gte } from "drizzle-orm";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/page-header";
@@ -13,7 +14,7 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const [totalAccounts] = await db.select({ value: count() }).from(accounts);
   const [totalCharacters] = await db.select({ value: count() }).from(characters);
-  const [totalGm] = await db.select({ value: count() }).from(accounts).where(eq(accounts.gm, true));
+  const [totalGm] = await db.select({ value: count() }).from(accounts).where(gte(accounts.authority, AUTH.GAMEMASTER));
   const [totalBanned] = await db.select({ value: count() }).from(accounts).where(eq(accounts.banned, true));
 
   const topCharacters = await db
@@ -32,7 +33,7 @@ export default async function DashboardPage() {
     .select({
       id: accounts.id,
       username: accounts.username,
-      gm: accounts.gm,
+      authority: accounts.authority,
       banned: accounts.banned,
       createdAt: accounts.createdAt,
     })
@@ -43,7 +44,7 @@ export default async function DashboardPage() {
   const stats = [
     { label: "Total Accounts", value: totalAccounts.value, icon: Users, tone: "accent" as const },
     { label: "Total Characters", value: totalCharacters.value, icon: Swords, tone: "success" as const },
-    { label: "GM Accounts", value: totalGm.value, icon: Shield, tone: "gold" as const },
+    { label: "Staff Accounts", value: totalGm.value, icon: Shield, tone: "gold" as const },
     { label: "Banned Accounts", value: totalBanned.value, icon: Ban, tone: "destructive" as const },
   ];
 
@@ -134,9 +135,13 @@ export default async function DashboardPage() {
                     </div>
                   </div>
                   <div className="flex gap-1">
-                    {acc.gm && <Badge variant="gold">GM</Badge>}
+                    {hasAuthority(acc.authority, AUTH.GAMEMASTER) && (
+                      <Badge variant="gold">{AUTH_LABELS[acc.authority] ?? "Staff"}</Badge>
+                    )}
                     {acc.banned && <Badge variant="destructive">Banned</Badge>}
-                    {!acc.gm && !acc.banned && <Badge variant="success">Active</Badge>}
+                    {!hasAuthority(acc.authority, AUTH.GAMEMASTER) && !acc.banned && (
+                      <Badge variant="success">Active</Badge>
+                    )}
                   </div>
                 </div>
               ))}

@@ -9,6 +9,13 @@
  */
 
 import { z } from "zod";
+import { AUTH, AUTH_VALUES } from "@flyff/entities/constants/authority";
+
+/** AUTH_* tier as an ASCII code; default AUTH_GENERAL. Rejects unknown values. */
+const authority = z
+  .number()
+  .int()
+  .refine((v) => AUTH_VALUES.includes(v), "Unknown authority tier");
 
 /** Letters, digits, underscore — same charset the certifier accepts. */
 export const USERNAME_RE = /^[A-Za-z0-9_]+$/;
@@ -44,7 +51,7 @@ export const CreateAccountSchema = z.object({
   username,
   password,
   email: email.optional().default(""),
-  gm: z.boolean().optional().default(false),
+  authority: authority.optional().default(AUTH.GENERAL),
   banned: z.boolean().optional().default(false),
 });
 
@@ -54,7 +61,7 @@ export const UpdateAccountSchema = z
     /** Omit to leave the current password untouched. */
     password: password.optional(),
     email: email.optional(),
-    gm: z.boolean().optional(),
+    authority: authority.optional(),
     banned: z.boolean().optional(),
     bannedUntil: bannedUntil.optional(),
   })

@@ -191,7 +191,7 @@ export class CPlayer {
   m_nZoneId: number;
   /**
    * GM/admin rank (C++ `m_dwAuthorization`). Gates `/cmd` routing via
-   * `cmd.auth <= m_bAuthority`. Loaded from `accounts.gm` on JOIN.
+   * `cmd.auth <= m_bAuthority`. Loaded from `accounts.authority` on JOIN.
    * See `constants/authority.ts`.
    */
   m_bAuthority: number = AUTH.GENERAL;

@@ -7,7 +7,7 @@ export const accounts = sqliteTable("accounts", {
   username: text("username", { length: 32 }).notNull().unique(),
   passwordHash: text("password_hash", { length: 255 }).notNull(),
   email: text("email", { length: 255 }),
-  gm: integer("gm", { mode: "boolean" }).default(false).notNull(),
+  authority: integer("authority").default(0x46).notNull(), // AUTH_* ASCII code
   banned: integer("banned", { mode: "boolean" }).default(false).notNull(),
   bannedUntil: text("banned_until"),
   createdAt: text("created_at").default("CURRENT_TIMESTAMP").notNull(),

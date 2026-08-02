@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { accounts } from "@/../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { verifyAccountPassword } from "@/lib/password";
+import { AUTH, hasAuthority } from "@flyff/entities/constants/authority";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -23,7 +24,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           .limit(1);
 
         if (!account) return null;
-        if (!account.gm) return null;
+        // Admin panel requires at least GAME MASTER; normal players can't sign in.
+        if (!hasAuthority(account.authority, AUTH.GAMEMASTER)) return null;
         if (account.banned) return null;
 
         const valid = await verifyAccountPassword(

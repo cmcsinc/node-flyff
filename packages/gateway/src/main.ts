@@ -18,7 +18,7 @@ async function ensureSchema(db: any): Promise<void> {
       t.string('username', 32).notNullable().unique();
       t.string('password_hash', 255).notNullable();
       t.string('email', 255).nullable();
-      t.boolean('gm').defaultTo(false);
+      t.integer('authority').notNullable().defaultTo(0x46); // AUTH_GENERAL
       t.boolean('banned').defaultTo(false);
       t.timestamp('banned_until').nullable();
       t.timestamps(true, true);
@@ -70,7 +70,7 @@ async function seedTestAccount(accountRepo: AccountRepository): Promise<void> {
     username: 'admin',
     password_hash: md5pw,
     email: 'admin@localhost',
-    gm: true,
+    authority: 0x50, // AUTH_ADMINISTRATOR
     banned: false,
     banned_until: null,
   });

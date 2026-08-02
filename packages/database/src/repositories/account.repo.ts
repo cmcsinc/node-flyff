@@ -8,7 +8,8 @@ export interface AccountRow {
   username: string;
   password_hash: string;
   email: string | null;
-  gm: boolean;
+  /** v19 AUTH_* tier as an ASCII code (GENERAL 0x46 .. ADMINISTRATOR 0x50). */
+  authority: number;
   banned: boolean;
   banned_until: Date | null;
   created_at: Date;
@@ -48,7 +49,6 @@ export class AccountRepository {
     if (!row) return null;
     return {
       ...row,
-      gm: Boolean(row.gm),
       banned: Boolean(row.banned),
     };
   }

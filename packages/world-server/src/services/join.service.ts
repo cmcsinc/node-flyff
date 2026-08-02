@@ -20,7 +20,7 @@ import type { ItemDefinition, SetItemDef, SkillIndex } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import { CPlayer } from '@flyff/entities';
 import type { PlayerSocket } from '@flyff/entities';
-import { AUTH, BUFF_SKILL, isJobMatch } from '@flyff/entities';
+import { AUTH, toAuthority, BUFF_SKILL, isJobMatch } from '@flyff/entities';
 import { buffEffects, dotFromSkill } from '@flyff/skills';
 import { recomputeSetBonuses } from '@flyff/inventory';
 import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam, buildSetSkillState } from '@flyff/world-core';
@@ -119,12 +119,14 @@ export class JoinService {
     if (row.world_id !== handoff.worldId) return { ok: false, reason: 'world_mismatch' };
 
     // Resolve GM rank from the account row. C++ populates `m_dwAuthorization`
-    // from `prj.CheckStaff(name)` (DPDatabaseClient.cpp:490); we collapse the
-    // boolean `gm` flag to GENERAL vs ADMINISTRATOR until a tiered column ships.
+    // from the `m_chAuthority` DB column (DbManagerJoin.cpp:237); we read the
+    // tiered `accounts.authority` (ASCII code) verbatim, clamped to a known tier.
+    // ponytail: no `login_authority` session-override column yet (C++ prefers it
+    // when != 'F'); IP-whitelist demotion (DPDatabaseClient.cpp:899) unported.
     let authority: number = AUTH.GENERAL;
     if (this.deps.accountRepo) {
       const account = await this.deps.accountRepo.findById(row.account_id);
-      if (account?.gm) authority = AUTH.ADMINISTRATOR;
+      if (account) authority = toAuthority(account.authority);
     }
 
     const player = CPlayer.fromRow(row, socket, authority);

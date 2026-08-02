@@ -17,7 +17,9 @@ export async function up(db: Knex): Promise<void> {
     table.string('username', 32).notNullable().unique();
     table.string('password_hash', 255).notNullable();
     table.string('email', 255).nullable();
-    table.boolean('gm').defaultTo(false);
+    // v19 AUTH_* tier as ASCII code (GENERAL 0x46 .. ADMINISTRATOR 0x50); see
+    // migration 021 + packages/entities/src/constants/authority.ts.
+    table.integer('authority').notNullable().defaultTo(0x46);
     table.boolean('banned').defaultTo(false);
     table.timestamp('banned_until').nullable();
     table.timestamps(true, true);

@@ -18,7 +18,7 @@ export type {
 } from './mover';
 
 // Constants
-export { AUTH } from './constants/authority';
+export { AUTH, AUTH_VALUES, AUTH_LABELS, toAuthority } from './constants/authority';
 export type { Authority } from './constants/authority';
 export { hasAuthority } from './constants/authority';
 export { MODE } from './constants/mode';

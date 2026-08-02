@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid body" }, { status: 400 });
   }
-  const { username, password, email, gm, banned } = parsed.data;
+  const { username, password, email, authority, banned } = parsed.data;
 
   const [existing] = await db
     .select({ id: accounts.id })
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
       username,
       passwordHash: hashAccountPassword(password),
       email,
-      gm,
+      authority,
       banned,
       bannedUntil: null,
       createdAt: now,
@@ -58,12 +58,12 @@ export async function PATCH(req: NextRequest) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid body" }, { status: 400 });
   }
-  const { id, password, email, gm, banned, bannedUntil } = parsed.data;
+  const { id, password, email, authority, banned, bannedUntil } = parsed.data;
 
   const updates: Record<string, unknown> = { updatedAt: new Date().toISOString() };
   if (password !== undefined) updates.passwordHash = hashAccountPassword(password);
   if (email !== undefined) updates.email = email;
-  if (gm !== undefined) updates.gm = gm;
+  if (authority !== undefined) updates.authority = authority;
   if (banned !== undefined) updates.banned = banned;
   if (bannedUntil !== undefined) updates.bannedUntil = bannedUntil;
 
