@@ -375,6 +375,42 @@ describe('quest.service -- real InventoryService adapter', () => {
     assert.deepEqual(calls, [[7100, 3]], 'onItemReward fired once with reward itemId + count');
   });
 
+  it('endQuest fires onComplete with the quest title token (C++ TID_EVE_ENDQUEST hook)', async () => {
+    const def: QuestDef = {
+      _version: '1.0', id: 8, symbol: 'Q8',
+      title: 'IDS_PROPQUEST_INC_009999', states: {}, quest_items: [],
+      commands: [
+        { cmd: 'SetBeginCondLevel', args: [numArg(1), numArg(150)] },
+        { cmd: 'SetEndCondLevel', args: [numArg(1), numArg(150)] },
+      ],
+    } as unknown as QuestDef;
+    const inventoryService = new InventoryService({
+      inventoryRepo: fakeInventoryRepo() as never,
+      charRepo: { updateGold: async () => {} } as never,
+      getStackSize: () => 999,
+    });
+    const repo = {
+      loadState: async () => ({ active: [], completed: [], checked: [] }),
+      upsertActive: async () => {}, removeActive: async () => {},
+      addCompleted: async () => {}, removeCompleted: async () => {},
+      clearCompleted: async () => {}, setChecked: async () => {}, insertLog: async () => {},
+    };
+    const calls: Array<[number, string]> = [];
+    const svc = new QuestService({
+      questRepo: repo as never,
+      quests: questIndex(def),
+      inventoryService,
+      createItemSerializer: new CreateItemSnapshotSerializer(),
+      journal: { append: () => 1 },
+      onComplete: (_p, qid, titleToken) => calls.push([qid, titleToken]),
+    });
+    const p = CPlayer.fromRow({ ...baseRow, level: 10 }, { write: () => true }, 0);
+    await svc.beginQuest(p, 8);
+    const res = await svc.endQuest(p, 8);
+    assert.equal(res.ok, true);
+    assert.deepEqual(calls, [[8, 'IDS_PROPQUEST_INC_009999']], 'onComplete fired once with quest id + title token');
+  });
+
   it('endQuest removes SetEndRemoveItem from the bag + emits UPDATE_ITEM', async () => {
     const def: QuestDef = {
       _version: '1.0', id: 7, symbol: 'Q7', states: {}, quest_items: [],

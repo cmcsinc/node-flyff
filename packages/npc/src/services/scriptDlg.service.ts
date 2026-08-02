@@ -574,14 +574,27 @@ export class ScriptDlgService {
    *  defaults so conditional bodies degrade rather than crash. */
   private makeBindings(player: CPlayer): DialogInterpBindings {
     const defines = this.deps.defines ?? new Map<string, number>();
+    // ponytail: the v19 propQuest.inc shipped without the `QUEST_VOC*_TRN3`
+    // (ids 56/154/158/162) bodies, yet the job-master dialogs gate ChangeJob on
+    // `GetQuestState(QUEST_VOC*_TRN3) == QS_END` (`mada_tailer_8` et al.). With
+    // no quest def the resolver returns -1 and ChangeJob never fires. Bridge:
+    // treat TRN3 as complete once the preceding TRN2 (the training certificate
+    // turn-in) is done -- the player has finished the available chain. Remove
+    // when the four TRN3 quests are recovered into the dataset.
+    const trn3Fallback = TRN3_TO_TRN2_FALLBACK(defines);
     return {
       resolveSymbol: (sym) => defines.get(sym),
       // C++ `GetQuestState` (ScriptLib.cpp:274): active quest -> m_nState;
       // else `MakeCompleteQuest` -> QS_END for a completed quest; else -1.
       // Job-change gates (`GetQuestState(QUEST_VOCMER_TRN2) == QS_END`) fire
       // only after the quest leaves the active list for m_aCompleteQuest.
-      questState: (id) =>
-        player.findQuest(id)?.state ?? (player.isCompleteQuest(id) ? QS_END : -1),
+      questState: (id) => {
+        const live = player.findQuest(id)?.state;
+        if (live !== undefined) return live;
+        if (player.isCompleteQuest(id)) return QS_END;
+        const trn2 = trn3Fallback.get(id);
+        return trn2 !== undefined && player.isCompleteQuest(trn2) ? QS_END : -1;
+      },
       isSetQuest: (id) => (player.findQuest(id) !== undefined || player.isCompleteQuest(id)) ? 1 : 0,
       playerJob: () => player.m_nJob,
       playerLvl: () => player.m_nLevel,
@@ -764,4 +777,24 @@ function keyToIndex(key: string): number {
   if (key.length === 0 || key === '#init') return 0;
   const n = parseInt(key, 10);
   return Number.isNaN(n) ? 0 : n;
+}
+
+/**
+ * Build the TRN3 -> TRN2 fallback map from the `definequest.h` symbol table.
+ * Returns id-pairs only for symbols present in `defines`; absent symbols are
+ * skipped (never throw). See {@link ScriptDlgService.makeBindings} for context.
+ */
+function TRN3_TO_TRN2_FALLBACK(defines: Map<string, number>): Map<number, number> {
+  const out = new Map<number, number>();
+  for (const [trn3, trn2] of [
+    ['QUEST_VOCACR_TRN3', 'QUEST_VOCACR_TRN2'],
+    ['QUEST_VOCMER_TRN3', 'QUEST_VOCMER_TRN2'],
+    ['QUEST_VOCASS_TRN3', 'QUEST_VOCASS_TRN2'],
+    ['QUEST_VOCMAG_TRN3', 'QUEST_VOCMAG_TRN2'],
+  ] as const) {
+    const a = defines.get(trn3);
+    const b = defines.get(trn2);
+    if (a !== undefined && b !== undefined) out.set(a, b);
+  }
+  return out;
 }

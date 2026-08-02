@@ -343,6 +343,63 @@ describe('ScriptDlgService.dialog', () => {
     assert.deepEqual(changed, [1]);
   });
 
+  it('TRN3 -> TRN2 bridge: a missing TRN3 quest reports QS_END when TRN2 is done', async () => {
+    // Regression: the v19 propQuest.inc shipped without the `QUEST_VOC*_TRN3`
+    // bodies (ids 56/154/158/162), but the job-master dialogs gate ChangeJob on
+    // `GetQuestState(QUEST_VOC*_TRN3) == QS_END`. With no quest def the gate
+    // returned -1 and ChangeJob never fired. Bridge: treat TRN3 as complete
+    // when the preceding TRN2 (the training-certificate turn-in) is done.
+    const { svc } = fakeQuestService();
+    const { serializer } = fakeScriptDialog();
+    const changed: number[] = [];
+    const dialogs = mkDialogs([]);
+    dialogs.byPrefix.set('mada_tailer', {
+      _version: '1.0', prefix: 'mada_tailer', character_key: 'Mada_Tailer',
+      states: { '8': { source: 'if(GetQuestState(QUEST_VOCACR_TRN3) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15) { ChangeJob( 2 ); InitStat(); } else { Exit(); }' } },
+    } as never);
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('Mada_Tailer') },
+      dialogs, quests: mkQuests([]), questService: svc,
+      defines: new Map([
+        ['QUEST_VOCACR_TRN3', 56],
+        ['QUEST_VOCACR_TRN2', 55],
+      ]),
+      changeJobService: { changeJob: (_p, job) => changed.push(job), initStat: () => {} } as never,
+    });
+    // Vagrant, level 15, VOCACR_TRN2 (55) completed but NOT TRN3 (56).
+    // The bridge must report TRN3 as QS_END so ChangeJob(2) fires.
+    const player = mkPlayer({ m_nJob: 0, m_nLevel: 15, m_aCompleteQuest: [55] });
+    const out = await s.dialog(player, { objid: NPC_ID, key: '8', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    assert.deepEqual(changed, [2]);
+  });
+
+  it('TRN3 -> TRN2 bridge: still -1 when neither TRN3 nor TRN2 is done', async () => {
+    const { svc } = fakeQuestService();
+    const { serializer } = fakeScriptDialog();
+    const changed: number[] = [];
+    const dialogs = mkDialogs([]);
+    dialogs.byPrefix.set('mada_tailer', {
+      _version: '1.0', prefix: 'mada_tailer', character_key: 'Mada_Tailer',
+      states: { '8': { source: 'if(GetQuestState(QUEST_VOCACR_TRN3) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15) { ChangeJob( 2 ); InitStat(); } else { Exit(); }' } },
+    } as never);
+    const s = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('Mada_Tailer') },
+      dialogs, quests: mkQuests([]), questService: svc,
+      defines: new Map([
+        ['QUEST_VOCACR_TRN3', 56],
+        ['QUEST_VOCACR_TRN2', 55],
+      ]),
+      chat: fakeChat as never, scriptDialog: serializer as never,
+      changeJobService: { changeJob: (_p, job) => changed.push(job) } as never,
+    });
+    // Level 15 vagrant who has NOT completed TRN2 -> gate still fails -> Exit().
+    const player = mkPlayer({ m_nJob: 0, m_nLevel: 15, m_aCompleteQuest: [] });
+    const out = await s.dialog(player, { objid: NPC_ID, key: '8', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0);
+    if (!out.ok) throw new Error('expected ok');
+    assert.deepEqual(changed, []);
+  });
+
   it('offer scan: single begin-eligible quest opens the begin confirmation (C++ shortcut)', async () => {
     const { svc } = fakeQuestService();
     const { serializer, calls } = fakeScriptDialog();

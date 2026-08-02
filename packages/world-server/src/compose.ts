@@ -81,7 +81,7 @@ import { DropService } from '@flyff/inventory';
 import { InventoryService } from '@flyff/inventory';
 import { LootService } from '@flyff/inventory';
 import { ItemManager } from '@flyff/inventory';
-import { VISIBILITY_RADIUS } from '@flyff/world-core';
+import { VISIBILITY_RADIUS, TID_EVE_ENDQUEST } from '@flyff/world-core';
 import { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler';
 import { MeleeAttackHandler } from '@flyff/combat';
 import { RangeAttackHandler } from '@flyff/combat';
@@ -415,6 +415,14 @@ export async function compose(): Promise<WorldComposeResult> {
       }
     },
     onItemReward: (player, itemId, count) => notifyItemAcquire(player, itemId, count),
+    // C++ `__SetQuestState` on QS_END emits AddDefinedText(TID_EVE_ENDQUEST,
+    // "\"%s\"", title) (ScriptHelper.cpp:895). Resolve the quest's IDS title
+    // token to display text + wrap in literal quotes exactly as the C++
+    // vsnprintf("\"%s\"", title) does.
+    onComplete: (player, _questId, titleToken) => {
+      const title = resources.questText.get(titleToken) ?? titleToken;
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, TID_EVE_ENDQUEST, `"${title}"`));
+    },
   });
 
   // Phase 6 -- reactive quest tracker (kill/patrol/time + quest-item drops).

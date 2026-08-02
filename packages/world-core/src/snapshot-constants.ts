@@ -354,6 +354,16 @@ export const TEXT_DIAG = 0x02;    // OpenMessageBoxUpper (modal)
  */
 export const TID_GAME_REAPMONEY = 631;
 
+/**
+ * `TID_EVE_ENDQUEST` (`game/resource/defineText.h:197`) -- the quest-complete
+ * notice. C++ `__SetQuestState` (`_Common/ScriptHelper.cpp:895`) emits
+ * `AddDefinedText(TID_EVE_ENDQUEST, "\"%s\"", pQuestProp->m_szTitle)` on QS_END,
+ * *before* `AddSetQuest`; the resolved title is wrapped in literal double
+ * quotes. The client's `OnDefinedText` resolves the template + colour from
+ * `textClient.inc` by id.
+ */
+export const TID_EVE_ENDQUEST = 506;
+
 // NULL_ID moved to @flyff/entities -- re-exported at bottom.
 
 /**

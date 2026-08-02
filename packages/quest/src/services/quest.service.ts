@@ -82,6 +82,16 @@ export interface QuestServiceDeps {
    * v19 C++ sends no item-name text). Matches {@link onExpGain}'s wiring shape.
    */
   onItemReward?: (player: CPlayer, itemId: number, count: number) => void;
+  /**
+   * Optional quest-complete notifier. When wired (compose.ts binds the
+   * NoticeSerializer), the end path emits `AddDefinedText(TID_EVE_ENDQUEST,
+   * "\"%s\"", title)` *before* `AddSetQuest` -- mirrors C++ `__SetQuestState`
+   * (`ScriptHelper.cpp:895-906`). `titleToken` is the quest's `IDS_PROPQUEST_*`
+   * key; the caller resolves it to display text. Vanilla sends no other
+   * complete feedback (no SFX/motion) -- the level-up animation lives on the
+   * job-change `SET_JOB_SKILL` path, not here.
+   */
+  onComplete?: (player: CPlayer, questId: number, titleToken: string) => void;
   /** Party query for quest begin/end party conditions (M8). Optional -- guild is ponytail. */
   partyQuery?: PartyQuery;
 }
@@ -254,6 +264,11 @@ export class QuestService {
     await this.deps.questRepo.removeActive(player.m_idPlayer, questId);
     await this.deps.questRepo.addCompleted(player.m_idPlayer, questId);
     await this.deps.questRepo.insertLog(player.m_idPlayer, questId, QUEST_LOG_ACTION.END);
+    // C++ `__SetQuestState` order: AddDefinedText(TID_EVE_ENDQUEST) THEN
+    // AddSetQuest (ScriptHelper.cpp:895 -> 906). The notifier writes the text
+    // snapshot directly (mirrors onItemReward/onExpGain) so it lands before the
+    // returned SETQUEST frame the handler writes next.
+    this.deps.onComplete?.(player, questId, def.title ?? def.symbol ?? `Quest ${questId}`);
     return { ok: true, frames: [buildSetQuest(player.m_idPlayer, done), ...frames] };
   }
 
