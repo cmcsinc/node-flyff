@@ -76,6 +76,27 @@ const QUEST_KEY = {
 
 const QUEST_ROUTE_KEYS: ReadonlySet<string> = new Set<string>(Object.values(QUEST_KEY));
 
+/**
+ * Dialog state index of `#questEndComplete` -- line 8 of `WorldDialog.txt`.
+ *
+ * Dialog state indices are literally row numbers in that file: `RunDialog(key)`
+ * -> `GetKeyIndex(key)` -> `sprintf("%s_%d", name, index)` (`NpcScript.cpp:260`,
+ * key table `:296`, index map `:28518`). Rows 0-8 are reserved control keys
+ * (`#auto`, `#init`, `#addKey`, `#yesQuest`, `#noQuest`, `#questBegin`,
+ * `#questBeginYes`, `#questBeginNo`, `#questEndComplete`), so state 8 is a
+ * SERVER-invoked post-turn-in callback, never a player-clickable button -- which
+ * is why no dialog anywhere calls `AddKey( 8 )`.
+ *
+ * `__QuestEndComplete` runs it on the turn-in NPC right after `__EndQuest`
+ * succeeds (`ScriptHelper.cpp:877-878`). It is the ONLY trigger for the 1st-job
+ * change: every job master's state 8 body is
+ * `if( GetQuestState(QUEST_VOC*_TRN2) == QS_END && GetPlayerJob() == 0 &&
+ * GetPlayerLvl() == 15 ) { ChangeJob( n ); InitStat(); }`. The gate is
+ * satisfiable because `__EndQuest` already moved the quest to the completed
+ * list before the dialog call.
+ */
+const DLGSTATE_QUEST_END_COMPLETE = 8;
+
 export interface ScriptDlgFrame {
   objid: number;
   key: string;
@@ -336,10 +357,10 @@ export class ScriptDlgService {
 
   /** Resolve + execute an explicit BeginQuest(n)/EndQuest(n) from a source body. */
   private async applyIntent(
-    player: CPlayer, _npc: CMover, intent: QuestIntent, frames: Buffer[],
+    player: CPlayer, npc: CMover, intent: QuestIntent, frames: Buffer[],
   ): Promise<void> {
     if (intent.kind === 'begin') await this.applyBegin(player, intent.id, frames);
-    else await this.applyEnd(player, intent.id, frames);
+    else await this.applyEnd(player, npc, intent.id, frames);
   }
 
   /**
@@ -480,13 +501,13 @@ export class ScriptDlgService {
         this.questBeginConfirm(player, questId, frames);
         return;
       case QUEST_KEY.END:
-        this.questEndConfirm(player, questId, frames);
+        this.questEndConfirm(player, npc, questId, frames);
         return;
       case QUEST_KEY.BEGIN_YES:
         await this.applyBegin(player, questId, frames);
         return;
       case QUEST_KEY.END_COMPLETE:
-        await this.applyEnd(player, questId, frames);
+        await this.applyEnd(player, npc, questId, frames);
         return;
       case QUEST_KEY.NEXT_LEVEL:
         frames.push(this.scriptDialog.build(player.m_idPlayer, [
@@ -510,28 +531,48 @@ export class ScriptDlgService {
    * player turn in at Pire, consuming the quest without ever visiting the
    * master whose dialog body runs `ChangeJob(n)`.
    *
-   * BEGIN / BEGIN_YES  -> must be in the `SetCharacter` index.
-   * END / END_COMPLETE -> must be in the `SetEndCondCharacter` index.
-   * Anything else (NEXT_LEVEL, BEGIN_NO, END_FAIL) only closes the window, so
-   * either side is enough. `SRT_QUESTOFFICE` legitimately serves the whole
-   * catalog (mirrors the offer scan in {@link emitQuestOffer}).
+   * BEGIN / BEGIN_YES -> must be in the `SetCharacter` index.
+   * END_COMPLETE      -> must be in the `SetEndCondCharacter` index.
+   *
+   * `END` (opening the turn-in confirmation) deliberately accepts EITHER side:
+   * C++ `__QuestEnd` lists the active quest at the begin NPC too and answers
+   * with `QSAY_END_FAILURE` + `QUEST_END_FAIL` when the NPC is not the end NPC
+   * (`ScriptHelper.cpp:601-614`). {@link questEndConfirm} makes that call, so
+   * blocking `END` here would silently close a window C++ populates.
+   *
+   * NEXT_LEVEL / BEGIN_NO / END_FAIL only close the window, so either side is
+   * enough. `SRT_QUESTOFFICE` legitimately serves the whole catalog (mirrors the
+   * offer scan in {@link emitQuestOffer}).
    */
   private ownsQuestRoute(npc: CMover, questId: number, key: string): boolean {
     if (npc.m_nStructure === SRT_QUESTOFFICE) return true;
     const lk = npcLookupKey(npc);
     if (!lk) return false;
     const isBegin = this.beginByKey.get(lk)?.includes(questId) ?? false;
-    const isEnd = this.endByKey.get(lk)?.includes(questId) ?? false;
+    const isEnd = this.isEndNpc(npc, questId);
     switch (key) {
       case QUEST_KEY.BEGIN:
       case QUEST_KEY.BEGIN_YES:
         return isBegin;
-      case QUEST_KEY.END:
       case QUEST_KEY.END_COMPLETE:
         return isEnd;
       default:
         return isBegin || isEnd;
     }
+  }
+
+  /**
+   * C++ `strcmpi( pQuestProp->m_szEndCondCharacter, pMover->m_szCharacterKey )`
+   * (`ScriptHelper.cpp:601`) -- is `npc` the quest's `SetEndCondCharacter`?
+   *
+   * `SRT_QUESTOFFICE` NPCs serve the whole catalog, so they pass for any quest
+   * (mirrors the offer scan in {@link emitQuestOffer}).
+   */
+  private isEndNpc(npc: CMover, questId: number): boolean {
+    if (npc.m_nStructure === SRT_QUESTOFFICE) return true;
+    const lk = npcLookupKey(npc);
+    if (!lk) return false;
+    return this.endByKey.get(lk)?.includes(questId) ?? false;
   }
 
   /** `__QuestBegin` (`ScriptHelper.cpp:498-506`): say the quest's `QSAY_BEGIN1..5`
@@ -550,13 +591,22 @@ export class ScriptDlgService {
     frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
   }
 
-  /** `__QuestEnd` (`ScriptHelper.cpp:603-613`): complete-eligible -> say
-   *  `QSAY_END_COMPLETE1..3` + OK=>`QUEST_END_COMPLETE`; not yet eligible ->
-   *  `QSAY_END_FAILURE1..3` + OK=>`QUEST_END_FAIL` (closes). */
-  private questEndConfirm(player: CPlayer, questId: number, frames: Buffer[]): void {
+  /** `__QuestEnd` (`ScriptHelper.cpp:603-613`): complete-eligible AND this NPC is
+   *  the quest's `SetEndCondCharacter` -> say `QSAY_END_COMPLETE1..3` +
+   *  OK=>`QUEST_END_COMPLETE`; otherwise `QSAY_END_FAILURE1..3` +
+   *  OK=>`QUEST_END_FAIL` (closes).
+   *
+   *  The end-NPC comparison is C++ `strcmpi( pQuestProp->m_szEndCondCharacter,
+   *  pMover->m_szCharacterKey ) == 0` (`:601`) -- it is what stops a player
+   *  turning in at the quest's BEGIN npc. `QUEST_VOCACR_TRN1` (54) begins at
+   *  `MaFl_Pire` and ends at `MaDa_Tailer`, so Pire lists the active quest but
+   *  must answer with the failure line, not the complete button. */
+  private questEndConfirm(player: CPlayer, npc: CMover, questId: number, frames: Buffer[]): void {
     const def = this.deps.quests.byId.get(questId);
     const q = player.findQuest(questId);
-    const eligible = def && q ? isComplete(player, q, def, this.questInv(player)).ok : false;
+    const eligible = def && q
+      ? isComplete(player, q, def, this.questInv(player)).ok && this.isEndNpc(npc, questId)
+      : false;
     const funcs: ScriptFunc[] = [{ type: 'removeAllKeys' }];
     const slots = eligible ? QSAY.END_COMPLETE : QSAY.END_FAILURE;
     const key = eligible ? QUEST_KEY.END_COMPLETE : QUEST_KEY.END_FAIL;
@@ -594,20 +644,63 @@ export class ScriptDlgService {
     }
   }
 
-  /** Complete a quest; append SETQUEST + reward frames, then close. */
-  private async applyEnd(player: CPlayer, questId: number, frames: Buffer[]): Promise<void> {
+  /**
+   * Complete a quest, then run the turn-in NPC's `#questEndComplete` body.
+   *
+   * C++ `__QuestEndComplete` (`ScriptHelper.cpp:873-880`) does exactly this
+   * order: `__EndQuest` consumes the quest (`:877`), THEN
+   * `RunDialog("#questEndComplete")` fires state 8 on the same NPC (`:878`).
+   * That callback is the only trigger for the 1st-job change -- each job
+   * master's state 8 runs `ChangeJob(n); InitStat();` behind a
+   * `GetQuestState(TRN2) == QS_END` gate that only passes because the quest is
+   * already in the completed list. Running it before `endQuest` would leave the
+   * player a Vagrant; skipping it entirely (the previous behavior) did too.
+   *
+   * The synthetic "Quest complete." + exit frame is only emitted when state 8
+   * produced nothing -- otherwise its own `Say`/`Exit` ops drive the window and a
+   * second `removeAllKeys` burst would wipe them.
+   */
+  private async applyEnd(
+    player: CPlayer, npc: CMover, questId: number, frames: Buffer[],
+  ): Promise<void> {
     const res = await this.deps.questService.endQuest(player, questId);
-    if (res.ok) {
-      frames.push(...res.frames);
+    if (!res.ok) {
+      logger.info({ charId: player.m_idPlayer, questId, reason: res.reason }, 'quest end rejected');
+      this.closeDialog(player, frames);
+      return;
+    }
+    frames.push(...res.frames);
+    const before = frames.length;
+    await this.runEndCompleteCallback(player, npc, frames);
+    if (frames.length === before) {
       frames.push(this.scriptDialog.build(player.m_idPlayer, [
         { type: 'removeAllKeys' },
         { type: 'say', text: 'Quest complete.' },
         { type: 'exit' },
       ]));
-    } else {
-      logger.info({ charId: player.m_idPlayer, questId, reason: res.reason }, 'quest end rejected');
-      this.closeDialog(player, frames);
     }
+  }
+
+  /**
+   * Run the turn-in NPC's `#questEndComplete` (state 8) dialog body -- the C++
+   * `RunDialog( "#questEndComplete", ... )` at `ScriptHelper.cpp:878`.
+   *
+   * Resolved through the same prefix lookup as {@link runState} so an NPC with no
+   * dialog file, or no state 8, is a silent no-op (most quest NPCs are). Job
+   * masters have it, and their body is what sets `m_nJob`.
+   */
+  private async runEndCompleteCallback(
+    player: CPlayer, npc: CMover, frames: Buffer[],
+  ): Promise<void> {
+    const npcKey = npc.m_szCharacterKey || npc.m_szKey;
+    const prefix = prefixForNpc(this.deps.dialogs, npcKey);
+    if (!prefix) return;
+    const state = stateForKey(this.deps.dialogs, prefix, DLGSTATE_QUEST_END_COMPLETE);
+    if (!state) return;
+    const intents: QuestIntent[] = [];
+    if (state.source) this.runSource(player, npc, state.source, intents, frames);
+    else this.emitMenu(player, state, frames);
+    for (const intent of intents) await this.applyIntent(player, npc, intent, frames);
   }
 
   private closeDialog(player: CPlayer, frames: Buffer[]): void {

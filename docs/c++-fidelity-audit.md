@@ -361,17 +361,54 @@ is exploitable under an untrusted client. Each needs an explicit rationale.
   button-emit classification at `ScriptHelper.cpp:601`
   (`strcmpi(m_szEndCondCharacter, pMover->m_szCharacterKey)`).
 - **TS**: BEGIN / BEGIN_YES require the NPC to be in the quest's `SetCharacter`
-  index; END / END_COMPLETE require the `SetEndCondCharacter` index. The two
-  sides are checked **separately** — a begin-or-end test is not enough, because
-  most quests hand off between two NPCs. `SRT_QUESTOFFICE` still serves the
-  whole catalog.
+  index; END_COMPLETE requires the `SetEndCondCharacter` index. The two sides are
+  checked **separately** — a begin-or-end test is not enough, because most quests
+  hand off between two NPCs. `SRT_QUESTOFFICE` still serves the whole catalog.
+  `QUEST_END` (opening the turn-in confirmation) is *not* blocked: C++ lists the
+  active quest at the begin NPC too and answers with `QSAY_END_FAILURE` +
+  `QUEST_END_FAIL` (`:601-614`), which `questEndConfirm` now reproduces by
+  folding `isEndNpc` into its eligibility test.
 - **Why**: `nGlobal2` is client-supplied, so the C++ shape lets any NPC begin or
   complete any quest. Concretely it broke the 1st job change:
   `QUEST_VOCACR_TRN1` (54) begins at `MaFl_Pire` and ends at `MaDa_Tailer`, but
   could be turned in at Pire — consuming the quest without ever reaching the
   master whose dialog body runs `ChangeJob(n)`, leaving the player a Vagrant.
 - **Tests**: `packages/npc/test/services/scriptDlg.service.test.ts` →
-  "quest route NPC ownership" (5 cases, incl. begin-NPC-cannot-complete).
+  "quest route NPC ownership" (7 cases, incl. begin-NPC-cannot-complete and the
+  QUEST_END_FAIL / QUEST_END_COMPLETE button split).
+
+---
+
+## The `#questEndComplete` (dialog state 8) callback — was MISSING, now ported
+
+Not a divergence; a port gap that is now closed. Recorded because the mechanism
+is non-obvious and easy to re-break.
+
+- **File**: `packages/npc/src/services/scriptDlg.service.ts`
+  (`applyEnd` → `runEndCompleteCallback`)
+- **C++**: dialog state indices are row numbers in `WorldDialog.txt`
+  (`RunDialog(key)` → `GetKeyIndex(key)` → `sprintf("%s_%d", name, index)`,
+  `NpcScript.cpp:260`; key table `:296`; index map `:28518`). Rows 0–8 are
+  reserved control keys: `#auto`, `#init`, `#addKey`, `#yesQuest`, `#noQuest`,
+  `#questBegin`, `#questBeginYes`, `#questBeginNo`, **`#questEndComplete`**.
+  `__QuestEndComplete` runs state 8 on the turn-in NPC immediately *after*
+  `__EndQuest` succeeds — `ScriptHelper.cpp:877-878`.
+- **Consequence of the gap**: state 8 is a server-invoked callback, never a
+  clickable button, so no dialog anywhere calls `AddKey( 8 )`. The TS `applyEnd`
+  completed the quest and emitted its own "Quest complete." frame but never
+  dispatched state 8 — and state 8 is the ONLY place `ChangeJob(n)` lives. Every
+  job master's body is
+  `if( GetQuestState(QUEST_VOC*_TRN2/3) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 ) { ChangeJob( n ); InitStat(); }`.
+  Result: the quest completed, no job was ever set, player stayed a Vagrant.
+- **Ordering matters**: the callback must run *after* `endQuest`, because the
+  `== QS_END` gate only passes once the quest has moved to the completed list.
+- **Note**: `keyToIndex` maps `#init` → 0, but `#init` is row 1 and `#auto` is
+  row 0. Harmless today (state 0 is treated as the greeting throughout, and
+  `#auto` — the idle barker, `Mover.cpp:1384`) is not dispatched from
+  `OnScriptDialogReq`), but it is a latent off-by-one if `#auto` is ever ported.
+- **Tests**: `packages/npc/test/services/scriptDlg.service.test.ts` →
+  "#questEndComplete callback" (3 cases: ChangeJob+InitStat fire, ordering,
+  no-state-8 fallback frame).
 
 ---
 

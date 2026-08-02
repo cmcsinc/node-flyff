@@ -804,4 +804,146 @@ describe('scriptDlg.service -- quest route NPC ownership', () => {
     assert.deepEqual((await routeAt('MaFl_Impostor', 'QUEST_END_COMPLETE')).ended, []);
     assert.deepEqual((await routeAt('MaFl_Impostor', 'QUEST_BEGIN_YES')).began, []);
   });
+
+  // C++ `__QuestEnd` (ScriptHelper.cpp:601) only offers the QUEST_END_COMPLETE
+  // button when `strcmpi( m_szEndCondCharacter, m_szCharacterKey ) == 0`. The
+  // BEGIN npc still LISTS the active quest (it is in m_awSrcQuest), so clicking
+  // it must produce the failure line + QUEST_END_FAIL, not the complete button.
+  it('the BEGIN NPC offers QUEST_END_FAIL, never the complete button', async () => {
+    const { funcs } = await routeAt('MaFl_Starter', 'QUEST_END');
+    const answers = funcs.filter((f) => f.type === 'addAnswer') as Array<{ key: string }>;
+    assert.deepEqual(answers.map((a) => a.key), ['QUEST_END_FAIL']);
+  });
+
+  it('the END NPC offers the QUEST_END_COMPLETE button', async () => {
+    const { funcs } = await routeAt('MaFl_Finisher', 'QUEST_END');
+    const answers = funcs.filter((f) => f.type === 'addAnswer') as Array<{ key: string }>;
+    assert.deepEqual(answers.map((a) => a.key), ['QUEST_END_COMPLETE']);
+  });
+});
+
+/**
+ * `#questEndComplete` (dialog state 8) -- the post-turn-in callback.
+ *
+ * Dialog state indices are row numbers in `WorldDialog.txt`; row 8 is the
+ * reserved `#questEndComplete` key, which is why no dialog ever calls
+ * `AddKey( 8 )`. C++ `__QuestEndComplete` runs it on the turn-in NPC right after
+ * `__EndQuest` succeeds (`ScriptHelper.cpp:877-878`). It is the ONLY trigger for
+ * the 1st-job change -- each job master's state 8 body holds
+ * `ChangeJob(n); InitStat();` behind a `GetQuestState(TRN2) == QS_END` gate.
+ */
+describe('scriptDlg.service -- #questEndComplete callback', () => {
+  const TRN2 = 55;
+
+  /** Quest 55 ending at `MaFl_Ssunder`, the Acrobat master. */
+  function acrobatChain(): QuestIndex {
+    const def = {
+      _version: '1.0', id: TRN2, symbol: 'QUEST_VOCACR_TRN2', title: 'IDS_TITLE',
+      commands: [], states: {}, quest_items: [], dialog: {},
+    } as unknown as QuestDef;
+    return {
+      byId: new Map([[TRN2, def]]), drops: new Map(),
+      byNpc: { begin: new Map([['mada_tailer', [TRN2]]]), end: new Map([['mafl_ssunder', [TRN2]]]) },
+    } as unknown as QuestIndex;
+  }
+
+  /** Ssunder with the real state-8 job-change body. `endQuest` mutates the
+   *  player the way QuestService does (active -> completed), so the state-8
+   *  `GetQuestState(TRN2) == QS_END` gate sees post-turn-in state. */
+  function ssunder(): {
+    svc: ScriptDlgService; changed: number[]; statInits: number; player: CPlayer; calls: ScriptFunc[][];
+  } {
+    const changed: number[] = [];
+    let statInits = 0;
+    const dialogs = mkDialogs([]);
+    dialogs.byPrefix.set('mafl_ssunder', {
+      _version: '1.0', prefix: 'mafl_ssunder', character_key: 'MaFl_Ssunder',
+      states: {
+        '8': {
+          source: 'if( GetQuestState(QUEST_VOCACR_TRN2) == QS_END && GetPlayerJob() == 0 && GetPlayerLvl() == 15 ) { ChangeJob( 2 ); InitStat(); } else { Exit(); }',
+        },
+      },
+    } as never);
+    const player = mkPlayer({
+      m_nJob: 0, m_nLevel: 15,
+      m_aQuest: [{ id: TRN2, state: 0 }] as never,
+      m_aCompleteQuest: [],
+    });
+    const questService = {
+      endQuest: async (p: CPlayer, id: number) => {
+        // Mirror QuestService.endQuest: drop from active, add to completed.
+        // Splice in place -- mkPlayer's findQuest closes over the original array.
+        const i = p.m_aQuest.findIndex((q) => q.id === id);
+        if (i >= 0) p.m_aQuest.splice(i, 1);
+        p.m_aCompleteQuest.push(id);
+        return { ok: true, frames: [] };
+      },
+    } as unknown as QuestService;
+    const { serializer, calls } = fakeScriptDialog();
+    const svc = new ScriptDlgService({
+      spawnManager: { get: () => mkNpc('MaFl_Ssunder') },
+      dialogs, quests: acrobatChain(), questService,
+      defines: new Map([['QUEST_VOCACR_TRN2', TRN2]]),
+      chat: fakeChat as never, scriptDialog: serializer as never,
+      changeJobService: {
+        changeJob: (_p: CPlayer, job: number) => changed.push(job),
+        initStat: () => { statInits++; },
+      } as never,
+    });
+    return { svc, changed, get statInits() { return statInits; }, player, calls };
+  }
+
+  /** THE bug: completing TRN2 at Ssunder left the player a Vagrant because
+   *  state 8 -- the only `ChangeJob` path -- was never dispatched. */
+  it('turning in at the job master fires ChangeJob + InitStat', async () => {
+    const t = ssunder();
+    const out = await t.svc.dialog(
+      t.player,
+      { objid: NPC_ID, key: 'QUEST_END_COMPLETE', nGlobal1: 0, nGlobal2: TRN2, nGlobal3: 0, nGlobal4: 0 },
+      0,
+    );
+    if (!out.ok) throw new Error('expected ok');
+    assert.deepEqual(t.changed, [2], 'ChangeJob(2) must fire on the turn-in NPC');
+    assert.equal(t.statInits, 1, 'InitStat() must follow ChangeJob');
+  });
+
+  it('the callback runs AFTER the quest is completed, so the QS_END gate passes', async () => {
+    const t = ssunder();
+    await t.svc.dialog(
+      t.player,
+      { objid: NPC_ID, key: 'QUEST_END_COMPLETE', nGlobal1: 0, nGlobal2: TRN2, nGlobal3: 0, nGlobal4: 0 },
+      0,
+    );
+    assert.deepEqual(t.player.m_aCompleteQuest, [TRN2]);
+    assert.deepEqual(t.changed, [2], 'ordering: endQuest must precede the state-8 body');
+  });
+
+  it('an NPC with no state 8 still gets the fallback "Quest complete." frame', async () => {
+    const { ended, funcs } = await (async () => {
+      const ended: number[] = [];
+      const questService = {
+        endQuest: async (_p: CPlayer, id: number) => { ended.push(id); return { ok: true, frames: [] }; },
+      } as unknown as QuestService;
+      const { serializer, calls } = fakeScriptDialog();
+      const s = new ScriptDlgService({
+        spawnManager: { get: () => mkNpc('MaFl_Finisher') },
+        dialogs: mkDialogs(), quests: (() => {
+          const def = { _version: '1.0', id: 900, symbol: 'Q900', commands: [], states: {}, quest_items: [], dialog: {} } as unknown as QuestDef;
+          return {
+            byId: new Map([[900, def]]), drops: new Map(),
+            byNpc: { begin: new Map(), end: new Map([['mafl_finisher', [900]]]) },
+          } as unknown as QuestIndex;
+        })(),
+        questService, chat: fakeChat as never, scriptDialog: serializer as never,
+      });
+      const player = mkPlayer({ m_aQuest: [{ id: 900, state: 0 }] as never });
+      await s.dialog(player, { objid: NPC_ID, key: 'QUEST_END_COMPLETE', nGlobal1: 0, nGlobal2: 900, nGlobal3: 0, nGlobal4: 0 }, 0);
+      return { ended, funcs: calls.flat() };
+    })();
+    assert.deepEqual(ended, [900]);
+    assert.ok(
+      funcs.some((f) => f.type === 'say' && (f as { text: string }).text === 'Quest complete.'),
+      'no state 8 -> the synthetic completion frame still closes the window',
+    );
+  });
 });
