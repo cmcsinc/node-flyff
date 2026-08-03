@@ -64,7 +64,7 @@ strings:
   - Yeah, it'll be good for you to go home. Because this is no place for humans
     to come.
   - ...
-  - ........
+  - ...
   - I don't know if this is someone I haven't seen in years. Kukeng~ I am
     Neville, the great chief of the Kikun.
   - It's been a long time since I've been a person. I'll see you again on the
@@ -103,7 +103,7 @@ strings:
   - Welcome, fun shopping This is the general store of Archaven. Coke Coke~
   - What would you like to do?
   - Welcome. cologne. It is my happiness to see customers who are always happy
-    to shop. Cole..
+    to shop. Cole...
   - My name is <Arcaven Comanedot>, who runs a general store in Taken City.
   - I wish you good health always. Don't forget to stop by when you come to
     Daken City.
@@ -112,7 +112,7 @@ strings:
   - The sky is a dream world. Cancer, not like that. If my family hadn't
     collapsed, I'd be flying in that sky by now...
   - My name is <Armani Ishchenji> who runs a station in Daken City.
-  - 1. You need to buy a flying broom or board at the station.\n 2. Drag or
+  - 1. You need to buy a flying broom or board at the station.\n2. Drag or
     double-click the board or broom icon from the inventory window to the
     mounting location in the lower right corner of the window to get on it.
   - 3. If you press the space bar to start the aircraft, it will start.
@@ -126,22 +126,22 @@ strings:
   - 6. All types of aircraft can be ridden regardless of occupation.
   - That's all for a basic flight guide. The rest is your ability. Have a nice
     flight.
-  - " 1. When a certain distance from a flying monster is reached while riding
-    an aircraft, a box appears around the monsters in sight."
-  - " 2. Press the Tab key to target sequentially, and you can also click the
-    left mouse button."
-  - " 3. If you approach the targeted monster and click the left mouse button or
-    press the Insert key, it attacks.\\n 4. If you press the Z key while being
-    targeted, it automatically follows the target."
-  - " 5. Items obtained by winning flight battles are automatically acquired as
-    inventory."
-  - " 6. The pick-up action is set to the F3 key in the first quickslot by
+  - 1. When a certain distance from a flying monster is reached while riding an
+    aircraft, a box appears around the monsters in sight.
+  - 2. Press the Tab key to target sequentially, and you can also click the left
+    mouse button.
+  - 3. If you approach the targeted monster and click the left mouse button or
+    press the Insert key, it attacks.\n4. If you press the Z key while being
+    targeted, it automatically follows the target.
+  - 5. Items obtained by winning flight battles are automatically acquired as
+    inventory.
+  - 6. The pick-up action is set to the F3 key in the first quickslot by
     default, but items obtained by winning a flying battle are automatically
-    acquired into the inventory and will not be used."
-  - " 7. During flight, Mercenary and Assist perform a single melee attack
+    acquired into the inventory and will not be used.
+  - 7. During flight, Mercenary and Assist perform a single melee attack
     regardless of weapon, and in the case of a Magician, a long-range derivative
     firing attack when wearing a wand, and a single melee attack when wearing a
-    staff."
+    staff.
   - I hope you enjoy the wonderful flight and thrilling battles.
   - good luck If there's anything you don't know, be sure to ask.
   - As long as I keep it, no one will be able to cross over here. cancer! Don't
@@ -179,7 +179,7 @@ strings:
     they will not disappear.
   - It is called <Bonefer Guardian>, a knight guardian who protects the will of
     the knight hero <Billaion>.
-  - May the courage of <Billion> be with you always..
+  - May the courage of <Billion> be with you always...
   - Those who follow the Billposter hero <Loentel>, are you ready to follow the
     hero's will?
   - Those who follow them, their adherents, will eventually be destroyed...
@@ -230,7 +230,7 @@ strings:
   - Eight lights will rise, each with their wounds, the light against evil.
   - I am the current Blade Master <Corel Anduril>, who was once called the Blade
     Dancer.
-  - The blessings of <Heren> bless you..
+  - The blessings of <Heren> bless you...
   - O psychic hero <Offerep>, I gladly honor your spirit.
   - It will be great... it will be grandiose... Their final battle will truly
     last forever.
@@ -250,7 +250,7 @@ strings:
   - These are the things you should do.
   - When they enter a new place, they will be reborn as heroes.
   - As a Ranger Master, my role is to guide you on the path of a hero.
-  - May the will of <Hainan> be full..
+  - May the will of <Hainan> be full...
   - Ringmaster Hero <Eienne>, your blessing on this land will be remembered
     forever.
   - When the world is engulfed in chaos, I forgot that chaos... ah... ah! right.
@@ -260,14 +260,14 @@ strings:
   - I hope that <Eienne> is full of blessings.
   - This is where the great beings are sleeping. We are waiting for your
     challenge.
-  - What is it?\n1.[Monster Hunting][]. \n2.[Because I'm bored][]. \n3.[It's my
+  - What is it?\n1.[Monster Hunting][].\n2.[Because I'm bored][].\n3.[It's my
     heart][].
   - Failed. Would you like to try again?\n[Yes][Yes_Entry] / [No][No_Entry]
   - Have you achieved the ideal you are heading for? Congratulations.
   - You are fully qualified to take on the challenge. Would you like to
     enter?\n[Yes][Yes_Entry] / [No][No_Entry]
   - you stupid human Don't think of this as entertainment. If I value you...
-  - .................
+  - ...
   - Looks like the other contenders are already fighting him. Can't enter now.
   - Unless you are firmly determined, you will not be able to overcome that
     existence.
@@ -300,8 +300,8 @@ strings:
   - It is a place where mystical magic lives together. Experience the magical
     world with Heaven.
   - Key_Scenario5
-  - How can I help you? I think you have a question for me...\n What is [your
-    job][]? \n[Is she the magician's daughter][]? \n[Who are you][]?
+  - How can I help you? I think you have a question for me...\nWhat is [your
+    job][]?\n[Is she the magician's daughter][]?\n[Who are you][]?
   - What did you need to find our magic shop? Everything is there. Ho Ho
   - hello. Welcome to Heaven's Magic Shop. Take a look around and choose wisely
     to buy what you really need.
@@ -317,35 +317,36 @@ strings:
     know. How masculine you are.
   - Magic goods play a big role in this Dak'kon. That's why I needed more here.
     But the people here are always bright.
-  - " Maybe it's because Dak'kon is too dark, it's brighter than other people in
-    the area, is it just me? Isn't it? whoops"
+  - Maybe it's because Dak'kon is too dark, it's brighter than other people in
+    the area, is it just me? Isn't it? whoops
   - Anyway, if it's a safe adventure, it's a bit weird, but you definitely need
     a magic item. Don't forget that.
   - Goodbye. If you want to see me, please drop by.
   - Ho-ho-ho, as you can see, I'm running a little magic shop. Are you really
-    curious about that? hoho spicy..
-  - Yes? Yes, but how did you know?\n [just a feeling][].. \n [heard someone][].
+    curious about that? hoho spicy...
+  - Yes? Yes, but how did you know?\n[just a feeling][]...\n[heard someone][].
   - Yes?! I...I'm Hee...Heaven, the owner of the magic shop... Why do you do
     that? All of a sudden... I mean, I'm scared...
   - Are you really? Wow, your eyesight is great. I run a magic shop, but how do
     I get to such a thing... and... (I really believe in this woman...)
-  - Who.. in the military.. crab? I heard it from the three twin brothers.
+  - Who... in the military... crab? I heard it from the three twin brothers.
     Ummm... those people sometimes talk nonsense. It must not have been easy to
     find those brothers, but you have met them all.
   - But if I had met those brothers, I think they would have asked me for
-    something... Do you have any requests?\n [Yes][].\n [No][].
+    something... Do you have any requests?\n[Yes][].\n[No][].
   - Ummm... the interpretation of the ancient language. My father had some
     knowledge of ancient languages, but I know only a small part of it, and I
-    don't know if I can interpret it. Can you show me first?\n [I'm here][].\n
-    [Not here][].
+    don't know if I can interpret it. Can you show me first?\n[I'm
+    here][].\n[Not here][].
   - Do you really have nothing to ask for? That brother can't be... It's weird.
     I think you have something to hide from me... well... it's hard to tell. If
     you have anything to ask for later, please come back.
-  - You said it was the back page of the book. Let's see.. Al Areka..Ummm...this
-    is...Ahhh... That's right Hmmm! Al Areca Dribushi Ecuador..
+  - You said it was the back page of the book. Let's see... Al
+    Areka...Ummm...this is...Ahhh... That's right Hmmm! Al Areca Dribushi
+    Ecuador...
   - First, the interpretation of the ancient language is as follows. Don't look
-    for me and don't even try to find out. However..
-  - The second ancient word is um...Redribushi La Padre Eschropheia Larador..If
+    for me and don't even try to find out. However...
+  - The second ancient word is um...Redribushi La Padre Eschropheia Larador...If
     you want to know more, find my nest and unseal the seal. Then it will open.
   - "The last old word is: Sorarador Driafedo Lepanendish Lonrondosi... It's a
     little creepy... Hmmm! Purekera Capo Dracif Lumiaru Warneaus"
@@ -381,7 +382,7 @@ strings:
   - Some praised them, others criticized them. But they save all these people.
   - Among the 8 heroes, this is Jester's guardian <Heingard>, who protects the
     will of Jester's hero <Kerenen>.
-  - May the blessings of <Kerenen> be with you..
+  - May the blessings of <Kerenen> be with you...
   - Gentlemen! Have a dream! And wish it hard! Then it will be done!
   - It is your duty to perform.
   - see 17 martial arts dances! Adadadadat!
@@ -422,7 +423,7 @@ strings:
     they are heroes.
   - It is called <Kylead>, the ranger guardian who protects the will of the
     ranger hero <Hainan> among all 8 heroes.
-  - May Kwangyoung of <Hainan> be with you..
+  - May Kwangyoung of <Hainan> be with you...
   - <Billion>, hero of the night, the will you left behind will spread
     throughout the land...
   - When the eight flames are completely extinguished... then, the world will
@@ -464,8 +465,8 @@ strings:
   - I am the youngest member of the <Pang> family, who manages this resurrection
     roadlight from generation to generation.
   - If you select the place you want to resurrect, you can resurrect from that
-    road light.\n If you want to resurrect in another place, you can designate
-    it there. got it?
+    road light.\nIf you want to resurrect in another place, you can designate it
+    there. got it?
   - Good bye. See you again. I'm dying hehehe
   - I am the youngest member of the <Pang> family, who manages this resurrection
     roadlight from generation to generation. Actually they are twins Hehe
@@ -527,7 +528,7 @@ strings:
   - Heh... you want to die because you're curious about the mines behind me,
     don't you? If you want to enter that mine, talk to a guy named Cell
     somewhere in Dak'kon 1.
-  - .....
+  - ...
   - Ah Cell! Cell, you're bothering me too much. What I want to say to him is
     written here, so let him know.
   - Do you want to have the best weapon in the madrigal? Come over here. You
@@ -569,7 +570,7 @@ strings:
     world.
   - It is called <Sensit Guardian>, the blade protector who protects the will of
     <Heren>, the hero of the blade.
-  - May the blessings of <Heren> always overflow within you..
+  - May the blessings of <Heren> always overflow within you...
   - Those who want to follow the psychic hero <Offerep>, are you willing to
     follow the hero's will?
   - Everything begins that way and will end that way.
@@ -578,7 +579,7 @@ strings:
   - The spirit of <Operep> will train your weak heart.
   - what you want! You can find them all in this Steamer's weapon shop.
   - What will you handle?
-  - The road of the haengrang merchant.. the rainy season is hard. So I settled
+  - The road of the haengrang merchant... the rainy season is hard. So I settled
     here. It's a simple store now, but I'm sure it will open a regular store.
   - My name is <Steima Ogonell>, a former travel merchant who handles weapons in
     this Aaronfax. I wish you well.
@@ -598,7 +599,7 @@ strings:
     withdrew from <War of Heroes>, its power rapidly declined, and now it has
     been transformed into a wandering group.
   - Currently, he is wandering and doing business in the 3rd district of Dakkon.
-    This place is surprisingly good. There are no monsters.. I think I can stay
+    This place is surprisingly good. There are no monsters... I think I can stay
     for a while. heh heh heh
   - We will always serve you the best and the best. Please visit us again.
   - Those who want to become the heirs of the elemental hero <Lillip>, do you
@@ -622,13 +623,13 @@ strings:
   - My name is <Saint Arami>, who is in charge of Santa in the Madrigal
     Christmas Association. nice to meet.
   - hey! merry christmas!
-  - Ummm.. It is very difficult to track the position of the Neue planet in the
-    Amedos galaxy.. Should we also use the Chaos Theory?
+  - Ummm... It is very difficult to track the position of the Neue planet in the
+    Amedos galaxy... Should we also use the Chaos Theory?
   - he will wake up In the land of the dead filled with the noise of machines,
     heroes will be reborn.
   - My name is <Atta Milleniat> and I am learning astronomy with <Neuer> as my
     teacher. Do you know how to analyze this fractal curve?
-  - Then I'm so busy.. The angle of this curve becomes like this... Well...
+  - Then I'm so busy... The angle of this curve becomes like this... Well...
   - brothers! Maybe good to do this? huh? If this is the case, then Christmas
     will be dark.
   - I wish you a Christmas full of happiness and warmth.
@@ -695,35 +696,35 @@ strings:
     were great people. I want to be like that too.
   - It's called <Dior Christine>, who manages the best station in the city of
     Plaline.
-  - " 1. Purchase a flying broom or board at the station.\\n 2. Drag or
-    double-click the board or broom icon from the inventory window to the
-    mounting location at the bottom right of the window to board."
-  - " 3. Press the space bar to start the aircraft."
-  - " 4. You can move the aircraft in the desired direction by clicking the
-    right mouse button and moving it.\\n You can change the direction not only
-    with the mouse but also with the W,S,A,D keys on the keyboard."
-  - " 5. Let me give you a tip. If you double-click the right button, you can
+  - 1. Purchase a flying broom or board at the station.\n2. Drag or double-click
+    the board or broom icon from the inventory window to the mounting location
+    at the bottom right of the window to board.
+  - 3. Press the space bar to start the aircraft.
+  - 4. You can move the aircraft in the desired direction by clicking the right
+    mouse button and moving it.\nYou can change the direction not only with the
+    mouse but also with the W, S, A, D keys on the keyboard.
+  - 5. Let me give you a tip. If you double-click the right button, you can
     change the direction of the aircraft even if you move the mouse without
-    holding down the right button."
-  - " 6. All types of aircraft can be boarded regardless of occupation."
-  - " This was a basic flight guide. The rest is up to you. Have a great flight"
-  - " 1. A box will appear around the monsters in your field of view when you
-    reach a certain distance from the flying monster while riding the vehicle."
-  - " 2. Press the Tab key to target sequentially. You can also do this by
-    clicking the left mouse button."
-  - " 3. If you approach the targeted monster and click the left mouse button or
-    press the Insert key, it will attack.\\n 4. If you press the Z key while
-    being targeted, it will automatically follow the target."
-  - " 5. Items obtained by winning flight battles are automatically acquired as
-    inventory."
-  - " 6. By default, the pick-up action is assigned to the F3 key of the first
+    holding down the right button.
+  - 6. All types of aircraft can be boarded regardless of occupation.
+  - This was a basic flight guide. The rest is up to you. Have a great flight
+  - 1. A box will appear around the monsters in your field of view when you
+    reach a certain distance from the flying monster while riding the vehicle.
+  - 2. Press the Tab key to target sequentially. You can also do this by
+    clicking the left mouse button.
+  - 3. If you approach the targeted monster and click the left mouse button or
+    press the Insert key, it will attack.\n4. If you press the Z key while being
+    targeted, it will automatically follow the target.
+  - 5. Items obtained by winning flight battles are automatically acquired as
+    inventory.
+  - 6. By default, the pick-up action is assigned to the F3 key of the first
     quickslot, but items obtained by winning a flying battle are automatically
-    acquired as inventory, so there is no need to use them."
-  - " 7. During flight, Mercenary and Assist perform a single melee attack
+    acquired as inventory, so there is no need to use them.
+  - 7. During flight, Mercenary and Assist perform a single melee attack
     regardless of weapon, and in the case of a Magician, a long-range derivative
     fire attack when equipped with a wand, and a melee single attack when
-    equipped with a staff."
-  - " We hope you enjoy the wonderful flight and thrilling battles."
+    equipped with a staff.
+  - We hope you enjoy the wonderful flight and thrilling battles.
   - Safety rules are essential! Did you know? Have a nice flight.
   - heh heh. Looks like I'm in shape here. It's not awkward at all. Isn't it?
     heh heh.
@@ -822,7 +823,7 @@ strings:
     mean I have to agree, right? is not it?
   - I will exercise my right to remain silent, people who care about me are
     disgusting. I'll never tell you. okay?
-  - Oh, it's annoying.. I'm going to have to hit this thing now too..
+  - Oh, it's annoying... I'm going to have to hit this thing now too...
   - don't let me know I exist but don't exist. Nothing more, nothing less...
   - Ummm... it's been decades since I started doing this here.
   - The world is engulfed in evil, and 8 new lights will rise against it. Wait
@@ -903,7 +904,7 @@ strings:
     city of Plaline. Oh, and Kimberly, who works as an assistant in Sain City,
     is my wife.
   - Next, tell me about the outskirts of the city. Goodbye.
-  - Rice cake soup.. Rice cake soup is gone. Oh, what am I supposed to do now!
+  - Rice cake soup... Rice cake soup is gone. Oh, what am I supposed to do now!
     Somebody please help!
   - I started this way at a late age because I wanted to become a chef, but I
     don't think I've ever been as happy as I am now, hahaha.
@@ -972,10 +973,10 @@ strings:
   - Everything is there. There is nothing there. Louie's general store!
   - Now, I want you to do these things...
   - I can't believe my brother Rooney was involved in such an incident. she's
-    gone now She said she would never come back. Hmm..
+    gone now She said she would never come back. Hmm...
   - My name is <Louis Keraldin> who runs a general store in the city of Plaline.
     Even though he is also called handsome Lou. ha ha ha.
-  - come again next time! If you become a regular, I will make it cheaper..
+  - come again next time! If you become a regular, I will make it cheaper...
   - All cadets wishing to assist, from the moment you choose to assist, you will
     be filled with only blessings.
   - The karma you have accumulated is not lost by your actions. Continuous
@@ -1022,7 +1023,7 @@ strings:
     weather. heh heh heh This is the most rewarding part of making this
     observatory.
   - I'm the astronomer Neue Hedleton who built and runs this observatory.
-  - Farewell.. Your future is bright. heh heh heh
+  - Farewell... Your future is bright. heh heh heh
   - hello. Welcome to Plaline Government Office.
   - To the left of the government office is the library with the business books
     of the government office, and to the right is the reception desk with
@@ -1072,7 +1073,7 @@ strings:
     to see them disappear like that.
   - It's called "Radion Angamel". People say I'm the great sage. I'm just an old
     man who has lived many years...
-  - Hey... um... no.. good bye...
+  - Hey... um... no... good bye...
   - Let's open sashimi, sashimi. Let's grab some rice! Chobaaaaap!!
   - After slicing the flesh thickly like this, grab a handful of pickled rice,
     put wasabi on it, and put the flesh on it... heh heh.
@@ -1099,9 +1100,9 @@ strings:
   - Well, that's what you have to do. No choice, hehe.
   - It's hard to see our high-dwarpets the same as regular dwarves. Even
     comparing them to us is disgusting.
-  - me? who am i Listen well. I'm a dwarf, why do you hate me, hehehe. okay?
+  - me? who am I Listen well. I'm a dwarf, why do you hate me, hehehe. okay?
   - bye.
-  - Believe in ancient miracles.. Long believe what. Someone to play with me,
+  - Believe in ancient miracles... Long believe what. Someone to play with me,
     stick here.
   - Come on, do anything. Can it be done? hehehe
   - What? What did you come to me for? yes? Are you surprised with me? ahhh
@@ -1110,11 +1111,11 @@ strings:
     of sophistication.
   - My name is <Ann Feltrot>, a guide in Sain City. She also manages Lysis'
     garden.
-  - This is Sein City, the city of holy morning.\n It's a peaceful and beautiful
+  - This is Sein City, the city of holy morning.\nIt's a peaceful and beautiful
     city, isn't it? I'm so proud to be born here.\nBut there are a lot of scary
     monsters outside the town.
   - It's not too late to go out of town after getting enough information while
-    walking around town.\n It's better to meet all the merchants and prepare for
+    walking around town.\nIt's better to meet all the merchants and prepare for
     your trip.
   - Everything you want is here. Come to Bill's general store.
   - What can you do to help?
@@ -1178,9 +1179,10 @@ strings:
     the greatest destructive power, and the greatest splendor. Do you think so
     too?
   - My name is <Hee-Ryu>, a master from the Job Masters. I am in charge of being
-    the master of the magician profession, but this job is also tedious. Well..
+    the master of the magician profession, but this job is also tedious. Well...
   - The magician's light will always protect you!
-  - This <Saint Hall> is the best architecture in Madrigal.. blah blah blah blah.
+  - This <Saint Hall> is the best architecture in Madrigal... blah blah blah
+    blah.
   - Thanks for your efforts. Congratulations on the creation of a new guild.
   - uh? Are you not the head of a theater company or are there not 3 members of
     the company? Or, it seems that two days have not passed since you left or
@@ -1197,7 +1199,7 @@ strings:
   - I am an appraiser for rare or rare items. For now, it's just providing the
     information needed for the high-class collecting hobby.
   - I hope you have a nice day.
-  - ....
+  - ...
   - Madrigal Lab is the largest research institute in Madrigal located in St.
     Hall. Both the magician and the flight were developed at this institute.
   - My name is <Helton Mondugane>, who is a member of Madrigal Lab and is the
@@ -1208,7 +1210,7 @@ strings:
     City.
   - Please find our child! Please... please... find me... our... child... a
     little... heuk heuk
-  - My child is really pretty and cute.. Except for the loud and unique
+  - My child is really pretty and cute... Except for the loud and unique
     laughter...
   - My name is <Jeonghwa Song>, a resident of Sain City who moved to Sain City a
     few years ago. I was originally a foreigner, but this is how I settled.
@@ -1216,8 +1218,8 @@ strings:
   - Her healthy body makes for a healthy mind, and for that, Karin's food is
     perfect. cancer.
   - What do you think you can do?
-  - I don't like the bulge, nor Bill.. My daughter likes a guy like that.. She's
-    upset and going crazy. How I Raised Tina...
+  - I don't like the bulge, nor Bill... My daughter likes a guy like that...
+    She's upset and going crazy. How I Raised Tina...
   - My name is Karin Sharaphoban, who runs a food store in Sain City. How. Tina,
     the most beautiful woman in Sain City, is my daughter. ho ho ho.
   - Goodbye, you should eat well. that's how you get stronger
@@ -1245,8 +1247,8 @@ strings:
   - My name is Martin Scorsese, who runs a magic shop in Sain City. He is also
     the president of the Saint Hall Magic Research Society. heh heh heh
   - good luck May the magical dawn shine upon you.
-  - oh! Cool.. Wow! i want something like that too
-  - Hehehe. i like that Unusual things, things that others don't have... and
+  - oh! Cool... Wow! I want something like that too
+  - Hehehe. I like that Unusual things, things that others don't have... and
     pretty girls! oh heh
   - I call it <Mayoon Song>, nice to meet you. You might think that young people
     are spoiled, but this is my style. Please understand.
@@ -1258,8 +1260,8 @@ strings:
   - I am a descendant of <Lilip>. Currently, she is learning station management
     from Tina. What is my name? It's called "Parinne Hoavent".
   - We realize customer satisfaction with exceptional service. Sain City Station!
-  - It's kind of weird.. the front and back don't match at all... um... (talking
-    to myself)
+  - It's kind of weird... the front and back don't match at all... um...
+    (talking to myself)
   - (surprised) Oh! I didn't even know I was here to think. yes, nice to meet you
   - If I were to speak, I would say <Porgo Verdant>, the president of the Sain
     City Missing Child Association. heh heh heh.
@@ -1291,20 +1293,20 @@ strings:
   - Hey, this is a shield. shield? what? shovel? My, are you talking about Toda?
     That's, betrayal, betrayal.
   - This... such a bad guy... uh... ugh...
-  - Namba You. Oh, it's really Namba.. Did you just live by being deceived? It's
-    not Nambassam!!
+  - Namba You. Oh, it's really Namba... Did you just live by being deceived?
+    It's not Nambassam!!
   - I am currently practicing the next work <Nambasam>. Can't you feel my acting?
   - Our theater company <Pepo View> boasts the best. I'm sorry, but could you
     please stay out of the way? Because I'm practicing.
   - <Pepo View> is always with you.
   - Oh <Juriat> I want to break up with you now. Let me go. please...
   - <Juriat> You may close your window now. I can't see your window anymore.
-  - There's nothing I can do for you now. <Juriat>.... Hello...
+  - There's nothing I can do for you now. <Juriat>... Hello...
   - What can you do?
   - We are currently rehearsing the next work <Appearing with the Rain>. Can't
     you feel my acting?
-  - Heuk-heuk.. Are you saying that the diamond ring from <Scarlet Mohana> is so
-    good.. Heuk-heuk?
+  - Heuk-heuk... Are you saying that the diamond ring from <Scarlet Mohana> is
+    so good... Heuk-heuk?
   - My window will always be open. So that you will know as soon as you return...
   - Do you really have to leave? <Romao> I love you~~!
   - What can you do?
@@ -1364,7 +1366,7 @@ strings:
   - You can't do anything unless you bring the three jewels with emotions.
   - Whoever collects all the rubies will guide you to a special place.
   - Aren't you curious about what lies in the unknown area?
-  - Don't ask me to tell you anything.. What I want are three jewels with
+  - Don't ask me to tell you anything... What I want are three jewels with
     feelings. Only those who bring all of these can move to a special place.
   - Farewell, those who have the light of hope...
   - Collect all rubies. A great challenge awaits you.
@@ -1379,23 +1381,23 @@ strings:
   - If you collect songpyeon, I will give you beads~
   - If you bring 1000 Songpyeon, I'll give you a red marble~
   - My name is Evil Toby, the eldest of Iblis' brothers.
-  - Happy New Year.. Billion.. Isn't this...
+  - Happy New Year... Billion... Isn't this...
   - If you collect songpyeon, I will give you beads~
   - If you bring 600 Songpyeon, I'll give you orange beads~
   - My name is Evildori, the second of Iblis' brothers.
-  - Happy New Year.. Billion.. Isn't this...
+  - Happy New Year... Billion... Isn't this...
   - If you collect songpyeon, I will give you beads~
   - If you bring 300 Songpyeon, I'll give you yellow beads~
   - My name is Evilnana, the third of Iblis' brothers.
-  - Happy New Year.. Billion.. Isn't this...
+  - Happy New Year... Billion... Isn't this...
   - If you collect songpyeon, I will give you beads~
   - If you bring 100 Songpyeon, I'll give you a green marble~
   - I'm Evil Toby, the fourth of Iblis' brothers.
-  - Happy New Year.. Billion.. Isn't this...
+  - Happy New Year... Billion... Isn't this...
   - If you collect songpyeon, I will give you beads~
   - If you bring 50 songpyeon, I'll give you a blue marble~
   - My name is Evil Po, the youngest of Iblis' brothers.
-  - Happy New Year.. Billion.. Isn't this...
+  - Happy New Year... Billion... Isn't this...
   - If you collect the leaves, they will give you a maple leaf.
   - If you bring 100 leaves, I will give you a fir sapling.
   - I call it Autumn Event NPC01~
@@ -1457,7 +1459,7 @@ strings:
   - Nature is like life...
   - Lost saplings have mystical powers. Double-clicking on a sapling will give
     you a nice gift or a young sapling...
-  - Hello.. I am the watchman who protects the green forest..
+  - Hello... I am the watchman who protects the green forest...
   - Goodbye if you don't want to help
   - Nature should be loved and cherished
   - This sapling is specially ordered... Double-clicking will give you a gift or
@@ -1617,12 +1619,12 @@ strings:
   - normal speech bubble
   - I am the Hostess who is running the Prepaid Card event.\nTo celebrate the
     opening of our prepaid cards in Target and Staples, we are running an event!
-  - Here is how the event works :\nBuy a gPotato prepaid card at Target or
-    Staples.  Go to our website and redeem the prepaid card for gPotatoes. At
-    the end of the redemption process, choose a bonus item.  A special gift box
-    will be delivered to your inventory!\nOnce you get the gift box, come back
-    to me, and tell me you wish to ��Redeem Gift��.  I will then help you open
-    your gift box, giving you a special bonus item!
+  - Here is how the event works:\nBuy a gPotato prepaid card at Target or
+    Staples. Go to our website and redeem the prepaid card for gPotatoes. At the
+    end of the redemption process, choose a bonus item. A special gift box will
+    be delivered to your inventory!\nOnce you get the gift box, come back to me,
+    and tell me you wish to "Redeem Gift". I will then help you open your gift
+    box, giving you a special bonus item!
   - farewell speech bubble
   - What can I do for the weaver...
   - I recently went to a festival with a weaver. It was fun to be able to sell
@@ -1787,11 +1789,11 @@ strings:
   - If you feel better, please help.
   - The monsters stole the raw materials. Someone must have planned it!
   - Yesterday, the monsters broke into the house and stole the brewing
-    machine..\nIt's before the festival...ah
+    machine...\nIt's before the festival...ah
   - My name is Augustine. Help. My brewing skills are also famous in madrigals.
     I'm too busy to be away.
   - I want you to change your mind. There is a reward that can be exchanged for
-    raw materials. i need it fast
+    raw materials. I need it fast
   - Adventurers!! Please listen to me!!
   - If I don't make a deal with him...
   - My name is Pixie Rose. It's a secret, but I'm a magical girl...
@@ -1823,7 +1825,7 @@ strings:
   - We will take you to your desired destination safely and quickly.
   - hello. My name is Lorraine, who is helping all guild members move quickly
     and safely.
-  - Have a nice trip....
+  - Have a nice trip...
   - Get the guild's symbol hideout
   - Everyone wants to have at least one social space.
   - hello! I am a guild house manager who provides shelters to all guilds.
@@ -1849,7 +1851,7 @@ strings:
   - We will take you to your desired destination safely and quickly.
   - hello. My name is Velocia, who is helping all guild members move quickly and
     safely.
-  - Have a nice trip....
+  - Have a nice trip...
   - If you want a powerful weapon, come to me~
   - There seems to be no end to research on making powerful weapons... huh...
   - My name is Radian, a smelting expert who boasts the skills to make weapons
@@ -1859,7 +1861,7 @@ strings:
   - When it comes to love, it doesn't just apply to love. Thinking of your
     family, friends, and colleagues is also part of love, so keep that in mind.
   - I can feel it... Affection revolves around this town
-  - I am the rumored cupid god��
+  - I am the rumored cupid god
   - ardu
   - Happy new year everyone
   - Do you have a Wansonubi coupon? come to me!
@@ -1976,11 +1978,11 @@ strings:
     expert Laia!
   - I can't live without jewels, I really can't live~
   - I... build... a house... Is there anything you want me to do...?
-  - Chatting with friends... having a party... The mini-room is a great space..
+  - Chatting with friends... having a party... The mini-room is a great space...
     I'll invite you too? I'm shy, but I'm not going...
   - Ellyun's tree is very good for building a house. If you say it... I will
     build any house.
-  - It's so hard to talk to people. I want to go home quickly..
+  - It's so hard to talk to people. I want to go home quickly...
   - there you! Are you still fighting with your guild members outside in the
     cool air?
   - A guild should have at least one guild house, wouldn't it be like, 'Oh, you
@@ -2224,7 +2226,7 @@ strings:
   - Please help me. I think my dad melted and disappeared.
   - If there is a golden snow crystal, I will exchange it for a useful gift~
   - The golden snow crystals are so pretty~
-  - Goodbye..
+  - Goodbye...
   - Fighting at the forefront of the battlefield, we are brave mercenaries!
   - There is no time and there is a lot to do.
   - Do you want to become a Mercenary? Then join our Mercenary League.
@@ -2238,7 +2240,7 @@ strings:
   - I am the ambassador and training instructor of the assist school that
     conveys the will of Lysis to the world.
   - May Lysis' blessings be with you wherever you go...
-  - Lightning-like movement! Speed ??like the wind! This is our Acrobat!
+  - Lightning-like movement! Speed like the wind! This is our Acrobat!
   - Aren't you tired already?
   - Our Acrobat Federation is the place where the fastest and most agile people
     in the world gather. You look a little dull... but I'll take it if you want.
@@ -2282,7 +2284,7 @@ strings:
     speed!
   - This body is said to be the head of the Acrobat group, each with its own
     unique personality, no, the Master, Pyre.
-  - Agility enough to run on a feather! Speed ??enough to avoid even falling
+  - Agility enough to run on a feather! Speed enough to avoid even falling
     raindrops! Don't forget!
   - Heroes of Lysis! This is your chance to prove your bravery. Challenge
     yourself.
@@ -2349,7 +2351,7 @@ strings:
   - We will take you to your desired destination safely and quickly.
   - hello. My name is Bellisa, who is helping all guild members move quickly and
     safely. She is the twin sister of third-class veteran teleporter Velocia.
-  - Have a nice trip....
+  - Have a nice trip...
   - Help Eupressia, the paradise of plants. please
   - Eupressia is a plant paradise under the protection of Queen Entanis. But
     these days, unusual things are happening in Upressia. please help me
@@ -2361,8 +2363,8 @@ strings:
   - My name is Sanfres, I'm the captain of the aircraft in front of you,
     Sanfress. My twin brother, Sancherco, is also an airship captain like me.
   - Sanfres is like my life!
-  - Heuk-heuk, how good... Leo-sama..
-  - Leo, whom I long for has disappeared into this lake. How good.. uhhhhhhh..
+  - Heuk-heuk, how good... Leo-sama...
+  - Leo, whom I long for has disappeared into this lake. How good... uhhhhhhh...
   - My name is Raela. Hearing the rumor that Leo-sama was missing from this
     lake, he came here.
   - Clearly, there must be something in the lake...
@@ -2374,13 +2376,13 @@ strings:
     also lost his plane to the harpies... We don't know why.
   - Like mean harpies! I will definitely take revenge!
   - Rio...
-  - Our Rio-sama has disappeared into this lake. Hehehehe...Help me..
-  - I am not Raela. It's Laela's older sister Laila.. Our Leo-sama is a little
+  - Our Rio-sama has disappeared into this lake. Hehehehe...Help me...
+  - I am not Raela. It's Laela's older sister Laila... Our Leo-sama is a little
     cooler than Leo, and a little more intelligent.
-  - Because I don't like water.. Heukheuk..
+  - Because I don't like water... Heukheuk...
   - Ahh! Ahh! You look like these ugly harpies!
-  - Everyone is too much.. Abandoning me and running away.. I fell asleep on the
-    deck for a while and the crew all ran away and only the harpies were
+  - Everyone is too much... Abandoning me and running away... I fell asleep on
+    the deck for a while and the crew all ran away and only the harpies were
     infested. What?
   - My name is Thomas, the sailor of this Sanfres. But... I guess I'm not the
     only crew member in the airship, am I? Say no...
@@ -2393,8 +2395,8 @@ strings:
     into this lake looking for a woman of fantasy.
   - I hate sharks~~!
   - Whoops! These naked harpies! please go away!
-  - Everyone is too much.. Abandoning me and running away.. I fell asleep on the
-    deck for a while and the crew all ran away and only the harpies were
+  - Everyone is too much... Abandoning me and running away... I fell asleep on
+    the deck for a while and the crew all ran away and only the harpies were
     infested. What?
   - My name is Smith, the crew of this Sancherco. But... I guess I'm not the
     only crew member in the airship, am I? Say no...
@@ -2415,7 +2417,7 @@ strings:
   - I am Nerko, who will become the hero of Sain City! Would you like to look
     good on me?
   - Good bye! When I become a hero later, I must come to play~
-  - I can't remember..
+  - I can't remember...
   - what? Is there anything you want to say to me?
   - Who? What did you just say?
   - My name is Hael. I'm interested in the sudden increase in monsters, and I
@@ -2433,7 +2435,7 @@ strings:
     do?
   - Hey... Could you please listen to me?
   - My name is Nersha. I'm Nerko's younger brother, but I'm quiet.
-  - Please listen to me! I lost my favorite hairpin.. heuk heuk..
+  - Please listen to me! I lost my favorite hairpin... heuk heuk...
   - Iblis! You put such a curse on me! Aww... get hot!
   - Even if I look like this now, I am a famous hero in the past. If I looked at
     it recklessly, would it hurt a big nose?
@@ -2450,7 +2452,7 @@ strings:
     active even after Iblis has disappeared.
   - There are many powerful monsters in the Lysis Garden, so be especially
     careful.
-  - Phew.. After all, being a hero is a very busy job.
+  - Phew... After all, being a hero is a very busy job.
   - Busy busy! Ten bodies are not enough to help people in need here and there!
     Hey you! Why are you staring at me so blankly?
   - Are you really looking for the reincarnation of heroes?
@@ -2464,7 +2466,7 @@ strings:
   - Leonan? What happened?
   - My name is Elaine, who is the chairman of Dakorn Nature Love.
   - It's a big deal to not know that nature needs to be healthy for everyone to
-    coexist..!
+    coexist...!
   - ho ho ho! No one bothers to follow me all the way here, right? Hiton, I know
     she's pretty, really~
   - I'm roaming the Decanes dungeon right now to do some important research.
@@ -2474,7 +2476,7 @@ strings:
   - Say I am Einher, the reincarnation of a past psychic hero. ho ho ho! In
     terms of beauty or strength, I think I'm really perfect~~
   - I'm busy, so stop getting out of here! Don't disturb me anymore!
-  - The last practice.. All you need to do is complete this...
+  - The last practice... All you need to do is complete this...
   - go away! I mean, I really need to focus now. If I complete the last
     practice, I think I will be able to achieve the realization I was looking
     for.
@@ -2490,7 +2492,7 @@ strings:
   - Are you ready to join the competition?
   - hello? I'm managing the arena entry. Maybe you should join the game now, but
     haven't entered yet?
-  - How to win a battle...? Well..I'm the admission manager. I don't know..
+  - How to win a battle...? Well...I'm the admission manager. I don't know...
   - Then good luck~~!!
   - If you are going to the Madrigal market, please tell me~~!!
   - Wondering what kind of items there are in the market?
@@ -2608,8 +2610,8 @@ strings:
     adventurer's power~
   - Want to test your bravery? Then I'll give you a chance.
   - Only the brave can wield a powerful weapon.
-  - AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    !! help me!!!!!!
+  - AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!
+    help me!!!!!!
   - Could you help me find the missing note?
   - My name is Handel, the apprentice musician of the Madrigal Orchestra.
   - I think you should bring some more...
@@ -2665,14 +2667,14 @@ strings:
   - To get to this place, you need to be a little stronger.
   - It's reckless. I can't deal with them alone, so I can't let you in.
   - Unqualified persons cannot be brought in.
-  - You have not yet met the qualifications.. Come with the five colored gems..
-  - It's not enough, it's not enough.. You guys still lack enough to challenge
-    this place..
-  - Come, courageous ones.. awaiting your challenge..
+  - You have not yet met the qualifications... Come with the five colored gems...
+  - It's not enough, it's not enough... You guys still lack enough to challenge
+    this place...
+  - Come, courageous ones... awaiting your challenge...
   - Don't even think about going to this place if you're not ready. If your life
-    is precious... .
-  - Don't let me know.. I exist, but I don't exist.
-  - Goodbye..
+    is precious....
+  - Don't let me know... I exist, but I don't exist.
+  - Goodbye...
   - ho ho ho! No one is chasing me all the way here, right? Anyway, I know it's
     pretty and it's really
   - I'm working on a way to regenerate the tainted lysis trails. Please don't
@@ -2687,5 +2689,5 @@ strings:
   - May you continue to prosper!
   - It's called linen. I'm here to bless you.
   - Enjoy the 12th anniversary event!
-  - May the madrigal be blessed with you..
+  - May the madrigal be blessed with you...
   - ""
