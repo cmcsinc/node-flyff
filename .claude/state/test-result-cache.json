@@ -244,5 +244,9 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\moverBroadcast.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\database\\test\\migrations\\001_initial.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\vendor.service.test.ts": "fail"
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\vendor.service.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\questText.loader.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\items.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\handlers\\rangeAttack.handler.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\rangeAttack.service.test.ts": "pass"
 }
