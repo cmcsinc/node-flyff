@@ -112,6 +112,24 @@ export function parseTxtTxt(content: string): Map<string, string> {
   return out;
 }
 
+/**
+ * Resolve a cell that may be numeric OR a Flyff symbol (`WT_RANGE_BOW`,
+ * `DST_STR`, `JOB_VAGRANT`...) to its numeric value via a defines map. `=`
+ * is treated as absent (it is resolved to the prior row's literal by
+ * {@link parsePropTable} before reaching here, but defensive). Returns
+ * `undefined` when the token is absent or has no defines entry -- the caller
+ * decides whether that means "skip" vs "0".
+ */
+export function symbol(
+  defines: Map<string, number>,
+  token: string | undefined,
+): number | undefined {
+  if (!token || token === '=' || token === '') return undefined;
+  const n = Number(token);
+  if (Number.isFinite(n)) return n;
+  return defines.get(token);
+}
+
 /** Parse a numeric cell, returning `fallback` when absent / non-numeric. */
 export function num(row: Row, col: string, fallback = 0): number {
   const v = row[col];

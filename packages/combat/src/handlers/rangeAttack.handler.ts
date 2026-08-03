@@ -1,15 +1,23 @@
 /**
  * RANGE_ATTACK handler -- `PACKETTYPE_RANGE_ATTACK` (0x00ff0012).
  *
- * The ranged twin of {@link MeleeAttackHandler}. Same C->S body as melee
- * (`dwAtkMsg, objid, nParam2, nParam3` + trailing `fVal` under `__HACK_1023`,
- * active in v19). `fVal` is consumed to keep the stream aligned but otherwise
- * unused (anti-cheat echo of the weapon's fAttackSpeed).
+ * `DPSrvr::OnRangeAttack` (DPSrvr.cpp:4296) reads a 4-DWORD body:
+ *   `ar >> dwAtkMsg >> objid >> dwItemID >> idSfxHit;`
+ * This is NOT the melee body -- melee (`OnMeleeAttack`) reads `dwAtkMsg, objid,
+ * nParam2, nParam3, fVal` (5 fields, the last a `__HACK_1023` float). The range
+ * packet has no `fVal`. The Neuz send confirms it: `CDPClient::SendRangeAttack`
+ * (DPClient.cpp:9852) writes `dwAtkMsg << objid << dwItemID << idSfxHit`.
  *
- * The client sends RANGE_ATTACK (not MELEE_ATTACK) when the equipped weapon is a
- * bow, so this is the distinct ranged auto-attack path. `idSfxHit` is derived
- * from `nParam3`'s HIWORD -- the same field the melee snapshot uses to drive the
- * peer hit SFX -- so the ranged echo carries a projectile SFX id.
+ * Reading the melee layout here over-runs the 16-byte payload by 4 bytes; the
+ * trailing `readFloat()` trips `PacketReader.checkBounds`, throws `PacketError`,
+ * and the handler swallows it -- so the swing never reaches the service and
+ * ranged damage never lands.
+ *
+ * `dwItemID` is the bow's item id (passed to `DoAttackRange` for the weapon-type
+ * gate); `idSfxHit` is the projectile/hit SFX index. Neither is the melee
+ * `nParam2`/`nParam3`. The peer broadcast (`CUserMng::AddRangeAttack`,
+ * User.cpp:4846) is a DIFFERENT 5-field shape -- `dwAtkMsg, objid, nParam2,
+ * nParam3, idSfxHit` -- remapped at broadcast time (see {@link RangeAttackFrame}).
  *
  * @module handlers/rangeAttack.handler
  */
@@ -47,18 +55,17 @@ export class RangeAttackHandler {
     }
 
     try {
+      // 4-DWORD body per DPSrvr.cpp:4298-4303 / DPClient.cpp:9855.
       const dwAtkMsg = reader.readDword();
       const objid = reader.readDword();
-      const nParam2 = reader.readLong();
-      const nParam3 = reader.readLong();
-      reader.readFloat(); // fVal -- __HACK_1023 anti-cheat; unused until enforced
-      Validate.dword(dwAtkMsg);
+      const dwItemID = reader.readDword();
+      const idSfxHit = reader.readDword();
       Validate.dword(objid);
-      // HIWORD(nParam3) is the peer hit-SFX id (same field the melee snapshot
-      // reads); pass it through as the ranged projectile SFX. >>>0 keeps it an
-      // unsigned DWORD for the serializer.
-      const idSfxHit = (nParam3 >>> 16) & 0xffff;
-      const frame: RangeAttackFrame = { dwAtkMsg, objid, nParam2, nParam3, idSfxHit };
+      // Broadcast shape per AddRangeAttack (User.cpp:4850): the server remaps
+      // the received body -- nParam2 carries dwItemID, nParam3 is hardcoded 0,
+      // idSfxHit passes through as a full DWORD (NOT the HIWORD the old code
+      // extracted from a non-existent nParam3).
+      const frame: RangeAttackFrame = { dwAtkMsg, objid, nParam2: dwItemID, nParam3: 0, idSfxHit };
       const outcome = this.rangeAttackService.attack(player, frame);
       if (!outcome.ok) {
         logger.debug({ charId: player.m_idPlayer, reason: outcome.reason }, 'RANGE_ATTACK dropped');

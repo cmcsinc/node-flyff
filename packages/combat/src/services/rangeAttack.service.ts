@@ -42,7 +42,7 @@ export interface RangeAttackServiceDeps {
 
 export type RangeAttackOutcome =
   | { ok: true; reached: number }
-  | { ok: false; reason: 'invalid_target' };
+  | { ok: false; reason: 'invalid_target' | 'no_ranged_weapon' };
 
 export class RangeAttackService {
   private readonly serializer = new RangeAttackSerializer();
@@ -58,6 +58,16 @@ export class RangeAttackService {
   attack(player: CPlayer, frame: RangeAttackFrame): RangeAttackOutcome {
     if (frame.objid === NULL_ID) {
       return { ok: false, reason: 'invalid_target' };
+    }
+    // DoAttackRange weapon gate (MoverSkill.cpp:3666): reject if the equipped
+    // weapon is not a ranged type. Fires BEFORE the swing broadcast so a
+    // spoofed RANGE_ATTACK from a sword/bare-hand player emits nothing.
+    if (!this.deps.combatService.isRangedWeaponEquipped(player)) {
+      logger.warn(
+        { charId: player.m_idPlayer, objid: frame.objid },
+        'range attack rejected: no ranged weapon equipped',
+      );
+      return { ok: false, reason: 'no_ranged_weapon' };
     }
     const packet = this.serializer.build(player.m_idPlayer, frame);
     // Exclude the caster: C++ `AddRangeAttack` skips `USERPTR != pMover`. The

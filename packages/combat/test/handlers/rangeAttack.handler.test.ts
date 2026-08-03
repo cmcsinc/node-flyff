@@ -19,14 +19,13 @@ function mockSocket(state = SessionState.IN_WORLD) {
   };
 }
 
-/** Build the 20-byte RANGE_ATTACK body: dwAtkMsg, objid, nParam2, nParam3, fVal. */
-const payload = (dwAtkMsg: number, objid: number, nParam2: number, nParam3: number, fVal: number) => {
+/** Build the 16-byte RANGE_ATTACK body: dwAtkMsg, objid, dwItemID, idSfxHit. */
+const payload = (dwAtkMsg: number, objid: number, dwItemID: number, idSfxHit: number) => {
   const w = new PacketWriter();
   w.writeDword(dwAtkMsg);
   w.writeDword(objid);
-  w.writeLong(nParam2);
-  w.writeLong(nParam3);
-  w.writeFloat(fVal);
+  w.writeDword(dwItemID);
+  w.writeDword(idSfxHit);
   return w.build();
 };
 
@@ -36,28 +35,39 @@ const fakeSvc = (r: RangeAttackOutcome): RangeAttackService =>
 const player = { m_idPlayer: 42, m_bDead: false, isStunned: () => false } as unknown as CPlayer;
 
 describe('RangeAttackHandler', () => {
-  it('parses the 20-byte body and derives idSfxHit from HIWORD(nParam3)', () => {
+  it('parses the 16-byte body and remaps to the AddRangeAttack broadcast shape', () => {
     let got: RangeAttackFrame | null = null;
     const svc = {
       attack: (_p: CPlayer, f: RangeAttackFrame) => { got = f; return { ok: true, reached: 0 }; },
     } as unknown as RangeAttackService;
     const handler = new RangeAttackHandler(fakePm(player), svc);
-    // nParam3 = 0x00070003 -> HIWORD = 7 -> idSfxHit 7.
-    handler.handleRangeAttack(mockSocket() as never, new PacketReader(payload(35, 0x40000005, 0, 0x00070003, 2.0)));
-    assert.deepEqual(got, { dwAtkMsg: 35, objid: 0x40000005, nParam2: 0, nParam3: 0x00070003, idSfxHit: 7 });
+    // Received: dwAtkMsg=35, objid, dwItemID=431, idSfxHit=7.
+    // Broadcast (AddRangeAttack, User.cpp:4850): nParam2=dwItemID, nParam3=0, idSfxHit passthrough.
+    handler.handleRangeAttack(mockSocket() as never, new PacketReader(payload(35, 0x40000005, 431, 7)));
+    assert.deepEqual(got, { dwAtkMsg: 35, objid: 0x40000005, nParam2: 431, nParam3: 0, idSfxHit: 7 });
+  });
+
+  it('does NOT read a trailing fVal (range packet is 16 bytes, not the 20-byte melee body)', () => {
+    // A 16-byte buffer must parse cleanly. If the handler read a 5th float it
+    // would over-run -> PacketError -> silent drop (the original ranged-bug).
+    let called = false;
+    const svc = { attack: () => { called = true; return { ok: true, reached: 0 }; } } as unknown as RangeAttackService;
+    const handler = new RangeAttackHandler(fakePm(player), svc);
+    handler.handleRangeAttack(mockSocket() as never, new PacketReader(payload(35, 0x40000005, 431, 7)));
+    assert.equal(called, true, 'service must be reached on the 16-byte body');
   });
 
   it('destroys when not IN_WORLD', () => {
     const handler = new RangeAttackHandler(fakePm(player), fakeSvc({ ok: true, reached: 0 }));
     const sock = mockSocket(SessionState.CONNECTED);
-    handler.handleRangeAttack(sock as never, new PacketReader(payload(35, 1, 0, 0, 1)));
+    handler.handleRangeAttack(sock as never, new PacketReader(payload(35, 1, 0, 0)));
     assert.equal(sock._destroyed, true);
   });
 
   it('drops silently on rejected (NULL_ID target) outcome', () => {
     const handler = new RangeAttackHandler(fakePm(player), fakeSvc({ ok: false, reason: 'invalid_target' }));
     const sock = mockSocket();
-    handler.handleRangeAttack(sock as never, new PacketReader(payload(35, 0xffffffff, 0, 0, 1)));
+    handler.handleRangeAttack(sock as never, new PacketReader(payload(35, 0xffffffff, 0, 0)));
     assert.equal(sock._destroyed, false);
   });
 });

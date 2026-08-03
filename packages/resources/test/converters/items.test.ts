@@ -24,6 +24,7 @@ interface Item {
   item_kind3?: string;
   equip_slot?: number;
   stack_size?: number;
+  weapon_type?: number;
 }
 
 function loadArmors(): Item[] {
@@ -92,6 +93,38 @@ describe('item converter: icon filename populated', () => {
     const items = (armors.items ?? []) as Item[];
     const ponycat = items.find((it) => it.id === 4427);
     assert.equal(ponycat?.icon, 'itm_ArmCloMasBall05.DDS');
+  });
+});
+
+/**
+ * propItem `dwWeaponType` is a WT_* SYMBOL (WT_RANGE_BOW, WT_MELEE_YOYO...),
+ * not a number. The converter previously read it with `num()`, which returns 0
+ * for any symbol, so every weapon lost its type and the combat formula's
+ * `getWeaponATK` fell through its `default` sword-STR branch for ALL weapons --
+ * bows dealt sword damage, yoyos/knuckles/staves/wands likewise. Pinned on a
+ * known bow (Woodness Bow = II_WEA_BOW_WOODNE = 431) so a regression fails
+ * loudly. WT_RANGE_BOW=21 per defineAttribute.h.
+ */
+describe('item converter: weapon_type resolved from WT_* symbol', () => {
+  it('Woodness Bow (IK3_BOW) carries weapon_type=21 (WT_RANGE_BOW)', () => {
+    const weapons = parse(readFileSync(resolve(__dirname, '../../data/items/weapons.yml'), 'utf8'));
+    const items = (weapons.items ?? []) as Item[];
+    const bow = items.find((it) => it.id === 431);
+    assert.equal(bow?.name, 'Woodness Bow');
+    assert.equal(bow?.item_kind3, 'IK3_BOW');
+    assert.equal(bow?.weapon_type, 21, 'WT_RANGE_BOW');
+  });
+
+  it('every IK3_BOW resolves to WT_RANGE_BOW (21)', () => {
+    const weapons = parse(readFileSync(resolve(__dirname, '../../data/items/weapons.yml'), 'utf8'));
+    const items = (weapons.items ?? []) as Item[];
+    const bows = items.filter((it) => it.item_kind3 === 'IK3_BOW');
+    assert.ok(bows.length > 10, 'expected the full bow set');
+    assert.deepEqual(
+      bows.filter((it) => it.weapon_type !== 21).map((it) => it.id),
+      [],
+      'all bows must resolve to WT_RANGE_BOW',
+    );
   });
 });
 

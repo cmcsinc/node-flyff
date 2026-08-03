@@ -30,7 +30,7 @@ import {
   type Rng, type MeleeResult,
 } from '../combat/formulas';
 import { resolveSkillCast } from '../combat/skillFormulas';
-import { AF_MISS } from '../combat/tables';
+import { AF_MISS, WT_RANGE_BOW, WT_RANGE } from '../combat/tables';
 import { playerCombatant, moverCombatant } from '../combat/combatants';
 import type { ItemLookup } from '../combat/equipStats';
 import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR, EXP_TABLE } from '@flyff/entities';
@@ -136,6 +136,19 @@ export class CombatService {
   private readonly rng: Rng;
   constructor(private readonly deps: CombatServiceDeps) {
     this.rng = deps.rng ?? xRandomRng;
+  }
+
+  /**
+   * `DoAttackRange` weapon-type gate (`MoverSkill.cpp:3666`): the equipped
+   * weapon must be `WT_RANGE` or `WT_RANGE_BOW`, else the swing is rejected.
+   * Anti-cheat -- a player can spoof a RANGE_ATTACK packet while holding a
+   * sword; without this, the server would broadcast the projectile animation
+   * and apply damage on a weapon that cannot range. Bare-hand (BARE_HAND, sword
+   * type) correctly fails this gate.
+   */
+  isRangedWeaponEquipped(player: CPlayer): boolean {
+    const c = playerCombatant(player, this.deps.getItem);
+    return c.weapon.type === WT_RANGE_BOW || c.weapon.type === WT_RANGE;
   }
 
   /** Resolve a melee swing from `player` onto `targetObjid`. */

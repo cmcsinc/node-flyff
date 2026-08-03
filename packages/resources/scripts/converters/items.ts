@@ -11,7 +11,7 @@
 import { writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { stringify } from 'yaml';
-import { parsePropTable, parseDefines, parseTxtTxt, readSource, num, type Row } from './parse.js';
+import { parsePropTable, parseDefines, parseTxtTxt, readSource, num, symbol, type Row } from './parse.js';
 
 /** Flyff IK1_ kind -> output filename + schema `_kind`. null = skip row. */
 const KIND_BUCKETS: Record<string, { file: string; kind: string }> = {
@@ -123,6 +123,7 @@ function rowToItem(
   kind1: string,
   partsMap: Map<string, number>,
   dstMap: Map<string, number>,
+  wtMap: Map<string, number>,
 ): Record<string, unknown> {
   const abilMin = num(row, 'dwAbilityMin', 0);
   const abilMax = num(row, 'dwAbilityMax', 0);
@@ -192,8 +193,18 @@ function rowToItem(
       item.item_kind3 && fashionParts[item.item_kind3] !== undefined) {
     item.equip_slot = fashionParts[item.item_kind3];
   }
-  const weaponType = num(row, 'dwWeaponType', 0);
-  if (weaponType > 0) item.weapon_type = weaponType;
+  // Weapon type -- propItem `dwWeaponType` is a WT_* SYMBOL (WT_RANGE_BOW,
+  // WT_MELEE_YOYO...), not a number. `num()` returns 0 for any symbol, so every
+  // weapon previously lost its type and `sumEquipStats` fell back to the sword
+  // STR curve -- bows dealt sword damage, yoyos/knuckles/staves/wands likewise.
+  // Resolve via defineAttribute.h like the skills converter does. Gated to
+  // weapons: propItem's `=` inherit rule leaks the prior weapon's dwWeaponType
+  // onto every following armor/consumable/misc row, and C++ only reads it for
+  // IK1_WEAPON (the combat formula's getWeaponATK switch is weapon-only).
+  if (isWeapon) {
+    const weaponType = symbol(wtMap, row.dwWeaponType);
+    if (weaponType !== undefined) item.weapon_type = weaponType;
+  }
 
   // Flight props -- ride items only (Spec_Item cols 292-298, ProjectCmn.cpp:475-481).
   // Gated to IK1_RIDE because the propItem `=` inherit rule would otherwise leak a
@@ -339,6 +350,7 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
   const iiIds = parseDefines(defineItem, 'II_');
   const partsMap = parseDefines(defineNeuz, 'PARTS_');
   const dstMap = parseDefines(defineAttr, 'DST_');
+  const wtMap = parseDefines(defineAttr, 'WT_');
   const names = parseTxtTxt(txtTxt);
 
   let used = 0;
@@ -355,7 +367,7 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
     if (!bucket) { noBucket++; continue; }
 
     const name = NAME_OVERRIDES[row.szName] ?? names.get(row.szName) ?? row.dwID;
-    bucket.items.push(rowToItem(row, id, name, kind1, partsMap, dstMap));
+    bucket.items.push(rowToItem(row, id, name, kind1, partsMap, dstMap, wtMap));
     used++;
   }
 

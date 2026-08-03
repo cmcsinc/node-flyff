@@ -8,13 +8,14 @@ import type { CPlayer } from '@flyff/entities';
 
 const player = { m_idPlayer: 7, m_vPos: { x: 0, y: 0, z: 0 }, m_nZoneId: 1 } as unknown as CPlayer;
 
-function makeDeps(combatOutcome: CombatOutcome) {
+function makeDeps(combatOutcome: CombatOutcome, ranged = true) {
   const calls: { broadcast: number; resolved: number[] } = { broadcast: 0, resolved: [] };
   const zoneManager = {
     broadcastAround: () => { calls.broadcast++; return 3; },
   } as unknown as ZoneManager;
   const combatService = {
     resolveAttack: (_p: CPlayer, objid: number) => { calls.resolved.push(objid); return combatOutcome; },
+    isRangedWeaponEquipped: () => ranged,
   } as unknown as CombatService;
   return { deps: { zoneManager, combatService }, calls };
 }
@@ -46,5 +47,14 @@ describe('RangeAttackService', () => {
     const out = svc.attack(player, frame(0x40000005));
     assert.deepEqual(out, { ok: true, reached: 3 });
     assert.equal(calls.broadcast, 1);
+  });
+
+  it('rejects WITHOUT broadcasting when no ranged weapon is equipped (DoAttackRange gate)', () => {
+    const { deps, calls } = makeDeps({ ok: true, hit: true, damage: 5, killed: false }, false);
+    const svc = new RangeAttackService(deps);
+    const out = svc.attack(player, frame(0x40000005));
+    assert.deepEqual(out, { ok: false, reason: 'no_ranged_weapon' });
+    assert.equal(calls.broadcast, 0, 'no swing broadcast on a spoofed range attack');
+    assert.equal(calls.resolved.length, 0, 'no damage resolved on a spoofed range attack');
   });
 });

@@ -103,6 +103,8 @@ export const WT_MELEE_STAFF = 5;
 export const WT_MAGIC_WAND = 6;
 export const WT_MELEE_YOYO = 20;
 export const WT_RANGE_BOW = 21;
+/** Broad "ranged" category (defineAttribute.h). `DoAttackRange` accepts this OR `WT_RANGE_BOW`. */
+export const WT_RANGE = 8;
 
 // --- Attack types (`CalcATK` switch) -----------------------------------------
 export const ATK_GENERIC = 0;
