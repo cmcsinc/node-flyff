@@ -63,7 +63,7 @@ commands:
       - type: num
         value: -1
       - type: sym
-        value: 23684
+        value: 2950
       - type: num
         value: 5
       - type: num
@@ -77,7 +77,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 23684
+        value: 2950
       - type: num
         value: 5
   - cmd: SetEndRewardItem
