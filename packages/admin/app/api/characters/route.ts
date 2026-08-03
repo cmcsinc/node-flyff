@@ -16,7 +16,10 @@ const int = (max: number) => z.number().int().min(0).max(max);
 const PatchSchema = z.object({
   id: z.number().int().positive(),
   level: z.number().int().min(1).max(199).optional(),
-  exp: z.string().regex(/^\d{1,19}$/).optional(),
+  // The `exp` column is a `bigInteger` (migration 001) that drizzle declares as
+  // `text()`, so an untouched row reads back as a JS number while an edited one
+  // arrives as the digit string `percentToExp` produced. Coerce, then bound.
+  exp: z.coerce.string().regex(/^\d{1,19}$/).optional(),
   class: int(255).optional(),
   strength: int(65_535).optional(),
   stamina: int(65_535).optional(),
