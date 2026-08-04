@@ -5,10 +5,11 @@
 > checklist covers features not yet ported at all (wider scope).
 
 Generated 2026-07-23 from a full-source sweep (3 parallel domain maps + every
-`ponytail:` comment). Re-verified 2026-07-24 (57 items), and **re-verified again
-2026-08-01** against master `c9ae378` — 136 commits later — by 4 parallel
-read-only explorers covering all 16 sections. Compares the emulator against full
-retail v19.
+`ponytail:` comment). Re-verified 2026-07-24 (57 items), **re-verified 2026-08-01**
+against master `c9ae378` (136 commits later) by 4 parallel read-only explorers
+over 16 sections, and **targeted re-audit 2026-08-03** (4 parallel explorers —
+opcode gap, unstarted systems, slash commands, fix-first shortlist re-verify)
+which added §23-25. Compares the emulator against full retail v19.
 
 **Status legend**
 - ✅ DONE — implemented + passing on this device's checks (NOT user-confirmed)
@@ -24,8 +25,9 @@ a denser, line-level gap inventory than this checklist. When a line here says
 PARTIAL, the ponytail at the cited file:line usually names exactly what is
 missing. `grep -rn "ponytail:" packages/*/src` is the authoritative sweep.
 
-**Tally at this refresh** (206 tracked lines across 22 sections):
-✅ 123 · 🟡 48 · ❌ 23 · 🟥 8 · 🚫 4 (retired as not-gaps).
+**Tally at this refresh** (25 sections — sections 1-22 carry the 206-line tally
+✅ 123 · 🟡 48 · ❌ 23 · 🟥 8 · 🚫 4; §23-25 add ~167 opcode gaps + ~25 absent
+systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 
 ---
 
@@ -371,51 +373,235 @@ Emulator infrastructure with no C++ analogue.
 
 ---
 
-## Biggest gaps, ranked (re-ranked 2026-08-01)
+## 23. C→S OPCODE GAP *(new section 2026-08-03)*
+
+Full audit of v19 C++ `DPSrvr.cpp:122-579` `OnMsg` table (+`USESKILL` in
+`DPSrvrLux.cpp:32`) vs emulator `clientServer.ts` dispatch. **~228 C→S opcodes
+in C++; emulator routes 101, misses ~167.** Excludes S→C-only / IPC-only / the
+6 known-dead codes (already retired in `unimplemented-packets-audit` memory).
+
+### Declared-but-undispatched (cheapest — opcode value already pinned in `opcodes.ts`)
+
+| Opcode | hex | C++ handler | Purpose |
+|---|---|---|---|
+| `MAGIC_ATTACK` | `0x00ff0011` | `DPSrvr.cpp:223 OnMagicAttack` | Magic/spell attack swing — the one remaining combat path |
+| `PROPOSE` | `0x8FFFF000` | `DPSrvr.cpp:511 OnPropose` | Couple propose (string target) |
+| `REFUSE` | `0x8FFFF001` | `DPSrvr.cpp:512 OnRefuse` | Couple refuse |
+| `COUPLE` | `0x8FFFF002` | `DPSrvr.cpp:513 OnCouple` | Couple accept |
+| `DECOUPLE` | `0x8FFFF003` | `DPSrvr.cpp:514 OnDecouple` | Break couple |
+
+Snapshots `COUPLE_PROPOSE_RESULT/COUPLE_RESULT/DECOUPLE_RESULT/ADD_COUPLE_EXPERIENCE` (`0x9701-5`) are also already declared at `opcodes.ts:399-402` — someone pre-stubbed Couple for build but never wired dispatch.
+
+### Core holes (not subsystem-clustered, newly identified)
+
+`MELEE_ATTACK2` · `SFX_ID`/`SFX_CLEAR`/`SFX_HIT` · `TELESKILL` (blink) ·
+`RETURNSCROLL` (use return scroll) · `RESURRECTION_OK`/`RESURRECTION_CANCEL`
+(accept/cancel other-player resurrect) · `STATEMODE` · `MODIFYMODE` ·
+`TELEPORTER` (NPC teleporter UI) · `SETLODELIGHT` (set respawn point) ·
+`INC_STAT_LEVEL` · `SEND_TO_SERVER_CHANGEJOB` (packet-driven job change — note:
+dialog-driven path already works, see §14) · `SUMMONPLAYER`/`TELEPORTPLAYER`
+(GM teleport-target) · `PARTYSKILLUSE` · `QUERY_PLAYER_DATA2` (v2 of friend/guild
+peer-data) · `ADDAPPLETTASKBAR`/`REMOVEAPPLETTASKBAR`/`SCROLLTASKBAR` (applet
+taskbar grid — §15 notes applet grid absent) · `CTRL_COOLTIME_CANCEL` ·
+`CORR_REQ`/`PLAYERCORR2` (position correction) · `DO_USE_ITEM_TARGET`/
+`DO_USE_ITEM_INPUT` (identify / Azria scroll) · `SET_HAIR`/`CHANGEFACE`
+(cosmetic) · `AWAKENING`/`PIERCING`/`PIERCINGREMOVE`/`PIERCING_SIZE`/
+`CHANGE_ATTRIBUTE`/`REMOVE_ATTRIBUTE`/`SMELT_SAFETY`/`UPGRADEBASE`/`BARUNA`/
+`PACHETTYPE_ITEMTRANSY` (item-upgrade side-channels — §8) · `PET_RELEASE`/
+`USE_PET_FEED`/`MAKE_PET_FEED`/`CLEAR_PET_NAME`/`TRANSFORM_ITEM` (pets — §rank-6)
+· `AVAIL_POCKET`/`MOVE_ITEM_POCKET` (pocket tabs).
+
+### Subsystem clusters (count of undeclared opcodes)
+
+Guild bank 5 · Guild combat 13 · 1v1 guild combat 9 · Secret room 9 ·
+Rainbow race 5 · Housing 5 · Guild house 7 · Ultimate weapon 6 · Minigames 8 ·
+Pet/feed 8 · Guild core (invite/logo/notice/contribution/ranking) 6 ·
+Lord/election 5 · Honor 2 · Collecting 2 · Wanted-list 4 · Chatting-room 4 ·
+Summon-friend/party 5 · Arena (enter/exit) 2 · `QUERYPOSTMAIL` (deliberate skip,
+opcodes.ts:18).
+
+> **`MOVEBANKITEM` caveat:** the `opcodes.ts` comment claims it is an unregistered
+> C++ stub, but `ON_MSG` at `DPSrvr.cpp:169` does register `OnMoveBankItem`.
+> Re-check the handler body before trusting either claim.
+
+---
+
+## 24. UNSTARTED FEATURE SYSTEMS *(new section 2026-08-03)*
+
+Whole systems entirely absent from the emulator (zero code path) or stubbed at
+the protocol layer only. Decomposes the existing biggest-gap ranks 1, 6, 10 into
+separable subsystems and adds systems never previously tracked.
+
+### Player-facing / signature (ranked by blocking + visibility)
+
+| System | C++ source | Emulator | Blocks |
+|---|---|---|---|
+| **Guild sub-tree** (9 subsystems) | `guild.cpp` + 8 siblings | absent | guild chat `/g`, guild-party, guild-war revive, guild bank, guild quest, guild cloak flag, guild non-tradeable, dialog predicates |
+| **Lord / Election / Lord skills** | `lord.cpp`, `slord.cpp`, `lordskill.cpp`, `election.inc`, `lordevent.inc` | absent | Lord-controlled Tax rate, lord-skill server-wide buffs, lordevent |
+| **Couple / Marriage** | `couple.cpp`, `couplehelper.cpp`, `couple.inc` | **protocol-stubbed** (opcodes declared, undispatched — see §23) | couple quest conditions, `IK3_COUPLE_BUFF` items, propKarma branch |
+| **Instance / Party Dungeon** | `InstanceDungeonBase.cpp`, `InstanceDungeonParty.cpp`, `PartyDungeon.lua` | absent | `propQuest-DungeonandPK.inc` (unprocessed), `propQuest-Scenario.inc`, endgame PvE |
+| **Event / Live-ops** | `EventLua.cpp`, `flyffevent.cpp`, `EventMonster.cpp`, `spevent.cpp` + 4 lua + `propEvent.inc`/`propDropEvent.inc`/`randomeventmonster.inc` | absent | every data-driven drop/spawn/exp event — core live-ops tool |
+| **Pets** (5 subsystems) | `pet.h` `PETLEVEL` enum, egg→D-C-B-A-S | absent | `dwPetId` field always `NULL_ID` (`mover.serializer.ts:78`); collecting/auto-loot |
+| **Rainbow Race** | `RainbowRace.cpp` + siblings | absent | standalone minigame |
+| **Colosseum** | `Colosseum.cpp`, `Colosseum.lua` | absent | instanced PvP arena |
+| **Secret Room** | `SecretRoom.cpp`, `SecretRoomDBMng.cpp` | absent | guild-vs-guild war; Tax revenue |
+| **Housing** | `Housing.cpp`, `HousingDBCtrl.cpp` | absent | standalone |
+| **Guild House** | `GuildHouse.cpp` + dialog `mafl_guildhousesale.yml` (ships!) | absent (dialog predicates return safe constants) | guild-house ownership |
+| **7 MiniGames** | `MiniGame{Arithmetic,Diceplay,Gawibawibo,Ladder,Pairgame,Stopwatch,Typing}.cpp` | absent | FunnyCoin economy |
+| **Quiz Event / Quiz World** | `Quiz.cpp`, `QuizEvent.lua` | absent | standalone event |
+| **Fishing** | `propItemEtc.inc` rods/bait, `IK3_FISHROD` | absent | self-contained gathering skill |
+| **Auction House** | `auction.cpp` | absent | cross-player economy |
+| **Wanted List (bounty)** | `WantedList.cpp`, `WantedListSnapshot.cpp` | absent | PvP incentive loop |
+| **Honor / Title** | `honor.cpp`, `defineHonor.h` | absent | title-gated dialog conditions |
+| **Ultimate Weapon** | `UltimateWeapon.cpp` | absent | endgame weapon progression; ultimate-piercing column |
+| **Collecting (auto-loot pet)** | `collecting.cpp`, `collecting.inc` | absent | loot-pet economy sink |
+| **Rangda (world boss)** | `rangda.cpp` | absent | world-boss PvE loop |
+| **Environment / Weather / Day-Night** | `Environment.cpp`, `weather.cpp`, `Light.cpp`, `SkyBox.cpp` | absent | ambient only |
+
+### Economy / sink
+
+| System | C++ source | Emulator | Blocks |
+|---|---|---|---|
+| **Tax System** | `Tax.cpp`, `Tax.lua` | absent (one stale comment at `shop.service.ts:106`) | downstream of Lord+SecretRoom; **upstream of every shop transaction** — the cost multiplier |
+| **Funny Coin** | `FunnyCoin.cpp` | absent | minigame currency spend |
+| **PCBang bonuses** | `PCBang.cpp` | absent | region-locked; N/A for most deployments |
+
+### Stubbed / partial
+
+| System | C++ source | Emulator | Blocks |
+|---|---|---|---|
+| **Pocket (extra inv tabs)** | `pocket.cpp`, `CPocketController` | stub — `mover.serializer.ts:47` writes 3 zero flag bytes for absent CPocketController | bank overflow, premium-bag economy |
+| **BeautyShop / SkinChange / LookChange** | `character.inc` `MMI_BEAUTYSHOP*`/`MMI_LOOKCHANGE` | absent — `characterInc.loader.ts:32-45` does not know these MMI constants → parse to undefined | cosmetic coupon economy |
+| **NPC Marking (minimap markers)** | `character.inc` `MMI_MARKING` | constant only (loader:8), no service consumes it | navigation UX |
+| **Guild Banking** | `character.inc` `MMI_GUILDBANKING` | constant only (loader:15) | guild-shared bank |
+
+---
+
+## 25. SLASH COMMANDS *(new section 2026-08-03)*
+
+Full audit of `FuncTextCmd.cpp:5157-5522` ON_TEXTCMDFUNC table vs
+`command.service.ts` + `adminCommand.service.ts`. **Player: 3/25 ported
+(`/w`, `/say`, `/s`). GM: ~35 ported, ~60 missing.**
+
+### Player commands
+
+- **Ported:** `/w` whisper, `/say`, `/s` shout
+- **Blocked on subsystems:** `/p` party chat, `/g` guild chat, `/partyinvite`, `/guildinvite`, `/campusinvite`
+- **Client-only `TCM_CLIENT` (no server work):** 17 preference/display toggles — `/pos`, `/ti`, `/ta`+`/tr`, `/wa`+`/wr`, `/ma`+`/mr`, `/ga`+`/gr`, `/ca`+`/cr`, `/ha`+`/hr`, `/ig`+`/uig`+`/igl`. Not gaps
+
+### Highest-value GM commands still missing (no new subsystem needed)
+
+- `/cjob` changejob — needs `characterRepo.updateJob` (high test value)
+- `/mute` `/talk` `/nota` `/freeze` `/nofr` — target-named mode pipeline
+- `/slv` `/slvAll` `/InitSE` — skill level (skill system exists)
+- `/setskilllevel`-family + `/ci2` secondary create-item
+
+### Blocked GM commands (need their subsystem first)
+
+`/cg` `/dg` `/gstat` (guild); `/plv` (party); `/gcopen`/`gcclose`/`gcin`/`gcNext` (guild combat); `/pl` `/pe` `/mpf` `/cpn` (pets); `/Propose`/`Couple`/`Decouple` (couple); `/ranking` (guild ranking); `/SecretRoom*` (8); `/BuyGuildHouse`/`/GuildHouseUpkeep`; all Lord/Election; `/ritem` `/pier` `/gro`/`iro`/`sro` (item random-option).
+
+---
+
+## Biggest gaps, ranked (re-ranked 2026-08-03)
 
 The 2026-07-23 ranking is obsolete — items 1, 2, 6, and 8 shipped, and 3 partly
-shipped. Current ranking:
+shipped. Current ranking (re-ranked 2026-08-03 after §23-25 audits):
 
-1. **Guild** — the largest wholly unstarted system. Blocks guild chat/`/g`,
-   guild-party, guild-war revive, guild bank, guild quest conditions, the
-   `idGuild` non-tradeable flag, and several dialog predicates that currently
-   return safe constants. No tables exist.
+1. **Guild** — largest wholly unstarted system; §24 decomposes it into **9
+   separable subsystems** (core roster, `/g` chat, guild bank, guild quest, guild
+   war, guild combat 1v1, guild house, guild party flag, guild cloak flag). No
+   tables exist. ~30 undeclared C→S opcodes cluster here.
 2. **Flying + mounts** — signature Flyff mechanic, entirely absent, and it is
    the blocker behind PLAYERANGLE being accepted-and-discarded plus the
    flying-mismatch targeting deferral.
 3. **Skill effect breadth** — AoE and projectile remain 🟥 (DoT, multi-hit, and
-   buff skills have since shipped).
-4. **Zone transitions / collision / world map** — one zone ships; no REPLACE
-   cross-world handoff; no terrain or speed enforcement.
-5. **Vending / private shop** — **shipped 🟡 2026-08-02**: 6-opcode PVENDOR port
-   (open/register/unregister/query/buy/close + disconnect), dupe-safe buy with
-   WAL both sides, peer ADD_OBJ title. C++ guards for unported subsystems
-   (chaotic-Propensity, guild-war/miniroom worlds, fly, bound/guild-cloak/ride
-   flags, chatting room, NPC-radius) ponytail'd. See §10.
-6. **Pets** — never audited in this checklist, entirely absent, and a signature
-   v19 system (`PET_RELEASE`/`USE_PET_FEED` opcodes are not even declared).
-7. **Weight + durability decay** — both parsed/stored and consumed by nothing;
-   durability's absence makes the shipped `RepairService` a no-op sink.
-8. **Piercing / sockets / awakening** — zero-placeholder writes only.
-9. **Aggro table + flight/collision AI** — plus the data-starvation bugs below.
-10. **Mining / gathering, day-night / weather** — small self-contained systems,
-    never started.
+   buff skills have since shipped). `MAGIC_ATTACK` opcode declared but still
+   undispatched (§23).
+4. **Lord / Election / Tax** — v15 signature player-elected Lord; controls the
+   Tax rate that gates every shop cost. Entirely absent, 4 C++ files + 2 inc.
+5. **Event / Live-ops** — 4 C++ source + 4 lua + 3 `.inc` unparseable; without
+   it, the server cannot run any temporary event (the primary live-ops tool).
+6. **Couple / Marriage** — opcodes + snapshots already declared (pre-stubbed),
+   only dispatch + service + DB missing; couple skills + `IK3_COUPLE_BUFF` items
+   + propKarma branch downstream.
+7. **Pets** — entirely absent; §24 decomposes into 5 subsystems. `PET_RELEASE`/
+   `USE_PET_FEED` opcodes not even declared.
+8. **Instance / Party Dungeon** — v19 endgame PvE; blocks `propQuest-Scenario.inc`
+   + `propQuest-DungeonandPK.inc` (both ship unprocessed).
+9. **Zone transitions / world map** — one zone ships; no REPLACE cross-world
+   handoff; no terrain or speed enforcement. (`Vending` dropped off — shipped 🟡
+   2026-08-02, see §10.)
+10. **Weight + durability decay + piercing/sockets/awakening + BeautyShop** —
+    parsed/stored and consumed by nothing; durability's absence makes the shipped
+    `RepairService` a no-op sink. The full item-upgrade side-channel
+    (awakening/piercing/attribute-change/smelt/baruna/transy) is ~10 undeclared
+    opcodes (§23).
+
+### Newly affordable "wiring-only" wins (small effort, no new subsystem)
+
+1. **`MAGIC_ATTACK` dispatch** — opcode declared `0x00ff0011`, parallel to the
+   shipped MELEE/RANGE paths. Closes the last combat-path hole.
+2. **Couple 4-opcode dispatch** — opcodes + snapshots already declared; service
+   + repo + dispatch missing (rank-6 above).
+3. **`partyQuery` wiring** — `compose.ts:396-405` QuestService ctor omits it;
+   one-line fix unblocks quest party conditions (last survivor of fix-first #2).
+4. **`IK3_TEXT_DISGUISE` aggro buff check** — `ai.system.ts:460 isHidden()` still
+   MODE-only; buffs shipped long ago (last survivor of fix-first #10).
+5. **Flee/heal AI `healCadenceMs`** — converter parses `Recovery` but never
+   threads the cadence field; defaults 1000ms (fix-first #6 partial).
 
 ### Fix-first shortlist (small effort, disproportionate effect)
 
 These are *implemented but inert*, so each is a wiring or data fix rather than a
-feature build:
+feature build. **Re-verified 2026-08-03** — 7 of 10 fixed since the 2026-08-01 audit:
 
-1. `shopCostRate` omitted from the `ShopService` ctor — `compose.ts:803-807`
-2. `partyQuery` never supplied, so quest party conditions fail closed — consumed `quest.service.ts:145`
-3. `CHRSTATE_BITS.SLEEP` does not exist — sleep never gates (`player.ts:622` vs `dst.ts:112-119`)
+1. ~~`shopCostRate` omitted from the `ShopService` ctor~~ — **fixed** `compose.ts:855` passes `config.world.shopCostRate`
+2. `partyQuery` never supplied, so quest party conditions fail closed — **STILL BROKEN**: `compose.ts:396-405` `new QuestService({...})` has no `partyQuery`; consumer `quest.service.ts:155` `if (this.deps.partyQuery)` stays falsy
+3. ~~`CHRSTATE_BITS.SLEEP` does not exist~~ — **fixed** `entities/src/constants/dst.ts:119` `SLEEP: 0x00200000` (`CHS_SLEEPING`)
 4. ~~`BANK_DEPOSIT`/`BANK_WITHDRAW` have no replayer~~ — **fixed 2026-08-02** (§16); five delta types converted to absolute rows, `BANK_SLOT`/`BANK_GOLD`/`PK_KILL` replayers added, coverage now test-guarded
-5. Duel does not bypass the PK-consent gate — `combat.policy.ts:51`
-6. Flee + self-heal AI are fully coded but fed zeros — no converter exports `propMoverEx` `SetRunAway`/`Recovery`
-7. `dwReAttackDelay` reads propMover col 34 instead of col 35
-8. Blocklist `setBlocked` has no calling opcode
-9. Movement is not stun-gated — `movement.service.ts:88,103,113,132`
-10. `IK3_TEXT_DISGUISE` aggro check — the "when buffs ship" precondition is met
+5. ~~Duel does not bypass the PK-consent gate~~ — **fixed** `combat.policy.ts:61-62` duel branch (`m_nDuel===1 && m_idDuelTarget===target`)
+6. Flee + self-heal AI are fully coded — **PARTIAL**: converter `movers.ts:70/82/66` now parses `SetRunAway`/`Recovery`/`dwRunawayDelay`, spawn.manager passes `fleeHpPct/runawayDelay/healHpPct/healAmount` — but `healCadenceMs` is still not threaded (defaults 1000ms in `mover.ts:420`)
+7. ~~`dwReAttackDelay` reads propMover col 34 instead of col 35~~ — **fixed** `converters/movers.ts:177` reads `dwReAttackDelay` (col 35)
+8. ~~Blocklist `setBlocked` has no calling opcode~~ — **fixed** `social/handlers/friend.handler.ts:157` → `friend.service.ts:305`
+9. ~~Movement is not stun-gated~~ — **fixed** `movement.service.ts:92,111,123,145,165,181` all check `isStunned()`
+10. `IK3_TEXT_DISGUISE` aggro check — **STILL BROKEN**: `combat/systems/ai.system.ts:460` `isHidden()` tests only `MODE.TRANSPARENT`, no buff check (the "when buffs ship" precondition was met long ago)
+
+---
+
+## Re-verification changelog (2026-08-03)
+
+Targeted re-audit (4 parallel read-only explorers) — opcode gap, unstarted
+systems, slash commands, and re-verify of the 10-item fix-first shortlist.
+Covered ~5 commits past the 2026-08-01 baseline `c9ae378`, incl. ranged-bow
+bugfixes (`9a76c40`).
+
+**Fix-first shortlist: 7/10 fixed** since 08-01. Fixed: shopCostRate,
+CHRSTATE_BITS.SLEEP, duel/PK gate, dwReAttackDelay column, blocklist setBlocked,
+movement stun-gate, USESKILL cast-range. Partial: flee/heal AI (missing
+`healCadenceMs`). Still broken: `partyQuery` unwired, `IK3_TEXT_DISGUISE` aggro
+MODE-only.
+
+**Three new sections added (23-25):**
+- §23 C→S opcode gap — ~228 C++ opcodes vs 101 routed (~167 missed). 5
+  declared-but-undispatched (`MAGIC_ATTACK` + 4 Couple); ~162 undeclared.
+- §24 Unstarted feature systems — ~25 entirely-absent systems never previously
+  tracked (Lord, Honor, Colosseum, Secret Room, Rainbow Race, MiniGames, Quiz,
+  Fishing, Auction, Wanted-list, Ultimate Weapon, Collecting, Rangda, Tax,
+  Funny Coin, Event/Live-ops, Instance Dungeon, Housing, Pocket, BeautyShop).
+- §25 Slash commands — 3/25 player commands ported; ~35 GM ported, ~60 missing.
+
+**Newly identified gaps (not on prior checklists):** `MAGIC_ATTACK` opcode
+declared-but-undispatched (the last combat path); the Couple protocol stub
+(opcodes + snapshots declared, undispatched); the Tax system as the upstream of
+every shop cost; Instance Dungeon blocking scenario quests; the Event system as
+the core live-ops tool; `MELEE_ATTACK2`/`SFX_*`/`TELESKILL`/`RETURNSCROLL`/
+`RESURRECTION_OK`/`CANCEL`/`STATEMODE`/`MODIFYMODE`/`TELEPORTER` core holes;
+`MMI_BEAUTYSHOP*`/`MMI_LOOKCHANGE` constants parse to undefined in
+`characterInc.loader.ts`.
+
+**`MOVEBANKITEM` caveat flagged:** opcodes.ts comment claims it is an
+unregistered C++ stub, but `DPSrvr.cpp:169` registers `OnMoveBankItem` —
+re-check handler body before trusting either claim.
 
 ---
 

@@ -26,6 +26,26 @@ const DEFAULT_PROTOCOL_VERSION = '20100412';
  *   [string protocolVersion][string account][672-byte Rijndael-CBC password blob]
  * The blob decrypts to the 32-char `md5("kikugalanet"+pwd)` lowercase hex; the
  * service argon2-verifies that digest against the stored hash.
+ *
+ * ## The `resVer` field is deliberately not read
+ *
+ * `DPCertified.cpp:135-137` writes a fourth field between version and account --
+ * `md5` of the whole `Flyff.a` resource manifest -- but only under
+ * `#ifdef __SECURITY_0628`. `CERTIFIER/DPCertifier.cpp:241-247` reads it back and
+ * replies `ERROR_FLYFF_RESOURCE_MODIFIED` on mismatch.
+ *
+ * The shipped `Neuz.exe` was **not** built with that flag, so it does not send
+ * the field, and reading one here would consume the account string and break
+ * every login. Evidence: the binary is unpacked (plaintext `kikugalanet`,
+ * `CResFile Open Error`, `propQuest`) yet contains none of the flag's strings
+ * (`Flyff.a`, `killed by CResFile::Read()`); and the 3-field parse below has
+ * authenticated real clients successfully -- account names arrive as `test` /
+ * `test2`, never as a 32-char hex digest.
+ *
+ * If a client built with `__SECURITY_0628` is ever introduced, add
+ * `reader.readString()` between the two reads below and gate it on the client
+ * build -- the field cannot be detected from the payload alone, because a
+ * length-prefixed string is indistinguishable from the account that follows it.
  */
 export class AuthHandler {
   private readonly expectedProtocolVersion: string;
