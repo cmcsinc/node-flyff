@@ -6085,6 +6085,7 @@ items:
     icon: itm_WeaSecBilCharm.dds
     item_kind2: IK2_CHARM
     item_kind3: IK3_BCHARM
+    equip_slot: 25
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -6102,6 +6103,7 @@ items:
     icon: itm_WeaSecRinCharm.dds
     item_kind2: IK2_CHARM
     item_kind3: IK3_RCHARM
+    equip_slot: 25
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -6119,6 +6121,7 @@ items:
     icon: Itm_WeaSecArrowBox.dds
     item_kind2: IK2_BULLET
     item_kind3: IK3_ARROW
+    equip_slot: 25
     mp_restore: 9999
     durability: 12000000
     job_req:
@@ -10610,6 +10613,7 @@ items:
     icon: Itm_WeaSecArrowBox.dds
     item_kind2: IK2_BULLET
     item_kind3: IK3_CROSSARROW
+    equip_slot: 25
     durability: 7200000
     job_req:
       - vagrant

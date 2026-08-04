@@ -167,8 +167,17 @@ function rowToItem(
   // copying it makes UseItemService route them through EquipService (equip_slot check fires
   // before the IK2_POTION branch) and silently drop the consume.
   const kind3 = row.dwItemKind3 ?? '';
+  const kind2 = row.dwItemKind2 ?? '';
   const isEquippable =
     kind1 === 'IK1_WEAPON' || kind1 === 'IK1_ARMOR' ||
+    // Secondary-hand ammo/charms: arrows (IK2_BULLET) and Billposter/Ringmaster
+    // charms (IK2_CHARM) are IK1_GENERAL rows carrying `dwParts = PARTS_BULLET`
+    // (25). Without this they arrived with no `equip_slot`, so `UseItemService`
+    // fell past the equip branch into the consume router, matched no IK2 branch
+    // and rejected -- acrobats could not equip arrows at all. Gated on the kind2
+    // pair (not on PARTS_BULLET alone) because propItem's `=` inherit rule would
+    // otherwise leak parts 25 onto following unrelated IK1_GENERAL rows.
+    kind2 === 'IK2_BULLET' || kind2 === 'IK2_CHARM' ||
     // Ride items (boards/brooms/wings) equip into PARTS_RIDE (13). Without this
     // they reached the game with no `equip_slot` at all, so `EquipService` and
     // `UseItemService` both rejected them -- flying was unreachable from data
