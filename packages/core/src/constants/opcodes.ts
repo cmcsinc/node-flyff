@@ -57,6 +57,11 @@ export const PACKETTYPE = Object.freeze({
   // one entry per m_aJobSkill slot. Atomic all-or-nothing server-side.
   DOUSESKILLPOINT:      0x000f0003,
   DOUSEITEM:            0x00ff0021,
+  // MsgHdr.h:149 -- `CDPSrvr::OnSfxID` (DPSrvr.cpp:4146): `OBJID idTarget, int
+  // idSfxHit, DWORD dwType, DWORD dwSkill, int nMaxDmgCnt`. The client registers
+  // a projectile it just launched into the attacker's `m_sfxHitArray` so the
+  // later SFX_HIT can be matched back to a target. Bookkeeping only -- no damage.
+  SFX_ID:               0x00ff0022,
   SETTARGET:            0x00ff0023,
   REVIVAL:              0x00ff00c0,
   // v19 client -> world revival opcodes (DPSrvr.cpp:960/1061/1188). All three
@@ -65,6 +70,14 @@ export const PACKETTYPE = Object.freeze({
   // OnRevivalLodelight=empty C++ stub.
   REVIVAL_TO_LODESTAR:  0x00ff00c1,
   REVIVAL_TO_LODELIGHT: 0x00ff00c2,
+  // MsgHdr.h:191 -- `CDPSrvr::OnSfxHit` (DPSrvr.cpp:4099): `int idSfxHit, int
+  // nMagicPower, DWORD dwSkill, OBJID idAttacker, int nDmgCnt, float fDmgAngle,
+  // float fDmgPower`. Reports a registered projectile landing. In C++ it only
+  // pops the `m_sfxHitArray` entry and bumps `m_mapSFXCount` (`RemoveSFX`,
+  // MoverAttack.cpp:2309) -- the damage path (`AttackBySFX`) is #if'd out in v19
+  // and this emulator already resolves ranged damage eagerly in
+  // `CombatService.resolveAttack`. Accepted and dropped.
+  SFX_HIT:              0x00ff00d2,
   WHISPER:              0x00ff00d4,
   // MsgHdr.h:194 -- `CDPSrvr::OnEndSkillQueue` (DPSrvr.cpp:7077). Bodyless; the
   // opcode alone signals "skill queue cancelled". Server acks with a self-only

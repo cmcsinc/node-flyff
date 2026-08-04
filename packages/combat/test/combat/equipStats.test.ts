@@ -1,8 +1,9 @@
 /**
  * sumEquipStats test -- weapon + armor fold from equipped slots.
  *
- * Equipped items live at `m_Inventory[MAX_INVENTORY + part]`. LWEAPON=9 feeds
- * the weapon stats; armor parts {2,3,4,5,6,11} sum into DEF. Bare-hands +
+ * Equipped items live at `m_Inventory[MAX_INVENTORY + part]`. RWEAPON=10 is the
+ * weapon slot every propItem weapon row uses (LWEAPON=9 only holds a Blade
+ * off-hand / yoyo); armor parts {2,3,4,5,6,11} sum into DEF. Bare-hands +
  * 0 DEF fallback when nothing is equipped (matches CPlayer defaults).
  */
 
@@ -11,7 +12,7 @@ import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
 import { sumEquipStats } from '../../src/combat/equipStats';
 import { MAX_INVENTORY } from '@flyff/world-core';
-import { NO_PROP, WT_MELEE_SWD } from '../../src/combat/tables';
+import { NO_PROP, WT_MELEE_SWD, WT_RANGE_BOW } from '../../src/combat/tables';
 import type { CharacterRow } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 
@@ -37,9 +38,9 @@ describe('sumEquipStats', () => {
     assert.equal(r.weapon.element, NO_PROP);
   });
 
-  it('reads weapon min/max/type/speed from LWEAPON slot (part 9)', () => {
+  it('reads weapon min/max/type/speed from RWEAPON slot (part 10)', () => {
     const p = CPlayer.fromRow(makeRow(), { write: () => true });
-    p.m_Inventory[MAX_INVENTORY + 9] = { itemId: 5000, count: 1, refine: 3 };
+    p.m_Inventory[MAX_INVENTORY + 10] = { itemId: 5000, count: 1, refine: 3 };
     const table = new Map<number, ItemDefinition>([
       [5000, {
         id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1,
@@ -55,9 +56,43 @@ describe('sumEquipStats', () => {
     assert.equal(r.weapon.option, 3, 'refine feeds option as raw level (formula applies pow(option,1.5))');
   });
 
+  // Regression: every propItem weapon row carries dwParts=PARTS_RWEAPON(10), so
+  // reading LWEAPON(9) as THE weapon slot yielded bare hands for every player --
+  // zeroing weapon ATK and false-rejecting the bow gate in DoAttackRange.
+  it('reports a bow equipped in RWEAPON as a ranged weapon type', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 10] = { itemId: 431, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [431, {
+        id: 431, name: 'Woodness Bow', name_id: 'ITEM_B', stack_size: 1, weight: 1,
+        level_req: 1, price: 0, sell_price: 0,
+        attack_min: 36, attack_max: 37, weapon_type: WT_RANGE_BOW, attack_speed: 7,
+      }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.weapon.type, WT_RANGE_BOW, 'bow in slot 10 must read as WT_RANGE_BOW');
+    assert.equal(r.weapon.min, 36);
+  });
+
+  // Blade dual-wield / yoyo: DoEquip parks the off-hand in LWEAPON
+  // (MoverEquip.cpp:515), so it stays a valid fallback when RWEAPON is empty.
+  it('falls back to the LWEAPON slot (part 9) when RWEAPON is empty', () => {
+    const p = CPlayer.fromRow(makeRow(), { write: () => true });
+    p.m_Inventory[MAX_INVENTORY + 9] = { itemId: 5000, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [5000, {
+        id: 5000, name: 'Offhand', name_id: 'ITEM_O', stack_size: 1, weight: 1,
+        level_req: 1, price: 0, sell_price: 0,
+        attack_min: 20, attack_max: 30, weapon_type: WT_MELEE_SWD, attack_speed: 40,
+      }],
+    ]);
+    const r = sumEquipStats(p, (id) => table.get(id));
+    assert.equal(r.weapon.min, 20, 'off-hand still feeds the weapon curve');
+  });
+
   it('reads weapon element from the slot instance field', () => {
     const p = CPlayer.fromRow(makeRow(), { write: () => true });
-    p.m_Inventory[MAX_INVENTORY + 9] = { itemId: 5000, count: 1, element: 1 /* FIRE */ };
+    p.m_Inventory[MAX_INVENTORY + 10] = { itemId: 5000, count: 1, element: 1 /* FIRE */ };
     const table = new Map<number, ItemDefinition>([
       [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, attack_min: 1, attack_max: 3, weapon_type: WT_MELEE_SWD, attack_speed: 40 }],
     ]);
@@ -67,7 +102,7 @@ describe('sumEquipStats', () => {
 
   it('falls back to the weapon propItem element name when no instance element', () => {
     const p = CPlayer.fromRow(makeRow(), { write: () => true });
-    p.m_Inventory[MAX_INVENTORY + 9] = { itemId: 5000, count: 1 }; // no slot.element
+    p.m_Inventory[MAX_INVENTORY + 10] = { itemId: 5000, count: 1 }; // no slot.element
     const table = new Map<number, ItemDefinition>([
       [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, attack_min: 1, attack_max: 3, weapon_type: WT_MELEE_SWD, attack_speed: 40, element: 'electric' }],
     ]);
@@ -77,7 +112,7 @@ describe('sumEquipStats', () => {
 
   it('instance element overrides the propItem element name', () => {
     const p = CPlayer.fromRow(makeRow(), { write: () => true });
-    p.m_Inventory[MAX_INVENTORY + 9] = { itemId: 5000, count: 1, element: 1 /* FIRE */ };
+    p.m_Inventory[MAX_INVENTORY + 10] = { itemId: 5000, count: 1, element: 1 /* FIRE */ };
     const table = new Map<number, ItemDefinition>([
       [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, attack_min: 1, attack_max: 3, weapon_type: WT_MELEE_SWD, attack_speed: 40, element: 'water' }],
     ]);

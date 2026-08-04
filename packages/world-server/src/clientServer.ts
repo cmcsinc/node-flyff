@@ -166,6 +166,13 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r));
   dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
   dispatcher.register(PACKETTYPE.RANGE_ATTACK, (s, r) => deps.rangeAttackHandler.handleRangeAttack(s, r));
+  // Projectile SFX bookkeeping. C++ tracks these in `m_sfxHitArray` purely so a
+  // later SFX_HIT can be matched to its launch; the damage path they once fed
+  // (`AttackBySFX`) is commented out in v19 and ranged damage is already resolved
+  // eagerly by `CombatService.resolveAttack`. Registered so a bow shot does not
+  // log "Unknown opcode" twice per arrow.
+  dispatcher.register(PACKETTYPE.SFX_ID, () => {});
+  dispatcher.register(PACKETTYPE.SFX_HIT, () => {});
   dispatcher.register(PACKETTYPE.DUELREQUEST, (s, r) => deps.duelHandler.handleDuelRequest(s, r));
   dispatcher.register(PACKETTYPE.DUELYES, (s, r) => deps.duelHandler.handleDuelYes(s, r));
   dispatcher.register(PACKETTYPE.DUELNO, (s, r) => deps.duelHandler.handleDuelNo(s, r));

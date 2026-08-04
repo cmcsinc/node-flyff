@@ -24,6 +24,13 @@ import { MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
 import { NO_PROP, WT_MELEE_SWD, elementFromName } from './tables';
 import type { WeaponStats } from './formulas';
 
+// Weapons live in PARTS_RWEAPON (10) -- `GetActiveHandItemProp( int nParts =
+// PARTS_RWEAPON )` (Mover.h:1021) is what every ATK/weapon-type read defaults to,
+// and every propItem weapon row carries dwParts=10. PARTS_LWEAPON (9) holds only
+// the off-hand of a Blade dual-wield (DoEquip remaps to it, MoverEquip.cpp:515)
+// and yoyo models -- reading it as THE weapon slot yields bare hands for
+// everyone, zeroing weapon ATK and false-rejecting the bow gate.
+const PARTS_RWEAPON = 10;
 const PARTS_LWEAPON = 9;
 const PARTS_UPPER_BODY = 2; // defender suit element source (MoverAttack.cpp:1249)
 const ARMOR_PARTS = new Set([2, 3, 4, 5, 6, 11]); // UPPER_BODY, LOWER_BODY, HAND, FOOT, CAP, SHIELD
@@ -66,7 +73,10 @@ export function sumEquipStats(p: CPlayer, getItem: ItemLookup): EquipStats {
   let parry = 0;
   let element = NO_PROP;
 
-  const weaponSlot = p.m_Inventory[MAX_INVENTORY + PARTS_LWEAPON];
+  // Right hand is the weapon; fall back to the left only for the dual-wield /
+  // yoyo case where DoEquip parked the item there.
+  const weaponSlot = p.m_Inventory[MAX_INVENTORY + PARTS_RWEAPON]
+    ?? p.m_Inventory[MAX_INVENTORY + PARTS_LWEAPON];
   if (weaponSlot) {
     const prop = getItem(weaponSlot.itemId);
     if (prop) {
