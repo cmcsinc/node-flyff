@@ -16,6 +16,7 @@ import {
   Map,
   Gem,
   MessageSquareText,
+  PackageCheck,
   Server,
   type LucideIcon,
 } from "lucide-react";
@@ -60,6 +61,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Dialogues", href: "/resources/dialogues", icon: MessageSquareText },
     ],
   },
+  { label: "Client Patch", href: "/client-patch", icon: PackageCheck },
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
