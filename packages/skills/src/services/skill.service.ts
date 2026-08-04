@@ -36,6 +36,8 @@ const logger = createLogger({ module: 'skill-service' });
 /** EXT_* cast mechanics supported by the v1 damage path. */
 const EXT_MELEEATK = 17;
 const EXT_MAGICATKSHOT = 14;
+/** `KT_MAGIC` (resource/defineAttribute.h:152) -- MP-costed magic skill type. */
+const KT_MAGIC = 1;
 /** `RT_TIME` (defineAttribute.h:236) -- referTarget marks a timed buff skill. */
 const RT_TIME = 2;
 /** `BUFF_SKILL` (SkillInfluence.h:5) -- skill-sourced buff type tag for SETSKILLSTATE. */
@@ -154,7 +156,6 @@ export type LearnOutcome =
         | 'slot_occupied'
         | 'over_max'
         | 'low_level'
-        | 'prereq'
         | 'insufficient_sp'
         | 'wrong_job';
     };
@@ -347,7 +348,7 @@ export class SkillService {
       player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
       this.useSkill.build(player.m_idPlayer, {
         skillId: slot.skillId, level: slot.level, target: frame.objid,
-        useType: frame.useType, castingTime: levelRow.castingTime ?? 0,
+        useType: frame.useType, castingTime: wireCastingTime(skill),
       }),
     );
 
@@ -408,7 +409,7 @@ export class SkillService {
 
   /** MP/FP need routed by `resourceType` (KT_MAGIC=1→MP, else FP). */
   private resourceNeed(skill: SkillDefinition, level: SkillLevel): { mp: number; fp: number } {
-    if (skill.resourceType === 1) return { mp: Math.max(0, level.reqMp ?? 0), fp: 0 };
+    if (skill.resourceType === KT_MAGIC) return { mp: Math.max(0, level.reqMp ?? 0), fp: 0 };
     return { mp: 0, fp: Math.max(0, level.reqFp ?? 0) };
   }
 
@@ -608,10 +609,10 @@ export class SkillService {
   }
 
   /**
-   * `OnDoUseSkillPoint` learn (docs #5). The client proposes its full 45-slot
+   * `OnDoUseSkillPoint` learn (docs #5). The client proposes its full 51-slot
    * roster; the server validates atomically (any reject -> whole batch rejected,
    * no SP spent, no confirm). Server-side gates beyond C++ (which trusts the
-   * client): maxLevel, reqLevel, prereqs, no-decrease, no slot reassignment.
+   * client): maxLevel, reqLevel, no-decrease, no slot reassignment, job match.
    * Cost = `Σ (newLevel - curLevel) * tierCost` per raised slot.
    */
   learnSkills(
@@ -641,10 +642,15 @@ export class SkillService {
       if (skill.reqLevel > 0 && player.m_nLevel < skill.reqLevel) {
         return { ok: false, reason: 'low_level' };
       }
-      for (const p of skill.prereqs) {
-        const met = player.m_aJobSkill.some((s) => s.skillId === p.skill && s.level >= p.level);
-        if (!met) return { ok: false, reason: 'prereq' };
-      }
+      // NO prereq gate. `CDPSrvr::OnDoUseSkillPoint` (`DPSrvr.cpp:3305`) checks
+      // ONLY `dwLevel >= m_aJobSkill[i].dwLevel`, `dwLevel <= dwExpertMax`, and
+      // SP -- it never reads `dwReSkill1/2`. The prereq lives in the client's
+      // `CMover::CheckSkill` (`MoverParam.cpp:133`), which itself only enforces
+      // it when the prereq skill is PRESENT in the roster (`GetSkill()` non-NULL),
+      // so a cross-job prereq is skipped. Enforcing it here rejected nearly
+      // every legitimate learn: propSkill.txt's `=` inherit rule bleeds the
+      // previous row's `dwReSkill1` into most rows, producing cross-job and even
+      // self-referential prereqs (skill 121 requires skill 121 at level 2).
       const curLevel = cur.skillId === req.skillId ? cur.level : 0;
       const tierCost = TIER_SP_COST.get(skill.tier) ?? 3;
       totalCost += (req.level - curLevel) * tierCost;
@@ -759,6 +765,24 @@ export function dotFromSkill(level: SkillLevel, nowMs: number): DoTPayload | und
   if (damage <= 0) return undefined;
   const intervalMs = level.destData?.[1] ?? DEFAULT_DOT_INTERVAL_MS;
   return { damage, intervalMs, nextTickMs: nowMs + intervalMs };
+}
+
+/**
+ * Wire `nCastingTime` for the USESKILL snapshot.
+ *
+ * Under `__NEW_TASKBAR_V19` the WORLDSERVER never sends the propSkillAdd
+ * `dwCastingTime` (`MoverSkill.cpp:246-266`): it hardcodes `0` for `KT_MAGIC`
+ * and `1` for `KT_SKILL`. The pre-v19 `GetCastingTime()` branch that derived
+ * the value from the skill data is `#else`'d out.
+ *
+ * The field is in TICKS, not ms -- the client scales it by
+ * `nParam3 * 66.66f` (`ActionMoverMsg.cpp:797`) and holds
+ * `OBJSTA_ATK_CASTING2` until `m_nCount >= nParam3 * 4`
+ * (`ActionMoverState.cpp:712`). Sending Heal's raw `castingTime: 250` froze
+ * the caster for ~16 s.
+ */
+function wireCastingTime(skill: SkillDefinition): number {
+  return skill.resourceType === KT_MAGIC ? 0 : 1;
 }
 
 /** Squared 3D distance — used for cast-range check. */

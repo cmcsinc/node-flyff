@@ -79,7 +79,12 @@ function makeService(
   const deps = {
     skills: { skills } as unknown as SkillIndex,
     spawnManager: { get: (id: number) => state.spawnGet(id) },
-    zoneManager: { broadcastAround: () => { broadcasts.push(Buffer.alloc(0)); return 1; } },
+    zoneManager: {
+      broadcastAround: (_pos: unknown, _zone: unknown, _r: unknown, buf: Buffer) => {
+        broadcasts.push(buf);
+        return 1;
+      },
+    },
     playerManager: {
       sendTo: (_p: unknown, b: Buffer) => { sent.push(b); },
       get: (id: number) => playerMap.get(id),
@@ -225,6 +230,27 @@ describe('SkillService.cast (heal)', () => {
     assert.equal(p.m_nMp, 33, 'MP spent (50 - 17)');
     assert.equal(m.calls.resolve, 0, 'heal does not run the damage pipeline');
     assert.ok(m.broadcasts.length >= 1, 'USESKILL broadcast');
+  });
+
+  it('wires nCastingTime as 0 for KT_MAGIC and 1 for KT_SKILL, never the data value', () => {
+    // __NEW_TASKBAR_V19 (MoverSkill.cpp:246-266) hardcodes these; the field is in
+    // TICKS (client scales *66.66ms). Sending Heal's raw castingTime:150 froze
+    // the caster ~10 s in OBJSTA_ATK_CASTING2.
+    const readCastingTime = (buf: Buffer): number => buf.readUInt32LE(buf.length - 4);
+
+    const mage = CPlayer.fromRow(makeRow({ mp: 50, max_mp: 100, hp: 10, max_hp: 1000 }), makeSocket());
+    mage.hydrateSkills([{ slot: 0, skillId: 44, level: 1 }]);
+    const mMagic = makeService(new Map([[44, healSkill()]]), mage);
+    assert.equal(mMagic.service.cast(mage, { wId: 0, objid: mage.m_idPlayer, useType: 0 }).ok, true);
+    assert.equal(readCastingTime(mMagic.broadcasts[0]!), 0, 'KT_MAGIC casting time is 0');
+
+    // Same skill re-tagged KT_SKILL (resourceType 2) -> 1, despite castingTime:150.
+    const fp = CPlayer.fromRow(makeRow({ hp: 10, max_hp: 1000 }), makeSocket());
+    fp.m_nFp = 100;
+    fp.hydrateSkills([{ slot: 0, skillId: 44, level: 1 }]);
+    const mSkill = makeService(new Map([[44, healSkill({ resourceType: 2, levels: [{ level: 1, reqMp: 0, reqFp: 5, adjParamVals: [100, 150], castingTime: 150, cooldown: 0 }] })]]), fp);
+    assert.equal(mSkill.service.cast(fp, { wId: 0, objid: fp.m_idPlayer, useType: 0 }).ok, true);
+    assert.equal(readCastingTime(mSkill.broadcasts[0]!), 1, 'KT_SKILL casting time is 1');
   });
 
   it('heals another live player target and notifies both', () => {
@@ -458,7 +484,12 @@ describe('SkillService.learnSkills', () => {
     assert.equal(out.ok === false && out.reason, 'low_level');
   });
 
-  it('rejects when a prerequisite skill is missing', () => {
+  it('does not gate on prerequisites (C++ OnDoUseSkillPoint never reads dwReSkill)', () => {
+    // `DPSrvr.cpp:3305` checks only no-decrease, dwExpertMax, and SP. The
+    // prereq lives client-side in `CMover::CheckSkill` and is skipped there
+    // whenever the prereq skill is absent from the roster -- which is the norm,
+    // since propSkill.txt's `=` inherit bleeds cross-job dwReSkill1 values into
+    // most rows. Enforcing it here rejected nearly every legitimate learn.
     const p = CPlayer.fromRow(makeRow(), makeSocket());
     p.m_nSkillPoint = 50;
     const sk = meleeSkill({ prereqs: [{ skill: 50, level: 1 }] });
@@ -466,7 +497,8 @@ describe('SkillService.learnSkills', () => {
     const req = Array.from({ length: 45 }, () => ({ skillId: NULL_ID, level: 0 }));
     req[0] = { skillId: 100, level: 1 };
     const out = m.service.learnSkills(p, req);
-    assert.equal(out.ok === false && out.reason, 'prereq');
+    assert.equal(out.ok, true);
+    assert.equal(p.m_aJobSkill[0]!.level, 1);
   });
 
   it('rejects reassigning an occupied slot to a different skill id', () => {
