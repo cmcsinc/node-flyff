@@ -252,5 +252,12 @@
   "H:\\flyff\\node-flyff\\packages\\admin\\test\\client-patch.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\equipStats.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\entities\\test\\constants\\attackRange.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\parse.stripBlockComments.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\parse.stripBlockComments.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\useItem.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\pet.system.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\database\\test\\repositories\\party.repo.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\buff.system.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\peerSnapshot.serializer.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\blinkwing.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\blinkwing.system.test.ts": "pass"
 }
