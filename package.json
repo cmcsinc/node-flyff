@@ -4,6 +4,15 @@
   "description": "Modern Flyff (Fly For Fun) MMORPG server emulator in TypeScript/Node.js",
   "type": "module",
   "private": true,
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmcsinc/node-flyff.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cmcsinc/node-flyff/issues"
+  },
+  "homepage": "https://github.com/cmcsinc/node-flyff#readme",
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
