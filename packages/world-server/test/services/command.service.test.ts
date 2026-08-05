@@ -464,12 +464,19 @@ describe('CommandService -- createNpc (/cn)', () => {
   it('spawns by name and honours the count + activeAttack args', () => {
     const { commandService, gm, spawner } = setupCn({ 'Small Aibatt': AIBATT });
     commandService.route(gm, '/cn Small Aibatt');
-    assert.equal(spawner.calls.length, 0, 'multi-word name is not resolvable -- first token only');
+    assert.deepEqual(spawner.calls, [{ id: 20, zoneId: 7, aggro: false }], 'multi-word name resolves');
 
     const b = setupCn({ Aibatt: AIBATT });
     b.commandService.route(b.gm, '/cn Aibatt 3 1');
     assert.equal(b.spawner.calls.length, 3);
     assert.ok(b.spawner.calls.every((c) => c.aggro));
+  });
+
+  it('accepts a quoted multi-word name with trailing args', () => {
+    const { commandService, gm, spawner } = setupCn({ 'Boss Bang': AIBATT });
+    commandService.route(gm, '/cn "Boss Bang" 2 1');
+    assert.equal(spawner.calls.length, 2);
+    assert.ok(spawner.calls.every((c) => c.aggro));
   });
 
   it('caps count at 100 (TextCmd_CreateNPC: dwNum > 100 -> 100)', () => {

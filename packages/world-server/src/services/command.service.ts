@@ -485,12 +485,18 @@ export class CommandService {
    * per-mover gold model (drops come from the drop table), so it is skipped.
    */
   private createNpc({ args, player }: CommandCtx): void {
-    const [token, countTok, activeTok] = args.trim().split(/\s+/);
-    if (!token) return;
-    const def = this.deps.lookupMover?.(token);
-    if (!def) return;
-    if (!SPAWNABLE_MOVER_TYPES.has(def.type ?? '')) return;
+    const resolved = resolveMover(args, this.deps.lookupMover);
+    if (!resolved) {
+      logger.warn({ charId: player.m_idPlayer, args }, '/cn: could not resolve mover (unknown name/id)');
+      return;
+    }
+    const { def, rest } = resolved;
+    if (!SPAWNABLE_MOVER_TYPES.has(def.type ?? '')) {
+      logger.warn({ charId: player.m_idPlayer, id: def.id, type: def.type }, '/cn: mover is not a spawnable monster type');
+      return;
+    }
 
+    const [countTok, activeTok] = rest.split(/\s+/);
     let count = Number.parseInt(countTok ?? '', 10);
     if (!Number.isInteger(count) || count <= 0) count = 1;
     if (count > MAX_CREATE_NPC) count = MAX_CREATE_NPC;
@@ -863,6 +869,38 @@ function resolveItemId(
 function parseCount(s: string): number {
   const n = Number.parseInt(s, 10);
   return Number.isInteger(n) && n > 0 ? n : 1;
+}
+
+/**
+ * Resolve `/cn` / `/dis` args into `{ def, rest }`.
+ * Supports: numeric id (`46 3`), quoted name (`"Boss Bang" 3`), unquoted
+ * multi-word (`Boss Bang 3` -- greedy longest-match, same shape as
+ * `resolveItemId`). C++ `CScanner::GetToken` strips the quotes itself
+ * (Scanner.cpp:764), so a quoted mover name reaches `GetMoverProp` unquoted --
+ * our splitter kept the `"` and every multi-word monster name failed to match.
+ */
+function resolveMover(
+  args: string,
+  lookupMover?: (token: string) => MoverDefinition | undefined,
+): { def: MoverDefinition; rest: string } | null {
+  const trimmed = args.trim();
+  if (!trimmed || !lookupMover) return null;
+
+  if (trimmed[0] === '"') {
+    const endQuote = trimmed.indexOf('"', 1);
+    if (endQuote > 1) {
+      const name = trimmed.slice(1, endQuote);
+      const def = lookupMover(name);
+      return def ? { def, rest: trimmed.slice(endQuote + 1).trim() } : null;
+    }
+  }
+
+  const tokens = trimmed.split(/\s+/);
+  for (let n = tokens.length; n >= 1; n--) {
+    const def = lookupMover(tokens.slice(0, n).join(' '));
+    if (def) return { def, rest: tokens.slice(n).join(' ') };
+  }
+  return null;
 }
 
 /**
