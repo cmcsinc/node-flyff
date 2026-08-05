@@ -259,5 +259,7 @@
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\buff.system.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\peerSnapshot.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\blinkwing.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\blinkwing.system.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\world-server\\test\\systems\\blinkwing.system.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\target.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\repair.service.test.ts": "pass"
 }

@@ -9,8 +9,10 @@ Generated 2026-07-23 from a full-source sweep (3 parallel domain maps + every
 against master `c9ae378` (136 commits later) by 4 parallel read-only explorers
 over 16 sections, **targeted re-audit 2026-08-03** (4 parallel explorers —
 opcode gap, unstarted systems, slash commands, fix-first shortlist re-verify)
-which added §23-25, and **spot re-verify 2026-08-04** of 10 §1-2 / shortlist
-claims against live code. Compares the emulator against full retail v19.
+which added §23-25, **spot re-verify 2026-08-04** of 10 §1-2 / shortlist
+claims against live code, and **spot re-verify 2026-08-05** against master
+`b54ee36` (38 entries sampled across all 25 sections). Compares the emulator
+against full retail v19.
 
 **Status legend**
 - ✅ DONE — implemented + passing on this device's checks (NOT user-confirmed)
@@ -21,15 +23,16 @@ claims against live code. Compares the emulator against full retail v19.
 **Override rule:** ✅ here = "passes my checks", never "fixed". Only the user
 declares a feature fixed by testing on a real v19 client.
 
-**Companion signal:** there are **157 `ponytail:` markers across 82 files**
-(re-counted 2026-08-04) — a denser, line-level gap inventory than this
+**Companion signal:** there are **164 `ponytail:` markers across 85 files**
+(re-counted 2026-08-05) — a denser, line-level gap inventory than this
 checklist. When a line here says PARTIAL, the ponytail at the cited file:line
 usually names exactly what is missing. `grep -rn "ponytail:" packages/*/src` is
 the authoritative sweep.
 
-**Tally at this refresh** (25 sections — sections 1-22 carry the 206-line tally
-✅ 127 · 🟡 45 · ❌ 22 · 🟥 8 · 🚫 4; §23-25 add ~167 opcode gaps + ~25 absent
-systems + ~60 missing GM commands tracked separately as cross-cutting audits).
+**Tally at this refresh** (25 sections — sections 1-22 carry the tally
+✅ 143 · 🟡 41 · ❌ 22 · 🟥 6 · 🚫 3, recounted mechanically 2026-08-05; §23-25 add
+~156 opcode gaps + ~25 absent systems + ~60 missing GM commands tracked
+separately as cross-cutting audits).
 
 ---
 
@@ -42,8 +45,12 @@ systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 - [x] ✅ DEF subtract, element factor, level-diff falloff — `formulas.ts:200,252,212`
 - [x] ✅ ATK from weapon + DST_CHR_DMG/ATKPOWER/ATKPOWER_RATE + refine — `formulas.ts:115`
 - [x] ✅ Equip→stat projection — element string→enum, refine→option decode, jewelry HR/ER, atkSpeed — `combat/equipStats.ts`
-- [x] ✅ Targeting policy — `MI_CHAOGUARDIAN` inverse (`m_bChaoGuard`) + `RANK_GUARD` — `combat.policy.ts`. Flying-mismatch still deferred (no flight subsystem)
+- [x] ✅ Targeting policy — `MI_CHAOGUARDIAN` inverse (`m_bChaoGuard`) + `RANK_GUARD` — `combat.policy.ts`. Flying-mismatch reject now lives here too (first branch of `isPlayerAttackableBy`), since `FlightService` shipped — see §13
 - [x] ✅ NPC→player min-damage floor (10% of ATK) — `formulas.ts`
+- [x] ✅ NPC→player swings read the defender's **gear** — the monster attack path
+  resolves equipped items so armour DEF and `DST_ADJ_HITRATE`/`DST_ADJ_PARRY`
+  reach the roll — `combat/systems/ai.system.ts:288` (`501b21c`). The old "drops
+  `getItem`, gear never read" note is retired
 
 ### Ranged / bow
 - [x] ✅ Bow damage curve (STR/DEX) — `formulas.ts:109`
@@ -126,11 +133,22 @@ systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 - [x] ✅ Skill buff apply/expire (RT_TIME → applyBuff; refresh/replace/ignore, 28-cap, per-effect SETDESTPARAM sync) — `skill.service.ts` applyBuff, `BuffManager.ts:118`
 - [x] ✅ Buff clear on death (clear + REMOVESKILLINFULENCE + RESETDESTPARAM per buff) — `revival.service.ts:96-107`, `buff.system.ts` `onExpired`
 - [x] ✅ Buff persistence across relog — `join.service.ts:395-473` (`loadBuffs`, `collectPersistedBuffs`) + `character_buffs` (migrations 015/016/018, absolute `expiresAtMs`)
-- [ ] 🟡 **Stun gate has a real type bug** — `player.ts:622` reads `CHRSTATE_BITS.STUN | CHRSTATE_BITS.SLEEP`, but `entities/constants/dst.ts:112-119` **has no `SLEEP` key** (only STUN/DARK/POISON/SLOW/BLEEDING/SILENT). At runtime `8 | undefined` → `8`, so **stun gates and sleep never does**. C++ value is `CHS_SLEEPING 0x00200000`. Build stays green only because tsup/esbuild does not typecheck
-- [ ] 🟡 Stun gate coverage — movement is **not** stun-gated: `world-core/services/movement.service.ts:88,103,113,132` check `m_bDead` only, never `isStunned()`. A stunned player can still walk (attack + cast paths *are* gated)
+- [x] ✅ Stun/sleep gate type fix — `entities/src/constants/dst.ts:121` now carries
+  `SLEEP: 0x00200000` (`CHS_SLEEPING`) and `player.ts:676` masks
+  `CHRSTATE_BITS.STUN | CHRSTATE_BITS.SLEEP`, so sleep gates as well as stun.
+  Re-verified 2026-08-05; the old `8 | undefined` row is retired
+- [x] ✅ Stun gate coverage on movement — all 6 move paths check `m_bDead` **then**
+  `isStunned()` — `world-server/services/movement.service.ts:100,119,131,153,173,189`.
+  Re-verified 2026-08-05
 - [x] ✅ Poison DoT tick system — `BuffManager.ts:219 tickDots`, `buff.system.ts:59 onDots`, `ai.system.ts:126` (see the DoT-death caveat in §1)
 - [x] ✅ Buff-grant consumable items (IK2_BUFF/IK2_BUFF2 → addItemBuff + SETSKILLSTATE + SETDESTPARAM) — `inventory/services/useItem.service.ts:78`, `BuffManager.ts:160`
-- [ ] 🟥 `IK3_TEXT_DISGUISE` buff check in AI aggro — `ai.system.ts:460 isHidden()` still tests only `MODE.TRANSPARENT`. The ponytail said "when buffs ship" — **buffs have shipped, so this is now actionable**
+- [x] ✅ Peer buff list on the wire — `writeEmptyBuffs` deleted in `1c39895`;
+  `writeBuffs(w, p, nowMs)` writes count then per-buff WORD type / WORD id /
+  DWORD level / DWORD remaining-ms, used by **both** `writeMoverSerialize` and
+  `writeMoverExcludeItem` — `world-server/net/snapshot/mover.serializer.ts:75-83`.
+  Other players now show buff icons on first sight, not only on the next
+  SETSKILLSTATE
+- [ ] 🟥 `IK3_TEXT_DISGUISE` buff check in AI aggro — `combat/systems/ai.system.ts:469-471 isHidden()` still tests only `MODE.TRANSPARENT`. The ponytail said "when buffs ship" — **buffs have shipped, so this is now actionable**
 - [ ] 🟡 Monster debuff icons never clear — `applyBuffToMover` broadcasts SETSKILLSTATE but `ai.system.ts:122` deliberately skips REMOVESKILLINFULENCE for movers, so a debuff icon appears on a monster and stays forever
 
 ---
@@ -149,7 +167,14 @@ systems + ~60 missing GM commands tracked separately as cross-cutting audits).
   `data/movers/monsters.yml` via `converters/movers.ts:221`. Test-covered at
   `ai.system.test.ts:574`. Monsters with no `SetRunAway` never flee — faithful
 - [x] ✅ Ranged monster AI (holds at range, RANGE_ATTACK, re-attack cadence) — `ai.system.ts:209`
-- [ ] 🟡 Healer monster AI — **self-heal code ✅, data ❌, ally-heal ❌.** `ai.system.ts:247-253` implements low-HP self-heal, but `spawn.manager.ts` never passes `m_nHealHpPct`/`m_nHealAmount`/`m_nHealCadenceMs` → always 0 → dead code. Source is `propMoverEx.inc` `Recovery 10 50 100 m`, unparsed. Healing *other* monsters is entirely absent
+- [ ] 🟡 Healer monster AI — **self-heal code ✅, cadence data ❌, ally-heal ❌.**
+  Narrowed 2026-08-05: `spawn.manager.ts:206-207,367-368` **do** now pass
+  `healHpPct`/`healAmount`, so the low-HP self-heal branch at
+  `ai.system.ts:247-253` fires. What remains is (a) `healCadenceMs` — never
+  emitted by `converters/movers.ts`, absent from `mover.schema.ts`, so
+  `entities/mover.ts:420` always resolves the 1000 ms default, and (b) healing
+  *other* monsters, entirely absent. Source is `propMoverEx.inc`
+  `Recovery 10 50 100 m`, unparsed. Healing *other* monsters is entirely absent
 - [ ] ❌ Flight-capable monster AI — `flyable` is converted into the mover yml but nothing in `ai.system.ts` reads it
 - [ ] ❌ Collision-aware stuck-teleport (return-home has a 20s time cap only, no pathing) — `ai.system.ts:285`
 - [ ] 🟡 Per-mover `dwReAttackDelay` — **wired to the wrong column.** `spawn.manager.ts` passes `reAttackDelay: def.attack_speed`, and `scripts/converters/movers.ts:86` sets `attack_speed: num(row,'dwAttackSpeed',0)` = propMover col **34** (~1000 for 693 of ~740 movers). The real field is col **35** `dwReAttackDelay` (e.g. 6000), named in the propMover.txt header but never exported. The old "defaults to 2000ms" note was wrong — it reads a real but *incorrect* value
@@ -160,8 +185,11 @@ systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 
 ## 5. PARTY / EXP-SHARE
 
-Shipped 2026-07-30 → 08-01 as `@flyff/party` (solo-party MVP, in-memory only —
-matches C++, which keeps party state on the Core server not in the DB).
+Shipped 2026-07-30 → 08-01 as `@flyff/party` (solo-party MVP). **Parties are
+now durable** across restarts — migration `022_parties.ts` + `party.repo.ts`,
+hydrated at boot (`party/managers/party.manager.ts:189-213`, persist calls
+`:249,267,287,290,311,343`), landed in `b3c4e41`. This is an emulator-side
+divergence from C++, which keeps party state on the Core server, not in the DB.
 
 - [x] ✅ Party invite / accept / decline / leave / kick — `party/services/party.service.ts:91,127,147,163`, handlers `party/handlers/party.handler.ts:52,73,94,109`, dispatch `world-server/clientServer.ts:167-170`
 - [x] ✅ Party member-list snapshot (`PARTYMEMBER` 0x0082 + `CParty::Serialize`) — `world-core/serializers/party.serializer.ts:151`
@@ -175,8 +203,10 @@ matches C++, which keeps party state on the Core server not in the DB).
 - [x] ✅ Disconnect teardown (auto-promote leader, disband under 2) — `party.service.ts:318`
 - [x] ✅ Party chat via the `PARTYCHAT` opcode (0xffffff59) — `party.service.ts:276`, dispatch `clientServer.ts:176`
 - [ ] ❌ `/p` slash alias for party chat (the opcode path works; only the `/cmd` alias is absent) — `world-server/services/command.service.ts:37`
-- [ ] 🟡 Contribution exp mode — the `m_nTroupsShareExp` toggle is stored + echoed (`party.service.ts:222`) but the contribution split itself is ponytail'd — `party.service.ts:360`
-- [ ] ❌ Guild-party — party level/exp bar, party skills, party finder, party-duel, mute check on party chat — `party.service.ts:15`, `party/managers/party.manager.ts:13`
+- [x] ✅ Party persistence across restart — `022_parties.ts`, `database/repositories/party.repo.ts`, `party.manager.ts:176 constructor(repo?)` + `:189-213 hydrate` (`b3c4e41`)
+- [x] ✅ Party level / exp bar — `party.manager.ts:77-79,103,376-379` (`e88927f`)
+- [ ] 🟡 Contribution exp mode — the `m_nTroupsShareExp` toggle is stored + echoed (`party.service.ts:222`) but the contribution split itself is ponytail'd — `party.service.ts:239,447`
+- [ ] ❌ Guild-party — party skills, party finder, party-duel, mute check on party chat — `party.service.ts:15`, `party/managers/party.manager.ts:13`
 
 ---
 
@@ -190,7 +220,7 @@ matches C++, which keeps party state on the Core server not in the DB).
 - [ ] 🟡→impl Chaotic/PK revive — isChaotic() gate: 0.1 HP rate vs 0.2 non-chaotic — `revival.service.ts` restoreVitals (2026-07-25)
 - [ ] 🟡→impl PK value decay — PkDecaySystem 60s tick, -1 PK per 5min cooldown since last PK action — `pkDecay.system.ts` (2026-07-25)
 - [x] ✅ DUEL handshake (0xffffff23-2a) — `combat/services/duel.service.ts:48,60,77,94,104` + `combat/managers/duel.manager.ts`, dispatch `clientServer.ts:164-166`; 1v1 request/yes/no/expire/death/disconnect
-- [ ] ❌ **Duel does not bypass the PK-consent gate** — an accepted duel still requires PK mode ON for both, so duel damage cannot land. `combat.policy.ts:47,51` has no duel branch. **Likely a real gameplay bug, not just a gap**
+- [x] ✅ Duel bypasses the PK-consent gate — `combat/services/combat.policy.ts` `isPlayerAttackableBy`: fly-mismatch reject first, then the duel override (`attacker.m_nDuel === 1 && attacker.m_idDuelTarget === target.m_idPlayer`, plus the mirror), then the mutual `m_bPKMode` gate. Re-verified 2026-08-05; the old "duel damage cannot land" row is retired
 - [ ] ❌ Guild-war revive — `revival.service.ts:20`
 - [ ] ❌ Zone region-type PvP enforcement (safe zones reject PvP) — `combat.policy.ts:47`
 - [ ] ❌ PK death item-drop penalty (KarmaProp table) — no code path; only `dwKarma` guard reads (`combat.policy.ts:8-9`, `entities/mover.ts:100`)
@@ -228,7 +258,12 @@ matches C++, which keeps party state on the Core server not in the DB).
 - [x] ✅ Equip/unequip (server-authoritative slot, swap, level_req) — `equip.service.ts`
 - [x] ✅ DST stat-bonus apply/remove on equip/unequip — `equip.service.ts:89`
 - [x] ✅ **Set-item bonuses** — **UPGRADE ❌→✅**: `recomputeSetBonuses` full-recompute over `MAX_HUMAN_PARTS` with an `avails[].equipped` threshold walk, `m_setEffects` diffed through `m_params.applyEffects/removeEffects` — `equip.service.ts:66-96`, wired `compose.ts:471,692`, seeded on login `join.service.ts:228`. The old "field exists, no logic" claim was stale
-- [x] ✅ Potion / food consumables — `useItem.service.ts:65`
+- [x] ✅ Potion / food consumables — `useItem.service.ts:125` (`IK2_POTION`/`IK2_FOOD`)
+- [x] ✅ Blinkwing teleport scrolls — `inventory/services/blinkwing.service.ts` (259 lines, `12eb53b`): two-pass channel (arm, then complete), 10 s blinkwing / 300 s Return, `IK3_BLINKWING` fixed destination, `IK3_TOWNBLINKWING` to the zone revival point, cancel on move/damage. Paired `blinkwing.system.ts`, `stateMode.handler.ts`, `stateMode.serializer.ts`. Cross-world destinations are refused — no REPLACE re-send exists (§12)
+- [x] ✅ DOUSEITEM routing — `useItem.service.ts:97-124` dispatches `IK3_PET` (requires `link_kind`) and `IK2_BLINKWING` alongside potion/food; `:138` still charge-only for IK2_BUFF/BUFF2/SKILL/TEXT/WARP (`891f68d`)
+- [x] ✅ Double-click unequip — `inventory/handlers/doUseItem.handler.ts:104-108` routes an equipped item's DOUSEITEM through `buildDoEquipVicinity(..., !r.unequip, ...)` (`891f68d`)
+- [x] ✅ Looter pet — `world-server/systems/pet.system.ts` (352 lines, `439c52f`): port of `AIPet.cpp` `DoUseEatPet`/`ActivateEatPet`/`InactivateEatPet`; states IDLE/TRACE/LOOT, `TICK_MS = 100`, `SCAN_INTERVAL_MS = 1072`, loot through `LootService.pickup(owner, pile)`. **This is the EatPet/looter only** — see the system-pet row below
+- [ ] ❌ System pet (`IK3_EGG` → D-C-B-A-S levels) — the egg hatch, pet level/exp, feeding, naming, and release paths are all absent; `dwPetId` is still written as `NULL_ID` (`mover.serializer.ts:136`) and `SNAPSHOTTYPE_PET_*` stays unused. Distinct from the shipped looter pet above; `PET_RELEASE`/`USE_PET_FEED`/`MAKE_PET_FEED`/`CLEAR_PET_NAME` are not even declared (§23)
 - [ ] 🟡 Buff-grant usable items — **UPGRADE 🟥→🟡**: `IK2_BUFF`/`IK2_BUFF2` → `addItemBuff` + SETSKILLSTATE + per-effect SETDESTPARAM (`useItem.service.ts:86-115`). Skill / warp / text items are still charge-only no-ops — `:117`
 - [x] ✅ Jewelry HR/parry — `hit_rate`/`parry` summed `combat/equipStats.ts:61-102`, consumed `formulas.ts:216,221-227`
 - [ ] ❌ Weight / overweight enforcement — `weight: z.number().int().min(0).default(1)` is parsed with **zero consumers** (grep hits only test fixtures) — `resources/schemas/item.schema.ts:143`
@@ -250,8 +285,8 @@ matches C++, which keeps party state on the Core server not in the DB).
 - [x] ✅ Bank item deposit/withdraw — `bank.service.ts:108`
 - [x] ✅ Bank per-tab gold — **UPGRADE 🟡→✅**: `getGold/setGold` tab-indexed, wire `BYTE nSlot` honored, JOIN hydrates + checkpoint flushes all 3 pools — `bank.service.ts:191`, `011_bank_per_tab_gold.ts`
 - [x] ✅ NPC dialog `source:` bodies — **UPGRADE 🟡→✅ for the interpreter**: real recursive-descent evaluator with C++ int-truthiness, 19-method bindings / 13-method sink — `npc/services/dialogInterpreter.ts` (397 lines)
-- [ ] 🟡 Dialog *bindings* completeness — the interpreter is real but several predicates it can call are constants: `getItemNum: () => 0`, `emptyInventoryNum: () => 32`, `partySize: () => 1`, `isParty: () => 0`, `isGuild: () => 0` — `scriptDlg.service.ts:575 makeBindings`
-- [ ] 🟡 Shop cost multiplier / event buy factor — **UPGRADE ❌→🟡 with a catch**: `unitCost = max(1, floor((shopCostRate ?? 1) * rawPrice))` is implemented *and unit-tested* (`shop.service.ts:57,121`), but `ShopService` is constructed **without `shopCostRate`** at `compose.ts:803-807`, so it silently defaults to 1.0 at runtime. One-line wiring fix. Perin fixed-price still ❌
+- [ ] 🟡 Dialog *bindings* completeness — the interpreter is real but several predicates it can call are constants: `getItemNum: () => 0`, `emptyInventoryNum: () => 32`, `partySize: () => 1`, `isParty: () => 0`, `isGuild: () => 0` — `scriptDlg.service.ts:742-748 makeBindings` (path line corrected 2026-08-05; the old `:575` citation predates the file growing)
+- [x] ✅ Shop cost multiplier — `unitCost = max(1, floor((shopCostRate ?? 1) * rawPrice))` (`shop.service.ts:57,121`) **and** the ctor is now wired: `compose.ts:942` passes `config.world.shopCostRate`. Perin fixed-price still ❌
 
 ---
 
@@ -280,9 +315,9 @@ matches C++, which keeps party state on the Core server not in the DB).
 
 ## 12. MOVEMENT / ZONES / WORLD
 
-- [x] ✅ Walk/run apply + broadcast + anti-teleport guard — `world-core/services/movement.service.ts:86,101,116,130`; `ANTI_TELEPORT_SQ = 1_000_000` `:73`; every path calls `visibilityService?.refresh()`
+- [x] ✅ Walk/run apply + broadcast + anti-teleport guard — `world-server/services/movement.service.ts:100,119,131,153,173,189` (moved from `world-core` in the carve-out); `ANTI_TELEPORT_SQ = 1_000_000`; every path calls `visibilityService?.refresh()` and `lootService?.checkArrival(player)` (`:111,140,162`)
 - [x] ✅ GM teleport `/te` (same-world SETPOS) — `command.service.ts:272`; 3-arg Navigator form `<worldId> <x> <z>` + 2-arg form, `x>0 && z>0` guard (`worldId` accepted and ignored)
-- [ ] 🟥 PLAYERANGLE accepted + dropped — `readAngleFrame` consumes the 45-byte body then discards it; `applyAngle(_player, _now)` returns `{ok:true,reached:0}` — `movement.service.ts:150`, `playerAngle.handler.ts:57`. Flight-dependent
+- [x] ✅ PLAYERANGLE applied — `applyAngle` is real: rejects when `!player.isFly()` with `reason:'not_flying'`, otherwise sets `m_fAngleX` and broadcasts — `movement.service.ts:188-193`, `playerAngle.handler.ts`. Shipped with FlightService (`438b248`); the old accepted-and-discarded row is retired
 - [ ] ❌ Collision / terrain check — only the distance anti-cheat
 - [ ] ❌ Player run/walk speed enforcement — no speed clamp anywhere in `movement.service.ts`
 - [ ] 🟡 Multi-zone — buckets are real (`Map<number, Set<CPlayer>>`, `broadcastAround` frames once and reuses) but `resources/data/worlds/zones/flaris.yml` is the **only** zone file, so one zone ships — `world-core/managers/zone.manager.ts:17`
@@ -292,14 +327,28 @@ matches C++, which keeps party state on the Core server not in the DB).
 - [x] ✅ Vicinity radius streaming (`CLinkMap::ModifyView` port) — per-player `m_known` objid set diffed against a live radius query, streaming ADD_OBJ/DEL_OBJ deltas — `world-core/services/visibility.service.ts:110,140,152,175`. Wired into MAP_KEY, all 5 movement paths, DESTPOS, `/te` `/su` `/teleport`, admin teleport, revival, disconnect
 - [ ] 🟡 Vicinity does not re-link on **monster** movement — only player moves, teleport, and spawn/despawn drive a diff; the 30 m leash bounds the error — `visibility.service.ts:27`
 - [x] ✅ Player-to-player ADD_OBJ (`METHOD_EXCLUDE_ITEM` PLAYER branch) — peers appear/disappear as either side walks — `visibility.service.ts:175 diffPeers`, `world-server/net/snapshot/peerSnapshot.serializer.ts`
-- [ ] 🟡 Peer frame carries an **empty buff list** — no buff icons on other players until the next SETSKILLSTATE — `mover.serializer.ts:82`
+- [x] ✅ Peer frame carries the real buff list — see §3; `mover.serializer.ts:75-83 writeBuffs`
 
 ---
 
 ## 13. FLYING / MOUNTS (signature Flyff)
 
-- [ ] 🟥 Flying (board/broom) — no flight state model; move/angle broadcast unconditionally — `movement.service.ts:108`
-- [ ] ❌ Mounts / ride
+- [ ] 🟡 Flying (board/broom) — **UPGRADE 🟥→🟡 (2026-08-05).** `FlightService`
+  ships (`world-core/services/flight.service.ts`, added `438b248`): mount sets
+  `player.m_dwStateFlag |= OBJSTAF.FLY` (`:137`), dismount clears
+  `OBJSTAF.FLY | OBJSTAF.ACC | OBJSTAF.TURBO` (`:149`); reject TIDs are the real
+  ones (`USEAIRCRAFT` 612, `NOFLY` 2405, `CHAOTIC_NOT_FLY` 3135,
+  `MODIFY_FLIGHT_SPEED` 3457). Entry is the equip path —
+  `inventory/services/equip.service.ts:158 canMount`, `:199 flight?.mount`,
+  `:232 flight?.dismount` on `PARTS_RIDE`. Wired `world-server/compose.ts:760,770,775,821`.
+  `m_dwStateFlag` reaches the client at `mover.serializer.ts:149`; `player.ts:685
+  isFly()` + `getFlightLv()` are the read side, consumed by the movement angle
+  gate (§12) and the combat fly-mismatch reject (§1/§6). **Ponytail'd, still
+  missing:** `HATTR_NOFLY` terrain attribute check, the `IK3_TEXT_DISGUISE` buff
+  reject, the summoned-pet gate, and fuel / turbo consumption
+- [ ] ❌ Mounts / ride — `PARTS_RIDE` routes into `FlightService`, but there is no
+  distinct ground-mount state, no mount speed model, and no `MOVERDESTPOS` mount
+  handling
 
 ---
 
@@ -420,8 +469,11 @@ Emulator infrastructure with no C++ analogue.
 
 Full audit of v19 C++ `DPSrvr.cpp:122-579` `OnMsg` table (+`USESKILL` in
 `DPSrvrLux.cpp:32`) vs emulator `clientServer.ts` dispatch. **~228 C→S opcodes
-in C++; emulator routes 101, misses ~167.** Excludes S→C-only / IPC-only / the
+in C++; emulator routes 112, misses ~156.** Excludes S→C-only / IPC-only / the
 6 known-dead codes (already retired in `unimplemented-packets-audit` memory).
+Count re-taken 2026-08-05 (`grep -c "dispatcher.register"` → 112; was 101 at the
+08-03 audit — the 11 new registrations are 6 × PVENDOR, BLOCK, PLAYERBEHAVIOR2,
+STATEMODE, and the SFX_ID / SFX_HIT no-op acks).
 
 ### Declared-but-undispatched (cheapest — opcode value already pinned in `opcodes.ts`)
 
@@ -437,9 +489,9 @@ Snapshots `COUPLE_PROPOSE_RESULT/COUPLE_RESULT/DECOUPLE_RESULT/ADD_COUPLE_EXPERI
 
 ### Core holes (not subsystem-clustered, newly identified)
 
-`MELEE_ATTACK2` · `SFX_ID`/`SFX_CLEAR`/`SFX_HIT` · `TELESKILL` (blink) ·
+`MELEE_ATTACK2` · `SFX_CLEAR` · `TELESKILL` (blink) ·
 `RETURNSCROLL` (use return scroll) · `RESURRECTION_OK`/`RESURRECTION_CANCEL`
-(accept/cancel other-player resurrect) · `STATEMODE` · `MODIFYMODE` ·
+(accept/cancel other-player resurrect) · `MODIFYMODE` ·
 `TELEPORTER` (NPC teleporter UI) · `SETLODELIGHT` (set respawn point) ·
 `INC_STAT_LEVEL` · `SEND_TO_SERVER_CHANGEJOB` (packet-driven job change — note:
 dialog-driven path already works, see §14) · `SUMMONPLAYER`/`TELEPORTPLAYER`
@@ -451,8 +503,13 @@ taskbar grid — §15 notes applet grid absent) · `CTRL_COOLTIME_CANCEL` ·
 (cosmetic) · `AWAKENING`/`PIERCING`/`PIERCINGREMOVE`/`PIERCING_SIZE`/
 `CHANGE_ATTRIBUTE`/`REMOVE_ATTRIBUTE`/`SMELT_SAFETY`/`UPGRADEBASE`/`BARUNA`/
 `PACHETTYPE_ITEMTRANSY` (item-upgrade side-channels — §8) · `PET_RELEASE`/
-`USE_PET_FEED`/`MAKE_PET_FEED`/`CLEAR_PET_NAME`/`TRANSFORM_ITEM` (pets — §rank-6)
+`USE_PET_FEED`/`MAKE_PET_FEED`/`CLEAR_PET_NAME`/`TRANSFORM_ITEM` (system pet — §8)
 · `AVAIL_POCKET`/`MOVE_ITEM_POCKET` (pocket tabs).
+
+**Closed since the 08-03 audit** (removed from the list above): `STATEMODE`
+(`clientServer.ts:169`, drives the blinkwing channel), `SFX_ID` + `SFX_HIT`
+(registered as no-op acks), `PLAYERBEHAVIOR2`, `BLOCK`, and the 6 `PVENDOR`
+codes (§10).
 
 ### Subsystem clusters (count of undeclared opcodes)
 
@@ -484,7 +541,7 @@ separable subsystems and adds systems never previously tracked.
 | **Couple / Marriage** | `couple.cpp`, `couplehelper.cpp`, `couple.inc` | **protocol-stubbed** (opcodes declared, undispatched — see §23) | couple quest conditions, `IK3_COUPLE_BUFF` items, propKarma branch |
 | **Instance / Party Dungeon** | `InstanceDungeonBase.cpp`, `InstanceDungeonParty.cpp`, `PartyDungeon.lua` | absent | `propQuest-DungeonandPK.inc` (unprocessed), `propQuest-Scenario.inc`, endgame PvE |
 | **Event / Live-ops** | `EventLua.cpp`, `flyffevent.cpp`, `EventMonster.cpp`, `spevent.cpp` + 4 lua + `propEvent.inc`/`propDropEvent.inc`/`randomeventmonster.inc` | absent | every data-driven drop/spawn/exp event — core live-ops tool |
-| **Pets** (5 subsystems) | `pet.h` `PETLEVEL` enum, egg→D-C-B-A-S | absent | `dwPetId` field always `NULL_ID` (`mover.serializer.ts:78`); collecting/auto-loot |
+| **System pet** (5 subsystems) | `pet.h` `PETLEVEL` enum, egg→D-C-B-A-S | absent — **the looter/EatPet half shipped** (`world-server/systems/pet.system.ts`, `439c52f`); egg hatch / pet level+exp / feed / name / release are the missing five | `dwPetId` still `NULL_ID` (`mover.serializer.ts:136`); pet-level buffs |
 | **Rainbow Race** | `RainbowRace.cpp` + siblings | absent | standalone minigame |
 | **Colosseum** | `Colosseum.cpp`, `Colosseum.lua` | absent | instanced PvP arena |
 | **Secret Room** | `SecretRoom.cpp`, `SecretRoomDBMng.cpp` | absent | guild-vs-guild war; Tax revenue |
@@ -545,34 +602,38 @@ Full audit of `FuncTextCmd.cpp:5157-5522` ON_TEXTCMDFUNC table vs
 
 ---
 
-## Biggest gaps, ranked (re-ranked 2026-08-03)
+## Biggest gaps, ranked (re-ranked 2026-08-05)
 
 The 2026-07-23 ranking is obsolete — items 1, 2, 6, and 8 shipped, and 3 partly
-shipped. Current ranking (re-ranked 2026-08-03 after §23-25 audits):
+shipped. Re-ranked 2026-08-05: **flight dropped from rank 2 to rank 8** now that
+`FlightService` ships 🟡 (§13), and the old pets rank is narrowed to the system
+pet only, since the looter pet shipped.
 
 1. **Guild** — largest wholly unstarted system; §24 decomposes it into **9
    separable subsystems** (core roster, `/g` chat, guild bank, guild quest, guild
    war, guild combat 1v1, guild house, guild party flag, guild cloak flag). No
    tables exist. ~30 undeclared C→S opcodes cluster here.
-2. **Flying + mounts** — signature Flyff mechanic, entirely absent, and it is
-   the blocker behind PLAYERANGLE being accepted-and-discarded plus the
-   flying-mismatch targeting deferral.
-3. **Skill effect breadth** — AoE and projectile remain 🟥 (DoT, multi-hit, and
+2. **Skill effect breadth** — AoE and projectile remain 🟥 (DoT, multi-hit, and
    buff skills have since shipped). `MAGIC_ATTACK` opcode declared but still
    undispatched (§23).
-4. **Lord / Election / Tax** — v15 signature player-elected Lord; controls the
+3. **Lord / Election / Tax** — v19 signature player-elected Lord; controls the
    Tax rate that gates every shop cost. Entirely absent, 4 C++ files + 2 inc.
-5. **Event / Live-ops** — 4 C++ source + 4 lua + 3 `.inc` unparseable; without
+4. **Event / Live-ops** — 4 C++ source + 4 lua + 3 `.inc` unparseable; without
    it, the server cannot run any temporary event (the primary live-ops tool).
-6. **Couple / Marriage** — opcodes + snapshots already declared (pre-stubbed),
+5. **Couple / Marriage** — opcodes + snapshots already declared (pre-stubbed),
    only dispatch + service + DB missing; couple skills + `IK3_COUPLE_BUFF` items
    + propKarma branch downstream.
-7. **Pets** — entirely absent; §24 decomposes into 5 subsystems. `PET_RELEASE`/
-   `USE_PET_FEED` opcodes not even declared.
-8. **Instance / Party Dungeon** — v19 endgame PvE; blocks `propQuest-Scenario.inc`
+6. **System pet** (egg → D-C-B-A-S) — the looter/EatPet half shipped
+   (`pet.system.ts`, `439c52f`); hatch, level/exp, feed, name, and release are
+   absent, and `PET_RELEASE`/`USE_PET_FEED` are not even declared.
+7. **Instance / Party Dungeon** — v19 endgame PvE; blocks `propQuest-Scenario.inc`
    + `propQuest-DungeonandPK.inc` (both ship unprocessed).
+8. **Flight completion + mounts** — `FlightService` ships 🟡 (§13); what remains
+   is the `HATTR_NOFLY` terrain check, the disguise-buff reject, the summoned-pet
+   gate, fuel/turbo, and a real ground-mount state with its own speed model.
 9. **Zone transitions / world map** — one zone ships; no REPLACE cross-world
-   handoff; no terrain or speed enforcement. (`Vending` dropped off — shipped 🟡
+   handoff; no terrain or speed enforcement. Also blocks cross-world blinkwing
+   (§8) and cross-world revive (§7). (`Vending` dropped off — shipped 🟡
    2026-08-02, see §10.)
 10. **Weight + durability decay + piercing/sockets/awakening + BeautyShop** —
     parsed/stored and consumed by nothing; durability's absence makes the shipped
@@ -582,22 +643,22 @@ shipped. Current ranking (re-ranked 2026-08-03 after §23-25 audits):
 
 ### Newly affordable "wiring-only" wins (small effort, no new subsystem)
 
-All five re-verified 2026-08-04; all still open.
+All five re-verified 2026-08-05; all still open.
 
 1. **`MAGIC_ATTACK` dispatch** — opcode declared `opcodes.ts:50` `0x00ff0011`;
-   `clientServer.ts:167-168` registers only MELEE_ATTACK + RANGE_ATTACK. No
+   `clientServer.ts:171-172` registers only MELEE_ATTACK + RANGE_ATTACK. No
    handler file exists. Closes the last combat-path hole.
 2. **Couple 4-opcode dispatch** — opcodes + snapshots already declared; service
-   + repo + dispatch missing (rank-6 above).
-3. **`partyQuery` wiring** — `compose.ts:396-428` `new QuestService({...})` has
-   no `partyQuery` key; consumer `quest.service.ts:96,155` stays falsy. One-line
+   + repo + dispatch missing (rank-5 above).
+3. **`partyQuery` wiring** — `compose.ts:418-450` `new QuestService({...})` has
+   no `partyQuery` key; consumer `quest.service.ts:96,155-156` stays falsy. One-line
    fix unblocks quest party conditions (last survivor of fix-first #2).
-4. **`IK3_TEXT_DISGUISE` aggro buff check** — `ai.system.ts:460-462 isHidden()`
+4. **`IK3_TEXT_DISGUISE` aggro buff check** — `ai.system.ts:469-471 isHidden()`
    tests only `MODE.TRANSPARENT`; buffs shipped long ago (fix-first #10).
-5. **Flee/heal AI `healCadenceMs`** — `converters/movers.ts:223-224` emits only
-   `healHpPct`/`healPct`, `mover.schema.ts:142-162` has no cadence key, and
-   `spawn.manager.ts:206-209,367-370` pass only `healHpPct`/`healAmount`, so
-   `mover.ts:420` always defaults to 1000 ms (fix-first #6 partial).
+5. **Flee/heal AI `healCadenceMs`** — the converter emits no cadence field,
+   `mover.schema.ts` has no cadence key, and `spawn.manager.ts:206-207,367-368`
+   pass only `healHpPct`/`healAmount`, so `entities/mover.ts:420` always defaults
+   to 1000 ms (fix-first #6 partial).
 
 ### Fix-first shortlist (small effort, disproportionate effect)
 
@@ -606,7 +667,7 @@ feature build. **Re-verified 2026-08-04** — 7 of 10 fixed, #6 upgraded to
 mostly-fixed (flee data now threaded; only `healCadenceMs` remains):
 
 1. ~~`shopCostRate` omitted from the `ShopService` ctor~~ — **fixed** `compose.ts:855` passes `config.world.shopCostRate`
-2. `partyQuery` never supplied, so quest party conditions fail closed — **STILL BROKEN** (re-verified 2026-08-04): `compose.ts:396-428` `new QuestService({...})` has no `partyQuery`; consumer `quest.service.ts:96,155` stays falsy
+2. `partyQuery` never supplied, so quest party conditions fail closed — **STILL BROKEN** (re-verified 2026-08-05): `compose.ts:418-450` `new QuestService({...})` has no `partyQuery`; consumer `quest.service.ts:96,155-156` stays falsy
 3. ~~`CHRSTATE_BITS.SLEEP` does not exist~~ — **fixed** `entities/src/constants/dst.ts:119` `SLEEP: 0x00200000` (`CHS_SLEEPING`)
 4. ~~`BANK_DEPOSIT`/`BANK_WITHDRAW` have no replayer~~ — **fixed 2026-08-02** (§16); five delta types converted to absolute rows, `BANK_SLOT`/`BANK_GOLD`/`PK_KILL` replayers added, coverage now test-guarded
 5. ~~Duel does not bypass the PK-consent gate~~ — **fixed** `combat.policy.ts:61-62` duel branch (`m_nDuel===1 && m_idDuelTarget===target`)
@@ -614,8 +675,72 @@ mostly-fixed (flee data now threaded; only `healCadenceMs` remains):
 7. ~~`dwReAttackDelay` reads propMover col 34 instead of col 35~~ — **fixed** `converters/movers.ts:177` reads `dwReAttackDelay` (col 35)
 8. ~~Blocklist `setBlocked` has no calling opcode~~ — **fixed** `social/handlers/friend.handler.ts:157` → `friend.service.ts:305`
 9. ~~Movement is not stun-gated~~ — **fixed** `movement.service.ts:92,111,123,145,165,181` all check `isStunned()`
-10. `IK3_TEXT_DISGUISE` aggro check — **STILL BROKEN** (re-verified 2026-08-04): `combat/systems/ai.system.ts:460-462` `isHidden()` tests only `MODE.TRANSPARENT`, no buff check (the "when buffs ship" precondition was met long ago)
+10. `IK3_TEXT_DISGUISE` aggro check — **STILL BROKEN** (re-verified 2026-08-05): `combat/systems/ai.system.ts:469-471` `isHidden()` tests only `MODE.TRANSPARENT`, no buff check (the "when buffs ship" precondition was met long ago)
 11. ~~USESKILL cast-range validation~~ — **fixed 2026-08-04** (§2): reads the base `attackRange` AR_* enum via `getAttackRange`, not the per-level AoE `skillRange`
+
+---
+
+## Re-verification changelog (2026-08-05)
+
+Spot re-verify against master `b54ee36` — **38 entries sampled** across all 25
+sections (one read-only pass, `file:line` evidence per verdict), weighted toward
+🟡/🟥/❌ rows plus ✅ rows in sections the last 15 commits touched. No code
+changed; this pass only corrects the checklist.
+
+**Claims that flipped ❌/🟥/🟡 → ✅ (8):**
+- **Flying** 🟥→🟡 (§13). `world-core/services/flight.service.ts` shipped in
+  `438b248`: `OBJSTAF.FLY` set/clear, real reject TIDs, `PARTS_RIDE` entry via
+  `equip.service.ts:158,199,232`, wired `compose.ts:760-821`. Demoted from
+  biggest-gaps rank 2 to rank 8.
+- **PLAYERANGLE** 🟥→✅ (§12). `applyAngle` is real — rejects `!isFly()`, else
+  sets `m_fAngleX` and broadcasts (`movement.service.ts:188-193`).
+- **Peer buff list** 🟡→✅ (§3, §12). `writeEmptyBuffs` deleted in `1c39895`;
+  `writeBuffs` (`mover.serializer.ts:75-83`) serves both mover paths.
+- **`DST.SLEEP` type bug** 🟡→✅ (§3). `entities/src/constants/dst.ts:121`
+  `SLEEP: 0x00200000`.
+- **Movement stun gate** 🟡→✅ (§3). All 6 paths check `isStunned()`.
+- **Duel bypasses the PK gate** ❌→✅ (§6). Duel branch present in
+  `combat.policy.ts` `isPlayerAttackableBy`.
+- **Party persistence** → ✅ (§5). Migration `022_parties.ts` + `party.repo.ts`
+  + `party.manager.ts:189-213 hydrate` (`b3c4e41`); the "in-memory only" framing
+  is gone.
+- **Party level / exp bar** ❌→✅ (§5), `e88927f`.
+
+**Shipped but previously untracked, now added (6):** `FlightService` (§13);
+looter/EatPet pet system `pet.system.ts` (§8, `439c52f`) — split from the still-
+absent egg→S system pet; blinkwing scrolls `blinkwing.service.ts` (§8,
+`12eb53b`); DOUSEITEM pet/blinkwing routing + double-click unequip (§8,
+`891f68d`); monster swings reading player gear (§4, `501b21c` — the contradicted
+row is retired); `shopCostRate` ctor wiring (§9, now `compose.ts:942`).
+
+**Narrowed, not flipped:** the §4 healer row — `healHpPct`/`healAmount` **are**
+threaded now, so only `healCadenceMs` and ally-heal remain.
+
+**Confirmed still open (17):** skill AoE 🟥, projectile skills 🟥, durability
+decay, item weight, piercing/sockets, `DiePenalty.inc` loader, cross-world
+REPLACE, `QUERY_PLAYER_DATA` 🟥, one-zone, map-key accept-all, monster-movement
+vicinity relink, dialog binding constants, `partyQuery` unwired,
+`IK3_TEXT_DISGUISE` aggro check, `@flyff/gateway` orphan, char-delete second
+factor, job-tier server/panel disagreement.
+
+**Counts corrected:** `ponytail:` markers 157/82 files → **164 across 85 files**;
+routed C→S opcodes 101 → **112** (`grep -c "dispatcher.register"`), so §23's miss
+count drops ~167 → ~156 — the 11 new registrations are 6 × PVENDOR, `BLOCK`,
+`PLAYERBEHAVIOR2`, `STATEMODE`, `SFX_ID`, `SFX_HIT`. The §1-22 tally was also
+**recounted mechanically** rather than adjusted by hand: ✅ 127→**143**,
+🟡 45→**41**, ❌ 22→**22**, 🟥 8→**6**, 🚫 4→**3**. The ✅ jump is mostly the
+recount catching rows the previous hand-tally missed, not 16 new features.
+
+**Paths corrected (3, files moved in the world-server carve-out):**
+`movement.service.ts` → `packages/world-server/src/services/`;
+`combat.policy.ts` → `packages/combat/src/services/`;
+the `scriptDlg.service.ts` binding-stub citation `:575` → `:742-748`.
+
+**Still unresolved:** the `MOVEBANKITEM` caveat (§23) — the C++ handler body was
+not inspected this pass, so neither claim is trustworthy yet.
+
+**Nothing in this changelog is user-confirmed.** Every ✅ above means "passes
+this device's checks"; the override rule stands.
 
 ---
 
