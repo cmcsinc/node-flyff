@@ -40,6 +40,7 @@ export {
 } from './constants/slots';
 export { DST, MAX_ADJPARAMARY, CHG_SENTINEL, CHRSTATE_BITS } from './constants/dst';
 export type { DstId } from './constants/dst';
+export { AR, getAttackRange, RANGE_HITBOX_SLACK } from './constants/attackRange';
 export {
   MAX_CHEERPOINT, TICK_CHEERPOINT_MS, MTI_CHEERSAME, MTI_CHEEROTHER,
   XI_CHEERSENDEFFECT, XI_CHEERRECEIVEEFFECT, II_CHEERUP, CHEERUP_DURATION_MS,

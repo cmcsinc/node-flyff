@@ -18,7 +18,7 @@
 import type { SkillIndex, SkillDefinition, SkillLevel } from '@flyff/resources';
 import type { SkillRepository, CharacterRepository, Journal } from '@flyff/database';
 import type { CPlayer, CMover, DstEffect, DoTPayload, Vec3 } from '@flyff/entities';
-import { isJobMatch, CHG_SENTINEL } from '@flyff/entities';
+import { isJobMatch, CHG_SENTINEL, getAttackRange, RANGE_HITBOX_SLACK } from '@flyff/entities';
 import type { SpawnManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
@@ -323,14 +323,33 @@ export class SkillService {
         : this.resolveDamageTarget(frame.objid);
     if ('reason' in target) { this.clear(player); return target; }
 
-    // Cast-range anti-cheat: C++ `IsRangeObj(pTarget, fRange)` rejects casts
-    // beyond the skill's effective range. `skillRange` is in game-world units
-    // (same scale as `VISIBILITY_RADIUS`); absent means melee range (2 m).
-    const maxRange = levelRow.skillRange ?? 2;
+    // Cast-range anti-cheat. **DIVERGENCE — emulator-only, not a port.** The C++
+    // WORLDSERVER does not gate cast distance at all: `DoUseSkill`
+    // (`MoverSkill.cpp:320-1160`) checks die/fly/mode/target/PK/weapon/level/
+    // cooldown/MP but never distance (`docs/skills-research.md:77`). The only
+    // `GetAttackRange` use for skills is `CMD_SetUseSkill` (`MoverMsg.cpp:206`),
+    // which is CLIENT-only (callers: `WndManager.cpp:7337`,
+    // `WndTaskBar.cpp:2366`) and feeds `SetDestObj(target, fArrivalRange)` — the
+    // distance the client WALKS TO before casting, not a reject.
+    //
+    // We add the gate because an emulator cannot trust the client. AR_* is the
+    // right magnitude precisely because it is that walk-to distance: a genuine
+    // client is always within it when the cast fires.
+    //
+    // Read the BASE row's `attackRange` AR_* enum, never the per-level
+    // `skillRange` — that is the AoE/region radius (`Ctrl.cpp:268,432,752`).
+    // Gating on it capped Heal at 6 m instead of AR_WAND's 15 m and limited
+    // 1 m-AoE melee skills to a 1 m cast. `RANGE_HITBOX_SLACK` stands in for the
+    // two model radii `IsRangeObj` adds (`Obj.cpp:805`) plus movement-tick lag.
+    // A skill with no AR_* enum resolves to 0 (C++ `default:` arm) and so only
+    // reaches the slack -- every propSkill row in `data/skills/` carries one.
     const targetPos = this.targetPos(frame.objid);
-    if (targetPos && distSq3(player.m_vPos, targetPos) > maxRange * maxRange) {
-      this.clear(player);
-      return { ok: false, reason: 'too_far' };
+    if (targetPos) {
+      const reach = getAttackRange(skill.attackRange, player.m_params) + RANGE_HITBOX_SLACK;
+      if (distSq3(player.m_vPos, targetPos) > reach * reach) {
+        this.clear(player);
+        return { ok: false, reason: 'too_far' };
+      }
     }
 
     // Resource need is routed by KT (resourceType): magic=MP, skill=FP. The data

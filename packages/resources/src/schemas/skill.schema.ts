@@ -48,7 +48,11 @@ export const SkillLevelSchema = z.object({
   cooldown: z.number().int().optional(),
   /** `dwCastingTime` -- cast bar duration in ms. */
   castingTime: z.number().int().optional(),
-  /** `dwSkillRange` -- effective range / AoE radius. */
+  /**
+   * `dwSkillRange` -- AoE / region radius (metres) consumed by
+   * `ApplySkillRegion`/`Around`/`Line`/`AroundTroupe` (`_Common/Ctrl.cpp:268,
+   * 432,752`). NOT the cast reach -- that is the base row's `attackRange` AR_*.
+   */
   skillRange: z.number().int().optional(),
   /** `dwSkillTime` -- buff duration in ms (0 for non-buffs). */
   skillTime: z.number().int().optional(),
@@ -75,7 +79,12 @@ export const SkillDefinitionSchema = z.object({
   weaponType: z.number().int().optional(),
   /** `dwHanded` HD_* (1=one-handed, 3=dual). */
   handed: z.number().int().optional(),
-  /** `dwAttackRange` AR_* (1=short, 2=medium, 3=long). */
+  /**
+   * `dwAttackRange` AR_* (`defineAttribute.h:93-99` -- 1=SHORT 2m, 2=LONG 3m,
+   * 3=FAR 4m, 4=RANGE 10m, 5=WAND 15m, 6=HRANGE 6m, 7=HWAND 18m). This is the
+   * **cast reach**; resolve with `getAttackRange` (`@flyff/entities`). Distinct
+   * from the per-level {@link SkillLevelSchema.shape.skillRange} AoE radius.
+   */
   attackRange: z.number().int().optional(),
   /** `dwReqDisLV` minimum job-dispatch level to learn. */
   reqLevel: z.number().int().min(0).default(0),

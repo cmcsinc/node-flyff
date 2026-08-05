@@ -1,6 +1,6 @@
 import { describe, it, mock, beforeEach, afterEach } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { CPlayer, CMover, DST, CHRSTATE_BITS } from '@flyff/entities';
+import { CPlayer, CMover, DST, CHRSTATE_BITS, AR, RANGE_HITBOX_SLACK } from '@flyff/entities';
 import { SkillService } from '../../src/services/skill.service';
 import { NULL_ID, SHORTCUT, SNAPSHOTTYPE_ENDSKILLQUEUE } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
@@ -372,6 +372,115 @@ describe('SkillService.cast (debuff on monster)', () => {
     assert.equal(out.ok, false);
     assert.equal(out.ok === false && out.reason, 'target_dead');
     assert.equal(p.m_nMp, 50, 'no MP spent on reject');
+  });
+});
+
+describe('SkillService.cast cast-range gate', () => {
+  /** AR_LONG (=3 m) melee skill; reach = 3 + RANGE_HITBOX_SLACK. */
+  function shortSkill(over: Partial<SkillDefinition> = {}): SkillDefinition {
+    return meleeSkill({ attackRange: AR.LONG, ...over });
+  }
+
+  function mobAt(x: number): CMover {
+    return CMover.spawn(
+      999, { modelIndex: 0, key: '', name: 'Mob', level: 5, hp: 100 },
+      { x, y: 0, z: 0 }, 1,
+    );
+  }
+
+  it('accepts a target inside AR_LONG + hitbox slack', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    p.hydrateSkills([{ slot: 0, skillId: 100, level: 1 }]);
+    const mob = mobAt(3 + RANGE_HITBOX_SLACK - 0.5);
+    const m = makeService(new Map([[100, shortSkill()]]), p, [], mob);
+
+    const out = m.service.cast(p, { wId: 0, objid: 999, useType: 0 });
+
+    assert.equal(out.ok, true);
+    assert.equal(m.calls.resolve, 1);
+  });
+
+  it('rejects a target beyond AR_LONG + hitbox slack, spending nothing', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    p.hydrateSkills([{ slot: 0, skillId: 100, level: 1 }]);
+    const mob = mobAt(3 + RANGE_HITBOX_SLACK + 0.5);
+    const m = makeService(new Map([[100, shortSkill()]]), p, [], mob);
+
+    const out = m.service.cast(p, { wId: 0, objid: 999, useType: 0 });
+
+    assert.equal(out.ok, false);
+    assert.equal(out.ok === false && out.reason, 'too_far');
+    assert.equal(m.calls.resolve, 0, 'damage pipeline never ran');
+    assert.equal(p.m_nFp, 100, 'no FP spent on an out-of-range cast');
+    assert.equal(p.m_tmReUseDelay[0] ?? 0, 0, 'no cooldown burned');
+    assert.equal(m.broadcasts.length, 0, 'no USESKILL broadcast');
+    assert.equal(m.sent.length, 1, 'CLEAR_USESKILL sent to caster');
+  });
+
+  it('uses the base AR_* reach, not the per-level AoE skillRange', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    p.hydrateSkills([{ slot: 0, skillId: 100, level: 1 }]);
+    // AR_WAND = 15 m reach, but the level's AoE radius is only 1 m. Reading
+    // skillRange here (the old bug) would reject a 12 m cast the client allows.
+    const skill = meleeSkill({
+      attackRange: AR.WAND,
+      levels: [{ level: 1, reqFp: 5, cooldown: 0, castingTime: 0, skillRange: 1 }],
+    });
+    const m = makeService(new Map([[100, skill]]), p, [], mobAt(12));
+
+    const out = m.service.cast(p, { wId: 0, objid: 999, useType: 0 });
+
+    assert.equal(out.ok, true, 'AR_WAND reaches 15 m regardless of the 1 m AoE');
+  });
+
+  it('extends reach by DST_HAWKEYE_RATE', () => {
+    const p = CPlayer.fromRow(makeRow(), makeSocket());
+    p.m_nFp = 100;
+    p.hydrateSkills([{ slot: 0, skillId: 100, level: 1 }]);
+    // AR_RANGE 10 m: out of reach at 14 m bare (10 + 2 slack), in reach with
+    // Hawkeye +50% (15 + 2 slack).
+    const skill = meleeSkill({ attackRange: AR.RANGE });
+    const far = 10 + RANGE_HITBOX_SLACK + 2;
+
+    const bare = makeService(new Map([[100, skill]]), p, [], mobAt(far));
+    assert.equal(bare.service.cast(p, { wId: 0, objid: 999, useType: 0 }).ok, false);
+
+    p.m_params.setDestParam(DST.HAWKEYE_RATE, 50);
+    p.m_tmReUseDelay[0] = 0;
+    const buffed = makeService(new Map([[100, skill]]), p, [], mobAt(far));
+    assert.equal(buffed.service.cast(p, { wId: 0, objid: 999, useType: 0 }).ok, true);
+  });
+
+  it('skips the range gate for a self-target (NULL_ID)', () => {
+    const p = CPlayer.fromRow(makeRow({ hp: 50, max_hp: 100 }), makeSocket());
+    p.m_nMp = 100;
+    p.hydrateSkills([{ slot: 0, skillId: 44, level: 1 }]);
+    // AR_SHORT (2 m) heal cast on self -- targetPos is null, no distance check.
+    const m = makeService(new Map([[44, healSkill({ attackRange: AR.SHORT })]]), p);
+
+    const out = m.service.cast(p, { wId: 0, objid: NULL_ID, useType: 0 });
+
+    assert.equal(out.ok, true);
+    assert.ok(p.m_nHp > 50, 'self-heal landed');
+  });
+
+  it('rejects a cast on a distant player target', () => {
+    const caster = CPlayer.fromRow(makeRow(), makeSocket());
+    caster.m_nMp = 100;
+    caster.hydrateSkills([{ slot: 0, skillId: 44, level: 1 }]);
+    const ally = CPlayer.fromRow(makeRow({ id: 43, hp: 10, max_hp: 100 }), makeSocket());
+    ally.m_vPos = { x: 40, y: 0, z: 0 };
+    // AR_WAND = 15 m; the ally sits at 40 m.
+    const m = makeService(new Map([[44, healSkill({ attackRange: AR.WAND })]]), caster, [ally]);
+
+    const out = m.service.cast(caster, { wId: 0, objid: 43, useType: 0 });
+
+    assert.equal(out.ok === false && out.reason, 'too_far');
+    assert.equal(ally.m_nHp, 10, 'no heal applied');
+    assert.equal(caster.m_nMp, 100, 'no MP spent');
   });
 });
 
