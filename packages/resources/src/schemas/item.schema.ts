@@ -157,6 +157,46 @@ export const ItemDefinitionSchema = z.object({
   /** Raw item kind 3 (propItem dwItemKind3, IK3_*) -- fine category. */
   item_kind3: z.string().optional(),
 
+  // Blinkwing (teleport scroll) -- IK2_BLINKWING only. v19 reuses four unrelated
+  // weapon columns as the destination (`MoverSkill.cpp:2049-2057`):
+  //   dwWeaponType     -> world id (WI_*)
+  //   dwItemAtkOrder1..4 -> x, y, z, angle
+  // Present only on `IK3_BLINKWING` (fixed destination). `IK3_TOWNBLINKWING`
+  // resolves its target at runtime from the world's revival point and its own
+  // columns hold `=`-inherited garbage, so the converter omits them there.
+  /** Destination world id (propItem `dwWeaponType` as `WI_*`). */
+  blink_world: z.number().int().min(1).optional(),
+
+  /** Destination position (propItem `dwItemAtkOrder1..3`). y=0 means ground-snap. */
+  blink_pos: z.object({ x: z.number(), y: z.number(), z: z.number() }).optional(),
+
+  /** Facing on arrival, degrees (propItem `dwItemAtkOrder4`). */
+  blink_angle: z.number().optional(),
+
+  /**
+   * Channel time in ms before the teleport fires (propItem `dwSkillReadyType`).
+   * `CMover::IsItemRedyTime` (`Mover.cpp:8795`) arms `m_nReadyTime` on the first
+   * DOUSEITEM and only teleports on the second pass. 10 s for blinkwings,
+   * 300 s for the Return scroll. Zero/undefined = instant.
+   */
+  ready_ms: z.number().int().min(0).optional(),
+
+  /**
+   * Minimum level to *use* (propItem `dwLimitLevel1`). Distinct from
+   * `level_req`, which gates equipping. `MoverSkill.cpp:1995` refuses with
+   * `TID_GAME_USINGNOTLEVEL`.
+   */
+  use_level: z.number().int().min(1).optional(),
+
+  /**
+   * Linked mover id (propItem `dwLinkKind`, an `MI_*` from defineObj.h resolved
+   * to its numeric index). On an `IK3_PET` looter item this is the mover the
+   * server spawns on summon -- `CreateMover( GetWorld(), pProp->dwLinkKind, ... )`
+   * (`MoverSkill.cpp:4392`). Only emitted for `IK3_PET`: propItem's `=` inherit
+   * rule would otherwise leak the previous row's link onto unrelated items.
+   */
+  link_kind: z.number().int().positive().optional(),
+
   // Flight (ride items only -- IK1_RIDE, dwParts == PARTS_RIDE 13).
   // Columns 292-298 of `Spec_Item.txt`, parsed in this order by C++
   // `ProjectCmn.cpp:475-481`. Present only on boards/brooms/wings; every other

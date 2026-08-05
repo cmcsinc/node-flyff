@@ -4084,6 +4084,36 @@
 "4765":
   file: armors.yml
   name: St. Patrick's Day Cloak
+"4803":
+  file: misc.yml
+  name: Blinkwing of Flaris
+"4804":
+  file: misc.yml
+  name: Blinkwing of Saint Morning
+"4805":
+  file: misc.yml
+  name: Town Blinkwing
+"4806":
+  file: misc.yml
+  name: Blinkwing of Darkon
+"4807":
+  file: misc.yml
+  name: Blinkwing of Darkon 1
+"4808":
+  file: misc.yml
+  name: Blinkwing of Darkon 3
+"4809":
+  file: misc.yml
+  name: Blinkwing of Dekane
+"4810":
+  file: misc.yml
+  name: Blinkwing of Mars
+"4811":
+  file: misc.yml
+  name: Blinkwing of Volkane
+"4812":
+  file: misc.yml
+  name: Blinkwing of Shaduwar
 "5000":
   file: misc.yml
   name: Magic Broom

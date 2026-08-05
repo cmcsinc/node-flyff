@@ -98,6 +98,11 @@ function bucketFor(kind1: string, kind2: string, kind3: string): ItemYml | null 
   // (IK2_SYSTEM server-internal items are intentionally skipped). Route them to
   // consumables so UseItemService can apply their DST effects + timed duration.
   if (kind2 === 'IK2_BUFF' || kind2 === 'IK2_BUFF2') key = 'IK1_MAGIC';
+  // Blinkwings (teleport scrolls) are IK1_SYSTEM, which has no bucket -- so all
+  // ten (`II_SYS_BLI_*`, 4803-4812) were absent from the catalog entirely and the
+  // server had no name, stack_size, or destination for them. Only the Return
+  // scroll (10435, IK1_CHARGED) got through. Route by IK2 like the buff scrolls.
+  if (kind2 === 'IK2_BLINKWING') key = 'IK1_CHARGED';
   let b = KIND_BUCKETS[key];
   // Accessories (ring/earring/necklace) share no IK1 -- route by IK3.
   if (!b && (kind3 === 'IK3_RING' || kind3 === 'IK3_EARRING' || kind3 === 'IK3_NECKLACE')) {
@@ -124,6 +129,8 @@ function rowToItem(
   partsMap: Map<string, number>,
   dstMap: Map<string, number>,
   wtMap: Map<string, number>,
+  miIds: Map<string, number>,
+  wiIds: Map<string, number>,
 ): Record<string, unknown> {
   const abilMin = num(row, 'dwAbilityMin', 0);
   const abilMax = num(row, 'dwAbilityMax', 0);
@@ -159,6 +166,16 @@ function rowToItem(
   // Kind routing -- read before equip_slot so consumables can be excluded.
   if (row.dwItemKind2) item.item_kind2 = row.dwItemKind2;
   if (row.dwItemKind3) item.item_kind3 = row.dwItemKind3;
+
+  // `dwLinkKind` on an IK3_PET row is the looter pet's mover (`MI_PET_*`), which
+  // `ActivateEatPet` passes straight to `CreateMover` (`MoverSkill.cpp:4392`).
+  // Gated to IK3_PET: the column is also used for bullets/eggs (dwLinkKind holds
+  // a `PK_*` on an egg, not an `MI_*`), and propItem's `=` inherit rule would
+  // otherwise leak the last pet's mover onto every following row.
+  if (row.dwItemKind3 === 'IK3_PET') {
+    const link = miIds.get(row.dwLinkKind ?? '');
+    if (link !== undefined) item.link_kind = link;
+  }
 
   // Equip slot / weapon type -- raw propItem columns.
   // `dwParts` is a `PARTS_*` symbol (defineNeuz.h), not a raw int -- resolve via map,
@@ -332,6 +349,37 @@ function rowToItem(
   if (sex === 1) item.gender_req = 'male';
   else if (sex === 2) item.gender_req = 'female';
 
+  // Blinkwing destination -- v19 reuses four weapon columns as teleport data
+  // (`MoverSkill.cpp:2049-2057`): dwWeaponType = WI_* world id, dwItemAtkOrder1..4
+  // = x, y, z, angle. Gated hard to IK2_BLINKWING + IK3_BLINKWING because
+  //   - propItem's `=` inherit rule leaks WT_*/AS_* weapon symbols into these
+  //     columns on every other row (the Return scroll reads `WT_MELEE_AXE` /
+  //     `AS_DIAGONAL` there), and
+  //   - IK3_TOWNBLINKWING resolves its target at runtime from the world's
+  //     revival point and never reads these columns.
+  // `dwSkillReadyType` (channel time) and `dwLimitLevel1` (use gate) are read
+  // for both IK3 variants, since C++ checks them before the IK3 branch.
+  if (kind2 === 'IK2_BLINKWING') {
+    const readyMs = num(row, 'dwSkillReadyType', 0);
+    if (readyMs > 0) item.ready_ms = readyMs;
+    const useLevel = num(row, 'dwLimitLevel1', 0);
+    if (useLevel > 1) item.use_level = useLevel;
+    if (kind3 === 'IK3_BLINKWING') {
+      const world = symbol(wiIds, row.dwWeaponType);
+      // WI_WORLD_NONE (0) / NULL_ID = no destination -- C++ returns FALSE
+      // (`MoverSkill.cpp:2054`); emit nothing so the runtime rejects too.
+      if (world !== undefined && world > 0) {
+        item.blink_world = world;
+        item.blink_pos = {
+          x: num(row, 'dwItemAtkOrder1', 0),
+          y: num(row, 'dwItemAtkOrder2', 0),
+          z: num(row, 'dwItemAtkOrder3', 0),
+        };
+        item.blink_angle = num(row, 'dwItemAtkOrder4', 0);
+      }
+    }
+  }
+
   return item;
 }
 
@@ -347,10 +395,12 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
   const propItem = await readSource(resolve(rawDir, 'Spec_Item.txt')).catch(() =>
     readSource(resolve(rawDir, 'propItem.txt')),
   );
-  const [defineItem, defineNeuz, defineAttr, txtTxt] = await Promise.all([
+  const [defineItem, defineNeuz, defineAttr, defineObj, defineWorld, txtTxt] = await Promise.all([
     readSource(resolve(rawDir, 'defineItem.h')),
     readSource(resolve(rawDir, 'defineNeuz.h')),
     readSource(resolve(rawDir, 'defineAttribute.h')),
+    readSource(resolve(rawDir, 'defineObj.h')),
+    readSource(resolve(rawDir, 'defineWorld.h')),
     readSource(resolve(rawDir, 'propItem.txt.txt')),
   ]);
 
@@ -359,6 +409,8 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
   const partsMap = parseDefines(defineNeuz, 'PARTS_');
   const dstMap = parseDefines(defineAttr, 'DST_');
   const wtMap = parseDefines(defineAttr, 'WT_');
+  const miIds = parseDefines(defineObj, 'MI_');
+  const wiIds = parseDefines(defineWorld, 'WI_');
   const names = parseTxtTxt(txtTxt);
 
   let used = 0;
@@ -375,7 +427,7 @@ export async function convertItems(rawDir: string, dataDir: string): Promise<voi
     if (!bucket) { noBucket++; continue; }
 
     const name = NAME_OVERRIDES[row.szName] ?? names.get(row.szName) ?? row.dwID;
-    bucket.items.push(rowToItem(row, id, name, kind1, partsMap, dstMap, wtMap));
+    bucket.items.push(rowToItem(row, id, name, kind1, partsMap, dstMap, wtMap, miIds, wiIds));
     used++;
   }
 

@@ -8829,6 +8829,7 @@ items:
     icon: itm_PetLawolf1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 720
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8846,6 +8847,7 @@ items:
     icon: itm_PetAibatt1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 721
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8863,6 +8865,7 @@ items:
     icon: itm_PetLeyena1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 722
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8880,6 +8883,7 @@ items:
     icon: itm_PetLuia1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 723
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8897,6 +8901,7 @@ items:
     icon: itm_PetDog1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 725
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8914,6 +8919,7 @@ items:
     icon: itm_PetCat1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 724
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8931,6 +8937,7 @@ items:
     icon: itm_PetSoccerBall.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 726
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8948,6 +8955,7 @@ items:
     icon: itm_PetCola.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 727
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8965,6 +8973,7 @@ items:
     icon: itm_PetPenguin.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 728
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8982,6 +8991,7 @@ items:
     icon: itm_PetIguana.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 729
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -8999,6 +9009,7 @@ items:
     icon: itm_PetCobra.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 730
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9016,6 +9027,7 @@ items:
     icon: Itm_PetFrog.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 746
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9033,6 +9045,7 @@ items:
     icon: Itm_PetHamburger.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 747
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9050,6 +9063,7 @@ items:
     icon: Itm_PetTurtle.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 748
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9067,6 +9081,7 @@ items:
     icon: Itm_PetChicken.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 893
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9084,6 +9099,7 @@ items:
     icon: Itm_PetCow.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 894
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9101,6 +9117,7 @@ items:
     icon: Itm_PetDog2.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 895
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9118,6 +9135,7 @@ items:
     icon: Itm_PetDragon.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 896
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9135,6 +9153,7 @@ items:
     icon: Itm_PetDragon-et01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 916
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9152,6 +9171,7 @@ items:
     icon: Itm_PetHamster.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 897
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9169,6 +9189,7 @@ items:
     icon: Itm_PetHorse.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 898
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9186,6 +9207,7 @@ items:
     icon: Itm_PetMonkey.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 899
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9203,6 +9225,7 @@ items:
     icon: Itm_PetPig.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 900
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9220,6 +9243,7 @@ items:
     icon: Itm_PetRabbit.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 901
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9237,6 +9261,7 @@ items:
     icon: Itm_PetSheep.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 902
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9254,6 +9279,7 @@ items:
     icon: Itm_PetTiger.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 903
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9271,6 +9297,7 @@ items:
     icon: Itm_PetCardpuppet1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 914
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9288,6 +9315,7 @@ items:
     icon: Itm_PetMia1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 915
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9305,6 +9333,7 @@ items:
     icon: Itm_PetYeti.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 970
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9322,6 +9351,7 @@ items:
     icon: Itm_PetBulldog.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1031
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9339,6 +9369,7 @@ items:
     icon: Itm_PetGhost.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1032
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9356,6 +9387,7 @@ items:
     icon: Itm_PetHaetae.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1033
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9373,6 +9405,7 @@ items:
     icon: Itm_PetOwl.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1034
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9390,6 +9423,7 @@ items:
     icon: Itm_PetRagdoll.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1035
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9407,6 +9441,7 @@ items:
     icon: Itm_PetRobot.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1036
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9424,6 +9459,7 @@ items:
     icon: Itm_PetBang1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1037
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9441,6 +9477,7 @@ items:
     icon: Itm_PetPanda.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1038
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9458,6 +9495,7 @@ items:
     icon: Itm_PetTaiga01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1039
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9475,6 +9513,7 @@ items:
     icon: Itm_PetTaiga02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1040
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -9492,6 +9531,7 @@ items:
     icon: Itm_PetTaiga03.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1041
     hp_restore: 747
     durability: 4500000
     job_req:
@@ -10064,6 +10104,7 @@ items:
     icon: itm_PetParrot.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1095
     durability: 4500000
     job_req:
       - vagrant
@@ -10080,6 +10121,7 @@ items:
     icon: Itm_PetDaringRaccon.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1102
     durability: 7200000
     job_req:
       - vagrant
@@ -10096,6 +10138,7 @@ items:
     icon: Itm_PetRobot01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1098
     durability: 50000
     job_req:
       - vagrant
@@ -10128,6 +10171,7 @@ items:
     icon: Itm_Santa.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1120
     hp_restore: 9999
     durability: 7200000
   - id: 20187
@@ -10143,6 +10187,7 @@ items:
     icon: Itm_Snowman02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1121
     hp_restore: 9999
     durability: 7200000
   - id: 21081
@@ -10158,6 +10203,7 @@ items:
     icon: Itm_PetHybridRican.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1124
     durability: 7200000
   - id: 20211
     name: Champion's Ring
@@ -10484,6 +10530,7 @@ items:
     icon: itm_PetDesertFox.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1149
     hp_restore: 2000
     durability: 4500000
   - id: 21083
@@ -10499,6 +10546,7 @@ items:
     icon: itm_PetDoberman.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1150
     hp_restore: 2000
     durability: 4500000
   - id: 21084
@@ -10514,6 +10562,7 @@ items:
     icon: itm_PetIceQueen.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1151
     hp_restore: 2000
     durability: 4500000
   - id: 21085
@@ -10529,6 +10578,7 @@ items:
     icon: itm_PetWrongKoala.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1152
     hp_restore: 2000
     durability: 4500000
   - id: 21086
@@ -10544,6 +10594,7 @@ items:
     icon: Itm_PetCheshireCat.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1154
     durability: 4500000
   - id: 21087
     name: The White Rabbit
@@ -10558,6 +10609,7 @@ items:
     icon: Itm_PetWhiteRabbit.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1155
     durability: 4500000
   - id: 21088
     name: Tiger Cub
@@ -10572,6 +10624,7 @@ items:
     icon: Itm_PetWhiteTiger02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1156
     durability: 4500000
   - id: 21089
     name: Bone Golem
@@ -10586,6 +10639,7 @@ items:
     icon: Itm_PetRemains01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1165
     durability: 50000
   - id: 21090
     name: Mocomochi
@@ -10600,6 +10654,7 @@ items:
     icon: Itm_Mokomochi.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1166
     durability: 50000
   - id: 20332
     name: Soul Dancer
@@ -10614,6 +10669,7 @@ items:
     icon: Itm_PetDance.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1167
     durability: 50000
   - id: 20334
     name: Cross Bow Arrow
@@ -11010,6 +11066,7 @@ items:
     icon: Itm_PetSheep.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1222
     durability: 7200000
     job_req:
       - acrobat
@@ -11026,6 +11083,7 @@ items:
     icon: Itm_PetChamelon.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1281
     durability: 50000
     job_req:
       - mercenary
@@ -11154,6 +11212,7 @@ items:
     icon: Itm_PetZombie.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1325
     durability: 50000
     job_req:
       - vagrant
@@ -11170,6 +11229,7 @@ items:
     icon: Itm_Mokomochi.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1166
     durability: 7200000
     job_req:
       - vagrant
@@ -11186,6 +11246,7 @@ items:
     icon: Itm_PetBang1.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1037
     durability: 7200000
     job_req:
       - vagrant
@@ -11202,6 +11263,7 @@ items:
     icon: Itm_PetDaringRaccon.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1102
     durability: 7200000
     job_req:
       - vagrant
@@ -11234,6 +11296,7 @@ items:
     icon: Itm_PetPaang.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1336
     durability: 7200000
     job_req:
       - vagrant
@@ -11250,6 +11313,7 @@ items:
     icon: Itm_PetRemains01.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1165
     durability: 7200000
     job_req:
       - vagrant
@@ -11282,6 +11346,7 @@ items:
     icon: Itm_Snowman02.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1389
     hp_restore: 1
     durability: 3600000
   - id: 20927
@@ -11313,6 +11378,7 @@ items:
     icon: Itm_PetSnowman.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1427
     hp_restore: 25000
     durability: 4500000
   - id: 20940
@@ -11328,6 +11394,7 @@ items:
     icon: Itm_PetChrisfairy.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1428
     hp_restore: 25000
     durability: 4500000
   - id: 20956
@@ -11343,6 +11410,7 @@ items:
     icon: Itm_PetRudolf.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1429
     hp_restore: 25000
     durability: 4500000
   - id: 21091
@@ -11358,6 +11426,7 @@ items:
     icon: Itm_Petkimpd.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1434
     durability: 7200000
     job_req:
       - acrobat
@@ -11374,6 +11443,7 @@ items:
     icon: itm_PetPenguin.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 728
     durability: 4500000
     job_req:
       - acrobat
@@ -11390,6 +11460,7 @@ items:
     icon: Itm_PetcuteBear-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1437
     durability: 50000
     job_req:
       - acrobat
@@ -11438,6 +11509,7 @@ items:
     icon: Itm_PetRabbitfairy-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1441
     durability: 50000
     job_req:
       - acrobat
@@ -11454,6 +11526,7 @@ items:
     icon: Itm_Petdeviltoy-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1443
     durability: 4500000
     job_req:
       - ranger
@@ -11470,6 +11543,7 @@ items:
     icon: Itm_Pettaddybear-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1444
     durability: 3600000
     job_req:
       - ranger
@@ -11558,6 +11632,7 @@ items:
     icon: Itm_PetRabbitfairy-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1441
     hp_restore: 270
     durability: 7200000
     job_req:
@@ -11575,6 +11650,7 @@ items:
     icon: Itm_PetGhost.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1032
     durability: 3600000
     job_req:
       - vagrant
@@ -11669,6 +11745,7 @@ items:
     icon: Itm_PetGpotato-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1506
     durability: 7200000
     job_req:
       - jester
@@ -11685,6 +11762,7 @@ items:
     icon: Itm_PetBabykargo-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1508
     durability: 7200000
   - id: 23592
     name: Lil'gPotato
@@ -11699,6 +11777,7 @@ items:
     icon: Itm_PetGpotato-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1506
     durability: 7200000
   - id: 23686
     name: 깨진 문스톤 상자
@@ -11735,6 +11814,7 @@ items:
     icon: Itm_PetMatryoshka-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1510
     durability: 50000
   - id: 23919
     name: Mysterious Ring
@@ -11846,6 +11926,7 @@ items:
     icon: Itm_Petkimpd.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1434
     durability: 6570000
     job_req:
       - vagrant
@@ -11862,6 +11943,7 @@ items:
     icon: Itm_BabyCat-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1542
     durability: 50000
     job_req:
       - vagrant
@@ -12198,6 +12280,7 @@ items:
     icon: Itm_BabyCat02-32.dds
     item_kind2: IK2_GENERAL
     item_kind3: IK3_PET
+    link_kind: 1543
     durability: 4500000
     job_req:
       - vagrant

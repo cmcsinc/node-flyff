@@ -152,6 +152,7 @@ items:
     durability: 12000000
     job_req:
       - acrobat
+    ready_ms: 300000
   - id: 10206
     name: Remantis Laccotte
     name_id: IDS_PROPITEM_TXT_004466
@@ -1245,6 +1246,208 @@ items:
     durability: 4500000
     job_req:
       - acrobat
+  - id: 4803
+    name: Blinkwing of Flaris
+    name_id: IDS_PROPITEM_TXT_005114
+    weight: 1
+    price: 500
+    sell_price: 125
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    blink_world: 1
+    blink_pos:
+      x: 7161
+      y: 100
+      z: 3264
+    blink_angle: 143
+  - id: 4804
+    name: Blinkwing of Saint Morning
+    name_id: IDS_PROPITEM_TXT_005116
+    weight: 1
+    price: 800
+    sell_price: 200
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    blink_world: 1
+    blink_pos:
+      x: 8321
+      y: 100
+      z: 3720
+    blink_angle: 207
+  - id: 4805
+    name: Town Blinkwing
+    name_id: IDS_PROPITEM_TXT_005118
+    weight: 1
+    price: 200
+    sell_price: 50
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_TOWNBLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+  - id: 4806
+    name: Blinkwing of Darkon
+    name_id: IDS_PROPITEM_TXT_005120
+    weight: 1
+    price: 800
+    sell_price: 200
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    use_level: 15
+    blink_world: 1
+    blink_pos:
+      x: 3896
+      y: 59
+      z: 4378
+    blink_angle: 67
+  - id: 4807
+    name: Blinkwing of Darkon 1
+    name_id: IDS_PROPITEM_TXT_005122
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    blink_world: 1
+    blink_pos:
+      x: 5519
+      y: 75
+      z: 3894
+    blink_angle: 0
+  - id: 4808
+    name: Blinkwing of Darkon 3
+    name_id: IDS_PROPITEM_TXT_005124
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    blink_world: 1
+    blink_pos:
+      x: 3221
+      y: 10
+      z: 3416
+    blink_angle: 0
+  - id: 4809
+    name: Blinkwing of Dekane
+    name_id: IDS_PROPITEM_TXT_005126
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    blink_world: 1
+    blink_pos:
+      x: 5074
+      y: 55
+      z: 3960
+    blink_angle: 0
+  - id: 4810
+    name: Blinkwing of Mars
+    name_id: IDS_PROPITEM_TXT_005128
+    weight: 1
+    price: 0
+    sell_price: 0
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    blink_world: 1
+    blink_pos:
+      x: 7603
+      y: 155
+      z: 4262
+    blink_angle: 0
+  - id: 4811
+    name: Blinkwing of Volkane
+    name_id: IDS_PROPITEM_TXT_008696
+    weight: 1
+    price: 100
+    sell_price: 25
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW02.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 50000
+    job_req:
+      - acrobat
+    ready_ms: 10000
+    blink_world: 203
+    blink_pos:
+      x: 1394
+      y: 150
+      z: 544
+    blink_angle: 0
   - id: 5000
     name: Magic Broom
     name_id: IDS_PROPITEM_TXT_005130
@@ -5015,6 +5218,29 @@ items:
     durability: 8800000
     job_req:
       - vagrant
+  - id: 4812
+    name: Blinkwing of Shaduwar
+    name_id: IDS_PROPITEM_TXT_010852
+    weight: 1
+    price: 100000
+    sell_price: 25000
+    tradeable: true
+    dropable: true
+    destroyable: true
+    stack_size: 999
+    icon: itm_SysBliBliBlinkW.dds
+    item_kind2: IK2_BLINKWING
+    item_kind3: IK3_BLINKWING
+    durability: 4500000
+    job_req:
+      - vagrant
+    ready_ms: 10000
+    blink_world: 1
+    blink_pos:
+      x: 5936
+      y: 100
+      z: 5421
+    blink_angle: 143
   - id: 20103
     name: Angel's Wings (White)
     name_id: IDS_PROPITEM_TXT_011188
