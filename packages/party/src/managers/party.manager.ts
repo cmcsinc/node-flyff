@@ -1,14 +1,29 @@
 /**
- * PartyManager -- in-memory registry of live parties + pending invites.
+ * PartyManager -- registry of live parties + pending invites, backed by the
+ * `parties` / `party_member` tables (migration `022`).
  *
  * Mirrors `CPartyMng` (`_Common/party.cpp`): auto-increment party ids, a
  * {@link Party} per active id, and one pending inbound invite per target
- * member. Parties are purely ephemeral session state (no DB row -- matches
- * C++ where CParty lives in CoreServer RAM, never the character row). Rule 04
- * excludes ephemeral social state from the WAL journal.
+ * member.
+ *
+ * **Persistence diverges from C++ on purpose.** Vanilla keeps rosters in
+ * CoreServer RAM and persists only `characters.m_idparty`, so a CoreServer
+ * restart destroys every party (`party.cpp:844`, `:1184`). It also reaps a
+ * member offline for 10 minutes (`CPartyMng::Worker`, `party.cpp:1121`) and
+ * deletes a party whose every member is offline (`RemoveConnection`, `:1259`).
+ * Here parties are durable: {@link onDisconnect} marks a member offline and
+ * NEVER removes them, an all-offline party survives, and {@link hydrate}
+ * reloads the whole set at world boot. The 600 s reaper is not ported --
+ * removal happens only via an explicit leave/kick that drops below 2 members.
+ *
+ * The offline flag itself (`PartyMember::m_bRemove`) is NOT stored here or in
+ * the DB: it is derived from whether the character is in `PlayerManager`, the
+ * same way `friends.dwState` is derived (migration `019`). A stored flag would
+ * strand members "offline" after a crash.
  *
  * Roster invariant: `members[0]` is always the current leader (C++ keeps the
- * leader at slot 0 via `SwapPartyMember(0, idx)` in `CParty::ChangeLeader`).
+ * leader at slot 0 via `SwapPartyMember(0, idx)` in `CParty::ChangeLeader`),
+ * and that order is what `party_member.slot` persists.
  *
  * ponytail: party-duel (`m_idDuelParty`), guild-party (`m_nKindTroup=1` +
  * party name + party-level + contribution mode + skills). Solo party only.
@@ -17,6 +32,9 @@
  */
 
 import { NULL_ID } from '@flyff/world-core';
+import { createLogger } from '@flyff/core/logger';
+
+const logger = createLogger({ module: 'party-manager' });
 
 /** Exp-mode constants (`m_nTroupsShareExp`). Solo party uses level-split. */
 export const PARTY_EXP_MODE_LEVEL = 0;
@@ -116,10 +134,85 @@ export interface PendingPartyInvite {
   timer: ReturnType<typeof setTimeout>;
 }
 
+/**
+ * Persistence port -- structurally satisfied by
+ * `PartyRepository` (`@flyff/database`). An interface rather than the concrete
+ * class so the manager stays testable with a plain object and carries no
+ * knowledge of Knex.
+ */
+export interface PartyPersistence {
+  loadAll(): Promise<{
+    id: number; kindTroup: number; name: string; level: number; exp: number;
+    point: number; expMode: number; itemMode: number; lastItemGetterId: number;
+    members: number[];
+  }[]>;
+  maxId(): Promise<number>;
+  create(party: {
+    id: number; kindTroup: number; name: string; level: number; exp: number;
+    point: number; expMode: number; itemMode: number; lastItemGetterId: number;
+    members: number[];
+  }): Promise<void>;
+  update(partyId: number, data: {
+    kind_troup?: number; name?: string; level?: number; exp?: number;
+    point?: number; exp_mode?: number; item_mode?: number;
+    last_item_getter_id?: number;
+  }): Promise<void>;
+  replaceMembers(partyId: number, members: number[]): Promise<void>;
+  remove(partyId: number): Promise<void>;
+}
+
 export class PartyManager {
   private readonly parties = new Map<number, Party>();
   private readonly pending = new Map<number, PendingPartyInvite>();
   private nextId = 1;
+
+  /**
+   * Optional persistence port. Absent (tests, or a world with no DB wired) =
+   * the manager behaves exactly as the old in-memory version. Every write is
+   * fire-and-forget: a DB failure must never break a live roster broadcast, so
+   * each call swallows its own rejection into a log line (rule 01 -- all async
+   * handles rejection).
+   */
+  constructor(private readonly repo?: PartyPersistence) {}
+
+  /**
+   * World-boot hydrate -- reload every persisted party and seed the id counter
+   * past the highest stored id. Equivalent in spirit to CoreServer pushing
+   * `PACKETTYPE_LOAD_WORLD` -> `CPartyMng::Serialize` into each world
+   * (`DPCoreSrvr.cpp:251`), except the source is the DB rather than RAM.
+   *
+   * Parties that fell below 2 members while offline (a character was deleted,
+   * cascading its `party_member` row) are dropped here rather than resurrected
+   * -- the same floor {@link removeMember} enforces at runtime.
+   */
+  async hydrate(): Promise<void> {
+    if (!this.repo) return;
+    const rows = await this.repo.loadAll();
+    let dropped = 0;
+    for (const r of rows) {
+      if (r.members.length < 2) {
+        dropped++;
+        void this.repo.remove(r.id).catch((err: unknown) => {
+          logger.warn({ err, partyId: r.id }, 'party prune failed');
+        });
+        continue;
+      }
+      this.parties.set(r.id, {
+        id: r.id,
+        members: [...r.members],
+        expMode: r.expMode,
+        itemMode: r.itemMode,
+        level: r.level,
+        exp: r.exp,
+        point: r.point,
+        lastItemGetterId: r.lastItemGetterId,
+        kindTroup: r.kindTroup,
+        name: r.name,
+      });
+    }
+    this.nextId = (await this.repo.maxId()) + 1;
+    logger.info({ parties: this.parties.size, dropped, nextId: this.nextId }, 'parties loaded');
+  }
 
   hasPending(memberId: number): boolean { return this.pending.has(memberId); }
 
@@ -153,6 +246,7 @@ export class PartyManager {
       name: '',
     };
     this.parties.set(party.id, party);
+    this.persistCreate(party);
     return party;
   }
 
@@ -170,6 +264,7 @@ export class PartyManager {
     const p = this.parties.get(partyId);
     if (!p || p.members.length >= MAX_PARTY_MEMBERS || p.members.includes(charId)) return undefined;
     p.members.push(charId);
+    this.persistMembers(p);
     return p;
   }
 
@@ -177,6 +272,9 @@ export class PartyManager {
    * Remove a member. Returns `{ party, disbanded }`; `disbanded=true` means the
    * party dropped below 2 members and was deleted. Caller is responsible for
    * clearing `m_idParty` on remaining members + sending disband notices.
+   *
+   * This is the ONLY path that shrinks a roster -- a logout does not (see
+   * {@link onDisconnect}).
    */
   removeMember(partyId: number, charId: number): { party: Party | undefined; disbanded: boolean } {
     const p = this.parties.get(partyId);
@@ -186,8 +284,10 @@ export class PartyManager {
     p.members.splice(idx, 1);
     if (p.members.length < 2) {
       this.parties.delete(partyId);
+      this.persistRemove(partyId);
       return { party: p, disbanded: true };
     }
+    this.persistMembers(p);
     return { party: p, disbanded: false };
   }
 
@@ -208,6 +308,7 @@ export class PartyManager {
     const tmp = p.members[0];
     p.members[0] = p.members[idx];
     p.members[idx] = tmp;
+    this.persistMembers(p);
     return p;
   }
 
@@ -237,7 +338,31 @@ export class PartyManager {
   /** `pParty->m_nGetItemPlayerId = pGetUser->m_idPlayer` after a distribution. */
   setLastItemGetter(partyId: number, charId: number): void {
     const p = this.parties.get(partyId);
-    if (p) p.lastItemGetterId = charId;
+    if (!p) return;
+    p.lastItemGetterId = charId;
+    this.persistUpdate(partyId, { last_item_getter_id: charId });
+  }
+
+  /**
+   * Leader-only mode change (`m_nTroupsShareExp` / `m_nTroupeShareItem`). The
+   * service validates the range and does the broadcast; this just records +
+   * persists. Returns the party, or undefined for an unknown id.
+   */
+  setExpMode(partyId: number, mode: number): Party | undefined {
+    const p = this.parties.get(partyId);
+    if (!p) return undefined;
+    p.expMode = mode;
+    this.persistUpdate(partyId, { exp_mode: mode });
+    return p;
+  }
+
+  /** Item-share counterpart of {@link setExpMode}. */
+  setItemMode(partyId: number, mode: number): Party | undefined {
+    const p = this.parties.get(partyId);
+    if (!p) return undefined;
+    p.itemMode = mode;
+    this.persistUpdate(partyId, { item_mode: mode });
+    return p;
   }
 
   /**
@@ -284,6 +409,7 @@ export class PartyManager {
       p.point += row.point;
       p.level++;
     }
+    this.persistUpdate(p.id, { level: p.level, exp: p.exp, point: p.point });
     return p;
   }
 
@@ -297,23 +423,70 @@ export class PartyManager {
     if (!p) return undefined;
     p.kindTroup = PARTY_KIND_TROUPE;
     p.name = name.slice(0, MAX_PARTY_NAME_LEN);
+    this.persistUpdate(partyId, { kind_troup: p.kindTroup, name: p.name });
     return p;
   }
 
   /**
-   * Disconnect hook -- clear pending invites referencing `charId` (as leader
-   * or target) AND remove from any active party. Returns the affected party
-   * (if any) so the service can re-broadcast roster / disband.
+   * Disconnect hook -- clear pending invites referencing `charId` (as leader or
+   * target), then report the party they are (still) in.
+   *
+   * **The member is NOT removed.** This mirrors `CPartyMng::RemoveConnection`
+   * (`party.cpp:1199`), which sets `m_bRemove = TRUE` and leaves the roster
+   * intact; only an explicit leave/kick or the (unported) 600 s reaper calls
+   * `DeleteMember`. It diverges from C++ in one place: when the LEADER
+   * disconnects and every other member is already offline, C++ deletes the party
+   * (`:1259`) -- here it survives, which is the whole point of durable parties.
+   *
+   * `wasLeader` lets the service hand leadership to a still-online member (the
+   * `SwapPartyMember(0, j)` half of `RemoveConnection`, which the client mirrors
+   * on receiving the PP_REMOVE delta at `DPClient.cpp:5402`).
    */
-  onDisconnect(charId: number): { party: Party | undefined; disbanded: boolean; wasLeader: boolean } {
+  onDisconnect(charId: number): { party: Party | undefined; wasLeader: boolean } {
     if (this.pending.has(charId)) this.removePending(charId);
     for (const [memberId, inv] of this.pending) {
       if (inv.leaderId === charId) { clearTimeout(inv.timer); this.pending.delete(memberId); }
     }
     const party = this.getByMember(charId);
-    if (!party) return { party: undefined, disbanded: false, wasLeader: false };
-    const wasLeader = party.members[0] === charId;
-    const res = this.removeMember(party.id, charId);
-    return { party: res.party, disbanded: res.disbanded, wasLeader };
+    if (!party) return { party: undefined, wasLeader: false };
+    return { party, wasLeader: party.members[0] === charId };
   }
+
+  // ── Persistence (fire-and-forget; a DB failure never breaks a broadcast) ───
+
+  private persistCreate(p: Party): void {
+    void this.repo?.create(snapshotForDb(p)).catch((err: unknown) => {
+      logger.error({ err, partyId: p.id }, 'party create persist failed');
+    });
+  }
+
+  private persistMembers(p: Party): void {
+    void this.repo?.replaceMembers(p.id, [...p.members]).catch((err: unknown) => {
+      logger.error({ err, partyId: p.id }, 'party roster persist failed');
+    });
+  }
+
+  private persistUpdate(partyId: number, data: PartyUpdatePatch): void {
+    void this.repo?.update(partyId, data).catch((err: unknown) => {
+      logger.error({ err, partyId }, 'party update persist failed');
+    });
+  }
+
+  private persistRemove(partyId: number): void {
+    void this.repo?.remove(partyId).catch((err: unknown) => {
+      logger.error({ err, partyId }, 'party remove persist failed');
+    });
+  }
+}
+
+/** Column patch shape accepted by {@link PartyPersistence.update}. */
+type PartyUpdatePatch = Parameters<PartyPersistence['update']>[1];
+
+/** Flatten a live {@link Party} into the repo's insert shape. */
+function snapshotForDb(p: Party): Parameters<PartyPersistence['create']>[0] {
+  return {
+    id: p.id, kindTroup: p.kindTroup, name: p.name, level: p.level, exp: p.exp,
+    point: p.point, expMode: p.expMode, itemMode: p.itemMode,
+    lastItemGetterId: p.lastItemGetterId, members: [...p.members],
+  };
 }

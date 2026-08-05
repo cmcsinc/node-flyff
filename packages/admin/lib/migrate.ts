@@ -358,6 +358,31 @@ const MIGRATIONS: readonly Migration[] = [
     `UPDATE accounts SET authority = 0x50 WHERE gm = 1`,
     `ALTER TABLE accounts DROP COLUMN gm`,
   ]},
+  // 022 — durable parties — mirrors 022_parties.ts. Diverges from C++ on
+  // purpose: vanilla keeps rosters in CoreServer RAM only.
+  { table: 'parties', sql: [
+    `CREATE TABLE IF NOT EXISTS parties (
+      id INTEGER PRIMARY KEY,
+      kind_troup INTEGER NOT NULL DEFAULT 0,
+      name TEXT NOT NULL DEFAULT '',
+      level INTEGER NOT NULL DEFAULT 1,
+      exp INTEGER NOT NULL DEFAULT 0,
+      point INTEGER NOT NULL DEFAULT 0,
+      exp_mode INTEGER NOT NULL DEFAULT 0,
+      item_mode INTEGER NOT NULL DEFAULT 0,
+      last_item_getter_id INTEGER NOT NULL DEFAULT 0,
+      created_at_ms INTEGER NOT NULL
+    )`,
+    `CREATE TABLE IF NOT EXISTS party_member (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      party_id INTEGER NOT NULL REFERENCES parties(id) ON DELETE CASCADE,
+      character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+      slot INTEGER NOT NULL,
+      joined_at_ms INTEGER NOT NULL,
+      UNIQUE(character_id)
+    )`,
+    `CREATE INDEX IF NOT EXISTS party_member_party_idx ON party_member(party_id)`,
+  ]},
   // Admin-only: GM action trail. No game-server counterpart — the admin panel
   // owns this table, so it is not mirrored in login-server/seed.ts.
   { table: 'admin_audit_log', sql: [

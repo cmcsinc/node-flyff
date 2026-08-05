@@ -277,6 +277,37 @@ export function buildPartyChangeTroup(recipientObjid: number, partyName: string)
 }
 
 /**
+ * `SNAPSHOTTYPE_SET_PARTY_MEMBER_PARAM` (0x0091) --
+ * `AddSetPartyMemberParam` (`User.cpp:1238`). Body:
+ * `u_long idPlayer | BYTE nParam | int nVal`.
+ *
+ * `nParam` is **1 byte** (the live `CAr` template writes `sizeof(BYTE)`);
+ * widening it shifts `nVal` and the client reads garbage. The only param in v19
+ * is {@link PP_REMOVE}, the member ONLINE flag: `nVal = 1` marks `idPlayer`
+ * offline, `0` marks them back online. Sent to every member on the roster
+ * (C++ `OnAddPlayerParty` / `OnRemovePlayerParty`, `DPCoreClient.cpp:1041/1067`).
+ *
+ * The client also runs the leader-offline branch on receipt
+ * (`DPClient.cpp:5395`): when the OFFLINE member is slot 0 it swaps in the
+ * first still-online member, and calls `InitParty()` (tears the window down)
+ * only if every other member is offline too. So a server that keeps an
+ * all-offline party alive must resend the full roster on relog -- the client
+ * has already forgotten it.
+ */
+export function buildSetPartyMemberParam(
+  recipientObjid: number, idPlayer: number, nParam: number, nVal: number,
+): Buffer {
+  const w = snap(SNAPSHOTTYPE.SET_PARTY_MEMBER_PARAM, recipientObjid);
+  w.writeDword(idPlayer);
+  w.writeByte(nParam & 0xff); // BYTE -- no widening
+  w.writeDword(nVal);
+  return w.build();
+}
+
+/** `PP_REMOVE` (`_Common/party.h:31`) -- the member offline flag. */
+export const PP_REMOVE = 0;
+
+/**
  * `SNAPSHOTTYPE_ERRORPARTY` (0x0081) -- `AddSendErrorParty` (User.cpp:1222).
  * Body: `DWORD dw`. Only when `dw == ERROR_NOTARGET` does C++ append a second
  * `dwSkill` DWORD -- we surface that via the optional second arg.

@@ -565,28 +565,78 @@ describe('PartyService', () => {
     });
   });
 
-  describe('onDisconnect', () => {
-    it('leader disconnect auto-promotes + rebroadcasts (party persists with >=2)', () => {
+  describe('onDisconnect / onJoin (durable parties)', () => {
+    it('leader disconnect promotes an online member + sends PP_REMOVE(1)', () => {
       service.invite(a, 2); service.accept(b, 1);
       service.invite(a, 3); service.accept(c, 1);
       harness.sent.length = 0;
+      harness.players.delete(1); // A's socket is gone before the hook runs
       service.onDisconnect(a);
-      assert.equal(a.m_idParty, NULL_ID);
-      const remaining = manager.getByMember(2);
-      assert.ok(remaining, 'party persists');
-      assert.equal(remaining!.members[0], 2, 'b promoted');
-      const leaderNotice = harness.sent.some((s) => subtype(s.buf) === SNAPSHOTTYPE.ADDPARTYCHANGELEADER);
-      assert.ok(leaderNotice);
+      const party = manager.getByMember(2);
+      assert.ok(party, 'party persists');
+      assert.equal(party!.members[0], 2, 'b promoted (first online member)');
+      assert.deepEqual(party!.members.slice().sort(), [1, 2, 3], 'A stays on the roster');
+      assert.ok(harness.sent.some((s) => subtype(s.buf) === SNAPSHOTTYPE.ADDPARTYCHANGELEADER));
+      const offline = harness.sent.filter(
+        (s) => subtype(s.buf) === SNAPSHOTTYPE.SET_PARTY_MEMBER_PARAM,
+      );
+      assert.deepEqual(offline.map((s) => s.id), [2, 3], 'both online peers told');
+      // Body: idPlayer(DWORD) | nParam(BYTE) | nVal(DWORD) after the 16-byte head.
+      assert.equal(offline[0].buf.readUInt32LE(16), 1, 'idPlayer = the leaver');
+      assert.equal(offline[0].buf.readUInt8(20), 0, 'PP_REMOVE');
+      assert.equal(offline[0].buf.readUInt32LE(21), 1, 'nVal = 1 (offline)');
     });
 
-    it('disband when last-but-one disconnects', () => {
+    it('two-member party survives everyone logging out', () => {
       service.invite(a, 2); service.accept(b, 1);
-      harness.sent.length = 0;
+      harness.players.delete(1);
       service.onDisconnect(a);
-      assert.equal(b.m_idParty, NULL_ID, 'remaining member cleared');
-      assert.equal(manager.getByMember(2), undefined, 'party gone');
-      const disbanded = harness.sent.some((s) => subtype(s.buf) === SNAPSHOTTYPE.PARTYMEMBER);
-      assert.ok(disbanded);
+      harness.players.delete(2);
+      service.onDisconnect(b);
+      const party = manager.get(1);
+      assert.ok(party, 'party still exists with every member offline');
+      assert.deepEqual(party!.members.slice().sort(), [1, 2]);
+    });
+
+    it('onJoin re-pushes the roster to the returning member + PP_REMOVE(0) to peers', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      harness.players.delete(1);
+      service.onDisconnect(a);
+      a.m_idParty = NULL_ID; // simulate a fresh CPlayer built by JoinService
+      harness.players.set(1, a);
+      harness.sent.length = 0;
+      assert.equal(service.onJoin(a), true);
+      assert.equal(a.m_idParty, 1, 'membership restored');
+      const roster = harness.sent.filter((s) => subtype(s.buf) === SNAPSHOTTYPE.PARTYMEMBER);
+      assert.deepEqual(roster.map((s) => s.id), [1], 'roster to the returner only');
+      const back = harness.sent.filter(
+        (s) => subtype(s.buf) === SNAPSHOTTYPE.SET_PARTY_MEMBER_PARAM,
+      );
+      assert.deepEqual(back.map((s) => s.id), [2], 'peer told we are back');
+      assert.equal(back[0].buf.readUInt32LE(21), 0, 'nVal = 0 (online)');
+    });
+
+    it('onJoin with no party clears a stale m_idParty and sends nothing', () => {
+      a.m_idParty = 77;
+      assert.equal(service.onJoin(a), false);
+      assert.equal(a.m_idParty, NULL_ID);
+      assert.equal(harness.sent.length, 0);
+    });
+
+    it('the roster snapshot marks offline members with m_bRemove', () => {
+      service.invite(a, 2); service.accept(b, 1);
+      harness.players.delete(2); // B logs out
+      harness.sent.length = 0;
+      service.onJoin(a);
+      const roster = harness.sent.find((s) => subtype(s.buf) === SNAPSHOTTYPE.PARTYMEMBER)!;
+      // Head 16 | idPlayer 4 | leaderName str | memberName str | size 4 |
+      // CParty (9 DWORDs + 5 modeTime) | per-member { id, remove }.
+      // Simpler: the last 16 bytes are the two member trailers.
+      const tail = roster.buf.subarray(roster.buf.length - 16);
+      assert.equal(tail.readUInt32LE(0), 1, 'leader = A');
+      assert.equal(tail.readUInt32LE(4), 0, 'A online');
+      assert.equal(tail.readUInt32LE(8), 2, 'member = B');
+      assert.equal(tail.readUInt32LE(12), 1, 'B flagged offline');
     });
   });
 

@@ -9,6 +9,7 @@ import * as assert from 'node:assert/strict';
 import {
   buildPartyMember, buildPartyRequest, buildPartyRequestCancel,
   buildPartyChangeLeader, buildPartyChat, buildPartyExp, buildErrorParty,
+  buildSetPartyMemberParam, PP_REMOVE,
   MAX_PARTYMODE,
 } from '../../src/serializers/party.serializer';
 import { PACKETTYPE, SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
@@ -184,5 +185,21 @@ describe('remaining party serializers', () => {
     assert.equal(buf.readUInt32LE(16), 1);
     assert.equal(buf.readUInt32LE(20), 999);
     assert.equal(buf.length, 24);
+  });
+
+  it('buildSetPartyMemberParam writes nParam as ONE byte', () => {
+    const buf = buildSetPartyMemberParam(4, 77, PP_REMOVE, 1);
+    assertPrefix(buf, 4, SNAPSHOTTYPE.SET_PARTY_MEMBER_PARAM);
+    assert.equal(buf.readUInt32LE(16), 77, 'idPlayer');
+    assert.equal(buf.readUInt8(20), PP_REMOVE, 'nParam is BYTE (CAr writes sizeof(BYTE))');
+    assert.equal(buf.readUInt32LE(21), 1, 'nVal follows immediately -- no padding');
+    // 16 head + 4 id + 1 param + 4 val. A DWORD nParam would make this 28 and
+    // shift nVal, so the client would read garbage (DPClient.cpp:5381).
+    assert.equal(buf.length, 25);
+  });
+
+  it('buildSetPartyMemberParam nVal 0 marks a member back online', () => {
+    const buf = buildSetPartyMemberParam(4, 77, PP_REMOVE, 0);
+    assert.equal(buf.readUInt32LE(21), 0);
   });
 });

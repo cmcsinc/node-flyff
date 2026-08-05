@@ -180,6 +180,14 @@ export const PACKETTYPE = Object.freeze({
   // mode bits. `dwMode=1` = PK on, `dwMode=0` = PK off.
   MODE:                 0xffffff7b,
 
+  // v19 `DPSrvr::OnStateMode` (DPSrvr.cpp:6844) -- `DWORD dwStateMode, BYTE nFlag`.
+  // The client's ONLY use is cancelling an armed item channel: it sends
+  // `STATE_BASEMOTION_MODE | STATEMODE_BASEMOTION_CANCEL` when the player moves,
+  // jumps (`WndWorldControlPlayer.cpp:560`), or takes/deals a hit
+  // (`DPClient.cpp:1827`). Server clears `m_dwStateMode`, `m_nReadyTime`, and
+  // `m_dwUseItemId`. Any other flag is ignored.
+  STATEMODE:            0xffffff7a,
+
   GUILD:                0xffffff30,
 
   // v19 client -> world -- `WORLDSERVER/DPSrvr.cpp` handlers.
@@ -445,6 +453,13 @@ export const SNAPSHOTTYPE = Object.freeze({
   // (User.cpp:1346 AddPartyChangeTroup): `String szPartyName`. Client sets
   // g_Party.m_nKindTroup=1 on receipt (DPClient.cpp:5340 OnPartyChangeTroup).
   PARTYCHANGETROUP:       0x0088,
+  // MsgHdr.h:1055 -- `CUser::AddSetPartyMemberParam` (User.cpp:1238):
+  // `objid | SET_PARTY_MEMBER_PARAM | u_long idPlayer | BYTE nParam | int nVal`.
+  // `nParam` is the only PP_* in v19 (`PP_REMOVE`, party.h:31) and carries a
+  // member's ONLINE state: 1 = offline, 0 = back online. `nParam` is a BYTE on
+  // the wire (the live `CAr` template writes sizeof(BYTE)); widening it to a
+  // DWORD shifts `nVal` and the client reads garbage.
+  SET_PARTY_MEMBER_PARAM: 0x0091,
   // MsgHdr.h:1121 -- navigator map ping echo. `CUser::AddSetNaviPoint`
   // (User.cpp:2559) body: `D3DXVECTOR3 Pos | String Name`. `objid` (the
   // snapshot record owner) is the PINGER's id, not the recipient's --

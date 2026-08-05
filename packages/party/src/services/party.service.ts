@@ -14,8 +14,12 @@
  *
  * ponytail: guild-party (`m_nKindTroup=1` + party name + level/exp bar +
  * contribution mode + party skills), party-duel, round-robin item distribution,
- * party finder, party map ping, mute check on party chat, persistence (none --
- * parties are ephemeral, matching C++).
+ * party finder, party map ping, mute check on party chat.
+ *
+ * Persistence: rosters ARE durable here (migration `022`) -- a logout marks the
+ * member offline via {@link PartyService.onDisconnect} and {@link PartyService.onJoin}
+ * restores them, which diverges from C++ where a CoreServer restart destroys
+ * every party. See the `PartyManager` module comment for the full divergence.
  *
  * @module services/party
  */
@@ -29,6 +33,7 @@ import {
   buildPartyChangeLeader, buildPartyChat, PARTY_NO_DUEL,
   buildSetNaviPoint, buildPartyExp,
   buildPartyChangeItemMode, buildPartyChangeExpMode, buildPartyChangeTroup,
+  buildSetPartyMemberParam, PP_REMOVE,
   type PartySnapshotState,
 } from '@flyff/world-core';
 import {
@@ -238,7 +243,7 @@ export class PartyService {
     const party = this.deps.partyManager.getByMember(leader.m_idPlayer);
     if (!party || party.members[0] !== leader.m_idPlayer) return;
     if (mode < 0 || mode > PARTY_EXP_MODE_CONTRIBUTION) return;
-    party.expMode = mode;
+    this.deps.partyManager.setExpMode(party.id, mode);
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
       if (p) this.deps.playerManager.sendTo(p, buildPartyChangeExpMode(p.m_idPlayer, mode));
@@ -255,7 +260,7 @@ export class PartyService {
     const party = this.deps.partyManager.getByMember(leader.m_idPlayer);
     if (!party || party.members[0] !== leader.m_idPlayer) return;
     if (mode < 0 || mode > PARTY_ITEM_MODE_MAX) return;
-    party.itemMode = mode;
+    this.deps.partyManager.setItemMode(party.id, mode);
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);
       if (p) this.deps.playerManager.sendTo(p, buildPartyChangeItemMode(p.m_idPlayer, mode));
@@ -325,23 +330,90 @@ export class PartyService {
   }
 
   /**
-   * Disconnect seam -- clear pending invites AND remove from any active party.
-   * Caller passes the live player so we can clear `m_idParty` before the join
-   * service drops the player from the manager. Mirrors leave: auto-promote if
-   * the leader dropped, disband if <2 remain.
+   * Disconnect seam -- clear pending invites, mark the member OFFLINE, and hand
+   * leadership over if they were the leader.
+   *
+   * Ports `CPartyMng::RemoveConnection` (`party.cpp:1199`): the member stays on
+   * the roster with `m_bRemove = TRUE`, every member gets the PP_REMOVE delta
+   * (`nVal = 1`), and a departing leader is swapped out for the first
+   * still-online member. It diverges in one place -- C++ deletes a party whose
+   * every member is now offline (`:1259`); here it persists, so the roster is
+   * still there when someone logs back in ({@link onJoin} resends it).
+   *
+   * The caller passes the live player because `m_idParty` must be read before
+   * the join service drops them from `PlayerManager`. `m_idParty` is deliberately
+   * NOT cleared: it is persisted membership now, not session state.
    */
   onDisconnect(player: CPlayer): void {
-    const party = this.deps.partyManager.getByMember(player.m_idPlayer);
-    const leaderName = party ? this.deps.playerManager.get(party.members[0])?.m_szName ?? '' : '';
     const res = this.deps.partyManager.onDisconnect(player.m_idPlayer);
-    player.m_idParty = NULL_ID;
     if (!res.party) return;
-    if (res.disbanded) { this.notifyDisband(res.party, leaderName, player.m_szName); return; }
+    const party = res.party;
+    // Leader left -> promote the first member who is still online. Silent no-op
+    // when nobody else is on (the party sits leaderless-but-intact until the
+    // next login, exactly as the persisted slot order says).
     if (res.wasLeader) {
-      const newLeaderId = res.party.members[0];
-      this.broadcastAddPartyChangeLeader(res.party, newLeaderId);
+      const heir = party.members.find(
+        (id) => id !== player.m_idPlayer && this.deps.playerManager.get(id) !== undefined,
+      );
+      if (heir !== undefined) {
+        const promoted = this.deps.partyManager.promoteLeader(party.id, heir);
+        if (promoted) this.broadcastAddPartyChangeLeader(promoted, heir);
+      }
     }
-    this.broadcastRosterOnly(res.party, player.m_idPlayer, player.m_szName);
+    // PP_REMOVE(1) to every member still online. The leaver's own socket is
+    // already gone, and `sendTo` only reaches players in PlayerManager, so the
+    // loop naturally skips them.
+    this.broadcastMemberOffline(party, player.m_idPlayer, true);
+  }
+
+  /**
+   * JOIN seam -- re-push the full roster to a returning member and tell the rest
+   * of the party they are back.
+   *
+   * Both halves are required. C++'s `AddConnection` (`party.cpp:1173`) only
+   * broadcasts `ADDPLAYERPARTY` -> PP_REMOVE(0) because the *returning* client
+   * gets its roster from `CUser::AddPartyMember` on character load
+   * (`DPDatabaseClient.cpp:1075`). We do that same roster push here rather than
+   * in the join handler so both halves stay in one place.
+   *
+   * Returns false when the player is in no party (nothing sent), which also
+   * clears a stale `m_idParty` -- the C++ `pPlayer->m_uPartyId = 0` fallback at
+   * `party.cpp:1196` for an id that no longer resolves.
+   */
+  onJoin(player: CPlayer): boolean {
+    const party = this.deps.partyManager.getByMember(player.m_idPlayer);
+    if (!party) {
+      player.m_idParty = NULL_ID;
+      return false;
+    }
+    player.m_idParty = party.id;
+    const leaderName = this.deps.playerManager.get(party.members[0])?.m_szName ?? '';
+    // Full roster to the returning member. `affectedPlayerId` is themself, the
+    // C++ `idMember` argument, and the size is unchanged so the client prints no
+    // join/leave line -- it just rebuilds `g_Party`.
+    this.deps.playerManager.sendTo(player, buildPartyMember(
+      player.m_idPlayer, player.m_idPlayer, leaderName, player.m_szName, this.snapshot(party),
+    ));
+    // "<name> is back online" to everyone else.
+    this.broadcastMemberOffline(party, player.m_idPlayer, false);
+    return true;
+  }
+
+  /**
+   * PP_REMOVE fan-out -- `AddSetPartyMemberParam(idPlayer, PP_REMOVE, nVal)` to
+   * every ONLINE member except `idPlayer` themself (whose socket is either gone,
+   * on disconnect, or already got the full roster, on join).
+   */
+  private broadcastMemberOffline(party: Party, idPlayer: number, offline: boolean): void {
+    for (const id of party.members) {
+      if (id === idPlayer) continue;
+      const p = this.deps.playerManager.get(id);
+      if (p) {
+        this.deps.playerManager.sendTo(
+          p, buildSetPartyMemberParam(p.m_idPlayer, idPlayer, PP_REMOVE, offline ? 1 : 0),
+        );
+      }
+    }
   }
 
   /**
@@ -633,6 +705,11 @@ export class PartyService {
    * `CParty::Serialize` state for a roster broadcast. `kindTroup`/`partyName`
    * MUST ride along: the client re-reads them on every PARTYMEMBER, so omitting
    * them silently demotes an advanced party back to solo on the next refresh.
+   *
+   * `remove` is `PartyMember::m_bRemove` -- the OFFLINE flag, derived from
+   * whether the member is in `PlayerManager` (it is never stored; see the
+   * manager's module comment). Hardcoding `false` would render every logged-out
+   * member as online in the party window.
    */
   private snapshot(party: Party): PartySnapshotState {
     return {
@@ -640,7 +717,9 @@ export class PartyService {
       level: party.level, exp: party.exp, point: party.point,
       expMode: party.expMode, itemMode: party.itemMode, duelPartyId: PARTY_NO_DUEL,
       partyName: party.name,
-      members: party.members.map((m) => ({ id: m, remove: false })),
+      members: party.members.map((m) => ({
+        id: m, remove: this.deps.playerManager.get(m) === undefined,
+      })),
     };
   }
 

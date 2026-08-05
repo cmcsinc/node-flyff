@@ -80,6 +80,14 @@ export {
   type CampusWithMembers,
 } from './repositories/campus.repo';
 
+export {
+  PartyRepository,
+  type PartyRow,
+  type PartyMemberRow,
+  type PartyWithMembers,
+  type PartyUpdateData,
+} from './repositories/party.repo';
+
 // WAL journal -- embedded SQLite crash-recovery log
 export {
   Journal,

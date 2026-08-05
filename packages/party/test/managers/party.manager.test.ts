@@ -116,20 +116,84 @@ describe('PartyManager', () => {
     assert.ok(!mgr.hasPending(2));
   });
 
-  it('onDisconnect clears pending-as-leader AND removes from active party', () => {
+  it('onDisconnect clears pending-as-leader but KEEPS the member on the roster', () => {
     const p = mgr.create(1, 2);
     mgr.addMember(p.id, 3);
     const t1 = setTimeout(() => {}, 1000);
     mgr.addPending({ leaderId: 4, memberId: 5, expiresAt: 0, timer: t1 });
-    // Disconnect member 3 (not leader) -> party persists.
+    // Parties are durable (migration 022): a logout marks the member offline,
+    // it never shrinks the roster.
     const res = mgr.onDisconnect(3);
-    assert.equal(res.disbanded, false);
-    assert.deepEqual(mgr.members(p.id), [1, 2]);
-    // Disconnect leader -> auto-promote, party persists at size 1 only if >=2
-    // remaining; here size drops to 1 so disband.
+    assert.equal(res.wasLeader, false);
+    assert.deepEqual(mgr.members(p.id), [1, 2, 3], 'roster intact');
+    assert.ok(mgr.hasPending(5), 'an unrelated invite is untouched');
+    // Leader disconnect reports wasLeader and still keeps everyone.
     const res2 = mgr.onDisconnect(1);
-    assert.equal(res2.disbanded, true);
     assert.equal(res2.wasLeader, true);
-    assert.equal(mgr.get(p.id), undefined);
+    assert.deepEqual(mgr.members(p.id), [1, 2, 3]);
+    assert.ok(mgr.get(p.id), 'all-offline party survives');
+  });
+
+  it('onDisconnect clears a pending invite the leaver had issued', () => {
+    const t = setTimeout(() => {}, 1000);
+    mgr.addPending({ leaderId: 7, memberId: 8, expiresAt: 0, timer: t });
+    mgr.onDisconnect(7);
+    assert.ok(!mgr.hasPending(8), 'invites from a departing leader are dropped');
+  });
+
+  it('hydrate reloads rosters, seeds the id counter, and prunes size<2', () => {
+    const repo = {
+      loadAll: async () => [
+        {
+          id: 4, kindTroup: 1, name: 'Troupe', level: 3, exp: 20, point: 45,
+          expMode: 0, itemMode: 2, lastItemGetterId: 9, members: [5, 6, 7],
+        },
+        // A character was deleted while offline -> cascade left one member.
+        {
+          id: 9, kindTroup: 0, name: '', level: 1, exp: 0, point: 0,
+          expMode: 0, itemMode: 0, lastItemGetterId: 0, members: [8],
+        },
+      ],
+      maxId: async () => 9,
+      create: async () => {},
+      update: async () => {},
+      replaceMembers: async () => {},
+      remove: async (id: number) => { removed.push(id); },
+    };
+    const removed: number[] = [];
+    const m = new PartyManager(repo);
+    return m.hydrate().then(() => {
+      const p = m.get(4);
+      assert.ok(p);
+      assert.deepEqual(p!.members, [5, 6, 7], 'slot order preserved (leader first)');
+      assert.equal(p!.itemMode, 2);
+      assert.equal(p!.level, 3);
+      assert.equal(p!.kindTroup, 1);
+      assert.equal(p!.name, 'Troupe');
+      assert.equal(m.get(9), undefined, 'size<2 pruned');
+      assert.deepEqual(removed, [9], 'pruned party deleted from the DB too');
+      // Counter continues past the highest stored id -- a fresh party must not
+      // collide with a hydrated one.
+      assert.equal(m.create(20, 21).id, 10);
+    });
+  });
+
+  it('mutations write through to the repo', () => {
+    const calls: string[] = [];
+    const m = new PartyManager({
+      loadAll: async () => [],
+      maxId: async () => 0,
+      create: async () => { calls.push('create'); },
+      update: async () => { calls.push('update'); },
+      replaceMembers: async () => { calls.push('members'); },
+      remove: async () => { calls.push('remove'); },
+    });
+    const p = m.create(1, 2);
+    m.addMember(p.id, 3);
+    m.promoteLeader(p.id, 3);
+    m.setItemMode(p.id, 1);
+    m.removeMember(p.id, 3);
+    m.removeMember(p.id, 2); // drops below 2 -> delete
+    assert.deepEqual(calls, ['create', 'members', 'members', 'update', 'members', 'remove']);
   });
 });
