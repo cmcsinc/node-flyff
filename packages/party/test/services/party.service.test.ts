@@ -9,6 +9,7 @@ import { describe, it, beforeEach } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PartyService } from '../../src/services/party.service';
 import { PartyManager } from '../../src/managers/party.manager';
+import { MAX_PARTY_LEVEL } from '../../src/managers/party.manager';
 import { SNAPSHOTTYPE } from '@flyff/core/constants/opcodes';
 import { NULL_ID } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
@@ -364,6 +365,101 @@ describe('PartyService', () => {
         'A alone nearby -> solo fallback',
       );
       assert.equal(harness.grants.length, 0);
+    });
+  });
+
+  describe('party-LEVEL exp (CParty::GetPoint -> SETPARTYEXP)', () => {
+    const mob = (level: number) =>
+      ({ m_nZoneId: 1, m_nLevel: level, m_vPos: { x: 0, y: 0, z: 0 } }) as never;
+
+    /** The last PARTYEXP body sent to `id`, or undefined. */
+    function lastPartyExp(id: number): { exp: number; level: number; point: number } | undefined {
+      const hits = harness.sent.filter(
+        (s) => s.id === id && subtype(s.buf) === SNAPSHOTTYPE.PARTYEXP,
+      );
+      const last = hits.at(-1);
+      if (!last) return undefined;
+      // 14-byte snapshot prefix, then exp/level/point DWORDs.
+      return {
+        exp: last.buf.readUInt32LE(16), level: last.buf.readUInt32LE(20),
+        point: last.buf.readUInt32LE(24),
+      };
+    }
+
+    it('accrues (monLv/25 + 1) * 10 and pushes PARTYEXP to every member', () => {
+      a.m_nLevel = 10; b.m_nLevel = 10;
+      service.invite(a, 2); service.accept(b, 1);
+      const party = manager.getByMember(1)!;
+      assert.equal(party.level, 1, 'ctor seeds level 1');
+      harness.sent.length = 0;
+      service.distributeExp(a, mob(10), 100);
+      // (10/25 -> 0) + 1 = 1 -> 10 exp. Level-1 threshold is 200, no level-up.
+      assert.equal(party.exp, 10);
+      assert.equal(party.level, 1);
+      assert.deepEqual(lastPartyExp(1), { exp: 10, level: 1, point: 0 });
+      assert.deepEqual(lastPartyExp(2), { exp: 10, level: 1, point: 0 },
+        'every member sees the bar move');
+    });
+
+    it('mob level scales via integer division (lv 50 -> 30 exp)', () => {
+      a.m_nLevel = 50; b.m_nLevel = 50;
+      service.invite(a, 2); service.accept(b, 1);
+      const party = manager.getByMember(1)!;
+      service.distributeExp(a, mob(50), 100);
+      // (50/25 = 2) + 1 = 3 -> 30.
+      assert.equal(party.exp, 30);
+    });
+
+    it('levels the party ONCE per kill, carrying the remainder', () => {
+      a.m_nLevel = 10; b.m_nLevel = 10;
+      service.invite(a, 2); service.accept(b, 1);
+      const party = manager.getByMember(1)!;
+      party.exp = 195; // 5 short of the 200 threshold
+      harness.sent.length = 0;
+      service.distributeExp(a, mob(10), 100);
+      // 195 + 10 = 205 >= 200 -> level 2, carry 5, +15 point.
+      assert.equal(party.level, 2);
+      assert.equal(party.exp, 5);
+      assert.equal(party.point, 15);
+      assert.deepEqual(lastPartyExp(1), { exp: 5, level: 2, point: 15 });
+    });
+
+    it('gate: a party averaging 5+ levels above the mob earns no party exp', () => {
+      a.m_nLevel = 20; b.m_nLevel = 20;
+      service.invite(a, 2); service.accept(b, 1);
+      const party = manager.getByMember(1)!;
+      harness.sent.length = 0;
+      // avg 20 - mob 15 = 5, NOT < 5 -> blocked (party.cpp:268).
+      service.distributeExp(a, mob(15), 1000);
+      assert.equal(party.exp, 0);
+      assert.equal(lastPartyExp(1), undefined, 'no PARTYEXP push when gated');
+      // avg 20 - mob 16 = 4 < 5 -> allowed.
+      service.distributeExp(a, mob(16), 1000);
+      assert.equal(party.exp, 10);
+    });
+
+    it('a maxed (level 10) solo party stops accruing', () => {
+      a.m_nLevel = 10; b.m_nLevel = 10;
+      service.invite(a, 2); service.accept(b, 1);
+      const party = manager.getByMember(1)!;
+      party.level = MAX_PARTY_LEVEL; party.exp = 0;
+      harness.sent.length = 0;
+      service.distributeExp(a, mob(10), 100);
+      assert.equal(party.exp, 0, 'C++ gates on m_nLevel < MAX_PARTYLEVEL');
+      assert.equal(party.level, MAX_PARTY_LEVEL);
+      assert.equal(lastPartyExp(1), undefined);
+    });
+
+    it('partyExpRate scales the accrual', () => {
+      const svc = new PartyService({
+        playerManager: harness.pm as never, partyManager: manager,
+        grantExpAmount: harness.grantExpAmount, partyExpRate: () => 3.0,
+      });
+      a.m_nLevel = 10; b.m_nLevel = 10;
+      svc.invite(a, 2); svc.accept(b, 1);
+      const party = manager.getByMember(1)!;
+      svc.distributeExp(a, mob(10), 100);
+      assert.equal(party.exp, 30, '10 * 3.0');
     });
   });
 

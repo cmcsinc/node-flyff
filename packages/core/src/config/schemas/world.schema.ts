@@ -32,6 +32,12 @@ export const WorldSimConfigSchema = z.object({
   /** Gold (penya) drop rate multiplier (1.0 = retail). */
   goldRate: z.number().positive().default(1.0),
   /**
+   * Party-LEVEL exp rate (`s_fPartyExpRate`, read from the CoreServer ini's
+   * `PartyExpRate` at `CoreServer.cpp:546`). Scales the party bar's own exp
+   * only -- per-member kill exp uses {@link expRate} and its own curve.
+   */
+  partyExpRate: z.number().positive().default(1.0),
+  /**
    * NPC shop cost rate (`prj.m_fShopCost`, C++ `Project.h:968`). Multiplied
    * into every buy price: `floor(rate * propItem.price)`, floored to 1.
    * 1.0 = retail. Values > 1.0 make shops more expensive.

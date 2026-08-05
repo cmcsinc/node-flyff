@@ -50,6 +50,29 @@ export const PARTY_KIND_TROUPE = 1;
 /** `m_sParty` capacity -- `ar.ReadString(sParty, 33)` (32 chars + NUL). */
 export const MAX_PARTY_NAME_LEN = 32;
 
+/** `MAX_PARTYLEVEL` (`ProjectCmn.h:34`) -- a solo party stops levelling here. */
+export const MAX_PARTY_LEVEL = 10;
+
+/**
+ * `expParty` block of `expTable.inc` (parsed by `CProject::OpenExpTable`,
+ * `Project.cpp:3459`) -- `{ exp-to-next, point-on-levelup }` indexed by the
+ * party's CURRENT level. C++ reads `m_aExpParty[m_nLevel]`, and the table is
+ * "0 based" per its own comment, so index 0 is unreachable for a live party
+ * (`m_nLevel` starts at 1) and index 10 is the `MAX_PARTYLEVEL` terminator.
+ */
+export const PARTY_EXP_TABLE: readonly { readonly exp: number; readonly point: number }[] = [
+  { exp: 0, point: 0 },     // 0 (unused -- parties start at level 1)
+  { exp: 200, point: 15 },  // 1 -> 2
+  { exp: 200, point: 15 },  // 2 -> 3
+  { exp: 250, point: 15 },  // 3 -> 4
+  { exp: 300, point: 15 },  // 4 -> 5
+  { exp: 350, point: 15 },  // 5 -> 6
+  { exp: 400, point: 15 },  // 6 -> 7
+  { exp: 450, point: 15 },  // 7 -> 8
+  { exp: 500, point: 15 },  // 8 -> 9
+  { exp: 500, point: 15 },  // 9 -> 10
+];
+
 /** One live party. `members[0]` is the leader. */
 export interface Party {
   readonly id: number;
@@ -59,6 +82,12 @@ export interface Party {
   expMode: number;
   /** `m_nTroupeShareItem` (0 finder, 1 sequential, 2 leader, 3 random). */
   itemMode: number;
+  /** `m_nLevel` -- party level. C++ ctor seeds 1 (`party.cpp:55`). */
+  level: number;
+  /** `m_nExp` -- within-level party exp (resets on each party level-up). */
+  exp: number;
+  /** `m_nPoint` -- accrued party-skill points. */
+  point: number;
   /**
    * `CParty::m_nGetItemPlayerId` -- who received the LAST distributed item.
    * Sequential mode hands the next drop to the member AFTER this one in the
@@ -116,6 +145,9 @@ export class PartyManager {
       members: [leaderId, memberId],
       expMode: PARTY_EXP_MODE_LEVEL,
       itemMode: PARTY_ITEM_MODE_FFA,
+      level: 1,
+      exp: 0,
+      point: 0,
       lastItemGetterId: NULL_ID,
       kindTroup: PARTY_KIND_SOLO,
       name: '',
@@ -206,6 +238,53 @@ export class PartyManager {
   setLastItemGetter(partyId: number, charId: number): void {
     const p = this.parties.get(partyId);
     if (p) p.lastItemGetterId = charId;
+  }
+
+  /**
+   * Party-level exp accrual -- `CDPCoreSrvr::OnAddPartyExp` solo-party branch
+   * (`DPCoreSrvr.cpp:764-786`), reached from `CParty::GetPoint`
+   * (`party.cpp:264`) once per party kill:
+   *
+   * ```
+   * nAddExp = int((nMonLv / 25 + 1) * 10) * s_fPartyExpRate   // int div on nMonLv
+   * m_nExp += nAddExp
+   * if( m_nExp >= m_aExpParty[m_nLevel].Exp ) {
+   *   m_nExp   -= m_aExpParty[m_nLevel].Exp
+   *   m_nPoint += m_aExpParty[m_nLevel].Point
+   *   m_nLevel++
+   * }
+   * ```
+   *
+   * Note the single `if`, not a `while`: C++ levels the party at most ONCE per
+   * kill and carries the remainder, so a huge `rate` cannot skip levels. Kept
+   * verbatim. A solo party at `MAX_PARTY_LEVEL` gains nothing (the C++ guard is
+   * on the level check, so exp stops accruing entirely -- it does not sit
+   * capped at the threshold).
+   *
+   * Returns the mutated party when anything changed (so the caller can push
+   * PARTYEXP), or `undefined` for an unknown id / a maxed party.
+   *
+   * ponytail: `bSuperLeader` (II_SYS_SYS_SCR_SUPERLEADERPARTY buff -> x2) and
+   * the v12 `bLeaderSMExpUp` scroll (x1.5); neither buff item is ported. The
+   * guild-party branch (`m_nKindTroup == 1`, its own uncapped level curve at
+   * `DPCoreSrvr.cpp:788-820`) is out of scope with guild parties.
+   */
+  addPartyExp(partyId: number, monsterLevel: number, rate = 1.0): Party | undefined {
+    const p = this.parties.get(partyId);
+    if (!p) return undefined;
+    // Solo-party only, and only below the cap (C++ gates on both).
+    if (p.kindTroup !== PARTY_KIND_SOLO) return undefined;
+    if (p.level >= MAX_PARTY_LEVEL) return undefined;
+    const addExp = Math.trunc(Math.trunc(Math.trunc(monsterLevel / 25) + 1) * 10 * rate);
+    if (addExp <= 0) return undefined;
+    p.exp += addExp;
+    const row = PARTY_EXP_TABLE[p.level];
+    if (row !== undefined && p.exp >= row.exp) {
+      p.exp -= row.exp;
+      p.point += row.point;
+      p.level++;
+    }
+    return p;
   }
 
   /**

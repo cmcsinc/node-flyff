@@ -27,7 +27,7 @@ import type { PlayerManager } from '@flyff/world-core';
 import {
   buildPartyMember, buildPartyRequest, buildPartyRequestCancel,
   buildPartyChangeLeader, buildPartyChat, PARTY_NO_DUEL,
-  buildSetNaviPoint,
+  buildSetNaviPoint, buildPartyExp,
   buildPartyChangeItemMode, buildPartyChangeExpMode, buildPartyChangeTroup,
   type PartySnapshotState,
 } from '@flyff/world-core';
@@ -58,6 +58,12 @@ const PARTY_ITEM_PROXIMITY = 32;
 const PARTY_EXP_LEVEL_BAND = 20;
 /** `fAddExp = fExpValue * 0.2 * (nMemberSize - 1)` (Mover.cpp:6612). */
 const PARTY_EXP_BONUS_PER_MEMBER = 0.2;
+/**
+ * Party-LEVEL exp gate: `(nTotalLevel / nMemberSize) - nDeadLevel < 5`
+ * (`CParty::GetPoint`, `party.cpp:268`). Unrelated to
+ * {@link PARTY_EXP_LEVEL_BAND}, which gates per-MEMBER exp.
+ */
+const PARTY_LEVEL_EXP_BAND = 5;
 
 export interface PartyServiceDeps {
   playerManager: PlayerManager;
@@ -69,6 +75,13 @@ export interface PartyServiceDeps {
    * satisfies the signature, keeps party free of any `@flyff/combat` import.
    */
   grantExpAmount: (player: CPlayer, amount: number) => void;
+  /**
+   * `s_fPartyExpRate` (`CoreServer.cpp:546`, the CoreServer ini's
+   * `PartyExpRate`) -- multiplier on party-LEVEL exp only, NOT on the member
+   * exp split. A thunk so a runtime rate change takes effect on the next kill
+   * (same pattern as `DropService.rates`). Defaults to 1.0.
+   */
+  partyExpRate?: () => number;
   /** Injector seam for tests. */
   now?: () => number;
   /** `[0,1)` source for the random/remainder picks. Injector seam for tests. */
@@ -78,9 +91,11 @@ export interface PartyServiceDeps {
 export class PartyService {
   private readonly now: () => number;
   private readonly random: () => number;
+  private readonly partyExpRate: () => number;
   constructor(private readonly deps: PartyServiceDeps) {
     this.now = deps.now ?? Date.now;
     this.random = deps.random ?? Math.random;
+    this.partyExpRate = deps.partyExpRate ?? ((): number => 1.0);
   }
 
   /**
@@ -395,6 +410,19 @@ export class PartyService {
 
     // 3. Party reduce factor: keyed on the highest NEARBY level vs the mover.
     const expValue = baseExp * expPartyReduceFactor(mover.m_nLevel, maxLevel);
+
+    // 3b. `pParty->GetPoint(nTotalLevel, nMemberSize, pDead->GetLevel())`
+    // (`Mover.cpp:6479`) -- party-LEVEL exp, distinct from the member exp split
+    // below. C++ calls it right after the reduce factor and UNCONDITIONALLY, so
+    // it sits above the `expValue <= 0` bail: party-bar exp is keyed on the mob
+    // level alone and does not care that the member split rounded to nothing.
+    // Its own gate is `(nTotalLevel / nMemberSize) - nDeadLevel < 5`
+    // (`party.cpp:268`, integer division) -- a party whose AVERAGE level is 5+
+    // above the mob earns no party exp.
+    let totalLevel = 0;
+    for (const p of nearby) totalLevel += p.m_nLevel;
+    this.addPartyLevelExp(party, totalLevel, nearby.length, mover.m_nLevel);
+
     if (expValue <= 0) return 0;
 
     // 4-5. Bonus + level-square denominator over ALL nearby members.
@@ -424,6 +452,38 @@ export class PartyService {
     // party-handled kill -- C++ pays nobody in that case and does NOT fall back
     // to a solo grant, so report a handled kill rather than null.
     return granted;
+  }
+
+  /**
+   * `CParty::GetPoint` (`party.cpp:264`) -> `SendAddPartyExp` -> CoreServer
+   * `OnAddPartyExp` (`DPCoreSrvr.cpp:744`) -> `SETPARTYEXP` back to the world ->
+   * `AddPartyExpLevel` to every member (`DPCoreClient.cpp:1275`). In this
+   * single-process emulator all three hops collapse into one call.
+   *
+   * Gate: `(nTotalLevel / nMemberSize) - nDeadLevel < 5` with C++ INTEGER
+   * division on the average -- a party averaging 5+ levels above the mob earns
+   * no party exp. `nTotalLevel`/`nMemberSize` are the NEARBY members
+   * (`GetPartyMemberFind` output), not the whole roster.
+   *
+   * The PARTYEXP push goes to every member on the roster, matching
+   * `OnSetPartyExp`'s `m_nSizeofMember` loop -- NOT only the nearby ones. A
+   * member across the map still sees the party bar move.
+   */
+  private addPartyLevelExp(
+    party: Party, totalLevel: number, memberSize: number, moverLevel: number,
+  ): void {
+    if (memberSize <= 0) return;
+    if (Math.trunc(totalLevel / memberSize) - moverLevel >= PARTY_LEVEL_EXP_BAND) return;
+    const updated = this.deps.partyManager.addPartyExp(party.id, moverLevel, this.partyExpRate());
+    if (!updated) return;
+    for (const id of updated.members) {
+      const p = this.deps.playerManager.get(id);
+      if (p) {
+        this.deps.playerManager.sendTo(
+          p, buildPartyExp(p.m_idPlayer, updated.exp, updated.level, updated.point),
+        );
+      }
+    }
   }
 
   /**
@@ -577,6 +637,7 @@ export class PartyService {
   private snapshot(party: Party): PartySnapshotState {
     return {
       partyId: party.id, kindTroup: party.kindTroup, size: party.members.length,
+      level: party.level, exp: party.exp, point: party.point,
       expMode: party.expMode, itemMode: party.itemMode, duelPartyId: PARTY_NO_DUEL,
       partyName: party.name,
       members: party.members.map((m) => ({ id: m, remove: false })),

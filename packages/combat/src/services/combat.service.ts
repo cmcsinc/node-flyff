@@ -500,11 +500,23 @@ export class CombatService {
     // Each group's combined hit portion goes through the partyExp seam
     // (PartyService.distributeExp) which splits it among nearby members by
     // level-squared weighting.
-    if (this.deps.partyExp) {
-      for (const { representative, hits } of partyGrants) {
-        const share = rawExp * (hits / totalHit);
-        if (share > 0) this.deps.partyExp(representative, mover, share);
+    //
+    // A `null` return means the split did NOT apply -- `GetPartyMemberFind`
+    // found fewer than 2 members within 64m OF THE REPRESENTATIVE (the first
+    // attacker to land a hit, whose proximity scan C++ runs as `pEnemy->`).
+    // Two party members can each be within 64m of the corpse yet >64m apart,
+    // so this is reachable on any spread-out tag. C++ falls back to
+    // `AddExperienceSolo(fExpValuePerson, ..., bParty=TRUE)` (Mover.cpp:6367);
+    // without the fallback the whole pooled share is dropped and NOBODY --
+    // not even the killer -- is paid for the kill.
+    for (const { representative, hits } of partyGrants) {
+      const share = rawExp * (hits / totalHit);
+      if (share <= 0) continue;
+      if (this.deps.partyExp) {
+        const handled = this.deps.partyExp(representative, mover, share);
+        if (handled !== null) continue;
       }
+      this.grantSoloExp(representative, mover, share);
     }
 
     // ── Phase 3: non-party solo grants. ──

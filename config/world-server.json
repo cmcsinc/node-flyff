@@ -27,6 +27,7 @@
     "expRate": 1.0,
     "dropRate": 1.0,
     "goldRate": 1.0,
+    "partyExpRate": 1.0,
     "spawnMultiplier": 1.0
   },
   "zone": {

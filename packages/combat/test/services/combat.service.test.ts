@@ -310,6 +310,46 @@ describe('CombatService.resolveAttack', () => {
     assert.equal(mate.m_nExp, 0);
   });
 
+  it('hit-share: pooled party share falls back to a solo grant when the split declines', () => {
+    // Regression: Phase 2 used to ignore the seam's return value, so a `null`
+    // (split does not apply -- fewer than 2 members within 64m of the
+    // REPRESENTATIVE) dropped the whole pooled share and NOBODY was paid.
+    // C++ AddExperienceKillMember calls AddExperienceSolo(..., bParty=TRUE)
+    // on that branch (Mover.cpp:6367).
+    const player = CPlayer.fromRow(makeRow({ level: 30, class: 1 }), { write: () => true });
+    player.m_nZoneId = 1; player.m_vPos = { x: 0, y: 0, z: 0 };
+    const mate = CPlayer.fromRow(makeRow({ id: 2, name: 'Mate', level: 30, class: 1 }), { write: () => true });
+    mate.m_nZoneId = 1; mate.m_vPos = { x: 0, y: 0, z: 0 };
+
+    const mover = CMover.spawn(
+      0x40000053,
+      { modelIndex: 20, name: 'Aibatt', level: 30, hp: 15, atkMin: 1, atkMax: 1, armor: 0, hr: 40, er: 3, expValue: 400 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    mover.m_idEnemies.set(mate.m_idPlayer, 45);
+    const players = new Map([[1, player], [2, mate]]);
+    const partyShares: number[] = [];
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: () => mover, kill: () => {} },
+      zoneManager: { broadcastAround: () => 1 },
+      playerManager: { get: (id: number) => players.get(id), sendTo: () => {} },
+      charRepo: { updateLevelAndExp: async () => {} },
+      rng: makeRng(),
+      sameParty: () => true,
+      // Pooling happens (both are "same party"), but the split declines.
+      partyExp: (_k, _m, share) => { partyShares.push(share); return null; },
+    });
+
+    combat.resolveAttack(player, mover.m_idMover);
+    assert.deepEqual(partyShares, [400], 'seam still consulted with the pooled share');
+    // The representative is the FIRST entry in `m_idEnemies` insertion order --
+    // here `mate`, seeded before the killer's own hit is recorded. That is the
+    // player C++ runs `GetPartyMemberFind` from, and the one the fallback pays.
+    assert.equal(mate.m_nExp, 400, 'pooled share falls back to the representative');
+    assert.equal(player.m_nExp, 0, 'the non-representative is not separately paid');
+  });
+
   it('rejects a non-attackable (guard, non-PK player) target', () => {
     const socket = { write: () => true };
     const player = CPlayer.fromRow(makeRow(), socket);

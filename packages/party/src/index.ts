@@ -23,6 +23,7 @@ export {
   PARTY_ITEM_MODE_FFA, PARTY_ITEM_MODE_SEQUENTIAL,
   PARTY_ITEM_MODE_LEADER, PARTY_ITEM_MODE_RANDOM, PARTY_ITEM_MODE_MAX,
   PARTY_ITEM_MODE_ROUND_ROBIN,
+  MAX_PARTY_LEVEL, PARTY_EXP_TABLE,
 } from './managers/party.manager';
 export type { Party, PendingPartyInvite } from './managers/party.manager';
 export { PartyService } from './services/party.service';
