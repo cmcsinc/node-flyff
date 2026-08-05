@@ -448,3 +448,33 @@ describe('InventoryService -- removeItem (REMOVEINVENITEM)', () => {
     assert.equal(player.m_Inventory[0]!.count, 10, 'stack untouched');
   });
 });
+
+describe('InventoryService.canFit (pet-only IsLoot bag-full filter)', () => {
+  it('true on an empty bag', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const svc = new InventoryService(makeFullDeps().deps);
+    assert.equal(svc.canFit(player, 2001, 1), true);
+  });
+
+  it('false when every main-bag slot is occupied and nothing stacks', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    for (let i = 0; i < MAX_INVENTORY; i++) player.m_Inventory[i] = { itemId: 1, count: 1 };
+    const svc = new InventoryService(makeFullDeps().deps);
+    assert.equal(svc.canFit(player, 2001, 1), false);
+  });
+
+  it('true on a full bag when a partial stack of the same item has room', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    for (let i = 0; i < MAX_INVENTORY; i++) player.m_Inventory[i] = { itemId: 1, count: 1 };
+    player.m_Inventory[5] = { itemId: 2001, count: 90 };
+    const svc = new InventoryService(makeFullDeps(() => 99).deps);
+    assert.equal(svc.canFit(player, 2001, 9), true, '9 fits the 90/99 stack');
+    assert.equal(svc.canFit(player, 2001, 10), false, '10 overflows with no empty slot left');
+  });
+
+  it('false for a non-positive count', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const svc = new InventoryService(makeFullDeps().deps);
+    assert.equal(svc.canFit(player, 2001, 0), false);
+  });
+});

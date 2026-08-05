@@ -344,6 +344,29 @@ export class InventoryService {
     return Math.max(1, this.deps.getStackSize?.(itemId) ?? 1);
   }
 
+  /**
+   * Would `count` of `itemId` fit right now? `CItemContainer::IsFull` as used by
+   * the pet-only branch of `CMover::IsLoot` (`MoverActEvent.cpp:2313`), which
+   * stops a looter pet from walking to a pile it cannot carry. Same two passes
+   * as {@link addItem}: merge space on partial stacks, then empty slots.
+   */
+  canFit(player: CPlayer, itemId: number, count: number): boolean {
+    if (count <= 0) return false;
+    const stackSize = this.stackSize(itemId);
+    let remaining = count;
+    if (stackSize > 1) {
+      for (let i = 0; i < MAX_INVENTORY && remaining > 0; i++) {
+        const s = player.m_Inventory[i];
+        if (!s || s.itemId !== itemId || (s.flags ?? 0) !== 0) continue;
+        remaining -= Math.max(0, stackSize - s.count);
+      }
+    }
+    for (let i = 0; i < MAX_INVENTORY && remaining > 0; i++) {
+      if (player.m_Inventory[i] === null) remaining -= stackSize;
+    }
+    return remaining <= 0;
+  }
+
   private findEmpty(player: CPlayer): number {
     for (let i = 0; i < MAX_INVENTORY; i++) {
       if (player.m_Inventory[i] === null) return i;

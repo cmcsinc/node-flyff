@@ -387,6 +387,28 @@ is exploitable under an untrusted client. Each needs an explicit rationale.
   "quest route NPC ownership" (7 cases, incl. begin-NPC-cannot-complete and the
   QUEST_END_FAIL / QUEST_END_COMPLETE button split).
 
+### D2. Looter pet picks the genuinely nearest pile
+
+- **File**: `packages/world-server/src/systems/pet.system.ts` (`scan`)
+- **C++** (`_AIInterface/AIPet.cpp:115,144`): `SubItemLoot` initialises
+  `float fMinDist = 9999999.0f` and tests `fDistSq < 15*15 && fDistSq < fMinDist`
+  — but **never assigns `fMinDist` inside the loop**. Every pile within 15 units
+  therefore passes the second test, so `pMinObj` ends up as the *last* qualifying
+  pile in link-map iteration order, not the nearest.
+- **TS**: tracks the running best distance, so the pet walks to the actual
+  nearest pile.
+- **Why**: this is a plain C++ bug with no observable behaviour worth
+  reproducing — link-map order is an implementation detail of a data structure we
+  do not have, so "faithful" is undefined here. Nearest-first is what the code
+  was written to express.
+- **Related, same function**: C++ passes `nRange = 0` (uninitialised, `:113`) to
+  `FOR_LINKMAP`, so the sweep only covers the pet's own link cell(s) and the
+  15-unit test is a second filter inside that set. We sweep every pile in the
+  zone and filter by distance, which is the wider (intended) behaviour.
+- **Tests**: `packages/world-server/test/systems/pet.system.test.ts` → "picks the
+  nearest of several candidate piles", "ignores a pile outside the 15-unit scan
+  radius".
+
 ---
 
 ## The `#questEndComplete` (dialog state 8) callback — was MISSING, now ported

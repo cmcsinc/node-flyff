@@ -72,4 +72,19 @@ describe('ItemManager', () => {
     t.mock.timers.tick(3 * 60_000 + 1);
     assert.equal(broadcasts.length, 1); // only the spawn ADD_OBJ -- no decay DEL_OBJ
   });
+  it('all() yields every live pile and drops removed ones (pet loot scan)', (t) => {
+    t.mock.timers.enable();
+    const { zone } = mockZone();
+    const mgr = new ItemManager({ zoneManager: zone, now: () => 0 });
+    const a = mgr.spawn({ itemId: 1, count: 1, ownerId: 1, pos: { x: 0, y: 0, z: 0 }, zoneId: 1 });
+    const b = mgr.spawn({ itemId: 2, count: 5, ownerId: 1, pos: { x: 3, y: 0, z: 0 }, zoneId: 1 });
+
+    assert.deepEqual([...mgr.all()].map((i) => i.m_idObject).sort(), [a, b].sort());
+
+    mgr.remove(a);
+    assert.deepEqual([...mgr.all()].map((i) => i.m_idObject), [b]);
+
+    mgr.shutdown();
+    assert.deepEqual([...mgr.all()], [], 'empty after shutdown');
+  });
 });

@@ -78,6 +78,17 @@ export class ItemManager {
     return this.items.get(id);
   }
 
+  /**
+   * Every live pile. Stands in for the C++ link-map walk the pet loot scan does
+   * (`FOR_LINKMAP( pWorld, vPos, pObj, nRange, CObj::linkDynamic, ... )`,
+   * `AIPet.cpp:113`) -- with a few hundred piles a flat sweep plus a distance
+   * filter is cheaper than a spatial index, same as `VisibilityService`'s
+   * radius query replacing `CLinkMap::ModifyView`'s grid.
+   */
+  *all(): IterableIterator<GroundItem> {
+    yield* this.items.values();
+  }
+
   /** Clear every pile + decay timer (world shutdown). */
   shutdown(): void {
     for (const t of this.timers.values()) clearTimeout(t);
