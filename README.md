@@ -1,248 +1,311 @@
-# Flyff Node.js Server Emulator
+# node-flyff
 
-> A modern, production-grade **Flyff (Fly For Fun) MMORPG server emulator** written in **TypeScript/Node.js**.
-> Replicates the Login, Cluster, and World servers, communicating with real Flyff clients over TCP using the authentic binary packet protocol.
+A **Flyff (Fly For Fun) v19 MMORPG server emulator** written in TypeScript.
 
-[![CI](https://github.com/your-org/nodejs-flyff/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/nodejs-flyff/actions/workflows/ci.yml)
+It speaks the authentic binary TCP protocol, so an unmodified retail v19 client
+connects to it and plays — no client patching, no custom launcher. Login,
+character select, and the game world all run as real servers.
+
+[![CI](https://github.com/cmcsinc/node-flyff/actions/workflows/ci.yml/badge.svg)](https://github.com/cmcsinc/node-flyff/actions/workflows/ci.yml)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](LICENSE)
 [![Node.js: 20+](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org)
 [![pnpm](https://img.shields.io/badge/pnpm-9%2B-orange.svg)](https://pnpm.io)
 
----
-
-## ✨ Features
-
-- **Modern TypeScript** — strict mode, pure ESM, zero `any`
-- **Multi-Server Topology** — independent Login, Cluster, and World servers
-- **Secure IPC** — HMAC-SHA256 signed Redis pub/sub + internal TLS TCP between servers
-- **Crash-Proof Persistence** — Hybrid WAL pattern: SQLite WAL journal (0-latency) + Knex main DB sync
-- **Multi-Database** — Knex.js supports SQLite3 (dev), PostgreSQL, and MySQL/MariaDB (production)
-- **Clean Architecture** — strict `Handler → Service → Repository` separation
-- **Domain packages** — world gameplay split into independent `@flyff/*` packages (combat, inventory, skills, quest, npc)
-- **Fully Agentic** — specialized Claude sub-agents and lifecycle hooks for autonomous development
+> **Status: playable, incomplete, pre-1.0.** You can level a character through
+> combat, quests, skills, parties, and trade, and fly on a board or broom. You
+> cannot join a guild, marry, raise a pet, or enter a dungeon. See
+> [**Feature Status**](docs/FEATURE-STATUS.md) for the honest breakdown.
 
 ---
 
-## 📁 Project Structure
+## What this is
 
-The monorepo splits into three tiers: **shared infrastructure**, **domain packages**
-(carved out of the world server), and **server entry points**.
+This project is a **port, not a reimplementation**. The original Flyff v19 C++
+server source is the specification; every packet layout, damage formula, and AI
+transition is translated from it rather than designed. That constraint is the
+whole reason a retail client will talk to it.
 
-```text
-packages/
-  # ── Shared infrastructure ──────────────────────────────────────────────
-  core/               @flyff/core       — Packet protocol, constants, cache, logger, errors, event bus
-  ipc/                @flyff/ipc        — Secure inter-server IPC (HMAC pub/sub + TLS TCP)
-  database/           @flyff/database   — Knex migrations, repositories, WAL journal
-  resources/          @flyff/resources  — propItem/propMover/propSkill loaders and parsers
+What that gets you:
 
-  # ── Shared world layers ────────────────────────────────────────────────
-  entities/           @flyff/entities   — CPlayer/CMover, slot/exp/vital math, authority constants
-  world-core/         @flyff/world-core — Player/Zone/Spawn managers + QuestHooks seam
+- **Authentic protocol** — `0x5E`-marker framing, CRC integrity, DWORD-prefixed
+  strings. 112 client→server opcodes dispatched.
+- **Real server topology** — separate login, cluster, and world processes talking
+  over HMAC-signed IPC, the way the original does it.
+- **Crash-proof persistence** — a hybrid WAL: every item, gold, and exp change
+  hits a local SQLite journal in under 0.1 ms *before* the client is told it
+  worked, then batch-flushes to the main database. Kill the process mid-trade and
+  nothing duplicates or vanishes.
+- **Modern engineering** — TypeScript strict mode with zero `any`, pure ESM, 19
+  packages in an acyclic dependency graph, 2,494 tests on Node’s native runner,
+  no test framework dependency.
+- **A live-ops admin panel** — Next.js: resource editors, character operations,
+  server supervisor, log streaming, client `.res` patching.
 
-  # ── Domain packages (carved out of world-server) ───────────────────────
-  combat/             @flyff/combat     — Damage formulas, melee/skill pipeline, AI FSM
-  inventory/          @flyff/inventory  — Item/bag/equip/consume/drop/loot, ItemManager, ground items
-  skills/             @flyff/skills     — Skill cast + learn services
-  quest/              @flyff/quest      — Quest conditions/rewards, QuestTrackerSystem
-  npc/                @flyff/npc        — Dialog/script/shop/bank/target/vicinity/mapKey services
+---
 
-  # ── Server entry points ────────────────────────────────────────────────
-  login-server/       @flyff/login-server    — Auth + server list (port 23000)
-  cluster-server/     @flyff/cluster-server  — Character select/create (port 38100)
-  world-server/       @flyff/world-server    — Gameplay loop; composes the domain packages (port 38180)
-  gateway/            @flyff/gateway    — Unified WebSocket server: auth + select + world in one process
-tools/                Dev tools: packet sniffer, resource inspector
-scripts/              Agent and dev helper scripts
-.claude/
-  agents/             Specialized sub-agents (architect, implementor, researcher, ...)
-  hooks/              Lifecycle hooks (safety guard, checkpointing, test reminder)
-  skills/             Context-aware knowledge skills
-  state/SESSION.md    Persistent agent session checkpoint
+## Requirements
+
+| | |
+| --- | --- |
+| Node.js | ≥ 20 |
+| pnpm | ≥ 9 |
+| A retail Flyff v19 client | you must supply this yourself |
+| Flyff v19 resource files | extracted from that client — see below |
+| Redis | optional; falls back to an in-memory cache |
+| PostgreSQL / MySQL | optional; SQLite is the default |
+
+### Game resources are not included
+
+This repository ships **no Flyff client files, assets, or game data**. Those are
+copyrighted by Gala Lab Corp. and cannot be redistributed.
+
+To run the server you need the resource files from a client you legitimately
+possess — `propItem.txt`, `propMover.txt`, `propSkill.txt`, `character.inc`,
+`WorldDialog.txt`, the quest and dialog `.inc` files, and the zone `.dyo`/`.rgn`
+data. Extract them from your client's `.res` archives (`tools/res-reader.mjs`
+reads that format) and place them under `packages/resources/raw/`, then run the
+converter to produce the YAML the server loads:
+
+```bash
+pnpm --filter @flyff/resources convert
 ```
 
-> **Domain-package refactor:** the world server was decomposed from one monolith
-> into focused `@flyff/*` domain packages (`combat`, `inventory`, `skills`,
-> `quest`, `npc`) sitting on shared `entities` + `world-core` layers.
-> `@flyff/world-server` now wires these together via its `compose.ts` root rather
-> than owning the logic directly.
+Without these files the world server will start but the world will be empty.
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-| Tool | Version |
-| --- | --- |
-| Node.js | ≥ 20.0.0 |
-| pnpm | ≥ 9.0.0 |
-| Redis | ≥ 7 (optional for local dev — falls back to MemoryCache) |
-| PostgreSQL / MySQL | (optional — SQLite3 used by default) |
-
-### 1. Install dependencies
+## Quick start
 
 ```bash
 pnpm install
-```
-
-### 2. Configure environment
-
-```bash
 cp .env.example .env
-# Edit .env — set DB_CLIENT, DATABASE_URL, REDIS_URL, IPC_SECRET
 ```
 
-For **local development**, the defaults work out of the box:
+Generate a real IPC secret and put it in `.env` — the servers refuse to trust
+each other without a matching one:
 
 ```bash
-DB_CLIENT=sqlite3
-DB_FILENAME=./data/flyff_dev.sqlite3
-IPC_SECRET=change-me-in-production
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-### 3. Run database migrations
+Seed the development database (this creates the schema and a test account):
 
 ```bash
-pnpm --filter @flyff/database migrate
-```
-
-### 4. Start the servers
-
-Open three terminals:
-
-```bash
-# Terminal 1 — Login Server
 pnpm --filter @flyff/login-server dev
-
-# Terminal 2 — Cluster Server
-pnpm --filter @flyff/cluster-server dev
-
-# Terminal 3 — World Server
-pnpm --filter @flyff/world-server dev
 ```
 
-Or with Docker Compose (Redis + PostgreSQL included):
+The login server seeds on first boot. Then start the other two, each in its own
+terminal:
 
 ```bash
-docker compose up
+pnpm server:login      # :23000  authentication
+pnpm server:cluster    # :28000  character select
+pnpm server:world      # :5400   gameplay
 ```
 
-#### Alternative: unified gateway (single process)
-
-`@flyff/gateway` runs auth, character select, and world in **one WebSocket
-process** — handy for local testing without the three-server split or Redis IPC:
+Or bring all three up under the supervisor:
 
 ```bash
-pnpm --filter @flyff/gateway dev
+pnpm sv:up
+pnpm sv:status
+pnpm sv:down
 ```
+
+Point your client at the login server's address and connect.
+
+> ⚠️ **The dev seed creates an account `test` / `test` at ADMINISTRATOR tier.**
+> That is deliberate for local development and documented in the source. **Delete
+> it before exposing this server to a network.** `scripts/seed-admin.mjs`
+> similarly creates `admin` / `admin` when no GM account exists. See
+> [SECURITY.md](SECURITY.md#deployment-hardening) for the full hardening list.
+
+### Admin panel
+
+```bash
+pnpm admin        # dev server
+```
+
+The panel has no authentication assumptions baked in. Keep it on a private
+network.
 
 ---
 
-## 🧪 Development Commands
+<!-- SECTIONS-BELOW -->
 
-```bash
-# Build all packages
-pnpm -r build
+## Architecture
 
-# Run all tests (Node.js native test runner)
-pnpm -r test
-
-# Lint all packages
-pnpm -r lint
-
-# Format all files
-pnpm format
-
-# Update session checkpoint
-pnpm checkpoint --task="Description of what you did"
-```
-
----
-
-## 🏗 Architecture
-
-### Server Topology
+### Topology
 
 ```text
-Flyff Client ──► Login Server (:23000)   — authenticate, receive server list
+Flyff client ──► Login server   :23000   authenticate, deliver server list
                       │
-                 @flyff/ipc (HMAC Redis pub/sub + internal TLS TCP)
+                 @flyff/ipc — HMAC-SHA256 signed Redis pub/sub + internal TLS TCP
                       │
-Flyff Client ──► Cluster Server (:38100) — character select / create
+Flyff client ──► Cluster server :28000   character select / create
                       │
                  @flyff/ipc
                       │
-Flyff Client ──► World Server (:38180)   — gameplay, combat, AI, zones
+Flyff client ──► World server   :5400    gameplay, combat, AI, zones
 ```
 
-### Layer Discipline
+Only those three ports face players. Redis, the database, the IPC TCP listener,
+the admin panel, and the supervisor daemon all belong on a private interface.
 
-Every feature follows a strict hierarchy — **no skipping layers**:
+An alternative `@flyff/gateway` runs auth, select, and world in **one WebSocket
+process** — convenient for local experiments, but it is a reduced parallel stack
+that does not use the domain packages and is far behind the real servers. Do not
+build on it.
 
-| Layer | Owns | Must NOT |
+### Packages
+
+Nineteen packages in an acyclic dependency graph.
+
+```text
+# Shared infrastructure
+core        packet protocol, opcodes, config loader, logger, cache, errors, event bus
+ipc         HMAC-signed Redis pub/sub + TLS TCP between servers
+database    Knex migrations (22), repositories (12), WAL journal
+resources   propItem / propMover / propSkill / quest / dialog / zone loaders
+
+# Shared world layers
+entities    CPlayer, CMover, param model, buff manager, exp / vital math
+world-core  player / zone / spawn managers, visibility, flight, quest-hooks seam
+
+# Domain packages
+combat      damage formulas, melee & ranged pipeline, monster AI FSM, duels
+inventory   bag, equip, consume, drop, loot, trade, vending, enchant, repair
+skills      skill cast and learn
+quest       conditions, rewards, kill / patrol / time tracking
+npc         dialog interpreter, shop, bank, buff NPC, targeting, speech
+party       invite, roster, exp and item sharing
+social      friends, campus (master–pupil mentoring)
+mail        mailbox, attachments
+
+# Entry points
+login-server    auth + server list
+cluster-server  character select / create
+world-server    gameplay; composes the domain packages via compose.ts
+gateway         unified WebSocket process (experimental)
+admin           Next.js live-ops panel
+```
+
+### Layer discipline
+
+Every feature follows the same path, and skipping a layer is a review rejection.
+
+```text
+Network → Handler → Service → Repository → Database
+                 ↘ Manager (in-memory live state)
+                 ↘ System  (per-tick simulation)
+```
+
+| Layer | Owns | Must not |
 | --- | --- | --- |
-| **Handler** | Parse packets, validate input, call service | Access DB or implement game rules |
-| **Service** | Business logic, game rules, emit events | Call `socket.write()` or write SQL |
-| **Repository** | All Knex queries | Contain game logic |
-| **Manager** | In-memory live state | Persist data |
-| **System** | Per-tick game simulation | Handle packets |
+| **Handler** | Parse packet fields, validate, call one service, write the reply | Touch the database or hold game rules |
+| **Service** | Game rules, orchestration, WAL journaling | Call `socket.write()` or write SQL |
+| **Repository** | Every Knex query | Hold game logic |
+| **Manager** | In-memory live state | Persist anything |
+| **System** | Per-tick simulation | Handle packets, or `await` in the tick |
 
-### Persistence (Hybrid WAL)
+Services reach handlers through a typed event bus, never by importing the socket.
+Dependency injection is manual — everything is wired in each server's
+`compose.ts`.
 
-To solve the "rollback vs. DB DDoS" MMORPG dilemma:
+### Persistence
 
-1. **Critical mutations** (items, gold, exp) → written synchronously to a local SQLite WAL journal (`world_X_journal.sqlite`) in `< 0.1ms`
-2. **Main DB sync** → Knex batch-flushes dirty fields every 30 seconds
-3. **Crash recovery** → on startup, replay any unprocessed journal entries
+The MMO dilemma is that flushing every item change to the database melts it,
+while batching them means a crash rolls players back and duplicates items. The
+hybrid WAL resolves it:
+
+1. A critical mutation writes to a local SQLite journal — under 0.1 ms — **before**
+   the success packet goes out.
+2. Dirty fields batch-flush to the main database every 30 seconds.
+3. On boot, unreplayed journal entries are re-applied before the TCP listener
+   opens. Payloads carry absolute state, so replay is idempotent.
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-### 1. Fork & Branch
+## Development
 
 ```bash
-git checkout -b feat/your-feature-name
+pnpm -r build                  # build every package
+pnpm -r test                   # 2,494 tests, Node's native runner
+pnpm -r lint
+pnpm -r exec tsc --noEmit
+pnpm format
 ```
 
-### 2. Follow Code Standards
+Tests use `node:test` with `tsx`. There is no Jest, Mocha, or Vitest, and adding
+one will be declined. Test files live in `test/` at each package root, mirroring
+`src/` — never inside `src/`.
 
-- **TypeScript strict** — no `any`, no `@ts-ignore`
-- **ESM only** — `import`/`export`, no `require()`
-- **Handler → Service → Repository** — never skip layers
-- **Zod** for all external input validation
-- **pino** for logging — no `console.log`
-- **node:test** for tests — no Jest/Mocha/Vitest
-- **WAL-first** for any mutation of items, gold, or exp
+Configuration merges last-wins:
 
-See [`CLAUDE.md`](CLAUDE.md) for the full coding standards reference.
-
-### 3. Write Tests
-
-Every `.ts` source file must have a companion `.test.ts`.
-
-```bash
-pnpm -r test
+```text
+{} → config/default.json → config/<server>.json → config/*.yml → env vars
 ```
 
-### 4. Open a Pull Request
-
-- Target: `master` branch
-- Fill in the PR template
-- Ensure CI passes (lint, build, test on SQLite + PostgreSQL)
+A Zod `.default()` only fills a key **no layer supplies**, so runtime config
+files override schema defaults. Change both when changing a real default. Config
+is read once at boot.
 
 ---
 
-## 📜 License
+## Contributing
 
-This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
-See the [`LICENSE`](LICENSE) file for details.
+Contributions are welcome. Two documents matter before you start:
+
+- [**CONTRIBUTING.md**](CONTRIBUTING.md) — workflow, standards, testing, PR
+  checklist
+- [**AGENTS.md**](AGENTS.md) — the same ground rules written for AI coding agents,
+  plus a list of protocol traps that will otherwise cost you a week
+
+The enforced per-domain rules live in [`.claude/rules/`](.claude/rules/).
+
+**The one rule to internalize:** find the behaviour in the C++ source and
+translate it. Do not design it. A guessed field width produces a client crash
+that someone else has to find with a hex dump. If you cannot locate the C++,
+say so and ask rather than approximating.
+
+Good first contributions are the **quick wins** in
+[Feature Status](docs/FEATURE-STATUS.md#quick-wins) — features that are already
+implemented but never wired up, so each is a small fix with visible effect.
+
+Found a security issue? See [SECURITY.md](SECURITY.md) — report it privately, not
+as a public issue.
 
 ---
 
-## ⚠️ Disclaimer
+## Documentation
 
-This project is for **educational and research purposes only**. It is not affiliated with, endorsed by, or connected to Gala Lab Corp. (formerly Gravity Co.) or any official Flyff product. All game content, assets, and trademarks belong to their respective owners. Do not use this software for commercial purposes or to replace official game services.
+| Document | Contents |
+| --- | --- |
+| [docs/FEATURE-STATUS.md](docs/FEATURE-STATUS.md) | What works, what partly works, what is missing |
+| [docs/c++-fidelity-audit.md](docs/c++-fidelity-audit.md) | Known behavioural deviations from the original server |
+| [docs/TESTING.md](docs/TESTING.md) | Testing approach and conventions |
+| [CLAUDE.md](CLAUDE.md) | Full standards reference |
+| [.claude/rules/](.claude/rules/) | Enforced rules by domain |
+| `grep -rn "ponytail:" packages/*/src` | 164 line-level markers, each naming a deliberate simplification |
+
+---
+
+## License
+
+[GNU Affero General Public License v3.0](LICENSE).
+
+If you run a modified version of this software as a network service, the AGPL
+requires you to offer its source to your users.
+
+---
+
+## Disclaimer
+
+An unofficial, educational reimplementation of a game server. Not affiliated
+with, endorsed by, or connected to Gala Lab Corp. (formerly Gravity Co.) or any
+official Flyff product. All game content, assets, and trademarks belong to their
+respective owners.
+
+No game data, client files, or original server source are distributed here. You
+must supply those yourself from a client you legitimately possess. Do not use
+this software commercially or to compete with official game services.
+
