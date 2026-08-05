@@ -7,9 +7,10 @@
 Generated 2026-07-23 from a full-source sweep (3 parallel domain maps + every
 `ponytail:` comment). Re-verified 2026-07-24 (57 items), **re-verified 2026-08-01**
 against master `c9ae378` (136 commits later) by 4 parallel read-only explorers
-over 16 sections, and **targeted re-audit 2026-08-03** (4 parallel explorers —
+over 16 sections, **targeted re-audit 2026-08-03** (4 parallel explorers —
 opcode gap, unstarted systems, slash commands, fix-first shortlist re-verify)
-which added §23-25. Compares the emulator against full retail v19.
+which added §23-25, and **spot re-verify 2026-08-04** of 10 §1-2 / shortlist
+claims against live code. Compares the emulator against full retail v19.
 
 **Status legend**
 - ✅ DONE — implemented + passing on this device's checks (NOT user-confirmed)
@@ -20,13 +21,14 @@ which added §23-25. Compares the emulator against full retail v19.
 **Override rule:** ✅ here = "passes my checks", never "fixed". Only the user
 declares a feature fixed by testing on a real v19 client.
 
-**Companion signal:** there are **187 `ponytail:` markers across 79 files** —
-a denser, line-level gap inventory than this checklist. When a line here says
-PARTIAL, the ponytail at the cited file:line usually names exactly what is
-missing. `grep -rn "ponytail:" packages/*/src` is the authoritative sweep.
+**Companion signal:** there are **157 `ponytail:` markers across 82 files**
+(re-counted 2026-08-04) — a denser, line-level gap inventory than this
+checklist. When a line here says PARTIAL, the ponytail at the cited file:line
+usually names exactly what is missing. `grep -rn "ponytail:" packages/*/src` is
+the authoritative sweep.
 
 **Tally at this refresh** (25 sections — sections 1-22 carry the 206-line tally
-✅ 123 · 🟡 48 · ❌ 23 · 🟥 8 · 🚫 4; §23-25 add ~167 opcode gaps + ~25 absent
+✅ 127 · 🟡 45 · ❌ 22 · 🟥 8 · 🚫 4; §23-25 add ~167 opcode gaps + ~25 absent
 systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 
 ---
@@ -53,12 +55,30 @@ systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 - [x] ✅ Single-target skill damage (melee + magic, element, magic-factor) — `skillFormulas.ts:268` `resolveSkillCast`
 - [x] 🚫 Skill crit — **the old line was semantically wrong and is retired**: skills *never* crit in v19 by design (`MoverAttack.cpp:800` `if (IsSkillAttack(dwAtkFlags)) return FALSE`). The TS states this explicitly at `skillFormulas.ts:294`. Nothing to implement
 - [x] ✅ Debuff/secondary-effect **application** — damage-skill tail calls `applyBuffToMover` on the target — `skills/skill.service.ts:351`
-- [ ] 🟡 **Debuff proc roll is not enforced** — the gate is `(levelRow.destParams?.length ?? 0) > 0`, NOT the rolled `effectProc` from `skillFormulas.ts:321`, so a debuff whose `nProbability` roll *failed* still lands. Fidelity deviation — `skill.service.ts:351`
-- [ ] 🟥 AoE (area skills) — no consumer of `skillRange`/`spellRegion` anywhere in `combat/` or `skills/`
+- [x] ✅ Debuff proc roll **is** enforced — the gate reads the rolled
+  `effectProc` from `skillFormulas.ts:321` (`prob === undefined || rng.int(100) <
+  prob`), surfaced via `combat.service.ts:290,314` and consumed at
+  `skill.service.ts:376` (`&& outcome.effectProc !== false`). A debuff whose
+  `nProbability` roll failed no longer lands. Fixed in `812bf3f`
+- [ ] 🟥 AoE (area skills) — no runtime consumer of `skillRange`/`spellRegion` in
+  `combat/` or `skills/`. Re-verified 2026-08-04: the only hits are a comment
+  (`skill.service.ts:329`), an admin field label, YAML data, and a test asserting
+  `skillRange` is *deliberately* ignored by the cast-range gate
+  (`skill.service.test.ts:422`). Needs `ApplySkillRegion`/`Around`/`Line` ports
+  (`_Common/Ctrl.cpp:255,420,1675`) — `skillRange` is their radius input
 - [x] ✅ DoT (damage-over-time) — `entities/params/BuffManager.ts:219 tickDots`, `world-server/systems/buff.system.ts:59` (players), `ai.system.ts:126` (monsters); seeded via `dotFromSkill()` `skill.service.ts:732`
-- [ ] 🟡 **DoT death is not a real death** — monster DoT death sets `m_bDead` and `continue`s: no MOVERDEATH broadcast, no exp, no drops (`ai.system.ts:126`). Player DoT death sends no DAMAGE snapshot and never triggers `onPlayerDeath` (`buff.system.ts:67`)
+- [ ] 🟡 **DoT death is not a real death** — re-verified 2026-08-04, both halves
+  still true. Monster DoT death sets `m_bDead` and `continue`s with no MOVERDEATH
+  broadcast, no exp, no drops (`ai.system.ts:135-138`, ponytail at `:128`). Player
+  DoT death subtracts HP and sends only SETPOINTPARAM DST_HP — no DAMAGE
+  snapshot, no killer attribution, never triggers `onPlayerDeath`
+  (`buff.system.ts:67-76`, ponytail at `:74`)
 - [x] ✅ Multi-hit skills (`nSkillCount` chain: N rolls + N DAMAGE snapshots, stops on death) — `combat.service.ts:185-213`
-- [ ] 🟥 Projectile skills — no projectile path in `combat/` or `skills/`
+- [ ] 🟥 Projectile skills — no server-side projectile path in `combat/` or
+  `skills/` (re-verified 2026-08-04: only ponytail comments at
+  `skillFormulas.ts:10,264`, `skill.service.ts:178`). Ranged auto-attack ships,
+  but its projectile is client-side visual only — no flight time, no travel
+  interception (`rangeAttack.service.ts:14`)
 - [x] ✅ Heal skills (RT_HEAL → DST_HP restore, self/other target) — `skill.service.ts` `applyHeal`
 - [x] ✅ Buff skills — **UPGRADE 🟥→✅**: `effectKind` returns `'buff'` on `RT_TIME` in `referTargets[0|1]` (`skill.service.ts:381`), effects built data-driven by `buffEffects()` (`:705`). The old `dwDestParam=0` special-case is gone
 - [x] ✅ PvP + PvE skill damage vars (PvP 0.60 + NPC level-diff cosine) — `skillFormulas.ts:310`
@@ -78,7 +98,25 @@ systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 - [x] ✅ WAL `SKILL_LEARN` journal type + replayer — `skill.service.ts:655`, `journalReplayers.ts:98`
 - [x] ✅ Action-slot / skill-queue combo progression — server-driven `SetNextSkill` + tick-spaced advance + `ENDSKILLQUEUE` on exhaust — `skill.service.ts:194-282`
 - [x] ✅ NPC buff casting with conflict table — `skill.service.ts:487 applyNpcBuff`, `NPC_BUFF_CONFLICT:65`
-- [ ] ❌ **Cast-range validation** — `useSkill.handler.ts:44` validates objid + slot only; `resolveDamageTarget` checks existence + alive, never distance. **A client can cast any skill on any objid in the zone from any distance.** Anti-cheat gap, newly identified 2026-08-01
+- [x] ✅ Cast-range validation — **emulator-only divergence, not a port.** The C++
+  WORLDSERVER never gates cast distance: `DoUseSkill` (`MoverSkill.cpp:320-1160`)
+  checks die/fly/mode/target/PK/weapon/level/cooldown/MP and no distance
+  (`docs/skills-research.md:77` states this explicitly). `GetAttackRange` is used
+  for skills only in the CLIENT-side `CMD_SetUseSkill` (`MoverMsg.cpp:206`,
+  callers `WndManager.cpp:7337` + `WndTaskBar.cpp:2366`), where it feeds
+  `SetDestObj(target, fArrivalRange)` — the walk-to distance, not a reject. We add
+  the gate anyway since an emulator can't trust the client, and AR_* is the right
+  magnitude because a genuine client is always inside it when the cast fires.
+  Implementation: `skill.service.ts:326-352` →
+  `getAttackRange(skill.attackRange, player.m_params) + RANGE_HITBOX_SLACK`
+  (`entities/constants/attackRange.ts`, the `GetAttackRange` metre table
+  `MoverMsg.cpp:140-166` + `DST_HAWKEYE_RATE` scaling). Out-of-range →
+  CLEAR_USESKILL, no MP/FP, no cooldown, no broadcast. **Was ❌ then briefly
+  wrong**: `812bf3f` gated on the per-level `skillRange`, which is the AoE radius
+  (`Ctrl.cpp:268/432/752`), capping Heal at 6 m instead of AR_WAND's 15 m and
+  limiting 1 m-AoE melee skills to a 1 m cast. `RANGE_HITBOX_SLACK` (2 m) stands
+  in for the two model radii `IsRangeObj` adds (`Obj.cpp:805`); ponytail for real
+  bounds. **NOT user-tested**
 
 ---
 
@@ -104,7 +142,12 @@ systems + ~60 missing GM commands tracked separately as cross-cutting audits).
 - [x] ✅ Retaliation on hit (triggerRage) — `combat.service.ts:353`
 - [x] ✅ Spawn + respawn timers (static NPC never respawns) — `world-core/managers/spawn.manager.ts`
 - [ ] 🟡 Aggro — single-slot target (`m_idTarget`) — `entities/mover.ts:320`; `m_idEnemies:344` tallies hit-share for exp only, never target selection. No aggro table
-- [ ] 🟡 Flee / low-HP retreat — **code ✅, data ❌.** Gate `ai.system.ts:213-223`, `startFlee:344` (50 m, `FLEE_SPEED_FACTOR`), `stepFlee:368` all exist, but `spawn.manager.ts:180-236` never passes `fleeHpPct`/`runawayDelay`, so `m_nFleeHpPct` is always 0 and **the branch can never fire**. Source data exists (`resources/raw/propMoverEx.inc`, 19 `SetRunAway(...)` calls) but only `scripts/converters/drops.ts` reads that file
+- [x] ✅ Flee / low-HP retreat — **code ✅, data ✅ (re-verified 2026-08-04).**
+  Gate `ai.system.ts:213-222`, `startFlee` (50 m, `FLEE_SPEED_FACTOR`),
+  `stepFlee`; `spawn.manager.ts:204-205,365-366` now pass
+  `fleeHpPct`/`runawayDelay`, assigned at `mover.ts:416-417`, data present in
+  `data/movers/monsters.yml` via `converters/movers.ts:221`. Test-covered at
+  `ai.system.test.ts:574`. Monsters with no `SetRunAway` never flee — faithful
 - [x] ✅ Ranged monster AI (holds at range, RANGE_ATTACK, re-attack cadence) — `ai.system.ts:209`
 - [ ] 🟡 Healer monster AI — **self-heal code ✅, data ❌, ally-heal ❌.** `ai.system.ts:247-253` implements low-HP self-heal, but `spawn.manager.ts` never passes `m_nHealHpPct`/`m_nHealAmount`/`m_nHealCadenceMs` → always 0 → dead code. Source is `propMoverEx.inc` `Recovery 10 50 100 m`, unparsed. Healing *other* monsters is entirely absent
 - [ ] ❌ Flight-capable monster AI — `flyable` is converted into the mover yml but nothing in `ai.system.ts` reads it
@@ -539,32 +582,79 @@ shipped. Current ranking (re-ranked 2026-08-03 after §23-25 audits):
 
 ### Newly affordable "wiring-only" wins (small effort, no new subsystem)
 
-1. **`MAGIC_ATTACK` dispatch** — opcode declared `0x00ff0011`, parallel to the
-   shipped MELEE/RANGE paths. Closes the last combat-path hole.
+All five re-verified 2026-08-04; all still open.
+
+1. **`MAGIC_ATTACK` dispatch** — opcode declared `opcodes.ts:50` `0x00ff0011`;
+   `clientServer.ts:167-168` registers only MELEE_ATTACK + RANGE_ATTACK. No
+   handler file exists. Closes the last combat-path hole.
 2. **Couple 4-opcode dispatch** — opcodes + snapshots already declared; service
    + repo + dispatch missing (rank-6 above).
-3. **`partyQuery` wiring** — `compose.ts:396-405` QuestService ctor omits it;
-   one-line fix unblocks quest party conditions (last survivor of fix-first #2).
-4. **`IK3_TEXT_DISGUISE` aggro buff check** — `ai.system.ts:460 isHidden()` still
-   MODE-only; buffs shipped long ago (last survivor of fix-first #10).
-5. **Flee/heal AI `healCadenceMs`** — converter parses `Recovery` but never
-   threads the cadence field; defaults 1000ms (fix-first #6 partial).
+3. **`partyQuery` wiring** — `compose.ts:396-428` `new QuestService({...})` has
+   no `partyQuery` key; consumer `quest.service.ts:96,155` stays falsy. One-line
+   fix unblocks quest party conditions (last survivor of fix-first #2).
+4. **`IK3_TEXT_DISGUISE` aggro buff check** — `ai.system.ts:460-462 isHidden()`
+   tests only `MODE.TRANSPARENT`; buffs shipped long ago (fix-first #10).
+5. **Flee/heal AI `healCadenceMs`** — `converters/movers.ts:223-224` emits only
+   `healHpPct`/`healPct`, `mover.schema.ts:142-162` has no cadence key, and
+   `spawn.manager.ts:206-209,367-370` pass only `healHpPct`/`healAmount`, so
+   `mover.ts:420` always defaults to 1000 ms (fix-first #6 partial).
 
 ### Fix-first shortlist (small effort, disproportionate effect)
 
 These are *implemented but inert*, so each is a wiring or data fix rather than a
-feature build. **Re-verified 2026-08-03** — 7 of 10 fixed since the 2026-08-01 audit:
+feature build. **Re-verified 2026-08-04** — 7 of 10 fixed, #6 upgraded to
+mostly-fixed (flee data now threaded; only `healCadenceMs` remains):
 
 1. ~~`shopCostRate` omitted from the `ShopService` ctor~~ — **fixed** `compose.ts:855` passes `config.world.shopCostRate`
-2. `partyQuery` never supplied, so quest party conditions fail closed — **STILL BROKEN**: `compose.ts:396-405` `new QuestService({...})` has no `partyQuery`; consumer `quest.service.ts:155` `if (this.deps.partyQuery)` stays falsy
+2. `partyQuery` never supplied, so quest party conditions fail closed — **STILL BROKEN** (re-verified 2026-08-04): `compose.ts:396-428` `new QuestService({...})` has no `partyQuery`; consumer `quest.service.ts:96,155` stays falsy
 3. ~~`CHRSTATE_BITS.SLEEP` does not exist~~ — **fixed** `entities/src/constants/dst.ts:119` `SLEEP: 0x00200000` (`CHS_SLEEPING`)
 4. ~~`BANK_DEPOSIT`/`BANK_WITHDRAW` have no replayer~~ — **fixed 2026-08-02** (§16); five delta types converted to absolute rows, `BANK_SLOT`/`BANK_GOLD`/`PK_KILL` replayers added, coverage now test-guarded
 5. ~~Duel does not bypass the PK-consent gate~~ — **fixed** `combat.policy.ts:61-62` duel branch (`m_nDuel===1 && m_idDuelTarget===target`)
-6. Flee + self-heal AI are fully coded — **PARTIAL**: converter `movers.ts:70/82/66` now parses `SetRunAway`/`Recovery`/`dwRunawayDelay`, spawn.manager passes `fleeHpPct/runawayDelay/healHpPct/healAmount` — but `healCadenceMs` is still not threaded (defaults 1000ms in `mover.ts:420`)
+6. Flee + self-heal AI are fully coded — **flee fixed, heal-cadence PARTIAL** (re-verified 2026-08-04): `spawn.manager.ts:204-205,365-366` now pass `fleeHpPct`/`runawayDelay` and the flee branch fires (test `ai.system.test.ts:574`); only `healCadenceMs` is still unthreaded — `converters/movers.ts:223-224` emits no cadence field and `mover.ts:420` defaults to 1000 ms
 7. ~~`dwReAttackDelay` reads propMover col 34 instead of col 35~~ — **fixed** `converters/movers.ts:177` reads `dwReAttackDelay` (col 35)
 8. ~~Blocklist `setBlocked` has no calling opcode~~ — **fixed** `social/handlers/friend.handler.ts:157` → `friend.service.ts:305`
 9. ~~Movement is not stun-gated~~ — **fixed** `movement.service.ts:92,111,123,145,165,181` all check `isStunned()`
-10. `IK3_TEXT_DISGUISE` aggro check — **STILL BROKEN**: `combat/systems/ai.system.ts:460` `isHidden()` tests only `MODE.TRANSPARENT`, no buff check (the "when buffs ship" precondition was met long ago)
+10. `IK3_TEXT_DISGUISE` aggro check — **STILL BROKEN** (re-verified 2026-08-04): `combat/systems/ai.system.ts:460-462` `isHidden()` tests only `MODE.TRANSPARENT`, no buff check (the "when buffs ship" precondition was met long ago)
+11. ~~USESKILL cast-range validation~~ — **fixed 2026-08-04** (§2): reads the base `attackRange` AR_* enum via `getAttackRange`, not the per-level AoE `skillRange`
+
+---
+
+## Re-verification changelog (2026-08-04)
+
+Spot re-verify of 10 claims in §1-2 and the fix-first shortlist against live
+code (one read-only explorer, file:line evidence per verdict), plus the
+cast-range fix landed the same day.
+
+**Upgrades ❌/🟡 → ✅ (3):**
+- **Cast-range validation** ❌→✅ (§2). Ported `CMover::GetAttackRange`
+  (`MoverMsg.cpp:140-166`) as `entities/constants/attackRange.ts`; gate at
+  `skill.service.ts:326-340`. Note the intermediate bug: `812bf3f` gated on the
+  per-level `skillRange`, which is the **AoE radius** (`Ctrl.cpp:268/432/752`),
+  not cast reach — Heal was capped at 6 m instead of AR_WAND's 15 m. Both fields
+  are now documented in `skill.schema.ts` to stop the confusion recurring.
+- **Debuff proc roll** 🟡→✅ (§1). The `effectProc` roll from
+  `skillFormulas.ts:321` is enforced at `skill.service.ts:376`; fixed in
+  `812bf3f`, the checklist was stale.
+- **Flee / low-HP retreat** 🟡→✅ (§1). `spawn.manager.ts:204-205,365-366` pass
+  `fleeHpPct`/`runawayDelay`; branch fires, test-covered at
+  `ai.system.test.ts:574`.
+
+**Confirmed still open (7):** AoE skills (🟥 — no runtime `skillRange`/
+`spellRegion` consumer; needs the `ApplySkillRegion`/`Around`/`Line` ports);
+projectile skills (🟥 — ranged auto-attack's projectile is client-visual only);
+DoT death granting no MOVERDEATH/exp/drops on monsters and never firing
+`onPlayerDeath` on players (🟡, both halves); `partyQuery` unwired
+(`compose.ts:396-428`); `IK3_TEXT_DISGUISE` aggro check MODE-only
+(`ai.system.ts:460-462`); `healCadenceMs` unthreaded from the converter;
+`MAGIC_ATTACK` declared-but-undispatched (`clientServer.ts:167-168` registers
+only MELEE/RANGE).
+
+**Counts corrected:** `ponytail:` markers 187/79 files → **157 across 82 files**
+(the earlier number predated the world-server carve-out). Tally adjusted
+✅ 123→127, 🟡 48→45, ❌ 23→22.
+
+**Nothing in this changelog is user-confirmed.** All three upgrades pass local
+build + tests only; the override rule stands.
 
 ---
 

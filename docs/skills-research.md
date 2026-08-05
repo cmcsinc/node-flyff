@@ -104,6 +104,31 @@ MagicSkillFactor cycle (1>2,2>3,3>5,5>4,4>1) — **separate** from the melee ELE
 ### AoE (`dwSpellRegion`, instant not per-tick)
 DIRECT single | AROUND (target excl) | REGION (target incl) | LINE cone. Radius = `dwSkillRange` snapped 4/8/16/32.
 
+> **`dwSkillRange` is the AoE radius only — never the cast reach.** It is
+> per-level (propSkillAdd) and is read exclusively by `ApplySkillRegion` /
+> `ApplySkillAround` / `ApplySkillLine` / `ApplySkillAroundTroupe`
+> (`Ctrl.cpp:268,432,752,1675`). Cast reach is the BASE row's `dwAttackRange`
+> `AR_*` enum via `GetAttackRange` (`MoverMsg.cpp:140-166`) — see §4.1. Confusing
+> the two capped Heal at 6 m instead of AR_WAND's 15 m (fixed 2026-08-04).
+
+### 4.1 Range: not server-gated in C++ (emulator divergence)
+`DoUseSkill` never checks distance — see the "Range NOT gated" note in §4. The
+only skill use of `GetAttackRange` is the **client-side** `CMD_SetUseSkill`
+(`MoverMsg.cpp:206`; callers `WndManager.cpp:7337`, `WndTaskBar.cpp:2366`), where
+`fArrivalRange` feeds `SetDestObj(idTarget, fArrivalRange, TRUE)` — the distance
+the client walks to before casting, not a rejection.
+
+`AR_*` → metres (`MoverMsg.cpp:140-166`, `defineAttribute.h:93-99`):
+`SHORT(1)=2 · LONG(2)=3 · FAR(3)=4 · RANGE(4)=10 · WAND(5)=15 · HRANGE(6)=6 ·
+HWAND(7)=18 · default=0`, then `*(DST_HAWKEYE_RATE+100)/100` (Ranger Hawkeye).
+
+`CObj::IsRangeObj` (`Obj.cpp:805`) compares against
+`0.8*GetRadius(this) + 0.8*GetRadius(other) + fRange` — the model bounds are part
+of the reach, so any port without meshes needs a slack allowance standing in.
+
+**This emulator diverges deliberately:** it rejects out-of-range casts server-side
+(`skills/services/skill.service.ts`), since a server cannot trust the client.
+
 ### Multi-hit (`nSkillCount`)
 Each hit = full damage roll + own DAMAGE snapshot, 4-frame spacing. Magic MP split per hit (`nReqMp/nSkillCount`).
 

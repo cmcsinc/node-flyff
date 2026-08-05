@@ -1,5 +1,15 @@
 # C++ Fidelity Audit — 2026-07-27
 
+> **Snapshot, not a live tracker.** These 64 findings were captured on
+> 2026-07-27 and `.claude/state/MISSING-FEATURES.md` records them as resolved.
+> Kept for provenance and for the C++ citations, which remain accurate as
+> research. For current status use that checklist, not the severities below.
+>
+> Later deviations found after this snapshot are logged in
+> `.claude/state/PROGRESS.md` → Lessons Learned rather than appended here (e.g.
+> the 2026-08-04 `dwAttackRange` cast-reach vs `dwSkillRange` AoE-radius mixup
+> in the skill cast-range gate).
+
 All 6 domains audited against `game/source/` C++ spec. Findings listed by severity.
 
 **Rule**: Every feature/bug has a C++ equivalent. This is a port, not new development.

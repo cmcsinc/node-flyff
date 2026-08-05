@@ -250,5 +250,7 @@
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\handlers\\rangeAttack.handler.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\rangeAttack.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\admin\\test\\client-patch.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\equipStats.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\equipStats.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\entities\\test\\constants\\attackRange.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\parse.stripBlockComments.test.ts": "pass"
 }

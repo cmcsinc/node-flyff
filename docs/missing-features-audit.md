@@ -9,7 +9,7 @@
 > packages.
 >
 > **For current feature status use `.claude/state/MISSING-FEATURES.md`**
-> (re-verified 2026-08-01 against master `c9ae378`).
+> (re-verified 2026-08-01 against master `c9ae378`; spot re-verify 2026-08-04).
 > For TS↔C++ behavioral deviations use [`c++-fidelity-audit.md`](c++-fidelity-audit.md).
 >
 > **What is still useful here:** the C++ source citations, opcode hex values,
