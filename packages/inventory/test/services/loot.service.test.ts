@@ -3,10 +3,10 @@
  * stale-dest cleanup, owner-lock / 7s FFA, bag-full.
  */
 
-import { describe, it, mock, beforeEach, afterEach } from 'node:test';
+import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { LootService } from '../../src/services/loot.service';
-import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM, SNAPSHOTTYPE_QUERYGETPOS } from '@flyff/world-core';
+import { NULL_ID, SNAPSHOTTYPE_CREATEITEM, SNAPSHOTTYPE_SETPOINTPARAM } from '@flyff/world-core';
 import { DST_GOLD } from '@flyff/world-core';
 import type { CPlayer, Vec3 } from '@flyff/entities';
 import type { ItemManager } from '../../src/managers/item.manager';
@@ -377,124 +377,5 @@ describe('LootService party distribution', () => {
     });
     loot.checkArrival(player);
     assert.deepEqual(added, [42]);
-  });
-});
-
-/**
- * Walk-poll: the fix for "pickup not proceeding". While the client auto-walks to
- * a dest object it sends NO movement packet, so the ONLY arrival check that ever
- * ran was the immediate one at PLAYERSETDESTOBJ time. `onSetDestObj` now arms a
- * QUERYGETPOS poll; each reply arrives as GETPOS -> `checkArrival`.
- */
-describe('LootService walk-to-pile poll', () => {
-  // mock.timers.enable() is session-global -- reset per test (memory
-  // `node-test-mock-timers-gotcha`).
-  beforeEach(() => { mock.timers.enable({ apis: ['setInterval', 'Date'] }); });
-  afterEach(() => { mock.timers.reset(); });
-
-  interface PollHarness {
-    loot: LootService;
-    player: CPlayer;
-    sent: Buffer[];
-    /** Mutable so a test can make the pile vanish mid-walk. */
-    pile: { value: unknown };
-  }
-
-  function pollSetup(itemPos = { x: 200, y: 0, z: 200 }): PollHarness {
-    const item = {
-      m_idObject: 0x80000011, m_dwItemId: 2950, m_nItemNum: 1, m_idOwn: NULL_ID,
-      m_dwDropTime: Date.now(), m_vPos: itemPos, m_nZoneId: 1,
-    };
-    const pile: { value: unknown } = { value: item };
-    const sent: Buffer[] = [];
-    const player = {
-      m_idPlayer: 42, m_nGold: 0, m_idDestObj: item.m_idObject, m_fArrivalRange: 0,
-      m_nZoneId: 1, m_vPos: { x: 100, y: 0, z: 100 }, // far from the pile
-    } as unknown as CPlayer;
-    const loot = new LootService({
-      inventoryService: {
-        addItem: () => ({ ok: true, changes: [{ slot: 0, objid: 1, itemId: 2950, count: 1, isNew: true }] }),
-      } as unknown as InventoryService,
-      itemManager: {
-        get: () => pile.value, remove: () => pile.value,
-      } as unknown as ItemManager,
-      playerManager: {
-        get: () => player,
-        sendTo: (_p: CPlayer, b: Buffer) => { sent.push(b); },
-      } as unknown as PlayerManager,
-      zoneManager: { broadcastAround: () => 1 } as unknown as ZoneManager,
-    });
-    return { loot, player, sent, pile };
-  }
-
-  it('arms a QUERYGETPOS poll when the pile is out of reach', () => {
-    const { loot, player, sent } = pollSetup();
-    loot.onSetDestObj(player);
-    assert.equal(sent.length, 0, 'no immediate loot -- out of range');
-
-    mock.timers.tick(300);
-    assert.equal(sent.length, 1, 'one QUERYGETPOS after the first interval');
-    assert.equal(subtype(sent[0]!), SNAPSHOTTYPE_QUERYGETPOS);
-    // idFrom must be NULL_ID or OnGetPos will not take the position as the
-    // sender's own (DPSrvr.cpp:1463).
-    assert.equal(sent[0]!.readUInt32LE(16), NULL_ID, 'idFrom = NULL_ID');
-
-    mock.timers.tick(500);
-    assert.equal(sent.length, 3, 'keeps polling while walking');
-  });
-
-  it('stops polling once the player arrives and the pile is looted', () => {
-    const { loot, player, sent } = pollSetup();
-    loot.onSetDestObj(player);
-    mock.timers.tick(300);
-    assert.equal(sent.length, 1);
-
-    // The client walked onto the pile and its GETPOS reply landed -> arrival.
-    player.m_vPos = { x: 200, y: 0, z: 200 };
-    loot.checkArrival(player);
-    assert.equal(player.m_idDestObj, NULL_ID, 'looted, dest cleared');
-
-    const afterLoot = sent.length;
-    mock.timers.tick(2_000);
-    assert.equal(sent.length, afterLoot, 'no further QUERYGETPOS after pickup');
-  });
-
-  it('stops polling when the pile decays mid-walk', () => {
-    const { loot, player, sent, pile } = pollSetup();
-    loot.onSetDestObj(player);
-    mock.timers.tick(300);
-    const before = sent.length;
-
-    pile.value = undefined; // 3-min decay fired
-    mock.timers.tick(1_000);
-    assert.equal(sent.length, before, 'poll cancelled with the pile gone');
-  });
-
-  it('gives up after the walk timeout', () => {
-    const { loot, player, sent } = pollSetup();
-    loot.onSetDestObj(player);
-    mock.timers.tick(16_000);
-    const atTimeout = sent.length;
-    mock.timers.tick(5_000);
-    assert.equal(sent.length, atTimeout, 'poll stopped at the deadline');
-  });
-
-  it('does not poll for a non-item dest (monster/NPC walk-to)', () => {
-    const { loot, player, sent, pile } = pollSetup();
-    pile.value = undefined;              // itemManager.get -> undefined
-    player.m_idDestObj = 0x40000007;     // a mover objid
-    loot.onSetDestObj(player);
-    mock.timers.tick(2_000);
-    assert.equal(sent.length, 0, 'melee/dialog approach must not arm a loot poll');
-  });
-
-  it('shutdown clears an armed poll', () => {
-    const { loot, player, sent } = pollSetup();
-    loot.onSetDestObj(player);
-    mock.timers.tick(300);
-    const before = sent.length;
-    loot.shutdown();
-    mock.timers.tick(2_000);
-    assert.equal(sent.length, before, 'no timers left running');
   });
 });

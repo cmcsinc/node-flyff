@@ -19,7 +19,7 @@
  * @module services/snapshot.service
  */
 
-import type { ZoneManager, PlayerManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import type { Vec3 } from '@flyff/entities';
 import type { CPlayer } from '@flyff/entities';
 import {
@@ -27,17 +27,22 @@ import {
 } from '@flyff/combat';
 import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import type { VisibilityService } from '@flyff/world-core';
+import type { DestPollService } from './destPoll.service';
 
 export interface SnapshotServiceDeps {
   zoneManager: ZoneManager;
-  /** Live player lookup for follow-target detection. */
-  playerManager?: PlayerManager;
   /**
    * View re-diff hook -- DESTPOS is an authoritative position change, so peers
    * and movers must stream in/out of view the same way they do on PLAYERMOVED
    * (`CLinkMap::ModifyView`, LinkMap.cpp:404). Optional for tests.
    */
   visibilityService?: Pick<VisibilityService, 'refresh'>;
+  /**
+   * Walk-to-destination poll. A DESTPOS clears the object destination
+   * (`SetDestPos` -> `ClearDestObj`), so any in-flight position poll for that
+   * destination must stop with it. Optional for tests.
+   */
+  destPollService?: Pick<DestPollService, 'cancel'>;
 }
 
 export type DestPosOutcome =
@@ -46,12 +51,6 @@ export type DestPosOutcome =
 
 /** `D3DXVec3LengthSq > 1_000_000` => drop (OnPlayerDestPos:4371). */
 const ANTI_TELEPORT_SQ = 1_000_000;
-/**
- * Max squared distance from DESTPOS to a player's current position for
- * follow-detection. 10m² = 100 — generous enough for lag, tight enough to
- * avoid false snaps in crowded areas.
- */
-const FOLLOW_DETECT_SQ = 100;
 
 export class SnapshotService {
   private readonly destPosSerializer = new DestPosSerializer();
@@ -62,24 +61,6 @@ export class SnapshotService {
    * jumps; otherwise updates position and echoes to peers.
    */
   destPos(player: CPlayer, frame: DestPosFrame): DestPosOutcome {
-    // Follow detection: if the DESTPOS target is near another player's current
-    // position, the follower is clicking-to-follow that player. Snap the
-    // follower's server-side position to the LEADER's live position instead of
-    // the stale destination coordinates. This keeps distance gates (party exp,
-    // loot share) passing continuously between DESTPOS packets (~500ms gap).
-    // Also bypasses anti-teleport since the snap is intentional.
-    if (this.deps.playerManager) {
-      for (const other of this.deps.playerManager.all()) {
-        const id = other.m_idPlayer;
-        if (id === player.m_idPlayer) continue;
-        if (other.m_nZoneId !== player.m_nZoneId) continue;
-        if (distSq3(other.m_vPos, frame.vPos) < FOLLOW_DETECT_SQ) {
-          player.m_vPos = { ...other.m_vPos };
-          player._dirty.add('m_vPos');
-          return { ok: true, reached: 0 };
-        }
-      }
-    }
     if (distSq3(player.m_vPos, frame.vPos) > ANTI_TELEPORT_SQ) {
       return { ok: false, reason: 'too_far' };
     }
@@ -93,6 +74,7 @@ export class SnapshotService {
     // into range renders a phantom follow.
     player.m_idDestObj = NULL_ID;
     player.m_fArrivalRange = 0;
+    this.deps.destPollService?.cancel(player.m_idPlayer);
     this.deps.visibilityService?.refresh(player.m_idPlayer);
 
     const packet = this.destPosSerializer.build(player.m_idPlayer, frame);

@@ -35,6 +35,7 @@ import { DestObjSerializer } from '@flyff/combat';
 import { VISIBILITY_RADIUS, NULL_ID } from '@flyff/world-core';
 import type { VisibilityService } from '@flyff/world-core';
 import type { LootService } from '@flyff/inventory';
+import type { DestPollService } from './destPoll.service';
 
 export interface MovementServiceDeps {
   zoneManager: ZoneManager;
@@ -59,6 +60,14 @@ export interface MovementServiceDeps {
    * walks. Optional so bare movement tests can omit it.
    */
   visibilityService?: Pick<VisibilityService, 'refresh'>;
+  /**
+   * Walk-to-destination position refresh. While the client auto-walks to a dest
+   * object it sends no movement packet, so the server must ask
+   * (`SNAPSHOTTYPE_QUERYGETPOS`) or `m_vPos` stays pinned at the click point for
+   * the whole walk. Armed on PLAYERSETDESTOBJ, cancelled whenever the dest is
+   * cleared. Optional so bare movement tests can omit it.
+   */
+  destPollService?: Pick<DestPollService, 'arm' | 'cancel'>;
 }
 
 export type MovementOutcome =
@@ -243,6 +252,10 @@ export class MovementService {
       // The pile was looted on contact -- nothing left to walk to, no broadcast.
       return { ok: true, reached: 0 };
     }
+    // The walk has actually begun: start asking the client where it is, or every
+    // range gate (party exp/item proximity, skill reach, loot arrival, vicinity)
+    // reads the pre-walk position until the client sends its next real frame.
+    this.deps.destPollService?.arm(player);
     const packet = this.destObjSerializer.build(player.m_idPlayer, destObjid, fRange);
     return this.broadcast(player, packet);
   }
@@ -270,6 +283,8 @@ export class MovementService {
   private clearDestObj(player: CPlayer): void {
     player.m_idDestObj = NULL_ID;
     player.m_fArrivalRange = 0;
+    // Real movement frames are arriving again -- position is fresh without asking.
+    this.deps.destPollService?.cancel(player.m_idPlayer);
   }
 
   private broadcast(player: CPlayer, packet: Buffer): MovementOutcome {
