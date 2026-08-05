@@ -336,8 +336,23 @@ export class EquipService {
     player.m_nMaxHp = maxHp;
     player.m_nMaxMp = maxMp;
     player.m_nMaxFp = maxFp;
-    if (player.m_nHp > maxHp) { player.m_nHp = maxHp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, maxHp)); }
-    if (player.m_nMp > maxMp) { player.m_nMp = maxMp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, maxMp)); }
-    if (player.m_nFp > maxFp) { player.m_nFp = maxFp; this.deps.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, maxFp)); }
+    if (player.m_nHp > maxHp) { player.m_nHp = maxHp; this.syncVital(player, DST_HP, maxHp); }
+    if (player.m_nMp > maxMp) { player.m_nMp = maxMp; this.syncVital(player, DST_MP, maxMp); }
+    if (player.m_nFp > maxFp) { player.m_nFp = maxFp; this.syncVital(player, DST_FP, maxFp); }
+  }
+
+  /**
+   * One clamped-vital `SETPOINTPARAM`, vicinity-wide when the broadcast dep is
+   * wired. C++ `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`) is
+   * FOR_VISIBILITYRANGE: unequipping +HP gear must lower this player's bar in
+   * every peer's target display, not only their own.
+   */
+  private syncVital(player: CPlayer, dst: number, value: number): void {
+    const packet = buildSetPointParam(player.m_idPlayer, dst, value);
+    if (this.deps.broadcastAround) {
+      this.deps.broadcastAround(player, packet);
+      return;
+    }
+    this.deps.sendTo(player, packet);
   }
 }

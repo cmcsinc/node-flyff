@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { PeerSnapshotSerializer } from '../../../src/net/snapshot/peerSnapshot.serializer';
 import { CPlayer } from '@flyff/entities';
+import { BUFF_SKILL } from '@flyff/entities';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
 import {
   OT_MOVER, MI_MALE, MI_FEMALE, SNAPSHOTTYPE_ADD_OBJ, SNAPSHOTTYPE_DEL_OBJ,
@@ -122,8 +123,27 @@ describe('PeerSnapshotSerializer', () => {
       assert.equal(framed.readUInt32LE(at), 0);                        // CBuffMgr count
     });
 
-    it('writes uSize=0 for a player with nothing equipped', () => {
-      assert.equal(buf.readUInt8(buf.length - TAIL_LEN - 1), 0); // uSize
+    it('serializes an active buff so an arriving peer sees the icon', () => {
+      // `CBuffMgr::Serialize` (`_Common/buff.cpp:933`): count then, per buff,
+      // [WORD type][WORD id][DWORD level][DWORD REMAINING ms]. Without this a
+      // late-arriving viewer sees a buffed player with no buff icons -- the
+      // SETSKILLSTATE that granted it was broadcast before they were in range.
+      const p = makePlayer();
+      const now = Date.now();
+      p.m_buffs.addSkillBuff(150, 3, 30_000, [{ dst: 1, adj: 20 }], now);
+      const framed = serializer.build([p]);
+      // Tail is now [petId:4][petName:4][count:4] + one 12-byte buff entry.
+      const BUFF_ENTRY_LEN = 12;
+      let at = framed.length - BUFF_ENTRY_LEN - 4;
+      assert.equal(framed.readUInt32LE(at), 1); at += 4;          // CBuffMgr count
+      assert.equal(framed.readUInt16LE(at), BUFF_SKILL); at += 2; // m_wType
+      assert.equal(framed.readUInt16LE(at), 150); at += 2;        // m_wId
+      assert.equal(framed.readUInt32LE(at), 3); at += 4;          // dwLevel
+      const remain = framed.readUInt32LE(at);
+      assert.ok(remain > 0 && remain <= 30_000, 'tmTotal is the REMAINING ms, not the total');
+    });
+
+    it('writes uSize=0 for a player with nothing equipped', () => {      assert.equal(buf.readUInt8(buf.length - TAIL_LEN - 1), 0); // uSize
     });
 
     it('opens the body with an empty private-shop title', () => {

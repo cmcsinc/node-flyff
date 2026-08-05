@@ -25,10 +25,11 @@
 
 import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
 import { getJobProps } from '@flyff/combat';
 import { standRecovery } from '@flyff/combat';
-import { buildSetPointParam, DST_HP, DST_MP, DST_FP } from '@flyff/world-core';
+import { buildSetPointParam, DST_HP, DST_MP, DST_FP, VISIBILITY_RADIUS } from '@flyff/world-core';
 
 const logger = createLogger({ module: 'recovery' });
 
@@ -41,6 +42,14 @@ const COMBAT_GATE_MS = 10_000;
 
 export interface RecoverySystemDeps {
   readonly playerManager: PlayerManager;
+  /**
+   * Vicinity fan-out for the regen `SETPOINTPARAM` frames. C++
+   * `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`) is
+   * `FOR_VISIBILITYRANGE`, *including* the mover itself -- every visible
+   * player's HP bar tracks the regen, not just the owner's. Optional so existing
+   * tests can construct the system without it; absent falls back to self-only.
+   */
+  readonly zoneManager?: ZoneManager;
   /**
    * Cheer-point regen. C++ drives `CMover::CheckTickCheer` from the same
    * per-user tick as `ProcessRecovery` (`WORLDSERVER/User.cpp:438`), so it
@@ -143,15 +152,30 @@ export class RecoverySystem {
 
     if (p.m_nHp !== hpBefore) {
       p._dirty.add('m_nHp');
-      this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_HP, p.m_nHp));
+      this.syncVital(p, DST_HP, p.m_nHp);
     }
     if (p.m_nMp !== mpBefore) {
       p._dirty.add('m_nMp');
-      this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_MP, p.m_nMp));
+      this.syncVital(p, DST_MP, p.m_nMp);
     }
     if (p.m_nFp !== fpBefore) {
-      this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_FP, p.m_nFp));
+      this.syncVital(p, DST_FP, p.m_nFp);
     }
+  }
+
+  /**
+   * Push one `SETPOINTPARAM` to the whole visibility range (self included), per
+   * `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`). This is what
+   * keeps another player's HP bar live in the target display -- without it a
+   * peer's bar only moves on DAMAGE deltas and drifts on regen/heal.
+   */
+  private syncVital(p: CPlayer, dst: number, value: number): void {
+    const packet = buildSetPointParam(p.m_idPlayer, dst, value);
+    if (this.deps.zoneManager) {
+      this.deps.zoneManager.broadcastAround(p.m_vPos, p.m_nZoneId, VISIBILITY_RADIUS, packet);
+      return;
+    }
+    this.deps.playerManager.sendTo(p, packet);
   }
 
   /** Stop the recovery loop (idempotent). */

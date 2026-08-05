@@ -197,15 +197,25 @@ describe('EquipService.equip', () => {
       [RING, { id: RING, name: 'Stat Ring', name_id: 'ITEM_R', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: EQUIP_SLOT, effects: [{ dst: STR, adj: 3 }, { dst: STA, adj: 5 }] }],
     ]);
     const { svc, broadcast } = makeSvc((id) => table.get(id));
+    // SETDESTPARAM/RESETDESTPARAM only -- the clamped-vital SETPOINTPARAM now
+    // rides the same vicinity broadcast (C++ AddSetPointParam is
+    // FOR_VISIBILITYRANGE, WORLDSERVER/User.cpp:4658), and losing the ring's
+    // +STA lowers max HP, so unequip emits one too. Filter by snapshot type.
+    const SETDESTPARAM = 0x001c, RESETDESTPARAM = 0x001d;
+    const destParams = (): Buffer[] =>
+      broadcast.filter((b) => {
+        const t = b.readUInt16LE(14);
+        return t === SETDESTPARAM || t === RESETDESTPARAM;
+      });
 
     const r = svc.equip(player, 0, EQUIP_SLOT);
     assert.equal(r.ok, true);
-    assert.equal(broadcast.length, 2, 'one SETDESTPARAM per effect on equip');
+    assert.equal(destParams().length, 2, 'one SETDESTPARAM per effect on equip');
 
     const unequipR = svc.unequip(player, EQUIP_SLOT);
     assert.equal(unequipR.ok, true);
     // 2 from equip + 2 RESETDESTPARAM from unequip = 4 total
-    assert.equal(broadcast.length, 4, 'one RESETDESTPARAM per effect on unequip');
+    assert.equal(destParams().length, 4, 'one RESETDESTPARAM per effect on unequip');
   });
 });
 

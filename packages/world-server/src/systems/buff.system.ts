@@ -70,7 +70,7 @@ export class BuffSystem {
     if (total <= 0) return;
     p.m_nHp = Math.max(0, p.m_nHp - total);
     p._dirty.add('m_nHp');
-    this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_HP, p.m_nHp));
+    this.syncVital(p, DST_HP, p.m_nHp);
     // ponytail: DAMAGE snapshot (poison hit number/SFX) + killer attribution +
     // trigger onPlayerDeath when a DoT crosses 0 (currently combat/AI own death).
   }
@@ -105,17 +105,30 @@ export class BuffSystem {
     if (p.m_nHp > maxHp) {
       p.m_nHp = maxHp;
       p._dirty.add('m_nHp');
-      this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_HP, p.m_nHp));
+      this.syncVital(p, DST_HP, p.m_nHp);
     }
     if (p.m_nMp > maxMp) {
       p.m_nMp = maxMp;
       p._dirty.add('m_nMp');
-      this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_MP, p.m_nMp));
+      this.syncVital(p, DST_MP, p.m_nMp);
     }
     if (p.m_nFp > maxFp) {
       p.m_nFp = maxFp;
-      this.deps.playerManager.sendTo(p, buildSetPointParam(p.m_idPlayer, DST_FP, p.m_nFp));
+      this.syncVital(p, DST_FP, p.m_nFp);
     }
+  }
+
+  /**
+   * One `SETPOINTPARAM` to the whole visibility range (self included), per
+   * `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`). DoT ticks and
+   * buff-expiry clamps must reach peers or a poisoned player's HP bar freezes in
+   * everyone else's target display.
+   */
+  private syncVital(p: CPlayer, dst: number, value: number): void {
+    this.deps.zoneManager.broadcastAround(
+      p.m_vPos, p.m_nZoneId, VISIBILITY_RADIUS,
+      buildSetPointParam(p.m_idPlayer, dst, value),
+    );
   }
 
   /** Stop the expiry loop (idempotent). */

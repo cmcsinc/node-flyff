@@ -30,15 +30,21 @@ interface Captured { objid: number; type: number; skillId: number; }
 function makeDeps(player: CPlayer) {
   const sent: Buffer[] = [];
   const broadcasts: Captured[] = [];
+  /** Raw vicinity frames -- needed to discriminate snapshot types by the type word. */
+  const rawBroadcasts: Buffer[] = [];
   return {
-    sent, broadcasts,
+    sent, broadcasts, rawBroadcasts,
     playerManager: {
       all: () => [player],
       sendTo: (_p: unknown, b: Buffer) => { sent.push(b); },
       get: (id: number) => (id === player.m_idPlayer ? player : undefined),
     },
     zoneManager: {
-      broadcastAround: (_pos: unknown, _zid: number, _r: number, _pkt: Buffer) => { broadcasts.push({ objid: 0, type: 0, skillId: 0 }); return 1; },
+      broadcastAround: (_pos: unknown, _zid: number, _r: number, pkt: Buffer) => {
+        broadcasts.push({ objid: 0, type: 0, skillId: 0 });
+        rawBroadcasts.push(pkt);
+        return 1;
+      },
     },
   };
 }
@@ -77,7 +83,12 @@ describe('BuffSystem.tick (expiry)', () => {
 
     assert.equal(p.m_buffs.has(151), false);
     assert.ok(p.m_nHp <= p.getMaxHp(), 'HP clamped to the new (lower) cap');
-    assert.ok(deps.sent.length >= 1, 'HP clamp synced to client');
+    // The clamp SETPOINTPARAM is a vicinity broadcast, not a self-only send:
+    // C++ `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`) is
+    // FOR_VISIBILITYRANGE, so peers watching this player see the bar drop too.
+    const SETPOINTPARAM = 0x001e;
+    const clamps = deps.rawBroadcasts.filter((b: Buffer) => b.readUInt16LE(14) === SETPOINTPARAM);
+    assert.ok(clamps.length >= 1, 'HP clamp broadcast to the vicinity');
   });
 
   it('skips dead players', () => {

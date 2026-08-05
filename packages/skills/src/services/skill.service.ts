@@ -432,19 +432,29 @@ export class SkillService {
     return { mp: 0, fp: Math.max(0, level.reqFp ?? 0) };
   }
 
-  /** Spend the routed resource (clamp >= 0) + sync the client. */
+  /**
+   * Spend the routed resource (clamp >= 0) + sync the client. Vicinity-wide, per
+   * `CUserMng::AddSetPointParam` (`User.cpp:4658`) -- the C++ send is
+   * FOR_VISIBILITYRANGE for every DST, MP/FP included.
+   */
   private spendResource(player: CPlayer, need: { mp: number; fp: number }): void {
     if (need.mp > 0) {
       const before = player.m_nMp;
       player.m_nMp = Math.max(0, before - need.mp);
       logger.info({ charId: player.m_idPlayer, before, cost: need.mp, after: player.m_nMp }, 'spend MP');
-      this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp));
+      this.deps.zoneManager.broadcastAround(
+        player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+        buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp),
+      );
     }
     if (need.fp > 0) {
       const before = player.m_nFp;
       player.m_nFp = Math.max(0, before - need.fp);
       logger.info({ charId: player.m_idPlayer, before, cost: need.fp, after: player.m_nFp }, 'spend FP');
-      this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp));
+      this.deps.zoneManager.broadcastAround(
+        player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+        buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp),
+      );
     }
   }
 
@@ -482,9 +492,17 @@ export class SkillService {
     const inc = this.healAmount(caster, skill, level);
     target.m_nHp = Math.min(target.m_nMaxHp, target.m_nHp + inc);
     target._dirty.add('m_nHp');
-    this.deps.playerManager.sendTo(target, buildSetPointParam(target.m_idPlayer, DST_HP, target.m_nHp));
+    // Vicinity, not target+caster: C++ `CUserMng::AddSetPointParam`
+    // (`User.cpp:4658`) is FOR_VISIBILITYRANGE, so every player who can see the
+    // healed mover gets the new HP. The old two-send version left bystanders'
+    // target display stuck on the pre-heal value.
+    this.deps.zoneManager.broadcastAround(
+      target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS,
+      buildSetPointParam(target.m_idPlayer, DST_HP, target.m_nHp),
+    );
     if (target !== caster) {
-      // Caster sees the heal land on its target (HP bar of the healed mover).
+      // A caster outside the target's own visibility bucket (edge of range, or a
+      // different zone via a party heal) still needs the bar update.
       this.deps.playerManager.sendTo(caster, buildSetPointParam(target.m_idPlayer, DST_HP, target.m_nHp));
     }
     return { ok: true, hit: true, damage: 0, killed: false };

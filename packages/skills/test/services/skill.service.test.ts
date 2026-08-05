@@ -103,6 +103,20 @@ function makeService(
   };
 }
 
+/**
+ * Pick the broadcast frame carrying `snapshotType`. Frames are
+ * `[dword SNAPSHOT][dword NULL_ID][word 1][dword objid][word type]...`, so the
+ * type word sits at offset 14. Needed because the resource-spend
+ * `SETPOINTPARAM` now precedes `USESKILL` in the broadcast stream (C++ order:
+ * `IncManaPoint` then `AddUseSkill`, `_Common/MoverSkill.cpp:955-987`).
+ */
+function findBroadcast(bufs: readonly Buffer[], snapshotType: number): Buffer | undefined {
+  return bufs.find((b) => b.length >= 16 && b.readUInt16LE(14) === snapshotType);
+}
+
+/** `SNAPSHOTTYPE_USESKILL` (`MsgHdr.h:884`). */
+const SNAPSHOTTYPE_USESKILL = 0x0019;
+
 describe('SkillService.cast', () => {
   it('spends FP (resourceType=2), sets cooldown, broadcasts USESKILL, runs damage', () => {
     const p = CPlayer.fromRow(makeRow(), makeSocket());
@@ -117,8 +131,11 @@ describe('SkillService.cast', () => {
     assert.equal(p.m_nFp, 5, 'FP spent (10 - 5)');
     assert.equal(p.m_nMp, 50, 'MP untouched on FP skill');
     assert.equal(m.calls.resolve, 1, 'damage pipeline ran once');
-    assert.equal(m.broadcasts.length, 1, 'USESKILL broadcast to vicinity');
-    assert.equal(m.sent.length, 1, 'SETPOINTPARAM DST_FP sent to self');
+    // USESKILL + the DST_FP SETPOINTPARAM both go to the vicinity now:
+    // `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`) is
+    // FOR_VISIBILITYRANGE, so peers see the caster's FP bar drop.
+    assert.equal(m.broadcasts.length, 2, 'USESKILL + SETPOINTPARAM broadcast to vicinity');
+    assert.equal(m.sent.length, 0, 'no self-only send -- the vital rides the broadcast');
     assert.ok(p.m_tmReUseDelay[0]! > 0, 'cooldown set on slot 0');
   });
 
@@ -242,7 +259,7 @@ describe('SkillService.cast (heal)', () => {
     mage.hydrateSkills([{ slot: 0, skillId: 44, level: 1 }]);
     const mMagic = makeService(new Map([[44, healSkill()]]), mage);
     assert.equal(mMagic.service.cast(mage, { wId: 0, objid: mage.m_idPlayer, useType: 0 }).ok, true);
-    assert.equal(readCastingTime(mMagic.broadcasts[0]!), 0, 'KT_MAGIC casting time is 0');
+    assert.equal(readCastingTime(findBroadcast(mMagic.broadcasts, SNAPSHOTTYPE_USESKILL)!), 0, 'KT_MAGIC casting time is 0');
 
     // Same skill re-tagged KT_SKILL (resourceType 2) -> 1, despite castingTime:150.
     const fp = CPlayer.fromRow(makeRow({ hp: 10, max_hp: 1000 }), makeSocket());
@@ -250,7 +267,7 @@ describe('SkillService.cast (heal)', () => {
     fp.hydrateSkills([{ slot: 0, skillId: 44, level: 1 }]);
     const mSkill = makeService(new Map([[44, healSkill({ resourceType: 2, levels: [{ level: 1, reqMp: 0, reqFp: 5, adjParamVals: [100, 150], castingTime: 150, cooldown: 0 }] })]]), fp);
     assert.equal(mSkill.service.cast(fp, { wId: 0, objid: fp.m_idPlayer, useType: 0 }).ok, true);
-    assert.equal(readCastingTime(mSkill.broadcasts[0]!), 1, 'KT_SKILL casting time is 1');
+    assert.equal(readCastingTime(findBroadcast(mSkill.broadcasts, SNAPSHOTTYPE_USESKILL)!), 1, 'KT_SKILL casting time is 1');
   });
 
   it('heals another live player target and notifies both', () => {
@@ -311,8 +328,9 @@ describe('SkillService.cast (buff)', () => {
     assert.equal(p.m_nMp, 30, 'MP spent (50 - 20)');
     assert.equal(p.m_buffs.has(150), true, 'buff active on caster');
     assert.equal(p.m_params.get(DST.STA, 0), 20, '+STA applied to the DST pool');
-    // USESKILL (cast anim) + SETSKILLSTATE (buff icon) + SETDESTPARAM (STA delta).
-    assert.equal(m.broadcasts.length, 3);
+    // SETPOINTPARAM (MP spend) + USESKILL (cast anim) + SETSKILLSTATE (buff icon)
+    // + SETDESTPARAM (STA delta) -- all four are FOR_VISIBILITYRANGE in C++.
+    assert.equal(m.broadcasts.length, 4);
   });
 
   it('refreshes duration on re-cast (same level), no double-apply', () => {

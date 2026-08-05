@@ -19,7 +19,8 @@ import type { Journal } from '@flyff/database';
 import type { CharacterRepository } from '@flyff/database';
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager } from '@flyff/world-core';
-import { buildSetPointParam, DST_FP, DST_HP, DST_MP } from '@flyff/world-core';
+import type { ZoneManager } from '@flyff/world-core';
+import { buildSetPointParam, DST_FP, DST_HP, DST_MP, VISIBILITY_RADIUS } from '@flyff/world-core';
 import { SetStateSerializer } from '@flyff/combat';
 import { createLogger } from '@flyff/core/logger';
 
@@ -41,6 +42,13 @@ export interface StatServiceDeps {
   playerManager: PlayerManager;
   charRepo: Pick<CharacterRepository, 'updateStats'>;
   journal?: Journal;
+  /**
+   * Vicinity fan-out for the post-allocation `SETPOINTPARAM` refill. C++
+   * `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`) is
+   * `FOR_VISIBILITYRANGE` (self included), so peers watching this player see the
+   * bar jump to the new max. Optional -- absent falls back to self-only.
+   */
+  zoneManager?: ZoneManager;
 }
 
 export type StatAllocResult =
@@ -104,9 +112,7 @@ export class StatService {
     player.m_nHp = player.m_nMaxHp;
     player.m_nMp = player.m_nMaxMp;
     player.m_nFp = player.m_nMaxFp;
-    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, player.m_nHp));
-    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp));
-    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp));
+    this.syncVitals(player);
 
     this.deps.charRepo.updateStats(player.m_idPlayer, {
       strength: player.m_nStr, stamina: player.m_nSta,
@@ -172,9 +178,7 @@ export class StatService {
     player.m_nHp = player.m_nMaxHp;
     player.m_nMp = player.m_nMaxMp;
     player.m_nFp = player.m_nMaxFp;
-    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, player.m_nHp));
-    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, player.m_nMp));
-    this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, player.m_nFp));
+    this.syncVitals(player);
 
     this.deps.charRepo.updateStats(player.m_idPlayer, {
       strength: player.m_nStr, stamina: player.m_nSta,
@@ -183,5 +187,24 @@ export class StatService {
     }).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'initStat persist failed'));
 
     logger.debug({ charId: player.m_idPlayer, remainGP: player.m_nRemainGP }, 'stats reset (InitStat)');
+  }
+
+  /**
+   * Push HP/MP/FP `SETPOINTPARAM` to the visibility range (self included), per
+   * `CUserMng::AddSetPointParam` (`WORLDSERVER/User.cpp:4658`). Peers watching
+   * this player in the target display see the refilled bar.
+   */
+  private syncVitals(player: CPlayer): void {
+    const vitals: ReadonlyArray<[number, number]> = [
+      [DST_HP, player.m_nHp], [DST_MP, player.m_nMp], [DST_FP, player.m_nFp],
+    ];
+    for (const [dst, value] of vitals) {
+      const packet = buildSetPointParam(player.m_idPlayer, dst, value);
+      if (this.deps.zoneManager) {
+        this.deps.zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet);
+      } else {
+        this.deps.playerManager.sendTo(player, packet);
+      }
+    }
   }
 }

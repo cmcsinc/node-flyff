@@ -49,9 +49,37 @@ function writeEmptyPocketController(w: PacketWriter): void {
   for (let i = 0; i < MAX_POCKET_TABS; i++) w.writeByte(0); // availability flag
 }
 
-/** Empty CBuffMgr -- zero buffs (__BUFF_1107 active). Shared with NPC branch. */
-export function writeEmptyBuffs(w: PacketWriter): void {
-  w.writeDword(0); // size_t count
+/**
+ * `CBuffMgr::Serialize` storing branch (`_Common/buff.cpp:933`):
+ * ```
+ * ar << m_mapBuffs.size() - GetRemoveBuffSize();   // size_t (4 B, 32-bit build)
+ * per buff: IBuff::Serialize (buff.cpp:124)
+ *   ar << m_wType;      // WORD  BUFF_ITEM 0 / BUFF_SKILL 1
+ *   ar << m_wId;        // WORD  skill or item prop id
+ *   SerializeLevel(ar); // DWORD m_dwLevel
+ *   ar << tmTotal;      // DWORD REMAINING ms (GetTotal() - (now - GetInst()))
+ * ```
+ * `tmTotal` is the remaining duration, not the total -- `IBuff::Serialize`
+ * recomputes it against `g_tmCurrent` on every store, so the icon countdown a
+ * peer sees continues from where the buff actually is. We hold an absolute
+ * deadline, so subtract `now`; the C++ floor-at-0 guard maps to `Math.max(0,…)`.
+ *
+ * This is the frame that gives an arriving peer the buff icons of players
+ * already in range -- SETSKILLSTATE is fire-and-forget at cast time, so without
+ * it a late viewer sees a buffed player with no icons until the next re-cast.
+ *
+ * ponytail: `BUFF_ITEM2` writes `GetLevel() - time_null()` in the level slot
+ * (`buff.cpp:637`); no IK2_BUFF2-with-expiry path stores that type yet.
+ */
+export function writeBuffs(w: PacketWriter, p: CPlayer, nowMs: number = Date.now()): void {
+  const buffs = p.m_buffs.getAll();
+  w.writeDword(buffs.length);  // size_t count
+  for (const b of buffs) {
+    w.writeWord(b.type);       // m_wType
+    w.writeWord(b.skillId);    // m_wId
+    w.writeDword(b.level);     // SerializeLevel -> m_dwLevel
+    w.writeDword(Math.max(0, b.expiresAtMs - nowMs)); // tmTotal = REMAINING ms
+  }
 }
 
 /**
@@ -62,7 +90,7 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
   writeMoverPrefix(w, p);
   writeMethodNoneBody(w, p);
   // --- buffs (always active, __BUFF_1107) ---
-  writeEmptyBuffs(w);
+  writeBuffs(w, p);
 }
 
 /**
@@ -77,11 +105,12 @@ export function writeMoverSerialize(w: PacketWriter, p: CPlayer): void {
  *   per part: [uParts:BYTE][m_dwItemId:WORD][m_byFlag:BYTE]
  *   [dwPetId:DWORD] = NULL_ID      MAKELONG(petIndex, petLevel) when summoned
  *   [petName:String] = ""          __PET_1024 (defined in Neuz + WORLDSERVER)
- *   CBuffMgr: [count:DWORD]
+ *   CBuffMgr: [count:DWORD][per buff: WORD type, WORD id, DWORD level, DWORD remainMs]
  *
- * ponytail: buff count is 0 -- a peer arriving mid-buff sees no buff icons on
- * the other player until the next SETSKILLSTATE. Same simplification the self
- * frame makes; wire both together when `CBuffMgr::Serialize` is ported.
+ * The buff list is what puts buff icons under a peer's name in the target
+ * display (`CWndWorld::RenderMoverBuff`, `_Interface/WndWorld.cpp:11286`, which
+ * iterates the peer copy's `m_buffs.m_mapBuffs`). SETSKILLSTATE only reaches
+ * clients that were already in range when the buff landed.
  */
 export function writeMoverExcludeItem(w: PacketWriter, p: CPlayer): void {
   writeMoverPrefix(w, p);
@@ -107,7 +136,7 @@ export function writeMoverExcludeItem(w: PacketWriter, p: CPlayer): void {
   w.writeDword(NULL_ID);       // dwPetId (__VER>=9) -- NULL_ID = no summoned pet
   w.writeString('');           // pet name (__PET_1024)
 
-  writeEmptyBuffs(w);
+  writeBuffs(w, p);
 }
 
 /** Shared `CMover::Serialize` prefix -- everything before the method branch. */
