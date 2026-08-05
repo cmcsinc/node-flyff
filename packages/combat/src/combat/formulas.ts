@@ -172,9 +172,22 @@ export function getHR(c: Combatant): number {
   return c.kind === 'player' ? c.dex : c.npcHR;
 }
 
-/** `GetParrying` (MoverParam.cpp:506) -- DEX/2 + DST_PARRY (player) / `dwER` (NPC). */
+/**
+ * `GetAdjHitRate` (MoverParam.cpp:549) -- `GetParam( DST_ADJ_HITRATE, m_nAdjHitRate )`.
+ *
+ * `c.adjHitRate` is the propItem-column base (`nAdjHitRate`, col 49) summed over
+ * equipped parts; the DST layer on top is where the real data lives -- every one
+ * of the 5716 propItem rows leaves col 49 empty, while 441 armour/weapon rows
+ * carry `dst: 47`, and Hawkeye-style buffs write the same slot.
+ */
+export function getAdjHitRate(c: Combatant): number {
+  return c.params.get(DST.ADJ_HITRATE, c.adjHitRate);
+}
+
+/** `GetParrying` (MoverParam.cpp:555) -- `DEX/2 + GetParam(DST_PARRY, m_nAdjParry)` (player) / `dwER` (NPC). */
 export function getParrying(c: Combatant): number {
-  return c.kind === 'player' ? Math.floor(c.dex * 0.5) + c.parry : c.npcER;
+  if (c.kind !== 'player') return c.npcER;
+  return Math.floor(c.dex * 0.5 + c.params.get(DST.PARRY, c.parry));
 }
 
 /** `GetCriticalProb` (MoverAttack.cpp:609) -- `(DEX/10) * job.fCritical` + DST_CHR_CHANCECRITICAL. */
@@ -208,8 +221,19 @@ export function getAttackSpeed(c: Combatant): number {
 // --- damage pipeline (#B) ----------------------------------------------------
 
 /**
- * `GetAttackResult` (MoverAttack.cpp:241) -- server-authoritative hit roll.
- * Player->NPC branch. Clamp `[MIN_HR, MAX_HR]`; `hit = xRandom(100) < nHitRate`.
+ * `GetAttackResult` (MoverAttack.cpp:316) -- server-authoritative hit roll.
+ * Clamp `[MIN_HR, MAX_HR]`; `hit = xRandom(100) < nHitRate`.
+ *
+ * The branch result is truncated to int BEFORE `GetAdjHitRate()` is added
+ * (`nHitRate = (int)(...)` then `nHitRate += ...`, C++ :330/:348), so a +20 buff
+ * moves the rate by exactly 20 points -- flooring the sum instead would drop a
+ * fractional point.
+ *
+ * ponytail: the `IsNPC() && pDefender->IsPlayer()` branch below still carries the
+ * player->NPC coefficients (`*1.6 / *1.5`, level term `LVL*1.2/(LVL+defLVL)`)
+ * instead of the C++ NPC ones (`*1.5 / *2.0`, level term
+ * `LVL*0.5/(LVL + defLVL*0.3)`, MoverAttack.cpp:330-331). Correcting it changes
+ * how often monsters land a hit, so it is left for a separate, deliberate pass.
  */
 export function getAttackResult(attacker: Combatant, defender: Combatant): number {
   const HR = getHR(attacker);
@@ -217,15 +241,15 @@ export function getAttackResult(attacker: Combatant, defender: Combatant): numbe
   const LVL = attacker.level, defLVL = defender.level;
   let rate: number;
   if (attacker.kind === 'player' && defender.kind === 'npc') {
-    // MoverAttack.cpp:333-336 — Player→NPC hit rate
+    // MoverAttack.cpp:335-336 -- Player->NPC hit rate
     rate = (HR * 1.6 / (HR + parry)) * 1.5 * (LVL * 1.2 / (LVL + defLVL)) * 100;
   } else if (attacker.kind === 'npc' && defender.kind === 'player') {
     rate = (HR * 1.6 / (HR + parry)) * 1.5 * (LVL * 1.2 / (LVL + defLVL)) * 100;
-  } else { // PvP
+  } else { // PvP -- MoverAttack.cpp:344-345
     rate = (HR * 1.6 / (HR + parry)) * 1.2 * (LVL * 1.2 / (LVL + defLVL)) * 100;
   }
-  rate += attacker.adjHitRate; // nHitRate += GetAdjHitRate() (MoverAttack.cpp:273)
-  return clamp(Math.floor(rate), MIN_HR, MAX_HR);
+  // nHitRate += GetAdjHitRate() (MoverAttack.cpp:348), after the (int) cast.
+  return clamp(Math.floor(rate) + getAdjHitRate(attacker), MIN_HR, MAX_HR);
 }
 
 /**

@@ -88,6 +88,8 @@ export const DST = Object.freeze({
   ATKPOWER: 83,
   /** Percentage defense modifier (`GetDEFMultiplier`); positive = more DEF. */
   ADJDEF_RATE: 72,
+  /** Attack-range % bonus (`defineAttribute.h:387`); Hawkeye scales GetAttackRange. */
+  HAWKEYE_RATE: 90,
   RESIST_MAGIC_RATE: 91,
 
   // pseudo-params (>= 10000) -- fan out via setDestParam switch, never stored.

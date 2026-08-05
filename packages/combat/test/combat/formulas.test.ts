@@ -10,7 +10,7 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import {
-  resolveMelee, getHitMinMax, getAttackResult, getParrying, getCriticalProb, getAttackSpeed, getDamageMultiplier,
+  resolveMelee, getHitMinMax, getAttackResult, getParrying, getAdjHitRate, getCriticalProb, getAttackSpeed, getDamageMultiplier,
   calcDefense, expLevelDiffMult,
   addExp, expToNextLevel, subDieDecExp,
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
@@ -133,6 +133,46 @@ describe('combat getParrying (DST_PARRY)', () => {
     assert.equal(getParrying(player), 7, 'floor(15/2)=7, no jewelry parry');
     const withRing: Combatant = { ...player, parry: 5 };
     assert.equal(getParrying(withRing), 12, '7 + 5 jewelry parry');
+  });
+
+  it('DST_PARRY adds on top of the propItem base (GetParam(DST_PARRY, m_nAdjParry))', () => {
+    const params = new ParamModel();
+    params.setDestParam(DST.PARRY, 8);
+    assert.equal(getParrying({ ...player, params }), 15, '7 + 8 from equipped DST_PARRY');
+    assert.equal(
+      getParrying({ ...player, parry: 5, params }), 20,
+      'DST is additive over the propItem column, not a replacement',
+    );
+  });
+
+  it('DST_PARRY does not apply to an NPC (C++ returns dwER outright)', () => {
+    const params = new ParamModel();
+    params.setDestParam(DST.PARRY, 50);
+    assert.equal(getParrying({ ...aibatt, params }), 3, 'NPC ER unchanged');
+  });
+});
+
+describe('combat getAdjHitRate (DST_ADJ_HITRATE)', () => {
+  it('reads the DST slot on top of the propItem column', () => {
+    assert.equal(getAdjHitRate(player), 0, 'no gear, no buff');
+    assert.equal(getAdjHitRate({ ...player, adjHitRate: 4 }), 4, 'propItem nAdjHitRate alone');
+    const params = new ParamModel();
+    params.setDestParam(DST.ADJ_HITRATE, 20);
+    assert.equal(getAdjHitRate({ ...player, params }), 20, 'equipped/buffed DST alone');
+    assert.equal(getAdjHitRate({ ...player, adjHitRate: 4, params }), 24, 'both are additive');
+  });
+
+  it('a DST_ADJ_HITRATE buff actually raises the hit roll', () => {
+    // Both sides mid-range so the rate lands inside [MIN_HR, MAX_HR] and the
+    // +20 is visible rather than swallowed by the clamp.
+    const acro: Combatant = { ...player, level: 30, dex: 60 };
+    const mob: Combatant = { ...pukepuke, level: 30, npcER: 100 };
+    const base = getAttackResult(acro, mob);
+    assert.ok(base > 20 && base < 76, `base ${base} must be off both clamps`);
+    const params = new ParamModel();
+    params.setDestParam(DST.ADJ_HITRATE, 20);
+    const buffed = getAttackResult({ ...acro, params }, mob);
+    assert.equal(buffed - base, 20, '+20 DST_ADJ_HITRATE = +20 percentage points');
   });
 });
 

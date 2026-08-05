@@ -467,6 +467,7 @@ export async function compose(): Promise<WorldComposeResult> {
       }
       return false;
     },
+    getItem: (id: number) => resources.items.items.get(id),
     onPlayerDeath: (p, killerObjid) => revivalService.onPlayerDeath(p, killerObjid),
   });
   aiSystem.start();
@@ -561,6 +562,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const partyService = new PartyService({
     playerManager, partyManager,
     grantExpAmount: (p, amount) => combatGrantSlot.fn!(p, amount),
+    // `s_fPartyExpRate` -- party-LEVEL exp rate only (the member exp split has
+    // its own curve). A thunk so a runtime change applies on the next kill.
+    partyExpRate: () => config.world.partyExpRate,
   });
   // Shared same-party predicate: loot ownership (IsLoot), the combat hit-share
   // pooling, and anything else that asks "are these two in one party".

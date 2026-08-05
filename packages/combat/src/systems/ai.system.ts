@@ -39,6 +39,7 @@ import type { CMover } from '@flyff/entities';
 import type { Vec3 } from '@flyff/entities';
 import { resolveMelee, xRandomRng, type Rng } from '../combat/formulas';
 import { playerCombatant, moverCombatant } from '../combat/combatants';
+import type { ItemLookup } from '../combat/equipStats';
 import { AF_MISS } from '../combat/tables';
 import {
   RANGE_MOVE, RAGE_LEASH, RANGE_RETURN_TO_BEGIN, HOME_ARRIVAL, SIGHT_RANGE,
@@ -77,6 +78,14 @@ export interface AISystemDeps {
    * reach pursue). Backed by the zone's `regions: type: safe` AABB data.
    */
   safeZone?: (zoneId: number, pos: Vec3) => boolean;
+  /**
+   * Item-definition lookup, forwarded to `playerCombatant` so the defender's
+   * equipped armour actually counts when a monster swings. Without it
+   * `combatants.ts` falls back to `BARE_EQUIP` (0 DEF / 0 HR / 0 parry) and the
+   * player is hit as though naked -- the player->mob path has always passed it
+   * (`combat.service.ts`), so omitting it here made armour one-directional.
+   */
+  getItem?: ItemLookup;
   /** Called when a player's HP reaches 0 from a monster swing. */
   onPlayerDeath?: (player: CPlayer, killerObjid: number) => void;
 }
@@ -285,7 +294,7 @@ private pursue(m: CMover, now: number, dtMs: number): void {
       : this.meleeAttack.build(m.m_idMover, { dwAtkMsg: OBJMSG_ATK1, objid: target.m_idPlayer, nParam2: 0, nParam3: 0 });
     this.deps.zoneManager.broadcastAround(m.m_vPos, m.m_nZoneId, VISIBILITY_RADIUS, animPkt);
 
-    const result = resolveMelee(moverCombatant(m), playerCombatant(target), this.rng);
+    const result = resolveMelee(moverCombatant(m), playerCombatant(target, this.deps.getItem), this.rng);
     // MATCHLESS (undying `/undying`) -> invincible: swing anim + DAMAGE still
     // broadcast (hit=0) so the client sees the monster wind up, but no HP is
     // subtracted. Mirrors C++ `IsMode(MATCHLESS_MODE)` gating MinusHP.
