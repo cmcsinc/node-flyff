@@ -39,6 +39,8 @@ import type { GetPosHandler } from './handlers/getPos.handler';
 import type { ScriptDlgHandler } from '@flyff/npc';
 import type { RevivalHandler } from './handlers/revival.handler';
 import type { PkModeHandler } from './handlers/pkMode.handler';
+import type { ReqLeaveHandler } from './handlers/reqLeave.handler';
+import type { StateModeHandler } from './handlers/stateMode.handler';
 import type { PlayerSetDestObjHandler } from './handlers/playerSetDestObj.handler';
 import type { MeleeAttackHandler } from '@flyff/combat';
 import type { RangeAttackHandler } from '@flyff/combat';
@@ -96,6 +98,7 @@ export interface WorldClientServerDeps {
   scriptDlgHandler: ScriptDlgHandler;
   revivalHandler: RevivalHandler;
   pkModeHandler: PkModeHandler;
+  stateModeHandler: StateModeHandler;
   playerSetDestObjHandler: PlayerSetDestObjHandler;
   meleeAttackHandler: MeleeAttackHandler;
   rangeAttackHandler: RangeAttackHandler;
@@ -163,6 +166,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.REVIVAL_TO_LODESTAR, (s, r) => deps.revivalHandler.handleRevivalLodestar(s, r));
   dispatcher.register(PACKETTYPE.REVIVAL_TO_LODELIGHT, (s, r) => deps.revivalHandler.handleRevivalLodelight(s, r));
   dispatcher.register(PACKETTYPE.MODE, (s, r) => deps.pkModeHandler.handleMode(s, r));
+  dispatcher.register(PACKETTYPE.STATEMODE, (s, r) => deps.stateModeHandler.handleStateMode(s, r));
   dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r));
   dispatcher.register(PACKETTYPE.MELEE_ATTACK, (s, r) => deps.meleeAttackHandler.handleMeleeAttack(s, r));
   dispatcher.register(PACKETTYPE.RANGE_ATTACK, (s, r) => deps.rangeAttackHandler.handleRangeAttack(s, r));

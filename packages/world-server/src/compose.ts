@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository, PartyRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
 import { AdminListener } from './ipc/adminListener';
@@ -14,6 +14,7 @@ import { PlayerManager } from '@flyff/world-core';
 import { ZoneManager } from '@flyff/world-core';
 import { SpawnManager } from '@flyff/world-core';
 import { VisibilityService } from '@flyff/world-core';
+import { buildStateMode } from '@flyff/world-core';
 import { FlightService } from '@flyff/world-core';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer';
 import { PeerSnapshotSerializer } from './net/snapshot/peerSnapshot.serializer';
@@ -32,6 +33,7 @@ import { MapKeyHandler } from '@flyff/npc';
 import { QueryPlayerDataService } from './services/queryPlayerData.service';
 import { QueryPlayerDataHandler } from './handlers/queryPlayerData.handler';
 import { SnapshotService } from './services/snapshot.service';
+import { DestPollService } from './services/destPoll.service';
 import { SnapshotHandler } from './handlers/snapshot.handler';
 import { MovementService } from './services/movement.service';
 import { PlayerMovedHandler } from './handlers/playerMoved.handler';
@@ -68,6 +70,7 @@ import { NpcSpeechService } from '@flyff/npc';
 import { RevivalHandler } from './handlers/revival.handler';
 import { PkModeService } from './services/pkMode.service';
 import { PkModeHandler } from './handlers/pkMode.handler';
+import { StateModeHandler } from './handlers/stateMode.handler';
 import { MeleeAttackService } from '@flyff/combat';
 import { RangeAttackService } from '@flyff/combat';
 import { CombatService } from '@flyff/combat';
@@ -99,6 +102,7 @@ import { DoEquipHandler } from '@flyff/inventory';
 import { EquipService } from '@flyff/inventory';
 import { ConsumableService } from '@flyff/inventory';
 import { UseItemService } from '@flyff/inventory';
+import { BlinkwingService } from '@flyff/inventory';
 import { EnchantService } from '@flyff/inventory';
 import { DoUseItemHandler } from '@flyff/inventory';
 import { EnchantHandler } from '@flyff/inventory';
@@ -131,7 +135,9 @@ import { AISystem } from '@flyff/combat';
 import { CheckpointSystem } from './systems/checkpoint.system';
 import { RecoverySystem } from './systems/recovery.system';
 import { BuffSystem } from './systems/buff.system';
+import { BlinkwingSystem } from './systems/blinkwing.system';
 import { PkDecaySystem } from './systems/pkDecay.system';
+import { PetSystem } from './systems/pet.system';
 
 export interface WorldComposeResult {
   config: WorldServerConfig;
@@ -158,6 +164,7 @@ export interface WorldComposeResult {
   queryPlayerDataService: QueryPlayerDataService;
   queryPlayerDataHandler: QueryPlayerDataHandler;
   snapshotService: SnapshotService;
+  destPollService: DestPollService;
   snapshotHandler: SnapshotHandler;
   movementService: MovementService;
   playerMovedHandler: PlayerMovedHandler;
@@ -199,6 +206,7 @@ export interface WorldComposeResult {
   revivalHandler: RevivalHandler;
   pkModeService: PkModeService;
   pkModeHandler: PkModeHandler;
+  stateModeHandler: StateModeHandler;
   meleeAttackService: MeleeAttackService;
   rangeAttackService: RangeAttackService;
   combatService: CombatService;
@@ -221,6 +229,16 @@ export interface WorldComposeResult {
   removeItemHandler: RemoveItemHandler;
   doEquipHandler: DoEquipHandler;
   doUseItemHandler: DoUseItemHandler;
+  // Present in the returned object since their features shipped but never added
+  // to this interface, so `index.ts` could not destructure them (and the
+  // handlers were silently missing from `buildWorldClientServer`).
+  enchantHandler: EnchantHandler;
+  repairHandler: RepairHandler;
+  vendorService: VendorService;
+  vendorHandler: VendorHandler;
+  partyManager: PartyManager;
+  partyService: PartyService;
+  partyHandler: PartyHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
   npcBuffHandler: NpcBuffHandler;
@@ -238,7 +256,10 @@ export interface WorldComposeResult {
   checkpointSystem: CheckpointSystem;
   recoverySystem: RecoverySystem;
   buffSystem: BuffSystem;
+  blinkwingSystem: BlinkwingSystem;
+  blinkwingService: BlinkwingService;
   pkDecaySystem: PkDecaySystem;
+  petSystem: PetSystem;
 }
 
 export async function compose(): Promise<WorldComposeResult> {
@@ -299,6 +320,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const presenceRepo = new PresenceRepository(db);
   const friendRepo = new FriendRepository(db);
   const campusRepo = new CampusRepository(db);
+  const partyRepo = new PartyRepository(db);
   // A hard crash leaves this process's presence rows behind. Clearing them at
   // boot means the admin panel never shows a ghost as online for the 60 s the
   // staleness window would otherwise take to expire them.
@@ -497,6 +519,15 @@ export async function compose(): Promise<WorldComposeResult> {
     socialJoin: async (player: CPlayer) => {
       await friendService.onJoin(player);
       await campusService.onJoin(player);
+      // Durable party (migration 022): re-push the roster to a returning member
+      // and flip their PP_REMOVE flag back to online for everyone else. Also
+      // clears a stale `m_idParty` when the party is gone (C++ party.cpp:1196).
+      // Same fire-and-forget path as the friend/campus pushes above, so the
+      // packets land after the JOIN self-spawn. The self ADD_OBJ therefore
+      // carries no `m_idparty`; the client takes it from this PARTYMEMBER
+      // instead (`g_pPlayer->m_idparty = g_Party.m_uPartyId`, DPClient.cpp:4937),
+      // which is also how C++ restores it on character load.
+      partyService.onJoin(player);
     },
   });
   const joinHandler = new JoinHandler(
@@ -529,7 +560,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // (`WORLDSERVER/User.cpp:432-433`). Late-bound -- campusService is built below.
   const campusRecoverSlot: { fn: ((p: CPlayer, now: number) => void) | null } = { fn: null };
   const recoverySystem = new RecoverySystem({
-    playerManager, cheerService,
+    playerManager, zoneManager, cheerService,
     campusService: { recoverPoints: (p, now) => campusRecoverSlot.fn?.(p, now) },
   });
   recoverySystem.start();
@@ -544,7 +575,12 @@ export async function compose(): Promise<WorldComposeResult> {
   const queryPlayerDataHandler = new QueryPlayerDataHandler(queryPlayerDataService);
 
   // In-world movement + peer-broadcast handlers (Phases 3-5).
-  const snapshotService = new SnapshotService({ zoneManager, playerManager, visibilityService });
+  // Walk-to-destination position refresh (QUERYGETPOS). The client sends no
+  // movement packet while auto-walking to a dest object -- following a player,
+  // approaching a mob/NPC, walking to a pile -- so without this the server's
+  // `m_vPos` stays at the click point and every range gate reads it stale.
+  const destPollService = new DestPollService({ playerManager });
+  const snapshotService = new SnapshotService({ zoneManager, visibilityService, destPollService });
   const snapshotHandler = new SnapshotHandler(playerManager, snapshotService);
   // ItemManager + LootService created before MovementService: movement runs the
   // dest-obj arrival check (v19 pickup has no packet -- client walks to the pile
@@ -554,7 +590,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // (sameParty) and exp-share (partyExp) seams can close over the party
   // manager / service. `grantExpAmount` is bound to CombatService, which is
   // built further below; capture it via a slot that's filled once combat exists.
-  const partyManager = new PartyManager();
+  const partyManager = new PartyManager(partyRepo);
   const combatGrantSlot: { fn: ((p: CPlayer, amount: number) => void) | null } = { fn: null };
   // CampusService is composed after CombatService (it needs the repos wired
   // below), so the level-up seam is late-bound the same way `combatGrantSlot` is.
@@ -583,11 +619,19 @@ export async function compose(): Promise<WorldComposeResult> {
     // branch). PartyService satisfies the structural `PartyLootShare` surface.
     party: partyService,
   });
+  // Looter pet (`IK3_PET` / `CAIPet`) -- created after LootService so it can
+  // route pickups through the owner's own DoLoot path, as C++ does.
+  const petSystem = new PetSystem({
+    playerManager, zoneManager, spawnManager, itemManager, lootService, inventoryService,
+    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
+  petSystem.start();
   const movementService = new MovementService({
     zoneManager,
     onMoved: (p) => questTracker.onPlayerMoved(p),
     lootService,
     visibilityService,
+    destPollService,
   });
   const playerMovedHandler = new PlayerMovedHandler(playerManager, movementService);
   const playerBehaviorHandler = new PlayerBehaviorHandler(playerManager, movementService);
@@ -634,7 +678,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // Stats -- MODIFY_STATUS allocates STR/STA/DEX/INT from m_nRemainGP (OnModifyStatus).
   // Declared here (ahead of the skill handlers that follow) because
   // ChangeJobServiceImpl needs it for the `InitStat()` dialog call.
-  const statService = new StatService({ playerManager, charRepo, journal });
+  const statService = new StatService({ playerManager, zoneManager, charRepo, journal });
   const changeJobService = new ChangeJobServiceImpl({
     charRepo, skills: resources.skills, playerManager, zoneManager, journal, statService,
   });
@@ -734,12 +778,43 @@ export async function compose(): Promise<WorldComposeResult> {
 
   // Use-item -- DOUSEITEM router (equip / potion+food / buff-skill-warp-text).
   const consumableService = new ConsumableService(inventoryService);
+  // Blinkwing teleport scrolls (IK2_BLINKWING). The teleport + STATEMODE frames
+  // are injected because @flyff/inventory must not depend on world-server, where
+  // SetPosSerializer + VisibilityService live (same seam as AdminCommandService).
+  const blinkwingSetPosSerializer = new SetPosSerializer();
+  const blinkwingService = new BlinkwingService({
+    inventoryService, playerManager,
+    getItem: (id: number) => resources.items.items.get(id),
+    zones: resources.zones,
+    // Same-world SETPOS + forced view re-diff -- identical to `/teleport`
+    // (command.service applyReplace). Cross-world is refused upstream.
+    teleport: (player, pos) => {
+      player.m_vPos = { ...pos };
+      player._dirty.add('x'); player._dirty.add('y'); player._dirty.add('z');
+      playerManager.sendTo(player, blinkwingSetPosSerializer.build(player.m_idPlayer, pos));
+      visibilityService.refresh(player.m_idPlayer, true);
+    },
+    broadcastStateMode: (player, flag, itemId) =>
+      zoneManager.broadcastAround(
+        player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+        buildStateMode(player.m_idPlayer, player.m_dwStateMode, flag, itemId),
+      ),
+    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
   const useItemService = new UseItemService({
     equipService, consumableService, inventoryService,
     getItem: (id: number) => resources.items.items.get(id),
     potionCooldownMs: config.consumable.potionCooldownMs,
     playerManager, zoneManager,
+    togglePet: (player, itemObjid, linkKind) => petSystem.toggle(player, itemObjid, linkKind),
+    blinkwingService,
   });
+  // Channel-completion poll -- fires the teleport when `m_nReadyTime` elapses
+  // (C++ drives this from the per-user tick, `User.cpp:382`).
+  const blinkwingSystem = new BlinkwingSystem({ playerManager, blinkwingService });
+  blinkwingSystem.start();
+  // Client-side channel abort (move / jump / hit) -- PACKETTYPE_STATEMODE.
+  const stateModeHandler = new StateModeHandler(playerManager, blinkwingService);
   const doUseItemHandler = new DoUseItemHandler({
     playerManager, zoneManager, useItemService,
     getItem: (id: number) => resources.items.items.get(id),
@@ -837,6 +912,14 @@ export async function compose(): Promise<WorldComposeResult> {
   void campusService.bootstrap()
     .catch((err: unknown) => logger.warn({ err }, 'campus bootstrap failed'));
 
+  // Durable party rosters (migration 022) -- reload every persisted party before
+  // the first client can JOIN, so a returning member's `onJoin` finds their
+  // party. Best-effort: a failure leaves the manager empty rather than blocking
+  // boot, and new parties still form normally.
+  void partyManager
+    .hydrate()
+    .catch((err: unknown) => logger.warn({ err }, 'party hydrate failed'));
+
   // Bank -- open + deposit/withdraw item & gold (account-shared).
   const bankService = new BankService({ bankRepo, inventoryRepo, journal });
   const bankHandler = new BankHandler({ playerManager, bankService });
@@ -909,6 +992,8 @@ export async function compose(): Promise<WorldComposeResult> {
       friendService.onDisconnect(player.m_idPlayer);
       campusService.onDisconnect(player.m_idPlayer);
       visibilityService.remove(player);
+      destPollService.cancel(player.m_idPlayer);
+      petSystem.onOwnerGone(player);
     },
   });
   const adminListener = new AdminListener({ sink: adminCommandService });
@@ -932,7 +1017,10 @@ export async function compose(): Promise<WorldComposeResult> {
     checkpointSystem,
     recoverySystem,
     buffSystem,
+    blinkwingSystem,
+    blinkwingService,
     pkDecaySystem,
+    petSystem,
     snapshotSerializer,
     npcSnapshotSerializer,
     joinService,
@@ -944,6 +1032,7 @@ export async function compose(): Promise<WorldComposeResult> {
     queryPlayerDataService,
     queryPlayerDataHandler,
     snapshotService,
+    destPollService,
     snapshotHandler,
     movementService,
     playerMovedHandler,
@@ -979,6 +1068,7 @@ export async function compose(): Promise<WorldComposeResult> {
     revivalHandler,
     pkModeService,
     pkModeHandler,
+    stateModeHandler,
     meleeAttackService,
     rangeAttackService,
     combatService,

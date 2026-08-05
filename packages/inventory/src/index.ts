@@ -18,6 +18,7 @@ export * from './services/equip.service';
 export * from './services/consumable.service';
 export * from './services/cooltime';
 export * from './services/useItem.service';
+export * from './services/blinkwing.service';
 export * from './services/enchant.service';
 export * from './services/repair.service';
 export * from './services/trade.service';

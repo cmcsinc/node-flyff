@@ -245,6 +245,18 @@ export class CPlayer {
    */
   m_idDestObj: number = NULL_ID;
   /**
+   * Summoned looter-pet mover objid (C++ `CMover::m_oiEatPet`, `Mover.h:577`),
+   * or {@link NULL_ID} when no pet is out. Transient by design: C++ never
+   * persists it -- `Replace` (`Mover.cpp:2426`) and logout (`User.cpp:4004`)
+   * both call `InactivateEatPet()`, so the pet dies with the session. Also
+   * absent from `CMover::Serialize`; the pet is its own world mover streamed by
+   * the ordinary ADD_OBJ path, and the ADD_OBJ pet fields
+   * (`ObjSerializeOpt.cpp:299`) describe the *egg* pet (`m_dwPetId`), which is
+   * a separate unported subsystem.
+   */
+  m_oiEatPet: number = NULL_ID;
+
+  /**
    * Active 1v1 duel peer (C++ `m_idDuelOther`, Mover.h). `NULL_ID` = not
    * dueling. Set by `DuelService.accept` on mutual consent; cleared on death,
    * decline, expire, or disconnect. Drives `DUELCANCEL` broadcast on lethal
@@ -449,6 +461,28 @@ export class CPlayer {
    * by `NEXT_TICK_RECOVERYSTAND` (3 s) each fire. Transient -- not persisted.
    */
   m_tmNextRecovery: number = 0;
+  /**
+   * PK/PVP/channel state bitmask (C++ `CMover::m_dwStateMode`,
+   * `_Common/authorization.h:60-64`). Only `STATE_BASEMOTION_MODE` (0x4) is
+   * driven today, by the blinkwing channel (`BlinkwingService`). Rides on the
+   * wire in every `SNAPSHOTTYPE_STATEMODE` frame; the ADD_OBJ serializer still
+   * writes 0 (a peer joining mid-channel does not see the cast bar -- ponytail).
+   * Transient -- not persisted.
+   */
+  m_dwStateMode: number = 0;
+  /**
+   * Wall-clock (`Date.now()`) when the armed item channel completes, or 0 when
+   * no channel is running (C++ `CMover::m_nReadyTime`, set by
+   * `IsItemRedyTime`, `Mover.cpp:8817`). Polled by `BlinkwingSystem`.
+   * Transient -- not persisted.
+   */
+  m_nReadyTime: number = 0;
+  /**
+   * Stable `objid` of the item whose channel is running (C++
+   * `m_dwUseItemId` + `m_bItemFind`). Re-resolved to a slot on completion so a
+   * mid-channel move/drop is caught. 0 = none. Transient -- not persisted.
+   */
+  m_dwUseItemObjId: number = 0;
   /**
    * DST destination-parameter adjustments (C++ `m_adjParamAry`/`m_chgParamAry`,
    * `MoverParam.cpp`). Holds equip +stat bonuses (ring +STR, armor +DEF, etc)

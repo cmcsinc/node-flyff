@@ -5,6 +5,8 @@
  * int nPart[, FLOAT fVal]`. The slot is `HIWORD(dwData)`; `objid` is the focus
  * target (NPC for scrolls); a trailing FLOAT rides in only for `PARTS_RIDE`
  * (`__HACK_1023`). Routes via `UseItemService`: equip -> DOEQUIP snapshots;
+ * an item already in an equip slot -> unequip (`DoUseEquipmentItem` computes
+ * `bEquip = !IsEquip(dwId)`, MoverEquip.cpp:2624);
  * potion/food -> SETPOINTPARAM(DST_HP/MP/FP); buff/skill/warp/text consume the
  * charge (effect ponytail). Every non-equip use also sends UPDATE_ITEM(UI_NUM)
  * for the new stack count (`DoUseItem` tail, MoverSkill.cpp:1723).
@@ -21,7 +23,7 @@ import { createLogger } from '@flyff/core/logger';
 import type { PlayerManager } from '@flyff/world-core';
 import type { ZoneManager } from '@flyff/world-core';
 import type { UseItemService } from '../services/useItem.service';
-import { VISIBILITY_RADIUS, FLIGHT_TID } from '@flyff/world-core';
+import { VISIBILITY_RADIUS, FLIGHT_TID, MAX_INVENTORY, MAX_HUMAN_PARTS } from '@flyff/world-core';
 import type { CPlayer } from '@flyff/entities';
 import { PARTS_RIDE } from '@flyff/entities';
 import type { ItemDefinition } from '@flyff/resources';
@@ -55,9 +57,9 @@ export class DoUseItemHandler {
     try {
       const dwData = reader.readDword();
       reader.readDword();                        // objid -- focus target, unused here
-      const nPart = reader.readDword();
+      const nPart = reader.readDword() | 0;      // C++ reads `int nPart`; -1 = auto-resolve
       Validate.dword(dwData);
-      Validate.dword(nPart);
+      if (nPart >= MAX_HUMAN_PARTS) return;      // DPSrvr.cpp:2633 guard
 
       // HIWORD(dwData) is the item's STABLE m_dwObjId (DPClient SendDoUseItem ->
       // MAKELONG(ITYPE_ITEM, m_dwObjId)), NOT the current slot -- resolve via scan
@@ -68,12 +70,12 @@ export class DoUseItemHandler {
       if (slot < 0) { logger.debug({ charId: player.m_idPlayer, objid, nPart }, 'DOUSEITEM item not found by objid'); return; }
 
       // `__HACK_1023` trailing FLOAT -- read iff the item's OWN dwParts is
-      // PARTS_RIDE (`DPSrvr.cpp:2659-2677` resolves the prop first). DOUSEITEM
-      // always addresses a bag slot, so the item is never already equipped and
-      // the float is always present for a ride item. Keying off the client's
-      // `nPart` (the old check) missed every double-click mount, which sends -1.
+      // PARTS_RIDE **and** it is not already equipped (`DPSrvr.cpp:2657-2666`
+      // gates on `!IsEquip(nId)`). Keying off the client's `nPart` (the old
+      // check) missed every double-click mount, which sends -1; reading it
+      // unconditionally over-reads the dismount frame, which carries no float.
       const prop = this.deps.getItem(player.m_Inventory[slot]?.itemId ?? 0);
-      if (prop?.equip_slot === PARTS_RIDE) {
+      if (prop?.equip_slot === PARTS_RIDE && slot < MAX_INVENTORY) {
         const claimed = reader.readFloat();
         if (this.deps.isFlightSpeedValid && !this.deps.isFlightSpeedValid(prop, claimed)) {
           logger.warn(
@@ -91,22 +93,35 @@ export class DoUseItemHandler {
       if (r.kind === 'equip') {
         const e = r.equip;
         if (!e.ok) {
-          logger.debug({ charId: player.m_idPlayer, slot, nPart, reason: e.reason, tid: e.tid }, 'DOUSEITEM equip rejected');
-          if (e.tid !== undefined) this.deps.notify?.(player, e.tid);
+          const tid = 'tid' in e ? e.tid : undefined;
+          logger.debug({ charId: player.m_idPlayer, slot, nPart, reason: e.reason, tid }, 'DOUSEITEM equip rejected');
+          if (tid !== undefined) this.deps.notify?.(player, tid);
           return;
         }
         // 6-field vicinity format, sent to self + peers alike (C++ g_UserMng::
         // AddDoEquip broadcasts to m_2pc incl self -- User.cpp:4515). The 3-field
         // self variant is dead C++ (CUser::AddDoEquip) whose layout desyncs
-        // OnDoEquip's 6-field reader.
+        // OnDoEquip's 6-field reader. bEquip=false for the unequip path (a
+        // DOUSEITEM on an already-equipped item), matching DOEQUIP.
         this.deps.zoneManager.broadcastAround(
           player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
-          buildDoEquipVicinity(player.m_idPlayer, e.objid, true, { dwId: e.itemId, nOption: 0, byFlag: 0 }, e.parts),
+          buildDoEquipVicinity(player.m_idPlayer, objid, !r.unequip, { dwId: e.itemId, nOption: 0, byFlag: 0 }, e.parts),
         );
       } else if (r.kind === 'consumable') {
-        if (r.hp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_HP, r.hp));
-        if (r.mp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_MP, r.mp));
-        if (r.fp !== undefined) this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_FP, r.fp));
+        // Vitals go to the whole visibility range, not just self: C++
+        // `CUserMng::AddSetPointParam` (`User.cpp:4658`) is FOR_VISIBILITYRANGE,
+        // so a potion drink moves this player's HP bar in every peer's target
+        // display too. Self-only here would leave peers reading the pre-heal HP
+        // until the next DAMAGE frame.
+        const vitals: ReadonlyArray<[number, number | undefined]> =
+          [[DST_HP, r.hp], [DST_MP, r.mp], [DST_FP, r.fp]];
+        for (const [dst, value] of vitals) {
+          if (value === undefined) continue;
+          this.deps.zoneManager.broadcastAround(
+            player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
+            buildSetPointParam(player.m_idPlayer, dst, value),
+          );
+        }
         // C++ DoUseItem tail: pItemElem->UseItem() then UpdateItem(dwId, UI_NUM,
         // m_nItemNum) on every non-equip use (MoverSkill.cpp:1710/1723). Without
         // this the client never sees the stack drop, so a consume looks like
@@ -129,8 +144,12 @@ export class DoUseItemHandler {
             ? buildUpdateItemCooltime(player.m_idPlayer, objid, r.remaining)
             : buildUpdateItemCount(player.m_idPlayer, objid, r.remaining),
         );
+      } else if (r.kind === 'channel') {
+        // Blinkwing: the service already sent STATEMODE (and, on a 0 ms item,
+        // SETPOS + UPDATE_ITEM). Nothing to echo.
       } else if (r.kind === 'reject') {
-        logger.debug({ charId: player.m_idPlayer, slot, nPart }, 'DOUSEITEM rejected (no equip_slot / unknown kind)');
+        if (r.tid !== undefined) this.deps.notify?.(player, r.tid);
+        logger.debug({ charId: player.m_idPlayer, slot, nPart, tid: r.tid }, 'DOUSEITEM rejected (no equip_slot / unknown kind)');
       }
     } catch (error) {
       if (error instanceof PacketError) {

@@ -14,7 +14,7 @@ import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
 import { CPlayer } from '@flyff/entities';
 import { UseItemService } from '../../src/services/useItem.service';
-import { MAX_INVENTORY } from '@flyff/world-core';
+import { MAX_INVENTORY, INVENTORY_SLOTS } from '@flyff/world-core';
 import type { CharacterRow } from '@flyff/database';
 import type { ItemDefinition } from '@flyff/resources';
 import type { EquipService, EquipResult } from '../../src/services/equip.service';
@@ -37,12 +37,15 @@ function makeSvc(opts: {
   equipResult?: EquipResult;
   consumableResult?: ConsumableResult;
   potionCooldownMs?: number;
+  togglePet?: (player: CPlayer, itemObjid: number, linkKind: number) => boolean;
 }) {
   let equipCalled = false;
+  let unequipCalled: number | false = false;
   let consumeCalled = false;
   let applyCalled = false;
   const equipService = {
     equip: () => { equipCalled = true; return opts.equipResult ?? { ok: true, parts: 9, itemId: 5000, invSlot: 4 }; },
+    unequip: (_p: unknown, parts: number) => { unequipCalled = parts; return { ok: true, parts, itemId: 5000, invSlot: 0, objid: 0 }; },
   } as unknown as EquipService;
   const consumableService = {
     apply: () => { applyCalled = true; return opts.consumableResult ?? { hp: 150, consumed: null }; },
@@ -56,8 +59,9 @@ function makeSvc(opts: {
     potionCooldownMs: opts.potionCooldownMs ?? 1000,
     playerManager: { sendTo: () => {} } as never,
     zoneManager: { broadcastAround: () => 0 } as never,
+    ...(opts.togglePet ? { togglePet: opts.togglePet } : {}),
   });
-  return { svc, equipCalled: () => equipCalled, applyCalled: () => applyCalled, consumeCalled: () => consumeCalled };
+  return { svc, equipCalled: () => equipCalled, unequipCalled: () => unequipCalled, applyCalled: () => applyCalled, consumeCalled: () => consumeCalled };
 }
 
 describe('UseItemService.use', () => {
@@ -140,11 +144,28 @@ describe('UseItemService.use', () => {
     assert.equal(r.kind, 'reject');
   });
 
-  it('rejects when nId (HIWORD) is outside the main bag', () => {
+  it('rejects when the slot index is out of range', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     const { svc } = makeSvc({ getItem: () => undefined });
-    const r = svc.use(player, MAX_INVENTORY, 0);
+    const r = svc.use(player, INVENTORY_SLOTS, 0);
     assert.equal(r.kind, 'reject');
+  });
+
+  it('routes an item sitting in an equip slot to unequip (DoUseEquipmentItem bEquip=!IsEquip)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    const equipIdx = MAX_INVENTORY + 9;
+    player.m_Inventory[equipIdx] = { itemId: 5000, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [5000, { id: 5000, name: 'Sword', name_id: 'ITEM_S', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, equip_slot: 9 }],
+    ]);
+    const { svc, unequipCalled, equipCalled } = makeSvc({ getItem: (id) => table.get(id) });
+
+    const r = svc.use(player, equipIdx, -1);
+
+    assert.equal(r.kind, 'equip');
+    assert.equal(r.kind === 'equip' && r.unequip, true);
+    assert.equal(unequipCalled(), 9, 'unequip called with parts=9');
+    assert.equal(equipCalled(), false, 'equip must not run for an equipped item');
   });
 
   it('rejects a potion on cooldown WITHOUT spending the charge', () => {
@@ -191,5 +212,47 @@ describe('UseItemService.use', () => {
 
     const second = svc.use(player, 1, 0);
     assert.equal(second.kind, 'reject', 'still on cooldown');
+  });
+
+  it('routes an IK3_PET item to the pet toggle, spending no charge', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[2] = { itemId: 21000, count: 1, objid: 2 };
+    const table = new Map<number, ItemDefinition>([
+      [21000, { id: 21000, name: 'Baby Lawolf', name_id: 'ITEM_P', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_GENERAL', item_kind3: 'IK3_PET', link_kind: 720 } as ItemDefinition],
+    ]);
+    const calls: Array<{ itemObjid: number; linkKind: number }> = [];
+    const { svc, consumeCalled } = makeSvc({
+      getItem: (id) => table.get(id),
+      togglePet: (_p, itemObjid, linkKind) => { calls.push({ itemObjid, linkKind }); return true; },
+    });
+
+    const r = svc.use(player, 2, 0);
+    assert.equal(r.kind, 'pet');
+    assert.deepEqual(calls, [{ itemObjid: 2, linkKind: 720 }], 'toggle got the item objid + link_kind');
+    assert.equal(consumeCalled(), false, 'pet items are bPermanence -- no charge spent');
+  });
+
+  it('rejects an IK3_PET item with no link_kind instead of consuming it', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[2] = { itemId: 21001, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [21001, { id: 21001, name: 'Broken Pet', name_id: 'ITEM_P2', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind3: 'IK3_PET' }],
+    ]);
+    const { svc, consumeCalled } = makeSvc({ getItem: (id) => table.get(id) });
+
+    assert.equal(svc.use(player, 2, 0).kind, 'reject');
+    assert.equal(consumeCalled(), false);
+  });
+
+  it('rejects an IK3_PET item when no pet system is wired (togglePet absent)', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_Inventory[2] = { itemId: 21000, count: 1 };
+    const table = new Map<number, ItemDefinition>([
+      [21000, { id: 21000, name: 'Baby Lawolf', name_id: 'ITEM_P', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind3: 'IK3_PET', link_kind: 720 } as ItemDefinition],
+    ]);
+    const { svc, consumeCalled } = makeSvc({ getItem: (id) => table.get(id) });
+
+    assert.equal(svc.use(player, 2, 0).kind, 'reject');
+    assert.equal(consumeCalled(), false, 'still no charge spent');
   });
 });

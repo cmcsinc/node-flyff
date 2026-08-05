@@ -130,6 +130,11 @@ async function main(): Promise<void> {
     skillTaskbarHandler,
     endSkillQueueHandler,
     reqLeaveHandler,
+    pkModeHandler,
+    stateModeHandler,
+    vendorHandler,
+    enchantHandler,
+    repairHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,
@@ -146,9 +151,11 @@ async function main(): Promise<void> {
     checkpointSystem,
     recoverySystem,
     buffSystem,
+    blinkwingSystem,
     pkDecaySystem,
+    petSystem,
     itemManager,
-    lootService,
+    destPollService,
   } = await compose();
 
   process.on('unhandledRejection', err => {
@@ -223,10 +230,13 @@ async function main(): Promise<void> {
     checkpointSystem.stop();
     recoverySystem.stop();
     buffSystem.stop();
+    blinkwingSystem.stop();
     pkDecaySystem.stop();
+    // Before spawnManager.shutdown(): dismissing each pet kills its mover.
+    petSystem.stop();
     spawnManager.shutdown();
     itemManager.shutdown();
-    lootService.shutdown();
+    destPollService.shutdown();
     journal.close();
     process.exit(code);
   };
@@ -319,6 +329,11 @@ async function main(): Promise<void> {
     skillTaskbarHandler,
     endSkillQueueHandler,
     reqLeaveHandler,
+    pkModeHandler,
+    stateModeHandler,
+    vendorHandler,
+    enchantHandler,
+    repairHandler,
     removeQuestHandler,
     questCheckHandler,
     questHelperHandler,
@@ -351,6 +366,9 @@ async function main(): Promise<void> {
           // DEL_OBJ the leaver from every peer that still has them in scene, and
           // clear their own known-set (rule 05 -- no dangling Set entries).
           visibilityService.remove(player);
+          // Stop the walk-to-destination position poll (rule 05 -- no interval
+          // outlives the player it was armed for).
+          destPollService.cancel(charId);
         }
       }
       // Flush player state (position, vitals, stats, bank gold) + drop from

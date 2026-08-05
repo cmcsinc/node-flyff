@@ -53,12 +53,14 @@ function makeHandler(
 }
 
 describe('DoUseItemHandler', () => {
-  it('consumable: sends SETPOINTPARAM per restored pool + UPDATE_ITEM for the count', () => {
-    const { handler, sent } = makeHandler({ kind: 'consumable', nId: 2, remaining: 4, hp: 150, mp: 90, fp: 40 });
+  it('consumable: broadcasts SETPOINTPARAM per restored pool + sends UPDATE_ITEM for the count', () => {
+    const { handler, sent, broadcasts } = makeHandler({ kind: 'consumable', nId: 2, remaining: 4, hp: 150, mp: 90, fp: 40 });
     handler.handleDoUseItem(mockSocket(), new PacketReader(body(2, 0)));
-    // 3 SETPOINTPARAM (HP/MP/FP) + 1 UPDATE_ITEM
+    // Vitals fan out to the vicinity (C++ AddSetPointParam is FOR_VISIBILITYRANGE,
+    // WORLDSERVER/User.cpp:4658) so peers' target HP bar tracks the potion;
+    // UPDATE_ITEM stays self-only (it is the caster's own bag).
     const byType = sent.map((b) => b.readUInt16LE(14));
-    const pointParams = sent.filter((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.SETPOINTPARAM);
+    const pointParams = broadcasts.filter((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.SETPOINTPARAM);
     const params = pointParams.map((b) => b.readUInt32LE(16)).sort((a, b) => a - b);
     assert.deepEqual(params, [DST_HP, DST_MP, DST_FP].sort((a, b) => a - b));
     assert.equal(pointParams[0]!.readUInt32LE(20), 150, 'value = new HP total');
@@ -69,10 +71,10 @@ describe('DoUseItemHandler', () => {
   });
 
   it('consumable: UPDATE_ITEM is sent even with no restored pools (count must drop)', () => {
-    const { handler, sent } = makeHandler({ kind: 'consumable', nId: 0, remaining: 2, hp: 180 });
+    const { handler, sent, broadcasts } = makeHandler({ kind: 'consumable', nId: 0, remaining: 2, hp: 180 });
     handler.handleDoUseItem(mockSocket(), new PacketReader(body(0, 0)));
-    // 1 SETPOINTPARAM (HP) + 1 UPDATE_ITEM
-    assert.equal(sent.filter((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.SETPOINTPARAM).length, 1);
+    // 1 SETPOINTPARAM (HP) broadcast + 1 UPDATE_ITEM to self
+    assert.equal(broadcasts.filter((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.SETPOINTPARAM).length, 1);
     const upd = sent.find((b) => b.readUInt16LE(14) === SNAPSHOTTYPE.UPDATE_ITEM)!;
     assert.equal(upd.readUInt32LE(19), 2, 'remaining count');
   });
