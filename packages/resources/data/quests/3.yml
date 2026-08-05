@@ -114,15 +114,15 @@ states:
     cond: IDS_PROPQUEST_INC_000041
     status: IDS_PROPQUEST_INC_000042
 quest_items:
-  - mover: 27
+  - mover: 29
     item: 6023
     prob: 1500000000
     num: 1
-  - mover: 29
+  - mover: 32
     item: 6024
     prob: 1500000000
     num: 1
-  - mover: 34
+  - mover: 38
     item: 6016
     prob: 1500000000
     num: 1

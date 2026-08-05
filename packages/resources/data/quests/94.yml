@@ -115,19 +115,19 @@ dialog:
   "7": IDS_PROPQUEST_INC_000962
   "10": IDS_PROPQUEST_INC_000963
 quest_items:
-  - mover: 41
+  - mover: 48
     item: 18113
     prob: 750000000
     num: 1
-  - mover: 42
+  - mover: 49
     item: 18113
     prob: 750000000
     num: 1
-  - mover: 43
+  - mover: 50
     item: 18113
     prob: 750000000
     num: 1
-  - mover: 78
+  - mover: 51
     item: 18113
     prob: 750000000
     num: 1

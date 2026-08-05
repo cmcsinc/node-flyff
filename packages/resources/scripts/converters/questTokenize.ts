@@ -10,6 +10,8 @@
  * @module scripts/converters/questTokenize
  */
 
+import { stripBlockComments } from '../../src/defineHeader.js';
+
 export type Token =
   | { t: 'punct'; v: string }
   | { t: 'str'; v: string }
@@ -79,9 +81,14 @@ export async function loadAllDefines(rawDir: string): Promise<Map<string, number
   const re = /^\s*#\s*define\s+([A-Za-z_]\w*)\s+(-?\d+)/gm;
   for (const f of files) {
     const buf = await readFile(resolve(rawDir, f));
-    const text = buf[0] === 0xff && buf[1] === 0xfe ? buf.subarray(2).toString('utf16le') : buf.toString('utf8');
+    const raw = buf[0] === 0xff && buf[1] === 0xfe ? buf.subarray(2).toString('utf16le') : buf.toString('utf8');
+    // Block comments first: a commented-out block of defines is dead code the C
+    // preprocessor never sees, and first-write-wins would otherwise prefer it
+    // over the live block below it (defineObj.h's dead MI_* block, lines
+    // 1852-1921). See `stripBlockComments` in parse.ts.
+    const text = stripBlockComments(raw);
     // First-write-wins: some define files (e.g. defineJob.h) have duplicate
-    // symbols in separate unconditional sections (original vs 3RD_LEGEND16
+    // symbols in separate LIVE sections (original vs 3RD_LEGEND16
     // renumbering). The first section matches the database's numbering; the
     // second overwrites with a different scheme. Preserve the first definition
     // so resolved symbol values align with the stored player state.

@@ -16,8 +16,6 @@ bounds:
     x: 4000
     y: 500
     z: 4000
-# `fly 1` token in game/resource/World/WdMadrigal/WdMadrigal.wld -- boards allowed.
-# Written by extractFlaris (parseFlyToken); 40 shipped worlds are `fly 0`.
 fly: true
 revival:
   position:
@@ -306,6 +304,33 @@ spawns:
     count: 1
     delay: 2100000
   - id: 29
+    mover_id: 69
+    position:
+      x: 8171.79
+      y: 84.944
+      z: 2771.805
+    radius: 44
+    count: 10
+    delay: 55000
+  - id: 30
+    mover_id: 70
+    position:
+      x: 8118.021
+      y: 84.883
+      z: 2750.672
+    radius: 35.5
+    count: 10
+    delay: 55000
+  - id: 31
+    mover_id: 70
+    position:
+      x: 8179.016
+      y: 85.748
+      z: 2663.101
+    radius: 35.5
+    count: 10
+    delay: 55000
+  - id: 32
     mover_id: 71
     position:
       x: 8152.389
@@ -314,7 +339,7 @@ spawns:
     radius: 71.5
     count: 1
     delay: 2100000
-  - id: 30
+  - id: 33
     mover_id: 120
     position:
       x: 8156.741
@@ -323,7 +348,7 @@ spawns:
     radius: 41
     count: 10
     delay: 55000
-  - id: 31
+  - id: 34
     mover_id: 122
     position:
       x: 8096.323
@@ -332,7 +357,7 @@ spawns:
     radius: 42.5
     count: 10
     delay: 55000
-  - id: 32
+  - id: 35
     mover_id: 122
     position:
       x: 8105.361
@@ -341,7 +366,7 @@ spawns:
     radius: 40
     count: 10
     delay: 55000
-  - id: 33
+  - id: 36
     mover_id: 123
     position:
       x: 8058.298
@@ -350,7 +375,7 @@ spawns:
     radius: 85
     count: 1
     delay: 2100000
-  - id: 34
+  - id: 37
     mover_id: 400
     position:
       x: 7899.201
@@ -359,7 +384,7 @@ spawns:
     radius: 46.5
     count: 10
     delay: 55000
-  - id: 35
+  - id: 38
     mover_id: 400
     position:
       x: 7979.149
@@ -368,7 +393,7 @@ spawns:
     radius: 37
     count: 10
     delay: 55000
-  - id: 36
+  - id: 39
     mover_id: 401
     position:
       x: 7928.61
@@ -377,7 +402,7 @@ spawns:
     radius: 33
     count: 10
     delay: 55000
-  - id: 37
+  - id: 40
     mover_id: 402
     position:
       x: 7840.493
@@ -386,7 +411,7 @@ spawns:
     radius: 44
     count: 10
     delay: 55000
-  - id: 38
+  - id: 41
     mover_id: 402
     position:
       x: 7944.122
@@ -395,7 +420,7 @@ spawns:
     radius: 36.5
     count: 10
     delay: 55000
-  - id: 39
+  - id: 42
     mover_id: 403
     position:
       x: 7881.058
@@ -404,7 +429,7 @@ spawns:
     radius: 55
     count: 1
     delay: 2100000
-  - id: 40
+  - id: 43
     mover_id: 552
     position:
       x: 8101.828
@@ -413,7 +438,7 @@ spawns:
     radius: 48
     count: 10
     delay: 55000
-  - id: 41
+  - id: 44
     mover_id: 552
     position:
       x: 8043.208
@@ -422,7 +447,7 @@ spawns:
     radius: 50
     count: 10
     delay: 55000
-  - id: 42
+  - id: 45
     mover_id: 811
     position:
       x: 8160.437
@@ -431,7 +456,7 @@ spawns:
     radius: 12.5
     count: 3
     delay: 60000
-  - id: 43
+  - id: 46
     mover_id: 811
     position:
       x: 8167.585
@@ -440,7 +465,7 @@ spawns:
     radius: 20
     count: 3
     delay: 60000
-  - id: 44
+  - id: 47
     mover_id: 811
     position:
       x: 8091.446
@@ -449,7 +474,7 @@ spawns:
     radius: 18
     count: 3
     delay: 60000
-  - id: 45
+  - id: 48
     mover_id: 816
     position:
       x: 7834.98
@@ -458,7 +483,7 @@ spawns:
     radius: 9
     count: 1
     delay: 600000
-  - id: 46
+  - id: 49
     mover_id: 812
     position:
       x: 7844.682
@@ -467,7 +492,25 @@ spawns:
     radius: 14
     count: 2
     delay: 300000
-  - id: 47
+  - id: 50
+    mover_id: 68
+    position:
+      x: 8256.192
+      y: 82.262
+      z: 2815.599
+    radius: 31
+    count: 10
+    delay: 55000
+  - id: 51
+    mover_id: 68
+    position:
+      x: 8241.367
+      y: 83.657
+      z: 2744.359
+    radius: 46
+    count: 10
+    delay: 55000
+  - id: 52
     mover_id: 84
     position:
       x: 8641.668
@@ -476,7 +519,34 @@ spawns:
     radius: 41
     count: 10
     delay: 55000
-  - id: 48
+  - id: 53
+    mover_id: 105
+    position:
+      x: 8640.619
+      y: 143.27
+      z: 2677.314
+    radius: 62
+    count: 10
+    delay: 55000
+  - id: 54
+    mover_id: 105
+    position:
+      x: 8641.18
+      y: 139.583
+      z: 2800.317
+    radius: 68
+    count: 10
+    delay: 55000
+  - id: 55
+    mover_id: 106
+    position:
+      x: 8657.256
+      y: 141.869
+      z: 2752.189
+    radius: 65
+    count: 1
+    delay: 2100000
+  - id: 56
     mover_id: 120
     position:
       x: 8580.957
@@ -485,7 +555,7 @@ spawns:
     radius: 71
     count: 10
     delay: 55000
-  - id: 49
+  - id: 57
     mover_id: 120
     position:
       x: 8397.018
@@ -494,7 +564,7 @@ spawns:
     radius: 39.5
     count: 10
     delay: 55000
-  - id: 50
+  - id: 58
     mover_id: 121
     position:
       x: 8204.284
@@ -503,7 +573,7 @@ spawns:
     radius: 36
     count: 10
     delay: 55000
-  - id: 51
+  - id: 59
     mover_id: 811
     position:
       x: 8675.905
@@ -512,7 +582,7 @@ spawns:
     radius: 17
     count: 3
     delay: 60000
-  - id: 52
+  - id: 60
     mover_id: 811
     position:
       x: 8471.772
@@ -521,7 +591,7 @@ spawns:
     radius: 35
     count: 3
     delay: 60000
-  - id: 53
+  - id: 61
     mover_id: 508
     position:
       x: 5494.796
@@ -530,7 +600,7 @@ spawns:
     radius: 82.5
     count: 10
     delay: 55000
-  - id: 54
+  - id: 62
     mover_id: 508
     position:
       x: 5557.613
@@ -539,7 +609,7 @@ spawns:
     radius: 33
     count: 8
     delay: 55000
-  - id: 55
+  - id: 63
     mover_id: 509
     position:
       x: 5492.792
@@ -548,7 +618,7 @@ spawns:
     radius: 80.5
     count: 10
     delay: 55000
-  - id: 56
+  - id: 64
     mover_id: 510
     position:
       x: 5324.062
@@ -557,7 +627,7 @@ spawns:
     radius: 87.5
     count: 10
     delay: 55000
-  - id: 57
+  - id: 65
     mover_id: 510
     position:
       x: 5446.615
@@ -566,7 +636,7 @@ spawns:
     radius: 61.5
     count: 10
     delay: 55000
-  - id: 58
+  - id: 66
     mover_id: 511
     position:
       x: 5402.578
@@ -575,7 +645,7 @@ spawns:
     radius: 62
     count: 1
     delay: 2100000
-  - id: 59
+  - id: 67
     mover_id: 800
     position:
       x: 5248.75
@@ -584,7 +654,7 @@ spawns:
     radius: 31.5
     count: 6
     delay: 120000
-  - id: 60
+  - id: 68
     mover_id: 817
     position:
       x: 5241.153
@@ -593,7 +663,7 @@ spawns:
     radius: 32.5
     count: 1
     delay: 180000
-  - id: 61
+  - id: 69
     mover_id: 800
     position:
       x: 5188.35
@@ -602,7 +672,7 @@ spawns:
     radius: 23
     count: 12
     delay: 120000
-  - id: 62
+  - id: 70
     mover_id: 817
     position:
       x: 5177.451
@@ -611,7 +681,7 @@ spawns:
     radius: 25.5
     count: 2
     delay: 180000
-  - id: 63
+  - id: 71
     mover_id: 827
     position:
       x: 5153.416
@@ -620,7 +690,7 @@ spawns:
     radius: 11
     count: 1
     delay: 240000
-  - id: 64
+  - id: 72
     mover_id: 800
     position:
       x: 5521.252
@@ -629,7 +699,7 @@ spawns:
     radius: 15.5
     count: 3
     delay: 120000
-  - id: 65
+  - id: 73
     mover_id: 548
     position:
       x: 5685.912
@@ -638,7 +708,7 @@ spawns:
     radius: 57.5
     count: 8
     delay: 55000
-  - id: 66
+  - id: 74
     mover_id: 549
     position:
       x: 5729.711
@@ -647,7 +717,7 @@ spawns:
     radius: 36
     count: 8
     delay: 55000
-  - id: 67
+  - id: 75
     mover_id: 550
     position:
       x: 5813.288
@@ -656,7 +726,7 @@ spawns:
     radius: 37
     count: 8
     delay: 55000
-  - id: 68
+  - id: 76
     mover_id: 550
     position:
       x: 5816.647
@@ -665,7 +735,7 @@ spawns:
     radius: 45.5
     count: 8
     delay: 55000
-  - id: 69
+  - id: 77
     mover_id: 551
     position:
       x: 5738.827
@@ -674,7 +744,7 @@ spawns:
     radius: 81.5
     count: 1
     delay: 2100000
-  - id: 70
+  - id: 78
     mover_id: 20
     position:
       x: 6711.443
@@ -683,7 +753,7 @@ spawns:
     radius: 21.5
     count: 18
     delay: 60000
-  - id: 71
+  - id: 79
     mover_id: 20
     position:
       x: 7133.263
@@ -692,7 +762,7 @@ spawns:
     radius: 29.5
     count: 18
     delay: 60000
-  - id: 72
+  - id: 80
     mover_id: 20
     position:
       x: 6839.46
@@ -701,7 +771,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 73
+  - id: 81
     mover_id: 20
     position:
       x: 6893.733
@@ -710,7 +780,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 74
+  - id: 82
     mover_id: 20
     position:
       x: 7053.456
@@ -719,7 +789,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 75
+  - id: 83
     mover_id: 20
     position:
       x: 7013.978
@@ -728,7 +798,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 76
+  - id: 84
     mover_id: 20
     position:
       x: 6851.166
@@ -737,7 +807,7 @@ spawns:
     radius: 42.5
     count: 18
     delay: 60000
-  - id: 77
+  - id: 85
     mover_id: 21
     position:
       x: 6802.625
@@ -746,7 +816,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 78
+  - id: 86
     mover_id: 21
     position:
       x: 6774.683
@@ -755,7 +825,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 79
+  - id: 87
     mover_id: 21
     position:
       x: 7146.32
@@ -764,7 +834,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 80
+  - id: 88
     mover_id: 21
     position:
       x: 7038.019
@@ -773,7 +843,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 81
+  - id: 89
     mover_id: 22
     position:
       x: 7062.696
@@ -782,7 +852,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 82
+  - id: 90
     mover_id: 22
     position:
       x: 6900.113
@@ -791,7 +861,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 83
+  - id: 91
     mover_id: 22
     position:
       x: 6790.68
@@ -800,7 +870,7 @@ spawns:
     radius: 21
     count: 18
     delay: 60000
-  - id: 84
+  - id: 92
     mover_id: 22
     position:
       x: 6733.184
@@ -809,7 +879,7 @@ spawns:
     radius: 29
     count: 10
     delay: 55000
-  - id: 85
+  - id: 93
     mover_id: 24
     position:
       x: 6733.147
@@ -818,7 +888,7 @@ spawns:
     radius: 42
     count: 15
     delay: 55000
-  - id: 86
+  - id: 94
     mover_id: 24
     position:
       x: 6729.243
@@ -827,7 +897,7 @@ spawns:
     radius: 47.5
     count: 15
     delay: 55000
-  - id: 87
+  - id: 95
     mover_id: 24
     position:
       x: 6864.938
@@ -836,7 +906,7 @@ spawns:
     radius: 24
     count: 15
     delay: 55000
-  - id: 88
+  - id: 96
     mover_id: 25
     position:
       x: 6671.678
@@ -845,7 +915,7 @@ spawns:
     radius: 34.5
     count: 15
     delay: 55000
-  - id: 89
+  - id: 97
     mover_id: 25
     position:
       x: 6870.226
@@ -854,7 +924,7 @@ spawns:
     radius: 30.5
     count: 15
     delay: 55000
-  - id: 90
+  - id: 98
     mover_id: 26
     position:
       x: 6670.323
@@ -863,7 +933,7 @@ spawns:
     radius: 43.5
     count: 15
     delay: 55000
-  - id: 91
+  - id: 99
     mover_id: 96
     position:
       x: 7112.355
@@ -872,7 +942,7 @@ spawns:
     radius: 24
     count: 10
     delay: 55000
-  - id: 92
+  - id: 100
     mover_id: 96
     position:
       x: 7153.268
@@ -881,7 +951,7 @@ spawns:
     radius: 24
     count: 12
     delay: 55000
-  - id: 93
+  - id: 101
     mover_id: 96
     position:
       x: 7065.607
@@ -890,7 +960,7 @@ spawns:
     radius: 30
     count: 12
     delay: 55000
-  - id: 94
+  - id: 102
     mover_id: 97
     position:
       x: 7106.374
@@ -899,7 +969,7 @@ spawns:
     radius: 24
     count: 10
     delay: 55000
-  - id: 95
+  - id: 103
     mover_id: 97
     position:
       x: 7148.118
@@ -908,7 +978,7 @@ spawns:
     radius: 24
     count: 10
     delay: 55000
-  - id: 96
+  - id: 104
     mover_id: 98
     position:
       x: 7155.575
@@ -917,7 +987,7 @@ spawns:
     radius: 30.5
     count: 12
     delay: 55000
-  - id: 97
+  - id: 105
     mover_id: 1021
     position:
       x: 6872.385
@@ -926,7 +996,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 98
+  - id: 106
     mover_id: 1021
     position:
       x: 6965.546
@@ -935,7 +1005,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 99
+  - id: 107
     mover_id: 1021
     position:
       x: 6957.083
@@ -944,7 +1014,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 100
+  - id: 108
     mover_id: 751
     position:
       x: 6962.749
@@ -953,7 +1023,7 @@ spawns:
     radius: 7.5
     count: 1
     delay: 120000
-  - id: 101
+  - id: 109
     mover_id: 811
     position:
       x: 6983.76
@@ -962,7 +1032,7 @@ spawns:
     radius: 6.5
     count: 3
     delay: 60000
-  - id: 102
+  - id: 110
     mover_id: 811
     position:
       x: 6931.802
@@ -971,7 +1041,7 @@ spawns:
     radius: 11.5
     count: 3
     delay: 60000
-  - id: 103
+  - id: 111
     mover_id: 811
     position:
       x: 7166.155
@@ -980,7 +1050,7 @@ spawns:
     radius: 10
     count: 3
     delay: 60000
-  - id: 104
+  - id: 112
     mover_id: 1021
     position:
       x: 6962.111
@@ -989,7 +1059,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 105
+  - id: 113
     mover_id: 1021
     position:
       x: 7157.009
@@ -998,7 +1068,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 106
+  - id: 114
     mover_id: 1021
     position:
       x: 7163.142
@@ -1007,7 +1077,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 107
+  - id: 115
     mover_id: 1021
     position:
       x: 7162.378
@@ -1016,7 +1086,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 108
+  - id: 116
     mover_id: 1021
     position:
       x: 7156.362
@@ -1025,7 +1095,7 @@ spawns:
     radius: 1.5
     count: 1
     delay: 1000
-  - id: 109
+  - id: 117
     mover_id: 1021
     position:
       x: 7123.659
@@ -1034,7 +1104,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 110
+  - id: 118
     mover_id: 1021
     position:
       x: 7087.32
@@ -1043,7 +1113,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 111
+  - id: 119
     mover_id: 1021
     position:
       x: 6918.181
@@ -1052,7 +1122,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 112
+  - id: 120
     mover_id: 1021
     position:
       x: 6953.001
@@ -1061,7 +1131,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 113
+  - id: 121
     mover_id: 1021
     position:
       x: 7122.508
@@ -1070,7 +1140,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 114
+  - id: 122
     mover_id: 20
     position:
       x: 7267.842
@@ -1079,7 +1149,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 115
+  - id: 123
     mover_id: 20
     position:
       x: 7213.674
@@ -1088,7 +1158,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 116
+  - id: 124
     mover_id: 20
     position:
       x: 7279.533
@@ -1097,7 +1167,7 @@ spawns:
     radius: 24
     count: 10
     delay: 60000
-  - id: 117
+  - id: 125
     mover_id: 21
     position:
       x: 7316.537
@@ -1106,7 +1176,7 @@ spawns:
     radius: 35.5
     count: 18
     delay: 60000
-  - id: 118
+  - id: 126
     mover_id: 21
     position:
       x: 7232.597
@@ -1115,7 +1185,7 @@ spawns:
     radius: 24
     count: 18
     delay: 60000
-  - id: 119
+  - id: 127
     mover_id: 22
     position:
       x: 7266.901
@@ -1124,7 +1194,7 @@ spawns:
     radius: 20
     count: 18
     delay: 60000
-  - id: 120
+  - id: 128
     mover_id: 22
     position:
       x: 7226.664
@@ -1133,7 +1203,7 @@ spawns:
     radius: 23.5
     count: 9
     delay: 60000
-  - id: 121
+  - id: 129
     mover_id: 24
     position:
       x: 7370.721
@@ -1142,7 +1212,7 @@ spawns:
     radius: 31
     count: 15
     delay: 55000
-  - id: 122
+  - id: 130
     mover_id: 98
     position:
       x: 7168.851
@@ -1151,7 +1221,7 @@ spawns:
     radius: 24
     count: 12
     delay: 55000
-  - id: 123
+  - id: 131
     mover_id: 99
     position:
       x: 7213.723
@@ -1160,7 +1230,7 @@ spawns:
     radius: 71
     count: 1
     delay: 2100000
-  - id: 124
+  - id: 132
     mover_id: 1021
     position:
       x: 7200.26
@@ -1169,7 +1239,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 125
+  - id: 133
     mover_id: 1021
     position:
       x: 7206.384
@@ -1178,7 +1248,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 126
+  - id: 134
     mover_id: 1021
     position:
       x: 7184.502
@@ -1187,7 +1257,7 @@ spawns:
     radius: 1.5
     count: 1
     delay: 1000
-  - id: 127
+  - id: 135
     mover_id: 120
     position:
       x: 8185.881
@@ -1196,7 +1266,7 @@ spawns:
     radius: 49.5
     count: 5
     delay: 55000
-  - id: 128
+  - id: 136
     mover_id: 44
     position:
       x: 8423.403
@@ -1205,7 +1275,7 @@ spawns:
     radius: 46
     count: 8
     delay: 55000
-  - id: 129
+  - id: 137
     mover_id: 45
     position:
       x: 8483.244
@@ -1214,7 +1284,7 @@ spawns:
     radius: 55
     count: 8
     delay: 55000
-  - id: 130
+  - id: 138
     mover_id: 45
     position:
       x: 8444.252
@@ -1223,7 +1293,7 @@ spawns:
     radius: 50.5
     count: 8
     delay: 55000
-  - id: 131
+  - id: 139
     mover_id: 46
     position:
       x: 8505.207
@@ -1232,7 +1302,7 @@ spawns:
     radius: 45
     count: 8
     delay: 55000
-  - id: 132
+  - id: 140
     mover_id: 48
     position:
       x: 8605.104
@@ -1241,7 +1311,7 @@ spawns:
     radius: 42.5
     count: 8
     delay: 55000
-  - id: 133
+  - id: 141
     mover_id: 48
     position:
       x: 8578.099
@@ -1250,7 +1320,7 @@ spawns:
     radius: 53
     count: 8
     delay: 55000
-  - id: 134
+  - id: 142
     mover_id: 49
     position:
       x: 8615.475
@@ -1259,7 +1329,7 @@ spawns:
     radius: 47.5
     count: 8
     delay: 55000
-  - id: 135
+  - id: 143
     mover_id: 50
     position:
       x: 8664.988
@@ -1268,7 +1338,7 @@ spawns:
     radius: 48.5
     count: 8
     delay: 55000
-  - id: 136
+  - id: 144
     mover_id: 120
     position:
       x: 8306.038
@@ -1277,7 +1347,7 @@ spawns:
     radius: 40
     count: 5
     delay: 55000
-  - id: 137
+  - id: 145
     mover_id: 305
     position:
       x: 8371.693
@@ -1286,7 +1356,7 @@ spawns:
     radius: 82.5
     count: 8
     delay: 80000
-  - id: 138
+  - id: 146
     mover_id: 305
     position:
       x: 8662.074
@@ -1295,7 +1365,7 @@ spawns:
     radius: 51.5
     count: 8
     delay: 80000
-  - id: 139
+  - id: 147
     mover_id: 305
     position:
       x: 8588.22
@@ -1304,7 +1374,7 @@ spawns:
     radius: 51.5
     count: 8
     delay: 80000
-  - id: 140
+  - id: 148
     mover_id: 306
     position:
       x: 8465.977
@@ -1313,7 +1383,7 @@ spawns:
     radius: 64.5
     count: 8
     delay: 80000
-  - id: 141
+  - id: 149
     mover_id: 577
     position:
       x: 8440.976
@@ -1322,7 +1392,7 @@ spawns:
     radius: 16.5
     count: 2
     delay: 55000
-  - id: 142
+  - id: 150
     mover_id: 577
     position:
       x: 8497.771
@@ -1331,7 +1401,7 @@ spawns:
     radius: 16
     count: 2
     delay: 55000
-  - id: 143
+  - id: 151
     mover_id: 577
     position:
       x: 8446.195
@@ -1340,7 +1410,7 @@ spawns:
     radius: 16
     count: 2
     delay: 55000
-  - id: 144
+  - id: 152
     mover_id: 577
     position:
       x: 8381.31
@@ -1349,7 +1419,7 @@ spawns:
     radius: 16.5
     count: 2
     delay: 55000
-  - id: 145
+  - id: 153
     mover_id: 577
     position:
       x: 8377.875
@@ -1358,7 +1428,7 @@ spawns:
     radius: 15.5
     count: 2
     delay: 55000
-  - id: 146
+  - id: 154
     mover_id: 578
     position:
       x: 8492.461
@@ -1367,7 +1437,7 @@ spawns:
     radius: 16.5
     count: 2
     delay: 55000
-  - id: 147
+  - id: 155
     mover_id: 578
     position:
       x: 8443.428
@@ -1376,7 +1446,7 @@ spawns:
     radius: 16
     count: 2
     delay: 55000
-  - id: 148
+  - id: 156
     mover_id: 578
     position:
       x: 8433.765
@@ -1385,7 +1455,7 @@ spawns:
     radius: 15.5
     count: 2
     delay: 1000
-  - id: 149
+  - id: 157
     mover_id: 578
     position:
       x: 8377.379
@@ -1394,7 +1464,7 @@ spawns:
     radius: 16
     count: 2
     delay: 55000
-  - id: 150
+  - id: 158
     mover_id: 578
     position:
       x: 8378.132
@@ -1403,7 +1473,7 @@ spawns:
     radius: 15.5
     count: 2
     delay: 55000
-  - id: 151
+  - id: 159
     mover_id: 579
     position:
       x: 8372.343
@@ -1412,7 +1482,7 @@ spawns:
     radius: 17
     count: 1
     delay: 55000
-  - id: 152
+  - id: 160
     mover_id: 579
     position:
       x: 8495.077
@@ -1421,7 +1491,7 @@ spawns:
     radius: 17.5
     count: 1
     delay: 55000
-  - id: 153
+  - id: 161
     mover_id: 579
     position:
       x: 8438.268
@@ -1430,7 +1500,7 @@ spawns:
     radius: 15.5
     count: 1
     delay: 55000
-  - id: 154
+  - id: 162
     mover_id: 579
     position:
       x: 8376.232
@@ -1439,7 +1509,7 @@ spawns:
     radius: 16
     count: 1
     delay: 55000
-  - id: 155
+  - id: 163
     mover_id: 580
     position:
       x: 8404.227
@@ -1448,7 +1518,7 @@ spawns:
     radius: 63
     count: 1
     delay: 2100000
-  - id: 156
+  - id: 164
     mover_id: 1021
     position:
       x: 8562.795
@@ -1457,7 +1527,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 157
+  - id: 165
     mover_id: 752
     position:
       x: 8621.985
@@ -1466,7 +1536,7 @@ spawns:
     radius: 6.5
     count: 1
     delay: 120000
-  - id: 158
+  - id: 166
     mover_id: 811
     position:
       x: 8440.828
@@ -1475,7 +1545,7 @@ spawns:
     radius: 15.5
     count: 3
     delay: 60000
-  - id: 159
+  - id: 167
     mover_id: 811
     position:
       x: 8633.598
@@ -1484,7 +1554,7 @@ spawns:
     radius: 18
     count: 3
     delay: 60000
-  - id: 160
+  - id: 168
     mover_id: 811
     position:
       x: 8428.753
@@ -1493,7 +1563,7 @@ spawns:
     radius: 11
     count: 3
     delay: 60000
-  - id: 161
+  - id: 169
     mover_id: 1021
     position:
       x: 8571.123
@@ -1502,7 +1572,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 162
+  - id: 170
     mover_id: 1021
     position:
       x: 8482.786
@@ -1511,7 +1581,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 163
+  - id: 171
     mover_id: 1021
     position:
       x: 8445.944
@@ -1520,7 +1590,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 164
+  - id: 172
     mover_id: 405
     position:
       x: 5133.504
@@ -1529,7 +1599,7 @@ spawns:
     radius: 56.5
     count: 6
     delay: 55000
-  - id: 165
+  - id: 173
     mover_id: 406
     position:
       x: 5133.306
@@ -1538,7 +1608,7 @@ spawns:
     radius: 68.5
     count: 8
     delay: 55000
-  - id: 166
+  - id: 174
     mover_id: 516
     position:
       x: 5190.409
@@ -1547,7 +1617,7 @@ spawns:
     radius: 76.5
     count: 8
     delay: 55000
-  - id: 167
+  - id: 175
     mover_id: 516
     position:
       x: 5226.99
@@ -1556,7 +1626,7 @@ spawns:
     radius: 61
     count: 8
     delay: 55000
-  - id: 168
+  - id: 176
     mover_id: 517
     position:
       x: 5223.574
@@ -1565,7 +1635,7 @@ spawns:
     radius: 37
     count: 8
     delay: 55000
-  - id: 169
+  - id: 177
     mover_id: 518
     position:
       x: 5285.768
@@ -1574,7 +1644,7 @@ spawns:
     radius: 47
     count: 8
     delay: 55000
-  - id: 170
+  - id: 178
     mover_id: 518
     position:
       x: 5279.396
@@ -1583,7 +1653,7 @@ spawns:
     radius: 55.5
     count: 8
     delay: 55000
-  - id: 171
+  - id: 179
     mover_id: 519
     position:
       x: 5243.729
@@ -1592,7 +1662,7 @@ spawns:
     radius: 78
     count: 1
     delay: 2100000
-  - id: 172
+  - id: 180
     mover_id: 800
     position:
       x: 5611.137
@@ -1601,7 +1671,7 @@ spawns:
     radius: 16
     count: 3
     delay: 120000
-  - id: 173
+  - id: 181
     mover_id: 800
     position:
       x: 5574.553
@@ -1610,7 +1680,7 @@ spawns:
     radius: 13
     count: 2
     delay: 120000
-  - id: 174
+  - id: 182
     mover_id: 1021
     position:
       x: 5576.159
@@ -1619,7 +1689,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 175
+  - id: 183
     mover_id: 107
     position:
       x: 5932.208
@@ -1628,7 +1698,7 @@ spawns:
     radius: 41.5
     count: 10
     delay: 55000
-  - id: 176
+  - id: 184
     mover_id: 107
     position:
       x: 5877.305
@@ -1637,7 +1707,7 @@ spawns:
     radius: 42.5
     count: 10
     delay: 55000
-  - id: 177
+  - id: 185
     mover_id: 108
     position:
       x: 5891.663
@@ -1646,7 +1716,7 @@ spawns:
     radius: 36
     count: 10
     delay: 55000
-  - id: 178
+  - id: 186
     mover_id: 109
     position:
       x: 5774.165
@@ -1655,7 +1725,7 @@ spawns:
     radius: 41
     count: 10
     delay: 55000
-  - id: 179
+  - id: 187
     mover_id: 109
     position:
       x: 5869.497
@@ -1664,7 +1734,7 @@ spawns:
     radius: 49.5
     count: 10
     delay: 55000
-  - id: 180
+  - id: 188
     mover_id: 109
     position:
       x: 5828.344
@@ -1673,7 +1743,7 @@ spawns:
     radius: 51
     count: 10
     delay: 55000
-  - id: 181
+  - id: 189
     mover_id: 110
     position:
       x: 5850.744
@@ -1682,7 +1752,7 @@ spawns:
     radius: 80
     count: 1
     delay: 2100000
-  - id: 182
+  - id: 190
     mover_id: 504
     position:
       x: 5745.963
@@ -1691,7 +1761,7 @@ spawns:
     radius: 47
     count: 8
     delay: 55000
-  - id: 183
+  - id: 191
     mover_id: 540
     position:
       x: 6140.583
@@ -1700,7 +1770,7 @@ spawns:
     radius: 58.5
     count: 10
     delay: 55000
-  - id: 184
+  - id: 192
     mover_id: 540
     position:
       x: 5982.252
@@ -1709,7 +1779,7 @@ spawns:
     radius: 76
     count: 10
     delay: 55000
-  - id: 185
+  - id: 193
     mover_id: 541
     position:
       x: 6042.588
@@ -1718,7 +1788,7 @@ spawns:
     radius: 43
     count: 10
     delay: 55000
-  - id: 186
+  - id: 194
     mover_id: 543
     position:
       x: 6102.19
@@ -1727,7 +1797,7 @@ spawns:
     radius: 81
     count: 1
     delay: 2100000
-  - id: 187
+  - id: 195
     mover_id: 589
     position:
       x: 6051.379
@@ -1736,7 +1806,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 188
+  - id: 196
     mover_id: 589
     position:
       x: 6117.1
@@ -1745,7 +1815,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 189
+  - id: 197
     mover_id: 589
     position:
       x: 6087.37
@@ -1754,7 +1824,7 @@ spawns:
     radius: 20.5
     count: 2
     delay: 55000
-  - id: 190
+  - id: 198
     mover_id: 589
     position:
       x: 6137.546
@@ -1763,7 +1833,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 191
+  - id: 199
     mover_id: 589
     position:
       x: 6055.673
@@ -1772,7 +1842,7 @@ spawns:
     radius: 20.5
     count: 2
     delay: 55000
-  - id: 192
+  - id: 200
     mover_id: 590
     position:
       x: 6082.117
@@ -1781,7 +1851,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 193
+  - id: 201
     mover_id: 590
     position:
       x: 6128.032
@@ -1790,7 +1860,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 194
+  - id: 202
     mover_id: 590
     position:
       x: 6045.895
@@ -1799,7 +1869,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 195
+  - id: 203
     mover_id: 590
     position:
       x: 6119.278
@@ -1808,7 +1878,7 @@ spawns:
     radius: 19
     count: 2
     delay: 55000
-  - id: 196
+  - id: 204
     mover_id: 590
     position:
       x: 6051.583
@@ -1817,7 +1887,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 197
+  - id: 205
     mover_id: 591
     position:
       x: 6134.274
@@ -1826,7 +1896,7 @@ spawns:
     radius: 19.5
     count: 1
     delay: 55000
-  - id: 198
+  - id: 206
     mover_id: 591
     position:
       x: 6077.268
@@ -1835,7 +1905,7 @@ spawns:
     radius: 21
     count: 1
     delay: 55000
-  - id: 199
+  - id: 207
     mover_id: 591
     position:
       x: 6054.646
@@ -1844,7 +1914,7 @@ spawns:
     radius: 19
     count: 1
     delay: 55000
-  - id: 200
+  - id: 208
     mover_id: 591
     position:
       x: 6124.178
@@ -1853,7 +1923,7 @@ spawns:
     radius: 20
     count: 1
     delay: 55000
-  - id: 201
+  - id: 209
     mover_id: 591
     position:
       x: 6057.525
@@ -1862,7 +1932,7 @@ spawns:
     radius: 20.5
     count: 1
     delay: 55000
-  - id: 202
+  - id: 210
     mover_id: 592
     position:
       x: 6095.714
@@ -1871,7 +1941,7 @@ spawns:
     radius: 62.5
     count: 1
     delay: 2100000
-  - id: 203
+  - id: 211
     mover_id: 844
     position:
       x: 6073.209
@@ -1880,7 +1950,7 @@ spawns:
     radius: 11.5
     count: 1
     delay: 60000
-  - id: 204
+  - id: 212
     mover_id: 845
     position:
       x: 5660.393
@@ -1889,7 +1959,7 @@ spawns:
     radius: 6
     count: 1
     delay: 60000
-  - id: 205
+  - id: 213
     mover_id: 524
     position:
       x: 6632.372
@@ -1898,7 +1968,7 @@ spawns:
     radius: 24
     count: 10
     delay: 60000
-  - id: 206
+  - id: 214
     mover_id: 524
     position:
       x: 6588.2
@@ -1907,7 +1977,7 @@ spawns:
     radius: 24
     count: 10
     delay: 60000
-  - id: 207
+  - id: 215
     mover_id: 525
     position:
       x: 6584.501
@@ -1916,7 +1986,7 @@ spawns:
     radius: 34
     count: 10
     delay: 60000
-  - id: 208
+  - id: 216
     mover_id: 526
     position:
       x: 6599.197
@@ -1925,7 +1995,7 @@ spawns:
     radius: 24
     count: 10
     delay: 60000
-  - id: 209
+  - id: 217
     mover_id: 526
     position:
       x: 6495.5
@@ -1934,7 +2004,7 @@ spawns:
     radius: 43.5
     count: 10
     delay: 60000
-  - id: 210
+  - id: 218
     mover_id: 527
     position:
       x: 6564.978
@@ -1943,7 +2013,7 @@ spawns:
     radius: 59.5
     count: 1
     delay: 2100000
-  - id: 211
+  - id: 219
     mover_id: 542
     position:
       x: 6158.167
@@ -1952,7 +2022,7 @@ spawns:
     radius: 49
     count: 10
     delay: 55000
-  - id: 212
+  - id: 220
     mover_id: 589
     position:
       x: 6156.554
@@ -1961,7 +2031,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 213
+  - id: 221
     mover_id: 590
     position:
       x: 6162.739
@@ -1970,7 +2040,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 214
+  - id: 222
     mover_id: 591
     position:
       x: 6152.945
@@ -1979,7 +2049,7 @@ spawns:
     radius: 19.5
     count: 1
     delay: 55000
-  - id: 215
+  - id: 223
     mover_id: 811
     position:
       x: 6586.858
@@ -1988,7 +2058,7 @@ spawns:
     radius: 13.5
     count: 3
     delay: 60000
-  - id: 216
+  - id: 224
     mover_id: 812
     position:
       x: 6594.013
@@ -1997,7 +2067,7 @@ spawns:
     radius: 10
     count: 5
     delay: 240000
-  - id: 217
+  - id: 225
     mover_id: 813
     position:
       x: 6498.059
@@ -2006,7 +2076,7 @@ spawns:
     radius: 9.5
     count: 3
     delay: 180000
-  - id: 218
+  - id: 226
     mover_id: 814
     position:
       x: 6635.658
@@ -2015,7 +2085,7 @@ spawns:
     radius: 9
     count: 3
     delay: 180000
-  - id: 219
+  - id: 227
     mover_id: 24
     position:
       x: 7127.917
@@ -2024,7 +2094,7 @@ spawns:
     radius: 37
     count: 8
     delay: 55000
-  - id: 220
+  - id: 228
     mover_id: 25
     position:
       x: 7157.091
@@ -2033,7 +2103,7 @@ spawns:
     radius: 27.5
     count: 8
     delay: 55000
-  - id: 221
+  - id: 229
     mover_id: 27
     position:
       x: 6669.108
@@ -2042,7 +2112,7 @@ spawns:
     radius: 77.5
     count: 1
     delay: 2100000
-  - id: 222
+  - id: 230
     mover_id: 28
     position:
       x: 7011.686
@@ -2051,7 +2121,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 223
+  - id: 231
     mover_id: 28
     position:
       x: 7054.413
@@ -2060,7 +2130,7 @@ spawns:
     radius: 34.5
     count: 8
     delay: 55000
-  - id: 224
+  - id: 232
     mover_id: 28
     position:
       x: 7118.409
@@ -2069,7 +2139,7 @@ spawns:
     radius: 22
     count: 8
     delay: 55000
-  - id: 225
+  - id: 233
     mover_id: 28
     position:
       x: 6973.182
@@ -2078,7 +2148,7 @@ spawns:
     radius: 39.5
     count: 8
     delay: 55000
-  - id: 226
+  - id: 234
     mover_id: 28
     position:
       x: 6799.221
@@ -2087,7 +2157,7 @@ spawns:
     radius: 27.5
     count: 8
     delay: 55000
-  - id: 227
+  - id: 235
     mover_id: 29
     position:
       x: 7021.729
@@ -2096,7 +2166,7 @@ spawns:
     radius: 27.5
     count: 8
     delay: 55000
-  - id: 228
+  - id: 236
     mover_id: 29
     position:
       x: 7067.148
@@ -2105,7 +2175,7 @@ spawns:
     radius: 27.5
     count: 8
     delay: 55000
-  - id: 229
+  - id: 237
     mover_id: 29
     position:
       x: 7135.584
@@ -2114,7 +2184,7 @@ spawns:
     radius: 23.5
     count: 8
     delay: 55000
-  - id: 230
+  - id: 238
     mover_id: 30
     position:
       x: 7033.388
@@ -2123,7 +2193,7 @@ spawns:
     radius: 31
     count: 8
     delay: 55000
-  - id: 231
+  - id: 239
     mover_id: 30
     position:
       x: 7080.49
@@ -2132,7 +2202,7 @@ spawns:
     radius: 22.5
     count: 8
     delay: 55000
-  - id: 232
+  - id: 240
     mover_id: 30
     position:
       x: 7049.119
@@ -2141,7 +2211,7 @@ spawns:
     radius: 26.5
     count: 8
     delay: 55000
-  - id: 233
+  - id: 241
     mover_id: 31
     position:
       x: 7016.956
@@ -2150,7 +2220,7 @@ spawns:
     radius: 57.5
     count: 1
     delay: 2100000
-  - id: 234
+  - id: 242
     mover_id: 32
     position:
       x: 6817.13
@@ -2159,7 +2229,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 235
+  - id: 243
     mover_id: 32
     position:
       x: 6839.499
@@ -2168,7 +2238,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 236
+  - id: 244
     mover_id: 32
     position:
       x: 6883.986
@@ -2177,7 +2247,7 @@ spawns:
     radius: 32.5
     count: 8
     delay: 55000
-  - id: 237
+  - id: 245
     mover_id: 33
     position:
       x: 6856.239
@@ -2186,7 +2256,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 238
+  - id: 246
     mover_id: 33
     position:
       x: 6904.972
@@ -2195,7 +2265,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 239
+  - id: 247
     mover_id: 34
     position:
       x: 6863.883
@@ -2204,7 +2274,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 240
+  - id: 248
     mover_id: 34
     position:
       x: 6822.782
@@ -2213,7 +2283,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 241
+  - id: 249
     mover_id: 35
     position:
       x: 6822.983
@@ -2222,7 +2292,7 @@ spawns:
     radius: 43
     count: 1
     delay: 2100000
-  - id: 242
+  - id: 250
     mover_id: 37
     position:
       x: 7112.396
@@ -2231,7 +2301,7 @@ spawns:
     radius: 35.5
     count: 8
     delay: 55000
-  - id: 243
+  - id: 251
     mover_id: 37
     position:
       x: 7037.569
@@ -2240,7 +2310,7 @@ spawns:
     radius: 59
     count: 8
     delay: 55000
-  - id: 244
+  - id: 252
     mover_id: 38
     position:
       x: 7048.69
@@ -2249,7 +2319,7 @@ spawns:
     radius: 30
     count: 8
     delay: 55000
-  - id: 245
+  - id: 253
     mover_id: 39
     position:
       x: 7053.078
@@ -2258,7 +2328,7 @@ spawns:
     radius: 91.5
     count: 1
     delay: 2100000
-  - id: 246
+  - id: 254
     mover_id: 524
     position:
       x: 6957.528
@@ -2267,7 +2337,7 @@ spawns:
     radius: 42
     count: 2
     delay: 55000
-  - id: 247
+  - id: 255
     mover_id: 524
     position:
       x: 6846.806
@@ -2276,7 +2346,7 @@ spawns:
     radius: 33.5
     count: 2
     delay: 55000
-  - id: 248
+  - id: 256
     mover_id: 811
     position:
       x: 7158.858
@@ -2285,7 +2355,7 @@ spawns:
     radius: 9.5
     count: 3
     delay: 60000
-  - id: 249
+  - id: 257
     mover_id: 811
     position:
       x: 7096.413
@@ -2294,7 +2364,7 @@ spawns:
     radius: 13.5
     count: 3
     delay: 60000
-  - id: 250
+  - id: 258
     mover_id: 811
     position:
       x: 7045.091
@@ -2303,7 +2373,7 @@ spawns:
     radius: 25.5
     count: 3
     delay: 60000
-  - id: 251
+  - id: 259
     mover_id: 811
     position:
       x: 6840.572
@@ -2312,7 +2382,7 @@ spawns:
     radius: 13
     count: 3
     delay: 60000
-  - id: 252
+  - id: 260
     mover_id: 815
     position:
       x: 6685.025
@@ -2321,7 +2391,7 @@ spawns:
     radius: 9
     count: 3
     delay: 180000
-  - id: 253
+  - id: 261
     mover_id: 25
     position:
       x: 7186.045
@@ -2330,7 +2400,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 254
+  - id: 262
     mover_id: 26
     position:
       x: 7205.144
@@ -2339,7 +2409,7 @@ spawns:
     radius: 18
     count: 8
     delay: 55000
-  - id: 255
+  - id: 263
     mover_id: 26
     position:
       x: 7217.335
@@ -2348,7 +2418,7 @@ spawns:
     radius: 18.5
     count: 8
     delay: 55000
-  - id: 256
+  - id: 264
     mover_id: 28
     position:
       x: 7186.967
@@ -2357,7 +2427,7 @@ spawns:
     radius: 34
     count: 8
     delay: 55000
-  - id: 257
+  - id: 265
     mover_id: 32
     position:
       x: 7321
@@ -2366,7 +2436,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 258
+  - id: 266
     mover_id: 32
     position:
       x: 7438
@@ -2375,7 +2445,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 259
+  - id: 267
     mover_id: 36
     position:
       x: 7239.402
@@ -2384,7 +2454,7 @@ spawns:
     radius: 29
     count: 8
     delay: 55000
-  - id: 260
+  - id: 268
     mover_id: 36
     position:
       x: 7264.827
@@ -2393,7 +2463,7 @@ spawns:
     radius: 35
     count: 8
     delay: 55000
-  - id: 261
+  - id: 269
     mover_id: 37
     position:
       x: 7168.232
@@ -2402,7 +2472,7 @@ spawns:
     radius: 32
     count: 8
     delay: 55000
-  - id: 262
+  - id: 270
     mover_id: 40
     position:
       x: 7466.913
@@ -2411,7 +2481,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 263
+  - id: 271
     mover_id: 60
     position:
       x: 7330.685
@@ -2420,7 +2490,7 @@ spawns:
     radius: 37
     count: 8
     delay: 55000
-  - id: 264
+  - id: 272
     mover_id: 60
     position:
       x: 7264.7
@@ -2429,7 +2499,7 @@ spawns:
     radius: 22.5
     count: 8
     delay: 55000
-  - id: 265
+  - id: 273
     mover_id: 88
     position:
       x: 7302.762
@@ -2438,7 +2508,7 @@ spawns:
     radius: 26.5
     count: 8
     delay: 55000
-  - id: 266
+  - id: 274
     mover_id: 88
     position:
       x: 7196.146
@@ -2447,7 +2517,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 267
+  - id: 275
     mover_id: 88
     position:
       x: 7290.929
@@ -2456,7 +2526,7 @@ spawns:
     radius: 25.5
     count: 8
     delay: 55000
-  - id: 268
+  - id: 276
     mover_id: 89
     position:
       x: 7344.235
@@ -2465,7 +2535,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 269
+  - id: 277
     mover_id: 90
     position:
       x: 7378.221
@@ -2474,7 +2544,7 @@ spawns:
     radius: 25.5
     count: 8
     delay: 55000
-  - id: 270
+  - id: 278
     mover_id: 90
     position:
       x: 7381.341
@@ -2483,7 +2553,7 @@ spawns:
     radius: 26
     count: 8
     delay: 55000
-  - id: 271
+  - id: 279
     mover_id: 91
     position:
       x: 7425.569
@@ -2492,7 +2562,7 @@ spawns:
     radius: 83
     count: 1
     delay: 2100000
-  - id: 272
+  - id: 280
     mover_id: 750
     position:
       x: 7274.079
@@ -2501,7 +2571,7 @@ spawns:
     radius: 7
     count: 1
     delay: 120000
-  - id: 273
+  - id: 281
     mover_id: 811
     position:
       x: 7381.859
@@ -2510,7 +2580,7 @@ spawns:
     radius: 10.5
     count: 3
     delay: 60000
-  - id: 274
+  - id: 282
     mover_id: 811
     position:
       x: 7366.63
@@ -2519,7 +2589,7 @@ spawns:
     radius: 15.5
     count: 3
     delay: 60000
-  - id: 275
+  - id: 283
     mover_id: 1021
     position:
       x: 8383.477
@@ -2528,7 +2598,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 276
+  - id: 284
     mover_id: 1021
     position:
       x: 8415.225
@@ -2537,7 +2607,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 277
+  - id: 285
     mover_id: 811
     position:
       x: 8253.741
@@ -2546,7 +2616,7 @@ spawns:
     radius: 27
     count: 5
     delay: 60000
-  - id: 278
+  - id: 286
     mover_id: 812
     position:
       x: 8295.217
@@ -2555,7 +2625,7 @@ spawns:
     radius: 15.5
     count: 2
     delay: 180000
-  - id: 279
+  - id: 287
     mover_id: 1021
     position:
       x: 8276.211
@@ -2564,7 +2634,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 280
+  - id: 288
     mover_id: 1021
     position:
       x: 8281.378
@@ -2573,7 +2643,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 281
+  - id: 289
     mover_id: 1021
     position:
       x: 8462.336
@@ -2582,7 +2652,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 282
+  - id: 290
     mover_id: 1021
     position:
       x: 8465.948
@@ -2591,7 +2661,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 283
+  - id: 291
     mover_id: 1021
     position:
       x: 8343.627
@@ -2600,7 +2670,7 @@ spawns:
     radius: 6.5
     count: 1
     delay: 1000
-  - id: 284
+  - id: 292
     mover_id: 1021
     position:
       x: 8343.81
@@ -2609,7 +2679,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 285
+  - id: 293
     mover_id: 1021
     position:
       x: 8458.827
@@ -2618,7 +2688,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 286
+  - id: 294
     mover_id: 1021
     position:
       x: 8466.975
@@ -2627,7 +2697,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 287
+  - id: 295
     mover_id: 1021
     position:
       x: 8465.035
@@ -2636,7 +2706,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 288
+  - id: 296
     mover_id: 1021
     position:
       x: 8513.12
@@ -2645,7 +2715,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 289
+  - id: 297
     mover_id: 112
     position:
       x: 5336.687
@@ -2654,7 +2724,7 @@ spawns:
     radius: 67
     count: 8
     delay: 55000
-  - id: 290
+  - id: 298
     mover_id: 112
     position:
       x: 5378.816
@@ -2663,7 +2733,7 @@ spawns:
     radius: 58.5
     count: 8
     delay: 55000
-  - id: 291
+  - id: 299
     mover_id: 113
     position:
       x: 5274.015
@@ -2672,7 +2742,7 @@ spawns:
     radius: 56
     count: 8
     delay: 55000
-  - id: 292
+  - id: 300
     mover_id: 114
     position:
       x: 5212.004
@@ -2681,7 +2751,7 @@ spawns:
     radius: 61
     count: 8
     delay: 55000
-  - id: 293
+  - id: 301
     mover_id: 114
     position:
       x: 5166.008
@@ -2690,7 +2760,7 @@ spawns:
     radius: 61
     count: 8
     delay: 55000
-  - id: 294
+  - id: 302
     mover_id: 115
     position:
       x: 5146.648
@@ -2699,7 +2769,7 @@ spawns:
     radius: 106
     count: 1
     delay: 2100000
-  - id: 295
+  - id: 303
     mover_id: 504
     position:
       x: 5594.518
@@ -2708,7 +2778,7 @@ spawns:
     radius: 43.5
     count: 8
     delay: 55000
-  - id: 296
+  - id: 304
     mover_id: 505
     position:
       x: 5470.621
@@ -2717,7 +2787,7 @@ spawns:
     radius: 59.5
     count: 8
     delay: 55000
-  - id: 297
+  - id: 305
     mover_id: 506
     position:
       x: 5497.614
@@ -2726,7 +2796,7 @@ spawns:
     radius: 66.5
     count: 8
     delay: 55000
-  - id: 298
+  - id: 306
     mover_id: 506
     position:
       x: 5616.538
@@ -2735,7 +2805,7 @@ spawns:
     radius: 64
     count: 8
     delay: 55000
-  - id: 299
+  - id: 307
     mover_id: 507
     position:
       x: 5482.482
@@ -2744,7 +2814,7 @@ spawns:
     radius: 82
     count: 1
     delay: 2100000
-  - id: 300
+  - id: 308
     mover_id: 818
     position:
       x: 5350.276
@@ -2753,7 +2823,7 @@ spawns:
     radius: 9
     count: 1
     delay: 480000
-  - id: 301
+  - id: 309
     mover_id: 542
     position:
       x: 6056.605
@@ -2762,7 +2832,7 @@ spawns:
     radius: 66
     count: 10
     delay: 55000
-  - id: 302
+  - id: 310
     mover_id: 38
     position:
       x: 7040.833
@@ -2771,7 +2841,7 @@ spawns:
     radius: 27.5
     count: 8
     delay: 55000
-  - id: 303
+  - id: 311
     mover_id: 811
     position:
       x: 7011.271
@@ -2780,7 +2850,7 @@ spawns:
     radius: 13.5
     count: 3
     delay: 60000
-  - id: 304
+  - id: 312
     mover_id: 40
     position:
       x: 7419.412
@@ -2789,7 +2859,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 305
+  - id: 313
     mover_id: 41
     position:
       x: 7490.211
@@ -2798,7 +2868,7 @@ spawns:
     radius: 40
     count: 8
     delay: 55000
-  - id: 306
+  - id: 314
     mover_id: 42
     position:
       x: 7381.871
@@ -2807,7 +2877,7 @@ spawns:
     radius: 30.5
     count: 8
     delay: 55000
-  - id: 307
+  - id: 315
     mover_id: 42
     position:
       x: 7432.239
@@ -2816,7 +2886,7 @@ spawns:
     radius: 57
     count: 8
     delay: 55000
-  - id: 308
+  - id: 316
     mover_id: 43
     position:
       x: 7425.562
@@ -2825,7 +2895,7 @@ spawns:
     radius: 78.5
     count: 1
     delay: 2100000
-  - id: 309
+  - id: 317
     mover_id: 44
     position:
       x: 7550.973
@@ -2834,7 +2904,7 @@ spawns:
     radius: 33.5
     count: 8
     delay: 55000
-  - id: 310
+  - id: 318
     mover_id: 44
     position:
       x: 7588.668
@@ -2843,7 +2913,7 @@ spawns:
     radius: 30
     count: 8
     delay: 55000
-  - id: 311
+  - id: 319
     mover_id: 45
     position:
       x: 7602.508
@@ -2852,7 +2922,7 @@ spawns:
     radius: 42.5
     count: 8
     delay: 55000
-  - id: 312
+  - id: 320
     mover_id: 45
     position:
       x: 7620.84
@@ -2861,7 +2931,7 @@ spawns:
     radius: 39.5
     count: 10
     delay: 55000
-  - id: 313
+  - id: 321
     mover_id: 61
     position:
       x: 7224.404
@@ -2870,7 +2940,7 @@ spawns:
     radius: 32.5
     count: 8
     delay: 55000
-  - id: 314
+  - id: 322
     mover_id: 62
     position:
       x: 7188.811
@@ -2879,7 +2949,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 315
+  - id: 323
     mover_id: 62
     position:
       x: 7250.135
@@ -2888,7 +2958,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 316
+  - id: 324
     mover_id: 63
     position:
       x: 7210.653
@@ -2897,7 +2967,7 @@ spawns:
     radius: 53.5
     count: 1
     delay: 2100000
-  - id: 317
+  - id: 325
     mover_id: 800
     position:
       x: 7504.776
@@ -2906,7 +2976,7 @@ spawns:
     radius: 15
     count: 6
     delay: 60000
-  - id: 318
+  - id: 326
     mover_id: 811
     position:
       x: 7254.604
@@ -2915,7 +2985,7 @@ spawns:
     radius: 9
     count: 3
     delay: 60000
-  - id: 319
+  - id: 327
     mover_id: 811
     position:
       x: 7473.663
@@ -2924,7 +2994,7 @@ spawns:
     radius: 12
     count: 3
     delay: 60000
-  - id: 320
+  - id: 328
     mover_id: 811
     position:
       x: 7367.928
@@ -2933,7 +3003,7 @@ spawns:
     radius: 14
     count: 3
     delay: 60000
-  - id: 321
+  - id: 329
     mover_id: 811
     position:
       x: 7613.144
@@ -2942,7 +3012,7 @@ spawns:
     radius: 12.5
     count: 3
     delay: 60000
-  - id: 322
+  - id: 330
     mover_id: 817
     position:
       x: 7514.72
@@ -2951,7 +3021,7 @@ spawns:
     radius: 5.5
     count: 3
     delay: 240000
-  - id: 323
+  - id: 331
     mover_id: 44
     position:
       x: 7868.307
@@ -2960,7 +3030,7 @@ spawns:
     radius: 23.5
     count: 8
     delay: 55000
-  - id: 324
+  - id: 332
     mover_id: 46
     position:
       x: 7716.362
@@ -2969,7 +3039,7 @@ spawns:
     radius: 42.5
     count: 8
     delay: 55000
-  - id: 325
+  - id: 333
     mover_id: 46
     position:
       x: 7743.213
@@ -2978,7 +3048,7 @@ spawns:
     radius: 34.5
     count: 8
     delay: 55000
-  - id: 326
+  - id: 334
     mover_id: 800
     position:
       x: 7793.469
@@ -2987,7 +3057,7 @@ spawns:
     radius: 12.5
     count: 12
     delay: 120000
-  - id: 327
+  - id: 335
     mover_id: 817
     position:
       x: 7801.089
@@ -2996,7 +3066,7 @@ spawns:
     radius: 12.5
     count: 3
     delay: 180000
-  - id: 328
+  - id: 336
     mover_id: 47
     position:
       x: 7704.153
@@ -3005,7 +3075,7 @@ spawns:
     radius: 53
     count: 1
     delay: 2100000
-  - id: 329
+  - id: 337
     mover_id: 1021
     position:
       x: 5878.264
@@ -3014,7 +3084,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 330
+  - id: 338
     mover_id: 1021
     position:
       x: 5888.896
@@ -3023,7 +3093,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 331
+  - id: 339
     mover_id: 1021
     position:
       x: 5860.062
@@ -3032,7 +3102,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 332
+  - id: 340
     mover_id: 1021
     position:
       x: 5845.957
@@ -3041,7 +3111,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 333
+  - id: 341
     mover_id: 1021
     position:
       x: 5950.797
@@ -3050,7 +3120,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 334
+  - id: 342
     mover_id: 1052
     position:
       x: 6060.854
@@ -3059,7 +3129,7 @@ spawns:
     radius: 64
     count: 40
     delay: 35000
-  - id: 335
+  - id: 343
     mover_id: 1051
     position:
       x: 5997.676
@@ -3068,7 +3138,7 @@ spawns:
     radius: 80.5
     count: 50
     delay: 1000
-  - id: 336
+  - id: 344
     mover_id: 1051
     position:
       x: 5919.976
@@ -3077,7 +3147,7 @@ spawns:
     radius: 64
     count: 30
     delay: 35000
-  - id: 337
+  - id: 345
     mover_id: 1051
     position:
       x: 5790.804
@@ -3086,7 +3156,7 @@ spawns:
     radius: 63.5
     count: 30
     delay: 35000
-  - id: 338
+  - id: 346
     mover_id: 1050
     position:
       x: 5855.52
@@ -3095,7 +3165,7 @@ spawns:
     radius: 78.5
     count: 40
     delay: 35000
-  - id: 339
+  - id: 347
     mover_id: 1050
     position:
       x: 5709.04
@@ -3104,7 +3174,7 @@ spawns:
     radius: 94
     count: 40
     delay: 35000
-  - id: 340
+  - id: 348
     mover_id: 1053
     position:
       x: 6030.787
@@ -3113,7 +3183,7 @@ spawns:
     radius: 95
     count: 1
     delay: 1800000
-  - id: 341
+  - id: 349
     mover_id: 1054
     position:
       x: 6637.396
@@ -3122,7 +3192,7 @@ spawns:
     radius: 95.5
     count: 20
     delay: 35000
-  - id: 342
+  - id: 350
     mover_id: 1055
     position:
       x: 6638.161
@@ -3131,7 +3201,7 @@ spawns:
     radius: 95
     count: 20
     delay: 35000
-  - id: 343
+  - id: 351
     mover_id: 1055
     position:
       x: 6497.905
@@ -3140,7 +3210,7 @@ spawns:
     radius: 58
     count: 30
     delay: 35000
-  - id: 344
+  - id: 352
     mover_id: 1056
     position:
       x: 6368.813
@@ -3149,7 +3219,7 @@ spawns:
     radius: 72
     count: 30
     delay: 35000
-  - id: 345
+  - id: 353
     mover_id: 1057
     position:
       x: 6448.639
@@ -3158,7 +3228,7 @@ spawns:
     radius: 114
     count: 1
     delay: 1800000
-  - id: 346
+  - id: 354
     mover_id: 1046
     position:
       x: 6226.29
@@ -3167,7 +3237,7 @@ spawns:
     radius: 88
     count: 30
     delay: 35000
-  - id: 347
+  - id: 355
     mover_id: 1047
     position:
       x: 6226.765
@@ -3176,7 +3246,7 @@ spawns:
     radius: 103.5
     count: 30
     delay: 35000
-  - id: 348
+  - id: 356
     mover_id: 1048
     position:
       x: 6160.068
@@ -3185,7 +3255,7 @@ spawns:
     radius: 111
     count: 20
     delay: 35000
-  - id: 349
+  - id: 357
     mover_id: 1049
     position:
       x: 6207.187
@@ -3194,7 +3264,7 @@ spawns:
     radius: 88
     count: 1
     delay: 1800000
-  - id: 350
+  - id: 358
     mover_id: 1042
     position:
       x: 6479.56
@@ -3203,7 +3273,7 @@ spawns:
     radius: 65
     count: 30
     delay: 35000
-  - id: 351
+  - id: 359
     mover_id: 1043
     position:
       x: 6559.712
@@ -3212,7 +3282,7 @@ spawns:
     radius: 78.5
     count: 30
     delay: 35000
-  - id: 352
+  - id: 360
     mover_id: 1044
     position:
       x: 6655.972
@@ -3221,7 +3291,7 @@ spawns:
     radius: 80.5
     count: 20
     delay: 35000
-  - id: 353
+  - id: 361
     mover_id: 1045
     position:
       x: 6583.469
@@ -3230,7 +3300,7 @@ spawns:
     radius: 113
     count: 1
     delay: 1800000
-  - id: 354
+  - id: 362
     mover_id: 1054
     position:
       x: 6976.161
@@ -3239,7 +3309,7 @@ spawns:
     radius: 71
     count: 40
     delay: 1000
-  - id: 355
+  - id: 363
     mover_id: 1054
     position:
       x: 6801.177
@@ -3248,7 +3318,7 @@ spawns:
     radius: 96.5
     count: 40
     delay: 35000
-  - id: 356
+  - id: 364
     mover_id: 1060
     position:
       x: 7328.269
@@ -3257,7 +3327,7 @@ spawns:
     radius: 64.5
     count: 30
     delay: 35000
-  - id: 357
+  - id: 365
     mover_id: 1060
     position:
       x: 7327.95
@@ -3266,7 +3336,7 @@ spawns:
     radius: 95.5
     count: 40
     delay: 35000
-  - id: 358
+  - id: 366
     mover_id: 1061
     position:
       x: 7328.21
@@ -3275,7 +3345,7 @@ spawns:
     radius: 111.5
     count: 1
     delay: 1800000
-  - id: 359
+  - id: 367
     mover_id: 528
     position:
       x: 8079.118
@@ -3284,7 +3354,7 @@ spawns:
     radius: 71
     count: 10
     delay: 55000
-  - id: 360
+  - id: 368
     mover_id: 529
     position:
       x: 8013.018
@@ -3293,7 +3363,7 @@ spawns:
     radius: 50.5
     count: 10
     delay: 55000
-  - id: 361
+  - id: 369
     mover_id: 811
     position:
       x: 8092.968
@@ -3302,7 +3372,7 @@ spawns:
     radius: 18
     count: 3
     delay: 60000
-  - id: 362
+  - id: 370
     mover_id: 85
     position:
       x: 8689.83
@@ -3311,7 +3381,7 @@ spawns:
     radius: 52
     count: 10
     delay: 55000
-  - id: 363
+  - id: 371
     mover_id: 86
     position:
       x: 8667.513
@@ -3320,7 +3390,7 @@ spawns:
     radius: 43.5
     count: 10
     delay: 55000
-  - id: 364
+  - id: 372
     mover_id: 92
     position:
       x: 8563.144
@@ -3329,7 +3399,7 @@ spawns:
     radius: 63
     count: 10
     delay: 60000
-  - id: 365
+  - id: 373
     mover_id: 92
     position:
       x: 8394.828
@@ -3338,7 +3408,7 @@ spawns:
     radius: 76.5
     count: 10
     delay: 55000
-  - id: 366
+  - id: 374
     mover_id: 554
     position:
       x: 8558.055
@@ -3347,7 +3417,7 @@ spawns:
     radius: 45.5
     count: 5
     delay: 55000
-  - id: 367
+  - id: 375
     mover_id: 554
     position:
       x: 8603.761
@@ -3356,7 +3426,7 @@ spawns:
     radius: 37
     count: 5
     delay: 55000
-  - id: 368
+  - id: 376
     mover_id: 581
     position:
       x: 8701.748
@@ -3365,7 +3435,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 369
+  - id: 377
     mover_id: 583
     position:
       x: 8701.777
@@ -3374,7 +3444,7 @@ spawns:
     radius: 20.5
     count: 1
     delay: 55000
-  - id: 370
+  - id: 378
     mover_id: 811
     position:
       x: 8671.644
@@ -3383,7 +3453,7 @@ spawns:
     radius: 12.5
     count: 3
     delay: 60000
-  - id: 371
+  - id: 379
     mover_id: 811
     position:
       x: 8574.877
@@ -3392,7 +3462,7 @@ spawns:
     radius: 17.5
     count: 3
     delay: 60000
-  - id: 372
+  - id: 380
     mover_id: 842
     position:
       x: 8255.101
@@ -3401,7 +3471,7 @@ spawns:
     radius: 8
     count: 1
     delay: 60000
-  - id: 373
+  - id: 381
     mover_id: 651
     position:
       x: 3016.812
@@ -3410,7 +3480,7 @@ spawns:
     radius: 58.5
     count: 12
     delay: 55000
-  - id: 374
+  - id: 382
     mover_id: 651
     position:
       x: 2984.665
@@ -3419,7 +3489,7 @@ spawns:
     radius: 66
     count: 10
     delay: 55000
-  - id: 375
+  - id: 383
     mover_id: 652
     position:
       x: 2881.031
@@ -3428,7 +3498,7 @@ spawns:
     radius: 96.5
     count: 15
     delay: 55000
-  - id: 376
+  - id: 384
     mover_id: 653
     position:
       x: 2928.981
@@ -3437,7 +3507,7 @@ spawns:
     radius: 88
     count: 1
     delay: 2100000
-  - id: 377
+  - id: 385
     mover_id: 610
     position:
       x: 3114.328
@@ -3446,7 +3516,7 @@ spawns:
     radius: 26.5
     count: 5
     delay: 55000
-  - id: 378
+  - id: 386
     mover_id: 610
     position:
       x: 3184.78
@@ -3455,7 +3525,7 @@ spawns:
     radius: 46
     count: 6
     delay: 55000
-  - id: 379
+  - id: 387
     mover_id: 610
     position:
       x: 3343.735
@@ -3464,7 +3534,7 @@ spawns:
     radius: 60
     count: 4
     delay: 55000
-  - id: 380
+  - id: 388
     mover_id: 611
     position:
       x: 3166.707
@@ -3473,7 +3543,7 @@ spawns:
     radius: 31
     count: 5
     delay: 55000
-  - id: 381
+  - id: 389
     mover_id: 611
     position:
       x: 3165.184
@@ -3482,7 +3552,7 @@ spawns:
     radius: 42.5
     count: 5
     delay: 55000
-  - id: 382
+  - id: 390
     mover_id: 612
     position:
       x: 3155.098
@@ -3491,7 +3561,7 @@ spawns:
     radius: 35
     count: 5
     delay: 55000
-  - id: 383
+  - id: 391
     mover_id: 612
     position:
       x: 3156.073
@@ -3500,7 +3570,7 @@ spawns:
     radius: 58.5
     count: 5
     delay: 55000
-  - id: 384
+  - id: 392
     mover_id: 613
     position:
       x: 3167.28
@@ -3509,7 +3579,7 @@ spawns:
     radius: 180.5
     count: 1
     delay: 2100000
-  - id: 385
+  - id: 393
     mover_id: 663
     position:
       x: 3246.042
@@ -3518,7 +3588,7 @@ spawns:
     radius: 10.5
     count: 1
     delay: 60000
-  - id: 386
+  - id: 394
     mover_id: 608
     position:
       x: 3065.382
@@ -3527,7 +3597,7 @@ spawns:
     radius: 86
     count: 5
     delay: 55000
-  - id: 387
+  - id: 395
     mover_id: 608
     position:
       x: 3001.95
@@ -3536,7 +3606,7 @@ spawns:
     radius: 91.5
     count: 6
     delay: 55000
-  - id: 388
+  - id: 396
     mover_id: 650
     position:
       x: 2968.711
@@ -3545,7 +3615,7 @@ spawns:
     radius: 100
     count: 12
     delay: 55000
-  - id: 389
+  - id: 397
     mover_id: 650
     position:
       x: 2892.393
@@ -3554,7 +3624,7 @@ spawns:
     radius: 78
     count: 10
     delay: 55000
-  - id: 390
+  - id: 398
     mover_id: 689
     position:
       x: 2959.816
@@ -3563,7 +3633,7 @@ spawns:
     radius: 5.5
     count: 1
     delay: 60000
-  - id: 391
+  - id: 399
     mover_id: 614
     position:
       x: 3409.341
@@ -3572,7 +3642,7 @@ spawns:
     radius: 58
     count: 4
     delay: 55000
-  - id: 392
+  - id: 400
     mover_id: 614
     position:
       x: 3550.784
@@ -3581,7 +3651,7 @@ spawns:
     radius: 44
     count: 4
     delay: 55000
-  - id: 393
+  - id: 401
     mover_id: 616
     position:
       x: 3531.256
@@ -3590,7 +3660,7 @@ spawns:
     radius: 51.5
     count: 4
     delay: 55000
-  - id: 394
+  - id: 402
     mover_id: 616
     position:
       x: 3477.904
@@ -3599,7 +3669,7 @@ spawns:
     radius: 55
     count: 4
     delay: 55000
-  - id: 395
+  - id: 403
     mover_id: 642
     position:
       x: 3405.301
@@ -3608,7 +3678,7 @@ spawns:
     radius: 60.5
     count: 8
     delay: 55000
-  - id: 396
+  - id: 404
     mover_id: 642
     position:
       x: 3284.349
@@ -3617,7 +3687,7 @@ spawns:
     radius: 91.5
     count: 4
     delay: 55000
-  - id: 397
+  - id: 405
     mover_id: 643
     position:
       x: 3342.642
@@ -3626,7 +3696,7 @@ spawns:
     radius: 59.5
     count: 6
     delay: 55000
-  - id: 398
+  - id: 406
     mover_id: 643
     position:
       x: 3266.301
@@ -3635,7 +3705,7 @@ spawns:
     radius: 56.5
     count: 7
     delay: 55000
-  - id: 399
+  - id: 407
     mover_id: 644
     position:
       x: 3317.792
@@ -3644,7 +3714,7 @@ spawns:
     radius: 57.5
     count: 7
     delay: 55000
-  - id: 400
+  - id: 408
     mover_id: 644
     position:
       x: 3430.498
@@ -3653,7 +3723,7 @@ spawns:
     radius: 66
     count: 5
     delay: 55000
-  - id: 401
+  - id: 409
     mover_id: 645
     position:
       x: 3309.338
@@ -3662,7 +3732,7 @@ spawns:
     radius: 118
     count: 1
     delay: 2100000
-  - id: 402
+  - id: 410
     mover_id: 615
     position:
       x: 3589.522
@@ -3671,7 +3741,7 @@ spawns:
     radius: 28.5
     count: 4
     delay: 55000
-  - id: 403
+  - id: 411
     mover_id: 615
     position:
       x: 3607.135
@@ -3680,7 +3750,7 @@ spawns:
     radius: 77
     count: 5
     delay: 55000
-  - id: 404
+  - id: 412
     mover_id: 616
     position:
       x: 3596.323
@@ -3689,7 +3759,7 @@ spawns:
     radius: 34
     count: 4
     delay: 55000
-  - id: 405
+  - id: 413
     mover_id: 617
     position:
       x: 3606.286
@@ -3698,7 +3768,7 @@ spawns:
     radius: 146.5
     count: 1
     delay: 2100000
-  - id: 406
+  - id: 414
     mover_id: 622
     position:
       x: 3890.939
@@ -3707,7 +3777,7 @@ spawns:
     radius: 67
     count: 5
     delay: 55000
-  - id: 407
+  - id: 415
     mover_id: 647
     position:
       x: 4066.5
@@ -3716,7 +3786,7 @@ spawns:
     radius: 62.5
     count: 10
     delay: 55000
-  - id: 408
+  - id: 416
     mover_id: 520
     position:
       x: 4069.979
@@ -3725,7 +3795,7 @@ spawns:
     radius: 43
     count: 10
     delay: 45000
-  - id: 409
+  - id: 417
     mover_id: 522
     position:
       x: 4076.332
@@ -3734,7 +3804,7 @@ spawns:
     radius: 64.5
     count: 5
     delay: 35000
-  - id: 410
+  - id: 418
     mover_id: 521
     position:
       x: 4072.554
@@ -3743,7 +3813,7 @@ spawns:
     radius: 53.5
     count: 10
     delay: 45000
-  - id: 411
+  - id: 419
     mover_id: 634
     position:
       x: 3919.858
@@ -3752,7 +3822,7 @@ spawns:
     radius: 91
     count: 20
     delay: 45000
-  - id: 412
+  - id: 420
     mover_id: 635
     position:
       x: 3928.368
@@ -3761,7 +3831,7 @@ spawns:
     radius: 81
     count: 20
     delay: 45000
-  - id: 413
+  - id: 421
     mover_id: 636
     position:
       x: 3939.754
@@ -3770,7 +3840,7 @@ spawns:
     radius: 70.5
     count: 10
     delay: 35000
-  - id: 414
+  - id: 422
     mover_id: 637
     position:
       x: 3948.332
@@ -3779,7 +3849,7 @@ spawns:
     radius: 59.5
     count: 10
     delay: 35000
-  - id: 415
+  - id: 423
     mover_id: 838
     position:
       x: 3967.607
@@ -3788,7 +3858,7 @@ spawns:
     radius: 42
     count: 1
     delay: 2100000
-  - id: 416
+  - id: 424
     mover_id: 523
     position:
       x: 4084.787
@@ -3797,7 +3867,7 @@ spawns:
     radius: 58.5
     count: 5
     delay: 35000
-  - id: 417
+  - id: 425
     mover_id: 523
     position:
       x: 4063.966
@@ -3806,7 +3876,7 @@ spawns:
     radius: 14.5
     count: 2
     delay: 35000
-  - id: 418
+  - id: 426
     mover_id: 828
     position:
       x: 3940.882
@@ -3815,7 +3885,7 @@ spawns:
     radius: 73
     count: 20
     delay: 45000
-  - id: 419
+  - id: 427
     mover_id: 829
     position:
       x: 3948.326
@@ -3824,7 +3894,7 @@ spawns:
     radius: 53.5
     count: 20
     delay: 45000
-  - id: 420
+  - id: 428
     mover_id: 830
     position:
       x: 3957.219
@@ -3833,7 +3903,7 @@ spawns:
     radius: 53.5
     count: 10
     delay: 35000
-  - id: 421
+  - id: 429
     mover_id: 831
     position:
       x: 3965.588
@@ -3842,7 +3912,7 @@ spawns:
     radius: 52
     count: 10
     delay: 35000
-  - id: 422
+  - id: 430
     mover_id: 832
     position:
       x: 3975.861
@@ -3851,7 +3921,7 @@ spawns:
     radius: 31.5
     count: 1
     delay: 2100000
-  - id: 423
+  - id: 431
     mover_id: 522
     position:
       x: 4063.394
@@ -3860,7 +3930,7 @@ spawns:
     radius: 18
     count: 2
     delay: 35000
-  - id: 424
+  - id: 432
     mover_id: 521
     position:
       x: 4062.651
@@ -3869,7 +3939,7 @@ spawns:
     radius: 24
     count: 3
     delay: 45000
-  - id: 425
+  - id: 433
     mover_id: 520
     position:
       x: 4062.661
@@ -3878,7 +3948,7 @@ spawns:
     radius: 24.5
     count: 3
     delay: 45000
-  - id: 426
+  - id: 434
     mover_id: 624
     position:
       x: 4151.032
@@ -3887,7 +3957,7 @@ spawns:
     radius: 69.5
     count: 10
     delay: 55000
-  - id: 427
+  - id: 435
     mover_id: 623
     position:
       x: 4107.656
@@ -3896,7 +3966,7 @@ spawns:
     radius: 72.5
     count: 8
     delay: 55000
-  - id: 428
+  - id: 436
     mover_id: 648
     position:
       x: 4120.186
@@ -3905,7 +3975,7 @@ spawns:
     radius: 90
     count: 10
     delay: 55000
-  - id: 429
+  - id: 437
     mover_id: 833
     position:
       x: 4145.445
@@ -3914,7 +3984,7 @@ spawns:
     radius: 83
     count: 20
     delay: 45000
-  - id: 430
+  - id: 438
     mover_id: 834
     position:
       x: 4141.126
@@ -3923,7 +3993,7 @@ spawns:
     radius: 72.5
     count: 20
     delay: 45000
-  - id: 431
+  - id: 439
     mover_id: 835
     position:
       x: 4135.657
@@ -3932,7 +4002,7 @@ spawns:
     radius: 64.5
     count: 10
     delay: 35000
-  - id: 432
+  - id: 440
     mover_id: 836
     position:
       x: 4145.571
@@ -3941,7 +4011,7 @@ spawns:
     radius: 52.5
     count: 10
     delay: 35000
-  - id: 433
+  - id: 441
     mover_id: 837
     position:
       x: 4139.333
@@ -3950,7 +4020,7 @@ spawns:
     radius: 33
     count: 1
     delay: 2100000
-  - id: 434
+  - id: 442
     mover_id: 839
     position:
       x: 4134.689
@@ -3959,7 +4029,7 @@ spawns:
     radius: 38
     count: 1
     delay: 2100000
-  - id: 435
+  - id: 443
     mover_id: 523
     position:
       x: 4135.896
@@ -3968,7 +4038,7 @@ spawns:
     radius: 30
     count: 3
     delay: 35000
-  - id: 436
+  - id: 444
     mover_id: 522
     position:
       x: 4135.803
@@ -3977,7 +4047,7 @@ spawns:
     radius: 28.5
     count: 3
     delay: 35000
-  - id: 437
+  - id: 445
     mover_id: 521
     position:
       x: 4097.091
@@ -3986,7 +4056,7 @@ spawns:
     radius: 58.5
     count: 5
     delay: 45000
-  - id: 438
+  - id: 446
     mover_id: 521
     position:
       x: 4136.073
@@ -3995,7 +4065,7 @@ spawns:
     radius: 38
     count: 7
     delay: 45000
-  - id: 439
+  - id: 447
     mover_id: 520
     position:
       x: 4097.219
@@ -4004,7 +4074,7 @@ spawns:
     radius: 60
     count: 5
     delay: 45000
-  - id: 440
+  - id: 448
     mover_id: 520
     position:
       x: 4135.962
@@ -4013,7 +4083,7 @@ spawns:
     radius: 37.5
     count: 7
     delay: 45000
-  - id: 441
+  - id: 449
     mover_id: 596
     position:
       x: 2857.284
@@ -4022,7 +4092,7 @@ spawns:
     radius: 86
     count: 10
     delay: 55000
-  - id: 442
+  - id: 450
     mover_id: 606
     position:
       x: 2948.891
@@ -4031,7 +4101,7 @@ spawns:
     radius: 83
     count: 7
     delay: 55000
-  - id: 443
+  - id: 451
     mover_id: 607
     position:
       x: 2939.561
@@ -4040,7 +4110,7 @@ spawns:
     radius: 58
     count: 5
     delay: 55000
-  - id: 444
+  - id: 452
     mover_id: 607
     position:
       x: 3021.881
@@ -4049,7 +4119,7 @@ spawns:
     radius: 55
     count: 4
     delay: 55000
-  - id: 445
+  - id: 453
     mover_id: 609
     position:
       x: 3018.161
@@ -4058,7 +4128,7 @@ spawns:
     radius: 99.5
     count: 1
     delay: 2100000
-  - id: 446
+  - id: 454
     mover_id: 602
     position:
       x: 3501.287
@@ -4067,7 +4137,7 @@ spawns:
     radius: 89.5
     count: 10
     delay: 55000
-  - id: 447
+  - id: 455
     mover_id: 603
     position:
       x: 3486.97
@@ -4076,7 +4146,7 @@ spawns:
     radius: 77.5
     count: 12
     delay: 55000
-  - id: 448
+  - id: 456
     mover_id: 604
     position:
       x: 3551.004
@@ -4085,7 +4155,7 @@ spawns:
     radius: 78
     count: 20
     delay: 55000
-  - id: 449
+  - id: 457
     mover_id: 605
     position:
       x: 3552.095
@@ -4094,7 +4164,7 @@ spawns:
     radius: 124
     count: 1
     delay: 2100000
-  - id: 450
+  - id: 458
     mover_id: 606
     position:
       x: 3215.183
@@ -4103,7 +4173,7 @@ spawns:
     radius: 76
     count: 7
     delay: 55000
-  - id: 451
+  - id: 459
     mover_id: 1021
     position:
       x: 3206.585
@@ -4112,7 +4182,7 @@ spawns:
     radius: 5.5
     count: 1
     delay: 1000
-  - id: 452
+  - id: 460
     mover_id: 1021
     position:
       x: 3234.032
@@ -4121,7 +4191,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 453
+  - id: 461
     mover_id: 646
     position:
       x: 3950.685
@@ -4130,7 +4200,7 @@ spawns:
     radius: 67.5
     count: 2
     delay: 200000
-  - id: 454
+  - id: 462
     mover_id: 618
     position:
       x: 3833.598
@@ -4139,7 +4209,7 @@ spawns:
     radius: 165
     count: 10
     delay: 100000
-  - id: 455
+  - id: 463
     mover_id: 621
     position:
       x: 3870.978
@@ -4148,7 +4218,7 @@ spawns:
     radius: 115.5
     count: 1
     delay: 3600000
-  - id: 456
+  - id: 464
     mover_id: 620
     position:
       x: 4082.691
@@ -4157,7 +4227,7 @@ spawns:
     radius: 87.5
     count: 10
     delay: 100000
-  - id: 457
+  - id: 465
     mover_id: 619
     position:
       x: 3986.086
@@ -4166,7 +4236,7 @@ spawns:
     radius: 74.5
     count: 5
     delay: 100000
-  - id: 458
+  - id: 466
     mover_id: 602
     position:
       x: 3675.742
@@ -4175,7 +4245,7 @@ spawns:
     radius: 78
     count: 15
     delay: 100000
-  - id: 459
+  - id: 467
     mover_id: 603
     position:
       x: 3615.205
@@ -4184,7 +4254,7 @@ spawns:
     radius: 68
     count: 12
     delay: 55000
-  - id: 460
+  - id: 468
     mover_id: 625
     position:
       x: 4315.513
@@ -4193,7 +4263,7 @@ spawns:
     radius: 78
     count: 1
     delay: 2100000
-  - id: 461
+  - id: 469
     mover_id: 623
     position:
       x: 4210.638
@@ -4202,7 +4272,7 @@ spawns:
     radius: 78
     count: 10
     delay: 55000
-  - id: 462
+  - id: 470
     mover_id: 649
     position:
       x: 4302.749
@@ -4211,7 +4281,7 @@ spawns:
     radius: 61
     count: 1
     delay: 2100000
-  - id: 463
+  - id: 471
     mover_id: 594
     position:
       x: 2756.586
@@ -4220,7 +4290,7 @@ spawns:
     radius: 83
     count: 15
     delay: 55000
-  - id: 464
+  - id: 472
     mover_id: 594
     position:
       x: 2978.019
@@ -4229,7 +4299,7 @@ spawns:
     radius: 129
     count: 15
     delay: 55000
-  - id: 465
+  - id: 473
     mover_id: 595
     position:
       x: 2692.883
@@ -4238,7 +4308,7 @@ spawns:
     radius: 109.5
     count: 15
     delay: 55000
-  - id: 466
+  - id: 474
     mover_id: 595
     position:
       x: 3023.731
@@ -4247,7 +4317,7 @@ spawns:
     radius: 126.5
     count: 12
     delay: 55000
-  - id: 467
+  - id: 475
     mover_id: 596
     position:
       x: 2702.896
@@ -4256,7 +4326,7 @@ spawns:
     radius: 106
     count: 10
     delay: 55000
-  - id: 468
+  - id: 476
     mover_id: 596
     position:
       x: 2945.019
@@ -4265,7 +4335,7 @@ spawns:
     radius: 106.5
     count: 10
     delay: 55000
-  - id: 469
+  - id: 477
     mover_id: 596
     position:
       x: 2841.267
@@ -4274,7 +4344,7 @@ spawns:
     radius: 76.5
     count: 15
     delay: 55000
-  - id: 470
+  - id: 478
     mover_id: 597
     position:
       x: 2865.447
@@ -4283,7 +4353,7 @@ spawns:
     radius: 156
     count: 1
     delay: 2100000
-  - id: 471
+  - id: 479
     mover_id: 628
     position:
       x: 3471.684
@@ -4292,7 +4362,7 @@ spawns:
     radius: 56
     count: 12
     delay: 55000
-  - id: 472
+  - id: 480
     mover_id: 626
     position:
       x: 3276.754
@@ -4301,7 +4371,7 @@ spawns:
     radius: 117
     count: 12
     delay: 55000
-  - id: 473
+  - id: 481
     mover_id: 626
     position:
       x: 3176.423
@@ -4310,7 +4380,7 @@ spawns:
     radius: 115
     count: 10
     delay: 55000
-  - id: 474
+  - id: 482
     mover_id: 627
     position:
       x: 3371.276
@@ -4319,7 +4389,7 @@ spawns:
     radius: 65
     count: 15
     delay: 55000
-  - id: 475
+  - id: 483
     mover_id: 627
     position:
       x: 3412.439
@@ -4328,7 +4398,7 @@ spawns:
     radius: 94
     count: 12
     delay: 55000
-  - id: 476
+  - id: 484
     mover_id: 629
     position:
       x: 3425.087
@@ -4337,7 +4407,7 @@ spawns:
     radius: 156.5
     count: 1
     delay: 2100000
-  - id: 477
+  - id: 485
     mover_id: 618
     position:
       x: 3830.518
@@ -4346,7 +4416,7 @@ spawns:
     radius: 59
     count: 5
     delay: 55000
-  - id: 478
+  - id: 486
     mover_id: 619
     position:
       x: 3941.948
@@ -4355,7 +4425,7 @@ spawns:
     radius: 81
     count: 5
     delay: 55000
-  - id: 479
+  - id: 487
     mover_id: 502
     position:
       x: 4391.91
@@ -4364,7 +4434,7 @@ spawns:
     radius: 56.5
     count: 8
     delay: 55000
-  - id: 480
+  - id: 488
     mover_id: 569
     position:
       x: 4603.256
@@ -4373,7 +4443,7 @@ spawns:
     radius: 37
     count: 8
     delay: 55000
-  - id: 481
+  - id: 489
     mover_id: 570
     position:
       x: 4547.708
@@ -4382,7 +4452,7 @@ spawns:
     radius: 42.5
     count: 8
     delay: 55000
-  - id: 482
+  - id: 490
     mover_id: 571
     position:
       x: 4506.93
@@ -4391,7 +4461,7 @@ spawns:
     radius: 152.5
     count: 1
     delay: 2100000
-  - id: 483
+  - id: 491
     mover_id: 690
     position:
       x: 4544.702
@@ -4400,7 +4470,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 60000
-  - id: 484
+  - id: 492
     mover_id: 404
     position:
       x: 5073.765
@@ -4409,7 +4479,7 @@ spawns:
     radius: 45
     count: 8
     delay: 55000
-  - id: 485
+  - id: 493
     mover_id: 406
     position:
       x: 5067.455
@@ -4418,7 +4488,7 @@ spawns:
     radius: 52.5
     count: 8
     delay: 55000
-  - id: 486
+  - id: 494
     mover_id: 407
     position:
       x: 5074.775
@@ -4427,7 +4497,7 @@ spawns:
     radius: 132.5
     count: 1
     delay: 2100000
-  - id: 487
+  - id: 495
     mover_id: 513
     position:
       x: 5001.066
@@ -4436,7 +4506,7 @@ spawns:
     radius: 79
     count: 8
     delay: 55000
-  - id: 488
+  - id: 496
     mover_id: 514
     position:
       x: 4934.218
@@ -4445,7 +4515,7 @@ spawns:
     radius: 53.5
     count: 8
     delay: 55000
-  - id: 489
+  - id: 497
     mover_id: 514
     position:
       x: 5044.395
@@ -4454,7 +4524,7 @@ spawns:
     radius: 49
     count: 8
     delay: 55000
-  - id: 490
+  - id: 498
     mover_id: 515
     position:
       x: 4985.981
@@ -4463,7 +4533,7 @@ spawns:
     radius: 63.5
     count: 1
     delay: 2100000
-  - id: 491
+  - id: 499
     mover_id: 568
     position:
       x: 4682.884
@@ -4472,7 +4542,7 @@ spawns:
     radius: 36
     count: 8
     delay: 55000
-  - id: 492
+  - id: 500
     mover_id: 568
     position:
       x: 4782.763
@@ -4481,7 +4551,7 @@ spawns:
     radius: 44.5
     count: 8
     delay: 55000
-  - id: 493
+  - id: 501
     mover_id: 630
     position:
       x: 2511.145
@@ -4490,7 +4560,7 @@ spawns:
     radius: 28.5
     count: 3
     delay: 55000
-  - id: 494
+  - id: 502
     mover_id: 640
     position:
       x: 2534.998
@@ -4499,7 +4569,7 @@ spawns:
     radius: 43.5
     count: 4
     delay: 55000
-  - id: 495
+  - id: 503
     mover_id: 630
     position:
       x: 2583.156
@@ -4508,7 +4578,7 @@ spawns:
     radius: 27.5
     count: 2
     delay: 55000
-  - id: 496
+  - id: 504
     mover_id: 630
     position:
       x: 2629.251
@@ -4517,7 +4587,7 @@ spawns:
     radius: 28
     count: 3
     delay: 55000
-  - id: 497
+  - id: 505
     mover_id: 630
     position:
       x: 2888.16
@@ -4526,7 +4596,7 @@ spawns:
     radius: 41
     count: 4
     delay: 55000
-  - id: 498
+  - id: 506
     mover_id: 630
     position:
       x: 2804.788
@@ -4535,7 +4605,7 @@ spawns:
     radius: 34.5
     count: 2
     delay: 55000
-  - id: 499
+  - id: 507
     mover_id: 631
     position:
       x: 2984.423
@@ -4544,7 +4614,7 @@ spawns:
     radius: 46.5
     count: 2
     delay: 55000
-  - id: 500
+  - id: 508
     mover_id: 631
     position:
       x: 3063.251
@@ -4553,7 +4623,7 @@ spawns:
     radius: 58.5
     count: 3
     delay: 55000
-  - id: 501
+  - id: 509
     mover_id: 631
     position:
       x: 3071.901
@@ -4562,7 +4632,7 @@ spawns:
     radius: 51.5
     count: 8
     delay: 55000
-  - id: 502
+  - id: 510
     mover_id: 639
     position:
       x: 2957.358
@@ -4571,7 +4641,7 @@ spawns:
     radius: 56
     count: 8
     delay: 55000
-  - id: 503
+  - id: 511
     mover_id: 640
     position:
       x: 2573.031
@@ -4580,7 +4650,7 @@ spawns:
     radius: 62.5
     count: 3
     delay: 55000
-  - id: 504
+  - id: 512
     mover_id: 641
     position:
       x: 2576.657
@@ -4589,7 +4659,7 @@ spawns:
     radius: 190
     count: 1
     delay: 2100000
-  - id: 505
+  - id: 513
     mover_id: 640
     position:
       x: 2922.73
@@ -4598,7 +4668,7 @@ spawns:
     radius: 51.5
     count: 8
     delay: 55000
-  - id: 506
+  - id: 514
     mover_id: 639
     position:
       x: 2772.84
@@ -4607,7 +4677,7 @@ spawns:
     radius: 45.5
     count: 8
     delay: 55000
-  - id: 507
+  - id: 515
     mover_id: 575
     position:
       x: 3568.471
@@ -4616,7 +4686,7 @@ spawns:
     radius: 21.5
     count: 1
     delay: 55000
-  - id: 508
+  - id: 516
     mover_id: 598
     position:
       x: 3264.177
@@ -4625,7 +4695,7 @@ spawns:
     radius: 45.5
     count: 4
     delay: 55000
-  - id: 509
+  - id: 517
     mover_id: 598
     position:
       x: 3266.723
@@ -4634,7 +4704,7 @@ spawns:
     radius: 45.5
     count: 4
     delay: 55000
-  - id: 510
+  - id: 518
     mover_id: 599
     position:
       x: 3347.677
@@ -4643,7 +4713,7 @@ spawns:
     radius: 43.5
     count: 5
     delay: 55000
-  - id: 511
+  - id: 519
     mover_id: 599
     position:
       x: 3337.31
@@ -4652,7 +4722,7 @@ spawns:
     radius: 55.5
     count: 4
     delay: 55000
-  - id: 512
+  - id: 520
     mover_id: 600
     position:
       x: 3365.052
@@ -4661,7 +4731,7 @@ spawns:
     radius: 71.5
     count: 8
     delay: 55000
-  - id: 513
+  - id: 521
     mover_id: 601
     position:
       x: 3343.865
@@ -4670,7 +4740,7 @@ spawns:
     radius: 76.5
     count: 1
     delay: 2100000
-  - id: 514
+  - id: 522
     mover_id: 632
     position:
       x: 3178.752
@@ -4679,7 +4749,7 @@ spawns:
     radius: 41
     count: 5
     delay: 55000
-  - id: 515
+  - id: 523
     mover_id: 632
     position:
       x: 3176.75
@@ -4688,7 +4758,7 @@ spawns:
     radius: 45
     count: 4
     delay: 55000
-  - id: 516
+  - id: 524
     mover_id: 633
     position:
       x: 3157.573
@@ -4697,7 +4767,7 @@ spawns:
     radius: 89
     count: 1
     delay: 2100000
-  - id: 517
+  - id: 525
     mover_id: 538
     position:
       x: 4088.921
@@ -4706,7 +4776,7 @@ spawns:
     radius: 40
     count: 8
     delay: 55000
-  - id: 518
+  - id: 526
     mover_id: 572
     position:
       x: 3645.537
@@ -4715,7 +4785,7 @@ spawns:
     radius: 26
     count: 2
     delay: 55000
-  - id: 519
+  - id: 527
     mover_id: 573
     position:
       x: 3641.486
@@ -4724,7 +4794,7 @@ spawns:
     radius: 26
     count: 2
     delay: 55000
-  - id: 520
+  - id: 528
     mover_id: 575
     position:
       x: 3647.12
@@ -4733,7 +4803,7 @@ spawns:
     radius: 27
     count: 1
     delay: 55000
-  - id: 521
+  - id: 529
     mover_id: 1021
     position:
       x: 3884.067
@@ -4742,7 +4812,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 522
+  - id: 530
     mover_id: 687
     position:
       x: 4060.086
@@ -4751,7 +4821,7 @@ spawns:
     radius: 7
     count: 1
     delay: 60000
-  - id: 523
+  - id: 531
     mover_id: 841
     position:
       x: 3895.335
@@ -4760,7 +4830,7 @@ spawns:
     radius: 4
     count: 1
     delay: 60000
-  - id: 524
+  - id: 532
     mover_id: 846
     position:
       x: 3679.093
@@ -4769,7 +4839,7 @@ spawns:
     radius: 5
     count: 1
     delay: 300000
-  - id: 525
+  - id: 533
     mover_id: 1021
     position:
       x: 3718.985
@@ -4778,7 +4848,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 526
+  - id: 534
     mover_id: 1021
     position:
       x: 3719.504
@@ -4787,7 +4857,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 527
+  - id: 535
     mover_id: 1021
     position:
       x: 3895.066
@@ -4796,7 +4866,7 @@ spawns:
     radius: 5.5
     count: 1
     delay: 1000
-  - id: 528
+  - id: 536
     mover_id: 1021
     position:
       x: 3964.297
@@ -4805,7 +4875,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 529
+  - id: 537
     mover_id: 1021
     position:
       x: 3971.303
@@ -4814,7 +4884,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 530
+  - id: 538
     mover_id: 1021
     position:
       x: 3963.906
@@ -4823,7 +4893,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 531
+  - id: 539
     mover_id: 1021
     position:
       x: 3971.568
@@ -4832,7 +4902,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 532
+  - id: 540
     mover_id: 1021
     position:
       x: 3827.679
@@ -4841,7 +4911,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 533
+  - id: 541
     mover_id: 1021
     position:
       x: 3712.783
@@ -4850,7 +4920,7 @@ spawns:
     radius: 2.5
     count: 1
     delay: 1000
-  - id: 534
+  - id: 542
     mover_id: 1021
     position:
       x: 3706.156
@@ -4859,7 +4929,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 535
+  - id: 543
     mover_id: 500
     position:
       x: 4532.847
@@ -4868,7 +4938,7 @@ spawns:
     radius: 49
     count: 8
     delay: 55000
-  - id: 536
+  - id: 544
     mover_id: 500
     position:
       x: 4470.652
@@ -4877,7 +4947,7 @@ spawns:
     radius: 49
     count: 8
     delay: 55000
-  - id: 537
+  - id: 545
     mover_id: 501
     position:
       x: 4398.529
@@ -4886,7 +4956,7 @@ spawns:
     radius: 63.5
     count: 8
     delay: 55000
-  - id: 538
+  - id: 546
     mover_id: 501
     position:
       x: 4397.763
@@ -4895,7 +4965,7 @@ spawns:
     radius: 52
     count: 8
     delay: 55000
-  - id: 539
+  - id: 547
     mover_id: 501
     position:
       x: 4400.331
@@ -4904,7 +4974,7 @@ spawns:
     radius: 65
     count: 8
     delay: 55000
-  - id: 540
+  - id: 548
     mover_id: 502
     position:
       x: 4246.2
@@ -4913,7 +4983,7 @@ spawns:
     radius: 85
     count: 8
     delay: 55000
-  - id: 541
+  - id: 549
     mover_id: 503
     position:
       x: 4426.954
@@ -4922,7 +4992,7 @@ spawns:
     radius: 112
     count: 1
     delay: 2100000
-  - id: 542
+  - id: 550
     mover_id: 536
     position:
       x: 4215.008
@@ -4931,7 +5001,7 @@ spawns:
     radius: 49.5
     count: 8
     delay: 55000
-  - id: 543
+  - id: 551
     mover_id: 536
     position:
       x: 4230.172
@@ -4940,7 +5010,7 @@ spawns:
     radius: 53
     count: 8
     delay: 55000
-  - id: 544
+  - id: 552
     mover_id: 537
     position:
       x: 4186.417
@@ -4949,7 +5019,7 @@ spawns:
     radius: 38
     count: 8
     delay: 55000
-  - id: 545
+  - id: 553
     mover_id: 537
     position:
       x: 4140.458
@@ -4958,7 +5028,7 @@ spawns:
     radius: 50.5
     count: 8
     delay: 55000
-  - id: 546
+  - id: 554
     mover_id: 538
     position:
       x: 4180.674
@@ -4967,7 +5037,7 @@ spawns:
     radius: 62
     count: 8
     delay: 55000
-  - id: 547
+  - id: 555
     mover_id: 539
     position:
       x: 4217.028
@@ -4976,7 +5046,7 @@ spawns:
     radius: 83.5
     count: 1
     delay: 2100000
-  - id: 548
+  - id: 556
     mover_id: 512
     position:
       x: 5051.029
@@ -4985,7 +5055,7 @@ spawns:
     radius: 71.5
     count: 8
     delay: 55000
-  - id: 549
+  - id: 557
     mover_id: 512
     position:
       x: 5009.142
@@ -4994,7 +5064,7 @@ spawns:
     radius: 61
     count: 8
     delay: 55000
-  - id: 550
+  - id: 558
     mover_id: 568
     position:
       x: 4864.431
@@ -5003,7 +5073,7 @@ spawns:
     radius: 52.5
     count: 8
     delay: 55000
-  - id: 551
+  - id: 559
     mover_id: 568
     position:
       x: 4844.183
@@ -5012,7 +5082,7 @@ spawns:
     radius: 43.5
     count: 8
     delay: 55000
-  - id: 552
+  - id: 560
     mover_id: 569
     position:
       x: 4752.701
@@ -5021,7 +5091,7 @@ spawns:
     radius: 43
     count: 8
     delay: 55000
-  - id: 553
+  - id: 561
     mover_id: 569
     position:
       x: 4727.941
@@ -5030,7 +5100,7 @@ spawns:
     radius: 48
     count: 8
     delay: 55000
-  - id: 554
+  - id: 562
     mover_id: 570
     position:
       x: 4750.382
@@ -5039,7 +5109,7 @@ spawns:
     radius: 38.5
     count: 8
     delay: 55000
-  - id: 555
+  - id: 563
     mover_id: 570
     position:
       x: 4690.124
@@ -5048,7 +5118,7 @@ spawns:
     radius: 39.5
     count: 8
     delay: 55000
-  - id: 556
+  - id: 564
     mover_id: 638
     position:
       x: 2922.184
@@ -5057,7 +5127,7 @@ spawns:
     radius: 66.5
     count: 4
     delay: 55000
-  - id: 557
+  - id: 565
     mover_id: 638
     position:
       x: 2976.374
@@ -5066,7 +5136,7 @@ spawns:
     radius: 65.5
     count: 5
     delay: 55000
-  - id: 558
+  - id: 566
     mover_id: 638
     position:
       x: 2805.521
@@ -5075,7 +5145,7 @@ spawns:
     radius: 35
     count: 8
     delay: 55000
-  - id: 559
+  - id: 567
     mover_id: 560
     position:
       x: 3491.12
@@ -5084,7 +5154,7 @@ spawns:
     radius: 23
     count: 2
     delay: 55000
-  - id: 560
+  - id: 568
     mover_id: 560
     position:
       x: 3454.732
@@ -5093,7 +5163,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 561
+  - id: 569
     mover_id: 560
     position:
       x: 3390.054
@@ -5102,7 +5172,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 562
+  - id: 570
     mover_id: 560
     position:
       x: 3393.265
@@ -5111,7 +5181,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 563
+  - id: 571
     mover_id: 560
     position:
       x: 3500.969
@@ -5120,7 +5190,7 @@ spawns:
     radius: 20.5
     count: 2
     delay: 55000
-  - id: 564
+  - id: 572
     mover_id: 561
     position:
       x: 3388.855
@@ -5129,7 +5199,7 @@ spawns:
     radius: 19
     count: 2
     delay: 55000
-  - id: 565
+  - id: 573
     mover_id: 561
     position:
       x: 3489.344
@@ -5138,7 +5208,7 @@ spawns:
     radius: 23.5
     count: 2
     delay: 55000
-  - id: 566
+  - id: 574
     mover_id: 561
     position:
       x: 3453.146
@@ -5147,7 +5217,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 567
+  - id: 575
     mover_id: 561
     position:
       x: 3377.606
@@ -5156,7 +5226,7 @@ spawns:
     radius: 21
     count: 2
     delay: 55000
-  - id: 568
+  - id: 576
     mover_id: 561
     position:
       x: 3493.447
@@ -5165,7 +5235,7 @@ spawns:
     radius: 19
     count: 2
     delay: 55000
-  - id: 569
+  - id: 577
     mover_id: 562
     position:
       x: 3386.14
@@ -5174,7 +5244,7 @@ spawns:
     radius: 19.5
     count: 1
     delay: 55000
-  - id: 570
+  - id: 578
     mover_id: 562
     position:
       x: 3493.991
@@ -5183,7 +5253,7 @@ spawns:
     radius: 24
     count: 1
     delay: 55000
-  - id: 571
+  - id: 579
     mover_id: 562
     position:
       x: 3446.668
@@ -5192,7 +5262,7 @@ spawns:
     radius: 20.5
     count: 1
     delay: 55000
-  - id: 572
+  - id: 580
     mover_id: 562
     position:
       x: 3379.06
@@ -5201,7 +5271,7 @@ spawns:
     radius: 20
     count: 1
     delay: 55000
-  - id: 573
+  - id: 581
     mover_id: 562
     position:
       x: 3492.843
@@ -5210,7 +5280,7 @@ spawns:
     radius: 19.5
     count: 1
     delay: 55000
-  - id: 574
+  - id: 582
     mover_id: 563
     position:
       x: 3417.245
@@ -5219,7 +5289,7 @@ spawns:
     radius: 75
     count: 1
     delay: 2100000
-  - id: 575
+  - id: 583
     mover_id: 564
     position:
       x: 3309.735
@@ -5228,7 +5298,7 @@ spawns:
     radius: 18.5
     count: 2
     delay: 55000
-  - id: 576
+  - id: 584
     mover_id: 564
     position:
       x: 3224.251
@@ -5237,7 +5307,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 577
+  - id: 585
     mover_id: 564
     position:
       x: 3161.273
@@ -5246,7 +5316,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 578
+  - id: 586
     mover_id: 564
     position:
       x: 3283.868
@@ -5255,7 +5325,7 @@ spawns:
     radius: 18
     count: 2
     delay: 55000
-  - id: 579
+  - id: 587
     mover_id: 564
     position:
       x: 3308.727
@@ -5264,7 +5334,7 @@ spawns:
     radius: 17.5
     count: 2
     delay: 55000
-  - id: 580
+  - id: 588
     mover_id: 564
     position:
       x: 3201.736
@@ -5273,7 +5343,7 @@ spawns:
     radius: 21.5
     count: 2
     delay: 55000
-  - id: 581
+  - id: 589
     mover_id: 565
     position:
       x: 3233.915
@@ -5282,7 +5352,7 @@ spawns:
     radius: 20.5
     count: 2
     delay: 55000
-  - id: 582
+  - id: 590
     mover_id: 565
     position:
       x: 3305.88
@@ -5291,7 +5361,7 @@ spawns:
     radius: 18
     count: 2
     delay: 55000
-  - id: 583
+  - id: 591
     mover_id: 565
     position:
       x: 3151.101
@@ -5300,7 +5370,7 @@ spawns:
     radius: 21
     count: 2
     delay: 55000
-  - id: 584
+  - id: 592
     mover_id: 565
     position:
       x: 3292.756
@@ -5309,7 +5379,7 @@ spawns:
     radius: 18
     count: 2
     delay: 55000
-  - id: 585
+  - id: 593
     mover_id: 565
     position:
       x: 3301.64
@@ -5318,7 +5388,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 586
+  - id: 594
     mover_id: 565
     position:
       x: 3192.509
@@ -5327,7 +5397,7 @@ spawns:
     radius: 21
     count: 2
     delay: 55000
-  - id: 587
+  - id: 595
     mover_id: 566
     position:
       x: 3228.672
@@ -5336,7 +5406,7 @@ spawns:
     radius: 20
     count: 1
     delay: 55000
-  - id: 588
+  - id: 596
     mover_id: 566
     position:
       x: 3312.277
@@ -5345,7 +5415,7 @@ spawns:
     radius: 18
     count: 1
     delay: 55000
-  - id: 589
+  - id: 597
     mover_id: 566
     position:
       x: 3162.056
@@ -5354,7 +5424,7 @@ spawns:
     radius: 19.5
     count: 1
     delay: 55000
-  - id: 590
+  - id: 598
     mover_id: 566
     position:
       x: 3292.27
@@ -5363,7 +5433,7 @@ spawns:
     radius: 18
     count: 1
     delay: 55000
-  - id: 591
+  - id: 599
     mover_id: 566
     position:
       x: 3311.793
@@ -5372,7 +5442,7 @@ spawns:
     radius: 17.5
     count: 1
     delay: 55000
-  - id: 592
+  - id: 600
     mover_id: 566
     position:
       x: 3203.651
@@ -5381,7 +5451,7 @@ spawns:
     radius: 19.5
     count: 1
     delay: 55000
-  - id: 593
+  - id: 601
     mover_id: 567
     position:
       x: 3272.971
@@ -5390,7 +5460,7 @@ spawns:
     radius: 75
     count: 1
     delay: 2100000
-  - id: 594
+  - id: 602
     mover_id: 572
     position:
       x: 3563.446
@@ -5399,7 +5469,7 @@ spawns:
     radius: 23
     count: 2
     delay: 55000
-  - id: 595
+  - id: 603
     mover_id: 572
     position:
       x: 3566.166
@@ -5408,7 +5478,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 596
+  - id: 604
     mover_id: 573
     position:
       x: 3569.437
@@ -5417,7 +5487,7 @@ spawns:
     radius: 21.5
     count: 2
     delay: 55000
-  - id: 597
+  - id: 605
     mover_id: 573
     position:
       x: 3566.009
@@ -5426,7 +5496,7 @@ spawns:
     radius: 20.5
     count: 2
     delay: 55000
-  - id: 598
+  - id: 606
     mover_id: 575
     position:
       x: 3560
@@ -5435,7 +5505,7 @@ spawns:
     radius: 20
     count: 1
     delay: 55000
-  - id: 599
+  - id: 607
     mover_id: 572
     position:
       x: 3702.306
@@ -5444,7 +5514,7 @@ spawns:
     radius: 20.5
     count: 2
     delay: 55000
-  - id: 600
+  - id: 608
     mover_id: 572
     position:
       x: 3692.172
@@ -5453,7 +5523,7 @@ spawns:
     radius: 22
     count: 2
     delay: 55000
-  - id: 601
+  - id: 609
     mover_id: 572
     position:
       x: 3706.015
@@ -5462,7 +5532,7 @@ spawns:
     radius: 25
     count: 2
     delay: 55000
-  - id: 602
+  - id: 610
     mover_id: 572
     position:
       x: 3755.252
@@ -5471,7 +5541,7 @@ spawns:
     radius: 22
     count: 2
     delay: 55000
-  - id: 603
+  - id: 611
     mover_id: 572
     position:
       x: 3690.105
@@ -5480,7 +5550,7 @@ spawns:
     radius: 21
     count: 2
     delay: 55000
-  - id: 604
+  - id: 612
     mover_id: 572
     position:
       x: 3623.285
@@ -5489,7 +5559,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 605
+  - id: 613
     mover_id: 573
     position:
       x: 3703.421
@@ -5498,7 +5568,7 @@ spawns:
     radius: 25
     count: 2
     delay: 55000
-  - id: 606
+  - id: 614
     mover_id: 573
     position:
       x: 3683.843
@@ -5507,7 +5577,7 @@ spawns:
     radius: 21.5
     count: 2
     delay: 55000
-  - id: 607
+  - id: 615
     mover_id: 573
     position:
       x: 3699.906
@@ -5516,7 +5586,7 @@ spawns:
     radius: 22.5
     count: 2
     delay: 55000
-  - id: 608
+  - id: 616
     mover_id: 573
     position:
       x: 3761.771
@@ -5525,7 +5595,7 @@ spawns:
     radius: 21
     count: 2
     delay: 55000
-  - id: 609
+  - id: 617
     mover_id: 573
     position:
       x: 3681.252
@@ -5534,7 +5604,7 @@ spawns:
     radius: 19
     count: 2
     delay: 55000
-  - id: 610
+  - id: 618
     mover_id: 573
     position:
       x: 3633.883
@@ -5543,7 +5613,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 611
+  - id: 619
     mover_id: 575
     position:
       x: 3766.088
@@ -5552,7 +5622,7 @@ spawns:
     radius: 23
     count: 12
     delay: 55000
-  - id: 612
+  - id: 620
     mover_id: 575
     position:
       x: 3629.829
@@ -5561,7 +5631,7 @@ spawns:
     radius: 20.5
     count: 1
     delay: 55000
-  - id: 613
+  - id: 621
     mover_id: 575
     position:
       x: 3697.341
@@ -5570,7 +5640,7 @@ spawns:
     radius: 22.5
     count: 1
     delay: 55000
-  - id: 614
+  - id: 622
     mover_id: 575
     position:
       x: 3705.204
@@ -5579,7 +5649,7 @@ spawns:
     radius: 21.5
     count: 1
     delay: 55000
-  - id: 615
+  - id: 623
     mover_id: 575
     position:
       x: 3702.745
@@ -5588,7 +5658,7 @@ spawns:
     radius: 25.5
     count: 1
     delay: 55000
-  - id: 616
+  - id: 624
     mover_id: 575
     position:
       x: 3686.37
@@ -5597,7 +5667,7 @@ spawns:
     radius: 19.5
     count: 1
     delay: 55000
-  - id: 617
+  - id: 625
     mover_id: 576
     position:
       x: 3664.284
@@ -5606,7 +5676,7 @@ spawns:
     radius: 86
     count: 1
     delay: 2100000
-  - id: 618
+  - id: 626
     mover_id: 93
     position:
       x: 8315.853
@@ -5615,7 +5685,7 @@ spawns:
     radius: 53
     count: 10
     delay: 55000
-  - id: 619
+  - id: 627
     mover_id: 94
     position:
       x: 8218.428
@@ -5624,7 +5694,7 @@ spawns:
     radius: 45
     count: 10
     delay: 55000
-  - id: 620
+  - id: 628
     mover_id: 94
     position:
       x: 8325.248
@@ -5633,7 +5703,7 @@ spawns:
     radius: 70.5
     count: 10
     delay: 55000
-  - id: 621
+  - id: 629
     mover_id: 95
     position:
       x: 8280.385
@@ -5642,7 +5712,7 @@ spawns:
     radius: 85
     count: 1
     delay: 2100000
-  - id: 622
+  - id: 630
     mover_id: 581
     position:
       x: 8665.439
@@ -5651,7 +5721,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 623
+  - id: 631
     mover_id: 582
     position:
       x: 8663.597
@@ -5660,7 +5730,7 @@ spawns:
     radius: 20.5
     count: 2
     delay: 55000
-  - id: 624
+  - id: 632
     mover_id: 583
     position:
       x: 8672.01
@@ -5669,7 +5739,7 @@ spawns:
     radius: 20
     count: 1
     delay: 55000
-  - id: 625
+  - id: 633
     mover_id: 811
     position:
       x: 8372.89
@@ -5678,7 +5748,7 @@ spawns:
     radius: 24
     count: 6
     delay: 60000
-  - id: 626
+  - id: 634
     mover_id: 1106
     position:
       x: 6879.269
@@ -5687,7 +5757,7 @@ spawns:
     radius: 14.5
     count: 3
     delay: 35000
-  - id: 627
+  - id: 635
     mover_id: 1106
     position:
       x: 6923.802
@@ -5696,7 +5766,7 @@ spawns:
     radius: 12
     count: 3
     delay: 35000
-  - id: 628
+  - id: 636
     mover_id: 1106
     position:
       x: 6948.779
@@ -5705,7 +5775,7 @@ spawns:
     radius: 15.5
     count: 3
     delay: 35000
-  - id: 629
+  - id: 637
     mover_id: 1106
     position:
       x: 7007.672
@@ -5714,7 +5784,7 @@ spawns:
     radius: 8.5
     count: 2
     delay: 35000
-  - id: 630
+  - id: 638
     mover_id: 1106
     position:
       x: 7030.161
@@ -5723,7 +5793,7 @@ spawns:
     radius: 19.5
     count: 5
     delay: 35000
-  - id: 631
+  - id: 639
     mover_id: 1106
     position:
       x: 7090.441
@@ -5732,7 +5802,7 @@ spawns:
     radius: 28.5
     count: 5
     delay: 35000
-  - id: 632
+  - id: 640
     mover_id: 1107
     position:
       x: 7274.361
@@ -5741,7 +5811,7 @@ spawns:
     radius: 10
     count: 2
     delay: 35000
-  - id: 633
+  - id: 641
     mover_id: 1107
     position:
       x: 7327.443
@@ -5750,7 +5820,7 @@ spawns:
     radius: 16
     count: 4
     delay: 35000
-  - id: 634
+  - id: 642
     mover_id: 1107
     position:
       x: 7401.401
@@ -5759,7 +5829,7 @@ spawns:
     radius: 78.5
     count: 10
     delay: 35000
-  - id: 635
+  - id: 643
     mover_id: 1107
     position:
       x: 7577.363
@@ -5768,7 +5838,7 @@ spawns:
     radius: 58.5
     count: 15
     delay: 35000
-  - id: 636
+  - id: 644
     mover_id: 1108
     position:
       x: 7604.576
@@ -5777,7 +5847,7 @@ spawns:
     radius: 87.5
     count: 10
     delay: 35000
-  - id: 637
+  - id: 645
     mover_id: 1109
     position:
       x: 7661.963
@@ -5786,7 +5856,7 @@ spawns:
     radius: 50.5
     count: 10
     delay: 5000
-  - id: 638
+  - id: 646
     mover_id: 1109
     position:
       x: 7628.778
@@ -5795,7 +5865,7 @@ spawns:
     radius: 68.5
     count: 7
     delay: 35000
-  - id: 639
+  - id: 647
     mover_id: 1109
     position:
       x: 7551.773
@@ -5804,7 +5874,7 @@ spawns:
     radius: 53.5
     count: 5
     delay: 35000
-  - id: 640
+  - id: 648
     mover_id: 1109
     position:
       x: 7488.037
@@ -5813,7 +5883,7 @@ spawns:
     radius: 61
     count: 7
     delay: 35000
-  - id: 641
+  - id: 649
     mover_id: 1109
     position:
       x: 7337.834
@@ -5822,7 +5892,7 @@ spawns:
     radius: 136.5
     count: 10
     delay: 35000
-  - id: 642
+  - id: 650
     mover_id: 1110
     position:
       x: 7197.929
@@ -5831,7 +5901,7 @@ spawns:
     radius: 57
     count: 15
     delay: 35000
-  - id: 643
+  - id: 651
     mover_id: 1110
     position:
       x: 7289.592
@@ -5840,7 +5910,7 @@ spawns:
     radius: 54
     count: 5
     delay: 35000
-  - id: 644
+  - id: 652
     mover_id: 1111
     position:
       x: 6415.844
@@ -5849,7 +5919,7 @@ spawns:
     radius: 19
     count: 4
     delay: 35000
-  - id: 645
+  - id: 653
     mover_id: 1111
     position:
       x: 6469.487
@@ -5858,7 +5928,7 @@ spawns:
     radius: 39
     count: 5
     delay: 35000
-  - id: 646
+  - id: 654
     mover_id: 1111
     position:
       x: 6558.275
@@ -5867,7 +5937,7 @@ spawns:
     radius: 36.5
     count: 5
     delay: 35000
-  - id: 647
+  - id: 655
     mover_id: 1111
     position:
       x: 6630.84
@@ -5876,7 +5946,7 @@ spawns:
     radius: 39.5
     count: 3
     delay: 35000
-  - id: 648
+  - id: 656
     mover_id: 1111
     position:
       x: 6558.23
@@ -5885,7 +5955,7 @@ spawns:
     radius: 32.5
     count: 3
     delay: 35000
-  - id: 649
+  - id: 657
     mover_id: 1111
     position:
       x: 6552.876
@@ -5894,7 +5964,7 @@ spawns:
     radius: 11.5
     count: 2
     delay: 35000
-  - id: 650
+  - id: 658
     mover_id: 1111
     position:
       x: 6622.977
@@ -5903,7 +5973,7 @@ spawns:
     radius: 45.5
     count: 7
     delay: 35000
-  - id: 651
+  - id: 659
     mover_id: 1111
     position:
       x: 6640.228
@@ -5912,7 +5982,7 @@ spawns:
     radius: 33
     count: 5
     delay: 35000
-  - id: 652
+  - id: 660
     mover_id: 1111
     position:
       x: 6703.704
@@ -5921,7 +5991,7 @@ spawns:
     radius: 32
     count: 4
     delay: 35000
-  - id: 653
+  - id: 661
     mover_id: 1111
     position:
       x: 6774.675
@@ -5930,7 +6000,7 @@ spawns:
     radius: 28.5
     count: 4
     delay: 35000
-  - id: 654
+  - id: 662
     mover_id: 1111
     position:
       x: 6738.802
@@ -5939,7 +6009,7 @@ spawns:
     radius: 120
     count: 15
     delay: 35000
-  - id: 655
+  - id: 663
     mover_id: 1111
     position:
       x: 6968.634
@@ -5948,7 +6018,7 @@ spawns:
     radius: 75
     count: 10
     delay: 35000
-  - id: 656
+  - id: 664
     mover_id: 1111
     position:
       x: 7022.459
@@ -5957,7 +6027,7 @@ spawns:
     radius: 90
     count: 15
     delay: 35000
-  - id: 657
+  - id: 665
     mover_id: 1111
     position:
       x: 6706.634
@@ -5966,7 +6036,7 @@ spawns:
     radius: 65
     count: 7
     delay: 35000
-  - id: 658
+  - id: 666
     mover_id: 1111
     position:
       x: 6836.632
@@ -5975,7 +6045,7 @@ spawns:
     radius: 86.5
     count: 15
     delay: 35000
-  - id: 659
+  - id: 667
     mover_id: 1110
     position:
       x: 7584.454
@@ -5984,7 +6054,7 @@ spawns:
     radius: 15.5
     count: 3
     delay: 35000
-  - id: 660
+  - id: 668
     mover_id: 1110
     position:
       x: 7459.541
@@ -5993,7 +6063,7 @@ spawns:
     radius: 102
     count: 20
     delay: 35000
-  - id: 661
+  - id: 669
     mover_id: 1109
     position:
       x: 7587.607
@@ -6002,7 +6072,7 @@ spawns:
     radius: 23.5
     count: 5
     delay: 35000
-  - id: 662
+  - id: 670
     mover_id: 1109
     position:
       x: 7533.232
@@ -6011,7 +6081,7 @@ spawns:
     radius: 25.5
     count: 3
     delay: 35000
-  - id: 663
+  - id: 671
     mover_id: 1109
     position:
       x: 7627.985
@@ -6020,7 +6090,7 @@ spawns:
     radius: 38.5
     count: 4
     delay: 35000
-  - id: 664
+  - id: 672
     mover_id: 1110
     position:
       x: 7189.516
@@ -6029,7 +6099,7 @@ spawns:
     radius: 43.5
     count: 5
     delay: 35000
-  - id: 665
+  - id: 673
     mover_id: 1110
     position:
       x: 7186.569
@@ -6038,7 +6108,7 @@ spawns:
     radius: 35.5
     count: 5
     delay: 35000
-  - id: 666
+  - id: 674
     mover_id: 1110
     position:
       x: 7332.538
@@ -6047,7 +6117,7 @@ spawns:
     radius: 92
     count: 10
     delay: 35000
-  - id: 667
+  - id: 675
     mover_id: 1110
     position:
       x: 7171.295
@@ -6056,7 +6126,7 @@ spawns:
     radius: 65
     count: 10
     delay: 35000
-  - id: 668
+  - id: 676
     mover_id: 1111
     position:
       x: 7233.046
@@ -6065,7 +6135,7 @@ spawns:
     radius: 120
     count: 15
     delay: 35000
-  - id: 669
+  - id: 677
     mover_id: 1345
     position:
       x: 4714.207
@@ -6074,7 +6144,7 @@ spawns:
     radius: 151
     count: 25
     delay: 50000
-  - id: 670
+  - id: 678
     mover_id: 1345
     position:
       x: 4653.906
@@ -6083,7 +6153,7 @@ spawns:
     radius: 88
     count: 10
     delay: 50000
-  - id: 671
+  - id: 679
     mover_id: 1343
     position:
       x: 4759.066
@@ -6092,7 +6162,7 @@ spawns:
     radius: 158
     count: 25
     delay: 20000
-  - id: 672
+  - id: 680
     mover_id: 1343
     position:
       x: 5579.306
@@ -6101,7 +6171,7 @@ spawns:
     radius: 167
     count: 25
     delay: 50000
-  - id: 673
+  - id: 681
     mover_id: 1345
     position:
       x: 5497.178
@@ -6110,7 +6180,7 @@ spawns:
     radius: 163.5
     count: 30
     delay: 50000
-  - id: 674
+  - id: 682
     mover_id: 1343
     position:
       x: 5266.972
@@ -6119,7 +6189,7 @@ spawns:
     radius: 194
     count: 30
     delay: 50000
-  - id: 675
+  - id: 683
     mover_id: 1341
     position:
       x: 6024.479
@@ -6128,7 +6198,7 @@ spawns:
     radius: 98
     count: 15
     delay: 50000
-  - id: 676
+  - id: 684
     mover_id: 1355
     position:
       x: 5899.66
@@ -6137,7 +6207,7 @@ spawns:
     radius: 116
     count: 25
     delay: 50000
-  - id: 677
+  - id: 685
     mover_id: 1355
     position:
       x: 5893.176
@@ -6146,7 +6216,7 @@ spawns:
     radius: 118.5
     count: 13
     delay: 50000
-  - id: 678
+  - id: 686
     mover_id: 1344
     position:
       x: 5666.585
@@ -6155,7 +6225,7 @@ spawns:
     radius: 118.5
     count: 28
     delay: 50000
-  - id: 679
+  - id: 687
     mover_id: 1344
     position:
       x: 5771.798
@@ -6164,7 +6234,7 @@ spawns:
     radius: 113
     count: 17
     delay: 50000
-  - id: 680
+  - id: 688
     mover_id: 1111
     position:
       x: 6535.986
@@ -6173,7 +6243,7 @@ spawns:
     radius: 49.5
     count: 5
     delay: 35000
-  - id: 681
+  - id: 689
     mover_id: 1111
     position:
       x: 6540.976
@@ -6182,7 +6252,7 @@ spawns:
     radius: 28.5
     count: 3
     delay: 35000
-  - id: 682
+  - id: 690
     mover_id: 1341
     position:
       x: 6256.747
@@ -6191,7 +6261,7 @@ spawns:
     radius: 121.5
     count: 10
     delay: 50000
-  - id: 683
+  - id: 691
     mover_id: 1110
     position:
       x: 7147.598
@@ -6200,7 +6270,7 @@ spawns:
     radius: 22.5
     count: 5
     delay: 35000
-  - id: 684
+  - id: 692
     mover_id: 1110
     position:
       x: 7077.891
@@ -6209,7 +6279,7 @@ spawns:
     radius: 16
     count: 3
     delay: 35000
-  - id: 685
+  - id: 693
     mover_id: 1110
     position:
       x: 7041.155
@@ -6218,7 +6288,7 @@ spawns:
     radius: 37.5
     count: 4
     delay: 35000
-  - id: 686
+  - id: 694
     mover_id: 1110
     position:
       x: 6985.442
@@ -6227,7 +6297,7 @@ spawns:
     radius: 47.5
     count: 7
     delay: 35000
-  - id: 687
+  - id: 695
     mover_id: 1110
     position:
       x: 7008.805
@@ -6236,7 +6306,7 @@ spawns:
     radius: 27.5
     count: 5
     delay: 35000
-  - id: 688
+  - id: 696
     mover_id: 1110
     position:
       x: 7068.896
@@ -6245,7 +6315,7 @@ spawns:
     radius: 23
     count: 3
     delay: 35000
-  - id: 689
+  - id: 697
     mover_id: 1110
     position:
       x: 7154.692
@@ -6254,7 +6324,7 @@ spawns:
     radius: 51.5
     count: 5
     delay: 35000
-  - id: 690
+  - id: 698
     mover_id: 1111
     position:
       x: 6760.755
@@ -6263,7 +6333,7 @@ spawns:
     radius: 37.5
     count: 5
     delay: 35000
-  - id: 691
+  - id: 699
     mover_id: 1111
     position:
       x: 6762.96
@@ -6272,7 +6342,7 @@ spawns:
     radius: 40
     count: 5
     delay: 35000
-  - id: 692
+  - id: 700
     mover_id: 1110
     position:
       x: 7371.105
@@ -6281,7 +6351,7 @@ spawns:
     radius: 47
     count: 5
     delay: 35000
-  - id: 693
+  - id: 701
     mover_id: 1110
     position:
       x: 7168.209
@@ -6290,7 +6360,7 @@ spawns:
     radius: 40
     count: 4
     delay: 35000
-  - id: 694
+  - id: 702
     mover_id: 1110
     position:
       x: 7241.305
@@ -6299,7 +6369,7 @@ spawns:
     radius: 74.5
     count: 7
     delay: 35000
-  - id: 695
+  - id: 703
     mover_id: 1345
     position:
       x: 4827.832
@@ -6308,7 +6378,7 @@ spawns:
     radius: 108.5
     count: 30
     delay: 50000
-  - id: 696
+  - id: 704
     mover_id: 1343
     position:
       x: 4908.575
@@ -6317,7 +6387,7 @@ spawns:
     radius: 160
     count: 28
     delay: 50000
-  - id: 697
+  - id: 705
     mover_id: 1340
     position:
       x: 4830.232
@@ -6326,7 +6396,7 @@ spawns:
     radius: 6
     count: 1
     delay: 26100000
-  - id: 698
+  - id: 706
     mover_id: 1343
     position:
       x: 5596.919
@@ -6335,7 +6405,7 @@ spawns:
     radius: 134.5
     count: 15
     delay: 50000
-  - id: 699
+  - id: 707
     mover_id: 1344
     position:
       x: 5551.361
@@ -6344,7 +6414,7 @@ spawns:
     radius: 103.5
     count: 22
     delay: 50000
-  - id: 700
+  - id: 708
     mover_id: 1345
     position:
       x: 5415.443
@@ -6353,7 +6423,7 @@ spawns:
     radius: 229
     count: 30
     delay: 50000
-  - id: 701
+  - id: 709
     mover_id: 1344
     position:
       x: 5427.075
@@ -6362,7 +6432,7 @@ spawns:
     radius: 115.5
     count: 20
     delay: 50000
-  - id: 702
+  - id: 710
     mover_id: 1345
     position:
       x: 5139.254
@@ -6371,7 +6441,7 @@ spawns:
     radius: 101.5
     count: 20
     delay: 50000
-  - id: 703
+  - id: 711
     mover_id: 1345
     position:
       x: 5149.856
@@ -6380,7 +6450,7 @@ spawns:
     radius: 199
     count: 30
     delay: 50000
-  - id: 704
+  - id: 712
     mover_id: 1219
     position:
       x: 6099.411
@@ -6389,7 +6459,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 705
+  - id: 713
     mover_id: 1356
     position:
       x: 5921.648
@@ -6398,7 +6468,7 @@ spawns:
     radius: 58.5
     count: 8
     delay: 50000
-  - id: 706
+  - id: 714
     mover_id: 1356
     position:
       x: 6003.335
@@ -6407,7 +6477,7 @@ spawns:
     radius: 91
     count: 11
     delay: 50000
-  - id: 707
+  - id: 715
     mover_id: 1356
     position:
       x: 6129.877
@@ -6416,7 +6486,7 @@ spawns:
     radius: 61
     count: 8
     delay: 50000
-  - id: 708
+  - id: 716
     mover_id: 1356
     position:
       x: 6139.461
@@ -6425,7 +6495,7 @@ spawns:
     radius: 158.5
     count: 18
     delay: 50000
-  - id: 709
+  - id: 717
     mover_id: 1341
     position:
       x: 6016.206
@@ -6434,7 +6504,7 @@ spawns:
     radius: 123.5
     count: 15
     delay: 50000
-  - id: 710
+  - id: 718
     mover_id: 1341
     position:
       x: 5900.457
@@ -6443,7 +6513,7 @@ spawns:
     radius: 110.5
     count: 7
     delay: 50000
-  - id: 711
+  - id: 719
     mover_id: 1341
     position:
       x: 5790.299
@@ -6452,7 +6522,7 @@ spawns:
     radius: 92.5
     count: 15
     delay: 50000
-  - id: 712
+  - id: 720
     mover_id: 1355
     position:
       x: 5793.833
@@ -6461,7 +6531,7 @@ spawns:
     radius: 138.5
     count: 30
     delay: 50000
-  - id: 713
+  - id: 721
     mover_id: 1355
     position:
       x: 5670.929
@@ -6470,7 +6540,7 @@ spawns:
     radius: 121
     count: 20
     delay: 50000
-  - id: 714
+  - id: 722
     mover_id: 1176
     position:
       x: 6650.712
@@ -6479,7 +6549,7 @@ spawns:
     radius: 45.5
     count: 7
     delay: 50000
-  - id: 715
+  - id: 723
     mover_id: 1176
     position:
       x: 6625.241
@@ -6488,7 +6558,7 @@ spawns:
     radius: 49.5
     count: 20
     delay: 50000
-  - id: 716
+  - id: 724
     mover_id: 1177
     position:
       x: 6566.484
@@ -6497,7 +6567,7 @@ spawns:
     radius: 52
     count: 18
     delay: 50000
-  - id: 717
+  - id: 725
     mover_id: 1176
     position:
       x: 6877.807
@@ -6506,7 +6576,7 @@ spawns:
     radius: 43
     count: 10
     delay: 50000
-  - id: 718
+  - id: 726
     mover_id: 1176
     position:
       x: 6768.134
@@ -6515,7 +6585,7 @@ spawns:
     radius: 55.5
     count: 15
     delay: 50000
-  - id: 719
+  - id: 727
     mover_id: 1176
     position:
       x: 6677.04
@@ -6524,7 +6594,7 @@ spawns:
     radius: 59
     count: 12
     delay: 50000
-  - id: 720
+  - id: 728
     mover_id: 1176
     position:
       x: 6820.767
@@ -6533,7 +6603,7 @@ spawns:
     radius: 52.5
     count: 10
     delay: 50000
-  - id: 721
+  - id: 729
     mover_id: 1176
     position:
       x: 6694.828
@@ -6542,7 +6612,7 @@ spawns:
     radius: 61
     count: 8
     delay: 50000
-  - id: 722
+  - id: 730
     mover_id: 1176
     position:
       x: 6719.795
@@ -6551,7 +6621,7 @@ spawns:
     radius: 33
     count: 10
     delay: 50000
-  - id: 723
+  - id: 731
     mover_id: 1176
     position:
       x: 6899.498
@@ -6560,7 +6630,7 @@ spawns:
     radius: 45.5
     count: 20
     delay: 50000
-  - id: 724
+  - id: 732
     mover_id: 1176
     position:
       x: 6810.256
@@ -6569,7 +6639,7 @@ spawns:
     radius: 45
     count: 12
     delay: 50000
-  - id: 725
+  - id: 733
     mover_id: 1177
     position:
       x: 6661.917
@@ -6578,7 +6648,7 @@ spawns:
     radius: 49
     count: 15
     delay: 50000
-  - id: 726
+  - id: 734
     mover_id: 1176
     position:
       x: 6719.998
@@ -6587,7 +6657,7 @@ spawns:
     radius: 44
     count: 20
     delay: 50000
-  - id: 727
+  - id: 735
     mover_id: 1177
     position:
       x: 6830.569
@@ -6596,7 +6666,7 @@ spawns:
     radius: 57
     count: 20
     delay: 50000
-  - id: 728
+  - id: 736
     mover_id: 1177
     position:
       x: 6941.874
@@ -6605,7 +6675,7 @@ spawns:
     radius: 52
     count: 10
     delay: 50000
-  - id: 729
+  - id: 737
     mover_id: 1177
     position:
       x: 7000.725
@@ -6614,7 +6684,7 @@ spawns:
     radius: 33
     count: 8
     delay: 50000
-  - id: 730
+  - id: 738
     mover_id: 1177
     position:
       x: 6829.025
@@ -6623,7 +6693,7 @@ spawns:
     radius: 45
     count: 7
     delay: 50000
-  - id: 731
+  - id: 739
     mover_id: 1177
     position:
       x: 6703.183
@@ -6632,7 +6702,7 @@ spawns:
     radius: 46.5
     count: 9
     delay: 50000
-  - id: 732
+  - id: 740
     mover_id: 1178
     position:
       x: 7020.267
@@ -6641,7 +6711,7 @@ spawns:
     radius: 56.5
     count: 15
     delay: 50000
-  - id: 733
+  - id: 741
     mover_id: 1178
     position:
       x: 6932.123
@@ -6650,7 +6720,7 @@ spawns:
     radius: 38.5
     count: 7
     delay: 50000
-  - id: 734
+  - id: 742
     mover_id: 1178
     position:
       x: 6979.225
@@ -6659,7 +6729,7 @@ spawns:
     radius: 53
     count: 12
     delay: 50000
-  - id: 735
+  - id: 743
     mover_id: 1178
     position:
       x: 7152.322
@@ -6668,7 +6738,7 @@ spawns:
     radius: 57.5
     count: 10
     delay: 50000
-  - id: 736
+  - id: 744
     mover_id: 1218
     position:
       x: 7046.126
@@ -6677,7 +6747,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 737
+  - id: 745
     mover_id: 1218
     position:
       x: 7060.332
@@ -6686,7 +6756,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 738
+  - id: 746
     mover_id: 1219
     position:
       x: 7092.147
@@ -6695,7 +6765,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 739
+  - id: 747
     mover_id: 1219
     position:
       x: 7140.456
@@ -6704,7 +6774,7 @@ spawns:
     radius: 4.5
     count: 1
     delay: 1000
-  - id: 740
+  - id: 748
     mover_id: 1178
     position:
       x: 7246.528
@@ -6713,7 +6783,7 @@ spawns:
     radius: 39.5
     count: 10
     delay: 50000
-  - id: 741
+  - id: 749
     mover_id: 1179
     position:
       x: 7361.947
@@ -6722,7 +6792,7 @@ spawns:
     radius: 45.5
     count: 10
     delay: 50000
-  - id: 742
+  - id: 750
     mover_id: 1179
     position:
       x: 7430.36
@@ -6731,7 +6801,7 @@ spawns:
     radius: 48
     count: 8
     delay: 50000
-  - id: 743
+  - id: 751
     mover_id: 1179
     position:
       x: 7428.944
@@ -6740,7 +6810,7 @@ spawns:
     radius: 41.5
     count: 8
     delay: 50000
-  - id: 744
+  - id: 752
     mover_id: 1179
     position:
       x: 7505.469
@@ -6749,7 +6819,7 @@ spawns:
     radius: 67
     count: 12
     delay: 50000
-  - id: 745
+  - id: 753
     mover_id: 1179
     position:
       x: 7517.751
@@ -6758,7 +6828,7 @@ spawns:
     radius: 44
     count: 13
     delay: 50000
-  - id: 746
+  - id: 754
     mover_id: 1180
     position:
       x: 7559.349
@@ -6767,7 +6837,7 @@ spawns:
     radius: 63.5
     count: 10
     delay: 50000
-  - id: 747
+  - id: 755
     mover_id: 1180
     position:
       x: 7672.015
@@ -6776,7 +6846,7 @@ spawns:
     radius: 77
     count: 17
     delay: 50000
-  - id: 748
+  - id: 756
     mover_id: 1180
     position:
       x: 7678.029
@@ -6785,7 +6855,7 @@ spawns:
     radius: 55
     count: 15
     delay: 50000
-  - id: 749
+  - id: 757
     mover_id: 1180
     position:
       x: 7605.329
@@ -6794,7 +6864,7 @@ spawns:
     radius: 64.5
     count: 13
     delay: 50000
-  - id: 750
+  - id: 758
     mover_id: 1180
     position:
       x: 7679.44
@@ -6803,7 +6873,7 @@ spawns:
     radius: 53.5
     count: 10
     delay: 50000
-  - id: 751
+  - id: 759
     mover_id: 1179
     position:
       x: 7555.829
@@ -6812,7 +6882,7 @@ spawns:
     radius: 97.5
     count: 10
     delay: 50000
-  - id: 752
+  - id: 760
     mover_id: 1219
     position:
       x: 7171.011
@@ -6821,7 +6891,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 753
+  - id: 761
     mover_id: 1219
     position:
       x: 7326.255
@@ -6830,7 +6900,7 @@ spawns:
     radius: 4.5
     count: 1
     delay: 1000
-  - id: 754
+  - id: 762
     mover_id: 1219
     position:
       x: 7443.53
@@ -6839,7 +6909,7 @@ spawns:
     radius: 4.5
     count: 1
     delay: 1000
-  - id: 755
+  - id: 763
     mover_id: 1343
     position:
       x: 5546.263
@@ -6848,7 +6918,7 @@ spawns:
     radius: 207
     count: 20
     delay: 50000
-  - id: 756
+  - id: 764
     mover_id: 1219
     position:
       x: 6037.269
@@ -6857,7 +6927,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 757
+  - id: 765
     mover_id: 1219
     position:
       x: 6036.793
@@ -6866,7 +6936,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 758
+  - id: 766
     mover_id: 1219
     position:
       x: 6078.024
@@ -6875,7 +6945,7 @@ spawns:
     radius: 3.5
     count: 1
     delay: 1000
-  - id: 759
+  - id: 767
     mover_id: 1219
     position:
       x: 6016.276
@@ -6884,7 +6954,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 760
+  - id: 768
     mover_id: 1356
     position:
       x: 5988.104
@@ -6893,7 +6963,7 @@ spawns:
     radius: 126.5
     count: 15
     delay: 50000
-  - id: 761
+  - id: 769
     mover_id: 1356
     position:
       x: 5905.47
@@ -6902,7 +6972,7 @@ spawns:
     radius: 129
     count: 18
     delay: 50000
-  - id: 762
+  - id: 770
     mover_id: 1341
     position:
       x: 5801.73
@@ -6911,7 +6981,7 @@ spawns:
     radius: 243.5
     count: 25
     delay: 50000
-  - id: 763
+  - id: 771
     mover_id: 1355
     position:
       x: 5689.49
@@ -6920,7 +6990,7 @@ spawns:
     radius: 156.5
     count: 20
     delay: 50000
-  - id: 764
+  - id: 772
     mover_id: 1177
     position:
       x: 6597.969
@@ -6929,7 +6999,7 @@ spawns:
     radius: 71.5
     count: 17
     delay: 50000
-  - id: 765
+  - id: 773
     mover_id: 1177
     position:
       x: 6582.859
@@ -6938,7 +7008,7 @@ spawns:
     radius: 48.5
     count: 7
     delay: 50000
-  - id: 766
+  - id: 774
     mover_id: 1356
     position:
       x: 6181.306
@@ -6947,7 +7017,7 @@ spawns:
     radius: 147
     count: 10
     delay: 50000
-  - id: 767
+  - id: 775
     mover_id: 1177
     position:
       x: 6676.528
@@ -6956,7 +7026,7 @@ spawns:
     radius: 50
     count: 15
     delay: 50000
-  - id: 768
+  - id: 776
     mover_id: 1177
     position:
       x: 6704.694
@@ -6965,7 +7035,7 @@ spawns:
     radius: 44
     count: 10
     delay: 50000
-  - id: 769
+  - id: 777
     mover_id: 1177
     position:
       x: 6778.748
@@ -6974,7 +7044,7 @@ spawns:
     radius: 52.5
     count: 17
     delay: 50000
-  - id: 770
+  - id: 778
     mover_id: 1178
     position:
       x: 6780.845
@@ -6983,7 +7053,7 @@ spawns:
     radius: 69
     count: 10
     delay: 50000
-  - id: 771
+  - id: 779
     mover_id: 1178
     position:
       x: 6784.814
@@ -6992,7 +7062,7 @@ spawns:
     radius: 95
     count: 15
     delay: 50000
-  - id: 772
+  - id: 780
     mover_id: 1178
     position:
       x: 7000.346
@@ -7001,7 +7071,7 @@ spawns:
     radius: 38
     count: 7
     delay: 50000
-  - id: 773
+  - id: 781
     mover_id: 1178
     position:
       x: 6915.854
@@ -7010,7 +7080,7 @@ spawns:
     radius: 83.5
     count: 15
     delay: 50000
-  - id: 774
+  - id: 782
     mover_id: 1178
     position:
       x: 6994.87
@@ -7019,7 +7089,7 @@ spawns:
     radius: 51.5
     count: 10
     delay: 50000
-  - id: 775
+  - id: 783
     mover_id: 1178
     position:
       x: 7143.733
@@ -7028,7 +7098,7 @@ spawns:
     radius: 116
     count: 20
     delay: 50000
-  - id: 776
+  - id: 784
     mover_id: 1178
     position:
       x: 7098.296
@@ -7037,7 +7107,7 @@ spawns:
     radius: 54
     count: 15
     delay: 50000
-  - id: 777
+  - id: 785
     mover_id: 1219
     position:
       x: 7141.011
@@ -7046,7 +7116,7 @@ spawns:
     radius: 7
     count: 1
     delay: 1000
-  - id: 778
+  - id: 786
     mover_id: 1178
     position:
       x: 7170.046
@@ -7055,7 +7125,7 @@ spawns:
     radius: 66
     count: 20
     delay: 50000
-  - id: 779
+  - id: 787
     mover_id: 1179
     position:
       x: 7226.594
@@ -7064,7 +7134,7 @@ spawns:
     radius: 51
     count: 12
     delay: 50000
-  - id: 780
+  - id: 788
     mover_id: 1179
     position:
       x: 7302.598
@@ -7073,7 +7143,7 @@ spawns:
     radius: 64.5
     count: 10
     delay: 50000
-  - id: 781
+  - id: 789
     mover_id: 1179
     position:
       x: 7310.807
@@ -7082,7 +7152,7 @@ spawns:
     radius: 38.5
     count: 10
     delay: 50000
-  - id: 782
+  - id: 790
     mover_id: 1179
     position:
       x: 7374.871
@@ -7091,7 +7161,7 @@ spawns:
     radius: 38.5
     count: 10
     delay: 50000
-  - id: 783
+  - id: 791
     mover_id: 1179
     position:
       x: 7385.077
@@ -7100,7 +7170,7 @@ spawns:
     radius: 64
     count: 20
     delay: 50000
-  - id: 784
+  - id: 792
     mover_id: 1179
     position:
       x: 7412.708
@@ -7109,7 +7179,7 @@ spawns:
     radius: 61.5
     count: 10
     delay: 50000
-  - id: 785
+  - id: 793
     mover_id: 1179
     position:
       x: 7465.101
@@ -7118,7 +7188,7 @@ spawns:
     radius: 40.5
     count: 8
     delay: 50000
-  - id: 786
+  - id: 794
     mover_id: 1179
     position:
       x: 7545.728
@@ -7127,7 +7197,7 @@ spawns:
     radius: 59.5
     count: 12
     delay: 50000
-  - id: 787
+  - id: 795
     mover_id: 1180
     position:
       x: 7570.576
@@ -7136,7 +7206,7 @@ spawns:
     radius: 79.5
     count: 20
     delay: 50000
-  - id: 788
+  - id: 796
     mover_id: 1179
     position:
       x: 7619.727
@@ -7145,7 +7215,7 @@ spawns:
     radius: 58
     count: 15
     delay: 50000
-  - id: 789
+  - id: 797
     mover_id: 1218
     position:
       x: 7492.829
@@ -7154,7 +7224,7 @@ spawns:
     radius: 2
     count: 1
     delay: 1000
-  - id: 790
+  - id: 798
     mover_id: 1218
     position:
       x: 7485.657
@@ -7163,7 +7233,7 @@ spawns:
     radius: 3
     count: 1
     delay: 1000
-  - id: 791
+  - id: 799
     mover_id: 1219
     position:
       x: 7328.085
@@ -7172,7 +7242,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 792
+  - id: 800
     mover_id: 1219
     position:
       x: 7459.737
@@ -7181,7 +7251,7 @@ spawns:
     radius: 4
     count: 1
     delay: 1000
-  - id: 793
+  - id: 801
     mover_id: 86
     position:
       x: 8710.361
@@ -7190,7 +7260,16 @@ spawns:
     radius: 38.5
     count: 10
     delay: 55000
-  - id: 794
+  - id: 802
+    mover_id: 87
+    position:
+      x: 8705.34
+      y: 157.313
+      z: 2440.322
+    radius: 109
+    count: 1
+    delay: 2100000
+  - id: 803
     mover_id: 544
     position:
       x: 8935.25
@@ -7199,7 +7278,7 @@ spawns:
     radius: 43
     count: 10
     delay: 55000
-  - id: 795
+  - id: 804
     mover_id: 544
     position:
       x: 9067.979
@@ -7208,7 +7287,7 @@ spawns:
     radius: 70.5
     count: 10
     delay: 55000
-  - id: 796
+  - id: 805
     mover_id: 544
     position:
       x: 8807.681
@@ -7217,7 +7296,7 @@ spawns:
     radius: 79
     count: 4
     delay: 55000
-  - id: 797
+  - id: 806
     mover_id: 545
     position:
       x: 8941.962
@@ -7226,7 +7305,7 @@ spawns:
     radius: 38
     count: 10
     delay: 55000
-  - id: 798
+  - id: 807
     mover_id: 581
     position:
       x: 8785.232
@@ -7235,7 +7314,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 799
+  - id: 808
     mover_id: 582
     position:
       x: 8709.606
@@ -7244,7 +7323,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 800
+  - id: 809
     mover_id: 582
     position:
       x: 8776.501
@@ -7253,7 +7332,7 @@ spawns:
     radius: 20
     count: 2
     delay: 55000
-  - id: 801
+  - id: 810
     mover_id: 583
     position:
       x: 8780.793
@@ -7262,7 +7341,7 @@ spawns:
     radius: 20
     count: 1
     delay: 55000
-  - id: 802
+  - id: 811
     mover_id: 688
     position:
       x: 8779.899
@@ -7271,7 +7350,7 @@ spawns:
     radius: 4
     count: 1
     delay: 60000
-  - id: 803
+  - id: 812
     mover_id: 811
     position:
       x: 8734.788
@@ -7280,7 +7359,7 @@ spawns:
     radius: 24
     count: 3
     delay: 60000
-  - id: 804
+  - id: 813
     mover_id: 811
     position:
       x: 8991.644
@@ -7289,7 +7368,7 @@ spawns:
     radius: 14
     count: 3
     delay: 60000
-  - id: 805
+  - id: 814
     mover_id: 811
     position:
       x: 8729.045
@@ -7298,7 +7377,7 @@ spawns:
     radius: 19
     count: 3
     delay: 60000
-  - id: 806
+  - id: 815
     mover_id: 811
     position:
       x: 8809.609
@@ -7307,7 +7386,7 @@ spawns:
     radius: 14.5
     count: 3
     delay: 60000
-  - id: 807
+  - id: 816
     mover_id: 84
     position:
       x: 8752.842
@@ -7316,7 +7395,34 @@ spawns:
     radius: 38
     count: 10
     delay: 55000
-  - id: 808
+  - id: 817
+    mover_id: 103
+    position:
+      x: 8825.807
+      y: 147.168
+      z: 2880.591
+    radius: 59
+    count: 10
+    delay: 55000
+  - id: 818
+    mover_id: 103
+    position:
+      x: 8773.547
+      y: 143.666
+      z: 2683.767
+    radius: 55
+    count: 10
+    delay: 55000
+  - id: 819
+    mover_id: 104
+    position:
+      x: 8763.405
+      y: 141.941
+      z: 2734.309
+    radius: 60
+    count: 10
+    delay: 55000
+  - id: 820
     mover_id: 529
     position:
       x: 8957.799
@@ -7325,7 +7431,7 @@ spawns:
     radius: 41.5
     count: 5
     delay: 55000
-  - id: 809
+  - id: 821
     mover_id: 546
     position:
       x: 8888.446
@@ -7334,7 +7440,7 @@ spawns:
     radius: 64
     count: 10
     delay: 55000
-  - id: 810
+  - id: 822
     mover_id: 546
     position:
       x: 8928.146
@@ -7343,7 +7449,7 @@ spawns:
     radius: 159
     count: 10
     delay: 55000
-  - id: 811
+  - id: 823
     mover_id: 547
     position:
       x: 8928.764
@@ -7352,7 +7458,7 @@ spawns:
     radius: 186
     count: 1
     delay: 2100000
-  - id: 812
+  - id: 824
     mover_id: 811
     position:
       x: 8846.452
@@ -7361,7 +7467,7 @@ spawns:
     radius: 16.5
     count: 3
     delay: 60000
-  - id: 813
+  - id: 825
     mover_id: 811
     position:
       x: 8906.11
@@ -7370,7 +7476,7 @@ spawns:
     radius: 15.5
     count: 3
     delay: 60000
-  - id: 814
+  - id: 826
     mover_id: 821
     position:
       x: 8961.755
@@ -7379,7 +7485,7 @@ spawns:
     radius: 7
     count: 2
     delay: 180000
-  - id: 815
+  - id: 827
     mover_id: 50
     position:
       x: 8710.034
@@ -7388,7 +7494,7 @@ spawns:
     radius: 38
     count: 10
     delay: 55000
-  - id: 816
+  - id: 828
     mover_id: 51
     position:
       x: 8715.237
@@ -7397,7 +7503,7 @@ spawns:
     radius: 74
     count: 1
     delay: 2100000
-  - id: 817
+  - id: 829
     mover_id: 306
     position:
       x: 8746.687
@@ -7406,7 +7512,7 @@ spawns:
     radius: 53.5
     count: 8
     delay: 80000
-  - id: 818
+  - id: 830
     mover_id: 811
     position:
       x: 8997.466
@@ -7415,7 +7521,7 @@ spawns:
     radius: 16
     count: 3
     delay: 60000
-  - id: 819
+  - id: 831
     mover_id: 585
     position:
       x: 9164.56
@@ -7424,7 +7530,7 @@ spawns:
     radius: 17.5
     count: 2
     delay: 55000
-  - id: 820
+  - id: 832
     mover_id: 585
     position:
       x: 9182.563
@@ -7433,7 +7539,7 @@ spawns:
     radius: 17
     count: 2
     delay: 55000
-  - id: 821
+  - id: 833
     mover_id: 585
     position:
       x: 9129.418
@@ -7442,7 +7548,7 @@ spawns:
     radius: 16.5
     count: 2
     delay: 55000
-  - id: 822
+  - id: 834
     mover_id: 585
     position:
       x: 9064.822
@@ -7451,7 +7557,7 @@ spawns:
     radius: 17.5
     count: 2
     delay: 55000
-  - id: 823
+  - id: 835
     mover_id: 585
     position:
       x: 9091.153
@@ -7460,7 +7566,7 @@ spawns:
     radius: 16
     count: 2
     delay: 55000
-  - id: 824
+  - id: 836
     mover_id: 586
     position:
       x: 9165.15
@@ -7469,7 +7575,7 @@ spawns:
     radius: 17.5
     count: 2
     delay: 55000
-  - id: 825
+  - id: 837
     mover_id: 586
     position:
       x: 9187.909
@@ -7478,7 +7584,7 @@ spawns:
     radius: 15.5
     count: 2
     delay: 55000
-  - id: 826
+  - id: 838
     mover_id: 586
     position:
       x: 9127.031
@@ -7487,7 +7593,7 @@ spawns:
     radius: 16
     count: 2
     delay: 55000
-  - id: 827
+  - id: 839
     mover_id: 586
     position:
       x: 9086.682
@@ -7496,7 +7602,7 @@ spawns:
     radius: 17
     count: 2
     delay: 55000
-  - id: 828
+  - id: 840
     mover_id: 586
     position:
       x: 9070.235
@@ -7505,7 +7611,7 @@ spawns:
     radius: 16
     count: 2
     delay: 55000
-  - id: 829
+  - id: 841
     mover_id: 587
     position:
       x: 9074.05
@@ -7514,7 +7620,7 @@ spawns:
     radius: 15.5
     count: 1
     delay: 55000
-  - id: 830
+  - id: 842
     mover_id: 587
     position:
       x: 9120.768
@@ -7523,7 +7629,7 @@ spawns:
     radius: 16.5
     count: 1
     delay: 55000
-  - id: 831
+  - id: 843
     mover_id: 587
     position:
       x: 9189.35
@@ -7532,7 +7638,7 @@ spawns:
     radius: 16
     count: 1
     delay: 55000
-  - id: 832
+  - id: 844
     mover_id: 587
     position:
       x: 9161.218
@@ -7541,7 +7647,7 @@ spawns:
     radius: 17.5
     count: 1
     delay: 55000
-  - id: 833
+  - id: 845
     mover_id: 588
     position:
       x: 9132.904
@@ -7550,7 +7656,7 @@ spawns:
     radius: 41
     count: 1
     delay: 2100000
-  - id: 834
+  - id: 846
     mover_id: 56
     position:
       x: 9019.233
@@ -7559,7 +7665,7 @@ spawns:
     radius: 37
     count: 8
     delay: 55000
-  - id: 835
+  - id: 847
     mover_id: 56
     position:
       x: 9104.875
@@ -7568,7 +7674,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 836
+  - id: 848
     mover_id: 56
     position:
       x: 9006.328
@@ -7577,7 +7683,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 837
+  - id: 849
     mover_id: 57
     position:
       x: 9091.969
@@ -7586,7 +7692,7 @@ spawns:
     radius: 35.5
     count: 8
     delay: 55000
-  - id: 838
+  - id: 850
     mover_id: 57
     position:
       x: 8930.874
@@ -7595,7 +7701,7 @@ spawns:
     radius: 30.5
     count: 8
     delay: 55000
-  - id: 839
+  - id: 851
     mover_id: 57
     position:
       x: 9021.725
@@ -7604,7 +7710,7 @@ spawns:
     radius: 24.5
     count: 8
     delay: 55000
-  - id: 840
+  - id: 852
     mover_id: 57
     position:
       x: 9045.259
@@ -7613,7 +7719,7 @@ spawns:
     radius: 32.5
     count: 8
     delay: 55000
-  - id: 841
+  - id: 853
     mover_id: 58
     position:
       x: 8861.287
@@ -7622,7 +7728,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 842
+  - id: 854
     mover_id: 58
     position:
       x: 8863.422
@@ -7631,7 +7737,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 843
+  - id: 855
     mover_id: 58
     position:
       x: 8949.904
@@ -7640,7 +7746,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 844
+  - id: 856
     mover_id: 59
     position:
       x: 8727.672
@@ -7649,7 +7755,7 @@ spawns:
     radius: 28
     count: 1
     delay: 2100000
-  - id: 845
+  - id: 857
     mover_id: 72
     position:
       x: 9122.569
@@ -7658,7 +7764,7 @@ spawns:
     radius: 30
     count: 8
     delay: 55000
-  - id: 846
+  - id: 858
     mover_id: 72
     position:
       x: 9193.018
@@ -7667,7 +7773,7 @@ spawns:
     radius: 20
     count: 8
     delay: 55000
-  - id: 847
+  - id: 859
     mover_id: 72
     position:
       x: 9165.112
@@ -7676,7 +7782,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 848
+  - id: 860
     mover_id: 556
     position:
       x: 8927.588
@@ -7685,7 +7791,7 @@ spawns:
     radius: 212.5
     count: 3
     delay: 2100000
-  - id: 849
+  - id: 861
     mover_id: 843
     position:
       x: 9050.504
@@ -7694,7 +7800,7 @@ spawns:
     radius: 6.5
     count: 1
     delay: 60000
-  - id: 850
+  - id: 862
     mover_id: 52
     position:
       x: 9552.288
@@ -7703,7 +7809,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 851
+  - id: 863
     mover_id: 52
     position:
       x: 9494.783
@@ -7712,7 +7818,7 @@ spawns:
     radius: 29
     count: 8
     delay: 55000
-  - id: 852
+  - id: 864
     mover_id: 80
     position:
       x: 9288.311
@@ -7721,7 +7827,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 853
+  - id: 865
     mover_id: 80
     position:
       x: 9386.888
@@ -7730,7 +7836,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 854
+  - id: 866
     mover_id: 80
     position:
       x: 9295.736
@@ -7739,7 +7845,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 855
+  - id: 867
     mover_id: 81
     position:
       x: 9334.38
@@ -7748,7 +7854,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 856
+  - id: 868
     mover_id: 81
     position:
       x: 9333.882
@@ -7757,7 +7863,7 @@ spawns:
     radius: 32.5
     count: 8
     delay: 55000
-  - id: 857
+  - id: 869
     mover_id: 81
     position:
       x: 9437.187
@@ -7766,7 +7872,7 @@ spawns:
     radius: 41.5
     count: 8
     delay: 55000
-  - id: 858
+  - id: 870
     mover_id: 82
     position:
       x: 9391.538
@@ -7775,7 +7881,7 @@ spawns:
     radius: 38
     count: 8
     delay: 55000
-  - id: 859
+  - id: 871
     mover_id: 82
     position:
       x: 9526.422
@@ -7784,7 +7890,7 @@ spawns:
     radius: 33.5
     count: 8
     delay: 55000
-  - id: 860
+  - id: 872
     mover_id: 83
     position:
       x: 9452.158
@@ -7793,7 +7899,7 @@ spawns:
     radius: 24
     count: 1
     delay: 2100000
-  - id: 861
+  - id: 873
     mover_id: 52
     position:
       x: 9518.932
@@ -7802,7 +7908,7 @@ spawns:
     radius: 38.5
     count: 8
     delay: 55000
-  - id: 862
+  - id: 874
     mover_id: 53
     position:
       x: 9565.389
@@ -7811,7 +7917,7 @@ spawns:
     radius: 25
     count: 8
     delay: 55000
-  - id: 863
+  - id: 875
     mover_id: 53
     position:
       x: 9572.743
@@ -7820,7 +7926,7 @@ spawns:
     radius: 19
     count: 8
     delay: 55000
-  - id: 864
+  - id: 876
     mover_id: 54
     position:
       x: 9634.429
@@ -7829,7 +7935,7 @@ spawns:
     radius: 24.5
     count: 8
     delay: 55000
-  - id: 865
+  - id: 877
     mover_id: 55
     position:
       x: 9704.357
@@ -7838,7 +7944,7 @@ spawns:
     radius: 21
     count: 1
     delay: 2100000
-  - id: 866
+  - id: 878
     mover_id: 72
     position:
       x: 9263.764
@@ -7847,7 +7953,7 @@ spawns:
     radius: 12.5
     count: 2
     delay: 55000
-  - id: 867
+  - id: 879
     mover_id: 72
     position:
       x: 9301.292
@@ -7856,7 +7962,7 @@ spawns:
     radius: 11.5
     count: 2
     delay: 55000
-  - id: 868
+  - id: 880
     mover_id: 73
     position:
       x: 9334.321
@@ -7865,7 +7971,7 @@ spawns:
     radius: 35.5
     count: 9
     delay: 55000
-  - id: 869
+  - id: 881
     mover_id: 73
     position:
       x: 9358.512
@@ -7874,7 +7980,7 @@ spawns:
     radius: 32
     count: 8
     delay: 55000
-  - id: 870
+  - id: 882
     mover_id: 74
     position:
       x: 9418.936
@@ -7883,7 +7989,7 @@ spawns:
     radius: 24
     count: 8
     delay: 55000
-  - id: 871
+  - id: 883
     mover_id: 74
     position:
       x: 9401.678
@@ -7892,7 +7998,7 @@ spawns:
     radius: 32.5
     count: 8
     delay: 55000
-  - id: 872
+  - id: 884
     mover_id: 74
     position:
       x: 9444.461
@@ -7901,7 +8007,7 @@ spawns:
     radius: 31
     count: 8
     delay: 55000
-  - id: 873
+  - id: 885
     mover_id: 75
     position:
       x: 9409.694
@@ -7910,7 +8016,7 @@ spawns:
     radius: 22.5
     count: 1
     delay: 2100000
-  - id: 874
+  - id: 886
     mover_id: 581
     position:
       x: 8734.071
@@ -7919,7 +8025,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 875
+  - id: 887
     mover_id: 581
     position:
       x: 8796.793
@@ -7928,7 +8034,7 @@ spawns:
     radius: 22
     count: 2
     delay: 55000
-  - id: 876
+  - id: 888
     mover_id: 582
     position:
       x: 8730.187
@@ -7937,7 +8043,7 @@ spawns:
     radius: 19.5
     count: 2
     delay: 55000
-  - id: 877
+  - id: 889
     mover_id: 582
     position:
       x: 8801.611
@@ -7946,7 +8052,7 @@ spawns:
     radius: 21
     count: 2
     delay: 55000
-  - id: 878
+  - id: 890
     mover_id: 583
     position:
       x: 8733.447
@@ -7955,7 +8061,7 @@ spawns:
     radius: 20.5
     count: 1
     delay: 55000
-  - id: 879
+  - id: 891
     mover_id: 583
     position:
       x: 8806.042
@@ -7964,7 +8070,7 @@ spawns:
     radius: 21
     count: 1
     delay: 55000
-  - id: 880
+  - id: 892
     mover_id: 584
     position:
       x: 8720.13
@@ -7973,7 +8079,7 @@ spawns:
     radius: 70
     count: 1
     delay: 2100000
-  - id: 881
+  - id: 893
     mover_id: 1058
     position:
       x: 6447.806
@@ -7982,7 +8088,7 @@ spawns:
     radius: 81
     count: 40
     delay: 35000
-  - id: 882
+  - id: 894
     mover_id: 1058
     position:
       x: 6640.903
@@ -7991,7 +8097,7 @@ spawns:
     radius: 96.5
     count: 40
     delay: 35000
-  - id: 883
+  - id: 895
     mover_id: 1059
     position:
       x: 6879.755
@@ -8000,7 +8106,7 @@ spawns:
     radius: 111.5
     count: 40
     delay: 35000
-  - id: 884
+  - id: 896
     mover_id: 1059
     position:
       x: 7124.817
@@ -8009,7 +8115,7 @@ spawns:
     radius: 128.5
     count: 40
     delay: 35000
-  - id: 885
+  - id: 897
     mover_id: 1106
     position:
       x: 7060.206
@@ -8018,7 +8124,7 @@ spawns:
     radius: 26
     count: 7
     delay: 35000
-  - id: 886
+  - id: 898
     mover_id: 1106
     position:
       x: 7019.898
@@ -8027,7 +8133,7 @@ spawns:
     radius: 15
     count: 5
     delay: 35000
-  - id: 887
+  - id: 899
     mover_id: 1106
     position:
       x: 6995.668
@@ -8036,7 +8142,7 @@ spawns:
     radius: 37
     count: 10
     delay: 35000
-  - id: 888
+  - id: 900
     mover_id: 1106
     position:
       x: 7040.927
@@ -8045,7 +8151,7 @@ spawns:
     radius: 9.5
     count: 3
     delay: 35000
-  - id: 889
+  - id: 901
     mover_id: 1106
     position:
       x: 7069.355
@@ -8054,7 +8160,7 @@ spawns:
     radius: 12
     count: 3
     delay: 35000
-  - id: 890
+  - id: 902
     mover_id: 1106
     position:
       x: 7089.665
@@ -8063,7 +8169,7 @@ spawns:
     radius: 13
     count: 3
     delay: 35000
-  - id: 891
+  - id: 903
     mover_id: 1106
     position:
       x: 7123.286
@@ -8072,7 +8178,7 @@ spawns:
     radius: 17
     count: 7
     delay: 35000
-  - id: 892
+  - id: 904
     mover_id: 1106
     position:
       x: 7067.75
@@ -8081,7 +8187,7 @@ spawns:
     radius: 27
     count: 5
     delay: 35000
-  - id: 893
+  - id: 905
     mover_id: 1106
     position:
       x: 6861.03
@@ -8090,7 +8196,7 @@ spawns:
     radius: 11
     count: 3
     delay: 35000
-  - id: 894
+  - id: 906
     mover_id: 1106
     position:
       x: 6926.209
@@ -8099,7 +8205,7 @@ spawns:
     radius: 23.5
     count: 5
     delay: 35000
-  - id: 895
+  - id: 907
     mover_id: 1106
     position:
       x: 7003.109
@@ -8108,7 +8214,7 @@ spawns:
     radius: 10.5
     count: 2
     delay: 35000
-  - id: 896
+  - id: 908
     mover_id: 1106
     position:
       x: 6981.542
@@ -8117,7 +8223,7 @@ spawns:
     radius: 35.5
     count: 10
     delay: 35000
-  - id: 897
+  - id: 909
     mover_id: 1106
     position:
       x: 7003.125
@@ -8126,7 +8232,7 @@ spawns:
     radius: 8.5
     count: 2
     delay: 35000
-  - id: 898
+  - id: 910
     mover_id: 1106
     position:
       x: 7085.891
@@ -8135,7 +8241,7 @@ spawns:
     radius: 26.5
     count: 20
     delay: 35000
-  - id: 899
+  - id: 911
     mover_id: 1107
     position:
       x: 7186.917
@@ -8144,7 +8250,7 @@ spawns:
     radius: 26.5
     count: 10
     delay: 35000
-  - id: 900
+  - id: 912
     mover_id: 1107
     position:
       x: 7187.008
@@ -8153,7 +8259,7 @@ spawns:
     radius: 34.5
     count: 7
     delay: 35000
-  - id: 901
+  - id: 913
     mover_id: 1107
     position:
       x: 7184.82
@@ -8162,7 +8268,7 @@ spawns:
     radius: 24
     count: 10
     delay: 35000
-  - id: 902
+  - id: 914
     mover_id: 1107
     position:
       x: 7275.224
@@ -8171,7 +8277,7 @@ spawns:
     radius: 55
     count: 7
     delay: 35000
-  - id: 903
+  - id: 915
     mover_id: 1107
     position:
       x: 7402.889
@@ -8180,7 +8286,7 @@ spawns:
     radius: 110.5
     count: 30
     delay: 35000
-  - id: 904
+  - id: 916
     mover_id: 1108
     position:
       x: 7913.682
@@ -8189,7 +8295,7 @@ spawns:
     radius: 46
     count: 7
     delay: 35000
-  - id: 905
+  - id: 917
     mover_id: 1108
     position:
       x: 7772.446
@@ -8198,7 +8304,7 @@ spawns:
     radius: 107.5
     count: 25
     delay: 35000
-  - id: 906
+  - id: 918
     mover_id: 1108
     position:
       x: 8107.04
@@ -8207,7 +8313,7 @@ spawns:
     radius: 43
     count: 15
     delay: 35000
-  - id: 907
+  - id: 919
     mover_id: 1108
     position:
       x: 8031.734
@@ -8216,7 +8322,7 @@ spawns:
     radius: 39.5
     count: 5
     delay: 35000
-  - id: 908
+  - id: 920
     mover_id: 1106
     position:
       x: 8019.201
@@ -8225,7 +8331,7 @@ spawns:
     radius: 43.5
     count: 10
     delay: 35000
-  - id: 909
+  - id: 921
     mover_id: 1110
     position:
       x: 8151.931
@@ -8234,7 +8340,7 @@ spawns:
     radius: 44
     count: 10
     delay: 35000
-  - id: 910
+  - id: 922
     mover_id: 1107
     position:
       x: 7935.432
@@ -8243,7 +8349,7 @@ spawns:
     radius: 12.5
     count: 4
     delay: 35000
-  - id: 911
+  - id: 923
     mover_id: 1107
     position:
       x: 7954.055
@@ -8252,7 +8358,7 @@ spawns:
     radius: 21
     count: 3
     delay: 35000
-  - id: 912
+  - id: 924
     mover_id: 1107
     position:
       x: 7896.759
@@ -8261,7 +8367,7 @@ spawns:
     radius: 16
     count: 3
     delay: 35000
-  - id: 913
+  - id: 925
     mover_id: 1108
     position:
       x: 7879.523
@@ -8270,7 +8376,7 @@ spawns:
     radius: 43.5
     count: 7
     delay: 35000
-  - id: 914
+  - id: 926
     mover_id: 1108
     position:
       x: 7887.782
@@ -8279,7 +8385,7 @@ spawns:
     radius: 24.5
     count: 3
     delay: 35000
-  - id: 915
+  - id: 927
     mover_id: 1109
     position:
       x: 7970.481
@@ -8288,7 +8394,7 @@ spawns:
     radius: 62.5
     count: 10
     delay: 35000
-  - id: 916
+  - id: 928
     mover_id: 1107
     position:
       x: 8106.734
@@ -8297,7 +8403,7 @@ spawns:
     radius: 14
     count: 3
     delay: 35000
-  - id: 917
+  - id: 929
     mover_id: 1107
     position:
       x: 8140.639
@@ -8306,7 +8412,7 @@ spawns:
     radius: 17
     count: 2
     delay: 35000
-  - id: 918
+  - id: 930
     mover_id: 1108
     position:
       x: 8178.781
@@ -8315,7 +8421,7 @@ spawns:
     radius: 19.5
     count: 5
     delay: 35000
-  - id: 919
+  - id: 931
     mover_id: 1112
     position:
       x: 8200.808
@@ -8324,7 +8430,7 @@ spawns:
     radius: 28.5
     count: 1
     delay: 21600000
-  - id: 920
+  - id: 932
     mover_id: 1111
     position:
       x: 8194.592
@@ -8333,7 +8439,7 @@ spawns:
     radius: 30
     count: 7
     delay: 35000
-  - id: 921
+  - id: 933
     mover_id: 1109
     position:
       x: 8199.295
@@ -8342,7 +8448,7 @@ spawns:
     radius: 25
     count: 5
     delay: 35000
-  - id: 922
+  - id: 934
     mover_id: 1108
     position:
       x: 7690.124
@@ -8351,7 +8457,7 @@ spawns:
     radius: 76.5
     count: 10
     delay: 35000
-  - id: 923
+  - id: 935
     mover_id: 1108
     position:
       x: 7818.018
@@ -8360,7 +8466,7 @@ spawns:
     radius: 29.5
     count: 7
     delay: 35000
-  - id: 924
+  - id: 936
     mover_id: 1108
     position:
       x: 8090.204
@@ -8369,7 +8475,7 @@ spawns:
     radius: 112
     count: 20
     delay: 35000
-  - id: 925
+  - id: 937
     mover_id: 1108
     position:
       x: 7940.141
@@ -8378,7 +8484,7 @@ spawns:
     radius: 84.5
     count: 10
     delay: 35000
-  - id: 926
+  - id: 938
     mover_id: 1109
     position:
       x: 8185.046
@@ -8387,7 +8493,7 @@ spawns:
     radius: 75.5
     count: 15
     delay: 35000
-  - id: 927
+  - id: 939
     mover_id: 1109
     position:
       x: 7812.989
@@ -8396,7 +8502,7 @@ spawns:
     radius: 57.5
     count: 7
     delay: 35000
-  - id: 928
+  - id: 940
     mover_id: 1109
     position:
       x: 7896.119
@@ -8405,7 +8511,7 @@ spawns:
     radius: 68
     count: 15
     delay: 35000
-  - id: 929
+  - id: 941
     mover_id: 1109
     position:
       x: 8209.905
@@ -8414,7 +8520,7 @@ spawns:
     radius: 56.5
     count: 15
     delay: 35000
-  - id: 930
+  - id: 942
     mover_id: 1109
     position:
       x: 7751.927
@@ -8423,7 +8529,7 @@ spawns:
     radius: 85.5
     count: 20
     delay: 35000
-  - id: 931
+  - id: 943
     mover_id: 1181
     position:
       x: 8173.255
@@ -8432,7 +8538,7 @@ spawns:
     radius: 67.5
     count: 12
     delay: 50000
-  - id: 932
+  - id: 944
     mover_id: 1181
     position:
       x: 8022.515
@@ -8441,7 +8547,7 @@ spawns:
     radius: 55
     count: 15
     delay: 50000
-  - id: 933
+  - id: 945
     mover_id: 1181
     position:
       x: 8026.506
@@ -8450,7 +8556,7 @@ spawns:
     radius: 61
     count: 15
     delay: 50000
-  - id: 934
+  - id: 946
     mover_id: 1181
     position:
       x: 8020.463
@@ -8459,7 +8565,7 @@ spawns:
     radius: 100.5
     count: 20
     delay: 50000
-  - id: 935
+  - id: 947
     mover_id: 1181
     position:
       x: 7886.511
@@ -8468,7 +8574,7 @@ spawns:
     radius: 49
     count: 12
     delay: 50000
-  - id: 936
+  - id: 948
     mover_id: 1181
     position:
       x: 7898.395
@@ -8477,7 +8583,7 @@ spawns:
     radius: 91.5
     count: 22
     delay: 50000
-  - id: 937
+  - id: 949
     mover_id: 1180
     position:
       x: 7788.097
@@ -8486,7 +8592,7 @@ spawns:
     radius: 60
     count: 13
     delay: 50000
-  - id: 938
+  - id: 950
     mover_id: 1180
     position:
       x: 7694.686
@@ -8495,7 +8601,7 @@ spawns:
     radius: 72.5
     count: 17
     delay: 50000
-  - id: 939
+  - id: 951
     mover_id: 1180
     position:
       x: 7796.309
@@ -8504,7 +8610,7 @@ spawns:
     radius: 72.5
     count: 15
     delay: 50000
-  - id: 940
+  - id: 952
     mover_id: 1182
     position:
       x: 8147.174
@@ -8513,7 +8619,7 @@ spawns:
     radius: 8
     count: 1
     delay: 26100000
-  - id: 941
+  - id: 953
     mover_id: 1181
     position:
       x: 8145.94
@@ -8522,7 +8628,7 @@ spawns:
     radius: 89
     count: 22
     delay: 50000
-  - id: 942
+  - id: 954
     mover_id: 1181
     position:
       x: 7952.815
@@ -8531,7 +8637,7 @@ spawns:
     radius: 92.5
     count: 22
     delay: 50000
-  - id: 943
+  - id: 955
     mover_id: 1180
     position:
       x: 7771.093
@@ -8540,7 +8646,7 @@ spawns:
     radius: 76.5
     count: 17
     delay: 50000
-  - id: 944
+  - id: 956
     mover_id: 1180
     position:
       x: 7687.214
@@ -8549,7 +8655,7 @@ spawns:
     radius: 78
     count: 22
     delay: 50000
-  - id: 945
+  - id: 957
     mover_id: 1181
     position:
       x: 7830.014
@@ -8558,7 +8664,7 @@ spawns:
     radius: 92
     count: 10
     delay: 50000
-  - id: 946
+  - id: 958
     mover_id: 1181
     position:
       x: 7876.141
@@ -8567,7 +8673,7 @@ spawns:
     radius: 61.5
     count: 10
     delay: 50000
-  - id: 947
+  - id: 959
     mover_id: 1181
     position:
       x: 7733.09
@@ -8576,7 +8682,7 @@ spawns:
     radius: 52.5
     count: 10
     delay: 50000
-  - id: 948
+  - id: 960
     mover_id: 1180
     position:
       x: 7773.936
@@ -12039,16 +12145,6 @@ npcs:
     angle: 0
     functions: []
 regions:
-  # NOTE: the bogus "Flaris Safe Zone" (x6800-7200, z3100-3600) was removed -- it
-  # was centered on the revival point (6978,3329) which sits in the Captain
-  # Mushpang field, NOT in Flaris town (NPCs cluster at x~2800-3700, z~2100-3100).
-  # With it present, every mushpang-field swing tripped the v19 RA_SAFETY gate
-  # (AIMonster.cpp:1622) -> monster dropped target, snapped home, and silent-
-  # full-healed every tick -> unkillable except by a one-shot crit. The C++ gate
-  # is correct; the region DATA was wrong. Re-add a safe region ONLY after
-  # extracting real RA_SAFETY AABBs from WdMadrigal.rgn.
-  # WARNING: extractFlaris rewrites this file via YAML stringify, which DROPS
-  # comments. Re-add this note after any `pnpm extract:flaris` run.
   - id: 2
     name: Flaris PVP Arena
     type: pvp

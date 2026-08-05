@@ -11,6 +11,8 @@
 
 import { readFile } from 'node:fs/promises';
 
+import { stripBlockComments } from '../../src/defineHeader.js';
+
 /** Flyff `=` cell means "same value as the previous row" -- resolve it. */
 const INHERIT = '=';
 
@@ -75,6 +77,12 @@ export function parsePropTable(content: string): Row[] {
 }
 
 /**
+ * Re-export of the shared header helper (`src/defineHeader.ts`) so the converter
+ * modules keep importing block-comment stripping from `./parse.js`.
+ */
+export { stripBlockComments };
+
+/**
  * Parse a `define*.h` header into `SYM -> numeric value`.
  * e.g. `#define MI_AIBATT1   20` -> { 'MI_AIBATT1': 20 }
  *
@@ -83,14 +91,14 @@ export function parsePropTable(content: string): Row[] {
 export function parseDefines(content: string, prefix: string): Map<string, number> {
   const out = new Map<string, number>();
   const re = new RegExp(`^\\s*#define\\s+(${prefix}\\w+)\\s+(\\d+)`, 'gm');
-  // First-write-wins -- matches `loadAllDefines` (questTokenize.ts). Some define
-  // files (e.g. defineObj.h) have duplicate symbols in separate sections
-  // (original vs renumbered). The FIRST section matches the numbering used by
-  // the quest/item/drop data; taking the last definition here would give movers
-  // a different `dwObjIndex` than the quest drops key on the same symbol,
-  // silently breaking quest-item drops (e.g. MI_LAWOLF3 = 34 in quests but 38
-  // in movers). Preserving the first definition keeps both sides aligned.
-  for (let m = re.exec(content); m !== null; m = re.exec(content)) {
+  // First-write-wins on the COMMENT-STRIPPED text -- matches `loadAllDefines`
+  // (questTokenize.ts). Some define files (e.g. defineJob.h) still carry
+  // duplicate symbols in separate LIVE sections (original vs 3RD_LEGEND16
+  // renumbering); the first matches the numbering the quest/item/drop data and
+  // stored player state use, so keep it. What we must NOT do is let a dead
+  // commented-out section win -- hence `stripBlockComments` first.
+  const live = stripBlockComments(content);
+  for (let m = re.exec(live); m !== null; m = re.exec(live)) {
     if (!out.has(m[1])) out.set(m[1], parseInt(m[2], 10));
   }
   return out;

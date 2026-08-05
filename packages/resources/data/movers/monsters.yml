@@ -78,11 +78,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 71
+  - id: 23
     key: MI_AIBATT4
     name: Giant Aibatt
     name_id: IDS_PROPMOVER_TXT_000012
-    dwObjIndex: 71
+    dwObjIndex: 23
     scale: 1
     type: boss
     level: 5
@@ -216,11 +216,11 @@ movers:
     runawayDelay: 1000
     healHpPct: 20
     healPct: 50
-  - id: 23
+  - id: 24
     key: MI_BURUDENG1
     name: Small Burudeng
     name_id: IDS_PROPMOVER_TXT_000022
-    dwObjIndex: 23
+    dwObjIndex: 24
     scale: 1
     type: monster
     level: 5
@@ -242,11 +242,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 24
+  - id: 25
     key: MI_BURUDENG2
     name: Burudeng
     name_id: IDS_PROPMOVER_TXT_000024
-    dwObjIndex: 24
+    dwObjIndex: 25
     scale: 1
     type: monster
     level: 5
@@ -268,11 +268,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 25
+  - id: 26
     key: MI_BURUDENG3
     name: Captain Burudeng
     name_id: IDS_PROPMOVER_TXT_000026
-    dwObjIndex: 25
+    dwObjIndex: 26
     scale: 1
     type: monster
     level: 6
@@ -294,11 +294,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 72
+  - id: 27
     key: MI_BURUDENG4
     name: Giant Burudeng
     name_id: IDS_PROPMOVER_TXT_000028
-    dwObjIndex: 72
+    dwObjIndex: 27
     scale: 1
     type: boss
     level: 9
@@ -320,11 +320,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 26
+  - id: 28
     key: MI_PUKEPUKE1
     name: Small Pukepuke
     name_id: IDS_PROPMOVER_TXT_000030
-    dwObjIndex: 26
+    dwObjIndex: 28
     scale: 1
     type: monster
     level: 7
@@ -348,11 +348,11 @@ movers:
     belligerence: 11
     fleeHpPct: 10
     runawayDelay: 750
-  - id: 27
+  - id: 29
     key: MI_PUKEPUKE2
     name: Pukepuke
     name_id: IDS_PROPMOVER_TXT_000032
-    dwObjIndex: 27
+    dwObjIndex: 29
     scale: 1
     type: monster
     level: 7
@@ -376,11 +376,11 @@ movers:
     belligerence: 11
     fleeHpPct: 10
     runawayDelay: 750
-  - id: 28
+  - id: 30
     key: MI_PUKEPUKE3
     name: Captain Pukepuke
     name_id: IDS_PROPMOVER_TXT_000034
-    dwObjIndex: 28
+    dwObjIndex: 30
     scale: 1
     type: monster
     level: 8
@@ -404,11 +404,11 @@ movers:
     belligerence: 11
     fleeHpPct: 10
     runawayDelay: 750
-  - id: 73
+  - id: 31
     key: MI_PUKEPUKE4
     name: Giant Pukepuke
     name_id: IDS_PROPMOVER_TXT_000036
-    dwObjIndex: 73
+    dwObjIndex: 31
     scale: 1
     type: boss
     level: 11
@@ -644,11 +644,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 29
+  - id: 32
     key: MI_DORIDOMA1
     name: Small Doridoma
     name_id: IDS_PROPMOVER_TXT_000054
-    dwObjIndex: 29
+    dwObjIndex: 32
     scale: 1
     type: monster
     level: 11
@@ -670,11 +670,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 30
+  - id: 33
     key: MI_DORIDOMA2
     name: Doridoma
     name_id: IDS_PROPMOVER_TXT_000056
-    dwObjIndex: 30
+    dwObjIndex: 33
     scale: 1
     type: monster
     level: 11
@@ -696,11 +696,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 31
+  - id: 34
     key: MI_DORIDOMA3
     name: Captain Doridoma
     name_id: IDS_PROPMOVER_TXT_000058
-    dwObjIndex: 31
+    dwObjIndex: 34
     scale: 1
     type: monster
     level: 12
@@ -722,11 +722,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 74
+  - id: 35
     key: MI_DORIDOMA4
     name: Giant Doridoma
     name_id: IDS_PROPMOVER_TXT_000060
-    dwObjIndex: 74
+    dwObjIndex: 35
     scale: 1
     type: boss
     level: 15
@@ -750,11 +750,11 @@ movers:
     belligerence: 12
     fleeHpPct: 10
     runawayDelay: 1000
-  - id: 32
+  - id: 36
     key: MI_LAWOLF1
     name: Young Lawolf
     name_id: IDS_PROPMOVER_TXT_000062
-    dwObjIndex: 32
+    dwObjIndex: 36
     scale: 1
     type: monster
     level: 13
@@ -776,11 +776,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 33
+  - id: 37
     key: MI_LAWOLF2
     name: Lawolf
     name_id: IDS_PROPMOVER_TXT_000064
-    dwObjIndex: 33
+    dwObjIndex: 37
     scale: 1
     type: monster
     level: 13
@@ -802,11 +802,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 34
+  - id: 38
     key: MI_LAWOLF3
     name: Grownup Lawolf
     name_id: IDS_PROPMOVER_TXT_000066
-    dwObjIndex: 34
+    dwObjIndex: 38
     scale: 1
     type: monster
     level: 14
@@ -828,11 +828,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 75
+  - id: 39
     key: MI_LAWOLF4
     name: Giant Lawolf
     name_id: IDS_PROPMOVER_TXT_000068
-    dwObjIndex: 75
+    dwObjIndex: 39
     scale: 1
     type: boss
     level: 17
@@ -856,11 +856,11 @@ movers:
     belligerence: 11
     fleeHpPct: 20
     runawayDelay: 1000
-  - id: 50
+  - id: 60
     key: MI_FEFERN1
     name: 1st Class Fefern
     name_id: IDS_PROPMOVER_TXT_000070
-    dwObjIndex: 50
+    dwObjIndex: 60
     scale: 1
     type: monster
     level: 15
@@ -882,11 +882,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 51
+  - id: 61
     key: MI_FEFERN2
     name: Fefern
     name_id: IDS_PROPMOVER_TXT_000072
-    dwObjIndex: 51
+    dwObjIndex: 61
     scale: 1
     type: monster
     level: 15
@@ -908,11 +908,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 52
+  - id: 62
     key: MI_FEFERN3
     name: 2nd Class Fefern
     name_id: IDS_PROPMOVER_TXT_000074
-    dwObjIndex: 52
+    dwObjIndex: 62
     scale: 1
     type: monster
     level: 16
@@ -934,11 +934,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 81
+  - id: 63
     key: MI_FEFERN4
     name: Giant Fefern
     name_id: IDS_PROPMOVER_TXT_000076
-    dwObjIndex: 81
+    dwObjIndex: 63
     scale: 1
     type: boss
     level: 19
@@ -960,11 +960,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 35
+  - id: 40
     key: MI_NYANGNYANG1
     name: Cute Nyangnyang
     name_id: IDS_PROPMOVER_TXT_000078
-    dwObjIndex: 35
+    dwObjIndex: 40
     scale: 1
     type: monster
     level: 17
@@ -986,11 +986,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 36
+  - id: 41
     key: MI_NYANGNYANG2
     name: Nyangnyang
     name_id: IDS_PROPMOVER_TXT_000080
-    dwObjIndex: 36
+    dwObjIndex: 41
     scale: 1
     type: monster
     level: 17
@@ -1014,11 +1014,11 @@ movers:
     belligerence: 12
     fleeHpPct: 10
     runawayDelay: 1000
-  - id: 37
+  - id: 42
     key: MI_NYANGNYANG3
     name: Creep Nyangnyang
     name_id: IDS_PROPMOVER_TXT_000082
-    dwObjIndex: 37
+    dwObjIndex: 42
     scale: 1
     type: monster
     level: 18
@@ -1040,11 +1040,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 76
+  - id: 43
     key: MI_NYANGNYANG4
     name: Giant Nyangnyang
     name_id: IDS_PROPMOVER_TXT_000084
-    dwObjIndex: 76
+    dwObjIndex: 43
     scale: 1
     type: boss
     level: 21
@@ -1066,11 +1066,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 38
+  - id: 44
     key: MI_BANG1
     name: Bang
     name_id: IDS_PROPMOVER_TXT_000086
-    dwObjIndex: 38
+    dwObjIndex: 44
     scale: 1
     type: monster
     level: 19
@@ -1092,11 +1092,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 39
+  - id: 45
     key: MI_BANG2
     name: Captain Bang
     name_id: IDS_PROPMOVER_TXT_000088
-    dwObjIndex: 39
+    dwObjIndex: 45
     scale: 1
     type: monster
     level: 19
@@ -1118,11 +1118,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 40
+  - id: 46
     key: MI_BANG3
     name: Boss Bang
     name_id: IDS_PROPMOVER_TXT_000090
-    dwObjIndex: 40
+    dwObjIndex: 46
     scale: 1
     type: monster
     level: 20
@@ -1144,11 +1144,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 11
-  - id: 77
+  - id: 47
     key: MI_BANG4
     name: Giant Bang
     name_id: IDS_PROPMOVER_TXT_000092
-    dwObjIndex: 77
+    dwObjIndex: 47
     scale: 1
     type: boss
     level: 23
@@ -1172,11 +1172,11 @@ movers:
     belligerence: 11
     fleeHpPct: 10
     runawayDelay: 1000
-  - id: 41
+  - id: 48
     key: MI_WAGSAAC1
     name: Small Wagsaac
     name_id: IDS_PROPMOVER_TXT_000094
-    dwObjIndex: 41
+    dwObjIndex: 48
     scale: 1
     type: monster
     level: 21
@@ -1198,11 +1198,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 42
+  - id: 49
     key: MI_WAGSAAC2
     name: Wagsaac
     name_id: IDS_PROPMOVER_TXT_000096
-    dwObjIndex: 42
+    dwObjIndex: 49
     scale: 1
     type: monster
     level: 21
@@ -1224,11 +1224,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 43
+  - id: 50
     key: MI_WAGSAAC3
     name: Captain Wagsaac
     name_id: IDS_PROPMOVER_TXT_000098
-    dwObjIndex: 43
+    dwObjIndex: 50
     scale: 1
     type: monster
     level: 22
@@ -1250,11 +1250,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 78
+  - id: 51
     key: MI_WAGSAAC4
     name: Giant Wagsaac
     name_id: IDS_PROPMOVER_TXT_000100
-    dwObjIndex: 78
+    dwObjIndex: 51
     scale: 1
     type: boss
     level: 25
@@ -1382,11 +1382,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 53
+  - id: 68
     key: MI_MRPUMPKIN1
     name: Stale Mr. Pumpkin
     name_id: IDS_PROPMOVER_TXT_000110
-    dwObjIndex: 53
+    dwObjIndex: 68
     scale: 1
     type: monster
     level: 25
@@ -1408,11 +1408,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 54
+  - id: 69
     key: MI_MRPUMPKIN2
     name: Mr. Pumpkin
     name_id: IDS_PROPMOVER_TXT_000112
-    dwObjIndex: 54
+    dwObjIndex: 69
     scale: 1
     type: monster
     level: 25
@@ -1434,11 +1434,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 55
+  - id: 70
     key: MI_MRPUMPKIN3
     name: Rotten Mr Pumpkin
     name_id: IDS_PROPMOVER_TXT_000114
-    dwObjIndex: 55
+    dwObjIndex: 70
     scale: 1
     type: monster
     level: 26
@@ -1460,11 +1460,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 82
+  - id: 71
     key: MI_MRPUMPKIN4
     name: Giant Mr. Pumpkin
     name_id: IDS_PROPMOVER_TXT_000116
-    dwObjIndex: 82
+    dwObjIndex: 71
     scale: 1
     type: boss
     level: 29
@@ -1486,11 +1486,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 56
+  - id: 64
     key: MI_REDMANTIS1
     name: Red Mantis C
     name_id: IDS_PROPMOVER_TXT_000118
-    dwObjIndex: 56
+    dwObjIndex: 64
     scale: 1
     type: monster
     level: 27
@@ -1512,11 +1512,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 57
+  - id: 65
     key: MI_REDMANTIS2
     name: Red Mantis B
     name_id: IDS_PROPMOVER_TXT_000120
-    dwObjIndex: 57
+    dwObjIndex: 65
     scale: 1
     type: monster
     level: 27
@@ -1538,11 +1538,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 58
+  - id: 66
     key: MI_REDMANTIS3
     name: Red Mantis A
     name_id: IDS_PROPMOVER_TXT_000122
-    dwObjIndex: 58
+    dwObjIndex: 66
     scale: 1
     type: monster
     level: 28
@@ -1564,11 +1564,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 83
+  - id: 67
     key: MI_REDMANTIS4
     name: Giant Red Mantis
     name_id: IDS_PROPMOVER_TXT_000124
-    dwObjIndex: 83
+    dwObjIndex: 67
     scale: 1
     type: boss
     level: 31
@@ -2110,11 +2110,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 47
+  - id: 103
     key: MI_TOTEMIA1
     name: Small Totemia
     name_id: IDS_PROPMOVER_TXT_000166
-    dwObjIndex: 47
+    dwObjIndex: 103
     scale: 1
     type: monster
     level: 39
@@ -2136,11 +2136,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 48
+  - id: 104
     key: MI_TOTEMIA2
     name: Totemia
     name_id: IDS_PROPMOVER_TXT_000168
-    dwObjIndex: 48
+    dwObjIndex: 104
     scale: 1
     type: monster
     level: 39
@@ -2162,11 +2162,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 49
+  - id: 105
     key: MI_TOTEMIA3
     name: Captain Totemia
     name_id: IDS_PROPMOVER_TXT_000170
-    dwObjIndex: 49
+    dwObjIndex: 105
     scale: 1
     type: monster
     level: 40
@@ -2188,11 +2188,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 80
+  - id: 106
     key: MI_TOTEMIA4
     name: Giant Totemia
     name_id: IDS_PROPMOVER_TXT_000172
-    dwObjIndex: 80
+    dwObjIndex: 106
     scale: 1
     type: boss
     level: 43
@@ -2214,11 +2214,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 62
+  - id: 84
     key: MI_CARDPUPPET1
     name: Maid Cardpuppet
     name_id: IDS_PROPMOVER_TXT_000174
-    dwObjIndex: 62
+    dwObjIndex: 84
     scale: 1
     type: monster
     level: 41
@@ -2240,11 +2240,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 63
+  - id: 85
     key: MI_CARDPUPPET2
     name: Cardpuppet
     name_id: IDS_PROPMOVER_TXT_000176
-    dwObjIndex: 63
+    dwObjIndex: 85
     scale: 1
     type: monster
     level: 41
@@ -2266,11 +2266,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 64
+  - id: 86
     key: MI_CARDPUPPET3
     name: Manager Cardpuppet
     name_id: IDS_PROPMOVER_TXT_000178
-    dwObjIndex: 64
+    dwObjIndex: 86
     scale: 1
     type: monster
     level: 42
@@ -2292,11 +2292,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 85
+  - id: 87
     key: MI_CARDPUPPET4
     name: Boss Cardpuppet
     name_id: IDS_PROPMOVER_TXT_000180
-    dwObjIndex: 85
+    dwObjIndex: 87
     scale: 1
     type: boss
     level: 45
@@ -2422,11 +2422,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 59
+  - id: 72
     key: MI_BASQUE1
     name: Phantom Basque
     name_id: IDS_PROPMOVER_TXT_000190
-    dwObjIndex: 59
+    dwObjIndex: 72
     scale: 1
     type: monster
     level: 45
@@ -2448,11 +2448,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 60
+  - id: 73
     key: MI_BASQUE2
     name: Basque
     name_id: IDS_PROPMOVER_TXT_000192
-    dwObjIndex: 60
+    dwObjIndex: 73
     scale: 1
     type: monster
     level: 45
@@ -2474,11 +2474,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 61
+  - id: 74
     key: MI_BASQUE3
     name: Lumping Basque
     name_id: IDS_PROPMOVER_TXT_000194
-    dwObjIndex: 61
+    dwObjIndex: 74
     scale: 1
     type: monster
     level: 46
@@ -2500,11 +2500,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 84
+  - id: 75
     key: MI_BASQUE4
     name: Giant Basque
     name_id: IDS_PROPMOVER_TXT_000196
-    dwObjIndex: 84
+    dwObjIndex: 75
     scale: 1
     type: boss
     level: 49
@@ -2526,11 +2526,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 65
+  - id: 80
     key: MI_PRANKSTER1
     name: Small Mage Prankster
     name_id: IDS_PROPMOVER_TXT_000198
-    dwObjIndex: 65
+    dwObjIndex: 80
     scale: 1
     type: monster
     level: 47
@@ -2552,11 +2552,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 66
+  - id: 81
     key: MI_PRANKSTER2
     name: Prankster
     name_id: IDS_PROPMOVER_TXT_000200
-    dwObjIndex: 66
+    dwObjIndex: 81
     scale: 1
     type: monster
     level: 47
@@ -2578,11 +2578,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 67
+  - id: 82
     key: MI_PRANKSTER3
     name: Master Mage Prankster
     name_id: IDS_PROPMOVER_TXT_000202
-    dwObjIndex: 67
+    dwObjIndex: 82
     scale: 1
     type: monster
     level: 48
@@ -2604,11 +2604,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 86
+  - id: 83
     key: MI_PRANKSTER4
     name: Giantmage Prankster
     name_id: IDS_PROPMOVER_TXT_000204
-    dwObjIndex: 86
+    dwObjIndex: 83
     scale: 1
     type: boss
     level: 51
@@ -2630,11 +2630,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 13
-  - id: 44
+  - id: 52
     key: MI_WHEELEM1
     name: Rough Wheelem
     name_id: IDS_PROPMOVER_TXT_000206
-    dwObjIndex: 44
+    dwObjIndex: 52
     scale: 1
     type: monster
     level: 49
@@ -2656,11 +2656,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 45
+  - id: 53
     key: MI_WHEELEM2
     name: Wheelem
     name_id: IDS_PROPMOVER_TXT_000208
-    dwObjIndex: 45
+    dwObjIndex: 53
     scale: 1
     type: monster
     level: 49
@@ -2682,11 +2682,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 46
+  - id: 54
     key: MI_WHEELEM3
     name: Bouncing Wheelem
     name_id: IDS_PROPMOVER_TXT_000210
-    dwObjIndex: 46
+    dwObjIndex: 54
     scale: 1
     type: monster
     level: 50
@@ -2708,11 +2708,11 @@ movers:
     attackable: true
     guard: false
     belligerence: 12
-  - id: 79
+  - id: 55
     key: MI_WHEELEM4
     name: Giant Wheelem
     name_id: IDS_PROPMOVER_TXT_000212
-    dwObjIndex: 79
+    dwObjIndex: 55
     scale: 1
     type: boss
     level: 53

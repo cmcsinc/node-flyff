@@ -282,7 +282,6 @@ function rowToItem(
   //  - buff scrolls (IK2_BUFF/IK2_BUFF2): applied as a timed item-buff on consume
   //    (UseItemService IK2_BUFF branch -> BuffManager.addItemBuff). Their DST is
   //    everything-except-HP/MP/FP (e.g. DST_STR on II_SYS_SYS_SCR_STR).
-  const kind2 = row.dwItemKind2 ?? '';
   const isBuffItem = kind2 === 'IK2_BUFF' || kind2 === 'IK2_BUFF2';
   if (isEquippable || isBuffItem) {
     const effects: Array<{ dst: number; adj: number; chg?: number }> = [];

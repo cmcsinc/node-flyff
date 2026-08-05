@@ -108,19 +108,19 @@ dialog:
   "10": IDS_PROPQUEST_INC_000652
   "11": IDS_PROPQUEST_INC_000653
 quest_items:
-  - mover: 41
+  - mover: 48
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 42
+  - mover: 49
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 43
+  - mover: 50
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 78
+  - mover: 51
     item: 18097
     prob: 750000000
     num: 1
@@ -140,35 +140,35 @@ quest_items:
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 53
+  - mover: 68
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 54
+  - mover: 69
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 55
+  - mover: 70
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 82
+  - mover: 71
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 56
+  - mover: 64
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 57
+  - mover: 65
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 58
+  - mover: 66
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 83
+  - mover: 67
     item: 18097
     prob: 750000000
     num: 1
@@ -252,35 +252,35 @@ quest_items:
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 47
+  - mover: 103
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 48
+  - mover: 104
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 49
+  - mover: 105
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 80
+  - mover: 106
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 62
-    item: 18097
-    prob: 750000000
-    num: 1
-  - mover: 63
-    item: 18097
-    prob: 750000000
-    num: 1
-  - mover: 64
+  - mover: 84
     item: 18097
     prob: 750000000
     num: 1
   - mover: 85
+    item: 18097
+    prob: 750000000
+    num: 1
+  - mover: 86
+    item: 18097
+    prob: 750000000
+    num: 1
+  - mover: 87
     item: 18097
     prob: 750000000
     num: 1
@@ -300,51 +300,51 @@ quest_items:
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 59
+  - mover: 72
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 60
+  - mover: 73
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 61
+  - mover: 74
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 84
+  - mover: 75
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 65
+  - mover: 80
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 66
+  - mover: 81
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 67
+  - mover: 82
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 86
+  - mover: 83
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 44
+  - mover: 52
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 45
+  - mover: 53
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 46
+  - mover: 54
     item: 18097
     prob: 750000000
     num: 1
-  - mover: 79
+  - mover: 55
     item: 18097
     prob: 750000000
     num: 1

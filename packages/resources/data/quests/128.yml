@@ -49,7 +49,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 29
+        value: 32
       - type: num
         value: 1
       - type: num
@@ -143,7 +143,7 @@ dialog:
   "8": IDS_PROPQUEST_INC_001357
   "10": IDS_PROPQUEST_INC_001358
 quest_items:
-  - mover: 29
+  - mover: 32
     item: 18165
     prob: 1000000000
     num: 1

@@ -69,7 +69,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 61
+        value: 74
       - type: num
         value: 60
       - type: num
@@ -83,7 +83,7 @@ commands:
       - type: num
         value: 1
       - type: sym
-        value: 66
+        value: 81
       - type: num
         value: 70
       - type: num

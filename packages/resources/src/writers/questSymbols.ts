@@ -20,6 +20,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
+import { decodeDefineHeader, stripBlockComments } from '../defineHeader';
+
 /** Forward + prefix-bucketed reverse `#define` tables. */
 export interface QuestWriterSymbols {
   /** `SYMBOL -> value`, first-write-wins across all `define*.h`. */
@@ -55,19 +57,18 @@ export function symbolFor(
 }
 
 /** Decode a define header buffer (the v19 headers are UTF-16LE with BOM). */
-function decodeHeader(buf: Buffer): string {
-  if (buf[0] === 0xff && buf[1] === 0xfe) return buf.subarray(2).toString('utf16le');
-  return buf.toString('utf8');
-}
+const decodeHeader = decodeDefineHeader;
 
 /**
  * Build {@link QuestWriterSymbols} from every `define*.h` in `rawDir`.
  *
- * FIRST-WRITE-WINS, matching `scripts/converters/questTokenize.ts`'s
- * `loadAllDefines`: `defineJob.h` defines the `JOB_*` symbols twice (original
- * numbering, then the `__3RD_LEGEND16` renumbering) and the converter resolved
- * quest arguments against the FIRST table. The writer must invert the same
- * table or a `JOB_*` argument would round-trip to a different job.
+ * FIRST-WRITE-WINS over the COMMENT-STRIPPED text, matching
+ * `scripts/converters/questTokenize.ts`'s `loadAllDefines`: `defineJob.h`
+ * defines the `JOB_*` symbols twice (original numbering, then the
+ * `__3RD_LEGEND16` renumbering) and the converter resolved quest arguments
+ * against the FIRST LIVE table. The writer must invert the same table or a
+ * `JOB_*` argument would round-trip to a different job -- which is also why the
+ * dead commented-out `MI_*` block in `defineObj.h` must be blanked here too.
  */
 export async function loadQuestSymbols(rawDir: string): Promise<QuestWriterSymbols> {
   const byName = new Map<string, number>();
@@ -79,7 +80,7 @@ export async function loadQuestSymbols(rawDir: string): Promise<QuestWriterSymbo
   }
   const re = /^\s*#\s*define\s+([A-Za-z_]\w*)\s+(-?\d+)/gm;
   for (const f of files) {
-    const text = decodeHeader(await readFile(resolve(rawDir, f)));
+    const text = stripBlockComments(decodeHeader(await readFile(resolve(rawDir, f))));
     for (let m = re.exec(text); m !== null; m = re.exec(text)) {
       const sym = m[1];
       const raw = m[2];

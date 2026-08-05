@@ -6087,6 +6087,11 @@ items:
     item_kind3: IK3_BCHARM
     equip_slot: 25
     mp_restore: 9999
+    effects:
+      - dst: 39
+        adj: 9999
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - billposter
@@ -6105,6 +6110,11 @@ items:
     item_kind3: IK3_RCHARM
     equip_slot: 25
     mp_restore: 9999
+    effects:
+      - dst: 39
+        adj: 9999
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - ringmaster
@@ -6123,6 +6133,11 @@ items:
     item_kind3: IK3_ARROW
     equip_slot: 25
     mp_restore: 9999
+    effects:
+      - dst: 39
+        adj: 9999
+      - dst: 77
+        adj: 73
     durability: 12000000
     job_req:
       - acrobat
@@ -10614,6 +10629,13 @@ items:
     item_kind2: IK2_BULLET
     item_kind3: IK3_CROSSARROW
     equip_slot: 25
+    effects:
+      - dst: 11
+        adj: 10
+      - dst: 35
+        adj: 100
+      - dst: 83
+        adj: 150
     durability: 7200000
     job_req:
       - vagrant

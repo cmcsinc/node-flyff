@@ -72,7 +72,7 @@ states:
     cond: IDS_PROPQUEST_INC_000067
     status: IDS_PROPQUEST_INC_000068
 quest_items:
-  - mover: 23
+  - mover: 24
     item: 6005
     prob: 1500000000
     num: 1

@@ -121,7 +121,7 @@ commands:
       - type: num
         value: 0
       - type: sym
-        value: 56
+        value: 64
       - type: num
         value: 10
       - type: num
@@ -179,7 +179,7 @@ dialog:
   "7": IDS_PROPQUEST_INC_001147
   "10": IDS_PROPQUEST_INC_001148
 quest_items:
-  - mover: 56
+  - mover: 64
     item: 6048
     prob: 1500000000
     num: 1

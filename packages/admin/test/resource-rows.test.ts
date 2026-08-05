@@ -62,12 +62,17 @@ describe("moverRows", () => {
     }
   });
 
-  it("gives every mover a unique MI_ key, even where ids collide", () => {
-    // defineObj.h reuses ids 56-59 across two MI_* blocks, so the row key must be
-    // the symbol; this asserts the symbol is actually usable as one.
+  it("keys every mover by its MI_ symbol, and the ids no longer collide", () => {
+    // The row key is the symbol, not the id -- that stays true regardless. Ids
+    // used to collide (56-59 appeared in two MI_* blocks) because `parseDefines`
+    // read the dead commented-out block in defineObj.h as live; once block
+    // comments are stripped, the live block alone numbers every mover uniquely.
     const keys = rows.map((r) => r.key).filter(Boolean);
     assert.equal(new Set(keys).size, keys.length, "MI_ keys must be unique");
-    assert.ok(new Set(rows.map((r) => r.id)).size < rows.length, "expected the known id collisions");
+    assert.equal(
+      new Set(rows.map((r) => r.id)).size, rows.length,
+      "dwObjIndex must be unique -- a duplicate means a dead define block leaked back in",
+    );
   });
 });
 
