@@ -15,6 +15,7 @@ function fakePlayer(pk = false): CPlayer {
     m_dwPKPropensity: pk ? 1 : 0,
     _dirty: new Set<string>(),
     isChaotic: () => pk,
+    isFly: () => false,
   } as unknown as CPlayer;
 }
 
@@ -30,6 +31,7 @@ function moverOf(opts: { attackable?: boolean; guard?: boolean }): CMover {
   return {
     m_bAttackable: opts.attackable ?? true,
     m_bGuard: opts.guard ?? false,
+    m_bFlyable: false,
     m_idTargeter: NULL_ID,
   } as unknown as CMover;
 }

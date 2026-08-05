@@ -3,8 +3,9 @@
  * @module services/repair.test
  */
 
-import { describe, it, before } from 'node:test';
+import { describe, it, before, after } from 'node:test';
 import * as assert from 'node:assert/strict';
+import { rmSync } from 'node:fs';
 import { Journal, InventoryRepository, createDb } from '@flyff/database';
 import type { Knex } from 'knex';
 import { RepairService, type RepairServiceDeps } from '../../src/services/repair.service';
@@ -42,8 +43,10 @@ describe('RepairService', () => {
       t.integer('refine').notNullable().defaultTo(0);
       t.integer('element').notNullable().defaultTo(0);
       t.integer('element_level').notNullable().defaultTo(0);
+      t.text('stats').nullable();
       t.timestamp('created_at').notNullable().defaultTo(db.fn.now());
       t.timestamp('updated_at').notNullable().defaultTo(db.fn.now());
+      t.unique(['character_id', 'slot']);
     });
     await db.schema.createTable('inventory', (t) => {
       t.integer('character_id').primary();
@@ -52,6 +55,18 @@ describe('RepairService', () => {
     await db('inventory').insert({ character_id: 1, gold: 100000 });
     journal = new Journal({ path: ':memory:' });
     repo = new InventoryRepository(db);
+  });
+
+  after(async () => {
+    // Release the file handle and drop the temp DB, or the next run inherits
+    // a stale schema and the process never exits.
+    journal.close?.();
+    await db.destroy();
+    try {
+      rmSync(TMP, { force: true });
+    } catch {
+      /* best effort -- Windows may still hold the handle */
+    }
   });
 
   function makeService(getItem: (id: number) => { durability?: number } | undefined, balance: number) {
