@@ -87,3 +87,22 @@ export async function up(db: Knex): Promise<void> {
     table.index(['acpt_guild_id'], 'guild_war_acpt_idx');
   });
 }
+
+/**
+ * Rollback. Knex REQUIRES both `up` and `down` on every migration file --
+ * `Migrator._validateMigrationStructure` throws "must both up and down" and
+ * fails the whole batch, so an omitted `down` breaks migrating FORWARD, not just
+ * back.
+ *
+ * `guild.win_point` is dropped with `alterTable`, which SQLite supports natively
+ * from 3.35 (better-sqlite3 ships newer); on Postgres/MySQL it is a plain DROP
+ * COLUMN.
+ *
+ * @param db - Knex instance
+ */
+export async function down(db: Knex): Promise<void> {
+  await db.schema.dropTableIfExists('guild_war');
+  await db.schema.alterTable('guild', (table: any) => {
+    table.dropColumn('win_point');
+  });
+}

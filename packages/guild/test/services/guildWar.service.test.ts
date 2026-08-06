@@ -22,6 +22,14 @@ import type { CPlayer } from '@flyff/entities';
 import { GuildManager } from '../../src/managers/guild.manager';
 import { GuildWarManager } from '../../src/managers/guildWar.manager';
 import { GuildWarService } from '../../src/services/guildWar.service';
+import {
+  TID_GAME_COMNOHAVECOM, TID_GAME_COMDELNOTKINGPIN,
+  TID_GAME_GUILDWARREQLV6, TID_GAME_GUILDWARNOTHINGGUILD,
+  TID_GAME_GUILDWAROHTERLV6, TID_GAME_GUILDWARMASTEROFF,
+  TID_GAME_GUILDWARMEMBER10, TID_GAME_GUILDWARSTILLNOWAR,
+  TID_GAME_GUILDWARNOREQUEST, TID_GAME_GUILDWARNOFINDGUILD,
+  TID_GAME_GUILDWARNOETC,
+} from '../../src/guildText';
 
 interface MockPlayer {
   m_idPlayer: number;
@@ -67,6 +75,8 @@ describe('GuildWarService', () => {
   let service: GuildWarService;
   let clock: number;
   let flag: boolean;
+  /** Refusal notices -- recorded as (recipient, tid) rather than serialized. */
+  let notices: Array<{ id: number; tid: number; args: string | undefined }>;
 
   /** Master ids: guild A = 1, guild B = 100. */
   let ma: MockPlayer & CPlayer;
@@ -108,12 +118,14 @@ describe('GuildWarService', () => {
     harness.sent.length = 0;
     harness.broadcasts.length = 0;
     harness.around.length = 0;
+    notices.length = 0;
   }
 
   beforeEach(() => {
     harness = makeHarness();
     clock = 1_700_000_000_000;
     flag = true;
+    notices = [];
     guilds = new GuildManager(undefined, () => clock);
     wars = new GuildWarManager(undefined, () => clock);
     service = new GuildWarService({
@@ -122,6 +134,9 @@ describe('GuildWarService', () => {
       guildManager: guilds,
       guildWarManager: wars,
       isWarEnabled: () => flag,
+      sendDefinedText: (p: CPlayer, tid: number, args?: string) => {
+        notices.push({ id: p.m_idPlayer, tid, args });
+      },
       now: () => clock,
     });
     seedGuilds();
@@ -179,12 +194,14 @@ describe('GuildWarService', () => {
 
     it('refuses a target roster below 10 -- but does NOT check its own size', () => {
       const b = guilds.get(gb)!;
-      b.members.length = GUILD_WAR_MIN_TARGET_MEMBERS - 1;
+      // splice, not `length =`: truncating and restoring `length` leaves holes
+      // that every later roster walk trips over.
+      const spare = b.members.splice(GUILD_WAR_MIN_TARGET_MEMBERS - 1);
       assert.equal(service.declare_(ma, 'Beta'), false);
+      b.members.push(...spare);
       // Own roster small, target's full: allowed. Only the TARGET is gated
-      // (DPCacheSrvr.cpp:2485 checks pAcpt->GetSize() only).
-      b.members.length = GUILD_WAR_MIN_TARGET_MEMBERS;
-      guilds.get(ga)!.members.length = 1;
+      // (DPCacheSrvr.cpp:2487 checks pAcpt->GetSize() only).
+      guilds.get(ga)!.members.splice(1);
       assert.equal(service.declare_(ma, 'Beta'), true);
     });
 
@@ -622,6 +639,114 @@ describe('GuildWarService', () => {
       assert.equal(guilds.get(ga)!.idWar, warId, 'stale id still set');
       assert.equal(service.queryTruce(ma), false);
       assert.equal(guilds.get(ga)!.idWar, 0, 'healed on read');
+    });
+  });
+
+  /**
+   * Refusal notices. War has NINE declare gates; without a distinct text per
+   * gate a failed declaration is indistinguishable from a bug, which is exactly
+   * the report ("the declare button does nothing") this is meant to prevent.
+   */
+  describe('refusal notices', () => {
+    function soleTid(): number {
+      assert.equal(notices.length, 1, 'exactly one notice');
+      return notices[0]!.tid;
+    }
+
+    it('names each of the nine declare gates distinctly', () => {
+      // Guildless caller.
+      const stranger = makePlayer(700);
+      harness.players.set(700, stranger);
+      reset(); service.declare_(stranger, 'Beta');
+      assert.equal(soleTid(), TID_GAME_COMNOHAVECOM);
+
+      // Not the master.
+      reset(); service.declare_(harness.players.get(2)!, 'Beta');
+      assert.equal(soleTid(), TID_GAME_COMDELNOTKINGPIN);
+
+      // Own guild below level 6.
+      guilds.get(ga)!.level = GUILD_WAR_MIN_LEVEL - 1;
+      reset(); service.declare_(ma, 'Beta');
+      assert.equal(soleTid(), TID_GAME_GUILDWARREQLV6);
+      guilds.get(ga)!.level = GUILD_WAR_MIN_LEVEL;
+
+      // No such guild.
+      reset(); service.declare_(ma, 'Nonexistent');
+      assert.equal(soleTid(), TID_GAME_GUILDWARNOTHINGGUILD);
+
+      // Target below level 6 -- note the misspelled OHTER constant.
+      guilds.get(gb)!.level = GUILD_WAR_MIN_LEVEL - 1;
+      reset(); service.declare_(ma, 'Beta');
+      assert.equal(soleTid(), TID_GAME_GUILDWAROHTERLV6);
+      guilds.get(gb)!.level = GUILD_WAR_MIN_LEVEL;
+
+      // Target master offline.
+      harness.players.delete(100);
+      reset(); service.declare_(ma, 'Beta');
+      assert.equal(soleTid(), TID_GAME_GUILDWARMASTEROFF);
+      harness.players.set(100, mb);
+
+      // Target roster below 10. Save the removed entries -- truncating an array
+      // discards them, and restoring only `length` would leave holes that break
+      // every later roster walk.
+      const bMembers = guilds.get(gb)!.members;
+      const removed = bMembers.splice(GUILD_WAR_MIN_TARGET_MEMBERS - 1);
+      reset(); service.declare_(ma, 'Beta');
+      assert.equal(soleTid(), TID_GAME_GUILDWARMEMBER10);
+      bMembers.push(...removed);
+
+      // Already at war -- both the own-guild and other-guild variants.
+      startWar();
+      reset(); service.declare_(ma, 'Beta');
+      assert.equal(soleTid(), TID_GAME_GUILDWARSTILLNOWAR);
+    });
+
+    it('a forged accept says NOREQUEST rather than nothing', () => {
+      reset();
+      assert.equal(service.accept(mb, ga), false);
+      assert.equal(soleTid(), TID_GAME_GUILDWARNOREQUEST);
+    });
+
+    it('an accept naming a guild that does not exist says NOFINDGUILD', () => {
+      service.declare_(ma, 'Beta');
+      reset();
+      assert.equal(service.accept(mb, 9999), false);
+      assert.equal(soleTid(), TID_GAME_GUILDWARNOFINDGUILD);
+    });
+
+    it('surrender with no war says NOETC', () => {
+      reset();
+      assert.equal(service.surrender(ma), false);
+      assert.equal(soleTid(), TID_GAME_GUILDWARNOETC);
+    });
+
+    it('a non-master asking for a truce says NOTKINGPIN', () => {
+      startWar();
+      reset();
+      assert.equal(service.queryTruce(harness.players.get(2)!), false);
+      assert.equal(soleTid(), TID_GAME_COMDELNOTKINGPIN);
+    });
+
+    it('the asker accepting its own truce is refused as not-the-master', () => {
+      startWar();
+      service.queryTruce(ma);
+      reset();
+      assert.equal(service.acceptTruce(ma), false);
+      assert.equal(soleTid(), TID_GAME_GUILDWARNOREQUEST, 'no request aimed at them');
+    });
+
+    it('a successful declare + accept sends NO notice', () => {
+      reset();
+      assert.equal(service.declare_(ma, 'Beta'), true);
+      assert.equal(service.accept(mb, ga), true);
+      assert.equal(notices.length, 0);
+    });
+
+    it('with the flag off declare is silent -- the client should not offer the button', () => {
+      flag = false;
+      reset();
+      assert.equal(service.declare_(ma, 'Beta'), false);
+      assert.equal(notices.length, 0, 'no C++ text covers "wrong server type" here');
     });
   });
 });

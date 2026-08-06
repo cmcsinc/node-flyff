@@ -20,6 +20,14 @@ import { GuildManager } from '../../src/managers/guild.manager';
 import {
   GUILD_NICKNAME_MIN_LEVEL, GUILD_REJOIN_COOLDOWN_MS, guildMaxMembers,
 } from '../../src/guildTable';
+import {
+  TID_GAME_COMCREATECOM, TID_GAME_COMOVERLAPNAME, TID_GAME_COMNOHAVECOM,
+  TID_GAME_COMDELNOTKINGPIN, TID_GAME_COMLEAVEKINGPIN, TID_GAME_COMLEAVENOKINGPIN,
+  TID_GAME_COMACCEPTHAVECOM, TID_GAME_COMOVERMEMBER, TID_GAME_COMACCEPTDENY,
+  TID_GAME_GUILDINVAITNOTWARR, TID_GAME_GUILDCHROFFLINE, TID_GAME_GUILDNOTINCLUDE,
+  TID_GAME_GUILDAPPOVER, TID_GAME_GUILDWARRANTREGOVER,
+  TID_GAME_GUILDNOTLEVEL, TID_DIAG_0011_01,
+} from '../../src/guildText';
 
 interface MockPlayer {
   m_idPlayer: number;
@@ -47,6 +55,8 @@ function makeHarness() {
   const sent: Array<{ id: number; buf: Buffer }> = [];
   const broadcasts: Buffer[] = [];
   const around: Array<{ buf: Buffer; except: number | undefined }> = [];
+  /** Refusal notices, recorded rather than serialized -- we assert the TID. */
+  const notices: Array<{ id: number; tid: number; args: string | undefined }> = [];
   const playerManager = {
     get: (id: number) => players.get(id),
     sendTo: (p: CPlayer, buf: Buffer) => { sent.push({ id: p.m_idPlayer, buf }); },
@@ -57,7 +67,13 @@ function makeHarness() {
       _pos: unknown, _zone: number, _radius: number, buf: Buffer, except?: CPlayer,
     ) => { around.push({ buf, except: except?.m_idPlayer }); },
   };
-  return { players, sent, broadcasts, around, playerManager, zoneManager };
+  const sendDefinedText = (p: CPlayer, tid: number, args?: string): void => {
+    notices.push({ id: p.m_idPlayer, tid, args });
+  };
+  return {
+    players, sent, broadcasts, around, notices, playerManager, zoneManager,
+    sendDefinedText,
+  };
 }
 
 describe('GuildService', () => {
@@ -82,6 +98,7 @@ describe('GuildService', () => {
       zoneManager: harness.zoneManager as never,
       guildManager: manager,
       isGameMaster: (p: CPlayer) => gmIds.has(p.m_idPlayer),
+      sendDefinedText: harness.sendDefinedText,
       now: () => clock,
     });
   });
@@ -90,7 +107,10 @@ describe('GuildService', () => {
   // not held open by a pending handle.
   afterEach(() => { for (const id of [1, 2, 3, 4]) manager.removePending(id); });
 
-  function reset(): void { harness.sent.length = 0; harness.broadcasts.length = 0; harness.around.length = 0; }
+  function reset(): void {
+    harness.sent.length = 0; harness.broadcasts.length = 0;
+    harness.around.length = 0; harness.notices.length = 0;
+  }
 
   describe('create', () => {
     it('sets m_idGuild on every online member and announces CREATE_GUILD to all', () => {
@@ -761,6 +781,180 @@ describe('GuildService', () => {
       assert.equal(service.isPartyGuild([1, 2, 3]), 2, 'a member is on the rejoin cooldown');
       clock += GUILD_REJOIN_COOLDOWN_MS;
       assert.equal(service.isPartyGuild([1, 2, 3]), 0, 'eligible again once it expires');
+    });
+  });
+
+  /**
+   * Refusal notices -- `CDPCacheSrvr::SendDefinedText` at each guard.
+   *
+   * These exist because a silent refusal is indistinguishable from a bug: the
+   * whole point of the TID is telling the player WHICH rule stopped them. Each
+   * case asserts the exact id, since a wrong one shows a confidently wrong
+   * sentence rather than failing loudly.
+   */
+  describe('refusal notices', () => {
+    /** The tid of the only notice sent, asserting there was exactly one. */
+    function soleTid(): number {
+      assert.equal(harness.notices.length, 1, 'exactly one notice');
+      return harness.notices[0]!.tid;
+    }
+
+    it('create refuses a caller who is already guilded', () => {
+      service.create(a, 'First');
+      reset();
+      assert.equal(service.create(a, 'Second'), undefined);
+      assert.equal(soleTid(), TID_GAME_COMCREATECOM);
+    });
+
+    it('create sends BOTH the GUILD_ERROR packet and the duplicate-name text', () => {
+      service.create(a, 'Taken');
+      reset();
+      assert.equal(service.create(b, 'Taken'), undefined);
+      assert.equal(soleTid(), TID_GAME_COMOVERLAPNAME);
+      assert.equal(harness.sent.length, 1, 'and the dialog-driving GUILD_ERROR');
+      assert.equal(op(harness.sent[0]!.buf), PACKETTYPE.GUILD_ERROR);
+    });
+
+    it('every guildless caller gets COMNOHAVECOM', () => {
+      for (const call of [
+        () => service.destroy(a),
+        () => service.leaveOrKick(a, 2),
+        () => service.setMemberLevel(a, 2, GUD_CAPTAIN),
+        () => service.setMemberAlias(a, 2, 'Nick'),
+        () => service.changeMaster(a, 2),
+        () => service.rename(a, 'X'),
+        () => service.setAuthority(a, [0, 0, 0, 0, 0]),
+        () => service.setRankPenya(a, GUD_ROOKIE, 100),
+      ]) {
+        reset();
+        call();
+        assert.equal(soleTid(), TID_GAME_COMNOHAVECOM);
+      }
+    });
+
+    it('a non-master gets COMDELNOTKINGPIN from every master-only path', () => {
+      service.create(a, 'Braves', [2]);
+      for (const call of [
+        () => service.destroy(b),
+        () => service.changeMaster(b, 1),
+        () => service.rename(b, 'X'),
+        () => service.setAuthority(b, [0, 0, 0, 0, 0]),
+        () => service.setRankPenya(b, GUD_ROOKIE, 100),
+      ]) {
+        reset();
+        call();
+        assert.equal(soleTid(), TID_GAME_COMDELNOTKINGPIN);
+      }
+    });
+
+    it('a master trying to leave gets COMLEAVEKINGPIN, a non-master kicking gets COMLEAVENOKINGPIN', () => {
+      service.create(a, 'Braves', [2, 3]);
+      reset();
+      service.leaveOrKick(a, 1);
+      assert.equal(soleTid(), TID_GAME_COMLEAVEKINGPIN, 'master may not simply leave');
+      reset();
+      service.leaveOrKick(b, 3);
+      assert.equal(soleTid(), TID_GAME_COMLEAVENOKINGPIN, 'only the master kicks');
+    });
+
+    it('invite refuses without PF_INVITATION, and when the target is guilded', () => {
+      const g = service.create(a, 'Braves', [2])!;
+      // Rookie rank holds no PF_INVITATION by default.
+      reset();
+      service.invite(b, 3);
+      assert.equal(soleTid(), TID_GAME_GUILDINVAITNOTWARR);
+      // Master invites someone who already has a guild.
+      service.create(c, 'Other');
+      reset();
+      service.invite(a, 3);
+      assert.equal(soleTid(), TID_GAME_COMACCEPTHAVECOM);
+      assert.ok(g);
+    });
+
+    it('invite refuses a full roster with COMOVERMEMBER', () => {
+      const g = service.create(a, 'Braves')!;
+      // Fill to the level-1 cap so the early check trips.
+      const cap = guildMaxMembers(g.level);
+      for (let i = 0; i < cap - 1; i++) manager.addMember(g.id, 500 + i);
+      reset();
+      service.invite(a, 2);
+      assert.equal(soleTid(), TID_GAME_COMOVERMEMBER);
+    });
+
+    it('accept refuses when the inviter went offline', () => {
+      service.create(a, 'Braves');
+      service.invite(a, 2);
+      harness.players.delete(1);   // inviter logs off
+      reset();
+      service.accept(b);
+      assert.equal(soleTid(), TID_GAME_GUILDCHROFFLINE);
+    });
+
+    it('accept refuses inside the 2-day rejoin lockout', () => {
+      service.create(a, 'Braves');
+      manager.stampCooldown(2);
+      service.invite(a, 2);
+      reset();
+      service.accept(b);
+      assert.equal(soleTid(), TID_GAME_GUILDNOTINCLUDE);
+    });
+
+    it('decline notifies the INVITER, not the decliner, and carries their name', () => {
+      service.create(a, 'Braves');
+      service.invite(a, 2);
+      reset();
+      service.decline(b);
+      assert.equal(harness.notices.length, 1);
+      assert.equal(harness.notices[0]!.id, 1, 'the inviter is told');
+      assert.equal(harness.notices[0]!.tid, TID_GAME_COMACCEPTDENY);
+      assert.equal(harness.notices[0]!.args, b.m_szName);
+    });
+
+    it('rank change reports which of the three seniority rules failed', () => {
+      const g = service.create(a, 'Braves', [2, 3])!;
+      manager.setMemberLevel(g.id, 3, GUD_KINGPIN);   // c outranks b
+      assert.equal(manager.getMember(g.id, 2)!.memberLv, GUD_ROOKIE);
+      // b (rookie) tries to promote c (kingpin) -- the target outranks them.
+      reset();
+      service.setMemberLevel(b, 3, GUD_CAPTAIN);
+      assert.equal(soleTid(), TID_GAME_GUILDAPPOVER);
+      // Master promoting c to a rank at/above their own: master is GUD_MASTER(0),
+      // so any target rank fails the second gate rather than the first.
+      reset();
+      service.setMemberLevel(a, 3, GUD_MASTER);
+      assert.equal(soleTid(), TID_GAME_GUILDWARRANTREGOVER);
+    });
+
+    it('nickname reports level gate and length gate separately', () => {
+      const g = service.create(a, 'Braves', [2])!;
+      reset();
+      service.setMemberAlias(a, 2, 'Nick');
+      assert.equal(soleTid(), TID_GAME_GUILDNOTLEVEL, 'needs guild level 10');
+      g.level = GUILD_NICKNAME_MIN_LEVEL;
+      reset();
+      service.setMemberAlias(a, 2, 'X');
+      assert.equal(soleTid(), TID_DIAG_0011_01, 'too short');
+    });
+
+    it('a successful action sends NO notice', () => {
+      service.create(a, 'Braves', [2]);
+      reset();
+      service.setNotice(a, 'hello');
+      assert.equal(harness.notices.length, 0);
+    });
+
+    it('without the sink every guard still refuses -- just silently', () => {
+      const quiet = new GuildService({
+        playerManager: harness.playerManager as never,
+        zoneManager: harness.zoneManager as never,
+        guildManager: manager,
+        now: () => clock,
+      });
+      quiet.create(a, 'Braves');
+      reset();
+      // Second create must still be refused with no sink present.
+      assert.equal(quiet.create(a, 'Again'), undefined);
+      assert.equal(harness.notices.length, 0);
     });
   });
 });

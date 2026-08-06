@@ -47,6 +47,14 @@ import {
 import { createLogger } from '@flyff/core/logger';
 import type { GuildManager, Guild } from '../managers/guild.manager';
 import type { GuildWarManager, War } from '../managers/guildWar.manager';
+import {
+  TID_GAME_COMNOHAVECOM, TID_GAME_COMDELNOTKINGPIN,
+  TID_GAME_GUILDWARREQLV6, TID_GAME_GUILDWARSTILLNOWAR,
+  TID_GAME_GUILDWARNOTHINGGUILD, TID_GAME_GUILDWAROHTERLV6,
+  TID_GAME_GUILDWARMASTEROFF, TID_GAME_GUILDWARMEMBER10,
+  TID_GAME_GUILDWAROTHERWAR, TID_GAME_GUILDWARNOREQUEST,
+  TID_GAME_GUILDWARNOFINDGUILD, TID_GAME_GUILDWARNOETC,
+} from '../guildText';
 
 const logger = createLogger({ module: 'guild-war-service' });
 
@@ -94,6 +102,12 @@ export interface GuildWarServiceDeps {
    * boolean so a GM command can flip it without recomposing.
    */
   isWarEnabled: () => boolean;
+  /**
+   * Refusal-notice sink -- `CDPCacheSrvr::SendDefinedText` (`:657`). Optional;
+   * without it the nine declare gates all refuse silently, which makes a failed
+   * declaration indistinguishable from a bug.
+   */
+  sendDefinedText?: (player: CPlayer, tid: number, args?: string) => void;
   /** Injector seam for tests. */
   now?: () => number;
 }
@@ -129,24 +143,36 @@ export class GuildWarService {
    */
   declare_(master: CPlayer, targetGuildName: string): boolean {
     // divergence 1: C++ does not check the flag here -- see the module note.
+    // TID_GAME_GUILDWARNOTSERVER is the closest C++ text ("not a war server"),
+    // but it is never sent from the declare path there, so nothing is sent here
+    // either: with the flag off the client should not show the button at all.
     if (!this.deps.isWarEnabled()) return false;
 
     const decl = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!decl) return false;                                    // :2441
-    if (decl.masterId !== master.m_idPlayer) return false;       // :2446
-    if (decl.level < GUILD_WAR_MIN_LEVEL) return false;          // :2452
-    if (this.warOf(decl)) return false;                          // :2459
+    if (!decl) return this.refuse(master, TID_GAME_COMNOHAVECOM);                    // :2443
+    if (decl.masterId !== master.m_idPlayer) {
+      return this.refuse(master, TID_GAME_COMDELNOTKINGPIN);                          // :2448
+    }
+    if (decl.level < GUILD_WAR_MIN_LEVEL) {
+      return this.refuse(master, TID_GAME_GUILDWARREQLV6);                            // :2454
+    }
+    if (this.warOf(decl)) return this.refuse(master, TID_GAME_GUILDWARSTILLNOWAR);     // :2461
     const acpt = this.deps.guildManager.getByName(targetGuildName.trim());
-    if (!acpt) return false;                                     // :2466
-    if (acpt.level < GUILD_WAR_MIN_LEVEL) return false;           // :2472
+    if (!acpt) return this.refuse(master, TID_GAME_GUILDWARNOTHINGGUILD);              // :2468
+    if (acpt.level < GUILD_WAR_MIN_LEVEL) {
+      return this.refuse(master, TID_GAME_GUILDWAROHTERLV6);                           // :2474
+    }
     const targetMaster = this.deps.playerManager.get(acpt.masterId);
-    if (!targetMaster) return false;                             // :2479
-    if (acpt.members.length < GUILD_WAR_MIN_TARGET_MEMBERS) return false; // :2485
-    if (this.warOf(acpt)) return false;                          // :2491
-    if (decl.id === acpt.id) return false;                       // :2496
+    if (!targetMaster) return this.refuse(master, TID_GAME_GUILDWARMASTEROFF);          // :2481
+    if (acpt.members.length < GUILD_WAR_MIN_TARGET_MEMBERS) {
+      return this.refuse(master, TID_GAME_GUILDWARMEMBER10);                            // :2487
+    }
+    if (this.warOf(acpt)) return this.refuse(master, TID_GAME_GUILDWAROTHERWAR);        // :2493
+    if (decl.id === acpt.id) return false;                                             // :2496
     // Not in C++ (which stores nothing), but a second open declaration against
-    // the same guild would just overwrite the first -- refuse instead.
-    if (this.proposals.has(acpt.id)) return false;
+    // the same guild would just overwrite the first -- refuse instead. Reuses the
+    // "other guild is busy" text since that is what it means from here.
+    if (this.proposals.has(acpt.id)) return this.refuse(master, TID_GAME_GUILDWAROTHERWAR);
 
     this.proposals.set(acpt.id, {
       declGuildId: decl.id, targetGuildId: acpt.id,
@@ -182,26 +208,29 @@ export class GuildWarService {
     if (!this.deps.isWarEnabled()) return false;
 
     const acpt = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!acpt) return false;                                     // :2516
-    if (acpt.masterId !== master.m_idPlayer) return false;        // :2521
-    if (this.warOf(acpt)) return false;                          // :2526
+    if (!acpt) return this.refuse(master, TID_GAME_COMNOHAVECOM);                       // :2518
+    if (acpt.masterId !== master.m_idPlayer) {
+      return this.refuse(master, TID_GAME_COMDELNOTKINGPIN);                            // :2523
+    }
+    if (this.warOf(acpt)) return this.refuse(master, TID_GAME_GUILDWARNOREQUEST);        // :2528
     const decl = this.deps.guildManager.get(declGuildId);
-    if (!decl) return false;                                     // :2533
-    if (decl.id === acpt.id) return false;                       // :2539
+    if (!decl) return this.refuse(master, TID_GAME_GUILDWARNOFINDGUILD);                 // :2535
+    if (decl.id === acpt.id) return false;                                              // :2539
     const declMaster = this.deps.playerManager.get(decl.masterId);
-    if (!declMaster) return false;                               // :2544
-    if (this.warOf(decl)) return false;                          // :2551
+    if (!declMaster) return this.refuse(master, TID_GAME_GUILDWARMASTEROFF);              // :2548
+    if (this.warOf(decl)) return this.refuse(master, TID_GAME_GUILDWAROTHERWAR);          // :2553
 
     // divergence 2: C++ trusts the client-supplied `idDecl` outright, so any
     // master could forge a war against any eligible guild. Require the
-    // declaration we actually recorded.
+    // declaration we actually recorded. TID_GAME_GUILDWARNOREQUEST is the honest
+    // text -- there is no request.
     const proposal = this.proposals.get(acpt.id);
     if (!proposal || proposal.declGuildId !== decl.id) {
       logger.warn(
         { acpt: acpt.id, claimed: declGuildId, master: master.m_idPlayer },
         'guild war accept with no matching declaration -- refused',
       );
-      return false;
+      return this.refuse(master, TID_GAME_GUILDWARNOREQUEST);
     }
     this.clearProposal(acpt.id);
 
@@ -269,10 +298,10 @@ export class GuildWarService {
    */
   surrender(player: CPlayer): boolean {
     const guild = this.deps.guildManager.getByMember(player.m_idPlayer);
-    if (!guild) return false;
+    if (!guild) return this.refuse(player, TID_GAME_COMNOHAVECOM);
     const war = this.warOf(guild);
     // TID_GAME_GUILDWARNOETC -- not in a war (:2291).
-    if (!war) { player.m_idWar = 0; return false; }
+    if (!war) { player.m_idWar = 0; return this.refuse(player, TID_GAME_GUILDWARNOETC); }
     const other = this.otherGuild(war, guild.id);
     if (!other) return false;                                    // :2297
 
@@ -307,14 +336,18 @@ export class GuildWarService {
    */
   queryTruce(master: CPlayer): boolean {
     const guild = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!guild) return false;
+    if (!guild) return this.refuse(master, TID_GAME_COMNOHAVECOM);
     const war = this.warOf(guild);
-    if (!war) return false;                                      // :2373
-    if (guild.masterId !== master.m_idPlayer) return false;       // :2380
+    if (!war) return this.refuse(master, TID_GAME_GUILDWARNOETC);                        // :2373
+    if (guild.masterId !== master.m_idPlayer) {
+      return this.refuse(master, TID_GAME_COMDELNOTKINGPIN);                             // :2380
+    }
     const other = this.otherGuild(war, guild.id);
-    if (!other) return false;                                    // :2391
+    if (!other) return false;                                                           // :2391
     const otherMaster = this.deps.playerManager.get(other.masterId);
-    if (!otherMaster) return false;                              // :2394
+    // TID_GAME_GUILDWARMASTEROFF -- nobody to ask (:2394 is silent in C++, but
+    // silence here reads as a broken button).
+    if (!otherMaster) return this.refuse(master, TID_GAME_GUILDWARMASTEROFF);
 
     this.truces.set(war.id, {
       warId: war.id, fromGuildId: guild.id, toGuildId: other.id,
@@ -336,18 +369,21 @@ export class GuildWarService {
    */
   acceptTruce(master: CPlayer): boolean {
     const guild = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!guild) return false;
+    if (!guild) return this.refuse(master, TID_GAME_COMNOHAVECOM);
     const war = this.warOf(guild);
-    if (!war) return false;                                      // :2415
-    if (!this.otherGuild(war, guild.id)) return false;            // :2420
+    if (!war) return this.refuse(master, TID_GAME_GUILDWARNOETC);                        // :2415
+    if (!this.otherGuild(war, guild.id)) return false;                                  // :2420
 
     const req = this.truces.get(war.id);
-    if (!req || req.toGuildId !== guild.id || guild.masterId !== master.m_idPlayer) {
+    if (!req || req.toGuildId !== guild.id) {
       logger.warn(
         { warId: war.id, guild: guild.id, player: master.m_idPlayer },
         'truce accept without a matching request -- refused',
       );
-      return false;
+      return this.refuse(master, TID_GAME_GUILDWARNOREQUEST);
+    }
+    if (guild.masterId !== master.m_idPlayer) {
+      return this.refuse(master, TID_GAME_COMDELNOTKINGPIN);
     }
     this.truces.delete(war.id);
     // WR_TRUCE is >= WR_TRUCE, so `Result` skips the whole win/lose block: a
@@ -571,6 +607,12 @@ export class GuildWarService {
   }
 
   // ── Helpers ────────────────────────────────────────────────────────────────
+
+  /** Send the TID line and return false, so guards stay single-expression. */
+  private refuse(player: CPlayer, tid: number, args?: string): false {
+    this.deps.sendDefinedText?.(player, tid, args);
+    return false;
+  }
 
   /** `pGuild->GetWar()` -- the registry lookup, with stale-id self-heal. */
   private warOf(guild: Guild): War | undefined {

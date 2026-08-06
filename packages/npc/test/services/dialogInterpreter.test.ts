@@ -164,4 +164,45 @@ describe('dialogInterpreter', () => {
     assert.deepEqual(run(2, 60), ['exit']);
     assert.deepEqual(run(1, 59), ['exit']);
   });
+
+  /**
+   * Negative literals. `-` was missing from the tokenizer's op alternation, and
+   * because {@link tokenize} SKIPS anything it does not match, `== -1` silently
+   * became `== 1` -- a dropped operator that evaluates instead of failing.
+   * `GetGuildQuestState` returns -1 for an absent entry, so this is the shape
+   * that exposed it.
+   */
+  describe('negative literals', () => {
+    it('compares against a negative number correctly', () => {
+      const src = 'if( GetGuildQuestState( 1 ) == -1) { Say( 1 ); } else { Exit(); }';
+      const run = (state: number): string[] => {
+        const { sink, calls } = mkSink();
+        interpretDialog(src, mkBindings({ guildQuestState: () => state }), sink);
+        return calls;
+      };
+      assert.deepEqual(run(-1), ['say:1'], 'absent entry matches -1');
+      assert.deepEqual(run(0), ['exit'], 'QS_BEGIN (0) must NOT match -1');
+      assert.deepEqual(run(1), ['exit'], 'and positive 1 must not either');
+    });
+
+    it('does not confuse -1 with 1 -- the bug the minus token fixes', () => {
+      const src = 'if( GetGuildQuestState( 1 ) == -1) { Say( 7 ); }';
+      const { sink, calls } = mkSink();
+      interpretDialog(src, mkBindings({ guildQuestState: () => 1 }), sink);
+      assert.deepEqual(calls, [], 'state 1 is not state -1');
+    });
+
+    it('handles a negative on the left of a comparison', () => {
+      const { sink, calls } = mkSink();
+      interpretDialog('if( -1 == GetGuildQuestState( 1 )) { Say( 2 ); }',
+        mkBindings({ guildQuestState: () => -1 }), sink);
+      assert.deepEqual(calls, ['say:2']);
+    });
+
+    it('accepts a negative argument', () => {
+      const { sink, calls } = mkSink();
+      interpretDialog('Say( 3 ); CreateItem( 100, -1 );', mkBindings(), sink);
+      assert.deepEqual(calls, ['say:3', 'createItem:100,-1']);
+    });
+  });
 });

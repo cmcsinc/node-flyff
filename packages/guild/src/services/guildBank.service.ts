@@ -50,6 +50,7 @@ import {
 import { MMI_GUILDBANKING } from '@flyff/resources';
 import { createLogger } from '@flyff/core/logger';
 import type { GuildManager } from '../managers/guild.manager';
+import { TID_GAME_GUILDBANKFULL } from '../guildText';
 
 const logger = createLogger({ module: 'guild-bank' });
 
@@ -124,6 +125,11 @@ export interface GuildBankServiceDeps {
   repo?: GuildBankPersistence;
   /** `g_eLocal.GetState( ENABLE_GUILD_INVENTORY )`. Defaults on. */
   guildInventoryEnabled?: () => boolean;
+  /**
+   * Refusal-notice sink -- `SendDefinedText`. Optional; without it a full bank
+   * looks like a dead drag.
+   */
+  sendDefinedText?: (player: CPlayer, tid: number, args?: string) => void;
 }
 
 export class GuildBankService {
@@ -208,7 +214,11 @@ export class GuildBankService {
 
     const bank = this.bank(guild.id);
     const dst = firstFree(bank);
-    if (dst === -1) return; // TID_GAME_GUILDBANKFULL
+    // TID_GAME_GUILDBANKFULL -- all 42 slots taken (`DPSrvr.cpp:3660`).
+    if (dst === -1) {
+      this.deps.sendDefinedText?.(player, TID_GAME_GUILDBANKFULL);
+      return;
+    }
     if (!this.deps.inventory.removeItem(player, invSlot, n)) return;
 
     const stored: GuildBankSlot = {

@@ -647,6 +647,10 @@ export async function compose(): Promise<WorldComposeResult> {
   const guildWarManager = new GuildWarManager(guildWarRepo);
   const guildService = new GuildService({
     playerManager, zoneManager, guildManager, guildWarManager,
+    // Refusal texts -- `CDPCacheSrvr::SendDefinedText`. Without this every guild
+    // guard refuses silently and a rejected click looks like a dead button.
+    sendDefinedText: (player, tid, args) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
     // `CUser::IsAuthHigher( AUTH_GAMEMASTER )` -- gates guild logos above 20
     // (DPSrvr.cpp:1833). Ordinal compare on the ASCII rank byte, same as every
     // other `/cmd` gate in this codebase.
@@ -659,6 +663,8 @@ export async function compose(): Promise<WorldComposeResult> {
   // never imports `@flyff/inventory`.
   const guildContributionService = new GuildContributionService({
     playerManager, guildManager,
+    sendDefinedText: (player, tid, args) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
     inventory: {
       getGold: (p: CPlayer) => p.m_nGold,
       spendGold: (p: CPlayer, amount: number) => inventoryService.spendGold(p, amount),
@@ -686,6 +692,8 @@ export async function compose(): Promise<WorldComposeResult> {
   // (the same field level-up spends), so no separate balance is threaded here.
   const guildBankService = new GuildBankService({
     playerManager, guildManager, spawnManager, repo: guildBankRepo,
+    sendDefinedText: (player, tid, args) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
     inventory: {
       getSlot: (p: CPlayer, slot: number) =>
         slot >= 0 && slot < MAX_INVENTORY ? (p.m_Inventory[slot] ?? null) : null,
@@ -732,6 +740,10 @@ export async function compose(): Promise<WorldComposeResult> {
   const guildWarService = new GuildWarService({
     playerManager, zoneManager, guildManager, guildWarManager,
     isWarEnabled: () => config.world.guildWarEnabled,
+    // Nine declare gates all refuse; without the text a failed declaration is
+    // indistinguishable from a bug.
+    sendDefinedText: (player, tid, args) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
   });
   // The war tick. Armed unconditionally -- `GuildWarService.tick` re-checks the
   // flag itself (as the C++ call site does), and with no wars live the callback
@@ -826,6 +838,18 @@ export async function compose(): Promise<WorldComposeResult> {
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
     defines: resources.defines, questText: resources.questText,
     changeJobService,
+    // The four guild script predicates (`ScriptLib.cpp:401,415,782,790`). Both
+    // membership checks are REGISTRY lookups in C++, so `getByMember` (which
+    // resolves through the roster) is the faithful shape -- not `m_idGuild != 0`.
+    // Guild QUEST entries do not exist yet (the arena is unported), so those two
+    // report "no entry"; `-1` is what C++ returns for an absent entry and is
+    // load-bearing at `NpcScript.cpp:2059`.
+    guild: {
+      isMember: (charId) => guildManager.getByMember(charId) !== undefined,
+      isMaster: (charId) => guildManager.getByMember(charId)?.masterId === charId,
+      hasQuest: () => false,
+      questState: () => -1,
+    },
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
   const revivalHandler = new RevivalHandler(playerManager, revivalService);
@@ -851,6 +875,8 @@ export async function compose(): Promise<WorldComposeResult> {
   const duelService = new DuelService({
     playerManager, duelManager,
     isInWar: (player) => guildWarService.isInWar(player),
+    sendDefinedText: (player, tid) =>
+      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
   });
   const combatService = new CombatService({
     spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,

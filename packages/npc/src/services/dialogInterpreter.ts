@@ -95,7 +95,15 @@ type Tok =
   | { t: 'ident'; v: string }
   | { t: 'punct'; v: string };
 
-const TOKEN_RE = /\s+|(?<num>\d+)|(?<ident>[A-Za-z_]\w*)|(?<op>==|!=|<=|>=|&&|\|\||[!<>(),;{}])/g;
+/**
+ * Token pattern. `-` is in the op set for a reason worth stating: the
+ * `(?<op>...)` alternation is the ONLY thing that turns a character into a
+ * token, and anything unmatched is silently skipped by {@link tokenize}. Before
+ * `-` was listed, `GetGuildQuestState(1) == -1` tokenized as `== 1` -- the minus
+ * vanished and the comparison quietly ran against POSITIVE one. A dropped
+ * operator is far worse than a parse error, because it evaluates.
+ */
+const TOKEN_RE = /\s+|(?<num>\d+)|(?<ident>[A-Za-z_]\w*)|(?<op>==|!=|<=|>=|&&|\|\||[!<>(),;{}-])/g;
 
 function tokenize(src: string): Tok[] {
   const toks: Tok[] = [];
@@ -120,6 +128,7 @@ type Expr =
   | { k: 'sym'; name: string }
   | { k: 'call'; name: string; args: Expr[] }
   | { k: 'unary'; op: '!'; e: Expr }
+  | { k: 'neg'; e: Expr }
   | { k: 'bin'; op: string; l: Expr; r: Expr };
 
 type Stmt =
@@ -240,6 +249,17 @@ class Parser {
   }
   private parseUnary(): Expr {
     if (this.isPunct('!')) { this.next(); return { k: 'unary', op: '!', e: this.parseUnary() }; }
+    // Unary minus. No shipped dialog body uses a negative literal (checked
+    // across `resources/data/dialogues`), but `GetGuildQuestState` returns -1
+    // and the tokenizer emits `-` as punctuation, so without this a future
+    // `== -1` would THROW mid-dialog rather than evaluate. Folded into the
+    // literal instead of a node: negation only ever applies to a number here.
+    if (this.isPunct('-')) {
+      this.next();
+      const e = this.parseUnary();
+      if (e.k === 'num') return { k: 'num', v: -e.v };
+      return { k: 'neg', e };
+    }
     return this.parsePrimary();
   }
   private parsePrimary(): Expr {
@@ -273,6 +293,7 @@ function evalExpr(e: Expr, b: DialogInterpBindings): number {
     }
     case 'call': return evalCallExpr(e.name, e.args, b);
     case 'unary': return evalExpr(e.e, b) ? 0 : 1;
+    case 'neg': return -evalExpr(e.e, b);
     case 'bin': return evalBin(e.op, e.l, e.r, b);
   }
 }

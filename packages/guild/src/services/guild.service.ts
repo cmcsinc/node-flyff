@@ -9,11 +9,11 @@
  * single-world, so those hops become direct calls.
  *
  * **Every permission check in this file is a port, not a design.** The C++
- * refusal branches (and the TID_* message each one sends) are named at each
- * guard so a future reader can diff them against `DPCacheSrvr.cpp` directly.
- * The refusal *messages* are not sent yet -- `SendDefinedText` needs the guild
- * TID block wired through the notice seam (ponytail below); the guards
- * themselves are faithful and simply return.
+ * refusal branches are named at each guard so a future reader can diff them
+ * against `DPCacheSrvr.cpp` directly, and each one now sends its
+ * `TID_GAME_*` line through {@link GuildServiceDeps.sendDefinedText} -- the port
+ * of `CDPCacheSrvr::SendDefinedText` (`:657`). Without that sink the guards
+ * still refuse, just silently.
  *
  * Sends: guild notices fan out over the whole roster (which can span zones), so
  * everything is a member-loop `playerManager.sendTo` -- never `broadcastAround`.
@@ -21,9 +21,8 @@
  * GUILD_LOGO) go to every connected player because each client keeps its own
  * `g_GuildMng` name cache.
  *
- * ponytail: guild bank, votes, guild war (every `pGuild->GetWar()` guard below
- * is a no-op stub until phase 5), guild quests, contribution/level-up, the
- * 21:00 salary tick, and the TID_* refusal texts.
+ * ponytail: guild votes (compiled out of v19 -- see the vote-count field in
+ * `writeCGuild`) and guild quests.
  *
  * @module services/guild
  */
@@ -54,6 +53,17 @@ import {
   GUILD_NICKNAME_MIN_LEN, GUILD_NICKNAME_MAX_LEN,
   GUILD_CLASS_MIN, GUILD_CLASS_MAX,
 } from '../guildTable';
+import {
+  TID_GAME_COMCREATECOM, TID_GAME_COMDELNOTKINGPIN, TID_GAME_COMNOHAVECOM,
+  TID_GAME_COMOVERLAPNAME, TID_GAME_COMHAVECOM, TID_GAME_COMOVERMEMBER,
+  TID_GAME_COMLEAVEKINGPIN, TID_GAME_COMLEAVENOKINGPIN,
+  TID_GAME_COMACCEPTHAVECOM, TID_GAME_COMACCEPTDENY,
+  TID_GAME_GUILDNOTLEVEL, TID_GAME_GUILDCHROFFLINE, TID_GAME_GUILDAPPOVER,
+  TID_GAME_GUILDAPPNOTWARRANT, TID_GAME_GUILDWARRANTREGOVER,
+  TID_GAME_GUILDAPPNUMOVER, TID_GAME_GUILDINVAITNOTWARR,
+  TID_GAME_GUILDWARNOMEMBER, TID_GAME_GUILDWARNODISMISS,
+  TID_GAME_GUILDNOTINCLUDE, TID_DIAG_0011_01,
+} from '../guildText';
 
 const logger = createLogger({ module: 'guild-service' });
 
@@ -73,6 +83,13 @@ export interface GuildServiceDeps {
    * guild as at peace, which is exactly what `EVE_GUILDWAR = 0` means anyway.
    */
   guildWarManager?: Pick<GuildWarManager, 'get'>;
+  /**
+   * Refusal-notice sink -- `CDPCacheSrvr::SendDefinedText( tid, ... )`
+   * (`DPCacheSrvr.cpp:657`). Optional: without it every guard still refuses,
+   * just silently, which is what shipped before the TID block was wired. Bound
+   * in `compose.ts` to `buildDefinedText(player.m_idPlayer, tid, args)`.
+   */
+  sendDefinedText?: (player: CPlayer, tid: number, args?: string) => void;
   /** Injector seam for tests. */
   now?: () => number;
 }
@@ -101,13 +118,19 @@ export class GuildService {
    * Returns the new guild, or undefined on either refusal.
    */
   create(master: CPlayer, name: string, memberIds: readonly number[] = []): Guild | undefined {
-    // TID_GAME_COMCREATECOM -- already in a guild (:1367).
-    if (this.deps.guildManager.getByMember(master.m_idPlayer)) return undefined;
+    // TID_GAME_COMCREATECOM -- already in a guild (:1369).
+    if (this.deps.guildManager.getByMember(master.m_idPlayer)) {
+      this.refuse(master, TID_GAME_COMCREATECOM);
+      return undefined;
+    }
     const trimmed = name.trim();
     if (trimmed.length === 0 || trimmed.length > MAX_G_NAME) return undefined;
-    // TID_GAME_COMOVERLAPNAME -- duplicate name (:1375).
+    // TID_GAME_COMOVERLAPNAME -- duplicate name (:1378). The GUILD_ERROR packet
+    // drives the client's own dialog; the TID line is the chat-log half, and C++
+    // sends both.
     if (this.deps.guildManager.getByName(trimmed)) {
       this.deps.playerManager.sendTo(master, buildGuildError(GUILD_ERROR_DUPLICATE_NAME));
+      this.refuse(master, TID_GAME_COMOVERLAPNAME);
       return undefined;
     }
     const guild = this.deps.guildManager.create(trimmed, master.m_idPlayer, memberIds);
@@ -134,12 +157,12 @@ export class GuildService {
    */
   destroy(master: CPlayer): void {
     const guild = this.deps.guildManager.getByMember(master.m_idPlayer);
-    // TID_GAME_COMNOHAVECOM -- not in a guild; C++ also clears the stale id.
-    if (!guild) { master.m_idGuild = NULL_ID; return; }
-    // TID_GAME_COMDELNOTKINGPIN -- not the master (:1211).
-    if (guild.masterId !== master.m_idPlayer) return;
-    // TID_GAME_GUILDWARNODISMISS -- at war (:1218).
-    if (this.isAtWar(guild)) return;
+    // TID_GAME_COMNOHAVECOM -- not in a guild (:1205); C++ also clears the stale id.
+    if (!guild) { master.m_idGuild = NULL_ID; this.refuse(master, TID_GAME_COMNOHAVECOM); return; }
+    // TID_GAME_COMDELNOTKINGPIN -- not the master (:1213).
+    if (guild.masterId !== master.m_idPlayer) { this.refuse(master, TID_GAME_COMDELNOTKINGPIN); return; }
+    // TID_GAME_GUILDWARNODISMISS -- at war (:1219).
+    if (this.isAtWar(guild)) { this.refuse(master, TID_GAME_GUILDWARNODISMISS); return; }
 
     const members = [...guild.members];
     this.deps.guildManager.destroy(guild.id);
@@ -168,20 +191,32 @@ export class GuildService {
    */
   invite(inviter: CPlayer, targetObjid: number): void {
     const guild = this.deps.guildManager.getByMember(inviter.m_idPlayer);
-    if (!guild) return;
+    if (!guild) { this.refuse(inviter, TID_GAME_COMNOHAVECOM); return; }
     const member = this.deps.guildManager.getMember(guild.id, inviter.m_idPlayer);
     if (!member) return;
-    if (!this.deps.guildManager.rankHasPower(guild.id, member.memberLv, PF_INVITATION)) return;
+    // TID_GAME_GUILDINVAITNOTWARR -- rank lacks PF_INVITATION (DPSrvr.cpp:9986).
+    if (!this.deps.guildManager.rankHasPower(guild.id, member.memberLv, PF_INVITATION)) {
+      this.refuse(inviter, TID_GAME_GUILDINVAITNOTWARR);
+      return;
+    }
 
     const target = this.resolveByObjid(targetObjid);
     if (!target || target.m_idPlayer === inviter.m_idPlayer) return;
-    if (this.deps.guildManager.getByMember(target.m_idPlayer)) return;
+    // TID_GAME_COMACCEPTHAVECOM -- target already guilded (DPSrvr.cpp:9993).
+    if (this.deps.guildManager.getByMember(target.m_idPlayer)) {
+      this.refuse(inviter, TID_GAME_COMACCEPTHAVECOM);
+      return;
+    }
     if (target.m_nDuel > 0) return;
-    if (this.isAtWar(guild)) return;
+    // TID_GAME_GUILDWARNOMEMBER -- roster frozen during a war (:1385).
+    if (this.isAtWar(guild)) { this.refuse(inviter, TID_GAME_GUILDWARNOMEMBER); return; }
     if (this.deps.guildManager.hasPending(target.m_idPlayer)) return;
-    // Roster full is checked again on accept (C++ checks it there, :1313) but
+    // Roster full is checked again on accept (C++ checks it there, :1318) but
     // refusing early avoids a popup that can only fail.
-    if (guild.members.length >= this.deps.guildManager.maxMembers(guild.id)) return;
+    if (guild.members.length >= this.deps.guildManager.maxMembers(guild.id)) {
+      this.refuse(inviter, TID_GAME_COMOVERMEMBER);
+      return;
+    }
 
     const timer = setTimeout(() => this.expireInvite(target.m_idPlayer), GUILD_INVITE_TIMEOUT_MS);
     this.deps.guildManager.addPending({
@@ -215,13 +250,26 @@ export class GuildService {
     this.deps.guildManager.removePending(target.m_idPlayer);
 
     const inviter = this.deps.playerManager.get(pending.inviterId);
-    if (!inviter) return;
-    if (this.deps.guildManager.onCooldown(target.m_idPlayer)) return;
+    // TID_GAME_GUILDCHROFFLINE -- the inviter logged off mid-dialog (:1264).
+    if (!inviter) { this.refuse(target, TID_GAME_GUILDCHROFFLINE); return; }
+    // TID_GAME_GUILDNOTINCLUDE -- still inside the 2-day rejoin lockout (:1274).
+    if (this.deps.guildManager.onCooldown(target.m_idPlayer)) {
+      this.refuse(target, TID_GAME_GUILDNOTINCLUDE);
+      return;
+    }
     const guild = this.deps.guildManager.get(pending.guildId);
     if (!guild) return;
-    if (this.isAtWar(guild)) return;
-    if (this.deps.guildManager.getByMember(target.m_idPlayer)) return;
-    if (!this.deps.guildManager.addMember(guild.id, target.m_idPlayer)) return;
+    if (this.isAtWar(guild)) { this.refuse(target, TID_GAME_GUILDWARNOMEMBER); return; }
+    // TID_GAME_COMHAVECOM -- joined some other guild while the dialog sat open (:1309).
+    if (this.deps.guildManager.getByMember(target.m_idPlayer)) {
+      this.refuse(target, TID_GAME_COMHAVECOM);
+      return;
+    }
+    // TID_GAME_COMOVERMEMBER -- roster filled up in the meantime (:1318).
+    if (!this.deps.guildManager.addMember(guild.id, target.m_idPlayer)) {
+      this.refuse(target, TID_GAME_COMOVERMEMBER);
+      return;
+    }
 
     target.m_idGuild = guild.id;
     for (const m of guild.members) {
@@ -237,12 +285,17 @@ export class GuildService {
   }
 
   /**
-   * Decline -- `CDPSrvr::OnIgnoreGuildInvite` (`DPSrvr.cpp:1801`). The only
-   * effect is a TID_GAME_COMACCEPTDENY line to the inviter, which needs the
-   * notice seam; for now it just clears the pending slot.
+   * Decline -- `CDPSrvr::OnIgnoreGuildInvite` (`DPSrvr.cpp:1812`). The only
+   * effect is a TID_GAME_COMACCEPTDENY line to the INVITER (not the decliner),
+   * plus clearing the pending slot.
    */
   decline(target: CPlayer): void {
+    const pending = this.deps.guildManager.getPending(target.m_idPlayer);
     this.deps.guildManager.removePending(target.m_idPlayer);
+    if (!pending) return;
+    const inviter = this.deps.playerManager.get(pending.inviterId);
+    // C++ passes the decliner's NAME as the printf arg ("%s declined").
+    if (inviter) this.deps.sendDefinedText?.(inviter, TID_GAME_COMACCEPTDENY, target.m_szName);
   }
 
   // ── Leave / kick ───────────────────────────────────────────────────────────
@@ -258,16 +311,24 @@ export class GuildService {
    */
   leaveOrKick(requester: CPlayer, targetId: number): void {
     const guild = this.deps.guildManager.getByMember(requester.m_idPlayer);
-    if (!guild) { requester.m_idGuild = NULL_ID; return; }
-    if (this.isAtWar(guild)) return;
+    if (!guild) { requester.m_idGuild = NULL_ID; this.refuse(requester, TID_GAME_COMNOHAVECOM); return; }
+    // TID_GAME_GUILDWARNOMEMBER -- nobody joins or leaves mid-war (:1385).
+    if (this.isAtWar(guild)) { this.refuse(requester, TID_GAME_GUILDWARNOMEMBER); return; }
 
     const isSelf = requester.m_idPlayer === targetId;
     if (isSelf) {
-      // A master may not simply leave (:1406).
-      if (guild.masterId === requester.m_idPlayer) return;
+      // TID_GAME_COMLEAVEKINGPIN -- a master may not simply leave (:1412).
+      if (guild.masterId === requester.m_idPlayer) {
+        this.refuse(requester, TID_GAME_COMLEAVEKINGPIN);
+        return;
+      }
     } else {
       if (!this.deps.guildManager.getMember(guild.id, targetId)) return;
-      if (guild.masterId !== requester.m_idPlayer) return;
+      // TID_GAME_COMLEAVENOKINGPIN -- only the master may kick (:1402).
+      if (guild.masterId !== requester.m_idPlayer) {
+        this.refuse(requester, TID_GAME_COMLEAVENOKINGPIN);
+        return;
+      }
     }
     if (!this.deps.guildManager.removeMember(guild.id, targetId)) return;
 
@@ -297,17 +358,27 @@ export class GuildService {
    */
   setMemberLevel(requester: CPlayer, targetId: number, memberLv: number): void {
     const guild = this.deps.guildManager.getByMember(requester.m_idPlayer);
-    if (!guild) { requester.m_idGuild = NULL_ID; return; }
-    if (this.isAtWar(guild)) return;
+    if (!guild) { requester.m_idGuild = NULL_ID; this.refuse(requester, TID_GAME_COMNOHAVECOM); return; }
+    if (this.isAtWar(guild)) { this.refuse(requester, TID_GAME_GUILDWARNOMEMBER); return; }
     const me = this.deps.guildManager.getMember(guild.id, requester.m_idPlayer);
     const them = this.deps.guildManager.getMember(guild.id, targetId);
     if (!me || !them) return;
-    if (me.memberLv >= them.memberLv) return;
-    if (me.memberLv >= memberLv) return;
-    if (!this.deps.guildManager.rankHasPower(guild.id, me.memberLv, PF_MEMBERLEVEL)) return;
+    // TID_GAME_GUILDAPPOVER -- target outranks or matches me (:1483).
+    if (me.memberLv >= them.memberLv) { this.refuse(requester, TID_GAME_GUILDAPPOVER); return; }
+    // TID_GAME_GUILDWARRANTREGOVER -- the NEW rank outranks or matches me (:1488).
+    if (me.memberLv >= memberLv) { this.refuse(requester, TID_GAME_GUILDWARRANTREGOVER); return; }
+    // TID_GAME_GUILDAPPNOTWARRANT -- my rank lacks PF_MEMBERLEVEL (:1493).
+    if (!this.deps.guildManager.rankHasPower(guild.id, me.memberLv, PF_MEMBERLEVEL)) {
+      this.refuse(requester, TID_GAME_GUILDAPPNOTWARRANT);
+      return;
+    }
     if (memberLv < 0 || memberLv >= MAX_GM_LEVEL) return;
+    // TID_GAME_GUILDAPPNUMOVER -- that rank's headcount cap is full (:1505).
     const cap = this.deps.guildManager.maxRankMembers(guild.id, memberLv);
-    if (this.deps.guildManager.rankCount(guild.id, memberLv) + 1 > cap) return;
+    if (this.deps.guildManager.rankCount(guild.id, memberLv) + 1 > cap) {
+      this.refuse(requester, TID_GAME_GUILDAPPNUMOVER);
+      return;
+    }
 
     if (!this.deps.guildManager.setMemberLevel(guild.id, targetId, memberLv)) return;
     this.toRoster(guild, buildGuildMemberLevel(targetId, memberLv));
@@ -321,12 +392,16 @@ export class GuildService {
    */
   setMemberClass(requester: CPlayer, targetId: number, up: boolean): void {
     const guild = this.deps.guildManager.getByMember(requester.m_idPlayer);
-    if (!guild) { requester.m_idGuild = NULL_ID; return; }
-    if (this.isAtWar(guild)) return;
+    if (!guild) { requester.m_idGuild = NULL_ID; this.refuse(requester, TID_GAME_COMNOHAVECOM); return; }
+    if (this.isAtWar(guild)) { this.refuse(requester, TID_GAME_GUILDWARNOMEMBER); return; }
     const me = this.deps.guildManager.getMember(guild.id, requester.m_idPlayer);
     const them = this.deps.guildManager.getMember(guild.id, targetId);
     if (!me || !them) return;
-    if (!this.deps.guildManager.rankHasPower(guild.id, me.memberLv, PF_LEVEL)) return;
+    // TID_GAME_GUILDAPPNOTWARRANT -- PF_LEVEL, same text as PF_MEMBERLEVEL (:1684).
+    if (!this.deps.guildManager.rankHasPower(guild.id, me.memberLv, PF_LEVEL)) {
+      this.refuse(requester, TID_GAME_GUILDAPPNOTWARRANT);
+      return;
+    }
     const next = up ? them.memberClass + 1 : them.memberClass - 1;
     if (next < GUILD_CLASS_MIN || next > GUILD_CLASS_MAX) return;
 
@@ -341,12 +416,17 @@ export class GuildService {
    */
   setMemberAlias(requester: CPlayer, targetId: number, alias: string): void {
     const guild = this.deps.guildManager.getByMember(requester.m_idPlayer);
-    if (!guild) { requester.m_idGuild = NULL_ID; return; }
-    if (guild.level < GUILD_NICKNAME_MIN_LEVEL) return;
-    if (this.isAtWar(guild)) return;
-    if (guild.masterId !== requester.m_idPlayer) return;
+    if (!guild) { requester.m_idGuild = NULL_ID; this.refuse(requester, TID_GAME_COMNOHAVECOM); return; }
+    // TID_GAME_GUILDNOTLEVEL -- nicknames need guild level 10 (:1812).
+    if (guild.level < GUILD_NICKNAME_MIN_LEVEL) { this.refuse(requester, TID_GAME_GUILDNOTLEVEL); return; }
+    if (this.isAtWar(guild)) { this.refuse(requester, TID_GAME_GUILDWARNOMEMBER); return; }
+    if (guild.masterId !== requester.m_idPlayer) { this.refuse(requester, TID_GAME_COMDELNOTKINGPIN); return; }
     const trimmed = alias.trim();
-    if (trimmed.length < GUILD_NICKNAME_MIN_LEN || trimmed.length > GUILD_NICKNAME_MAX_LEN) return;
+    // TID_DIAG_0011_01 -- 2..12 chars (:1829).
+    if (trimmed.length < GUILD_NICKNAME_MIN_LEN || trimmed.length > GUILD_NICKNAME_MAX_LEN) {
+      this.refuse(requester, TID_DIAG_0011_01);
+      return;
+    }
     if (!this.deps.guildManager.getMember(guild.id, targetId)) return;
 
     if (!this.deps.guildManager.setMemberAlias(guild.id, targetId, trimmed)) return;
@@ -360,10 +440,10 @@ export class GuildService {
   changeMaster(master: CPlayer, newMasterId: number): void {
     if (master.m_idPlayer === newMasterId) return;
     const guild = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!guild) { master.m_idGuild = NULL_ID; return; }
+    if (!guild) { master.m_idGuild = NULL_ID; this.refuse(master, TID_GAME_COMNOHAVECOM); return; }
     if (!this.deps.guildManager.getMember(guild.id, newMasterId)) return;
-    if (this.isAtWar(guild)) return;
-    if (guild.masterId !== master.m_idPlayer) return;
+    if (this.isAtWar(guild)) { this.refuse(master, TID_GAME_GUILDWARNOMEMBER); return; }
+    if (guild.masterId !== master.m_idPlayer) { this.refuse(master, TID_GAME_COMDELNOTKINGPIN); return; }
 
     if (!this.deps.guildManager.changeMaster(guild.id, master.m_idPlayer, newMasterId)) return;
     this.toRoster(guild, buildChgMaster(master.m_idPlayer, newMasterId));
@@ -384,12 +464,13 @@ export class GuildService {
    */
   rename(master: CPlayer, name: string): void {
     const guild = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!guild) { master.m_idGuild = NULL_ID; return; }
-    if (guild.masterId !== master.m_idPlayer) return;
+    if (!guild) { master.m_idGuild = NULL_ID; this.refuse(master, TID_GAME_COMNOHAVECOM); return; }
+    if (guild.masterId !== master.m_idPlayer) { this.refuse(master, TID_GAME_COMDELNOTKINGPIN); return; }
     const trimmed = name.trim();
     if (trimmed.length === 0 || trimmed.length > MAX_G_NAME) return;
     if (!this.deps.guildManager.rename(guild.id, trimmed)) {
       this.deps.playerManager.sendTo(master, buildGuildError(GUILD_ERROR_DUPLICATE_NAME));
+      this.refuse(master, TID_GAME_COMOVERLAPNAME);
       return;
     }
     this.broadcastAll(buildGuildSetName(guild.id, trimmed));
@@ -420,8 +501,8 @@ export class GuildService {
     if (logo > CUSTOM_LOGO_MAX) return;
     if (logo > GUILD_LOGO_GM_ONLY_ABOVE && !this.isGameMaster(player)) return;
     const guild = this.deps.guildManager.getByMember(player.m_idPlayer);
-    if (!guild) return;
-    if (this.isAtWar(guild)) return;
+    if (!guild) { this.refuse(player, TID_GAME_COMNOHAVECOM); return; }
+    if (this.isAtWar(guild)) { this.refuse(player, TID_GAME_GUILDWARNOMEMBER); return; }
     if (!this.deps.guildManager.setLogo(guild.id, logo)) return;
     this.broadcastAll(buildGuildLogo(guild.id, logo));
   }
@@ -432,9 +513,10 @@ export class GuildService {
    */
   setAuthority(master: CPlayer, power: readonly number[]): void {
     const guild = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!guild) return;
-    if (guild.masterId !== master.m_idPlayer) return;
-    if (this.isAtWar(guild)) return;
+    if (!guild) { this.refuse(master, TID_GAME_COMNOHAVECOM); return; }
+    if (guild.masterId !== master.m_idPlayer) { this.refuse(master, TID_GAME_COMDELNOTKINGPIN); return; }
+    // TID_GAME_GUILDWARNOMEMBER -- authority is frozen mid-war (:1548).
+    if (this.isAtWar(guild)) { this.refuse(master, TID_GAME_GUILDWARNOMEMBER); return; }
     const updated = this.deps.guildManager.setAuthority(guild.id, power);
     if (!updated) return;
     this.toRoster(guild, buildGuildAuthority(updated.power));
@@ -446,8 +528,8 @@ export class GuildService {
    */
   setRankPenya(master: CPlayer, rank: number, penya: number): void {
     const guild = this.deps.guildManager.getByMember(master.m_idPlayer);
-    if (!guild) return;
-    if (guild.masterId !== master.m_idPlayer) return;
+    if (!guild) { this.refuse(master, TID_GAME_COMNOHAVECOM); return; }
+    if (guild.masterId !== master.m_idPlayer) { this.refuse(master, TID_GAME_COMDELNOTKINGPIN); return; }
     if (rank < 0 || rank >= MAX_GM_LEVEL) return;
     if (penya < 0 || penya >= MAX_GUILD_RANK_PENYA) {
       this.deps.playerManager.sendTo(master, buildGuildError(GUILD_ERROR_BAD_PENYA));
@@ -564,6 +646,19 @@ export class GuildService {
   }
 
   // ── Helpers ────────────────────────────────────────────────────────────────
+
+  /**
+   * Refuse: send the TID line and return false, so a guard reads
+   * `if (cond) return this.refuse(p, TID)`.
+   *
+   * Returning `false` rather than `void` is what lets the caller keep its
+   * single-expression shape; the value itself is only meaningful in the few
+   * methods that report success.
+   */
+  private refuse(player: CPlayer, tid: number, args?: string): false {
+    this.deps.sendDefinedText?.(player, tid, args);
+    return false;
+  }
 
   /**
    * `pGuild->GetWar()` (`guild.cpp:678-682`) -- a REGISTRY lookup, not an

@@ -37,6 +37,7 @@ import {
 import { createLogger } from '@flyff/core/logger';
 import type { GuildManager, Guild } from '../managers/guild.manager';
 import { gemContributionPxp, MAX_GUILD_LEVEL } from '../guildTable';
+import { TID_GAME_GUILDNOTENGGOLD } from '../guildText';
 
 const logger = createLogger({ module: 'guild-contribution' });
 
@@ -82,6 +83,11 @@ export interface GuildContributionServiceDeps {
    * Defaults on; a thunk so flipping it takes effect without a recompose.
    */
   guildInventoryEnabled?: () => boolean;
+  /**
+   * Refusal-notice sink -- `SendDefinedText`. Optional; without it a short-penya
+   * contribution looks like a dead button.
+   */
+  sendDefinedText?: (player: CPlayer, tid: number, args?: string) => void;
   /** Clock seam for the salary tick + tests. */
   now?: () => Date;
 }
@@ -126,7 +132,11 @@ export class GuildContributionService {
    * and drops out with TID_GAME_GUILDNOTENGGOLD when short.
    */
   private contributePenya(player: CPlayer, guild: Guild, gold: number): void {
-    if (this.deps.inventory.getGold(player) < gold) return;
+    // TID_GAME_GUILDNOTENGGOLD -- carrying less than the amount (`:1876`).
+    if (this.deps.inventory.getGold(player) < gold) {
+      this.deps.sendDefinedText?.(player, TID_GAME_GUILDNOTENGGOLD);
+      return;
+    }
     const result = this.deps.guildManager.addContribution(guild.id, player.m_idPlayer, 0, gold);
     if (!result) return;
     if (!this.deps.inventory.spendGold(player, gold)) {

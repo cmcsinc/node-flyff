@@ -946,4 +946,124 @@ describe('scriptDlg.service -- #questEndComplete callback', () => {
       'no state 8 -> the synthetic completion frame still closes the window',
     );
   });
+
+  /**
+   * The four guild script predicates (`ScriptLib.cpp:401,415,782,790`).
+   *
+   * These were hardcoded to 0 / -1, which is a live bug rather than a missing
+   * feature: `MaDa_Eshylop`'s dialog gates on `IsGuild() == 1 &&
+   * IsGuildMaster() == 1` (`NpcScript.cpp:1977`), so a real guild master failed
+   * the gate and fell through to a generic offer.
+   */
+  describe('guild script predicates', () => {
+    /** A dialog whose state 1 branches on the two membership predicates. */
+    function guildGateDialog(): ReturnType<typeof mkDialogs> {
+      const dialogs = mkDialogs(['', '', '', '', '', '', '', '', '', 'master', 'member']);
+      dialogs.byPrefix.set('mafl_test', {
+        _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+        states: {
+          '1': {
+            source:
+              'if(IsGuild() == 1 && IsGuildMaster() == 1) { AddKey( 9 ); } else { AddKey( 10 ); }',
+          },
+        },
+      } as never);
+      return dialogs;
+    }
+
+    async function runGate(guild: {
+      isMember(id: number): boolean; isMaster(id: number): boolean;
+      hasQuest(id: number, q: number): boolean; questState(id: number, q: number): number;
+    } | undefined): Promise<string[]> {
+      const { svc } = fakeQuestService();
+      const { serializer, calls } = fakeScriptDialog();
+      const s = new ScriptDlgService({
+        spawnManager: { get: () => mkNpc('MaFl_Test') },
+        dialogs: guildGateDialog(), quests: mkQuests([]), questService: svc,
+        chat: fakeChat as never, scriptDialog: serializer as never,
+        ...(guild ? { guild } : {}),
+      });
+      const out = await s.dialog(
+        mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0,
+      );
+      if (!out.ok) throw new Error('expected ok');
+      return calls.flat()
+        .filter((f) => f.type === 'addKey')
+        .map((f) => (f as { key: string }).key);
+    }
+
+    const noGuild = {
+      isMember: () => false, isMaster: () => false,
+      hasQuest: () => false, questState: () => -1,
+    };
+
+    it('a guild MASTER takes the gated branch', async () => {
+      assert.deepEqual(
+        await runGate({ ...noGuild, isMember: () => true, isMaster: () => true }),
+        ['9'],
+      );
+    });
+
+    it('a plain MEMBER does not -- IsGuildMaster is a separate check', async () => {
+      assert.deepEqual(
+        await runGate({ ...noGuild, isMember: () => true, isMaster: () => false }),
+        ['10'],
+      );
+    });
+
+    it('a guildless player does not', async () => {
+      assert.deepEqual(await runGate(noGuild), ['10']);
+    });
+
+    it('omitting the seam reads guildless -- the pre-fix behaviour', async () => {
+      assert.deepEqual(await runGate(undefined), ['10']);
+    });
+
+    it('GetGuildQuestState returns -1 for an absent entry, not 0', async () => {
+      // The -1 is load-bearing: `NpcScript.cpp:2059` distinguishes it from
+      // QS_BEGIN == 0, so collapsing it to 0 would make an unstarted guild quest
+      // look already-begun.
+      const { svc } = fakeQuestService();
+      const { serializer, calls } = fakeScriptDialog();
+      const dialogs = mkDialogs(['', '', '', '', '', '', '', '', '', 'absent', 'begun']);
+      dialogs.byPrefix.set('mafl_test', {
+        _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+        states: { '1': { source: 'if(GetGuildQuestState( 1 ) == -1) { AddKey( 9 ); } else { AddKey( 10 ); }' } },
+      } as never);
+      const s = new ScriptDlgService({
+        spawnManager: { get: () => mkNpc('MaFl_Test') },
+        dialogs, quests: mkQuests([]), questService: svc,
+        chat: fakeChat as never, scriptDialog: serializer as never,
+        guild: noGuild,
+      });
+      const out = await s.dialog(
+        mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0,
+      );
+      if (!out.ok) throw new Error('expected ok');
+      const keys = calls.flat().filter((f) => f.type === 'addKey').map((f) => (f as { key: string }).key);
+      assert.deepEqual(keys, ['9'], 'absent entry reported as -1');
+    });
+
+    it('IsGuildQuest reports the entry when the guild holds it', async () => {
+      const { svc } = fakeQuestService();
+      const { serializer, calls } = fakeScriptDialog();
+      const dialogs = mkDialogs(['', '', '', '', '', '', '', '', '', 'has', 'hasnt']);
+      dialogs.byPrefix.set('mafl_test', {
+        _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+        states: { '1': { source: 'if(IsGuildQuest( 1 ) == 1) { AddKey( 9 ); } else { AddKey( 10 ); }' } },
+      } as never);
+      const s = new ScriptDlgService({
+        spawnManager: { get: () => mkNpc('MaFl_Test') },
+        dialogs, quests: mkQuests([]), questService: svc,
+        chat: fakeChat as never, scriptDialog: serializer as never,
+        guild: { ...noGuild, hasQuest: () => true },
+      });
+      const out = await s.dialog(
+        mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0,
+      );
+      if (!out.ok) throw new Error('expected ok');
+      const keys = calls.flat().filter((f) => f.type === 'addKey').map((f) => (f as { key: string }).key);
+      assert.deepEqual(keys, ['9']);
+    });
+  });
 });

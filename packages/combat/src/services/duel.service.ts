@@ -28,6 +28,16 @@ import {
 } from '@flyff/world-core';
 import { DuelManager, DUEL_REQUEST_TIMEOUT_MS } from '../managers/duel.manager';
 
+/**
+ * `TID_GAME_GUILDWARERRORDUEL` (`resource/defineText.h:1294`) -- "you cannot
+ * duel during a guild war" (`Mover.cpp:7178`).
+ *
+ * Declared locally rather than imported from `@flyff/guild`: this package must
+ * not take an edge on the guild domain for one integer, and the guild text
+ * module cites the same define. Duplicated deliberately, both sides commented.
+ */
+const TID_GAME_GUILDWARERRORDUEL = 1294;
+
 /** SETDUEL `nDuelState` value used on accept -- C++ sets 104 (active). */
 const DUEL_STATE_ACTIVE = 104;
 
@@ -42,6 +52,12 @@ export interface DuelServiceDeps {
    * Structural seam so `@flyff/combat` keeps no `@flyff/guild` import.
    */
   isInWar?: (player: CPlayer) => boolean;
+  /**
+   * Refusal-notice sink -- `CMover::PrintString( pMover1, TID_* )`
+   * (`Mover.cpp:7178`). Only the war refusal uses it; every other duel guard is
+   * silent in C++ too.
+   */
+  sendDefinedText?: (player: CPlayer, tid: number) => void;
   /** Injector seam for tests. */
   now?: () => number;
 }
@@ -60,7 +76,10 @@ export class DuelService {
     // TID_GAME_GUILDWARERRORDUEL -- `CanDuel` refuses while either side is at war
     // (`Mover.cpp:7174`). Checked for BOTH: C++ tests `m_idWar` on the mover
     // being asked, and the request is symmetric here.
-    if (this.deps.isInWar?.(src) === true || this.deps.isInWar?.(dst) === true) return;
+    if (this.deps.isInWar?.(src) === true || this.deps.isInWar?.(dst) === true) {
+      this.deps.sendDefinedText?.(src, TID_GAME_GUILDWARERRORDUEL);
+      return;
+    }
     if (this.deps.duelManager.hasPending(dstId)) return;
     const srcId = src.m_idPlayer;
     const timer = setTimeout(() => this.expire(dstId), DUEL_REQUEST_TIMEOUT_MS);

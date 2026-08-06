@@ -106,29 +106,38 @@ describe('DuelService', () => {
   // is in a guild war (`Mover.cpp:7173-7181`) -- a duel would otherwise let two
   // warring players out of the war's targeting rules.
   describe('guild-war refusal', () => {
+    /** Recorded refusal texts -- we assert the TID, not the bytes. */
+    let notices: Array<{ id: number; tid: number }>;
+
     function withWar(atWarIds: number[]): DuelService {
+      notices = [];
       return new DuelService({
         playerManager: harness.pm as any,
         duelManager: manager,
         isInWar: (p: CPlayer) => atWarIds.includes(p.m_idPlayer),
+        sendDefinedText: (p: CPlayer, tid: number) => { notices.push({ id: p.m_idPlayer, tid }); },
       });
     }
 
-    it('refuses when the CHALLENGER is at war', () => {
+    it('refuses when the CHALLENGER is at war, and says why', () => {
       withWar([1]).request(a, 2);
       assert.ok(!manager.hasPending(2));
       assert.equal(harness.sent.length, 0);
+      // TID_GAME_GUILDWARERRORDUEL (Mover.cpp:7178) -- to the CHALLENGER.
+      assert.deepEqual(notices, [{ id: 1, tid: 1294 }]);
     });
 
     it('refuses when the TARGET is at war', () => {
       withWar([2]).request(a, 2);
       assert.ok(!manager.hasPending(2));
       assert.equal(harness.sent.length, 0);
+      assert.deepEqual(notices, [{ id: 1, tid: 1294 }]);
     });
 
-    it('allows the duel when neither is at war', () => {
+    it('allows the duel when neither is at war, and says nothing', () => {
       withWar([99]).request(a, 2);
       assert.ok(manager.hasPending(2));
+      assert.equal(notices.length, 0);
     });
   });
 });

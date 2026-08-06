@@ -243,7 +243,7 @@
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\combat.policy.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-server\\test\\net\\snapshot\\moverBroadcast.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\database\\test\\migrations\\001_initial.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\scriptDlg.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\vendor.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\questText.loader.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\converters\\items.test.ts": "fail",
@@ -265,7 +265,7 @@
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\serializers\\guild.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\guild\\test\\guildTable.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\guild\\test\\managers\\guild.manager.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\guild\\test\\services\\guild.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\guild\\test\\services\\guild.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\guild\\test\\handlers\\guild.handler.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\guild\\test\\services\\guildContribution.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\database\\test\\repositories\\guildBank.repo.test.ts": "pass",
@@ -273,5 +273,6 @@
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\serializers\\guildWar.serializer.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\guild\\test\\managers\\guildWar.manager.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\core\\test\\config\\schemas\\world.schema.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\duel.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\combat\\test\\services\\duel.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\dialogInterpreter.test.ts": "pass"
 }

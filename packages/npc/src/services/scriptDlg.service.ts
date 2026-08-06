@@ -130,6 +130,40 @@ export interface ScriptDlgDeps {
    *  job masters). Optional: a no-op stub when absent (keeps `@flyff/npc`
    *  free of the world-server's DB/socket wiring in tests). */
   changeJobService?: ChangeJobService;
+  /**
+   * Guild lookups for the four guild script predicates (`ScriptLib.cpp`):
+   * `IsGuild` (`:782`), `IsGuildMaster` (`:790`), `IsGuildQuest` (`:401`),
+   * `GetGuildQuestState` (`:415`).
+   *
+   * A structural port, not a `@flyff/guild` import -- `@flyff/npc` must not take
+   * an edge on the guild domain, and `compose.ts` binds these to `GuildManager`
+   * lookups. Absent = every predicate reads guildless, which is the behaviour
+   * before this seam existed.
+   *
+   * Note both `IsGuild` and `IsGuildMaster` are REGISTRY lookups in C++
+   * (`g_GuildMng.GetGuild( pUser->m_idGuild )` then `IsMember`/`IsMaster`), not
+   * a bare `m_idGuild != 0` test -- so a stale id on the mover reads as
+   * guildless rather than as a member of a guild that no longer exists.
+   */
+  guild?: ScriptDlgGuildLookup;
+}
+
+/** The guild surface the four script predicates need. */
+export interface ScriptDlgGuildLookup {
+  /** `pGuild && pGuild->IsMember( idPlayer )` -- has a guild AND is on its roster. */
+  isMember(charId: number): boolean;
+  /** `pGuild && pGuild->IsMaster( idPlayer )`. */
+  isMaster(charId: number): boolean;
+  /**
+   * `pGuild->GetQuest( n ) != NULL` -- does the player's guild hold that guild
+   * quest entry?
+   */
+  hasQuest(charId: number, questId: number): boolean;
+  /**
+   * `pQuest->nState`, or **-1** when the guild has no such entry. The -1 is
+   * load-bearing: `NpcScript.cpp:2059` distinguishes it from `QS_BEGIN == 0`.
+   */
+  questState(charId: number, questId: number): number;
 }
 
 /** Quest action queued by the interpreter -- resolved + executed after the
@@ -745,12 +779,21 @@ export class ScriptDlgService {
       partySize: () => 1,
       isParty: () => 0,
       isPartyMaster: () => 1,        // solo player is their own master
-      isGuild: () => 0,
-      isGuildMaster: () => 0,
-      isGuildQuest: () => 0,
-      guildQuestState: () => -1,
+      // The four guild predicates (`ScriptLib.cpp:401,415,782,790`). Without the
+      // guild seam these read guildless -- which is what shipped before, and is
+      // why `MaDa_Eshylop` fell through its `IsGuild() == 1 &&
+      // IsGuildMaster() == 1` gate (`NpcScript.cpp:1977`) to a generic offer.
+      isGuild: () => (this.deps.guild?.isMember(player.m_idPlayer) === true ? 1 : 0),
+      isGuildMaster: () => (this.deps.guild?.isMaster(player.m_idPlayer) === true ? 1 : 0),
+      isGuildQuest: (id) => (this.deps.guild?.hasQuest(player.m_idPlayer, id) === true ? 1 : 0),
+      // -1 when absent, NOT 0 -- see the port note on `ScriptDlgGuildLookup`.
+      guildQuestState: (id) => this.deps.guild?.questState(player.m_idPlayer, id) ?? -1,
       playerExpPercent: () => 0,
       random: (n) => (n > 0 ? Math.floor(Math.random() * n) : 0),
+      // `g_eLocal.GetState( EVE_WORMON )` (`ScriptLib.cpp:431`) -- the guild-quest
+      // event flag, which vanilla v19 ships at 0. Left hardcoded rather than
+      // config-backed: the arena the flag gates is not ported, so exposing a
+      // switch that turns on a half-feature would be worse than the constant.
       isWormonServer: () => 0,
     };
   }
