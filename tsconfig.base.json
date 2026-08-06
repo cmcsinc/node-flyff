@@ -41,6 +41,8 @@
       "@flyff/mail/*": ["packages/mail/src/*"],
       "@flyff/party": ["packages/party/src/index.ts"],
       "@flyff/party/*": ["packages/party/src/*"],
+      "@flyff/guild": ["packages/guild/src/index.ts"],
+      "@flyff/guild/*": ["packages/guild/src/*"],
       "@flyff/social": ["packages/social/src/index.ts"],
       "@flyff/social/*": ["packages/social/src/*"]
     }

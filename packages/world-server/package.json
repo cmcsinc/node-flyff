@@ -52,6 +52,7 @@
     "@flyff/quest": "workspace:*",
     "@flyff/npc": "workspace:*",
     "@flyff/party": "workspace:*",
+    "@flyff/guild": "workspace:*",
     "@flyff/mail": "workspace:*",
     "@flyff/social": "workspace:*"
   },

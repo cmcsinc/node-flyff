@@ -101,4 +101,34 @@ describe('DuelService', () => {
     assert.ok(!manager.hasPending(2));
     assert.equal(harness.sent.length, 0);
   });
+
+  // `CMover::CanDuel` bails with TID_GAME_GUILDWARERRORDUEL while the challenger
+  // is in a guild war (`Mover.cpp:7173-7181`) -- a duel would otherwise let two
+  // warring players out of the war's targeting rules.
+  describe('guild-war refusal', () => {
+    function withWar(atWarIds: number[]): DuelService {
+      return new DuelService({
+        playerManager: harness.pm as any,
+        duelManager: manager,
+        isInWar: (p: CPlayer) => atWarIds.includes(p.m_idPlayer),
+      });
+    }
+
+    it('refuses when the CHALLENGER is at war', () => {
+      withWar([1]).request(a, 2);
+      assert.ok(!manager.hasPending(2));
+      assert.equal(harness.sent.length, 0);
+    });
+
+    it('refuses when the TARGET is at war', () => {
+      withWar([2]).request(a, 2);
+      assert.ok(!manager.hasPending(2));
+      assert.equal(harness.sent.length, 0);
+    });
+
+    it('allows the duel when neither is at war', () => {
+      withWar([99]).request(a, 2);
+      assert.ok(manager.hasPending(2));
+    });
+  });
 });

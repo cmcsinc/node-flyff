@@ -113,4 +113,73 @@ describe('isPlayerAttackableBy -- flight forbids PvP (MoverAttack.cpp:1848)', ()
   it('target flying -> rejected', () => {
     assert.equal(isPlayerAttackableBy(flyPlayer(false, { m_idPlayer: 1 }), flyPlayer(true, { m_idPlayer: 2 })), false);
   });
+
+  // HITTYPE_WAR -- `GetHitType2` checks `IsWarTarget` after `IsPVPTarget` and
+  // BEFORE the `EVE_PK` block (`MoverAttack.cpp:1850-1863`), so a war grants
+  // consent on its own exactly like a duel.
+  const atWar = (): boolean => true;
+  const notAtWar = (): boolean => false;
+
+  it('a war target is attackable with PK mode OFF on both sides', () => {
+    const a = flyPlayer(false, { m_idPlayer: 1, m_bPKMode: false } as Partial<CPlayer>);
+    const b = flyPlayer(false, { m_idPlayer: 2, m_bPKMode: false } as Partial<CPlayer>);
+    assert.equal(isPlayerAttackableBy(a, b), false, 'no consent without the war');
+    assert.equal(isPlayerAttackableBy(a, b, atWar), true, 'the war IS the consent');
+  });
+
+  it('the war predicate does not override the flight rule', () => {
+    const a = flyPlayer(true, { m_idPlayer: 1 });
+    const b = flyPlayer(false, { m_idPlayer: 2 });
+    assert.equal(isPlayerAttackableBy(a, b, atWar), false);
+  });
+
+  it('a false predicate falls through to the normal PK consent gate', () => {
+    const on1 = flyPlayer(false, { m_idPlayer: 1 });
+    const on2 = flyPlayer(false, { m_idPlayer: 2 });
+    assert.equal(isPlayerAttackableBy(on1, on2, notAtWar), true, 'both PK on');
+    const off = flyPlayer(false, { m_idPlayer: 3, m_bPKMode: false } as Partial<CPlayer>);
+    assert.equal(isPlayerAttackableBy(on1, off, notAtWar), false);
+  });
+
+  it('omitting the predicate entirely means no war targets (EVE_GUILDWAR = 0)', () => {
+    const a = flyPlayer(false, { m_idPlayer: 1, m_bPKMode: false } as Partial<CPlayer>);
+    const b = flyPlayer(false, { m_idPlayer: 2, m_bPKMode: false } as Partial<CPlayer>);
+    assert.equal(isPlayerAttackableBy(a, b), false);
+  });
+
+  // War SUPPRESSES ordinary PK (`MoverAttack.cpp:1945-1949`): with the flag on, a
+  // player in ANY war can neither PK nor be PK'd by anyone outside that war.
+  const inWar = (p: CPlayer): boolean => p.m_idPlayer === 1;
+  const nobodyAtWar = (): boolean => false;
+
+  it('a warring player cannot PK an unrelated stranger, even with both PK modes on', () => {
+    const warrior = flyPlayer(false, { m_idPlayer: 1 });
+    const bystander = flyPlayer(false, { m_idPlayer: 2 });
+    assert.equal(isPlayerAttackableBy(warrior, bystander, notAtWar), true, 'without the rule');
+    assert.equal(isPlayerAttackableBy(warrior, bystander, notAtWar, inWar), false);
+  });
+
+  it('and the stranger cannot PK them back', () => {
+    const bystander = flyPlayer(false, { m_idPlayer: 2 });
+    const warrior = flyPlayer(false, { m_idPlayer: 1 });
+    assert.equal(isPlayerAttackableBy(bystander, warrior, notAtWar, inWar), false);
+  });
+
+  it('but the war ENEMY is still attackable -- suppression runs after the war branch', () => {
+    const a = flyPlayer(false, { m_idPlayer: 1, m_bPKMode: false } as Partial<CPlayer>);
+    const b = flyPlayer(false, { m_idPlayer: 2, m_bPKMode: false } as Partial<CPlayer>);
+    assert.equal(isPlayerAttackableBy(a, b, atWar, inWar), true);
+  });
+
+  it('a duel still overrides suppression -- the duel branch is checked first', () => {
+    const a = flyPlayer(false, { m_idPlayer: 1, m_nDuel: 1, m_idDuelTarget: 2 } as Partial<CPlayer>);
+    const b = flyPlayer(false, { m_idPlayer: 2 });
+    assert.equal(isPlayerAttackableBy(a, b, notAtWar, inWar), true);
+  });
+
+  it('nobody at war leaves normal PK untouched', () => {
+    const a = flyPlayer(false, { m_idPlayer: 1 });
+    const b = flyPlayer(false, { m_idPlayer: 2 });
+    assert.equal(isPlayerAttackableBy(a, b, notAtWar, nobodyAtWar), true);
+  });
 });

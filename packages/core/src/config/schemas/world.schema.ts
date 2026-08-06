@@ -45,6 +45,23 @@ export const WorldSimConfigSchema = z.object({
   shopCostRate: z.number().positive().default(1.0),
   /** Spawn density multiplier. Values > 1.0 increase monster population. */
   spawnMultiplier: z.number().positive().default(1.0),
+  /**
+   * Guild war on/off -- the port of the runtime `EVE_GUILDWAR` event flag
+   * (`_Common/flyffevent.h:9`), which `CFlyffEvent`'s ctor memsets to 0 and only
+   * the world boot-script token `GUILDWAR` ever sets
+   * (`WORLDSERVER/WorldServer.cpp:601-603`). So vanilla v19 ships guild war
+   * DISABLED, and `false` is the faithful default.
+   *
+   * The flag is checked in two places in C++, both world-side:
+   * `CMover::IsWarTarget` (`MoverAttack.cpp:2049`) and the
+   * `CGuildWarMng::Process` tick (`ThreadMng.cpp:466`). Declaration and accept
+   * live in CoreServer and are NOT gated there -- meaning a faithful port lets a
+   * war be declared with the flag off, lock every roster mutation on both
+   * guilds, and never expire because the only thing that expires it is the tick
+   * this flag gates. We deliberately diverge and gate declaration too; see
+   * `docs/c++-fidelity-audit.md`.
+   */
+  guildWarEnabled: z.boolean().default(false),
 });
 
 // ---------------------------------------------------------------------------

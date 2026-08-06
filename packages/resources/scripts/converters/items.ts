@@ -185,6 +185,17 @@ function rowToItem(
   // before the IK2_POTION branch) and silently drop the consume.
   const kind3 = row.dwItemKind3 ?? '';
   const kind2 = row.dwItemKind2 ?? '';
+
+  // `dwItemLV` (col 23) -- gems only. Guild contribution pays
+  // `((dwItemLV + 1) / 2) * count` PXP per donated stack (`DPSrvr.cpp:1893`),
+  // so Twinkle Stone (LV 1) is worth 1 and Palin (LV 5) is worth 3. Gated to
+  // IK3_GEM because propItem's `=` inherit rule carries the previous row's
+  // value down every column -- reading it unconditionally would stamp a
+  // meaningless grade on thousands of unrelated items.
+  if (kind3 === 'IK3_GEM') {
+    const itemLv = num(row, 'dwItemLV', 0);
+    if (itemLv > 0) item.item_lv = itemLv;
+  }
   const isEquippable =
     kind1 === 'IK1_WEAPON' || kind1 === 'IK1_ARMOR' ||
     // Secondary-hand ammo/charms: arrows (IK2_BULLET) and Billposter/Ringmaster

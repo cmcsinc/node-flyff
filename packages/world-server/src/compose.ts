@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository, PartyRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository, PartyRepository, GuildRepository, GuildBankRepository, GuildWarRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
 import { AdminListener } from './ipc/adminListener';
@@ -10,11 +10,14 @@ import { SetPosSerializer } from './net/snapshot/setPos.serializer';
 import { ModifyModeSerializer } from './net/snapshot/modifyMode.serializer';
 import { loadAllResources, type ResourceIndex } from '@flyff/resources';
 import type { CPlayer } from '@flyff/entities';
+import { AUTH, hasAuthority } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
 import { ZoneManager } from '@flyff/world-core';
 import { SpawnManager } from '@flyff/world-core';
 import { VisibilityService } from '@flyff/world-core';
 import { buildStateMode } from '@flyff/world-core';
+import { MAX_INVENTORY } from '@flyff/world-core';
+import { MAX_GOLD } from '@flyff/core/constants/limits';
 import { FlightService } from '@flyff/world-core';
 import { PlayerSnapshotSerializer } from './net/snapshot/playerSnapshot.serializer';
 import { PeerSnapshotSerializer } from './net/snapshot/peerSnapshot.serializer';
@@ -80,6 +83,14 @@ import { DuelHandler } from '@flyff/combat';
 import { PartyManager } from '@flyff/party';
 import { PartyService } from '@flyff/party';
 import { PartyHandler } from '@flyff/party';
+import { GuildManager } from '@flyff/guild';
+import { GuildWarManager, GuildWarService } from '@flyff/guild';
+import { GuildService } from '@flyff/guild';
+import { GuildHandler } from '@flyff/guild';
+import { GuildContributionService, IK3_GEM, type GemStack } from '@flyff/guild';
+import { GuildBankService } from '@flyff/guild';
+import { GuildSalarySystem } from './systems/guildSalary.system';
+import { GuildWarSystem } from './systems/guildWar.system';
 import { DropService } from '@flyff/inventory';
 import { InventoryService } from '@flyff/inventory';
 import { LootService } from '@flyff/inventory';
@@ -239,6 +250,11 @@ export interface WorldComposeResult {
   partyManager: PartyManager;
   partyService: PartyService;
   partyHandler: PartyHandler;
+  guildManager: GuildManager;
+  guildService: GuildService;
+  guildContributionService: GuildContributionService;
+  guildBankService: GuildBankService;
+  guildHandler: GuildHandler;
   bankHandler: BankHandler;
   shopHandler: ShopHandler;
   npcBuffHandler: NpcBuffHandler;
@@ -256,6 +272,10 @@ export interface WorldComposeResult {
   checkpointSystem: CheckpointSystem;
   recoverySystem: RecoverySystem;
   buffSystem: BuffSystem;
+  guildSalarySystem: GuildSalarySystem;
+  guildWarManager: GuildWarManager;
+  guildWarService: GuildWarService;
+  guildWarSystem: GuildWarSystem;
   blinkwingSystem: BlinkwingSystem;
   blinkwingService: BlinkwingService;
   pkDecaySystem: PkDecaySystem;
@@ -321,6 +341,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const friendRepo = new FriendRepository(db);
   const campusRepo = new CampusRepository(db);
   const partyRepo = new PartyRepository(db);
+  const guildRepo = new GuildRepository(db);
+  const guildBankRepo = new GuildBankRepository(db);
+  const guildWarRepo = new GuildWarRepository(db);
   // A hard crash leaves this process's presence rows behind. Clearing them at
   // boot means the admin panel never shows a ghost as online for the 60 s the
   // staleness window would otherwise take to expire them.
@@ -528,6 +551,17 @@ export async function compose(): Promise<WorldComposeResult> {
       // instead (`g_pPlayer->m_idparty = g_Party.m_uPartyId`, DPClient.cpp:4937),
       // which is also how C++ restores it on character load.
       partyService.onJoin(player);
+      // Guild (migration 023): ALL_GUILDS seeds the client's guild-name cache
+      // (every peer ADD_OBJ carrying an idGuild resolves against it), then the
+      // player's own GUILD + the online-roster push. Same fire-and-forget
+      // ordering as party -- the self ADD_OBJ carries no guild block, the
+      // client takes it from these snapshots.
+      guildService.onJoin(player);
+      // Guild war (migration 025) -- `CUser::AddMyGuildWar`, sent THIRD after
+      // ALL_GUILDS then GUILD (`User.cpp:330-332`). Also re-stamps `m_idWar` on
+      // the mover, which C++ gets for free from the CoreServer player record.
+      // Silent for the overwhelmingly common case of no war.
+      guildWarService.onJoin(player);
     },
   });
   const joinHandler = new JoinHandler(
@@ -602,6 +636,109 @@ export async function compose(): Promise<WorldComposeResult> {
     // its own curve). A thunk so a runtime change applies on the next kill.
     partyExpRate: () => config.world.partyExpRate,
   });
+  // Guild -- independent of the party/combat seams (no exp or loot share), so
+  // it composes in one shot right after the party service. GuildService owns
+  // both halves of the C++ split: the CoreServer authority checks and the
+  // world-server relay.
+  const guildManager = new GuildManager(guildRepo);
+  // Guild war registry. Composed BEFORE GuildService because every roster guard
+  // in that service asks it whether the guild is at war (`pGuild->GetWar()` in
+  // C++ -- a registry lookup, not an `m_idWar != 0` test).
+  const guildWarManager = new GuildWarManager(guildWarRepo);
+  const guildService = new GuildService({
+    playerManager, zoneManager, guildManager, guildWarManager,
+    // `CUser::IsAuthHigher( AUTH_GAMEMASTER )` -- gates guild logos above 20
+    // (DPSrvr.cpp:1833). Ordinal compare on the ASCII rank byte, same as every
+    // other `/cmd` gate in this codebase.
+    isGameMaster: (p: CPlayer) => hasAuthority(p.m_bAuthority, AUTH.GAMEMASTER),
+  });
+
+  // Guild contribution -- penya/gem donation, guild level-up, the 21:00 payroll.
+  // Split from GuildService because it is the only guild code that touches the
+  // bag; the inventory surface is passed as a structural port so `@flyff/guild`
+  // never imports `@flyff/inventory`.
+  const guildContributionService = new GuildContributionService({
+    playerManager, guildManager,
+    inventory: {
+      getGold: (p: CPlayer) => p.m_nGold,
+      spendGold: (p: CPlayer, amount: number) => inventoryService.spendGold(p, amount),
+      // C++ walks the whole bag and donates EVERY gem stack it finds
+      // (`DPSrvr.cpp:1885`). `item_lv` is emitted only for IK3_GEM rows, which is
+      // also the kind filter, so a missing grade yields 0 PXP and the stack is
+      // skipped rather than consumed for nothing.
+      findGems: (p: CPlayer) => {
+        const out: GemStack[] = [];
+        for (let slot = 0; slot < MAX_INVENTORY; slot++) {
+          const s = p.m_Inventory[slot];
+          if (!s || s.count <= 0) continue;
+          const def = resources.items.items.get(s.itemId);
+          if (def?.item_kind3 !== IK3_GEM) continue;
+          out.push({ slot, itemId: s.itemId, count: s.count, itemLv: def.item_lv ?? 0 });
+        }
+        return out;
+      },
+      removeItem: (p: CPlayer, slot: number, count: number) =>
+        inventoryService.removeItem(p, slot, count).ok,
+    },
+  });
+
+  // Guild bank -- the 42-slot shared warehouse. The penya pool is `guild.gold`
+  // (the same field level-up spends), so no separate balance is threaded here.
+  const guildBankService = new GuildBankService({
+    playerManager, guildManager, spawnManager, repo: guildBankRepo,
+    inventory: {
+      getSlot: (p: CPlayer, slot: number) =>
+        slot >= 0 && slot < MAX_INVENTORY ? (p.m_Inventory[slot] ?? null) : null,
+      removeItem: (p: CPlayer, slot: number, count: number) =>
+        inventoryService.removeItem(p, slot, count).ok,
+      addItem: (p: CPlayer, item) => {
+        // `m_Inventory.Add` returns the destination slot; ours reports changes.
+        const r = inventoryService.addItem(p, item.itemId, item.count);
+        return r.ok ? (r.changes[0]?.slot ?? -1) : -1;
+      },
+      addGold: (p: CPlayer, amount: number) => inventoryService.addGold(p, amount),
+      canAddGold: (p: CPlayer, amount: number) => p.m_nGold + amount <= MAX_GOLD,
+      // `OnPutItemGuildBank`'s refused-chain (`DPSrvr.cpp:3598-3627`). Quest items
+      // are the one gate our slot model can express today; bound / in-use /
+      // charged / `PARTS_RIDE`-on-vagrant are not modelled on the slot, same
+      // ponytail the vendor listing check carries.
+      isDepositBlocked: (p: CPlayer, slot: number) => {
+        const item = p.m_Inventory[slot];
+        if (!item) return true;
+        return resources.items.items.get(item.itemId)?.item_kind3 === 'IK3_QUEST';
+      },
+    },
+  });
+  void guildBankService
+    .hydrate()
+    .catch((err: unknown) => logger.warn({ err }, 'guild bank hydrate failed'));
+
+  // The 21:00 payroll poll (`CGuildMng::Process`). Hour-granular, so a
+  // one-minute interval cannot miss the 21:00 or 22:00 boundary.
+  const guildSalarySystem = new GuildSalarySystem({ contributionService: guildContributionService });
+  guildSalarySystem.start();
+
+  // Guild war -- declare/accept/surrender/truce plus the expiry tick.
+  //
+  // `isWarEnabled` is the port of the runtime `EVE_GUILDWAR` event flag, which
+  // vanilla v19 ships at 0 (`flyffevent.h`; only the world boot-script token
+  // `GUILDWAR` ever sets it). A thunk, not a captured boolean, so a future GM
+  // command can flip it without recomposing.
+  //
+  // Note we additionally gate DECLARATION on the flag, which C++ does not: there
+  // the flag guards only `IsWarTarget` and the expiry tick, so a war declared
+  // with the flag off would lock every roster mutation on both guilds and never
+  // end. Recorded in docs/c++-fidelity-audit.md.
+  const guildWarService = new GuildWarService({
+    playerManager, zoneManager, guildManager, guildWarManager,
+    isWarEnabled: () => config.world.guildWarEnabled,
+  });
+  // The war tick. Armed unconditionally -- `GuildWarService.tick` re-checks the
+  // flag itself (as the C++ call site does), and with no wars live the callback
+  // is an empty Map walk once a second.
+  const guildWarSystem = new GuildWarSystem({ warService: guildWarService });
+  guildWarSystem.start();
+
   // Shared same-party predicate: loot ownership (IsLoot), the combat hit-share
   // pooling, and anything else that asks "are these two in one party".
   const sameParty = (a: number, b: number): boolean => {
@@ -642,6 +779,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
     inventoryService, charRepo, inventoryRepo, zoneManager, visibilityService,
+    // `/g` guild chat + `/cg` GM guild create -- the server-side half of the
+    // TCM_BOTH `TextCmd_GuildChat` (guild chat has no C->S opcode of its own).
+    guildService,
     getItemByName: (name: string) => resources.items.byName.get(name),
     // `/cn <id|name>` -- C++ tries `GetMoverPropEx(id)` on a numeric token,
     // else `GetMoverProp(name)` (FuncTextCmd.cpp:2940-2946).
@@ -705,7 +845,13 @@ export async function compose(): Promise<WorldComposeResult> {
   // Duel manager + service -- created before CombatService so the PvP-kill seam
   // can clear active-duel flags on a lethal blow (in addition to revival).
   const duelManager = new DuelManager();
-  const duelService = new DuelService({ playerManager, duelManager });
+  // `CMover::CanDuel` refuses while either side is in a guild war
+  // (TID_GAME_GUILDWARERRORDUEL, `Mover.cpp:7174`) -- a duel would otherwise let
+  // two warring players opt out of the war's targeting rules.
+  const duelService = new DuelService({
+    playerManager, duelManager,
+    isInWar: (player) => guildWarService.isInWar(player),
+  });
   const combatService = new CombatService({
     spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,
     getItem: (id: number) => resources.items.items.get(id),
@@ -724,6 +870,16 @@ export async function compose(): Promise<WorldComposeResult> {
     sameParty,
     // Campus reward + graduation on level-up (CCampusHelper::SetLevelUpReward).
     onLevelUp: (player) => campusLevelUpSlot.fn?.(player),
+    // HITTYPE_WAR -- `CMover::IsWarTarget` (`MoverAttack.cpp:2047`). Grants PvP
+    // consent between two warring guilds regardless of PK mode, and (via
+    // `GetPVPCase`) routes the kill to `SubWar` instead of `SubPK`, so a war
+    // death costs the killer no PK value.
+    isWarTarget: (attacker, target) => guildWarService.isWarTarget(attacker, target),
+    // ...and the flip side: being in a war makes you un-PK-able by anyone OUTSIDE
+    // it (`MoverAttack.cpp:1945`). Checked after `isWarTarget`, so the enemy
+    // guild stays attackable.
+    isInWar: (player) => guildWarService.isInWar(player),
+    onWarDeath: (victim) => guildWarService.onWarDeath(victim),
   });
   // Fill the late-bound exp-applier slot so party share routes through the
   // SAME grantExpAmount path as solo kills (one exp-application code path).
@@ -735,6 +891,12 @@ export async function compose(): Promise<WorldComposeResult> {
   const rangeAttackHandler = new RangeAttackHandler(playerManager, rangeAttackService);
   const duelHandler = new DuelHandler({ playerManager, duelService });
   const partyHandler = new PartyHandler({ playerManager, partyService });
+  const guildHandler = new GuildHandler({
+    playerManager, guildService,
+    contributionService: guildContributionService,
+    bankService: guildBankService,
+    warService: guildWarService,
+  });
   // Skills -- USESKILL cast + DOUSESKILLPOINT learn (v19 damage-skill MVP).
   const skillService = new SkillService({
     skills: resources.skills,
@@ -919,6 +1081,20 @@ export async function compose(): Promise<WorldComposeResult> {
   void partyManager
     .hydrate()
     .catch((err: unknown) => logger.warn({ err }, 'party hydrate failed'));
+  // Guilds ARE durable in C++ too (CoreServer reloads GUILD_TBL at boot), so
+  // this is a faithful port rather than a divergence. Same fire-and-forget
+  // shape: a failed hydrate logs and leaves the registry empty.
+  //
+  // Wars ride the same chain, and the ORDER matters: `relinkAfterHydrate`
+  // re-derives each guild's `m_idWar`/`m_idEnemyGuild` from the loaded war rows
+  // (exactly as the tail of the C++ load query does), so the guild registry must
+  // be populated first. A war naming a guild that no longer exists is dropped
+  // there rather than left dangling.
+  void guildManager
+    .hydrate()
+    .then(() => guildWarManager.hydrate())
+    .then(() => { guildWarService.relinkAfterHydrate(); })
+    .catch((err: unknown) => logger.warn({ err }, 'guild hydrate failed'));
 
   // Bank -- open + deposit/withdraw item & gold (account-shared).
   const bankService = new BankService({ bankRepo, inventoryRepo, journal });
@@ -1082,6 +1258,15 @@ export async function compose(): Promise<WorldComposeResult> {
     partyManager,
     partyService,
     partyHandler,
+    guildManager,
+    guildService,
+    guildContributionService,
+    guildBankService,
+    guildSalarySystem,
+    guildWarManager,
+    guildWarService,
+    guildWarSystem,
+    guildHandler,
     skillService,
     statService,
     useSkillHandler,

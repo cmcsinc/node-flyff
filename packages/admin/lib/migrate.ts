@@ -383,6 +383,117 @@ const MIGRATIONS: readonly Migration[] = [
     )`,
     `CREATE INDEX IF NOT EXISTS party_member_party_idx ON party_member(party_id)`,
   ]},
+  // 023 — guilds — mirrors 023_guild.ts. Ported from CGuild/CGuildMember
+  // (guild.h:179-376). master_id is intentionally not an FK (C++ derives the
+  // master from member_lv == GUD_MASTER; an FK would block character delete).
+  { table: 'guild', sql: [
+    `CREATE TABLE IF NOT EXISTS guild (
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      master_id INTEGER NOT NULL,
+      level INTEGER NOT NULL DEFAULT 1,
+      logo INTEGER NOT NULL DEFAULT 0,
+      contribution_pxp INTEGER NOT NULL DEFAULT 0,
+      gold INTEGER NOT NULL DEFAULT 0,
+      notice TEXT NOT NULL DEFAULT '',
+      power_0 INTEGER NOT NULL DEFAULT 255,
+      power_1 INTEGER NOT NULL DEFAULT 0,
+      power_2 INTEGER NOT NULL DEFAULT 0,
+      power_3 INTEGER NOT NULL DEFAULT 0,
+      power_4 INTEGER NOT NULL DEFAULT 0,
+      penya_0 INTEGER NOT NULL DEFAULT 0,
+      penya_1 INTEGER NOT NULL DEFAULT 0,
+      penya_2 INTEGER NOT NULL DEFAULT 0,
+      penya_3 INTEGER NOT NULL DEFAULT 0,
+      penya_4 INTEGER NOT NULL DEFAULT 0,
+      win INTEGER NOT NULL DEFAULT 0,
+      lose INTEGER NOT NULL DEFAULT 0,
+      surrender INTEGER NOT NULL DEFAULT 0,
+      created_at_ms INTEGER NOT NULL,
+      UNIQUE(name)
+    )`,
+    `CREATE TABLE IF NOT EXISTS guild_member (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      guild_id INTEGER NOT NULL REFERENCES guild(id) ON DELETE CASCADE,
+      character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+      member_lv INTEGER NOT NULL DEFAULT 4,
+      class INTEGER NOT NULL DEFAULT 0,
+      pay INTEGER NOT NULL DEFAULT 0,
+      give_gold INTEGER NOT NULL DEFAULT 0,
+      give_pxp INTEGER NOT NULL DEFAULT 0,
+      win INTEGER NOT NULL DEFAULT 0,
+      lose INTEGER NOT NULL DEFAULT 0,
+      surrender INTEGER NOT NULL DEFAULT 0,
+      alias TEXT NOT NULL DEFAULT '',
+      selected_vote_id INTEGER NOT NULL DEFAULT 0,
+      joined_at_ms INTEGER NOT NULL,
+      UNIQUE(character_id)
+    )`,
+    `CREATE INDEX IF NOT EXISTS guild_member_guild_idx ON guild_member(guild_id)`,
+    `CREATE TABLE IF NOT EXISTS guild_cooldown (
+      character_id INTEGER PRIMARY KEY REFERENCES characters(id) ON DELETE CASCADE,
+      until_ms INTEGER NOT NULL
+    )`,
+  ]},
+  // 024 — guild bank — mirrors 024_guild_bank.ts. Container/contents split per
+  // rule 11: C++ packs all 42 slots (MAX_GUILDBANK, guild.h:30) into three
+  // strings in one GUILD_BANK_STR row (DbManager.cpp:3515); that is a flat-file
+  // optimization, not a schema. The bank's penya pool stays on guild.gold
+  // (m_nGoldGuild is both the balance and the level-up currency).
+  { table: 'guild_bank', sql: [
+    `CREATE TABLE IF NOT EXISTS guild_bank (
+      guild_id INTEGER PRIMARY KEY REFERENCES guild(id) ON DELETE CASCADE,
+      updated_at_ms INTEGER NOT NULL
+    )`,
+    `CREATE TABLE IF NOT EXISTS guild_bank_item (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      guild_id INTEGER NOT NULL REFERENCES guild(id) ON DELETE CASCADE,
+      slot INTEGER NOT NULL,
+      item_id INTEGER NOT NULL,
+      count INTEGER NOT NULL DEFAULT 1,
+      objid INTEGER,
+      refine INTEGER NOT NULL DEFAULT 0,
+      element INTEGER NOT NULL DEFAULT 0,
+      element_level INTEGER NOT NULL DEFAULT 0,
+      flags INTEGER NOT NULL DEFAULT 0,
+      durability INTEGER NOT NULL DEFAULT -1,
+      stats TEXT,
+      deposited_by INTEGER,
+      deposited_at_ms INTEGER NOT NULL,
+      UNIQUE(guild_id, slot)
+    )`,
+    `CREATE INDEX IF NOT EXISTS guild_bank_item_guild_idx ON guild_bank_item(guild_id)`,
+  ]},
+  // 025 — guild war — mirrors 025_guild_war.ts. Two parts, so two entries: the
+  // guild.win_point ALTER is column-gated, the guild_war table is table-gated.
+  // m_nWinPoint (guild.h:288) is NOT in CGuild::Serialize — CoreServer-only
+  // ranking state, which is why 023 missed it.
+  { column: ['guild', 'win_point'], sql: [
+    `ALTER TABLE guild ADD COLUMN win_point INTEGER NOT NULL DEFAULT 0`,
+  ]},
+  // Wars are durable in C++ too: CoreServer reloads GUILD_WAR_STR at boot and
+  // re-derives both m_idEnemyGuild back-links. decl_/acpt_ flatten the two
+  // WAR_ENTRY structs (guildwar.h:7-15). started_at_sec is SECONDS — it is the
+  // 32-bit time_t that goes on the wire, not a ms timestamp.
+  { table: 'guild_war', sql: [
+    `CREATE TABLE IF NOT EXISTS guild_war (
+      id INTEGER PRIMARY KEY,
+      decl_guild_id INTEGER NOT NULL,
+      decl_size INTEGER NOT NULL DEFAULT 0,
+      decl_surrender INTEGER NOT NULL DEFAULT 0,
+      decl_dead INTEGER NOT NULL DEFAULT 0,
+      decl_absent INTEGER NOT NULL DEFAULT 0,
+      acpt_guild_id INTEGER NOT NULL,
+      acpt_size INTEGER NOT NULL DEFAULT 0,
+      acpt_surrender INTEGER NOT NULL DEFAULT 0,
+      acpt_dead INTEGER NOT NULL DEFAULT 0,
+      acpt_absent INTEGER NOT NULL DEFAULT 0,
+      flag INTEGER NOT NULL,
+      started_at_sec INTEGER NOT NULL
+    )`,
+    `CREATE INDEX IF NOT EXISTS guild_war_decl_idx ON guild_war(decl_guild_id)`,
+    `CREATE INDEX IF NOT EXISTS guild_war_acpt_idx ON guild_war(acpt_guild_id)`,
+  ]},
   // Admin-only: GM action trail. No game-server counterpart — the admin panel
   // owns this table, so it is not mirrored in login-server/seed.ts.
   { table: 'admin_audit_log', sql: [

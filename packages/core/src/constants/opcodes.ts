@@ -188,7 +188,155 @@ export const PACKETTYPE = Object.freeze({
   // `m_dwUseItemId`. Any other flag is ignored.
   STATEMODE:            0xffffff7a,
 
+  // ── Guild (MsgHdr.h:315-332, 381-384, 455-506, 581) ──────────────────────
+  // Real Flyff splits guild across CoreServer (authority: create/kick/promote/
+  // authority mask/salary/rename/master-transfer -- `CORESERVER/DPCacheSrvr.cpp
+  // :1185-1855`) and world-server (relay: invite/ignore/logo/contribution/
+  // notice/bank -- `WORLDSERVER/DPSrvr.cpp:1790-1955`). This emulator is single
+  // -process, so every one of these is a world-server handler.
+  //
+  // GUILD (0xffffff30) is S->C only: `DWORD idGuild | CGuild::Serialize(FALSE)`
+  // (`SendGuild`, DPCacheSrvr.cpp:1856). The C->S entries below carry the
+  // client's request bodies (`Neuz/DPClient.cpp` senders).
   GUILD:                0xffffff30,
+  // `DWORD idMaster` -- `OnDestroyGuild` (:1185). Master only, not at war.
+  DESTROY_GUILD:        0xffffff32,
+  // `DWORD idMaster | GUILD_MEMBER_INFO info` -- accept invite, `OnAddGuildMember`
+  // (:1245). `GUILD_MEMBER_INFO` is `ar.Read(&info, sizeof(...))` of
+  // `{ u_long idPlayer; BYTE nMultiNo; }` under v19 (`guild.h:243`) -- a RAW
+  // struct write, so **8 bytes** on the wire (4 + 1 + 3 tail padding), not 5.
+  ADD_GUILD_MEMBER:     0xffffff33,
+  // `DWORD idMaster | DWORD idPlayer` -- kick (master) or leave (self, non-master).
+  // `OnRemoveGuildMember` (:1357).
+  REMOVE_GUILD_MEMBER:  0xffffff34,
+  // `DWORD objid` (target MOVER objid, not playerId) -- `OnGuildInvite`
+  // (DPSrvr.cpp:1790) -> `InviteCompany` (:9960).
+  GUILD_INVITE:         0xffffff35,
+  // `DWORD idPlayer` (the INVITER) -- decline. `OnIgnoreGuildInvite` (:1801).
+  IGNORE_GUILD_INVITE:  0xffffff36,
+  // S->C only: `DWORD objid | String playerName | String chat` (`SendGuildChat`,
+  // :1937). Guild chat has NO C->S opcode -- it rides PACKETTYPE_CHAT as
+  // `/g <msg>` through the text-command router (`FuncTextCmd.cpp:1122`).
+  GUILD_CHAT:           0xffffff39,
+  // `DWORD idMaster | DWORD idPlayer | int nMemberLv` -- promote/demote a rank.
+  // `OnGuildMemberLv` (:1441).
+  GUILD_MEMBER_LEVEL:   0xffffff3a,
+  // `BYTE nFlag (1=up, 0=down) | DWORD idMaster | DWORD idPlayer` -- member
+  // class A/B/C (0..2). `OnGuildClass` (:1640).
+  GUILD_CLASS:          0xffffff74,
+  // `DWORD idSelf | DWORD idPlayer | String alias(<=48)` -- member nickname.
+  // Master only, guild level >= 10, 2..12 chars. `OnGuildNickName` (:1783).
+  GUILD_NICKNAME:       0xffffff75,
+  // `DWORD dwLogo` -- write-once guild logo. `OnGuildLogo` (DPSrvr.cpp:1818):
+  // `<= CUSTOM_LOGO_MAX(27)`, and `> 20` requires AUTH_GAMEMASTER.
+  NW_GUILDLOGO:         0xf000b010,
+  // `BYTE cbPxpCount | int nGold | BYTE cbItemFlag` -- contribute penya (nGold>0)
+  // or gems (cbItemFlag). `OnGuildContribution` (DPSrvr.cpp:1837).
+  NW_GUILDCONTRIBUTION: 0xf000b011,
+  // `String szNotice(<=128)` -- guild notice. `OnGuildNotice` (DPSrvr.cpp:1919).
+  NW_GUILDNOTICE:       0xf000b012,
+  // `DWORD idPlayer | DWORD idGuild | DWORD dwAuthority[5]` -- the PF_* mask per
+  // rank, a RAW 20-byte write (no count prefix). Master only, not at war.
+  // `OnGuildAuthority` (:1527).
+  GUILD_AUTHORITY:      0xf000b026,
+  // `DWORD idPlayer | DWORD idGuild | DWORD dwType(rank) | DWORD dwPenya` --
+  // per-rank daily salary, `0 <= penya < 1000000`. `OnGuildPenya` (:1607).
+  GUILD_PENYA:          0xf000b027,
+  // `DWORD idPlayer | DWORD idGuild | String szName` -- rename. Master only,
+  // name must be unique (else GUILD_ERROR 1). `OnGuildSetName` (:1559).
+  GUILD_SETNAME:        0xf000b032,
+  // S->C only: `int nError` -- 1 = duplicate name, 2 = bad salary value.
+  GUILD_ERROR:          0xf000b035,
+  // S->C only: `BYTE nLogin(1/0) | DWORD idPlayer | DWORD uMultiNo` -- a
+  // guildmate came online/went offline (`SendGuildMemberLogin`, :1946).
+  GUILD_GAMELOGIN:      0xf000b029,
+  // S->C only: `int nMaxLogin | DWORD ids[n] | DWORD multiNos[n]` (both RAW
+  // arrays) -- the roster's currently-online set, pushed to a joining member
+  // (`SendGuildMemberGameJoin`, :1953).
+  GUILD_GAMEJOIN:       0xf000b030,
+  // S->C only: `DWORD idGuild | DWORD nGoldGuild` -- guild bank penya after the
+  // 21:00 salary payout (`SendGuildGetPay`, DPCoreClient.cpp:2705).
+  GUILD_DB_REALPENYA:   0xf000b028,
+  // `DWORD idSelf | DWORD idPlayer2` -- hand the guild to another member.
+  // Master only, not at war. `OnChgMaster` (:1719).
+  CHG_MASTER:           0xf000f000,
+
+  // ── Guild bank (42 slots) ─────────────────────────────────────────────────
+  // Every one of these re-checks `IsCloseNpc( MMI_GUILDBANKING, ... )` server
+  // side (`DPSrvr.cpp:3590`, `:3682`), not just the window open -- a client that
+  // holds the window and walks away cannot keep transacting. All are also gated
+  // on `g_eLocal.GetState( ENABLE_GUILD_INVENTORY )`.
+  //
+  // Bodyless -- open the guild-bank window. `OnOpenGuildBankWnd`
+  // (DPSrvr.cpp:3271): refused while trading, vendoring, or in the personal bank.
+  GUILD_BANK_WND:       0xf000b020,
+  // Bodyless -- close it. `OnCloseGuildBankWnd` (DPSrvr.cpp:3370).
+  GUILD_BANK_WND_CLOSE: 0xffffff3e,
+  // `BYTE nId (inv slot) | DWORD nItemNum | BYTE mode` -- deposit.
+  // `OnPutItemGuildBank` (DPSrvr.cpp:3574). `mode == 0` (gold) is REJECTED here:
+  // penya only ever leaves the guild bank, it is deposited via the separate
+  // NW_GUILDCONTRIBUTION path. Refuses quest/bound/equipped/charged items and
+  // `PARTS_RIDE` on a vagrant.
+  PUTITEMGUILDBANK:     0xf000b021,
+  // `BYTE nId | DWORD dwItemNum | BYTE mode` -- withdraw.
+  // `OnGetItemGuildBank` (DPSrvr.cpp:3666). `mode == 0` withdraws PENYA with
+  // `dwItemNum` as the amount and needs PF_PENYA; `mode == 1` withdraws the item
+  // in bank slot `nId` and needs PF_ITEM.
+  GETITEMGUILDBANK:     0xf000b022,
+  // `BYTE nSrc | BYTE nDest` -- reorder within the bank.
+  // `OnGuildBankMoveItem` (DPSrvr.cpp:3786).
+  GUILD_BANK_MOVEITEM:  0xffffff3f,
+
+  // ── Guild war ─────────────────────────────────────────────────────────────
+  // NOT behind a feature macro -- unlike guild VOTES (`__GUILDVOTE`), the war
+  // dispatch table entries (`DPCacheSrvr.cpp:54-58`) and the client's war tab
+  // are unguarded. It is gated at RUNTIME on `EVE_GUILDWAR` (`flyffevent.h:9`),
+  // which defaults to 0 (`CFlyffEvent` ctor memsets the 1024-byte state array)
+  // and is set only world-side from the boot-script token `GUILDWAR`
+  // (`WorldServer.cpp:601-603`).
+  //
+  // `__INTERNALSERVER` is UNSET in this tree, so the retail arms win: a war runs
+  // TWO HOURS (`guildwar.h:64`; the 10-minute arm is dead) and all three declare
+  // gates are live -- declarer guild level >= 6 (`:2451`), target level >= 6
+  // (`:2471`), target roster >= 10 members (`:2484`).
+  //
+  // `DWORD idMaster | String szGuild` -- declare on a guild BY NAME.
+  // `OnDeclWar` (`DPCacheSrvr.cpp:2426`). Master only. Note the payload's
+  // `idMaster` is read and then DISCARDED; the session's own player is used.
+  DECL_GUILD_WAR:       0xf000b036,
+  // `DWORD idMaster | DWORD idDecl` -- accept a declaration.
+  // `OnAcptWar` (`:2503`). In C++ this trusts a client-supplied `idDecl` against
+  // NO stored proposal (`OnDeclWar` persists nothing, it only messages the target
+  // master), so anyone may force any two guilds into war -- the author's own
+  // `// fixme - raiders` sits at `:2502`. We store the proposal and validate.
+  ACPT_GUILD_WAR:       0xf000b037,
+  // `DWORD idPlayer` -- give up. `OnSurrender` (`:2275`). Bumps the member's and
+  // the side's surrender counters; ends the war when the surrenderer is the
+  // master OR the side's surrender count exceeds 70% of its `nSize` snapshot.
+  SURRENDER:            0xf000b047,
+  // `DWORD idPlayer` -- ask the other master for a truce. `OnQueryTruce`
+  // (`:2360`). Master only; every refusal on this path is silent in C++.
+  QUERY_TRUCE:          0xf000b048,
+  // `DWORD idPlayer` -- accept a truce, ending the war with no winner.
+  // `OnAcptTruce` (`:2402`). C++ checks NEITHER master status NOR which guild was
+  // asked, so any member of either side can end the war; we require both.
+  ACPT_TRUCE:           0xf000b049,
+  // There is deliberately NO reject/decline opcode: the client's "No" button is a
+  // bare `Destroy()` with no send (`WndGuildWarRequest.cpp:84-91`). There is also
+  // no war-state query -- state arrives only via JOIN and events.
+  //
+  // S->C only. `DWORD idWar | int nWptDecl | int nWptAcpt | int nType` --
+  // the war is over (`SendWarEnd`, `DPCacheSrvr.cpp:2611-2616`; client
+  // `DPClientGuildWar.cpp:267-298`). `nType` is a `WR_*` ordinal; the two win
+  // points are the POST-update ratings, because the client re-runs `Result()`
+  // locally and takes them as authoritative rather than recomputing.
+  // Fan-out is DPID_ALLPLAYERS -- the whole shard.
+  WAR_END:              0xf000b046,
+  // S->C only. `DWORD idWar | String szPlayer | BOOL bDecl (4 bytes)` -- a
+  // non-master war casualty (`SendWarDead`, `:2618-2625`). Sent to every online
+  // member of BOTH rosters. Note the source spells the constant `0Xf000b045`
+  // with a capital X (`MsgHdr.h:502`); the value is unaffected.
+  WAR_DEAD:             0xf000b045,
 
   // v19 client -> world -- `WORLDSERVER/DPSrvr.cpp` handlers.
   MAP_KEY:              0xfffff000, // OnMapKey -- per-.wld checksum as client loads the world
@@ -460,6 +608,101 @@ export const SNAPSHOTTYPE = Object.freeze({
   // the wire (the live `CAr` template writes sizeof(BYTE)); widening it to a
   // DWORD shifts `nVal` and the client reads garbage.
   SET_PARTY_MEMBER_PARAM: 0x0091,
+  // ── Guild S->C (MsgHdr.h:1064-1069, 1095-1096, 1160-1180) ─────────────────
+  // Writers: `CUser::AddGuildInvite/AddAllGuilds/AddMyGuild/AddContribution/
+  // AddInsertedVote/AddModifyVote/AddSetNotice/AddSetGuildAuthority/
+  // AddSetGuildPenya/AddGuildRealPenya` (User.cpp:1892-2033) and the
+  // vicinity/global fan-outs `CUserMng::AddCreateGuild/AddDestroyGuild/
+  // AddSetGuild/AddSetWar/AddSetLogo` (User.cpp:5268-5325).
+  //
+  // `objid` (the snapshot record owner) is NULL_ID for every guild-scoped record
+  // EXCEPT SET_GUILD (the affected mover), SETGUILDQUEST (self), and the bank
+  // put/get records (self).
+  //
+  // `DWORD idGuild | DWORD idMaster` -- invite popup (User.cpp:1892).
+  GUILD_INVITE:           0x009a,
+  // `DWORD idGuild` on the affected mover -- broadcast to visibility range when
+  // a live player's guild changes (User.cpp:5291).
+  SET_GUILD:              0x009b,
+  // `DWORD idPlayer | DWORD idGuild | String playerName | String guildName` --
+  // broadcast to ALL players (User.cpp:5268).
+  CREATE_GUILD:           0x009c,
+  // `String masterName | DWORD idGuild` -- broadcast to ALL (User.cpp:5280).
+  // Note the reversed order vs CREATE_GUILD: the name comes FIRST here.
+  DESTROY_GUILD:          0x009d,
+  // `DWORD idGuild | CGuild::Serialize(bDesc=FALSE)` -- my full guild, sent on
+  // JOIN and on every roster change (User.cpp:1915).
+  GUILD:                  0x009e,
+  // `CGuildMng::Serialize(bDesc=TRUE)` -- EVERY guild on the shard in descriptor
+  // form. Must precede any ADD_OBJ carrying an idGuild, since the client resolves
+  // guild name/level out of its own `g_GuildMng` cache (User.cpp:1904).
+  ALL_GUILDS:             0x009f,
+  // `DWORD idWar` on the affected mover -- vicinity broadcast (User.cpp:5302).
+  // `AddSetWar` fans out over FOR_VISIBILITYRANGE, NOT the guild roster: peers
+  // need it to resolve attackability, and `objid` is the mover whose war id
+  // changed (`User.cpp:5303-5313`). `idWar == 0` means the war is over.
+  SET_WAR:                0x007a,
+  // `DWORD idWar | CGuildWar::Serialize` -- my war, JOIN ONLY (`AddMyGuildWar`,
+  // `User.cpp:1930-1945`), sent third after ALL_GUILDS then GUILD (`:330-332`).
+  //
+  // The leading `idWar` is written TWICE and that is not a transcription slip:
+  // the bare DWORD at `:1942` is followed by `Serialize` at `:1943`, whose first
+  // field is `m_idWar` again. The client reads it twice to match
+  // (`DPClientGuildWar.cpp:193-226`) -- collapse it and the stream desyncs.
+  //
+  // `CGuildWar::Serialize` (`guildwar.cpp:41-61`) = DWORD m_idWar | 20 RAW bytes
+  // m_Decl | 20 RAW bytes m_Acpt | 1 byte m_nFlag | DWORD start time. The two
+  // WAR_ENTRY blobs go through `ar.Write(&e, sizeof(e))`, not field-by-field;
+  // each is `{ u_long idGuild; int nSize, nSurrender, nDead, nAbsent }` = 20 B
+  // with no padding (all members 4-byte aligned). The time is `(time_t)` and
+  // every server StdAfx.h defines `_USE_32BIT_TIME_T`, so it is 4 bytes.
+  WAR:                    0x00da,
+  // `int nQuestId | int nState` on SELF (User.cpp:2297).
+  SETGUILDQUEST:          0x00b5,
+  // `int nQuestId` (User.cpp:2308). NOTE: `CGuild::RemoveQuest` (guild.cpp:946)
+  // has an unconditional `return TRUE` above its notify loop, so this snapshot is
+  // DEAD CODE in the original. A faithful port never sends it.
+  REMOVEGUILDQUEST:       0x00b6,
+  // `int nGoldGuild | int nType(rank)` -- guild bank penya after the 21:00
+  // salary payout (User.cpp:2022).
+  GUILD_REAL_PENYA:       0x00d5,
+  // `VOTE_INSERTED_INFO` = `DWORD idGuild | DWORD idVote | String title |
+  // String question | 4x String select` (guild.cpp:31, User.cpp:1959).
+  GUILD_ADDVOTE:          0x00d8,
+  // `DWORD idVote | BYTE cbOperation | BYTE cbExtra` -- both BYTEs are 1 byte
+  // (the live `CAr` template writes sizeof(T)). User.cpp:1971.
+  GUILD_MODIFYVOTE:       0x00d9,
+  // `DWORD idGuild | DWORD dwLogo` -- broadcast to ALL (User.cpp:5316).
+  GUILD_LOGO:             0x00fb,
+  // `CONTRIBUTION_CHANGED_INFO` = `DWORD idGuild | DWORD idPlayer |
+  // DWORD dwPxpCount | DWORD dwPenya | DWORD dwGuildPxpCount |
+  // DWORD dwGuildPenya | WORD nGuildLevel` (guild.cpp:56, User.cpp:1947).
+  GUILD_CONTRIBUTION:     0x00fc,
+  // `DWORD idGuild | String szNotice` (User.cpp:1985).
+  GUILD_NOTICE:           0x00fd,
+  // RAW `DWORD dwAuthority[5]` -- 20 bytes, no count prefix (User.cpp:1998).
+  GUILD_AUTHORITY:        0x00fe,
+  // `DWORD dwType(rank) | DWORD dwPenya` (User.cpp:2010).
+  GUILD_PENYA:            0x00ff,
+  // ── Guild bank S->C ───────────────────────────────────────────────────────
+  // `int nMode | DWORD m_nGoldGuild | CItemContainer::Serialize(42)` --
+  // `CUser::AddGuildBankWindow` (User.cpp:1036). objid is SELF, not NULL_ID.
+  GUILD_BANK_WND:         0x00fa,
+  // Deposit echo. Two shapes on one subtype, discriminated by the leading BYTE:
+  //   1 = to the depositor  (`AddPutItemGuildBank`, User.cpp:932)
+  //   3 = to guild peers who also have the window open (`AddPutItemElem`, :5341)
+  // Both then carry `CItemElem::Serialize`.
+  PUTITEMGUILDBANK:       0x00ef,
+  // Withdraw echo. THREE shapes on one subtype, again by the leading BYTE:
+  //   0 = penya, to the withdrawer  (`AddGetGoldGuildBank`, User.cpp:952):
+  //       `BYTE 0 | DWORD gold | DWORD playerId | BYTE cbCloak`
+  //   2 = penya, to every other online member (same body, mode 2)
+  //   1 = item, to the withdrawer   (`AddGetItemGuildBank`, User.cpp:942):
+  //       `BYTE 1 | CItemElem::Serialize`
+  //   3 = item, to guild peers with the window open (`AddGetItemElem`, :5326)
+  GETITEMGUILDBANK:       0x00d4,
+  // `DWORD idGuild | DWORD dwId | DWORD dwItemNum` -- bank slot emptied.
+  REMOVE_GUILD_BANK_ITEM: 0x00f3,
   // MsgHdr.h:1121 -- navigator map ping echo. `CUser::AddSetNaviPoint`
   // (User.cpp:2559) body: `D3DXVECTOR3 Pos | String Name`. `objid` (the
   // snapshot record owner) is the PINGER's id, not the recipient's --

@@ -28,7 +28,9 @@
     "dropRate": 1.0,
     "goldRate": 1.0,
     "partyExpRate": 1.0,
-    "spawnMultiplier": 1.0
+    "spawnMultiplier": 1.0,
+    "_guildWarComment": "EVE_GUILDWAR. Vanilla v19 ships this OFF (flyffevent.h default 0, set only by the boot-script GUILDWAR token). Turning it on enables PvP between warring guilds and the 2-hour war timer.",
+    "guildWarEnabled": false
   },
   "zone": {
     "broadcastRadius": 75.0,

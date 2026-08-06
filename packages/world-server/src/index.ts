@@ -114,6 +114,9 @@ async function main(): Promise<void> {
     partyManager,
     partyService,
     partyHandler,
+    guildService,
+    guildBankService,
+    guildHandler,
     playerManager,
     visibilityService,
     actMsgHandler,
@@ -151,6 +154,9 @@ async function main(): Promise<void> {
     checkpointSystem,
     recoverySystem,
     buffSystem,
+    guildSalarySystem,
+    guildWarSystem,
+    guildWarService,
     blinkwingSystem,
     pkDecaySystem,
     petSystem,
@@ -230,6 +236,11 @@ async function main(): Promise<void> {
     checkpointSystem.stop();
     recoverySystem.stop();
     buffSystem.stop();
+    guildSalarySystem.stop();
+    guildWarSystem.stop();
+    // Cancel any open declaration timer (rule 05 -- no timer outlives the
+    // process it was armed in).
+    guildWarService.dispose();
     blinkwingSystem.stop();
     pkDecaySystem.stop();
     // Before spawnManager.shutdown(): dismissing each pet kills its mover.
@@ -315,6 +326,7 @@ async function main(): Promise<void> {
     rangeAttackHandler,
     duelHandler,
     partyHandler,
+    guildHandler,
     actMsgHandler,
     moveItemHandler,
     dropItemHandler,
@@ -355,6 +367,13 @@ async function main(): Promise<void> {
         const player = playerManager.get(charId);
         if (player) {
           partyService.onDisconnect(player);
+          // Guild logout notice -- same ordering reason as party: the roster
+          // fan-out needs the live player. The member is NEVER removed from the
+          // roster (C++ `CGuildMng::RemoveConnection`, guild.cpp:882).
+          guildService.onDisconnect(player);
+          // Clear the guild-bank window flag (`CUser::m_bGuildBank`) -- a dropped
+          // socket must not leave a phantom "window open" peer receiving echoes.
+          guildBankService.onDisconnect(charId);
           // Trade teardown before the player leaves PlayerManager: refunds any
           // staged gold on BOTH sides and unwedges the surviving partner
           // (C++ `CMover::~CMover` -> `pOther->m_vtInfo.TradeClear()`).

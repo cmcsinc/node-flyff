@@ -208,6 +208,7 @@ export {
   MMI_DIALOG,
   MMI_TRADE,
   MMI_NPC_BUFF,
+  MMI_GUILDBANKING,
   MMI_BANKING,
   type CharacterIncIndex,
   type CharacterIncBlock,

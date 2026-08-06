@@ -169,7 +169,23 @@ function writeMoverPrefix(w: PacketWriter, p: CPlayer): void {
   w.writeWord(p.m_nLevel);     // m_nLevel
   w.writeDword(0);             // m_nFuel
   w.writeDword(0);             // m_tmAccFuel
-  w.writeByte(0);              // guild flag (no guild -> skip idGuild/idWar)
+  // Guild block (ObjSerializeOpt.cpp:130-140). Same variable-length shape as
+  // the party block below: literal `(u_char)1` + `m_idGuild` + `m_idWar` when
+  // the player is in a guild, else `(u_char)0` and nothing. The load side
+  // matches `== 1` exactly, so any other nonzero byte skips both reads and
+  // desyncs every field after it. Our sentinel is NULL_ID (C++ uses 0).
+  //
+  // No guild NAME or RANK rides here -- the client resolves both from its
+  // `g_GuildMng` cache, which ALL_GUILDS (0x009f) seeds. An ADD_OBJ carrying an
+  // idGuild the client has never heard of renders a blank tag, so ALL_GUILDS
+  // must precede any peer spawn.
+  if (p.m_idGuild !== NULL_ID && p.m_idGuild > 0) {
+    w.writeByte(1);
+    w.writeDword(p.m_idGuild);   // m_idGuild
+    w.writeDword(p.m_idWar);     // m_idWar (0 = not at war)
+  } else {
+    w.writeByte(0);
+  }
   w.writeDword(0);             // m_idGuildCloak (Mover.cpp:381 inits to 0)
   // Party block (ObjSerializeOpt.cpp:141-151). C++ writes literal `(u_char)1`
   // then `m_idparty`+`m_idDuelParty` when `m_idparty > 0`, else `(u_char)0` and

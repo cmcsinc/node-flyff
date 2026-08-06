@@ -528,3 +528,91 @@ describe('CombatService.resolveSkill — multi-hit (nSkillCount)', () => {
     assert.equal(journalCalls.length, 1, 'exp granted exactly once (no double-death)');
   });
 });
+
+/**
+ * `CMover::SubPVP` -> `GetPVPCase` (`Mover.cpp:5945-6029`) routes a lethal
+ * player-vs-player hit to exactly ONE consequence, and the guild-war arm is
+ * tested FIRST (`:5958`), calling `SubWar` INSTEAD of `SubPK` (`:6016`). So a war
+ * kill must grant no PK value -- otherwise a warring guild farms chaotic status
+ * off each other, and participants are punished for taking part.
+ */
+describe('CombatService PvP kill routing (SubPVP / GetPVPCase)', () => {
+  /** Two players in the same zone, attacker set up to one-shot the victim. */
+  function makePvp(over: Partial<Parameters<typeof CombatService.prototype.constructor>[0]> = {}) {
+    const socketA = { write: () => true };
+    const socketB = { write: () => true };
+    const attacker = CPlayer.fromRow(makeRow({ id: 1, name: 'Killer' }), socketA);
+    const victim = CPlayer.fromRow(makeRow({ id: 2, name: 'Victim', hp: 1, max_hp: 1 }), socketB);
+    for (const p of [attacker, victim]) {
+      p.m_nZoneId = 1;
+      p.m_vPos = { x: 0, y: 0, z: 0 };
+      p.m_bPKMode = true;
+    }
+    const players = new Map([[1, attacker], [2, victim]]);
+    const spawnManager = { get: () => undefined, kill: () => {} };
+    const zoneManager = { broadcastAround: () => 1 };
+    const playerManager = { get: (id: number) => players.get(id), sendTo: () => {} };
+    const pkCalls: Array<{ propensity: number; value: number }> = [];
+    const charRepo = {
+      updateLevelAndExp: async () => {},
+      updatePKState: async (_id: number, propensity: number, value: number) => {
+        pkCalls.push({ propensity, value });
+      },
+    };
+    const journalCalls: Array<{ type: string }> = [];
+    const journal = { append: (e: { type: string }) => { journalCalls.push(e); } };
+    const revived: number[] = [];
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager, zoneManager, playerManager, charRepo, journal, rng: makeRng(),
+      onPvpKill: (v: CPlayer) => { revived.push(v.m_idPlayer); },
+      ...over,
+    });
+    return { attacker, victim, combat, pkCalls, journalCalls, revived };
+  }
+
+  it('an ordinary PK kill increments PK value and journals it', () => {
+    const { attacker, victim, combat, pkCalls, journalCalls } = makePvp();
+    const r = combat.resolveAttack(attacker, victim.m_idPlayer);
+    assert.equal(r.ok && r.killed, true);
+    assert.equal(attacker.m_nPKValue, 1);
+    assert.equal(attacker.m_dwPKPropensity, 1);
+    assert.equal(pkCalls.length, 1, 'PK state persisted');
+    assert.equal(journalCalls.filter((j) => j.type === 'PK_KILL').length, 1);
+  });
+
+  it('a GUILD WAR kill grants NO PK value and journals no PK_KILL', () => {
+    const { attacker, victim, combat, pkCalls, journalCalls } = makePvp({
+      isWarTarget: () => true,
+    } as never);
+    const r = combat.resolveAttack(attacker, victim.m_idPlayer);
+    assert.equal(r.ok && r.killed, true, 'the kill still lands');
+    assert.equal(attacker.m_nPKValue, 0, 'SubWar runs INSTEAD of SubPK');
+    assert.equal(attacker.m_dwPKPropensity, 0);
+    assert.equal(pkCalls.length, 0, 'nothing to persist');
+    assert.equal(journalCalls.filter((j) => j.type === 'PK_KILL').length, 0);
+  });
+
+  it('a war kill still fires the war-death hook and the revival hook', () => {
+    const deaths: number[] = [];
+    const { attacker, victim, combat, revived } = makePvp({
+      isWarTarget: () => true,
+      onWarDeath: (v: CPlayer) => { deaths.push(v.m_idPlayer); },
+    } as never);
+    combat.resolveAttack(attacker, victim.m_idPlayer);
+    assert.deepEqual(deaths, [victim.m_idPlayer], 'OnWarDead reported');
+    assert.deepEqual(revived, [victim.m_idPlayer], 'revival loop still notified');
+    assert.equal(victim.m_bDead, true);
+  });
+
+  it('a NON-war kill does not fire the war-death hook', () => {
+    const deaths: number[] = [];
+    const { attacker, victim, combat } = makePvp({
+      isWarTarget: () => false,
+      onWarDeath: (v: CPlayer) => { deaths.push(v.m_idPlayer); },
+    } as never);
+    combat.resolveAttack(attacker, victim.m_idPlayer);
+    assert.equal(deaths.length, 0);
+    assert.equal(attacker.m_nPKValue, 1, 'and it IS a PK');
+  });
+});

@@ -409,6 +409,67 @@ is exploitable under an untrusted client. Each needs an explicit rationale.
   nearest of several candidate piles", "ignores a pile outside the 15-unit scan
   radius".
 
+### D3. Guild-war DECLARATION is gated on `EVE_GUILDWAR`
+
+- **File**: `packages/guild/src/services/guildWar.service.ts` (`declare_`, `accept`)
+- **C++**: the flag is checked in exactly two places, both world-side:
+  `CMover::IsWarTarget` (`MoverAttack.cpp:2049`) and the `CGuildWarMng::Process`
+  tick (`ThreadMng.cpp:466`). The CoreServer half — `OnDeclWar` / `OnAcptWar`
+  (`DPCacheSrvr.cpp:2426`, `:2503`) — runs **unconditionally**.
+- **TS**: `declare_` and `accept` both refuse when the flag is down.
+- **Why**: `EVE_GUILDWAR` defaults to **0** (`CFlyffEvent`'s ctor memsets
+  `m_aEvent[1024]`; only the world boot-script token `GUILDWAR` sets it,
+  `WorldServer.cpp:601-603`), so vanilla v19 ships guild war disabled. With the
+  flag off the faithful shape lets a war be declared and accepted, which sets
+  `m_idWar` on both guilds and thereby trips **ten** `pGuild->GetWar()` guards —
+  no invites, no kicks, no rank changes, no disband, on either side — and the war
+  then never ends, because the only thing that ends it on time is the tick the
+  flag disables. Reproducing that means shipping a griefing primitive, not a
+  behaviour.
+- **Tests**: `packages/guild/test/services/guildWar.service.test.ts` → "declare —
+  the EVE_GUILDWAR gate (divergence 1)".
+
+### D4. War accept and truce accept are validated against stored state
+
+- **File**: `packages/guild/src/services/guildWar.service.ts` (`accept`, `acceptTruce`)
+- **C++**: `OnAcptWar` reads `idDecl` off the wire and never checks that the
+  named guild declared anything — the author's own `// fixme - raiders` sits on
+  the function signature (`DPCacheSrvr.cpp:2502`). `OnAcptTruce` (`:2402-2424`) is
+  worse: it resolves the war from the accepter's `m_idWar` and calls `Result`
+  with **no master check** and **no check that the accepter is the guild that was
+  asked**.
+- **TS**: a declaration is stored server-side keyed by target guild and must
+  match on accept; a truce request is stored keyed by war id, and accepting
+  requires being the master of the guild that was *asked*.
+- **Why**: two distinct exploits. The first lets any guild master forge a war
+  against any eligible guild by sending an `idDecl` that never declared — the
+  victim's roster locks with no warning and no counterparty. The second lets *any
+  member* of either guild end a war unilaterally (and lets the asking guild
+  accept its own request), which makes the truce handshake decorative. Neither is
+  a game rule; both are missing validation in a trusted-client design.
+- **Note**: there is deliberately no reject/decline path on either, matching C++
+  — the client's "No" button is a bare `Destroy()` with no send
+  (`WndGuildWarRequest.cpp:84-91`). A refused proposal simply expires.
+- **Tests**: `packages/guild/test/services/guildWar.service.test.ts` → "accept —
+  proposal validation (divergence 2)" and the `truce` block.
+
+### D5. `nAbsent` accumulates once per second, not once per frame
+
+- **File**: `packages/guild/src/managers/guildWar.manager.ts` (`addAbsent`),
+  `packages/world-server/src/systems/guildWar.system.ts`
+- **C++**: `CGuildWar::Process` bumps `nAbsent` on every pass of a
+  `WaitForSingleObject(..., 1)` loop (`ThreadMng.cpp:339`, `:466`) for whichever
+  side's master is offline — order of a thousand increments per second.
+- **TS**: the counter is normalized to whole seconds offline, with the
+  millisecond remainder carried between ticks.
+- **Why**: nothing reads the absolute value. `OnWarTimeout` only *compares* the
+  two sides (`DPCoreSrvr.cpp:1722`), so every decision the field feeds is
+  preserved, while the stored number becomes a duration a human can read. The
+  alternative — a 1ms interval whose only purpose is inflating an integer — costs
+  a Map walk a thousand times a second for no behavioural difference.
+- **Tests**: `packages/guild/test/managers/guildWar.manager.test.ts` → "nAbsent
+  counts WHOLE SECONDS", "carries the remainder rather than dropping it".
+
 ---
 
 ## The `#questEndComplete` (dialog state 8) callback — was MISSING, now ported

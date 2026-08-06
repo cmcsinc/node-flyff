@@ -34,6 +34,14 @@ const DUEL_STATE_ACTIVE = 104;
 export interface DuelServiceDeps {
   playerManager: PlayerManager;
   duelManager: DuelManager;
+  /**
+   * Optional at-war predicate (wired to `GuildWarService.isInWar`). `CMover::
+   * CanDuel` refuses outright with TID_GAME_GUILDWARERRORDUEL when the challenger
+   * is in a war and the flag is on (`Mover.cpp:7173-7181`) -- a duel would
+   * otherwise give the two an escape from the war's own targeting rules.
+   * Structural seam so `@flyff/combat` keeps no `@flyff/guild` import.
+   */
+  isInWar?: (player: CPlayer) => boolean;
   /** Injector seam for tests. */
   now?: () => number;
 }
@@ -49,6 +57,10 @@ export class DuelService {
     if (src.m_idDuelTarget !== NULL_ID) return; // already dueling
     const dst = this.deps.playerManager.get(dstId);
     if (!dst || dst.m_idDuelTarget !== NULL_ID) return;
+    // TID_GAME_GUILDWARERRORDUEL -- `CanDuel` refuses while either side is at war
+    // (`Mover.cpp:7174`). Checked for BOTH: C++ tests `m_idWar` on the mover
+    // being asked, and the request is symmetric here.
+    if (this.deps.isInWar?.(src) === true || this.deps.isInWar?.(dst) === true) return;
     if (this.deps.duelManager.hasPending(dstId)) return;
     const srcId = src.m_idPlayer;
     const timer = setTimeout(() => this.expire(dstId), DUEL_REQUEST_TIMEOUT_MS);

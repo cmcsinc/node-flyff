@@ -40,6 +40,9 @@ import { up as migrationUp019 } from '@flyff/database/migrations/019_friends';
 import { up as migrationUp020 } from '@flyff/database/migrations/020_campus';
 import { up as migrationUp021 } from '@flyff/database/migrations/021_account_authority';
 import { up as migrationUp022 } from '@flyff/database/migrations/022_parties';
+import { up as migrationUp023 } from '@flyff/database/migrations/023_guild';
+import { up as migrationUp024 } from '@flyff/database/migrations/024_guild_bank';
+import { up as migrationUp025 } from '@flyff/database/migrations/025_guild_war';
 import { hashPassword } from '@flyff/core/utils/password';
 
 /**
@@ -74,6 +77,9 @@ const MIGRATIONS = [
   { marker: 'campus', up: migrationUp020 },
   { column: ['accounts', 'authority'], up: migrationUp021 },
   { marker: 'parties', up: migrationUp022 },
+  { marker: 'guild', up: migrationUp023 },
+  { marker: 'guild_bank', up: migrationUp024 },
+  { marker: 'guild_war', up: migrationUp025 },
 ] as const;
 
 const DB_FILENAME = process.env['DB_FILENAME'] ?? './data/flyff_dev.sqlite3';

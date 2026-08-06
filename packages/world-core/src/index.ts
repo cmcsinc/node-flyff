@@ -36,5 +36,6 @@ export * from './serializers/itemContainer';
 export * from './serializers/actionSlot.serializer';
 export * from './serializers/duel.serializer';
 export * from './serializers/party.serializer';
+export * from './serializers/guild.serializer';
 export * from './serializers/naviPoint.serializer';
 export * from './serializers/stateMode.serializer';

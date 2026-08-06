@@ -157,6 +157,19 @@ export const ItemDefinitionSchema = z.object({
   /** Raw item kind 3 (propItem dwItemKind3, IK3_*) -- fine category. */
   item_kind3: z.string().optional(),
 
+  /**
+   * `dwItemLV` (propItem col 23) -- the item's own grade, distinct from every
+   * `*_level` field here (which gate USE or EQUIP). Only emitted where a game
+   * rule actually reads it.
+   *
+   * Guild contribution is that rule: donating gems awards
+   * `((dwItemLV + 1) / 2) * count` guild PXP per stack
+   * (`WORLDSERVER/DPSrvr.cpp:1893`), so Twinkle Stone (LV 1) is worth 1 and
+   * Palin (LV 5) is worth 3. Without this the whole gem-donation path silently
+   * awards nothing.
+   */
+  item_lv: z.number().int().min(0).optional(),
+
   // Blinkwing (teleport scroll) -- IK2_BLINKWING only. v19 reuses four unrelated
   // weapon columns as the destination (`MoverSkill.cpp:2049-2057`):
   //   dwWeaponType     -> world id (WI_*)

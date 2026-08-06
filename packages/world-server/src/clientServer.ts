@@ -46,6 +46,7 @@ import type { MeleeAttackHandler } from '@flyff/combat';
 import type { RangeAttackHandler } from '@flyff/combat';
 import type { DuelHandler } from '@flyff/combat';
 import type { PartyHandler } from '@flyff/party';
+import type { GuildHandler } from '@flyff/guild';
 import type { UseSkillHandler } from '@flyff/skills';
 import type { DoUseSkillPointHandler } from '@flyff/skills';
 import type { ModifyStatusHandler } from './handlers/modifyStatus.handler';
@@ -104,6 +105,7 @@ export interface WorldClientServerDeps {
   rangeAttackHandler: RangeAttackHandler;
   duelHandler: DuelHandler;
   partyHandler: PartyHandler;
+  guildHandler: GuildHandler;
   useSkillHandler: UseSkillHandler;
   doUseSkillPointHandler: DoUseSkillPointHandler;
   modifyStatusHandler: ModifyStatusHandler;
@@ -190,6 +192,40 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.PARTYCHANGEEXPMODE, (s, r) => deps.partyHandler.handlePartyChangeExpMode(s, r));
   dispatcher.register(PACKETTYPE.PARTYCHAT, (s, r) => deps.partyHandler.handlePartyChat(s, r));
   dispatcher.register(PACKETTYPE.SETNAVIPOINT, (s, r) => deps.partyHandler.handleSetNaviPoint(s, r));
+  // Guild -- 16 C->S opcodes. Guild CHAT is deliberately absent: `/g <msg>`
+  // arrives as PACKETTYPE_CHAT and the chat command router calls
+  // `GuildService.chat`, exactly as `FuncTextCmd.cpp:1122` does.
+  dispatcher.register(PACKETTYPE.GUILD_INVITE, (s, r) => deps.guildHandler.handleGuildInvite(s, r));
+  dispatcher.register(PACKETTYPE.IGNORE_GUILD_INVITE, (s, r) => deps.guildHandler.handleIgnoreGuildInvite(s, r));
+  dispatcher.register(PACKETTYPE.ADD_GUILD_MEMBER, (s, r) => deps.guildHandler.handleAddGuildMember(s, r));
+  dispatcher.register(PACKETTYPE.REMOVE_GUILD_MEMBER, (s, r) => deps.guildHandler.handleRemoveGuildMember(s, r));
+  dispatcher.register(PACKETTYPE.DESTROY_GUILD, (s, r) => deps.guildHandler.handleDestroyGuild(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_MEMBER_LEVEL, (s, r) => deps.guildHandler.handleGuildMemberLevel(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_CLASS, (s, r) => deps.guildHandler.handleGuildClass(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_NICKNAME, (s, r) => deps.guildHandler.handleGuildNickname(s, r));
+  dispatcher.register(PACKETTYPE.CHG_MASTER, (s, r) => deps.guildHandler.handleChgMaster(s, r));
+  dispatcher.register(PACKETTYPE.NW_GUILDLOGO, (s, r) => deps.guildHandler.handleGuildLogo(s, r));
+  dispatcher.register(PACKETTYPE.NW_GUILDNOTICE, (s, r) => deps.guildHandler.handleGuildNotice(s, r));
+  dispatcher.register(PACKETTYPE.NW_GUILDCONTRIBUTION, (s, r) => deps.guildHandler.handleGuildContribution(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_AUTHORITY, (s, r) => deps.guildHandler.handleGuildAuthority(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_PENYA, (s, r) => deps.guildHandler.handleGuildPenya(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_SETNAME, (s, r) => deps.guildHandler.handleGuildSetName(s, r));
+  // Guild bank -- all 5 re-check MMI_GUILDBANKING proximity in the service, not
+  // just on open, so holding the window and walking away stops transacting.
+  dispatcher.register(PACKETTYPE.GUILD_BANK_WND, (s, r) => deps.guildHandler.handleGuildBankWnd(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_BANK_WND_CLOSE, (s, r) => deps.guildHandler.handleGuildBankWndClose(s, r));
+  dispatcher.register(PACKETTYPE.PUTITEMGUILDBANK, (s, r) => deps.guildHandler.handlePutItemGuildBank(s, r));
+  dispatcher.register(PACKETTYPE.GETITEMGUILDBANK, (s, r) => deps.guildHandler.handleGetItemGuildBank(s, r));
+  dispatcher.register(PACKETTYPE.GUILD_BANK_MOVEITEM, (s, r) => deps.guildHandler.handleGuildBankMoveItem(s, r));
+  // Guild war -- 5 opcodes. Off by default (`EVE_GUILDWAR`); the service refuses
+  // declare/accept when the flag is down, so these are safe to register always.
+  // There is no reject/decline opcode for either the war or the truce: the
+  // client's "No" is a bare Destroy() with no send.
+  dispatcher.register(PACKETTYPE.DECL_GUILD_WAR, (s, r) => deps.guildHandler.handleDeclGuildWar(s, r));
+  dispatcher.register(PACKETTYPE.ACPT_GUILD_WAR, (s, r) => deps.guildHandler.handleAcptGuildWar(s, r));
+  dispatcher.register(PACKETTYPE.SURRENDER, (s, r) => deps.guildHandler.handleSurrender(s, r));
+  dispatcher.register(PACKETTYPE.QUERY_TRUCE, (s, r) => deps.guildHandler.handleQueryTruce(s, r));
+  dispatcher.register(PACKETTYPE.ACPT_TRUCE, (s, r) => deps.guildHandler.handleAcptTruce(s, r));
   dispatcher.register(PACKETTYPE.USESKILL, (s, r) => deps.useSkillHandler.handleUseSkill(s, r));
   dispatcher.register(PACKETTYPE.DOUSESKILLPOINT, (s, r) => deps.doUseSkillPointHandler.handleDoUseSkillPoint(s, r));
   dispatcher.register(PACKETTYPE.MODIFY_STATUS, (s, r) => deps.modifyStatusHandler.handleModifyStatus(s, r));

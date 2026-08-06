@@ -49,17 +49,44 @@ export function isMoverAttackableBy(player: CPlayer, mover: CMover): boolean {
  * 1v1 consent mechanism; requiring PK mode ON as well made duels unusable
  * in practice.
  *
+ * **Guild-war override:** `isWarTarget` is the port of `CMover::IsWarTarget`
+ * (`MoverAttack.cpp:2047-2055`), and `CMover::GetHitType2` checks it right after
+ * `IsPVPTarget` and BEFORE the `EVE_PK` block (`:1850-1853`). So a war is its own
+ * consent channel exactly like a duel: two members of warring guilds may hit
+ * each other with PK mode off on both sides. Passed as a predicate rather than
+ * imported so `@flyff/combat` keeps no edge on `@flyff/guild`; absent (a world
+ * composed without the war subsystem) means no war targets, which is also what
+ * `EVE_GUILDWAR = 0` means.
+ *
+ * **PK suppression while at war:** `isInWar` is the port of the block right after
+ * the war/school checks (`MoverAttack.cpp:1945-1949`, mirrored `:1963-1967`) --
+ * with the flag on, a player in ANY war can neither PK nor be PK'd by someone
+ * outside that war. It is checked AFTER `isWarTarget`, so the enemy guild stays
+ * attackable and only unrelated bystanders become untouchable.
+ *
  * Dead / stunned / same-player targets are rejected upstream by `resolveTarget`.
  * ponytail: zone region-type enforcement (safe zones reject PvP).
  */
-export function isPlayerAttackableBy(attacker: CPlayer, target: CPlayer): boolean {
+export function isPlayerAttackableBy(
+  attacker: CPlayer,
+  target: CPlayer,
+  isWarTarget?: (a: CPlayer, t: CPlayer) => boolean,
+  isInWar?: (p: CPlayer) => boolean,
+): boolean {
   // `CMover::GetHitType` returns HITTYPE_FAIL before any PvP/duel check when
-  // either player flies (`MoverAttack.cpp:1848`, `:1918`). Keep this BEFORE the
+  // either player flies (`MoverAttack.cpp:1918`, `:1848`). Keep this BEFORE the
   // duel override: a duel grants consent, not aerial melee.
   if (attacker.isFly() || target.isFly()) return false;
   // Duel override -- accepted 1v1 duel pairs are always attackable to each other.
   if (attacker.m_nDuel === 1 && attacker.m_idDuelTarget === target.m_idPlayer) return true;
   if (target.m_nDuel === 1 && target.m_idDuelTarget === attacker.m_idPlayer) return true;
+  // HITTYPE_WAR -- same war id, different guilds, flag on (checked inside).
+  if (isWarTarget?.(attacker, target) === true) return true;
+  // War SUPPRESSES ordinary PK (`MoverAttack.cpp:1945-1949`): with the flag on,
+  // a player in ANY war cannot PK, and cannot be PK'd, by anyone outside it.
+  // This sits after the war branch on purpose -- the enemy guild is still fair
+  // game; it is the unrelated bystander who becomes untouchable.
+  if (isInWar?.(attacker) === true || isInWar?.(target) === true) return false;
   // Standard PvP: both must have PK mode enabled -- mutual consent.
   if (!attacker.m_bPKMode || !target.m_bPKMode) return false;
   return true;

@@ -88,6 +88,31 @@ export {
   type PartyUpdateData,
 } from './repositories/party.repo';
 
+export {
+  GuildRepository,
+  type GuildRow,
+  type GuildMemberRow,
+  type GuildMember,
+  type GuildWithMembers,
+  type GuildUpdateData,
+  type GuildMemberUpdateData,
+} from './repositories/guild.repo';
+
+export {
+  GuildBankRepository,
+  type GuildBankItemRow,
+  type GuildBankItem,
+  type GuildBankItemData,
+} from './repositories/guildBank.repo';
+
+export {
+  GuildWarRepository,
+  type GuildWarRow,
+  type GuildWarSide,
+  type GuildWar,
+  type GuildWarUpdateData,
+} from './repositories/guildWar.repo';
+
 // WAL journal -- embedded SQLite crash-recovery log
 export {
   Journal,

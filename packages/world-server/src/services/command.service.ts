@@ -117,6 +117,19 @@ export interface CommandServiceDeps {
    * the new spot appears. Optional: teleport skips the refresh if absent.
    */
   visibilityService?: Pick<VisibilityService, 'refresh'>;
+  /**
+   * Guild service -- `/g` (guild chat) and `/cg` (GM guild create).
+   *
+   * Guild chat has no C->S opcode of its own: `TextCmd_GuildChat`
+   * (`FuncTextCmd.cpp:1122`) is registered as `TCM_BOTH`, so the client turns
+   * `/g <msg>` into a plain CHAT packet and the SERVER-side half of the same
+   * command reads it back off the scanner and calls `SendGuildChat`. Routing it
+   * here is that server-side half. Optional: `/g` and `/cg` are dropped if absent.
+   */
+  guildService?: {
+    chat(sender: CPlayer, msg: string): void;
+    create(master: CPlayer, name: string, memberIds?: readonly number[]): unknown;
+  };
 }
 
 export type CommandOutcome =
@@ -176,6 +189,12 @@ export class CommandService {
       { names: ['w', 'whisper'], auth: AUTH.GENERAL, run: (c) => this.whisper(c) },
       { names: ['say'], auth: AUTH.GENERAL, run: (c) => this.whisper(c) },
       { names: ['s', 'shout'], auth: AUTH.GENERAL, run: (c) => this.shout(c) },
+      // `/g <msg>` -- TextCmd_GuildChat, TCM_BOTH, AUTH_GENERAL.
+      { names: ['g', 'guildchat'], auth: AUTH.GENERAL, run: (c) => this.guildChat(c) },
+      // `/cg <name>` -- TextCmd_CreateGuild, TCM_SERVER, AUTH_GAMEMASTER3.
+      // Solo create with no penya cost: C++ builds a 1-entry GUILD_MEMBER_INFO
+      // array from the caller and skips the whole NPC eligibility script.
+      { names: ['cg', 'createguild'], auth: AUTH.GAMEMASTER3, run: (c) => this.createGuild(c) },
       { names: ['te', 'tele', 'teleport'], auth: AUTH.GAMEMASTER, run: (c) => this.teleport(c) },
       { names: ['su', 'summon'], auth: AUTH.GAMEMASTER, run: (c) => this.summon(c) },
       { names: ['sys', 'system'], auth: AUTH.GAMEMASTER2, run: (c) => this.system(c) },
@@ -260,6 +279,24 @@ export class CommandService {
     });
     this.deps.playerManager.sendTo(player, buf);
     this.deps.playerManager.sendTo(target, buf);
+  }
+
+  /**
+   * `/g <msg>` -- TextCmd_GuildChat (FuncTextCmd.cpp:1122). C++ caps the line at
+   * 260 bytes and DROPS it entirely when longer (`return TRUE` without sending,
+   * `:1142`) rather than truncating -- kept verbatim.
+   */
+  private guildChat({ args, player }: CommandCtx): void {
+    const text = args.trim();
+    if (text.length === 0 || text.length >= MAX_WHISPER_LEN) return;
+    this.deps.guildService?.chat(player, text);
+  }
+
+  /** `/cg <name>` -- TextCmd_CreateGuild (FuncTextCmd.cpp:1078). GM-only. */
+  private createGuild({ args, player }: CommandCtx): void {
+    const name = args.trim();
+    if (name.length === 0) return;
+    this.deps.guildService?.create(player, name);
   }
 
   /** `/s <msg>` -- TextCmd_shout (FuncTextCmd.cpp:1510). Server-wide fan-out. */

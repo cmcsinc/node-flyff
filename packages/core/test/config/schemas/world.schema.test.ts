@@ -227,6 +227,14 @@ describe('WorldSimConfigSchema', () => {
     assert.equal(result.dropRate, 1.0);
     assert.equal(result.goldRate, 1.0);
     assert.equal(result.spawnMultiplier, 1.0);
+    // EVE_GUILDWAR defaults to 0 in `CFlyffEvent`'s ctor (memset) and is set only
+    // by the world boot-script token, so OFF is the faithful default. Flipping
+    // this default would silently enable guild-war PvP on every fresh install.
+    assert.equal(result.guildWarEnabled, false);
+  });
+
+  it('accepts guildWarEnabled: true', () => {
+    assert.equal(WorldSimConfigSchema.parse({ guildWarEnabled: true }).guildWarEnabled, true);
   });
 
   it('throws ZodError when tickRateMs is below minimum (10)', () => {

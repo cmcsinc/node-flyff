@@ -181,6 +181,12 @@ export const CONFIG_FIELDS: Record<ServerType, FieldSection[]> = {
         { path: 'world.dropRate', label: 'Drop rate', kind: 'number' },
         { path: 'world.goldRate', label: 'Penya rate', kind: 'number' },
         { path: 'world.spawnMultiplier', label: 'Spawn multiplier', kind: 'number' },
+        {
+          path: 'world.guildWarEnabled',
+          label: 'Guild war',
+          kind: 'boolean',
+          hint: 'EVE_GUILDWAR. Vanilla v19 ships this OFF. On: warring guilds can attack each other regardless of PK mode, and wars expire after 2 hours.',
+        },
       ],
     },
     {

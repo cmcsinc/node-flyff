@@ -103,6 +103,31 @@ export interface CombatServiceDeps {
    * `@flyff/combat` free of a `@flyff/social` import.
    */
   onLevelUp?: (player: CPlayer, prevLevel: number) => void;
+  /**
+   * Optional guild-war target predicate (wired to `GuildWarService.isWarTarget`
+   * in `compose.ts`) -- the port of `CMover::IsWarTarget`
+   * (`MoverAttack.cpp:2047-2055`), which `GetHitType2` checks right after
+   * `IsPVPTarget` and before the `EVE_PK` block (`:1852`). Grants PvP consent
+   * between members of two warring guilds regardless of PK mode. Absent = no war
+   * targets, which is also what the default `EVE_GUILDWAR = 0` means. Structural
+   * seam, so `@flyff/combat` keeps no `@flyff/guild` import.
+   */
+  isWarTarget?: (attacker: CPlayer, target: CPlayer) => boolean;
+  /**
+   * Optional at-war predicate (wired to `GuildWarService.isInWar`). With the war
+   * flag on, a player in ANY war can neither PK nor be PK'd by anyone outside it
+   * (`MoverAttack.cpp:1945-1949`) -- so this SUPPRESSES ordinary PvP rather than
+   * granting it, and is applied only after {@link CombatServiceDeps.isWarTarget}
+   * has had its say.
+   */
+  isInWar?: (player: CPlayer) => boolean;
+  /**
+   * Optional war-death hook (wired to `GuildWarService.onWarDeath`). Fired when a
+   * player dies while in a war -- `CDPCoreSrvr::OnWarDead`
+   * (`DPCoreSrvr.cpp:1623`) bumps that side's `nDead`, or ends the war outright
+   * if the dead player was either master.
+   */
+  onWarDeath?: (victim: CPlayer) => void;
 }
 
 /** One `m_idEnemies` row: an attacker and their cumulative recorded damage. */
@@ -250,7 +275,9 @@ export class CombatService {
     const target = this.deps.playerManager.get(targetObjid);
     if (target === undefined) return { ok: false, reason: 'invalid_target' };
     if (target.m_bDead) return { ok: false, reason: 'target_dead' };
-    if (!isPlayerAttackableBy(player, target)) return { ok: false, reason: 'pvp_not_enabled' };
+    if (!isPlayerAttackableBy(player, target, this.deps.isWarTarget, this.deps.isInWar)) {
+      return { ok: false, reason: 'pvp_not_enabled' };
+    }
     return { ok: true, target: { kind: 'player', target } };
   }
 
@@ -315,14 +342,47 @@ export class CombatService {
   }
 
   /**
-   * `OnDiedPVP` (AttackArbiter.cpp:821) -- the victim died to a player killer.
-   * Increments the killer's PK value + propensity, stamps the PK-time decay base,
-   * journals the PK state before the ack (rule 04), persists fire-and-forget,
-   * and hands the victim off to the revival loop via the `onPvpKill` seam.
+   * `CMover::SubPVP` -> `GetPVPCase` (`Mover.cpp:5945-6029`) -- route a lethal
+   * player-vs-player hit to exactly ONE of the three PvP consequences.
+   *
+   * The order is load-bearing and the war arm comes FIRST (`:5958`): if both
+   * movers share a non-zero `m_idWar`, the case is `PVP_MODE_GUILDWAR` and
+   * `SubWar` runs INSTEAD of `SubPK` (`:6016-6018`). So a guild-war kill grants
+   * the killer **no PK value and no propensity** -- war deaths are not murders.
+   * Getting this wrong would let a warring guild farm each other for chaotic
+   * status, or (worse) punish players for participating.
+   *
+   * `SubWar` itself re-checks the flag and that the two guilds differ
+   * (`:5932-5937`), returning 0 without reporting when they match -- so a
+   * same-guild kill inside a war is silently nothing at all, not a PK.
    */
   private onPvpKill(killer: CPlayer, victim: CPlayer): void {
     victim.m_bDead = true;
     victim._dirty.add('m_bDead');
+
+    // PVP_MODE_GUILDWAR -- `SubWar`, and NOT the PK path below.
+    if (this.deps.isWarTarget?.(killer, victim) === true) {
+      logger.info(
+        { killer: killer.m_idPlayer, victim: victim.m_idPlayer },
+        'player killed in guild war (no PK value)',
+      );
+      this.deps.onWarDeath?.(victim);
+      this.deps.onPvpKill?.(victim, killer.m_idPlayer);
+      return;
+    }
+
+    this.subPk(killer, victim);
+    // Hand the victim to the revival loop (flags dead, broadcasts MOVERDEATH,
+    // opens the revive dialog) -- combat must not depend on RevivalService.
+    this.deps.onPvpKill?.(victim, killer.m_idPlayer);
+  }
+
+  /**
+   * `CMover::SubPK` -- the PK-value consequence of a non-war, non-duel kill.
+   * Increments the killer's PK value + propensity, stamps the PK-time decay base,
+   * journals the PK state before the ack (rule 04), and persists it.
+   */
+  private subPk(killer: CPlayer, victim: CPlayer): void {
     killer.m_nPKValue += 1;
     killer.m_dwPKPropensity = Math.max(killer.m_dwPKPropensity, 1);
     killer.m_dwPKTime = Date.now();
@@ -347,9 +407,6 @@ export class CombatService {
     this.deps.charRepo.updatePKState(
       killer.m_idPlayer, killer.m_dwPKPropensity, killer.m_nPKValue, killer.m_dwPKTime,
     ).catch((err: unknown) => logger.error({ err, charId: killer.m_idPlayer }, 'PK state persist failed'));
-    // Hand the victim to the revival loop (flags dead, broadcasts MOVERDEATH,
-    // opens the revive dialog) -- combat must not depend on RevivalService.
-    this.deps.onPvpKill?.(victim, killer.m_idPlayer);
   }
 
   /**

@@ -66,6 +66,15 @@ export const MMI_TRADE = 2;
  */
 export const MMI_NPC_BUFF = 74;
 
+/**
+ * `MMI_GUILDBANKING` (`defineNeuz.h:105`) -- gates the right-click Guild Bank
+ * option, and more importantly the server-side proximity gate: every guild-bank
+ * opcode re-checks `IsCloseNpc( MMI_GUILDBANKING, ... )`
+ * (`DPSrvr.cpp:3590`, `:3682`), not just the window open, so a client that
+ * keeps the window open and walks away cannot keep transacting.
+ */
+export const MMI_GUILDBANKING = 15;
+
 /** One equipped part -- C++ `m_adwEquip[ nEquipNum++ ]` (Project.cpp:2937). */
 export interface CharacterIncEquipPart {
   /** Slot index (PARTS_* from defineNeuz.h:26-35) -- derived from equip order. */

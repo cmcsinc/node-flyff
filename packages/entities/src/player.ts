@@ -271,6 +271,27 @@ export class CPlayer {
    */
   m_idParty: number = NULL_ID;
   /**
+   * Guild id this player belongs to (C++ `CMover::m_idGuild`), or {@link NULL_ID}
+   * when guildless. The roster lives in `GuildManager`; this is the per-player
+   * back-reference that the ADD_OBJ guild block, guild chat, and the NPC-script
+   * `IsGuild`/`IsGuildMaster` predicates key on.
+   *
+   * C++ zeroes this whenever a guild lookup fails (`pPlayer->m_idGuild = 0` in
+   * every `DPCacheSrvr` guard) so a stale id can never survive a relog.
+   */
+  m_idGuild: number = NULL_ID;
+  /**
+   * Active guild-war id (C++ `CGuild::m_idWar` mirrored onto the mover), 0 when
+   * not at war. Rides the ADD_OBJ guild block alongside {@link m_idGuild}.
+   *
+   * Written by `GuildWarService` on accept / JOIN / war-end, and by an
+   * individual surrender (which clears only that member's copy while their
+   * guild stays in the war -- `DPCacheSrvr.cpp:2332`). It is an INDEX into
+   * `GuildWarManager`, not a boolean: a stale id whose war is gone reads as "not
+   * at war" rather than faulting.
+   */
+  m_idWar: number = 0;
+  /**
    * Duel active flag (C++ `m_nDuel`). 0 = idle, 1 = active. Mirrors the C++
    * field the client reads via `OnSetDuel` (DPClient.cpp:15493). Set alongside
    * {@link m_idDuelTarget}; cleared together.
