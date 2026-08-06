@@ -51,7 +51,7 @@ function prop(over: Partial<ItemDefinition> = {}): ItemDefinition {
   } as ItemDefinition;
 }
 
-function makeSvc(props: Record<number, ItemDefinition> = {}) {
+function makeSvc(props: Record<number, ItemDefinition> = {}, inQuestRect = false) {
   const consumes: Array<{ slot: number; count: number }> = [];
   const teleports: Array<{ x: number; y: number; z: number }> = [];
   const stateModes: Array<{ flag: number; itemId?: number }> = [];
@@ -79,6 +79,7 @@ function makeSvc(props: Record<number, ItemDefinition> = {}) {
       stateModes.push(e);
     },
     notify: (_p, tid) => { notices.push(tid); },
+    isGuildQuestRegion: () => inQuestRect,
   });
   return { svc, consumes, teleports, stateModes, notices, sent };
 }
@@ -206,6 +207,53 @@ describe('BlinkwingService', () => {
 
     player.m_Inventory[3] = { itemId: scroll.id, count: 1, objid: 3 };
     assert.equal(svc.begin(player, 3, 3, scroll).kind, 'channel');
+  });
+
+  /**
+   * `prj.IsGuildQuestRegion` gates the RETURN scroll only
+   * (`MoverSkill.cpp:2842`, inside the `II_SYS_SYS_SCR_RETURN` case). An ordinary
+   * blinkwing is not in that branch, so the rect must not touch it -- the
+   * asymmetry is in the C++ and is easy to over-apply.
+   */
+  describe('guild-quest rect', () => {
+    it('refuses the Return scroll inside the rect with TID_GAME_LIMITZONE_USE', () => {
+      const scroll = prop({ id: II_CHR_SYS_SCR_ESCAPEBLINKWING, item_kind3: 'IK3_TOWNBLINKWING' });
+      const { svc } = makeSvc({ [scroll.id]: scroll }, true);
+      const player = makePlayer(scroll.id);
+      assert.deepEqual(
+        svc.begin(player, 3, 3, scroll),
+        { kind: 'refuse', tid: BLINKWING_TID.LIMITZONE_USE },
+      );
+    });
+
+    it('does NOT gate an ordinary blinkwing on the rect', () => {
+      const wing = prop();
+      const { svc } = makeSvc({ [wing.id]: wing }, true);
+      const player = makePlayer(wing.id);
+      assert.notEqual(svc.begin(player, 3, 3, wing).kind, 'refuse');
+    });
+
+    it('allows the Return scroll outside the rect', () => {
+      const scroll = prop({ id: II_CHR_SYS_SCR_ESCAPEBLINKWING, item_kind3: 'IK3_TOWNBLINKWING' });
+      const { svc } = makeSvc({ [scroll.id]: scroll }, false);
+      const player = makePlayer(scroll.id);
+      assert.notEqual(svc.begin(player, 3, 3, scroll).kind, 'refuse');
+    });
+
+    it('omitting the seam is the pre-arena behaviour -- no refusal', () => {
+      const scroll = prop({ id: II_CHR_SYS_SCR_ESCAPEBLINKWING, item_kind3: 'IK3_TOWNBLINKWING' });
+      // makeSvc always binds the seam, so build one without it here.
+      const svc = new BlinkwingService({
+        inventoryService: { consume: () => null } as never,
+        playerManager: { sendTo: () => {} } as never,
+        getItem: (id: number) => ({ [scroll.id]: scroll })[id],
+        zones,
+        teleport: (p, pos) => { p.m_vPos = { ...pos }; },
+        broadcastStateMode: () => {},
+      });
+      const player = makePlayer(scroll.id);
+      assert.notEqual(svc.begin(player, 3, 3, scroll).kind, 'refuse');
+    });
   });
 
   it('a 0 ms item fires immediately with no channel', () => {

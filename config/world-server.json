@@ -30,7 +30,9 @@
     "partyExpRate": 1.0,
     "spawnMultiplier": 1.0,
     "_guildWarComment": "EVE_GUILDWAR. Vanilla v19 ships this OFF (flyffevent.h default 0, set only by the boot-script GUILDWAR token). Turning it on enables PvP between warring guilds and the 2-hour war timer.",
-    "guildWarEnabled": false
+    "guildWarEnabled": false,
+    "_guildQuestComment": "EVE_WORMON. Vanilla v19 ships this OFF (same default-0 mechanism, boot-script token WORMON). Turning it on lets a level-70 guild master open the one defined boss arena (QUEST_WARMON_LV1 -- one MI_CLOCKWORK1 in a Madrigal rect), world-exclusive, 60-min kill deadline + 20-min loot window. No quest rewards exist; the boss's normal drops are the only payout.",
+    "guildQuestEnabled": false
   },
   "zone": {
     "broadcastRadius": 75.0,

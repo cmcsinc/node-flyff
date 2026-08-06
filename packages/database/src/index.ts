@@ -113,6 +113,13 @@ export {
   type GuildWarUpdateData,
 } from './repositories/guildWar.repo';
 
+export {
+  GuildQuestRepository,
+  type GuildQuestRow,
+  type GuildQuestEntry,
+} from './repositories/guildQuest.repo';
+
+
 // WAL journal -- embedded SQLite crash-recovery log
 export {
   Journal,

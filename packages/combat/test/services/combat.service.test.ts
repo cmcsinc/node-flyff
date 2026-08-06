@@ -616,3 +616,83 @@ describe('CombatService PvP kill routing (SubPVP / GetPVPCase)', () => {
     assert.equal(attacker.m_nPKValue, 1, 'and it IS a PK');
   });
 });
+
+/**
+ * `CMover::DropItem`'s guild arm (`Mover.cpp:7493-7511`) -- a monster death may
+ * be a guild-quest arena boss. Wired as an optional structural dep so combat
+ * keeps no `@flyff/guild` edge, same shape as `questTracker` and `dropService`.
+ *
+ * Note the hook takes only the OBJID, not the attacker. C++ credits
+ * `pAttacker->GetGuild()`, which is the completion-steal recorded as divergence
+ * D6; not passing the killer makes reintroducing it a signature change rather
+ * than a one-line edit.
+ */
+describe('guild-quest boss hook', () => {
+  const mkMover = (): CMover => CMover.spawn(
+    0x40000099,
+    { modelIndex: 20, name: 'Clockworks', level: 1, hp: 1, atkMin: 1, atkMax: 1, armor: 0, hr: 40, er: 0, expValue: 1 },
+    { x: 0, y: 0, z: 0 }, 1,
+  );
+
+  it('fires on a monster kill with the dead mover objid', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nZoneId = 1;
+    const mover = mkMover();
+    const seen: number[] = [];
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: () => mover, kill: () => {} },
+      zoneManager: { broadcastAround: () => 1 },
+      playerManager: { sendTo: () => {} },
+      charRepo: { updateLevelAndExp: async () => {} },
+      journal: { append: () => {} },
+      rng: fixedRng,
+      onGuildQuestBossKilled: (objid: number) => { seen.push(objid); return true; },
+    });
+
+    combat.resolveAttack(player, mover.m_idMover);
+    assert.deepEqual(seen, [mover.m_idMover]);
+  });
+
+  it('does not fire while the mover is still alive', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nZoneId = 1;
+    const mover = CMover.spawn(
+      0x4000009a,
+      { modelIndex: 20, name: 'Tanky', level: 1, hp: 100_000, atkMin: 1, atkMax: 1, armor: 0, hr: 40, er: 0, expValue: 1 },
+      { x: 0, y: 0, z: 0 }, 1,
+    );
+    let calls = 0;
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: () => mover, kill: () => {} },
+      zoneManager: { broadcastAround: () => 1 },
+      playerManager: { sendTo: () => {} },
+      charRepo: { updateLevelAndExp: async () => {} },
+      journal: { append: () => {} },
+      rng: fixedRng,
+      onGuildQuestBossKilled: () => { calls++; return false; },
+    });
+
+    combat.resolveAttack(player, mover.m_idMover);
+    assert.equal(calls, 0);
+  });
+
+  it('a kill with no hook wired still completes -- the seam is optional', () => {
+    const player = CPlayer.fromRow(makeRow(), { write: () => true });
+    player.m_nZoneId = 1;
+    const mover = mkMover();
+    const combat = new CombatService({
+      // @ts-expect-error -- mock managers satisfy only the read surface
+      spawnManager: { get: () => mover, kill: () => {} },
+      zoneManager: { broadcastAround: () => 1 },
+      playerManager: { sendTo: () => {} },
+      charRepo: { updateLevelAndExp: async () => {} },
+      journal: { append: () => {} },
+      rng: fixedRng,
+    });
+
+    assert.doesNotThrow(() => combat.resolveAttack(player, mover.m_idMover));
+    assert.equal(mover.m_bDead, true);
+  });
+});

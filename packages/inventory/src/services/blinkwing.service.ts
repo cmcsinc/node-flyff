@@ -69,6 +69,12 @@ export const BLINKWING_TID = Object.freeze({
   USINGNOTLEVEL: 1151,
   /** 2484 -- the channel could not finish (item gone / cannot use here). defineText.h:1608. */
   BLINK_LIMIT: 2484,
+  /**
+   * 2664 -- "this is a restricted zone, the item cannot be used"
+   * (`defineText.h:1749`). Sent by the RETURN-scroll branch when the caster
+   * stands in a limited world or a guild-quest rect (`MoverSkill.cpp:2842`).
+   */
+  LIMITZONE_USE: 2664,
 } as const);
 
 /**
@@ -104,6 +110,21 @@ export interface BlinkwingServiceDeps {
   broadcastStateMode: (player: CPlayer, flag: number, itemId?: number) => void;
   /** Send a `SNAPSHOTTYPE_DEFINEDTEXT` refusal notice to this player. */
   notify?: (player: CPlayer, tid: number) => void;
+  /**
+   * `prj.IsGuildQuestRegion( vPos )` (`Project.cpp:4635`) -- is this point
+   * inside a guild-quest arena rect?
+   *
+   * A PROP-table scan, so it refuses whether or not a quest is live. Optional:
+   * absent = no rect, which is the behaviour before the arena shipped.
+   *
+   * ponytail: C++ consults this at EIGHT sites -- the blink skill
+   * (`DPSrvr.cpp:4336`), summon friend (`:8058`, `:8188`), summon party
+   * (`:8289`, `:8429`), `CUser::IsTeleportable` (`User.cpp:8209`), the return
+   * scroll (`MoverSkill.cpp:2842`), and couple warp (`:4191`). Only the return
+   * scroll exists in this port; the other seven features are unported, so this
+   * is the only gate there is to place.
+   */
+  isGuildQuestRegion?: (pos: Vec3, worldId: number) => boolean;
 }
 
 export class BlinkwingService {
@@ -128,6 +149,14 @@ export class BlinkwingService {
     // scroll uses REPLACE_FORCE and so may be used in flight.
     if (player.isFly() && prop.id !== II_CHR_SYS_SCR_ESCAPEBLINKWING) {
       return { kind: 'refuse' };
+    }
+    // MoverSkill.cpp:2842 -- the RETURN scroll only, and only inside a
+    // guild-quest rect (the C++ condition also lists WI_WORLD_GUILDWAR and
+    // WI_WORLD_KEBARAS, neither of which exists here). Placed after the flight
+    // check to match the C++ order within `DoUseItemSystem`.
+    if (prop.id === II_CHR_SYS_SCR_ESCAPEBLINKWING
+      && this.deps.isGuildQuestRegion?.(player.m_vPos, this.worldIdOf(player)) === true) {
+      return { kind: 'refuse', tid: BLINKWING_TID.LIMITZONE_USE };
     }
     // Resolve the destination BEFORE arming: C++ reaches `DoUseItemBlinkWing`'s
     // `WI_WORLD_NONE` bail only after the channel, but a 10 s cast that can
@@ -249,6 +278,13 @@ export class BlinkwingService {
     const currentWorld = WI_BY_WORLD_SLUG[zone.world_id];
     if (currentWorld === undefined || currentWorld !== prop.blink_world) return null;
     return { pos: { ...prop.blink_pos }, angle: prop.blink_angle ?? player.m_fAngle };
+  }
+
+  /** The player's current `WI_*` world id, or -1 when the zone is unknown. */
+  private worldIdOf(player: CPlayer): number {
+    const zone = this.deps.zones.byNumericId.get(player.m_nZoneId);
+    if (!zone) return -1;
+    return WI_BY_WORLD_SLUG[zone.world_id] ?? -1;
   }
 
   private clearChannel(player: CPlayer): void {

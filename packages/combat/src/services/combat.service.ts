@@ -62,6 +62,17 @@ export interface CombatServiceDeps {
    */
   questTracker?: { onKill(killer: CPlayer, victimModelIdx: number): void };
   /**
+   * Optional guild-quest boss hook -- `CMover::DropItem`'s guild arm
+   * (`Mover.cpp:7493-7511`). Called with the dying mover's objid; returns true
+   * when it WAS a live arena's boss.
+   *
+   * Note the C++ site takes the ATTACKER and credits `pAttacker->GetGuild()`.
+   * We deliberately do not pass the killer: the arena credits the guild that
+   * opened it, so passing the attacker would only invite reintroducing the
+   * completion-steal. See `GuildQuestService`'s divergence 1.
+   */
+  onGuildQuestBossKilled?: (bossObjid: number) => boolean;
+  /**
    * Optional drop-roller (Phase A-C). Spawns ground piles for the kill.
    * Structural type -- compose.ts binds the real `DropService` (in @flyff/
    * inventory), which satisfies this signature without combat depending on it.
@@ -448,6 +459,10 @@ export class CombatService {
     this.deps.dropService?.roll(mover, killer);
     // Phase 7 -- increment SetEndCondKillNPC slots before the mover leaves scope.
     this.deps.questTracker?.onKill(killer, mover.m_dwIndex);
+    // Guild-quest arena: advance it if this was the boss. Before the despawn, so
+    // the service can still address the mover if it ever needs to. C++ runs its
+    // equivalent inside `DropItem`, i.e. also before the drop roll completes.
+    this.deps.onGuildQuestBossKilled?.(mover.m_idMover);
     // Schedule corpse DEL_OBJ after CORPSE_DESPAWN_MS so clients drop the death
     // animation; respawn (if any) runs on its own independent timer. Admin
     // despawns (/rn, /ak) omit the flag and broadcast DEL_OBJ themselves.

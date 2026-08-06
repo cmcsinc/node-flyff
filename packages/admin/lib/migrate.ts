@@ -494,6 +494,22 @@ const MIGRATIONS: readonly Migration[] = [
     `CREATE INDEX IF NOT EXISTS guild_war_decl_idx ON guild_war(decl_guild_id)`,
     `CREATE INDEX IF NOT EXISTS guild_war_acpt_idx ON guild_war(acpt_guild_id)`,
   ]},
+  // 026 — guild quest — mirrors 026_guild_quest.ts. One row per (guild, quest);
+  // GUILDQUEST (guildquest.h:40-53) is a flat m_aQuest[256] blit in C++, which is
+  // an array layout for the DB wire, not a schema. quest_id stays SIGNED to match
+  // the wire type (-1 is the C++ in-place tombstone), though no tombstone row is
+  // ever stored — an absent row IS the tombstone. UNIQUE is the upsert's conflict
+  // target, unlike guild_war's plain indexes. FK CASCADE here (guild_war has
+  // none): a disbanded guild's quest rows unwind no live state.
+  { table: 'guild_quest', sql: [
+    `CREATE TABLE IF NOT EXISTS guild_quest (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      guild_id INTEGER NOT NULL REFERENCES guild(id) ON DELETE CASCADE,
+      quest_id INTEGER NOT NULL,
+      state INTEGER NOT NULL DEFAULT 0
+    )`,
+    `CREATE UNIQUE INDEX IF NOT EXISTS guild_quest_guild_quest_uniq ON guild_quest(guild_id, quest_id)`,
+  ]},
   // Admin-only: GM action trail. No game-server counterpart — the admin panel
   // owns this table, so it is not mirrored in login-server/seed.ts.
   { table: 'admin_audit_log', sql: [

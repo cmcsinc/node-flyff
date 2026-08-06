@@ -117,6 +117,31 @@ export interface Guild {
   sentPay: boolean;
   /** Roster. Order is not load-bearing (rank lives in `memberLv`). */
   members: GuildMemberState[];
+  /**
+   * `m_aQuest[m_nQuestSize]` (`guild.h:347-348`) -- the guild's quest ledger,
+   * which IS on the wire (tail of `CGuild::Serialize`, `guild.cpp:433`).
+   *
+   * Order IS load-bearing, unlike {@link Guild.members}: the client blits the
+   * array and `CGuild::SetQuest` appends, so an entry's index is stable for the
+   * life of the guild. We never store the `nId == -1` tombstones C++ writes in
+   * place of a removed entry -- see {@link GuildManager.removeQuest}.
+   */
+  quests: GuildQuestState[];
+}
+
+/**
+ * One `GUILDQUEST` (`_Common/guildquest.h:40-53`) -- 12 bytes on the wire.
+ *
+ * `idGuild` is deliberately absent: the C++ struct carries it, but
+ * `CGuild::SetQuest` (`guild.cpp:909-944`) never assigns it, so every entry the
+ * original serializes has `idGuild == 0` from the default ctor. The serializer
+ * writes the literal 0 rather than storing a field nothing sets.
+ */
+export interface GuildQuestState {
+  /** `nId` -- the `QUEST_*` numeric id. */
+  readonly questId: number;
+  /** `nState` -- `QS_BEGIN`(0) .. `QS_END`(14). */
+  state: number;
 }
 
 /** One pending inbound guild invite, keyed by the TARGET character. */
@@ -166,6 +191,24 @@ export interface GuildPersistence {
   loadAllCooldowns(): Promise<Map<number, number>>;
 }
 
+/**
+ * Quest-ledger persistence port -- structurally satisfied by
+ * `GuildQuestRepository` (`@flyff/database`, migration `026`).
+ *
+ * Separate from {@link GuildPersistence} because the original keeps them apart
+ * too: guild rows come from CoreServer (`CDbManager::OpenGuild`), quest rows
+ * from the DatabaseServer's `GUILD_QUEST_STR` table via a distinct
+ * `SendQueryGuildQuest` round trip (`ThreadMng.cpp:248`) that only runs when
+ * `EVE_WORMON` is on. Keeping the ports separate means a world with the flag
+ * off never touches the table.
+ */
+export interface GuildQuestPersistence {
+  /** guildId -> its entries. */
+  loadAll(): Promise<Map<number, { guildId: number; questId: number; state: number }[]>>;
+  upsert(guildId: number, questId: number, state: number): Promise<void>;
+  remove(guildId: number, questId: number): Promise<void>;
+}
+
 export class GuildManager {
   private readonly guilds = new Map<number, Guild>();
   /** Lower-cased name -> guild id. Mirrors `CGuildMng::m_mapPGuild2`. */
@@ -181,6 +224,41 @@ export class GuildManager {
    * live roster broadcast, so each call swallows its rejection into a log line.
    */
   constructor(private readonly repo?: GuildPersistence, private readonly now: () => number = Date.now) {}
+
+  /**
+   * Attach the quest-ledger port after construction.
+   *
+   * Late-bound rather than a constructor arg because `GuildManager` is composed
+   * before the world knows whether the guild-quest flag is on, and every
+   * existing test constructs it with one argument. Absent = quests live only in
+   * memory.
+   */
+  setQuestRepo(repo: GuildQuestPersistence): void { this.questRepo = repo; }
+
+  private questRepo?: GuildQuestPersistence;
+
+  /**
+   * Load every guild's quest ledger -- `SendQueryGuildQuest` (`ThreadMng.cpp:248`).
+   *
+   * Called AFTER {@link hydrate}, because it indexes into guilds that must
+   * already exist. Entries for an unknown guild are dropped with a warn, which
+   * is what the C++ consumer does too (`DPDatabaseClient.cpp:2362` reads them
+   * into a throwaway `CGuild waste` purely to keep the stream aligned).
+   */
+  async hydrateQuests(): Promise<void> {
+    if (!this.questRepo) return;
+    const byGuild = await this.questRepo.loadAll();
+    let loaded = 0;
+    let orphans = 0;
+    for (const [guildId, entries] of byGuild) {
+      const guild = this.guilds.get(guildId);
+      if (!guild) { orphans += entries.length; continue; }
+      guild.quests = entries.map((e) => ({ questId: e.questId, state: e.state }));
+      loaded += guild.quests.length;
+    }
+    if (orphans > 0) logger.warn({ orphans }, 'guild quest rows for unknown guilds');
+    logger.info({ loaded }, 'guild quests loaded');
+  }
 
   /**
    * World-boot hydrate -- the port of `CDbManager::OpenGuild` +
@@ -203,6 +281,7 @@ export class GuildManager {
         idWar: 0, idEnemyGuild: 0,
         sentPay: false,
         members: r.members.map((m) => ({ ...m })),
+        quests: [],
       };
       // C++ re-forces the master mask on every load (DbManager.cpp:2837) -- it
       // is never persisted, so a hand-edited DB cannot lock a master out.
@@ -312,6 +391,7 @@ export class GuildManager {
       idWar: 0, idEnemyGuild: 0,
       sentPay: false,
       members: [newMember(masterId, GUD_MASTER)],
+      quests: [],
     };
     for (const id of memberIds) {
       if (id === masterId) continue;
@@ -711,6 +791,79 @@ export class GuildManager {
     m.surrender += 1;
     this.persistMember(characterId, { surrender: m.surrender });
     return m;
+  }
+
+  // ── Quest ledger ───────────────────────────────────────────────────────────
+
+  /** `CGuild::FindQuest` (`guild.cpp:966-979`), minus its `m_pQuest` cache. */
+  getQuest(guildId: number, questId: number): GuildQuestState | undefined {
+    return this.guilds.get(guildId)?.quests.find((q) => q.questId === questId);
+  }
+
+  /**
+   * `CGuild::SetQuest` (`guild.cpp:909-944`) -- find-or-append, then notify.
+   *
+   * C++ walks `m_aQuest` for a matching `nId`, else reuses the first slot whose
+   * `nId == -1`, else appends and bumps `m_nQuestSize`. We collapse the
+   * tombstone-reuse arm because {@link removeQuest} really deletes: a UNIQUE
+   * `(guild_id, quest_id)` row plus a real delete is the relational equivalent
+   * of reusing a `-1` slot, and it keeps the serialized array free of holes the
+   * client would have to skip.
+   *
+   * The 255 bound is `m_nQuestSize` being a **BYTE** (`guild.h:348`) against
+   * `MAX_GUILD_QUEST == 256` (`guildquest.h:10`) -- the original's own count
+   * wraps at 256. Defensive only: the shipped data defines one quest.
+   *
+   * Returns the entry, or undefined when the guild is unknown or the ledger is
+   * full.
+   */
+  setQuest(guildId: number, questId: number, state: number): GuildQuestState | undefined {
+    const guild = this.guilds.get(guildId);
+    if (!guild) return undefined;
+    const existing = guild.quests.find((q) => q.questId === questId);
+    if (existing) {
+      existing.state = state;
+      this.persistQuest(guildId, questId, state);
+      return existing;
+    }
+    if (guild.quests.length >= 255) {
+      logger.warn({ guildId, questId }, 'guild quest ledger full -- entry dropped');
+      return undefined;
+    }
+    const entry: GuildQuestState = { questId, state };
+    guild.quests.push(entry);
+    this.persistQuest(guildId, questId, state);
+    return entry;
+  }
+
+  /**
+   * Drop an entry.
+   *
+   * The original tombstones instead (`CGuild::RemoveQuest`, `guild.cpp:946-964`,
+   * sets `nId = -1` in place) and never tells the client: that function has an
+   * unconditional `return TRUE;` at `:952`, ABOVE its
+   * `SNAPSHOTTYPE_REMOVEGUILDQUEST` notify loop, so the whole fan-out is dead
+   * code and clients only learn of a removal at the next full guild serialize.
+   * We match the silence -- see the opcode note on `REMOVEGUILDQUEST` -- while
+   * deleting the row rather than holing the array.
+   */
+  removeQuest(guildId: number, questId: number): boolean {
+    const guild = this.guilds.get(guildId);
+    if (!guild) return false;
+    const i = guild.quests.findIndex((q) => q.questId === questId);
+    if (i < 0) return false;
+    guild.quests.splice(i, 1);
+    if (this.questRepo) {
+      void this.questRepo.remove(guildId, questId)
+        .catch((err: unknown) => logger.warn({ err, guildId, questId }, 'guild quest remove failed'));
+    }
+    return true;
+  }
+
+  private persistQuest(guildId: number, questId: number, state: number): void {
+    if (!this.questRepo) return;
+    void this.questRepo.upsert(guildId, questId, state)
+      .catch((err: unknown) => logger.warn({ err, guildId, questId }, 'guild quest upsert failed'));
   }
 
   // ── Rejoin cooldown ────────────────────────────────────────────────────────

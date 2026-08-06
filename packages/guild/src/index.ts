@@ -17,7 +17,8 @@
 
 export { GuildManager } from './managers/guild.manager';
 export type {
-  Guild, GuildMemberState, PendingGuildInvite, GuildPersistence,
+  Guild, GuildMemberState, GuildQuestState, PendingGuildInvite,
+  GuildPersistence, GuildQuestPersistence,
 } from './managers/guild.manager';
 export { GuildWarManager } from './managers/guildWar.manager';
 export type { War, GuildWarPersistence } from './managers/guildWar.manager';
@@ -25,6 +26,19 @@ export { GuildWarService, WAR_PROPOSAL_TIMEOUT_MS } from './services/guildWar.se
 export type {
   GuildWarServiceDeps, WarProposal, TruceRequest,
 } from './services/guildWar.service';
+export {
+  GuildQuestProcessor, ptInRect,
+  GQP_READY, GQP_WORMON, GQP_GETITEM,
+  GUILD_QUEST_WORMON_MS, GUILD_QUEST_GETITEM_MS, GUILD_QUEST_SCAN_DEBOUNCE,
+} from './managers/guildQuest.manager';
+export type {
+  GuildQuestElem, GuildQuestPropLike, QuestRect,
+} from './managers/guildQuest.manager';
+export { GuildQuestService, GUILD_QUEST_MIN_LEVEL } from './services/guildQuest.service';
+export type {
+  GuildQuestServiceDeps, GuildQuestSpawnPort, GuildQuestTeleportPort,
+  GuildQuestStartResult, GuildQuestStartFailure,
+} from './services/guildQuest.service';
 export {
   GUILD_TABLE, MAX_GUILD_LEVEL, guildMaxMembers, guildMaxRankMembers,
   GUILD_REJOIN_COOLDOWN_MS,

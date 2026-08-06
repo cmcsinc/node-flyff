@@ -32,6 +32,7 @@ import { loadCharacterInc, type CharacterIncIndex } from './loaders/characterInc
 import { loadSetItems, type SetItemIndex } from './loaders/setItem.loader';
 import { loadDefines } from './loaders/defines.loader';
 import { loadQuestText, type QuestTextIndex } from './loaders/questText.loader';
+import { loadGuildQuest, type GuildQuestIndex } from './loaders/guildQuest.loader';
 
 const logger = createResourceLogger('resources');
 
@@ -75,6 +76,9 @@ export interface ResourceIndex {
   /** `IDS_PROPQUEST_INC_* -> display text` from `raw/propQuest.txt.txt`.
    *  Resolves quest titles + per-state desc/cond/status for the dialog UI. */
   questText: QuestTextIndex;
+
+  /** `propGuildQuest.inc` guild (Wormon) quest props keyed by quest id + symbol. */
+  guildQuest: GuildQuestIndex;
 }
 
 /**
@@ -93,7 +97,11 @@ export async function loadAllResources(
 ): Promise<ResourceIndex> {
   logger.info({ dataDir, rawDir }, 'Loading all resources...');
 
-  const [items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines, questText] = await Promise.all([
+  // Defines resolve FIRST: `propGuildQuest.inc` needs the `QUEST_*`/`WI_*`/`MI_*`
+  // symbol table to resolve its ids, so it cannot share the parallel batch below.
+  const defines = await loadDefines(rawDir);
+
+  const [items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, questText, guildQuest] = await Promise.all([
     loadItems(dataDir, rawDir),
     loadMovers(dataDir),
     loadSkills(dataDir),
@@ -103,8 +111,8 @@ export async function loadAllResources(
     loadDrops(dataDir),
     loadCharacterInc(rawDir),
     loadSetItems(dataDir),
-    loadDefines(rawDir),
     loadQuestText(rawDir),
+    loadGuildQuest(rawDir, defines),
   ]);
 
   logger.info(
@@ -120,11 +128,12 @@ export async function loadAllResources(
       setItems: setItems.byId.size,
       defines: defines.size,
       questText: questText.size,
+      guildQuest: guildQuest.byId.size,
     },
     'All resources loaded'
   );
 
-  return { items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines, questText };
+  return { items, movers, skills, zones, dialogs, quests, drops, characterInc, setItems, defines, questText, guildQuest };
 }
 
 /**
@@ -200,6 +209,12 @@ export {
 } from './loaders/quest.loader';
 export { loadDefines } from './loaders/defines.loader';
 export { loadQuestText, type QuestTextIndex } from './loaders/questText.loader';
+export {
+  loadGuildQuest,
+  parseGuildQuestInc,
+  type GuildQuestIndex,
+  type GuildQuestProp,
+} from './loaders/guildQuest.loader';
 export {
   loadCharacterInc,
   parseCharacterInc,

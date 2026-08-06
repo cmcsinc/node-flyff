@@ -62,6 +62,27 @@ export const WorldSimConfigSchema = z.object({
    * `docs/c++-fidelity-audit.md`.
    */
   guildWarEnabled: z.boolean().default(false),
+
+  /**
+   * `EVE_WORMON` (`_Common/flyffevent.h:14`) -- the guild-quest boss arena.
+   *
+   * Same shape as {@link guildWarEnabled}: memset to 0 by the `CFlyffEvent`
+   * ctor, written only by the boot-script token `WORMON`
+   * (`WORLDSERVER/WorldServer.cpp:617-620`), so vanilla v19 ships it DISABLED
+   * and `false` is the faithful default.
+   *
+   * The flag gates two things in C++: the boot-time `SendQueryGuildQuest`
+   * (`ThreadMng.cpp:248`) and the script predicate `IsWormonServer`
+   * (`ScriptLib.cpp:433`), which is one term of the dialog gate that offers the
+   * quest. Notably the arena tick itself is NOT gated (`ThreadMng.cpp:413` runs
+   * unconditionally over an empty table).
+   *
+   * On: the level-70 guild master of a guild can open the one defined arena
+   * (`QUEST_WARMON_LV1` -- one `MI_CLOCKWORK1` in a Madrigal rect) and hold it
+   * world-exclusively for up to 60 minutes, plus a 20-minute loot window. There
+   * are no quest rewards; the boss's ordinary drop table is the only payout.
+   */
+  guildQuestEnabled: z.boolean().default(false),
 });
 
 // ---------------------------------------------------------------------------

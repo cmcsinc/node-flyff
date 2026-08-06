@@ -17,7 +17,7 @@ import {
   buildGuildContribution, buildAddGuildMember, buildChgMaster, buildGuildChat,
   buildGuildAuthority,
   buildGuildBankWindow, buildPutItemGuildBank, buildGetItemGuildBank,
-  buildGetGoldGuildBank, buildRemoveGuildBankItem,
+  buildGetGoldGuildBank, buildRemoveGuildBankItem, buildSetGuildQuest,
   MAX_GUILDBANK, MAX_LEN_MOVER_MENU_SQ,
   GUILD_BANK_ECHO_SELF, GUILD_BANK_ECHO_PEER,
   GUILD_BANK_ECHO_PENYA_SELF, GUILD_BANK_ECHO_PENYA_PEER,
@@ -471,5 +471,59 @@ describe('guild bank constants', () => {
   it('MAX_GUILDBANK is 42 and the proximity gate is squared', () => {
     assert.equal(MAX_GUILDBANK, 42);
     assert.equal(MAX_LEN_MOVER_MENU_SQ, 1024, 'MAX_LEN_MOVER_MENU = 1024, already squared-space');
+  });
+});
+
+/**
+ * The quest ledger is the TAIL of `CGuild::Serialize` (`guild.cpp:433-434`):
+ * a BYTE `m_nQuestSize` then a raw blit of 12-byte `GUILDQUEST` records. The
+ * count byte is the trap -- `m_nQuestSize` is a `BYTE` (`guild.h:348`) against
+ * `MAX_GUILD_QUEST == 256`, so the original's own count wraps.
+ */
+describe('quest ledger tail of writeCGuild', () => {
+  it('writes a zero count byte when there are no entries', () => {
+    const w = new PacketWriter();
+    writeCGuild(w, makeGuild(), false);
+    const buf = w.build();
+    assert.equal(buf[buf.length - 1], 0, 'trailing m_nQuestSize == 0');
+  });
+
+  it('writes count then 12 bytes per entry, in nId/nState/idGuild order', () => {
+    const w = new PacketWriter();
+    writeCGuild(w, makeGuild({
+      quests: [
+        { nId: 1, nState: 14, idGuild: 0 },
+        { nId: 2, nState: 0, idGuild: 0 },
+      ],
+    }), false);
+    const buf = w.build();
+    const tail = buf.subarray(buf.length - (1 + 24));
+    assert.equal(tail[0], 2, 'm_nQuestSize');
+    assert.equal(tail.readUInt32LE(1), 1);
+    assert.equal(tail.readUInt32LE(5), 14);
+    assert.equal(tail.readUInt32LE(9), 0, 'idGuild is 0 -- SetQuest never assigns it');
+    assert.equal(tail.readUInt32LE(13), 2);
+    assert.equal(tail.readUInt32LE(17), 0);
+    assert.equal(tail.readUInt32LE(21), 0);
+  });
+});
+
+describe('buildSetGuildQuest (SNAPSHOTTYPE_SETGUILDQUEST)', () => {
+  it('body is nQuestId | nState on the recipient objid', () => {
+    const buf = buildSetGuildQuest(0x42, 1, 14);
+    assertSnapPrefix(buf, 0x42, SNAPSHOTTYPE.SETGUILDQUEST);
+    const r = new PacketReader(buf.subarray(16));
+    assert.equal(r.readDword(), 1, 'nQuestId');
+    assert.equal(r.readDword(), 14, 'nState');
+    assert.equal(r.remaining, 0);
+    assert.equal(buf.length, 24);
+  });
+
+  it('the subtype is 0x00b5, distinct from REMOVEGUILDQUEST 0x00b6', () => {
+    // 0x00b6 has a writer in C++ but no reachable caller -- `CGuild::RemoveQuest`
+    // returns above its notify loop (`guild.cpp:952`) -- so a faithful port never
+    // sends it. Pinning both numbers keeps a future edit from swapping them.
+    assert.equal(SNAPSHOTTYPE.SETGUILDQUEST, 0x00b5);
+    assert.equal(SNAPSHOTTYPE.REMOVEGUILDQUEST, 0x00b6);
   });
 });

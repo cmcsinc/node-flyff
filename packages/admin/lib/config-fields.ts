@@ -187,6 +187,12 @@ export const CONFIG_FIELDS: Record<ServerType, FieldSection[]> = {
           kind: 'boolean',
           hint: 'EVE_GUILDWAR. Vanilla v19 ships this OFF. On: warring guilds can attack each other regardless of PK mode, and wars expire after 2 hours.',
         },
+        {
+          path: 'world.guildQuestEnabled',
+          label: 'Guild quest arena',
+          kind: 'boolean',
+          hint: 'EVE_WORMON. Vanilla v19 ships this OFF. On: a level-70 guild master can open the one defined boss arena (QUEST_WARMON_LV1, a single MI_CLOCKWORK1 in a Madrigal rect), held world-exclusively for 60 min plus a 20-min loot window. There are no quest rewards.',
+        },
       ],
     },
     {

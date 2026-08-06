@@ -165,7 +165,7 @@ export interface GuildSnapshot {
   members: GuildMemberSnapshot[];
   /** `m_votes` -- serialized inline. Empty until guild votes ship. */
   votes?: GuildVoteSnapshot[];
-  /** `m_aQuest[m_nQuestSize]`. Empty until guild quests ship. */
+  /** `m_aQuest[m_nQuestSize]` -- the guild's quest ledger. */
   quests?: GuildQuestEntry[];
 }
 
@@ -999,5 +999,27 @@ export function buildWarDead(idWar: number, playerName: string, isDecl: boolean)
   w.writeDword(idWar);
   w.writeString(playerName);
   w.writeDword(isDecl ? 1 : 0);
+  return w.build();
+}
+
+/**
+ * `SNAPSHOTTYPE_SETGUILDQUEST` (0x00b5) -- one guild-quest entry changed.
+ * Body: `int nQuestId | int nState` (`CUser::AddSetGuildQuest`, `User.cpp:2297`).
+ *
+ * Sent per online member from `CGuild::SetQuest`'s notify loop
+ * (`guild.cpp:930-943`), which is why the leading objid is the RECIPIENT's own
+ * id rather than an affected third party -- the client handler
+ * (`DPClient.cpp:8403`) ignores the objid entirely and applies the entry to
+ * `GetActiveMover()->GetGuild()`, so the recipient's id is the only value that
+ * cannot mislead a future reader.
+ *
+ * There is no removal counterpart in practice: `SNAPSHOTTYPE_REMOVEGUILDQUEST`
+ * (0x00b6) has a writer but no reachable caller (`CGuild::RemoveQuest` returns
+ * above its notify loop, `guild.cpp:952`), so a faithful port never sends it.
+ */
+export function buildSetGuildQuest(selfObjid: number, questId: number, state: number): Buffer {
+  const w = snap(SNAPSHOTTYPE.SETGUILDQUEST, selfObjid);
+  w.writeDword(questId);
+  w.writeDword(state);
   return w.build();
 }

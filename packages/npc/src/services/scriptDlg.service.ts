@@ -164,6 +164,24 @@ export interface ScriptDlgGuildLookup {
    * load-bearing: `NpcScript.cpp:2059` distinguishes it from `QS_BEGIN == 0`.
    */
   questState(charId: number, questId: number): number;
+  /**
+   * `g_eLocal.GetState( EVE_WORMON )` (`ScriptLib.cpp:431-434`) -- is the
+   * guild-quest arena enabled on this world?
+   *
+   * One term of the dialog gate that offers the quest (`NpcScript.cpp:1977`),
+   * so with it 0 the whole offer branch is unreachable and the arena cannot be
+   * started through the intended path.
+   */
+  isWormonServer(): boolean;
+  /**
+   * `MonHuntStart( nQuest, nState, nState2, n )` (`ScriptLib.cpp:443-492`) --
+   * open the arena. Returns true on success.
+   *
+   * The only guild predicate with a side effect. It sits on this lookup rather
+   * than on the sink because the script branches on its RETURN value
+   * (`NpcScript.cpp:2061`).
+   */
+  monHuntStart(charId: number, questId: number, state: number, ns: number, nf: number): boolean;
 }
 
 /** Quest action queued by the interpreter -- resolved + executed after the
@@ -791,10 +809,14 @@ export class ScriptDlgService {
       playerExpPercent: () => 0,
       random: (n) => (n > 0 ? Math.floor(Math.random() * n) : 0),
       // `g_eLocal.GetState( EVE_WORMON )` (`ScriptLib.cpp:431`) -- the guild-quest
-      // event flag, which vanilla v19 ships at 0. Left hardcoded rather than
-      // config-backed: the arena the flag gates is not ported, so exposing a
-      // switch that turns on a half-feature would be worse than the constant.
-      isWormonServer: () => 0,
+      // event flag, which vanilla v19 ships at 0. Now config-backed through the
+      // guild seam; absent seam still reads 0, so a world composed without it
+      // cannot reach the offer branch.
+      isWormonServer: () => (this.deps.guild?.isWormonServer() === true ? 1 : 0),
+      // `MonHuntStart` -- the arena entry point. 0 when the seam is absent, which
+      // makes the script take its `== FALSE` arm and say the refusal line.
+      monHuntStart: (questId, state, ns, nf) =>
+        this.deps.guild?.monHuntStart(player.m_idPlayer, questId, state, ns, nf) === true ? 1 : 0,
     };
   }
 

@@ -470,6 +470,49 @@ is exploitable under an untrusted client. Each needs an explicit rationale.
 - **Tests**: `packages/guild/test/managers/guildWar.manager.test.ts` → "nAbsent
   counts WHOLE SECONDS", "carries the remainder rather than dropping it".
 
+### D6. Guild-quest completion credits the QUESTING guild, not the killer's
+
+- **File**: `packages/guild/src/services/guildQuest.service.ts` (`onBossKilled`),
+  `packages/combat/src/services/combat.service.ts` (`onGuildQuestBossKilled`)
+- **C++**: `CMover::DropItem`'s guild arm reads `CGuild* pGuild =
+  pAttacker->GetGuild();` (`Mover.cpp:7499`) and writes the success state to it,
+  with **no comparison against `pElem->idGuild`** — the guild that actually
+  opened the arena. Two consequences: an outside guild that lands the killing
+  blow takes the completion, and a *guildless* killer voids it entirely (the
+  whole `if( pGuild )` block is skipped, so the arena stays in `GQP_WORMON` with
+  a dangling `objidWormon` until its 60 minutes expire and it writes the
+  FAILURE state instead).
+- **TS**: the arena's own `guildId` is credited. The combat hook deliberately
+  does not even receive the attacker, so the steal cannot be reintroduced by a
+  later edit.
+- **Why**: the arena is world-exclusive per quest id, so the theft is not a fair
+  race — an uninvolved guild can camp a rect it has no claim to and take a
+  60-minute run off the guild that started it. This is the same class of hole as
+  D4 (war accept taking `idDecl` off the wire unvalidated), and the author's own
+  `// fixme - raiders` on that function suggests the family was known.
+- **Tests**: `packages/guild/test/services/guildQuest.service.test.ts` →
+  the `onBossKilled` divergence case.
+
+### D7. Guild-quest start enforces master + level server-side
+
+- **File**: `packages/guild/src/services/guildQuest.service.ts` (`start`)
+- **C++**: `MonHuntStart` checks only "not already questing / has a guild / prop
+  exists" (`ScriptLib.cpp:446-457`). Every real gate lives in the dialog script:
+  `GetPlayerLvl() >= 70 && IsWormonServer() == TRUE && IsGuild() == 1 &&
+  IsGuildMaster() == 1` (`NpcScript.cpp:1977`).
+- **TS**: the master check and the level-70 check are enforced in the service as
+  well, returning `not-master` / `level`.
+- **Why**: a script predicate is a client-visible *branch*, not an authority
+  check. The script decides which menu key to show; the entry point is reachable
+  by any dialog step that names it. Reproducing the split faithfully would mean
+  any guild member at any level could open the arena through a crafted or
+  mis-authored dialog, and the arena is world-exclusive — one bad actor denies
+  it to everyone. Note `GUILDQUESTPROP::nLevel` is NOT the source of the 70: that
+  field is parsed and read by nothing, so the literal is duplicated from the
+  script as `GUILD_QUEST_MIN_LEVEL`.
+- **Tests**: `packages/guild/test/services/guildQuest.service.test.ts` → the two
+  gate-order divergence cases.
+
 ---
 
 ## The `#questEndComplete` (dialog state 8) callback — was MISSING, now ported

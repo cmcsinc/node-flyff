@@ -55,9 +55,13 @@ summon a looter pet, use blinkwing teleport scrolls,
 send and read mail, chat across several channels, and be administered live from
 a web panel.
 
-They cannot yet: ride a mount, join a guild, marry, raise a system pet (the
+They cannot yet: ride a mount, marry, raise a system pet (the
 looter pet works; the egg → D-C-B-A-S progression does not), enter an instance
 dungeon, or participate in any minigame, event, or Lord election.
+
+Guilds are built end to end — roster, bank, contribution, war, and the boss
+arena — but **not yet client-tested**, and the two event-flag subsystems (war,
+arena) ship OFF as vanilla v19 does.
 
 ---
 
@@ -196,6 +200,7 @@ The 41 🟡 items, condensed. Each has a `file:line` in the detailed checklist.
 | **Pets** | Looter pet — summon, follow, auto-loot, dismiss | The egg → D-C-B-A-S system pet; `dwPetId` still serializes as `NULL_ID` |
 | **Zones** | One zone (Flaris) | Cross-world `REPLACE` handoff; terrain collision; movement speed enforcement |
 | **Trade / vending** | Core flows | Edge cases around cancellation and stack splitting |
+| **Guild** | Roster, ranks and authority, `/cg` + `/g`, rejoin cooldown, contribution and guild level, the 21:00 salary payroll, guild bank, war (declare / accept / surrender / truce / timeout, war kills routed away from PK), the four dialog predicates, refusal notices, and the boss arena | **Untested in client.** Votes are compiled out of v19 upstream so they are deliberately absent. War and the arena are behind runtime flags that ship OFF (`world.guildWarEnabled`, `world.guildQuestEnabled`), matching vanilla. Guild 1v1 combat and Guild House are unported |
 
 ### Accepted and discarded (🟥)
 
@@ -212,24 +217,23 @@ projectile).
 
 Ranked by how much else they block.
 
-1. **Guild** — the largest unstarted system. Decomposes into 9 separable
-   subsystems (roster, `/g` chat, bank, quest, war, 1v1 combat, house, party
-   flag, cloak flag). No tables exist; roughly 30 undeclared opcodes cluster
-   here. Blocks guild dialog predicates and guild-war revival.
-2. **Lord / Election / Tax** — the player-elected Lord controls the tax rate that
+1. **Lord / Election / Tax** — the player-elected Lord controls the tax rate that
    multiplies every shop transaction. 4 C++ files plus 2 `.inc` unprocessed.
-3. **Events / live-ops** — no way to run a temporary drop, spawn, or experience
+2. **Events / live-ops** — no way to run a temporary drop, spawn, or experience
    event. This is the primary live-operations tool. 4 C++ sources, 4 Lua scripts,
    3 `.inc` files unparsed.
-4. **Couple / marriage** — protocol-stubbed: opcodes and snapshots are already
+3. **Couple / marriage** — protocol-stubbed: opcodes and snapshots are already
    declared, only dispatch, service, and tables are missing.
-5. **System pets** — the egg → D-C-B-A-S progression is absent; `dwPetId` always
+4. **System pets** — the egg → D-C-B-A-S progression is absent; `dwPetId` always
    serializes as `NULL_ID`. The looter pet is a separate, working system.
-6. **Mounts** — flight on a board or broom works; ridable mounts do not.
-7. **Instance / party dungeons** — endgame PvE; blocks two quest `.inc` files
+5. **Mounts** — flight on a board or broom works; ridable mounts do not.
+6. **Instance / party dungeons** — endgame PvE; blocks two quest `.inc` files
    that currently ship unprocessed.
-8. **Item upgrade side-channels** — awakening, piercing, attribute change, smelt,
+7. **Item upgrade side-channels** — awakening, piercing, attribute change, smelt,
    baruna, transy. Around 10 undeclared opcodes.
+8. **Guild 1v1 combat / Guild House** — the two guild subsystems still outside
+   the port. Everything else guild-related is built (see *Guild* under **Partly
+   working**).
 9. **Minigames** (7), **Rainbow Race**, **Colosseum**, **Secret Room**,
    **Housing**, **Guild House**, **Quiz Event**, **Fishing**, **Auction House**,
    **Wanted List**, **Honor / Titles**, **Ultimate Weapon**, **Collecting**,

@@ -157,6 +157,7 @@ async function main(): Promise<void> {
     guildSalarySystem,
     guildWarSystem,
     guildWarService,
+    guildQuestSystem,
     blinkwingSystem,
     pkDecaySystem,
     petSystem,
@@ -241,6 +242,7 @@ async function main(): Promise<void> {
     // Cancel any open declaration timer (rule 05 -- no timer outlives the
     // process it was armed in).
     guildWarService.dispose();
+    guildQuestSystem.stop();
     blinkwingSystem.stop();
     pkDecaySystem.stop();
     // Before spawnManager.shutdown(): dismissing each pet kills its mover.

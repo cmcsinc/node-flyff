@@ -1,6 +1,6 @@
 import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
 import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
-import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository, PartyRepository, GuildRepository, GuildBankRepository, GuildWarRepository } from '@flyff/database';
+import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository, PartyRepository, GuildRepository, GuildBankRepository, GuildWarRepository, GuildQuestRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
 import { AdminListener } from './ipc/adminListener';
@@ -85,12 +85,14 @@ import { PartyService } from '@flyff/party';
 import { PartyHandler } from '@flyff/party';
 import { GuildManager } from '@flyff/guild';
 import { GuildWarManager, GuildWarService } from '@flyff/guild';
+import { GuildQuestProcessor, GuildQuestService } from '@flyff/guild';
 import { GuildService } from '@flyff/guild';
 import { GuildHandler } from '@flyff/guild';
 import { GuildContributionService, IK3_GEM, type GemStack } from '@flyff/guild';
 import { GuildBankService } from '@flyff/guild';
 import { GuildSalarySystem } from './systems/guildSalary.system';
 import { GuildWarSystem } from './systems/guildWar.system';
+import { GuildQuestSystem } from './systems/guildQuest.system';
 import { DropService } from '@flyff/inventory';
 import { InventoryService } from '@flyff/inventory';
 import { LootService } from '@flyff/inventory';
@@ -276,6 +278,9 @@ export interface WorldComposeResult {
   guildWarManager: GuildWarManager;
   guildWarService: GuildWarService;
   guildWarSystem: GuildWarSystem;
+  guildQuestProcessor: GuildQuestProcessor;
+  guildQuestService: GuildQuestService;
+  guildQuestSystem: GuildQuestSystem;
   blinkwingSystem: BlinkwingSystem;
   blinkwingService: BlinkwingService;
   pkDecaySystem: PkDecaySystem;
@@ -344,6 +349,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const guildRepo = new GuildRepository(db);
   const guildBankRepo = new GuildBankRepository(db);
   const guildWarRepo = new GuildWarRepository(db);
+  const guildQuestRepo = new GuildQuestRepository(db);
   // A hard crash leaves this process's presence rows behind. Clearing them at
   // boot means the admin panel never shows a ghost as online for the 60 s the
   // staleness window would otherwise take to expire them.
@@ -562,6 +568,10 @@ export async function compose(): Promise<WorldComposeResult> {
       // the mover, which C++ gets for free from the CoreServer player record.
       // Silent for the overwhelmingly common case of no war.
       guildWarService.onJoin(player);
+      // `CUser::AdjustGuildQuest` (`User.cpp:3652`) -- a player who logs in
+      // inside an arena rect they have no claim to is ejected to a revival point.
+      // No-op outside the rect, which is everyone.
+      guildQuestService.adjustOnEnter(player);
     },
   });
   const joinHandler = new JoinHandler(
@@ -751,6 +761,46 @@ export async function compose(): Promise<WorldComposeResult> {
   const guildWarSystem = new GuildWarSystem({ warService: guildWarService });
   guildWarSystem.start();
 
+  // ── Guild quest (the boss arena) ─────────────────────────────────────────
+  //
+  // `isQuestEnabled` is the port of the runtime `EVE_WORMON` flag, which vanilla
+  // v19 ships at 0 (`flyffevent.h`; only the boot-script token `WORMON` sets it).
+  // A thunk for the same reason as `isWarEnabled`.
+  //
+  // The rect table comes from the loaded props, which is where C++ builds it too
+  // -- `AddQuestRect` is called inline during the prop parse
+  // (`Project.cpp:1260`), so by the time any world state exists the rects are
+  // already static.
+  const guildQuestProcessor = new GuildQuestProcessor(resources.guildQuest.byId.values());
+  const guildQuestSetPos = new SetPosSerializer();
+  const guildQuestService = new GuildQuestService({
+    playerManager, guildManager,
+    processor: guildQuestProcessor,
+    spawn: {
+      spawnMonster: (moverId, pos, zoneId, activeAttack) =>
+        spawnManager.spawnMonster(moverId, pos, zoneId, activeAttack),
+      kill: (id, opts) => spawnManager.kill(id, opts),
+    },
+    teleport: {
+      // Same-world SETPOS + forced view re-diff -- the arena and every revival
+      // point it ejects to are in Madrigal, so REPLACE is never needed here.
+      teleport: (player, pos) => {
+        player.m_vPos = { ...pos };
+        player._dirty.add('x'); player._dirty.add('y'); player._dirty.add('z');
+        playerManager.sendTo(player, guildQuestSetPos.build(player.m_idPlayer, pos));
+        visibilityService.refresh(player.m_idPlayer, true);
+      },
+      // `GetNearRevivalPos` (`guild.cpp:1000`) collapsed to the zone's single
+      // revival point, matching RevivalService's own note: the nearest-point
+      // tables are unported.
+      revivalPos: (player) => resources.zones.byNumericId.get(player.m_nZoneId)?.revival.position,
+    },
+    isQuestEnabled: () => config.world.guildQuestEnabled,
+  });
+  guildManager.setQuestRepo(guildQuestRepo);
+  const guildQuestSystem = new GuildQuestSystem({ questService: guildQuestService });
+  guildQuestSystem.start();
+
   // Shared same-party predicate: loot ownership (IsLoot), the combat hit-share
   // pooling, and anything else that asks "are these two in one party".
   const sameParty = (a: number, b: number): boolean => {
@@ -794,6 +844,11 @@ export async function compose(): Promise<WorldComposeResult> {
     // `/g` guild chat + `/cg` GM guild create -- the server-side half of the
     // TCM_BOTH `TextCmd_GuildChat` (guild chat has no C->S opcode of its own).
     guildService,
+    // `/sgq` -- ledger-only, per the C++ command. See the dep's note.
+    guildQuest: {
+      setStateByGuildName: (name, questId, state) =>
+        guildQuestService.setStateByGuildName(name, questId, state),
+    },
     getItemByName: (name: string) => resources.items.byName.get(name),
     // `/cn <id|name>` -- C++ tries `GetMoverPropEx(id)` on a numeric token,
     // else `GetMoverProp(name)` (FuncTextCmd.cpp:2940-2946).
@@ -838,17 +893,29 @@ export async function compose(): Promise<WorldComposeResult> {
     spawnManager, dialogs: resources.dialogs, quests: resources.quests, questService,
     defines: resources.defines, questText: resources.questText,
     changeJobService,
-    // The four guild script predicates (`ScriptLib.cpp:401,415,782,790`). Both
-    // membership checks are REGISTRY lookups in C++, so `getByMember` (which
-    // resolves through the roster) is the faithful shape -- not `m_idGuild != 0`.
-    // Guild QUEST entries do not exist yet (the arena is unported), so those two
-    // report "no entry"; `-1` is what C++ returns for an absent entry and is
+    // The guild script predicates (`ScriptLib.cpp:401,415,431,443,782,790`).
+    // Both membership checks are REGISTRY lookups in C++, so `getByMember`
+    // (which resolves through the roster) is the faithful shape -- not
+    // `m_idGuild != 0`. `questState` returns `-1` for an absent entry, which is
     // load-bearing at `NpcScript.cpp:2059`.
     guild: {
       isMember: (charId) => guildManager.getByMember(charId) !== undefined,
       isMaster: (charId) => guildManager.getByMember(charId)?.masterId === charId,
-      hasQuest: () => false,
-      questState: () => -1,
+      hasQuest: (charId, questId) => {
+        const g = guildManager.getByMember(charId);
+        return g !== undefined && guildManager.getQuest(g.id, questId) !== undefined;
+      },
+      questState: (charId, questId) => {
+        const g = guildManager.getByMember(charId);
+        if (!g) return -1;
+        return guildManager.getQuest(g.id, questId)?.state ?? -1;
+      },
+      isWormonServer: () => config.world.guildQuestEnabled,
+      monHuntStart: (charId, questId, state, ns, nf) => {
+        const player = playerManager.get(charId);
+        if (!player) return false;
+        return guildQuestService.start(player, questId, state, ns, nf).ok;
+      },
     },
   });
   const scriptDlgHandler = new ScriptDlgHandler(playerManager, scriptDlgService);
@@ -906,6 +973,9 @@ export async function compose(): Promise<WorldComposeResult> {
     // guild stays attackable.
     isInWar: (player) => guildWarService.isInWar(player),
     onWarDeath: (victim) => guildWarService.onWarDeath(victim),
+    // Guild-quest arena: a monster death may be the boss. Cheap when no arena is
+    // live (an empty Map scan).
+    onGuildQuestBossKilled: (bossObjid) => guildQuestService.onBossKilled(bossObjid),
   });
   // Fill the late-bound exp-applier slot so party share routes through the
   // SAME grantExpAmount path as solo kills (one exp-application code path).
@@ -988,6 +1058,10 @@ export async function compose(): Promise<WorldComposeResult> {
         buildStateMode(player.m_idPlayer, player.m_dwStateMode, flag, itemId),
       ),
     notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    // `prj.IsGuildQuestRegion` -- refuses the Return scroll inside an arena rect
+    // (`MoverSkill.cpp:2842`). The only one of the C++'s eight suppression sites
+    // whose feature exists in this port.
+    isGuildQuestRegion: (pos, worldId) => guildQuestService.isQuestRegion(pos, worldId),
   });
   const useItemService = new UseItemService({
     equipService, consumableService, inventoryService,
@@ -1120,6 +1194,11 @@ export async function compose(): Promise<WorldComposeResult> {
     .hydrate()
     .then(() => guildWarManager.hydrate())
     .then(() => { guildWarService.relinkAfterHydrate(); })
+    // Quest ledgers index into guilds, so they load last. C++ round-trips this
+    // separately too (`SendQueryGuildQuest`, `ThreadMng.cpp:248`) and only when
+    // the flag is on; we always load, because a flag flipped on later must not
+    // silently see an empty ledger.
+    .then(() => guildManager.hydrateQuests())
     .catch((err: unknown) => logger.warn({ err }, 'guild hydrate failed'));
 
   // Bank -- open + deposit/withdraw item & gold (account-shared).
@@ -1292,6 +1371,9 @@ export async function compose(): Promise<WorldComposeResult> {
     guildWarManager,
     guildWarService,
     guildWarSystem,
+    guildQuestProcessor,
+    guildQuestService,
+    guildQuestSystem,
     guildHandler,
     skillService,
     statService,

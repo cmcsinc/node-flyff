@@ -244,6 +244,7 @@ function snapshot(guild: Guild): GuildSnapshot {
     power: guild.power, penya: guild.penya, notice: guild.notice,
     contributionPxp: guild.contributionPxp,
     enemyGuildId: guild.idEnemyGuild,
+    quests: guild.quests.map((q) => ({ nId: q.questId, nState: q.state, idGuild: 0 })),
     members: guild.members.map((m) => ({
       id: m.characterId, pay: m.pay, giveGold: m.giveGold, givePxp: m.givePxp,
       win: m.win, lose: m.lose, memberLv: m.memberLv,

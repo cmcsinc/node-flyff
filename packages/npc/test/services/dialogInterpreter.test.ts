@@ -48,6 +48,7 @@ function mkBindings(overrides: Partial<DialogInterpBindings> = {}): DialogInterp
     playerExpPercent: () => 0,
     random: (n) => (n > 0 ? 0 : 0),
     isWormonServer: () => 0,
+    monHuntStart: () => 0,
     ...overrides,
   };
 }
@@ -203,6 +204,57 @@ describe('dialogInterpreter', () => {
       const { sink, calls } = mkSink();
       interpretDialog('Say( 3 ); CreateItem( 100, -1 );', mkBindings(), sink);
       assert.deepEqual(calls, ['say:3', 'createItem:100,-1']);
+    });
+  });
+
+  /**
+   * `MonHuntStart` is the one binding with a side effect, and the shipped script
+   * uses it in EXPRESSION position -- `if( MonHuntStart(...) == FALSE )`
+   * (`NpcScript.cpp:2061`) -- so its return value picks the branch. A binding
+   * that returned nothing useful would silently take the failure arm forever.
+   */
+  describe('MonHuntStart', () => {
+    it('passes all four arguments through in order', () => {
+      const seen: number[][] = [];
+      const { sink } = mkSink();
+      interpretDialog(
+        'if( MonHuntStart( QUEST_DUDK_VOL1, 0, 14, 1 ) == 1 ) { Say( 1 ); }',
+        mkBindings({
+          monHuntStart: (q, s, ns, nf) => { seen.push([q, s, ns, nf]); return 1; },
+        }),
+        sink,
+      );
+      // QUEST_DUDK_VOL1 resolves to 100 via the symbol map.
+      assert.deepEqual(seen, [[100, 0, 14, 1]]);
+    });
+
+    it('drives the branch on its return value', () => {
+      const run = (ret: number): string[] => {
+        const { sink, calls } = mkSink();
+        interpretDialog(
+          'if( MonHuntStart( 1, 0, 14, 1 ) == FALSE ) { Say( 187 ); } else { Say( 999 ); }',
+          mkBindings({ monHuntStart: () => ret }),
+          sink,
+        );
+        return calls;
+      };
+      assert.deepEqual(run(0), ['say:187'], 'refusal takes the FALSE arm');
+      assert.deepEqual(run(1), ['say:999'], 'success takes the other arm');
+    });
+
+    it('still fires when called in statement position', () => {
+      let fired = 0;
+      const { sink } = mkSink();
+      interpretDialog('MonHuntStart( 1, 0, 14, 1 ); Say( 2 );',
+        mkBindings({ monHuntStart: () => { fired += 1; return 1; } }), sink);
+      assert.equal(fired, 1);
+    });
+
+    it('defaults to refusal when the binding is the no-op stub', () => {
+      const { sink, calls } = mkSink();
+      interpretDialog('if( MonHuntStart( 1, 0, 14, 1 ) == FALSE ) { Say( 187 ); }',
+        mkBindings(), sink);
+      assert.deepEqual(calls, ['say:187']);
     });
   });
 });

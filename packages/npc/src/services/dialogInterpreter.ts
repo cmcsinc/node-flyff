@@ -67,6 +67,15 @@ export interface DialogInterpBindings {
   playerExpPercent(): number;
   random(n: number): number;
   isWormonServer(): number;
+  /**
+   * `MonHuntStart( nQuest, nState, nState2, n )` (`ScriptLib.cpp:443`) -- open
+   * the guild-quest boss arena. Returns 1 on success, 0 on any refusal.
+   *
+   * A binding rather than a sink op because the script uses it in EXPRESSION
+   * position (`if( MonHuntStart(...) == FALSE )`, `NpcScript.cpp:2061`), so its
+   * return value drives the branch. It is the only binding with a side effect.
+   */
+  monHuntStart(questId: number, state: number, ns: number, nf: number): number;
 }
 
 export interface DialogInterpSink {
@@ -317,6 +326,7 @@ function evalBin(op: string, l: Expr, r: Expr, b: DialogInterpBindings): number 
 /** Function calls used in expression position (runtime queries). */
 function evalCallExpr(name: string, args: Expr[], b: DialogInterpBindings): number {
   const argv = (): number => evalExpr(args[0] ?? { k: 'num', v: 0 }, b);
+  const argAt = (i: number): number => evalExpr(args[i] ?? { k: 'num', v: 0 }, b);
   switch (name) {
     case 'GetQuestState': return b.questState(argv());
     case 'IsSetQuest': return b.isSetQuest(argv());
@@ -336,6 +346,8 @@ function evalCallExpr(name: string, args: Expr[], b: DialogInterpBindings): numb
     case 'GetGuildQuestState': return b.guildQuestState(argv());
     case 'Random': return b.random(argv());
     case 'IsWormonServer': return b.isWormonServer();
+    // Side-effecting, and in expression position on purpose -- see the binding.
+    case 'MonHuntStart': return b.monHuntStart(argAt(0), argAt(1), argAt(2), argAt(3));
     case 'NpcId': return 0; // identity not needed server-side; Speak uses the active NPC
     case 'GetParam1':
     case 'GetParam2':
@@ -375,6 +387,12 @@ function execCall(s: Stmt, b: DialogInterpBindings, sink: DialogInterpSink): voi
     case 'GoMark':
     case 'PrintSystemMessage':
       return; // no-op / client-only system message -- deferred
+    case 'MonHuntStart':
+      // Never appears in statement position in the shipped scripts (it is always
+      // compared), but routed rather than falling through to the unknown-function
+      // log so that a script which does call it bare still opens the arena.
+      b.monHuntStart(arg(0), arg(1), arg(2), arg(3));
+      return;
     default:
       logger.debug({ fn: name }, 'interp: unknown statement function -> ignored');
   }

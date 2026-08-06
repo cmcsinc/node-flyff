@@ -231,10 +231,27 @@ describe('WorldSimConfigSchema', () => {
     // by the world boot-script token, so OFF is the faithful default. Flipping
     // this default would silently enable guild-war PvP on every fresh install.
     assert.equal(result.guildWarEnabled, false);
+    // EVE_WORMON, same story: memset to 0, set only by the boot-script `WORMON`
+    // token. On, a level-70 guild master can seize the one defined arena
+    // world-exclusively for an hour, so this default is load-bearing too.
+    assert.equal(result.guildQuestEnabled, false);
   });
 
   it('accepts guildWarEnabled: true', () => {
     assert.equal(WorldSimConfigSchema.parse({ guildWarEnabled: true }).guildWarEnabled, true);
+  });
+
+  it('accepts guildQuestEnabled: true', () => {
+    assert.equal(WorldSimConfigSchema.parse({ guildQuestEnabled: true }).guildQuestEnabled, true);
+  });
+
+  it('the two event flags are independent', () => {
+    // They are separate `EVE_*` slots (`flyffevent.h:11` and `:14`); nothing in
+    // the C++ couples them, so neither may imply the other.
+    const warOnly = WorldSimConfigSchema.parse({ guildWarEnabled: true });
+    assert.equal(warOnly.guildQuestEnabled, false);
+    const questOnly = WorldSimConfigSchema.parse({ guildQuestEnabled: true });
+    assert.equal(questOnly.guildWarEnabled, false);
   });
 
   it('throws ZodError when tickRateMs is below minimum (10)', () => {

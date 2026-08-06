@@ -64,6 +64,7 @@ import { PacketError } from '@flyff/core/errors';
 import { MAX_GOLD } from '@flyff/core';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import { QS_BEGIN, QS_END } from '@flyff/core/constants/quest';
 import {
   NULL_ID, SNAPSHOTTYPE_SETPOINTPARAM, DST_GOLD,
   SNAPSHOTTYPE_DEL_OBJ,
@@ -129,6 +130,18 @@ export interface CommandServiceDeps {
   guildService?: {
     chat(sender: CPlayer, msg: string): void;
     create(master: CPlayer, name: string, memberIds?: readonly number[]): unknown;
+  };
+  /**
+   * Guild-quest ledger writer -- `TextCmd_SetGuildQuest` / `sgq`
+   * (`FuncTextCmd.cpp:1257-1286`, registered `AUTH_ADMINISTRATOR` at `:5345`).
+   *
+   * Deliberately NOT the arena opener: the C++ command touches only guild state
+   * plus the DB row (`pGuild->SetQuest` + `SendUpdateGuildQuest`) and never calls
+   * `CGuildQuestProcessor::SetGuildQuest`, so it spawns no boss and starts no
+   * timer. Faithful.
+   */
+  guildQuest?: {
+    setStateByGuildName(guildName: string, questId: number, state: number): boolean;
   };
 }
 
@@ -232,6 +245,7 @@ export class CommandService {
       { names: ['removequest', 'rq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'cancel'); } },
       { names: ['removeallquest', 'raq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'removeAll'); } },
       { names: ['removecompletequest', 'rcq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'removeComplete'); } },
+      { names: ['setguildquest', 'sgq'], auth: AUTH.ADMINISTRATOR, run: (c) => this.setGuildQuest(c) },
     ];
   }
 
@@ -602,6 +616,28 @@ export class CommandService {
       case 'removeComplete': res = await qs.removeCompleteQuests(player); break;
     }
     if (res?.ok) for (const f of res.frames) this.deps.playerManager.sendTo(player, f);
+  }
+
+  /**
+   * `/setguildquest` `/sgq <guildName> <questId> <state>` --
+   * `TextCmd_SetGuildQuest` (`FuncTextCmd.cpp:1257-1286`), `AUTH_ADMINISTRATOR`.
+   *
+   * Writes one ledger entry and nothing else. C++ rejects an unknown quest id
+   * (`GetGuildQuestProp` null -> `return FALSE`) and silently ignores a state
+   * outside `[QS_BEGIN, QS_END]` -- the `if` at `:1275` has an EMPTY then-branch,
+   * so an out-of-range state produces no write and no message. Both reproduced.
+   *
+   * Silent either way: the command sends no reply in C++.
+   */
+  private setGuildQuest({ args }: CommandCtx): void {
+    const tokens = args.split(/\s+/).filter(Boolean);
+    const guildName = tokens[0];
+    const questId = Number.parseInt(tokens[1] ?? '', 10);
+    const state = Number.parseInt(tokens[2] ?? '', 10);
+    if (guildName === undefined || !Number.isInteger(questId) || !Number.isInteger(state)) return;
+    // `nState < QS_BEGIN || nState > QS_END` -> empty branch (`:1275`).
+    if (state < QS_BEGIN || state > QS_END) return;
+    this.deps.guildQuest?.setStateByGuildName(guildName, questId, state);
   }
 
   /**

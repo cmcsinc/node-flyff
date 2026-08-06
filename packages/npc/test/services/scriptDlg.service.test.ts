@@ -974,6 +974,8 @@ describe('scriptDlg.service -- #questEndComplete callback', () => {
     async function runGate(guild: {
       isMember(id: number): boolean; isMaster(id: number): boolean;
       hasQuest(id: number, q: number): boolean; questState(id: number, q: number): number;
+      isWormonServer(): boolean;
+      monHuntStart(id: number, q: number, s: number, ns: number, nf: number): boolean;
     } | undefined): Promise<string[]> {
       const { svc } = fakeQuestService();
       const { serializer, calls } = fakeScriptDialog();
@@ -995,6 +997,7 @@ describe('scriptDlg.service -- #questEndComplete callback', () => {
     const noGuild = {
       isMember: () => false, isMaster: () => false,
       hasQuest: () => false, questState: () => -1,
+      isWormonServer: () => false, monHuntStart: () => false,
     };
 
     it('a guild MASTER takes the gated branch', async () => {
@@ -1057,6 +1060,90 @@ describe('scriptDlg.service -- #questEndComplete callback', () => {
         dialogs, quests: mkQuests([]), questService: svc,
         chat: fakeChat as never, scriptDialog: serializer as never,
         guild: { ...noGuild, hasQuest: () => true },
+      });
+      const out = await s.dialog(
+        mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0,
+      );
+      if (!out.ok) throw new Error('expected ok');
+      const keys = calls.flat().filter((f) => f.type === 'addKey').map((f) => (f as { key: string }).key);
+      assert.deepEqual(keys, ['9']);
+    });
+
+    /**
+     * The `MaDa_Eshylop` offer gate is
+     * `GetPlayerLvl() >= 70 && IsWormonServer() == TRUE && IsGuild() == 1 &&
+     * IsGuildMaster() == 1` (`NpcScript.cpp:1977`). `IsWormonServer` was
+     * hardcoded 0, so with the arena ported the flag has to be able to read 1 --
+     * otherwise the branch stays unreachable and the feature cannot be turned on.
+     */
+    it('IsWormonServer reports the arena flag', async () => {
+      const run = async (on: boolean): Promise<string[]> => {
+        const { svc } = fakeQuestService();
+        const { serializer, calls } = fakeScriptDialog();
+        const dialogs = mkDialogs(['', '', '', '', '', '', '', '', '', 'on', 'off']);
+        dialogs.byPrefix.set('mafl_test', {
+          _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+          states: { '1': { source: 'if(IsWormonServer() == TRUE) { AddKey( 9 ); } else { AddKey( 10 ); }' } },
+        } as never);
+        const s = new ScriptDlgService({
+          spawnManager: { get: () => mkNpc('MaFl_Test') },
+          dialogs, quests: mkQuests([]), questService: svc,
+          chat: fakeChat as never, scriptDialog: serializer as never,
+          guild: { ...noGuild, isWormonServer: () => on },
+        });
+        const out = await s.dialog(
+          mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0,
+        );
+        if (!out.ok) throw new Error('expected ok');
+        return calls.flat().filter((f) => f.type === 'addKey').map((f) => (f as { key: string }).key);
+      };
+      assert.deepEqual(await run(true), ['9'], 'flag on');
+      assert.deepEqual(await run(false), ['10'], 'flag off -- the vanilla default');
+    });
+
+    it('MonHuntStart routes through the guild seam and its result picks the branch', async () => {
+      const seen: number[][] = [];
+      const run = async (ok: boolean): Promise<string[]> => {
+        const { svc } = fakeQuestService();
+        const { serializer, calls } = fakeScriptDialog();
+        const dialogs = mkDialogs(['', '', '', '', '', '', '', '', '', 'failed', 'started']);
+        dialogs.byPrefix.set('mafl_test', {
+          _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+          states: { '1': { source: 'if(MonHuntStart( 1, 0, 14, 1 ) == FALSE) { AddKey( 9 ); } else { AddKey( 10 ); }' } },
+        } as never);
+        const s = new ScriptDlgService({
+          spawnManager: { get: () => mkNpc('MaFl_Test') },
+          dialogs, quests: mkQuests([]), questService: svc,
+          chat: fakeChat as never, scriptDialog: serializer as never,
+          guild: {
+            ...noGuild,
+            monHuntStart: (id, q, st, ns, nf) => { seen.push([id, q, st, ns, nf]); return ok; },
+          },
+        });
+        const out = await s.dialog(
+          mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0,
+        );
+        if (!out.ok) throw new Error('expected ok');
+        return calls.flat().filter((f) => f.type === 'addKey').map((f) => (f as { key: string }).key);
+      };
+      assert.deepEqual(await run(false), ['9'], 'refusal takes the FALSE arm');
+      assert.deepEqual(await run(true), ['10'], 'success takes the other arm');
+      // charId first, then the script's four args in source order.
+      assert.deepEqual(seen[0]?.slice(1), [1, 0, 14, 1]);
+    });
+
+    it('omitting the seam refuses MonHuntStart rather than throwing', async () => {
+      const { svc } = fakeQuestService();
+      const { serializer, calls } = fakeScriptDialog();
+      const dialogs = mkDialogs(['', '', '', '', '', '', '', '', '', 'failed', 'started']);
+      dialogs.byPrefix.set('mafl_test', {
+        _version: '1.0', prefix: 'mafl_test', character_key: 'MaFl_Test',
+        states: { '1': { source: 'if(MonHuntStart( 1, 0, 14, 1 ) == FALSE) { AddKey( 9 ); } else { AddKey( 10 ); }' } },
+      } as never);
+      const s = new ScriptDlgService({
+        spawnManager: { get: () => mkNpc('MaFl_Test') },
+        dialogs, quests: mkQuests([]), questService: svc,
+        chat: fakeChat as never, scriptDialog: serializer as never,
       });
       const out = await s.dialog(
         mkPlayer(), { objid: NPC_ID, key: '1', nGlobal1: 0, nGlobal2: 0, nGlobal3: 0, nGlobal4: 0 }, 0,

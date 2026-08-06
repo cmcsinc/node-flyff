@@ -732,6 +732,9 @@ export class GuildService {
       power: guild.power, penya: guild.penya, notice: guild.notice,
       contributionPxp: guild.contributionPxp,
       enemyGuildId: guild.idEnemyGuild,
+      // `idGuild` is written as 0 because `CGuild::SetQuest` never assigns it --
+      // see the note on `GuildQuestState`.
+      quests: guild.quests.map((q) => ({ nId: q.questId, nState: q.state, idGuild: 0 })),
       members: guild.members.map(toMemberSnapshot),
     };
   }
