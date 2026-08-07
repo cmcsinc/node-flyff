@@ -94,7 +94,7 @@ import { GuildSalarySystem } from './systems/guildSalary.system';
 import { GuildWarSystem } from './systems/guildWar.system';
 import { GuildQuestSystem } from './systems/guildQuest.system';
 import { DropService } from '@flyff/inventory';
-import { InventoryService } from '@flyff/inventory';
+import { InventoryService, AmmoService } from '@flyff/inventory';
 import { LootService } from '@flyff/inventory';
 import { ItemManager } from '@flyff/inventory';
 import { VISIBILITY_RADIUS, TID_EVE_ENDQUEST } from '@flyff/world-core';
@@ -423,6 +423,17 @@ export async function compose(): Promise<WorldComposeResult> {
     getStackSize: (id: number) => resources.items.items.get(id)?.stack_size ?? 1,
   });
   const createItemSerializer = new CreateItemSnapshotSerializer();
+
+  // Equipped-arrow gate + burn for bow attacks (CMover::IsBullet / ArrowDown).
+  // Injected into RangeAttackService (combat must not depend on inventory) and
+  // into EquipService for the arrow-needs-bow equip gate.
+  const ammoService = new AmmoService({
+    inventoryRepo, journal,
+    getItem: (id: number) => resources.items.items.get(id),
+    sendTo: (player, buf) => playerManager.sendTo(player, buf),
+    broadcastAround: (player, buf) =>
+      zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
+  });
 
   // Item-acquire chat-line notifier (SNAPSHOTTYPE_TEXT). v19 C++ sends no
   // item-name text on pickup or quest reward -- only CREATEITEM + sound -- so
@@ -823,6 +834,10 @@ export async function compose(): Promise<WorldComposeResult> {
   const petSystem = new PetSystem({
     playerManager, zoneManager, spawnManager, itemManager, lootService, inventoryService,
     notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    // `pEatPet->Delete()` -- same DEL_OBJ + `m_known` clear the spawn manager's
+    // own despawn callback uses. Without it a dismissed pet renders forever and
+    // each leash re-summon stacks another model.
+    onDespawn: (mover) => visibilitySlot.svc?.onMoverDespawn(mover),
   });
   petSystem.start();
   const movementService = new MovementService({
@@ -984,7 +999,12 @@ export async function compose(): Promise<WorldComposeResult> {
   // SAME grantExpAmount path as solo kills (one exp-application code path).
   combatGrantSlot.fn = (p, amount) => combatService.grantExpAmount(p, amount);
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
-  const rangeAttackService = new RangeAttackService({ zoneManager, combatService });
+  const rangeAttackService = new RangeAttackService({
+    zoneManager, combatService,
+    hasArrow: (player) => ammoService.hasArrow(player),
+    arrowDown: (player, count) => ammoService.arrowDown(player, count),
+    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+  });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
   const rangeAttackHandler = new RangeAttackHandler(playerManager, rangeAttackService);
@@ -1029,6 +1049,7 @@ export async function compose(): Promise<WorldComposeResult> {
     broadcastAround: (player, buf) =>
       zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
     flight: flightService,
+    isArrowEquipAllowed: (player, prop) => ammoService.isArrowEquipAllowed(player, prop),
   });
   const doEquipHandler = new DoEquipHandler({
     playerManager, zoneManager, equipService,

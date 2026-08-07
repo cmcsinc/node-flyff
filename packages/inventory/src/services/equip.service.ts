@@ -63,6 +63,12 @@ export interface EquipServiceDeps {
     mount(player: CPlayer): void;
     dismount(player: CPlayer): void;
   };
+  /**
+   * `AmmoService.isArrowEquipAllowed` -- `IsEquipAble`'s arrow gate
+   * (`MoverEquip.cpp:1712`): an `IK3_ARROW` stack may only be equipped while
+   * `PARTS_RWEAPON` holds an `IK3_BOW`. Optional so bare equip tests construct.
+   */
+  isArrowEquipAllowed?: (player: CPlayer, prop: ItemDefinition) => boolean;
   journal?: Journal;
 }
 
@@ -162,6 +168,12 @@ export class EquipService {
           ? { ok: false, reason: 'restricted', tid: check.tid }
           : { ok: false, reason: 'restricted' };
       }
+    }
+    // Arrows need a bow in hand (`IsEquipAble`, MoverEquip.cpp:1712). Silent
+    // refusal -- the C++ branch just `return FALSE` with no AddDefinedText. Also
+    // pre-mutation, same rule as the ride gate above.
+    if (this.deps.isArrowEquipAllowed && !this.deps.isArrowEquipAllowed(player, prop)) {
+      return { ok: false, reason: 'restricted' };
     }
     if (prop.level_req && player.m_nLevel < prop.level_req) return { ok: false, reason: 'restricted' };
 

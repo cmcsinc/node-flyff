@@ -14,9 +14,13 @@
  * The projectile visual is client-side only. So this service exists purely to
  * play the RANGE swing animation (vs the MELEE one) for the correct weapon.
  *
- * Ammo: v19 retail bows are ammo-less -- there is no arrow/quiver item kind in
- * propItem, so nothing is consumed. (Later Flyff quivers would be a consumable
- * gate here; the emulator has no arrow item concept to enforce.)
+ * Ammo: v19 bows DO require an equipped arrow. `DoAttackRange`
+ * (`_Common/MoverSkill.cpp:3646-3648`) refuses the shot when `PARTS_BULLET` is
+ * empty or holds a non-`IK3_ARROW` item, and burns one per swing via
+ * `ArrowDown(1)` (`_Common/Mover.cpp:8720`) AFTER `AddRangeAttack`. Because
+ * `@flyff/combat` has no `@flyff/inventory` dependency, the gate + burn arrive
+ * as injected `hasArrow`/`arrowDown` deps (AmmoService, wired in `compose.ts`);
+ * when unwired the shot is not gated (tests / non-player callers).
  *
  * No WAL (rule 04 -- the swing is not journaled; the shared damage tail journals
  * exp/level on kill exactly as melee does).
@@ -35,14 +39,27 @@ import { createLogger } from '@flyff/core/logger';
 
 const logger = createLogger({ module: 'rangeAttack-service' });
 
+/**
+ * `defineText.h:1681` -- `TID_TIP_NEEDSATTACKITEM`, the refusal `CMover::IsBullet`
+ * pushes when a bow has no arrow (`_Common/Mover.cpp:8690`). Duplicated here
+ * rather than imported: `@flyff/combat` must not depend on `@flyff/inventory`.
+ */
+export const TID_TIP_NEEDSATTACKITEM = 2608;
+
 export interface RangeAttackServiceDeps {
   zoneManager: ZoneManager;
   combatService: CombatService;
+  /** `AmmoService.hasArrow` -- equipped `PARTS_BULLET` is an arrow kind. */
+  hasArrow?: (player: CPlayer) => boolean;
+  /** `AmmoService.arrowDown` -- burn one arrow + echo UPDATE_ITEM. */
+  arrowDown?: (player: CPlayer, count: number) => void;
+  /** DEFINEDTEXT push to the shooter (refusal notice). */
+  notify?: (player: CPlayer, tid: number) => void;
 }
 
 export type RangeAttackOutcome =
   | { ok: true; reached: number }
-  | { ok: false; reason: 'invalid_target' | 'no_ranged_weapon' };
+  | { ok: false; reason: 'invalid_target' | 'no_ranged_weapon' | 'no_arrow' };
 
 export class RangeAttackService {
   private readonly serializer = new RangeAttackSerializer();
@@ -69,14 +86,27 @@ export class RangeAttackService {
       );
       return { ok: false, reason: 'no_ranged_weapon' };
     }
-    const packet = this.serializer.build(player.m_idPlayer, frame);
-    // Exclude the caster: C++ `AddRangeAttack` skips `USERPTR != pMover`. The
+    // Arrow gate (MoverSkill.cpp:3646-3648): equipped PARTS_BULLET must hold an
+    // IK3_ARROW stack. Also pre-broadcast, and pushes the same refusal notice
+    // `CMover::IsBullet` sends (TID_TIP_NEEDSATTACKITEM).
+    if (this.deps.hasArrow && !this.deps.hasArrow(player)) {
+      this.deps.notify?.(player, TID_TIP_NEEDSATTACKITEM);
+      logger.debug(
+        { charId: player.m_idPlayer, objid: frame.objid },
+        'range attack rejected: no arrow equipped',
+      );
+      return { ok: false, reason: 'no_arrow' };
+    }
+    const packet = this.serializer.build(player.m_idPlayer, frame);    // Exclude the caster: C++ `AddRangeAttack` skips `USERPTR != pMover`. The
     // caster drives its own shot animation locally; echoing back re-queues it
     // (OnRangeAttack) and desyncs auto-attack cadence after a skill. Damage
     // broadcast below still includes the caster.
     const reached = this.deps.zoneManager.broadcastAround(
       player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, packet, player,
     );
+    // `ArrowDown( 1 )` sits immediately after `AddRangeAttack` in DoAttackRange
+    // (MoverSkill.cpp:3680) -- burn only once the swing has actually gone out.
+    this.deps.arrowDown?.(player, 1);
     const res = this.deps.combatService.resolveAttack(player, frame.objid);
     if (!res.ok) {
       // Info-level: a rejected shot is the #1 "can't kill with bow" symptom

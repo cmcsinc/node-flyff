@@ -46,6 +46,16 @@ export const OBJSTAF = Object.freeze({
  */
 export const PARTS_RIDE = 13;
 
+/** Right-hand weapon slot. `resource/defineNeuz.h:41` -- `PARTS_RWEAPON`. */
+export const PARTS_RWEAPON = 10;
+
+/**
+ * Equipped-ammo slot (arrows / crossbow bolts). `resource/defineNeuz.h:61` --
+ * `PARTS_BULLET`. A bow's ranged attack requires an `IK3_ARROW` stack here and
+ * burns one per swing (`CMover::ArrowDown`, `_Common/Mover.cpp:8720`).
+ */
+export const PARTS_BULLET = 25;
+
 /**
  * Minimum character level for `dwFlightLimit == 1` ride items -- i.e. every ride
  * item in `Spec_Item.txt`.

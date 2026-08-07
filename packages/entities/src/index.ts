@@ -22,7 +22,7 @@ export { AUTH, AUTH_VALUES, AUTH_LABELS, toAuthority } from './constants/authori
 export type { Authority } from './constants/authority';
 export { hasAuthority } from './constants/authority';
 export { MODE } from './constants/mode';
-export { OBJSTAF, PARTS_RIDE, FLIGHT_LV_MIN_LEVEL } from './constants/stateFlag';
+export { OBJSTAF, PARTS_RIDE, PARTS_RWEAPON, PARTS_BULLET, FLIGHT_LV_MIN_LEVEL } from './constants/stateFlag';
 export {
   MELEE_ATTACK_RANGE, RANGE_ATTACK_RANGE, REATTACK_DELAY_MS, REATTACK_JITTER_MS,
   RANGE_REATTACK_DELAY_MS, RANGE_MOVE, RANGE_RETURN_TO_BEGIN, RAGE_LEASH,

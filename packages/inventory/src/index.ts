@@ -12,6 +12,7 @@
  */
 
 export * from './services/inventory.service';
+export * from './services/ammo.service';
 export * from './services/loot.service';
 export * from './services/drop.service';
 export * from './services/equip.service';
