@@ -9,6 +9,7 @@ import { KICK_CLOSE_DELAY_MS } from '../../src/net/snapshot/kick.serializer';
 import { TEXT_GENERAL } from '@flyff/world-core';
 import { MODE } from '@flyff/entities';
 import type { CharacterRow } from '@flyff/database';
+import type { ZoneDefinition } from '@flyff/resources';
 
 interface SpySocket {
   write: (b: Buffer) => boolean;
@@ -154,7 +155,10 @@ describe('CommandService -- teleport', () => {
     assert.equal(result.ok, true);
     assert.equal(gm.m_vPos.x, 100);
     assert.equal(gm.m_vPos.z, 200);
-    assert.equal(gm.m_vPos.y, 0);
+    // y is NOT the literal 0 the command carried: that is `CWorld::_replace`'s
+    // sentinel (`World.cpp:1568`), and with no zone index wired it resolves to
+    // the pre-raycast 100.0f. Shipping 0 put the player under the terrain.
+    assert.equal(gm.m_vPos.y, 100);
     assert.equal((gm.socket as unknown as SpySocket)._sent.length, 1, 'SETPOS sent');
     assert.ok(gm._dirty.has('x'));
     assert.ok(gm._dirty.has('z'));
@@ -228,6 +232,90 @@ describe('CommandService -- teleport', () => {
     commandService.route(gm, '/te 100 200');
     assert.equal((gm.socket as unknown as SpySocket)._sent.length, 1, 'SETPOS only');
   });
+
+  it('accepts the Navigator float form `/teleport 1 3880.000000 3500.000000`', () => {
+    // `"/teleport %d %f %f"` (WndField.cpp:11983). The old `/^\d+(\.\d+)?$/`
+    // gate also rejected signed tokens, dropping them into the name branch.
+    const { playerManager, commandService } = setup();
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    playerManager.add(gm);
+    commandService.route(gm, '/teleport 1 3880.000000 3500.000000');
+    assert.equal(gm.m_vPos.x, 3880);
+    assert.equal(gm.m_vPos.z, 3500);
+  });
+
+  it('answers a bare `/te` with usage instead of a silent no-op', () => {
+    const { playerManager, commandService } = setup();
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    gm.m_vPos = { x: 7, y: 8, z: 9 };
+    playerManager.add(gm);
+    commandService.route(gm, '/te');
+    assert.deepEqual(gm.m_vPos, { x: 7, y: 8, z: 9 }, 'position untouched');
+    assert.equal((gm.socket as unknown as SpySocket)._sent.length, 1, 'usage notice sent');
+  });
+
+  it('answers a bad-coord `/te` with a notice instead of a silent no-op', () => {
+    const { playerManager, commandService } = setup();
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    playerManager.add(gm);
+    commandService.route(gm, '/te 100 -5');
+    assert.equal((gm.socket as unknown as SpySocket)._sent.length, 1, 'refusal notice sent');
+  });
+
+  it('refuses the unported `<worldId> <regionKey>` form with a notice', () => {
+    // C++ resolves `g_WorldMng.GetRevivalPos( dwWorldId, token )` off the `.wld`
+    // region table; no TS equivalent exists, so refuse rather than mis-teleport.
+    const { playerManager, commandService } = setup();
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    gm.m_vPos = { x: 7, y: 8, z: 9 };
+    playerManager.add(gm);
+    commandService.route(gm, '/te 1 revival');
+    assert.deepEqual(gm.m_vPos, { x: 7, y: 8, z: 9 });
+    assert.equal((gm.socket as unknown as SpySocket)._sent.length, 1);
+  });
+
+  it('resolves the y sentinel from the nearest authored terrain sample', () => {
+    const playerManager = new PlayerManager();
+    const zone = {
+      // A y:0 entry is itself a sentinel (portals author 0), never a sample --
+      // it must not win even when it is the closest point.
+      spawns: [{ position: { x: 100, y: 0, z: 200 } }, { position: { x: 120, y: 147.058, z: 210 } }],
+      npcs: [{ position: { x: 900, y: 84.793, z: 900 } }],
+    } as unknown as ZoneDefinition;
+    const commandService = new CommandService({
+      playerManager,
+      spawnManager: makeSpawnManager(),
+      questService: makeQuestService().svc,
+      zones: { byNumericId: new Map([[1, zone]]) },
+    });
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    playerManager.add(gm);
+    commandService.route(gm, '/te 100 200');
+    assert.equal(gm.m_vPos.y, 147.058, 'nearest non-zero sample wins');
+    assert.ok(gm._dirty.has('y'), 'resolved y must persist');
+  });
+
+  it('broadcasts SETPOS to vicinity peers, excluding the mover', () => {
+    // `g_UserMng.AddSetPos` is FOR_VISIBILITYRANGE (User.cpp:4675), not a
+    // self-send -- without it peers watch a ghost stand at the old spot.
+    const playerManager = new PlayerManager();
+    const calls: { zoneId: number; except: unknown }[] = [];
+    const commandService = new CommandService({
+      playerManager,
+      spawnManager: makeSpawnManager(),
+      questService: makeQuestService().svc,
+      zoneManager: {
+        broadcastAround: (_pos, zoneId, _radius, _pkt, except): number => {
+          calls.push({ zoneId, except }); return 1;
+        },
+      },
+    });
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    playerManager.add(gm);
+    commandService.route(gm, '/te 100 200');
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0]?.except, gm, 'the mover got its own copy already');
+  });
 });
 
 describe('CommandService -- summon', () => {
@@ -244,6 +332,28 @@ describe('CommandService -- summon', () => {
     assert.equal(bob.m_vPos.x, 10);
     assert.equal(bob.m_vPos.z, 20);
     assert.equal((bob.socket as unknown as SpySocket)._sent.length, 1, 'target gets SETPOS');
+  });
+
+  it('broadcasts the summoned target to vicinity peers', () => {
+    const playerManager = new PlayerManager();
+    const excepts: unknown[] = [];
+    const commandService = new CommandService({
+      playerManager,
+      spawnManager: makeSpawnManager(),
+      questService: makeQuestService().svc,
+      zoneManager: {
+        broadcastAround: (_p, _z, _r, _pkt, except): number => { excepts.push(except); return 1; },
+      },
+    });
+    const gm = makePlayer(1, 'GM', AUTH.GAMEMASTER);
+    const bob = makePlayer(2, 'Bob');
+    gm.m_vPos = { x: 10, y: 55, z: 20 };
+    playerManager.add(gm);
+    playerManager.add(bob);
+    commandService.route(gm, '/su Bob');
+    // The caller's y is live, not a sentinel -- it must survive verbatim.
+    assert.equal(bob.m_vPos.y, 55);
+    assert.deepEqual(excepts, [bob], 'the relocated mover is the exception');
   });
 });
 

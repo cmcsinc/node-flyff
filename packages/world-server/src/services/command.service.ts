@@ -57,7 +57,7 @@ import type { QuestService } from '@flyff/quest';
 import type { InventoryService } from '@flyff/inventory';
 import { buildUpdateItemCount } from '@flyff/inventory';
 import type { CharacterRepository, InventoryRepository } from '@flyff/database';
-import type { ItemDefinition, MoverDefinition } from '@flyff/resources';
+import type { ItemDefinition, MoverDefinition, ZoneDefinition } from '@flyff/resources';
 import { AUTH, hasAuthority } from '@flyff/entities';
 import { Validate } from '@flyff/core/utils/validate';
 import { PacketError } from '@flyff/core/errors';
@@ -118,6 +118,21 @@ export interface CommandServiceDeps {
    * the new spot appears. Optional: teleport skips the refresh if absent.
    */
   visibilityService?: Pick<VisibilityService, 'refresh'>;
+  /**
+   * Zone index -- `/te` reads it for two things C++ gets from `CWorld`:
+   *  - `VecInWorld` (`World.cpp:1063`), the coord gate; and
+   *  - a terrain height for the `y == 0` sentinel `CWorld::_replace`
+   *    (`World.cpp:1568`) resolves via `GetFullHeight`.
+   *
+   * ponytail: the real `GetFullHeight`/`GetLandHeight` sample the `.lnd`
+   *   heightmap (`WorldFile.cpp:832`, `World.cpp:982`). No `.lnd` parser exists
+   *   in TS (same gap as `drop.service.ts:91` and `flight.service.ts:24`), so
+   *   `groundY` approximates it from the nearest authored spawn/NPC y in the
+   *   zone -- those ARE sampled terrain heights from the extractor. Swap this
+   *   for `world.getLandHeight(x, z)` once the `.lnd` files under
+   *   `game/client/World/` are parsed. Optional: absent = keep the caller's y.
+   */
+  zones?: { byNumericId: Map<number, ZoneDefinition> };
   /**
    * Guild service -- `/g` (guild chat) and `/cg` (GM guild create).
    *
@@ -181,6 +196,14 @@ const MAX_CREATE_NPC = 100;
 const SPAWNABLE_MOVER_TYPES: ReadonlySet<string> = new Set(['monster', 'boss', 'giant', 'raid']);
 /** Single-stat ceiling for `/stat` -- C++ clamps via the broader stat pipeline. */
 const MAX_STAT = 999;
+/**
+ * `CWorld::_replace`'s pre-raycast y (`World.cpp:1568`: `vPos.y = 100.0f;`
+ * before `GetFullHeight`). Used as the fallback when no terrain sample exists.
+ */
+const SENTINEL_Y = 100;
+/** `/te` refusal notices -- C++ drops these silently; a GM needs to see why. */
+const TE_USAGE = 'Usage: /te <name> | /te <x> <z> | /te <worldId> <x> <z>';
+const TE_BAD_COORDS = '/te: coordinates must be positive numbers inside the world.';
 
 export class CommandService {
   private readonly whisperSer = new WhisperSerializer();
@@ -326,35 +349,57 @@ export class CommandService {
   }
 
   /**
-   * `/te <name>` | `/te <x> <z>` | `/teleport <worldId> <x> <z>` --
-   * TextCmd_Teleport (FuncTextCmd.cpp:2362). The Navigator minimap GM double-
-   * click sends the 3-arg form (`WndField.cpp:10049`: `/teleport <worldId>
-   * x z`); 2-arg is the manual shorthand. First token non-numeric => teleport
-   * to that player. Coords must satisfy `x > 0 && z > 0` (C++ `VecInWorld`
-   * guard, FuncTextCmd.cpp:2439) -- the old parser read `<worldId>` as x and
-   * dropped the real z, landing GMs at (1, ...) off the terrain. `worldId` is
-   * accepted but ignored (single-world Madrigal for now; cross-world REPLACE
-   * ponytail).
+   * `/te <name>` | `/te <worldId> <x> <z>` | `/te <x> <z>` --
+   * `TextCmd_Teleport` (`FuncTextCmd.cpp:2389`, registered `TCM_SERVER,
+   * AUTH_GAMEMASTER` at `:5193`). The Navigator minimap GM double-click sends
+   * the 3-token form (`WndField.cpp:11983`: `"/teleport %d %f %f"`).
+   *
+   * C++ token order: first token non-NUMBER => player name (and on an
+   * unresolved name it emits `AddReturnSay( 3, token )` -- note the C++ then
+   * FALLS THROUGH into the numeric branch, where `atoi` of a name yields 0 and
+   * `GetWorldStruct(0)` fails, so the fall-through is inert). Otherwise token 1
+   * is ALWAYS `worldId`, token 2 is either a region key or `x`, token 3 is `z`.
+   *
+   * ponytail: two deliberate divergences from that shape, both surfaced per
+   * rule 01 rather than silently papered over --
+   *  - The 2-token `<x> <z>` shorthand does not exist in C++ (there, `/te 100
+   *    200` means worldId=100, regionKey/x=200). It is kept because it is what
+   *    this project's GMs already use, and it is unambiguous: a 2-token numeric
+   *    line cannot be a valid C++ coord form.
+   *  - `<worldId> <regionKey>` is unported: `g_WorldMng.GetRevivalPos( worldId,
+   *    key )` reads the `.wld` region table, and `flaris.yml`'s `regions:`
+   *    carries one pvp rect and no revival keys. A non-numeric second token is
+   *    refused with a notice instead of teleporting somewhere wrong.
    */
   private teleport({ args, player }: CommandCtx): void {
     const tokens = args.split(/\s+/).filter(Boolean);
-    if (tokens.length === 0) return;
-    if (/^\d+(\.\d+)?$/.test(tokens[0]!)) {
-      // 3 tokens => Navigator client form `<worldId> <x> <z>`; 2 => manual `<x> <z>`.
-      const xIdx = tokens.length >= 3 ? 1 : 0;
-      const zIdx = tokens.length >= 3 ? 2 : 1;
-      const x = Number.parseFloat(tokens[xIdx] ?? '');
-      const z = Number.parseFloat(tokens[zIdx] ?? '');
-      if (!Number.isFinite(x) || !Number.isFinite(z) || x <= 0 || z <= 0) return;
-      this.applyReplace(player, { x, y: 0, z });
+    const [first] = tokens;
+    if (first === undefined) {
+      this.deps.playerManager.sendTo(player, this.noticeSer.build(TE_USAGE));
       return;
     }
-    const target = this.findPlayer(tokens[0]!);
-    if (!target) {
-      this.returnSay(player, RETURN_NOT_FOUND, tokens[0]!);
+    if (!isNumericToken(first)) {
+      const target = this.findPlayer(first);
+      // AddReturnSay( 3, token ) -- the C++ no-such-player reply.
+      if (!target) { this.returnSay(player, RETURN_NOT_FOUND, first); return; }
+      this.applyReplace(player, { ...target.m_vPos });
       return;
     }
-    this.applyReplace(player, { ...target.m_vPos });
+    // Numeric first token => `<worldId> <x> <z>`, or the 2-token `<x> <z>`.
+    const [xs, zs] = tokens.length >= 3 ? tokens.slice(1, 3) : tokens.slice(0, 2);
+    if (xs === undefined || zs === undefined || !isNumericToken(xs) || !isNumericToken(zs)) {
+      this.deps.playerManager.sendTo(player, this.noticeSer.build(TE_USAGE));
+      return;
+    }
+    const x = Number.parseFloat(xs);
+    const z = Number.parseFloat(zs);
+    // `pWorld->VecInWorld( x, z ) && x > 0 && z > 0` (FuncTextCmd.cpp:2466).
+    if (!Number.isFinite(x) || !Number.isFinite(z) || x <= 0 || z <= 0) {
+      this.deps.playerManager.sendTo(player, this.noticeSer.build(TE_BAD_COORDS));
+      return;
+    }
+    // y = 0 is the `CWorld::_replace` sentinel; applyReplace resolves it.
+    this.applyReplace(player, { x, y: 0, z });
   }
 
   /** `/su <name>` -- TextCmd_Summon (FuncTextCmd.cpp:1689). Move target to caller. */
@@ -370,16 +415,10 @@ export class CommandService {
       this.returnSay(player, RETURN_NOT_FOUND, name);
       return;
     }
-    const pos: Vec3 = { ...player.m_vPos };
-    target.m_vPos = pos;
-    target._dirty.add('x');
-    target._dirty.add('y');
-    target._dirty.add('z');
-    // SETPOS (not REPLACE): same-world teleport must not null g_pPlayer
-    // (OnReplace DPClient.cpp:2352 -> CWndQuestQuickInfo::Process:259 crash).
-    const buf = this.setPosSer.build(target.m_idPlayer, pos);
-    this.deps.playerManager.sendTo(target, buf);
-    this.refreshVisibility(target);
+    // Caller's live position -- y already resolved, so no sentinel. SETPOS (not
+    // REPLACE): same-world teleport must not null g_pPlayer (OnReplace
+    // DPClient.cpp:2352 -> CWndQuestQuickInfo::Process:259 crash).
+    this.applyReplace(target, { ...player.m_vPos });
   }
 
   /** `/sys <msg>` -- TextCmd_System (FuncTextCmd.cpp:2840). Yellow notice to all. */
@@ -835,23 +874,82 @@ export class CommandService {
 
   // --- helpers --------------------------------------------------------------
 
-  /** Move `player` to `pos` via SETPOS (CWorld::_replace same-world branch). */
+  /**
+   * Move `player` to `pos` -- the same-world branch of `CWorld::_replace`
+   * (`World.cpp:1565`), verbatim:
+   *
+   * ```cpp
+   * if( vPos.y == 0.0f ) { vPos.y = 100.0f; vPos.y = GetFullHeight( vPos ); }
+   * g_UserMng.AddSetPos( (CCtrl*)pMover, vPos );
+   * pMover->SetPos( vPos );
+   * if( pMover->IsPlayer() ) ( (CUser*)pMover )->Notify();
+   * ```
+   *
+   * Three things that were wrong here:
+   *  - literal `y: 0` went on the wire. `CDPClient::OnSetPos` (`DPClient.cpp:556`)
+   *    trusts the server's y verbatim (`RemoveObj` -> `ReadWorld` -> `SetPos` ->
+   *    `AddObj` -> `OBJMSG_STAND`) and there is no server-side gravity anywhere
+   *    in `_Common/MoverMove.cpp` -- so y=0 is y=0 on screen, under the terrain.
+   *  - `AddSetPos` is a `FOR_VISIBILITYRANGE` broadcast (`User.cpp:4675`), not a
+   *    self-send: peers never saw the GM move.
+   *  - every reject path was a silent `return`.
+   */
   private applyReplace(player: CPlayer, pos: Vec3): void {
+    const y = pos.y === 0 ? this.groundY(player.m_nZoneId, pos.x, pos.z) : pos.y;
+    const dest: Vec3 = { x: pos.x, y, z: pos.z };
     try {
-      Validate.pos(pos.x, pos.y, pos.z);
+      Validate.pos(dest.x, dest.y, dest.z);
     } catch {
+      this.deps.playerManager.sendTo(player, this.noticeSer.build(TE_BAD_COORDS));
       return;
     }
-    player.m_vPos = pos;
+    player.m_vPos = dest;
     player._dirty.add('x');
     player._dirty.add('y');
     player._dirty.add('z');
-    const buf = this.setPosSer.build(player.m_idPlayer, pos);
+    const buf = this.setPosSer.build(player.m_idPlayer, dest);
     this.deps.playerManager.sendTo(player, buf);
-    // Re-diff the view at the destination -- without this, spawns from the old
-    // position linger and nothing at the new spot appears (SETPOS does not
-    // reload the world, so no new MAP_KEY fires).
+    // `g_UserMng.AddSetPos` -- visibility-range broadcast so peers relocate the
+    // mover instead of watching a ghost stand at the old spot (`/lv` :420 does
+    // the same for SETLEVEL). `except` is the mover: it got its copy above.
+    this.deps.zoneManager?.broadcastAround(
+      dest, player.m_nZoneId, VISIBILITY_RADIUS, buf, player,
+    );
+    // `CUser::Notify()` (`User.cpp:578`) -- re-diff the view at the destination.
+    // Without it the old spawns linger and nothing at the new spot appears
+    // (SETPOS does not reload the world, so no new MAP_KEY fires).
     this.refreshVisibility(player);
+  }
+
+  /**
+   * `CWorld::GetFullHeight` stand-in (`WorldIntersect.cpp:12`) -- terrain y at
+   * `(x, z)`, or `SENTINEL_Y` when the zone is unknown.
+   *
+   * ponytail: the real thing raycasts static objects then falls back to a
+   *   bilinear `.lnd` heightmap sample (`World.cpp:982 GetLandHeight`). No
+   *   `.lnd` parser exists in TS. This takes the y of the nearest authored
+   *   spawn/NPC placement in the zone instead -- those y values ARE terrain
+   *   samples taken by the extractor (`flaris.yml` carries 2600 of them), so on
+   *   Flaris's rolling ground the error is metres, not the ~100 m that shipping
+   *   a raw 0 costs. Replace with `world.getLandHeight(x, z)` once the `.lnd`
+   *   files under `game/client/World/` are parsed.
+   */
+  private groundY(zoneId: number, x: number, z: number): number {
+    const zone = this.deps.zones?.byNumericId.get(zoneId);
+    if (!zone) return SENTINEL_Y;
+    let best = SENTINEL_Y;
+    let bestDistSq = Number.POSITIVE_INFINITY;
+    const consider = (p: { x: number; y: number; z: number }): void => {
+      // Authored 0s are themselves sentinels (portals use y: 0) -- not samples.
+      if (p.y === 0) return;
+      const dx = p.x - x;
+      const dz = p.z - z;
+      const distSq = dx * dx + dz * dz;
+      if (distSq < bestDistSq) { bestDistSq = distSq; best = p.y; }
+    };
+    for (const spawn of zone.spawns) consider(spawn.position);
+    for (const npc of zone.npcs) consider(npc.position);
+    return best;
   }
 
   /** Re-diff the post-teleport player's view (ADD_OBJ new, DEL_OBJ stale). */
@@ -894,6 +992,17 @@ function splitTargetMessage(args: string): { target: string; message: string } |
 
 function isSelf(player: CPlayer, name: string): boolean {
   return name.toLowerCase() === player.m_szName.toLowerCase();
+}
+
+/**
+ * Is this token a NUMBER to `CScanner::GetToken`? The scanner's NUMBER covers
+ * an optional sign and a decimal point, which matters because the Navigator
+ * sends floats (`"/teleport %d %f %f"`, `WndField.cpp:11983` -> `/teleport 1
+ * 3880.000000 3500.000000`). The old `/^\d+(\.\d+)?$/` rejected `-1` and `.5`,
+ * so a signed token fell into the player-name branch.
+ */
+function isNumericToken(token: string): boolean {
+  return /^[+-]?(\d+\.?\d*|\.\d+)$/.test(token);
 }
 
 /**

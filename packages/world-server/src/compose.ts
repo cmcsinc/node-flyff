@@ -841,6 +841,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const commandService = new CommandService({
     playerManager, spawnManager, questService, journal,
     inventoryService, charRepo, inventoryRepo, zoneManager, visibilityService,
+    // `/te` -- zone index for the coord gate + the `y == 0` terrain-height
+    // sentinel `CWorld::_replace` resolves via `GetFullHeight`.
+    zones: resources.zones,
     // `/g` guild chat + `/cg` GM guild create -- the server-side half of the
     // TCM_BOTH `TextCmd_GuildChat` (guild chat has no C->S opcode of its own).
     guildService,
