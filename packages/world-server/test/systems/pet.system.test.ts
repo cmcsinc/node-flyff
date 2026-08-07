@@ -40,6 +40,7 @@ interface FakeMover {
 function makeDeps(player: CPlayer, piles: GroundItem[] = []) {
   const movers = new Map<number, FakeMover>();
   const killed: number[] = [];
+  const despawned: number[] = [];
   const broadcasts: Buffer[] = [];
   const notified: number[] = [];
   const picked: GroundItem[] = [];
@@ -47,7 +48,7 @@ function makeDeps(player: CPlayer, piles: GroundItem[] = []) {
   const pileMap = new Map(piles.map((p) => [p.m_idObject, p]));
 
   const deps = {
-    movers, killed, broadcasts, notified, picked, pileMap,
+    movers, killed, despawned, broadcasts, notified, picked, pileMap,
     /** Test knobs: flip these to exercise the two pet-only IsLoot filters. */
     lootable: true,
     fits: true,
@@ -78,6 +79,7 @@ function makeDeps(player: CPlayer, piles: GroundItem[] = []) {
       pickup: (_p: CPlayer, item: GroundItem) => { picked.push(item); pileMap.delete(item.m_idObject); },
     },
     inventoryService: { canFit: () => deps.fits },
+    onDespawn: (m: FakeMover) => { despawned.push(m.m_idMover); },
     notify: (_p: CPlayer, tid: number) => { notified.push(tid); },
     now: () => 0,
   };
@@ -112,6 +114,7 @@ describe('PetSystem.toggle (summon/dismiss)', () => {
     assert.equal(sys.toggle(player, ITEM_OBJID, PET_LINK), true);
     assert.equal(player.m_oiEatPet, NULL_ID, 'cleared');
     assert.deepEqual(deps.killed, [moverId], 'pet mover killed');
+    assert.deepEqual(deps.despawned, [moverId], 'DEL_OBJ sent -- C++ pEatPet->Delete()');
     assert.equal(deps.movers.size, 0);
   });
 
@@ -225,6 +228,24 @@ describe('PetSystem.tick (loot)', () => {
     for (let t = 1100; t <= 6000 && deps.picked.length === 0; t += 100) sys.tick(t);
     assert.equal(deps.picked[0]!.m_idObject, near.m_idObject, 'nearest pile first');
   });
+
+  it('chains to the next pile in the same arrival, without waiting a scan interval', () => {
+    const player = CPlayer.fromRow(makeRow(), makeSocket());
+    const a = makePile(506, { x: 2, y: 0, z: 0 });
+    const b = makePile(507, { x: 4, y: 0, z: 0 });
+    const deps = makeDeps(player, [a, b]);
+    const sys = new PetSystem(deps as never);
+    sys.toggle(player, ITEM_OBJID, PET_LINK);
+    player.m_vPos = { x: 3, y: 0, z: 0 };
+
+    sys.tick(1100); // scan interval: acquire pile A
+    sys.tick(1200); // arrive + loot A, then the synchronous re-scan targets B
+    assert.equal(deps.picked.length, 1, 'first pile looted');
+    // If the chain relied on the next scan window instead, B would sit on the
+    // ground until t >= 2272 (1200 + 1072).
+    sys.tick(1300);
+    assert.equal(deps.picked.length, 2, 'second pile taken on the very next tick');
+  });
 });
 
 describe('PetSystem.tick (owner state)', () => {
@@ -254,10 +275,28 @@ describe('PetSystem.tick (owner state)', () => {
     sys.tick(100);
 
     assert.deepEqual(deps.killed, [original], 'stale pet removed');
+    assert.deepEqual(deps.despawned, [original], 'and removed from clients too');
     assert.notEqual(player.m_oiEatPet, NULL_ID, 'a fresh pet exists');
     assert.notEqual(player.m_oiEatPet, original, 'with a new objid');
+    assert.equal(deps.movers.size, 1, 'exactly one live pet mover after a re-summon');
     const pet = deps.movers.get(player.m_oiEatPet)!;
     assert.deepEqual(pet.m_vPos, player.m_vPos, 're-summoned at the owner');
+  });
+
+  it('never leaves two live pet movers across repeated leash re-summons', () => {
+    const player = CPlayer.fromRow(makeRow(), makeSocket());
+    const deps = makeDeps(player);
+    const sys = new PetSystem(deps as never);
+    sys.toggle(player, ITEM_OBJID, PET_LINK);
+
+    // Six leash breaches -- the reported screenshot showed ~7 stacked pets.
+    for (let i = 1; i <= 6; i++) {
+      player.m_vPos = { x: 500 * i, y: 0, z: 500 * i };
+      sys.tick(100 * i);
+      assert.equal(deps.movers.size, 1, `one live mover after breach ${i}`);
+    }
+    // Every removed mover got a client removal -- no ghost models left behind.
+    assert.equal(deps.despawned.length, deps.killed.length, 'every kill paired with a DEL_OBJ');
   });
 
   it('stop() dismisses every live pet', () => {

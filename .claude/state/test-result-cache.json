@@ -277,5 +277,6 @@
   "H:\\flyff\\node-flyff\\packages\\npc\\test\\services\\dialogInterpreter.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\database\\test\\repositories\\guildQuest.repo.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\guildQuest.loader.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\guild\\test\\services\\guildQuest.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\guild\\test\\services\\guildQuest.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\ammo.service.test.ts": "pass"
 }

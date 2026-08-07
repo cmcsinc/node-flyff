@@ -40,7 +40,7 @@
  */
 
 import { createLogger } from '@flyff/core/logger';
-import type { CPlayer, Vec3 } from '@flyff/entities';
+import type { CMover, CPlayer, Vec3 } from '@flyff/entities';
 import { NULL_ID, SPEED_SCALE } from '@flyff/entities';
 import type { PlayerManager, SpawnManager, ZoneManager } from '@flyff/world-core';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
@@ -103,6 +103,16 @@ export interface PetSystemDeps {
   readonly itemManager: Pick<ItemManager, 'all' | 'get'>;
   readonly lootService: Pick<LootService, 'pickup' | 'isLoot'>;
   readonly inventoryService: Pick<InventoryService, 'canFit'>;
+  /**
+   * `pEatPet->Delete()` seam (`InactivateEatPet`, `MoverSkill.cpp:4437`). C++
+   * `Delete()` removes the object from every client that knows it; our
+   * `SpawnManager.kill(id, { despawn: false })` broadcasts NOTHING, so without
+   * this the dismissed pet lives forever as a client-side model -- and every
+   * leash re-summon stacks one more. Wired in `compose.ts` to
+   * `VisibilityService.onMoverDespawn` (DEL_OBJ **and** `m_known.delete`, which a
+   * bare `broadcastAll(buildRemoveObj)` would skip, blocking any later re-add).
+   */
+  readonly onDespawn?: (mover: CMover) => void;
   /** `AddDefinedText` seam -- refusal notices. Optional (no-op in tests). */
   readonly notify?: (player: CPlayer, tid: number) => void;
   /** Injector seam for tests; defaults to `Date.now`. */
@@ -171,6 +181,11 @@ export class PetSystem {
       this.deps.notify?.(player, TID_CANNOT_CALL_PET_ON_FLYING);
       return false;
     }
+    // Belt-and-braces against a stale record whose owner lost `m_oiEatPet`
+    // (the mover-vanished branch in `tick`, a crash between the two writes):
+    // `toggle` would then read NULL_ID and summon a SECOND live mover while the
+    // first stayed in the map, unowned and unremovable.
+    this.dismiss(player);
     const mover = this.deps.spawnManager.spawnMonster(linkKind, player.m_vPos, player.m_nZoneId);
     if (!mover) {
       logger.warn({ charId: player.m_idPlayer, linkKind }, 'pet summon failed -- unknown mover');
@@ -189,14 +204,18 @@ export class PetSystem {
     return true;
   }
 
-  /** `CMover::InactivateEatPet` (`MoverSkill.cpp:4422`) -- delete + clear. */
+  /**
+   * `CMover::InactivateEatPet` (`MoverSkill.cpp:4422`) -- delete + clear. The
+   * `Delete()` half is {@link removeMover}: without a DEL_OBJ the model stays on
+   * every client that saw the ADD_OBJ.
+   */
   dismiss(player: CPlayer): void {
     const rec = this.pets.get(player.m_idPlayer);
     if (!rec) {
       player.m_oiEatPet = NULL_ID;
       return;
     }
-    this.deps.spawnManager.kill(rec.moverId, { despawn: false });
+    this.removeMover(rec.moverId);
     this.pets.delete(player.m_idPlayer);
     player.m_oiEatPet = NULL_ID;
     logger.info({ charId: player.m_idPlayer, moverId: rec.moverId }, 'pet dismissed');
@@ -210,8 +229,18 @@ export class PetSystem {
   /** Drop a record whose owner is already gone from the manager. */
   private forget(charId: number): void {
     const rec = this.pets.get(charId);
-    if (rec) this.deps.spawnManager.kill(rec.moverId, { despawn: false });
+    if (rec) this.removeMover(rec.moverId);
     this.pets.delete(charId);
+  }
+
+  /**
+   * `pEatPet->Delete()`. `{ despawn: false }` keeps `SpawnManager` from arming its
+   * 10 s corpse timer (a pet has no corpse); the client removal is ours to send.
+   */
+  private removeMover(moverId: number): void {
+    const mover = this.deps.spawnManager.get(moverId);
+    this.deps.spawnManager.kill(moverId, { despawn: false });
+    if (mover) this.deps.onDespawn?.(mover);
   }
 
   /** One pass over every live pet. Sync, no `await` (rule 05). */
@@ -321,7 +350,13 @@ export class PetSystem {
     this.deps.lootService.pickup(owner, pile);
     rec.state = 'idle';
     rec.lootTarget = NULL_ID;
-    rec.nextScanAt = now; // chain: next tick re-scans immediately
+    // C++ re-scans SYNCHRONOUSLY inside the same `AIMSG_ARRIVAL`
+    // (`if( SubItemLoot() == FALSE ) { m_bLootMove = FALSE; ... }`,
+    // `AIPet.cpp:317`), so a drop cluster is cleared in one trip with no idle
+    // gap. Deferring to the next tick's `stepFollow` scan let the follow half
+    // pull the pet back toward the owner between piles.
+    rec.nextScanAt = now + SCAN_INTERVAL_MS;
+    this.scan(owner, rec, mover);
   }
 
   private broadcast(mover: { m_vPos: Vec3; m_nZoneId: number }, packet: Buffer): void {
