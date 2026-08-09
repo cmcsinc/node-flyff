@@ -36,7 +36,7 @@ function getArgon2(): Argon2Exports {
   try {
     // Dynamic require so the build does not depend on argon2 native bindings
     // when they are unavailable (e.g. Windows without node-gyp).
-    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const mod = require('argon2') as Argon2Exports;
     argon2 = mod;
     return mod;
@@ -53,29 +53,31 @@ const SCRYPT_P = 1;
 const SCRYPT_KEYLEN = 32;
 
 const scryptFallback: Argon2Exports = {
-  async hash(password: string): Promise<string> {
+  hash(password: string): Promise<string> {
     const salt = randomBytes(16);
     const key = scryptSync(password, salt, SCRYPT_KEYLEN, {
       N: SCRYPT_N, r: SCRYPT_R, p: SCRYPT_P,
     });
-    return `$scrypt$${SCRYPT_N}$${SCRYPT_R}$${SCRYPT_P}$${salt.toString('base64')}$${key.toString('base64')}`;
+    return Promise.resolve(
+      `$scrypt$${String(SCRYPT_N)}$${String(SCRYPT_R)}$${String(SCRYPT_P)}$${salt.toString('base64')}$${key.toString('base64')}`,
+    );
   },
-  async verify(hash: string, password: string): Promise<boolean> {
+  verify(hash: string, password: string): Promise<boolean> {
     // `$scrypt$N$r$p$saltB64$keyB64` -> ['', 'scrypt', N, r, p, saltB64, keyB64]
     const parts = hash.split('$');
-    if (parts.length !== 7 || parts[1] !== 'scrypt') return false;
+    if (parts.length !== 7 || parts[1] !== 'scrypt') return Promise.resolve(false);
     const N = Number(parts[2]);
     const r = Number(parts[3]);
     const p = Number(parts[4]);
     const saltStr = parts[5];
     const keyStr = parts[6];
-    if (!saltStr || !keyStr) return false;
-    if (!Number.isInteger(N) || !Number.isInteger(r) || !Number.isInteger(p)) return false;
+    if (!saltStr || !keyStr) return Promise.resolve(false);
+    if (!Number.isInteger(N) || !Number.isInteger(r) || !Number.isInteger(p)) return Promise.resolve(false);
     const salt = Buffer.from(saltStr, 'base64');
     const expected = Buffer.from(keyStr, 'base64');
-    if (expected.length !== SCRYPT_KEYLEN) return false;
+    if (expected.length !== SCRYPT_KEYLEN) return Promise.resolve(false);
     const key = scryptSync(password, salt, expected.length, { N, r, p });
-    return timingSafeEqual(key, expected);
+    return Promise.resolve(timingSafeEqual(key, expected));
   },
 };
 

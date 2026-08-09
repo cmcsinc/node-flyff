@@ -126,7 +126,7 @@ export class PacketDispatcher {
 
   /** Wire connection handling onto a `net.Server` (call before `listen`). */
   attach(server: Server): void {
-    server.on('connection', (raw: Socket) => this.onConnection(raw));
+    server.on('connection', (raw: Socket) => { this.onConnection(raw); });
   }
 
   private onConnection(raw: Socket): void {
@@ -146,7 +146,7 @@ export class PacketDispatcher {
       socket.write(framePacket(hello));
       this.log?.debug?.({ protocolId: pid, ip: socket.remoteAddress }, 'protocolId hello sent');
     }
-    socket.on('data', (chunk: Buffer) => this.onData(socket, chunk));
+    socket.on('data', (chunk: Buffer) => { this.onData(socket, chunk); });
     socket.on('error', (err: Error) => {
       this.log?.warn({ err, ip: socket.remoteAddress }, 'Client socket error');
     });

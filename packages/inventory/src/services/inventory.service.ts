@@ -184,7 +184,7 @@ export class InventoryService {
           this.persist(player, dst, b);
           this.deps.inventoryRepo
             .removeItem(player.m_idPlayer, src)
-            .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot: src }, 'inventory removeItem failed'));
+            .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, slot: src }, 'inventory removeItem failed'); });
         } else {
           // Partial: dst fills to stack_size, remainder stays in src.
           this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: b.itemId, count: stackSize } });
@@ -213,7 +213,7 @@ export class InventoryService {
     player._dirty.add('m_Inventory');
     this.deps.inventoryRepo
       .moveItem(player.m_idPlayer, src, dst)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, src, dst }, 'inventory moveItem failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, src, dst }, 'inventory moveItem failed'); });
     return { ok: true, src, dst };
   }
 
@@ -231,7 +231,7 @@ export class InventoryService {
       player.m_Inventory[slot] = null;
       this.deps.inventoryRepo
         .removeItem(player.m_idPlayer, slot)
-        .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory removeItem failed'));
+        .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory removeItem failed'); });
     } else {
       s.count -= take;
       this.persist(player, slot, s);
@@ -261,7 +261,7 @@ export class InventoryService {
       player.m_Inventory[slot] = null;
       this.deps.inventoryRepo
         .removeItem(player.m_idPlayer, slot)
-        .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory removeItem failed'));
+        .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory removeItem failed'); });
     } else {
       s.count = remaining;
       this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId, count: remaining } });
@@ -280,7 +280,7 @@ export class InventoryService {
     player._dirty.add('m_nGold');
     this.deps.inventoryRepo
       .setGold(player.m_idPlayer, player.m_nGold)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'); });
     return { ok: true, amount, pos };
   }
 
@@ -298,7 +298,7 @@ export class InventoryService {
     player._dirty.add('m_nGold');
     this.deps.inventoryRepo
       .setGold(player.m_idPlayer, player.m_nGold)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'); });
     return true;
   }
 
@@ -311,7 +311,7 @@ export class InventoryService {
     player._dirty.add('m_nGold');
     this.deps.inventoryRepo
       .setGold(player.m_idPlayer, player.m_nGold)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, 'gold persist failed'); });
   }
 
   /** Consume `count` from `slot` (scrolls/potions). Returns the post-consume slot or null. */
@@ -328,7 +328,7 @@ export class InventoryService {
       player.m_Inventory[slot] = null;
       this.deps.inventoryRepo
         .removeItem(player.m_idPlayer, slot)
-        .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory removeItem failed'));
+        .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory removeItem failed'); });
     } else {
       this.persist(player, slot, s);
     }
@@ -377,6 +377,6 @@ export class InventoryService {
   private persist(player: CPlayer, slot: number, s: InventorySlot): void {
     this.deps.inventoryRepo
       .setItem(player.m_idPlayer, slot, s.itemId, s.count, s.flags ?? 0, s.durability ?? -1, s.refine ?? 0)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory setItem failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, slot }, 'inventory setItem failed'); });
   }
 }

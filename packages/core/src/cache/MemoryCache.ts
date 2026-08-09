@@ -26,32 +26,34 @@ export class MemoryCache implements ICacheAdapter {
    * Returns the stored value, or `null` if the key is missing or has expired.
    * Expired entries are deleted from the internal map on access.
    */
-  async get(key: string): Promise<string | null> {
+  get(key: string): Promise<string | null> {
     const entry = this.store.get(key);
-    if (entry === undefined) return null;
+    if (entry === undefined) return Promise.resolve(null);
 
     if (entry.expiresAt !== null && Date.now() > entry.expiresAt) {
       this.store.delete(key);
-      return null;
+      return Promise.resolve(null);
     }
 
-    return entry.value;
+    return Promise.resolve(entry.value);
   }
 
   /**
    * Stores `value` under `key`, optionally with a TTL in seconds.
    */
-  async set(key: string, value: string, ttlSeconds?: number): Promise<void> {
+  set(key: string, value: string, ttlSeconds?: number): Promise<void> {
     const expiresAt =
       ttlSeconds !== undefined ? Date.now() + ttlSeconds * 1_000 : null;
     this.store.set(key, { value, expiresAt });
+    return Promise.resolve();
   }
 
   /**
    * Removes the entry for `key`. No-op if the key does not exist.
    */
-  async del(key: string): Promise<void> {
+  del(key: string): Promise<void> {
     this.store.delete(key);
+    return Promise.resolve();
   }
 
   /**

@@ -47,7 +47,7 @@ const MAGIC_FACTOR_BEATS: ReadonlySet<string> = new Set([
 /** Resolve the magic-skill factor for attacker/defender elements (1..5). */
 export function getMagicSkillFactor(atkElement: number, defElement: number): number {
   if (atkElement === defElement) return 1.1;
-  const key = `${atkElement}>${defElement}`;
+  const key = `${String(atkElement)}>${String(defElement)}`;
   if (MAGIC_FACTOR_BEATS.has(key)) return 0.9;
   return 1.0;
 }
@@ -91,7 +91,7 @@ export function getMeleeSkillPower(
   skill: SkillDefinition,
   level: SkillLevel,
 ): { min: number; max: number } {
-  const skillLvl = level.level ?? 1;
+  const skillLvl = level.level;
   const rts = skill.referTargets ?? [0, 0];
   const rss = skill.referStats ?? [0, 0];
   const rvs = skill.referValues ?? [0, 0];

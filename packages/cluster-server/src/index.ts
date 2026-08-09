@@ -31,13 +31,13 @@ async function startHandoffPublisher(
 ): Promise<void> {
   try {
     if (cfg.cacheAdapter === 'redis') {
-      type IpcRedisLike = {
+      interface IpcRedisLike {
         on(event: 'message', h: (channel: string, data: string) => void): void;
         publish(channel: string, data: string): Promise<number>;
         subscribe(channel: string): Promise<void>;
         unsubscribe(channel: string): Promise<void>;
         quit(): Promise<void>;
-      };
+      }
       const Redis = (await import('ioredis')).default as unknown as
         new (url: string, opts?: Record<string, unknown>) => IpcRedisLike;
       const redis = new Redis(cfg.redisUrl, { maxRetriesPerRequest: null });
@@ -79,7 +79,7 @@ async function main(): Promise<void> {
       localBusHost: config.ipc.localBusHost,
       localBusPort: config.ipc.localBusPort,
     },
-    (bus) => handoffPublisher.setBus(bus),
+    (bus: PublisherBusPort) => { handoffPublisher.setBus(bus); },
     logger,
   );
 

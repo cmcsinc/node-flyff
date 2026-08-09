@@ -61,9 +61,9 @@ function encodeMessage(opcode: number, payload: unknown): Buffer {
 class FrameParser {
   #buf = Buffer.alloc(0);
 
-  feed(chunk: Buffer): Array<{ op: number; data: unknown }> {
+  feed(chunk: Buffer): { op: number; data: unknown }[] {
     this.#buf = Buffer.concat([this.#buf, chunk]);
-    const frames: Array<{ op: number; data: unknown }> = [];
+    const frames: { op: number; data: unknown }[] = [];
 
     while (this.#buf.length >= 4) {
       const len = this.#buf.readUInt32BE(0);
@@ -158,7 +158,7 @@ export class LoginRegistrar extends EventEmitter {
     socket.on('connect', () => {
       this.#reconnectAttempts = 0;
       this.#log.info({ host: loginHost, port: loginInternalPort }, 'TCP connected to Login Server');
-      void this.#sendRegistration();
+      this.#sendRegistration();
     });
 
     socket.on('data', (chunk: Buffer) => {
@@ -189,7 +189,7 @@ export class LoginRegistrar extends EventEmitter {
   // Registration
   // ---------------------------------------------------------------------------
 
-  async #sendRegistration(): Promise<void> {
+  #sendRegistration(): void {
     const { serverId, serverName, publicIp, publicPort, ipcSecret, worldRegistry } = this.#deps;
 
     const token = computeRegistrationToken(ipcSecret, serverId, 'cluster');
@@ -305,7 +305,7 @@ export class LoginRegistrar extends EventEmitter {
     this.#reconnectAttempts++;
     this.#log.info({ delay, attempt: this.#reconnectAttempts }, 'Reconnecting to Login Server...');
     this.emit('reconnecting');
-    this.#reconnectTimer = setTimeout(() => this.#connect(), delay);
+    this.#reconnectTimer = setTimeout(() => { this.#connect(); }, delay);
   }
 
   // ---------------------------------------------------------------------------

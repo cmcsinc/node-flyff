@@ -513,7 +513,7 @@ export class SkillService {
     const stat = statForDst(caster, skill.referStats?.[0] ?? 0);
     const refVal = skill.referValues?.[0] ?? 0;
     const adj = level.adjParamVals?.[0] ?? 0;
-    const skillLvl = level.level ?? 1;
+    const skillLvl = level.level;
     return adj + Math.floor(refVal / 10) * stat + skillLvl * Math.floor(stat / 50);
   }
 
@@ -654,10 +654,10 @@ export class SkillService {
    */
   learnSkills(
     player: CPlayer,
-    requested: ReadonlyArray<{ skillId: number; level: number }>,
+    requested: readonly { skillId: number; level: number }[],
   ): LearnOutcome {
     let totalCost = 0;
-    const apply: Array<{ slot: number; skillId: number; level: number }> = [];
+    const apply: { slot: number; skillId: number; level: number }[] = [];
 
     for (let i = 0; i < MAX_SKILL_JOB; i++) {
       const req = requested[i];
@@ -675,7 +675,7 @@ export class SkillService {
       if (cur.skillId === req.skillId && req.level < cur.level) {
         return { ok: false, reason: 'decrease' };
       }
-      if (req.level > (skill.maxLevel ?? 1)) return { ok: false, reason: 'over_max' };
+      if (req.level > skill.maxLevel) return { ok: false, reason: 'over_max' };
       if (skill.reqLevel > 0 && player.m_nLevel < skill.reqLevel) {
         return { ok: false, reason: 'low_level' };
       }
@@ -721,12 +721,12 @@ export class SkillService {
         },
       });
     }
-    this.deps.skillRepo.saveAll(player.m_idPlayer, roster).catch(
-      (err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'skill roster persist failed'),
-    );
-    this.deps.charRepo.updateSkillPoints(player.m_idPlayer, player.m_nSkillPoint, player.m_nSkillLevel).catch(
-      (err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'skill-point persist failed'),
-    );
+    this.deps.skillRepo.saveAll(player.m_idPlayer, roster).catch((err: unknown) => {
+      logger.error({ err, charId: player.m_idPlayer }, 'skill roster persist failed');
+    });
+    this.deps.charRepo.updateSkillPoints(player.m_idPlayer, player.m_nSkillPoint, player.m_nSkillLevel).catch((err: unknown) => {
+      logger.error({ err, charId: player.m_idPlayer }, 'skill-point persist failed');
+    });
 
     this.deps.playerManager.sendTo(
       player,

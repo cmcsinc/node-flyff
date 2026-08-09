@@ -27,7 +27,7 @@ export class WorldHandoffTokenService implements WorldTokenService {
   async generateWorldHandoffToken(charId: number): Promise<string> {
     const timestamp = Date.now();
     const random = crypto.randomBytes(16).toString('hex');
-    const raw = `${charId}:${timestamp}:${random}`;
+    const raw = `${String(charId)}:${String(timestamp)}:${random}`;
     const signature = this.sign(raw);
     const token = `${raw}:${signature}`;
     await this.cache.set(`worldhandoff:${token}`, String(charId), 60);

@@ -18,8 +18,6 @@
  * @module net/PacketWriter
  */
 
-import { PacketError } from '../errors';
-
 // ---------------------------------------------------------------------------
 // Object Pool
 // ---------------------------------------------------------------------------
@@ -33,7 +31,7 @@ class PacketWriterPool {
   private readonly pool: PacketWriter[] = [];
   private readonly maxPoolSize: number;
 
-  constructor(maxPoolSize: number = 64) {
+  constructor(maxPoolSize = 64) {
     this.maxPoolSize = maxPoolSize;
   }
 
@@ -43,12 +41,10 @@ class PacketWriterPool {
    * @returns A reset PacketWriter ready for use.
    */
   acquire(): PacketWriter {
-    if (this.pool.length > 0) {
-      const writer = this.pool.pop()!;
-      writer.reset();
-      return writer;
-    }
-    return new PacketWriter();
+    const writer = this.pool.pop();
+    if (writer === undefined) return new PacketWriter();
+    writer.reset();
+    return writer;
   }
 
   /**
@@ -80,16 +76,6 @@ export class PacketWriter {
   static readonly pool = new PacketWriterPool();
 
   private chunks: (Buffer | number)[] = [];
-
-  /**
-   * Creates a new PacketWriter.
-   *
-   * Use {@link PacketWriter.pool.acquire()} instead of `new` for
-   * better performance in hot paths.
-   */
-  constructor() {
-    // Empty constructor - initialization happens in reset()
-  }
 
   /**
    * Resets the writer to its initial state, clearing all chunks.

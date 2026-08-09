@@ -79,8 +79,6 @@ export class LSFRCipher {
    * @returns The same buffer for chaining.
    */
   transform(buf: Buffer): Buffer {
-    const originalKey = this._key;
-
     for (let i = 0; i < buf.length; i++) {
       const k = this.nextKey();
       const byte = buf[i];

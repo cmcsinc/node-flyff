@@ -1,6 +1,6 @@
 import type { Socket } from 'node:net';
 import { PACKETTYPE, LOGIN_ERROR } from '@flyff/core/constants/opcodes';
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { sendPacket } from '@flyff/core/net/dispatcher';
 import { PacketError, AuthError } from '@flyff/core/errors';
@@ -10,9 +10,10 @@ import type { EventBus } from '@flyff/core/eventBus';
 import { createLogger } from '@flyff/core/logger';
 import { decryptV15Password, V15_PASSWORD_BLOB_SIZE } from '../utils/v15Password';
 
-type LoginEvents = {
-  'login:success': [{ accountId: number; account: string; socket: unknown; handoffToken: string }];
-};
+interface LoginEvents {
+  'login:success': [{ accountId: number; account: string; socket: Socket; handoffToken: string }];
+  [event: string]: unknown[];
+}
 
 const logger = createLogger({ module: 'auth-handler' });
 

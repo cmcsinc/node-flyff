@@ -22,7 +22,7 @@ export const PLAYER_HANDOFF_CHANNEL = 'player:handoff';
 
 /** Minimal bus port the publisher needs -- `IpcBus` satisfies it. */
 export interface PublisherBusPort {
-  publish<T>(channel: string, payload: T): Promise<void>;
+  publish(channel: string, payload: unknown): Promise<void>;
 }
 
 const logger = createLogger({ module: 'handoff-publisher' });

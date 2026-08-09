@@ -35,7 +35,7 @@ export function StatCard({ label, value, icon: Icon, tone = "accent", hint, inde
       className={cn(
         "card-top-accent relative overflow-hidden transition-transform hover:-translate-y-0.5",
       )}
-      style={{ animationDelay: `${index * 60}ms` }}
+      style={{ animationDelay: `${String(index * 60)}ms` }}
     >
       {/* tone-tinted top bar overrides the default accent line */}
       <div
@@ -49,7 +49,7 @@ export function StatCard({ label, value, icon: Icon, tone = "accent", hint, inde
           <p className="text-sm font-medium text-muted-foreground">{label}</p>
           <p
             className="mt-1 text-3xl font-bold tracking-tight"
-            style={{ animation: "var(--animate-count-pop)", animationDelay: `${index * 60 + 80}ms` }}
+            style={{ animation: "var(--animate-count-pop)", animationDelay: `${String(index * 60 + 80)}ms` }}
           >
             {display}
           </p>

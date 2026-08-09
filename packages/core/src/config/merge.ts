@@ -51,9 +51,6 @@ function mergeTwo(target: PlainObject, source: PlainObject): PlainObject {
  * const merged = deepMerge(defaults, fileConfig, envOverrides);
  * ```
  */
-export function deepMerge(...sources: Partial<PlainObject>[]): PlainObject {
-  return sources.reduce<PlainObject>(
-    (acc, src) => (src !== undefined ? mergeTwo(acc, src as PlainObject) : acc),
-    {},
-  );
+export function deepMerge(...sources: PlainObject[]): PlainObject {
+  return sources.reduce<PlainObject>(mergeTwo, {});
 }

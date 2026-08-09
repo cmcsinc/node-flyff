@@ -81,9 +81,9 @@ function encodeMessage(opcode: number, payload: unknown): Buffer {
 class FrameParser {
   #buf = Buffer.alloc(0);
 
-  feed(chunk: Buffer): Array<{ op: number; data: unknown }> {
+  feed(chunk: Buffer): { op: number; data: unknown }[] {
     this.#buf = Buffer.concat([this.#buf, chunk]);
-    const frames: Array<{ op: number; data: unknown }> = [];
+    const frames: { op: number; data: unknown }[] = [];
 
     while (this.#buf.length >= 4) {
       const len = this.#buf.readUInt32BE(0);
@@ -137,7 +137,7 @@ export class ClusterRegistry extends EventEmitter {
 
   start(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.#server = net.createServer(socket => this.#onConnection(socket));
+      this.#server = net.createServer(socket => { this.#onConnection(socket); });
 
       this.#server.on('error', (err: Error) => {
         this.#log.error({ err }, 'ClusterRegistry TCP server error');
@@ -166,7 +166,10 @@ export class ClusterRegistry extends EventEmitter {
     }
 
     await new Promise<void>((resolve, reject) => {
-      this.#server?.close(err => (err ? reject(err) : resolve()));
+      this.#server?.close((err: Error | null | undefined) => {
+        if (err !== null && err !== undefined) reject(err);
+        else resolve();
+      });
     });
   }
 
@@ -184,7 +187,7 @@ export class ClusterRegistry extends EventEmitter {
   // ---------------------------------------------------------------------------
 
   #onConnection(socket: net.Socket): void {
-    const remoteAddr = `${socket.remoteAddress ?? '?'}:${socket.remotePort ?? '?'}`;
+    const remoteAddr = `${socket.remoteAddress ?? '?'}:${String(socket.remotePort ?? '?')}`;
     this.#log.debug({ remoteAddr }, 'Incoming connection from potential cluster server');
 
     const parser = new FrameParser();

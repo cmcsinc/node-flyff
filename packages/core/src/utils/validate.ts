@@ -39,7 +39,7 @@ export const Validate = {
     const min = opts.minLength ?? DEFAULT_NAME_MIN;
     const max = opts.maxLength ?? DEFAULT_NAME_MAX;
     if (typeof value !== 'string' || value.length < min || value.length > max) {
-      throw new PacketError(`Name length must be ${min}-${max}`);
+      throw new PacketError(`Name length must be ${String(min)}-${String(max)}`);
     }
     if (!NAME_CHARSET.test(value)) {
       throw new PacketError('Name contains invalid characters');
@@ -57,7 +57,7 @@ export const Validate = {
    */
   string(value: string, min: number, max: number): void {
     if (typeof value !== 'string' || value.length < min || value.length > max) {
-      throw new PacketError(`String length must be ${min}-${max}`);
+      throw new PacketError(`String length must be ${String(min)}-${String(max)}`);
     }
   },
 
@@ -68,9 +68,9 @@ export const Validate = {
    * @param max - Exclusive upper bound (default 3 character slots).
    * @throws PacketError if out of range or non-integer.
    */
-  slot(slot: number, max: number = 3): void {
+  slot(slot: number, max = 3): void {
     if (!Number.isInteger(slot) || slot < 0 || slot >= max) {
-      throw new PacketError(`Slot out of range [0, ${max})`);
+      throw new PacketError(`Slot out of range [0, ${String(max)})`);
     }
   },
 

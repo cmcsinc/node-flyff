@@ -53,7 +53,7 @@ export type Long = number;
  * the buffer bounds.
  */
 export class PacketReader {
-  private _offset: number = 0;
+  private _offset = 0;
 
   /**
    * Creates a new PacketReader.
@@ -87,8 +87,8 @@ export class PacketReader {
   private checkBounds(size: number, methodName: string): void {
     if (this._offset + size > this.buffer.length) {
       throw new PacketError(
-        `${methodName}: Buffer overrun (offset=${this._offset}, ` +
-          `requested=${size}, remaining=${this.remaining})`
+        `${methodName}: Buffer overrun (offset=${String(this._offset)}, ` +
+          `requested=${String(size)}, remaining=${String(this.remaining)})`
       );
     }
   }

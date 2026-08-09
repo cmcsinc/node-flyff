@@ -12,7 +12,7 @@
  */
 
 import type { Socket } from 'node:net';
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { sendPacket } from '@flyff/core/net/dispatcher';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
@@ -50,8 +50,8 @@ export class CharHandler {
       const version = reader.readString();
       const authKey = reader.readDword();
       const account = reader.readString();
-      const _password = reader.readString();
-      const _dwId = reader.readDword();
+      reader.readString();
+      reader.readDword();
 
       // C++ destroys the connection when dwAuthKey == 0 (DPLoginSrvr.cpp:145).
       if (authKey === 0) {
@@ -92,18 +92,18 @@ export class CharHandler {
   async handleCreatePlayer(socket: Socket, reader: PacketReader): Promise<void> {
     try {
       const account = reader.readString();
-      const _password = reader.readString();
+      reader.readString();
       const slot = reader.readByte();
       const name = reader.readString();
-      const _face = reader.readByte();
-      const _costume = reader.readByte();
+      reader.readByte();
+      reader.readByte();
       const skinSet = reader.readByte();
       const hairMesh = reader.readByte();
       const hairColor = reader.readDword();
       const sex = reader.readByte();
       const job = reader.readByte();
       const headMesh = reader.readByte();
-      const _bankPW = reader.readLong();
+      reader.readLong();
       const authKey = reader.readDword();
 
       const result = await this.charCreateService.create({
@@ -125,8 +125,8 @@ export class CharHandler {
   async handleDeletePlayer(socket: Socket, reader: PacketReader): Promise<void> {
     try {
       const account = reader.readString();
-      const _password = reader.readString();
-      const _deleteKey = reader.readString();
+      reader.readString();
+      reader.readString();
       const idPlayer = reader.readDword();
       const authKey = reader.readDword();
 
@@ -153,7 +153,7 @@ export class CharHandler {
       const account = reader.readString();
       const idPlayer = reader.readDword();
       const name = reader.readString();
-      const _bankPW = reader.readLong();
+      reader.readLong();
 
       const result = await this.charSelectService.prejoin(account, idPlayer, name);
       if (!result.ok) {

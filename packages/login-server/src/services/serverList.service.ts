@@ -45,13 +45,13 @@ export interface ServerListEntry {
   /** Whether the server is accepting new connections. */
   readonly status: 'online' | 'offline' | 'maintenance';
   /** Channel-level breakdown (if dynamic data is available). */
-  readonly channels: ReadonlyArray<{
+  readonly channels: readonly {
     readonly id: number;
     readonly name: string;
     readonly players: number;
     readonly maxPlayers: number;
     readonly status: 'online' | 'offline' | 'maintenance';
-  }>;
+  }[];
 }
 
 export interface ServerListServiceDeps {

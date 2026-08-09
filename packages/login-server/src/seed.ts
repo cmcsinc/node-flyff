@@ -45,6 +45,9 @@ import { up as migrationUp024 } from '@flyff/database/migrations/024_guild_bank'
 import { up as migrationUp025 } from '@flyff/database/migrations/025_guild_war';
 import { up as migrationUp026 } from '@flyff/database/migrations/026_guild_quest';
 import { hashPassword } from '@flyff/core/utils/password';
+import { createLogger } from '@flyff/core/logger';
+
+const logger = createLogger({ module: 'seed' });
 
 /**
  * Ordered migration list -- each `up()` is gated so re-running seed is
@@ -103,7 +106,7 @@ async function main(): Promise<void> {
       const label = 'dropColumn' in m
         ? `${m.dropColumn[0]}.${m.dropColumn[1]} (drop)`
         : 'column' in m ? `${m.column[0]}.${m.column[1]}` : m.marker;
-      console.log(`[seed] ${label} missing -- running migration up()`);
+      logger.info({ label }, 'seed: migration missing -- running up()');
       await m.up(db);
     }
     const accountRepo = new AccountRepository(db);
@@ -113,7 +116,7 @@ async function main(): Promise<void> {
     let accountId: number;
     if (existing) {
       accountId = existing.id;
-      console.log(`[seed] account "${ACCOUNT}" already exists (id=${accountId}) -- leaving as-is`);
+      logger.info({ account: ACCOUNT, accountId }, 'seed: account already exists -- leaving as-is');
     } else {
       const md5hex = createHash('md5').update(SALT + PASSWORD).digest('hex');
       const passwordHash = await hashPassword(md5hex);
@@ -121,7 +124,7 @@ async function main(): Promise<void> {
         username: ACCOUNT, password_hash: passwordHash, email: `${ACCOUNT}@local`,
         authority: 0x50, banned: false, banned_until: null, // AUTH_ADMINISTRATOR -- testable admin
       });
-      console.log(`[seed] created account "${ACCOUNT}" (id=${accountId}) password "${PASSWORD}"`);
+      logger.info({ account: ACCOUNT, accountId, password: PASSWORD }, 'seed: created account');
     }
 
     const chars = await charRepo.findByAccountId(accountId);
@@ -133,16 +136,16 @@ async function main(): Promise<void> {
         strength: 15, stamina: 15, dexterity: 15, intelligence: 15,
         x: 6971.98, y: 100.0, z: 3336.88, world_id: 'W1', zone_id: 1, // Flaris RI_BEGIN (WdMadrigal.rgn:742)
       });
-      console.log(`[seed] created character "Tester" for account ${accountId}`);
+      logger.info({ accountId }, 'seed: created character "Tester"');
     } else {
-      console.log(`[seed] account ${accountId} already has ${chars.length} character(s) -- skipping`);
+      logger.info({ accountId, count: chars.length }, 'seed: account already has characters -- skipping');
     }
   } finally {
     await db.destroy();
   }
 }
 
-void main().catch((err) => {
-  console.error('[seed] failed:', err);
+void main().catch((err: unknown) => {
+  logger.error({ err }, 'seed failed');
   process.exit(1);
 });

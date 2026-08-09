@@ -30,25 +30,30 @@ export function Modal({
   footer,
   className,
   children,
-}: ModalProps) {
+}: ModalProps): React.ReactElement | null {
   const panelRef = React.useRef<HTMLDivElement>(null);
   const titleId = React.useId();
   const descId = React.useId();
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (!open) return;
     const panel = panelRef.current;
     // Focus the first field so keyboard users land inside the form, not on the
     // backdrop. Falls back to the panel itself when the body has no controls.
-    const focusables = () =>
+    const focusables = (): HTMLElement[] =>
       Array.from(
         panel?.querySelectorAll<HTMLElement>(
           'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',
         ) ?? [],
       );
-    focusables()[0]?.focus() ?? panel?.focus();
+    const initialItems = focusables();
+    if (initialItems.length > 0) {
+      initialItems[0].focus();
+    } else {
+      panel?.focus();
+    }
 
-    const onKey = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent): void => {
       if (e.key === "Escape") {
         e.preventDefault();
         onOpenChange(false);
@@ -57,8 +62,8 @@ export function Modal({
       if (e.key !== "Tab") return;
       const items = focusables();
       if (items.length === 0) return;
-      const first = items[0]!;
-      const last = items[items.length - 1]!;
+      const first = items[0];
+      const last = items[items.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
@@ -88,7 +93,7 @@ export function Modal({
     >
       <div
         className="fixed inset-0 bg-scrim backdrop-blur-sm animate-[fade-in-up_0.15s_ease-out]"
-        onClick={() => onOpenChange(false)}
+        onClick={(): void => { onOpenChange(false); }}
         aria-hidden
       />
       <div
@@ -113,7 +118,7 @@ export function Modal({
           <button
             type="button"
             aria-label="Close dialog"
-            onClick={() => onOpenChange(false)}
+            onClick={(): void => { onOpenChange(false); }}
             className="-mr-2 -mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
             <X className="h-4 w-4" />

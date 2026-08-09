@@ -163,7 +163,9 @@ export class MailHandler {
 
   private resolve(socket: ClientSocket): CPlayer | null {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return null; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId === undefined) { socket.destroy(); return null; }
+    const player = this.deps.playerManager.get(charId);
     if (!player) { socket.destroy(); return null; }
     return player;
   }

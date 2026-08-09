@@ -16,6 +16,7 @@
  */
 
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "crypto";
+import { createRequire } from "node:module";
 
 /** v19 client password salt — must match the login-server seed. */
 const V19_SALT = "kikugalanet";

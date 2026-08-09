@@ -46,7 +46,7 @@ export class TokenService {
   async generateHandoffToken(accountId: number): Promise<string> {
     const timestamp = Date.now();
     const random = crypto.randomBytes(16).toString('hex');
-    const raw = `${accountId}:${timestamp}:${random}`;
+    const raw = `${String(accountId)}:${String(timestamp)}:${random}`;
     const signature = this.sign(raw);
 
     const token = `${raw}:${signature}`;
@@ -123,8 +123,8 @@ export class TokenService {
    * @param clientIp - Client IP address
    * @returns Session token (64 hex characters)
    */
-  async generateSessionToken(accountId: number, clientIp: string): Promise<string> {
-    const raw = `${accountId}:${clientIp}:${Date.now()}:${crypto.randomBytes(16).toString('hex')}`;
+  generateSessionToken(accountId: number, clientIp: string): string {
+    const raw = `${String(accountId)}:${clientIp}:${String(Date.now())}:${crypto.randomBytes(16).toString('hex')}`;
     const signature = this.sign(raw);
     const token = `${raw}:${signature}`;
 
@@ -140,7 +140,7 @@ export class TokenService {
    * @param clientIp - Client IP address for validation
    * @returns Account ID if valid, 0 if invalid
    */
-  async validateSessionToken(token: string, clientIp: string): Promise<number> {
+  validateSessionToken(token: string, clientIp: string): number {
     const parts = token.split(':');
 
     if (parts.length !== 5) {

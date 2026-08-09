@@ -207,14 +207,56 @@ describe('PetSystem.tick (loot)', () => {
     assert.equal(deps.picked.length, 0, 'bag-full pile left on the ground');
   });
 
-  it('ignores a pile outside the 15-unit scan radius', () => {
+  it('loots gold seeds even when canFit is false (IK3_GOLD skips bag-full)', () => {
+    // C++ MoverActEvent.cpp:2324 -- IsLoot bPet skips IsFull for IK3_GOLD.
+    // Gold seeds stack_size=1 with count=penya amount; canFit would need N empty
+    // slots for N penya and forever reject every gold drop.
     const player = CPlayer.fromRow(makeRow(), makeSocket());
-    const deps = makeDeps(player, [makePile(503, { x: 25, y: 0, z: 0 })]);
+    const gold = GroundItem.spawn(600, {
+      itemId: 13, // II_GOLD_SEED2
+      count: 40,
+      ownerId: NULL_ID,
+      pos: { x: 3, y: 0, z: 0 },
+      zoneId: 1,
+    }, 0);
+    const deps = makeDeps(player, [gold]);
+    deps.fits = false; // bag full for non-gold items
+    const sys = new PetSystem(deps as never);
+    sys.toggle(player, ITEM_OBJID, PET_LINK);
+    player.m_vPos = { x: 3, y: 0, z: 0 };
+
+    for (let t = 1100; t <= 6000 && deps.picked.length === 0; t += 100) sys.tick(t);
+    assert.equal(deps.picked.length, 1, 'gold seed looted despite bag-full');
+    assert.equal(deps.picked[0]!.m_dwItemId, 13);
+  });
+
+  it('ignores a pile outside the scan radius', () => {
+    const player = CPlayer.fromRow(makeRow(), makeSocket());
+    // SCAN_RADIUS is 64 (emulator QoL; C++ was 15). Place well past it.
+    const deps = makeDeps(player, [makePile(503, { x: 80, y: 0, z: 0 })]);
     const sys = new PetSystem(deps as never);
     sys.toggle(player, ITEM_OBJID, PET_LINK);
 
     for (let t = 1100; t <= 4000; t += 100) sys.tick(t);
     assert.equal(deps.picked.length, 0, 'far pile not acquired');
+  });
+
+  it('acquires a pile past the vanilla 15u C++ scan (emulator range QoL)', () => {
+    const player = CPlayer.fromRow(makeRow(), makeSocket());
+    // 40u -- outside C++ 15, inside our 64. Acrobat kill-drop distance.
+    const pile = makePile(508, { x: 40, y: 0, z: 0 });
+    const deps = makeDeps(player, [pile]);
+    const sys = new PetSystem(deps as never);
+    sys.toggle(player, ITEM_OBJID, PET_LINK);
+    // Keep owner on the pet so the leash never trips mid-walk.
+    player.m_vPos = { x: 0, y: 0, z: 0 };
+
+    // First tick past scan interval acquires; later ticks walk the 40u.
+    for (let t = 1100; t <= 30_000 && deps.picked.length === 0; t += 100) {
+      player.m_vPos = { ...deps.movers.get(player.m_oiEatPet)!.m_vPos };
+      sys.tick(t);
+    }
+    assert.equal(deps.picked.length, 1, '40u pile looted under extended scan');
   });
 
   it('picks the nearest of several candidate piles', () => {
@@ -263,14 +305,14 @@ describe('PetSystem.tick (owner state)', () => {
     assert.deepEqual(deps.killed, [moverId]);
   });
 
-  it('re-summons at the owner when the pet drifts past the 32-unit leash', () => {
+  it('re-summons at the owner when the pet drifts past the leash', () => {
     const player = CPlayer.fromRow(makeRow(), makeSocket());
     const deps = makeDeps(player);
     const sys = new PetSystem(deps as never);
     sys.toggle(player, ITEM_OBJID, PET_LINK);
     const original = player.m_oiEatPet;
 
-    // Teleport the owner far away -- the old pet is now out of leash range.
+    // Teleport the owner well past OWNER_LEASH (64) -- old pet out of range.
     player.m_vPos = { x: 500, y: 0, z: 500 };
     sys.tick(100);
 

@@ -38,8 +38,7 @@ function computeHash(data: Buffer): number {
   // ELF HASH
   crc ^= ELF_KEY;
   let x = 0;
-  for (let i = 0; i < data.length; i++) {
-    const byte = data[i]!;
+  for (const byte of data) {
     crc = ((crc << 4) + byte) >>> 0;
     x = crc & 0xf0000000;
     if (x !== 0) {
@@ -54,9 +53,10 @@ function computeHash(data: Buffer): number {
   // CRC32 HASH
   crc ^= CRC32_KEY;
   crc = crc >>> 0;
-  for (let i = 0; i < data.length; i++) {
-    const byte = data[i]!;
-    crc = CRC32_TABLE[(crc ^ byte) & 0xff]! ^ (crc >>> 8);
+  for (const byte of data) {
+    const tableValue = CRC32_TABLE[(crc ^ byte) & 0xff];
+    if (tableValue === undefined) throw new RangeError('CRC32 table index out of range');
+    crc = tableValue ^ (crc >>> 8);
     crc = crc >>> 0;
   }
   crc ^= CRC32_KEY;

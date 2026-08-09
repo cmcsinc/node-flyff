@@ -26,7 +26,7 @@ const IV = Buffer.alloc(16, 0);
 /** Decrypt the 672-byte CERTIFY blob -> first 42 bytes as a UTF-8 C-string. */
 export function decryptV15Password(enc: Buffer): string {
   if (enc.length !== V15_PASSWORD_BLOB_SIZE) {
-    throw new Error(`v19 password blob must be ${V15_PASSWORD_BLOB_SIZE} bytes (got ${enc.length})`);
+    throw new Error(`v19 password blob must be ${String(V15_PASSWORD_BLOB_SIZE)} bytes (got ${String(enc.length)})`);
   }
   const d = createDecipheriv('aes-128-cbc', KEY, IV);
   d.setAutoPadding(false);

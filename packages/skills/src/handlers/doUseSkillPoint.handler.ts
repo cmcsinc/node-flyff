@@ -11,7 +11,7 @@
  * @module handlers/doUseSkillPoint
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { Validate } from '@flyff/core/utils/validate';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
@@ -34,11 +34,13 @@ export class DoUseSkillPointHandler {
       socket.destroy();
       return;
     }
-    const player = this.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId === undefined) { socket.destroy(); return; }
+    const player = this.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
 
     try {
-      const requested: Array<{ skillId: number; level: number }> = [];
+      const requested: { skillId: number; level: number }[] = [];
       for (let i = 0; i < MAX_SKILL_JOB; i++) {
         const skillId = reader.readDword();
         const level = reader.readDword();

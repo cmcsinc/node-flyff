@@ -39,7 +39,7 @@ const NULL_ID = 0xffffffff;
 export class ServerListHandler {
   constructor(private serverListService: ServerListService) {}
 
-  async sendServerList(socket: Socket, accountId: number, account: string): Promise<void> {
+  sendServerList(socket: Socket, accountId: number, account: string): void {
     try {
       const servers = this.serverListService.getServerList();
       const dwAuthKey = randomInt(1, 0x100000000); // non-zero DWORD
@@ -51,10 +51,10 @@ export class ServerListHandler {
       // channel children the client cannot proceed past server-select, so the
       // connect to PN_LOGINSRVR never happens.
       let nextId = 1;
-      const entries: Array<{
+      const entries: {
         parent: number; id: number; name: string; addr: string;
         count: number; enable: number; max: number;
-      }> = [];
+      }[] = [];
       for (const server of servers) {
         const serverId = nextId++;
         entries.push({

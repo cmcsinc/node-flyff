@@ -412,7 +412,7 @@ function getBlockFactor(defender: Combatant, attacker: Combatant, rng: Rng): num
   const defLVL = defender.level, atkLVL = attacker.level;
   const defDex = defender.dex, atkDex = attacker.dex;
   // Attacker-dependent blocking terms (C++ fBlockA + fBlockB).
-  let fBlockA = defLVL / ((defLVL + atkLVL) * 15.0);
+  const fBlockA = defLVL / ((defLVL + atkLVL) * 15.0);
   let fBlockB = (defDex + atkDex + 2) * ((defDex - atkDex) / 800.0);
   if (fBlockB > 10.0) fBlockB = 10.0;
   let fAdd = fBlockA + fBlockB;

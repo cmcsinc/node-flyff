@@ -19,7 +19,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { type ZodTypeAny, ZodError } from 'zod';
+import type { ZodType } from 'zod';
 import { deepMerge } from './merge';
 
 // ---------------------------------------------------------------------------
@@ -97,12 +97,14 @@ function buildEnvOverrides(): PlainObject {
 
   const set = (obj: PlainObject, keys: string[], value: string): void => {
     let cursor = obj;
-    for (let i = 0; i < keys.length - 1; i++) {
-      const k = keys[i] as string;
-      if (typeof cursor[k] !== 'object' || cursor[k] === null) cursor[k] = {};
+    for (const k of keys.slice(0, -1)) {
+      const next = cursor[k];
+      if (next === null || typeof next !== 'object' || Array.isArray(next)) cursor[k] = {};
       cursor = cursor[k] as PlainObject;
     }
-    cursor[keys[keys.length - 1] as string] = value;
+    const last = keys.at(-1);
+    if (last === undefined) return;
+    cursor[last] = value;
   };
 
   const env = process.env;
@@ -230,11 +232,11 @@ function loadDotenv(repoRoot: string): void {
  * console.log(cfg.world.tickRateMs); // 50
  * ```
  */
-export async function loadConfig<T extends ZodTypeAny>(
+export async function loadConfig<T>(
   serverName: string,
-  schema: T,
+  schema: ZodType<T>,
   options: LoadConfigOptions = {},
-): Promise<ReturnType<T['parse']>> {
+): Promise<T> {
   const configRoot = options.configRoot ?? discoverConfigRoot(process.cwd());
   loadDotenv(path.dirname(configRoot));
   const filePaths = resolveFilePaths(serverName, configRoot);
@@ -270,7 +272,7 @@ export async function loadConfig<T extends ZodTypeAny>(
   const result = schema.safeParse(merged) as ReturnType<T['safeParse']>;
 
   if (!result.success) {
-    const err = result.error as ZodError;
+    const err = result.error;
     const messages = err.errors
       .map(e => `  ${e.path.join('.')}: ${e.message}`)
       .join('\n');
@@ -289,11 +291,11 @@ export async function loadConfig<T extends ZodTypeAny>(
  *
  * Prefer {@link loadConfig} (async) whenever possible.
  */
-export function loadConfigSync<T extends ZodTypeAny>(
+export function loadConfigSync<T>(
   serverName: string,
-  schema: T,
+  schema: ZodType<T>,
   options: LoadConfigOptions = {},
-): ReturnType<T['parse']> {
+): T {
   const configRoot = options.configRoot ?? discoverConfigRoot(process.cwd());
   loadDotenv(path.dirname(configRoot));
   const filePaths = resolveFilePaths(serverName, configRoot);
@@ -322,7 +324,7 @@ export function loadConfigSync<T extends ZodTypeAny>(
 
   const result = schema.safeParse(merged) as ReturnType<T['safeParse']>;
   if (!result.success) {
-    const err = result.error as ZodError;
+    const err = result.error;
     const messages = err.errors
       .map(e => `  ${e.path.join('.')}: ${e.message}`)
       .join('\n');

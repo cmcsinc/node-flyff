@@ -23,7 +23,7 @@ const ELF_KEY = 0x15779231;
 const CRC32_KEY = 0x13393917;
 
 /** Standard reflected CRC-32 table (poly 0xEDB88320) -- matches `crc.cpp:46-98`. */
-const TABLE: Uint32Array = (() => {
+const TABLE: Uint32Array = ((): Uint32Array => {
   const t = new Uint32Array(256);
   for (let i = 0; i < 256; i++) {
     let c = i;
@@ -48,8 +48,8 @@ export function crc32Flyff(input: Buffer): number {
   let m = 0xffffffff;
   // Pass A -- ELF hash.
   m = (m ^ ELF_KEY) >>> 0;
-  for (let i = 0; i < input.length; i++) {
-    m = (((m << 4) >>> 0) + input[i]!) >>> 0;
+  for (const byte of input) {
+    m = (((m << 4) >>> 0) + byte) >>> 0;
     const x = m & 0xf0000000;
     if (x !== 0) m = (m ^ (x >>> 24)) >>> 0;
     m = (m & (~x >>> 0)) >>> 0;
@@ -58,8 +58,8 @@ export function crc32Flyff(input: Buffer): number {
   // Pass B -- CRC-32 (keyed).
   m = (m ^ CRC32_KEY) >>> 0;
   let c = m >>> 0;
-  for (let i = 0; i < input.length; i++) {
-    c = ((c >>> 8) ^ (TABLE[(c ^ input[i]!) & 0xff] ?? 0)) >>> 0;
+  for (const byte of input) {
+    c = ((c >>> 8) ^ (TABLE[(c ^ byte) & 0xff] ?? 0)) >>> 0;
   }
   c = (c ^ CRC32_KEY) >>> 0;
   return c >>> 0;

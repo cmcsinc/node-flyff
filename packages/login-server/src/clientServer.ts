@@ -31,7 +31,9 @@ export function buildLoginClientServer(deps: LoginClientServerDeps): {
   // internally, DPCertifier.cpp:306). Absorb it here so the dispatcher doesn't
   // log "Unknown opcode". (The LoginServer/cluster DOES echo dwPingTime -- see
   // cluster-server/src/clientServer.ts.)
-  dispatcher.register(PACKETTYPE.PING, () => {});
+  dispatcher.register(PACKETTYPE.PING, () => {
+    // No-op: certifier does not reply to PING (DPCertifier.cpp:306).
+  });
   dispatcher.register(PACKETTYPE.CERTIFY, (s, r) => deps.authHandler.handleCertify(s, r));
   return { server, dispatcher };
 }

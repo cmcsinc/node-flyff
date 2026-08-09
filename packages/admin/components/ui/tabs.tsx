@@ -9,21 +9,25 @@ interface TabsContextValue {
   baseId: string;
 }
 
+const noop = (): void => {
+  // default no-op; replaced by Tabs with a real handler.
+};
+
 const TabsContext = React.createContext<TabsContextValue>({
   value: "",
-  onValueChange: () => {},
+  onValueChange: noop,
   baseId: "tabs",
 });
 
 const Tabs = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { value?: string; defaultValue?: string; onValueChange?: (v: string) => void }
->(({ className, value: controlledValue, defaultValue, onValueChange, children, ...props }, ref) => {
-  const [internalValue, setInternalValue] = React.useState(defaultValue || "");
+>(({ className, value: controlledValue, defaultValue, onValueChange, children, ...props }, ref): React.ReactElement => {
+  const [internalValue, setInternalValue] = React.useState(defaultValue ?? "");
   const baseId = React.useId();
   const value = controlledValue ?? internalValue;
   const handleValueChange = React.useCallback(
-    (v: string) => {
+    (v: string): void => {
       onValueChange?.(v);
       if (controlledValue === undefined) setInternalValue(v);
     },
@@ -64,7 +68,7 @@ const TabsTrigger = React.forwardRef<
   const tabId = `${ctx.baseId}-trigger-${value}`;
   const panelId = `${ctx.baseId}-panel-${value}`;
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>): void => {
     props.onKeyDown?.(e);
     if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
       e.preventDefault();
@@ -75,7 +79,7 @@ const TabsTrigger = React.forwardRef<
       if (idx === -1) return;
       const dir = e.key === "ArrowRight" ? 1 : -1;
       const next = triggers[(idx + dir + triggers.length) % triggers.length];
-      next?.focus();
+      next.focus();
       ctx.onValueChange(next.dataset.value ?? "");
     }
   };
@@ -95,7 +99,7 @@ const TabsTrigger = React.forwardRef<
         active ? "bg-background text-foreground shadow" : "hover:text-foreground",
         className,
       )}
-      onClick={() => ctx.onValueChange(value)}
+      onClick={(): void => { ctx.onValueChange(value); }}
       onKeyDown={handleKeyDown}
       {...props}
     />

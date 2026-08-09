@@ -45,6 +45,7 @@ import { NULL_ID, SPEED_SCALE } from '@flyff/entities';
 import type { PlayerManager, SpawnManager, ZoneManager } from '@flyff/world-core';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import type { GroundItem, ItemManager, LootService, InventoryService } from '@flyff/inventory';
+import { isGoldSeed } from '@flyff/inventory';
 import { DestPosSerializer, DestObjSerializer } from '@flyff/combat';
 
 const logger = createLogger({ module: 'pet-system' });
@@ -60,15 +61,20 @@ const TICK_MS = 100;
 const SCAN_INTERVAL_MS = 1072;
 
 /**
- * Owner leash (`AIPet.cpp:110`, `NotOwnedPetInactivated:422`). Beyond 32 units
- * the pet stops scanning entirely, and `__REACTIVATE_EATPET` (`User.cpp:553`,
- * live at `__VER >= 15`) dismisses + immediately re-summons it at the owner --
- * the teleport catch-up. {@link resummon} is that path.
+ * Owner leash. C++ is 32 (`AIPet.cpp:110`, `User.cpp:559 IsValidArea(pEatPet, 32)`):
+ * past that the pet stops scanning and `__REACTIVATE_EATPET` re-summons at the
+ * owner. Emulator QoL: 64 -- acrobat/ranger kites leave the pet stranded at 32
+ * every few steps, so it never finishes a walk to a kill drop. Still re-summons
+ * past 64 so a true disconnect doesn't leave a forever-lagging model.
  */
-const OWNER_LEASH = 32;
+const OWNER_LEASH = 64;
 
-/** Pile search radius from the pet (`fDistSq < 15 * 15`, `AIPet.cpp:144`). */
-const SCAN_RADIUS = 15;
+/**
+ * Pile search radius from the pet. C++ is 15 (`AIPet.cpp:144`). Emulator QoL: 64
+ * -- ranged classes kill outside the pet's vanilla 15u bubble, so the pet only
+ * looted after the player walked onto the pile. Arrival radius stays vanilla 5.
+ */
+const SCAN_RADIUS = 64;
 
 /** Pickup radius re-checked on arrival (`fDistSq < 5.0f * 5.0f`, `AIPet.cpp:305`). */
 const ARRIVAL_RADIUS = 5;
@@ -320,7 +326,15 @@ export class PetSystem {
       const d = distSq2(mover.m_vPos, pile.m_vPos);
       if (d >= bestSq) continue;
       if (!this.deps.lootService.isLoot(owner, pile)) continue;
-      if (!this.deps.inventoryService.canFit(owner, pile.m_dwItemId, pile.m_nItemNum)) continue;
+      // C++ `IsLoot(..., bPet)` skips the bag-full filter for `IK3_GOLD`
+      // (`MoverActEvent.cpp:2324`). Gold piles carry `count = penya amount` with
+      // `stack_size: 1`, so a naive canFit would demand N empty bag slots for N
+      // penya and permanently reject every gold drop. Penya goes to `m_nGold`, not
+      // a bag slot -- skip the fit check for seeds.
+      if (!isGoldSeed(pile.m_dwItemId)
+          && !this.deps.inventoryService.canFit(owner, pile.m_dwItemId, pile.m_nItemNum)) {
+        continue;
+      }
       best = pile;
       bestSq = d;
     }

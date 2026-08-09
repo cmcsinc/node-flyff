@@ -131,7 +131,8 @@ export class RevivalService {
   private reviveScroll(player: CPlayer): RevivalOutcome {
     const slot = this.findScrollSlot(player);
     if (slot < 0) return { ok: false, reason: 'no_scroll' };
-    const stack = player.m_Inventory[slot]!;
+    const stack = player.m_Inventory[slot];
+    if (stack === undefined || stack === null) return { ok: false, reason: 'no_scroll' };
 
     // WAL journal the slot's ABSOLUTE post-state before the client ack (rule
     // 04): either decremented stack or cleared slot. Idempotent -- the boot

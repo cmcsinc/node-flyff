@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -5,7 +6,7 @@ import { cn } from "@/lib/utils";
  * state never depends on colour alone; the dot itself is `aria-hidden` and the
  * label carries the meaning.
  */
-export function OnlineIndicator({ online, className }: { online: boolean; className?: string }) {
+export function OnlineIndicator({ online, className }: { online: boolean; className?: string }): React.ReactElement {
   return (
     <span className={cn("inline-flex items-center gap-1.5 text-xs", className)}>
       <span

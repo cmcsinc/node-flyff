@@ -21,7 +21,7 @@ export function MeterBar({
   /** Text appended after `value / max`, e.g. "HP". */
   suffix?: string;
   className?: string;
-}) {
+}): React.ReactElement {
   const safeMax = max > 0 ? max : 1;
   const pct = Math.max(0, Math.min(100, (value / safeMax) * 100));
   const fill = {
@@ -48,7 +48,7 @@ export function MeterBar({
         aria-valuemax={max}
         className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
       >
-        <div className={cn("h-full rounded-full transition-[width] duration-300", fill)} style={{ width: `${pct}%` }} />
+        <div className={cn("h-full rounded-full transition-[width] duration-300", fill)} style={{ width: `${String(pct)}%` }} />
       </div>
     </div>
   );
@@ -66,7 +66,7 @@ export function DataRow({
   label: string;
   value: React.ReactNode;
   mono?: boolean;
-}) {
+}): React.ReactElement {
   return (
     <div className="flex items-baseline justify-between gap-3 py-0.5 text-sm">
       <span className="text-xs text-muted-foreground">{label}</span>

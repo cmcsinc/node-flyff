@@ -1,5 +1,5 @@
-import { createLogger, type Logger, loadConfig, type LoginServerConfig, MemoryCache, createEventBus, type EventBus } from '@flyff/core';
-import { LoginServerConfigSchema } from '@flyff/core/config/schemas/login';
+import type { Socket } from 'node:net';
+import { createLogger, type Logger, loadConfig, type LoginServerConfig, MemoryCache, createEventBus, type EventBus, LoginServerConfigSchema} from '@flyff/core';
 import { createDb, type DbConfig, AccountRepository } from '@flyff/database';
 import { ClusterRegistry } from './ipc/clusterRegistry';
 import { ServerListService } from './services/serverList.service';
@@ -8,9 +8,10 @@ import { TokenService } from './services/token.service';
 import { AuthHandler } from './handlers/auth.handler';
 import { ServerListHandler } from './handlers/serverList.handler';
 
-type LoginEvents = {
-  'login:success': [{ accountId: number; account: string; socket: unknown; handoffToken: string }];
-};
+interface LoginEvents {
+  'login:success': [{ accountId: number; account: string; socket: Socket; handoffToken: string }];
+  [event: string]: unknown[];
+}
 
 /**
  * Login server composition result.
@@ -98,8 +99,8 @@ export async function compose(): Promise<LoginComposeResult> {
   const serverListHandler = new ServerListHandler(serverListService);
 
   // Listen for login success events to send server list
-  eventBus.on('login:success', async (data: { accountId: number; account: string; socket: unknown; handoffToken: string }) => {
-    await serverListHandler.sendServerList(data.socket as any, data.accountId, data.account);
+  eventBus.on('login:success', (data: { accountId: number; account: string; socket: Socket; handoffToken: string }) => {
+    serverListHandler.sendServerList(data.socket, data.accountId, data.account);
   });
 
   return {

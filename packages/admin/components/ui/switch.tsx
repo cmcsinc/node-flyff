@@ -3,8 +3,10 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export interface SwitchProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> {}
+export type SwitchProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "size"
+>;
 
 /** Accessible styled toggle built on a native checkbox (role=switch). */
 const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(

@@ -39,7 +39,7 @@ export function Field({
   srOnlyLabel,
   className,
   children,
-}: FieldProps) {
+}: FieldProps): React.ReactElement {
   const hintId = hint ? `${htmlFor}-hint` : undefined;
   const errorId = error ? `${htmlFor}-error` : undefined;
   const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
@@ -83,7 +83,7 @@ export function FieldGroup({
   title: string;
   children: React.ReactNode;
   className?: string;
-}) {
+}): React.ReactElement {
   return (
     <fieldset className={cn("space-y-2", className)}>
       <legend className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
