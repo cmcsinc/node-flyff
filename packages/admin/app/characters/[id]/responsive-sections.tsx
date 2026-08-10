@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import * as React from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 interface Section {
   key: string;
@@ -22,27 +22,27 @@ interface ResponsiveSectionsProps {
  *   sections side-by-side below.
  * - **Mobile (<md):** tabbed interface.
  */
-export function ResponsiveSections({ sections }: ResponsiveSectionsProps) {
-  const [mode, setMode] = React.useState<"mobile" | "tablet" | "desktop">("mobile");
+export function ResponsiveSections({ sections }: ResponsiveSectionsProps): React.JSX.Element {
+  const [mode, setMode] = React.useState<'mobile' | 'tablet' | 'desktop'>('mobile');
 
   React.useEffect(() => {
-    const mobile = window.matchMedia("(max-width: 767px)");
-    const desktop = window.matchMedia("(min-width: 1280px)");
+    const mobile = window.matchMedia('(max-width: 767px)');
+    const desktop = window.matchMedia('(min-width: 1280px)');
 
-    function sync() {
-      setMode(desktop.matches ? "desktop" : mobile.matches ? "mobile" : "tablet");
+    function sync(): void {
+      setMode(desktop.matches ? 'desktop' : mobile.matches ? 'mobile' : 'tablet');
     }
     sync();
 
-    mobile.addEventListener("change", sync);
-    desktop.addEventListener("change", sync);
-    return () => {
-      mobile.removeEventListener("change", sync);
-      desktop.removeEventListener("change", sync);
+    mobile.addEventListener('change', sync);
+    desktop.addEventListener('change', sync);
+    return (): void => {
+      mobile.removeEventListener('change', sync);
+      desktop.removeEventListener('change', sync);
     };
   }, []);
 
-  if (mode === "mobile") {
+  if (mode === 'mobile') {
     return (
       <Tabs defaultValue={sections[0]?.key}>
         <TabsList className="w-full">
@@ -66,11 +66,13 @@ export function ResponsiveSections({ sections }: ResponsiveSectionsProps) {
     );
   }
 
-  if (mode === "desktop") {
+  if (mode === 'desktop') {
     return (
       <div className="grid grid-cols-3 gap-4">
         {sections.map((s) => (
-          <div key={s.key} className="min-w-0">{s.content}</div>
+          <div key={s.key} className="min-w-0">
+            {s.content}
+          </div>
         ))}
       </div>
     );
@@ -82,9 +84,14 @@ export function ResponsiveSections({ sections }: ResponsiveSectionsProps) {
     <div className="space-y-4">
       <div>{first.content}</div>
       {rest.length > 0 && (
-        <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${rest.length}, minmax(0, 1fr))` }}>
+        <div
+          className="grid gap-4"
+          style={{ gridTemplateColumns: `repeat(${String(rest.length)}, minmax(0, 1fr))` }}
+        >
           {rest.map((s) => (
-            <div key={s.key} className="min-w-0">{s.content}</div>
+            <div key={s.key} className="min-w-0">
+              {s.content}
+            </div>
           ))}
         </div>
       )}

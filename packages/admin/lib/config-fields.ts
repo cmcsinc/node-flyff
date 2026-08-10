@@ -95,7 +95,11 @@ export const CONFIG_FIELDS: Record<ServerType, FieldSection[]> = {
           hint: 'Must equal each cluster’s "Login internal port"',
         },
         { path: 'registration.allowedClusters', label: 'Allowed cluster ids', kind: 'csv' },
-        { path: 'registration.heartbeatTimeoutMs', label: 'Heartbeat timeout (ms)', kind: 'number' },
+        {
+          path: 'registration.heartbeatTimeoutMs',
+          label: 'Heartbeat timeout (ms)',
+          kind: 'number',
+        },
       ],
     },
     {
@@ -119,8 +123,16 @@ export const CONFIG_FIELDS: Record<ServerType, FieldSection[]> = {
           kind: 'number',
           hint: 'Must equal the login server’s registration.internalPort',
         },
-        { path: 'registration.reconnectIntervalMs', label: 'Reconnect interval (ms)', kind: 'number' },
-        { path: 'registration.heartbeatIntervalMs', label: 'Heartbeat interval (ms)', kind: 'number' },
+        {
+          path: 'registration.reconnectIntervalMs',
+          label: 'Reconnect interval (ms)',
+          kind: 'number',
+        },
+        {
+          path: 'registration.heartbeatIntervalMs',
+          label: 'Heartbeat interval (ms)',
+          kind: 'number',
+        },
       ],
     },
     {
@@ -132,7 +144,12 @@ export const CONFIG_FIELDS: Record<ServerType, FieldSection[]> = {
           kind: 'number',
           hint: 'Must equal each world’s "Cluster internal port"',
         },
-        { path: 'registration.allowedWorlds', label: 'Allowed world ids', kind: 'multiselect', optionsFrom: 'world' },
+        {
+          path: 'registration.allowedWorlds',
+          label: 'Allowed world ids',
+          kind: 'multiselect',
+          optionsFrom: 'world',
+        },
         {
           path: 'registration.worldHeartbeatTimeoutMs',
           label: 'World heartbeat timeout (ms)',
@@ -168,8 +185,16 @@ export const CONFIG_FIELDS: Record<ServerType, FieldSection[]> = {
         },
         { path: 'registration.channelId', label: 'Channel id', kind: 'number' },
         { path: 'registration.channelName', label: 'Channel name', kind: 'text' },
-        { path: 'registration.reconnectIntervalMs', label: 'Reconnect interval (ms)', kind: 'number' },
-        { path: 'registration.heartbeatIntervalMs', label: 'Heartbeat interval (ms)', kind: 'number' },
+        {
+          path: 'registration.reconnectIntervalMs',
+          label: 'Reconnect interval (ms)',
+          kind: 'number',
+        },
+        {
+          path: 'registration.heartbeatIntervalMs',
+          label: 'Heartbeat interval (ms)',
+          kind: 'number',
+        },
       ],
     },
     {
@@ -227,16 +252,18 @@ export function getAtPath(obj: Plain, path: string): unknown {
 /** Immutably writes a dotted path; `undefined` deletes the leaf (and empty parents). */
 export function setAtPath(obj: Plain, path: string, value: unknown): Plain {
   const [key, ...rest] = path.split('.');
-  if (key === undefined) return obj;
   const out = { ...obj };
   if (rest.length === 0) {
-    if (value === undefined) delete out[key];
-    else out[key] = value;
+    if (value === undefined) {
+      return Object.fromEntries(Object.entries(out).filter(([entryKey]) => entryKey !== key));
+    }
+    out[key] = value;
     return out;
   }
   const child = setAtPath(isPlain(out[key]) ? out[key] : {}, rest.join('.'), value);
-  if (Object.keys(child).length === 0) delete out[key];
-  else out[key] = child;
+  if (Object.keys(child).length === 0) {
+    return Object.fromEntries(Object.entries(out).filter(([entryKey]) => entryKey !== key));
+  }
+  out[key] = child;
   return out;
 }
-

@@ -29,24 +29,24 @@
  * @module app/api/dialog/route
  */
 
-import { resolve } from "node:path";
-import { NextResponse, type NextRequest } from "next/server";
-import { z } from "zod";
-import { stringify } from "yaml";
-import { writeFile } from "node:fs/promises";
+import { resolve } from 'node:path';
+import { NextResponse, type NextRequest } from 'next/server';
+import { z } from 'zod';
+import { stringify } from 'yaml';
+import { writeFile } from 'node:fs/promises';
 import {
   writeDialogStrings,
   writeNpcScriptEdit,
   type DialogState,
   type NpcScriptEdit,
-} from "@flyff/resources";
-import { auth } from "@/lib/auth";
-import { writeAudit } from "@/lib/audit";
-import { DATA_DIR, getResourceIndex, invalidateResourceCache } from "@/lib/resource-cache";
-import { RAW_DIR } from "@/lib/character-inc";
+} from '@flyff/resources';
+import { auth } from '@/lib/auth';
+import { writeAudit } from '@/lib/audit';
+import { DATA_DIR, getResourceIndex, invalidateResourceCache } from '@/lib/resource-cache';
+import { RAW_DIR } from '@/lib/character-inc';
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 /**
  * A text reference in a state. Non-negative = an existing string-table row.
@@ -78,12 +78,18 @@ const StateSchema = z.object({
 });
 
 const PutSchema = z.object({
-  prefix: z.string().min(1).max(64).regex(/^[a-z][a-z0-9_]*$/, "Invalid dialog prefix"),
+  prefix: z
+    .string()
+    .min(1)
+    .max(64)
+    .regex(/^[a-z][a-z0-9_]*$/, 'Invalid dialog prefix'),
   /** States to rewrite, keyed by dialog key index. */
-  states: z.record(z.string().regex(/^\d{1,5}$/, "Invalid state key"), StateSchema).optional(),
+  states: z.record(z.string().regex(/^\d{1,5}$/, 'Invalid state key'), StateSchema).optional(),
   /** In-place replacements of existing string-table rows. */
   texts: z
-    .array(z.object({ index: z.number().int().nonnegative().max(0xffff), text: z.string().max(512) }))
+    .array(
+      z.object({ index: z.number().int().nonnegative().max(0xffff), text: z.string().max(512) }),
+    )
     .max(64)
     .optional(),
   /** Rows to append. Their assigned indices replace the negative placeholders. */
@@ -101,7 +107,10 @@ function resolveRef(n: number, appended: readonly number[]): number {
 }
 
 /** Rewrite a submitted state's text refs into real indices. */
-function resolveState(state: z.infer<typeof StateSchema>, appended: readonly number[]): DialogState {
+function resolveState(
+  state: z.infer<typeof StateSchema>,
+  appended: readonly number[],
+): DialogState {
   const out: DialogState = {
     ...(state.say ? { say: state.say.map((n) => resolveRef(n, appended)) } : {}),
     ...(state.speak ? { speak: state.speak.map((n) => resolveRef(n, appended)) } : {}),
@@ -124,12 +133,12 @@ function resolveState(state: z.infer<typeof StateSchema>, appended: readonly num
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const body = PutSchema.safeParse(await req.json().catch(() => null));
   if (!body.success) {
     return NextResponse.json(
-      { ok: false, error: body.error.issues[0]?.message ?? "Invalid body" },
+      { ok: false, error: body.error.issues[0]?.message ?? 'Invalid body' },
       { status: 400 },
     );
   }
@@ -158,7 +167,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
       {
         ok: false,
         error:
-          `Text row(s) ${outOfRange.join(", ")} do not exist (table has ${String(count)} rows). ` +
+          `Text row(s) ${outOfRange.join(', ')} do not exist (table has ${String(count)} rows). ` +
           `New text must be appended, not written past the end.`,
       },
       { status: 400 },
@@ -176,7 +185,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
       {
         ok: false,
         error:
-          `State(s) ${clobbered.join(", ")} store a raw C++ body, which overrides every ` +
+          `State(s) ${clobbered.join(', ')} store a raw C++ body, which overrides every ` +
           `structured field. Edit them by hand in raw/NpcScript.cpp.`,
       },
       { status: 400 },
@@ -184,7 +193,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
   }
 
   if (Object.keys(states).length === 0 && texts.length === 0 && newTexts.length === 0) {
-    return NextResponse.json({ ok: false, error: "Nothing to change" }, { status: 400 });
+    return NextResponse.json({ ok: false, error: 'Nothing to change' }, { status: 400 });
   }
 
   let appended: number[] = [];
@@ -209,15 +218,15 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
       await writeDialogYml(prefix, file.character_key, { ...file.states, ...resolved });
     }
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Write failed";
+    const msg = e instanceof Error ? e.message : 'Write failed';
     return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 
   invalidateResourceCache();
 
   await writeAudit(session, {
-    action: "dialog_edit",
-    targetType: "dialog_prefix",
+    action: 'dialog_edit',
+    targetType: 'dialog_prefix',
     // The target is a string prefix, not a numeric row id.
     targetId: null,
     details: {
@@ -242,6 +251,6 @@ async function writeDialogYml(
   characterKey: string | undefined,
   states: Record<string, DialogState>,
 ): Promise<void> {
-  const doc = { _version: "1.0", prefix, character_key: characterKey, states };
-  await writeFile(resolve(DATA_DIR, "dialogues", `${prefix}.yml`), stringify(doc), "utf-8");
+  const doc = { _version: '1.0', prefix, character_key: characterKey, states };
+  await writeFile(resolve(DATA_DIR, 'dialogues', `${prefix}.yml`), stringify(doc), 'utf-8');
 }

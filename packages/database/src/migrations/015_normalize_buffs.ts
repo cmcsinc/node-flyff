@@ -26,7 +26,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('character_buffs', (table: any) => {
+  await db.schema.createTable('character_buffs', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
@@ -38,7 +38,7 @@ export async function up(db: Knex): Promise<void> {
   });
 
   // Drop the legacy JSON column — all persistence now goes through the table.
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.dropColumn('buffs');
   });
 }
@@ -48,7 +48,7 @@ export async function up(db: Knex): Promise<void> {
  */
 export async function down(db: Knex): Promise<void> {
   await db.schema.dropTableIfExists('character_buffs');
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.text('buffs').nullable().defaultTo(null);
   });
 }

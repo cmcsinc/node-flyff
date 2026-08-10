@@ -1,27 +1,29 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { db } from "@/lib/db";
-import { accounts } from "@/../drizzle/schema";
-import { eq } from "drizzle-orm";
-import { verifyAccountPassword } from "@/lib/password";
-import { AUTH, hasAuthority } from "@flyff/entities/constants/authority";
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import { db } from '@/lib/db';
+import { accounts } from '@/../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { verifyAccountPassword } from '@/lib/password';
+import { AUTH, hasAuthority } from '@flyff/entities/constants/authority';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
-      name: "GM Account",
+      name: 'GM Account',
       credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
+        username: { label: 'Username', type: 'text' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) return null;
+        if (!credentials.username || !credentials.password) return null;
 
-        const [account] = await db
-          .select()
-          .from(accounts)
-          .where(eq(accounts.username, credentials.username as string))
-          .limit(1);
+        const account = (
+          await db
+            .select()
+            .from(accounts)
+            .where(eq(accounts.username, credentials.username as string))
+            .limit(1)
+        ).at(0);
 
         if (!account) return null;
         // Admin panel requires at least GAME MASTER; normal players can't sign in.
@@ -43,10 +45,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   callbacks: {
     authorized({ auth: session }) {

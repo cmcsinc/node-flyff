@@ -55,7 +55,7 @@ export class RepairService {
   constructor(private readonly deps: RepairServiceDeps) {}
 
   repair(player: CPlayer, slots: number[]): RepairResult {
-    const plan: Array<{ slot: number; max: number; cost: number; objid: number }> = [];
+    const plan: { slot: number; max: number; cost: number; objid: number }[] = [];
     let total = 0;
     for (const slot of slots) {
       const s = player.m_Inventory[slot];
@@ -86,7 +86,7 @@ export class RepairService {
       repaired.push({ slot: p.slot, objid: p.objid, durability: p.max });
       this.deps.inventoryRepo
         .setItem(player.m_idPlayer, p.slot, s.itemId, s.count, s.flags ?? 0, p.max, s.refine ?? 0)
-        .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot: p.slot }, 'repair setItem failed'));
+        .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, slot: p.slot }, 'repair setItem failed'); });
     }
     player._dirty.add('m_Inventory');
     return { ok: true, cost: total, repaired };

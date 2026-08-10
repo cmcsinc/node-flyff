@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { AlertTriangle, Ban, ChevronRight, Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { QuestArgField } from "./quest-arg-field";
-import type { CommandView } from "@/lib/quest-args";
-import type { BlastTier } from "@/lib/quest-fields";
-import type { QuestArg } from "@flyff/resources";
+import { AlertTriangle, Ban, ChevronRight, Trash2 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { QuestArgField } from './quest-arg-field';
+import type { CommandView } from '@/lib/quest-args';
+import type { BlastTier } from '@/lib/quest-fields';
+import type { QuestArg } from '@flyff/resources';
 
 /**
  * One quest command as a titled group of named argument controls.
@@ -16,26 +16,26 @@ import type { QuestArg } from "@flyff/resources";
 /** What each tier means for a client that has not been patched. */
 export const TIER_COPY: Readonly<Record<BlastTier, { label: string; blurb: string }>> = {
   server: {
-    label: "Server only",
+    label: 'Server only',
     blurb:
-      "The client never reads this. A world-server restart applies it; no client patch needed.",
+      'The client never reads this. A world-server restart applies it; no client patch needed.',
   },
   cosmetic: {
-    label: "Client display",
+    label: 'Client display',
     blurb:
-      "The client renders this from its own copy of propQuest.inc. Until the archive is rebuilt, players see the old value — but the server still grants the real result.",
+      'The client renders this from its own copy of propQuest.inc. Until the archive is rebuilt, players see the old value — but the server still grants the real result.',
   },
   structural: {
-    label: "Client logic",
+    label: 'Client logic',
     blurb:
-      "The client re-evaluates this itself to decide the NPC quest icon and the objective list. An un-patched client will offer or hide the quest incorrectly.",
+      'The client re-evaluates this itself to decide the NPC quest icon and the objective list. An un-patched client will offer or hide the quest incorrectly.',
   },
 };
 
-const TIER_VARIANT: Readonly<Record<BlastTier, "secondary" | "warning" | "destructive">> = {
-  server: "secondary",
-  cosmetic: "warning",
-  structural: "destructive",
+const TIER_VARIANT: Readonly<Record<BlastTier, 'secondary' | 'warning' | 'destructive'>> = {
+  server: 'secondary',
+  cosmetic: 'warning',
+  structural: 'destructive',
 };
 
 export function QuestCommandCard({
@@ -63,7 +63,7 @@ export function QuestCommandCard({
           className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 text-left"
         >
           <ChevronRight
-            className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${expanded ? "rotate-90" : ""}`}
+            className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${expanded ? 'rotate-90' : ''}`}
             aria-hidden="true"
           />
           <span className="min-w-0 truncate text-xs font-medium">{title}</span>
@@ -98,16 +98,16 @@ export function QuestCommandCard({
               <Ban className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               <span>
                 <strong>
-                  <code className="font-mono">{view.cmd}</code> has no parse branch in{" "}
+                  <code className="font-mono">{view.cmd}</code> has no parse branch in{' '}
                   <code className="font-mono">CProject::LoadPropQuest</code>.
-                </strong>{" "}
-                Neither the server nor the client acts on it, so it is shown read-only —
-                editing it would change nothing. Removing it is safe.
+                </strong>{' '}
+                Neither the server nor the client acts on it, so it is shown read-only — editing it
+                would change nothing. Removing it is safe.
               </span>
             </p>
           )}
 
-          {!view.dead && view.tier !== "server" && (
+          {!view.dead && view.tier !== 'server' && (
             <p className="flex items-start gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-[11px] leading-snug text-warning">
               <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               <span>{TIER_COPY[view.tier].blurb}</span>
@@ -135,7 +135,9 @@ export function QuestCommandCard({
                   index={i}
                   {...(a.group !== undefined ? { group: a.group } : {})}
                   {...(view.dead ? { disabled: true } : {})}
-                  onChange={(arg) => { onArgChange(i, arg); }}
+                  onChange={(arg) => {
+                    onArgChange(i, arg);
+                  }}
                 />
               ))}
             </div>

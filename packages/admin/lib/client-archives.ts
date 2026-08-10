@@ -13,7 +13,7 @@
  */
 
 /** Archives the client loads, in `resource.txt` order. */
-export const ARCHIVES = ["data.res", "dataSub1.res", "dataSub2.res"] as const;
+export const ARCHIVES = ['data.res', 'dataSub1.res', 'dataSub2.res'] as const;
 
 /** True when `name` is one of the client's archives. */
 export function isArchive(name: string): boolean {

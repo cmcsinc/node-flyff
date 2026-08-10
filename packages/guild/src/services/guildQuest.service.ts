@@ -50,7 +50,7 @@ import { QS_BEGIN } from '@flyff/core/constants/quest';
 import { createLogger } from '@flyff/core/logger';
 import type { GuildManager, Guild } from '../managers/guild.manager';
 import {
-  GuildQuestProcessor, GQP_WORMON, GQP_GETITEM,
+  type GuildQuestProcessor, GQP_WORMON, GQP_GETITEM,
   type GuildQuestElem, type QuestRect,
 } from '../managers/guildQuest.manager';
 

@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { AlertTriangle, Plus, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Field } from "@/components/ui/field";
-import { Switch } from "@/components/ui/switch";
-import { blankLine, type KeyDraft, type LineDraft, type StateDraft } from "./dialog-drafts";
+import { AlertTriangle, Plus, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Field } from '@/components/ui/field';
+import { Switch } from '@/components/ui/switch';
+import { blankLine, type KeyDraft, type LineDraft, type StateDraft } from './dialog-drafts';
 
 /** Shared textarea styling — matches the `Input` control's chrome. */
 const TEXTAREA_CLASS =
-  "flex min-h-[36px] w-full rounded-md border border-input bg-transparent px-3 py-2 " +
-  "text-xs shadow-sm transition-colors placeholder:text-muted-foreground " +
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring " +
-  "focus-visible:ring-offset-1 focus-visible:ring-offset-background " +
-  "hover:border-ring/40 aria-invalid:border-destructive";
+  'flex min-h-[36px] w-full rounded-md border border-input bg-transparent px-3 py-2 ' +
+  'text-xs shadow-sm transition-colors placeholder:text-muted-foreground ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ' +
+  'focus-visible:ring-offset-1 focus-visible:ring-offset-background ' +
+  'hover:border-ring/40 aria-invalid:border-destructive';
 
 /**
  * One editable dialog line.
@@ -41,7 +41,7 @@ function LineRow({
   const shared = line.index !== null && line.uses > 1;
   const hint =
     line.index === null
-      ? "New line — appended as a new string-table row on save"
+      ? 'New line — appended as a new string-table row on save'
       : shared
         ? `Row ${String(line.index)} · used by ${String(line.uses)} states — editing changes all of them`
         : `String-table row ${String(line.index)}`;
@@ -53,7 +53,9 @@ function LineRow({
           id={id}
           rows={2}
           value={line.text}
-          onChange={(e) => { onChange({ text: e.currentTarget.value }); }}
+          onChange={(e) => {
+            onChange({ text: e.currentTarget.value });
+          }}
           className={TEXTAREA_CLASS}
         />
       </Field>
@@ -68,10 +70,7 @@ function LineRow({
         <Trash2 className="h-3.5 w-3.5" />
       </Button>
       {shared && (
-        <AlertTriangle
-          className="mt-7 h-3.5 w-3.5 shrink-0 text-warning"
-          aria-hidden="true"
-        />
+        <AlertTriangle className="mt-7 h-3.5 w-3.5 shrink-0 text-warning" aria-hidden="true" />
       )}
     </div>
   );
@@ -106,7 +105,9 @@ function LineList({
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => { onChange([blankLine()]); }}
+            onClick={() => {
+              onChange([blankLine()]);
+            }}
             className="cursor-pointer gap-1.5"
           >
             <Plus className="h-3.5 w-3.5" />
@@ -124,14 +125,18 @@ function LineList({
               onChange={(patch) => {
                 onChange(lines.map((x, k) => (k === i ? { ...x, ...patch } : x)));
               }}
-              onRemove={() => { onChange(lines.filter((_, k) => k !== i)); }}
+              onRemove={() => {
+                onChange(lines.filter((_, k) => k !== i));
+              }}
             />
           ))}
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => { onChange([...lines, blankLine()]); }}
+            onClick={() => {
+              onChange([...lines, blankLine()]);
+            }}
             className="cursor-pointer gap-1.5 text-xs"
           >
             <Plus className="h-3.5 w-3.5" />
@@ -169,8 +174,8 @@ function KeyTable({
         Choice buttons
       </p>
       <p className="text-[11px] leading-snug text-muted-foreground">
-        Each row is one <code className="font-mono">AddKey</code> line. <strong>Routes to</strong>{" "}
-        is the state the choice opens — blank routes to the label&apos;s own row number. A{" "}
+        Each row is one <code className="font-mono">AddKey</code> line. <strong>Routes to</strong>{' '}
+        is the state the choice opens — blank routes to the label&apos;s own row number. A{' '}
         <strong>Param</strong> needs a route (the C++ call is positional).
       </p>
       {keys.length === 0 ? (
@@ -180,7 +185,9 @@ function KeyTable({
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => { onChange([{ label: blankLine(), key: null, param: null }]); }}
+            onClick={() => {
+              onChange([{ label: blankLine(), key: null, param: null }]);
+            }}
             className="cursor-pointer gap-1.5"
           >
             <Plus className="h-3.5 w-3.5" />
@@ -199,8 +206,8 @@ function KeyTable({
                 label={`Button ${String(i + 1)} text`}
                 hint={
                   k.label.index === null
-                    ? "New line — appended on save"
-                    : `Row ${String(k.label.index)}${k.label.uses > 1 ? ` · shared by ${String(k.label.uses)} states` : ""}`
+                    ? 'New line — appended on save'
+                    : `Row ${String(k.label.index)}${k.label.uses > 1 ? ` · shared by ${String(k.label.uses)} states` : ''}`
                 }
               >
                 <Input
@@ -218,7 +225,7 @@ function KeyTable({
                   type="number"
                   step={1}
                   min={0}
-                  value={k.key ?? ""}
+                  value={k.key ?? ''}
                   onChange={(e) => {
                     const n = Number.parseInt(e.currentTarget.value, 10);
                     patch(i, { key: Number.isNaN(n) ? null : n });
@@ -230,13 +237,13 @@ function KeyTable({
                 htmlFor={`${idBase}-param-${String(i)}`}
                 label="Param"
                 hint="Optional"
-                error={k.param !== null && k.key === null ? "Needs a route" : undefined}
+                error={k.param !== null && k.key === null ? 'Needs a route' : undefined}
               >
                 <Input
                   id={`${idBase}-param-${String(i)}`}
                   type="number"
                   step={1}
-                  value={k.param ?? ""}
+                  value={k.param ?? ''}
                   onChange={(e) => {
                     const n = Number.parseInt(e.currentTarget.value, 10);
                     patch(i, { param: Number.isNaN(n) ? null : n });
@@ -249,7 +256,9 @@ function KeyTable({
                 variant="ghost"
                 size="icon"
                 aria-label={`Remove choice ${String(i + 1)}`}
-                onClick={() => { onChange(keys.filter((_, x) => x !== i)); }}
+                onClick={() => {
+                  onChange(keys.filter((_, x) => x !== i));
+                }}
                 className="mt-6 h-9 w-9 cursor-pointer text-muted-foreground hover:text-destructive"
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -260,7 +269,9 @@ function KeyTable({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => { onChange([...keys, { label: blankLine(), key: null, param: null }]); }}
+            onClick={() => {
+              onChange([...keys, { label: blankLine(), key: null, param: null }]);
+            }}
             className="cursor-pointer gap-1.5 text-xs"
           >
             <Plus className="h-3.5 w-3.5" />
@@ -289,7 +300,9 @@ export function DialogStateEditor({
         hint="Say( n ) — the lines shown in the NPC's dialog window."
         singular="Line"
         lines={draft.say}
-        onChange={(say) => { onChange({ say }); }}
+        onChange={(say) => {
+          onChange({ say });
+        }}
       />
       <LineList
         idBase={`${base}-speak`}
@@ -297,12 +310,16 @@ export function DialogStateEditor({
         hint="Speak( NpcId(), n ) — the chat-bubble text above the NPC."
         singular="Bubble"
         lines={draft.speak}
-        onChange={(speak) => { onChange({ speak }); }}
+        onChange={(speak) => {
+          onChange({ speak });
+        }}
       />
       <KeyTable
         idBase={base}
         keys={draft.keys}
-        onChange={(keys) => { onChange({ keys }); }}
+        onChange={(keys) => {
+          onChange({ keys });
+        }}
       />
       <div className="grid gap-x-6 gap-y-5 border-t border-border pt-4 md:grid-cols-2">
         <Field
@@ -315,7 +332,7 @@ export function DialogStateEditor({
             type="number"
             step={1}
             min={1}
-            value={draft.timer ?? ""}
+            value={draft.timer ?? ''}
             onChange={(e) => {
               const n = Number.parseInt(e.currentTarget.value, 10);
               onChange({ timer: Number.isNaN(n) || n < 1 ? null : n });
@@ -329,14 +346,18 @@ export function DialogStateEditor({
             label="Close the dialog"
             hint="Exit() — destroys the dialog window."
             checked={draft.exit}
-            onChange={(exit) => { onChange({ exit }); }}
+            onChange={(exit) => {
+              onChange({ exit });
+            }}
           />
           <ToggleRow
             id={`${base}-quest`}
             label="Launch quest"
             hint="LaunchQuest() — starts the quest this state routes to."
             checked={draft.launchQuest}
-            onChange={(launchQuest) => { onChange({ launchQuest }); }}
+            onChange={(launchQuest) => {
+              onChange({ launchQuest });
+            }}
           />
         </div>
       </div>
@@ -362,7 +383,9 @@ function ToggleRow({
       <Switch
         id={id}
         checked={checked}
-        onChange={(e) => { onChange(e.currentTarget.checked); }}
+        onChange={(e) => {
+          onChange(e.currentTarget.checked);
+        }}
         className="mt-0.5"
       />
       <div className="min-w-0 space-y-0.5">

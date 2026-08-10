@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Client patch panel — one card per `.res` archive.
@@ -10,24 +10,24 @@
  * @module app/client-patch/panel
  */
 
-import * as React from "react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Loader2, CheckCircle2, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ConfirmDialog } from "@/components/confirm-dialog";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import type { ArchiveStatus, ClientPatchStatus } from "@/lib/client-patch";
-import type { AuthFileStatus } from "@/lib/client-auth-file";
+import * as React from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { Loader2, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ConfirmDialog } from '@/components/confirm-dialog';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import type { ArchiveStatus, ClientPatchStatus } from '@/lib/client-patch';
+import type { AuthFileStatus } from '@/lib/client-auth-file';
 
 async function post(
   body: Record<string, unknown>,
 ): Promise<{ replaced?: { name: string }[]; records?: number | null }> {
-  const res = await fetch("/api/client-patch", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+  const res = await fetch('/api/client-patch', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
   const json: unknown = await res.json().catch(() => null);
@@ -37,23 +37,19 @@ async function post(
     replaced?: { name: string }[];
     records?: number | null;
   };
-  if (!res.ok || data.ok !== true) throw new Error(data.error ?? "Request failed");
+  if (!res.ok || data.ok !== true) throw new Error(data.error ?? 'Request failed');
   return data;
 }
 
-export function ClientPatchPanel({
-  initial,
-}: {
-  initial: ClientPatchStatus;
-}): React.JSX.Element {
+export function ClientPatchPanel({ initial }: { initial: ClientPatchStatus }): React.JSX.Element {
   const totalStale = initial.archives.reduce((n, a) => n + a.staleCount, 0);
 
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Client data at <code className="font-mono">{initial.clientDir}</code>.{" "}
+        Client data at <code className="font-mono">{initial.clientDir}</code>.{' '}
         {totalStale === 0
-          ? "Every tracked resource matches the client."
+          ? 'Every tracked resource matches the client.'
           : `${String(totalStale)} file(s) edited here have not reached the client yet.`}
       </p>
 
@@ -82,15 +78,15 @@ function AuthFileCard({ status }: { status: AuthFileStatus }): React.JSX.Element
   async function rebuild(): Promise<void> {
     setPending(true);
     try {
-      const data = await post({ action: "rebuild-manifest" });
+      const data = await post({ action: 'rebuild-manifest' });
       toast.success(
         data.records === null
-          ? "Flyff.a already matched the archives"
+          ? 'Flyff.a already matched the archives'
           : `Flyff.a rebuilt — ${String(data.records)} records`,
       );
       router.refresh();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed");
+      toast.error(e instanceof Error ? e.message : 'Failed');
     } finally {
       setPending(false);
     }
@@ -102,10 +98,10 @@ function AuthFileCard({ status }: { status: AuthFileStatus }): React.JSX.Element
         <div className="flex items-center gap-2">
           <CardTitle className="text-sm font-mono">Flyff.a</CardTitle>
           {status.error !== undefined || !status.present ? (
-            <Badge variant="outline">{status.present ? "Unreadable" : "Missing"}</Badge>
+            <Badge variant="outline">{status.present ? 'Unreadable' : 'Missing'}</Badge>
           ) : (
-            <Badge variant={bad > 0 ? "warning" : "success"}>
-              {bad > 0 ? `${String(bad)} mismatched` : "In sync"}
+            <Badge variant={bad > 0 ? 'warning' : 'success'}>
+              {bad > 0 ? `${String(bad)} mismatched` : 'In sync'}
             </Badge>
           )}
           {status.hasBackup && <Badge variant="outline">Backup available</Badge>}
@@ -123,9 +119,7 @@ function AuthFileCard({ status }: { status: AuthFileStatus }): React.JSX.Element
               <li key={name} className="flex items-center gap-2 text-sm">
                 <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-hidden />
                 <span className="font-mono">{name}</span>
-                <span className="text-xs text-muted-foreground">
-                  not covered by the manifest
-                </span>
+                <span className="text-xs text-muted-foreground">not covered by the manifest</span>
               </li>
             ))}
           </ul>
@@ -138,7 +132,11 @@ function AuthFileCard({ status }: { status: AuthFileStatus }): React.JSX.Element
           </p>
         )}
 
-        <Button variant={bad > 0 ? "default" : "outline"} onClick={() => void rebuild()} disabled={pending}>
+        <Button
+          variant={bad > 0 ? 'default' : 'outline'}
+          onClick={() => void rebuild()}
+          disabled={pending}
+        >
           {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />}
           Rebuild manifest
         </Button>
@@ -149,23 +147,23 @@ function AuthFileCard({ status }: { status: AuthFileStatus }): React.JSX.Element
 
 function ArchiveCard({ archive }: { archive: ArchiveStatus }): React.JSX.Element {
   const router = useRouter();
-  const [pending, setPending] = useState<null | "patch" | "restore">(null);
+  const [pending, setPending] = useState<null | 'patch' | 'restore'>(null);
   const [restoreOpen, setRestoreOpen] = useState(false);
 
   const stale = archive.tracked.filter((t) => t.stale);
 
-  async function run(action: "patch" | "restore"): Promise<void> {
+  async function run(action: 'patch' | 'restore'): Promise<void> {
     setPending(action);
     try {
       const data = await post({ action, archive: archive.name });
       toast.success(
-        action === "restore"
+        action === 'restore'
           ? `${archive.name} restored from backup, Flyff.a rebuilt`
           : `${archive.name}: ${String(data.replaced?.length ?? 0)} file(s) merged, Flyff.a rebuilt. Restart the client.`,
       );
       router.refresh();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed");
+      toast.error(e instanceof Error ? e.message : 'Failed');
     } finally {
       setPending(null);
     }
@@ -179,8 +177,8 @@ function ArchiveCard({ archive }: { archive: ArchiveStatus }): React.JSX.Element
           {archive.error !== undefined ? (
             <Badge variant="outline">Unreadable</Badge>
           ) : (
-            <Badge variant={stale.length > 0 ? "warning" : "success"}>
-              {stale.length > 0 ? `${String(stale.length)} stale` : "In sync"}
+            <Badge variant={stale.length > 0 ? 'warning' : 'success'}>
+              {stale.length > 0 ? `${String(stale.length)} stale` : 'In sync'}
             </Badge>
           )}
           {archive.hasBackup && <Badge variant="outline">Backup available</Badge>}
@@ -199,7 +197,8 @@ function ArchiveCard({ archive }: { archive: ArchiveStatus }): React.JSX.Element
                 <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-hidden />
                 <span className="font-mono">{m.name}</span>
                 <span className="text-xs text-muted-foreground">
-                  client {m.packedSize.toLocaleString()} B → raw {(m.rawSize ?? 0).toLocaleString()} B
+                  client {m.packedSize.toLocaleString()} B → raw {(m.rawSize ?? 0).toLocaleString()}{' '}
+                  B
                 </span>
               </li>
             ))}
@@ -215,19 +214,21 @@ function ArchiveCard({ archive }: { archive: ArchiveStatus }): React.JSX.Element
 
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => void run("patch")}
+            onClick={() => void run('patch')}
             disabled={pending !== null || stale.length === 0}
           >
-            {pending === "patch" && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />}
+            {pending === 'patch' && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />}
             Patch client
           </Button>
           {archive.hasBackup && (
             <Button
               variant="outline"
-              onClick={() => { setRestoreOpen(true); }}
+              onClick={() => {
+                setRestoreOpen(true);
+              }}
               disabled={pending !== null}
             >
-              {pending === "restore" && (
+              {pending === 'restore' && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
               )}
               Restore backup
@@ -245,12 +246,12 @@ function ArchiveCard({ archive }: { archive: ArchiveStatus }): React.JSX.Element
         description={
           <>
             The client&apos;s current <code className="font-mono">{archive.name}</code> is replaced
-            by the pre-patch backup. The patched copy is kept as{" "}
+            by the pre-patch backup. The patched copy is kept as{' '}
             <code className="font-mono">{archive.name}.patched</code>, so this is reversible. Close
             the game client first.
           </>
         }
-        onConfirm={() => run("restore")}
+        onConfirm={() => run('restore')}
       />
     </Card>
   );

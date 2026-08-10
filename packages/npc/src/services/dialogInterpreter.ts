@@ -46,6 +46,9 @@ const BUILTIN_CONST: Record<string, number> = {
   FALSE: 0,
 };
 
+/** Comparison operators honored by the dialog `source:` grammar. */
+const CMP_OPS: ReadonlySet<string> = new Set<string>(['==', '!=', '<', '<=', '>', '>=']);
+
 export interface DialogInterpBindings {
   /** Resolve `QUEST_*` / `II_*` / `TID_*` / `MI_*` / `JOB_*` to a number. */
   resolveSymbol(sym: string): number | undefined;
@@ -226,7 +229,7 @@ class Parser {
     if (!this.isPunct(')')) {
       do {
         args.push(this.parseExpr());
-      } while (this.isPunct(',') && (this.next(), true));
+      } while (this.isPunct(',') && this.next() !== undefined);
     }
     this.eatPunct(')');
     return args;
@@ -246,13 +249,12 @@ class Parser {
   }
   private parseCmp(): Expr {
     let l = this.parseUnary();
-    while (true) {
-      const t = this.peek();
-      if (t?.t === 'punct' && ['==', '!=', '<', '<=', '>', '>='].includes(t.v)) {
-        this.next();
-        const r = this.parseUnary();
-        l = { k: 'bin', op: t.v, l, r };
-      } else break;
+    let t = this.peek();
+    while (t?.t === 'punct' && CMP_OPS.has(t.v)) {
+      this.next();
+      const r = this.parseUnary();
+      l = { k: 'bin', op: t.v, l, r };
+      t = this.peek();
     }
     return l;
   }
@@ -405,7 +407,7 @@ function execStmts(stmts: Stmt[], b: DialogInterpBindings, sink: DialogInterpSin
       if (taken) execStmts(taken, b, sink);
     } else if (s.k === 'block') {
       execStmts(s.body, b, sink);
-    } else if (s.k === 'call') {
+    } else {
       execCall(s, b, sink);
     }
   }

@@ -222,53 +222,53 @@ export class CommandService {
 
   constructor(private readonly deps: CommandServiceDeps) {
     this.commands = [
-      { names: ['w', 'whisper'], auth: AUTH.GENERAL, run: (c) => this.whisper(c) },
-      { names: ['say'], auth: AUTH.GENERAL, run: (c) => this.whisper(c) },
-      { names: ['s', 'shout'], auth: AUTH.GENERAL, run: (c) => this.shout(c) },
+      { names: ['w', 'whisper'], auth: AUTH.GENERAL, run: (c): void => { this.whisper(c); } },
+      { names: ['say'], auth: AUTH.GENERAL, run: (c): void => { this.whisper(c); } },
+      { names: ['s', 'shout'], auth: AUTH.GENERAL, run: (c): void => { this.shout(c); } },
       // `/g <msg>` -- TextCmd_GuildChat, TCM_BOTH, AUTH_GENERAL.
-      { names: ['g', 'guildchat'], auth: AUTH.GENERAL, run: (c) => this.guildChat(c) },
+      { names: ['g', 'guildchat'], auth: AUTH.GENERAL, run: (c): void => { this.guildChat(c); } },
       // `/cg <name>` -- TextCmd_CreateGuild, TCM_SERVER, AUTH_GAMEMASTER3.
       // Solo create with no penya cost: C++ builds a 1-entry GUILD_MEMBER_INFO
       // array from the caller and skips the whole NPC eligibility script.
-      { names: ['cg', 'createguild'], auth: AUTH.GAMEMASTER3, run: (c) => this.createGuild(c) },
-      { names: ['te', 'tele', 'teleport'], auth: AUTH.GAMEMASTER, run: (c) => this.teleport(c) },
-      { names: ['su', 'summon'], auth: AUTH.GAMEMASTER, run: (c) => this.summon(c) },
-      { names: ['sys', 'system'], auth: AUTH.GAMEMASTER2, run: (c) => this.system(c) },
-      { names: ['lv', 'level'], auth: AUTH.GAMEMASTER3, run: (c) => this.level(c) },
-      { names: ['gg', 'getgold'], auth: AUTH.ADMINISTRATOR, run: (c) => this.gold(c) },
-      { names: ['undying', 'ud'], auth: AUTH.GAMEMASTER3, run: (c) => this.undying(c, true) },
-      { names: ['noundying', 'noud'], auth: AUTH.GAMEMASTER3, run: (c) => this.undying(c, false) },
-      { names: ['invisible', 'inv'], auth: AUTH.GAMEMASTER, run: (c) => this.invisible(c, true) },
-      { names: ['noinvisible', 'noinv'], auth: AUTH.GAMEMASTER, run: (c) => this.invisible(c, false) },
-      { names: ['count', 'cnt'], auth: AUTH.GAMEMASTER, run: (c) => this.count(c) },
-      { names: ['rtg'], auth: AUTH.ADMINISTRATOR, run: (c) => this.removeTotalGold(c) },
-      { names: ['rmvnpc', 'rn'], auth: AUTH.GAMEMASTER3, run: (c) => this.removeNpc(c) },
-      { names: ['createnpc', 'cn'], auth: AUTH.GAMEMASTER3, run: (c) => this.createNpc(c) },
-      { names: ['disguise', 'dis'], auth: AUTH.ADMINISTRATOR, run: (c) => this.disguise(c, true) },
-      { names: ['nodisguise', 'nodis'], auth: AUTH.ADMINISTRATOR, run: (c) => this.disguise(c, false) },
-      { names: ['onekill', 'ok'], auth: AUTH.GAMEMASTER3, run: (c) => this.onekill(c, true) },
-      { names: ['noonekill', 'nook'], auth: AUTH.GAMEMASTER3, run: (c) => this.onekill(c, false) },
-      { names: ['expupstop', 'es'], auth: AUTH.ADMINISTRATOR, run: (c) => this.expUpStop(c) },
-      { names: ['gmitem'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.ITEM, true) },
-      { names: ['gmnotitem'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.ITEM, false) },
-      { names: ['gmattck'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.NO_ATTACK, true) },
-      { names: ['gmnotattck'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.NO_ATTACK, false) },
-      { names: ['gmcommunity'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.COMMUNITY, true) },
-      { names: ['gmnotcommunity'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.COMMUNITY, false) },
-      { names: ['gmobserve'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.OBSERVE, true) },
-      { names: ['gmnotobserve'], auth: AUTH.ADMINISTRATOR, run: (c) => this.modeToggle(c, MODE.OBSERVE, false) },
-      { names: ['out'], auth: AUTH.GAMEMASTER2, run: (c) => this.out(c) },
-      { names: ['aroundkill', 'ak'], auth: AUTH.GAMEMASTER3, run: (c) => this.aroundKill(c) },
-      { names: ['createitem', 'ci'], auth: AUTH.ADMINISTRATOR, run: (c) => this.createItem(c) },
-      { names: ['userlist', 'ul'], auth: AUTH.ADMINISTRATOR, run: (c) => this.userList(c) },
-      { names: ['stat'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.stat(c); } },
-      { names: ['beginquest', 'bq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'begin'); } },
-      { names: ['endquest', 'eq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'end'); } },
-      { names: ['queststate', 'qs'], auth: AUTH.ADMINISTRATOR, run: (c) => { void this.questCmd(c, 'state'); } },
-      { names: ['removequest', 'rq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'cancel'); } },
-      { names: ['removeallquest', 'raq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'removeAll'); } },
-      { names: ['removecompletequest', 'rcq'], auth: AUTH.GAMEMASTER3, run: (c) => { void this.questCmd(c, 'removeComplete'); } },
-      { names: ['setguildquest', 'sgq'], auth: AUTH.ADMINISTRATOR, run: (c) => this.setGuildQuest(c) },
+      { names: ['cg', 'createguild'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.createGuild(c); } },
+      { names: ['te', 'tele', 'teleport'], auth: AUTH.GAMEMASTER, run: (c): void => { this.teleport(c); } },
+      { names: ['su', 'summon'], auth: AUTH.GAMEMASTER, run: (c): void => { this.summon(c); } },
+      { names: ['sys', 'system'], auth: AUTH.GAMEMASTER2, run: (c): void => { this.system(c); } },
+      { names: ['lv', 'level'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.level(c); } },
+      { names: ['gg', 'getgold'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.gold(c); } },
+      { names: ['undying', 'ud'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.undying(c, true); } },
+      { names: ['noundying', 'noud'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.undying(c, false); } },
+      { names: ['invisible', 'inv'], auth: AUTH.GAMEMASTER, run: (c): void => { this.invisible(c, true); } },
+      { names: ['noinvisible', 'noinv'], auth: AUTH.GAMEMASTER, run: (c): void => { this.invisible(c, false); } },
+      { names: ['count', 'cnt'], auth: AUTH.GAMEMASTER, run: (c): void => { this.count(c); } },
+      { names: ['rtg'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.removeTotalGold(c); } },
+      { names: ['rmvnpc', 'rn'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.removeNpc(c); } },
+      { names: ['createnpc', 'cn'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.createNpc(c); } },
+      { names: ['disguise', 'dis'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.disguise(c, true); } },
+      { names: ['nodisguise', 'nodis'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.disguise(c, false); } },
+      { names: ['onekill', 'ok'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.onekill(c, true); } },
+      { names: ['noonekill', 'nook'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.onekill(c, false); } },
+      { names: ['expupstop', 'es'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.expUpStop(c); } },
+      { names: ['gmitem'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.ITEM, true); } },
+      { names: ['gmnotitem'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.ITEM, false); } },
+      { names: ['gmattck'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.NO_ATTACK, true); } },
+      { names: ['gmnotattck'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.NO_ATTACK, false); } },
+      { names: ['gmcommunity'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.COMMUNITY, true); } },
+      { names: ['gmnotcommunity'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.COMMUNITY, false); } },
+      { names: ['gmobserve'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.OBSERVE, true); } },
+      { names: ['gmnotobserve'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.modeToggle(c, MODE.OBSERVE, false); } },
+      { names: ['out'], auth: AUTH.GAMEMASTER2, run: (c): void => { this.out(c); } },
+      { names: ['aroundkill', 'ak'], auth: AUTH.GAMEMASTER3, run: (c): void => { this.aroundKill(c); } },
+      { names: ['createitem', 'ci'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.createItem(c); } },
+      { names: ['userlist', 'ul'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.userList(c); } },
+      { names: ['stat'], auth: AUTH.GAMEMASTER3, run: (c): void => { void this.stat(c); } },
+      { names: ['beginquest', 'bq'], auth: AUTH.GAMEMASTER3, run: (c): void => { void this.questCmd(c, 'begin'); } },
+      { names: ['endquest', 'eq'], auth: AUTH.GAMEMASTER3, run: (c): void => { void this.questCmd(c, 'end'); } },
+      { names: ['queststate', 'qs'], auth: AUTH.ADMINISTRATOR, run: (c): void => { void this.questCmd(c, 'state'); } },
+      { names: ['removequest', 'rq'], auth: AUTH.GAMEMASTER3, run: (c): void => { void this.questCmd(c, 'cancel'); } },
+      { names: ['removeallquest', 'raq'], auth: AUTH.GAMEMASTER3, run: (c): void => { void this.questCmd(c, 'removeAll'); } },
+      { names: ['removecompletequest', 'rcq'], auth: AUTH.GAMEMASTER3, run: (c): void => { void this.questCmd(c, 'removeComplete'); } },
+      { names: ['setguildquest', 'sgq'], auth: AUTH.ADMINISTRATOR, run: (c): void => { this.setGuildQuest(c); } },
     ];
   }
 
@@ -461,7 +461,7 @@ export class CommandService {
       player,
     );
     this.deps.charRepo?.updateLevelAndExp(player.m_idPlayer, player.m_nLevel, 0n)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, '/lv persist failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, '/lv persist failed'); });
   }
 
   /**
@@ -482,7 +482,7 @@ export class CommandService {
       payload: { gold: total },
     });
     this.deps.inventoryRepo?.setGold(player.m_idPlayer, total)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/gg gold persist failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/gg gold persist failed'); });
     this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_GOLD, total));
   }
 
@@ -531,7 +531,7 @@ export class CommandService {
    * count (ponytail: fan out cross-server when IPC player-count ships).
    */
   private count({ player }: CommandCtx): void {
-    const text = `Players online: ${this.deps.playerManager.all().length}  Monsters: ${this.deps.spawnManager.size}`;
+    const text = `Players online: ${String(this.deps.playerManager.all().length)}  Monsters: ${String(this.deps.spawnManager.size)}`;
     this.deps.playerManager.sendTo(player, this.noticeSer.build(text));
   }
 
@@ -545,7 +545,7 @@ export class CommandService {
     const n = Number.parseInt(args.split(/\s+/)[0] ?? '', 10);
     if (!Number.isInteger(n) || n <= 0) return;
     if (n > player.m_nGold) {
-      this.deps.playerManager.sendTo(player, this.noticeSer.build(`Penya: ${player.m_nGold}`));
+      this.deps.playerManager.sendTo(player, this.noticeSer.build(`Penya: ${String(player.m_nGold)}`));
       return;
     }
     const total = player.m_nGold - n;
@@ -553,7 +553,7 @@ export class CommandService {
     player._dirty.add('m_nGold');
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: total } });
     this.deps.inventoryRepo?.setGold(player.m_idPlayer, total)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/rtg gold persist failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, gold: total }, '/rtg gold persist failed'); });
     this.deps.playerManager.sendTo(player, buildSetPointParam(player.m_idPlayer, DST_GOLD, total));
   }
 
@@ -597,7 +597,7 @@ export class CommandService {
     }
   }
 
-  private removeNpc({ args, player }: CommandCtx): void {
+  private removeNpc({ args }: CommandCtx): void {
     const objid = Number.parseInt(args.split(/\s+/)[0] ?? '', 10);
     if (!Number.isInteger(objid) || objid <= 0) return;
     const mover = this.deps.spawnManager.get(objid);
@@ -654,7 +654,7 @@ export class CommandService {
       case 'removeAll': res = await qs.removeAllQuests(player); break;
       case 'removeComplete': res = await qs.removeCompleteQuests(player); break;
     }
-    if (res?.ok) for (const f of res.frames) this.deps.playerManager.sendTo(player, f);
+    if (res.ok) for (const f of res.frames) this.deps.playerManager.sendTo(player, f);
   }
 
   /**
@@ -756,7 +756,7 @@ export class CommandService {
       // Dead socket -- fall through to the close.
     }
     const socket = target.socket;
-    setTimeout(() => socket.destroy?.(), KICK_CLOSE_DELAY_MS).unref?.();
+    setTimeout(() => socket.destroy?.(), KICK_CLOSE_DELAY_MS).unref();
     this.deps.playerManager.remove(target.m_idPlayer);
   }
 
@@ -832,7 +832,7 @@ export class CommandService {
    */
   private userList({ player }: CommandCtx): void {
     const names = this.deps.playerManager.all().map((p) => p.m_szName).join(', ');
-    const text = `Players (${this.deps.playerManager.size}): ${names}`.slice(0, MAX_NOTICE_LEN);
+    const text = `Players (${String(this.deps.playerManager.size)}): ${names}`.slice(0, MAX_NOTICE_LEN);
     this.deps.playerManager.sendTo(player, this.noticeSer.build(text));
   }
 
@@ -978,16 +978,16 @@ export class CommandService {
 function parseCommand(text: string): { name: string; args: string } | null {
   const body = text.slice(1).trimStart();
   if (!body) return null;
-  const match = body.match(/^(\S+)\s*(.*)$/s);
+  const match = /^(\S+)\s*(.*)$/s.exec(body);
   if (!match) return { name: body.toLowerCase(), args: '' };
-  return { name: match[1]!.toLowerCase(), args: match[2] ?? '' };
+  return { name: (match[1] ?? '').toLowerCase(), args: match[2] ?? '' };
 }
 
 /** Split `"name rest of message"` -> `{ target, message }`. Null if no message. */
 function splitTargetMessage(args: string): { target: string; message: string } | null {
-  const match = args.match(/^(\S+)\s+(.*)$/s);
+  const match = /^(\S+)\s+(.*)$/s.exec(args);
   if (!match) return null;
-  return { target: match[1]!, message: match[2]! };
+  return { target: match[1] ?? '', message: match[2] ?? '' };
 }
 
 function isSelf(player: CPlayer, name: string): boolean {
@@ -1018,7 +1018,7 @@ function resolveItemId(
   if (!trimmed) return null;
 
   // --- Quoted name: `"Popom Powder" 5` ---
-  if (trimmed[0] === '"') {
+  if (trimmed.startsWith('"')) {
     const endQuote = trimmed.indexOf('"', 1);
     if (endQuote > 1) {
       const name = trimmed.slice(1, endQuote);
@@ -1068,7 +1068,7 @@ function resolveMover(
   const trimmed = args.trim();
   if (!trimmed || !lookupMover) return null;
 
-  if (trimmed[0] === '"') {
+  if (trimmed.startsWith('"')) {
     const endQuote = trimmed.indexOf('"', 1);
     if (endQuote > 1) {
       const name = trimmed.slice(1, endQuote);

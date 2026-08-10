@@ -305,14 +305,6 @@ export class LootService {
   }
 }
 
-/** Full 3-D squared distance (matches C++ `D3DXVec3LengthSq`). */
-function distSq3(a: Vec3, b: Vec3): number {
-  const dx = a.x - b.x;
-  const dy = a.y - b.y;
-  const dz = a.z - b.z;
-  return dx * dx + dy * dy + dz * dz;
-}
-
 /** Horizontal (XZ) squared distance -- ground pickup ignores height. */
 function distSqXZ(a: Vec3, b: Vec3): number {
   const dx = a.x - b.x;

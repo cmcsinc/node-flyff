@@ -53,8 +53,8 @@ export class FriendHandler {
       reader.readDword(); reader.readDword();
       this.warnSpoof(player, claimedSelf, 'ADDFRIEND');
       void this.friendService.accept(player, leaderId)
-        .then((out) => logger.debug({ charId: player.m_idPlayer, leaderId, out }, 'ADDFRIEND'))
-        .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'ADDFRIEND failed'));
+        .then((out) => { logger.debug({ charId: player.m_idPlayer, leaderId, out }, 'ADDFRIEND'); })
+        .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'ADDFRIEND failed'); });
     } catch (error) {
       this.onParseError(error, player, 'ADDFRIEND');
     }
@@ -86,8 +86,8 @@ export class FriendHandler {
       if (name.length === 0 || name.length > MAX_MEMBER_NAME) return;
       this.warnSpoof(player, claimedSelf, 'ADDFRIENDNAMEREQEST');
       void this.friendService.requestByName(player, name)
-        .then((out) => logger.debug({ charId: player.m_idPlayer, name, out }, 'ADDFRIENDNAMEREQEST'))
-        .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'name request failed'));
+        .then((out) => { logger.debug({ charId: player.m_idPlayer, name, out }, 'ADDFRIENDNAMEREQEST'); })
+        .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'name request failed'); });
     } catch (error) {
       this.onParseError(error, player, 'ADDFRIENDNAMEREQEST');
     }
@@ -155,8 +155,8 @@ export class FriendHandler {
       if (nGu !== 2) return; // only friend block implemented
       this.warnSpoofByName(player, nameFrom, 'BLOCK');
       void this.friendService.toggleBlock(player, nameTo)
-        .then((out) => logger.debug({ charId: player.m_idPlayer, nameTo, out }, 'BLOCK'))
-        .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'BLOCK failed'));
+        .then((out) => { logger.debug({ charId: player.m_idPlayer, nameTo, out }, 'BLOCK'); })
+        .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'BLOCK failed'); });
     } catch (error) {
       this.onParseError(error, player, 'BLOCK');
     }
@@ -171,8 +171,8 @@ export class FriendHandler {
       const friendId = reader.readDword();
       Validate.dword(friendId);
       void this.friendService.remove(player, friendId)
-        .then((out) => logger.debug({ charId: player.m_idPlayer, friendId, out }, 'REMOVEFRIEND'))
-        .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'REMOVEFRIEND failed'));
+        .then((out) => { logger.debug({ charId: player.m_idPlayer, friendId, out }, 'REMOVEFRIEND'); })
+        .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'REMOVEFRIEND failed'); });
     } catch (error) {
       this.onParseError(error, player, 'REMOVEFRIEND');
     }

@@ -71,20 +71,40 @@ interface StoredQueueShortcut {
 /** v2 envelope: `{ v: 2, items: [...], queue: [...] }`. */
 interface TaskBarBlobV2 {
   v: 2;
-  items: StoredShortcut[];
-  queue: StoredQueueShortcut[];
+  items: unknown[];
+  queue: unknown[];
+}
+
+function isStoredShortcut(e: unknown): e is StoredShortcut {
+  if (typeof e !== 'object' || e === null) return false;
+  const o = e as Record<string, unknown>;
+  return typeof o.i === 'number' && typeof o.j === 'number'
+    && typeof o.dwShortcut === 'number' && typeof o.dwId === 'number'
+    && typeof o.dwType === 'number' && typeof o.dwIndex === 'number'
+    && typeof o.dwUserId === 'number' && typeof o.dwData === 'number';
+}
+
+function isStoredQueueShortcut(e: unknown): e is StoredQueueShortcut {
+  if (typeof e !== 'object' || e === null) return false;
+  const o = e as Record<string, unknown>;
+  return typeof o.i === 'number' && typeof o.dwShortcut === 'number'
+    && typeof o.dwId === 'number' && typeof o.dwType === 'number'
+    && typeof o.dwIndex === 'number' && typeof o.dwUserId === 'number'
+    && typeof o.dwData === 'number';
 }
 
 /**
  * Build the non-empty items entries for the grid (matches C++ `SaveTaskBar`
  * skipping `SHORTCUT_NONE`).
  */
-function collectItems(grid: ReadonlyArray<ReadonlyArray<Shortcut>>): StoredShortcut[] {
+function collectItems(grid: readonly (readonly Shortcut[])[]): StoredShortcut[] {
   const out: StoredShortcut[] = [];
   for (let i = 0; i < MAX_SLOT_ITEM_COUNT && i < grid.length; i++) {
-    const row = grid[i]!;
+    const row = grid[i];
+    if (row === undefined) break;
     for (let j = 0; j < MAX_SLOT_ITEM && j < row.length; j++) {
-      const s = row[j]!;
+      const s = row[j];
+      if (s === undefined) continue;
       if (s.dwShortcut === SHORTCUT.NONE) continue;
       const entry: StoredShortcut = {
         i, j,
@@ -98,10 +118,11 @@ function collectItems(grid: ReadonlyArray<ReadonlyArray<Shortcut>>): StoredShort
   return out;
 }
 
-function collectQueue(queue: ReadonlyArray<Shortcut>): StoredQueueShortcut[] {
+function collectQueue(queue: readonly Shortcut[]): StoredQueueShortcut[] {
   const out: StoredQueueShortcut[] = [];
   for (let i = 0; i < MAX_SLOT_QUEUE && i < queue.length; i++) {
-    const s = queue[i]!;
+    const s = queue[i];
+    if (s === undefined) continue;
     if (s.dwShortcut === SHORTCUT.NONE) continue;
     out.push({
       i,
@@ -117,8 +138,8 @@ function collectQueue(queue: ReadonlyArray<Shortcut>): StoredQueueShortcut[] {
  * Empty queue collapses to an empty `queue: []`. Only non-empty slots ship.
  */
 export function encodeTaskBar(
-  grid: ReadonlyArray<ReadonlyArray<Shortcut>>,
-  queue: ReadonlyArray<Shortcut> = [],
+  grid: readonly (readonly Shortcut[])[],
+  queue: readonly Shortcut[] = [],
 ): string {
   const blob: TaskBarBlobV2 = { v: 2, items: collectItems(grid), queue: collectQueue(queue) };
   return JSON.stringify(blob);
@@ -149,9 +170,10 @@ function parseTaskBar(json: string | null | undefined): TaskBarBlobV2 {
     logger.warn({ json }, 'taskbar column unreadable -- ignoring');
     return { v: 2, items: [], queue: [] };
   }
-  if (Array.isArray(parsed)) return { v: 2, items: parsed as StoredShortcut[], queue: [] };
+  if (Array.isArray(parsed)) return { v: 2, items: parsed, queue: [] };
   if (typeof parsed === 'object' && parsed !== null && (parsed as { v?: number }).v === 2) {
-    return parsed as TaskBarBlobV2;
+    const obj = parsed as { items?: unknown[]; queue?: unknown[] };
+    return { v: 2, items: obj.items ?? [], queue: obj.queue ?? [] };
   }
   return { v: 2, items: [], queue: [] };
 }
@@ -163,14 +185,16 @@ function parseTaskBar(json: string | null | undefined): TaskBarBlobV2 {
 export function decodeTaskBar(json: string | null | undefined): Shortcut[][] {
   const grid = emptyGrid();
   for (const e of parseTaskBar(json).items) {
-    if (typeof e !== 'object' || e === null) continue;
+    if (!isStoredShortcut(e)) continue;
     if (e.i < 0 || e.i >= MAX_SLOT_ITEM_COUNT || e.j < 0 || e.j >= MAX_SLOT_ITEM) continue;
     const slot: Shortcut = {
       dwShortcut: e.dwShortcut | 0, dwId: e.dwId | 0, dwType: e.dwType | 0,
       dwIndex: e.dwIndex | 0, dwUserId: e.dwUserId | 0, dwData: e.dwData | 0,
     };
     if (e.dwShortcut === SHORTCUT.CHAT && typeof e.szString === 'string') slot.szString = e.szString;
-    grid[e.i]![e.j] = slot;
+    const row = grid[e.i];
+    if (row === undefined) continue;
+    row[e.j] = slot;
   }
   return grid;
 }
@@ -183,7 +207,7 @@ export function decodeTaskBar(json: string | null | undefined): Shortcut[][] {
 export function decodeTaskBarQueue(json: string | null | undefined): Shortcut[] {
   const queue = emptyQueue();
   for (const e of parseTaskBar(json).queue) {
-    if (typeof e !== 'object' || e === null) continue;
+    if (!isStoredQueueShortcut(e)) continue;
     if (e.i < 0 || e.i >= MAX_SLOT_QUEUE) continue;
     queue[e.i] = {
       dwShortcut: e.dwShortcut | 0, dwId: e.dwId | 0, dwType: e.dwType | 0,
@@ -210,8 +234,8 @@ export class TaskBarService {
   /** Fire-and-forget write-through of grid + queue (rule 05 -- no unhandled rejection). */
   private save(player: TaskBarPlayer): void {
     if (!this.persist || player.m_idPlayer === undefined) return;
-    void this.persist(player.m_idPlayer, encodeTaskBar(player.m_aSlotItem, player.m_aSlotQueue)).catch((err) =>
-      logger.error({ err, charId: player.m_idPlayer }, 'taskbar persist failed'),
+    void this.persist(player.m_idPlayer, encodeTaskBar(player.m_aSlotItem, player.m_aSlotQueue)).catch((err: unknown) =>
+      { logger.error({ err, charId: player.m_idPlayer }, 'taskbar persist failed'); },
     );
   }
 
@@ -231,14 +255,18 @@ export class TaskBarService {
       // No defined-text serializer yet; the slot simply isn't updated.
       return { ok: false, reason: 'too_many_chat' };
     }
-    player.m_aSlotItem[slotIndex]![index] = shortcut;
+    const row = player.m_aSlotItem[slotIndex];
+    if (row === undefined) return { ok: false, reason: 'too_many_chat' };
+    row[index] = shortcut;
     this.save(player);
     return { ok: true };
   }
 
   /** Clear the binding at `[slotIndex][index]` (C++ `OnRemoveItemTaskBar`). */
   removeItem(player: TaskBarPlayer, slotIndex: number, index: number): void {
-    player.m_aSlotItem[slotIndex]![index] = { dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
+    const row = player.m_aSlotItem[slotIndex];
+    if (row === undefined) return;
+    row[index] = { dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
     this.save(player);
   }
 
@@ -251,7 +279,7 @@ export class TaskBarService {
    * cancel but SKILLTASKBAR upload was never wired, so the queue was
    * in-memory only and lost on relog).
    */
-  setQueue(player: TaskBarPlayer, slots: ReadonlyArray<Shortcut>): void {
+  setQueue(player: TaskBarPlayer, slots: readonly Shortcut[]): void {
     for (let i = 0; i < MAX_SLOT_QUEUE; i++) {
       const s = slots[i] ?? { dwShortcut: SHORTCUT.NONE, dwId: 0, dwType: 0, dwIndex: 0, dwUserId: 0, dwData: 0 };
       player.m_aSlotQueue[i] = {

@@ -28,7 +28,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('campus', (table: any) => {
+  await db.schema.createTable('campus', (table) => {
     table.increments('id').primary();
     // `CCampus::m_idMaster`. Not FK-cascaded to `characters`: C++ dissolves the
     // whole campus when the master leaves (`OnRemoveCampusMember`), which the
@@ -39,7 +39,7 @@ export async function up(db: Knex): Promise<void> {
     table.index(['master_id']);
   });
 
-  await db.schema.createTable('campus_member', (table: any) => {
+  await db.schema.createTable('campus_member', (table) => {
     table.increments('id').primary();
     table.integer('campus_id').unsigned().notNullable()
       .references('id').inTable('campus').onDelete('CASCADE');
@@ -54,7 +54,7 @@ export async function up(db: Knex): Promise<void> {
     table.index(['campus_id']);
   });
 
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     // Signed on purpose -- see the module doc.
     table.integer('campus_point').notNullable().defaultTo(0);
     table.bigInteger('campus_tick_ms').notNullable().defaultTo(0);
@@ -62,7 +62,7 @@ export async function up(db: Knex): Promise<void> {
 }
 
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.dropColumn('campus_tick_ms');
     table.dropColumn('campus_point');
   });

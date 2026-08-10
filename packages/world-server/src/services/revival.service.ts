@@ -180,7 +180,7 @@ export class RevivalService {
       }));
       this.deps.charRepo.updateLevelAndExp(
         player.m_idPlayer, player.m_nLevel, BigInt(Math.floor(player.m_nExp)),
-      ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
+      ).catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'); });
     }
 
     this.restoreVitals(player);

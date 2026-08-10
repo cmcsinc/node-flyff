@@ -468,8 +468,9 @@ export class CampusService {
 
   /** `IsCompleteCampusQuest` -- ALL entries of `tCampusQuest` must be complete. */
   private isCampusQuestComplete(player: CPlayer): boolean {
-    if (!this.deps.isQuestComplete) return false;
-    return CAMPUS_REQUIRED_QUESTS.every((id) => this.deps.isQuestComplete!(player, id));
+    const isQuestComplete = this.deps.isQuestComplete;
+    if (!isQuestComplete) return false;
+    return CAMPUS_REQUIRED_QUESTS.every((id) => isQuestComplete(player, id));
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────

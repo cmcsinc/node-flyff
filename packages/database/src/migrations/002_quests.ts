@@ -15,7 +15,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('character_quests', (table: any) => {
+  await db.schema.createTable('character_quests', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
@@ -29,16 +29,16 @@ export async function up(db: Knex): Promise<void> {
     table.unique(['character_id', 'quest_id']);
   });
 
-  await db.schema.createTable('character_completed_quests', (table: any) => {
+  await db.schema.createTable('character_completed_quests', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
     table.integer('quest_id').unsigned().notNullable();
-    table.timestamp('completed_at').defaultTo(db['fn'].now());
+    table.timestamp('completed_at').defaultTo(db.fn.now());
     table.unique(['character_id', 'quest_id']);
   });
 
-  await db.schema.createTable('character_checked_quests', (table: any) => {
+  await db.schema.createTable('character_checked_quests', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
@@ -48,13 +48,13 @@ export async function up(db: Knex): Promise<void> {
     table.unique(['character_id', 'quest_id']);
   });
 
-  await db.schema.createTable('quest_log', (table: any) => {
+  await db.schema.createTable('quest_log', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE').index();
     table.integer('quest_id').unsigned().notNullable();
     table.integer('action').unsigned().notNullable();      // QUEST_LOG_ACTION (10/20/30)
-    table.timestamp('ts').defaultTo(db['fn'].now());
+    table.timestamp('ts').defaultTo(db.fn.now());
   });
 }
 

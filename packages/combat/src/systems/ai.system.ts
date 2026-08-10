@@ -186,11 +186,14 @@ export class AISystem {
       .filter((p) => !p.m_bDead && !isHidden(p)
         && p.m_nLevel <= m.m_nLevel + AGGRO_LEVEL_BAND);
     if (players.length === 0) return false;
-    let nearest = players[0]!;
+    let nearest = players[0];
+    if (nearest === undefined) return false;
     let best = distSq2(m.m_vPos, nearest.m_vPos);
     for (let i = 1; i < players.length; i++) {
-      const d = distSq2(m.m_vPos, players[i]!.m_vPos);
-      if (d < best) { best = d; nearest = players[i]!; }
+      const candidate = players[i];
+      if (candidate === undefined) continue;
+      const d = distSq2(m.m_vPos, candidate.m_vPos);
+      if (d < best) { best = d; nearest = candidate; }
     }
     this.acquire(m, nearest, now);
     return true;

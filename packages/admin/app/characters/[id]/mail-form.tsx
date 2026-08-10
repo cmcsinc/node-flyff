@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Loader2, Mail, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Field } from "@/components/ui/field";
-import type { PickerItem } from "../../inventory/[characterId]/types";
+import * as React from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { Loader2, Mail, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Field } from '@/components/ui/field';
+import type { PickerItem } from '../../inventory/[characterId]/types';
 
 /**
  * Client-side mirror of the API limits. Both are hard client caps:
@@ -33,12 +33,12 @@ export function MailForm({
   pickerItems: PickerItem[];
   /** Called after a successful send — lets a host modal close itself. */
   onSent?: () => void;
-}) {
+}): React.JSX.Element {
   const router = useRouter();
-  const [title, setTitle] = React.useState("");
-  const [text, setText] = React.useState("");
-  const [gold, setGold] = React.useState("");
-  const [itemQuery, setItemQuery] = React.useState("");
+  const [title, setTitle] = React.useState('');
+  const [text, setText] = React.useState('');
+  const [gold, setGold] = React.useState('');
+  const [itemQuery, setItemQuery] = React.useState('');
   const [item, setItem] = React.useState<PickerItem | null>(null);
   const [itemCount, setItemCount] = React.useState(1);
   const [pending, setPending] = React.useState(false);
@@ -51,78 +51,95 @@ export function MailForm({
       .slice(0, 8);
   }, [pickerItems, itemQuery]);
 
-  const titleError = title.length > TITLE_MAX ? `Max ${TITLE_MAX} characters` : undefined;
-  const textError = text.length > TEXT_MAX ? `Max ${TEXT_MAX} characters` : undefined;
-  const goldError = gold !== "" && !/^\d{1,19}$/.test(gold.trim()) ? "Digits only" : undefined;
+  const titleError = title.length > TITLE_MAX ? `Max ${String(TITLE_MAX)} characters` : undefined;
+  const textError = text.length > TEXT_MAX ? `Max ${String(TEXT_MAX)} characters` : undefined;
+  const goldError = gold !== '' && !/^\d{1,19}$/.test(gold.trim()) ? 'Digits only' : undefined;
   const maxCount = item?.stackSize ?? 9999;
 
-  async function submit(e: React.FormEvent) {
+  async function submit(e: React.SyntheticEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
-    if (title.trim() === "") {
-      toast.error("Title is required");
+    if (title.trim() === '') {
+      toast.error('Title is required');
       return;
     }
     if (titleError || textError || goldError) return;
 
     setPending(true);
     try {
-      const res = await fetch("/api/mail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/mail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           receiverId: characterId,
           title: title.trim(),
           text,
-          gold: gold.trim() === "" ? undefined : gold.trim(),
+          gold: gold.trim() === '' ? undefined : gold.trim(),
           itemId: item?.id,
           itemCount: item ? Math.max(1, Math.min(itemCount, maxCount)) : undefined,
         }),
       });
-      const body: { ok?: boolean; error?: string; delivered?: boolean } = await res
-        .json()
-        .catch(() => ({}));
-      if (!res.ok || !body.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
-      toast.success(
-        body.delivered ? "Mail sent" : "Mail saved — delivered at next login (world offline)",
-      );
-      setTitle("");
-      setText("");
-      setGold("");
+      const body: unknown = await res.json().catch(() => null);
+      const ok = typeof body === 'object' && body !== null && 'ok' in body && body.ok === true;
+      const error =
+        typeof body === 'object' && body !== null && 'error' in body && typeof body.error === 'string'
+          ? body.error
+          : undefined;
+      const delivered =
+        typeof body === 'object' && body !== null && 'delivered' in body && body.delivered === true;
+      if (!res.ok || !ok) throw new Error(error ?? `HTTP ${String(res.status)}`);
+      toast.success(delivered ? 'Mail sent' : 'Mail saved — delivered at next login (world offline)');
+      setTitle('');
+      setText('');
+      setGold('');
       setItem(null);
-      setItemQuery("");
+      setItemQuery('');
       setItemCount(1);
       router.refresh();
       onSent?.();
     } catch (err) {
-      toast.error("Failed to send mail", { description: (err as Error).message });
+      toast.error('Failed to send mail', { description: (err as Error).message });
     } finally {
       setPending(false);
     }
   }
 
   return (
-    <form onSubmit={submit} className="space-y-3 border-t border-border pt-4">
+    <form onSubmit={(event) => { void submit(event); }} className="space-y-3 border-t border-border pt-4">
       <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         Send mail
       </p>
 
-      <Field htmlFor="mail-title" label="Title" hint={`${title.length}/${TITLE_MAX}`} error={titleError}>
+      <Field
+        htmlFor="mail-title"
+        label="Title"
+        hint={`${String(title.length)}/${String(TITLE_MAX)}`}
+        error={titleError}
+      >
         <Input
           id="mail-title"
           value={title}
           maxLength={TITLE_MAX}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
           placeholder="Compensation"
         />
       </Field>
 
-      <Field htmlFor="mail-text" label="Message" hint={`${text.length}/${TEXT_MAX}`} error={textError}>
+      <Field
+        htmlFor="mail-text"
+        label="Message"
+        hint={`${String(text.length)}/${String(TEXT_MAX)}`}
+        error={textError}
+      >
         <textarea
           id="mail-text"
           value={text}
           maxLength={TEXT_MAX}
           rows={3}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value);
+          }}
           className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background hover:border-ring/40 aria-invalid:border-destructive"
         />
       </Field>
@@ -133,11 +150,13 @@ export function MailForm({
             id="mail-gold"
             inputMode="numeric"
             value={gold}
-            onChange={(e) => setGold(e.target.value)}
+            onChange={(e) => {
+              setGold(e.target.value);
+            }}
             placeholder="0"
           />
         </Field>
-        <Field htmlFor="mail-item-count" label="Item count" hint={`Max ${maxCount}`}>
+        <Field htmlFor="mail-item-count" label="Item count" hint={`Max ${String(maxCount)}`}>
           <Input
             id="mail-item-count"
             type="number"
@@ -145,7 +164,9 @@ export function MailForm({
             max={maxCount}
             value={itemCount}
             disabled={!item}
-            onChange={(e) => setItemCount(Number(e.target.value))}
+            onChange={(e) => {
+              setItemCount(Number(e.target.value));
+            }}
           />
         </Field>
       </div>
@@ -177,7 +198,7 @@ export function MailForm({
             size="sm"
             onClick={() => {
               setItem(null);
-              setItemQuery("");
+              setItemQuery('');
             }}
           >
             Clear
@@ -197,7 +218,14 @@ export function MailForm({
                   }}
                   className="flex w-full items-center gap-2 rounded px-2 py-1 text-left text-sm hover:bg-secondary"
                 >
-                  <Image src={it.iconUrl} alt="" width={22} height={22} unoptimized className="rounded" />
+                  <Image
+                    src={it.iconUrl}
+                    alt=""
+                    width={22}
+                    height={22}
+                    unoptimized
+                    className="rounded"
+                  />
                   <span className="flex-1 truncate">{it.name}</span>
                   <span className="text-xs text-muted-foreground">#{it.id}</span>
                 </button>

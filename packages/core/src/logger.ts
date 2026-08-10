@@ -91,11 +91,14 @@ function prettyStream(): ReturnType<typeof pretty> {
     translateTime: 'HH:MM:ss.l',
     ignore: 'pid,hostname',
     customColors: LEVEL_COLORS,
-    messageFormat(log, messageKey, _levelLabel, extras) {
-      const msg = String(log[messageKey] ?? '');
-      const tag = log['module'] ?? log['service'] ?? log['system'];
-      if (tag === undefined || tag === '') return msg;
-      return `${extras.colors.gray(`[${String(tag)}]`)} ${msg}`;
+    messageFormat(log, messageKey) {
+      const rawMessage = log[messageKey];
+      const msg = typeof rawMessage === 'string' ? rawMessage : '';
+      const rawTag = log['module'] ?? log['service'] ?? log['system'];
+      const tag = typeof rawTag === 'string' || typeof rawTag === 'number'
+        ? String(rawTag)
+        : '';
+      return tag === '' ? msg : `[${tag}] ${msg}`;
     },
   });
 }

@@ -24,10 +24,10 @@ export async function up(db: Knex): Promise<void> {
   // ADD COLUMN is in-place (no table rebuild, no nested transaction), so the
   // raw statement is safe under better-sqlite3 + the migration runner's outer
   // transaction. See migration 008 for the DROP COLUMN caveat that forces raw.
-  await db['raw'](
+  await db.raw(
     'ALTER TABLE bank ADD COLUMN gold_tab1 BIGINT NOT NULL DEFAULT 0',
   );
-  await db['raw'](
+  await db.raw(
     'ALTER TABLE bank ADD COLUMN gold_tab2 BIGINT NOT NULL DEFAULT 0',
   );
 }
@@ -38,6 +38,6 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db['raw']('ALTER TABLE bank DROP COLUMN gold_tab2');
-  await db['raw']('ALTER TABLE bank DROP COLUMN gold_tab1');
+  await db.raw('ALTER TABLE bank DROP COLUMN gold_tab2');
+  await db.raw('ALTER TABLE bank DROP COLUMN gold_tab1');
 }

@@ -26,7 +26,7 @@ import type { PlayerManager } from '@flyff/world-core';
 import {
   buildDuelRequest, buildDuelStart, buildDuelNo, buildDuelCancel, buildSetDuel,
 } from '@flyff/world-core';
-import { DuelManager, DUEL_REQUEST_TIMEOUT_MS } from '../managers/duel.manager';
+import { type DuelManager, DUEL_REQUEST_TIMEOUT_MS } from '../managers/duel.manager';
 
 /**
  * `TID_GAME_GUILDWARERRORDUEL` (`resource/defineText.h:1294`) -- "you cannot
@@ -82,7 +82,7 @@ export class DuelService {
     }
     if (this.deps.duelManager.hasPending(dstId)) return;
     const srcId = src.m_idPlayer;
-    const timer = setTimeout(() => this.expire(dstId), DUEL_REQUEST_TIMEOUT_MS);
+    const timer = setTimeout(() => { this.expire(dstId); }, DUEL_REQUEST_TIMEOUT_MS);
     this.deps.duelManager.addPending({ srcId, dstId, expiresAt: this.now() + DUEL_REQUEST_TIMEOUT_MS, timer });
     this.deps.playerManager.sendTo(dst, buildDuelRequest(dst.m_idPlayer, srcId, dstId));
   }

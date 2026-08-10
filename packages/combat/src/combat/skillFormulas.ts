@@ -167,7 +167,7 @@ export function postCalcMagicSkill(
 ): number {
   // nATK -= nATK * GetParam(DST_RESIST_MAGIC_RATE)/100
   const resistRate = defender.params.get(DST.RESIST_MAGIC_RATE, 0);
-  let atk = resistRate > 0 ? nATK - nATK * resistRate / 100 : nATK;
+  const atk = resistRate > 0 ? nATK - nATK * resistRate / 100 : nATK;
   let a = atk - defenderDef;
   if (a < 0) a = 0;
   // (1 - GetResist(skillElement)) -- defender elemental resist via DST_RESIST_<elem>.

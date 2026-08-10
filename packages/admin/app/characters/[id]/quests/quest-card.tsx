@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { GoalHover } from "./goal-hover";
-import type { QuestSlotItem, QuestRequirement } from "./types";
-import { QUEST_STATE_LABELS, QUEST_STATE_VARIANT } from "./types";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
+import { GoalHover } from './goal-hover';
+import type { QuestSlotItem, QuestRequirement } from './types';
+import { QUEST_STATE_LABELS, QUEST_STATE_VARIANT } from './types';
 
 interface QuestCardProps {
   item: QuestSlotItem;
@@ -21,22 +21,27 @@ function killProgress(item: QuestSlotItem, req: QuestRequirement): number {
 }
 
 /** One requirement row — hover shows the icon and map goal. */
-function RequirementRow({ req, item }: { req: QuestRequirement; item: QuestSlotItem }) {
-  const done = req.kind === "kill" && req.count !== undefined
-    ? killProgress(item, req) >= req.count
-    : false;
+function RequirementRow({
+  req,
+  item,
+}: {
+  req: QuestRequirement;
+  item: QuestSlotItem;
+}): React.JSX.Element {
+  const done =
+    req.kind === 'kill' && req.count !== undefined ? killProgress(item, req) >= req.count : false;
 
   return (
     <li className="flex items-start gap-1.5">
       <span className="text-muted-foreground">•</span>
       <GoalHover iconUrl={req.iconUrl} label={req.label} goal={req.goal}>
-        <span className={cn(done && "text-success line-through")}>{req.label}</span>
+        <span className={cn(done && 'text-success line-through')}>{req.label}</span>
       </GoalHover>
       {req.count !== undefined && (
         <span className="text-muted-foreground">
-          {req.kind === "kill"
-            ? `${killProgress(item, req)} / ${req.count}`
-            : `×${req.count}`}
+          {req.kind === 'kill'
+            ? `${String(String(killProgress)(item, req))} / ${String(req.count)}`
+            : `×${String(req.count)}`}
         </span>
       )}
     </li>
@@ -44,8 +49,8 @@ function RequirementRow({ req, item }: { req: QuestRequirement; item: QuestSlotI
 }
 
 /** Collapsible detail body. */
-function QuestDetail({ item }: { item: QuestSlotItem }) {
-  const hasNpcs = Boolean(item.beginNpc || item.endNpc);
+function QuestDetail({ item }: { item: QuestSlotItem }): React.JSX.Element {
+  const hasNpcs = item.beginNpc != null || item.endNpc != null;
 
   return (
     <div className="mt-3 space-y-3 border-t border-border/60 pt-3 text-xs">
@@ -131,7 +136,11 @@ function QuestDetail({ item }: { item: QuestSlotItem }) {
       )}
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
-        {item.levelReq && <span>Level {item.levelReq[0]}–{item.levelReq[1]}</span>}
+        {item.levelReq && (
+          <span>
+            Level {item.levelReq[0]}–{item.levelReq[1]}
+          </span>
+        )}
         {item.categoryLabel && <span>{item.categoryLabel}</span>}
         {item.repeatable && <span>Repeatable</span>}
         {!item.removable && <span>Cannot cancel</span>}
@@ -146,16 +155,16 @@ function QuestDetail({ item }: { item: QuestSlotItem }) {
  * objective text, begin/turn-in NPCs, requirements, rewards, and drop sources —
  * each with a hover card showing the icon and map coordinates.
  */
-export function QuestCard({ item, isExpanded, onToggle }: QuestCardProps) {
+export function QuestCard({ item, isExpanded, onToggle }: QuestCardProps): React.JSX.Element {
   const hasKills = item.killNpcNum0 > 0 || item.killNpcNum1 > 0;
-  const label = QUEST_STATE_LABELS[item.state] ?? `State ${item.state}`;
-  const variant = QUEST_STATE_VARIANT[item.state] ?? "secondary";
+  const label = QUEST_STATE_LABELS[item.state] ?? `State ${String(item.state)}`;
+  const variant = QUEST_STATE_VARIANT[item.state] ?? 'secondary';
 
   return (
     <div
       className={cn(
-        "rounded-lg border border-border bg-card/80 transition-colors",
-        isExpanded ? "border-primary/40 bg-card" : "hover:border-primary/60",
+        'rounded-lg border border-border bg-card/80 transition-colors',
+        isExpanded ? 'border-primary/40 bg-card' : 'hover:border-primary/60',
       )}
     >
       <button
@@ -172,13 +181,21 @@ export function QuestCard({ item, isExpanded, onToggle }: QuestCardProps) {
             </div>
             <p className="mt-0.5 flex flex-wrap gap-x-3 text-[11px] text-muted-foreground">
               {item.beginNpc && <span>from {item.beginNpc.name}</span>}
-              {item.levelReq && <span>Lv. {item.levelReq[0]}–{item.levelReq[1]}</span>}
-              {hasKills && <span>kills {item.killNpcNum0}/{item.killNpcNum1}</span>}
+              {item.levelReq && (
+                <span>
+                  Lv. {item.levelReq[0]}–{item.levelReq[1]}
+                </span>
+              )}
+              {hasKills && (
+                <span>
+                  kills {item.killNpcNum0}/{item.killNpcNum1}
+                </span>
+              )}
               {item.time > 0 && (
                 <span>
                   {item.time > 60
-                    ? `${Math.floor(item.time / 60)}m ${item.time % 60}s left`
-                    : `${item.time}s left`}
+                    ? `${String(Math.floor(item.time / 60))}m ${String(item.time % 60)}s left`
+                    : `${String(item.time)}s left`}
                 </span>
               )}
             </p>

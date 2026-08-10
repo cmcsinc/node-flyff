@@ -8,13 +8,13 @@
  * @module app/client-patch/page
  */
 
-import type * as React from "react";
-import { PageHeader } from "@/components/page-header";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { clientPatchStatus } from "@/lib/client-patch";
-import { ClientPatchPanel } from "./panel";
+import type * as React from 'react';
+import { PageHeader } from '@/components/page-header';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { clientPatchStatus } from '@/lib/client-patch';
+import { ClientPatchPanel } from './panel';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function ClientPatchPage(): Promise<React.JSX.Element> {
   const status = await clientPatchStatus();
@@ -31,7 +31,7 @@ export default async function ClientPatchPage(): Promise<React.JSX.Element> {
           <CardHeader>
             <CardTitle className="text-sm">Client directory not configured</CardTitle>
             <CardDescription>
-              Set <code className="font-mono">CLIENT_DIR</code> to the folder holding{" "}
+              Set <code className="font-mono">CLIENT_DIR</code> to the folder holding{' '}
               <code className="font-mono">data.res</code>, then restart the admin panel.
             </CardDescription>
           </CardHeader>

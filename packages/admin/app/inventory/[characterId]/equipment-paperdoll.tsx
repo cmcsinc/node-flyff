@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import type { CSSProperties } from "react";
-import { ItemTile } from "./item-tile";
-import { MAX_INVENTORY } from "./constants";
-import type { SlotItem } from "./types";
+import type { CSSProperties } from 'react';
+import { ItemTile } from './item-tile';
+import { MAX_INVENTORY } from './constants';
+import type { SlotItem } from './types';
 
 /**
  * Equipment paper-doll, laid out like the Flyff character window: a faint body
@@ -13,7 +13,7 @@ import type { SlotItem } from "./types";
  */
 
 /** Minimal humanoid silhouette, rendered faintly behind the centre column. */
-function BodySilhouette() {
+function BodySilhouette(): React.JSX.Element {
   return (
     <svg
       viewBox="0 0 60 140"
@@ -40,23 +40,23 @@ interface SlotDef {
 
 // Column 1 = left accessories, 2 = centre body, 3 = right accessories.
 const LAYOUT: SlotDef[] = [
-  { part: 6, label: "Helmet", col: 2, row: 1 },
-  { part: 22, label: "Earring 1", col: 1, row: 2 },
-  { part: 12, label: "Mask", col: 2, row: 2 },
-  { part: 23, label: "Earring 2", col: 3, row: 2 },
-  { part: 8, label: "Cloak", col: 1, row: 3 },
-  { part: 2, label: "Suit", col: 2, row: 3 },
-  { part: 9, label: "Left Weapon", col: 1, row: 4 },
-  { part: 3, label: "Lower", col: 2, row: 4 },
-  { part: 10, label: "Right Weapon", col: 3, row: 4 },
-  { part: 4, label: "Gloves", col: 1, row: 5 },
-  { part: 19, label: "Necklace", col: 2, row: 5 },
-  { part: 11, label: "Shield", col: 3, row: 5 },
-  { part: 20, label: "Ring 1", col: 1, row: 6 },
-  { part: 5, label: "Boots", col: 2, row: 6 },
-  { part: 21, label: "Ring 2", col: 3, row: 6 },
+  { part: 6, label: 'Helmet', col: 2, row: 1 },
+  { part: 22, label: 'Earring 1', col: 1, row: 2 },
+  { part: 12, label: 'Mask', col: 2, row: 2 },
+  { part: 23, label: 'Earring 2', col: 3, row: 2 },
+  { part: 8, label: 'Cloak', col: 1, row: 3 },
+  { part: 2, label: 'Suit', col: 2, row: 3 },
+  { part: 9, label: 'Left Weapon', col: 1, row: 4 },
+  { part: 3, label: 'Lower', col: 2, row: 4 },
+  { part: 10, label: 'Right Weapon', col: 3, row: 4 },
+  { part: 4, label: 'Gloves', col: 1, row: 5 },
+  { part: 19, label: 'Necklace', col: 2, row: 5 },
+  { part: 11, label: 'Shield', col: 3, row: 5 },
+  { part: 20, label: 'Ring 1', col: 1, row: 6 },
+  { part: 5, label: 'Boots', col: 2, row: 6 },
+  { part: 21, label: 'Ring 2', col: 3, row: 6 },
   // Fashion hat sits below the doll (col 2, row 7) so it doesn't collide.
-  { part: 26, label: "Fashion Hat", col: 2, row: 7 },
+  { part: 26, label: 'Fashion Hat', col: 2, row: 7 },
 ];
 
 interface EquipmentPaperDollProps {
@@ -76,14 +76,14 @@ export function EquipmentPaperDoll({
   onRemove,
   interactive = true,
   compact = false,
-}: EquipmentPaperDollProps) {
+}: EquipmentPaperDollProps): React.JSX.Element {
   const byPart = new Map<number, SlotItem>();
   for (const it of items) byPart.set(it.slot - MAX_INVENTORY, it);
 
   const tileSize = compact ? 36 : 46;
-  const labelMaxW = compact ? "max-w-[44px]" : "max-w-[56px]";
+  const labelMaxW = compact ? 'max-w-[44px]' : 'max-w-[56px]';
 
-  const cell = (def: SlotDef) => {
+  const cell = (def: SlotDef): React.JSX.Element => {
     const item = byPart.get(def.part);
     return (
       <div
@@ -114,7 +114,10 @@ export function EquipmentPaperDoll({
             </button>
           )}
         </div>
-        <span className={`${labelMaxW} truncate text-[8px] text-muted-foreground/70`} title={def.label}>
+        <span
+          className={`${labelMaxW} truncate text-[8px] text-muted-foreground/70`}
+          title={def.label}
+        >
           {def.label}
         </span>
       </div>
@@ -122,13 +125,13 @@ export function EquipmentPaperDoll({
   };
 
   const gridStyle: CSSProperties = {
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-    gridTemplateRows: "repeat(7, min-content)",
-    placeItems: "center",
+    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+    gridTemplateRows: 'repeat(7, min-content)',
+    placeItems: 'center',
   };
 
   return (
-    <div className={compact ? "relative p-3" : "relative p-6"}>
+    <div className={compact ? 'relative p-3' : 'relative p-6'}>
       {!compact && <BodySilhouette />}
       <div className="relative grid gap-y-1 gap-x-2" style={gridStyle}>
         {LAYOUT.map(cell)}

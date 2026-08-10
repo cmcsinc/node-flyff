@@ -12,7 +12,7 @@
  * @module lib/account-tiers
  */
 
-import { AUTH, hasAuthority } from "@flyff/entities/constants/authority";
+import { AUTH, hasAuthority } from '@flyff/entities/constants/authority';
 
 export interface Actor {
   id: number;
@@ -36,7 +36,7 @@ export function checkAccountWrite(
   newAuthority: number | undefined,
 ): Denial {
   // Self-edit would let any GM lift their own ceiling.
-  if (actor.id === targetId) return "You cannot modify your own account";
+  if (actor.id === targetId) return 'You cannot modify your own account';
 
   // Acting on a peer or a superior.
   if (targetAuthority >= actor.authority) {
@@ -45,10 +45,10 @@ export function checkAccountWrite(
 
   if (newAuthority !== undefined) {
     if (!hasAuthority(actor.authority, AUTH.OPERATOR)) {
-      return "Changing authority requires Operator or above";
+      return 'Changing authority requires Operator or above';
     }
     if (newAuthority >= actor.authority) {
-      return "You cannot grant an authority at or above your own";
+      return 'You cannot grant an authority at or above your own';
     }
   }
 
@@ -59,10 +59,10 @@ export function checkAccountWrite(
 export function guardAccountCreate(actor: Actor, authority: number): Denial {
   if (authority === AUTH.GENERAL) return null;
   if (!hasAuthority(actor.authority, AUTH.OPERATOR)) {
-    return "Creating a staff account requires Operator or above";
+    return 'Creating a staff account requires Operator or above';
   }
   if (authority >= actor.authority) {
-    return "You cannot grant an authority at or above your own";
+    return 'You cannot grant an authority at or above your own';
   }
   return null;
 }

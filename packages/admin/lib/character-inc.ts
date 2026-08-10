@@ -20,23 +20,23 @@
  * @module lib/character-inc
  */
 
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   loadSymbols,
   resolveVendorStock,
   type CharacterIncBlock,
   type ItemIndex,
   type WriterSymbols,
-} from "@flyff/resources";
-import { IK3_LABELS } from "./game-constants";
-import { getResourceIndex } from "./resource-cache";
-import { loadNpcs } from "./npcs";
+} from '@flyff/resources';
+import { IK3_LABELS } from './game-constants';
+import { getResourceIndex } from './resource-cache';
+import { loadNpcs } from './npcs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** The `raw/` directory holding `character.inc` + `character.txt.txt`. */
-export const RAW_DIR = resolve(__dirname, "..", "..", "resources", "raw");
+export const RAW_DIR = resolve(__dirname, '..', '..', 'resources', 'raw');
 
 /**
  * The only `MMI_*` ids this server actually honors. `defineNeuz.h` declares 278;
@@ -55,8 +55,8 @@ export const IMPLEMENTED_MMI: readonly number[] = [0, 2, 9, 74];
 /** What each implemented menu actually does, for the UI hint. */
 export const MMI_PURPOSE: Readonly<Record<number, string>> = {
   0: "Right-click opens the NPC's dialog script.",
-  2: "Right-click opens the shop window, stocked from AddVendorItem.",
-  9: "Right-click opens the account bank (needs a bank PIN).",
+  2: 'Right-click opens the shop window, stocked from AddVendorItem.',
+  9: 'Right-click opens the account bank (needs a bank PIN).',
   74: "Right-click grants the block's SetBuffSkill buffs (Buff Pang).",
 };
 
@@ -164,12 +164,12 @@ export function getIncSymbols(): Promise<WriterSymbols> {
 /** `MMI_TRADE` → `Trade`. Underscores become spaces, words title-cased. */
 function labelForSymbol(symbol: string): string {
   return symbol
-    .replace(/^MMI_/, "")
+    .replace(/^MMI_/, '')
     .toLowerCase()
-    .split("_")
+    .split('_')
     .filter(Boolean)
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
+    .join(' ');
 }
 
 /**
@@ -244,7 +244,7 @@ function buildTabs(
   return block.vendorTabs.map((tab) => ({
     slot: tab.slot,
     labelToken: tab.label,
-    labelText: text.get(tab.label) ?? "",
+    labelText: text.get(tab.label) ?? '',
     rules: block.vendorItems
       .filter((v) => v.slot === tab.slot)
       .map((v) => ({

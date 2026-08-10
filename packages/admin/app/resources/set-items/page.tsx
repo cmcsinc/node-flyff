@@ -1,18 +1,18 @@
-import type * as React from "react";
-import { setItemRows } from "@/lib/resource-rows";
-import { Input } from "@/components/ui/input";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { FilterBar } from "@/components/filter-bar";
-import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { NameCell, SymbolCell, CountCell, EditLink } from "@/components/resource-cells";
-import { ItemChipList } from "@/components/item-chip-list";
-import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
-import { Gem } from "lucide-react";
-import type { SetItemRow } from "@/lib/resource-rows";
+import type * as React from 'react';
+import { setItemRows } from '@/lib/resource-rows';
+import { Input } from '@/components/ui/input';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { FilterBar } from '@/components/filter-bar';
+import { ResourceTable, type ResourceColumn } from '@/components/resource-table';
+import { NameCell, SymbolCell, CountCell, EditLink } from '@/components/resource-cells';
+import { ItemChipList } from '@/components/item-chip-list';
+import { parsePage, parsePerPage, paginate } from '@/lib/paginate';
+import { parseSort, sortRows, type QueryParams } from '@/lib/sort';
+import { Gem } from 'lucide-react';
+import type { SetItemRow } from '@/lib/resource-rows';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams extends QueryParams {
   search?: string;
@@ -24,55 +24,61 @@ interface SearchParams extends QueryParams {
   dir?: string;
 }
 
-const SORT_KEYS = ["id", "name", "nameId", "pieces", "bonuses"] as const;
+const SORT_KEYS = ['id', 'name', 'nameId', 'pieces', 'bonuses'] as const;
 
 const COLUMNS: readonly ResourceColumn<SetItemRow>[] = [
-  { key: "name", header: "Set", sortable: true, cell: (r) => <NameCell value={r.name} /> },
+  { key: 'name', header: 'Set', sortable: true, cell: (r) => <NameCell value={r.name} /> },
   {
-    key: "nameId",
-    header: "Name ID",
+    key: 'nameId',
+    header: 'Name ID',
     sortable: true,
     // Trimmed of its shared prefix; the full token is in the tooltip.
     cell: (r) => (
-      <SymbolCell value={r.nameId.replace(/^IDS_PROPITEMETC_INC_/, "")} title={r.nameId} />
+      <SymbolCell value={r.nameId.replace(/^IDS_PROPITEMETC_INC_/, '')} title={r.nameId} />
     ),
   },
   {
-    key: "items",
-    header: "Pieces",
+    key: 'items',
+    header: 'Pieces',
     // Names, not ids: `4587` tells a GM nothing the client's "Leaf Hat" does.
     cell: (r) => <ItemChipList names={r.itemNames} ids={r.itemIds} />,
   },
   {
-    key: "pieces",
-    header: "#",
+    key: 'pieces',
+    header: '#',
     sortable: true,
-    align: "right",
-    className: "w-16",
+    align: 'right',
+    className: 'w-16',
     cell: (r) => <CountCell value={r.pieces} />,
   },
   {
-    key: "bonuses",
-    header: "Bonuses",
+    key: 'bonuses',
+    header: 'Bonuses',
     sortable: true,
-    align: "right",
-    className: "w-24",
+    align: 'right',
+    className: 'w-24',
     cell: (r) => <CountCell value={r.bonuses} />,
   },
   {
-    key: "actions",
-    header: "Actions",
-    align: "right",
-    className: "w-24",
-    cell: (r) => <EditLink href={`/resources/set-items/${String(r.id)}/edit`} label={`set ${String(r.id)}`} />,
+    key: 'actions',
+    header: 'Actions',
+    align: 'right',
+    className: 'w-24',
+    cell: (r) => (
+      <EditLink href={`/resources/set-items/${String(r.id)}/edit`} label={`set ${String(r.id)}`} />
+    ),
   },
 ];
 
-export default async function SetItemsPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
+export default async function SetItemsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const item = params.item ?? "";
-  const minPieces = params.minPieces ?? "";
+  const search = params.search ?? '';
+  const item = params.item ?? '';
+  const minPieces = params.minPieces ?? '';
   const perPage = parsePerPage(params.perPage);
 
   const sets = setItemRows();
@@ -82,11 +88,16 @@ export default async function SetItemsPage({ searchParams }: { searchParams: Pro
 
   const filtered = sets.filter((s) => {
     // Member filter is by piece *name*: a GM knows "Leaf Hat", not 4587.
-    if (pieceNeedle && !s.itemNames.some((n) => n.toLowerCase().includes(pieceNeedle))) return false;
+    if (pieceNeedle && !s.itemNames.some((n) => n.toLowerCase().includes(pieceNeedle)))
+      return false;
     if (minPieces && Number.isFinite(minP) && s.pieces < minP) return false;
     // The token is searchable too — a GM cross-referencing propItemEtc.inc has
     // only the IDS_* token to go on.
-    if (needle && !s.name.toLowerCase().includes(needle) && !s.nameId.toLowerCase().includes(needle))
+    if (
+      needle &&
+      !s.name.toLowerCase().includes(needle) &&
+      !s.nameId.toLowerCase().includes(needle)
+    )
       return false;
     return true;
   });
@@ -136,7 +147,7 @@ export default async function SetItemsPage({ searchParams }: { searchParams: Pro
         sort={sort}
         params={params}
         unit="sets"
-        empty={{ icon: Gem, message: active ? "No sets match your filters" : "No set item data" }}
+        empty={{ icon: Gem, message: active ? 'No sets match your filters' : 'No set item data' }}
       />
     </div>
   );

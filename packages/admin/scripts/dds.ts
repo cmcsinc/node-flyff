@@ -68,7 +68,8 @@ function decodeUncompressed(
   const g = channelOf(gMask);
   const b = channelOf(bMask);
   const a = channelOf(aMask);
-  const hasAlpha = aMask !== 0 && (bitCount === 32 || (bitCount === 16 && (rMask & gMask & bMask) === 0));
+  const hasAlpha =
+    aMask !== 0 && (bitCount === 32 || (bitCount === 16 && (rMask & gMask & bMask) === 0));
 
   // Scale a channel's bit-field up to 0..255.
   const scale = (val: number, cw: number): number =>
@@ -126,7 +127,7 @@ function decodeDxt(
   for (let by = 0; by < blocksY; by++) {
     for (let bx = 0; bx < blocksX; bx++) {
       const blockOff = dataOff + (by * blocksX + bx) * blockSize;
-      let alphaRow = new Array<number>(16).fill(255);
+      const alphaRow = new Array<number>(16).fill(255);
 
       if (variant === 3) {
         // Explicit 4-bit alpha per pixel (64 bits = 8 bytes).
@@ -246,7 +247,14 @@ export function decodeDds(buf: Buffer): DecodedImage {
       width,
       height,
       data: decodeUncompressed(
-        buf, dataOff, width, height, bitCount, rMask, gMask, bMask,
+        buf,
+        dataOff,
+        width,
+        height,
+        bitCount,
+        rMask,
+        gMask,
+        bMask,
         pfFlags & DDPF_ALPHAPIXELS ? aMask : 0,
       ),
     };

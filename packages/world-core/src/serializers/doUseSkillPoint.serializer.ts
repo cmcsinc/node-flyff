@@ -34,7 +34,7 @@ export class DoUseSkillPointSerializer {
    */
   build(
     casterObjid: number,
-    roster: ReadonlyArray<DoUseSkillSlot>,
+    roster: readonly DoUseSkillSlot[],
     skillPoint: number,
   ): Buffer {
     const w = new PacketWriter();

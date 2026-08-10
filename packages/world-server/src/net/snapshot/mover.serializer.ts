@@ -21,12 +21,11 @@ import type { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { MAX_COMPLETE_QUEST_WIRE } from '@flyff/core/constants/quest';
 import type { CPlayer } from '@flyff/entities';
 import {
-  MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SKILL_SIZE, SM_MAX,
+  MAX_HUMAN_PARTS, MAX_JOB, MAX_SKILL_JOB, SM_MAX,
   MAX_HONOR_TITLE, MAX_INVENTORY, INVENTORY_SLOTS, BANK_SLOTS, MAX_BANK_TABS, MAX_POCKET_TABS,
 } from '@flyff/world-core';
 import { writeQuestStruct } from '@flyff/quest';
-import { writeCItemElemBody, writeItemContainer } from '@flyff/world-core';
-import type { InventorySlot } from '@flyff/entities';
+import { writeItemContainer } from '@flyff/world-core';
 import { MAX_CHEERPOINT } from '@flyff/entities';
 
 const NULL_ID = 0xffffffff;
@@ -117,7 +116,7 @@ export function writeMoverExcludeItem(w: PacketWriter, p: CPlayer): void {
 
   // m_vtInfo.GetTitle() -- private-shop ("vendor") sign text. "" when not
   // vending; otherwise the seller's overhead shop title (set on PVENDOR_OPEN).
-  w.writeString(p.m_vtInfo.title ?? '');
+  w.writeString(p.m_vtInfo.title);
 
   // Visible equipment: uSize then uSize * { uParts:BYTE, itemId:WORD, flag:BYTE }.
   // C++ back-patches uSize after the loop; we count first instead.

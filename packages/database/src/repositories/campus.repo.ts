@@ -100,9 +100,7 @@ export class CampusRepository {
         const [inserted] = await trx('campus')
           .insert({ master_id: masterId, created_at_ms: nowMs })
           .returning('id');
-        campusId = typeof inserted === 'object' && inserted !== null
-          ? Number((inserted as { id: number }).id)
-          : Number(inserted);
+        campusId = Number(inserted);
         await trx('campus_member').insert({
           campus_id: campusId, character_id: masterId,
           member_level: masterLevel, joined_at_ms: nowMs,

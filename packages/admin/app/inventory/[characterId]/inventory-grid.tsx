@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { ItemTile } from "./item-tile";
-import { BAG_SLOTS } from "./constants";
-import type { SlotItem } from "./types";
+import { ItemTile } from './item-tile';
+import { BAG_SLOTS } from './constants';
+import type { SlotItem } from './types';
 
 interface InventoryGridProps {
   items: SlotItem[];
@@ -26,7 +26,7 @@ export function InventoryGrid({
   onRemove,
   interactive = true,
   compact = false,
-}: InventoryGridProps) {
+}: InventoryGridProps): React.JSX.Element {
   const bySlot = new Map<number, SlotItem>();
   for (const it of items) bySlot.set(it.slot, it);
 

@@ -36,7 +36,7 @@ export type ShopOpenResult =
   | { ok: false; reason: 'invalid' | 'not_vendor' | 'busy' | 'chaotic' };
 
 export type BuyResult =
-  | { ok: true; changes: Array<{ slot: number; objid: number; itemId: number; count: number; isNew: boolean }>; gold: number }
+  | { ok: true; changes: { slot: number; objid: number; itemId: number; count: number; isNew: boolean }[]; gold: number }
   | { ok: false; reason: 'no_vendor' | 'invalid' | 'no_stock' | 'no_gold' | 'bag_full' };
 
 export type SellResult =
@@ -110,7 +110,9 @@ export class ShopService {
     if (!vendor) return { ok: false, reason: 'no_vendor' };
     if (!this.inVendorBounds(cTab, nId) || nNum <= 0 || !Number.isInteger(nNum)) return { ok: false, reason: 'invalid' };
 
-    const stockSlot = vendor.m_vendorStock[cTab]![nId];
+    const stockTab = vendor.m_vendorStock[cTab];
+    if (!stockTab) return { ok: false, reason: 'no_stock' };
+    const stockSlot = stockTab[nId];
     if (!stockSlot || stockSlot.itemId !== dwItemId) return { ok: false, reason: 'no_stock' };
 
     // H13: clamp nNum to vendor stock (C++ DPSrvr.cpp:2874)
@@ -162,7 +164,7 @@ export class ShopService {
     // findSlotByObjId scans the full 73-slot range (bag + equip parts), so gate
     // equip slots (>= MAX_INVENTORY) here.
     if (slot >= MAX_INVENTORY) return { ok: false, reason: 'unsellable' };
-    const src = player.m_Inventory[slot]!;
+    const src = player.m_Inventory[slot];
     if (!src) return { ok: false, reason: 'empty' };
 
     const def = this.deps.getItem(src.itemId);
@@ -190,7 +192,7 @@ export class ShopService {
   private tradeVendor(player: CPlayer): { m_vendorStock: VendorStock } | null {
     if (player.m_idOther === null) return null;
     const vendor = this.deps.spawnManager.get(player.m_idOther);
-    if (!vendor || !vendor.m_abMoverMenu.includes(MMI_TRADE)) return null;
+    if (!vendor?.m_abMoverMenu.includes(MMI_TRADE)) return null;
     return vendor;
   }
 

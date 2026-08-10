@@ -23,7 +23,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.alterTable('inventory_item', (table: any) => {
+  await db.schema.alterTable('inventory_item', (table) => {
     table.tinyint('element').unsigned().notNullable().defaultTo(0);
     table.integer('element_level').unsigned().notNullable().defaultTo(0);
   });
@@ -35,7 +35,7 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('inventory_item', (table: any) => {
+  await db.schema.alterTable('inventory_item', (table) => {
     table.dropColumn('element_level');
     table.dropColumn('element');
   });

@@ -12,38 +12,39 @@
  * @module app/api/zones/route
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { auth } from "@/lib/auth";
-import { writeAudit } from "@/lib/audit";
-import { findZone, saveZoneMeta, zoneMeta } from "@/lib/zones";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { auth } from '@/lib/auth';
+import { writeAudit } from '@/lib/audit';
+import { findZone, saveZoneMeta, zoneMeta } from '@/lib/zones';
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const PutSchema = z.object({
   zoneId: z.string().min(1).max(64),
   meta: z.record(z.unknown()),
 });
 
-export async function GET(req: NextRequest) {
-  const zoneId = req.nextUrl.searchParams.get("zoneId");
-  if (!zoneId) return NextResponse.json({ ok: false, error: "Missing zoneId" }, { status: 400 });
+export function GET(req: NextRequest): Response {
+  const zoneId = req.nextUrl.searchParams.get('zoneId');
+  if (!zoneId) return NextResponse.json({ ok: false, error: 'Missing zoneId' }, { status: 400 });
 
   const zone = findZone(zoneId);
-  if (!zone) return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
+  if (!zone) return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
 
   return NextResponse.json({ ok: true, file: zone.file, meta: zoneMeta(zone.doc) });
 }
 
-export async function PUT(req: NextRequest) {
+export async function PUT(req: NextRequest): Promise<Response> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const body = PutSchema.safeParse(await req.json().catch(() => null));
   if (!body.success) {
     return NextResponse.json(
-      { ok: false, error: body.error.issues[0]?.message ?? "Invalid body" },
+      { ok: false, error: body.error.issues[0]?.message ?? 'Invalid body' },
       { status: 400 },
     );
   }
@@ -51,15 +52,18 @@ export async function PUT(req: NextRequest) {
   try {
     saveZoneMeta(body.data.zoneId, body.data.meta);
   } catch (e) {
-    const msg = e instanceof z.ZodError
-      ? e.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")
-      : e instanceof Error ? e.message : "Save failed";
+    const msg =
+      e instanceof z.ZodError
+        ? e.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')
+        : e instanceof Error
+          ? e.message
+          : 'Save failed';
     return NextResponse.json({ ok: false, error: msg }, { status: 400 });
   }
 
   await writeAudit(session, {
-    action: "zone_update",
-    targetType: "zone",
+    action: 'zone_update',
+    targetType: 'zone',
     // The target is a slug, not a numeric row id.
     targetId: null,
     details: { zoneId: body.data.zoneId, keys: Object.keys(body.data.meta) },

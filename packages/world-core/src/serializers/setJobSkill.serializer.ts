@@ -36,7 +36,7 @@ export class SetJobSkillSerializer {
   build(
     moverObjid: number,
     job: number,
-    roster: ReadonlyArray<SetJobSkillSlot>,
+    roster: readonly SetJobSkillSlot[],
   ): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);

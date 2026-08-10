@@ -151,17 +151,12 @@ export class IpcClient {
         rejectUnauthorized: this.tlsOptions.rejectUnauthorized ?? true,
       });
 
-      if (!this.socket) {
-        reject(new Error('Failed to create socket'));
-        return;
-      }
-
       this.socket.on('secureConnect', () => {
         resolve();
       });
 
       this.socket.on('error', (err) => {
-        reject(err);
+        reject(err instanceof Error ? err : new Error(String(err)));
       });
     });
   }
@@ -189,7 +184,7 @@ export class IpcClient {
   async request<T = unknown>(
     endpoint: string,
     data: unknown,
-    timeoutMs: number = 5000
+    timeoutMs = 5000
   ): Promise<T> {
     if (this.socket === null) {
       throw new Error('Not connected -- call connect() first');
@@ -206,13 +201,13 @@ export class IpcClient {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         cleanup();
-        reject(new IpcTimeoutError(`Request timeout after ${timeoutMs}ms`));
+        reject(new IpcTimeoutError(`Request timeout after ${String(timeoutMs)}ms`));
       }, timeoutMs);
 
       // Track accumulated data for this request
       let buffer = Buffer.alloc(0);
 
-      const dataHandler = (chunk: Buffer) => {
+      const dataHandler = (chunk: Buffer): void => {
         buffer = Buffer.concat([buffer, chunk]);
 
         // Try to extract a complete response
@@ -230,26 +225,28 @@ export class IpcClient {
             }
 
             resolve(envelope.data as T);
-          } catch (err) {
-            reject(new Error(`Failed to parse response: ${err}`));
+          } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : String(err);
+            reject(new Error(`Failed to parse response: ${errorMessage}`));
           }
         }
       };
 
-      const errorHandler = () => {
+      const errorHandler = (): void => {
         cleanup();
         reject(new Error('Socket error during request'));
       };
 
-      const cleanup = () => {
+      const socket = this.socket;
+      const cleanup = (): void => {
         clearTimeout(timeout);
-        this.socket!.off('data', dataHandler);
-        this.socket!.off('error', errorHandler);
+        socket.off('data', dataHandler);
+        socket.off('error', errorHandler);
       };
 
-      this.socket!.on('data', dataHandler);
-      this.socket!.once('error', errorHandler);
-      this.socket!.write(message);
+      socket.on('data', dataHandler);
+      socket.once('error', errorHandler);
+      socket.write(message);
     });
   }
 
@@ -258,7 +255,7 @@ export class IpcClient {
    *
    * Destroys the socket and cleans up resources.
    */
-  async close(): Promise<void> {
+  close(): void {
     if (this.socket !== null) {
       this.socket.destroy();
       this.socket = null;

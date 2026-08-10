@@ -1,21 +1,27 @@
-import { db } from "@/lib/db";
-import { accounts, characters } from "@/../drizzle/schema";
-import { AUTH, AUTH_LABELS, hasAuthority } from "@flyff/entities/constants/authority";
-import { count, eq, desc, sql, gte } from "drizzle-orm";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { PageHeader } from "@/components/page-header";
-import { StatCard } from "@/components/stat-card";
-import { Users, Swords, Shield, Ban, Crown, Trophy } from "lucide-react";
-import { formatNumber, jobName, worldName } from "@/lib/utils";
+import { db } from '@/lib/db';
+import { accounts, characters } from '@/../drizzle/schema';
+import { AUTH, AUTH_LABELS, hasAuthority } from '@flyff/entities/constants/authority';
+import { count, eq, desc, gte } from 'drizzle-orm';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { PageHeader } from '@/components/page-header';
+import { StatCard } from '@/components/stat-card';
+import { Users, Swords, Shield, Ban, Crown, Trophy } from 'lucide-react';
+import { formatNumber, jobName, worldName } from '@/lib/utils';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export default async function DashboardPage() {
+export default async function DashboardPage(): Promise<React.JSX.Element> {
   const [totalAccounts] = await db.select({ value: count() }).from(accounts);
   const [totalCharacters] = await db.select({ value: count() }).from(characters);
-  const [totalGm] = await db.select({ value: count() }).from(accounts).where(gte(accounts.authority, AUTH.GAMEMASTER));
-  const [totalBanned] = await db.select({ value: count() }).from(accounts).where(eq(accounts.banned, true));
+  const [totalGm] = await db
+    .select({ value: count() })
+    .from(accounts)
+    .where(gte(accounts.authority, AUTH.GAMEMASTER));
+  const [totalBanned] = await db
+    .select({ value: count() })
+    .from(accounts)
+    .where(eq(accounts.banned, true));
 
   const topCharacters = await db
     .select({
@@ -42,10 +48,15 @@ export default async function DashboardPage() {
     .limit(5);
 
   const stats = [
-    { label: "Total Accounts", value: totalAccounts.value, icon: Users, tone: "accent" as const },
-    { label: "Total Characters", value: totalCharacters.value, icon: Swords, tone: "success" as const },
-    { label: "Staff Accounts", value: totalGm.value, icon: Shield, tone: "gold" as const },
-    { label: "Banned Accounts", value: totalBanned.value, icon: Ban, tone: "destructive" as const },
+    { label: 'Total Accounts', value: totalAccounts.value, icon: Users, tone: 'accent' as const },
+    {
+      label: 'Total Characters',
+      value: totalCharacters.value,
+      icon: Swords,
+      tone: 'success' as const,
+    },
+    { label: 'Staff Accounts', value: totalGm.value, icon: Shield, tone: 'gold' as const },
+    { label: 'Banned Accounts', value: totalBanned.value, icon: Ban, tone: 'destructive' as const },
   ];
 
   return (
@@ -83,14 +94,14 @@ export default async function DashboardPage() {
                   <div className="flex items-center gap-3">
                     <span
                       className={
-                        "flex h-6 w-6 items-center justify-center rounded-md text-xs font-bold " +
+                        'flex h-6 w-6 items-center justify-center rounded-md text-xs font-bold ' +
                         (i === 0
-                          ? "bg-gold/20 text-gold"
+                          ? 'bg-gold/20 text-gold'
                           : i === 1
-                            ? "bg-muted text-muted-foreground"
+                            ? 'bg-muted text-muted-foreground'
                             : i === 2
-                              ? "bg-warning/20 text-warning"
-                              : "text-muted-foreground")
+                              ? 'bg-warning/20 text-warning'
+                              : 'text-muted-foreground')
                       }
                     >
                       {i + 1}
@@ -113,7 +124,10 @@ export default async function DashboardPage() {
         </Card>
 
         {/* Recent Accounts */}
-        <Card className="animate-[fade-in-up_0.4s_ease-out_both]" style={{ animationDelay: "80ms" }}>
+        <Card
+          className="animate-[fade-in-up_0.4s_ease-out_both]"
+          style={{ animationDelay: '80ms' }}
+        >
           <CardHeader>
             <div className="flex items-center gap-2">
               <Crown className="h-4 w-4 text-primary" />
@@ -136,7 +150,7 @@ export default async function DashboardPage() {
                   </div>
                   <div className="flex gap-1">
                     {hasAuthority(acc.authority, AUTH.GAMEMASTER) && (
-                      <Badge variant="gold">{AUTH_LABELS[acc.authority] ?? "Staff"}</Badge>
+                      <Badge variant="gold">{AUTH_LABELS[acc.authority] ?? 'Staff'}</Badge>
                     )}
                     {acc.banned && <Badge variant="destructive">Banned</Badge>}
                     {!hasAuthority(acc.authority, AUTH.GAMEMASTER) && !acc.banned && (

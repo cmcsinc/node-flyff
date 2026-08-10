@@ -11,17 +11,18 @@
  * @module app/api/mail/route
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { eq } from "drizzle-orm";
-import { db } from "@/lib/db";
-import { characters, mail } from "@/../drizzle/schema";
-import { auth } from "@/lib/auth";
-import { publishAdminCommand } from "@/lib/ipc";
-import { writeAudit } from "@/lib/audit";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { eq } from 'drizzle-orm';
+import { db } from '@/lib/db';
+import { characters, mail } from '@/../drizzle/schema';
+import { auth } from '@/lib/auth';
+import { publishAdminCommand } from '@/lib/ipc';
+import { writeAudit } from '@/lib/audit';
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 /**
  * Title <=31 and text <=255 are hard client limits: `CMailBox::Serialize`
@@ -38,33 +39,35 @@ const BodySchema = z.object({
   itemCount: z.number().int().min(1).max(9999).optional(),
 });
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<Response> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const parsed = BodySchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid body" },
+      { ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid body' },
       { status: 400 },
     );
   }
 
   const { receiverId, title, text, gold, itemId, itemCount } = parsed.data;
 
-  const [receiver] = await db
-    .select({ id: characters.id })
-    .from(characters)
-    .where(eq(characters.id, receiverId))
-    .limit(1);
+  const receiver = (
+    await db
+      .select({ id: characters.id })
+      .from(characters)
+      .where(eq(characters.id, receiverId))
+      .limit(1)
+  ).at(0);
   if (!receiver) {
-    return NextResponse.json({ ok: false, error: "Character not found" }, { status: 404 });
+    return NextResponse.json({ ok: false, error: 'Character not found' }, { status: 404 });
   }
 
   await db.insert(mail).values({
     receiverId,
     senderId: 0,
-    senderName: "FLYFF",
+    senderName: 'FLYFF',
     title,
     text,
     gold: String(gold ?? 0),
@@ -77,13 +80,19 @@ export async function POST(req: NextRequest) {
   });
 
   // Best-effort nudge; the row is durable either way.
-  const delivered = await publishAdminCommand({ kind: "mail_pushed", charId: receiverId });
+  const delivered = await publishAdminCommand({ kind: 'mail_pushed', charId: receiverId });
 
   await writeAudit(session, {
-    action: "mail_send",
-    targetType: "character",
+    action: 'mail_send',
+    targetType: 'character',
     targetId: receiverId,
-    details: { title, gold: String(gold ?? 0), itemId: itemId ?? null, itemCount: itemCount ?? 0, delivered },
+    details: {
+      title,
+      gold: String(gold ?? 0),
+      itemId: itemId ?? null,
+      itemCount: itemCount ?? 0,
+      delivered,
+    },
   });
 
   return NextResponse.json({ ok: true, delivered });

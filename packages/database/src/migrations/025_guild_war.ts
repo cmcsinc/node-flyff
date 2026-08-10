@@ -34,13 +34,13 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.alterTable('guild', (table: any) => {
+  await db.schema.alterTable('guild', (table) => {
     // `m_nWinPoint`. Signed: `Result` subtracts from the loser and only then
     // clamps at zero (`guildwar.cpp:214`), so a negative intermediate is real.
     table.integer('win_point').notNullable().defaultTo(0);
   });
 
-  await db.schema.createTable('guild_war', (table: any) => {
+  await db.schema.createTable('guild_war', (table) => {
     // NOT `increments`: `GuildWarManager` issues the id in-memory before any
     // await (the ACPT_GUILD_WAR broadcast carries it) and inserts it
     // explicitly, seeding from `max(id) + 1` at boot -- the same pattern as
@@ -102,7 +102,7 @@ export async function up(db: Knex): Promise<void> {
  */
 export async function down(db: Knex): Promise<void> {
   await db.schema.dropTableIfExists('guild_war');
-  await db.schema.alterTable('guild', (table: any) => {
+  await db.schema.alterTable('guild', (table) => {
     table.dropColumn('win_point');
   });
 }

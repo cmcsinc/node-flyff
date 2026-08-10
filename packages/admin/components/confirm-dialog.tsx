@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -27,11 +27,11 @@ export function ConfirmDialog({
   onOpenChange,
   title,
   description,
-  confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
+  confirmLabel = 'Confirm',
+  cancelLabel = 'Cancel',
   destructive = false,
   onConfirm,
-}: ConfirmDialogProps) {
+}: ConfirmDialogProps): React.JSX.Element | null {
   const [pending, setPending] = React.useState(false);
   const confirmRef = React.useRef<HTMLButtonElement>(null);
   const cancelRef = React.useRef<HTMLButtonElement>(null);
@@ -40,12 +40,14 @@ export function ConfirmDialog({
   React.useEffect(() => {
     if (!open) return;
     confirmRef.current?.focus();
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+    const handleKey = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') {
         e.preventDefault();
         onOpenChange(false);
-      } else if (e.key === "Tab") {
-        const focusables = [cancelRef.current, confirmRef.current].filter(Boolean) as HTMLButtonElement[];
+      } else if (e.key === 'Tab') {
+        const focusables = [cancelRef.current, confirmRef.current].filter(
+          Boolean,
+        ) as HTMLButtonElement[];
         if (focusables.length === 0) return;
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
@@ -58,17 +60,17 @@ export function ConfirmDialog({
         }
       }
     };
-    document.addEventListener("keydown", handleKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return (): void => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
     };
   }, [open, onOpenChange]);
 
   if (!open) return null;
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (): Promise<void> => {
     try {
       setPending(true);
       await onConfirm();
@@ -88,7 +90,9 @@ export function ConfirmDialog({
     >
       <div
         className="absolute inset-0 bg-scrim backdrop-blur-sm animate-[fade-in-up_0.15s_ease-out]"
-        onClick={() => !pending && onOpenChange(false)}
+        onClick={() => {
+          if (!pending) onOpenChange(false);
+        }}
       />
       <div className="relative w-full max-w-md rounded-xl border border-border bg-popover p-6 shadow-overlay animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]">
         <h2 id="confirm-title" className="text-lg font-semibold tracking-tight">
@@ -102,7 +106,9 @@ export function ConfirmDialog({
             ref={cancelRef}
             type="button"
             variant="outline"
-            onClick={() => onOpenChange(false)}
+            onClick={() => {
+              onOpenChange(false);
+            }}
             disabled={pending}
           >
             {cancelLabel}
@@ -110,8 +116,10 @@ export function ConfirmDialog({
           <Button
             ref={confirmRef}
             type="button"
-            variant={destructive ? "destructive" : "default"}
-            onClick={handleConfirm}
+            variant={destructive ? 'destructive' : 'default'}
+            onClick={() => {
+              void handleConfirm();
+            }}
             disabled={pending}
           >
             {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

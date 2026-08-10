@@ -109,7 +109,7 @@ export class VisibilityService {
    */
   refresh(charId: number, force = false): void {
     const viewer = this.deps.playerManager.get(charId);
-    if (!viewer || !viewer.m_vicinitySent) return;
+    if (!viewer?.m_vicinitySent) return;
     if (!force) {
       const last = this.lastDiffAt.get(charId);
       if (last && distSq2(last, viewer.m_vPos) < this.stepSq) return;

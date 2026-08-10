@@ -93,7 +93,7 @@ export class BuffRepository {
    * @param buffs - Active buffs to persist (only BUFF_SKILL entries)
    */
   async saveAll(characterId: number, buffs: PersistableBuff[]): Promise<void> {
-    await this.db.transaction(async (trx: any) => {
+    await this.db.transaction(async (trx) => {
       await trx('character_buffs').where({ character_id: characterId }).del();
       if (buffs.length === 0) return;
       const rows = buffs.map((b) => ({

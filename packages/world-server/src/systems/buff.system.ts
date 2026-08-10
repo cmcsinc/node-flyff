@@ -64,7 +64,7 @@ export class BuffSystem {
   }
 
   /** Apply periodic-damage ticks: subtract HP, sync the bar, flag death. */
-  private onDots(p: CPlayer, dots: ReadonlyArray<{ buff: ActiveBuff; damage: number }>): void {
+  private onDots(p: CPlayer, dots: readonly { buff: ActiveBuff; damage: number }[]): void {
     let total = 0;
     for (const d of dots) total += d.damage;
     if (total <= 0) return;

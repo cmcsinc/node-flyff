@@ -22,7 +22,7 @@
  * @module handlers/join.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { sendPacket, type ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { createLogger } from '@flyff/core/logger';
@@ -46,17 +46,17 @@ export class JoinHandler {
   async handleJoin(socket: ClientSocket, reader: PacketReader): Promise<void> {
     let outcome;
     try {
-      const _dwWorldId = reader.readDword();
+      reader.readDword(); // dwWorldId (unused — packet order must be consumed)
       const idPlayer = reader.readDword();
-      const _dwAuthKey = reader.readDword();
-      const _idParty = reader.readDword();
-      const _idGuild = reader.readDword();
-      const _idWar = reader.readDword();
-      const _uChannel = reader.readDword();
+      reader.readDword(); // dwAuthKey
+      reader.readDword(); // idParty
+      reader.readDword(); // idGuild
+      reader.readDword(); // idWar
+      reader.readDword(); // uChannel
       const nSlot = reader.readByte();
-      const _name = reader.readString();
-      const _account = reader.readString();
-      const _password = reader.readString();
+      reader.readString(); // name
+      reader.readString(); // account
+      reader.readString(); // password
 
       if (nSlot >= 3) {
         logger.warn({ idPlayer, nSlot }, 'JOIN rejected -- slot out of range');

@@ -34,8 +34,8 @@ export class TaskBarSnapshotSerializer {
    */
   build(
     objid: number,
-    grid: ReadonlyArray<ReadonlyArray<Shortcut>>,
-    queue: ReadonlyArray<Shortcut> = [],
+    grid: readonly (readonly Shortcut[])[],
+    queue: readonly Shortcut[] = [],
   ): Buffer {
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);
@@ -48,11 +48,13 @@ export class TaskBarSnapshotSerializer {
 
     // Item grid -- buffer non-empty slots so count precedes entries (C++ skips
     // SHORTCUT_NONE). Grid is 8x9 so the array is tiny.
-    const entries: Array<{ i: number; j: number; slot: Shortcut }> = [];
+    const entries: { i: number; j: number; slot: Shortcut }[] = [];
     for (let i = 0; i < MAX_SLOT_ITEM_COUNT && i < grid.length; i++) {
-      const row = grid[i]!;
+      const row = grid[i];
+      if (row === undefined) break;
       for (let j = 0; j < MAX_SLOT_ITEM && j < row.length; j++) {
-        const slot = row[j]!;
+        const slot = row[j];
+        if (slot === undefined) continue;
         if (slot.dwShortcut !== SHORTCUT.NONE) entries.push({ i, j, slot });
       }
     }
@@ -71,9 +73,10 @@ export class TaskBarSnapshotSerializer {
 
     // Action-slot queue -- non-empty entries only (C++ Serialize skips
     // SHORTCUT_NONE). MAX_SLOT_QUEUE(5) so the array is tiny.
-    const qEntries: Array<{ i: number; slot: Shortcut }> = [];
+    const qEntries: { i: number; slot: Shortcut }[] = [];
     for (let i = 0; i < MAX_SLOT_QUEUE && i < queue.length; i++) {
-      const slot = queue[i]!;
+      const slot = queue[i];
+      if (slot === undefined) continue;
       if (slot.dwShortcut !== SHORTCUT.NONE) qEntries.push({ i, slot });
     }
     w.writeDword(qEntries.length);         // queueCount

@@ -12,10 +12,11 @@
  * @module lib/zone-seq
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
-import { parseDocument, isSeq, type Document, type YAMLSeq } from "yaml";import { getYamlDir, invalidateResourceCache } from "./resource-cache";
+import { readFileSync, writeFileSync } from 'node:fs';
+import { parseDocument, isSeq, type Document, type YAMLSeq } from 'yaml';
+import { getYamlDir, invalidateResourceCache } from './resource-cache';
 
-export const ZONE_DIR = "worlds/zones";
+export const ZONE_DIR = 'worlds/zones';
 
 /** Zone identity for filter dropdowns. */
 export interface ZoneRef {
@@ -34,9 +35,8 @@ export interface ZoneDoc {
 export function zoneDocs(): ZoneDoc[] {
   return getYamlDir(ZONE_DIR).map(({ file, doc }) => ({
     file,
-    zoneId: typeof doc._id === "string" ? doc._id : "",
-    zoneName:
-      typeof doc.name === "string" ? doc.name : typeof doc._id === "string" ? doc._id : "?",
+    zoneId: typeof doc._id === 'string' ? doc._id : '',
+    zoneName: typeof doc.name === 'string' ? doc.name : typeof doc._id === 'string' ? doc._id : '?',
     doc,
   }));
 }
@@ -45,7 +45,7 @@ export function zoneDocs(): ZoneDoc[] {
 export function zoneSeq(doc: Record<string, unknown>, key: string): Record<string, unknown>[] {
   const list = doc[key];
   if (!Array.isArray(list)) return [];
-  return list.filter((e): e is Record<string, unknown> => typeof e === "object" && e !== null);
+  return list.filter((e): e is Record<string, unknown> => typeof e === 'object' && e !== null);
 }
 
 /** All zones that can hold entries. */
@@ -58,11 +58,11 @@ export function loadZoneRefs(): ZoneRef[] {
 
 /** `"flaris:12"` → `{ zoneId: "flaris", entryId: 12 }`; `"flaris:new"` → `entryId: null`. */
 export function parseZoneRef(ref: string): { zoneId: string; entryId: number | null } | null {
-  const sep = ref.lastIndexOf(":");
+  const sep = ref.lastIndexOf(':');
   if (sep <= 0 || sep === ref.length - 1) return null;
   const zoneId = ref.slice(0, sep);
   const tail = ref.slice(sep + 1);
-  if (tail === "new") return { zoneId, entryId: null };
+  if (tail === 'new') return { zoneId, entryId: null };
   const entryId = Number(tail);
   if (!Number.isInteger(entryId) || entryId <= 0) return null;
   return { zoneId, entryId };
@@ -82,7 +82,7 @@ export function zoneFileFor(zoneId: string): string | null {
 
 /** Open one collection of a zone file, creating the node when absent. */
 function openSeq(file: string, key: string): { doc: Document; seq: YAMLSeq } {
-  const doc = parseDocument(readFileSync(file, "utf-8"));
+  const doc = parseDocument(readFileSync(file, 'utf-8'));
   let seq = doc.get(key);
   if (!isSeq(seq)) {
     doc.set(key, []);
@@ -93,7 +93,7 @@ function openSeq(file: string, key: string): { doc: Document; seq: YAMLSeq } {
 }
 
 function idOf(item: unknown): number {
-  return Number((item as { get?: (k: string) => unknown }).get?.("id"));
+  return Number((item as { get?: (k: string) => unknown }).get?.('id'));
 }
 
 function seqIds(seq: YAMLSeq): number[] {
@@ -128,7 +128,7 @@ export function writeZoneEntryToFile(
   if (idx >= 0) seq.set(idx, node);
   else seq.add(node);
 
-  writeFileSync(file, doc.toString({ lineWidth: 120 }), "utf-8");
+  writeFileSync(file, doc.toString({ lineWidth: 120 }), 'utf-8');
   return id;
 }
 
@@ -139,7 +139,7 @@ export function deleteZoneEntryFromFile(file: string, key: string, entryId: numb
   if (idx < 0) return false;
 
   seq.delete(idx);
-  writeFileSync(file, doc.toString({ lineWidth: 120 }), "utf-8");
+  writeFileSync(file, doc.toString({ lineWidth: 120 }), 'utf-8');
   return true;
 }
 

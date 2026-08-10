@@ -15,16 +15,24 @@
  * @module components/resource-table
  */
 
-import * as React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead } from "@/components/ui/table";
-import { EmptyRow } from "@/components/empty-state";
-import { Pagination } from "@/components/pagination";
-import { cn } from "@/lib/utils";
-import type { Page } from "@/lib/paginate";
-import type { Sort } from "@/lib/sort";
+import * as React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  SortableHead,
+} from '@/components/ui/table';
+import { EmptyRow } from '@/components/empty-state';
+import { Pagination } from '@/components/pagination';
+import { cn } from '@/lib/utils';
+import type { Page } from '@/lib/paginate';
+import type { Sort } from '@/lib/sort';
 
-type Align = "left" | "right" | "center";
+type Align = 'left' | 'right' | 'center';
 
 export interface ResourceColumn<T> {
   /** Sort key when sortable; also the React key for the cell. */
@@ -51,8 +59,8 @@ interface ResourceTableProps<T> {
 }
 
 function alignClass(align: Align | undefined): string | undefined {
-  if (align === "right") return "text-right";
-  if (align === "center") return "text-center";
+  if (align === 'right') return 'text-right';
+  if (align === 'center') return 'text-center';
   return undefined;
 }
 

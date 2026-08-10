@@ -34,17 +34,17 @@
  * @module lib/client-patch
  */
 
-import { readFile, writeFile, rename, stat, unlink } from "node:fs/promises";
-import { join, basename } from "node:path";
-import { parseResArchive, readResMember, repackResArchive } from "@flyff/resources";
-import { RAW_DIR } from "./resource-cache";
-import { ARCHIVES, isArchive } from "./client-archives";
-import { authFileStatus, regenerateAuthFile, type AuthFileStatus } from "./client-auth-file";
+import { readFile, writeFile, rename, stat, unlink } from 'node:fs/promises';
+import { join, basename } from 'node:path';
+import { parseResArchive, readResMember, repackResArchive } from '@flyff/resources';
+import { RAW_DIR } from './resource-cache';
+import { ARCHIVES, isArchive } from './client-archives';
+import { authFileStatus, regenerateAuthFile, type AuthFileStatus } from './client-auth-file';
 
-export { ARCHIVES } from "./client-archives";
+export { ARCHIVES } from './client-archives';
 
 /** Suffix for the pre-patch copy kept beside each archive. */
-const BACKUP_SUFFIX = ".bak";
+const BACKUP_SUFFIX = '.bak';
 
 /** One `raw/` file measured against its packed copy in an archive. */
 export interface MemberStatus {
@@ -130,7 +130,7 @@ async function readArchiveStatus(dir: string, name: string): Promise<ArchiveStat
   try {
     archive = parseResArchive(await readFile(path));
   } catch (e) {
-    return { ...base, error: e instanceof Error ? e.message : "Unreadable" };
+    return { ...base, error: e instanceof Error ? e.message : 'Unreadable' };
   }
 
   const tracked: MemberStatus[] = [];
@@ -234,7 +234,7 @@ export async function patchArchive(
   }
 
   // Temp beside the target so both renames stay same-filesystem and atomic.
-  const temp = path + ".patching";
+  const temp = path + '.patching';
   const backup = path + BACKUP_SUFFIX;
   await writeFile(temp, repackResArchive(archive, replacements));
   try {
@@ -268,7 +268,7 @@ export async function restoreArchive(dir: string, name: string): Promise<void> {
   const backup = path + BACKUP_SUFFIX;
   if (!(await exists(backup))) throw new Error(`No backup exists for ${name}`);
 
-  await rename(path, path + ".patched").catch(() => undefined);
+  await rename(path, path + '.patched').catch(() => undefined);
   await rename(backup, path);
   await regenerateAuthFile(dir);
 }

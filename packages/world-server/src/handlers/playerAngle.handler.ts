@@ -10,7 +10,7 @@
  * @module handlers/playerAngle.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { Validate } from '@flyff/core/utils/validate';
@@ -33,7 +33,7 @@ export class PlayerAngleHandler {
       socket.destroy();
       return;
     }
-    const player = this.playerManager.get(socket.session.charId!);
+    const player = this.playerManager.get(socket.session.charId ?? -1);
     if (!player) { socket.destroy(); return; }
 
     try {

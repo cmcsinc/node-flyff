@@ -8,7 +8,7 @@
  * @module handlers/revival.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { createLogger } from '@flyff/core/logger';
@@ -29,7 +29,7 @@ export class RevivalHandler {
       socket.destroy();
       return;
     }
-    const player = this.playerManager.get(socket.session.charId!);
+    const player = this.playerManager.get(socket.session.charId ?? -1);
     if (!player) { socket.destroy(); return; }
 
     const outcome = this.revivalService.revive(player, type);

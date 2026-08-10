@@ -286,7 +286,7 @@ export class GuildWarManager {
    */
   private persist(fn: () => Promise<void> | undefined, warId: number, what: string): void {
     try {
-      void fn()?.catch((err: unknown) => logger.warn({ err, warId, what }, 'guild war persist failed'));
+      void fn()?.catch((err: unknown) => { logger.warn({ err, warId, what }, 'guild war persist failed'); });
     } catch (err) {
       logger.warn({ err, warId, what }, 'guild war persist threw');
     }

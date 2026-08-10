@@ -81,7 +81,7 @@ export class SkillRepository {
     // table on JOIN (CPlayer.seedRoster), so storing level-0 roster entries is
     // pure bloat and the reload overlay matches by skillId, not slot.
     const valid = slots.filter((s) => s.skillId !== 0xffffffff && s.skillId > 0 && s.level > 0);
-    await this.db.transaction(async (trx: any) => {
+    await this.db.transaction(async (trx) => {
       await trx('skills').where({ character_id: characterId }).del();
       if (valid.length === 0) return;
       const now = new Date();

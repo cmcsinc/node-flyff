@@ -36,13 +36,13 @@ async function startIpcListeners(
       // ioredis ships as `export = Redis` (CJS); the dynamic-import default needs
       // a construct-signature cast for tsc. Runtime shape matches IpcBus's
       // IpcRedis (on/publish/subscribe/unsubscribe/quit) -- see @flyff/ipc tests.
-      type IpcRedisLike = {
+      interface IpcRedisLike {
         on(event: 'message', h: (channel: string, data: string) => void): void;
         publish(channel: string, data: string): Promise<number>;
         subscribe(channel: string): Promise<void>;
         unsubscribe(channel: string): Promise<void>;
         quit(): Promise<void>;
-      };
+      }
       const Redis = (await import('ioredis')).default as unknown as
         new (url: string, opts?: Record<string, unknown>) => IpcRedisLike;
       const redis = new Redis(cfg.redisUrl, { maxRetriesPerRequest: null });
@@ -111,7 +111,6 @@ async function main(): Promise<void> {
     meleeAttackHandler,
     rangeAttackHandler,
     duelHandler,
-    partyManager,
     partyService,
     partyHandler,
     guildService,
@@ -186,8 +185,8 @@ async function main(): Promise<void> {
     );
   }
 
-  // Assigned below; shutdown() may fire before it exists (a crash during boot).
-  let clientServer: Server | undefined;
+  // Holder so `prefer-const` is satisfied — shutdown() runs before assignment.
+  const clientServer: { server?: Server } = {};
   let shuttingDown = false;
 
   /**
@@ -215,7 +214,7 @@ async function main(): Promise<void> {
 
     // Stop accepting new connections before draining, so a joiner cannot land
     // mid-drain and be left un-notified.
-    clientServer?.close();
+    clientServer.server?.close();
 
     try {
       const drain = await adminCommandService.kickAll(`shutdown:${signal}`);
@@ -364,7 +363,7 @@ async function main(): Promise<void> {
       // Party cleanup FIRST -- needs the live player object to clear m_idParty
       // + re-broadcast roster / disband. After disconnectByCharId drops the
       // player from PlayerManager the party service can no longer resolve them.
-      const charId = socket.session?.charId;
+      const charId = socket.session.charId;
       if (charId !== undefined) {
         const player = playerManager.get(charId);
         if (player) {
@@ -399,7 +398,7 @@ async function main(): Promise<void> {
     },
     logger,
   });
-  clientServer = server;
+  clientServer.server = server;
   server.listen(config.server.port, () => {
     logger.info({ port: config.server.port }, 'World client server listening');
   });

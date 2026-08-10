@@ -10,7 +10,7 @@
  * @module handlers/npcBuff.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { Validate } from '@flyff/core/utils/validate';
@@ -35,7 +35,9 @@ export class NpcBuffHandler {
       socket.destroy();
       return;
     }
-    const player = this.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId === undefined) { socket.destroy(); return; }
+    const player = this.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
 
     let key: string;

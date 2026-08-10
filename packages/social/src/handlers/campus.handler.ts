@@ -54,8 +54,8 @@ export class CampusHandler {
       const requesterId = reader.readDword();
       Validate.dword(requesterId);
       void this.campusService.accept(player, requesterId)
-        .then((out) => logger.debug({ charId: player.m_idPlayer, requesterId, out }, 'CAMPUS_ACCEPT'))
-        .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'CAMPUS_ACCEPT failed'));
+        .then((out) => { logger.debug({ charId: player.m_idPlayer, requesterId, out }, 'CAMPUS_ACCEPT'); })
+        .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'CAMPUS_ACCEPT failed'); });
     } catch (error) {
       this.onParseError(error, player, 'CAMPUS_ACCEPT');
     }
@@ -83,8 +83,8 @@ export class CampusHandler {
       const targetId = reader.readDword();
       Validate.dword(targetId);
       void this.campusService.removeMember(player, targetId)
-        .then((out) => logger.debug({ charId: player.m_idPlayer, targetId, out }, 'CAMPUS_REMOVE_MEMBER'))
-        .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'CAMPUS_REMOVE_MEMBER failed'));
+        .then((out) => { logger.debug({ charId: player.m_idPlayer, targetId, out }, 'CAMPUS_REMOVE_MEMBER'); })
+        .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'CAMPUS_REMOVE_MEMBER failed'); });
     } catch (error) {
       this.onParseError(error, player, 'CAMPUS_REMOVE_MEMBER');
     }

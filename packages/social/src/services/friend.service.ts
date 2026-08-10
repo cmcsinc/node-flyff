@@ -269,7 +269,7 @@ export class FriendService {
     const clamped = clampState(state);
     this.states.set(player.m_idPlayer, clamped);
     void this.deps.friendRepo.setState(player.m_idPlayer, clamped)
-      .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'setState failed'));
+      .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'setState failed'); });
 
     this.deps.playerManager.sendTo(player, buildSetFriendState(player.m_idPlayer, clamped));
     if (clamped !== FRS.AUTOABSENT) {

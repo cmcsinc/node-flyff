@@ -14,7 +14,7 @@
  * @module handlers/taskbar
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { Validate } from '@flyff/core/utils/validate';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
@@ -83,7 +83,7 @@ export class TaskBarHandler {
     body: (player: NonNullable<ReturnType<PlayerManager['get']>>, reader: PacketReader) => void,
   ): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const player = this.deps.playerManager.get(socket.session.charId ?? -1);
     if (!player) { socket.destroy(); return; }
     try {
       body(player, reader);

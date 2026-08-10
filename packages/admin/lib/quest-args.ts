@@ -9,8 +9,8 @@
  * @module lib/quest-args
  */
 
-import type { QuestArg, QuestCommand } from "@flyff/resources";
-import type { BlastTier, QuestArgSpec, QuestCmdSpec } from "./quest-fields";
+import type { QuestArg, QuestCommand } from '@flyff/resources';
+import type { BlastTier, QuestArgSpec, QuestCmdSpec } from './quest-fields';
 
 /** One argument, paired with the spec slot it fills. */
 export interface ArgView {

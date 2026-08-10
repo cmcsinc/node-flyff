@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { PER_PAGE_OPTIONS } from "@/lib/paginate";
+import Link from 'next/link';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { PER_PAGE_OPTIONS } from '@/lib/paginate';
 
 interface PaginationProps {
   page: number;
@@ -17,11 +17,11 @@ interface PaginationProps {
 function href(params: Record<string, string | undefined>, page: number): string {
   const qs = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) {
-    if (k !== "page" && v) qs.set(k, v);
+    if (k !== 'page' && v) qs.set(k, v);
   }
-  if (page > 1) qs.set("page", String(page));
+  if (page > 1) qs.set('page', String(page));
   const s = qs.toString();
-  return s ? `?${s}` : "?";
+  return s ? `?${s}` : '?';
 }
 
 /** Windowed page numbers around the current page, always including first/last. */
@@ -37,7 +37,14 @@ function windowed(page: number, totalPages: number): number[] {
  * Query-string pagination footer. Server-rendered links only — no client JS, so
  * it works with the plain `<form method="GET">` filter bars on the resource pages.
  */
-export function Pagination({ page, totalPages, total, perPage, params, unit = "rows" }: PaginationProps) {
+export function Pagination({
+  page,
+  totalPages,
+  total,
+  perPage,
+  params,
+  unit = 'rows',
+}: PaginationProps): React.JSX.Element {
   const from = total === 0 ? 0 : (page - 1) * perPage + 1;
   const to = Math.min(page * perPage, total);
   const nums = windowed(page, totalPages);
@@ -57,11 +64,7 @@ export function Pagination({ page, totalPages, total, perPage, params, unit = "r
 
       {totalPages > 1 && (
         <div className="flex items-center gap-1">
-          <PageLink
-            href={href(params, page - 1)}
-            disabled={page <= 1}
-            label="Previous page"
-          >
+          <PageLink href={href(params, page - 1)} disabled={page <= 1} label="Previous page">
             <ChevronLeft className="h-4 w-4" />
           </PageLink>
 
@@ -72,12 +75,12 @@ export function Pagination({ page, totalPages, total, perPage, params, unit = "r
               )}
               <Link
                 href={href(params, n)}
-                aria-current={n === page ? "page" : undefined}
+                aria-current={n === page ? 'page' : undefined}
                 className={cn(
-                  "min-w-8 rounded-md border px-2 py-1 text-center text-xs transition-colors",
+                  'min-w-8 rounded-md border px-2 py-1 text-center text-xs transition-colors',
                   n === page
-                    ? "border-primary bg-primary/10 font-semibold text-primary"
-                    : "border-input text-muted-foreground hover:border-ring/40 hover:text-foreground",
+                    ? 'border-primary bg-primary/10 font-semibold text-primary'
+                    : 'border-input text-muted-foreground hover:border-ring/40 hover:text-foreground',
                 )}
               >
                 {n}
@@ -85,11 +88,7 @@ export function Pagination({ page, totalPages, total, perPage, params, unit = "r
             </span>
           ))}
 
-          <PageLink
-            href={href(params, page + 1)}
-            disabled={page >= totalPages}
-            label="Next page"
-          >
+          <PageLink href={href(params, page + 1)} disabled={page >= totalPages} label="Next page">
             <ChevronRight className="h-4 w-4" />
           </PageLink>
         </div>
@@ -108,17 +107,21 @@ function PageLink({
   disabled: boolean;
   label: string;
   children: React.ReactNode;
-}) {
-  const cls = "rounded-md border border-input p-1.5 transition-colors";
+}): React.JSX.Element {
+  const cls = 'rounded-md border border-input p-1.5 transition-colors';
   if (disabled) {
     return (
-      <span aria-disabled="true" aria-label={label} className={cn(cls, "opacity-40")}>
+      <span aria-disabled="true" aria-label={label} className={cn(cls, 'opacity-40')}>
         {children}
       </span>
     );
   }
   return (
-    <Link href={to} aria-label={label} className={cn(cls, "hover:border-ring/40 hover:text-primary")}>
+    <Link
+      href={to}
+      aria-label={label}
+      className={cn(cls, 'hover:border-ring/40 hover:text-primary')}
+    >
       {children}
     </Link>
   );

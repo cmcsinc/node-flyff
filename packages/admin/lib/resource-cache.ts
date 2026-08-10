@@ -12,17 +12,17 @@
  * @module lib/resource-cache
  */
 
-import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { resolve, dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { parse as parseYaml } from "yaml";
-import { loadAllResources, type ResourceIndex } from "@flyff/resources";
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { resolve, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { parse as parseYaml } from 'yaml';
+import { loadAllResources, type ResourceIndex } from '@flyff/resources';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(__dirname, "..", "..", "..");
+const REPO_ROOT = resolve(__dirname, '..', '..', '..');
 
 /** Parsed+validated resource index directory (`@flyff/resources` loaders). */
-export const DATA_DIR = resolve(REPO_ROOT, "packages", "resources", "data");
+export const DATA_DIR = resolve(REPO_ROOT, 'packages', 'resources', 'data');
 
 /** One parsed YAML file plus the absolute path it came from. */
 export interface YamlDoc {
@@ -31,7 +31,7 @@ export interface YamlDoc {
 }
 
 /** `raw/` — the string tables and `.inc` sources the converters read from. */
-export const RAW_DIR = resolve(REPO_ROOT, "packages", "resources", "raw");
+export const RAW_DIR = resolve(REPO_ROOT, 'packages', 'resources', 'raw');
 
 interface CacheState {
   index: Promise<ResourceIndex> | null;
@@ -63,8 +63,8 @@ export function getResourceIndex(): Promise<ResourceIndex> {
 function readYamlFile(filePath: string): Record<string, unknown> | null {
   try {
     if (!existsSync(filePath)) return null;
-    const parsed = parseYaml(readFileSync(filePath, "utf-8"));
-    if (typeof parsed !== "object" || parsed === null) return null;
+    const parsed: unknown = parseYaml(readFileSync(filePath, 'utf-8'));
+    if (typeof parsed !== 'object' || parsed === null) return null;
     return parsed as Record<string, unknown>;
   } catch {
     return null;
@@ -83,7 +83,7 @@ export function getYamlDir(dir: string): YamlDoc[] {
   const docs: YamlDoc[] = !existsSync(dirPath)
     ? []
     : readdirSync(dirPath)
-        .filter((f) => f.endsWith(".yml") && !f.startsWith("_"))
+        .filter((f) => f.endsWith('.yml') && !f.startsWith('_'))
         .map((f) => {
           const file = join(dirPath, f);
           const doc = readYamlFile(file);
@@ -114,9 +114,11 @@ export function getTextTable(fileName: string): Map<string, string> {
   if (existsSync(path)) {
     const buf = readFileSync(path);
     const text =
-      buf[0] === 0xff && buf[1] === 0xfe ? buf.subarray(2).toString("utf16le") : buf.toString("utf8");
+      buf[0] === 0xff && buf[1] === 0xfe
+        ? buf.subarray(2).toString('utf16le')
+        : buf.toString('utf8');
     for (const line of text.split(/\r?\n/)) {
-      const tab = line.indexOf("\t");
+      const tab = line.indexOf('\t');
       if (tab <= 0) continue;
       const key = line.slice(0, tab).trim();
       if (key) table.set(key, line.slice(tab + 1).trim());

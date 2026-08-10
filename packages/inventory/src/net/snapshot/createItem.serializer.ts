@@ -61,7 +61,8 @@ export class CreateItemSnapshotSerializer {
    */
   build(playerObjid: number, entries: readonly CreateItemEntry[]): Buffer {
     if (entries.length === 0) throw new Error('CREATEITEM requires at least one entry');
-    const first = entries[0]!;
+    const first = entries[0];
+    if (!first) throw new Error('CREATEITEM requires at least one entry');
 
     const w = new PacketWriter();
     w.writeDword(PACKETTYPE.SNAPSHOT);   // dwHdr

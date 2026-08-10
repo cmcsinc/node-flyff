@@ -26,8 +26,8 @@
  * @module lib/dialog-inc
  */
 
-import { prefixForNpc, type DialogIndex, type DialogState } from "@flyff/resources";
-import { getResourceIndex } from "./resource-cache";
+import { prefixForNpc, type DialogIndex, type DialogState } from '@flyff/resources';
+import { getResourceIndex } from './resource-cache';
 
 /**
  * Rows 0-8 of `WorldDialog.txt` are not prose — they are the reserved control
@@ -35,15 +35,15 @@ import { getResourceIndex } from "./resource-cache";
  * starts at). Labelled rather than shown as a bare number.
  */
 export const RESERVED_KEY_LABELS: Readonly<Record<number, string>> = {
-  0: "#auto — entry point",
-  1: "#init",
-  2: "#addKey",
-  3: "#yesQuest",
-  4: "#noQuest",
-  5: "#questBegin",
-  6: "#questBeginYes",
-  7: "#questBeginNo",
-  8: "#questEndComplete",
+  0: '#auto — entry point',
+  1: '#init',
+  2: '#addKey',
+  3: '#yesQuest',
+  4: '#noQuest',
+  5: '#questBegin',
+  6: '#questBeginYes',
+  7: '#questBeginNo',
+  8: '#questEndComplete',
 };
 
 /** One string-table row, resolved. `index` is the `n` in `Say( n )`. */
@@ -111,7 +111,9 @@ function usageMap(index: DialogIndex): Map<number, number> {
   if (hit) return hit;
 
   const uses = new Map<number, number>();
-  const bump = (n: number): void => { uses.set(n, (uses.get(n) ?? 0) + 1); };
+  const bump = (n: number): void => {
+    uses.set(n, (uses.get(n) ?? 0) + 1);
+  };
   for (const file of index.byPrefix.values()) {
     for (const state of Object.values(file.states)) {
       for (const n of state.say ?? []) bump(n);
@@ -125,7 +127,7 @@ function usageMap(index: DialogIndex): Map<number, number> {
 
 /** Resolve one index to text + share count. Out-of-range reads as `""`. */
 function line(index: DialogIndex, uses: Map<number, number>, n: number): DialogLineView {
-  return { index: n, text: index.strings[n] ?? "", uses: uses.get(n) ?? 0 };
+  return { index: n, text: index.strings[n] ?? '', uses: uses.get(n) ?? 0 };
 }
 
 function stateView(
@@ -175,7 +177,7 @@ export async function readDialogForKey(characterKey: string): Promise<DialogPref
  */
 export async function readDialogForPrefix(prefix: string): Promise<DialogPrefixView> {
   const idx = await getResourceIndex();
-  const characterKey = idx.dialogs.byPrefix.get(prefix)?.character_key ?? "";
+  const characterKey = idx.dialogs.byPrefix.get(prefix)?.character_key ?? '';
   return buildView(idx.dialogs, characterKey, prefix);
 }
 

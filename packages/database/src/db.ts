@@ -1,7 +1,5 @@
-import * as knexModule from 'knex';
+import knex from 'knex';
 import { z } from 'zod';
-
-const knex = (knexModule as any).default || knexModule;
 
 /**
  * Zod schema for database configuration.

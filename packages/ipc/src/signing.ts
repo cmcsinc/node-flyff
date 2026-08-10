@@ -36,7 +36,7 @@ export function signIpcMessage(
 ): string {
   // Normalize payload with sorted keys for stable signature
   const normalized = JSON.stringify(payload, Object.keys(payload as object).sort());
-  const data = normalized + ts + from;
+  const data = normalized + String(ts) + from;
 
   return createHmac('sha256', secret)
     .update(data)
@@ -83,7 +83,7 @@ export function verifyIpcMessage(
 
   // Reconstruct the signature
   const normalized = JSON.stringify(payload, Object.keys(payload as object).sort());
-  const data = normalized + ts + from;
+  const data = normalized + String(ts) + from;
   const expected = createHmac('sha256', secret)
     .update(data)
     .digest('hex');

@@ -8,7 +8,6 @@
  */
 
 import * as tls from 'node:tls';
-import * as net from 'node:net';
 import { verifyIpcMessage } from './signing';
 
 /**
@@ -151,7 +150,7 @@ export class IpcServer {
 
       // Handle server errors
       this.server.on('error', (err) => {
-        reject(err);
+        reject(err instanceof Error ? err : new Error(String(err)));
       });
 
       // Start listening
@@ -178,12 +177,8 @@ export class IpcServer {
 
       // Try to extract complete messages
       // Messages are newline-delimited JSON
-      while (true) {
-        const newlineIndex = buffer.indexOf('\n');
-        if (newlineIndex === -1) {
-          break; // No complete message yet
-        }
-
+      let newlineIndex = buffer.indexOf('\n');
+      while (newlineIndex !== -1) {
         // Extract one message
         const messageBytes = buffer.subarray(0, newlineIndex);
         buffer = buffer.subarray(newlineIndex + 1);
@@ -192,6 +187,7 @@ export class IpcServer {
         this.processMessage(messageBytes, socket, handler).catch(() => {
           // Errors are logged inside processMessage
         });
+        newlineIndex = buffer.indexOf('\n');
       }
     });
 
@@ -268,8 +264,9 @@ export class IpcServer {
       return;
     }
 
+    const server = this.server;
     return new Promise((resolve) => {
-      this.server!.close(() => {
+      server.close(() => {
         this.server = null;
         resolve();
       });
@@ -291,6 +288,6 @@ export class IpcServer {
    * @returns true if server is listening, false otherwise
    */
   isListening(): boolean {
-    return this.server !== null && this.server.listening;
+    return this.server?.listening ?? false;
   }
 }

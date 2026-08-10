@@ -1,13 +1,14 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { Loader2, Plus, Search, X } from "lucide-react";
-import type { PickerItem } from "./types";
+import * as React from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import { responseError } from '@/lib/api-response';
+import { Loader2, Plus, Search, X } from 'lucide-react';
+import type { PickerItem } from './types';
 
 interface AddItemProps {
   characterId: number;
@@ -20,17 +21,21 @@ interface AddItemProps {
  * input (clamped to the chosen item's stack size), and an optional slot.
  * Submits via the existing `action:"add"` PATCH on the inventory API.
  */
-export function AddItem({ characterId, items }: AddItemProps) {
+export function AddItem({ characterId, items }: AddItemProps): React.JSX.Element {
   const [open, setOpen] = React.useState(false);
   return (
     <>
-      <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
         <Plus className="mr-1 h-4 w-4" />
         Add Item
       </Button>
-      {open && (
-        <AddItemDialog characterId={characterId} items={items} onOpenChange={setOpen} />
-      )}
+      {open && <AddItemDialog characterId={characterId} items={items} onOpenChange={setOpen} />}
     </>
   );
 }
@@ -41,34 +46,36 @@ interface AddItemDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps) {
+function AddItemDialog({
+  characterId,
+  items,
+  onOpenChange,
+}: AddItemDialogProps): React.JSX.Element {
   const router = useRouter();
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = React.useState('');
   const [selected, setSelected] = React.useState<PickerItem | null>(null);
   const [quantity, setQuantity] = React.useState(1);
-  const [slot, setSlot] = React.useState("");
+  const [slot, setSlot] = React.useState('');
   const [pending, setPending] = React.useState(false);
   const searchRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     searchRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onOpenChange(false);
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') onOpenChange(false);
     };
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return (): void => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
     };
   }, [onOpenChange]);
 
   const results = React.useMemo(() => {
     const q = query.trim().toLowerCase();
     const base = q
-      ? items.filter(
-          (it) => it.name.toLowerCase().includes(q) || String(it.id) === q,
-        )
+      ? items.filter((it) => it.name.toLowerCase().includes(q) || String(it.id) === q)
       : items;
     return base.slice(0, 60);
   }, [items, query]);
@@ -76,33 +83,32 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
   // Clamp quantity to the selected item's stack size.
   const maxQty = selected?.stackSize ?? 9999;
 
-  async function submit() {
+  async function submit(): Promise<void> {
     if (!selected) {
-      toast.error("Pick an item first");
+      toast.error('Pick an item first');
       return;
     }
     const qty = Math.max(1, Math.min(quantity, maxQty));
-    const slotNum = slot.trim() === "" ? undefined : Number(slot);
+    const slotNum = slot.trim() === '' ? undefined : Number(slot);
     if (slotNum !== undefined && (!Number.isFinite(slotNum) || slotNum < 0 || slotNum > 72)) {
-      toast.error("Slot must be 0–72 (or blank for auto)");
+      toast.error('Slot must be 0–72 (or blank for auto)');
       return;
     }
     setPending(true);
     try {
-      const res = await fetch(`/api/inventory/${characterId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "add", itemId: selected.id, quantity: qty, slot: slotNum }),
+      const res = await fetch(`/api/inventory/${String(characterId)}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', itemId: selected.id, quantity: qty, slot: slotNum }),
       });
       if (!res.ok) {
-        const body = await res.json().catch(() => null);
-        throw new Error(body?.error ?? `HTTP ${res.status}`);
+        throw new Error((await responseError(res)) ?? `HTTP ${String(res.status)}`);
       }
-      toast.success(`Added ${qty} × ${selected.name}`);
+      toast.success(`Added ${String(qty)} × ${selected.name}`);
       onOpenChange(false);
       router.refresh();
     } catch (err) {
-      toast.error("Failed to add item", { description: (err as Error).message });
+      toast.error('Failed to add item', { description: (err as Error).message });
     } finally {
       setPending(false);
     }
@@ -117,7 +123,9 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
     >
       <div
         className="absolute inset-0 bg-scrim backdrop-blur-sm"
-        onClick={() => !pending && onOpenChange(false)}
+        onClick={() => {
+          if (!pending) onOpenChange(false);
+        }}
       />
       <div className="relative flex max-h-[85vh] w-full max-w-lg flex-col rounded-xl border border-border bg-popover shadow-2xl animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]">
         {/* Header */}
@@ -127,7 +135,9 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
           </h2>
           <button
             type="button"
-            onClick={() => onOpenChange(false)}
+            onClick={() => {
+              onOpenChange(false);
+            }}
             className="rounded p-1 text-muted-foreground hover:text-foreground"
             aria-label="Close"
           >
@@ -142,7 +152,9 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
             <Input
               ref={searchRef}
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
               placeholder="Search by name or id…"
               className="pl-9"
             />
@@ -164,11 +176,11 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
                     setQuantity(1);
                   }}
                   className={[
-                    "flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-left text-sm transition-colors",
+                    'flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-left text-sm transition-colors',
                     selected?.id === it.id
-                      ? "bg-primary/20 ring-1 ring-primary"
-                      : "hover:bg-secondary",
-                  ].join(" ")}
+                      ? 'bg-primary/20 ring-1 ring-primary'
+                      : 'hover:bg-secondary',
+                  ].join(' ')}
                 >
                   <Image
                     src={it.iconUrl}
@@ -198,7 +210,9 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
               min={1}
               max={maxQty}
               value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
+              onChange={(e) => {
+                setQuantity(Number(e.target.value));
+              }}
               className="w-24"
             />
           </div>
@@ -209,17 +223,29 @@ function AddItemDialog({ characterId, items, onOpenChange }: AddItemDialogProps)
               min={0}
               max={72}
               value={slot}
-              onChange={(e) => setSlot(e.target.value)}
+              onChange={(e) => {
+                setSlot(e.target.value);
+              }}
               placeholder="auto"
               className="w-24"
             />
           </div>
           <div className="ml-auto flex gap-2">
-            <Button variant="outline" onClick={() => onOpenChange(false)} disabled={pending}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                onOpenChange(false);
+              }}
+              disabled={pending}
+            >
               Cancel
             </Button>
-            <Button onClick={submit} disabled={pending || !selected}>
-              {pending ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <Plus className="mr-1 h-4 w-4" />}
+            <Button onClick={() => { void submit(); }} disabled={pending || !selected}>
+              {pending ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Plus className="mr-1 h-4 w-4" />
+              )}
               Add
             </Button>
           </div>

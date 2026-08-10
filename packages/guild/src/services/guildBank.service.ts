@@ -233,7 +233,7 @@ export class GuildBankService {
       refine: stored.refine, element: stored.element,
       elementLevel: stored.element_level, flags: stored.flags,
       durability: stored.durability, depositedBy: player.m_idPlayer,
-    }).catch((err: unknown) => logger.error({ err, guildId: guild.id, dst }, 'bank deposit persist failed'));
+    }).catch((err: unknown) => { logger.error({ err, guildId: guild.id, dst }, 'bank deposit persist failed'); });
 
     this.deps.playerManager.sendTo(player, buildPutItemGuildBank(
       player.m_idPlayer, GUILD_BANK_ECHO_SELF, dst, stored,
@@ -326,11 +326,11 @@ export class GuildBankService {
         refine: stored.refine, element: stored.element,
         elementLevel: stored.element_level, flags: stored.flags,
         durability: stored.durability,
-      }).catch((err: unknown) => logger.error({ err, guildId: guild.id }, 'bank partial-take persist failed'));
+      }).catch((err: unknown) => { logger.error({ err, guildId: guild.id }, 'bank partial-take persist failed'); });
     } else {
       bank[bankSlot] = null;
       void this.deps.repo?.clearSlot(guild.id, bankSlot)
-        .catch((err: unknown) => logger.error({ err, guildId: guild.id }, 'bank clear persist failed'));
+        .catch((err: unknown) => { logger.error({ err, guildId: guild.id }, 'bank clear persist failed'); });
     }
 
     this.deps.playerManager.sendTo(player, buildGetItemGuildBank(
@@ -372,7 +372,7 @@ export class GuildBankService {
     a.objid = dst;
     if (b) b.objid = src;
     void this.deps.repo?.moveSlot(guild.id, src, dst)
-      .catch((err: unknown) => logger.error({ err, guildId: guild.id, src, dst }, 'bank move persist failed'));
+      .catch((err: unknown) => { logger.error({ err, guildId: guild.id, src, dst }, 'bank move persist failed'); });
     // The client applies its own optimistic swap; a full window resend keeps a
     // rejected move from leaving the two views disagreeing.
     this.deps.playerManager.sendTo(player, buildGuildBankWindow(

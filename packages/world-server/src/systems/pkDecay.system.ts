@@ -94,7 +94,7 @@ export class PkDecaySystem {
     // Persist fire-and-forget (rule 02: service calls repo, no SQL).
     this.deps.charRepo.updatePKState(
       p.m_idPlayer, p.m_dwPKPropensity, p.m_nPKValue, p.m_dwPKTime,
-    ).catch((err: unknown) => logger.error({ err, charId: p.m_idPlayer }, 'PK decay persist failed'));
+    ).catch((err: unknown) => { logger.error({ err, charId: p.m_idPlayer }, 'PK decay persist failed'); });
   }
 
   /** Stop the decay sweep (idempotent). */

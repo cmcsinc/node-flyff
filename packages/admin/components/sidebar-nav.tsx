@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   Users,
@@ -19,10 +19,10 @@ import {
   PackageCheck,
   Server,
   type LucideIcon,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { useAppShell } from "@/components/app-shell";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { useAppShell } from '@/components/app-shell';
 
 interface NavLeaf {
   label: string;
@@ -37,40 +37,40 @@ interface NavGroup {
 type NavItem = NavLeaf | NavGroup;
 
 function isGroup(item: NavItem): item is NavGroup {
-  return (item as NavGroup).children !== undefined;
+  return 'children' in item;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Dashboard", href: "/", icon: LayoutDashboard },
-  { label: "Accounts", href: "/accounts", icon: Users },
-  { label: "Characters", href: "/characters", icon: Swords },
-  { label: "Servers", href: "/servers", icon: Server },
+  { label: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { label: 'Accounts', href: '/accounts', icon: Users },
+  { label: 'Characters', href: '/characters', icon: Swords },
+  { label: 'Servers', href: '/servers', icon: Server },
   {
-    label: "Resources",
+    label: 'Resources',
     icon: Package,
     children: [
-      { label: "Items", href: "/resources/items", icon: Sword },
-      { label: "Movers", href: "/resources/movers", icon: Bug },
-      { label: "NPCs", href: "/resources/npcs", icon: Users },
-      { label: "Spawns", href: "/resources/spawns", icon: Bug },
-      { label: "Skills", href: "/resources/skills", icon: Sparkles },
-      { label: "Quests", href: "/resources/quests", icon: ScrollText },
-      { label: "Drops", href: "/resources/drops", icon: Gem },
-      { label: "Zones", href: "/resources/zones", icon: Map },
-      { label: "Set Items", href: "/resources/set-items", icon: Gem },
-      { label: "Dialogues", href: "/resources/dialogues", icon: MessageSquareText },
+      { label: 'Items', href: '/resources/items', icon: Sword },
+      { label: 'Movers', href: '/resources/movers', icon: Bug },
+      { label: 'NPCs', href: '/resources/npcs', icon: Users },
+      { label: 'Spawns', href: '/resources/spawns', icon: Bug },
+      { label: 'Skills', href: '/resources/skills', icon: Sparkles },
+      { label: 'Quests', href: '/resources/quests', icon: ScrollText },
+      { label: 'Drops', href: '/resources/drops', icon: Gem },
+      { label: 'Zones', href: '/resources/zones', icon: Map },
+      { label: 'Set Items', href: '/resources/set-items', icon: Gem },
+      { label: 'Dialogues', href: '/resources/dialogues', icon: MessageSquareText },
     ],
   },
-  { label: "Client Patch", href: "/client-patch", icon: PackageCheck },
-  { label: "Settings", href: "/settings", icon: Settings },
+  { label: 'Client Patch', href: '/client-patch', icon: PackageCheck },
+  { label: 'Settings', href: '/settings', icon: Settings },
 ];
 
 function pathMatches(pathname: string, href: string): boolean {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(href + "/");
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(href + '/');
 }
 
-function LeafLink({ item }: { item: NavLeaf }) {
+function LeafLink({ item }: { item: NavLeaf }): React.JSX.Element {
   const pathname = usePathname();
   const active = pathMatches(pathname, item.href);
   const Icon = item.icon;
@@ -78,14 +78,16 @@ function LeafLink({ item }: { item: NavLeaf }) {
   return (
     <Link
       href={item.href}
-      aria-current={active ? "page" : undefined}
-      onClick={() => setMobileOpen(false)}
+      aria-current={active ? 'page' : undefined}
+      onClick={() => {
+        setMobileOpen(false);
+      }}
       className={cn(
         // py-2.5 on touch (44px row), tightened on desktop where the pointer is fine.
-        "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2",
+        'group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2',
         active
-          ? "bg-primary/15 text-primary"
-          : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+          ? 'bg-primary/15 text-primary'
+          : 'text-muted-foreground hover:bg-accent/60 hover:text-foreground',
       )}
     >
       {/* active accent bar */}
@@ -98,7 +100,7 @@ function LeafLink({ item }: { item: NavLeaf }) {
   );
 }
 
-function GroupNav({ item }: { item: NavGroup }) {
+function GroupNav({ item }: { item: NavGroup }): React.JSX.Element {
   const pathname = usePathname();
   const childActive = item.children.some((c) => pathMatches(pathname, c.href));
   const [open, setOpen] = useState(childActive);
@@ -106,21 +108,29 @@ function GroupNav({ item }: { item: NavGroup }) {
   return (
     <div>
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          setOpen(!open);
+        }}
         aria-expanded={open}
         className={cn(
-          "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2",
+          'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2',
           childActive
-            ? "text-foreground"
-            : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+            ? 'text-foreground'
+            : 'text-muted-foreground hover:bg-accent/60 hover:text-foreground',
         )}
       >
         <Icon className="h-4 w-4 shrink-0" />
         <span className="flex-1 text-left">{item.label}</span>
-        <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform", !open && "-rotate-90")} />
+        <ChevronDown
+          className={cn('h-4 w-4 shrink-0 transition-transform', !open && '-rotate-90')}
+        />
       </button>
       {open && (
-        <div className="ml-4 mt-1 space-y-0.5 border-l border-sidebar-border pl-3" role="group" aria-label={item.label}>
+        <div
+          className="ml-4 mt-1 space-y-0.5 border-l border-sidebar-border pl-3"
+          role="group"
+          aria-label={item.label}
+        >
           {item.children.map((child) => (
             <LeafLink key={child.href} item={child} />
           ))}
@@ -130,7 +140,7 @@ function GroupNav({ item }: { item: NavGroup }) {
   );
 }
 
-export function SidebarNav() {
+export function SidebarNav(): React.JSX.Element {
   return (
     <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4" aria-label="Primary">
       <div className="mb-4 px-3">
@@ -146,7 +156,11 @@ export function SidebarNav() {
       </div>
       <div className="space-y-0.5">
         {NAV_ITEMS.map((item) =>
-          isGroup(item) ? <GroupNav key={item.label} item={item} /> : <LeafLink key={item.href} item={item} />,
+          isGroup(item) ? (
+            <GroupNav key={item.label} item={item} />
+          ) : (
+            <LeafLink key={item.href} item={item} />
+          ),
         )}
       </div>
     </nav>

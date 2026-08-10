@@ -47,7 +47,7 @@ const MAX_BANK_PASS_LEN = 4;
 /** Sentinel for "no password set" (C++ `OnOpenBankWnd:3218`). */
 const NO_BANK_PASS = '0000';
 
-export type ChangeBankPassResult = { ok: boolean; dwId: number; dwItemId: number };
+export interface ChangeBankPassResult { ok: boolean; dwId: number; dwItemId: number }
 
 export type DepositResult =
   | { ok: true; tab: number; bankSlot: number; item: InventorySlot }
@@ -124,7 +124,7 @@ export class BankService {
     // replayer addresses the bank container, not a character row.
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_PASS', payload: { accountId: player.m_accountId, bankPass: newPass } });
     player.m_szBankPass = newPass;
-    this.deps.bankRepo.setBankPass(player.m_accountId, newPass).catch((e: unknown) => logger.warn({ err: e }, 'bank pass persist failed'));
+    this.deps.bankRepo.setBankPass(player.m_accountId, newPass).catch((e: unknown) => { logger.warn({ err: e }, 'bank pass persist failed'); });
     return { ok: true, dwId, dwItemId };
   }
 
@@ -133,6 +133,8 @@ export class BankService {
     if (tab < 0 || tab >= MAX_BANK_TABS || !this.inMainBag(invSlot)) return { ok: false, reason: 'invalid' };
     const src = player.m_Inventory[invSlot];
     if (!src || count <= 0) return { ok: false, reason: 'invalid' };
+    const tabArr = player.m_Bank[tab];
+    if (!tabArr) return { ok: false, reason: 'invalid' };
     const bankSlot = this.findEmptyBank(player, tab);
     if (bankSlot === -1) return { ok: false, reason: 'bank_full' };
 
@@ -146,15 +148,15 @@ export class BankService {
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_SLOT', payload: { accountId: player.m_accountId, tab, slot: bankSlot, itemId: moved.itemId, count: moved.count, flags: moved.flags ?? 0, durability: moved.durability ?? -1, refine: moved.refine ?? 0 } });
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: invLeft > 0 ? { slot: invSlot, itemId: src.itemId, count: invLeft, flags: src.flags ?? 0, durability: src.durability ?? -1, refine: src.refine ?? 0 } : { slot: invSlot, itemId: 0, count: 0 } });
 
-    player.m_Bank[tab]![bankSlot] = moved;
+    tabArr[bankSlot] = moved;
     if (take >= src.count) {
       player.m_Inventory[invSlot] = null;
-      this.deps.inventoryRepo.removeItem(player.m_idPlayer, invSlot).catch((e: unknown) => logger.warn({ err: e }, 'bank inv remove failed'));
+      this.deps.inventoryRepo.removeItem(player.m_idPlayer, invSlot).catch((e: unknown) => { logger.warn({ err: e }, 'bank inv remove failed'); });
     } else {
       src.count -= take;
-      this.deps.inventoryRepo.setItem(player.m_idPlayer, invSlot, src.itemId, src.count, src.flags ?? 0, src.durability ?? -1, src.refine ?? 0).catch((e: unknown) => logger.warn({ err: e }, 'bank inv set failed'));
+      this.deps.inventoryRepo.setItem(player.m_idPlayer, invSlot, src.itemId, src.count, src.flags ?? 0, src.durability ?? -1, src.refine ?? 0).catch((e: unknown) => { logger.warn({ err: e }, 'bank inv set failed'); });
     }
-    this.deps.bankRepo.setItem(player.m_accountId, tab, bankSlot, moved.itemId, moved.count, moved.flags ?? 0, moved.durability ?? -1, moved.refine ?? 0).catch((e: unknown) => logger.warn({ err: e }, 'bank set failed'));
+    this.deps.bankRepo.setItem(player.m_accountId, tab, bankSlot, moved.itemId, moved.count, moved.flags ?? 0, moved.durability ?? -1, moved.refine ?? 0).catch((e: unknown) => { logger.warn({ err: e }, 'bank set failed'); });
     player._dirty.add('m_Inventory');
     return { ok: true, tab, bankSlot, item: moved };
   }
@@ -162,7 +164,9 @@ export class BankService {
   /** Move `count` from bank `tab`/`bankSlot` into the first empty inv slot. */
   withdraw(player: CPlayer, tab: number, bankSlot: number, count: number): WithdrawResult {
     if (tab < 0 || tab >= MAX_BANK_TABS || bankSlot < 0 || bankSlot >= BANK_SLOTS) return { ok: false, reason: 'invalid' };
-    const src = player.m_Bank[tab]![bankSlot];
+    const tabArr = player.m_Bank[tab];
+    if (!tabArr) return { ok: false, reason: 'invalid' };
+    const src = tabArr[bankSlot];
     if (!src || count <= 0) return { ok: false, reason: 'invalid' };
     const invSlot = this.findEmptyInv(player);
     if (invSlot === -1) return { ok: false, reason: 'bag_full' };
@@ -176,13 +180,13 @@ export class BankService {
 
     player.m_Inventory[invSlot] = moved;
     if (take >= src.count) {
-      player.m_Bank[tab]![bankSlot] = null;
-      this.deps.bankRepo.removeItem(player.m_accountId, tab, bankSlot).catch((e: unknown) => logger.warn({ err: e }, 'bank remove failed'));
+      tabArr[bankSlot] = null;
+      this.deps.bankRepo.removeItem(player.m_accountId, tab, bankSlot).catch((e: unknown) => { logger.warn({ err: e }, 'bank remove failed'); });
     } else {
       src.count -= take;
-      this.deps.bankRepo.setItem(player.m_accountId, tab, bankSlot, src.itemId, src.count, src.flags ?? 0, src.durability ?? -1, src.refine ?? 0).catch((e: unknown) => logger.warn({ err: e }, 'bank set failed'));
+      this.deps.bankRepo.setItem(player.m_accountId, tab, bankSlot, src.itemId, src.count, src.flags ?? 0, src.durability ?? -1, src.refine ?? 0).catch((e: unknown) => { logger.warn({ err: e }, 'bank set failed'); });
     }
-    this.deps.inventoryRepo.setItem(player.m_idPlayer, invSlot, moved.itemId, moved.count, moved.flags ?? 0, moved.durability ?? -1, moved.refine ?? 0).catch((e: unknown) => logger.warn({ err: e }, 'bank inv set failed'));
+    this.deps.inventoryRepo.setItem(player.m_idPlayer, invSlot, moved.itemId, moved.count, moved.flags ?? 0, moved.durability ?? -1, moved.refine ?? 0).catch((e: unknown) => { logger.warn({ err: e }, 'bank inv set failed'); });
     player._dirty.add('m_Inventory');
     return { ok: true, tab, bankSlot, item: moved };
   }
@@ -199,39 +203,45 @@ export class BankService {
    */
   depositGold(player: CPlayer, tab: number, amount: number): GoldMoveResult {
     if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) return { ok: false, reason: 'invalid' };
+    const bankGold = player.m_BankGold[tab];
+    if (bankGold === undefined) return { ok: false, reason: 'invalid' };
     if (amount <= 0 || amount > player.m_nGold) return { ok: false, reason: 'invalid' };
     if (!this.hasNearbyBankNpc(player)) return { ok: false, reason: 'invalid' };
     // M12: C++ DPSrvr.cpp:3929 -- `CanAdd(m_dwGoldBank[nSlot], nGold)` rejects
     // deposits that would overflow the bank tab's gold pool.
-    if (player.m_BankGold[tab] + amount > MAX_GOLD) return { ok: false, reason: 'invalid' };
+    if (bankGold + amount > MAX_GOLD) return { ok: false, reason: 'invalid' };
     player.m_nGold -= amount;
-    player.m_BankGold[tab] += amount;
+    player.m_BankGold[tab] = bankGold + amount;
     // Canonical CHAR_GOLD carries the absolute post-mutation m_nGold so WAL
     // replay restores the inventory side too -- without this the inventory
     // container keeps the pre-deposit value and a relog dupes the penya back.
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_GOLD', payload: { accountId: player.m_accountId, tab, gold: player.m_BankGold[tab] } });
     this.persistGold(player, tab);
-    return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] };
+    return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] ?? 0 };
   }
 
   /** Move `amount` gold from bank `tab` into inv. */
   withdrawGold(player: CPlayer, tab: number, amount: number): GoldMoveResult {
     if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) return { ok: false, reason: 'invalid' };
-    if (amount <= 0 || amount > player.m_BankGold[tab]) return { ok: false, reason: 'invalid' };
-    player.m_BankGold[tab] -= amount;
+    const bankGold = player.m_BankGold[tab];
+    if (bankGold === undefined) return { ok: false, reason: 'invalid' };
+    if (amount <= 0 || amount > bankGold) return { ok: false, reason: 'invalid' };
+    player.m_BankGold[tab] = bankGold - amount;
     player.m_nGold += amount;
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold } });
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'BANK_GOLD', payload: { accountId: player.m_accountId, tab, gold: player.m_BankGold[tab] } });
     this.persistGold(player, tab);
-    return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] };
+    return { ok: true, tab, invGold: player.m_nGold, bankGold: player.m_BankGold[tab] ?? 0 };
   }
 
   private persistGold(player: CPlayer, tab: number): void {
+    const bankGold = player.m_BankGold[tab];
+    if (bankGold === undefined) return;
     player._dirty.add('m_nGold');
     this.deps.inventoryRepo.setGold(player.m_idPlayer, player.m_nGold)
-      .catch((e: unknown) => logger.warn({ err: e }, 'inv gold persist failed'));
-    this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[tab]!, tab).catch((e: unknown) => logger.warn({ err: e }, 'bank setGold failed'));
+      .catch((e: unknown) => { logger.warn({ err: e }, 'inv gold persist failed'); });
+    this.deps.bankRepo.setGold(player.m_accountId, bankGold, tab).catch((e: unknown) => { logger.warn({ err: e }, 'bank setGold failed'); });
   }
 
   private cloneSlot(src: InventorySlot, count: number): InventorySlot {
@@ -247,7 +257,8 @@ export class BankService {
   }
 
   private findEmptyBank(player: CPlayer, tab: number): number {
-    const t = player.m_Bank[tab]!;
+    const t = player.m_Bank[tab];
+    if (!t) return -1;
     for (let i = 0; i < BANK_SLOTS; i++) if (t[i] === null) return i;
     return -1;
   }

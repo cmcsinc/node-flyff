@@ -39,9 +39,9 @@ const MAX_BANK_TABS = 3;
  */
 function goldColumn(tab: number): string {
   if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) {
-    throw new Error(`bank tab out of range: ${tab}`);
+    throw new Error(`bank tab out of range: ${String(tab)}`);
   }
-  return tab === 0 ? 'gold' : `gold_tab${tab}`;
+  return tab === 0 ? 'gold' : `gold_tab${String(tab)}`;
 }
 
 /**
@@ -105,7 +105,7 @@ export class BankRepository {
     const rows = await this.db('bank_item')
       .where({ account_id: accountId, tab, slot })
       .limit(1);
-    return rows[0] || null;
+    return rows[0] ?? null;
   }
 
   async setItem(
@@ -113,10 +113,10 @@ export class BankRepository {
     tab: number,
     slot: number,
     itemId: number,
-    quantity: number = 1,
-    flags: number = 0,
-    durability: number = -1,
-    refine: number = 0,
+    quantity = 1,
+    flags = 0,
+    durability = -1,
+    refine = 0,
     stats?: string | null,
   ): Promise<void> {
     await this.db('bank_item')
@@ -129,7 +129,7 @@ export class BankRepository {
         flags,
         durability,
         refine,
-        stats: stats || null,
+        stats: stats ?? null,
         created_at: new Date(),
         updated_at: new Date(),
       })
@@ -140,7 +140,7 @@ export class BankRepository {
         flags,
         durability,
         refine,
-        stats: stats || null,
+        stats: stats ?? null,
         updated_at: new Date(),
       });
   }

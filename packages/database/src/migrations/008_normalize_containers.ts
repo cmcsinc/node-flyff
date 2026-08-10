@@ -35,26 +35,26 @@ import type { Knex } from '../types';
 export async function up(db: Knex): Promise<void> {
   // --- inventory: rename items -> inventory_item, new container holds gold ---
   await db.schema.renameTable('inventory', 'inventory_item');
-  await db.schema.createTable('inventory', (table: any) => {
+  await db.schema.createTable('inventory', (table) => {
     table.integer('character_id').primary();
     table.foreign('character_id').references('id').inTable('characters').onDelete('CASCADE');
     table.bigInteger('gold').unsigned().notNullable().defaultTo(0);
     table.timestamps(true, true);
   });
-  await db['raw']('INSERT INTO inventory (character_id, gold, created_at, updated_at) SELECT id, gold, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM characters');
+  await db.raw('INSERT INTO inventory (character_id, gold, created_at, updated_at) SELECT id, gold, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM characters');
 
   // --- bank: rename items -> bank_item, new container holds gold + bank_pass ---
   await db.schema.renameTable('bank', 'bank_item');
-  await db.schema.createTable('bank', (table: any) => {
+  await db.schema.createTable('bank', (table) => {
     table.integer('account_id').primary();
     table.foreign('account_id').references('id').inTable('accounts').onDelete('CASCADE');
     table.bigInteger('gold').unsigned().notNullable().defaultTo(0);
     table.string('bank_pass', 10).notNullable().defaultTo('0000');
     table.timestamps(true, true);
   });
-  await db['raw']('INSERT INTO bank (account_id, gold, bank_pass, created_at, updated_at) SELECT id, bank_gold, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM accounts', ['0000']);
+  await db.raw('INSERT INTO bank (account_id, gold, bank_pass, created_at, updated_at) SELECT id, bank_gold, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM accounts', ['0000']);
   // First set pin per account wins; accounts whose chars all used '0000' stay '0000'.
-  await db['raw'](
+  await db.raw(
     `UPDATE bank SET bank_pass = COALESCE(
        (SELECT c.bank_pass FROM characters c
         WHERE c.account_id = bank.account_id AND c.bank_pass != '0000'
@@ -68,9 +68,9 @@ export async function up(db: Knex): Promise<void> {
   // runner's outer transaction + foreign_keys pragma on better-sqlite3
   // ("unable to change foreign_keys pragma inside a nested transaction"). The
   // raw statement executes in-place with no extra transaction.
-  await db['raw']('ALTER TABLE characters DROP COLUMN gold');
-  await db['raw']('ALTER TABLE characters DROP COLUMN bank_pass');
-  await db['raw']('ALTER TABLE accounts DROP COLUMN bank_gold');
+  await db.raw('ALTER TABLE characters DROP COLUMN gold');
+  await db.raw('ALTER TABLE characters DROP COLUMN bank_pass');
+  await db.raw('ALTER TABLE accounts DROP COLUMN bank_gold');
 }
 
 /**
@@ -81,16 +81,16 @@ export async function up(db: Knex): Promise<void> {
  */
 export async function down(db: Knex): Promise<void> {
   // Re-add the owner-row columns (default empty), then copy container values back.
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.bigInteger('gold').unsigned().notNullable().defaultTo(0);
     table.string('bank_pass', 10).notNullable().defaultTo('0000');
   });
-  await db.schema.alterTable('accounts', (table: any) => {
+  await db.schema.alterTable('accounts', (table) => {
     table.bigInteger('bank_gold').unsigned().notNullable().defaultTo(0);
   });
-  await db['raw']('UPDATE characters SET gold = COALESCE((SELECT gold FROM inventory WHERE inventory.character_id = characters.id), 0)');
-  await db['raw'](`UPDATE characters SET bank_pass = COALESCE((SELECT bank_pass FROM bank WHERE bank.account_id = characters.account_id), '0000')`);
-  await db['raw']('UPDATE accounts SET bank_gold = COALESCE((SELECT gold FROM bank WHERE bank.account_id = accounts.id), 0)');
+  await db.raw('UPDATE characters SET gold = COALESCE((SELECT gold FROM inventory WHERE inventory.character_id = characters.id), 0)');
+  await db.raw(`UPDATE characters SET bank_pass = COALESCE((SELECT bank_pass FROM bank WHERE bank.account_id = characters.account_id), '0000')`);
+  await db.raw('UPDATE accounts SET bank_gold = COALESCE((SELECT gold FROM bank WHERE bank.account_id = accounts.id), 0)');
 
   await db.schema.dropTableIfExists('bank');
   await db.schema.dropTableIfExists('inventory');

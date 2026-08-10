@@ -19,9 +19,9 @@
  * @module lib/npc-options
  */
 
-import { npcNameForKey } from "@flyff/resources";
-import { getResourceIndex } from "./resource-cache";
-import type { EnumOption } from "./field-schema";
+import { npcNameForKey } from '@flyff/resources';
+import { getResourceIndex } from './resource-cache';
+import type { EnumOption } from './field-schema';
 
 /**
  * Every `character.inc` block key, labelled `<Resolved Name> (<key>)`.
@@ -34,7 +34,7 @@ export async function characterKeyOptions(): Promise<EnumOption[]> {
   const opts: EnumOption[] = [];
   for (const [key] of res.characterInc.byKey) {
     const name = npcNameForKey(res.characterInc, key);
-    const fallback = key.replace(/^[A-Za-z]{2,4}_/, "") || key;
+    const fallback = key.replace(/^[A-Za-z]{2,4}_/, '') || key;
     opts.push({ value: key, label: `${name ?? fallback} (${key})` });
   }
   return opts;
@@ -45,11 +45,11 @@ export async function characterKeyOptions(): Promise<EnumOption[]> {
  */
 export async function npcMoverOptions(): Promise<EnumOption[]> {
   const res = await getResourceIndex();
-  const npcs = res.movers.byType.get("npc") ?? [];
+  const npcs = res.movers.byType.get('npc') ?? [];
   return npcs
     .slice()
     .sort((a, b) => a.id - b.id)
-    .map((m) => ({ value: String(m.id), label: `${m.name} (#${m.id})` }));
+    .map((m) => ({ value: String(m.id), label: `${m.name} (#${String(m.id)})` }));
 }
 
 /**
@@ -64,7 +64,10 @@ export async function npcMoverOptions(): Promise<EnumOption[]> {
 export async function spawnMoverOptions(): Promise<EnumOption[]> {
   const res = await getResourceIndex();
   return [...res.movers.movers.values()]
-    .filter((m) => m.type !== "npc")
+    .filter((m) => m.type !== 'npc')
     .sort((a, b) => a.id - b.id)
-    .map((m) => ({ value: String(m.id), label: `${m.name} · Lv ${String(m.level)} (#${String(m.id)})` }));
+    .map((m) => ({
+      value: String(m.id),
+      label: `${m.name} · Lv ${String(m.level)} (#${String(m.id)})`,
+    }));
 }

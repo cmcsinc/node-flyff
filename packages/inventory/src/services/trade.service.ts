@@ -207,7 +207,11 @@ export class TradeService {
       return this.refuse(player, refusal);
     }
 
-    const item = player.m_Inventory[slot]!;
+    const item = player.m_Inventory[slot];
+    if (!item) {
+      logger.warn({ charId: player.m_idPlayer, slot, nId, index }, 'trade put: slot empty after findSlotByObjId');
+      return this.refuse(player, TID_GAME_CANNOTTRADE_ITEM);
+    }
     const staged = Math.min(count, item.count);
     player.m_vtInfo.items[index] = {
       slot, objid: item.objid ?? slot, itemId: item.itemId, count: staged,
@@ -269,7 +273,7 @@ export class TradeService {
       charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold },
     });
     void this.deps.inventoryRepo.setGold(player.m_idPlayer, player.m_nGold)
-      .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'setGold failed'));
+      .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'setGold failed'); });
 
     const packet = buildTradePutGold(player.m_idPlayer, staked);
     this.deps.playerManager.sendTo(player, packet);
@@ -381,16 +385,16 @@ export class TradeService {
             p.m_idPlayer, slot, content.itemId, content.count,
             content.flags ?? 0, content.durability ?? -1, content.refine ?? 0,
             null, content.element ?? 0, content.element_level ?? 0,
-          ).catch((err: unknown) => logger.error({ err }, 'trade setItem failed'));
+          ).catch((err: unknown) => { logger.error({ err }, 'trade setItem failed'); });
         } else {
           void this.deps.inventoryRepo.removeItem(p.m_idPlayer, slot)
-            .catch((err: unknown) => logger.error({ err }, 'trade removeItem failed'));
+            .catch((err: unknown) => { logger.error({ err }, 'trade removeItem failed'); });
         }
       }
       p.m_nGold = side.gold;
       p._dirty.add('m_nGold');
       void this.deps.inventoryRepo.setGold(p.m_idPlayer, p.m_nGold)
-        .catch((err: unknown) => logger.error({ err }, 'trade setGold failed'));
+        .catch((err: unknown) => { logger.error({ err }, 'trade setGold failed'); });
     }
 
     // Gold is already folded into m_nGold, so zero the stakes before clearing --
@@ -457,7 +461,8 @@ export class TradeService {
     const outgoing: InventorySlot[] = [];
 
     for (const index of giver.m_vtInfo.occupied()) {
-      const stake = giver.m_vtInfo.items[index]!;
+      const stake = giver.m_vtInfo.items[index];
+      if (!stake) continue;
       const live = giver.m_Inventory[stake.slot];
       // One log per rejection reason -- this is the path a "trade always
       // cancels" report lands on, and the field that mismatched is the answer.
@@ -589,7 +594,7 @@ export class TradeService {
         charId: player.m_idPlayer, type: 'CHAR_GOLD', payload: { gold: player.m_nGold },
       });
       void this.deps.inventoryRepo.setGold(player.m_idPlayer, player.m_nGold)
-        .catch((err: unknown) => logger.error({ err }, 'trade refund setGold failed'));
+        .catch((err: unknown) => { logger.error({ err }, 'trade refund setGold failed'); });
     }
     player.m_vtInfo.clear();
   }
@@ -625,7 +630,7 @@ export class TradeService {
     // covers `IsEquip`; an equipped item can never be in the bag range.
     const prop = this.deps.getItemProp?.(item.itemId);
     if (prop?.tradeable === false) return TID_GAME_CANNOTTRADE_ITEM;
-    if (player.m_vtInfo.occupied().some((i) => player.m_vtInfo.items[i]!.slot === slot)) {
+    if (player.m_vtInfo.occupied().some((i) => player.m_vtInfo.items[i]?.slot === slot)) {
       return TID_GAME_CANNOT_DO_USINGITEM;             // already staged
     }
     return 0;
@@ -633,7 +638,7 @@ export class TradeService {
 
   private refuse(player: CPlayer, tid: number): TradeResult {
     this.deps.sendDefinedText?.(player, tid);
-    return fail(`refused:${tid}`);
+    return fail(`refused:${String(tid)}`);
   }
 }
 

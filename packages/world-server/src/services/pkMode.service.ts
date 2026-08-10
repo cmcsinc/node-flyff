@@ -28,7 +28,6 @@ const logger = createLogger({ module: 'pkMode-service' });
 
 /** v19 client PK-mode toggle values (C++ `OnMode` dispatch table). */
 const PK_MODE_ON = 1;
-const PK_MODE_OFF = 0;
 
 export interface PkModeServiceDeps {
   playerManager: PlayerManager;

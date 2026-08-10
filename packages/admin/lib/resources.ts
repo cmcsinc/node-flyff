@@ -7,18 +7,18 @@
  * @module lib/resources
  */
 
-import { getYamlDir, invalidateResourceCache } from "./resource-cache";
+import { getYamlDir, invalidateResourceCache } from './resource-cache';
 
 /** Resource type → directory under the resources data dir. Shared with the edit route. */
 export const TYPE_DIRS: Record<string, string> = {
-  items: "items",
-  movers: "movers",
-  skills: "skills",
-  quests: "quests",
-  drops: "drops",
-  dialogues: "dialogues",
-  "set-items": "set-items",
-  zones: "worlds/zones",
+  items: 'items',
+  movers: 'movers',
+  skills: 'skills',
+  quests: 'quests',
+  drops: 'drops',
+  dialogues: 'dialogues',
+  'set-items': 'set-items',
+  zones: 'worlds/zones',
 };
 
 function dirFor(type: string): string {
@@ -32,17 +32,17 @@ export function loadByType(type: string): Record<string, unknown>[] {
   return getYamlDir(dirFor(type)).map((d) => d.doc);
 }
 
-export const loadItems = () => loadByType("items");
-export const loadMovers = () => loadByType("movers");
-export const loadSkills = () => loadByType("skills");
-export const loadQuests = () => loadByType("quests");
-export const loadDrops = () => loadByType("drops");
-export const loadZones = () => loadByType("zones");
-export const loadSetItems = () => loadByType("set-items");
-export const loadDialogues = () => loadByType("dialogues");
+export const loadItems = (): Record<string, unknown>[] => loadByType('items');
+export const loadMovers = (): Record<string, unknown>[] => loadByType('movers');
+export const loadSkills = (): Record<string, unknown>[] => loadByType('skills');
+export const loadQuests = (): Record<string, unknown>[] => loadByType('quests');
+export const loadDrops = (): Record<string, unknown>[] => loadByType('drops');
+export const loadZones = (): Record<string, unknown>[] => loadByType('zones');
+export const loadSetItems = (): Record<string, unknown>[] => loadByType('set-items');
+export const loadDialogues = (): Record<string, unknown>[] => loadByType('dialogues');
 
 /** Collection keys that hold arrays of entries within a YAML file. */
-const COLLECTION_KEYS = ["items", "movers", "skills", "drops", "sets", "zones"] as const;
+const COLLECTION_KEYS = ['items', 'movers', 'skills', 'drops', 'sets', 'zones'] as const;
 
 /**
  * Does this collection entry answer to `id`?
@@ -53,8 +53,12 @@ const COLLECTION_KEYS = ["items", "movers", "skills", "drops", "sets", "zones"] 
  * unchanged for items/movers/skills, which also carry a `key`.
  */
 export function entryMatches(entry: Record<string, unknown>, id: string): boolean {
-  if (entry.id !== undefined && String(entry.id) === id) return true;
-  return typeof entry.key === "string" && entry.key === id;
+  if (
+    (typeof entry.id === 'string' || typeof entry.id === 'number') &&
+    String(entry.id) === id
+  )
+    return true;
+  return typeof entry.key === 'string' && entry.key === id;
 }
 
 /**
@@ -70,7 +74,7 @@ export function loadEntryById(
       const list = doc[key];
       if (Array.isArray(list)) {
         const found = list.find((e): e is Record<string, unknown> => {
-          if (typeof e !== "object" || e === null) return false;
+          if (typeof e !== 'object' || e === null) return false;
           return entryMatches(e as Record<string, unknown>, id);
         });
         if (found) return { file, entry: found };

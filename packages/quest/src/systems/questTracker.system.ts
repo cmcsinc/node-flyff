@@ -33,7 +33,7 @@ import type { Rng } from '@flyff/combat';
 import { xRandomRng } from '@flyff/combat';
 import { QUEST_FLAG } from '@flyff/core/constants/quest';
 import { buildSetQuest, buildQuestTextTime } from '../net/snapshot/quest.serializer';
-import { CreateItemSnapshotSerializer } from '@flyff/inventory';
+import type { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import { buildUpdateItemCount } from '@flyff/inventory';
 import { createLogger } from '@flyff/core/logger';
 
@@ -83,7 +83,7 @@ export class QuestTrackerSystem {
   /** Begin the time-limit countdown loop (idempotent). */
   start(): void {
     if (this.timer) return;
-    this.timer = setInterval(() => this.tick(TICK_MS), TICK_MS);
+    this.timer = setInterval(() => { this.tick(TICK_MS); }, TICK_MS);
   }
 
   /** Stop the countdown loop (idempotent). */
@@ -228,7 +228,7 @@ export class QuestTrackerSystem {
       repo.upsertActive(player.m_idPlayer, {
         quest_id: q.id, state: q.state, time: q.time,
         kill_npc_num_0: q.killNpcNum[0], kill_npc_num_1: q.killNpcNum[1], flags: q.flags,
-      }).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'quest persist failed'));
+      }).catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'quest persist failed'); });
     }
   }
 }

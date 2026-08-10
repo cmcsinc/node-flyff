@@ -1,22 +1,22 @@
-import type * as React from "react";
-import { loadNpcs, loadZoneRefs } from "@/lib/npcs";
-import { moverNamesById } from "@/lib/resource-rows";
-import { getResourceIndex } from "@/lib/resource-cache";
-import { npcNameForKey } from "@flyff/resources";
-import { Select } from "@/components/ui/select";
-import { buttonVariants } from "@/components/ui/button";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { FilterBar } from "@/components/filter-bar";
-import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { IdCell, NameWithSymbol, TagCell, PosCell, EditLink } from "@/components/resource-cells";
-import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
-import Link from "next/link";
-import { Plus, Users } from "lucide-react";
-import type { NpcRow } from "@/lib/npcs";
+import type * as React from 'react';
+import { loadNpcs, loadZoneRefs } from '@/lib/npcs';
+import { moverNamesById } from '@/lib/resource-rows';
+import { getResourceIndex } from '@/lib/resource-cache';
+import { npcNameForKey } from '@flyff/resources';
+import { Select } from '@/components/ui/select';
+import { buttonVariants } from '@/components/ui/button';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { FilterBar } from '@/components/filter-bar';
+import { ResourceTable, type ResourceColumn } from '@/components/resource-table';
+import { IdCell, NameWithSymbol, TagCell, PosCell, EditLink } from '@/components/resource-cells';
+import { parsePage, parsePerPage, paginate } from '@/lib/paginate';
+import { parseSort, sortRows, type QueryParams } from '@/lib/sort';
+import Link from 'next/link';
+import { Plus, Users } from 'lucide-react';
+import type { NpcRow } from '@/lib/npcs';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams extends QueryParams {
   search?: string;
@@ -35,14 +35,20 @@ interface Row extends NpcRow {
   moverName: string;
 }
 
-const SORT_KEYS = ["id", "zoneName", "npcName", "characterKey", "moverName", "x"] as const;
+const SORT_KEYS = ['id', 'zoneName', 'npcName', 'characterKey', 'moverName', 'x'] as const;
 
 const COLUMNS: readonly ResourceColumn<Row>[] = [
-  { key: "id", header: "ID", sortable: true, className: "w-16", cell: (r) => <IdCell value={r.id} /> },
-  { key: "zoneName", header: "Zone", sortable: true, cell: (r) => <TagCell label={r.zoneName} /> },
   {
-    key: "npcName",
-    header: "NPC",
+    key: 'id',
+    header: 'ID',
+    sortable: true,
+    className: 'w-16',
+    cell: (r) => <IdCell value={r.id} />,
+  },
+  { key: 'zoneName', header: 'Zone', sortable: true, cell: (r) => <TagCell label={r.zoneName} /> },
+  {
+    key: 'npcName',
+    header: 'NPC',
     sortable: true,
     // The character key is the NPC's real identity — vendor stock, dialog, and
     // outfit all hang off it, not off the placement. Shown under the name so a
@@ -50,21 +56,21 @@ const COLUMNS: readonly ResourceColumn<Row>[] = [
     cell: (r) => <NameWithSymbol name={r.npcName} symbol={r.characterKey} />,
   },
   {
-    key: "moverName",
-    header: "Model",
+    key: 'moverName',
+    header: 'Model',
     sortable: true,
     cell: (r) => <NameWithSymbol name={r.moverName} symbol={`#${String(r.moverId)}`} />,
   },
   {
-    key: "x",
-    header: "Position",
+    key: 'x',
+    header: 'Position',
     sortable: true,
     cell: (r) => <PosCell x={r.x} y={r.y} z={r.z} />,
   },
   {
-    key: "actions",
-    header: "Actions",
-    align: "right",
+    key: 'actions',
+    header: 'Actions',
+    align: 'right',
     cell: (r) => (
       <EditLink
         href={`/resources/npcs/${encodeURIComponent(r.ref)}/edit`}
@@ -74,10 +80,14 @@ const COLUMNS: readonly ResourceColumn<Row>[] = [
   },
 ];
 
-export default async function NpcsPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
+export default async function NpcsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const zone = params.zone ?? "";
+  const search = params.search ?? '';
+  const zone = params.zone ?? '';
   const perPage = parsePerPage(params.perPage);
 
   const zones = loadZoneRefs();
@@ -89,8 +99,8 @@ export default async function NpcsPage({ searchParams }: { searchParams: Promise
   // as an NPC label. Unresolved stays empty so the key shows instead.
   const npcs: Row[] = loadNpcs().map((n) => ({
     ...n,
-    npcName: npcNameForKey(characterInc, n.characterKey) ?? "",
-    moverName: models.get(n.moverId) ?? "",
+    npcName: npcNameForKey(characterInc, n.characterKey) ?? '',
+    moverName: models.get(n.moverId) ?? '',
   }));
 
   const needle = search.toLowerCase();
@@ -127,7 +137,7 @@ export default async function NpcsPage({ searchParams }: { searchParams: Promise
           newZone ? (
             <Link
               href={`/resources/npcs/${encodeURIComponent(`${newZone}:new`)}/edit`}
-              className={buttonVariants({ size: "sm" })}
+              className={buttonVariants({ size: 'sm' })}
             >
               <Plus className="h-3.5 w-3.5" aria-hidden="true" />
               Add NPC
@@ -160,7 +170,10 @@ export default async function NpcsPage({ searchParams }: { searchParams: Promise
         sort={sort}
         params={params}
         unit="NPCs"
-        empty={{ icon: Users, message: active ? "No NPCs match your filters" : "No NPC placements" }}
+        empty={{
+          icon: Users,
+          message: active ? 'No NPCs match your filters' : 'No NPC placements',
+        }}
       />
     </div>
   );

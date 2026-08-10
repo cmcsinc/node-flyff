@@ -1,46 +1,84 @@
-import { db } from "@/lib/db";
-import { characters, accounts, inventory, inventoryItems, skills, characterQuests, characterCompletedQuests, onlinePlayers } from "@/../drizzle/schema";
-import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { PageHeader } from "@/components/page-header";
-import { formatNumber, jobName, worldName } from "@/lib/utils";
-import { getIk3Label } from "@/lib/game-constants";
-import { getAllItems, getItem, itemIconUrl } from "@/lib/item-catalog";
-import { getSkill, skillIconUrl } from "@/lib/skill-catalog";
-import { InventoryExplorer } from "../../inventory/[characterId]/inventory-explorer";
-import { GoldEditor } from "../../inventory/[characterId]/actions";
-import type { PickerItem, SlotItem } from "../../inventory/[characterId]/types";
-import type { SkillSlotItem } from "./skills/types";
-import { resolveQuests } from "./quests/resolve";
-import { SkillExplorer } from "./skills/skill-explorer";
-import { QuestExplorer } from "./quests/quest-explorer";
-import { EditStatsForm } from "./edit-stats";
-import { LiveOpsButton } from "./live-ops";
-import { OnlineIndicator } from "@/components/online-indicator";
-import { isOnline } from "@/lib/presence";
-import { MeterBar, DataRow } from "@/components/ui/meter";
-import { ResponsiveSections } from "./responsive-sections";
+import { db } from '@/lib/db';
+import {
+  characters,
+  accounts,
+  inventory,
+  inventoryItems,
+  skills,
+  characterQuests,
+  characterCompletedQuests,
+  onlinePlayers,
+} from '@/../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { PageHeader } from '@/components/page-header';
+import { formatNumber, jobName, worldName } from '@/lib/utils';
+import { getIk3Label } from '@/lib/game-constants';
+import { getAllItems, getItem, itemIconUrl } from '@/lib/item-catalog';
+import { getSkill, skillIconUrl } from '@/lib/skill-catalog';
+import { InventoryExplorer } from '../../inventory/[characterId]/inventory-explorer';
+import { GoldEditor } from '../../inventory/[characterId]/actions';
+import type { PickerItem, SlotItem } from '../../inventory/[characterId]/types';
+import type { SkillSlotItem } from './skills/types';
+import { resolveQuests } from './quests/resolve';
+import { SkillExplorer } from './skills/skill-explorer';
+import { QuestExplorer } from './quests/quest-explorer';
+import { EditStatsForm } from './edit-stats';
+import { LiveOpsButton } from './live-ops';
+import { OnlineIndicator } from '@/components/online-indicator';
+import { isOnline } from '@/lib/presence';
+import { MeterBar, DataRow } from '@/components/ui/meter';
+import { ResponsiveSections } from './responsive-sections';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export default async function CharacterDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function CharacterDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<React.JSX.Element> {
   const { id } = await params;
   const charId = Number(id);
   if (isNaN(charId)) notFound();
 
-  const [char] = await db.select().from(characters).where(eq(characters.id, charId)).limit(1);
+  const char = (
+    await db.select().from(characters).where(eq(characters.id, charId)).limit(1)
+  ).at(0);
   if (!char) notFound();
 
-  const [account] = await db.select().from(accounts).where(eq(accounts.id, char.accountId)).limit(1);
-  const invItems = await db.select().from(inventoryItems).where(eq(inventoryItems.characterId, charId));
-  const invRow = await db.select().from(inventory).where(eq(inventory.characterId, charId)).limit(1);
+  const account = (
+    await db
+      .select()
+      .from(accounts)
+      .where(eq(accounts.id, char.accountId))
+      .limit(1)
+  ).at(0);
+  const invItems = await db
+    .select()
+    .from(inventoryItems)
+    .where(eq(inventoryItems.characterId, charId));
+  const invRow = await db
+    .select()
+    .from(inventory)
+    .where(eq(inventory.characterId, charId))
+    .limit(1);
   const charSkills = await db.select().from(skills).where(eq(skills.characterId, charId));
-  const activeQuests = await db.select().from(characterQuests).where(eq(characterQuests.characterId, charId));
-  const completedQuests = await db.select().from(characterCompletedQuests).where(eq(characterCompletedQuests.characterId, charId));
-  const [presence] = await db.select().from(onlinePlayers).where(eq(onlinePlayers.characterId, charId)).limit(1);
+  const activeQuests = await db
+    .select()
+    .from(characterQuests)
+    .where(eq(characterQuests.characterId, charId));
+  const completedQuests = await db
+    .select()
+    .from(characterCompletedQuests)
+    .where(eq(characterCompletedQuests.characterId, charId));
+  const [presence] = await db
+    .select()
+    .from(onlinePlayers)
+    .where(eq(onlinePlayers.characterId, charId))
+    .limit(1);
   const online = isOnline(presence);
 
   const resolvedInv = await resolveSlotItems(invItems);
@@ -56,7 +94,7 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
       id: it.id,
       name: it.name,
       iconUrl: itemIconUrl(it.icon),
-      category: it.item_kind3 ? getIk3Label(it.item_kind3) : "",
+      category: it.item_kind3 ? getIk3Label(it.item_kind3) : '',
       stackSize: it.stack_size,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -71,7 +109,7 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
           <div>
             <CardTitle className="text-base">Inventory</CardTitle>
             <CardDescription className="text-xs">
-              {formatNumber(invRow[0]?.gold ?? "0")} gold · {invItems.length} items
+              {formatNumber(invRow[0]?.gold ?? '0')} gold · {invItems.length} items
             </CardDescription>
           </div>
           <GoldEditor characterId={charId} currentGold={Number(invRow[0]?.gold ?? 0)} />
@@ -124,7 +162,7 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
     <div className="space-y-6">
       <PageHeader
         title={char.name}
-        description={`${jobName(char.class)} · Level ${char.level} · ${worldName(char.worldId)}`}
+        description={`${jobName(char.class)} · Level ${String(char.level)} · ${worldName(char.worldId)}`}
         backHref="/characters"
         actions={
           <>
@@ -137,7 +175,7 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
             />
             <EditStatsForm characterId={char.id} stats={char} />
             {account ? (
-              <Link href={`/accounts/${account.id}`}>
+              <Link href={`/accounts/${String(account.id)}`}>
                 <Badge variant="secondary">Account: {account.username}</Badge>
               </Link>
             ) : null}
@@ -148,21 +186,35 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
       {/* Summary tiles */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card className="card-top-accent">
-          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Level / EXP</CardTitle></CardHeader>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Level / EXP
+            </CardTitle>
+          </CardHeader>
           <CardContent className="space-y-2">
             <p className="tabular text-2xl font-bold leading-none">Lv. {char.level}</p>
-            <p className="tabular text-xs text-muted-foreground">{formatNumber(char.exp)} exp in level</p>
+            <p className="tabular text-xs text-muted-foreground">
+              {formatNumber(char.exp)} exp in level
+            </p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Vitals</CardTitle></CardHeader>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Vitals
+            </CardTitle>
+          </CardHeader>
           <CardContent className="space-y-2.5">
             <MeterBar label="HP" value={char.hp} max={char.maxHp} tone="destructive" />
             <MeterBar label="MP" value={char.mp} max={char.maxMp} tone="primary" />
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Stats</CardTitle></CardHeader>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Stats
+            </CardTitle>
+          </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-x-4">
               <DataRow label="STR" value={char.strength} />
@@ -176,9 +228,16 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Position</CardTitle></CardHeader>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Position
+            </CardTitle>
+          </CardHeader>
           <CardContent>
-            <DataRow label="World" value={`${worldName(char.worldId)} · zone ${char.zoneId}`} />
+            <DataRow
+              label="World"
+              value={`${worldName(char.worldId)} · zone ${String(char.zoneId)}`}
+            />
             <DataRow label="X" value={char.x.toFixed(1)} mono />
             <DataRow label="Y" value={char.y.toFixed(1)} mono />
             <DataRow label="Z" value={char.z.toFixed(1)} mono />
@@ -188,7 +247,11 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">PK state</CardTitle></CardHeader>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              PK state
+            </CardTitle>
+          </CardHeader>
           <CardContent>
             <DataRow label="Propensity" value={char.pkPropensity} />
             <DataRow label="Value" value={char.pkValue} />
@@ -196,7 +259,11 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Progression</CardTitle></CardHeader>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Progression
+            </CardTitle>
+          </CardHeader>
           <CardContent>
             <DataRow label="Skill points" value={formatNumber(char.skillPoint)} />
             <DataRow label="SP earned (lifetime)" value={formatNumber(char.skillLevel)} />
@@ -208,9 +275,14 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
 
       <ResponsiveSections
         sections={[
-          { key: "inventory", label: "Inventory", badge: invItems.length, content: inventorySection },
-          { key: "skills", label: "Skills", badge: charSkills.length, content: skillsSection },
-          { key: "quests", label: "Quests", badge: activeQuests.length, content: questsSection },
+          {
+            key: 'inventory',
+            label: 'Inventory',
+            badge: invItems.length,
+            content: inventorySection,
+          },
+          { key: 'skills', label: 'Skills', badge: charSkills.length, content: skillsSection },
+          { key: 'quests', label: 'Quests', badge: activeQuests.length, content: questsSection },
         ]}
       />
     </div>
@@ -222,11 +294,17 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
  * Shared shape with the standalone inventory page.
  */
 async function resolveSlotItems(
-  rows: Array<{
-    id: number; slot: number; itemId: number; quantity: number;
-    refine: number; element: number; elementLevel: number;
-    durability: number; flags: number;
-  }>,
+  rows: {
+    id: number;
+    slot: number;
+    itemId: number;
+    quantity: number;
+    refine: number;
+    element: number;
+    elementLevel: number;
+    durability: number;
+    flags: number;
+  }[],
 ): Promise<SlotItem[]> {
   const out: SlotItem[] = [];
   for (const r of rows) {
@@ -241,10 +319,10 @@ async function resolveSlotItems(
       elementLevel: r.elementLevel,
       durability: r.durability,
       flags: r.flags,
-      name: def?.name ?? `Item #${r.itemId}`,
+      name: def?.name ?? `Item #${String(r.itemId)}`,
       iconUrl: itemIconUrl(def?.icon),
-      category: def?.item_kind3 ? getIk3Label(def.item_kind3) : "Unknown",
-      kind2: def?.item_kind2 ?? "",
+      category: def?.item_kind3 ? getIk3Label(def.item_kind3) : 'Unknown',
+      kind2: def?.item_kind2 ?? '',
       rarity: def?.rarity,
       attackMin: def?.attack_min,
       attackMax: def?.attack_max,
@@ -270,7 +348,7 @@ async function resolveSlotItems(
  * grid. Joins each DB row with the skill definition from @flyff/resources.
  */
 async function resolveSkills(
-  rows: Array<{ id: number; slot: number; skillId: number; level: number }>,
+  rows: { id: number; slot: number; skillId: number; level: number }[],
 ): Promise<SkillSlotItem[]> {
   const out: SkillSlotItem[] = [];
   for (const r of rows) {
@@ -282,7 +360,7 @@ async function resolveSkills(
       slot: r.slot,
       skillId: r.skillId,
       level: r.level,
-      name: def?.name ?? `Skill #${r.skillId}`,
+      name: def?.name ?? `Skill #${String(r.skillId)}`,
       description: def?.description,
       iconUrl: skillIconUrl(def?.icon),
       tier: def?.tier ?? 0,

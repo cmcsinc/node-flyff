@@ -216,8 +216,8 @@ export class BuffManager {
    * past (final-tick damage) before {@link tick} removes it -- callers should
    * run `tickDots` before `tick`.
    */
-  tickDots(nowMs: number): Array<{ buff: ActiveBuff; damage: number }> {
-    const due: Array<{ buff: ActiveBuff; damage: number }> = [];
+  tickDots(nowMs: number): { buff: ActiveBuff; damage: number }[] {
+    const due: { buff: ActiveBuff; damage: number }[] = [];
     for (const buff of this.buffs.values()) {
       const dot = buff.dot;
       if (dot === undefined) continue;

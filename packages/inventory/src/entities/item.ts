@@ -13,7 +13,7 @@
  * @module entities/item
  */
 
-import type { Vec3 } from './player';
+import type { Vec3 } from '@flyff/entities';
 
 /** First object id for a ground item -- disjoint from movers + players. */
 export const FIRST_ITEM_ID = 0x80000000;

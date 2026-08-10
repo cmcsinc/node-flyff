@@ -9,10 +9,10 @@
  * @module lib/audit
  */
 
-import { db } from "@/lib/db";
-import { accounts, adminAuditLog } from "@/../drizzle/schema";
-import { eq } from "drizzle-orm";
-import type { Session } from "next-auth";
+import { db } from '@/lib/db';
+import { accounts, adminAuditLog } from '@/../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import type { Session } from 'next-auth';
 
 /** Resolve the acting GM's account id, or 0 when it can't be determined. */
 export async function resolveActorAccountId(session: Session): Promise<number> {
@@ -27,7 +27,7 @@ export async function resolveActorAccountId(session: Session): Promise<number> {
     .from(accounts)
     .where(eq(accounts.username, name))
     .limit(1);
-  return row?.id ?? 0;
+  return row.id;
 }
 
 /** Append one audit row. `details` is stored as JSON text. */

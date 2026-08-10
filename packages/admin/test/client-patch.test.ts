@@ -12,17 +12,20 @@
  * @module test/client-patch
  */
 
-import { describe, it, before, after } from "node:test";
-import * as assert from "node:assert/strict";
-import { mkdtemp, rm, readFile, writeFile, stat } from "node:fs/promises";
-import { createHash } from "node:crypto";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
-import { parseResArchive, readResMember } from "@flyff/resources";
-import { authFileStatus, buildAuthFile, parseAuthFile } from "../lib/client-auth-file";
-import type { patchArchive as PatchArchive, restoreArchive as RestoreArchive } from "../lib/client-patch";
+import { describe, it, before, after } from 'node:test';
+import * as assert from 'node:assert/strict';
+import { mkdtemp, rm, readFile, writeFile, stat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { parseResArchive, readResMember } from '@flyff/resources';
+import { authFileStatus, buildAuthFile, parseAuthFile } from '../lib/client-auth-file';
+import type {
+  patchArchive as PatchArchive,
+  restoreArchive as RestoreArchive,
+} from '../lib/client-patch';
 
-const RAW_DIR = new URL("../../resources/raw/", import.meta.url);
+const RAW_DIR = new URL('../../resources/raw/', import.meta.url);
 
 /** Build a `.res` archive from `name -> plaintext`, matching `_Common/file.cpp`. */
 function makeArchive(members: Record<string, Buffer>, key = 0x57): Buffer {
@@ -37,11 +40,11 @@ function makeArchive(members: Record<string, Buffer>, key = 0x57): Buffer {
   };
 
   const version = Buffer.alloc(7);
-  version.write('"V0.01"', 0, "latin1");
+  version.write('"V0.01"', 0, 'latin1');
 
   // Directory width is fixed by the names, so offsets can be computed up front.
   let dirLen = 7 + 2;
-  for (const n of names) dirLen += 2 + Buffer.byteLength(n, "latin1") + 4 + 4 + 4;
+  for (const n of names) dirLen += 2 + Buffer.byteLength(n, 'latin1') + 4 + 4 + 4;
 
   const parts: Buffer[] = [version];
   const count = Buffer.alloc(2);
@@ -52,7 +55,7 @@ function makeArchive(members: Record<string, Buffer>, key = 0x57): Buffer {
   const payloads: Buffer[] = [];
   for (const n of names) {
     const data = encrypt(members[n] ?? Buffer.alloc(0));
-    const nb = Buffer.from(n, "latin1");
+    const nb = Buffer.from(n, 'latin1');
     const head = Buffer.alloc(2);
     head.writeInt16LE(nb.length, 0);
     const tail = Buffer.alloc(12);
@@ -65,7 +68,7 @@ function makeArchive(members: Record<string, Buffer>, key = 0x57): Buffer {
   }
 
   const dir = Buffer.concat(parts);
-  assert.equal(dir.length, dirLen, "directory width miscomputed");
+  assert.equal(dir.length, dirLen, 'directory width miscomputed');
   const header = Buffer.alloc(6);
   header.writeUInt8(key, 0);
   header.writeUInt8(1, 1);
@@ -82,22 +85,22 @@ async function exists(p: string): Promise<boolean> {
   }
 }
 
-void describe("client-patch", () => {
+void describe('client-patch', () => {
   let dir: string;
   let patchArchive: typeof PatchArchive;
   let restoreArchive: typeof RestoreArchive;
   /** A real `raw/` file, used as the tracked member. */
-  const TRACKED = "propQuest.inc";
+  const TRACKED = 'propQuest.inc';
   /** A name that is not in `raw/`, so it must be carried across untouched. */
-  const UNTRACKED = "not-a-raw-file.bin";
-  const UNTRACKED_BYTES = Buffer.from("carried across verbatim");
+  const UNTRACKED = 'not-a-raw-file.bin';
+  const UNTRACKED_BYTES = Buffer.from('carried across verbatim');
   let rawBytes: Buffer;
 
   before(async () => {
     rawBytes = await readFile(new URL(TRACKED, RAW_DIR));
-    dir = await mkdtemp(join(tmpdir(), "client-patch-"));
+    dir = await mkdtemp(join(tmpdir(), 'client-patch-'));
     process.env.CLIENT_DIR = dir;
-    const mod = await import("../lib/client-patch");
+    const mod = await import('../lib/client-patch');
     patchArchive = mod.patchArchive;
     restoreArchive = mod.restoreArchive;
   });
@@ -114,31 +117,31 @@ void describe("client-patch", () => {
    * patch rather than the assertion under test.
    */
   async function seed(): Promise<string> {
-    const path = join(dir, "dataSub1.res");
+    const path = join(dir, 'dataSub1.res');
     for (const f of [
-      path + ".bak",
-      path + ".patched",
-      join(dir, "Flyff.a"),
-      join(dir, "Flyff.a.bak"),
-      join(dir, "Flyff.a.built"),
+      path + '.bak',
+      path + '.patched',
+      join(dir, 'Flyff.a'),
+      join(dir, 'Flyff.a.bak'),
+      join(dir, 'Flyff.a.built'),
     ]) {
       await rm(f, { force: true });
     }
-    await writeFile(join(dir, "data.res"), makeArchive({ "define.h": Buffer.from("#define A 1") }));
-    await writeFile(join(dir, "dataSub2.res"), makeArchive({ "spec_item.txt": Buffer.from("x") }));
+    await writeFile(join(dir, 'data.res'), makeArchive({ 'define.h': Buffer.from('#define A 1') }));
+    await writeFile(join(dir, 'dataSub2.res'), makeArchive({ 'spec_item.txt': Buffer.from('x') }));
     await writeFile(
       path,
       makeArchive({
-        [TRACKED]: Buffer.from("stale client copy"),
+        [TRACKED]: Buffer.from('stale client copy'),
         [UNTRACKED]: UNTRACKED_BYTES,
       }),
     );
     return path;
   }
 
-  void it("merges the stale raw/ file and leaves untracked members byte-identical", async () => {
+  void it('merges the stale raw/ file and leaves untracked members byte-identical', async () => {
     const path = await seed();
-    const result = await patchArchive(dir, "dataSub1.res");
+    const result = await patchArchive(dir, 'dataSub1.res');
 
     assert.deepEqual(
       result.replaced.map((r) => r.name),
@@ -146,53 +149,53 @@ void describe("client-patch", () => {
     );
 
     const after = parseResArchive(await readFile(path));
-    assert.ok(readResMember(after, TRACKED).equals(rawBytes), "raw/ bytes did not land");
+    assert.ok(readResMember(after, TRACKED).equals(rawBytes), 'raw/ bytes did not land');
     assert.ok(
       readResMember(after, UNTRACKED).equals(UNTRACKED_BYTES),
-      "an untouched member was corrupted",
+      'an untouched member was corrupted',
     );
   });
 
-  void it("keeps the pre-patch archive as .bak", async () => {
+  void it('keeps the pre-patch archive as .bak', async () => {
     const path = await seed();
-    await patchArchive(dir, "dataSub1.res");
+    await patchArchive(dir, 'dataSub1.res');
 
-    const backup = parseResArchive(await readFile(path + ".bak"));
-    assert.equal(readResMember(backup, TRACKED).toString(), "stale client copy");
+    const backup = parseResArchive(await readFile(path + '.bak'));
+    assert.equal(readResMember(backup, TRACKED).toString(), 'stale client copy');
   });
 
-  void it("is a no-op on the second run, so the backup is never overwritten", async () => {
+  void it('is a no-op on the second run, so the backup is never overwritten', async () => {
     const path = await seed();
-    await patchArchive(dir, "dataSub1.res");
-    const backupBefore = await readFile(path + ".bak");
+    await patchArchive(dir, 'dataSub1.res');
+    const backupBefore = await readFile(path + '.bak');
 
-    const second = await patchArchive(dir, "dataSub1.res");
-    assert.deepEqual(second.replaced, [], "re-patched an already-current archive");
+    const second = await patchArchive(dir, 'dataSub1.res');
+    assert.deepEqual(second.replaced, [], 're-patched an already-current archive');
     assert.equal(second.backup, null);
     assert.ok(
-      (await readFile(path + ".bak")).equals(backupBefore),
-      "the second run clobbered the only pre-patch copy",
+      (await readFile(path + '.bak')).equals(backupBefore),
+      'the second run clobbered the only pre-patch copy',
     );
   });
 
-  void it("restores the backup and keeps the patched copy for undo", async () => {
+  void it('restores the backup and keeps the patched copy for undo', async () => {
     const path = await seed();
-    await patchArchive(dir, "dataSub1.res");
-    await restoreArchive(dir, "dataSub1.res");
+    await patchArchive(dir, 'dataSub1.res');
+    await restoreArchive(dir, 'dataSub1.res');
 
     const live = parseResArchive(await readFile(path));
-    assert.equal(readResMember(live, TRACKED).toString(), "stale client copy");
-    assert.ok(await exists(path + ".patched"), "the patched archive was discarded");
+    assert.equal(readResMember(live, TRACKED).toString(), 'stale client copy');
+    assert.ok(await exists(path + '.patched'), 'the patched archive was discarded');
   });
 
-  void it("refuses to restore when no backup exists", async () => {
+  void it('refuses to restore when no backup exists', async () => {
     await seed();
-    await assert.rejects(() => restoreArchive(dir, "dataSub1.res"), /No backup/);
+    await assert.rejects(() => restoreArchive(dir, 'dataSub1.res'), /No backup/);
   });
 
-  void it("rejects an archive name outside the known set", async () => {
-    await assert.rejects(() => patchArchive(dir, "../../etc/passwd"), /Unknown archive/);
-    await assert.rejects(() => restoreArchive(dir, "evil.res"), /Unknown archive/);
+  void it('rejects an archive name outside the known set', async () => {
+    await assert.rejects(() => patchArchive(dir, '../../etc/passwd'), /Unknown archive/);
+    await assert.rejects(() => restoreArchive(dir, 'evil.res'), /Unknown archive/);
   });
 
   // ── Flyff.a integrity manifest ────────────────────────────────────────────
@@ -201,73 +204,73 @@ void describe("client-patch", () => {
   // built with __SECURITY_0628 ExitProcess(-1) at file.cpp:513-533. These pin
   // the rebuild to the patch so it cannot be forgotten.
 
-  void it("rebuilds Flyff.a so every patched member is covered", async () => {
+  void it('rebuilds Flyff.a so every patched member is covered', async () => {
     await seed();
-    const result = await patchArchive(dir, "dataSub1.res");
+    const result = await patchArchive(dir, 'dataSub1.res');
 
-    assert.equal(result.authFileRecords, 4, "manifest should cover all 4 members");
+    assert.equal(result.authFileRecords, 4, 'manifest should cover all 4 members');
     const status = await authFileStatus(dir);
-    assert.deepEqual(status.mismatched, [], "a patched member is not covered by the manifest");
+    assert.deepEqual(status.mismatched, [], 'a patched member is not covered by the manifest');
     assert.equal(status.entries, status.members);
   });
 
-  void it("writes the manifest in the shipped record format", async () => {
+  void it('writes the manifest in the shipped record format', async () => {
     await seed();
-    await patchArchive(dir, "dataSub1.res");
+    await patchArchive(dir, 'dataSub1.res');
 
-    const buf = await readFile(join(dir, "Flyff.a"));
-    assert.equal(buf.length % 64, 0, "records must be a whole number of 64-byte rows");
+    const buf = await readFile(join(dir, 'Flyff.a'));
+    assert.equal(buf.length % 64, 0, 'records must be a whole number of 64-byte rows');
 
     const rows = parseAuthFile(buf);
     assert.equal(rows.size, 4);
     // The patched member's own row must be md5(lowercased name) -> md5(raw bytes).
-    const nameHash = createHash("md5").update(TRACKED.toLowerCase()).digest("hex");
-    assert.equal(rows.get(nameHash), createHash("md5").update(rawBytes).digest("hex"));
+    const nameHash = createHash('md5').update(TRACKED.toLowerCase()).digest('hex');
+    assert.equal(rows.get(nameHash), createHash('md5').update(rawBytes).digest('hex'));
     // Sorted ascending by name hash, as the shipped file is.
     const keys = [...rows.keys()];
     assert.deepEqual(keys, [...keys].sort());
   });
 
-  void it("keeps the pre-patch manifest as .bak and does not churn it", async () => {
+  void it('keeps the pre-patch manifest as .bak and does not churn it', async () => {
     await seed();
-    await writeFile(join(dir, "Flyff.a"), Buffer.alloc(64, 0x30));
-    await patchArchive(dir, "dataSub1.res");
+    await writeFile(join(dir, 'Flyff.a'), Buffer.alloc(64, 0x30));
+    await patchArchive(dir, 'dataSub1.res');
 
-    const backup = await readFile(join(dir, "Flyff.a.bak"));
-    assert.ok(backup.equals(Buffer.alloc(64, 0x30)), "the pre-patch manifest was not preserved");
+    const backup = await readFile(join(dir, 'Flyff.a.bak'));
+    assert.ok(backup.equals(Buffer.alloc(64, 0x30)), 'the pre-patch manifest was not preserved');
 
     // Second patch changes nothing, so the backup must survive intact.
-    const second = await patchArchive(dir, "dataSub1.res");
-    assert.equal(second.authFileRecords, null, "rewrote an already-current manifest");
-    assert.ok((await readFile(join(dir, "Flyff.a.bak"))).equals(backup));
+    const second = await patchArchive(dir, 'dataSub1.res');
+    assert.equal(second.authFileRecords, null, 'rewrote an already-current manifest');
+    assert.ok((await readFile(join(dir, 'Flyff.a.bak'))).equals(backup));
   });
 
-  void it("rebuilds the manifest after a restore, not just a patch", async () => {
+  void it('rebuilds the manifest after a restore, not just a patch', async () => {
     await seed();
-    await patchArchive(dir, "dataSub1.res");
-    await restoreArchive(dir, "dataSub1.res");
+    await patchArchive(dir, 'dataSub1.res');
+    await restoreArchive(dir, 'dataSub1.res');
 
     const status = await authFileStatus(dir);
     assert.deepEqual(
       status.mismatched,
       [],
-      "the manifest still describes the patched archive after restoring",
+      'the manifest still describes the patched archive after restoring',
     );
   });
 
-  void it("reports a stale manifest without writing anything", async () => {
+  void it('reports a stale manifest without writing anything', async () => {
     await seed();
-    await patchArchive(dir, "dataSub1.res");
-    const good = await readFile(join(dir, "Flyff.a"));
+    await patchArchive(dir, 'dataSub1.res');
+    const good = await readFile(join(dir, 'Flyff.a'));
 
     // Corrupt one row's content hash — the shape a half-finished patch leaves.
     const bad = Buffer.from(good);
-    bad.write("0".repeat(32), 32, "latin1");
-    await writeFile(join(dir, "Flyff.a"), bad);
+    bad.write('0'.repeat(32), 32, 'latin1');
+    await writeFile(join(dir, 'Flyff.a'), bad);
 
     const status = await authFileStatus(dir);
-    assert.equal(status.mismatched.length, 1, "a corrupted row was not reported");
-    assert.ok((await readFile(join(dir, "Flyff.a"))).equals(bad), "status wrote to disk");
+    assert.equal(status.mismatched.length, 1, 'a corrupted row was not reported');
+    assert.ok((await readFile(join(dir, 'Flyff.a'))).equals(bad), 'status wrote to disk');
   });
 });
 
@@ -280,22 +283,22 @@ void describe("client-patch", () => {
 //
 // Skipped when the client tree is absent so a bare checkout still passes.
 
-const CLIENT = "H:/flyff/v19/Client";
+const CLIENT = 'H:/flyff/v19/Client';
 
-void describe("client-auth-file — real v19 Flyff.a", () => {
-  void it("regenerates the shipped manifest byte-for-byte from the pre-patch archives", async () => {
+void describe('client-auth-file — real v19 Flyff.a', () => {
+  void it('regenerates the shipped manifest byte-for-byte from the pre-patch archives', async () => {
     // `Flyff.a.bak` — not the live `Flyff.a`. Both are Gala-shipped bytes, but
     // the live one is rewritten by every patch, so it describes whatever is on
     // disk now; the backup still describes the pre-patch archive set hashed
     // below. Comparing against the live file measures the wrong pair.
-    const original = await readFile(join(CLIENT, "Flyff.a.bak")).catch(() => null);
+    const original = await readFile(join(CLIENT, 'Flyff.a.bak')).catch(() => null);
     if (!original) return; // client tree absent, or never patched
 
     // `dataSub1.res.bak` is the pre-patch archive the shipped manifest describes.
     const sources: [string, string][] = [
-      ["data.res", "data.res"],
-      ["dataSub1.res", "dataSub1.res.bak"],
-      ["dataSub2.res", "dataSub2.res"],
+      ['data.res', 'data.res'],
+      ['dataSub1.res', 'dataSub1.res.bak'],
+      ['dataSub2.res', 'dataSub2.res'],
     ];
     const hashes = new Map<string, string>();
     for (const [, file] of sources) {
@@ -304,15 +307,15 @@ void describe("client-auth-file — real v19 Flyff.a", () => {
       const archive = parseResArchive(buf);
       for (const entry of archive.entries) {
         hashes.set(
-          createHash("md5").update(entry.name.toLowerCase()).digest("hex"),
-          createHash("md5").update(readResMember(archive, entry.name)).digest("hex"),
+          createHash('md5').update(entry.name.toLowerCase()).digest('hex'),
+          createHash('md5').update(readResMember(archive, entry.name)).digest('hex'),
         );
       }
     }
 
     assert.ok(
       buildAuthFile(hashes).equals(original),
-      "rebuilt manifest differs from the shipped Flyff.a — the record format is wrong",
+      'rebuilt manifest differs from the shipped Flyff.a — the record format is wrong',
     );
   });
 });

@@ -104,8 +104,8 @@ export type QuestOpResult =
 const PERMISSIVE_INV: QuestInventory = {
   count: () => 0,
   emptySlots: () => Number.MAX_SAFE_INTEGER,
-  add: () => {},
-  remove: () => {},
+  add: () => { /* permissive stub -- no-op */ },
+  remove: () => { /* permissive stub -- no-op */ },
 };
 
 /** Map a persisted active-quest row -> the in-memory `RuntimeQuest` mirror. */
@@ -162,16 +162,17 @@ export class QuestService {
     }
 
     const sink: RewardSink = { inventory: inv };
-    if (this.deps.journal) sink.journal = (entry) => { this.deps.journal!.append(entry); };
-    if (this.deps.onExpGain) sink.onExpGain = (p, leveled) => { this.deps.onExpGain!(p, leveled); };
-    if (this.deps.onItemReward) sink.onItemReward = (p, itemId, count) => { this.deps.onItemReward!(p, itemId, count); };
+    const { journal, onExpGain, onItemReward } = this.deps;
+    if (journal) sink.journal = (entry: JournalEntry): void => { journal.append(entry); };
+    if (onExpGain) sink.onExpGain = (p: CPlayer, leveled: boolean): void => { onExpGain(p, leveled); };
+    if (onItemReward) sink.onItemReward = (p: CPlayer, itemId: number, count: number): void => { onItemReward(p, itemId, count); };
     const inventoryRepo = this.deps.inventoryRepo;
     if (inventoryRepo) {
       // Fire-and-forget gold flush to the inventory container (migration 008).
-      sink.flushGold = (charId, gold) => {
-        inventoryRepo.setGold(charId, gold).catch((err: unknown) =>
-          logger.error({ err, charId, gold }, 'gold persist failed'),
-        );
+      sink.flushGold = (charId: number, gold: number): void => {
+        inventoryRepo.setGold(charId, gold).catch((err: unknown): void => {
+          logger.error({ err, charId, gold }, 'gold persist failed');
+        });
       };
     }
     return { inv, sink, frames: bound?.frames ?? EMPTY_FRAMES };
@@ -268,7 +269,7 @@ export class QuestService {
     // AddSetQuest (ScriptHelper.cpp:895 -> 906). The notifier writes the text
     // snapshot directly (mirrors onItemReward/onExpGain) so it lands before the
     // returned SETQUEST frame the handler writes next.
-    this.deps.onComplete?.(player, questId, def.title ?? def.symbol ?? `Quest ${questId}`);
+    this.deps.onComplete?.(player, questId, def.title ?? def.symbol);
     return { ok: true, frames: [buildSetQuest(player.m_idPlayer, done), ...frames] };
   }
 
@@ -283,7 +284,7 @@ export class QuestService {
     if (!rt) return { ok: false, reason: 'not_found' };
     if (rt.state === QS_END) return { ok: false, reason: 'not_found' };
     // C++ DPSrvr.cpp:1656 — pQuestProp->m_bNoRemove == FALSE required.
-    const def = this.deps.quests?.byId.get(questId);
+    const def = this.deps.quests.byId.get(questId);
     if (def?.no_remove) return { ok: false, reason: 'no_remove' };
     player.removeQuest(questId);
     await this.deps.questRepo.removeActive(player.m_idPlayer, questId);

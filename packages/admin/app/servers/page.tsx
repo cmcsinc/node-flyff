@@ -1,10 +1,10 @@
-import { PageHeader } from "@/components/page-header";
-import { getStatuses } from "@/lib/server-manager";
-import { ServerManager } from "./server-manager-client";
+import { PageHeader } from '@/components/page-header';
+import { getStatuses } from '@/lib/server-manager';
+import { ServerManager } from './server-manager-client';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export default async function ServersPage() {
+export default async function ServersPage(): Promise<React.JSX.Element> {
   const instances = await getStatuses();
   return (
     // Fixed viewport-height column so the log console owns the leftover space

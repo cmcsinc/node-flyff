@@ -269,11 +269,10 @@ export async function loadConfig<T>(
   const merged = deepMerge({}, ...layers, envOverrides);
 
   // Validate with the server-specific Zod schema
-  const result = schema.safeParse(merged) as ReturnType<T['safeParse']>;
+  const result = schema.safeParse(merged);
 
   if (!result.success) {
-    const err = result.error;
-    const messages = err.errors
+    const messages = result.error.errors
       .map(e => `  ${e.path.join('.')}: ${e.message}`)
       .join('\n');
     throw new Error(
@@ -282,7 +281,7 @@ export async function loadConfig<T>(
     );
   }
 
-  return result.data as ReturnType<T['parse']>;
+  return result.data;
 }
 
 /**
@@ -322,10 +321,9 @@ export function loadConfigSync<T>(
   const envOverrides = buildEnvOverrides();
   const merged = deepMerge({}, ...layers, envOverrides);
 
-  const result = schema.safeParse(merged) as ReturnType<T['safeParse']>;
+  const result = schema.safeParse(merged);
   if (!result.success) {
-    const err = result.error;
-    const messages = err.errors
+    const messages = result.error.errors
       .map(e => `  ${e.path.join('.')}: ${e.message}`)
       .join('\n');
     throw new Error(
@@ -333,5 +331,5 @@ export function loadConfigSync<T>(
     );
   }
 
-  return result.data as ReturnType<T['parse']>;
+  return result.data;
 }

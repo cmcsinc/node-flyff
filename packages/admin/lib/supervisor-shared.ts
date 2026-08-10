@@ -91,12 +91,15 @@ export function parseSpawnRequest(raw: unknown): { req: SpawnRequest } | { error
   const { id, type, configFile, env } = raw as Record<string, unknown>;
   if (!isValidInstanceId(id)) return { error: 'Invalid id' };
   if (typeof type !== 'string' || !(type in ENTRY)) return { error: 'Invalid type' };
-  if (typeof configFile !== 'string' || configFile.length === 0) return { error: 'Invalid configFile' };
+  if (typeof configFile !== 'string' || configFile.length === 0)
+    return { error: 'Invalid configFile' };
   const envOut: Record<string, string> = {};
   if (env !== undefined) {
-    if (typeof env !== 'object' || env === null || Array.isArray(env)) return { error: 'Invalid env' };
+    if (typeof env !== 'object' || env === null || Array.isArray(env))
+      return { error: 'Invalid env' };
     for (const [k, v] of Object.entries(env)) {
-      if (!/^[A-Z_][A-Z0-9_]*$/.test(k) || typeof v !== 'string') return { error: `Invalid env key: ${k}` };
+      if (!/^[A-Z_][A-Z0-9_]*$/.test(k) || typeof v !== 'string')
+        return { error: `Invalid env key: ${k}` };
       envOut[k] = v;
     }
   }
@@ -281,8 +284,8 @@ export function loadDotEnv(): Record<string, string> {
   if (!existsSync(path)) return out;
   for (const line of readFileSync(path, 'utf-8').split(/\r?\n/)) {
     if (line.trim().startsWith('#')) continue;
-    const m = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*)\s*$/);
-    if (m) out[m[1]!] = m[2]!.replace(/^["']|["']$/g, '');
+    const m = /^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*)\s*$/.exec(line);
+    if (m) out[m[1]] = m[2].replace(/^["']|["']$/g, '');
   }
   return out;
 }

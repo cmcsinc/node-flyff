@@ -23,7 +23,7 @@ import type { PlayerSocket } from '@flyff/entities';
 import { AUTH, toAuthority, BUFF_SKILL, isJobMatch } from '@flyff/entities';
 import { buffEffects, dotFromSkill } from '@flyff/skills';
 import { recomputeSetBonuses } from '@flyff/inventory';
-import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam, buildSetSkillState } from '@flyff/world-core';
+import { MAX_HUMAN_PARTS, MAX_INVENTORY, buildSetDestParam } from '@flyff/world-core';
 import { OBJSTAF, PARTS_RIDE } from '@flyff/entities';
 import { decodeTaskBar, decodeTaskBarQueue } from './taskbar.service';
 import type { PlayerManager } from '@flyff/world-core';
@@ -157,7 +157,7 @@ export class JoinService {
         zone_id: player.m_nZoneId,
         server_id: this.deps.serverId ?? 'world',
       })
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'presence upsert failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, 'presence upsert failed'); });
     // Port of `CUser::AdjustMailboxState` (User.cpp:3689) -- recompute
     // MODE_MAILBOX from unclaimed mail and hand the player their mailbox.
     void this.deps.mailHandler?.sendMailBox(player);
@@ -165,7 +165,7 @@ export class JoinService {
     // (`CUser::AddFriendGameJoin`, User.cpp:326) and the campus roster + point
     // value. Both best-effort for the same reason as presence/mail above.
     void this.deps.socialJoin?.(player)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'social join failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, 'social join failed'); });
     return { ok: true, player };
   }
 
@@ -224,7 +224,7 @@ export class JoinService {
    */
   private applyEquipDstParams(player: CPlayer): void {
     if (!this.deps.getItem) return;
-    const seeded: Array<{ dst: number; adj: number; chg?: number }> = [];
+    const seeded: { dst: number; adj: number; chg?: number }[] = [];
     for (let part = 0; part < MAX_HUMAN_PARTS; part++) {
       const slot = player.m_Inventory[MAX_INVENTORY + part];
       if (!slot) continue;
@@ -261,7 +261,8 @@ export class JoinService {
     const rows = await this.deps.bankRepo.findByAccountId(player.m_accountId);
     for (const r of rows) {
       if (r.tab < 0 || r.tab >= player.m_Bank.length) continue;
-      const tab = player.m_Bank[r.tab]!;
+      const tab = player.m_Bank[r.tab];
+      if (tab === undefined) continue;
       if (r.slot < 0 || r.slot >= tab.length) continue;
       tab[r.slot] = { itemId: r.item_id, count: r.quantity, flags: r.flags, refine: r.refine, durability: r.durability };
     }
@@ -278,7 +279,7 @@ export class JoinService {
     this.deps.playerManager.remove(player.m_idPlayer);
     this.deps.presenceRepo
       ?.remove(player.m_idPlayer)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'presence remove failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, 'presence remove failed'); });
   }
 
   /**
@@ -350,7 +351,9 @@ export class JoinService {
     }
     if (this.deps.bankRepo) {
       for (let t = 0; t < player.m_BankGold.length; t++) {
-        await this.deps.bankRepo.setGold(player.m_accountId, player.m_BankGold[t]!, t);
+        const gold = player.m_BankGold[t];
+        if (gold === undefined) continue;
+        await this.deps.bankRepo.setGold(player.m_accountId, gold, t);
       }
     }
   }
@@ -365,15 +368,15 @@ export class JoinService {
    */
   flushAll(): void {
     for (const p of this.deps.playerManager.all()) {
-      void this.flushPlayer(p).catch((err) =>
-        logger.error({ err, charId: p.m_idPlayer }, 'Checkpoint flush failed'),
+      void this.flushPlayer(p).catch((err: unknown) =>
+        { logger.error({ err, charId: p.m_idPlayer }, 'Checkpoint flush failed'); },
       );
       // Presence heartbeat rides the same 30 s pass. Readers treat a row as
       // online only while `last_seen_ms` is fresh, so a crashed world's rows
       // age out instead of pinning characters online forever.
       this.deps.presenceRepo
         ?.touch(p.m_idPlayer)
-        .catch((err: unknown) => logger.warn({ err, charId: p.m_idPlayer }, 'presence touch failed'));
+        .catch((err: unknown) => { logger.warn({ err, charId: p.m_idPlayer }, 'presence touch failed'); });
     }
   }
 

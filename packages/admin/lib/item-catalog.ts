@@ -9,8 +9,8 @@
  * @module lib/item-catalog
  */
 
-import type { ItemDefinition } from "@flyff/resources";
-import { getResourceIndex } from "./resource-cache";
+import type { ItemDefinition } from '@flyff/resources';
+import { getResourceIndex } from './resource-cache';
 
 /** Look up an item definition by numeric id. */
 export async function getItem(itemId: number): Promise<ItemDefinition | undefined> {
@@ -29,8 +29,8 @@ export async function getAllItems(): Promise<ItemDefinition[]> {
  * Returns a placeholder path when the icon is missing so the UI never has a broken img.
  */
 export function itemIconUrl(icon: string | undefined): string {
-  if (!icon) return "/icons/_placeholder.svg";
-  return `/icons/${icon.replace(/\.dds$/i, ".png")}`;
+  if (!icon) return '/icons/_placeholder.svg';
+  return `/icons/${icon.replace(/\.dds$/i, '.png')}`;
 }
 
 // --- Equipment slot / PARTS constants ----------------------------------------
@@ -43,37 +43,37 @@ export const MAX_INVENTORY = 42;
  * to a human-readable label. Sourced from `game/resource/defineNeuz.h`.
  */
 export const PARTS_LABELS: Record<number, string> = {
-  0: "Head",
-  1: "Hair",
-  2: "Upper Body",
-  3: "Lower Body",
-  4: "Hand",
-  5: "Foot",
-  6: "Helmet",
-  7: "Robe",
-  8: "Cloak",
-  9: "Left Weapon",
-  10: "Right Weapon",
-  11: "Shield",
-  12: "Mask",
-  13: "Ride",
-  14: "Costume Cap",
-  15: "Costume Upper",
-  16: "Costume Lower",
-  17: "Costume Hand",
-  18: "Costume Foot",
-  19: "Necklace",
-  20: "Ring 1",
-  21: "Ring 2",
-  22: "Earring 1",
-  23: "Earring 2",
-  24: "Property",
-  25: "Bullet",
-  26: "Fashion Hat",
-  27: "Fashion Cloth",
-  28: "Fashion Glove",
-  29: "Fashion Boots",
-  30: "Tail",
+  0: 'Head',
+  1: 'Hair',
+  2: 'Upper Body',
+  3: 'Lower Body',
+  4: 'Hand',
+  5: 'Foot',
+  6: 'Helmet',
+  7: 'Robe',
+  8: 'Cloak',
+  9: 'Left Weapon',
+  10: 'Right Weapon',
+  11: 'Shield',
+  12: 'Mask',
+  13: 'Ride',
+  14: 'Costume Cap',
+  15: 'Costume Upper',
+  16: 'Costume Lower',
+  17: 'Costume Hand',
+  18: 'Costume Foot',
+  19: 'Necklace',
+  20: 'Ring 1',
+  21: 'Ring 2',
+  22: 'Earring 1',
+  23: 'Earring 2',
+  24: 'Property',
+  25: 'Bullet',
+  26: 'Fashion Hat',
+  27: 'Fashion Cloth',
+  28: 'Fashion Glove',
+  29: 'Fashion Boots',
+  30: 'Tail',
 };
 
 /** Convert an inventory slot index (42+) to the body-part number. */
@@ -89,10 +89,10 @@ export function equipSlotLabel(slot: number): string | undefined {
 
 /** Element names by numeric id (propItem element field). */
 export const ELEMENT_NAMES: Record<number, string> = {
-  0: "None",
-  1: "Fire",
-  2: "Water",
-  3: "Electric",
-  4: "Wind",
-  5: "Earth",
+  0: 'None',
+  1: 'Fire',
+  2: 'Water',
+  3: 'Electric',
+  4: 'Wind',
+  5: 'Earth',
 };

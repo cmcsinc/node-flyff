@@ -33,8 +33,8 @@ export interface ReplayerRegistryDeps {
 }
 
 /** Parse a journal row's JSON payload. Throws on corrupt JSON (abort recovery). */
-function payload<T>(row: JournalRow): T {
-  return JSON.parse(row.payload) as T;
+function payload(row: JournalRow): unknown {
+  return JSON.parse(row.payload);
 }
 
 /**
@@ -44,14 +44,14 @@ function payload<T>(row: JournalRow): T {
 export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps): void {
   // Character level + cumulative exp (DB `exp` column = `m_nExp1`).
   r.register('CHAR_EXP', async (row) => {
-    const p = payload<{ level: number; exp: string }>(row);
+    const p = payload(row) as { level: number; exp: string };
     await deps.charRepo.updateLevelAndExp(row.char_id, p.level, BigInt(p.exp));
   });
 
   // Character gold total (C++ `m_nGold`) -- stored on the inventory container
   // row (migration 008), not the character row.
   r.register('CHAR_GOLD', async (row) => {
-    const p = payload<{ gold: number }>(row);
+    const p = payload(row) as { gold: number };
     await deps.inventoryRepo.setGold(row.char_id, p.gold);
   });
 
@@ -79,7 +79,7 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // container row (migration 008); payload carries accountId to address it.
   // '0000' = cleared.
   r.register('BANK_PASS', async (row) => {
-    const p = payload<{ accountId: number; bankPass: string }>(row);
+    const p = payload(row) as { accountId: number; bankPass: string };
     await deps.bankRepo.setBankPass(p.accountId, p.bankPass);
   });
 
@@ -97,7 +97,7 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // idempotent. saveAll delete+reinserts the whole set, matching the payload.
   r.register('SKILL_LEARN', async (row) => {
     const p = payload<{
-      roster: Array<{ slot: number; skillId: number; level: number }>;
+      roster: { slot: number; skillId: number; level: number }[];
       skillPoint: number; skillLevel: number;
     }>(row);
     await deps.skillRepo.saveAll(row.char_id, p.roster);
@@ -108,7 +108,7 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // absolute so replay is idempotent. Persists both the job id AND the new
   // roster (AddChangeJob re-seeds m_aJobSkill for the new job's tier).
   r.register('CHAR_JOB', async (row) => {
-    const p = payload<{ class: number; roster: Array<{ slot: number; skillId: number; level: number }> }>(row);
+    const p = payload(row) as { class: number; roster: { slot: number; skillId: number; level: number }[] };
     await deps.charRepo.updateClass(row.char_id, p.class);
     await deps.skillRepo.saveAll(row.char_id, p.roster);
   });
@@ -135,14 +135,14 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // One bank tab's absolute gold pool (C++ `m_dwGoldBank[tab]`). The inventory
   // side of a gold move rides on the canonical CHAR_GOLD row.
   r.register('BANK_GOLD', async (row) => {
-    const p = payload<{ accountId: number; tab: number; gold: number }>(row);
+    const p = payload(row) as { accountId: number; tab: number; gold: number };
     await deps.bankRepo.setGold(p.accountId, p.gold, p.tab);
   });
 
   // Absolute PK state of the killer (C++ m_dwPKPropensity/m_nPKValue/m_dwPKTime).
   // Emitted by CombatService.onPvpKill; `victimId` is audit context only.
   r.register('PK_KILL', async (row) => {
-    const p = payload<{ pkPropensity: number; pkValue: number; pkTime: number }>(row);
+    const p = payload(row) as { pkPropensity: number; pkValue: number; pkTime: number };
     await deps.charRepo.updatePKState(row.char_id, p.pkPropensity, p.pkValue, p.pkTime);
   });
 

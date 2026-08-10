@@ -1,32 +1,38 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
 
-export function GoldEditor({ characterId, currentGold }: { characterId: number; currentGold: number }) {
+export function GoldEditor({
+  characterId,
+  currentGold,
+}: {
+  characterId: number;
+  currentGold: number;
+}): React.JSX.Element {
   const [gold, setGold] = useState(currentGold);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const router = useRouter();
 
-  async function save() {
+  async function save(): Promise<void> {
     setSaving(true);
-    const res = await fetch("/api/inventory/" + characterId, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch(`/api/inventory/${String(characterId)}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ gold }),
     });
     setSaving(false);
     if (res.ok) {
-      toast.success("Gold updated");
+      toast.success('Gold updated');
       setEditing(false);
       router.refresh();
     } else {
-      toast.error("Failed to update gold");
+      toast.error('Failed to update gold');
     }
   }
 
@@ -34,7 +40,15 @@ export function GoldEditor({ characterId, currentGold }: { characterId: number; 
     return (
       <div className="flex items-center gap-3">
         <span className="text-2xl font-bold">{currentGold.toLocaleString()}</span>
-        <Button variant="outline" size="sm" onClick={() => setEditing(true)}>Edit</Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setEditing(true);
+          }}
+        >
+          Edit
+        </Button>
       </div>
     );
   }
@@ -44,15 +58,25 @@ export function GoldEditor({ characterId, currentGold }: { characterId: number; 
       <Input
         type="number"
         value={gold}
-        onChange={(e) => setGold(Number(e.target.value))}
+        onChange={(e) => {
+          setGold(Number(e.target.value));
+        }}
         className="w-40"
         min={0}
       />
-      <Button size="sm" onClick={save} disabled={saving}>
+      <Button size="sm" onClick={() => { void save(); }} disabled={saving}>
         {saving && <Loader2 className="mr-1 h-3 w-3 animate-spin" />}
         Save
       </Button>
-      <Button variant="ghost" size="sm" onClick={() => { setEditing(false); setGold(currentGold); }} disabled={saving}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => {
+          setEditing(false);
+          setGold(currentGold);
+        }}
+        disabled={saving}
+      >
         Cancel
       </Button>
     </div>

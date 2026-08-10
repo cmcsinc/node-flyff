@@ -19,8 +19,8 @@ import {
   MIN_HR, MAX_HR,
 } from './tables';
 import { getJobProps } from '@flyff/entities';
-import type { JobProps, Rng, ParamView } from '@flyff/entities';
-import { DST, EMPTY_PARAM_VIEW } from '@flyff/entities';
+import type { Rng, ParamView } from '@flyff/entities';
+import { DST } from '@flyff/entities';
 
 // exp / vitals / rng moved to @flyff/entities -- re-export for transition.
 export {
@@ -366,7 +366,7 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
   }
 
   // PostCalcGeneric (melee): DEF subtract (element-adjusted), then block.
-  let nDEF = Math.floor((calcDefense(defender, rng) * ef.defFactor) / 10000);
+  const nDEF = Math.floor((calcDefense(defender, rng) * ef.defFactor) / 10000);
   let nDamage = nATK - nDEF;
   if (nDamage > 0) {
     const fBlock = getBlockFactor(defender, attacker, rng);

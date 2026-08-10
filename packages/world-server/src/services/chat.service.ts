@@ -47,7 +47,7 @@ export class ChatService {
     if (sanitized.length === 0) return { ok: false, reason: 'empty' };
     if (sanitized.length > MAX_CHAT_LEN) return { ok: false, reason: 'too_long' };
 
-    if (sanitized[0] === '/') {
+    if (sanitized.startsWith('/')) {
       const result = this.deps.commandService.route(player, sanitized);
       if (result.ok) return { ok: true, reached: 0 };
       // Unknown slash-lines fall through to vicinity broadcast in C++ (the

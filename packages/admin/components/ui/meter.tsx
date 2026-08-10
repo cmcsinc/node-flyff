@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 /**
  * Horizontal fill meter for bounded values (HP, MP, EXP).
@@ -10,14 +10,14 @@ export function MeterBar({
   label,
   value,
   max,
-  tone = "primary",
+  tone = 'primary',
   suffix,
   className,
 }: {
   label: string;
   value: number;
   max: number;
-  tone?: "primary" | "success" | "destructive" | "gold";
+  tone?: 'primary' | 'success' | 'destructive' | 'gold';
   /** Text appended after `value / max`, e.g. "HP". */
   suffix?: string;
   className?: string;
@@ -25,19 +25,19 @@ export function MeterBar({
   const safeMax = max > 0 ? max : 1;
   const pct = Math.max(0, Math.min(100, (value / safeMax) * 100));
   const fill = {
-    primary: "bg-primary",
-    success: "bg-success",
-    destructive: "bg-destructive",
-    gold: "bg-gold",
+    primary: 'bg-primary',
+    success: 'bg-success',
+    destructive: 'bg-destructive',
+    gold: 'bg-gold',
   }[tone];
 
   return (
-    <div className={cn("space-y-1", className)}>
+    <div className={cn('space-y-1', className)}>
       <div className="flex items-baseline justify-between gap-2 text-xs">
         <span className="text-muted-foreground">{label}</span>
         <span className="tabular font-medium">
           {value.toLocaleString()} / {max.toLocaleString()}
-          {suffix ? ` ${suffix}` : ""}
+          {suffix ? ` ${suffix}` : ''}
         </span>
       </div>
       <div
@@ -48,7 +48,10 @@ export function MeterBar({
         aria-valuemax={max}
         className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
       >
-        <div className={cn("h-full rounded-full transition-[width] duration-300", fill)} style={{ width: `${String(pct)}%` }} />
+        <div
+          className={cn('h-full rounded-full transition-[width] duration-300', fill)}
+          style={{ width: `${String(pct)}%` }}
+        />
       </div>
     </div>
   );
@@ -70,7 +73,9 @@ export function DataRow({
   return (
     <div className="flex items-baseline justify-between gap-3 py-0.5 text-sm">
       <span className="text-xs text-muted-foreground">{label}</span>
-      <span className={cn("tabular text-right font-medium", mono && "font-mono text-xs")}>{value}</span>
+      <span className={cn('tabular text-right font-medium', mono && 'font-mono text-xs')}>
+        {value}
+      </span>
     </div>
   );
 }

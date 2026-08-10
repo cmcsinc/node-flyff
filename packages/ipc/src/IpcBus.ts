@@ -113,12 +113,12 @@ export class IpcBus {
    * await bus.publish('player:handoff', { charId: 123, token: 'abc' });
    * ```
    */
-  async publish<T>(channel: string, payload: T): Promise<void> {
+  async publish(channel: string, payload: unknown): Promise<void> {
     const ts = Date.now();
     const from = this.serverId;
     const sig = signIpcMessage(this.secret, payload, from, ts);
 
-    const envelope: IpcMessageEnvelope<T> = { ts, from, sig, payload };
+    const envelope: IpcMessageEnvelope = { ts, from, sig, payload };
     await this.redis.publish(channel, JSON.stringify(envelope));
   }
 
@@ -168,7 +168,7 @@ export class IpcBus {
     this.channels.delete(channel);
 
     if (this.subscribedChannels.has(channel)) {
-      this.redis.unsubscribe(channel);
+      void this.redis.unsubscribe(channel);
       this.subscribedChannels.delete(channel);
     }
   }
@@ -206,7 +206,7 @@ export class IpcBus {
       }
 
       // Dispatch to handler (catch errors to prevent crashing the bus)
-      Promise.resolve(handler(envelope.payload, envelope.from)).catch((err) => {
+      Promise.resolve(handler(envelope.payload, envelope.from)).catch((err: unknown) => {
         // Log handler errors but don't crash
         // TODO: Use pino logger when available
         console.error(`Error in IPC handler for channel ${channel}:`, err);

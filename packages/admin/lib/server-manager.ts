@@ -86,11 +86,7 @@ export function deepMerge(...layers: Plain[]): Plain {
  * Builds the self-contained config object for an instance.
  * Layers: committed default.json → <type>-server.json → derived → overrides.
  */
-export function buildInstanceConfig(
-  inst: ServerInstance,
-  defaults: Plain,
-  base: Plain,
-): Plain {
+export function buildInstanceConfig(inst: ServerInstance, defaults: Plain, base: Plain): Plain {
   const derived: Plain = {
     server: { id: inst.id, port: inst.port },
   };
@@ -120,7 +116,7 @@ function seedInstances(): ServerInstance[] {
     seed.push({
       id: typeof server.id === 'string' ? server.id : `${type}_1`,
       type,
-      label: `${type[0]!.toUpperCase()}${type.slice(1)} Server 1`,
+      label: `${type[0].toUpperCase()}${type.slice(1)} Server 1`,
       port: typeof server.port === 'number' ? server.port : 0,
     });
   }
@@ -158,9 +154,7 @@ export function writeInstanceConfig(inst: ServerInstance): string {
  * plus the committed base (no overrides) so the form can show "inherited"
  * values as placeholders.
  */
-export function readInstanceConfig(
-  inst: ServerInstance,
-): { effective: Plain; inherited: Plain } {
+export function readInstanceConfig(inst: ServerInstance): { effective: Plain; inherited: Plain } {
   const defaults = readJson(resolve(CONFIG_DIR, 'default.json'));
   const base = readJson(resolve(CONFIG_DIR, BASE_CONFIG[inst.type]));
   const inherited = buildInstanceConfig({ ...inst, overrides: {} }, defaults, base);
@@ -188,7 +182,7 @@ export async function getStatuses(): Promise<InstanceStatus[]> {
 
 export async function isRunning(id: string): Promise<boolean> {
   const st = (await fetchStatuses())[id];
-  return st !== undefined && (st.state === 'running' || st.state === 'starting');
+  return st.state === 'running' || st.state === 'starting';
 }
 
 export function getLogs(id: string, since = 0, wait = false): Promise<LogLine[]> {

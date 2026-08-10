@@ -35,7 +35,7 @@
  * @module services/flight.service
  */
 
-import type { ItemDefinition, ZoneIndex } from '@flyff/resources';
+import type { ItemDefinition, ZoneDefinition } from '@flyff/resources';
 import type { CPlayer } from '@flyff/entities';
 import { OBJSTAF } from '@flyff/entities';
 import { NULL_ID } from '../snapshot-constants';
@@ -67,7 +67,7 @@ export type MountCheck = { ok: true } | MountRefusal;
 
 export interface FlightServiceDeps {
   /** Zone index -- read for the per-world `fly` permission (`CWorld::m_bFly`). */
-  zones: Pick<ZoneIndex, 'byNumericId'>;
+  zones: { byNumericId: Map<number, ZoneDefinition> };
 }
 
 export class FlightService {
@@ -88,7 +88,7 @@ export class FlightService {
     //    as flyable, matching the C++ default (`World.cpp:92` inits TRUE) rather
     //    than locking a player out of a zone we simply failed to index.
     const zone = this.deps.zones.byNumericId.get(player.m_nZoneId);
-    if (zone && zone.fly === false) {
+    if (zone && !zone.fly) {
       return { ok: false, tid: FLIGHT_TID.NOFLY };
     }
     // 3./4. disguise buff + HATTR_NOFLY terrain -- ponytail, see module doc.

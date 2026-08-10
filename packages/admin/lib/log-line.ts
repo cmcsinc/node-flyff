@@ -25,9 +25,7 @@ export interface ParsedLine {
   detail: string | null;
 }
 
-const LEVELS: ReadonlySet<string> = new Set([
-  'trace', 'debug', 'info', 'warn', 'error', 'fatal',
-]);
+const LEVELS: ReadonlySet<string> = new Set(['trace', 'debug', 'info', 'warn', 'error', 'fatal']);
 
 const PINO = /^\[(\d{2}:\d{2}:\d{2}\.\d+)\]\s+([A-Z]+):\s*(?:\[([^\]]+)\]\s*)?([\s\S]*)$/;
 
@@ -48,12 +46,12 @@ function splitDetail(rest: string): { message: string; detail: string | null } {
 export function parseLogLine(line: string): ParsedLine {
   const m = PINO.exec(line);
   if (m) {
-    const level = m[2]!.toLowerCase();
-    const { message, detail } = splitDetail(m[4] ?? '');
+    const level = m[2].toLowerCase();
+    const { message, detail } = splitDetail(m[4]);
     return {
-      time: m[1] ?? null,
+      time: m[1],
       level: LEVELS.has(level) ? (level as LogLevel) : 'plain',
-      module: m[3] ?? null,
+      module: m[3],
       message,
       detail,
     };

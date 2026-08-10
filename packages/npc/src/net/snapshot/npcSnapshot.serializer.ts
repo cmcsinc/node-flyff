@@ -125,7 +125,8 @@ export class NpcSnapshotSerializer {
     // the appearance. MUST be sent even when the NPC has no outfit (SetFigure/
     // SetEquip): an AddMenu-only NPC still needs its key or the right-click
     // "Dialog" option never appears. Monsters send an empty string.
-    w.writeString(m.m_szCharacterKey || outfit?.characterKey || '');
+    const charKey = m.m_szCharacterKey.length > 0 ? m.m_szCharacterKey : (outfit?.characterKey ?? '');
+    w.writeString(charKey);
 
     // Equipment parts: uSize then uSize * { uParts:BYTE, m_dwItemId:WORD }
     const equip = outfit?.equip ?? EMPTY_EQUIP;

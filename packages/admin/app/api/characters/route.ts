@@ -1,11 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { db } from "@/lib/db";
-import { characters } from "@/../drizzle/schema";
-import { eq } from "drizzle-orm";
-import { auth } from "@/lib/auth";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { db } from '@/lib/db';
+import { characters } from '@/../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { auth } from '@/lib/auth';
 
-const int = (max: number) => z.number().int().min(0).max(max);
+const int = (max: number): z.ZodNumber => z.number().int().min(0).max(max);
 
 /**
  * Editable character fields. Intentionally narrower than the `characters` table:
@@ -19,7 +20,10 @@ const PatchSchema = z.object({
   // The `exp` column is a `bigInteger` (migration 001) that drizzle declares as
   // `text()`, so an untouched row reads back as a JS number while an edited one
   // arrives as the digit string `percentToExp` produced. Coerce, then bound.
-  exp: z.coerce.string().regex(/^\d{1,19}$/).optional(),
+  exp: z.coerce
+    .string()
+    .regex(/^\d{1,19}$/)
+    .optional(),
   class: int(255).optional(),
   strength: int(65_535).optional(),
   stamina: int(65_535).optional(),
@@ -34,18 +38,21 @@ const PatchSchema = z.object({
   pkExp: int(1_000_000).optional(),
 });
 
-export async function PATCH(req: NextRequest) {
+export async function PATCH(req: NextRequest): Promise<Response> {
   const session = await auth();
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const parsed = PatchSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid body" }, { status: 400 });
+    return NextResponse.json(
+      { error: parsed.error.issues[0]?.message ?? 'Invalid body' },
+      { status: 400 },
+    );
   }
 
   const { id, ...updates } = parsed.data;
   if (Object.keys(updates).length === 0) {
-    return NextResponse.json({ error: "No fields to update" }, { status: 400 });
+    return NextResponse.json({ error: 'No fields to update' }, { status: 400 });
   }
 
   await db

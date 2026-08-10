@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import type { SkillSlotItem } from "./types";
+import { useRef } from 'react';
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import type { SkillSlotItem } from './types';
 
 /** Tier → border color (matches Flyff's skill-window rarity rings). */
 const TIER_RING: Record<number, string> = {
-  0: "border-border",        // Base
-  1: "border-success/60",    // Expert
-  2: "border-primary/60",    // Pro
-  4: "border-muted-foreground/40", // Common
-  5: "border-gold/70",       // Master
-  6: "border-destructive/60", // Hero
+  0: 'border-border', // Base
+  1: 'border-success/60', // Expert
+  2: 'border-primary/60', // Pro
+  4: 'border-muted-foreground/40', // Common
+  5: 'border-gold/70', // Master
+  6: 'border-destructive/60', // Hero
 };
 
 interface SkillTileProps {
@@ -26,10 +26,15 @@ interface SkillTileProps {
  * One skill cell. Renders the skill icon with level badge, tier-colored border.
  * Mirrors {@link ../inventory-explorer.tsx#ItemTile} pattern.
  */
-export function SkillTile({ item, size = 56, onHover, onLeave }: SkillTileProps) {
+export function SkillTile({
+  item,
+  size = 56,
+  onHover,
+  onLeave,
+}: SkillTileProps): React.JSX.Element {
   const ref = useRef<HTMLButtonElement>(null);
 
-  function handleEnter() {
+  function handleEnter(): void {
     if (!item || !onHover || !ref.current) return;
     onHover(item, ref.current.getBoundingClientRect());
   }
@@ -48,16 +53,16 @@ export function SkillTile({ item, size = 56, onHover, onLeave }: SkillTileProps)
       ref={ref}
       type="button"
       tabIndex={0}
-      aria-label={`${item.name} Lv.${item.level}`}
+      aria-label={`${item.name} Lv.${String(item.level)}`}
       onMouseEnter={handleEnter}
       onFocus={handleEnter}
       onMouseLeave={onLeave}
       onBlur={onLeave}
       className={cn(
-        "group relative rounded-md border bg-secondary/80 transition-colors",
-        "hover:border-primary hover:shadow-[0_0_8px_-1px_var(--color-primary)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-        TIER_RING[item.tier] ?? "border-border",
+        'group relative rounded-md border bg-secondary/80 transition-colors',
+        'hover:border-primary hover:shadow-[0_0_8px_-1px_var(--color-primary)]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        TIER_RING[item.tier] ?? 'border-border',
       )}
       style={{ width: size, height: size }}
     >
@@ -69,7 +74,7 @@ export function SkillTile({ item, size = 56, onHover, onLeave }: SkillTileProps)
         className="pointer-events-none m-auto select-none"
         unoptimized
         onError={(e) => {
-          (e.currentTarget as HTMLImageElement).src = "/icons/_placeholder.svg";
+          (e.currentTarget as HTMLImageElement).src = '/icons/_placeholder.svg';
         }}
       />
 

@@ -9,7 +9,7 @@
  * @module handlers/scriptDlg.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { sendPacket } from '@flyff/core/net/dispatcher';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
@@ -35,7 +35,9 @@ export class ScriptDlgHandler {
       socket.destroy();
       return;
     }
-    const player = this.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId === undefined) { socket.destroy(); return; }
+    const player = this.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
 
     let frame;

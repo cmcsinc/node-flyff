@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { TableCell, TableRow } from "@/components/ui/table";
+import { cn } from '@/lib/utils';
+import { TableCell, TableRow } from '@/components/ui/table';
 
 interface EmptyStateProps {
   icon?: React.ComponentType<{ className?: string }>;
@@ -10,11 +10,17 @@ interface EmptyStateProps {
 }
 
 /** Full-card empty state with icon, title, description, optional action. */
-export function EmptyState({ icon: Icon, title, description, action, className }: EmptyStateProps) {
+export function EmptyState({
+  icon: Icon,
+  title,
+  description,
+  action,
+  className,
+}: EmptyStateProps): React.JSX.Element {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-2 px-6 py-16 text-center",
+        'flex flex-col items-center justify-center gap-2 px-6 py-16 text-center',
         className,
       )}
     >
@@ -31,7 +37,13 @@ export function EmptyState({ icon: Icon, title, description, action, className }
 }
 
 /** Compact single-row empty state for tables. Pass the table's column count. */
-export function EmptyRow({ colSpan, children }: { colSpan: number; children: React.ReactNode }) {
+export function EmptyRow({
+  colSpan,
+  children,
+}: {
+  colSpan: number;
+  children: React.ReactNode;
+}): React.JSX.Element {
   return (
     <TableRow>
       <TableCell colSpan={colSpan} className="py-10 text-center text-muted-foreground">

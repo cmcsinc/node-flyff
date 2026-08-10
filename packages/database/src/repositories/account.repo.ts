@@ -159,7 +159,7 @@ export class AccountRepository {
       .where({ id })
       .update({
         banned,
-        banned_until: bannedUntil || null,
+        banned_until: bannedUntil ?? null,
         updated_at: new Date(),
       });
   }

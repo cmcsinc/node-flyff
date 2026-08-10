@@ -101,7 +101,7 @@ export class NpcSpeechService {
   /** Build the schedule from spawned NPCs and start the poll timer. */
   start(): void {
     this.bootstrap();
-    this.timer = setInterval(() => this.tick(), POLL_MS);
+    this.timer = setInterval(() => { this.tick(); }, POLL_MS);
   }
 
   /** Stop polling (shutdown wiring -- rule 05 timers must be cleared). */

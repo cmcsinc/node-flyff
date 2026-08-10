@@ -13,7 +13,7 @@
  * @module lib/npcs
  */
 
-import { NpcSchema } from "@flyff/resources";
+import { NpcSchema } from '@flyff/resources';
 import {
   deleteZoneEntry,
   deleteZoneEntryFromFile,
@@ -25,9 +25,9 @@ import {
   zoneDocs,
   zoneSeq,
   type ZoneRef,
-} from "./zone-seq";
+} from './zone-seq';
 
-const KEY = "npcs";
+const KEY = 'npcs';
 
 export { loadZoneRefs, type ZoneRef };
 
@@ -46,19 +46,19 @@ export interface NpcRow {
   functions: number;
 }
 
-/** Every NPC placement across every zone file. */export function loadNpcs(): NpcRow[] {
+/** Every NPC placement across every zone file. */ export function loadNpcs(): NpcRow[] {
   const rows: NpcRow[] = [];
   for (const { zoneId, zoneName, doc } of zoneDocs()) {
     for (const npc of zoneSeq(doc, KEY)) {
       const pos = (npc.position ?? {}) as Record<string, unknown>;
       const id = Number(npc.id ?? 0);
       rows.push({
-        ref: `${zoneId}:${id}`,
+        ref: `${zoneId}:${String(id)}`,
         zoneId,
         zoneName,
         id,
         moverId: Number(npc.mover_id ?? 0),
-        characterKey: String(npc.character_key ?? ""),
+        characterKey: String(npc.character_key()),
         x: Number(pos.x ?? 0),
         y: Number(pos.y ?? 0),
         z: Number(pos.z ?? 0),
@@ -84,7 +84,7 @@ export function blankNpc(): Record<string, unknown> {
   return {
     id: 0,
     mover_id: 1,
-    character_key: "",
+    character_key: '',
     position: { x: 0, y: 0, z: 0 },
     angle: 0,
     functions: [],

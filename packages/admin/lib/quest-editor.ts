@@ -15,12 +15,12 @@
  * @module lib/quest-editor
  */
 
-import type { QuestDef } from "@flyff/resources";
-import { getResourceIndex } from "./resource-cache";
-import { pairQuestArgs, type CommandView } from "./quest-args";
-import { QUEST_CMDS, questCmdSpec, type BlastTier } from "./quest-fields";
+import type { QuestDef } from '@flyff/resources';
+import { getResourceIndex } from './resource-cache';
+import { pairQuestArgs, type CommandView } from './quest-args';
+import { QUEST_CMDS, questCmdSpec, type BlastTier } from './quest-fields';
 
-export type { ArgView, CommandView } from "./quest-args";
+export type { ArgView, CommandView } from './quest-args';
 
 export interface QuestEditorView {
   readonly id: number;
@@ -40,9 +40,9 @@ export interface QuestEditorView {
 
 /** Resolve an `IDS_PROPQUEST_INC_*` token to its display text. */
 async function resolveText(token: string | undefined): Promise<string> {
-  if (!token) return "";
+  if (!token) return '';
   const res = await getResourceIndex();
-  return res.questText.get(token) ?? "";
+  return res.questText.get(token) ?? '';
 }
 
 /**
@@ -64,7 +64,7 @@ export async function loadQuestForEdit(questId: number): Promise<QuestEditorView
       ...(spec ? { spec } : {}),
       // An unrecognised token gets the strictest tier: it cannot be shown as
       // "safe to edit" when nothing here knows what reads it.
-      tier: spec?.tier ?? "structural",
+      tier: spec?.tier ?? 'structural',
       dead: spec === undefined,
     };
   });

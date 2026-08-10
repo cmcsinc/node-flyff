@@ -1,27 +1,40 @@
-import { db } from "@/lib/db";
-import { accounts, characters, inventory, inventoryItems, bank, bankItems } from "@/../drizzle/schema";
-import { eq, count } from "drizzle-orm";
-import { notFound } from "next/navigation";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { PageHeader } from "@/components/page-header";
-import { CharacterTable } from "./character-table";
-import { formatNumber, formatDate } from "@/lib/utils";
-import { EditAccountButton } from "../account-form";
-import { AUTH, AUTH_LABELS, hasAuthority } from "@flyff/entities/constants/authority";
+import { db } from '@/lib/db';
+import {
+  accounts,
+  characters,
+  bank,
+  bankItems,
+} from '@/../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { notFound } from 'next/navigation';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { PageHeader } from '@/components/page-header';
+import { CharacterTable } from './character-table';
+import { formatNumber, formatDate } from '@/lib/utils';
+import { EditAccountButton } from '../account-form';
+import { AUTH, AUTH_LABELS, hasAuthority } from '@flyff/entities/constants/authority';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export default async function AccountDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function AccountDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<React.JSX.Element> {
   const { id } = await params;
   const accountId = Number(id);
   if (isNaN(accountId)) notFound();
 
-  const [account] = await db.select().from(accounts).where(eq(accounts.id, accountId)).limit(1);
+  const account = (await db.select().from(accounts).where(eq(accounts.id, accountId)).limit(1)).at(0);
   if (!account) notFound();
 
-  const chars = await db.select().from(characters).where(eq(characters.accountId, accountId)).orderBy(characters.slot);
+  const chars = await db
+    .select()
+    .from(characters)
+    .where(eq(characters.accountId, accountId))
+    .orderBy(characters.slot);
 
   const bankRow = await db.select().from(bank).where(eq(bank.accountId, accountId)).limit(1);
   const bankItemsList = await db.select().from(bankItems).where(eq(bankItems.accountId, accountId));
@@ -30,12 +43,12 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
     <div className="space-y-6">
       <PageHeader
         title={account.username}
-        description={`Account ID: ${account.id}`}
+        description={`Account ID: ${String(account.id)}`}
         backHref="/accounts"
         actions={
           <div className="flex flex-wrap items-center gap-2">
             {hasAuthority(account.authority, AUTH.GAMEMASTER) && (
-              <Badge variant="gold">{AUTH_LABELS[account.authority] ?? "Staff"}</Badge>
+              <Badge variant="gold">{AUTH_LABELS[account.authority] ?? 'Staff'}</Badge>
             )}
             {account.banned && <Badge variant="destructive">Banned</Badge>}
             <EditAccountButton
@@ -57,25 +70,33 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Email</CardTitle>
           </CardHeader>
-          <CardContent><p className="text-sm">{account.email ?? "Not set"}</p></CardContent>
+          <CardContent>
+            <p className="text-sm">{account.email ?? 'Not set'}</p>
+          </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Characters</CardTitle>
           </CardHeader>
-          <CardContent><p className="text-2xl font-bold">{chars.length}</p></CardContent>
+          <CardContent>
+            <p className="text-2xl font-bold">{chars.length}</p>
+          </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Bank Gold</CardTitle>
           </CardHeader>
-          <CardContent><p className="text-2xl font-bold">{formatNumber(bankRow[0]?.gold ?? "0")}</p></CardContent>
+          <CardContent>
+            <p className="text-2xl font-bold">{formatNumber(bankRow[0]?.gold ?? '0')}</p>
+          </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Created</CardTitle>
           </CardHeader>
-          <CardContent><p className="text-sm">{formatDate(account.createdAt)}</p></CardContent>
+          <CardContent>
+            <p className="text-sm">{formatDate(account.createdAt)}</p>
+          </CardContent>
         </Card>
       </div>
 
@@ -113,9 +134,11 @@ export default async function AccountDetailPage({ params }: { params: Promise<{ 
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Bank Password: {bankRow[0].bankPass === "0000" ? "Not set" : "****"}
+                    Bank Password: {bankRow[0].bankPass === '0000' ? 'Not set' : '****'}
                   </p>
-                  <p className="text-sm text-muted-foreground">{bankItemsList.length} items stored</p>
+                  <p className="text-sm text-muted-foreground">
+                    {bankItemsList.length} items stored
+                  </p>
                 </div>
               ) : (
                 <p className="text-muted-foreground">No bank data</p>

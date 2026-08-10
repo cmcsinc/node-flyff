@@ -132,8 +132,8 @@ export class DropService {
   private readonly rng: Rng;
   constructor(private readonly deps: DropServiceDeps) {
     this.rng = deps.rng ?? {
-      int: (max) => Math.floor(Math.random() * max),
-      range: (a, b) => a + Math.floor(Math.random() * (b - a)),
+      int: (max: number): number => Math.floor(Math.random() * max),
+      range: (a: number, b: number): number => a + Math.floor(Math.random() * (b - a)),
     };
   }
 

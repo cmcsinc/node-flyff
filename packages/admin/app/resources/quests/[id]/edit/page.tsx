@@ -1,12 +1,12 @@
-import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/page-header";
-import { FieldOptionsProvider } from "@/components/form/field-options";
-import { addableCommands, loadQuestForEdit } from "@/lib/quest-editor";
-import { characterKeyOptions, npcMoverOptions } from "@/lib/npc-options";
-import { getAllItems } from "@/lib/item-catalog";
-import { getAllSkills } from "@/lib/skill-catalog";
-import { getOptions } from "@/lib/field-schema";
-import { QuestPanel } from "./quest-panel";
+import { notFound } from 'next/navigation';
+import { PageHeader } from '@/components/page-header';
+import { FieldOptionsProvider } from '@/components/form/field-options';
+import { addableCommands, loadQuestForEdit } from '@/lib/quest-editor';
+import { characterKeyOptions, npcMoverOptions } from '@/lib/npc-options';
+import { getAllItems } from '@/lib/item-catalog';
+import { getAllSkills } from '@/lib/skill-catalog';
+import { getOptions } from '@/lib/field-schema';
+import { QuestPanel } from './quest-panel';
 
 /**
  * Quest edit page.
@@ -18,7 +18,7 @@ import { QuestPanel } from "./quest-panel";
  * @module app/resources/quests/[id]/edit/page
  */
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function QuestEditPage({
   params,
@@ -51,7 +51,7 @@ export default async function QuestEditPage({
       .map((s) => ({ value: String(s.id), label: `${s.name} (${String(s.id)})` }))
       .sort((a, b) => a.label.localeCompare(b.label)),
     // `-1` is the file's own "any job" sentinel and has no JOB_NAMES entry.
-    job: [{ value: "-1", label: "Any (-1)" }, ...(getOptions("job") ?? [])],
+    job: [{ value: '-1', label: 'Any (-1)' }, ...(getOptions('job') ?? [])],
   };
 
   return (

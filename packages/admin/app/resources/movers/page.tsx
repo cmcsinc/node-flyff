@@ -1,19 +1,26 @@
-import type * as React from "react";
-import { moverRows, BELLI_INFO } from "@/lib/resource-rows";
-import { Badge } from "@/components/ui/badge";
-import { Select } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { FilterBar } from "@/components/filter-bar";
-import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { IdCell, NameWithSymbol, TagCell, NumCell, EditLink, Dash } from "@/components/resource-cells";
-import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
-import { Bug } from "lucide-react";
-import type { MoverRow } from "@/lib/resource-rows";
+import type * as React from 'react';
+import { moverRows, BELLI_INFO } from '@/lib/resource-rows';
+import { Badge } from '@/components/ui/badge';
+import { Select } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { FilterBar } from '@/components/filter-bar';
+import { ResourceTable, type ResourceColumn } from '@/components/resource-table';
+import {
+  IdCell,
+  NameWithSymbol,
+  TagCell,
+  NumCell,
+  EditLink,
+  Dash,
+} from '@/components/resource-cells';
+import { parsePage, parsePerPage, paginate } from '@/lib/paginate';
+import { parseSort, sortRows, type QueryParams } from '@/lib/sort';
+import { Bug } from 'lucide-react';
+import type { MoverRow } from '@/lib/resource-rows';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams extends QueryParams {
   search?: string;
@@ -27,23 +34,47 @@ interface SearchParams extends QueryParams {
   dir?: string;
 }
 
-const SORT_KEYS = ["id", "name", "key", "type", "level", "hp", "exp", "belliLabel"] as const;
+const SORT_KEYS = ['id', 'name', 'key', 'type', 'level', 'hp', 'exp', 'belliLabel'] as const;
 
 const COLUMNS: readonly ResourceColumn<MoverRow>[] = [
-  { key: "id", header: "ID", sortable: true, className: "w-20", cell: (r) => <IdCell value={r.id} /> },
   {
-    key: "name",
-    header: "Name",
+    key: 'id',
+    header: 'ID',
+    sortable: true,
+    className: 'w-20',
+    cell: (r) => <IdCell value={r.id} />,
+  },
+  {
+    key: 'name',
+    header: 'Name',
     sortable: true,
     cell: (r) => <NameWithSymbol name={r.name} symbol={r.key} />,
   },
-  { key: "type", header: "Type", sortable: true, cell: (r) => <TagCell label={r.type} /> },
-  { key: "level", header: "Level", sortable: true, align: "right", cell: (r) => <NumCell value={r.level} /> },
-  { key: "hp", header: "HP", sortable: true, align: "right", cell: (r) => <NumCell value={r.hp} /> },
-  { key: "exp", header: "EXP", sortable: true, align: "right", cell: (r) => <NumCell value={r.exp} /> },
+  { key: 'type', header: 'Type', sortable: true, cell: (r) => <TagCell label={r.type} /> },
   {
-    key: "belliLabel",
-    header: "Behaviour",
+    key: 'level',
+    header: 'Level',
+    sortable: true,
+    align: 'right',
+    cell: (r) => <NumCell value={r.level} />,
+  },
+  {
+    key: 'hp',
+    header: 'HP',
+    sortable: true,
+    align: 'right',
+    cell: (r) => <NumCell value={r.hp} />,
+  },
+  {
+    key: 'exp',
+    header: 'EXP',
+    sortable: true,
+    align: 'right',
+    cell: (r) => <NumCell value={r.exp} />,
+  },
+  {
+    key: 'belliLabel',
+    header: 'Behaviour',
     sortable: true,
     // Sight-aggro mobs get the warning variant: this column decides whether a
     // mob attacks unprovoked, worth spotting before the word is read. Never
@@ -52,8 +83,10 @@ const COLUMNS: readonly ResourceColumn<MoverRow>[] = [
     cell: (r) =>
       r.belliLabel ? (
         <Badge
-          variant={r.aggro ? "warning" : "secondary"}
-          title={r.belliSym ? `${r.belliSym} (${String(r.belli)})` : `dwBelligerence ${String(r.belli)}`}
+          variant={r.aggro ? 'warning' : 'secondary'}
+          title={
+            r.belliSym ? `${r.belliSym} (${String(r.belli)})` : `dwBelligerence ${String(r.belli)}`
+          }
         >
           {r.belliLabel}
         </Badge>
@@ -62,20 +95,26 @@ const COLUMNS: readonly ResourceColumn<MoverRow>[] = [
       ),
   },
   {
-    key: "actions",
-    header: "Actions",
-    align: "right",
-    cell: (r) => <EditLink href={`/resources/movers/${String(r.id)}/edit`} label={`mover ${r.key}`} />,
+    key: 'actions',
+    header: 'Actions',
+    align: 'right',
+    cell: (r) => (
+      <EditLink href={`/resources/movers/${String(r.id)}/edit`} label={`mover ${r.key}`} />
+    ),
   },
 ];
 
-export default async function MoversPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
+export default async function MoversPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const type = params.type ?? "";
-  const belli = params.belli ?? "";
-  const minLevel = params.minLevel ?? "";
-  const maxLevel = params.maxLevel ?? "";
+  const search = params.search ?? '';
+  const type = params.type ?? '';
+  const belli = params.belli ?? '';
+  const minLevel = params.minLevel ?? '';
+  const maxLevel = params.maxLevel ?? '';
   const perPage = parsePerPage(params.perPage);
 
   const movers = moverRows();
@@ -166,7 +205,7 @@ export default async function MoversPage({ searchParams }: { searchParams: Promi
         sort={sort}
         params={params}
         unit="movers"
-        empty={{ icon: Bug, message: active ? "No movers match your filters" : "No mover data" }}
+        empty={{ icon: Bug, message: active ? 'No movers match your filters' : 'No mover data' }}
       />
     </div>
   );

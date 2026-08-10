@@ -90,7 +90,8 @@ export class EnchantService {
   /** `EnchantGeneral` (ItemUpgrade.cpp:1106): refine +1 on success, destroy on fail >= +3. */
   private refine(player: CPlayer, targetSlot: number, materialSlot: number, tProp: ItemDefinition): EnchantOutcome {
     if (!isRefinable(tProp.item_kind2, tProp.item_kind3)) return { kind: 'reject', reason: 'not_refinable' };
-    const target = player.m_Inventory[targetSlot]!;
+    const target = player.m_Inventory[targetSlot];
+    if (!target) return { kind: 'reject', reason: 'invalid' };
     const current = target.refine ?? 0;
     if (current >= MAX_REFINE) return { kind: 'maxed', targetSlot };
 
@@ -114,7 +115,8 @@ export class EnchantService {
     const element = CARD_ELEMENT_BY_ID.get(cardId);
     if (element === undefined) return { kind: 'reject', reason: 'unknown_card' };
 
-    const target = player.m_Inventory[targetSlot]!;
+    const target = player.m_Inventory[targetSlot];
+    if (!target) return { kind: 'reject', reason: 'invalid' };
     const currentElem = target.element ?? NO_PROP;
     const currentLevel = target.element_level ?? 0;
     // 2nd element rejected (TID_UPGRADE_ERROR_TWOELEMENT, ItemUpgrade.cpp:1138).
@@ -143,12 +145,13 @@ export class EnchantService {
       return { kind: 'fail_kept', targetSlot, materialSlot, materialRemaining };
     }
     // Destroy: clear slot + journal (itemId 0) + removeItem.
-    const target = player.m_Inventory[targetSlot]!;
+    const target = player.m_Inventory[targetSlot];
+    if (!target) return { kind: 'fail_destroyed', targetSlot, materialSlot, materialRemaining };
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: targetSlot, itemId: 0, count: 0 } });
     player.m_Inventory[targetSlot] = null;
     player._dirty.add('m_Inventory');
     this.deps.inventoryRepo.removeItem(player.m_idPlayer, targetSlot)
-      .catch((e: unknown) => logger.warn({ err: e, slot: targetSlot }, 'enchant destroy removeItem failed'));
+      .catch((e: unknown) => { logger.warn({ err: e, slot: targetSlot }, 'enchant destroy removeItem failed'); });
     logger.info({ charId: player.m_idPlayer, slot: targetSlot, itemId: target.itemId }, 'enchant: fail (item destroyed)');
     return { kind: 'fail_destroyed', targetSlot, materialSlot, materialRemaining };
   }
@@ -159,7 +162,6 @@ export class EnchantService {
 
   /** Journal the slot's absolute end-state (refine/element included) + fire-and-forget persist. */
   private persist(player: CPlayer, slot: number, s: InventorySlot): void {
-    if (!s) return;
     this.deps.journal?.append({
       charId: player.m_idPlayer, type: 'INVENTORY_SLOT',
       payload: {
@@ -171,6 +173,6 @@ export class EnchantService {
     player._dirty.add('m_Inventory');
     this.deps.inventoryRepo
       .setItem(player.m_idPlayer, slot, s.itemId, s.count, s.flags ?? 0, s.durability ?? -1, s.refine ?? 0, undefined, s.element ?? 0, s.element_level ?? 0)
-      .catch((e: unknown) => logger.warn({ err: e, slot }, 'enchant setItem failed'));
+      .catch((e: unknown) => { logger.warn({ err: e, slot }, 'enchant setItem failed'); });
   }
 }

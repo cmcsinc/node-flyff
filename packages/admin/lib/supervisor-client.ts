@@ -34,7 +34,7 @@ const g = globalThis as unknown as { __flyffSupervisorBoot?: Promise<DaemonHandl
 
 async function ping(port: number, token: string): Promise<boolean> {
   try {
-    const res = await fetch(`http://127.0.0.1:${port}/health`, {
+    const res = await fetch(`http://127.0.0.1:${String(port)}/health`, {
       headers: { [AUTH_HEADER]: token },
       signal: AbortSignal.timeout(CONNECT_TIMEOUT_MS),
     });
@@ -96,7 +96,7 @@ async function call<T>(
   const token = readToken();
   if (!handle || !token) return { error: 'Supervisor daemon is not reachable' };
   try {
-    const res = await fetch(`http://127.0.0.1:${handle.port}${path}`, {
+    const res = await fetch(`http://127.0.0.1:${String(handle.port)}${path}`, {
       method,
       headers: {
         [AUTH_HEADER]: token,
@@ -108,7 +108,7 @@ async function call<T>(
     const json: unknown = await res.json();
     if (!res.ok) {
       const err = (json as { error?: string }).error;
-      return { error: err ?? `Supervisor request failed (${res.status})` };
+      return { error: err ?? `Supervisor request failed (${String(res.status)})` };
     }
     return json as T;
   } catch (e) {
@@ -124,7 +124,7 @@ export async function fetchStatuses(): Promise<Record<string, ProcStatus>> {
 export async function fetchLogs(id: string, since = 0, wait = false): Promise<LogLine[]> {
   const res = await call<{ lines: LogLine[] }>(
     'GET',
-    `/logs?id=${encodeURIComponent(id)}&since=${since}${wait ? '&wait=1' : ''}`,
+    `/logs?id=${encodeURIComponent(id)}&since=${String(since)}${wait ? '&wait=1' : ''}`,
     undefined,
     // A waiting reader is meant to hang until output arrives; the daemon caps it
     // at 20s, so allow past that rather than aborting mid-hold.

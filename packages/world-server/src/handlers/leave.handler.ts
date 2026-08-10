@@ -16,7 +16,7 @@ const logger = createLogger({ module: 'leave-handler' });
 
 export class LeaveHandler {
   handleLeave(socket: ClientSocket): void {
-    const charId = socket.session?.charId ?? -1;
+    const charId = socket.session.charId ?? -1;
     logger.info({ charId }, 'LEAVE -- disconnecting');
     socket.destroy();
   }

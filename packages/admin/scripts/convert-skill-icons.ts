@@ -57,7 +57,9 @@ async function main(): Promise<void> {
   console.log('[skill-icons] Loading skill definitions...');
   const resources = await loadAllResources(DATA_DIR);
   const skills = [...resources.skills.skills.values()].filter((s) => s.icon);
-  console.log(`[skill-icons] ${skills.length} skills reference an icon; output -> ${OUT_DIR}`);
+  console.log(
+    `[skill-icons] ${String(skills.length)} skills reference an icon; output -> ${OUT_DIR}`,
+  );
 
   await mkdir(OUT_DIR, { recursive: true });
 
@@ -73,7 +75,7 @@ async function main(): Promise<void> {
     const ddsPath = await findDds(icon);
     if (!ddsPath) {
       tally.missing++;
-      missing.push(`${skill.id} ${skill.name} -> ${icon}`);
+      missing.push(`${String(skill.id)} ${skill.name} -> ${icon}`);
       continue;
     }
 
@@ -93,17 +95,17 @@ async function main(): Promise<void> {
       tally.converted++;
     } catch (err) {
       tally.failed++;
-      failed.push(`${skill.id} ${skill.name} (${icon}): ${(err as Error).message}`);
+      failed.push(`${String(skill.id)} ${skill.name} (${icon}): ${(err as Error).message}`);
     }
   }
 
   console.log('\n[skill-icons] done:', JSON.stringify(tally));
   if (missing.length) {
-    console.warn(`[skill-icons] ${missing.length} icons had no source .dds (first 10):`);
+    console.warn(`[skill-icons] ${String(missing.length)} icons had no source .dds (first 10):`);
     for (const m of missing.slice(0, 10)) console.warn('  -', m);
   }
   if (failed.length) {
-    console.warn(`[skill-icons] ${failed.length} icons failed to decode (first 10):`);
+    console.warn(`[skill-icons] ${String(failed.length)} icons failed to decode (first 10):`);
     for (const f of failed.slice(0, 10)) console.warn('  -', f);
   }
 }

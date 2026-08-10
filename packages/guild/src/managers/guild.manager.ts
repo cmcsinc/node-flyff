@@ -565,7 +565,7 @@ export class GuildManager {
     const g = this.guilds.get(guildId);
     if (!g || rank < 0 || rank >= MAX_GM_LEVEL) return undefined;
     g.penya[rank] = penya;
-    this.persistUpdate(guildId, { [`penya_${rank}`]: penya });
+    this.persistUpdate(guildId, { [`penya_${String(rank)}`]: penya });
     return g;
   }
 
@@ -855,7 +855,7 @@ export class GuildManager {
     guild.quests.splice(i, 1);
     if (this.questRepo) {
       void this.questRepo.remove(guildId, questId)
-        .catch((err: unknown) => logger.warn({ err, guildId, questId }, 'guild quest remove failed'));
+        .catch((err: unknown) => { logger.warn({ err, guildId, questId }, 'guild quest remove failed'); });
     }
     return true;
   }
@@ -863,7 +863,7 @@ export class GuildManager {
   private persistQuest(guildId: number, questId: number, state: number): void {
     if (!this.questRepo) return;
     void this.questRepo.upsert(guildId, questId, state)
-      .catch((err: unknown) => logger.warn({ err, guildId, questId }, 'guild quest upsert failed'));
+      .catch((err: unknown) => { logger.warn({ err, guildId, questId }, 'guild quest upsert failed'); });
   }
 
   // ── Rejoin cooldown ────────────────────────────────────────────────────────

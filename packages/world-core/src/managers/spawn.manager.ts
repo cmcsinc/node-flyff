@@ -155,7 +155,7 @@ export class SpawnManager {
         // AI system's own gate is `m_bAttackable`. ponytail: the record's `dwAI`
         // / `dwAI2` (initial FSM state) are not read, so the 14 MaEw guardian
         // placements stored as `STATE_STAND` wander instead of standing.
-        const belli = npcSpawn.belligerence ?? def.belligerence ?? 0;
+        const belli = npcSpawn.belligerence;
         const peaceful = belli === BELLI_PEACEFUL;
         // Resolve the character.inc block by the placement's character_key when
         // present -- multiple NPCs can share one mover model (e.g. Boboku /
@@ -164,8 +164,9 @@ export class SpawnManager {
         // by model. Fall back to the mover MI key for placements the .dyo did
         // not tag with a character_key.
         const charBlock = (npcSpawn.character_key
-          && this.resources.characterInc.byKey.get(npcSpawn.character_key))
-          || blockForMover(this.resources.characterInc, def.key);
+          ? this.resources.characterInc.byKey.get(npcSpawn.character_key)
+          : undefined)
+          ?? blockForMover(this.resources.characterInc, def.key);
         // C++ IsUsableDYO -- retail drops these at world load. Skipping here
         // keeps the event/seasonal duplicates from stacking on the live NPCs.
         if (!isUsableDyo(npcSpawn.character_key, charBlock)) {
@@ -188,9 +189,9 @@ export class SpawnManager {
             // `IsAttackAbleNPC` (Mover.cpp:6806-6810): `bKillable == 0` or
             // `BELLI_PEACEFUL` -> unattackable. `def.attackable` already carries
             // bKillable for monster-typed defs (false for npc-typed ones).
-            attackable: (def.attackable ?? false) && !peaceful,
-            guard: def.guard ?? false,
-            flyable: def.flyable ?? false,
+            attackable: def.attackable && !peaceful,
+            guard: def.guard,
+            flyable: def.flyable,
             belligerence: belli,
             atkMin: def.attack,
             atkMax: def.attack,
@@ -350,9 +351,9 @@ function monsterSource(def: MoverDefinition): MoverSpawnSource {
     hp: def.hp,
     scale: def.scale,
     attackable: def.attackable,
-    guard: def.guard ?? false,
-    flyable: def.flyable ?? false,
-    belligerence: def.belligerence ?? 0,
+    guard: def.guard,
+    flyable: def.flyable,
+    belligerence: def.belligerence,
     atkMin: def.attack,
     atkMax: def.attack,
     armor: def.defense,
@@ -383,7 +384,7 @@ function toOutfit(
       hairMesh: number;
       hairColor: number;
       headMesh: number;
-      equip: ReadonlyArray<{ parts: number; itemId: number }>;
+      equip: readonly { parts: number; itemId: number }[];
     } | undefined;
   },
   charBlock: CharacterIncBlock | undefined,

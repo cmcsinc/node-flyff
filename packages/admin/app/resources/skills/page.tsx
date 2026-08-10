@@ -1,18 +1,25 @@
-import type * as React from "react";
-import { skillRows } from "@/lib/resource-rows";
-import { Select } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { FilterBar } from "@/components/filter-bar";
-import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { IdCell, NameCell, TagCell, NumCell, CountCell, EditLink } from "@/components/resource-cells";
-import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
-import { Sparkles } from "lucide-react";
-import type { SkillRow } from "@/lib/resource-rows";
+import type * as React from 'react';
+import { skillRows } from '@/lib/resource-rows';
+import { Select } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { FilterBar } from '@/components/filter-bar';
+import { ResourceTable, type ResourceColumn } from '@/components/resource-table';
+import {
+  IdCell,
+  NameCell,
+  TagCell,
+  NumCell,
+  CountCell,
+  EditLink,
+} from '@/components/resource-cells';
+import { parsePage, parsePerPage, paginate } from '@/lib/paginate';
+import { parseSort, sortRows, type QueryParams } from '@/lib/sort';
+import { Sparkles } from 'lucide-react';
+import type { SkillRow } from '@/lib/resource-rows';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams extends QueryParams {
   search?: string;
@@ -25,46 +32,64 @@ interface SearchParams extends QueryParams {
   dir?: string;
 }
 
-const SORT_KEYS = ["id", "name", "job", "tier", "reqLevel", "maxLevel"] as const;
+const SORT_KEYS = ['id', 'name', 'job', 'tier', 'reqLevel', 'maxLevel'] as const;
 
 /** Job names come from the file's `_job` marker, which is already lowercase. */
 function jobLabel(job: string): string {
-  return job ? job.charAt(0).toUpperCase() + job.slice(1) : "";
+  return job ? job.charAt(0).toUpperCase() + job.slice(1) : '';
 }
 
 const COLUMNS: readonly ResourceColumn<SkillRow>[] = [
-  { key: "id", header: "ID", sortable: true, className: "w-20", cell: (r) => <IdCell value={r.id} /> },
-  { key: "name", header: "Name", sortable: true, cell: (r) => <NameCell value={r.name} /> },
-  { key: "job", header: "Job", sortable: true, cell: (r) => <TagCell label={jobLabel(r.job)} /> },
-  { key: "tier", header: "Tier", sortable: true, align: "center", cell: (r) => <CountCell value={r.tier} /> },
   {
-    key: "reqLevel",
-    header: "Req Lv",
+    key: 'id',
+    header: 'ID',
     sortable: true,
-    align: "right",
+    className: 'w-20',
+    cell: (r) => <IdCell value={r.id} />,
+  },
+  { key: 'name', header: 'Name', sortable: true, cell: (r) => <NameCell value={r.name} /> },
+  { key: 'job', header: 'Job', sortable: true, cell: (r) => <TagCell label={jobLabel(r.job)} /> },
+  {
+    key: 'tier',
+    header: 'Tier',
+    sortable: true,
+    align: 'center',
+    cell: (r) => <CountCell value={r.tier} />,
+  },
+  {
+    key: 'reqLevel',
+    header: 'Req Lv',
+    sortable: true,
+    align: 'right',
     cell: (r) => <NumCell value={r.reqLevel} />,
   },
   {
-    key: "maxLevel",
-    header: "Max Lv",
+    key: 'maxLevel',
+    header: 'Max Lv',
     sortable: true,
-    align: "right",
+    align: 'right',
     cell: (r) => <NumCell value={r.maxLevel} />,
   },
   {
-    key: "actions",
-    header: "Actions",
-    align: "right",
-    cell: (r) => <EditLink href={`/resources/skills/${String(r.id)}/edit`} label={`skill ${String(r.id)}`} />,
+    key: 'actions',
+    header: 'Actions',
+    align: 'right',
+    cell: (r) => (
+      <EditLink href={`/resources/skills/${String(r.id)}/edit`} label={`skill ${String(r.id)}`} />
+    ),
   },
 ];
 
-export default async function SkillsPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
+export default async function SkillsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const job = params.job ?? "";
-  const tier = params.tier ?? "";
-  const maxReqLevel = params.maxReqLevel ?? "";
+  const search = params.search ?? '';
+  const job = params.job ?? '';
+  const tier = params.tier ?? '';
+  const maxReqLevel = params.maxReqLevel ?? '';
   const perPage = parsePerPage(params.perPage);
 
   const skills = skillRows();
@@ -78,7 +103,8 @@ export default async function SkillsPage({ searchParams }: { searchParams: Promi
     if (job && s.job !== job) return false;
     if (tier && s.tier !== Number(tier)) return false;
     if (maxReqLevel && Number.isFinite(cap) && s.reqLevel > cap) return false;
-    if (needle && !s.name.toLowerCase().includes(needle) && !String(s.id).includes(needle)) return false;
+    if (needle && !s.name.toLowerCase().includes(needle) && !String(s.id).includes(needle))
+      return false;
     return true;
   });
 
@@ -136,7 +162,10 @@ export default async function SkillsPage({ searchParams }: { searchParams: Promi
         sort={sort}
         params={params}
         unit="skills"
-        empty={{ icon: Sparkles, message: active ? "No skills match your filters" : "No skill data" }}
+        empty={{
+          icon: Sparkles,
+          message: active ? 'No skills match your filters' : 'No skill data',
+        }}
       />
     </div>
   );

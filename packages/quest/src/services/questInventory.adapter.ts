@@ -18,10 +18,9 @@
  * @module services/questInventory
  */
 
-import type { InventoryService } from '@flyff/inventory';
+import type { InventoryService, CreateItemSnapshotSerializer } from '@flyff/inventory';
 import type { CPlayer } from '@flyff/entities';
 import { MAX_INVENTORY } from '@flyff/world-core';
-import { CreateItemSnapshotSerializer } from '@flyff/inventory';
 import { buildUpdateItemCount } from '@flyff/inventory';
 import type { InventoryOps } from './questConditions';
 
@@ -59,7 +58,7 @@ export function bindQuestInventory(
         );
       }
     },
-    remove: (itemId, count) => removeFromBag(player, deps.inventoryService, itemId, count, frames),
+    remove: (itemId, count) => { removeFromBag(player, deps.inventoryService, itemId, count, frames); },
   };
   return { inventory, frames };
 }

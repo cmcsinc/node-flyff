@@ -17,22 +17,22 @@
  * @module app/api/character-inc/route
  */
 
-import { NextResponse, type NextRequest } from "next/server";
-import { z } from "zod";
-import { writeCharacterEdit, allocTextTokens, type CharacterEdit } from "@flyff/resources";
-import { auth } from "@/lib/auth";
-import { writeAudit } from "@/lib/audit";
-import { getResourceIndex, invalidateResourceCache } from "@/lib/resource-cache";
-import { RAW_DIR, getIncSymbols, readIncBlock, sharersForKey } from "@/lib/character-inc";
+import { NextResponse, type NextRequest } from 'next/server';
+import { z } from 'zod';
+import { writeCharacterEdit, allocTextTokens, type CharacterEdit } from '@flyff/resources';
+import { auth } from '@/lib/auth';
+import { writeAudit } from '@/lib/audit';
+import { getResourceIndex, invalidateResourceCache } from '@/lib/resource-cache';
+import { RAW_DIR, getIncSymbols, readIncBlock, sharersForKey } from '@/lib/character-inc';
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const KeySchema = z
   .string()
   .min(1)
   .max(64)
-  .regex(/^[A-Za-z0-9_]+$/, "Invalid block key");
+  .regex(/^[A-Za-z0-9_]+$/, 'Invalid block key');
 
 /**
  * One PUT edits menus, shop stock, or both. Every field is optional and only the
@@ -60,7 +60,7 @@ const PutSchema = z.object({
         token: z
           .string()
           .max(64)
-          .regex(/^IDS_[A-Za-z0-9_]+$/, "Invalid string-table token")
+          .regex(/^IDS_[A-Za-z0-9_]+$/, 'Invalid string-table token')
           .optional(),
       }),
     )
@@ -70,7 +70,11 @@ const PutSchema = z.object({
     .array(
       z.object({
         slot: z.number().int().min(0).max(3),
-        kind3: z.string().min(1).max(64).regex(/^IK3_[A-Z0-9_]+$/, "Invalid IK3 symbol"),
+        kind3: z
+          .string()
+          .min(1)
+          .max(64)
+          .regex(/^IK3_[A-Z0-9_]+$/, 'Invalid IK3 symbol'),
         job: z.number().int().min(-1).max(64),
         uniqueMin: z.number().int().min(0).max(200),
         uniqueMax: z.number().int().min(0).max(200),
@@ -91,19 +95,19 @@ const PutSchema = z.object({
 });
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  const key = req.nextUrl.searchParams.get("key");
-  if (!key) return NextResponse.json({ ok: false, error: "Missing key" }, { status: 400 });
+  const key = req.nextUrl.searchParams.get('key');
+  if (!key) return NextResponse.json({ ok: false, error: 'Missing key' }, { status: 400 });
   return NextResponse.json({ ok: true, block: await readIncBlock(key) });
 }
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const body = PutSchema.safeParse(await req.json().catch(() => null));
   if (!body.success) {
     return NextResponse.json(
-      { ok: false, error: body.error.issues[0]?.message ?? "Invalid body" },
+      { ok: false, error: body.error.issues[0]?.message ?? 'Invalid body' },
       { status: 400 },
     );
   }
@@ -137,7 +141,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
     const texts: Record<string, string> = {};
     edit.vendorTabs = body.data.tabs.map((t) => {
       const token = t.token ?? fresh[next++];
-      if (!token) throw new Error("token allocation failed");
+      if (!token) throw new Error('token allocation failed');
       texts[token] = t.label;
       return { slot: t.slot, label: token };
     });
@@ -156,7 +160,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
     const unknown = menus.filter((id) => !mmiById.has(id));
     if (unknown.length > 0) {
       return NextResponse.json(
-        { ok: false, error: `Unknown MMI id(s): ${unknown.join(", ")}` },
+        { ok: false, error: `Unknown MMI id(s): ${unknown.join(', ')}` },
         { status: 400 },
       );
     }
@@ -173,7 +177,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
       .map((r) => r.kind3);
     if (emptyKinds.length > 0) {
       return NextResponse.json(
-        { ok: false, error: `No items carry kind: ${[...new Set(emptyKinds)].join(", ")}` },
+        { ok: false, error: `No items carry kind: ${[...new Set(emptyKinds)].join(', ')}` },
         { status: 400 },
       );
     }
@@ -206,7 +210,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
       .map((e) => e.itemId);
     if (undefinedIds.length > 0) {
       return NextResponse.json(
-        { ok: false, error: `Item id(s) not in defineItem.h: ${undefinedIds.join(", ")}` },
+        { ok: false, error: `Item id(s) not in defineItem.h: ${undefinedIds.join(', ')}` },
         { status: 400 },
       );
     }
@@ -215,13 +219,13 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
   }
 
   if (Object.keys(edit).length === 0) {
-    return NextResponse.json({ ok: false, error: "Nothing to change" }, { status: 400 });
+    return NextResponse.json({ ok: false, error: 'Nothing to change' }, { status: 400 });
   }
 
   try {
     await writeCharacterEdit(RAW_DIR, key, edit);
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Write failed";
+    const msg = e instanceof Error ? e.message : 'Write failed';
     return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 
@@ -229,8 +233,8 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
 
   const sharers = sharersForKey(key);
   await writeAudit(session, {
-    action: "character_inc_edit",
-    targetType: "character_inc_block",
+    action: 'character_inc_edit',
+    targetType: 'character_inc_block',
     // The target is a string key, not a numeric row id.
     targetId: null,
     details: { ...audit, placements: sharers.length },

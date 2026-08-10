@@ -106,7 +106,7 @@ export class InventoryRepository {
       .where({ character_id: characterId, slot })
       .limit(1);
 
-    return rows[0] || null;
+    return rows[0] ?? null;
   }
 
   /**
@@ -129,13 +129,13 @@ export class InventoryRepository {
     characterId: number,
     slot: number,
     itemId: number,
-    quantity: number = 1,
-    flags: number = 0,
-    durability: number = -1,
-    refine: number = 0,
+    quantity = 1,
+    flags = 0,
+    durability = -1,
+    refine = 0,
     stats?: string | null,
-    element: number = 0,
-    elementLevel: number = 0,
+    element = 0,
+    elementLevel = 0,
   ): Promise<void> {
     await this.db('inventory_item')
       .insert({
@@ -148,7 +148,7 @@ export class InventoryRepository {
         refine,
         element,
         element_level: elementLevel,
-        stats: stats || null,
+        stats: stats ?? null,
         created_at: new Date(),
         updated_at: new Date(),
       })
@@ -161,7 +161,7 @@ export class InventoryRepository {
         refine,
         element,
         element_level: elementLevel,
-        stats: stats || null,
+        stats: stats ?? null,
         updated_at: new Date(),
       });
   }
@@ -224,19 +224,19 @@ export class InventoryRepository {
     toSlot: number
   ): Promise<void> {
     // Use a transaction to safely swap items
-    await this.db.transaction(async (trx: any) => {
-      const fromItem = await trx('inventory_item')
+    await this.db.transaction(async (trx) => {
+      const fromItem = await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: fromSlot })
         .first();
 
-      const toItem = await trx('inventory_item')
+      const toItem = await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: toSlot })
         .first();
 
       if (fromItem && toItem) {
         // Swap: exchange the row contents (not the slot column) so the
         // (character_id, slot) UNIQUE constraint is never violated mid-swap.
-        await trx('inventory_item')
+        await trx<InventoryItemRow>('inventory_item')
           .where({ character_id: characterId, slot: fromSlot })
           .update({
             item_id: toItem.item_id,
@@ -244,7 +244,7 @@ export class InventoryRepository {
             updated_at: new Date(),
           });
 
-        await trx('inventory_item')
+        await trx<InventoryItemRow>('inventory_item')
           .where({ character_id: characterId, slot: toSlot })
           .update({
             item_id: fromItem.item_id,
@@ -253,7 +253,7 @@ export class InventoryRepository {
           });
       } else if (fromItem && !toItem) {
         // Simple move
-        await trx('inventory_item')
+        await trx<InventoryItemRow>('inventory_item')
           .where({ character_id: characterId, slot: fromSlot })
           .update({
             slot: toSlot,
@@ -281,8 +281,8 @@ export class InventoryRepository {
     toSlot: number,
     quantity: number
   ): Promise<void> {
-    await this.db.transaction(async (trx: any) => {
-      const fromItem = await trx('inventory_item')
+    await this.db.transaction(async (trx) => {
+      const fromItem = await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: fromSlot })
         .first();
 
@@ -294,7 +294,7 @@ export class InventoryRepository {
         return; // Not enough quantity
       }
 
-      const toItem = await trx('inventory_item')
+      const toItem = await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: toSlot })
         .first();
 
@@ -303,7 +303,7 @@ export class InventoryRepository {
       }
 
       // Create new stack in destination slot
-      await trx('inventory_item').insert({
+      await trx<InventoryItemRow>('inventory_item').insert({
         character_id: characterId,
         slot: toSlot,
         item_id: fromItem.item_id,
@@ -319,7 +319,7 @@ export class InventoryRepository {
       // Reduce quantity in source slot
       const newQuantity = fromItem.quantity - quantity;
       if (newQuantity > 0) {
-        await trx('inventory_item')
+        await trx<InventoryItemRow>('inventory_item')
           .where({ character_id: characterId, slot: fromSlot })
           .update({
             quantity: newQuantity,
@@ -327,7 +327,7 @@ export class InventoryRepository {
           });
       } else {
         // Remove empty stack
-        await trx('inventory_item')
+        await trx<InventoryItemRow>('inventory_item')
           .where({ character_id: characterId, slot: fromSlot })
           .del();
       }
@@ -349,12 +349,12 @@ export class InventoryRepository {
     fromSlot: number,
     toSlot: number
   ): Promise<void> {
-    await this.db.transaction(async (trx: any) => {
-      const fromItem = await trx('inventory_item')
+    await this.db.transaction(async (trx) => {
+      const fromItem = await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: fromSlot })
         .first();
 
-      const toItem = await trx('inventory_item')
+      const toItem = await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: toSlot })
         .first();
 
@@ -369,7 +369,7 @@ export class InventoryRepository {
       // Add quantities
       const newQuantity = toItem.quantity + fromItem.quantity;
 
-      await trx('inventory_item')
+      await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: toSlot })
         .update({
           quantity: newQuantity,
@@ -377,7 +377,7 @@ export class InventoryRepository {
         });
 
       // Remove source slot
-      await trx('inventory_item')
+      await trx<InventoryItemRow>('inventory_item')
         .where({ character_id: characterId, slot: fromSlot })
         .del();
     });

@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { useRouter } from "next/navigation";
-import { ConfirmDialog } from "@/components/confirm-dialog";
-import { toast } from "sonner";
-import { EquipmentPaperDoll } from "./equipment-paperdoll";
-import { InventoryGrid } from "./inventory-grid";
-import { ItemTooltip } from "./item-tooltip";
-import { AddItem } from "./add-item";
-import type { PickerItem, SlotItem } from "./types";
+import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { ConfirmDialog } from '@/components/confirm-dialog';
+import { toast } from 'sonner';
+import { EquipmentPaperDoll } from './equipment-paperdoll';
+import { InventoryGrid } from './inventory-grid';
+import { ItemTooltip } from './item-tooltip';
+import { AddItem } from './add-item';
+import type { PickerItem, SlotItem } from './types';
 
 interface InventoryExplorerProps {
   characterId: number;
@@ -39,7 +39,7 @@ export function InventoryExplorer({
   pickerItems,
   readOnly = false,
   compact = false,
-}: InventoryExplorerProps) {
+}: InventoryExplorerProps): React.JSX.Element {
   const router = useRouter();
   const [active, setActive] = React.useState<ActiveTooltip | null>(null);
   const [removeTarget, setRemoveTarget] = React.useState<SlotItem | null>(null);
@@ -47,7 +47,9 @@ export function InventoryExplorer({
 
   const scheduleOpen = React.useCallback((item: SlotItem, rect: DOMRect) => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    hoverTimer.current = setTimeout(() => setActive({ item, rect }), 90);
+    hoverTimer.current = setTimeout(() => {
+      setActive({ item, rect });
+    }, 90);
   }, []);
 
   const close = React.useCallback(() => {
@@ -55,27 +57,30 @@ export function InventoryExplorer({
     setActive(null);
   }, []);
 
-  React.useEffect(() => () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-  }, []);
+  React.useEffect(
+    () => (): void => {
+      if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    },
+    [],
+  );
 
-  async function confirmRemove() {
+  async function confirmRemove(): Promise<void> {
     if (!removeTarget) return;
     try {
-      const res = await fetch(`/api/inventory/${characterId}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch(`/api/inventory/${String(characterId)}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slot: removeTarget.slot }),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) throw new Error(`HTTP ${String(res.status)}`);
       toast.success(`Removed ${removeTarget.name}`);
       router.refresh();
     } catch (err) {
-      toast.error("Failed to remove item", { description: (err as Error).message });
+      toast.error('Failed to remove item', { description: (err as Error).message });
     }
   }
 
-  function handleRemove(_slot: number, item: SlotItem) {
+  function handleRemove(_slot: number, item: SlotItem): void {
     close();
     setRemoveTarget(item);
   }
@@ -88,7 +93,7 @@ export function InventoryExplorer({
         </div>
       )}
 
-      <div className={compact ? "flex flex-col gap-3" : "grid gap-4 lg:grid-cols-[auto_1fr]"}>
+      <div className={compact ? 'flex flex-col gap-3' : 'grid gap-4 lg:grid-cols-[auto_1fr]'}>
         {/* Equipment window (paper doll) */}
         <div className="flyff-panel overflow-hidden">
           <div className="flyff-window-header px-3 py-1.5 text-xs font-semibold tracking-wide text-foreground sm:px-4 sm:py-2 sm:text-sm">
@@ -112,7 +117,7 @@ export function InventoryExplorer({
               {bagItems.length}/{42}
             </span>
           </div>
-          <div className={compact ? "p-2" : "p-4"}>
+          <div className={compact ? 'p-2' : 'p-4'}>
             <InventoryGrid
               items={bagItems}
               onHover={scheduleOpen}
@@ -129,12 +134,14 @@ export function InventoryExplorer({
 
       <ConfirmDialog
         open={removeTarget !== null}
-        onOpenChange={(o) => !o && setRemoveTarget(null)}
+        onOpenChange={(open) => {
+          if (!open) setRemoveTarget(null);
+        }}
         title="Remove this item?"
         description={
           removeTarget
-            ? `${removeTarget.name} (slot ${removeTarget.slot}) will be deleted from the inventory. This cannot be undone.`
-            : ""
+            ? `${removeTarget.name} (slot ${String(removeTarget.slot)}) will be deleted from the inventory. This cannot be undone.`
+            : ''
         }
         confirmLabel="Remove"
         destructive

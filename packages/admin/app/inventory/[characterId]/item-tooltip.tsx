@@ -1,28 +1,36 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { getDstName } from "@/lib/game-constants";
-import { cn } from "@/lib/utils";
-import type { SlotItem } from "./types";
+import Image from 'next/image';
+import { getDstName } from '@/lib/game-constants';
+import { cn } from '@/lib/utils';
+import type { SlotItem } from './types';
 
 const ELEMENT_NAMES: Record<number, string> = {
-  1: "Fire",
-  2: "Water",
-  3: "Electric",
-  4: "Wind",
-  5: "Earth",
+  1: 'Fire',
+  2: 'Water',
+  3: 'Electric',
+  4: 'Wind',
+  5: 'Earth',
 };
 
 const GENDER_LABEL: Record<string, string> = {
-  male: "Male only",
-  female: "Female only",
+  male: 'Male only',
+  female: 'Female only',
 };
 
-function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+function Stat({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: string;
+  accent?: boolean;
+}): React.JSX.Element {
   return (
     <div className="flex items-center justify-between gap-4 text-xs">
       <span className="text-muted-foreground">{label}</span>
-      <span className={cn("font-medium", accent && "text-success")}>{value}</span>
+      <span className={cn('font-medium', accent && 'text-success')}>{value}</span>
     </div>
   );
 }
@@ -38,7 +46,7 @@ interface ItemTooltipProps {
  * owning grid/paper-doll, positioned `fixed` against the tile's viewport rect
  * and clamped so it never overflows the window.
  */
-export function ItemTooltip({ item, rect }: ItemTooltipProps) {
+export function ItemTooltip({ item, rect }: ItemTooltipProps): React.JSX.Element {
   const TOOLTIP_W = 240;
   const GAP = 8;
 
@@ -54,7 +62,7 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
   const hasStats =
     item.attackMin !== undefined ||
     item.defense !== undefined ||
-    (item.effects && item.effects.length > 0) ||
+    (item.effects != null && item.effects.length > 0) ||
     item.magicDefense !== undefined ||
     item.hitRate !== undefined ||
     item.parry !== undefined;
@@ -67,7 +75,7 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
         left,
         top,
         width: TOOLTIP_W,
-        transform: above ? "translateY(-100%)" : undefined,
+        transform: above ? 'translateY(-100%)' : undefined,
       }}
     >
       {/* Header */}
@@ -82,9 +90,7 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
         />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
-            {item.refine > 0 && (
-              <span className="text-xs font-bold text-gold">+{item.refine}</span>
-            )}
+            {item.refine > 0 && <span className="text-xs font-bold text-gold">+{item.refine}</span>}
             <h4 className="truncate text-sm font-semibold text-foreground">{item.name}</h4>
           </div>
           <p className="text-[11px] text-muted-foreground">{item.category}</p>
@@ -96,7 +102,7 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
         <div className="mt-2">
           <Stat
             label="Element"
-            value={`${ELEMENT_NAMES[item.element] ?? `#${item.element}`} +${item.elementLevel}`}
+            value={`${ELEMENT_NAMES[item.element] ?? `#${String(item.element)}`} +${String(item.elementLevel)}`}
             accent
           />
         </div>
@@ -110,7 +116,7 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
               label="Attack"
               value={
                 item.attackMax !== undefined && item.attackMax > item.attackMin
-                  ? `${item.attackMin} – ${item.attackMax}`
+                  ? `${String(item.attackMin)} – ${String(item.attackMax)}`
                   : String(item.attackMin)
               }
               accent
@@ -121,7 +127,7 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
               label="Defense"
               value={
                 item.defenseMax !== undefined && item.defenseMax > item.defense
-                  ? `${item.defense} – ${item.defenseMax}`
+                  ? `${String(item.defense)} – ${String(item.defenseMax)}`
                   : String(item.defense)
               }
               accent
@@ -131,16 +137,19 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
             <Stat label="Magic Def" value={String(item.magicDefense)} />
           )}
           {item.hitRate !== undefined && item.hitRate !== 0 && (
-            <Stat label="Hit Rate" value={`${item.hitRate > 0 ? "+" : ""}${item.hitRate}`} />
+            <Stat
+              label="Hit Rate"
+              value={`${item.hitRate > 0 ? '+' : ''}${String(item.hitRate)}`}
+            />
           )}
           {item.parry !== undefined && item.parry !== 0 && (
-            <Stat label="Parry" value={`${item.parry > 0 ? "+" : ""}${item.parry}`} />
+            <Stat label="Parry" value={`${item.parry > 0 ? '+' : ''}${String(item.parry)}`} />
           )}
           {item.effects?.map((e, i) => (
             <Stat
-              key={`${e.dst}-${i}`}
+              key={`${String(e.dst)}-${String(i)}`}
               label={getDstName(e.dst)}
-              value={`${e.adj > 0 ? "+" : ""}${e.adj}`}
+              value={`${e.adj > 0 ? '+' : ''}${String(e.adj)}`}
               accent={e.adj > 0}
             />
           ))}
@@ -153,15 +162,12 @@ export function ItemTooltip({ item, rect }: ItemTooltipProps) {
           <Stat label="Req. Level" value={String(item.levelReq)} />
         )}
         {item.jobReq && item.jobReq.length > 0 && (
-          <Stat label="Class" value={item.jobReq.map(capitalize).join(", ")} />
+          <Stat label="Class" value={item.jobReq.map(capitalize).join(', ')} />
         )}
         {item.genderReq && GENDER_LABEL[item.genderReq] && (
           <Stat label="Gender" value={GENDER_LABEL[item.genderReq]} />
         )}
-        <Stat
-          label="Durability"
-          value={item.durability === -1 ? "∞" : String(item.durability)}
-        />
+        <Stat label="Durability" value={item.durability === -1 ? '∞' : String(item.durability)} />
         {item.quantity > 1 && <Stat label="Quantity" value={String(item.quantity)} />}
         {item.price !== undefined && item.price > 0 && (
           <Stat label="Value" value={`${item.price.toLocaleString()} penya`} />

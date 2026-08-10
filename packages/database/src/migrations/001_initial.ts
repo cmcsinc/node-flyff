@@ -1,4 +1,4 @@
-import type { Knex } from '../types';
+import type { Knex, TableBuilder } from '../types';
 
 /**
  * Initial database schema.
@@ -12,7 +12,7 @@ import type { Knex } from '../types';
  */
 export async function up(db: Knex): Promise<void> {
   // Accounts table - stores user credentials
-  await db.schema.createTable('accounts', (table: any) => {
+  await db.schema.createTable('accounts', (table) => {
     table.increments('id').primary();
     table.string('username', 32).notNullable().unique();
     table.string('password_hash', 255).notNullable();
@@ -26,7 +26,7 @@ export async function up(db: Knex): Promise<void> {
   });
 
   // Characters table - stores player characters
-  await db.schema.createTable('characters', (table: any) => {
+  await db.schema.createTable('characters', (table) => {
     table.increments('id').primary();
     table.integer('account_id').unsigned().notNullable()
       .references('id').inTable('accounts').onDelete('CASCADE');
@@ -62,7 +62,7 @@ export async function up(db: Knex): Promise<void> {
   });
 
   // Inventory table - stores character inventory items
-  await db.schema.createTable('inventory', (table: any) => {
+  await db.schema.createTable('inventory', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
@@ -79,7 +79,7 @@ export async function up(db: Knex): Promise<void> {
   });
 
   // Bank table - shared bank storage across characters on same account
-  await db.schema.createTable('bank', (table: any) => {
+  await db.schema.createTable('bank', (table) => {
     table.increments('id').primary();
     table.integer('account_id').unsigned().notNullable()
       .references('id').inTable('accounts').onDelete('CASCADE');
@@ -96,7 +96,7 @@ export async function up(db: Knex): Promise<void> {
   });
 
   // Skills table - character learned skills
-  await db.schema.createTable('skills', (table: any) => {
+  await db.schema.createTable('skills', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
@@ -108,7 +108,7 @@ export async function up(db: Knex): Promise<void> {
   });
 
   // Quick slots table - UI quick bar shortcuts
-  await db.schema.createTable('quick_slots', (table: any) => {
+  await db.schema.createTable('quick_slots', (table) => {
     table.increments('id').primary();
     table.integer('character_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');
@@ -140,6 +140,6 @@ export async function down(db: Knex): Promise<void> {
  *
  * @param table - Knex table builder
  */
-function timestamps(table: any): void {
+function timestamps(table: TableBuilder): void {
   table.timestamps(true, true);
 }

@@ -1,22 +1,30 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { AlertTriangle, ChevronRight, Code2, Info, MessageSquare, RotateCcw, Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ConfirmDialog } from "@/components/confirm-dialog";
-import type { DialogPrefixView } from "@/lib/dialog-inc";
-import { DialogStateEditor } from "./dialog-state-editor";
+import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import {
+  AlertTriangle,
+  ChevronRight,
+  Code2,
+  Info,
+  MessageSquare,
+  RotateCcw,
+  Save,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { ConfirmDialog } from '@/components/confirm-dialog';
+import type { DialogPrefixView } from '@/lib/dialog-inc';
+import { DialogStateEditor } from './dialog-state-editor';
 import {
   appendCount,
   buildPutBody,
   draftsFromView,
   isDirty,
   type StateDraft,
-} from "./dialog-drafts";
+} from './dialog-drafts';
 
 /** Shape of `/api/dialog` PUT's JSON reply. */
 interface PutResponse {
@@ -54,11 +62,10 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
   const dirty = isDirty(drafts, baseline);
   const willAppend = appendCount(drafts);
   const sourceCount = view.states.filter((s) => s.hasSource).length;
-  const blankNew = drafts.some(
-    (d) =>
-      [...d.say, ...d.speak, ...d.keys.map((k) => k.label)].some(
-        (l) => l.index === null && l.text.trim() === "",
-      ),
+  const blankNew = drafts.some((d) =>
+    [...d.say, ...d.speak, ...d.keys.map((k) => k.label)].some(
+      (l) => l.index === null && l.text.trim() === '',
+    ),
   );
 
   function patchState(keyIdx: number, patch: Partial<StateDraft>): void {
@@ -70,24 +77,24 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
     setSaving(true);
     try {
       const body = buildPutBody(view.prefix, drafts, baseline);
-      const res = await fetch("/api/dialog", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/dialog', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
       const data = (await res.json().catch(() => null)) as PutResponse | null;
       if (!res.ok) {
-        toast.error(data?.error ?? "Save failed");
+        toast.error(data?.error ?? 'Save failed');
         return;
       }
       const added = data?.appended?.length ?? 0;
       toast.success(
-        "Saved to NpcScript.cpp + WorldDialog.txt — restart the world server to apply" +
-          (added > 0 ? ` (${String(added)} new string rows)` : ""),
+        'Saved to NpcScript.cpp + WorldDialog.txt — restart the world server to apply' +
+          (added > 0 ? ` (${String(added)} new string rows)` : ''),
       );
       router.refresh();
     } catch {
-      toast.error("Save failed");
+      toast.error('Save failed');
     } finally {
       setSaving(false);
     }
@@ -103,10 +110,10 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
           <p className="text-xs leading-relaxed text-muted-foreground">
             {view.characterKey ? (
               <>
-                No script group for <code className="font-mono">{view.characterKey}</code> exists in{" "}
-                <code className="font-mono">raw/NpcScript.cpp</code>, so this NPC has no dialog.
-                A new group has to be added by hand — it needs its own{" "}
-                <code className="font-mono">{"// File :"}</code> header among 4,244 functions.
+                No script group for <code className="font-mono">{view.characterKey}</code> exists in{' '}
+                <code className="font-mono">raw/NpcScript.cpp</code>, so this NPC has no dialog. A
+                new group has to be added by hand — it needs its own{' '}
+                <code className="font-mono">{'// File :'}</code> header among 4,244 functions.
               </>
             ) : (
               <>
@@ -138,11 +145,11 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
           <p className="flex items-start gap-2 text-[11px] leading-snug text-muted-foreground">
             <Info className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <span>
-              These are the <code className="font-mono">CNpcScript::{view.prefix}_&lt;n&gt;()</code>{" "}
-              bodies in <code className="font-mono">raw/NpcScript.cpp</code> and the{" "}
+              These are the <code className="font-mono">CNpcScript::{view.prefix}_&lt;n&gt;()</code>{' '}
+              bodies in <code className="font-mono">raw/NpcScript.cpp</code> and the{' '}
               <code className="font-mono">WorldDialog.txt</code> rows they reference. Dialog text
-              crosses the wire as a string and is <strong>not</strong> packed into the client&apos;s{" "}
-              <code className="font-mono">data.res</code>, so an edit here needs{" "}
+              crosses the wire as a string and is <strong>not</strong> packed into the client&apos;s{' '}
+              <code className="font-mono">data.res</code>, so an edit here needs{' '}
               <strong>no client patch</strong> — only a <strong>world-server restart</strong>.
             </span>
           </p>
@@ -150,15 +157,12 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
           <p className="flex items-start gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-[11px] leading-snug text-warning">
             <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <span>
-              <strong>String rows are shared and never renumbered.</strong> The table has{" "}
+              <strong>String rows are shared and never renumbered.</strong> The table has{' '}
               {view.stringCount} rows and 4,244 script functions reference them by number, so there
               is no insert and no delete: new text is appended, and editing a row used by several
               states changes every one of them.
               {sourceCount > 0 && (
-                <>
-                  {" "}
-                  {sourceCount} of these states store a raw C++ body and are read-only here.
-                </>
+                <> {sourceCount} of these states store a raw C++ body and are read-only here.</>
               )}
             </span>
           </p>
@@ -172,17 +176,17 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
               <div key={d.keyIdx} className="rounded-lg border border-border">
                 <button
                   type="button"
-                  onClick={() => { setOpen(expanded ? null : d.keyIdx); }}
+                  onClick={() => {
+                    setOpen(expanded ? null : d.keyIdx);
+                  }}
                   aria-expanded={expanded}
                   className="flex w-full cursor-pointer items-center gap-2 px-3 py-2.5 text-left"
                 >
                   <ChevronRight
-                    className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${expanded ? "rotate-90" : ""}`}
+                    className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${expanded ? 'rotate-90' : ''}`}
                     aria-hidden="true"
                   />
-                  <span className="font-mono text-[11px] text-muted-foreground">
-                    {d.keyIdx}
-                  </span>
+                  <span className="font-mono text-[11px] text-muted-foreground">{d.keyIdx}</span>
                   <span className="min-w-0 flex-1 truncate text-xs font-medium">
                     {stored?.reserved ?? summarize(d)}
                   </span>
@@ -200,7 +204,9 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
                     ) : (
                       <DialogStateEditor
                         draft={d}
-                        onChange={(patch) => { patchState(d.keyIdx, patch); }}
+                        onChange={(patch) => {
+                          patchState(d.keyIdx, patch);
+                        }}
                       />
                     )}
                   </div>
@@ -217,16 +223,20 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
         */}
         <CardFooter className="flex flex-wrap items-center gap-3 border-t border-border pt-4">
           <Button
-            onClick={() => { setConfirming(true); }}
+            onClick={() => {
+              setConfirming(true);
+            }}
             disabled={!dirty || saving || blankNew}
             className="cursor-pointer gap-2"
           >
             <Save className="h-4 w-4" />
-            {saving ? "Saving…" : "Save changes"}
+            {saving ? 'Saving…' : 'Save changes'}
           </Button>
           <Button
             variant="outline"
-            onClick={() => { setDrafts(draftsFromView(view)); }}
+            onClick={() => {
+              setDrafts(draftsFromView(view));
+            }}
             disabled={!dirty || saving}
             className="cursor-pointer gap-2"
           >
@@ -242,7 +252,7 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
               <span className="text-[11px] text-muted-foreground">
                 Unsaved changes
                 {willAppend > 0 &&
-                  ` · ${String(willAppend)} new string row${willAppend > 1 ? "s" : ""} will be appended`}
+                  ` · ${String(willAppend)} new string row${willAppend > 1 ? 's' : ''} will be appended`}
               </span>
             )
           )}
@@ -255,11 +265,11 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
         title="Write dialog files?"
         description={
           `This writes raw/NpcScript.cpp, raw/WorldDialog.txt, and ` +
-          `data/dialogues/${view.prefix ?? ""}.yml. ` +
+          `data/dialogues/${view.prefix ?? ''}.yml. ` +
           (willAppend > 0
             ? `${String(willAppend)} new string-table row(s) will be appended; existing rows are ` +
               `edited in place and never renumbered. `
-            : "") +
+            : '') +
           `The world server must be restarted before the change takes effect. No client patch ` +
           `is needed — the client never reads this text. Reversible by re-editing, or by ` +
           `restoring the files from git.`
@@ -273,12 +283,12 @@ export function DialogPanel({ view }: { view: DialogPrefixView }): React.JSX.Ele
 
 /** First line of dialog, or a structural description when there is none. */
 function summarize(d: StateDraft): string {
-  const first = d.say.length > 0 ? d.say[0].text : d.speak.length > 0 ? d.speak[0].text : "";
+  const first = d.say.length > 0 ? d.say[0].text : d.speak.length > 0 ? d.speak[0].text : '';
   if (first.trim()) return first;
   if (d.keys.length > 0) return `${String(d.keys.length)} choice buttons`;
-  if (d.exit) return "Closes the dialog";
-  if (d.launchQuest) return "Launches a quest";
-  return "Empty state";
+  if (d.exit) return 'Closes the dialog';
+  if (d.launchQuest) return 'Launches a quest';
+  return 'Empty state';
 }
 
 /**
@@ -295,8 +305,8 @@ function SourceState({ source }: { source: string }): React.JSX.Element {
         <Code2 className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         <span>
           <strong>Raw C++ body — read-only here.</strong> This state uses conditionals or calls
-          outside the structured subset, and the writer emits it verbatim: any structured edit
-          would be silently ignored. Edit it by hand in{" "}
+          outside the structured subset, and the writer emits it verbatim: any structured edit would
+          be silently ignored. Edit it by hand in{' '}
           <code className="font-mono">raw/NpcScript.cpp</code>, then re-run the dialog converter.
         </span>
       </p>

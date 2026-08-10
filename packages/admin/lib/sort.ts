@@ -8,7 +8,7 @@
  * @module lib/sort
  */
 
-export type SortDir = "asc" | "desc";
+export type SortDir = 'asc' | 'desc';
 
 /**
  * A page's URL query string.
@@ -21,7 +21,7 @@ export type SortDir = "asc" | "desc";
 export type QueryParams = Record<string, string | undefined>;
 
 export interface Sort<K extends string> {
-  key: K | "";
+  key: K | '';
   dir: SortDir;
 }
 
@@ -35,27 +35,27 @@ export function parseSort<K extends string>(
   allowed: readonly K[],
   fallback?: { key: K; dir?: SortDir },
 ): Sort<K> {
-  const key = rawKey && (allowed as readonly string[]).includes(rawKey) ? (rawKey as K) : "";
-  if (!key) return { key: fallback?.key ?? "", dir: fallback?.dir ?? "asc" };
-  return { key, dir: rawDir === "desc" ? "desc" : "asc" };
+  const key = rawKey && (allowed as readonly string[]).includes(rawKey) ? (rawKey as K) : '';
+  if (!key) return { key: fallback?.key ?? '', dir: fallback?.dir ?? 'asc' };
+  return { key, dir: rawDir === 'desc' ? 'desc' : 'asc' };
 }
 
 /** Primitives keep their own form; anything else degrades to "" rather than
     "[object Object]", so an accidentally-passed object sorts inertly. */
 function text(v: unknown): string {
-  if (v == null) return "";
-  if (typeof v === "string") return v;
-  if (typeof v === "number" || typeof v === "boolean" || typeof v === "bigint") return String(v);
+  if (v == null) return '';
+  if (typeof v === 'string') return v;
+  if (typeof v === 'number' || typeof v === 'boolean' || typeof v === 'bigint') return String(v);
   if (v instanceof Date) return v.toISOString();
-  return "";
+  return '';
 }
 
 /** Numbers compare numerically, everything else by locale-aware string order. */
 function compare(a: unknown, b: unknown): number {
-  if (typeof a === "number" && typeof b === "number") return a - b;
-  if (typeof a === "boolean" && typeof b === "boolean") return Number(a) - Number(b);
+  if (typeof a === 'number' && typeof b === 'number') return a - b;
+  if (typeof a === 'boolean' && typeof b === 'boolean') return Number(a) - Number(b);
   if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
-  return text(a).localeCompare(text(b), undefined, { numeric: true, sensitivity: "base" });
+  return text(a).localeCompare(text(b), undefined, { numeric: true, sensitivity: 'base' });
 }
 
 /**
@@ -71,7 +71,7 @@ export function sortRows<T, K extends string>(
   if (!sort.key) return rows as T[];
   const key = sort.key;
   const get = accessors?.[key] ?? ((row: T): unknown => (row as Record<string, unknown>)[key]);
-  const sign = sort.dir === "desc" ? -1 : 1;
+  const sign = sort.dir === 'desc' ? -1 : 1;
   // `.map` to index keeps the sort stable across engines that don't guarantee it.
   return rows
     .map((row, i) => ({ row, i }))
@@ -91,10 +91,10 @@ export function sortHref(
 ): string {
   const qs = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) {
-    if (k !== "sort" && k !== "dir" && k !== "page" && v) qs.set(k, v);
+    if (k !== 'sort' && k !== 'dir' && k !== 'page' && v) qs.set(k, v);
   }
-  qs.set("sort", key);
-  if (current.key === key && current.dir === "asc") qs.set("dir", "desc");
+  qs.set('sort', key);
+  if (current.key === key && current.dir === 'asc') qs.set('dir', 'desc');
   const s = qs.toString();
-  return s ? `?${s}` : "?";
+  return s ? `?${s}` : '?';
 }

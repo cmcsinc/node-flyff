@@ -26,7 +26,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('friends', (table: any) => {
+  await db.schema.createTable('friends', (table) => {
     table.increments('id').primary();
     // Roster owner.
     table.integer('character_id').unsigned().notNullable()
@@ -47,13 +47,13 @@ export async function up(db: Knex): Promise<void> {
   // `CRTMessenger::m_dwState` -- the owner's own presence status, one of the
   // FRS_* values (0..11). Persisted per C++ `m_nMessengerState`; defaults to
   // FRS_ONLINE (0).
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.integer('messenger_state').notNullable().defaultTo(0);
   });
 }
 
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.dropColumn('messenger_state');
   });
   await db.schema.dropTableIfExists('friends');

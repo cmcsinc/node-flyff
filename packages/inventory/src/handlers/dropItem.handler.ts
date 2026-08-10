@@ -15,7 +15,7 @@
  * @module handlers/dropItem
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { Validate } from '@flyff/core/utils/validate';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
@@ -39,7 +39,9 @@ export class DropItemHandler {
 
   handleDropItem(socket: ClientSocket, reader: PacketReader): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId === undefined) { socket.destroy(); return; }
+    const player = this.deps.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
 
     try {

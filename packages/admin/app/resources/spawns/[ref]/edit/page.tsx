@@ -1,12 +1,12 @@
-import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/page-header";
-import { SpawnEditor } from "./spawn-editor";
-import { blankSpawn, findSpawn, loadSpawns, nextSpawnId } from "@/lib/spawns";
-import { parseZoneRef, zoneDocs } from "@/lib/zone-seq";
-import { spawnMoverOptions } from "@/lib/npc-options";
-import { getResourceIndex } from "@/lib/resource-cache";
+import { notFound } from 'next/navigation';
+import { PageHeader } from '@/components/page-header';
+import { SpawnEditor } from './spawn-editor';
+import { blankSpawn, findSpawn, loadSpawns, nextSpawnId } from '@/lib/spawns';
+import { parseZoneRef, zoneDocs } from '@/lib/zone-seq';
+import { spawnMoverOptions } from '@/lib/npc-options';
+import { getResourceIndex } from '@/lib/resource-cache';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function SpawnEditPage({
   params,
@@ -51,7 +51,7 @@ export default async function SpawnEditPage({
     <div className="space-y-6">
       <PageHeader
         title={moverName}
-        description={`${zone.zoneName} · spawn #${String(parsed.entryId)} · ${found.file.split(/[/\\]/).pop() ?? ""}`}
+        description={`${zone.zoneName} · spawn #${String(parsed.entryId)} · ${found.file.split(/[/\\]/).pop() ?? ''}`}
         backHref="/resources/spawns"
       />
       <SpawnEditor ref_={ref} entry={found.spawn} moverOptions={movers} />

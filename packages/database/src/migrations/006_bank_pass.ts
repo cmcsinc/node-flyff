@@ -12,7 +12,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.string('bank_pass', 10).notNullable().defaultTo('0000');
   });
 }
@@ -23,7 +23,7 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.dropColumn('bank_pass');
   });
 }

@@ -16,7 +16,7 @@
 
 import type { Vec3 } from '@flyff/entities';
 import { GroundItem, FIRST_ITEM_ID, type GroundItemInit } from '../entities/item';
-import type { ZoneManager } from './zone.manager';
+import type { ZoneManager } from '@flyff/world-core';
 import { ItemSnapshotSerializer } from '../net/snapshot/itemSnapshot.serializer';
 import { VISIBILITY_RADIUS } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
@@ -57,7 +57,7 @@ export class ItemManager {
       'ground item spawned + ADD_OBJ broadcast',
     );
 
-    const timer = setTimeout(() => this.expire(id), DECAY_MS);
+    const timer = setTimeout(() => { this.expire(id); }, DECAY_MS);
     this.timers.set(id, timer);
     return id;
   }

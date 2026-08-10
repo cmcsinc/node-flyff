@@ -11,20 +11,15 @@
  * every diff unreviewable even when it happened to be semantically correct.
  */
 
-import { describe, it, beforeEach, afterEach } from "node:test";
-import * as assert from "node:assert/strict";
-import { mkdtempSync, rmSync, writeFileSync, readFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
-import { parse as parseYaml } from "yaml";
-import {
-  writeSpawnToFile,
-  deleteSpawnFromFile,
-  nextSpawnId,
-  blankSpawn,
-} from "../lib/spawns";
-import { writeZoneMetaToFile, zoneMeta, ZONE_META_KEYS } from "../lib/zones";
-import { parseZoneRef } from "../lib/zone-seq";
+import { describe, it, beforeEach, afterEach } from 'node:test';
+import * as assert from 'node:assert/strict';
+import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { parse as parseYaml } from 'yaml';
+import { writeSpawnToFile, deleteSpawnFromFile, nextSpawnId, blankSpawn } from '../lib/spawns';
+import { writeZoneMetaToFile, zoneMeta, ZONE_META_KEYS } from '../lib/zones';
+import { parseZoneRef } from '../lib/zone-seq';
 
 const ZONE_YAML = `# worlds/zones/test.yml
 # Hand-written header that must survive edits.
@@ -99,46 +94,48 @@ let dir: string;
 let file: string;
 
 beforeEach(() => {
-  dir = mkdtempSync(join(tmpdir(), "zone-test-"));
-  file = join(dir, "test.yml");
-  writeFileSync(file, ZONE_YAML, "utf-8");
+  dir = mkdtempSync(join(tmpdir(), 'zone-test-'));
+  file = join(dir, 'test.yml');
+  writeFileSync(file, ZONE_YAML, 'utf-8');
 });
 
-afterEach(() => rmSync(dir, { recursive: true, force: true }));
+afterEach(() => {
+  rmSync(dir, { recursive: true, force: true });
+});
 
 function doc(): Record<string, any> {
-  return parseYaml(readFileSync(file, "utf-8"));
+  return parseYaml(readFileSync(file, 'utf-8'));
 }
 
 function text(): string {
-  return readFileSync(file, "utf-8");
+  return readFileSync(file, 'utf-8');
 }
 
-describe("parseZoneRef", () => {
-  it("splits zone and entry id", () => {
-    assert.deepEqual(parseZoneRef("flaris:12"), { zoneId: "flaris", entryId: 12 });
+describe('parseZoneRef', () => {
+  it('splits zone and entry id', () => {
+    assert.deepEqual(parseZoneRef('flaris:12'), { zoneId: 'flaris', entryId: 12 });
   });
 
-  it("maps :new to a null id", () => {
-    assert.deepEqual(parseZoneRef("flaris:new"), { zoneId: "flaris", entryId: null });
+  it('maps :new to a null id', () => {
+    assert.deepEqual(parseZoneRef('flaris:new'), { zoneId: 'flaris', entryId: null });
   });
 
-  it("rejects malformed refs", () => {
-    for (const bad of ["", "flaris", ":12", "flaris:", "flaris:0", "flaris:-1", "flaris:x"]) {
+  it('rejects malformed refs', () => {
+    for (const bad of ['', 'flaris', ':12', 'flaris:', 'flaris:0', 'flaris:-1', 'flaris:x']) {
       assert.equal(parseZoneRef(bad), null, bad);
     }
   });
 });
 
-describe("writeSpawnToFile", () => {
-  it("preserves file comments", () => {
+describe('writeSpawnToFile', () => {
+  it('preserves file comments', () => {
     writeSpawnToFile(file, 1, { ...blankSpawn(), mover_id: 999, count: 3, delay: 1000 });
     assert.match(text(), /Hand-written header that must survive edits/);
     assert.match(text(), /a leading comment inside the sequence/);
     assert.match(text(), /records why a region was removed/);
   });
 
-  it("replaces in place without touching siblings", () => {
+  it('replaces in place without touching siblings', () => {
     writeSpawnToFile(file, 1, { ...blankSpawn(), mover_id: 999, count: 3, delay: 1000 });
     const spawns = doc().spawns;
     assert.equal(spawns.length, 2);
@@ -147,19 +144,19 @@ describe("writeSpawnToFile", () => {
     assert.equal(spawns[1].mover_id, 529);
   });
 
-  it("appends with the lowest free id", () => {
+  it('appends with the lowest free id', () => {
     const id = writeSpawnToFile(file, null, blankSpawn());
     assert.equal(id, 2);
     assert.equal(doc().spawns.length, 3);
     assert.equal(doc().spawns.at(-1).id, 2);
   });
 
-  it("keeps float precision on radius", () => {
+  it('keeps float precision on radius', () => {
     writeSpawnToFile(file, 1, { ...blankSpawn(), radius: 49.5 });
     assert.equal(doc().spawns[0].radius, 49.5);
   });
 
-  it("rejects a spawn the client would choke on", () => {
+  it('rejects a spawn the client would choke on', () => {
     // mover_id 0 has no propMover row -> OnAddObj null-derefs on materialize.
     assert.throws(() => writeSpawnToFile(file, 1, { ...blankSpawn(), mover_id: 0 }));
     assert.throws(() => writeSpawnToFile(file, 1, { ...blankSpawn(), count: 0 }));
@@ -167,15 +164,15 @@ describe("writeSpawnToFile", () => {
     assert.throws(() => writeSpawnToFile(file, 1, { ...blankSpawn(), radius: -1 }));
   });
 
-  it("leaves the file untouched when validation fails", () => {
+  it('leaves the file untouched when validation fails', () => {
     const before = text();
     assert.throws(() => writeSpawnToFile(file, 1, { ...blankSpawn(), mover_id: 0 }));
     assert.equal(text(), before);
   });
 });
 
-describe("deleteSpawnFromFile", () => {
-  it("removes only the named entry", () => {
+describe('deleteSpawnFromFile', () => {
+  it('removes only the named entry', () => {
     assert.equal(deleteSpawnFromFile(file, 1), true);
     const spawns = doc().spawns;
     assert.equal(spawns.length, 1);
@@ -183,31 +180,34 @@ describe("deleteSpawnFromFile", () => {
     assert.match(text(), /Hand-written header that must survive edits/);
   });
 
-  it("reports a miss rather than throwing", () => {
+  it('reports a miss rather than throwing', () => {
     assert.equal(deleteSpawnFromFile(file, 77), false);
   });
 });
 
-describe("nextSpawnId", () => {
-  it("fills the lowest gap", () => {
+describe('nextSpawnId', () => {
+  it('fills the lowest gap', () => {
     assert.equal(nextSpawnId([1, 3]), 2);
     assert.equal(nextSpawnId([]), 1);
   });
 });
 
-describe("zoneMeta", () => {
-  it("strips the placement collections", () => {
+describe('zoneMeta', () => {
+  it('strips the placement collections', () => {
     const meta = zoneMeta(doc());
-    assert.equal("spawns" in meta, false);
-    assert.equal("npcs" in meta, false);
-    assert.equal(meta.name, "Test");
-    assert.deepEqual(Object.keys(meta), ZONE_META_KEYS.filter((k) => k !== "portals" && k !== "weather"));
+    assert.equal('spawns' in meta, false);
+    assert.equal('npcs' in meta, false);
+    assert.equal(meta.name, 'Test');
+    assert.deepEqual(
+      Object.keys(meta),
+      ZONE_META_KEYS.filter((k) => k !== 'portals' && k !== 'weather'),
+    );
   });
 });
 
-describe("writeZoneMetaToFile", () => {
-  it("preserves comments and the placement collections", () => {
-    writeZoneMetaToFile(file, { name: "Renamed" });
+describe('writeZoneMetaToFile', () => {
+  it('preserves comments and the placement collections', () => {
+    writeZoneMetaToFile(file, { name: 'Renamed' });
     assert.match(text(), /Hand-written header that must survive edits/);
     assert.match(text(), /a leading comment inside the sequence/);
     assert.match(text(), /records why a region was removed/);
@@ -216,37 +216,43 @@ describe("writeZoneMetaToFile", () => {
     assert.deepEqual(doc().npcs, parseYaml(ZONE_YAML).npcs);
   });
 
-  it("writes only the submitted keys", () => {
-    writeZoneMetaToFile(file, { name: "Renamed" });
-    assert.equal(doc().name, "Renamed");
+  it('writes only the submitted keys', () => {
+    writeZoneMetaToFile(file, { name: 'Renamed' });
+    assert.equal(doc().name, 'Renamed');
     // Untouched keys keep their on-disk value rather than a schema default.
-    assert.equal(doc().name_id, "ZONE_TEST");
+    assert.equal(doc().name_id, 'ZONE_TEST');
     assert.equal(doc().revival.radius, 5);
   });
 
-  it("does not invent the keys it was not given", () => {
-    writeZoneMetaToFile(file, { name: "Renamed" });
+  it('does not invent the keys it was not given', () => {
+    writeZoneMetaToFile(file, { name: 'Renamed' });
     // `portals` has a `.default([])` in the schema; an unsubmitted key must not
     // materialize from it.
-    assert.equal("portals" in doc(), false);
+    assert.equal('portals' in doc(), false);
   });
 
-  it("round-trips nested objects and float precision", () => {
+  it('round-trips nested objects and float precision', () => {
     writeZoneMetaToFile(file, { revival: { position: { x: 1.25, y: 0, z: -2.5 }, radius: 7 } });
     assert.deepEqual(doc().revival, { position: { x: 1.25, y: 0, z: -2.5 }, radius: 7 });
   });
 
-  it("rejects metadata the loader would refuse", () => {
-    assert.throws(() => writeZoneMetaToFile(file, { name_id: "FLARIS" }), /ZONE_/);
-    assert.throws(() => writeZoneMetaToFile(file, { _id_numeric: 0 }));
-    assert.throws(() =>
-      writeZoneMetaToFile(file, { revival: { position: { x: 0, y: 0, z: 0 }, radius: 0 } }),
-    );
+  it('rejects metadata the loader would refuse', () => {
+    assert.throws(() => {
+      writeZoneMetaToFile(file, { name_id: 'FLARIS' });
+    }, /ZONE_/);
+    assert.throws(() => {
+      writeZoneMetaToFile(file, { _id_numeric: 0 });
+    });
+    assert.throws(() => {
+      writeZoneMetaToFile(file, { revival: { position: { x: 0, y: 0, z: 0 }, radius: 0 } });
+    });
   });
 
-  it("leaves the file untouched when validation fails", () => {
+  it('leaves the file untouched when validation fails', () => {
     const before = text();
-    assert.throws(() => writeZoneMetaToFile(file, { name_id: "FLARIS" }));
+    assert.throws(() => {
+      writeZoneMetaToFile(file, { name_id: 'FLARIS' });
+    });
     assert.equal(text(), before);
   });
 });

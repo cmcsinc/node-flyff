@@ -1,5 +1,5 @@
-import type * as React from "react";
-import { Dash } from "@/components/resource-cells";
+import type * as React from 'react';
+import { Dash } from '@/components/resource-cells';
 
 /**
  * A drop chance as a percent, plus the odds a human actually reasons in.
@@ -24,7 +24,7 @@ export function formatChancePct(pct: number): string {
 
 /** `1 in N` odds, or `""` when the chance is 100% (where "1 in 1" is noise). */
 export function formatChanceOdds(pct: number): string {
-  if (pct <= 0 || pct >= 100) return "";
+  if (pct <= 0 || pct >= 100) return '';
   const n = 100 / pct;
   return `1 in ${n >= 10 ? Math.round(n).toLocaleString() : n.toFixed(1)}`;
 }

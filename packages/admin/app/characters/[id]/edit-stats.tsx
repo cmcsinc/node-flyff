@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
-import { Field, FieldGroup } from "@/components/ui/field";
-import { Modal } from "@/components/ui/modal";
-import { toast } from "sonner";
-import { Loader2, AlertCircle, Pencil, Wand2 } from "lucide-react";
-import { JOB_NAMES } from "@/lib/utils";
-import { planJobChange, gpForLevel } from "@/lib/job-change";
-import { expThreshold, expToPercent, percentToExp, formatPercent } from "@/lib/exp-percent";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
+import { Field, FieldGroup } from '@/components/ui/field';
+import { Modal } from '@/components/ui/modal';
+import { responseError } from '@/lib/api-response';
+import { toast } from 'sonner';
+import { Loader2, AlertCircle, Pencil, Wand2 } from 'lucide-react';
+import { JOB_NAMES } from '@/lib/utils';
+import { planJobChange, gpForLevel } from '@/lib/job-change';
+import { expThreshold, expToPercent, percentToExp, formatPercent } from '@/lib/exp-percent';
 
 /**
  * Fields this form may change. Deliberately excludes:
@@ -55,22 +56,22 @@ interface NumField {
 // field carries a hint so rows in a grid share the same height — a mix of
 // hinted and unhinted fields leaves ragged bottoms.
 const PROGRESSION_FIELDS: NumField[] = [
-  { key: "level", label: "Level", min: 1, max: 199, hint: "1–199" },
-  { key: "skillPoint", label: "Skill points", min: 0, max: 1_000_000, hint: "Unspent SP" },
-  { key: "remainGp", label: "Stat points", min: 0, max: 1_000_000, hint: "Unspent GP" },
+  { key: 'level', label: 'Level', min: 1, max: 199, hint: '1–199' },
+  { key: 'skillPoint', label: 'Skill points', min: 0, max: 1_000_000, hint: 'Unspent SP' },
+  { key: 'remainGp', label: 'Stat points', min: 0, max: 1_000_000, hint: 'Unspent GP' },
 ];
 
 const STAT_FIELDS: NumField[] = [
-  { key: "strength", label: "STR", min: 0, max: 65_535, hint: "Strength" },
-  { key: "stamina", label: "STA", min: 0, max: 65_535, hint: "Stamina" },
-  { key: "dexterity", label: "DEX", min: 0, max: 65_535, hint: "Dexterity" },
-  { key: "intelligence", label: "INT", min: 0, max: 65_535, hint: "Intelligence" },
+  { key: 'strength', label: 'STR', min: 0, max: 65_535, hint: 'Strength' },
+  { key: 'stamina', label: 'STA', min: 0, max: 65_535, hint: 'Stamina' },
+  { key: 'dexterity', label: 'DEX', min: 0, max: 65_535, hint: 'Dexterity' },
+  { key: 'intelligence', label: 'INT', min: 0, max: 65_535, hint: 'Intelligence' },
 ];
 
 const PK_FIELDS: NumField[] = [
-  { key: "pkPropensity", label: "Propensity", min: 0, max: 1_000_000, hint: "m_dwPKPropensity" },
-  { key: "pkValue", label: "Value", min: 0, max: 1_000_000, hint: "Slaughter count" },
-  { key: "pkExp", label: "PK exp", min: 0, max: 1_000_000, hint: "m_nPKExp" },
+  { key: 'pkPropensity', label: 'Propensity', min: 0, max: 1_000_000, hint: 'm_dwPKPropensity' },
+  { key: 'pkValue', label: 'Value', min: 0, max: 1_000_000, hint: 'Slaughter count' },
+  { key: 'pkExp', label: 'PK exp', min: 0, max: 1_000_000, hint: 'm_nPKExp' },
 ];
 
 const ALL_NUM_FIELDS = [...PROGRESSION_FIELDS, ...STAT_FIELDS, ...PK_FIELDS];
@@ -82,15 +83,15 @@ const ALL_NUM_FIELDS = [...PROGRESSION_FIELDS, ...STAT_FIELDS, ...PK_FIELDS];
  * Empty input means `0` = "never".
  */
 function msToLocalInput(ms: number): string {
-  if (!Number.isFinite(ms) || ms <= 0) return "";
+  if (!Number.isFinite(ms) || ms <= 0) return '';
   const d = new Date(ms);
-  if (Number.isNaN(d.getTime())) return "";
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  if (Number.isNaN(d.getTime())) return '';
+  const pad = (n: number): string => String(n).padStart(2, '0');
+  return `${String(d.getFullYear())}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
 function localInputToMs(value: string): number {
-  if (value.trim() === "") return 0;
+  if (value.trim() === '') return 0;
   const ms = new Date(value).getTime();
   return Number.isNaN(ms) ? 0 : ms;
 }
@@ -100,18 +101,24 @@ function validate(form: EditableStats): Partial<Record<keyof EditableStats, stri
   const errors: Partial<Record<keyof EditableStats, string>> = {};
   for (const f of ALL_NUM_FIELDS) {
     const v = form[f.key];
-    if (!Number.isFinite(v)) errors[f.key] = "Must be a number";
-    else if (v < f.min || v > f.max) errors[f.key] = `Must be ${f.min}–${f.max}`;
+    if (!Number.isFinite(v)) errors[f.key] = 'Must be a number';
+    else if (v < f.min || v > f.max) errors[f.key] = `Must be ${String(f.min)}–${String(f.max)}`;
   }
-  if (!/^\d{1,19}$/.test(form.exp)) errors.exp = "Digits only";
+  if (!/^\d{1,19}$/.test(form.exp)) errors.exp = 'Digits only';
   if (!Number.isFinite(form.pkTime) || form.pkTime < 0 || form.pkTime > 2_147_483_647_000) {
-    errors.pkTime = "Invalid date";
+    errors.pkTime = 'Invalid date';
   }
   return errors;
 }
 
 /** Trigger button + the modal it opens. Rendered by the character detail page. */
-export function EditStatsForm({ characterId, stats }: { characterId: number; stats: EditableStats }) {
+export function EditStatsForm({
+  characterId,
+  stats,
+}: {
+  characterId: number;
+  stats: EditableStats;
+}): React.JSX.Element {
   const [open, setOpen] = useState(false);
   // Narrow the (wider) character row down to the editable keys so the PATCH body
   // can never carry a field this form is not allowed to change.
@@ -132,11 +139,24 @@ export function EditStatsForm({ characterId, stats }: { characterId: number; sta
   };
   return (
     <>
-      <Button variant="outline" onClick={() => setOpen(true)}>
+      <Button
+        variant="outline"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
         <Pencil className="mr-2 h-4 w-4" />
         Edit character
       </Button>
-      {open && <EditStatsModal characterId={characterId} stats={editable} onClose={() => setOpen(false)} />}
+      {open && (
+        <EditStatsModal
+          characterId={characterId}
+          stats={editable}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
+      )}
     </>
   );
 }
@@ -149,7 +169,7 @@ function EditStatsModal({
   characterId: number;
   stats: EditableStats;
   onClose: () => void;
-}) {
+}): React.JSX.Element {
   const [form, setForm] = useState<EditableStats>({ ...stats });
   const [saving, setSaving] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -165,7 +185,7 @@ function EditStatsModal({
   const [pct, setPct] = useState<string>(() => formatPercent(expToPercent(stats.exp, stats.level)));
 
   /** Apply a percentage against `level`, keeping `form.exp` in sync. */
-  const applyPercent = (nextPct: string, level: number) => {
+  const applyPercent = (nextPct: string, level: number): void => {
     setPct(nextPct);
     setForm((p) => ({ ...p, exp: percentToExp(Number(nextPct), level) }));
   };
@@ -184,9 +204,9 @@ function EditStatsModal({
    * GP 28, STR/DEX/STA/INT 15 — exactly what `ChangeJob(1); InitStat();` in
    * `mafl_hyuit.yml` produces.
    */
-  const changeClass = (nextClass: number) => {
+  const changeClass = (nextClass: number): void => {
     const plan = planJobChange(nextClass, { level: form.level, remainGp: form.remainGp });
-    if (plan && plan.level !== form.level) setPct("0");
+    if (plan && plan.level !== form.level) setPct('0');
     setForm((p) => ({
       ...p,
       class: nextClass,
@@ -195,7 +215,7 @@ function EditStatsModal({
             level: plan.level,
             remainGp: plan.remainGp,
             // Level changed → within-level exp restarts (C++ SetLevel sets m_nExp1 = 0).
-            exp: plan.level !== p.level ? "0" : p.exp,
+            exp: plan.level !== p.level ? '0' : p.exp,
             ...(plan.stats ?? {}),
           }
         : {}),
@@ -203,33 +223,33 @@ function EditStatsModal({
     setJobNote(plan?.note ?? null);
   };
 
-  async function save() {
+  async function save(): Promise<void> {
     setTouched(true);
     if (errorCount > 0) {
-      toast.error(`Fix ${errorCount} invalid field${errorCount > 1 ? "s" : ""} first`);
+      toast.error(`Fix ${String(errorCount)} invalid field${errorCount > 1 ? 's' : ''} first`);
       return;
     }
     setSaving(true);
-    const res = await fetch("/api/characters", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch('/api/characters', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: characterId, ...form }),
     });
     setSaving(false);
     if (res.ok) {
-      toast.success("Character updated");
+      toast.success('Character updated');
       router.refresh();
       onClose();
     } else {
-      const body = await res.json().catch(() => null);
-      toast.error(body?.error ?? "Failed to update character");
+      toast.error((await responseError(res)) ?? 'Failed to update character');
     }
   }
 
   /** Errors are only surfaced once the user has attempted a save. */
-  const errorFor = (key: keyof EditableStats) => (touched ? errors[key] : undefined);
+  const errorFor = (key: keyof EditableStats): string | undefined =>
+    touched ? errors[key] : undefined;
 
-  const numInput = (f: NumField) => (
+  const numInput = (f: NumField): React.JSX.Element => (
     <Field key={f.key} htmlFor={f.key} label={f.label} hint={f.hint} error={errorFor(f.key)}>
       <Input
         id={f.key}
@@ -241,7 +261,7 @@ function EditStatsModal({
           const v = Number(e.target.value);
           // The exp bar is level-relative, so a level change must re-resolve the
           // raw exp from the percentage (which stays where the user put it).
-          if (f.key === "level") applyPercent(pct, v);
+          if (f.key === 'level') applyPercent(pct, v);
           setForm((p) => ({ ...p, [f.key]: v }));
         }}
       />
@@ -251,14 +271,16 @@ function EditStatsModal({
   return (
     <Modal
       open
-      onOpenChange={(next) => !next && onClose()}
-      title={`Edit character #${characterId}`}
+      onOpenChange={(next) => {
+        if (!next) onClose();
+      }}
+      title={`Edit character #${String(characterId)}`}
       description="Writes to the database immediately. A logged-in character may overwrite these on its next save — edit while offline."
       footer={
         <>
-          <Button onClick={save} disabled={saving || !dirty}>
+          <Button onClick={() => { void save(); }} disabled={saving || !dirty}>
             {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {saving ? "Saving…" : "Save changes"}
+            {saving ? 'Saving…' : 'Save changes'}
           </Button>
           <Button
             variant="ghost"
@@ -273,12 +295,17 @@ function EditStatsModal({
             Reset
           </Button>
           {touched && errorCount > 0 && (
-            <p role="alert" className="ml-auto flex items-center gap-1.5 text-xs font-medium text-destructive">
+            <p
+              role="alert"
+              className="ml-auto flex items-center gap-1.5 text-xs font-medium text-destructive"
+            >
               <AlertCircle className="h-3.5 w-3.5" />
-              {errorCount} field{errorCount > 1 ? "s" : ""} need attention
+              {errorCount} field{errorCount > 1 ? 's' : ''} need attention
             </p>
           )}
-          {dirty && errorCount === 0 && <p className="ml-auto text-xs text-muted-foreground">Unsaved changes</p>}
+          {dirty && errorCount === 0 && (
+            <p className="ml-auto text-xs text-muted-foreground">Unsaved changes</p>
+          )}
         </>
       }
     >
@@ -286,7 +313,13 @@ function EditStatsModal({
         <FieldGroup title="Class">
           <div className="grid gap-3 sm:grid-cols-2">
             <Field htmlFor="class" label="Class / job" hint="Autofills level, GP and stats">
-              <Select id="class" value={form.class} onChange={(e) => changeClass(Number(e.target.value))}>
+              <Select
+                id="class"
+                value={form.class}
+                onChange={(e) => {
+                  changeClass(Number(e.target.value));
+                }}
+              >
                 {Object.entries(JOB_NAMES).map(([id, name]) => (
                   <option key={id} value={id}>
                     {name}
@@ -299,10 +332,10 @@ function EditStatsModal({
               label="EXP %"
               hint={
                 expThreshold(form.level) > 0
-                  ? `${Number(form.exp).toLocaleString()} / ${expThreshold(form.level).toLocaleString()} into level ${form.level}`
-                  : `Level ${form.level} is the cap — no exp bar`
+                  ? `${Number(form.exp).toLocaleString()} / ${expThreshold(form.level).toLocaleString()} into level ${String(form.level)}`
+                  : `Level ${String(form.level)} is the cap — no exp bar`
               }
-              error={errorFor("exp")}
+              error={errorFor('exp')}
             >
               <Input
                 id="exp"
@@ -312,7 +345,9 @@ function EditStatsModal({
                 step={0.01}
                 disabled={expThreshold(form.level) <= 0}
                 value={pct}
-                onChange={(e) => applyPercent(e.target.value, form.level)}
+                onChange={(e) => {
+                  applyPercent(e.target.value, form.level);
+                }}
               />
             </Field>
           </div>
@@ -325,14 +360,16 @@ function EditStatsModal({
         </FieldGroup>
 
         <FieldGroup title="Progression">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">{PROGRESSION_FIELDS.map(numInput)}</div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {PROGRESSION_FIELDS.map(numInput)}
+          </div>
         </FieldGroup>
 
         <FieldGroup title="Base stats">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{STAT_FIELDS.map(numInput)}</div>
           <button
             type="button"
-            onClick={() =>
+            onClick={() => {
               setForm((p) => ({
                 ...p,
                 strength: 15,
@@ -340,8 +377,8 @@ function EditStatsModal({
                 stamina: 15,
                 intelligence: 15,
                 remainGp: gpForLevel(p.level),
-              }))
-            }
+              }));
+            }}
             className="text-[11px] font-medium text-primary underline-offset-4 hover:underline"
           >
             Reset stats to 15 and refund GP for level {form.level} ({gpForLevel(form.level)} GP)
@@ -354,15 +391,17 @@ function EditStatsModal({
             <Field
               htmlFor="pkTime"
               label="Last PK action"
-              hint={form.pkTime > 0 ? `${form.pkTime} ms` : "Never"}
-              error={errorFor("pkTime")}
+              hint={form.pkTime > 0 ? `${String(form.pkTime)} ms` : 'Never'}
+              error={errorFor('pkTime')}
               className="col-span-2 sm:col-span-1"
             >
               <Input
                 id="pkTime"
                 type="datetime-local"
                 value={msToLocalInput(form.pkTime)}
-                onChange={(e) => setForm((p) => ({ ...p, pkTime: localInputToMs(e.target.value) }))}
+                onChange={(e) => {
+                  setForm((p) => ({ ...p, pkTime: localInputToMs(e.target.value) }));
+                }}
               />
             </Field>
           </div>

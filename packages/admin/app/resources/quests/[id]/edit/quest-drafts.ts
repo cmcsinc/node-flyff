@@ -12,10 +12,10 @@
  * @module app/resources/quests/[id]/edit/quest-drafts
  */
 
-import type { QuestArg } from "@flyff/resources";
-import type { CommandView } from "@/lib/quest-args";
-import type { QuestEditorView } from "@/lib/quest-editor";
-import { questCmdSpec, type BlastTier } from "@/lib/quest-fields";
+import type { QuestArg } from '@flyff/resources';
+import type { CommandView } from '@/lib/quest-args';
+import type { QuestEditorView } from '@/lib/quest-editor';
+import { questCmdSpec, type BlastTier } from '@/lib/quest-fields';
 
 /** One command being edited: its token plus the current arg values. */
 export interface CommandDraft {
@@ -62,7 +62,7 @@ export function setArg(
     const args = [...c.args];
     // Filling an optional slot the file omitted (a goal-marker tail) means the
     // slots before it must exist too, or the args land in the wrong positions.
-    while (args.length < argIndex) args.push({ type: "num", value: 0 });
+    while (args.length < argIndex) args.push({ type: 'num', value: 0 });
     args[argIndex] = arg;
     return { ...c, args };
   });
@@ -84,13 +84,13 @@ export function addCommand(draft: QuestDraft, cmd: string): QuestDraft {
   for (let i = 0; i < fixed; i++) {
     // A sentinel-bearing slot starts at its sentinel, not 0 — for a sex arg, 0
     // is "male" and -1 is "any", and a new command should not silently mean male.
-    args.push({ type: "num", value: spec?.args[i]?.sentinel ?? 0 });
+    args.push({ type: 'num', value: spec?.args[i]?.sentinel ?? 0 });
   }
   return {
     ...draft,
     commands: [
       ...draft.commands,
-      { cmd, args, tier: spec?.tier ?? "structural", dead: spec === undefined, removed: false },
+      { cmd, args, tier: spec?.tier ?? 'structural', dead: spec === undefined, removed: false },
     ],
   };
 }
@@ -123,7 +123,7 @@ export function pendingTier(draft: QuestDraft, baseline: QuestDraft): BlastTier 
 
   // A title edit writes propQuest.txt.txt, which the client reads for the quest
   // list — display only, so cosmetic.
-  if (draft.title !== baseline.title) touched.push("cosmetic");
+  if (draft.title !== baseline.title) touched.push('cosmetic');
 
   draft.commands.forEach((c, i) => {
     const b = baseline.commands.at(i);

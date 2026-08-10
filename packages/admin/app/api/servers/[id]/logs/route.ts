@@ -1,8 +1,8 @@
-import { NextRequest } from "next/server";
-import { auth } from "@/lib/auth";
-import { clearInstanceLogs, getLogs, isValidInstanceId, type LogLine } from "@/lib/server-manager";
+import type { NextRequest } from 'next/server';
+import { auth } from '@/lib/auth';
+import { clearInstanceLogs, getLogs, isValidInstanceId, type LogLine } from '@/lib/server-manager';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 /** Backoff after a failed daemon read, so a dead daemon isn't hammered. */
 const RETRY_MS = 1_000;
@@ -18,24 +18,28 @@ const RETRY_MS = 1_000;
  * subscribing in-process) is also what lets the stream pick up output produced
  * while the admin app was down.
  */
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+): Promise<Response> {
   const session = await auth();
-  if (!session) return new Response("Unauthorized", { status: 401 });
+  if (!session) return new Response('Unauthorized', { status: 401 });
 
   const { id } = await params;
-  if (!isValidInstanceId(id)) return new Response("Invalid id", { status: 400 });
+  if (!isValidInstanceId(id as unknown)) return new Response('Invalid id', { status: 400 });
 
   const encoder = new TextEncoder();
-  let closed = false;
+  const state: { closed: boolean } = { closed: false };
+  const isClosed = (): boolean => state.closed;
 
   const stream = new ReadableStream<Uint8Array>({
-    async start(controller) {
+    async start(controller): Promise<void> {
       const write = (frame: string): boolean => {
         try {
           controller.enqueue(encoder.encode(frame));
           return true;
         } catch {
-          closed = true;
+          state.closed = true;
           return false;
         }
       };
@@ -44,18 +48,18 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       // First read is non-waiting so the client paints the existing buffer at
       // once; every read after that long-polls for the next line.
       let wait = false;
-      while (!closed) {
+      while (!isClosed()) {
         try {
           const startedAt = Date.now();
           const lines: LogLine[] = await getLogs(id, since, wait);
-          if (closed) break;
+          if (isClosed()) break;
           for (const l of lines) {
             since = Math.max(since, l.seq);
             if (!write(`data: ${JSON.stringify(l)}\n\n`)) break;
           }
           // Comment frame on an empty long-poll — keeps proxies from closing an
           // idle stream and detects a client that went away.
-          if (lines.length === 0 && wait && !write(": ping\n\n")) break;
+          if (lines.length === 0 && wait && !write(': ping\n\n')) break;
           wait = true;
           // A waiting read is meant to block (the daemon holds it up to 20s). If
           // it came back empty in a blink the daemon is unreachable -- `getLogs`
@@ -65,7 +69,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
             await new Promise((r) => setTimeout(r, RETRY_MS));
           }
         } catch {
-          if (!write(": retry\n\n")) break;
+          if (!write(': retry\n\n')) break;
           await new Promise((r) => setTimeout(r, RETRY_MS));
         }
       }
@@ -75,17 +79,17 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         /* already closed */
       }
     },
-    cancel() {
-      closed = true;
+    cancel(): void {
+      state.closed = true;
     },
   });
 
   return new Response(stream, {
     headers: {
-      "Content-Type": "text/event-stream; charset=utf-8",
-      "Cache-Control": "no-cache, no-transform",
-      Connection: "keep-alive",
-      "X-Accel-Buffering": "no",
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      'Cache-Control': 'no-cache, no-transform',
+      Connection: 'keep-alive',
+      'X-Accel-Buffering': 'no',
     },
   });
 }
@@ -96,14 +100,17 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
  * Server-side because the daemon's ring is the source of truth: clearing only
  * the browser's copy comes back on the next reload or instance switch.
  */
-export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+): Promise<Response> {
   const session = await auth();
-  if (!session) return new Response("Unauthorized", { status: 401 });
+  if (!session) return new Response('Unauthorized', { status: 401 });
 
   const { id } = await params;
-  if (!isValidInstanceId(id)) return new Response("Invalid id", { status: 400 });
+  if (!isValidInstanceId(id as unknown)) return new Response('Invalid id', { status: 400 });
 
   const res = await clearInstanceLogs(id);
-  if ("error" in res) return Response.json({ error: res.error }, { status: 502 });
+  if ('error' in res) return Response.json({ error: res.error }, { status: 502 });
   return Response.json({ ok: true });
 }

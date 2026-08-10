@@ -53,17 +53,17 @@ export interface SkillSlotItem {
 
 /** TIER_* labels from defineJob.h. */
 export const TIER_LABELS: Record<number, string> = {
-  0: "Base",
-  1: "Expert",
-  2: "Pro",
-  4: "Common",
-  5: "Master",
-  6: "Hero",
+  0: 'Base',
+  1: 'Expert',
+  2: 'Pro',
+  4: 'Common',
+  5: 'Master',
+  6: 'Hero',
 };
 
 /** resourceType labels (KT_* -- what the skill costs to use). */
 export const RESOURCE_TYPE_LABELS: Record<number, string> = {
-  0: "None",
-  1: "MP",
-  2: "FP",
+  0: 'None',
+  1: 'MP',
+  2: 'FP',
 };

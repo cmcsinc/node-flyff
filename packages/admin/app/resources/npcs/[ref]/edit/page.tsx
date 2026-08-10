@@ -1,18 +1,22 @@
-import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/page-header";
-import { NpcEditor } from "./npc-editor";
-import { CapabilityPanel } from "./capability-panel";
-import { DialogPanel } from "@/components/dialog/dialog-panel";
-import { blankNpc, findNpc, loadNpcs, nextNpcId, parseNpcRef, loadZoneRefs } from "@/lib/npcs";
-import { kind3Options, mmiOptions, readIncBlock } from "@/lib/character-inc";
-import { characterKeyOptions, npcMoverOptions } from "@/lib/npc-options";
-import { readDialogForKey } from "@/lib/dialog-inc";
-import { getAllItems } from "@/lib/item-catalog";
-import { getOptions } from "@/lib/field-schema";
+import { notFound } from 'next/navigation';
+import { PageHeader } from '@/components/page-header';
+import { NpcEditor } from './npc-editor';
+import { CapabilityPanel } from './capability-panel';
+import { DialogPanel } from '@/components/dialog/dialog-panel';
+import { blankNpc, findNpc, loadNpcs, nextNpcId, parseNpcRef, loadZoneRefs } from '@/lib/npcs';
+import { kind3Options, mmiOptions, readIncBlock } from '@/lib/character-inc';
+import { characterKeyOptions, npcMoverOptions } from '@/lib/npc-options';
+import { readDialogForKey } from '@/lib/dialog-inc';
+import { getAllItems } from '@/lib/item-catalog';
+import { getOptions } from '@/lib/field-schema';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export default async function NpcEditPage({ params }: { params: Promise<{ ref: string }> }): Promise<React.JSX.Element> {
+export default async function NpcEditPage({
+  params,
+}: {
+  params: Promise<{ ref: string }>;
+}): Promise<React.JSX.Element> {
   const { ref: rawRef } = await params;
   const ref = decodeURIComponent(rawRef);
   const parsed = parseNpcRef(ref);
@@ -23,13 +27,25 @@ export default async function NpcEditPage({ params }: { params: Promise<{ ref: s
 
   // `:new` → a blank entry pre-filled with the id the write will actually use.
   if (parsed.npcId === null) {
-    const used = loadNpcs().filter((n) => n.zoneId === parsed.zoneId).map((n) => n.id);
+    const used = loadNpcs()
+      .filter((n) => n.zoneId === parsed.zoneId)
+      .map((n) => n.id);
     const entry = { ...blankNpc(), id: nextNpcId(used) };
     const [movers, charKeys] = await Promise.all([npcMoverOptions(), characterKeyOptions()]);
     return (
       <div className="space-y-6">
-        <PageHeader title="New NPC" description={`${zone.name} · next free id #${String(entry.id)}`} backHref="/resources/npcs" />
-        <NpcEditor ref_={ref} entry={entry} moverOptions={movers} characterKeyOptions={charKeys} isNew />
+        <PageHeader
+          title="New NPC"
+          description={`${zone.name} · next free id #${String(entry.id)}`}
+          backHref="/resources/npcs"
+        />
+        <NpcEditor
+          ref_={ref}
+          entry={entry}
+          moverOptions={movers}
+          characterKeyOptions={charKeys}
+          isNew
+        />
       </div>
     );
   }
@@ -39,7 +55,7 @@ export default async function NpcEditPage({ params }: { params: Promise<{ ref: s
 
   // Capability lives in `character.inc`, keyed by `character_key` — not in the
   // zone file. An empty key still renders the panel, which explains why.
-  const charKey = typeof found.npc.character_key === "string" ? found.npc.character_key : "";
+  const charKey = typeof found.npc.character_key === 'string' ? found.npc.character_key : '';
   const key = charKey || `#${String(parsed.npcId)}`;
 
   const [block, options, kind3Opts, itemDefs, dialog, movers, charKeys] = await Promise.all([
@@ -59,16 +75,21 @@ export default async function NpcEditPage({ params }: { params: Promise<{ ref: s
     .sort((a, b) => a.label.localeCompare(b.label));
 
   // `-1` is the file's own "any job" sentinel and has no JOB_NAMES entry.
-  const jobOptions = [{ value: "-1", label: "Any (-1)" }, ...(getOptions("job") ?? [])];
+  const jobOptions = [{ value: '-1', label: 'Any (-1)' }, ...(getOptions('job') ?? [])];
 
   return (
     <div className="space-y-6">
       <PageHeader
         title={key}
-        description={`${zone.name} · NPC #${String(parsed.npcId)} · ${found.file.split(/[/\\]/).pop() ?? ""}`}
+        description={`${zone.name} · NPC #${String(parsed.npcId)} · ${found.file.split(/[/\\]/).pop() ?? ''}`}
         backHref="/resources/npcs"
       />
-      <NpcEditor ref_={ref} entry={found.npc} moverOptions={movers} characterKeyOptions={charKeys} />
+      <NpcEditor
+        ref_={ref}
+        entry={found.npc}
+        moverOptions={movers}
+        characterKeyOptions={charKeys}
+      />
       <CapabilityPanel
         block={block}
         options={options}

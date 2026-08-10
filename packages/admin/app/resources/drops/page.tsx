@@ -1,19 +1,19 @@
-import type * as React from "react";
-import { dropRows } from "@/lib/resource-rows";
-import { Input } from "@/components/ui/input";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { FilterBar } from "@/components/filter-bar";
-import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { IdCell, NameWithSymbol, NumCell, Dash, EditLink } from "@/components/resource-cells";
-import { ItemChipList } from "@/components/item-chip-list";
-import { ChanceCell } from "@/components/chance-cell";
-import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
-import { Gem } from "lucide-react";
-import type { DropRow } from "@/lib/resource-rows";
+import type * as React from 'react';
+import { dropRows } from '@/lib/resource-rows';
+import { Input } from '@/components/ui/input';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { FilterBar } from '@/components/filter-bar';
+import { ResourceTable, type ResourceColumn } from '@/components/resource-table';
+import { IdCell, NameWithSymbol, NumCell, Dash, EditLink } from '@/components/resource-cells';
+import { ItemChipList } from '@/components/item-chip-list';
+import { ChanceCell } from '@/components/chance-cell';
+import { parsePage, parsePerPage, paginate } from '@/lib/paginate';
+import { parseSort, sortRows, type QueryParams } from '@/lib/sort';
+import { Gem } from 'lucide-react';
+import type { DropRow } from '@/lib/resource-rows';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams extends QueryParams {
   search?: string;
@@ -25,43 +25,51 @@ interface SearchParams extends QueryParams {
   dir?: string;
 }
 
-const SORT_KEYS = ["key", "moverName", "modelIdx", "goldMin", "maxItem", "count", "bestChance"] as const;
+const SORT_KEYS = [
+  'key',
+  'moverName',
+  'modelIdx',
+  'goldMin',
+  'maxItem',
+  'count',
+  'bestChance',
+] as const;
 
 const COLUMNS: readonly ResourceColumn<DropRow>[] = [
   {
-    key: "modelIdx",
-    header: "Model",
+    key: 'modelIdx',
+    header: 'Model',
     sortable: true,
-    className: "w-20",
+    className: 'w-20',
     cell: (r) => <IdCell value={r.modelIdx} />,
   },
   {
-    key: "moverName",
-    header: "Monster",
+    key: 'moverName',
+    header: 'Monster',
     sortable: true,
     cell: (r) => <NameWithSymbol name={r.moverName} symbol={r.key} />,
   },
   {
-    key: "itemIds",
-    header: "Drops",
+    key: 'itemIds',
+    header: 'Drops',
     // The point of the page: what this monster gives you, by name. Capped at 4
     // chips so one 20-slot table cannot make its row four lines tall.
     cell: (r) => <ItemChipList names={r.itemNames} ids={r.itemIds} max={4} />,
   },
   {
-    key: "bestChance",
-    header: "Best chance",
+    key: 'bestChance',
+    header: 'Best chance',
     sortable: true,
-    align: "right",
+    align: 'right',
     // The table's headline rate, not a sum: adding 20 slots up yields a number
     // over 100 that means nothing.
     cell: (r) => <ChanceCell pct={r.bestChance} />,
   },
   {
-    key: "goldMin",
-    header: "Penya",
+    key: 'goldMin',
+    header: 'Penya',
     sortable: true,
-    align: "right",
+    align: 'right',
     // A range, not a string: the row keeps min/max numeric so this column sorts
     // on the number rather than re-parsing a rendered "6–9".
     cell: (r) =>
@@ -74,27 +82,36 @@ const COLUMNS: readonly ResourceColumn<DropRow>[] = [
       ),
   },
   {
-    key: "maxItem",
-    header: "Max drops",
+    key: 'maxItem',
+    header: 'Max drops',
     sortable: true,
-    align: "right",
+    align: 'right',
     cell: (r) => <NumCell value={r.maxItem} />,
   },
   {
-    key: "actions",
-    header: "Actions",
-    className: "w-24",
-    align: "right",
+    key: 'actions',
+    header: 'Actions',
+    className: 'w-24',
+    align: 'right',
     // Keyed by the MI_* symbol, not a numeric id — a drop table has no `id`.
-    cell: (r) => <EditLink href={`/resources/drops/${encodeURIComponent(r.key)}/edit`} label={`drop table ${r.key}`} />,
+    cell: (r) => (
+      <EditLink
+        href={`/resources/drops/${encodeURIComponent(r.key)}/edit`}
+        label={`drop table ${r.key}`}
+      />
+    ),
   },
 ];
 
-export default async function DropsPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
+export default async function DropsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const item = params.item ?? "";
-  const minChance = params.minChance ?? "";
+  const search = params.search ?? '';
+  const item = params.item ?? '';
+  const minChance = params.minChance ?? '';
   const perPage = parsePerPage(params.perPage);
 
   const drops = dropRows();
@@ -108,7 +125,11 @@ export default async function DropsPage({ searchParams }: { searchParams: Promis
     if (minChance && Number.isFinite(minPct) && d.bestChance < minPct) return false;
     // Search spans the resolved monster name as well as the MI_* key, so a GM
     // can type "Aibatt" without knowing the symbol.
-    if (needle && !d.key.toLowerCase().includes(needle) && !d.moverName.toLowerCase().includes(needle))
+    if (
+      needle &&
+      !d.key.toLowerCase().includes(needle) &&
+      !d.moverName.toLowerCase().includes(needle)
+    )
       return false;
     return true;
   });
@@ -160,7 +181,10 @@ export default async function DropsPage({ searchParams }: { searchParams: Promis
         sort={sort}
         params={params}
         unit="drop tables"
-        empty={{ icon: Gem, message: active ? "No drop tables match your filters" : "No drop data" }}
+        empty={{
+          icon: Gem,
+          message: active ? 'No drop tables match your filters' : 'No drop data',
+        }}
       />
     </div>
   );

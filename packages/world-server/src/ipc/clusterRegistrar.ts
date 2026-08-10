@@ -22,7 +22,6 @@ import {
   computeRegistrationToken,
   type RegisterWorldRequest,
   type RegisterWorldAck,
-  type WorldHeartbeatAck,
   RegisterWorldAckSchema,
   WorldHeartbeatAckSchema,
 } from '@flyff/ipc';
@@ -75,9 +74,9 @@ function encodeMessage(opcode: number, payload: unknown): Buffer {
 class FrameParser {
   #buf = Buffer.alloc(0);
 
-  feed(chunk: Buffer): Array<{ op: number; data: unknown }> {
+  feed(chunk: Buffer): { op: number; data: unknown }[] {
     this.#buf = Buffer.concat([this.#buf, chunk]);
-    const frames: Array<{ op: number; data: unknown }> = [];
+    const frames: { op: number; data: unknown }[] = [];
 
     while (this.#buf.length >= 4) {
       const len = this.#buf.readUInt32BE(0);
@@ -219,7 +218,7 @@ export class ClusterRegistrar extends EventEmitter {
   // Registration handshake
   // ---------------------------------------------------------------------------
 
-  async #sendRegistration(): Promise<void> {
+  #sendRegistration(): void {
     const { serverId, channelId, channelName, publicIp, publicPort, maxPlayers, ipcSecret } = this.#deps;
 
     const token = computeRegistrationToken(ipcSecret, serverId, 'world');
@@ -293,7 +292,7 @@ export class ClusterRegistrar extends EventEmitter {
       this.#log.warn({ errors: result.error.errors }, 'Malformed WORLD_HEARTBEAT_ACK');
       return;
     }
-    const rtt = Date.now() - (result.data as WorldHeartbeatAck).ts;
+    const rtt = Date.now() - (result.data).ts;
     this.#log.trace({ rtt }, 'Heartbeat ACK received');
   }
 

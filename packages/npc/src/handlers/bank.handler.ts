@@ -14,7 +14,7 @@
  * @module handlers/bank
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { Validate } from '@flyff/core/utils/validate';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
@@ -125,7 +125,9 @@ export class BankHandler {
     body: (player: NonNullable<ReturnType<PlayerManager['get']>>, reader: PacketReader) => void,
   ): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId === undefined) { socket.destroy(); return; }
+    const player = this.deps.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
     try {
       body(player, reader);

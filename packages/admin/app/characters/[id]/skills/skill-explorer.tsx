@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { SkillTile } from "./skill-tile";
-import { SkillTooltip } from "./skill-tooltip";
-import type { SkillSlotItem } from "./types";
-import { jobName } from "@/lib/utils";
+import * as React from 'react';
+import { SkillTile } from './skill-tile';
+import { SkillTooltip } from './skill-tooltip';
+import type { SkillSlotItem } from './types';
+import { jobName } from '@/lib/utils';
 
 interface SkillExplorerProps {
   items: SkillSlotItem[];
@@ -17,12 +17,15 @@ interface ActiveTooltip {
 }
 
 /** Group skills by job, then sort by tier within each group. */
-function groupByJob(items: SkillSlotItem[]): Array<{ job: number; label: string; skills: SkillSlotItem[] }> {
+function groupByJob(
+  items: SkillSlotItem[],
+): { job: number; label: string; skills: SkillSlotItem[] }[] {
   const map = new Map<number, SkillSlotItem[]>();
   for (const item of items) {
     const key = item.job;
-    if (!map.has(key)) map.set(key, []);
-    map.get(key)!.push(item);
+    const skills = map.get(key);
+    if (skills) skills.push(item);
+    else map.set(key, [item]);
   }
   const groups = [...map.entries()].map(([job, skills]) => {
     // Sort: tier ascending, then slot ascending.
@@ -38,13 +41,15 @@ function groupByJob(items: SkillSlotItem[]): Array<{ job: number; label: string;
  * Interactive skill grid grouped by job. Owns the shared hover/focus tooltip.
  * Renders like the in-game skill window: class tabs with skill tiles.
  */
-export function SkillExplorer({ items }: SkillExplorerProps) {
+export function SkillExplorer({ items }: SkillExplorerProps): React.JSX.Element {
   const [active, setActive] = React.useState<ActiveTooltip | null>(null);
   const hoverTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scheduleOpen = React.useCallback((item: SkillSlotItem, rect: DOMRect) => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    hoverTimer.current = setTimeout(() => setActive({ item, rect }), 90);
+    hoverTimer.current = setTimeout(() => {
+      setActive({ item, rect });
+    }, 90);
   }, []);
 
   const close = React.useCallback(() => {
@@ -52,14 +57,15 @@ export function SkillExplorer({ items }: SkillExplorerProps) {
     setActive(null);
   }, []);
 
-  React.useEffect(() => () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-  }, []);
+  React.useEffect(
+    () => (): void => {
+      if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    },
+    [],
+  );
 
   if (items.length === 0) {
-    return (
-      <p className="py-8 text-center text-sm text-muted-foreground">No skills learned</p>
-    );
+    return <p className="py-8 text-center text-sm text-muted-foreground">No skills learned</p>;
   }
 
   const groups = groupByJob(items);
@@ -73,12 +79,7 @@ export function SkillExplorer({ items }: SkillExplorerProps) {
           </h4>
           <div className="flex flex-wrap gap-1.5">
             {group.skills.map((item) => (
-              <SkillTile
-                key={item.id}
-                item={item}
-                onHover={scheduleOpen}
-                onLeave={close}
-              />
+              <SkillTile key={item.id} item={item} onHover={scheduleOpen} onLeave={close} />
             ))}
           </div>
         </div>

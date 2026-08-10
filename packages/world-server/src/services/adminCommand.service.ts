@@ -115,7 +115,7 @@ export class AdminCommandService implements AdminCommandSink {
     const timer = setTimeout(() => socket.destroy?.(), this.closeDelayMs);
     // Never hold the event loop open on shutdown (rule 05 -- timers must not
     // outlive what they reference).
-    timer.unref?.();
+    timer.unref();
   }
 
   /**
@@ -148,7 +148,7 @@ export class AdminCommandService implements AdminCommandSink {
 
     // 1. Notices first -- collect sockets so the close still works after
     //    saveAndLeave drops each player from the manager.
-    const sockets: Array<{ destroy?: () => void }> = [];
+    const sockets: { destroy?: () => void }[] = [];
     for (const player of players) {
       sockets.push(player.socket);
       try {
@@ -195,7 +195,7 @@ export class AdminCommandService implements AdminCommandSink {
         }
       }
     }, this.closeDelayMs);
-    timer.unref?.();
+    timer.unref();
 
     logger.info(
       { reason, total: result.total, saved: result.saved, failed: result.failed.length },

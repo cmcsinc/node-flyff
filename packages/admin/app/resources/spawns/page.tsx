@@ -1,22 +1,29 @@
-import type * as React from "react";
-import { loadSpawns } from "@/lib/spawns";
-import { loadZoneRefs } from "@/lib/zone-seq";
-import { getResourceIndex } from "@/lib/resource-cache";
-import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
-import { buttonVariants } from "@/components/ui/button";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { FilterBar } from "@/components/filter-bar";
-import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { IdCell, NameWithSymbol, TagCell, PosCell, NumCell, EditLink } from "@/components/resource-cells";
-import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
-import Link from "next/link";
-import { Plus, Bug } from "lucide-react";
-import type { SpawnRow } from "@/lib/spawns";
+import type * as React from 'react';
+import { loadSpawns } from '@/lib/spawns';
+import { loadZoneRefs } from '@/lib/zone-seq';
+import { getResourceIndex } from '@/lib/resource-cache';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
+import { buttonVariants } from '@/components/ui/button';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { FilterBar } from '@/components/filter-bar';
+import { ResourceTable, type ResourceColumn } from '@/components/resource-table';
+import {
+  IdCell,
+  NameWithSymbol,
+  TagCell,
+  PosCell,
+  NumCell,
+  EditLink,
+} from '@/components/resource-cells';
+import { parsePage, parsePerPage, paginate } from '@/lib/paginate';
+import { parseSort, sortRows, type QueryParams } from '@/lib/sort';
+import Link from 'next/link';
+import { Plus, Bug } from 'lucide-react';
+import type { SpawnRow } from '@/lib/spawns';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams extends QueryParams {
   search?: string;
@@ -28,39 +35,71 @@ interface SearchParams extends QueryParams {
   dir?: string;
 }
 
-const SORT_KEYS = ["id", "zoneName", "moverName", "level", "count", "radius", "delay", "x"] as const;
+const SORT_KEYS = [
+  'id',
+  'zoneName',
+  'moverName',
+  'level',
+  'count',
+  'radius',
+  'delay',
+  'x',
+] as const;
 
 const COLUMNS: readonly ResourceColumn<SpawnRow>[] = [
-  { key: "id", header: "ID", sortable: true, className: "w-16", cell: (r) => <IdCell value={r.id} /> },
-  { key: "zoneName", header: "Zone", sortable: true, cell: (r) => <TagCell label={r.zoneName} /> },
   {
-    key: "moverName",
-    header: "Monster",
+    key: 'id',
+    header: 'ID',
+    sortable: true,
+    className: 'w-16',
+    cell: (r) => <IdCell value={r.id} />,
+  },
+  { key: 'zoneName', header: 'Zone', sortable: true, cell: (r) => <TagCell label={r.zoneName} /> },
+  {
+    key: 'moverName',
+    header: 'Monster',
     sortable: true,
     cell: (r) => <NameWithSymbol name={r.moverName} symbol={`#${String(r.moverId)}`} />,
   },
-  { key: "level", header: "Lv", sortable: true, align: "right", cell: (r) => <NumCell value={r.level} /> },
-  { key: "count", header: "Count", sortable: true, align: "right", cell: (r) => <NumCell value={r.count} /> },
   {
-    key: "radius",
-    header: "Radius",
+    key: 'level',
+    header: 'Lv',
     sortable: true,
-    align: "right",
+    align: 'right',
+    cell: (r) => <NumCell value={r.level} />,
+  },
+  {
+    key: 'count',
+    header: 'Count',
+    sortable: true,
+    align: 'right',
+    cell: (r) => <NumCell value={r.count} />,
+  },
+  {
+    key: 'radius',
+    header: 'Radius',
+    sortable: true,
+    align: 'right',
     cell: (r) => <NumCell value={Math.round(r.radius)} />,
   },
   {
-    key: "delay",
-    header: "Respawn (s)",
+    key: 'delay',
+    header: 'Respawn (s)',
     sortable: true,
-    align: "right",
+    align: 'right',
     // Seconds, not the raw ms: 55000 reads as noise, 55 reads as a rate.
     cell: (r) => <NumCell value={Math.round(r.delay / 1000)} />,
   },
-  { key: "x", header: "Position", sortable: true, cell: (r) => <PosCell x={r.x} y={r.y} z={r.z} /> },
   {
-    key: "actions",
-    header: "Actions",
-    align: "right",
+    key: 'x',
+    header: 'Position',
+    sortable: true,
+    cell: (r) => <PosCell x={r.x} y={r.y} z={r.z} />,
+  },
+  {
+    key: 'actions',
+    header: 'Actions',
+    align: 'right',
     cell: (r) => (
       <EditLink
         href={`/resources/spawns/${encodeURIComponent(r.ref)}/edit`}
@@ -76,9 +115,9 @@ export default async function SpawnsPage({
   searchParams: Promise<SearchParams>;
 }): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const zone = params.zone ?? "";
-  const minLevel = params.minLevel ?? "";
+  const search = params.search ?? '';
+  const zone = params.zone ?? '';
+  const minLevel = params.minLevel ?? '';
   const perPage = parsePerPage(params.perPage);
 
   const zones = loadZoneRefs();
@@ -115,7 +154,7 @@ export default async function SpawnsPage({
           newZone ? (
             <Link
               href={`/resources/spawns/${encodeURIComponent(`${newZone}:new`)}/edit`}
-              className={buttonVariants({ size: "sm" })}
+              className={buttonVariants({ size: 'sm' })}
             >
               <Plus className="h-3.5 w-3.5" aria-hidden="true" />
               Add spawn
@@ -157,7 +196,7 @@ export default async function SpawnsPage({
         sort={sort}
         params={params}
         unit="spawns"
-        empty={{ icon: Bug, message: active ? "No spawns match your filters" : "No spawn points" }}
+        empty={{ icon: Bug, message: active ? 'No spawns match your filters' : 'No spawn points' }}
       />
     </div>
   );

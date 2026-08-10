@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Toaster } from "sonner";
+import * as React from 'react';
+import { Toaster } from 'sonner';
 
 /**
  * Sonner's own `theme="system"` reads the OS media query, which is wrong here —
@@ -14,17 +14,15 @@ export function ThemedToaster(): React.JSX.Element {
   React.useEffect(() => {
     const el = document.documentElement;
     const sync = (): void => {
-      setDark(el.classList.contains("dark"));
+      setDark(el.classList.contains('dark'));
     };
     sync();
     const obs = new MutationObserver(sync);
-    obs.observe(el, { attributes: true, attributeFilter: ["class"] });
+    obs.observe(el, { attributes: true, attributeFilter: ['class'] });
     return (): void => {
       obs.disconnect();
     };
   }, []);
 
-  return (
-    <Toaster position="top-right" theme={dark ? "dark" : "light"} richColors closeButton />
-  );
+  return <Toaster position="top-right" theme={dark ? 'dark' : 'light'} richColors closeButton />;
 }

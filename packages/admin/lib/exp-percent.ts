@@ -11,7 +11,7 @@
  * See memory `flyff-exp-within-level-model`.
  */
 
-import { EXP_TABLE } from "@flyff/entities/math/expTable";
+import { EXP_TABLE } from '@flyff/entities/math/expTable';
 
 /**
  * Within-level exp needed to advance FROM `level` TO `level + 1` — the next
@@ -33,13 +33,13 @@ export function expToPercent(exp: string, level: number): number {
 /** 0–100 → raw within-level exp, clamped to the level's bar. */
 export function percentToExp(percent: number, level: number): string {
   const threshold = expThreshold(level);
-  if (threshold <= 0 || !Number.isFinite(percent) || percent <= 0) return "0";
+  if (threshold <= 0 || !Number.isFinite(percent) || percent <= 0) return '0';
   const clamped = Math.min(100, percent);
   return String(Math.min(threshold, Math.round((clamped / 100) * threshold)));
 }
 
 /** Percent for display in an input: trimmed to 2 decimals, no trailing zeros. */
 export function formatPercent(percent: number): string {
-  if (percent <= 0) return "0";
+  if (percent <= 0) return '0';
   return String(Number(percent.toFixed(2)));
 }

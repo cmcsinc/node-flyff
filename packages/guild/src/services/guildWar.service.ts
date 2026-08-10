@@ -37,7 +37,7 @@
 import type { CPlayer } from '@flyff/entities';
 import type { PlayerManager, ZoneManager } from '@flyff/world-core';
 import {
-  NULL_ID, VISIBILITY_RADIUS,
+  VISIBILITY_RADIUS,
   buildDeclWar, buildAcptWar, buildSurrender, buildQueryTruce,
   buildWarEnd, buildWarDead, buildSetWar, buildMyGuildWar,
   WR_DECL_SR, WR_ACPT_SR, WR_TRUCE,

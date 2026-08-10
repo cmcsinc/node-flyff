@@ -1,24 +1,29 @@
-import { db } from "@/lib/db";
-import { characters, accounts } from "@/../drizzle/schema";
-import { eq, desc } from "drizzle-orm";
-import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { EmptyRow } from "@/components/empty-state";
+import { db } from '@/lib/db';
+import { characters, accounts } from '@/../drizzle/schema';
+import { eq, desc } from 'drizzle-orm';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { EmptyRow } from '@/components/empty-state';
 import {
-  Table, TableBody, TableCell, TableHeader, TableRow, SortableHead,
-} from "@/components/ui/table";
-import { parseSort, sortRows } from "@/lib/sort";
-import { jobName, worldName } from "@/lib/utils";
-import { getOnlineCharacterIds } from "@/lib/presence";
-import { OnlineIndicator } from "@/components/online-indicator";
-import { Swords } from "lucide-react";
-import { KickAllButton } from "./kick-all-button";
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+  SortableHead,
+} from '@/components/ui/table';
+import { parseSort, sortRows } from '@/lib/sort';
+import { jobName, worldName } from '@/lib/utils';
+import { getOnlineCharacterIds } from '@/lib/presence';
+import { OnlineIndicator } from '@/components/online-indicator';
+import { Swords } from 'lucide-react';
+import { KickAllButton } from './kick-all-button';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams {
   search?: string;
@@ -30,17 +35,26 @@ interface SearchParams {
 }
 
 const SORT_KEYS = [
-  "id", "name", "online", "class", "level",
-  "strength", "stamina", "dexterity", "intelligence", "worldId", "accountUsername",
+  'id',
+  'name',
+  'online',
+  'class',
+  'level',
+  'strength',
+  'stamina',
+  'dexterity',
+  'intelligence',
+  'worldId',
+  'accountUsername',
 ] as const;
 
 export default async function CharactersPage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
-}) {
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
+  const search = params.search ?? '';
 
   const rows = await db
     .select({
@@ -75,14 +89,14 @@ export default async function CharactersPage({
     class: (r) => jobName(r.class),
     worldId: (r) => worldName(r.worldId),
     online: (r) => (onlineIds.has(r.id) ? 0 : 1),
-    accountUsername: (r) => r.accountUsername ?? "",
+    accountUsername: (r) => r.accountUsername ?? '',
   });
 
   return (
     <div className="space-y-6">
       <PageHeader
         title="Characters"
-        description={`${filtered.length} characters`}
+        description={`${String(filtered.length)} characters`}
         // Count is every online session, not the filtered/limited table rows —
         // the drain is server-wide, so the button must not understate its reach.
         actions={<KickAllButton onlineCount={onlineIds.size} />}
@@ -98,7 +112,9 @@ export default async function CharactersPage({
           defaultValue={search}
           className="w-full sm:w-64"
         />
-        <Button type="submit" variant="secondary" className="w-full sm:w-auto">Search</Button>
+        <Button type="submit" variant="secondary" className="w-full sm:w-auto">
+          Search
+        </Button>
       </form>
 
       <Card>
@@ -107,25 +123,86 @@ export default async function CharactersPage({
             <Table>
               <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
                 <TableRow className="hover:bg-transparent">
-                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">ID</SortableHead>
-                  <SortableHead sortKey="name" sort={sort} params={params}>Name</SortableHead>
-                  <SortableHead sortKey="online" sort={sort} params={params} className="w-28">Status</SortableHead>
-                  <SortableHead sortKey="class" sort={sort} params={params}>Class</SortableHead>
-                  <SortableHead sortKey="level" sort={sort} params={params} align="right">Level</SortableHead>
-                  <SortableHead sortKey="strength" sort={sort} params={params} align="right" className="hidden md:table-cell">STR</SortableHead>
-                  <SortableHead sortKey="stamina" sort={sort} params={params} align="right" className="hidden md:table-cell">STA</SortableHead>
-                  <SortableHead sortKey="dexterity" sort={sort} params={params} align="right" className="hidden md:table-cell">DEX</SortableHead>
-                  <SortableHead sortKey="intelligence" sort={sort} params={params} align="right" className="hidden md:table-cell">INT</SortableHead>
-                  <SortableHead sortKey="worldId" sort={sort} params={params} className="hidden lg:table-cell">World</SortableHead>
-                  <SortableHead sortKey="accountUsername" sort={sort} params={params} className="hidden sm:table-cell">Account</SortableHead>
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">
+                    ID
+                  </SortableHead>
+                  <SortableHead sortKey="name" sort={sort} params={params}>
+                    Name
+                  </SortableHead>
+                  <SortableHead sortKey="online" sort={sort} params={params} className="w-28">
+                    Status
+                  </SortableHead>
+                  <SortableHead sortKey="class" sort={sort} params={params}>
+                    Class
+                  </SortableHead>
+                  <SortableHead sortKey="level" sort={sort} params={params} align="right">
+                    Level
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="strength"
+                    sort={sort}
+                    params={params}
+                    align="right"
+                    className="hidden md:table-cell"
+                  >
+                    STR
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="stamina"
+                    sort={sort}
+                    params={params}
+                    align="right"
+                    className="hidden md:table-cell"
+                  >
+                    STA
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="dexterity"
+                    sort={sort}
+                    params={params}
+                    align="right"
+                    className="hidden md:table-cell"
+                  >
+                    DEX
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="intelligence"
+                    sort={sort}
+                    params={params}
+                    align="right"
+                    className="hidden md:table-cell"
+                  >
+                    INT
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="worldId"
+                    sort={sort}
+                    params={params}
+                    className="hidden lg:table-cell"
+                  >
+                    World
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="accountUsername"
+                    sort={sort}
+                    params={params}
+                    className="hidden sm:table-cell"
+                  >
+                    Account
+                  </SortableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {sorted.map((char) => (
                   <TableRow key={char.id}>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{char.id}</TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">
+                      {char.id}
+                    </TableCell>
                     <TableCell>
-                      <Link href={`/characters/${char.id}`} className="font-medium text-primary hover:underline">
+                      <Link
+                        href={`/characters/${String(char.id)}`}
+                        className="font-medium text-primary hover:underline"
+                      >
                         {char.name}
                       </Link>
                       {/* Columns hidden on small screens fold into the name cell. */}
@@ -140,13 +217,26 @@ export default async function CharactersPage({
                       <Badge variant="secondary">{jobName(char.class)}</Badge>
                     </TableCell>
                     <TableCell className="text-right font-bold text-gold">{char.level}</TableCell>
-                    <TableCell className="hidden text-right md:table-cell">{char.strength}</TableCell>
-                    <TableCell className="hidden text-right md:table-cell">{char.stamina}</TableCell>
-                    <TableCell className="hidden text-right md:table-cell">{char.dexterity}</TableCell>
-                    <TableCell className="hidden text-right md:table-cell">{char.intelligence}</TableCell>
-                    <TableCell className="hidden lg:table-cell">{worldName(char.worldId)}</TableCell>
+                    <TableCell className="hidden text-right md:table-cell">
+                      {char.strength}
+                    </TableCell>
+                    <TableCell className="hidden text-right md:table-cell">
+                      {char.stamina}
+                    </TableCell>
+                    <TableCell className="hidden text-right md:table-cell">
+                      {char.dexterity}
+                    </TableCell>
+                    <TableCell className="hidden text-right md:table-cell">
+                      {char.intelligence}
+                    </TableCell>
+                    <TableCell className="hidden lg:table-cell">
+                      {worldName(char.worldId)}
+                    </TableCell>
                     <TableCell className="hidden sm:table-cell">
-                      <Link href={`/accounts/${char.accountId}`} className="text-xs text-muted-foreground hover:text-primary hover:underline">
+                      <Link
+                        href={`/accounts/${String(char.accountId)}`}
+                        className="text-xs text-muted-foreground hover:text-primary hover:underline"
+                      >
                         {char.accountUsername}
                       </Link>
                     </TableCell>

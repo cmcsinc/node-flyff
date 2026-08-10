@@ -44,8 +44,8 @@ describe('parseLogLine', () => {
 });
 
 describe('passesLevel', () => {
-  const at = (line: string) => parseLogLine(line);
-  const set = (...l: LogLevel[]) => new Set(l);
+  const at = (line: string): ParsedLine => parseLogLine(line);
+  const set = (...l: LogLevel[]): Set<LogLevel> => new Set(l);
 
   it('passes everything when no filter is active', () => {
     assert.equal(passesLevel(at('[01:00:00.0] INFO: hi'), new Set()), true);

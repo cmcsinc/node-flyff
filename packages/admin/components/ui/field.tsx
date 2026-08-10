@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import * as React from 'react';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 interface FieldProps {
   /** Must match the control's `id` so clicking the label focuses it. */
@@ -15,7 +15,7 @@ interface FieldProps {
    * tables/lists/groups, where a trailing hint reads as part of the collection
    * rather than as guidance for it.
    */
-  hintPosition?: "below" | "above";
+  hintPosition?: 'below' | 'above';
   /** Validation message. Rendered next to the field (never only at form top). */
   error?: string;
   /** Visually hide the label but keep it for screen readers. */
@@ -34,7 +34,7 @@ export function Field({
   htmlFor,
   label,
   hint,
-  hintPosition = "below",
+  hintPosition = 'below',
   error,
   srOnlyLabel,
   className,
@@ -42,12 +42,12 @@ export function Field({
 }: FieldProps): React.ReactElement {
   const hintId = hint ? `${htmlFor}-hint` : undefined;
   const errorId = error ? `${htmlFor}-error` : undefined;
-  const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
+  const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined;
 
   const control = React.isValidElement(children)
     ? React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
-        "aria-describedby": describedBy,
-        "aria-invalid": error ? true : undefined,
+        'aria-describedby': describedBy,
+        'aria-invalid': error ? true : undefined,
       })
     : children;
 
@@ -58,13 +58,13 @@ export function Field({
   );
 
   return (
-    <div className={cn("space-y-1.5", className)}>
-      <Label htmlFor={htmlFor} className={cn("text-xs", srOnlyLabel && "sr-only")}>
+    <div className={cn('space-y-1.5', className)}>
+      <Label htmlFor={htmlFor} className={cn('text-xs', srOnlyLabel && 'sr-only')}>
         {label}
       </Label>
-      {hintPosition === "above" && hintNode}
+      {hintPosition === 'above' && hintNode}
       {control}
-      {hintPosition === "below" && hintNode}
+      {hintPosition === 'below' && hintNode}
       {error && (
         <p id={errorId} className="text-[11px] font-medium leading-snug text-destructive">
           {error}
@@ -85,7 +85,7 @@ export function FieldGroup({
   className?: string;
 }): React.ReactElement {
   return (
-    <fieldset className={cn("space-y-2", className)}>
+    <fieldset className={cn('space-y-2', className)}>
       <legend className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {title}
       </legend>

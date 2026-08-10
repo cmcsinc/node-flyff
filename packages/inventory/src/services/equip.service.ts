@@ -205,7 +205,7 @@ export class EquipService {
     this.clampVitals(player);
     this.persistSlot(player, equipIdx, item);
     if (prev) this.persistSlot(player, invSlot, prev);
-    else this.deps.inventoryRepo.removeItem(player.m_idPlayer, invSlot).catch((e: unknown) => logger.warn({ err: e }, 'equip removeItem failed'));
+    else this.deps.inventoryRepo.removeItem(player.m_idPlayer, invSlot).catch((e: unknown) => { logger.warn({ err: e }, 'equip removeItem failed'); });
     // Enter flight AFTER the slot move -- `mount` clears the walk-to destination,
     // mirroring the C++ equip tail's `ClearDest()` (`MoverEquip.cpp:1843`).
     if (equipSlot === PARTS_RIDE) this.deps.flight?.mount(player);
@@ -236,7 +236,7 @@ export class EquipService {
     this.applyItemEffects(player, item.itemId, false);
     this.recomputeSetBonuses(player);
     this.clampVitals(player);
-    this.deps.inventoryRepo.removeItem(player.m_idPlayer, equipIdx).catch((e: unknown) => logger.warn({ err: e }, 'unequip remove equipSlot failed'));
+    this.deps.inventoryRepo.removeItem(player.m_idPlayer, equipIdx).catch((e: unknown) => { logger.warn({ err: e }, 'unequip remove equipSlot failed'); });
     this.persistSlot(player, dst, item);
     // Leaving the ride slot grounds the player (`OBJMSG_MODE_GROUND` in the C++
     // equip tail). Unlike mounting there is no gate -- C++ only refuses a
@@ -259,7 +259,7 @@ export class EquipService {
   private persistSlot(player: CPlayer, slot: number, s: InventorySlot): void {
     this.deps.inventoryRepo
       .setItem(player.m_idPlayer, slot, s.itemId, s.count, s.flags ?? 0, s.durability ?? -1, s.refine ?? 0)
-      .catch((e: unknown) => logger.warn({ err: e, slot }, 'equip setItem failed'));
+      .catch((e: unknown) => { logger.warn({ err: e, slot }, 'equip setItem failed'); });
   }
 
   /**

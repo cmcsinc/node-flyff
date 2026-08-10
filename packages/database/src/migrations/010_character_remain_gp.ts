@@ -14,7 +14,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.integer('remain_gp').notNullable().defaultTo(0);
   });
 }
@@ -25,7 +25,7 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.dropColumn('remain_gp');
   });
 }

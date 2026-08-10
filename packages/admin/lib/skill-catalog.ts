@@ -8,8 +8,8 @@
  * @module lib/skill-catalog
  */
 
-import type { SkillDefinition } from "@flyff/resources";
-import { getResourceIndex } from "./resource-cache";
+import type { SkillDefinition } from '@flyff/resources';
+import { getResourceIndex } from './resource-cache';
 
 /** Look up a skill definition by numeric id. */
 export async function getSkill(skillId: number): Promise<SkillDefinition | undefined> {
@@ -28,6 +28,6 @@ export async function getAllSkills(): Promise<SkillDefinition[]> {
  * Returns a placeholder path when the icon is missing so the UI never has a broken img.
  */
 export function skillIconUrl(icon: string | undefined): string {
-  if (!icon) return "/icons/_placeholder.svg";
-  return `/icons/${icon.replace(/\.dds$/i, ".png")}`;
+  if (!icon) return '/icons/_placeholder.svg';
+  return `/icons/${icon.replace(/\.dds$/i, '.png')}`;
 }

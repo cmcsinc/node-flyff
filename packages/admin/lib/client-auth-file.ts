@@ -48,21 +48,21 @@
  * @module lib/client-auth-file
  */
 
-import { createHash } from "node:crypto";
-import { readFile, writeFile, rename, unlink } from "node:fs/promises";
-import { join } from "node:path";
-import { parseResArchive, readResMember } from "@flyff/resources";
-import { ARCHIVES } from "./client-archives";
+import { createHash } from 'node:crypto';
+import { readFile, writeFile, rename, unlink } from 'node:fs/promises';
+import { join } from 'node:path';
+import { parseResArchive, readResMember } from '@flyff/resources';
+import { ARCHIVES } from './client-archives';
 
 /** File name in the client directory. */
-export const AUTH_FILE = "Flyff.a";
+export const AUTH_FILE = 'Flyff.a';
 
 /** Bytes per record: two 32-char ASCII hex digests. */
 const RECORD_SIZE = 64;
 
 /** Lowercase hex md5, the form the manifest stores. */
 function md5(data: Buffer | string): string {
-  return createHash("md5").update(data).digest("hex");
+  return createHash('md5').update(data).digest('hex');
 }
 
 /** How the live `Flyff.a` compares to what the archives now contain. */
@@ -113,7 +113,7 @@ async function hashAllMembers(
 export function parseAuthFile(buf: Buffer): Map<string, string> {
   const out = new Map<string, string>();
   for (let i = 0; i + RECORD_SIZE <= buf.length; i += RECORD_SIZE) {
-    out.set(buf.toString("latin1", i, i + 32), buf.toString("latin1", i + 32, i + RECORD_SIZE));
+    out.set(buf.toString('latin1', i, i + 32), buf.toString('latin1', i + 32, i + RECORD_SIZE));
   }
   return out;
 }
@@ -126,14 +126,14 @@ export function parseAuthFile(buf: Buffer): Map<string, string> {
  */
 export function buildAuthFile(hashes: ReadonlyMap<string, string>): Buffer {
   const rows = [...hashes.entries()].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
-  return Buffer.from(rows.map(([name, content]) => name + content).join(""), "latin1");
+  return Buffer.from(rows.map(([name, content]) => name + content).join(''), 'latin1');
 }
 
 /** Compare the live `Flyff.a` against what the archives currently hold. */
 export async function authFileStatus(dir: string): Promise<AuthFileStatus> {
   const path = join(dir, AUTH_FILE);
   const live = await readFile(path).catch(() => null);
-  const hasBackup = (await readFile(path + ".bak").catch(() => null)) !== null;
+  const hasBackup = (await readFile(path + '.bak').catch(() => null)) !== null;
 
   let members: Map<string, { hash: string; name: string }>;
   try {
@@ -145,7 +145,7 @@ export async function authFileStatus(dir: string): Promise<AuthFileStatus> {
       members: 0,
       mismatched: [],
       hasBackup,
-      error: e instanceof Error ? e.message : "Could not read the archives",
+      error: e instanceof Error ? e.message : 'Could not read the archives',
     };
   }
 
@@ -185,11 +185,11 @@ export async function regenerateAuthFile(dir: string): Promise<number | null> {
   const live = await readFile(path).catch(() => null);
   if (live?.equals(next)) return null;
 
-  const temp = path + ".building";
+  const temp = path + '.building';
   await writeFile(temp, next);
   try {
     // First patch on a client that has no manifest yet: nothing to back up.
-    if (live !== null) await rename(path, path + ".bak");
+    if (live !== null) await rename(path, path + '.bak');
   } catch (e) {
     await unlink(temp).catch(() => undefined);
     throw e;
@@ -206,10 +206,10 @@ export async function regenerateAuthFile(dir: string): Promise<number | null> {
  */
 export async function restoreAuthFile(dir: string): Promise<void> {
   const path = join(dir, AUTH_FILE);
-  const backup = path + ".bak";
+  const backup = path + '.bak';
   if ((await readFile(backup).catch(() => null)) === null) {
     throw new Error(`No backup exists for ${AUTH_FILE}`);
   }
-  await rename(path, path + ".built").catch(() => undefined);
+  await rename(path, path + '.built').catch(() => undefined);
   await rename(backup, path);
 }

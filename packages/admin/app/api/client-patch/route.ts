@@ -14,36 +14,36 @@
  * @module app/api/client-patch/route
  */
 
-import { NextResponse, type NextRequest } from "next/server";
-import { z } from "zod";
-import { auth } from "@/lib/auth";
-import { writeAudit } from "@/lib/audit";
+import { NextResponse, type NextRequest } from 'next/server';
+import { z } from 'zod';
+import { auth } from '@/lib/auth';
+import { writeAudit } from '@/lib/audit';
 import {
   ARCHIVES,
   clientDir,
   clientPatchStatus,
   patchArchive,
   restoreArchive,
-} from "@/lib/client-patch";
-import { regenerateAuthFile } from "@/lib/client-auth-file";
+} from '@/lib/client-patch';
+import { regenerateAuthFile } from '@/lib/client-auth-file';
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function GET(): Promise<NextResponse> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   try {
     return NextResponse.json({ ok: true, ...(await clientPatchStatus()) });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Failed to read client archives";
+    const msg = e instanceof Error ? e.message : 'Failed to read client archives';
     return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 }
 
 const PostSchema = z.object({
-  action: z.enum(["patch", "restore", "rebuild-manifest"]),
+  action: z.enum(['patch', 'restore', 'rebuild-manifest']),
   /** Required for patch/restore; ignored by rebuild-manifest. */
   archive: z.enum(ARCHIVES).optional(),
   /** Restrict a patch to these member names. Omit to patch every stale member. */
@@ -52,12 +52,12 @@ const PostSchema = z.object({
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const body = PostSchema.safeParse(await req.json().catch(() => null));
   if (!body.success) {
     return NextResponse.json(
-      { ok: false, error: body.error.issues[0]?.message ?? "Invalid body" },
+      { ok: false, error: body.error.issues[0]?.message ?? 'Invalid body' },
       { status: 400 },
     );
   }
@@ -66,17 +66,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const dir = clientDir();
   if (!dir) {
     return NextResponse.json(
-      { ok: false, error: "CLIENT_DIR is not set, so there is no client to patch." },
+      { ok: false, error: 'CLIENT_DIR is not set, so there is no client to patch.' },
       { status: 400 },
     );
   }
 
   try {
-    if (action === "rebuild-manifest") {
+    if (action === 'rebuild-manifest') {
       const records = await regenerateAuthFile(dir);
       await writeAudit(session, {
-        action: "client_manifest_rebuild",
-        targetType: "client_archive",
+        action: 'client_manifest_rebuild',
+        targetType: 'client_archive',
         targetId: null,
         details: { records },
       });
@@ -85,16 +85,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     if (archive === undefined) {
       return NextResponse.json(
-        { ok: false, error: "An archive is required for this action." },
+        { ok: false, error: 'An archive is required for this action.' },
         { status: 400 },
       );
     }
 
-    if (action === "restore") {
+    if (action === 'restore') {
       await restoreArchive(dir, archive);
       await writeAudit(session, {
-        action: "client_restore",
-        targetType: "client_archive",
+        action: 'client_restore',
+        targetType: 'client_archive',
         targetId: null,
         details: { archive },
       });
@@ -103,8 +103,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const result = await patchArchive(dir, archive, members);
     await writeAudit(session, {
-      action: "client_patch",
-      targetType: "client_archive",
+      action: 'client_patch',
+      targetType: 'client_archive',
       targetId: null,
       details: {
         archive,
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     });
     return NextResponse.json({ ok: true, ...result });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Patch failed";
+    const msg = e instanceof Error ? e.message : 'Patch failed';
     return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 }

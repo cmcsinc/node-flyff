@@ -169,10 +169,14 @@ export class MailRepository {
   async countPending(receiverId: number): Promise<number> {
     const [row] = await this.db('mail')
       .where({ receiver_id: receiverId })
-      .andWhere((qb: any) => {
+      .andWhere((qb) => {
         qb.where({ read: false })
-          .orWhere((q: any) => q.whereNotNull('item_id').andWhere({ taken_item: false }))
-          .orWhere((q: any) => q.whereNot('gold', '0').andWhere({ taken_gold: false }));
+          .orWhere(function itemPending() {
+            this.whereNotNull('item_id').andWhere({ taken_item: false });
+          })
+          .orWhere(function goldPending() {
+            this.whereNot('gold', '0').andWhere({ taken_gold: false });
+          });
       })
       .count({ n: 'id' });
 

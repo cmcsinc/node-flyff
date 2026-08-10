@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/page-header";
-import { DialogPanel } from "@/components/dialog/dialog-panel";
-import { readDialogForPrefix } from "@/lib/dialog-inc";
-import { getResourceIndex } from "@/lib/resource-cache";
-import { npcNameForKey } from "@flyff/resources";
+import { notFound } from 'next/navigation';
+import { PageHeader } from '@/components/page-header';
+import { DialogPanel } from '@/components/dialog/dialog-panel';
+import { readDialogForPrefix } from '@/lib/dialog-inc';
+import { getResourceIndex } from '@/lib/resource-cache';
+import { npcNameForKey } from '@flyff/resources';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 /**
  * Dialogue editor, entered from the dialogues browser.
@@ -27,13 +27,13 @@ export default async function DialogueEditPage({
 
   // Dialogue files are keyed by the lowercased character.inc block stem, so the
   // display name follows the same chain the browser page uses.
-  const npcName = npcNameForKey(idx.characterInc, prefix) ?? "";
+  const npcName = npcNameForKey(idx.characterInc, prefix) ?? '';
 
   return (
     <div className="space-y-6">
       <PageHeader
         title={npcName || prefix}
-        description={`${prefix}.yml · ${String(view.states.length)} state${view.states.length === 1 ? "" : "s"}`}
+        description={`${prefix}.yml · ${String(view.states.length)} state${view.states.length === 1 ? '' : 's'}`}
         backHref="/resources/dialogues"
       />
       <DialogPanel view={view} />

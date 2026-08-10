@@ -8,7 +8,7 @@
  */
 
 import type { InventorySlot } from '@flyff/entities';
-import { PacketWriter } from '@flyff/core/net/PacketWriter';
+import type { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { NULL_ID } from '../snapshot-constants';
 import { writeCItemElemBody } from './itemElemBody.serializer';
 
@@ -38,8 +38,10 @@ export function writeItemContainer(
   }
   w.writeByte(occupied.length & 0xff);         // chSize
   for (const i of occupied) {
+    const item = contents[i];
+    if (item === null || item === undefined) continue;
     w.writeByte(i & 0xff);                     // slot index
-    writeCItemElemBody(w, i, contents[i]!);
+    writeCItemElemBody(w, i, item);
   }
   for (let i = 0; i < slots; i++) {            // adwObjIndex -- same identity rule
     w.writeDword(i < indexNum ? i : (contents[i] ? i : NULL_ID));

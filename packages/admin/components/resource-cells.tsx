@@ -11,11 +11,11 @@
  * @module components/resource-cells
  */
 
-import * as React from "react";
-import Link from "next/link";
-import { Pencil } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import * as React from 'react';
+import Link from 'next/link';
+import { Pencil } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
 
 /** An absent value. Muted so a populated column reads as the signal. */
 export function Dash(): React.JSX.Element {
@@ -148,15 +148,7 @@ export function TagCell({
 }
 
 /** A `{x,y,z}` world position. */
-export function PosCell({
-  x,
-  y,
-  z,
-}: {
-  x: number;
-  y: number;
-  z: number;
-}): React.JSX.Element {
+export function PosCell({ x, y, z }: { x: number; y: number; z: number }): React.JSX.Element {
   return (
     <span className="font-mono text-xs tabular-nums text-muted-foreground">
       {x.toFixed(0)}, {y.toFixed(0)}, {z.toFixed(0)}
@@ -185,7 +177,7 @@ export function EditLink({
     <Link
       href={href}
       aria-label={`Edit ${label}`}
-      className={buttonVariants({ variant: "outline", size: "sm" })}
+      className={buttonVariants({ variant: 'outline', size: 'sm' })}
     >
       <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
       Edit

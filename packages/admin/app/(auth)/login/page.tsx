@@ -1,38 +1,37 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Sword, Eye, EyeOff, AlertCircle } from "lucide-react";
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Loader2, Sword, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
-export default function LoginPage() {
+export default function LoginPage(): React.JSX.Element {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const res = await signIn("credentials", {
-      username: formData.get("username"),
-      password: formData.get("password"),
+    const res = await signIn('credentials', {
+      username: formData.get('username'),
+      password: formData.get('password'),
       redirect: false,
     });
 
     setLoading(false);
 
-    if (res?.error) {
-      setError("Invalid credentials or not a GM account.");
+    if (res.error) {
+      setError('Invalid credentials or not a GM account.');
     } else {
-      router.push("/");
+      router.push('/');
       router.refresh();
     }
   }
@@ -76,7 +75,9 @@ export default function LoginPage() {
 
             <div className="space-y-1.5">
               <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
-              <p className="text-sm text-muted-foreground">Sign in with a GM account to continue.</p>
+              <p className="text-sm text-muted-foreground">
+                Sign in with a GM account to continue.
+              </p>
             </div>
 
             {error && (
@@ -89,7 +90,12 @@ export default function LoginPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={(event) => {
+                void handleSubmit(event);
+              }}
+              className="space-y-4"
+            >
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
                 <Input
@@ -108,7 +114,7 @@ export default function LoginPage() {
                   <Input
                     id="password"
                     name="password"
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
                     autoComplete="current-password"
                     required
@@ -117,8 +123,10 @@ export default function LoginPage() {
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                     className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -127,7 +135,7 @@ export default function LoginPage() {
               </div>
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {loading ? "Signing in…" : "Sign in"}
+                {loading ? 'Signing in…' : 'Sign in'}
               </Button>
             </form>
           </div>

@@ -1,27 +1,35 @@
-import { db } from "@/lib/db";
-import { characters, inventory, inventoryItems } from "@/../drizzle/schema";
-import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { PageHeader } from "@/components/page-header";
-import { formatNumber, jobName, worldName } from "@/lib/utils";
-import { getIk3Label } from "@/lib/game-constants";
-import { getItem, getAllItems, itemIconUrl } from "@/lib/item-catalog";
-import { InventoryExplorer } from "./inventory-explorer";
-import { GoldEditor } from "./actions";
-import type { PickerItem, SlotItem } from "./types";
+import { db } from '@/lib/db';
+import { characters, inventory, inventoryItems } from '@/../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { notFound } from 'next/navigation';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { PageHeader } from '@/components/page-header';
+import { formatNumber, jobName, worldName } from '@/lib/utils';
+import { getIk3Label } from '@/lib/game-constants';
+import { getItem, getAllItems, itemIconUrl } from '@/lib/item-catalog';
+import { InventoryExplorer } from './inventory-explorer';
+import { GoldEditor } from './actions';
+import type { PickerItem, SlotItem } from './types';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export default async function InventoryPage({ params }: { params: Promise<{ characterId: string }> }) {
+export default async function InventoryPage({
+  params,
+}: {
+  params: Promise<{ characterId: string }>;
+}): Promise<React.JSX.Element> {
   const { characterId } = await params;
   const charId = Number(characterId);
   if (isNaN(charId)) notFound();
 
-  const [char] = await db.select().from(characters).where(eq(characters.id, charId)).limit(1);
+  const char = (await db.select().from(characters).where(eq(characters.id, charId)).limit(1)).at(0);
   if (!char) notFound();
 
-  const invRow = await db.select().from(inventory).where(eq(inventory.characterId, charId)).limit(1);
+  const invRow = await db
+    .select()
+    .from(inventory)
+    .where(eq(inventory.characterId, charId))
+    .limit(1);
   const rows = await db
     .select()
     .from(inventoryItems)
@@ -42,10 +50,10 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
       elementLevel: r.elementLevel,
       durability: r.durability,
       flags: r.flags,
-      name: def?.name ?? `Item #${r.itemId}`,
+      name: def?.name ?? `Item #${String(r.itemId)}`,
       iconUrl: itemIconUrl(def?.icon),
-      category: def?.item_kind3 ? getIk3Label(def.item_kind3) : "Unknown",
-      kind2: def?.item_kind2 ?? "",
+      category: def?.item_kind3 ? getIk3Label(def.item_kind3) : 'Unknown',
+      kind2: def?.item_kind2 ?? '',
       rarity: def?.rarity,
       attackMin: def?.attack_min,
       attackMax: def?.attack_max,
@@ -72,7 +80,7 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
       id: it.id,
       name: it.name,
       iconUrl: itemIconUrl(it.icon),
-      category: it.item_kind3 ? getIk3Label(it.item_kind3) : "",
+      category: it.item_kind3 ? getIk3Label(it.item_kind3) : '',
       stackSize: it.stack_size,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -84,8 +92,8 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
     <div className="space-y-6">
       <PageHeader
         title={`${char.name} — Inventory`}
-        description={`Level ${char.level} ${jobName(char.class)} · ${worldName(char.worldId)} · ${slotItems.length} items`}
-        backHref={`/characters/${charId}`}
+        description={`Level ${String(char.level)} ${jobName(char.class)} · ${worldName(char.worldId)} · ${String(slotItems.length)} items`}
+        backHref={`/characters/${String(charId)}`}
       />
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -102,8 +110,8 @@ export default async function InventoryPage({ params }: { params: Promise<{ char
             <CardTitle className="text-sm text-muted-foreground">Summary</CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
-            {bagItems.length} in bag · {equipItems.length} equipped ·{" "}
-            {formatNumber(invRow[0]?.gold ?? "0")} penya
+            {bagItems.length} in bag · {equipItems.length} equipped ·{' '}
+            {formatNumber(invRow[0]?.gold ?? '0')} penya
           </CardContent>
         </Card>
       </div>

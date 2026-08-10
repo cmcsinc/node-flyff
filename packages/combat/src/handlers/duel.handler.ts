@@ -16,7 +16,7 @@
  * @module handlers/duel
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { PacketError } from '@flyff/core/errors';
@@ -36,7 +36,9 @@ export class DuelHandler {
 
   handleDuelRequest(socket: ClientSocket, reader: PacketReader): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId == null) { socket.destroy(); return; }
+    const player = this.deps.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
     try {
       const uidSrc = reader.readDword();
@@ -51,7 +53,9 @@ export class DuelHandler {
 
   handleDuelYes(socket: ClientSocket, reader: PacketReader): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId == null) { socket.destroy(); return; }
+    const player = this.deps.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
     try {
       // YES body: `u_long uidSrc(=challenger A) | u_long uidDst(=self B)`.
@@ -69,7 +73,9 @@ export class DuelHandler {
 
   handleDuelNo(socket: ClientSocket, reader: PacketReader): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId == null) { socket.destroy(); return; }
+    const player = this.deps.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
     try {
       const uidSrc = reader.readDword();

@@ -27,6 +27,7 @@
 
 import { PacketWriter } from '@flyff/core/net/PacketWriter';
 import { PACKETTYPE } from '@flyff/core/constants/opcodes';
+import type { RuntimeQuest } from '@flyff/entities';
 import {
   NULL_ID,
   SNAPSHOTTYPE_SETQUEST,
@@ -38,7 +39,7 @@ import {
 
 // RuntimeQuest moved to @flyff/entities (shared with CPlayer.m_aQuest) -- re-export
 // so legacy `from './quest.serializer'` importers keep resolving.
-export type { RuntimeQuest } from '@flyff/entities';
+export type { RuntimeQuest };
 
 /** Open a single-snapshot SNAPSHOT frame (`objid | NULL_ID | 1 | objid | subtype`). */
 function frame(objid: number, subtype: number, w: PacketWriter): PacketWriter {

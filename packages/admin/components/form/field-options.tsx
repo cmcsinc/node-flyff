@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { createContext, useContext } from "react";
-import type { EnumOption } from "@/lib/field-schema";
+import { createContext, useContext } from 'react';
+import type { EnumOption } from '@/lib/field-schema';
 
 /**
  * Runtime-injected option lists for fields whose valid values live behind the
@@ -20,7 +20,7 @@ export function FieldOptionsProvider({
 }: {
   options: Record<string, EnumOption[]>;
   children: React.ReactNode;
-}) {
+}): React.JSX.Element {
   return <FieldOptionsCtx.Provider value={options}>{children}</FieldOptionsCtx.Provider>;
 }
 

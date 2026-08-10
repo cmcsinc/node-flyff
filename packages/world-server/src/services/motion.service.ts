@@ -24,7 +24,7 @@ export interface MotionServiceDeps {
   zoneManager: ZoneManager;
 }
 
-export type MotionOutcome = { ok: true; reached: number };
+export interface MotionOutcome { ok: true; reached: number }
 
 export class MotionService {
   private readonly serializer = new MotionSerializer();

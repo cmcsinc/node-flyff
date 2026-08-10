@@ -113,7 +113,7 @@ function adoptOrphans(): void {
       exitCode: null,
       logFile: createWriteStream(resolve(LOG_DIR, `${rec.id}.log`), { flags: 'a' }),
     });
-    pushLog(rec.id, `[supervisor] adopted orphaned pid=${rec.pid} from a previous daemon`);
+    pushLog(rec.id, `[supervisor] adopted orphaned pid=${String(rec.pid)} from a previous daemon`);
   }
   persistChildren();
 }
@@ -201,18 +201,22 @@ function start(body: unknown): { status: ProcStatus } | { error: string } {
   };
   procs.set(id, run);
   persistChildren();
-  pushLog(id, `[supervisor] spawned pid=${child.pid ?? '?'} config=${configFile}`);
+  pushLog(id, `[supervisor] spawned pid=${String(child.pid ?? '?')} config=${configFile}`);
 
   child.stdout?.on('data', (c: Buffer) => {
     if (run.state === 'starting') run.state = 'running';
     pushLog(id, c.toString());
   });
-  child.stderr?.on('data', (c: Buffer) => pushLog(id, c.toString()));
-  child.on('error', (err) => pushLog(id, `[supervisor] spawn error: ${err.message}`));
+  child.stderr?.on('data', (c: Buffer) => {
+    pushLog(id, c.toString());
+  });
+  child.on('error', (err) => {
+    pushLog(id, `[supervisor] spawn error: ${err.message}`);
+  });
   child.on('exit', (code, signal) => {
     run.state = 'exited';
     run.exitCode = code;
-    pushLog(id, `[supervisor] exited code=${code} signal=${signal ?? 'none'}`);
+    pushLog(id, `[supervisor] exited code=${String(code)} signal=${signal ?? 'none'}`);
     run.logFile?.end();
     persistChildren();
   });
@@ -316,9 +320,9 @@ async function readBody(req: IncomingMessage): Promise<unknown> {
 }
 
 const server = createServer((req, res) => {
-  void handle(req, res).catch((err: unknown) =>
-    send(res, 400, { error: err instanceof Error ? err.message : 'Bad request' }),
-  );
+  void handle(req, res).catch((err: unknown) => {
+    send(res, 400, { error: err instanceof Error ? err.message : 'Bad request' });
+  });
 });
 
 async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
@@ -420,7 +424,7 @@ function autoStartInstances(): void {
       process.stdout.write(
         'error' in res
           ? `[supervisor] autostart ${inst.id} failed: ${res.error}\n`
-          : `[supervisor] autostart ${inst.id} pid=${res.status.pid}\n`,
+          : `[supervisor] autostart ${inst.id} pid=${String(res.status.pid)}\n`,
       );
     } catch (err) {
       process.stdout.write(
@@ -432,7 +436,9 @@ function autoStartInstances(): void {
 
 server.listen(DEFAULT_PORT, '127.0.0.1', () => {
   writeHandle({ pid: process.pid, port: DEFAULT_PORT, startedAt: STARTED_AT });
-  process.stdout.write(`[supervisor] listening on 127.0.0.1:${DEFAULT_PORT} pid=${process.pid}\n`);
+  process.stdout.write(
+    `[supervisor] listening on 127.0.0.1:${String(DEFAULT_PORT)} pid=${String(process.pid)}\n`,
+  );
   // Reclaim children stranded by a previous daemon BEFORE autostart, so an
   // already-running instance is adopted instead of double-spawned on its port.
   adoptOrphans();
@@ -443,7 +449,7 @@ server.listen(DEFAULT_PORT, '127.0.0.1', () => {
 // die on an unhandled 'error' and leave a half-initialised daemon behind.
 server.on('error', (err: NodeJS.ErrnoException) => {
   if (err.code === 'EADDRINUSE') {
-    process.stdout.write(`[supervisor] port ${DEFAULT_PORT} already served — exiting\n`);
+    process.stdout.write(`[supervisor] port ${String(DEFAULT_PORT)} already served — exiting\n`);
     process.exit(0);
   }
   process.stdout.write(`[supervisor] server error: ${err.message}\n`);

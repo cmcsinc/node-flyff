@@ -47,7 +47,7 @@ export class QuestRepository {
       this.db('character_completed_quests')
         .where({ character_id: characterId }).orderBy('completed_at', 'asc') as Promise<CompletedQuestRow[]>,
       this.db('character_checked_quests')
-        .where({ character_id: characterId }).orderBy('slot', 'asc') as Promise<Array<{ quest_id: number }>>,
+        .where({ character_id: characterId }).orderBy('slot', 'asc') as Promise<{ quest_id: number }[]>,
     ]);
     return {
       active,

@@ -1,8 +1,8 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { formatNumber } from "@/lib/utils";
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { formatNumber } from '@/lib/utils';
 
-type StatTone = "accent" | "gold" | "success" | "destructive";
+type StatTone = 'accent' | 'gold' | 'success' | 'destructive';
 
 interface StatCardProps {
   label: string;
@@ -16,31 +16,38 @@ interface StatCardProps {
 }
 
 const TONE_CLASSES: Record<StatTone, { chip: string; bar: string }> = {
-  accent: { chip: "bg-primary/15 text-primary", bar: "from-primary" },
-  gold: { chip: "bg-gold/15 text-gold", bar: "from-gold" },
-  success: { chip: "bg-success/15 text-success", bar: "from-success" },
-  destructive: { chip: "bg-destructive/15 text-destructive", bar: "from-destructive" },
+  accent: { chip: 'bg-primary/15 text-primary', bar: 'from-primary' },
+  gold: { chip: 'bg-gold/15 text-gold', bar: 'from-gold' },
+  success: { chip: 'bg-success/15 text-success', bar: 'from-success' },
+  destructive: { chip: 'bg-destructive/15 text-destructive', bar: 'from-destructive' },
 };
 
 /**
  * Dashboard stat tile: gradient top border, accent icon chip, big number.
  * Animates in with a staggered pop; disabled under reduced-motion.
  */
-export function StatCard({ label, value, icon: Icon, tone = "accent", hint, index = 0 }: StatCardProps) {
+export function StatCard({
+  label,
+  value,
+  icon: Icon,
+  tone = 'accent',
+  hint,
+  index = 0,
+}: StatCardProps): React.JSX.Element {
   const toneClass = TONE_CLASSES[tone];
-  const display = typeof value === "number" ? formatNumber(value) : value;
+  const display = typeof value === 'number' ? formatNumber(value) : value;
 
   return (
     <Card
       className={cn(
-        "card-top-accent relative overflow-hidden transition-transform hover:-translate-y-0.5",
+        'card-top-accent relative overflow-hidden transition-transform hover:-translate-y-0.5',
       )}
       style={{ animationDelay: `${String(index * 60)}ms` }}
     >
       {/* tone-tinted top bar overrides the default accent line */}
       <div
         className={cn(
-          "absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r to-transparent opacity-80",
+          'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r to-transparent opacity-80',
           toneClass.bar,
         )}
       />
@@ -49,13 +56,21 @@ export function StatCard({ label, value, icon: Icon, tone = "accent", hint, inde
           <p className="text-sm font-medium text-muted-foreground">{label}</p>
           <p
             className="mt-1 text-3xl font-bold tracking-tight"
-            style={{ animation: "var(--animate-count-pop)", animationDelay: `${String(index * 60 + 80)}ms` }}
+            style={{
+              animation: 'var(--animate-count-pop)',
+              animationDelay: `${String(index * 60 + 80)}ms`,
+            }}
           >
             {display}
           </p>
           {hint && <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>}
         </div>
-        <div className={cn("flex h-11 w-11 shrink-0 items-center justify-center rounded-lg", toneClass.chip)}>
+        <div
+          className={cn(
+            'flex h-11 w-11 shrink-0 items-center justify-center rounded-lg',
+            toneClass.chip,
+          )}
+        >
           <Icon className="h-5 w-5" />
         </div>
       </CardContent>

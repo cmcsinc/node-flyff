@@ -22,7 +22,7 @@
  * @module handlers/rangeAttack.handler
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import { Validate } from '@flyff/core/utils/validate';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
@@ -45,7 +45,9 @@ export class RangeAttackHandler {
       socket.destroy();
       return;
     }
-    const player = this.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId == null) { socket.destroy(); return; }
+    const player = this.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
 
     // Stunned or sleeping? Ranged attack is an action.

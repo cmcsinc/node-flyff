@@ -25,20 +25,20 @@
  * @module app/api/quest/route
  */
 
-import { resolve } from "node:path";
-import { writeFile } from "node:fs/promises";
-import { NextResponse, type NextRequest } from "next/server";
-import { z } from "zod";
-import { stringify } from "yaml";
-import { writeQuestEdit, type QuestEdit } from "@flyff/resources";
-import { auth } from "@/lib/auth";
-import { writeAudit } from "@/lib/audit";
-import { DATA_DIR, getResourceIndex, invalidateResourceCache } from "@/lib/resource-cache";
-import { RAW_DIR } from "@/lib/character-inc";
-import { needsClientPatch, questCmdSpec } from "@/lib/quest-fields";
+import { resolve } from 'node:path';
+import { writeFile } from 'node:fs/promises';
+import { NextResponse, type NextRequest } from 'next/server';
+import { z } from 'zod';
+import { stringify } from 'yaml';
+import { writeQuestEdit, type QuestEdit } from '@flyff/resources';
+import { auth } from '@/lib/auth';
+import { writeAudit } from '@/lib/audit';
+import { DATA_DIR, getResourceIndex, invalidateResourceCache } from '@/lib/resource-cache';
+import { RAW_DIR } from '@/lib/character-inc';
+import { needsClientPatch, questCmdSpec } from '@/lib/quest-fields';
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 /**
  * One command argument.
@@ -49,7 +49,7 @@ export const dynamic = "force-dynamic";
  * claimed by hundreds of symbols).
  */
 const ArgSchema = z.object({
-  type: z.enum(["num", "str", "sym", "bool"]),
+  type: z.enum(['num', 'str', 'sym', 'bool']),
   value: z.union([z.number(), z.string().max(256)]),
 });
 
@@ -58,7 +58,7 @@ const CommandSchema = z.object({
     .string()
     .min(1)
     .max(64)
-    .regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Invalid command token"),
+    .regex(/^[A-Za-z_][A-Za-z0-9_]*$/, 'Invalid command token'),
   args: z.array(ArgSchema).max(64),
 });
 
@@ -72,19 +72,19 @@ const PutSchema = z.object({
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const body = PutSchema.safeParse(await req.json().catch(() => null));
   if (!body.success) {
     return NextResponse.json(
-      { ok: false, error: body.error.issues[0]?.message ?? "Invalid body" },
+      { ok: false, error: body.error.issues[0]?.message ?? 'Invalid body' },
       { status: 400 },
     );
   }
   const { id, title, commands } = body.data;
 
   if (title === undefined && commands === undefined) {
-    return NextResponse.json({ ok: false, error: "Nothing to change" }, { status: 400 });
+    return NextResponse.json({ ok: false, error: 'Nothing to change' }, { status: 400 });
   }
 
   const idx = await getResourceIndex();
@@ -112,7 +112,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
       {
         ok: false,
         error:
-          `Command(s) ${unknown.join(", ")} have no parse branch in CProject::LoadPropQuest, ` +
+          `Command(s) ${unknown.join(', ')} have no parse branch in CProject::LoadPropQuest, ` +
           `so neither the server nor the client acts on them. Remove them instead of saving them.`,
       },
       { status: 400 },
@@ -143,7 +143,7 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
     await writeQuestEdit(RAW_DIR, def.symbol, edit);
     await writeQuestYml(def, edit);
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Write failed";
+    const msg = e instanceof Error ? e.message : 'Write failed';
     return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 
@@ -152,8 +152,8 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
   const patch = (commands ?? []).some((c) => needsClientPatch(c.cmd)) || title !== undefined;
 
   await writeAudit(session, {
-    action: "quest_edit",
-    targetType: "quest",
+    action: 'quest_edit',
+    targetType: 'quest',
     targetId: id,
     details: {
       symbol: def.symbol,
@@ -173,11 +173,20 @@ export async function PUT(req: NextRequest): Promise<NextResponse> {
  * converter run reproduces this file rather than a reordered one.
  */
 async function writeQuestYml(
-  def: { id: number; symbol: string; commands: unknown; states: unknown; quest_items: unknown; title?: string; dialog?: unknown; no_remove?: boolean },
+  def: {
+    id: number;
+    symbol: string;
+    commands: unknown;
+    states: unknown;
+    quest_items: unknown;
+    title?: string;
+    dialog?: unknown;
+    no_remove?: boolean;
+  },
   edit: QuestEdit,
 ): Promise<void> {
   const doc = {
-    _version: "1.0",
+    _version: '1.0',
     id: def.id,
     symbol: def.symbol,
     commands: edit.commands ?? def.commands,
@@ -188,5 +197,5 @@ async function writeQuestYml(
     // The token is unchanged by a title edit — only the text behind it moves.
     ...(def.title !== undefined ? { title: def.title } : {}),
   };
-  await writeFile(resolve(DATA_DIR, "quests", `${String(def.id)}.yml`), stringify(doc), "utf-8");
+  await writeFile(resolve(DATA_DIR, 'quests', `${String(def.id)}.yml`), stringify(doc), 'utf-8');
 }

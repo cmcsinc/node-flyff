@@ -12,8 +12,8 @@
  * @module lib/item-options
  */
 
-import type { EnumOption } from "./field-schema";
-import { getAllItems } from "./item-catalog";
+import type { EnumOption } from './field-schema';
+import { getAllItems } from './item-catalog';
 
 /** Every item as a name-searchable option, sorted by name. */
 export async function itemOptions(): Promise<EnumOption[]> {

@@ -31,7 +31,7 @@ export class ReqLeaveHandler {
       socket.destroy();
       return;
     }
-    const player = this.playerManager.get(socket.session.charId!);
+    const player = this.playerManager.get(socket.session.charId ?? -1);
     if (!player) {
       socket.destroy();
       return;

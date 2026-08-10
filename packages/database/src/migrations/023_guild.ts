@@ -20,7 +20,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('guild', (table: any) => {
+  await db.schema.createTable('guild', (table) => {
     // NOT `increments`: `GuildManager` issues the id in-memory (the roster
     // broadcast needs it before any await) and inserts it explicitly, seeding
     // its counter from `max(id) + 1` at boot -- exactly like `parties` (022).
@@ -67,7 +67,7 @@ export async function up(db: Knex): Promise<void> {
     table.unique(['name']);
   });
 
-  await db.schema.createTable('guild_member', (table: any) => {
+  await db.schema.createTable('guild_member', (table) => {
     table.increments('id').primary();
     table.integer('guild_id').unsigned().notNullable()
       .references('id').inTable('guild').onDelete('CASCADE');
@@ -97,7 +97,7 @@ export async function up(db: Knex): Promise<void> {
     table.index(['guild_id']);
   });
 
-  await db.schema.createTable('guild_cooldown', (table: any) => {
+  await db.schema.createTable('guild_cooldown', (table) => {
     // `CPlayer::m_tGuildMember` -- set to now + 2 days on leave/kick/disband
     // and checked when accepting an invite (and in `IsPartyGuild`). Its own
     // table rather than a `characters` column: it outlives membership, so it

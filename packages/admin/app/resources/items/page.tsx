@@ -1,18 +1,25 @@
-import type * as React from "react";
-import { itemRows } from "@/lib/resource-rows";
-import { getIk2Label, getIk3Label } from "@/lib/game-constants";
-import { Select } from "@/components/ui/select";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { FilterBar } from "@/components/filter-bar";
-import { ResourceTable, type ResourceColumn } from "@/components/resource-table";
-import { IdCell, NameCell, TagCell, NumCell, EditLink, MutedCell } from "@/components/resource-cells";
-import { parsePage, parsePerPage, paginate } from "@/lib/paginate";
-import { parseSort, sortRows, type QueryParams } from "@/lib/sort";
-import { Package } from "lucide-react";
-import type { ItemRow } from "@/lib/resource-rows";
+import type * as React from 'react';
+import { itemRows } from '@/lib/resource-rows';
+import { getIk2Label, getIk3Label } from '@/lib/game-constants';
+import { Select } from '@/components/ui/select';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { FilterBar } from '@/components/filter-bar';
+import { ResourceTable, type ResourceColumn } from '@/components/resource-table';
+import {
+  IdCell,
+  NameCell,
+  TagCell,
+  NumCell,
+  EditLink,
+  MutedCell,
+} from '@/components/resource-cells';
+import { parsePage, parsePerPage, paginate } from '@/lib/paginate';
+import { parseSort, sortRows, type QueryParams } from '@/lib/sort';
+import { Package } from 'lucide-react';
+import type { ItemRow } from '@/lib/resource-rows';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams extends QueryParams {
   search?: string;
@@ -25,46 +32,79 @@ interface SearchParams extends QueryParams {
   dir?: string;
 }
 
-const SORT_KEYS = ["id", "name", "kind2", "kind3", "group", "price", "weight", "stackSize"] as const;
+const SORT_KEYS = [
+  'id',
+  'name',
+  'kind2',
+  'kind3',
+  'group',
+  'price',
+  'weight',
+  'stackSize',
+] as const;
 
 const COLUMNS: readonly ResourceColumn<ItemRow>[] = [
-  { key: "id", header: "ID", sortable: true, className: "w-20", cell: (r) => <IdCell value={r.id} /> },
-  { key: "name", header: "Name", sortable: true, cell: (r) => <NameCell value={r.name} /> },
   {
-    key: "kind2",
-    header: "Kind",
+    key: 'id',
+    header: 'ID',
+    sortable: true,
+    className: 'w-20',
+    cell: (r) => <IdCell value={r.id} />,
+  },
+  { key: 'name', header: 'Name', sortable: true, cell: (r) => <NameCell value={r.name} /> },
+  {
+    key: 'kind2',
+    header: 'Kind',
     sortable: true,
     cell: (r) => <TagCell label={r.kind2} title={r.kind2Sym} />,
   },
   {
-    key: "kind3",
-    header: "Subtype",
+    key: 'kind3',
+    header: 'Subtype',
     sortable: true,
     cell: (r) => <MutedCell value={r.kind3} title={r.kind3Sym} />,
   },
-  { key: "price", header: "Price", sortable: true, align: "right", cell: (r) => <NumCell value={r.price} /> },
-  { key: "weight", header: "Weight", sortable: true, align: "right", cell: (r) => <NumCell value={r.weight} /> },
   {
-    key: "stackSize",
-    header: "Stack",
+    key: 'price',
+    header: 'Price',
     sortable: true,
-    align: "right",
+    align: 'right',
+    cell: (r) => <NumCell value={r.price} />,
+  },
+  {
+    key: 'weight',
+    header: 'Weight',
+    sortable: true,
+    align: 'right',
+    cell: (r) => <NumCell value={r.weight} />,
+  },
+  {
+    key: 'stackSize',
+    header: 'Stack',
+    sortable: true,
+    align: 'right',
     cell: (r) => <NumCell value={r.stackSize} />,
   },
   {
-    key: "actions",
-    header: "Actions",
-    align: "right",
-    cell: (r) => <EditLink href={`/resources/items/${String(r.id)}/edit`} label={`item ${String(r.id)}`} />,
+    key: 'actions',
+    header: 'Actions',
+    align: 'right',
+    cell: (r) => (
+      <EditLink href={`/resources/items/${String(r.id)}/edit`} label={`item ${String(r.id)}`} />
+    ),
   },
 ];
 
-export default async function ItemsPage({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.JSX.Element> {
+export default async function ItemsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const kind = params.kind ?? "";
-  const sub = params.sub ?? "";
-  const group = params.group ?? "";
+  const search = params.search ?? '';
+  const kind = params.kind ?? '';
+  const sub = params.sub ?? '';
+  const group = params.group ?? '';
   const perPage = parsePerPage(params.perPage);
 
   const items = itemRows();
@@ -77,7 +117,8 @@ export default async function ItemsPage({ searchParams }: { searchParams: Promis
     if (kind && i.kind2Sym !== kind) return false;
     if (sub && i.kind3Sym !== sub) return false;
     if (group && i.group !== group) return false;
-    if (needle && !i.name.toLowerCase().includes(needle) && !String(i.id).includes(needle)) return false;
+    if (needle && !i.name.toLowerCase().includes(needle) && !String(i.id).includes(needle))
+      return false;
     return true;
   });
 
@@ -117,7 +158,12 @@ export default async function ItemsPage({ searchParams }: { searchParams: Promis
             </option>
           ))}
         </Select>
-        <Select name="group" defaultValue={group} className="w-36" aria-label="Filter by resource file">
+        <Select
+          name="group"
+          defaultValue={group}
+          className="w-36"
+          aria-label="Filter by resource file"
+        >
           <option value="">All files</option>
           {groups.map((g) => (
             <option key={g} value={g}>
@@ -136,7 +182,7 @@ export default async function ItemsPage({ searchParams }: { searchParams: Promis
         unit="items"
         empty={{
           icon: Package,
-          message: active ? "No items match your filters" : "No item data in resources/data/items/",
+          message: active ? 'No items match your filters' : 'No item data in resources/data/items/',
         }}
       />
     </div>

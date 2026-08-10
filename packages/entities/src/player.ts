@@ -156,7 +156,7 @@ export class CPlayer {
    * players are skipped as AI targets and rejected by non-dead revive paths.
    * ponytail: full `m_dwState` bitfield if more state bits are ever needed.
    */
-  m_bDead: boolean = false;
+  m_bDead = false;
   m_nStr: number;
   m_nSta: number;
   m_nDex: number;
@@ -167,7 +167,7 @@ export class CPlayer {
    * STR/STA/DEX/INT via `PACKETTYPE_MODIFY_STATUS`. Persisted on the
    * `characters.remain_gp` column (migration 010); hydrated on JOIN.
    */
-  m_nRemainGP: number = 0;
+  m_nRemainGP = 0;
   /**
    * Gold (C++ `m_nGold`). Persisted on the `inventory` container row's `gold`
    * column (migration 008 -- gold is a container attribute, not a character
@@ -175,7 +175,7 @@ export class CPlayer {
    * flushed by the inventory/quest/bank/command services. WAL `CHAR_GOLD` is
    * the crash-recovery backup.
    */
-  m_nGold: number = 0;
+  m_nGold = 0;
   /**
    * Within-level experience (mirrors C++ `m_nExp1`): progress toward the next
    * level, 0 at each level boundary. On level-up the consumed portion is
@@ -183,7 +183,7 @@ export class CPlayer {
    * DB `exp` column and the SETEXPERIENCE wire field store THIS value -- there
    * is no cumulative form. Per-level threshold is `EXP_TABLE[level+1].nExp1`.
    */
-  m_nExp: number = 0;
+  m_nExp = 0;
   m_dwSkin: number;
   m_nHairMesh: number;
   m_dwHairColor: number;
@@ -205,7 +205,7 @@ export class CPlayer {
    * (skip HP subtraction). ponytail: add a `mode` column + JOIN hydration if a
    * bit must survive reconnect.
    */
-  m_dwMode: number = 0;
+  m_dwMode = 0;
   /**
    * Action-state bitmask (C++ `CActionMover::m_dwStateFlag`, MoverMsg.h:95).
    * Today only `OBJSTAF.FLY` is driven, by `FlightService.mount/dismount` off a
@@ -218,22 +218,22 @@ export class CPlayer {
    * login rather than storing the flag (C++ does the same via `RedoEquip`,
    * `MoverEquip.cpp:1996-2058`).
    */
-  m_dwStateFlag: number = 0;
+  m_dwStateFlag = 0;
   /**
    * Flight pitch (C++ `CMover::m_fAngleX`). Only meaningful while flying; the
    * client clamps it to +/-45 degrees (`ActionMoverState2.cpp:87-91`). Updated by
    * PLAYERANGLE / PLAYERMOVED2.
    */
-  m_fAngleX: number = 0;
+  m_fAngleX = 0;
   /**
    * Disguise propMover index (C++ disguise `m_dwIndex`). 0 = none. Set by
    * `/dis`, cleared by `/nodis`, broadcast via `SNAPSHOTTYPE_DISGUISE`. The
    * client renders the player as this mover model. ponytail: persist + hydrate
    * on JOIN so a disguise survives reconnect.
    */
-  m_dwDisguise: number = 0;
+  m_dwDisguise = 0;
   /** Y-axis rotation (C++ `m_fAngle`). Updated by GETPOS/PLAYERANGLE. */
-  m_fAngle: number = 0;
+  m_fAngle = 0;
   /** Per-player target lock (C++ `m_idTarget`) -- set by SETTARGET, consumed by combat. */
   m_idTarget: number = NULL_ID;
   /** Objective target id (C++ `m_idSetTarget`) -- SETTARGET with bClear=2. */
@@ -290,59 +290,59 @@ export class CPlayer {
    * `GuildWarManager`, not a boolean: a stale id whose war is gone reads as "not
    * at war" rather than faulting.
    */
-  m_idWar: number = 0;
+  m_idWar = 0;
   /**
    * Duel active flag (C++ `m_nDuel`). 0 = idle, 1 = active. Mirrors the C++
    * field the client reads via `OnSetDuel` (DPClient.cpp:15493). Set alongside
    * {@link m_idDuelTarget}; cleared together.
    */
-  m_nDuel: number = 0;
+  m_nDuel = 0;
   /**
    * Walk-to-object arrival range (C++ `CMover::m_fArrivalRange`). Set alongside
    * `m_idDestObj` by PLAYERSETDESTOBJ; echoed back by QUERYGETDESTOBJ replies.
    */
-  m_fArrivalRange: number = 0;
+  m_fArrivalRange = 0;
   /**
    * Player-killer / chaotic disposition (C++ `m_dwPKPropensity`, Mover.h:1227 --
    * `IsChaotic()` = `> 0`). Gates guard attackability. Hydrated from the DB on
    * JOIN (`characters.pk_propensity`); mutated on player-kill and PK decay.
    */
-  m_dwPKPropensity: number = 0;
+  m_dwPKPropensity = 0;
   /**
    * PK value / slaughter count (C++ `m_nSlaughter`). Incremented on player-kill.
    * Hydrated from DB on JOIN (`characters.pk_value`).
    */
-  m_nPKValue: number = 0;
+  m_nPKValue = 0;
   /**
    * Wall-clock ms of the last PK action (C++ `m_dwPKTime`, `Date.now()`).
    * Drives PK-value decay. Hydrated from DB on JOIN (`characters.pk_time`).
    */
-  m_dwPKTime: number = 0;
+  m_dwPKTime = 0;
   /**
    * PK experience (C++ `m_dwPKExp`). Counter-decay accumulator. Hydrated from
    * DB on JOIN (`characters.pk_exp`).
    */
-  m_dwPKExp: number = 0;
+  m_dwPKExp = 0;
   /**
    * PK mode toggle -- transient, per-session, NOT persisted. When true, the
    * player's attacks become PvP-enabled (can target + damage other players).
    * Defaults off; toggled via `PACKETTYPE_MODE` (`CHANGE_PKMODE` branch).
    */
-  m_bPKMode: boolean = false;
+  m_bPKMode = false;
   /** Last SCRIPTDLG tick (C++ `m_tickScript`) -- 400ms rate limit (DPSrvr.cpp:903). */
-  m_tickScript: number = 0;
+  m_tickScript = 0;
   /**
    * Last NPC_BUFF tick -- rate limit for the buff-pang packet (C++ `OnNPCBuff`
    * has none; we add a 1s floor to keep a spamming client from DDoS-ing the
    * buff apply loop). Mirrors {@link m_tickScript}.
    */
-  m_tickNpcBuff: number = 0;
+  m_tickNpcBuff = 0;
   /**
    * One-shot: the zone's NPC/monster ADD_OBJ snapshot has been sent for this
    * player. Neuz sends MAP_KEY once per `.wld` as it loads the world; the
    * vicinity burst must fire only on the first (world-enter), not every map.
    */
-  m_vicinitySent: boolean = false;
+  m_vicinitySent = false;
   /**
    * Objids this player's client currently has in its scene (peer players AND
    * NPC/monster movers). The port of C++ `CUser::m_mapPC` + `m_mapNPC`
@@ -352,7 +352,7 @@ export class CPlayer {
    *
    * Cleared on disconnect (rule 05 -- never leave a Map holding references).
    */
-  m_known: Set<number> = new Set();
+  m_known = new Set<number>();
   /**
    * Per-player quest state -- in-memory mirror of the C++ per-mover arrays
    * (`_Common/Mover.h:702-709`). Loaded from the DB on JOIN; mutated by the
@@ -369,7 +369,7 @@ export class CPlayer {
    * change (matches the gold/exp write-through pattern -- no 30 s flush loop).
    * Indexes 0..MAX_INVENTORY-1 are the main bag; 42..72 are equip parts.
    */
-  m_Inventory: (InventorySlot | null)[] = new Array(INVENTORY_SLOTS).fill(null);
+  m_Inventory = new Array<InventorySlot | null>(INVENTORY_SLOTS).fill(null);
   /**
    * Mirror of the client's `m_apIndex` (`_Common/Item.h:818`) -- per slot, the
    * `m_dwObjId` the client believes is sitting there. The bag grid renders slot
@@ -391,9 +391,9 @@ export class CPlayer {
    * from `BankRepository` on JOIN; mutated by the bank service. Tab 0..2.
    */
   m_Bank: (InventorySlot | null)[][] = [
-    new Array(BANK_SLOTS).fill(null),
-    new Array(BANK_SLOTS).fill(null),
-    new Array(BANK_SLOTS).fill(null),
+    new Array<InventorySlot | null>(BANK_SLOTS).fill(null),
+    new Array<InventorySlot | null>(BANK_SLOTS).fill(null),
+    new Array<InventorySlot | null>(BANK_SLOTS).fill(null),
   ];
   /** Per-tab bank gold (C++ `m_dwGoldBank[3]`). */
   m_BankGold: [number, number, number] = [0, 0, 0];
@@ -421,7 +421,7 @@ export class CPlayer {
    * `UserTaskBar.cpp:203`) after each skill resolves, reset to -1 on queue
    * exhaust or `END_SKILLQUEUE` cancel. Drives server-side combo progression.
    */
-  m_nUsedSkillQueue: number = -1;
+  m_nUsedSkillQueue = -1;
   /**
    * Action point (C++ `m_playTaskBar.m_nActionPoint`, 0..100). Gates how many
    * queue slots chain: pos 1 costs 6 AP, 2 costs 8, 3 costs 11, 4 costs 30
@@ -429,7 +429,7 @@ export class CPlayer {
    * can full-combo. ponytail: no AP regen tick (C++ `Mover.cpp:3417` regens
    * ~+2/s while active); add when live action-slot pacing matters.
    */
-  m_nActionPoint: number = 100;
+  m_nActionPoint = 100;
   /**
    * Pending action-slot queue step timer. Set by `SkillService` when a queued
    * skill is scheduled (the combo is spaced one cast per tick-window so the
@@ -448,16 +448,16 @@ export class CPlayer {
    * safe-zone / guild-war logout penalty path. ponytail: no penalty enforcement
    * yet -- LEAVE destroys immediately; consult this field when porting penalty.
    */
-  m_dwLeavePenatyTime: number = 0;
+  m_dwLeavePenatyTime = 0;
   /** True while the bank window is open (NPC range / instant-bank). */
-  m_bBankOpen: boolean = false;
+  m_bBankOpen = false;
   /**
    * Bank password (C++ `m_szBankPass`, char[5]). `'0000'` = no password set
    * (bank opens directly); any other value prompts CONFIRMBANK. Max 4 chars,
    * changed via CHANGEBANKPASS. Account-wide (one pin per account) -- hydrated
    * on JOIN from the `bank` container row (`BankRepository.getBankPass`).
    */
-  m_szBankPass: string = '0000';
+  m_szBankPass = '0000';
   /**
    * The vendor NPC objid the player is currently interacting with
    * (C++ `m_vtInfo.GetOther()` / `SetOther()`). Set by OPENSHOPWND, cleared by
@@ -468,20 +468,20 @@ export class CPlayer {
    * Fatigue point pool (C++ `m_nFatiguePoint`). Consumables (food/potion) restore
    * it; most skills spend it. ponytail: real FP regen + skill spend once skills ship.
    */
-  m_nFp: number = 0;
-  m_nMaxFp: number = 0;
+  m_nFp = 0;
+  m_nMaxFp = 0;
   /**
    * Wall-clock of the last damage-taken event (`Date.now()`). Gates stand regen
    * -- C++ `IsAttackMode()` (`m_nAtkCnt < SEC1*10`) blocks `ProcessRecovery` for
    * 10 s after the last hit. Set by `AISystem.monsterSwing` on damage dealt;
    * 0 = never hit (regen immediate). Transient -- not persisted.
    */
-  m_tmLastDamage: number = 0;
+  m_tmLastDamage = 0;
   /**
    * Next stand-regen tick (`Date.now()`). C++ `m_dwTickRecoveryStand` advances
    * by `NEXT_TICK_RECOVERYSTAND` (3 s) each fire. Transient -- not persisted.
    */
-  m_tmNextRecovery: number = 0;
+  m_tmNextRecovery = 0;
   /**
    * PK/PVP/channel state bitmask (C++ `CMover::m_dwStateMode`,
    * `_Common/authorization.h:60-64`). Only `STATE_BASEMOTION_MODE` (0x4) is
@@ -490,20 +490,20 @@ export class CPlayer {
    * writes 0 (a peer joining mid-channel does not see the cast bar -- ponytail).
    * Transient -- not persisted.
    */
-  m_dwStateMode: number = 0;
+  m_dwStateMode = 0;
   /**
    * Wall-clock (`Date.now()`) when the armed item channel completes, or 0 when
    * no channel is running (C++ `CMover::m_nReadyTime`, set by
    * `IsItemRedyTime`, `Mover.cpp:8817`). Polled by `BlinkwingSystem`.
    * Transient -- not persisted.
    */
-  m_nReadyTime: number = 0;
+  m_nReadyTime = 0;
   /**
    * Stable `objid` of the item whose channel is running (C++
    * `m_dwUseItemId` + `m_bItemFind`). Re-resolved to a slot on completion so a
    * mid-channel move/drop is caught. 0 = none. Transient -- not persisted.
    */
-  m_dwUseItemObjId: number = 0;
+  m_dwUseItemObjId = 0;
   /**
    * DST destination-parameter adjustments (C++ `m_adjParamAry`/`m_chgParamAry`,
    * `MoverParam.cpp`). Holds equip +stat bonuses (ring +STR, armor +DEF, etc)
@@ -537,33 +537,33 @@ export class CPlayer {
    * `characters.skill_level` (migration 005). Earned on level-up via
    * `((level-1)/20)+2` (MoverParam.cpp:1434). Never decremented.
    */
-  m_nSkillLevel: number = 0;
+  m_nSkillLevel = 0;
   /**
    * Unspent skill points (C++ `m_nSkillPoint`). Persisted on
    * `characters.skill_point` (migration 005). Decremented by the learn handler
    * (DOUSESKILLPOINT) at the per-tier cost: vagrant 1, expert 2, pro/master/hero 3.
    */
-  m_nSkillPoint: number = 0;
+  m_nSkillPoint = 0;
   /**
    * Per-slot cooldown timestamps (C++ `m_tmReUseDelay[45]`). Set to
    * `Date.now() + cooldownMs` on cast; `0` = ready. Indexed by slot, NOT skill id.
    * ponytail: persisted only on graceful disconnect (transient state).
    */
-  m_tmReUseDelay: number[] = new Array(MAX_SKILL_JOB).fill(0);
+  m_tmReUseDelay = new Array<number>(MAX_SKILL_JOB).fill(0);
   /**
    * Per-group consumable cooldown next-allowed timestamps (C++
    * `CCooltimeMgr::m_times[]`, `CooltimeMgr.h`). 1-based group → index
    * `group-1`; `0` = ready. Transient (not persisted -- matches C++).
    * Groups: 1 food, 2 pill, 3 skill, 4 potion (our addition).
    */
-  m_cooltime: number[] = new Array(MAX_COOLTIME_GROUP).fill(0);
+  m_cooltime = new Array<number>(MAX_COOLTIME_GROUP).fill(0);
   /**
    * Cheer points held (C++ `CMover::m_nCheerPoint`, `_Common/Mover.h:645`).
    * Capped at `MAX_CHEERPOINT` (3). **Not persisted** -- `DPDatabaseClient.cpp
    * :725` resets it to 0 with a full timer on every load, so a relog costs you
    * your stock. Matches C++ exactly; do not add a DB column.
    */
-  m_nCheerPoint: number = 0;
+  m_nCheerPoint = 0;
   /**
    * Trade / private-vendor state (C++ `CMover::m_vtInfo`, `_Common/Mover.h:354`).
    * `m_vtInfo.otherId !== null` is the "busy" gate every trade entry point
@@ -583,10 +583,10 @@ export class CPlayer {
    * relative `m_dwTickCheer - now` field depend on construction time, so two
    * otherwise-identical players would serialize to different bytes.
    */
-  m_dwTickCheer: number = 0;
+  m_dwTickCheer = 0;
   readonly socket: PlayerSocket;
   /** Dirty field names pending the 30s partial flush (rule 04). */
-  readonly _dirty: Set<string> = new Set();
+  readonly _dirty = new Set<string>();
 
   private constructor(row: CharacterRow, socket: PlayerSocket, authority: number) {
     this.m_idPlayer = row.id;
@@ -613,7 +613,7 @@ export class CPlayer {
     this.m_nMaxHp = maxHitPoint(this.m_nLevel, this.m_nSta, job.fFactorMaxHP);
     this.m_nMaxMp = maxManaPoint(this.m_nLevel, this.m_nInt, job.fFactorMaxMP);
     this.m_nMaxFp = maxFatiguePoint(this.m_nLevel, this.m_nSta, job.fFactorMaxFP);
-    this.m_nRemainGP = row.remain_gp ?? 0;
+    this.m_nRemainGP = row.remain_gp;
     this.m_dwSkin = row.skin_color;
     this.m_nHairMesh = row.hair_style;
     this.m_dwHairColor = row.hair_color;
@@ -621,12 +621,12 @@ export class CPlayer {
     this.m_worldId = row.world_id;
     this.m_nZoneId = row.zone_id;
     this.m_bAuthority = authority;
-    this.m_nSkillPoint = row.skill_point ?? 0;
-    this.m_nSkillLevel = row.skill_level ?? 0;
-    this.m_dwPKPropensity = row.pk_propensity ?? 0;
-    this.m_nPKValue = row.pk_value ?? 0;
-    this.m_dwPKTime = Number(row.pk_time ?? 0);
-    this.m_dwPKExp = row.pk_exp ?? 0;
+    this.m_nSkillPoint = row.skill_point;
+    this.m_nSkillLevel = row.skill_level;
+    this.m_dwPKPropensity = row.pk_propensity;
+    this.m_nPKValue = row.pk_value;
+    this.m_dwPKTime = Number(row.pk_time);
+    this.m_dwPKExp = row.pk_exp;
     this.socket = socket;
     // m_invIndex: identity for the bag range (m_apIndex[i] = i after Clear,
     // Item.h:480), NULL_ID for equip slots (set by syncInvIndexAfterLoad once
@@ -647,7 +647,7 @@ export class CPlayer {
    * stores by slot index). Empty slots keep the NULL_ID sentinel. Caller is
    * `JoinService.loadSkills` after the DB row resolves.
    */
-  hydrateSkills(slots: ReadonlyArray<{ slot: number; skillId: number; level: number }>): void {
+  hydrateSkills(slots: readonly { slot: number; skillId: number; level: number }[]): void {
     for (const s of slots) {
       if (s.slot < 0 || s.slot >= this.m_aJobSkill.length) continue;
       if (s.skillId === NULL_ID || s.skillId === 0) continue;
@@ -664,7 +664,7 @@ export class CPlayer {
    * to learn or upgrade. Slots beyond the list keep the NULL_ID sentinel.
    * Levels are applied later via {@link overlaySkillLevels}.
    */
-  seedRoster(orderedSkillIds: ReadonlyArray<number>): void {
+  seedRoster(orderedSkillIds: readonly number[]): void {
     for (let i = 0; i < this.m_aJobSkill.length; i++) {
       const id = orderedSkillIds[i];
       this.m_aJobSkill[i] = id !== undefined
@@ -678,7 +678,7 @@ export class CPlayer {
    * (not slot) so a change in seed order across versions never mislabels a
    * level. Unmatched entries are dropped defensively.
    */
-  overlaySkillLevels(learned: ReadonlyArray<{ skillId: number; level: number }>): void {
+  overlaySkillLevels(learned: readonly { skillId: number; level: number }[]): void {
     for (const l of learned) {
       if (l.skillId === NULL_ID || l.skillId === 0 || l.level <= 0) continue;
       const slot = this.m_aJobSkill.find((s) => s.skillId === l.skillId);

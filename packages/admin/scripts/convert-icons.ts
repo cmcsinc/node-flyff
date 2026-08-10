@@ -69,7 +69,7 @@ async function main(): Promise<void> {
   console.log('[icons] Loading item definitions...');
   const resources = await loadAllResources(DATA_DIR);
   const items = [...resources.items.items.values()].filter((it) => it.icon);
-  console.log(`[icons] ${items.length} items reference an icon; output -> ${OUT_DIR}`);
+  console.log(`[icons] ${String(items.length)} items reference an icon; output -> ${OUT_DIR}`);
 
   await mkdir(OUT_DIR, { recursive: true });
 
@@ -85,7 +85,7 @@ async function main(): Promise<void> {
     const ddsPath = await findDds(icon);
     if (!ddsPath) {
       tally.missing++;
-      missing.push(`${item.id} ${item.name} -> ${icon}`);
+      missing.push(`${String(item.id)} ${item.name} -> ${icon}`);
       continue;
     }
 
@@ -105,17 +105,17 @@ async function main(): Promise<void> {
       tally.converted++;
     } catch (err) {
       tally.failed++;
-      failed.push(`${item.id} ${item.name} (${icon}): ${(err as Error).message}`);
+      failed.push(`${String(item.id)} ${item.name} (${icon}): ${(err as Error).message}`);
     }
   }
 
   console.log('\n[icons] done:', JSON.stringify(tally));
   if (missing.length) {
-    console.warn(`[icons] ${missing.length} icons had no source .dds (first 10):`);
+    console.warn(`[icons] ${String(missing.length)} icons had no source .dds (first 10):`);
     for (const m of missing.slice(0, 10)) console.warn('  -', m);
   }
   if (failed.length) {
-    console.warn(`[icons] ${failed.length} icons failed to decode (first 10):`);
+    console.warn(`[icons] ${String(failed.length)} icons failed to decode (first 10):`);
     for (const f of failed.slice(0, 10)) console.warn('  -', f);
   }
 }

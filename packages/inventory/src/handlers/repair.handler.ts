@@ -14,7 +14,7 @@
  * @module handlers/repair
  */
 
-import { PacketReader } from '@flyff/core/net/PacketReader';
+import type { PacketReader } from '@flyff/core/net/PacketReader';
 import type { ClientSocket } from '@flyff/core/net/dispatcher';
 import { SessionState } from '@flyff/core/constants/sessionState';
 import { PacketError } from '@flyff/core/errors';
@@ -38,7 +38,9 @@ export class RepairHandler {
 
   handleRepair(socket: ClientSocket, reader: PacketReader): void {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return; }
-    const player = this.deps.playerManager.get(socket.session.charId!);
+    const charId = socket.session.charId;
+    if (charId === undefined) { socket.destroy(); return; }
+    const player = this.deps.playerManager.get(charId);
     if (!player) { socket.destroy(); return; }
 
     try {
@@ -49,7 +51,7 @@ export class RepairHandler {
 
       const r = this.deps.repairService.repair(player, slots);
       if (!r.ok) return;
-      for (const s of r.repaired!) {
+      for (const s of r.repaired) {
         this.deps.playerManager.sendTo(
           player,
           buildUpdateItemDurability(player.m_idPlayer, s.objid, s.durability),

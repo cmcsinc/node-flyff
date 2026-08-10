@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { AlertTriangle, Info, RotateCcw, Save, ScrollText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { ConfirmDialog } from "@/components/confirm-dialog";
-import { SearchableSelect } from "@/components/form/searchable-select";
-import { pairQuestArgs, type ArgView, type CommandView } from "@/lib/quest-args";
-import type { QuestEditorView } from "@/lib/quest-editor";
-import { questCmdSpec, type BlastTier } from "@/lib/quest-fields";
-import type { QuestArg } from "@flyff/resources";
-import { QuestCommandCard, TIER_COPY } from "./quest-command-card";
+import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { AlertTriangle, Info, RotateCcw, Save, ScrollText } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { ConfirmDialog } from '@/components/confirm-dialog';
+import { SearchableSelect } from '@/components/form/searchable-select';
+import { pairQuestArgs, type ArgView, type CommandView } from '@/lib/quest-args';
+import type { QuestEditorView } from '@/lib/quest-editor';
+import { questCmdSpec, type BlastTier } from '@/lib/quest-fields';
+import type { QuestArg } from '@flyff/resources';
+import { QuestCommandCard, TIER_COPY } from './quest-command-card';
 import {
   addCommand,
   buildPutBody,
@@ -25,7 +25,7 @@ import {
   setArg,
   toggleRemoved,
   type QuestDraft,
-} from "./quest-drafts";
+} from './quest-drafts';
 
 /**
  * Quest editor, banded by client blast radius.
@@ -55,10 +55,10 @@ interface PutResponse {
   needsClientPatch?: boolean;
 }
 
-const TIER_BADGE: Readonly<Record<BlastTier, "secondary" | "warning" | "destructive">> = {
-  server: "secondary",
-  cosmetic: "warning",
-  structural: "destructive",
+const TIER_BADGE: Readonly<Record<BlastTier, 'secondary' | 'warning' | 'destructive'>> = {
+  server: 'secondary',
+  cosmetic: 'warning',
+  structural: 'destructive',
 };
 
 export function QuestPanel({
@@ -77,7 +77,7 @@ export function QuestPanel({
 
   const dirty = isDirty(draft, baseline);
   const worst = pendingTier(draft, baseline);
-  const needsPatch = worst !== null && worst !== "server";
+  const needsPatch = worst !== null && worst !== 'server';
 
   const addOptions = useMemo(
     () =>
@@ -91,24 +91,24 @@ export function QuestPanel({
   async function save(): Promise<void> {
     setSaving(true);
     try {
-      const res = await fetch("/api/quest", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/quest', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(buildPutBody(view.id, draft, baseline)),
       });
       const data = (await res.json().catch(() => null)) as PutResponse | null;
       if (!res.ok) {
-        toast.error(data?.error ?? "Save failed");
+        toast.error(data?.error ?? 'Save failed');
         return;
       }
       toast.success(
         needsPatch
-          ? "Written to propQuest.inc — restart the world server AND export a client patch"
-          : "Written to propQuest.inc — restart the world server to apply",
+          ? 'Written to propQuest.inc — restart the world server AND export a client patch'
+          : 'Written to propQuest.inc — restart the world server to apply',
       );
       router.refresh();
     } catch {
-      toast.error("Save failed");
+      toast.error('Save failed');
     } finally {
       setSaving(false);
     }
@@ -127,7 +127,7 @@ export function QuestPanel({
               </span>
             </CardTitle>
             <div className="flex flex-wrap items-center gap-1.5">
-              {(["structural", "cosmetic", "server"] as const).map((t) =>
+              {(['structural', 'cosmetic', 'server'] as const).map((t) =>
                 view.tierCounts[t] > 0 ? (
                   <Badge key={t} variant={TIER_BADGE[t]}>
                     {view.tierCounts[t]} {TIER_COPY[t].label.toLowerCase()}
@@ -140,11 +140,11 @@ export function QuestPanel({
           <p className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-[11px] leading-snug text-destructive">
             <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <span>
-              <strong>The client reads this file too.</strong>{" "}
-              <code className="font-mono">propQuest.inc</code> is packed into{" "}
-              <code className="font-mono">dataSub1.res</code>, so most fields here need a{" "}
-              <strong>client patch export</strong> on top of a world-server restart. Only{" "}
-              &ldquo;{TIER_COPY.server.label}&rdquo; commands are safe to change on their own.
+              <strong>The client reads this file too.</strong>{' '}
+              <code className="font-mono">propQuest.inc</code> is packed into{' '}
+              <code className="font-mono">dataSub1.res</code>, so most fields here need a{' '}
+              <strong>client patch export</strong> on top of a world-server restart. Only &ldquo;
+              {TIER_COPY.server.label}&rdquo; commands are safe to change on their own.
             </span>
           </p>
         </CardHeader>
@@ -156,14 +156,16 @@ export function QuestPanel({
             hint={
               view.titleToken
                 ? `Stored in propQuest.txt.txt under ${view.titleToken}. Shown in the client's quest list.`
-                : "This quest has no SetTitle token, so its title cannot be set here."
+                : 'This quest has no SetTitle token, so its title cannot be set here.'
             }
           >
             <Input
               id="q-title"
               value={draft.title}
               disabled={!view.titleToken}
-              onChange={(e) => { setDraft({ ...draft, title: e.target.value }); }}
+              onChange={(e) => {
+                setDraft({ ...draft, title: e.target.value });
+              }}
               className="h-9"
             />
           </Field>
@@ -191,7 +193,9 @@ export function QuestPanel({
                         type="button"
                         variant="ghost"
                         size="sm"
-                        onClick={() => { setDraft(toggleRemoved(draft, i)); }}
+                        onClick={() => {
+                          setDraft(toggleRemoved(draft, i));
+                        }}
                         className="h-7 cursor-pointer text-xs"
                       >
                         Undo
@@ -208,9 +212,15 @@ export function QuestPanel({
                     key={i}
                     view={{ ...rendered, index: i, args: argsFor(rendered, c.args) }}
                     expanded={open === i}
-                    onToggle={() => { setOpen(open === i ? null : i); }}
-                    onArgChange={(ai, arg) => { setDraft(setArg(draft, i, ai, arg)); }}
-                    onRemove={() => { setDraft(toggleRemoved(draft, i)); }}
+                    onToggle={() => {
+                      setOpen(open === i ? null : i);
+                    }}
+                    onArgChange={(ai, arg) => {
+                      setDraft(setArg(draft, i, ai, arg));
+                    }}
+                    onRemove={() => {
+                      setDraft(toggleRemoved(draft, i));
+                    }}
                   />
                 );
               })
@@ -239,16 +249,20 @@ export function QuestPanel({
 
         <CardFooter className="flex flex-wrap items-center gap-3 border-t border-border pt-4">
           <Button
-            onClick={() => { setConfirming(true); }}
+            onClick={() => {
+              setConfirming(true);
+            }}
             disabled={!dirty || saving}
             className="cursor-pointer gap-2"
           >
             <Save className="h-4 w-4" />
-            {saving ? "Saving…" : "Save changes"}
+            {saving ? 'Saving…' : 'Save changes'}
           </Button>
           <Button
             variant="outline"
-            onClick={() => { setDraft(draftFromView(view)); }}
+            onClick={() => {
+              setDraft(draftFromView(view));
+            }}
             disabled={!dirty || saving}
             className="cursor-pointer gap-2"
           >
@@ -257,7 +271,7 @@ export function QuestPanel({
           </Button>
           {dirty && worst !== null && (
             <span
-              className={`flex items-center gap-1.5 text-[11px] ${needsPatch ? "font-medium text-warning" : "text-muted-foreground"}`}
+              className={`flex items-center gap-1.5 text-[11px] ${needsPatch ? 'font-medium text-warning' : 'text-muted-foreground'}`}
             >
               {needsPatch ? (
                 <AlertTriangle className="h-3.5 w-3.5" aria-hidden="true" />
@@ -266,7 +280,7 @@ export function QuestPanel({
               )}
               {needsPatch
                 ? `Unsaved · reaches ${TIER_COPY[worst].label.toLowerCase()} — needs a client patch`
-                : "Unsaved · server-only change"}
+                : 'Unsaved · server-only change'}
             </span>
           )}
         </CardFooter>
@@ -283,7 +297,7 @@ export function QuestPanel({
               This rewrites <code className="font-mono">raw/propQuest.inc</code>
               {draft.title !== baseline.title ? (
                 <>
-                  {" "}
+                  {' '}
                   and <code className="font-mono">raw/propQuest.txt.txt</code>
                 </>
               ) : null}

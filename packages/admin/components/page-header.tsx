@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface PageHeaderProps {
   title: string;
@@ -16,9 +16,15 @@ interface PageHeaderProps {
  * Shared page header — title, optional description, back link, and actions.
  * Replaces the copy-pasted `<h1> + count` and back-arrow blocks across pages.
  */
-export function PageHeader({ title, description, backHref, actions, className }: PageHeaderProps) {
+export function PageHeader({
+  title,
+  description,
+  backHref,
+  actions,
+  className,
+}: PageHeaderProps): React.JSX.Element {
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn('space-y-3', className)}>
       {backHref && (
         <Link
           href={backHref}
@@ -30,7 +36,9 @@ export function PageHeader({ title, description, backHref, actions, className }:
       )}
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-4">
         <div className="min-w-0">
-          <h1 className="truncate text-xl font-bold tracking-tight sm:text-2xl md:text-3xl">{title}</h1>
+          <h1 className="truncate text-xl font-bold tracking-tight sm:text-2xl md:text-3xl">
+            {title}
+          </h1>
           {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
         </div>
         {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}

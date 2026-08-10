@@ -12,7 +12,7 @@
  * @module lib/spawns
  */
 
-import { SpawnSchema } from "@flyff/resources";
+import { SpawnSchema } from '@flyff/resources';
 import {
   deleteZoneEntry,
   deleteZoneEntryFromFile,
@@ -21,9 +21,9 @@ import {
   writeZoneEntryToFile,
   zoneDocs,
   zoneSeq,
-} from "./zone-seq";
+} from './zone-seq';
 
-const KEY = "spawns";
+const KEY = 'spawns';
 
 /** One spawn point, flattened for the list page. */
 export interface SpawnRow {
@@ -45,7 +45,9 @@ export interface SpawnRow {
 }
 
 /** Every spawn point across every zone file. `movers` resolves the names. */
-export function loadSpawns(movers: ReadonlyMap<number, { name: string; level: number }>): SpawnRow[] {
+export function loadSpawns(
+  movers: ReadonlyMap<number, { name: string; level: number }>,
+): SpawnRow[] {
   const rows: SpawnRow[] = [];
   for (const { zoneId, zoneName, doc } of zoneDocs()) {
     for (const spawn of zoneSeq(doc, KEY)) {
@@ -54,13 +56,14 @@ export function loadSpawns(movers: ReadonlyMap<number, { name: string; level: nu
       const mover = movers.get(moverId);
       const id = Number(spawn.id ?? 0);
       rows.push({
-        ref: `${zoneId}:${id}`,
+        ref: `${zoneId}:${String(id)}`,
         zoneId,
         zoneName,
         id,
         moverId,
-        moverName: mover?.name ?? "",
-        level: mover?.level ?? 0,        x: Number(pos.x ?? 0),
+        moverName: mover?.name ?? '',
+        level: mover?.level ?? 0,
+        x: Number(pos.x ?? 0),
         y: Number(pos.y ?? 0),
         z: Number(pos.z ?? 0),
         radius: Number(spawn.radius ?? 0),

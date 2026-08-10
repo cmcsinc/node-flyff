@@ -14,13 +14,8 @@
  * @module lib/quest-catalog
  */
 
-import {
-  npcNameForKey,
-  type QuestDef,
-  type QuestCommand,
-  type QuestState,
-} from "@flyff/resources";
-import { getResourceIndex as getCatalog } from "./resource-cache";
+import { npcNameForKey, type QuestDef, type QuestCommand, type QuestState } from '@flyff/resources';
+import { getResourceIndex as getCatalog } from './resource-cache';
 
 /** A resolved world position for an NPC or monster. */
 export interface Placement {
@@ -38,27 +33,27 @@ export async function getQuest(questId: number): Promise<QuestDef | undefined> {
 
 /** Resolve an IDS_PROPQUEST_INC_* token to display text. Empty string when absent. */
 export async function resolveQuestText(token: string | undefined): Promise<string> {
-  if (!token) return "";
+  if (!token) return '';
   const res = await getCatalog();
-  return res.questText.get(token) ?? "";
+  return res.questText.get(token) ?? '';
 }
 
 /** Item name + icon URL for a propItem id. */
-export async function resolveItem(
-  itemId: number,
-): Promise<{ name: string; iconUrl: string }> {
+export async function resolveItem(itemId: number): Promise<{ name: string; iconUrl: string }> {
   const res = await getCatalog();
   const def = res.items.items.get(itemId);
   return {
-    name: def?.name ?? `Item #${itemId}`,
-    iconUrl: def?.icon ? `/icons/${def.icon.replace(/\.dds$/i, ".png")}` : "/icons/_placeholder.svg",
+    name: def?.name ?? `Item #${String(itemId)}`,
+    iconUrl: def?.icon
+      ? `/icons/${def.icon.replace(/\.dds$/i, '.png')}`
+      : '/icons/_placeholder.svg',
   };
 }
 
 /** Mover (monster) name for an MI_* numeric id. */
 export async function resolveMoverName(moverId: number): Promise<string> {
   const res = await getCatalog();
-  return res.movers.movers.get(moverId)?.name ?? `Monster #${moverId}`;
+  return res.movers.movers.get(moverId)?.name ?? `Monster #${String(moverId)}`;
 }
 
 /**
@@ -71,7 +66,7 @@ export async function resolveNpcName(charKey: string): Promise<string> {
   const name = npcNameForKey(res.characterInc, charKey);
   if (name) return name;
   // Strip the `XxYy_` region prefix; keeps the key readable without lying.
-  return charKey.replace(/^[A-Za-z]{2,4}_/, "") || charKey;
+  return charKey.replace(/^[A-Za-z]{2,4}_/, '') || charKey;
 }
 
 /**

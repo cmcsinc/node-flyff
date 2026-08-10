@@ -17,16 +17,16 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.alterTable('skills', (table: any) => {
+  await db.schema.alterTable('skills', (table) => {
     table.integer('slot').unsigned().notNullable().defaultTo(0);
   });
-  await db.schema.alterTable('skills', (table: any) => {
+  await db.schema.alterTable('skills', (table) => {
     table.dropUnique(['character_id', 'skill_id']);
   });
-  await db.schema.alterTable('skills', (table: any) => {
+  await db.schema.alterTable('skills', (table) => {
     table.unique(['character_id', 'slot']);
   });
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.integer('skill_point').unsigned().notNullable().defaultTo(0);
     table.integer('skill_level').unsigned().notNullable().defaultTo(0);
   });
@@ -38,14 +38,14 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('skills', (table: any) => {
+  await db.schema.alterTable('skills', (table) => {
     table.dropUnique(['character_id', 'slot']);
   });
-  await db.schema.alterTable('skills', (table: any) => {
+  await db.schema.alterTable('skills', (table) => {
     table.unique(['character_id', 'skill_id']);
     table.dropColumn('slot');
   });
-  await db.schema.alterTable('characters', (table: any) => {
+  await db.schema.alterTable('characters', (table) => {
     table.dropColumn('skill_point');
     table.dropColumn('skill_level');
   });

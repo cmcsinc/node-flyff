@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import { Plus, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Field } from "@/components/ui/field";
-import { SearchableSelect } from "@/components/form/searchable-select";
-import type { EnumOption } from "@/lib/field-schema";
-import type { VendorTabView } from "@/lib/character-inc";
+import { useMemo } from 'react';
+import { Plus, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Field } from '@/components/ui/field';
+import { SearchableSelect } from '@/components/form/searchable-select';
+import type { EnumOption } from '@/lib/field-schema';
+import type { VendorTabView } from '@/lib/character-inc';
 
 /** Editable form of one `AddVendorItem` rule — a category, not an item. */
 export interface RuleDraft {
@@ -122,13 +122,15 @@ export function ShopTabEditor({
         hint={
           tab?.token
             ? `Client string-table row ${tab.token} — written to character.txt.txt`
-            : "New row — a string-table token is assigned on save"
+            : 'New row — a string-table token is assigned on save'
         }
       >
         <Input
           id={captionId}
-          value={tab?.label ?? ""}
-          onChange={(e) => { onTabChange({ label: e.currentTarget.value }); }}
+          value={tab?.label ?? ''}
+          onChange={(e) => {
+            onTabChange({ label: e.currentTarget.value });
+          }}
           placeholder="e.g. Weapons"
           className="h-9 max-w-xs text-xs"
         />
@@ -145,9 +147,8 @@ export function ShopTabEditor({
           )}
         </div>
         <p className="text-[11px] leading-snug text-muted-foreground">
-          Each rule stocks every item of one kind, cheapest first, up to{" "}
-          <strong>Max items</strong>. The saved count is computed at world-server boot,
-          so it changes if items are added later.
+          Each rule stocks every item of one kind, cheapest first, up to <strong>Max items</strong>.
+          The saved count is computed at world-server boot, so it changes if items are added later.
         </p>
 
         {myRules.length === 0 ? (
@@ -156,7 +157,7 @@ export function ShopTabEditor({
             onAdd={() => {
               setMyRules([
                 ...myRules,
-                { slot, kind3: "", job: -1, uniqueMin: 1, uniqueMax: 200, totalNum: 25 },
+                { slot, kind3: '', job: -1, uniqueMin: 1, uniqueMax: 200, totalNum: 25 },
               ]);
             }}
           />
@@ -181,7 +182,9 @@ export function ShopTabEditor({
                     <SearchableSelect
                       value={r.kind3}
                       options={kind3Options}
-                      onChange={(v) => { patchRule(i, { kind3: v }); }}
+                      onChange={(v) => {
+                        patchRule(i, { kind3: v });
+                      }}
                       placeholder="Pick a kind…"
                     />
                     {resolved === 0 && (
@@ -193,27 +196,37 @@ export function ShopTabEditor({
                   <SearchableSelect
                     value={String(r.job)}
                     options={jobOptions}
-                    onChange={(v) => { patchRule(i, { job: Number(v) }); }}
+                    onChange={(v) => {
+                      patchRule(i, { job: Number(v) });
+                    }}
                   />
                   <NumCell
                     label={`Min level, rule ${String(i + 1)}`}
                     value={r.uniqueMin}
-                    onChange={(n) => { patchRule(i, { uniqueMin: n }); }}
+                    onChange={(n) => {
+                      patchRule(i, { uniqueMin: n });
+                    }}
                   />
                   <NumCell
                     label={`Max level, rule ${String(i + 1)}`}
                     value={r.uniqueMax}
-                    onChange={(n) => { patchRule(i, { uniqueMax: n }); }}
+                    onChange={(n) => {
+                      patchRule(i, { uniqueMax: n });
+                    }}
                   />
                   <NumCell
                     label={`Max items, rule ${String(i + 1)}`}
                     value={r.totalNum}
                     max={100}
-                    onChange={(n) => { patchRule(i, { totalNum: n }); }}
+                    onChange={(n) => {
+                      patchRule(i, { totalNum: n });
+                    }}
                   />
                   <RemoveButton
                     label={`Remove rule ${String(i + 1)}`}
-                    onClick={() => { setMyRules(myRules.filter((_, k) => k !== i)); }}
+                    onClick={() => {
+                      setMyRules(myRules.filter((_, k) => k !== i));
+                    }}
                   />
                 </div>
               );
@@ -223,7 +236,7 @@ export function ShopTabEditor({
               onClick={() => {
                 setMyRules([
                   ...myRules,
-                  { slot, kind3: "", job: -1, uniqueMin: 1, uniqueMax: 200, totalNum: 25 },
+                  { slot, kind3: '', job: -1, uniqueMin: 1, uniqueMax: 200, totalNum: 25 },
                 ]);
               }}
             />
@@ -236,14 +249,16 @@ export function ShopTabEditor({
           Specific items
         </p>
         <p className="text-[11px] leading-snug text-muted-foreground">
-          One exact item each, added on top of the rules above. Use this to stock a
-          single item without pulling in its whole kind.
+          One exact item each, added on top of the rules above. Use this to stock a single item
+          without pulling in its whole kind.
         </p>
 
         {myExplicit.length === 0 ? (
           <EmptyRow
             label="No specific items"
-            onAdd={() => { setMyExplicit([...myExplicit, { slot, itemId: 0 }]); }}
+            onAdd={() => {
+              setMyExplicit([...myExplicit, { slot, itemId: 0 }]);
+            }}
           />
         ) : (
           <div className="space-y-2">
@@ -264,13 +279,17 @@ export function ShopTabEditor({
                 />
                 <RemoveButton
                   label={`Remove item ${String(i + 1)}`}
-                  onClick={() => { setMyExplicit(myExplicit.filter((_, k) => k !== i)); }}
+                  onClick={() => {
+                    setMyExplicit(myExplicit.filter((_, k) => k !== i));
+                  }}
                 />
               </div>
             ))}
             <AddButton
               label="Add item"
-              onClick={() => { setMyExplicit([...myExplicit, { slot, itemId: 0 }]); }}
+              onClick={() => {
+                setMyExplicit([...myExplicit, { slot, itemId: 0 }]);
+              }}
             />
           </div>
         )}
@@ -316,7 +335,13 @@ function EmptyRow({ label, onAdd }: { label: string; onAdd: () => void }): React
   return (
     <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-border px-3 py-5">
       <p className="text-[11px] text-muted-foreground">{label}</p>
-      <Button type="button" variant="outline" size="sm" onClick={onAdd} className="cursor-pointer gap-1.5">
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        onClick={onAdd}
+        className="cursor-pointer gap-1.5"
+      >
         <Plus className="h-3.5 w-3.5" />
         Add
       </Button>
@@ -326,14 +351,26 @@ function EmptyRow({ label, onAdd }: { label: string; onAdd: () => void }): React
 
 function AddButton({ label, onClick }: { label: string; onClick: () => void }): React.JSX.Element {
   return (
-    <Button type="button" variant="ghost" size="sm" onClick={onClick} className="cursor-pointer gap-1.5 text-xs">
+    <Button
+      type="button"
+      variant="ghost"
+      size="sm"
+      onClick={onClick}
+      className="cursor-pointer gap-1.5 text-xs"
+    >
       <Plus className="h-3.5 w-3.5" />
       {label}
     </Button>
   );
 }
 
-function RemoveButton({ label, onClick }: { label: string; onClick: () => void }): React.JSX.Element {
+function RemoveButton({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}): React.JSX.Element {
   return (
     <Button
       type="button"

@@ -30,7 +30,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('guild_quest', (table: any) => {
+  await db.schema.createTable('guild_quest', (table) => {
     table.increments('id').primary();
 
     // `idGuild`. FK WITH CASCADE, unlike `guild_war` (025) which deliberately

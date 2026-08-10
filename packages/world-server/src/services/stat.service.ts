@@ -118,7 +118,7 @@ export class StatService {
       strength: player.m_nStr, stamina: player.m_nSta,
       dexterity: player.m_nDex, intelligence: player.m_nInt,
       remain_gp: player.m_nRemainGP,
-    }).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'stat persist failed'));
+    }).catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'stat persist failed'); });
 
     logger.debug({ charId: player.m_idPlayer, alloc, remainGP: player.m_nRemainGP }, 'stat allocated');
     return { ok: true };
@@ -184,7 +184,7 @@ export class StatService {
       strength: player.m_nStr, stamina: player.m_nSta,
       dexterity: player.m_nDex, intelligence: player.m_nInt,
       remain_gp: player.m_nRemainGP,
-    }).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'initStat persist failed'));
+    }).catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'initStat persist failed'); });
 
     logger.debug({ charId: player.m_idPlayer, remainGP: player.m_nRemainGP }, 'stats reset (InitStat)');
   }
@@ -195,7 +195,7 @@ export class StatService {
    * this player in the target display see the refilled bar.
    */
   private syncVitals(player: CPlayer): void {
-    const vitals: ReadonlyArray<[number, number]> = [
+    const vitals: readonly [number, number][] = [
       [DST_HP, player.m_nHp], [DST_MP, player.m_nMp], [DST_FP, player.m_nFp],
     ];
     for (const [dst, value] of vitals) {

@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Monitor, Moon, Sun } from "lucide-react";
-import { cn } from "@/lib/utils";
+import * as React from 'react';
+import { Monitor, Moon, Sun } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-export type ThemeChoice = "light" | "dark" | "system";
+export type ThemeChoice = 'light' | 'dark' | 'system';
 
-export const THEME_STORAGE_KEY = "flyff-admin-theme";
+export const THEME_STORAGE_KEY = 'flyff-admin-theme';
 
 /**
  * Inline script that applies the stored theme before first paint. Rendered in
@@ -17,15 +17,15 @@ export const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('${
 
 function apply(choice: ThemeChoice): void {
   const dark =
-    choice === "dark" ||
-    (choice === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  document.documentElement.classList.toggle("dark", dark);
+    choice === 'dark' ||
+    (choice === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.classList.toggle('dark', dark);
 }
 
 const OPTIONS: { value: ThemeChoice; label: string; icon: typeof Sun }[] = [
-  { value: "light", label: "Light", icon: Sun },
-  { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Monitor },
+  { value: 'light', label: 'Light', icon: Sun },
+  { value: 'dark', label: 'Dark', icon: Moon },
+  { value: 'system', label: 'System', icon: Monitor },
 ];
 
 /**
@@ -34,25 +34,25 @@ const OPTIONS: { value: ThemeChoice; label: string; icon: typeof Sun }[] = [
  * third state, and a two-state toggle cannot express it.
  */
 export function ThemeToggle({ className }: { className?: string }): React.JSX.Element {
-  const [choice, setChoice] = React.useState<ThemeChoice>("system");
+  const [choice, setChoice] = React.useState<ThemeChoice>('system');
 
   // Read the stored choice after mount — localStorage does not exist on the
   // server, and the pre-paint script has already applied the class.
   React.useEffect(() => {
     const stored = localStorage.getItem(THEME_STORAGE_KEY) as ThemeChoice | null;
-    if (stored === "light" || stored === "dark" || stored === "system") setChoice(stored);
+    if (stored === 'light' || stored === 'dark' || stored === 'system') setChoice(stored);
   }, []);
 
   // While following the OS, react to it changing mid-session.
   React.useEffect(() => {
-    if (choice !== "system") return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    if (choice !== 'system') return;
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const onChange = (): void => {
-      apply("system");
+      apply('system');
     };
-    mq.addEventListener("change", onChange);
+    mq.addEventListener('change', onChange);
     return (): void => {
-      mq.removeEventListener("change", onChange);
+      mq.removeEventListener('change', onChange);
     };
   }, [choice]);
 
@@ -67,7 +67,7 @@ export function ThemeToggle({ className }: { className?: string }): React.JSX.El
       role="radiogroup"
       aria-label="Colour theme"
       className={cn(
-        "inline-flex items-center gap-0.5 rounded-full border border-border bg-muted/60 p-0.5",
+        'inline-flex items-center gap-0.5 rounded-full border border-border bg-muted/60 p-0.5',
         className,
       )}
     >
@@ -85,10 +85,10 @@ export function ThemeToggle({ className }: { className?: string }): React.JSX.El
               select(value);
             }}
             className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-full transition-colors",
+              'flex h-7 w-7 items-center justify-center rounded-full transition-colors',
               active
-                ? "bg-card text-primary shadow-card"
-                : "text-muted-foreground hover:text-foreground",
+                ? 'bg-card text-primary shadow-card'
+                : 'text-muted-foreground hover:text-foreground',
             )}
           >
             <Icon className="h-3.5 w-3.5" aria-hidden />

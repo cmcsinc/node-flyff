@@ -20,7 +20,7 @@ export const PLAYER_HANDOFF_CHANNEL = 'player:handoff';
 
 /** Minimal bus port the listener needs -- `IpcBus` satisfies it. */
 export interface ClusterBusPort {
-  subscribe<T>(channel: string, handler: (payload: T, from: string) => void | Promise<void>): Promise<void>;
+  subscribe(channel: string, handler: (payload: unknown, from: string) => void | Promise<void>): Promise<void>;
   unsubscribe(channel: string): void;
 }
 
@@ -86,8 +86,8 @@ export class ClusterListener {
       this.log.warn('No IPC bus -- player:handoff listener not started');
       return;
     }
-    await this.bus.subscribe<PlayerHandoff>(PLAYER_HANDOFF_CHANNEL, (payload, from) =>
-      this.onHandoff(payload, from),
+    await this.bus.subscribe(PLAYER_HANDOFF_CHANNEL, (payload, from) =>
+      { this.onHandoff(payload, from); },
     );
     this.log.info({ channel: PLAYER_HANDOFF_CHANNEL }, 'Listening for player handoffs');
   }

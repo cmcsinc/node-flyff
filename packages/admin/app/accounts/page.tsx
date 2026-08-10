@@ -1,25 +1,31 @@
-import { db } from "@/lib/db";
-import { accounts, characters } from "@/../drizzle/schema";
-import { eq, desc, sql } from "drizzle-orm";
-import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Select } from "@/components/ui/select";
-import { PageHeader } from "@/components/page-header";
-import { SearchInput } from "@/components/search-input";
-import { EmptyRow } from "@/components/empty-state";
+import { db } from '@/lib/db';
+import { accounts, characters } from '@/../drizzle/schema';
+import { eq, desc, sql } from 'drizzle-orm';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Select } from '@/components/ui/select';
+import { PageHeader } from '@/components/page-header';
+import { SearchInput } from '@/components/search-input';
+import { EmptyRow } from '@/components/empty-state';
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow, SortableHead,
-} from "@/components/ui/table";
-import { parseSort, sortRows } from "@/lib/sort";
-import { formatDate } from "@/lib/utils";
-import { BanToggleButton } from "./actions";
-import { CreateAccountButton } from "./account-form";
-import { AUTH, AUTH_LABELS, hasAuthority } from "@flyff/entities/constants/authority";
-import { Users } from "lucide-react";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  SortableHead,
+} from '@/components/ui/table';
+import { parseSort, sortRows } from '@/lib/sort';
+import { formatDate } from '@/lib/utils';
+import { BanToggleButton } from './actions';
+import { CreateAccountButton } from './account-form';
+import { AUTH, AUTH_LABELS, hasAuthority } from '@flyff/entities/constants/authority';
+import { Users } from 'lucide-react';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface SearchParams {
   search?: string;
@@ -30,16 +36,16 @@ interface SearchParams {
   [key: string]: string | undefined;
 }
 
-const SORT_KEYS = ["id", "username", "email", "charCount", "status", "createdAt"] as const;
+const SORT_KEYS = ['id', 'username', 'email', 'charCount', 'status', 'createdAt'] as const;
 
 export default async function AccountsPage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
-}) {
+}): Promise<React.JSX.Element> {
   const params = await searchParams;
-  const search = params.search ?? "";
-  const filter = params.filter ?? "all";
+  const search = params.search ?? '';
+  const filter = params.filter ?? 'all';
 
   const rows = await db
     .select({
@@ -50,7 +56,7 @@ export default async function AccountsPage({
       banned: accounts.banned,
       bannedUntil: accounts.bannedUntil,
       createdAt: accounts.createdAt,
-      charCount: sql<number>`count(${characters.id})`.as("char_count"),
+      charCount: sql<number>`count(${characters.id})`.as('char_count'),
     })
     .from(accounts)
     .leftJoin(characters, eq(accounts.id, characters.accountId))
@@ -60,8 +66,8 @@ export default async function AccountsPage({
 
   const filtered = rows.filter((r) => {
     if (search && !r.username.toLowerCase().includes(search.toLowerCase())) return false;
-    if (filter === "gm" && !hasAuthority(r.authority, AUTH.GAMEMASTER)) return false;
-    if (filter === "banned" && !r.banned) return false;
+    if (filter === 'gm' && !hasAuthority(r.authority, AUTH.GAMEMASTER)) return false;
+    if (filter === 'banned' && !r.banned) return false;
     return true;
   });
 
@@ -79,7 +85,7 @@ export default async function AccountsPage({
     <div className="space-y-6">
       <PageHeader
         title="Accounts"
-        description={`${filtered.length} of ${rows.length} accounts`}
+        description={`${String(filtered.length)} of ${String(rows.length)} accounts`}
         actions={<CreateAccountButton />}
       />
 
@@ -94,12 +100,19 @@ export default async function AccountsPage({
           defaultValue={search}
           className="w-full sm:w-64"
         />
-        <Select name="filter" defaultValue={filter} aria-label="Filter accounts" className="w-full sm:w-44">
+        <Select
+          name="filter"
+          defaultValue={filter}
+          aria-label="Filter accounts"
+          className="w-full sm:w-44"
+        >
           <option value="all">All Accounts</option>
           <option value="gm">Staff Only</option>
           <option value="banned">Banned Only</option>
         </Select>
-        <Button type="submit" variant="secondary" className="w-full sm:w-auto">Search</Button>
+        <Button type="submit" variant="secondary" className="w-full sm:w-auto">
+          Search
+        </Button>
       </form>
 
       <Card>
@@ -108,34 +121,71 @@ export default async function AccountsPage({
             <Table>
               <TableHeader className="sticky top-0 z-10 bg-card shadow-[0_1px_0_0_var(--color-border)]">
                 <TableRow className="hover:bg-transparent">
-                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">ID</SortableHead>
-                  <SortableHead sortKey="username" sort={sort} params={params}>Username</SortableHead>
-                  <SortableHead sortKey="email" sort={sort} params={params} className="hidden md:table-cell">Email</SortableHead>
-                  <SortableHead sortKey="charCount" sort={sort} params={params} align="center" className="hidden sm:table-cell">Characters</SortableHead>
-                  <SortableHead sortKey="status" sort={sort} params={params}>Status</SortableHead>
-                  <SortableHead sortKey="createdAt" sort={sort} params={params} className="hidden lg:table-cell">Created</SortableHead>
+                  <SortableHead sortKey="id" sort={sort} params={params} className="w-16">
+                    ID
+                  </SortableHead>
+                  <SortableHead sortKey="username" sort={sort} params={params}>
+                    Username
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="email"
+                    sort={sort}
+                    params={params}
+                    className="hidden md:table-cell"
+                  >
+                    Email
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="charCount"
+                    sort={sort}
+                    params={params}
+                    align="center"
+                    className="hidden sm:table-cell"
+                  >
+                    Characters
+                  </SortableHead>
+                  <SortableHead sortKey="status" sort={sort} params={params}>
+                    Status
+                  </SortableHead>
+                  <SortableHead
+                    sortKey="createdAt"
+                    sort={sort}
+                    params={params}
+                    className="hidden lg:table-cell"
+                  >
+                    Created
+                  </SortableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {sorted.map((acc) => (
                   <TableRow key={acc.id}>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{acc.id}</TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">
+                      {acc.id}
+                    </TableCell>
                     <TableCell>
-                      <Link href={`/accounts/${acc.id}`} className="font-medium text-primary hover:underline">
+                      <Link
+                        href={`/accounts/${String(acc.id)}`}
+                        className="font-medium text-primary hover:underline"
+                      >
                         {acc.username}
                       </Link>
                       {/* Email/char-count fold in here below md. */}
                       <span className="block truncate text-xs text-muted-foreground md:hidden">
-                        {acc.email ?? "no email"} · {acc.charCount} chars
+                        {acc.email ?? 'no email'} · {acc.charCount} chars
                       </span>
                     </TableCell>
-                    <TableCell className="hidden text-muted-foreground md:table-cell">{acc.email ?? "—"}</TableCell>
-                    <TableCell className="hidden text-center sm:table-cell">{acc.charCount}</TableCell>
+                    <TableCell className="hidden text-muted-foreground md:table-cell">
+                      {acc.email ?? '—'}
+                    </TableCell>
+                    <TableCell className="hidden text-center sm:table-cell">
+                      {acc.charCount}
+                    </TableCell>
                     <TableCell>
                       <div className="flex flex-wrap gap-1">
                         {hasAuthority(acc.authority, AUTH.GAMEMASTER) && (
-                          <Badge variant="gold">{AUTH_LABELS[acc.authority] ?? "Staff"}</Badge>
+                          <Badge variant="gold">{AUTH_LABELS[acc.authority] ?? 'Staff'}</Badge>
                         )}
                         {acc.banned && <Badge variant="destructive">Banned</Badge>}
                         {!hasAuthority(acc.authority, AUTH.GAMEMASTER) && !acc.banned && (
@@ -143,7 +193,9 @@ export default async function AccountsPage({
                         )}
                       </div>
                     </TableCell>
-                    <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">{formatDate(acc.createdAt)}</TableCell>
+                    <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
+                      {formatDate(acc.createdAt)}
+                    </TableCell>
                     <TableCell>
                       <div className="flex flex-wrap justify-end gap-2">
                         <BanToggleButton id={acc.id} banned={acc.banned} />

@@ -19,10 +19,10 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.alterTable('character_buffs', (table: any) => {
+  await db.schema.alterTable('character_buffs', (table) => {
     table.integer('expires_at_ms').notNullable().defaultTo(0);
   });
-  await db.schema.alterTable('character_buffs', (table: any) => {
+  await db.schema.alterTable('character_buffs', (table) => {
     table.dropColumn('total_ms');
   });
 }
@@ -33,10 +33,10 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('character_buffs', (table: any) => {
+  await db.schema.alterTable('character_buffs', (table) => {
     table.integer('total_ms').unsigned().notNullable().defaultTo(0);
   });
-  await db.schema.alterTable('character_buffs', (table: any) => {
+  await db.schema.alterTable('character_buffs', (table) => {
     table.dropColumn('expires_at_ms');
   });
 }

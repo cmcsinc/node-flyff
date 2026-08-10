@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Image from "next/image";
-import { worldName } from "@/lib/utils";
-import type { QuestGoal } from "./types";
+import * as React from 'react';
+import Image from 'next/image';
+import { worldName } from '@/lib/utils';
+import type { QuestGoal } from './types';
 
 interface GoalHoverProps {
   /** Icon to preview on hover (item or portrait). */
@@ -22,8 +22,8 @@ function coordLine(goal: QuestGoal): string {
     ? goal.zone.charAt(0).toUpperCase() + goal.zone.slice(1)
     : goal.worldId !== undefined
       ? worldName(goal.worldId)
-      : "";
-  const coords = `${Math.round(goal.x)}, ${Math.round(goal.z)}`;
+      : '';
+  const coords = `${String(Math.round(goal.x))}, ${String(Math.round(goal.z))}`;
   return place ? `${place} — ${coords}` : coords;
 }
 
@@ -33,18 +33,18 @@ function coordLine(goal: QuestGoal): string {
  * either. Positioned against the trigger's viewport rect and clamped to the
  * window edges (same approach as the skill tooltip).
  */
-export function GoalHover({ iconUrl, label, goal, children }: GoalHoverProps) {
+export function GoalHover({ iconUrl, label, goal, children }: GoalHoverProps): React.JSX.Element {
   const ref = React.useRef<HTMLSpanElement>(null);
   const [rect, setRect] = React.useState<DOMRect | null>(null);
 
-  const hasCard = Boolean(iconUrl || goal);
+  const hasCard = iconUrl != null || goal != null;
 
-  function open() {
+  function open(): void {
     if (!hasCard || !ref.current) return;
     setRect(ref.current.getBoundingClientRect());
   }
 
-  function close() {
+  function close(): void {
     setRect(null);
   }
 
@@ -58,7 +58,7 @@ export function GoalHover({ iconUrl, label, goal, children }: GoalHoverProps) {
       left: flipLeft ? Math.max(GAP, rect.left - GAP - CARD_W) : rect.right + GAP,
       top: rect.top,
       width: CARD_W,
-      transform: above ? "translateY(-100%)" : undefined,
+      transform: above ? 'translateY(-100%)' : undefined,
     };
   }
 
@@ -73,7 +73,7 @@ export function GoalHover({ iconUrl, label, goal, children }: GoalHoverProps) {
         onBlur={close}
         className={
           hasCard
-            ? "cursor-help rounded underline decoration-dotted decoration-muted-foreground/50 underline-offset-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            ? 'cursor-help rounded underline decoration-dotted decoration-muted-foreground/50 underline-offset-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
             : undefined
         }
       >

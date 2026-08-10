@@ -217,7 +217,7 @@ function lowerKeys(src: ReadonlyMap<string, number[]> | undefined): Map<string, 
 function npcLookupKey(npc: CMover): string | undefined {
   const ck = npc.m_szCharacterKey || npc.outfit?.characterKey;
   if (ck) return ck.toLowerCase();
-  const stripped = npc.m_szKey?.replace(/^MI_/i, '');
+  const stripped = npc.m_szKey.replace(/^MI_/i, '');
   return stripped ? stripped.toLowerCase() : undefined;
 }
 
@@ -251,8 +251,8 @@ export class ScriptDlgService {
   constructor(private deps: ScriptDlgDeps) {
     this.chat = deps.chat ?? new ChatSerializer();
     this.scriptDialog = deps.scriptDialog ?? new ScriptDialogSerializer();
-    this.beginByKey = lowerKeys(deps.quests.byNpc?.begin);
-    this.endByKey = lowerKeys(deps.quests.byNpc?.end);
+    this.beginByKey = lowerKeys(deps.quests.byNpc.begin);
+    this.endByKey = lowerKeys(deps.quests.byNpc.end);
   }
 
   /**
@@ -298,7 +298,7 @@ export class ScriptDlgService {
       {
         charId: player.m_idPlayer,
         npcKey,
-        charKey: npc.m_szCharacterKey ?? null,
+        charKey: npc.m_szCharacterKey,
         prefix: prefix ?? null,
         hasSource: stateForKey(this.deps.dialogs, prefix ?? '', keyToIndex(frame.key))?.source != null,
         key: frame.key,
@@ -366,7 +366,10 @@ export class ScriptDlgService {
   ): void {
     const ops: ScriptFunc[] = [];
     const speaks: number[] = [];
-    let exit = false;
+    // `exit` lives on a state object so TS's CFA does not narrow it back to the
+    // literal `false` after init -- the interpreter flips it via the closure,
+    // which CFA cannot see across the `interpretDialog` call.
+    const state = { exit: false };
     const sink: DialogInterpSink = {
       say: (n) => {
         const text = dialogText(this.deps.dialogs, n);
@@ -384,7 +387,7 @@ export class ScriptDlgService {
         ops.push({ type: 'addKey', word, key: String(key) });
       },
       removeKey: () => { /* ponytail: ScriptFunc has no removeKey op yet */ },
-      exit: () => { exit = true; },
+      exit: () => { state.exit = true; },
       launchQuest: () => { /* bare LaunchQuest(): eager emitQuestOffer covers it */ },
       beginQuest: (id) => { intents.push({ kind: 'begin', id }); },
       endQuest: (id) => { intents.push({ kind: 'end', id }); },
@@ -399,9 +402,9 @@ export class ScriptDlgService {
       const text = dialogText(this.deps.dialogs, n);
       if (text !== undefined) frames.push(this.chat.build(npc.m_idMover, text));
     }
-    if (ops.length > 0 || exit) {
+    if (ops.length > 0 || state.exit) {
       const funcs = ops.length > 0 ? [{ type: 'removeAllKeys' } as ScriptFunc, ...ops] : [{ type: 'removeAllKeys' } as ScriptFunc];
-      if (exit) funcs.push({ type: 'exit' });
+      if (state.exit) funcs.push({ type: 'exit' });
       frames.push(this.scriptDialog.build(player.m_idPlayer, funcs));
       this.menuCount++;
     }
@@ -476,8 +479,11 @@ export class ScriptDlgService {
       newQuests.length === 1 && nextQuests.length === 0 &&
       endQuests.length === 0 && currQuests.length === 0
     ) {
-      this.questBeginConfirm(player, newQuests[0]!, frames);
-      this.menuCount++;
+      const qid = newQuests[0];
+      if (qid !== undefined) {
+        this.questBeginConfirm(player, qid, frames);
+        this.menuCount++;
+      }
       return;
     }
     const funcs: ScriptFunc[] = [];
@@ -508,7 +514,7 @@ export class ScriptDlgService {
         );
       } else if (!isQuestOffice) {
         logger.warn(
-          { charId: player.m_idPlayer, lk, charKey: npc.m_szCharacterKey ?? null, propKey: npc.m_szKey ?? null },
+          { charId: player.m_idPlayer, lk, charKey: npc.m_szCharacterKey, propKey: npc.m_szKey },
           'quest offer: byNpc miss -- NPC key not in begin/end maps',
         );
       }
@@ -781,7 +787,7 @@ export class ScriptDlgService {
       // else `MakeCompleteQuest` -> QS_END for a completed quest; else -1.
       // Job-change gates (`GetQuestState(QUEST_VOCMER_TRN2) == QS_END`) fire
       // only after the quest leaves the active list for m_aCompleteQuest.
-      questState: (id) => {
+      questState: (id): number => {
         const live = player.findQuest(id)?.state;
         if (live !== undefined) return live;
         if (player.isCompleteQuest(id)) return QS_END;
@@ -793,7 +799,7 @@ export class ScriptDlgService {
       playerLvl: () => player.m_nLevel,
       getItemNum: () => 0,           // ponytail: inventory count
       emptyInventoryNum: () => 32,   // ponytail: assume room
-      playerGold: () => player.m_nGold ?? 0,
+      playerGold: () => player.m_nGold,
       partySize: () => 1,
       isParty: () => 0,
       isPartyMaster: () => 1,        // solo player is their own master
@@ -892,13 +898,13 @@ export class ScriptDlgService {
    *  the id (mirrors C++ `m_szTitle` lookup). */
   private questLabel(qid: number): string {
     const def = this.deps.quests.byId.get(qid);
-    if (!def) return `Quest ${qid}`;
-    return this.resolveText(def.title) ?? def.title ?? def.symbol ?? `Quest ${qid}`;
+    if (!def) return `Quest ${String(qid)}`;
+    return this.resolveText(def.title) ?? def.title ?? def.symbol;
   }
 
   /** Resolve an `IDS_PROPQUEST_INC_*` token to display text, or undefined. */
   private resolveText(token: string | undefined): string | undefined {
-    if (!token || !token.startsWith('IDS_')) return token;
+    if (!token?.startsWith('IDS_')) return token;
     const t = this.deps.questText?.get(token);
     return t && t.length > 0 ? t : undefined;
   }

@@ -23,22 +23,30 @@
  * @module lib/resource-rows
  */
 
-import { npcNameForKey } from "@flyff/resources";
-import { loadItems, loadMovers, loadSkills, loadDrops, loadZones, loadSetItems, loadDialogues } from "./resources";
-import { getResourceIndex, getTextTable } from "./resource-cache";
-import { getIk2Label, getIk3Label } from "./game-constants";
-import { worldName } from "./utils";
+import { npcNameForKey } from '@flyff/resources';
+import {
+  loadItems,
+  loadMovers,
+  loadSkills,
+  loadDrops,
+  loadZones,
+  loadSetItems,
+  loadDialogues,
+} from './resources';
+import { getResourceIndex, getTextTable } from './resource-cache';
+import { getIk2Label, getIk3Label } from './game-constants';
+import { worldName } from './utils';
 
 /** Narrow a YAML doc's collection key to an array of entry records. */
 function entriesOf(doc: unknown, key: string): Record<string, unknown>[] {
-  if (typeof doc !== "object" || doc === null) return [];
+  if (typeof doc !== 'object' || doc === null) return [];
   const list = (doc as Record<string, unknown>)[key];
   if (!Array.isArray(list)) return [];
-  return list.filter((e): e is Record<string, unknown> => typeof e === "object" && e !== null);
+  return list.filter((e): e is Record<string, unknown> => typeof e === 'object' && e !== null);
 }
 
 function str(v: unknown): string {
-  return typeof v === "string" ? v : typeof v === "number" ? String(v) : "";
+  return typeof v === 'string' ? v : typeof v === 'number' ? String(v) : '';
 }
 
 function num(v: unknown): number {
@@ -68,16 +76,16 @@ export function itemRows(): ItemRow[] {
   const rows: ItemRow[] = [];
   for (const doc of loadItems()) {
     const group = str(doc._kind);
-    for (const v of entriesOf(doc, "items")) {
+    for (const v of entriesOf(doc, 'items')) {
       const kind2Sym = str(v.item_kind2);
       const kind3Sym = str(v.item_kind3);
       rows.push({
         id: num(v.id),
         name: str(v.name),
         kind2Sym,
-        kind2: kind2Sym ? getIk2Label(kind2Sym) : "",
+        kind2: kind2Sym ? getIk2Label(kind2Sym) : '',
         kind3Sym,
-        kind3: kind3Sym ? getIk3Label(kind3Sym) : "",
+        kind3: kind3Sym ? getIk3Label(kind3Sym) : '',
         group,
         price: num(v.price),
         weight: num(v.weight),
@@ -97,7 +105,7 @@ export function itemRows(): ItemRow[] {
 export function itemNamesById(): Map<number, string> {
   const out = new Map<number, string>();
   for (const doc of loadItems()) {
-    for (const v of entriesOf(doc, "items")) out.set(num(v.id), str(v.name));
+    for (const v of entriesOf(doc, 'items')) out.set(num(v.id), str(v.name));
   }
   return out;
 }
@@ -120,19 +128,19 @@ export function itemNamesById(): Map<number, string> {
  * Source: `raw/defineAttribute.h:248-260`.
  */
 export const BELLI_INFO = new Map<number, { symbol: string; label: string }>([
-  [1, { symbol: "BELLI_PEACEFUL", label: "Peaceful" }],
-  [2, { symbol: "BELLI_CAUTIOUSATTACK", label: "Cautious" }],
-  [3, { symbol: "BELLI_ACTIVEATTACK", label: "Active" }],
-  [4, { symbol: "BELLI_ALLIANCE", label: "Alliance" }],
-  [5, { symbol: "BELLI_ACTIVEATTACK_MELEE2X", label: "Active · melee 2×" }],
-  [6, { symbol: "BELLI_ACTIVEATTACK_MELEE", label: "Active · melee" }],
-  [7, { symbol: "BELLI_ACTIVEATTACK_RANGE", label: "Active · ranged" }],
-  [8, { symbol: "BELLI_CAUTIOUSATTACK_MELEE2X", label: "Cautious · melee 2×" }],
-  [9, { symbol: "BELLI_CAUTIOUSATTACK_MELEE", label: "Cautious · melee" }],
-  [10, { symbol: "BELLI_CAUTIOUSATTACK_RANGE", label: "Cautious · ranged" }],
-  [11, { symbol: "BELLI_MELEE2X", label: "Melee 2×" }],
-  [12, { symbol: "BELLI_MELEE", label: "Melee" }],
-  [13, { symbol: "BELLI_RANGE", label: "Ranged" }],
+  [1, { symbol: 'BELLI_PEACEFUL', label: 'Peaceful' }],
+  [2, { symbol: 'BELLI_CAUTIOUSATTACK', label: 'Cautious' }],
+  [3, { symbol: 'BELLI_ACTIVEATTACK', label: 'Active' }],
+  [4, { symbol: 'BELLI_ALLIANCE', label: 'Alliance' }],
+  [5, { symbol: 'BELLI_ACTIVEATTACK_MELEE2X', label: 'Active · melee 2×' }],
+  [6, { symbol: 'BELLI_ACTIVEATTACK_MELEE', label: 'Active · melee' }],
+  [7, { symbol: 'BELLI_ACTIVEATTACK_RANGE', label: 'Active · ranged' }],
+  [8, { symbol: 'BELLI_CAUTIOUSATTACK_MELEE2X', label: 'Cautious · melee 2×' }],
+  [9, { symbol: 'BELLI_CAUTIOUSATTACK_MELEE', label: 'Cautious · melee' }],
+  [10, { symbol: 'BELLI_CAUTIOUSATTACK_RANGE', label: 'Cautious · ranged' }],
+  [11, { symbol: 'BELLI_MELEE2X', label: 'Melee 2×' }],
+  [12, { symbol: 'BELLI_MELEE', label: 'Melee' }],
+  [13, { symbol: 'BELLI_RANGE', label: 'Ranged' }],
 ]);
 
 /** Belligerence values that make a monster attack on sight (`ACTIVE_BELLI`). */
@@ -148,7 +156,7 @@ const AGGRO_BELLI = new Set([3, 5, 6, 7]);
 export function moverNamesByKey(): Map<string, string> {
   const out = new Map<string, string>();
   for (const doc of loadMovers()) {
-    for (const v of entriesOf(doc, "movers")) {
+    for (const v of entriesOf(doc, 'movers')) {
       const key = str(v.key);
       if (key) out.set(key, str(v.name));
     }
@@ -160,7 +168,7 @@ export function moverNamesByKey(): Map<string, string> {
 export function moverNamesById(): Map<number, string> {
   const out = new Map<number, string>();
   for (const doc of loadMovers()) {
-    for (const v of entriesOf(doc, "movers")) out.set(num(v.id), str(v.name) || str(v.key));
+    for (const v of entriesOf(doc, 'movers')) out.set(num(v.id), str(v.name) || str(v.key));
   }
   return out;
 }
@@ -182,9 +190,10 @@ export interface MoverRow {
   boss: boolean;
 }
 
-export function moverRows(): MoverRow[] {  const rows: MoverRow[] = [];
+export function moverRows(): MoverRow[] {
+  const rows: MoverRow[] = [];
   for (const doc of loadMovers()) {
-    for (const v of entriesOf(doc, "movers")) {
+    for (const v of entriesOf(doc, 'movers')) {
       const belli = num(v.belligerence);
       const info = BELLI_INFO.get(belli);
       rows.push({
@@ -196,8 +205,8 @@ export function moverRows(): MoverRow[] {  const rows: MoverRow[] = [];
         hp: num(v.hp),
         exp: num(v.exp),
         belli,
-        belliSym: info?.symbol ?? "",
-        belliLabel: info?.label ?? (belli ? `BELLI ${String(belli)}` : ""),
+        belliSym: info?.symbol ?? '',
+        belliLabel: info?.label ?? (belli ? `BELLI ${String(belli)}` : ''),
         aggro: AGGRO_BELLI.has(belli),
         boss: v.boss === true,
       });
@@ -222,7 +231,7 @@ export function skillRows(): SkillRow[] {
   const rows: SkillRow[] = [];
   for (const doc of loadSkills()) {
     const job = str(doc._job);
-    for (const v of entriesOf(doc, "skills")) {
+    for (const v of entriesOf(doc, 'skills')) {
       const levels = Array.isArray(v.levels) ? v.levels.length : 0;
       rows.push({
         id: num(v.id),
@@ -273,21 +282,22 @@ export function dropRows(): DropRow[] {
 
   const rows: DropRow[] = [];
   for (const doc of loadDrops()) {
-    for (const v of entriesOf(doc, "drops")) {
-      const gold = typeof v.gold === "object" && v.gold !== null ? (v.gold as Record<string, unknown>) : {};
-      const items = entriesOf(v, "items");
+    for (const v of entriesOf(doc, 'drops')) {
+      const gold =
+        typeof v.gold === 'object' && v.gold !== null ? (v.gold as Record<string, unknown>) : {};
+      const items = entriesOf(v, 'items');
       const key = str(v.key);
       const itemIds = items.map((i) => num(i.itemId));
       rows.push({
         key,
-        moverName: byKey.get(key) ?? "",
+        moverName: byKey.get(key) ?? '',
         modelIdx: num(v.modelIdx),
         goldMin: num(gold.min),
         goldMax: num(gold.max),
         maxItem: num(v.maxItem),
         count: items.length,
         itemIds,
-        itemNames: itemIds.map((id) => itemNames.get(id) ?? ""),
+        itemNames: itemIds.map((id) => itemNames.get(id) ?? ''),
         bestChance: items.reduce((best, i) => Math.max(best, num(i.chance)), 0),
         dropRate: num(v.dropRate) || 1,
       });
@@ -312,22 +322,22 @@ export interface SetItemRow {
 }
 
 export function setItemRows(): SetItemRow[] {
-  const text = getTextTable("propItemEtc.txt.txt");
+  const text = getTextTable('propItemEtc.txt.txt');
   const names = itemNamesById();
   const rows: SetItemRow[] = [];
   for (const doc of loadSetItems()) {
-    for (const v of entriesOf(doc, "sets")) {
+    for (const v of entriesOf(doc, 'sets')) {
       const nameId = str(v.nameId);
-      const elems = entriesOf(v, "elems");
+      const elems = entriesOf(v, 'elems');
       const itemIds = elems.map((e) => num(e.itemId));
       rows.push({
         id: num(v.id),
-        name: text.get(nameId) ?? "",
+        name: text.get(nameId) ?? '',
         nameId,
         pieces: elems.length,
         bonuses: Array.isArray(v.avails) ? v.avails.length : 0,
         itemIds,
-        itemNames: itemIds.map((id) => names.get(id) ?? ""),
+        itemNames: itemIds.map((id) => names.get(id) ?? ''),
       });
     }
   }
@@ -350,14 +360,14 @@ export interface ZoneRow {
 export function zoneRows(): ZoneRow[] {
   const rows: ZoneRow[] = [];
   loadZones().forEach((doc, i) => {
-    if (typeof doc !== "object") return;
+    if (typeof doc !== 'object') return;
     const worldId = str(doc.world_id) || str(doc.worldId);
     rows.push({
       id: num(doc._id_numeric) || num(doc.id) || i,
       slug: str(doc._id),
       name: str(doc.name) || str(doc._id),
       worldId,
-      world: worldId ? worldName(worldId) : "",
+      world: worldId ? worldName(worldId) : '',
       spawns: Array.isArray(doc.spawns) ? doc.spawns.length : 0,
       npcs: Array.isArray(doc.npcs) ? doc.npcs.length : 0,
     });
@@ -388,7 +398,7 @@ export interface DialogueRow {
  * shipped states are in that condition, so the count is the porting backlog per
  * NPC — the figure a porter sorts by to find the emptiest files.
  */
-const BEHAVIOUR_KEYS = ["say", "speak", "keys", "exit", "launch_quest"] as const;
+const BEHAVIOUR_KEYS = ['say', 'speak', 'keys', 'exit', 'launch_quest'] as const;
 
 /**
  * Dialogue rows with the NPC name resolved.
@@ -405,15 +415,16 @@ export async function dialogueRows(): Promise<DialogueRow[]> {
     const prefix = str(doc.prefix);
     // Index/string-table files (`_strings.yml`, `_npc-map.yml`) carry no prefix.
     if (!prefix) return;
-    const states = typeof doc.states === "object" && doc.states !== null ? Object.values(doc.states) : [];
+    const states =
+      typeof doc.states === 'object' && doc.states !== null ? Object.values(doc.states) : [];
     rows.push({
       ref: `${prefix}__${String(i)}`,
       prefix,
-      npcName: npcNameForKey(characterInc, prefix) ?? "",
+      npcName: npcNameForKey(characterInc, prefix) ?? '',
       states: states.length,
       inert: states.filter(
         (s) =>
-          typeof s !== "object" ||
+          typeof s !== 'object' ||
           s === null ||
           !BEHAVIOUR_KEYS.some((k) => k in (s as Record<string, unknown>)),
       ).length,

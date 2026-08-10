@@ -47,10 +47,10 @@ interface BusLogger {
 
 /** Noop default -- used when no logger is injected (keeps @flyff/ipc core-free). */
 const NOOP_LOGGER: BusLogger = {
-  info: () => {},
-  warn: () => {},
-  error: () => {},
-  debug: () => {},
+  info: () => undefined,
+  warn: () => undefined,
+  error: () => undefined,
+  debug: () => undefined,
 };
 
 export interface LocalBusOptions {
@@ -78,7 +78,7 @@ class LineCodec {
     this.buf += chunk;
     if (this.buf.length > MAX_FRAME_BYTES) {
       this.buf = '';
-      throw new Error(`frame exceeds ${MAX_FRAME_BYTES} bytes`);
+      throw new Error(`frame exceeds ${String(MAX_FRAME_BYTES)} bytes`);
     }
     const out: string[] = [];
     let nl = this.buf.indexOf('\n');
@@ -108,7 +108,7 @@ function writeFrame(socket: Socket, frame: Frame): void {
 export class LocalBus implements LocalBusLike {
   private readonly log: BusLogger;
   private readonly reconnectMs: number;
-  private readonly messageHandlers: Array<(channel: string, data: string) => void> = [];
+  private readonly messageHandlers: ((channel: string, data: string) => void)[] = [];
   private readonly localSubs = new Set<string>();
 
   private server: Server | undefined;
@@ -142,7 +142,9 @@ export class LocalBus implements LocalBusLike {
   /** Best-effort bind; EADDRINUSE means "someone else is the broker". */
   private tryBecomeBroker(): Promise<void> {
     return new Promise((resolve) => {
-      const server = net.createServer((sock) => this.onBrokerConnection(sock));
+      const server = net.createServer((sock) => {
+        this.onBrokerConnection(sock);
+      });
       server.on('error', (err) => {
         // EADDRINUSE -> another process is the broker; we are a client.
         this.log.debug?.({ err: String(err) }, 'broker bind failed -- acting as client');
@@ -276,26 +278,28 @@ export class LocalBus implements LocalBusLike {
     this.messageHandlers.push(handler);
   }
 
-  async publish(channel: string, data: string): Promise<number> {
+  publish(channel: string, data: string): Promise<number> {
     if (!this.client || !this.clientReady) {
       // No client yet -- broker may still be starting or this node lost the
       // race and hasn't connected. Dev-only; drop + warn rather than block.
       this.log.warn({ channel }, 'publish before client connected -- dropped');
-      return 0;
+      return Promise.resolve(0);
     }
     writeFrame(this.client, { op: 'pub', ch: channel, data });
-    return 1;
+    return Promise.resolve(1);
   }
 
-  async subscribe(channel: string): Promise<void> {
+  subscribe(channel: string): Promise<void> {
     this.localSubs.add(channel);
     if (this.client && this.clientReady) writeFrame(this.client, { op: 'sub', ch: channel });
+    return Promise.resolve();
   }
 
-  async unsubscribe(channel: string): Promise<void> {
+  unsubscribe(channel: string): Promise<void> {
     this.localSubs.delete(channel);
     // ponytail: no `unsub` op -- broker drops the sub on next reconnect.
     // Dev-only, low traffic; acceptable. Add an `unsub` op when prod care arises.
+    return Promise.resolve();
   }
 
   async quit(): Promise<void> {
@@ -307,7 +311,9 @@ export class LocalBus implements LocalBusLike {
     for (const peer of this.remoteSubs.keys()) peer.destroy();
     this.remoteSubs.clear();
     await new Promise<void>((resolve) => {
-      if (this.server) this.server.close(() => resolve());
+      if (this.server) this.server.close(() => {
+        resolve();
+      });
       else resolve();
     });
     this.server = undefined;

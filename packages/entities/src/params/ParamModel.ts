@@ -116,27 +116,30 @@ export class ParamModel implements ParamView {
    * `SetDestParam` switch head (`MoverParam.cpp:2250-2432`).
    */
   private applyPseudo(dst: number, adj: number, chg: number, add: boolean): boolean {
-    const fn = add ? this.setDestParam : this.resetDestParam;
+    const apply = (target: number, value: number, override: number): void => {
+      if (add) this.setDestParam(target, value, override);
+      else this.resetDestParam(target, value, override);
+    };
     switch (dst) {
       case DST.STAT_ALLUP:
-        fn.call(this, DST.STR, adj, chg);
-        fn.call(this, DST.DEX, adj, chg);
-        fn.call(this, DST.INT, adj, chg);
-        fn.call(this, DST.STA, adj, chg);
+        apply(DST.STR, adj, chg);
+        apply(DST.DEX, adj, chg);
+        apply(DST.INT, adj, chg);
+        apply(DST.STA, adj, chg);
         return true;
       case DST.RESIST_ALL:
-        for (const e of ALL_ELEMENTS) fn.call(this, e, adj, chg);
+        for (const e of ALL_ELEMENTS) apply(e, adj, chg);
         return true;
       case DST.MASTRY_ALL:
-        for (const e of ALL_MASTRY) fn.call(this, e, adj, chg);
+        for (const e of ALL_MASTRY) apply(e, adj, chg);
         return true;
       case DST.HPDMG_UP:
-        fn.call(this, DST.HP_MAX, adj, chg);
-        fn.call(this, DST.CHR_DMG, adj, chg);
+        apply(DST.HP_MAX, adj, chg);
+        apply(DST.CHR_DMG, adj, chg);
         return true;
       case DST.LOCOMOTION:
-        fn.call(this, DST.SPEED, adj, chg);
-        fn.call(this, 68 /* DST_JUMPING */, adj * 3, chg);
+        apply(DST.SPEED, adj, chg);
+        apply(68 /* DST_JUMPING */, adj * 3, chg);
         return true;
       default:
         return false;

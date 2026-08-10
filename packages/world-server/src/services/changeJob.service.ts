@@ -114,7 +114,7 @@ export class ChangeJobServiceImpl implements ChangeJobService {
     //    `g_dpDBClient.SaveSkill` (persists roster); class persists on the
     //    character row's `class` column.
     this.deps.charRepo.updateClass(player.m_idPlayer, targetJob).catch((err: unknown) =>
-      logger.error({ err, charId: player.m_idPlayer }, 'changeJob class persist failed'),
+      { logger.error({ err, charId: player.m_idPlayer }, 'changeJob class persist failed'); },
     );
   }
 

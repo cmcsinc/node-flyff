@@ -36,7 +36,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('guild_bank', (table: any) => {
+  await db.schema.createTable('guild_bank', (table) => {
     // One row per guild. The id is the guild's, not its own sequence: the
     // container cannot exist without its owner and is never addressed alone.
     table.integer('guild_id').unsigned().primary()
@@ -46,7 +46,7 @@ export async function up(db: Knex): Promise<void> {
     table.bigInteger('updated_at_ms').notNullable();
   });
 
-  await db.schema.createTable('guild_bank_item', (table: any) => {
+  await db.schema.createTable('guild_bank_item', (table) => {
     table.increments('id').primary();
     table.integer('guild_id').unsigned().notNullable()
       .references('id').inTable('guild').onDelete('CASCADE');

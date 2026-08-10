@@ -20,11 +20,11 @@
  * @module lib/zones
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
-import { parseDocument } from "yaml";
-import { ZoneDefinitionSchema } from "@flyff/resources";
-import { invalidateResourceCache } from "./resource-cache";
-import { zoneDocs, zoneFileFor, type ZoneDoc } from "./zone-seq";
+import { readFileSync, writeFileSync } from 'node:fs';
+import { parseDocument } from 'yaml';
+import { ZoneDefinitionSchema } from '@flyff/resources';
+import { invalidateResourceCache } from './resource-cache';
+import { zoneDocs, zoneFileFor, type ZoneDoc } from './zone-seq';
 
 /**
  * The keys the zone form owns.
@@ -33,16 +33,16 @@ import { zoneDocs, zoneFileFor, type ZoneDoc } from "./zone-seq";
  * schema bookkeeping the editor skips anyway.
  */
 export const ZONE_META_KEYS = [
-  "_id",
-  "_id_numeric",
-  "name",
-  "name_id",
-  "world_id",
-  "bounds",
-  "revival",
-  "portals",
-  "regions",
-  "weather",
+  '_id',
+  '_id_numeric',
+  'name',
+  'name_id',
+  'world_id',
+  'bounds',
+  'revival',
+  'portals',
+  'regions',
+  'weather',
 ] as const;
 
 /** One zone's metadata, with the placement collections stripped out. */
@@ -72,7 +72,7 @@ export function findZone(zoneId: string): ZoneDoc | null {
  * never materializes a key the file did not have.
  */
 export function writeZoneMetaToFile(file: string, meta: Record<string, unknown>): void {
-  const doc = parseDocument(readFileSync(file, "utf-8"));
+  const doc = parseDocument(readFileSync(file, 'utf-8'));
 
   const submitted: Record<string, unknown> = {};
   for (const key of ZONE_META_KEYS) {
@@ -90,7 +90,7 @@ export function writeZoneMetaToFile(file: string, meta: Record<string, unknown>)
     doc.set(key, doc.createNode(value));
   }
 
-  writeFileSync(file, doc.toString({ lineWidth: 120 }), "utf-8");
+  writeFileSync(file, doc.toString({ lineWidth: 120 }), 'utf-8');
 }
 
 /** Rewrite one zone's metadata, then drop the resource cache. */

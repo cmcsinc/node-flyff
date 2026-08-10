@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { AlertTriangle, Info, Plus, RotateCcw, Save, Store, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ConfirmDialog } from "@/components/confirm-dialog";
-import type { EnumOption } from "@/lib/field-schema";
-import type { IncBlockView, MmiOption } from "@/lib/character-inc";
+import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { AlertTriangle, Info, Plus, RotateCcw, Save, Store, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { ConfirmDialog } from '@/components/confirm-dialog';
+import type { EnumOption } from '@/lib/field-schema';
+import type { IncBlockView, MmiOption } from '@/lib/character-inc';
 import {
   ShopTabEditor,
   draftsFromTabs,
   type ExplicitDraft,
   type RuleDraft,
   type TabDraft,
-} from "./shop-tab-editor";
+} from './shop-tab-editor';
 
 /** `MMI_TRADE` — the menu that makes the shop tabs meaningful. */
 const MMI_TRADE = 2;
@@ -81,8 +81,7 @@ export function CapabilityPanel({
   // so nothing the file contains is hidden from the person editing it.
   const declaredVisible = showAll ? declaredOnly : declaredOnly.filter((o) => menus.has(o.id));
 
-  const menusDirty =
-    menus.size !== initial.size || [...menus].some((id) => !initial.has(id));
+  const menusDirty = menus.size !== initial.size || [...menus].some((id) => !initial.has(id));
   const shopDirty =
     JSON.stringify(sortTabs(tabs)) !== JSON.stringify(sortTabs(baseline.tabs)) ||
     JSON.stringify(sortRules(rules)) !== JSON.stringify(sortRules(baseline.rules)) ||
@@ -90,7 +89,7 @@ export function CapabilityPanel({
   const dirty = menusDirty || shopDirty;
 
   /** A caption is required — the client would render a blank tab otherwise. */
-  const blankCaption = tabs.some((t) => t.label.trim() === "");
+  const blankCaption = tabs.some((t) => t.label.trim() === '');
 
   function toggle(id: number, on: boolean): void {
     setMenus((prev) => {
@@ -115,7 +114,7 @@ export function CapabilityPanel({
     let slot = 0;
     while (used.has(slot) && slot < MAX_TABS) slot++;
     if (slot >= MAX_TABS) return;
-    setTabs([...tabs, { slot, label: "" }]);
+    setTabs([...tabs, { slot, label: '' }]);
     setActive(String(slot));
   }
 
@@ -141,24 +140,24 @@ export function CapabilityPanel({
         body.explicit = sortExplicit(explicit);
       }
 
-      const res = await fetch("/api/character-inc", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/character-inc', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
       const data = (await res.json().catch(() => null)) as PutResponse | null;
       if (!res.ok) {
-        toast.error(data?.error ?? "Save failed");
+        toast.error(data?.error ?? 'Save failed');
         return;
       }
       const n = data?.placements ?? block.sharers.length;
       toast.success(
-        "Saved to character.inc — restart the world server to apply" +
-          (n > 1 ? ` (${String(n)} placements)` : ""),
+        'Saved to character.inc — restart the world server to apply' +
+          (n > 1 ? ` (${String(n)} placements)` : ''),
       );
       router.refresh();
     } catch {
-      toast.error("Save failed");
+      toast.error('Save failed');
     } finally {
       setSaving(false);
     }
@@ -172,14 +171,18 @@ export function CapabilityPanel({
         </CardHeader>
         <CardContent className="pt-0">
           <p className="text-xs leading-relaxed text-muted-foreground">
-            {block.key
-              ? <>No <code className="font-mono">{block.key}</code> block exists in{" "}
-                  <code className="font-mono">character.inc</code>, so this NPC has no
-                  menus. Set a <strong>Character key</strong> that matches a block to
-                  give it capability.</>
-              : <>This placement has no <strong>Character key</strong>. Capability,
-                  display name, outfit, and shop stock all resolve through that key —
-                  set one above.</>}
+            {block.key ? (
+              <>
+                No <code className="font-mono">{block.key}</code> block exists in{' '}
+                <code className="font-mono">character.inc</code>, so this NPC has no menus. Set a{' '}
+                <strong>Character key</strong> that matches a block to give it capability.
+              </>
+            ) : (
+              <>
+                This placement has no <strong>Character key</strong>. Capability, display name,
+                outfit, and shop stock all resolve through that key — set one above.
+              </>
+            )}
           </p>
         </CardContent>
       </Card>
@@ -203,10 +206,10 @@ export function CapabilityPanel({
           <p className="flex items-start gap-2 text-[11px] leading-snug text-muted-foreground">
             <Info className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <span>
-              These are <code className="font-mono">AddMenu( MMI_* )</code> lines in{" "}
-              <code className="font-mono">character.inc</code> — the real source of NPC
-              capability. The zone file&apos;s <code className="font-mono">functions</code>{" "}
-              field is read by nothing. Changes need a <strong>world-server restart</strong>.
+              These are <code className="font-mono">AddMenu( MMI_* )</code> lines in{' '}
+              <code className="font-mono">character.inc</code> — the real source of NPC capability.
+              The zone file&apos;s <code className="font-mono">functions</code> field is read by
+              nothing. Changes need a <strong>world-server restart</strong>.
             </span>
           </p>
 
@@ -215,8 +218,8 @@ export function CapabilityPanel({
               <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               <span>
                 <strong>Affects {block.sharers.length} placements.</strong> They share this
-                character key and there is no per-placement override:{" "}
-                {block.sharers.map((s) => `${s.zoneName} #${String(s.id)}`).join(", ")}.
+                character key and there is no per-placement override:{' '}
+                {block.sharers.map((s) => `${s.zoneName} #${String(s.id)}`).join(', ')}.
               </span>
             </p>
           )}
@@ -233,7 +236,9 @@ export function CapabilityPanel({
                   key={o.id}
                   option={o}
                   checked={menus.has(o.id)}
-                  onChange={(on) => { toggle(o.id, on); }}
+                  onChange={(on) => {
+                    toggle(o.id, on);
+                  }}
                   warning={warningFor(o.id, block)}
                 />
               ))}
@@ -250,16 +255,18 @@ export function CapabilityPanel({
                 variant="ghost"
                 size="sm"
                 className="cursor-pointer text-xs"
-                onClick={() => { setShowAll((v) => !v); }}
+                onClick={() => {
+                  setShowAll((v) => !v);
+                }}
                 aria-expanded={showAll}
               >
-                {showAll ? "Hide" : `Show all ${String(declaredOnly.length)}`}
+                {showAll ? 'Hide' : `Show all ${String(declaredOnly.length)}`}
               </Button>
             </div>
             <p className="text-[11px] leading-snug text-muted-foreground">
-              The client parses these into <code className="font-mono">m_abMoverMenu</code>,
-              but no server handler reads them — enabling one changes nothing yet. Kept
-              editable so an NPC&apos;s existing declarations survive a save.
+              The client parses these into <code className="font-mono">m_abMoverMenu</code>, but no
+              server handler reads them — enabling one changes nothing yet. Kept editable so an
+              NPC&apos;s existing declarations survive a save.
             </p>
             {declaredVisible.length === 0 ? (
               <p className="rounded-lg border border-dashed border-border px-3 py-4 text-center text-[11px] text-muted-foreground">
@@ -272,7 +279,9 @@ export function CapabilityPanel({
                     key={o.id}
                     option={o}
                     checked={menus.has(o.id)}
-                    onChange={(on) => { toggle(o.id, on); }}
+                    onChange={(on) => {
+                      toggle(o.id, on);
+                    }}
                   />
                 ))}
               </div>
@@ -293,10 +302,9 @@ export function CapabilityPanel({
             {tabs.length === 0 ? (
               <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-border px-3 py-5">
                 <p className="text-[11px] leading-snug text-muted-foreground">
-                  No shop tabs. Adding one writes an{" "}
-                  <code className="font-mono">AddVendorSlot</code> line plus its caption
-                  into <code className="font-mono">character.txt.txt</code>, which the
-                  client reads.
+                  No shop tabs. Adding one writes an{' '}
+                  <code className="font-mono">AddVendorSlot</code> line plus its caption into{' '}
+                  <code className="font-mono">character.txt.txt</code>, which the client reads.
                 </p>
                 <Button
                   type="button"
@@ -356,7 +364,9 @@ export function CapabilityPanel({
                       type="button"
                       variant="ghost"
                       size="sm"
-                      onClick={() => { removeTab(t.slot); }}
+                      onClick={() => {
+                        removeTab(t.slot);
+                      }}
                       className="cursor-pointer gap-1.5 text-xs text-muted-foreground hover:text-destructive"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -376,12 +386,14 @@ export function CapabilityPanel({
         */}
         <CardFooter className="flex flex-wrap items-center gap-3 border-t border-border pt-4">
           <Button
-            onClick={() => { setConfirming(true); }}
+            onClick={() => {
+              setConfirming(true);
+            }}
             disabled={!dirty || saving || blankCaption}
             className="cursor-pointer gap-2"
           >
             <Save className="h-4 w-4" />
-            {saving ? "Saving…" : "Save changes"}
+            {saving ? 'Saving…' : 'Save changes'}
           </Button>
           <Button
             variant="outline"
@@ -399,7 +411,7 @@ export function CapabilityPanel({
           ) : (
             dirty && (
               <span className="text-[11px] text-muted-foreground">
-                Unsaved: {[menusDirty && "menus", shopDirty && "shop"].filter(Boolean).join(" + ")}
+                Unsaved: {[menusDirty && 'menus', shopDirty && 'shop'].filter(Boolean).join(' + ')}
               </span>
             )
           )}
@@ -414,7 +426,7 @@ export function CapabilityPanel({
           `This edits raw/character.inc, the same file the game client parses` +
           (block.sharers.length > 1
             ? `, and affects all ${String(block.sharers.length)} placements sharing "${block.key}"`
-            : "") +
+            : '') +
           `. The world server must be restarted before the change takes effect. ` +
           `Reversible by re-editing, or by restoring the file from git.`
         }
@@ -441,9 +453,9 @@ function sortExplicit(es: readonly ExplicitDraft[]): ExplicitDraft[] {
 
 /** Flag a menu that is enabled but has no data behind it — a silent no-op NPC. */
 function warningFor(id: number, block: IncBlockView): string | undefined {
-  if (id === MMI_TRADE && block.vendorTabCount === 0) return "No shop tabs — sells nothing.";
-  if (id === 74 && block.buffSkillCount === 0) return "No SetBuffSkill entries — grants nothing.";
-  if (id === 0 && !block.dialogFile) return "No m_szDialog file set.";
+  if (id === MMI_TRADE && block.vendorTabCount === 0) return 'No shop tabs — sells nothing.';
+  if (id === 74 && block.buffSkillCount === 0) return 'No SetBuffSkill entries — grants nothing.';
+  if (id === 0 && !block.dialogFile) return 'No m_szDialog file set.';
   return undefined;
 }
 
@@ -464,22 +476,20 @@ function MenuRow({
       <Switch
         id={id}
         checked={checked}
-        onChange={(e) => { onChange(e.currentTarget.checked); }}
+        onChange={(e) => {
+          onChange(e.currentTarget.checked);
+        }}
         className="mt-0.5"
       />
       <div className="min-w-0 space-y-0.5">
         <label htmlFor={id} className="block cursor-pointer text-xs font-medium">
           {option.label}
         </label>
-        <p className="font-mono text-[10px] leading-snug text-muted-foreground">
-          {option.symbol}
-        </p>
+        <p className="font-mono text-[10px] leading-snug text-muted-foreground">{option.symbol}</p>
         {option.purpose && (
           <p className="text-[11px] leading-snug text-muted-foreground">{option.purpose}</p>
         )}
-        {warning && (
-          <p className="text-[11px] leading-snug text-warning">{warning}</p>
-        )}
+        {warning && <p className="text-[11px] leading-snug text-warning">{warning}</p>}
       </div>
     </div>
   );

@@ -12,7 +12,7 @@
  * @module components/dialog/dialog-drafts
  */
 
-import type { DialogPrefixView, DialogStateView } from "@/lib/dialog-inc";
+import type { DialogPrefixView, DialogStateView } from '@/lib/dialog-inc';
 
 /** One editable dialog line. `null` index = a row that does not exist yet. */
 export interface LineDraft {
@@ -49,15 +49,18 @@ export interface StateDraft {
 /** Body of `PUT /api/dialog`. Text refs may be negative placeholders. */
 export interface DialogPutBody {
   prefix: string;
-  states?: Record<string, {
-    say?: number[];
-    speak?: number[];
-    keys?: { label: number; key?: number; param?: number }[];
-    exit?: boolean;
-    timer?: number;
-    launch_quest?: boolean;
-    source?: string;
-  }>;
+  states?: Record<
+    string,
+    {
+      say?: number[];
+      speak?: number[];
+      keys?: { label: number; key?: number; param?: number }[];
+      exit?: boolean;
+      timer?: number;
+      launch_quest?: boolean;
+      source?: string;
+    }
+  >;
   texts?: { index: number; text: string }[];
   newTexts?: string[];
 }
@@ -68,7 +71,7 @@ function lineDraft(view: { index: number; text: string; uses: number }): LineDra
 
 /** A blank line the GM has just added — appended on save. */
 export function blankLine(): LineDraft {
-  return { index: null, text: "", original: "", uses: 0 };
+  return { index: null, text: '', original: '', uses: 0 };
 }
 
 function stateDraft(s: DialogStateView): StateDraft {
@@ -121,7 +124,7 @@ export function buildPutBody(
     return l.index;
   };
 
-  const states: NonNullable<DialogPutBody["states"]> = {};
+  const states: NonNullable<DialogPutBody['states']> = {};
   for (const d of drafts) {
     if (d.hasSource) continue;
     const before = baseline.find((b) => b.keyIdx === d.keyIdx);
@@ -156,9 +159,7 @@ export function buildPutBody(
   return {
     prefix,
     ...(Object.keys(states).length > 0 ? { states } : {}),
-    ...(texts.size > 0
-      ? { texts: [...texts].map(([index, text]) => ({ index, text })) }
-      : {}),
+    ...(texts.size > 0 ? { texts: [...texts].map(([index, text]) => ({ index, text })) } : {}),
     ...(newTexts.length > 0 ? { newTexts } : {}),
   };
 }
@@ -180,7 +181,7 @@ function stateChanged(a: StateDraft, b: StateDraft): boolean {
 
 /** Any pending change at all — structural or text-only. */
 export function isDirty(drafts: readonly StateDraft[], baseline: readonly StateDraft[]): boolean {
-  const body = buildPutBody("x", drafts, baseline);
+  const body = buildPutBody('x', drafts, baseline);
   return body.states !== undefined || body.texts !== undefined || body.newTexts !== undefined;
 }
 

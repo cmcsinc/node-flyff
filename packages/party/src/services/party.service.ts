@@ -37,7 +37,7 @@ import {
   type PartySnapshotState,
 } from '@flyff/world-core';
 import {
-  PartyManager, PARTY_INVITE_TIMEOUT_MS,
+  type PartyManager, PARTY_INVITE_TIMEOUT_MS,
   PARTY_ITEM_MODE_SEQUENTIAL, PARTY_ITEM_MODE_LEADER, PARTY_ITEM_MODE_RANDOM,
   PARTY_ITEM_MODE_MAX, PARTY_EXP_MODE_CONTRIBUTION,
   PARTY_KIND_SOLO, MAX_PARTY_NAME_LEN,
@@ -117,7 +117,7 @@ export class PartyService {
     const target = this.deps.playerManager.get(memberId);
     if (!target) return;
     if (this.deps.partyManager.getByMember(memberId)) return;
-    const timer = setTimeout(() => this.expireInvite(memberId), PARTY_INVITE_TIMEOUT_MS);
+    const timer = setTimeout(() => { this.expireInvite(memberId); }, PARTY_INVITE_TIMEOUT_MS);
     this.deps.partyManager.addPending({
       leaderId: leader.m_idPlayer, memberId, expiresAt: this.now() + PARTY_INVITE_TIMEOUT_MS, timer,
     });

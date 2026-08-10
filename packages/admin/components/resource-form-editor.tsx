@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { stringify as stringifyYaml } from "yaml";
-import { Save, ArrowLeft, RotateCcw, ChevronDown, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TypedField, isWideField } from "@/components/form/typed-field";
-import { GROUP_ORDER, SKIP_KEYS, getMeta, type EnumOption } from "@/lib/field-schema";
-import { FieldOptionsProvider } from "@/components/form/field-options";
-import { cn } from "@/lib/utils";
+import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { stringify as stringifyYaml } from 'yaml';
+import { Save, ArrowLeft, RotateCcw, ChevronDown, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { TypedField, isWideField } from '@/components/form/typed-field';
+import { GROUP_ORDER, SKIP_KEYS, getMeta, type EnumOption } from '@/lib/field-schema';
+import { FieldOptionsProvider } from '@/components/form/field-options';
+import { cn } from '@/lib/utils';
+import { responseError } from '@/lib/api-response';
 
 /**
  * Resource entry editor.
@@ -37,14 +38,16 @@ function Section({
   count: number;
   defaultOpen: boolean;
   children: React.ReactNode;
-}) {
+}): React.JSX.Element {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <Card>
       <CardHeader className="py-0">
         <button
           type="button"
-          onClick={() => setOpen(!open)}
+          onClick={() => {
+            setOpen(!open);
+          }}
           aria-expanded={open}
           className="-mx-2 flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-3 text-left transition-colors hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
@@ -54,7 +57,9 @@ function Section({
             <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
           )}
           <CardTitle className="text-sm">{title}</CardTitle>
-          <Badge variant="secondary" className="ml-auto">{count}</Badge>
+          <Badge variant="secondary" className="ml-auto">
+            {count}
+          </Badge>
         </button>
       </CardHeader>
       {open && <CardContent className="pt-0 pb-5">{children}</CardContent>}
@@ -91,7 +96,7 @@ export function ResourceFormEditor({
   destructiveAction?: React.ReactNode;
   /** Runtime option lists injected from server-only data (character.inc keys, mover lists). */
   fieldOptions?: Record<string, EnumOption[]>;
-}) {
+}): React.JSX.Element {
   const [form, setForm] = useState<Record<string, unknown>>({ ...entry });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -100,12 +105,12 @@ export function ResourceFormEditor({
   const edited = useMemo(() => JSON.stringify(form) !== JSON.stringify(entry), [form, entry]);
   const canSave = edited || Boolean(saveClean);
 
-  function setField(key: string, value: unknown) {
+  function setField(key: string, value: unknown): void {
     setError(null);
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  async function handleSave() {
+  async function handleSave(): Promise<void> {
     setSaving(true);
     setError(null);
     try {
@@ -114,15 +119,14 @@ export function ResourceFormEditor({
         message = await save(form);
       } else {
         const res = await fetch(`/api/resources/${type}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id, yaml: stringifyYaml(form, { lineWidth: 120 }) }),
         });
-        const data = await res.json().catch(() => null);
-        message = res.ok ? null : (data?.error ?? "Save failed");
+        message = res.ok ? null : ((await responseError(res)) ?? 'Save failed');
       }
       if (message === null) {
-        toast.success("Saved");
+        toast.success('Saved');
         router.push(backHref ?? `/resources/${type}`);
         router.refresh();
       } else {
@@ -130,7 +134,7 @@ export function ResourceFormEditor({
         toast.error(message);
       }
     } catch {
-      const message = "Network error — the change was not saved";
+      const message = 'Network error — the change was not saved';
       setError(message);
       toast.error(message);
     } finally {
@@ -146,7 +150,7 @@ export function ResourceFormEditor({
    * visible hole beside it.
    */
   const sections = useMemo(() => {
-    const buckets = new Map<string, Array<[string, unknown]>>();
+    const buckets = new Map<string, [string, unknown][]>();
     for (const [key, value] of Object.entries(form)) {
       if (SKIP_KEYS.has(key)) continue;
       const group = getMeta(key).group;
@@ -159,7 +163,7 @@ export function ResourceFormEditor({
       const wide = fields.filter(([k, v]) => isWideField(k, v));
       fields.splice(0, fields.length, ...narrow, ...wide);
     }
-    const ordered: Array<[string, Array<[string, unknown]>]> = [];
+    const ordered: [string, [string, unknown][]][] = [];
     for (const g of GROUP_ORDER) {
       const fields = buckets.get(g);
       if (fields) ordered.push([g, fields]);
@@ -176,12 +180,14 @@ export function ResourceFormEditor({
         <Section key={group} title={group} count={fields.length} defaultOpen={si < 3}>
           <div className="grid grid-cols-1 items-start gap-x-6 gap-y-5 md:grid-cols-2">
             {fields.map(([key, value]) => (
-              <div key={key} className={cn(isWideField(key, value) && "md:col-span-2")}>
+              <div key={key} className={cn(isWideField(key, value) && 'md:col-span-2')}>
                 <TypedField
                   path={[key]}
                   fieldKey={key}
                   value={value}
-                  onChange={(v) => setField(key, v)}
+                  onChange={(v) => {
+                    setField(key, v);
+                  }}
                 />
               </div>
             ))}
@@ -196,9 +202,15 @@ export function ResourceFormEditor({
           </p>
         )}
         <div className="flex flex-wrap items-center gap-2">
-          <Button onClick={handleSave} disabled={saving || !canSave} className="cursor-pointer gap-2">
+          <Button
+            onClick={() => {
+              void handleSave();
+            }}
+            disabled={saving || !canSave}
+            className="cursor-pointer gap-2"
+          >
             <Save className="h-4 w-4" />
-            {saving ? "Saving…" : canSave ? "Save changes" : "No changes"}
+            {saving ? 'Saving…' : canSave ? 'Save changes' : 'No changes'}
           </Button>
           <Button
             variant="outline"
@@ -212,7 +224,13 @@ export function ResourceFormEditor({
             <RotateCcw className="h-4 w-4" />
             Revert
           </Button>
-          <Button variant="ghost" onClick={() => router.back()} className="cursor-pointer gap-2">
+          <Button
+            variant="ghost"
+            onClick={() => {
+              router.back();
+            }}
+            className="cursor-pointer gap-2"
+          >
             <ArrowLeft className="h-4 w-4" />
             Cancel
           </Button>

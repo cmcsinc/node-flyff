@@ -14,16 +14,16 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.alterTable('bank', (table: any) => {
+  await db.schema.alterTable('bank', (table) => {
     table.tinyint('tab').unsigned().notNullable().defaultTo(0);
   });
-  await db.schema.alterTable('bank', (table: any) => {
+  await db.schema.alterTable('bank', (table) => {
     table.dropUnique(['account_id', 'slot']);
   });
-  await db.schema.alterTable('bank', (table: any) => {
+  await db.schema.alterTable('bank', (table) => {
     table.unique(['account_id', 'tab', 'slot']);
   });
-  await db.schema.alterTable('accounts', (table: any) => {
+  await db.schema.alterTable('accounts', (table) => {
     table.bigInteger('bank_gold').unsigned().notNullable().defaultTo(0);
   });
 }
@@ -34,14 +34,14 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('bank', (table: any) => {
+  await db.schema.alterTable('bank', (table) => {
     table.dropUnique(['account_id', 'tab', 'slot']);
   });
-  await db.schema.alterTable('bank', (table: any) => {
+  await db.schema.alterTable('bank', (table) => {
     table.unique(['account_id', 'slot']);
     table.dropColumn('tab');
   });
-  await db.schema.alterTable('accounts', (table: any) => {
+  await db.schema.alterTable('accounts', (table) => {
     table.dropColumn('bank_gold');
   });
 }

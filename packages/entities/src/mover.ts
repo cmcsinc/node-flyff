@@ -18,7 +18,7 @@
  */
 
 import type { Vec3, InventorySlot } from './player';
-import { ParamModel, EMPTY_PARAM_VIEW } from './params/ParamModel';
+import { ParamModel } from './params/ParamModel';
 import { BuffManager } from './params/BuffManager';
 import { DST, CHRSTATE_BITS } from './constants/dst';
 import {
@@ -237,7 +237,7 @@ export class CMover {
    * after each retaliation by `RETALIATE_COOLDOWN_MS / m_fSpeedFactor`.
    * ponytail: replaced by the AI tick (`CMover::OnActTimer`) when it lands.
    */
-  m_nextAttackTick: number = 0;
+  m_nextAttackTick = 0;
   /** C++ `bKillable` + peaceful flag collapsed -- may be targeted for attack. */
   m_bAttackable: boolean;
   /** C++ `RANK_GUARD` -- town guard; only chaotic/PK players may attack. */
@@ -282,19 +282,19 @@ export class CMover {
    */
   m_bRangeAttack: boolean;
   /** Combat death flag -- set on lethal damage; swept from the spawn map on tick. */
-  m_bDead: boolean = false;
+  m_bDead = false;
   /**
    * Fleeing (C++ `m_bRunaway`) -- running AWAY from the attacker at chase
    * speed; expires after `m_tmRunawayEnd` -> transition to return-home.
    */
-  m_bRunaway: boolean = false;
+  m_bRunaway = false;
   /** Timestamp (ms, `Date.now()`) when the current runaway expires -> return-home. */
-  m_tmRunawayEnd: number = 0;
+  m_tmRunawayEnd = 0;
   /**
    * Flee HP threshold -- 1-100 (% of max). Populated from `MoverSpawnSource.fleeHpPct`
    * (propMoverEx `SetRunAway`). Undefined/0 = never flees.
    */
-  m_nFleeHpPct: number = 0; // % -> when `100*HP/maxHP <= this` -> flee
+  m_nFleeHpPct = 0; // % -> when `100*HP/maxHP <= this` -> flee
   /**
    * Flee duration (ms) before returning home. Populated from `MoverSpawnSource.runawayDelay`
    * (propMoverEx `m_dwRunawayDelay`, default 1000).
@@ -304,13 +304,13 @@ export class CMover {
    * Self-heal HP threshold -- 1-100 (% of max). Populated from
    * `MoverSpawnSource.healHpPct` (propMoverEx `Recovery` block). 0 = never.
    */
-  m_nHealHpPct: number = 0;
+  m_nHealHpPct = 0;
   /** Self-heal HP amount per tick (flat HP). Populated from `MoverSpawnSource.healAmount`. */
-  m_nHealAmount: number = 10;
+  m_nHealAmount = 10;
   /** Self-heal cadence (ms). Populated from `MoverSpawnSource.healCadenceMs` (default 1000). */
-  m_nHealCadenceMs: number = 1000;
+  m_nHealCadenceMs = 1000;
   /** Timestamp (ms, `Date.now()`) when the next self-heal tick fires. 0 = uninitialized. */
-  m_tmNextHealTick: number = 0;
+  m_tmNextHealTick = 0;
   /** DST destination-parameter pool (single `Int32Array(94)` adj + chg arrays). */
   readonly m_params: ParamModel = new ParamModel();
   /** Active timed DST buffs on this mover (debuffs from player skills). */
@@ -325,7 +325,7 @@ export class CMover {
    * destination. `0` = uninitialized -> the AI stagger-seeds it on first tick.
    * C++ drives this from `m_tmMove` + `SEC(5)+xRandom(SEC(1))` on arrival.
    */
-  m_tmNextWander: number = 0;
+  m_tmNextWander = 0;
   /**
    * Current aggro target objid (C++ `CAIMonster::m_dwIdTarget`, `AIMonster.h:37`).
    * `NULL_ID` = idle. Set on sight (active BELLI) or on damage (`AIMSG_DAMAGE`,
@@ -346,11 +346,11 @@ export class CMover {
   /** propMover `fSpeed` -- per-sub-step distance; the AI stepper scales it into u/s. */
   m_fSpeedBase: number;
   /** Leashing home (C++ `m_bReturnToBegin`) -- run to anchor at 2.66*, restore HP, drop target. */
-  m_bReturnToBegin: boolean = false;
+  m_bReturnToBegin = false;
   /** Timestamp (ms) the current return-home began -- feeds the stuck-teleport gate. */
-  m_tmReturnToBegin: number = 0;
+  m_tmReturnToBegin = 0;
   /** Chase-window expiry (C++ `m_tmAttack`, `s_tmAttack = SEC(15)`) -- anti-stuck gate. */
-  m_tmAttack: number = 0;
+  m_tmAttack = 0;
   /**
    * Hit-share table for kill exp (`m_idEnemies`). OBJID -> cumulative damage.
    * v1: single-attacker (no party grouping). ponytail: full HIT_INFO + party.

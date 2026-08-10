@@ -281,7 +281,7 @@ export class GuildRepository {
 
   /** Every lockout, character id -> deadline ms -- the world-boot hydrate. */
   async loadAllCooldowns(): Promise<Map<number, number>> {
-    const rows: Array<{ character_id: number; until_ms: number }> =
+    const rows: { character_id: number; until_ms: number }[] =
       await this.db('guild_cooldown').select('*');
     return new Map(rows.map((r) => [r.character_id, Number(r.until_ms)]));
   }

@@ -11,14 +11,15 @@
  * @module app/api/servers/kick-all/route
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { auth } from "@/lib/auth";
-import { publishAdminCommand } from "@/lib/ipc";
-import { writeAudit } from "@/lib/audit";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { auth } from '@/lib/auth';
+import { publishAdminCommand } from '@/lib/ipc';
+import { writeAudit } from '@/lib/audit';
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const BodySchema = z.object({
   /** Must be explicitly true — guards against an accidental empty POST. */
@@ -27,32 +28,32 @@ const BodySchema = z.object({
   reason: z.string().trim().min(1).max(200).optional(),
 });
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<Response> {
   const session = await auth();
-  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!session) return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const parsed = BodySchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid body" },
+      { ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid body' },
       { status: 400 },
     );
   }
 
   const { reason } = parsed.data;
   const delivered = await publishAdminCommand(
-    reason === undefined ? { kind: "kick_all" } : { kind: "kick_all", reason },
+    reason === undefined ? { kind: 'kick_all' } : { kind: 'kick_all', reason },
   );
   await writeAudit(session, {
-    action: "kick_all",
-    targetType: "world",
+    action: 'kick_all',
+    targetType: 'world',
     targetId: null,
     details: { delivered, ...(reason === undefined ? {} : { reason }) },
   });
 
   if (!delivered) {
     return NextResponse.json(
-      { ok: false, error: "World server unreachable — command not delivered" },
+      { ok: false, error: 'World server unreachable — command not delivered' },
       { status: 503 },
     );
   }

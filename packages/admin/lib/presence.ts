@@ -8,9 +8,9 @@
  * @module lib/presence
  */
 
-import { db } from "@/lib/db";
-import { onlinePlayers } from "@/../drizzle/schema";
-import { gt } from "drizzle-orm";
+import { db } from '@/lib/db';
+import { onlinePlayers } from '@/../drizzle/schema';
+import { gt } from 'drizzle-orm';
 
 /**
  * Staleness window. Must be > the world's 30 s checkpoint interval (which bumps

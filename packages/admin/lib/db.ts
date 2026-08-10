@@ -1,5 +1,15 @@
-import type { BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
-import * as schema from "@/../drizzle/schema";
+import type Database from 'better-sqlite3';
+import type { BetterSQLite3Database, drizzle as DrizzleFunction } from 'drizzle-orm/better-sqlite3';
+import type * as NodePath from 'node:path';
+import type { fileURLToPath as FileURLToPath } from 'node:url';
+import type { runMigrations as RunMigrations } from './migrate';
+import * as schema from '@/../drizzle/schema';
+
+declare function require(id: 'better-sqlite3'): typeof Database;
+declare function require(id: 'drizzle-orm/better-sqlite3'): { drizzle: typeof DrizzleFunction };
+declare function require(id: './migrate'): { runMigrations: typeof RunMigrations };
+declare function require(id: 'node:path'): typeof NodePath;
+declare function require(id: 'node:url'): { fileURLToPath: typeof FileURLToPath };
 
 // Lazy singleton — only instantiated on first access, not at import time.
 // This prevents better-sqlite3 native bindings from loading during build
@@ -11,19 +21,15 @@ import * as schema from "@/../drizzle/schema";
 // APIs are unavailable. All Node-only work is deferred into getDb().
 let _db: BetterSQLite3Database<typeof schema> | null = null;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let _Database: any = null;
-let _drizzle: any = null;
-let _runMigrations: ((sqlite: unknown) => void) | null = null;
+let _Database: typeof Database | null = null;
+let _drizzle: typeof DrizzleFunction | null = null;
+let _runMigrations: typeof RunMigrations | null = null;
 
-function ensureImports() {
+function ensureImports(): void {
   if (!_Database) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    _Database = require("better-sqlite3");
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    _drizzle = require("drizzle-orm/better-sqlite3").drizzle;
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    _runMigrations = require("./migrate").runMigrations;
+    _Database = require('better-sqlite3');
+    _drizzle = require('drizzle-orm/better-sqlite3').drizzle;
+    _runMigrations = require('./migrate').runMigrations;
   }
 }
 
@@ -42,19 +48,16 @@ let _repoRoot: string | null = null;
 
 function getRepoRoot(): string {
   if (!_repoRoot) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { fileURLToPath } = require("url");
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const path = require("path") as typeof import("path");
-    _repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+    const { fileURLToPath } = require('node:url');
+    const path = require('node:path');
+    _repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
   }
   return _repoRoot;
 }
 
 function resolveDbPath(): string {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const path = require("path") as typeof import("path");
-  const raw = process.env.DB_FILENAME || "./data/flyff_dev.sqlite3";
+  const path = require('node:path');
+  const raw = process.env.DB_FILENAME ?? './data/flyff_dev.sqlite3';
   if (path.isAbsolute(raw)) return raw;
   return path.resolve(getRepoRoot(), raw);
 }
@@ -62,23 +65,28 @@ function resolveDbPath(): string {
 export function getDb(): BetterSQLite3Database<typeof schema> {
   if (!_db) {
     ensureImports();
+    if (!_Database || !_drizzle || !_runMigrations) {
+      throw new TypeError('Database modules failed to load');
+    }
     const sqlite = new _Database(resolveDbPath());
-    sqlite.pragma("journal_mode = WAL");
-    sqlite.pragma("foreign_keys = ON");
+    sqlite.pragma('journal_mode = WAL');
+    sqlite.pragma('foreign_keys = ON');
     // Apply any pending game-server migrations so the admin never hits a
     // missing column/table when the game server hasn't run seed yet.
-    _runMigrations!(sqlite);
+    _runMigrations(sqlite);
     _db = _drizzle(sqlite, { schema });
   }
-  return _db!;
+  return _db;
 }
 
 // Backwards-compatible export (lazy via Proxy)
 export const db = new Proxy({} as BetterSQLite3Database<typeof schema>, {
-  get(_target, prop, receiver) {
-    const real = getDb();
-    const value = Reflect.get(real, prop, receiver);
-    return typeof value === "function" ? value.bind(real) : value;
+  get(_target, prop): unknown {
+    const real = getDb() as unknown as Record<PropertyKey, unknown>;
+    const value: unknown = real[prop as PropertyKey];
+    return typeof value === 'function'
+      ? (value as (...args: unknown[]) => unknown).bind(real)
+      : value;
   },
 });
 

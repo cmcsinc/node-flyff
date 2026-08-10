@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * Generated config form for one managed server instance.
@@ -9,14 +9,14 @@
  * Placeholders show what would be inherited.
  */
 
-import * as React from "react";
-import { toast } from "sonner";
-import { Settings2, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
+import * as React from 'react';
+import { toast } from 'sonner';
+import { Settings2, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select } from '@/components/ui/select';
 import {
   CONFIG_FIELDS,
   addToken,
@@ -24,10 +24,10 @@ import {
   setAtPath,
   type FieldKind,
   type FieldSpec,
-} from "@/lib/config-fields";
-import { cn } from "@/lib/utils";
-import type { InstanceStatus } from "./types";
-import { post } from "./types";
+} from '@/lib/config-fields';
+import { cn } from '@/lib/utils';
+import type { InstanceStatus } from './types';
+import { post } from './types';
 export function ConfigEditor({
   inst,
   instances,
@@ -37,11 +37,11 @@ export function ConfigEditor({
   /** All registered instances — sources the option list for multiselect fields. */
   instances: InstanceStatus[];
   onSaved: (next: InstanceStatus[]) => void;
-}) {
+}): React.JSX.Element {
   const [overrides, setOverrides] = React.useState<Record<string, unknown>>(inst.overrides ?? {});
   const [port, setPort] = React.useState(String(inst.port));
   const [saving, setSaving] = React.useState(false);
-  const live = inst.state === "running" || inst.state === "starting";
+  const live = inst.state === 'running' || inst.state === 'starting';
 
   // Reset the form only when a different instance is selected. `inst` is a
   // fresh object every 2s status poll, so keying on its contents would wipe
@@ -49,27 +49,27 @@ export function ConfigEditor({
   React.useEffect(() => {
     setOverrides(inst.overrides ?? {});
     setPort(String(inst.port));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inst.id]);
 
-  const save = async () => {
+  const save = async (): Promise<void> => {
     setSaving(true);
     try {
       const { instances } = await post({
-        action: "update",
+        action: 'update',
         id: inst.id,
         patch: { port: Number(port), overrides },
       });
       if (instances) onSaved(instances);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed");
+      toast.error(e instanceof Error ? e.message : 'Failed');
     } finally {
       setSaving(false);
     }
   };
 
-  const setField = (path: string, value: unknown) =>
+  const setField = (path: string, value: unknown): void => {
     setOverrides((prev) => setAtPath(prev, path, value));
+  };
 
   /**
    * Override paths this instance type has no generated field for — hand-written
@@ -78,9 +78,9 @@ export function ConfigEditor({
    */
   const unmapped = React.useMemo(() => {
     const known = new Set(CONFIG_FIELDS[inst.type].flatMap((s) => s.fields.map((f) => f.path)));
-    const out: Array<[string, unknown]> = [];
-    const walk = (node: unknown, prefix: string) => {
-      if (node === null || typeof node !== "object" || Array.isArray(node)) {
+    const out: [string, unknown][] = [];
+    const walk = (node: unknown, prefix: string): void => {
+      if (node === null || typeof node !== 'object' || Array.isArray(node)) {
         if (prefix && !known.has(prefix)) out.push([prefix, node]);
         return;
       }
@@ -90,7 +90,7 @@ export function ConfigEditor({
         walk(v, path);
       }
     };
-    walk(overrides, "");
+    walk(overrides, '');
     return out;
   }, [overrides, inst.type]);
 
@@ -115,7 +115,9 @@ export function ConfigEditor({
             max={65535}
             value={port}
             disabled={live}
-            onChange={(e) => setPort(e.target.value)}
+            onChange={(e) => {
+              setPort(e.target.value);
+            }}
           />
         </div>
 
@@ -137,7 +139,9 @@ export function ConfigEditor({
                       : undefined
                   }
                   disabled={live}
-                  onChange={(v) => setField(f.path, v)}
+                  onChange={(v) => {
+                    setField(f.path, v);
+                  }}
                 />
               ))}
             </div>
@@ -162,7 +166,9 @@ export function ConfigEditor({
                     type="button"
                     disabled={live}
                     aria-label={`Remove override ${path}`}
-                    onClick={() => setField(path, undefined)}
+                    onClick={() => {
+                      setField(path, undefined);
+                    }}
                     className="cursor-pointer rounded p-1 text-muted-foreground transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <X className="h-3.5 w-3.5" />
@@ -173,8 +179,8 @@ export function ConfigEditor({
           </fieldset>
         )}
 
-        <Button onClick={save} disabled={saving || live} className="cursor-pointer">
-          {saving ? "Saving…" : "Save"}
+        <Button onClick={() => { void save(); }} disabled={saving || live} className="cursor-pointer">
+          {saving ? 'Saving…' : 'Save'}
         </Button>
 
         <details className="rounded-md border border-border">
@@ -206,11 +212,11 @@ function ConfigField({
   choices?: string[];
   disabled: boolean;
   onChange: (v: unknown) => void;
-}) {
-  const id = `cfg-${spec.path.replace(/\./g, "-")}`;
+}): React.JSX.Element {
+  const id = `cfg-${spec.path.replace(/\./g, '-')}`;
   const placeholder = fmt(inherited);
 
-  if (spec.kind === "multiselect") {
+  if (spec.kind === 'multiselect') {
     return (
       <Wrap id={id} spec={spec} placeholder={placeholder}>
         <MultiSelect
@@ -225,17 +231,19 @@ function ConfigField({
     );
   }
 
-  if (spec.kind === "boolean") {
+  if (spec.kind === 'boolean') {
     // Tri-state: inherit / true / false — a checkbox cannot express "inherit".
     return (
       <Wrap id={id} spec={spec} placeholder={placeholder}>
         <Select
           id={id}
           disabled={disabled}
-          value={value === undefined ? "" : String(value)}
-          onChange={(e) => onChange(e.target.value === "" ? undefined : e.target.value === "true")}
+          value={value === undefined ? '' : typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' ? String(value) : ''}
+          onChange={(e) => {
+            onChange(e.target.value === '' ? undefined : e.target.value === 'true');
+          }}
         >
-          <option value="">inherit ({placeholder || "unset"})</option>
+          <option value="">inherit ({placeholder || 'unset'})</option>
           <option value="true">true</option>
           <option value="false">false</option>
         </Select>
@@ -243,16 +251,18 @@ function ConfigField({
     );
   }
 
-  if (spec.kind === "select") {
+  if (spec.kind === 'select') {
     return (
       <Wrap id={id} spec={spec} placeholder={placeholder}>
         <Select
           id={id}
           disabled={disabled}
-          value={typeof value === "string" ? value : ""}
-          onChange={(e) => onChange(e.target.value === "" ? undefined : e.target.value)}
+          value={typeof value === 'string' ? value : ''}
+          onChange={(e) => {
+            onChange(e.target.value === '' ? undefined : e.target.value);
+          }}
         >
-          <option value="">inherit ({placeholder || "unset"})</option>
+          <option value="">inherit ({placeholder || 'unset'})</option>
           {spec.options?.map((o) => (
             <option key={o} value={o}>
               {o}
@@ -295,7 +305,7 @@ function TextField({
   placeholder: string;
   disabled: boolean;
   onChange: (v: unknown) => void;
-}) {
+}): React.JSX.Element {
   const external = fmt(value);
   const [draft, setDraft] = React.useState(external);
 
@@ -303,14 +313,13 @@ function TextField({
   // save round-trip) — but not while the draft still parses to the same value.
   React.useEffect(() => {
     if (fmt(parseField(spec.kind, draft)) !== external) setDraft(external);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [external]);
 
   return (
     <Input
       id={id}
-      type={spec.kind === "number" ? "number" : "text"}
-      {...(spec.kind === "number" ? { step: "any" } : {})}
+      type={spec.kind === 'number' ? 'number' : 'text'}
+      {...(spec.kind === 'number' ? { step: 'any' } : {})}
       disabled={disabled}
       placeholder={placeholder}
       value={draft}
@@ -349,26 +358,28 @@ function MultiSelect({
   choices: string[];
   disabled: boolean;
   onChange: (v: unknown) => void;
-}) {
-  const [draft, setDraft] = React.useState("");
+}): React.JSX.Element {
+  const [draft, setDraft] = React.useState('');
   const active = selected ?? inheritedList;
   const available = choices.filter((c) => !active.includes(c));
 
-  const add = (raw: string) => {
+  const add = (raw: string): void => {
     const next = addToken(active, raw);
-    setDraft("");
+    setDraft('');
     if (next.length !== active.length) onChange(next);
   };
 
-  const remove = (v: string) => onChange(active.filter((x) => x !== v));
+  const remove = (v: string): void => {
+    onChange(active.filter((x) => x !== v));
+  };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === "," || e.key === "Tab") {
-      if (draft.trim() === "") return;
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter' || e.key === ',' || e.key === 'Tab') {
+      if (draft.trim() === '') return;
       e.preventDefault();
       add(draft);
-    } else if (e.key === "Backspace" && draft === "" && active.length > 0) {
-      remove(active[active.length - 1]!);
+    } else if (e.key === 'Backspace' && draft === '' && active.length > 0) {
+      remove(active[active.length - 1]);
     }
   };
 
@@ -376,26 +387,28 @@ function MultiSelect({
     <div className="space-y-1.5">
       <div
         className={cn(
-          "flex min-h-9 flex-wrap items-center gap-1.5 rounded-md border border-input bg-transparent px-2 py-1.5 shadow-sm transition-colors",
-          "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 focus-within:ring-offset-background",
-          disabled ? "cursor-not-allowed opacity-50" : "hover:border-ring/40",
+          'flex min-h-9 flex-wrap items-center gap-1.5 rounded-md border border-input bg-transparent px-2 py-1.5 shadow-sm transition-colors',
+          'focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 focus-within:ring-offset-background',
+          disabled ? 'cursor-not-allowed opacity-50' : 'hover:border-ring/40',
         )}
       >
         {active.map((v) => (
           <span
             key={v}
             className={cn(
-              "inline-flex items-center gap-1 rounded bg-secondary px-1.5 py-0.5 font-mono text-xs",
-              !choices.includes(v) && "text-muted-foreground ring-1 ring-inset ring-border",
+              'inline-flex items-center gap-1 rounded bg-secondary px-1.5 py-0.5 font-mono text-xs',
+              !choices.includes(v) && 'text-muted-foreground ring-1 ring-inset ring-border',
             )}
           >
             {v}
             <button
               type="button"
               aria-label={`Remove ${v}`}
-              title={choices.includes(v) ? undefined : "Not a registered instance"}
+              title={choices.includes(v) ? undefined : 'Not a registered instance'}
               disabled={disabled}
-              onClick={() => remove(v)}
+              onClick={() => {
+                remove(v);
+              }}
               className="rounded hover:text-destructive focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed"
             >
               <X className="h-3 w-3" />
@@ -411,7 +424,7 @@ function MultiSelect({
           autoComplete="off"
           disabled={disabled}
           value={draft}
-          placeholder={active.length === 0 ? "type an id…" : ""}
+          placeholder={active.length === 0 ? 'type an id…' : ''}
           onChange={(e) => {
             // Picking from the dropdown fires change with the full value.
             const v = e.target.value;
@@ -419,7 +432,9 @@ function MultiSelect({
             else setDraft(v);
           }}
           onKeyDown={onKeyDown}
-          onBlur={() => add(draft)}
+          onBlur={() => {
+            add(draft);
+          }}
           className="min-w-24 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed"
         />
         <datalist id={`${id}-options`}>
@@ -433,7 +448,9 @@ function MultiSelect({
           type="button"
           disabled={disabled}
           className="text-[11px] text-muted-foreground underline disabled:opacity-50"
-          onClick={() => onChange(undefined)}
+          onClick={() => {
+            onChange(undefined);
+          }}
         >
           reset to inherited
         </button>
@@ -452,7 +469,7 @@ function Wrap({
   spec: FieldSpec;
   placeholder: string;
   children: React.ReactNode;
-}) {
+}): React.JSX.Element {
   return (
     <div className="space-y-1.5">
       <Label htmlFor={id}>{spec.label}</Label>
@@ -469,14 +486,14 @@ function Wrap({
 
 /** Blank input = inherit (undefined). NaN numbers are dropped, not stored. */
 function parseField(kind: FieldKind, text: string): unknown {
-  if (text.trim() === "") return undefined;
-  if (kind === "number") {
+  if (text.trim() === '') return undefined;
+  if (kind === 'number') {
     const n = Number(text);
     return Number.isFinite(n) ? n : undefined;
   }
-  if (kind === "csv") {
+  if (kind === 'csv') {
     return text
-      .split(",")
+      .split(',')
       .map((s) => s.trim())
       .filter(Boolean);
   }
@@ -484,7 +501,7 @@ function parseField(kind: FieldKind, text: string): unknown {
 }
 
 function fmt(v: unknown): string {
-  if (v === undefined || v === null) return "";
-  if (Array.isArray(v)) return v.join(", ");
-  return String(v);
-}
+  if (v === undefined || v === null) return '';
+  if (Array.isArray(v)) return v.map((item) => (typeof item === 'string' || typeof item === 'number' || typeof item === 'boolean' ? String(item) : '')).join(', ');
+  return typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean' ? String(v) : '';
+}

@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-import { ResourceFormEditor } from "@/components/resource-form-editor";
+import { responseError } from '@/lib/api-response';
+import { ResourceFormEditor } from '@/components/resource-form-editor';
 
 /**
  * Zone metadata form.
@@ -16,15 +17,14 @@ export function ZoneEditor({
 }: {
   zoneId: string;
   meta: Record<string, unknown>;
-}) {
+}): React.JSX.Element {
   async function save(form: Record<string, unknown>): Promise<string | null> {
-    const res = await fetch("/api/zones", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch('/api/zones', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ zoneId, meta: form }),
     });
-    const data = await res.json().catch(() => null);
-    return res.ok ? null : (data?.error ?? "Save failed");
+    return res.ok ? null : ((await responseError(res)) ?? 'Save failed');
   }
 
   return (

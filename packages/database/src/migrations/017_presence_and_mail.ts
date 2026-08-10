@@ -37,7 +37,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('online_players', (table: any) => {
+  await db.schema.createTable('online_players', (table) => {
     table.integer('character_id').primary()
       .references('id').inTable('characters').onDelete('CASCADE');
     table.integer('account_id').unsigned().notNullable();
@@ -47,7 +47,7 @@ export async function up(db: Knex): Promise<void> {
     table.bigInteger('last_seen_ms').unsigned().notNullable();
   });
 
-  await db.schema.createTable('mail', (table: any) => {
+  await db.schema.createTable('mail', (table) => {
     table.increments('id').primary();
     table.integer('receiver_id').unsigned().notNullable()
       .references('id').inTable('characters').onDelete('CASCADE');

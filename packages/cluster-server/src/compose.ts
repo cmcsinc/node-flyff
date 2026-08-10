@@ -1,6 +1,11 @@
-import { createLogger, type Logger, loadConfig, type ClusterServerConfig, MemoryCache } from '@flyff/core';
-import { ClusterServerConfigSchema } from '@flyff/core/config/schemas/cluster';
+import { createLogger, type Logger, loadConfig, type ClusterServerConfig, ClusterServerConfigSchema, GameError, MemoryCache } from '@flyff/core';
 import { createDb, type DbConfig, AccountRepository, CharacterRepository, InventoryRepository } from '@flyff/database';
+
+type Database = ConstructorParameters<typeof AccountRepository>[0];
+
+function isDatabase(value: unknown): value is Database {
+  return typeof value === 'function' && 'transaction' in value;
+}
 import { LoginRegistrar } from './ipc/loginRegistrar';
 import { WorldRegistry } from './ipc/worldRegistry';
 import { ClusterHandoffPublisher } from './ipc/handoffPublisher';
@@ -37,7 +42,7 @@ export async function compose(): Promise<ClusterComposeResult> {
     client: config.database.client,
     connection: config.database.client === 'better-sqlite3'
       ? config.database.filename
-      : config.database.url || {
+      : config.database.url ?? {
           host: 'localhost',
           port: 3306,
           user: 'root',
@@ -45,7 +50,8 @@ export async function compose(): Promise<ClusterComposeResult> {
           database: 'flyff',
         },
   };
-  const db = createDb(dbConfig);
+  const db: unknown = createDb(dbConfig);
+  if (!isDatabase(db)) throw new GameError('Database factory returned an invalid connection');
   const accountRepo = new AccountRepository(db);
   const charRepo = new CharacterRepository(db);
   const inventoryRepo = new InventoryRepository(db);

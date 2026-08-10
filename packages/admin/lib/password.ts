@@ -15,11 +15,10 @@
  * All node:crypto calls are deferred to function-call time, never at import.
  */
 
-import { createHash, randomBytes, scryptSync, timingSafeEqual } from "crypto";
-import { createRequire } from "node:module";
+import { createHash, randomBytes, scryptSync, timingSafeEqual } from 'crypto';
 
 /** v19 client password salt — must match the login-server seed. */
-const V19_SALT = "kikugalanet";
+const V19_SALT = 'kikugalanet';
 
 /** scrypt KDF params (N=2^14, r=8, p=1, 32-byte key) — OWASP-recommended. */
 const SCRYPT_N = 16384;
@@ -31,13 +30,15 @@ const SCRYPT_KEYLEN = 32;
 
 /** Derive the md5 digest the client/server hash: md5(salt + password) hex. */
 function md5Digest(password: string): string {
-  return createHash("md5").update(V19_SALT + password).digest("hex");
+  return createHash('md5')
+    .update(V19_SALT + password)
+    .digest('hex');
 }
 
 /** Verify an scrypt PHC-ish hash ("$scrypt$N$r$p$saltB64$keyB64"). */
 function verifyScrypt(hash: string, password: string): boolean {
-  const parts = hash.split("$");
-  if (parts.length !== 7 || parts[1] !== "scrypt") return false;
+  const parts = hash.split('$');
+  if (parts.length !== 7 || parts[1] !== 'scrypt') return false;
   const N = Number(parts[2]);
   const r = Number(parts[3]);
   const p = Number(parts[4]);
@@ -45,8 +46,8 @@ function verifyScrypt(hash: string, password: string): boolean {
   const keyStr = parts[6];
   if (!saltStr || !keyStr) return false;
   if (!Number.isInteger(N) || !Number.isInteger(r) || !Number.isInteger(p)) return false;
-  const salt = Buffer.from(saltStr, "base64");
-  const expected = Buffer.from(keyStr, "base64");
+  const salt = Buffer.from(saltStr, 'base64');
+  const expected = Buffer.from(keyStr, 'base64');
   if (expected.length !== SCRYPT_KEYLEN) return false;
   const key = scryptSync(password, salt, expected.length, { N, r, p });
   return timingSafeEqual(key, expected);
@@ -63,10 +64,16 @@ function verifyScrypt(hash: string, password: string): boolean {
  */
 async function verifyArgon2(hash: string, password: string): Promise<boolean> {
   try {
-    // eslint-disable-next-line no-eval, @typescript-eslint/no-implied-eval
-    const mod = (0, eval)("require")("argon2") as {
-      verify: (h: string, p: string) => Promise<boolean>;
-    };
+    const dynamicRequire = (0, eval)('require') as (id: string) => unknown;
+    const raw = dynamicRequire('argon2');
+    if (
+      typeof raw !== 'object' ||
+      raw === null ||
+      !('verify' in raw) ||
+      typeof raw.verify !== 'function'
+    )
+      return false;
+    const mod = raw as { verify: (h: string, p: string) => Promise<boolean> };
     return await mod.verify(hash, password);
   } catch {
     return false;
@@ -82,8 +89,8 @@ export async function verifyAccountPassword(
   storedHash: string,
 ): Promise<boolean> {
   const digest = md5Digest(plaintext);
-  if (storedHash.startsWith("$scrypt$")) return verifyScrypt(storedHash, digest);
-  if (storedHash.startsWith("$argon2")) return verifyArgon2(storedHash, digest);
+  if (storedHash.startsWith('$scrypt$')) return verifyScrypt(storedHash, digest);
+  if (storedHash.startsWith('$argon2')) return verifyArgon2(storedHash, digest);
   return false;
 }
 
@@ -101,5 +108,5 @@ export function hashAccountPassword(plaintext: string): string {
     r: SCRYPT_R,
     p: SCRYPT_P,
   });
-  return `$scrypt$${SCRYPT_N}$${SCRYPT_R}$${SCRYPT_P}$${salt.toString("base64")}$${key.toString("base64")}`;
+  return `$scrypt$${String(SCRYPT_N)}$${String(SCRYPT_R)}$${String(SCRYPT_P)}$${salt.toString('base64')}$${key.toString('base64')}`;
 }

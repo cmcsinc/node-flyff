@@ -38,16 +38,16 @@ export const BASE_STAT = 15;
 /** `EXPCHARACTER.dwLPPoint` — flat 2 GP per level gained in v19's expTable.inc. */
 const GP_PER_LEVEL = 2;
 
-export type JobTier = "base" | "expert" | "pro" | "master" | "hero" | "legend";
+export type JobTier = 'base' | 'expert' | 'pro' | 'master' | 'hero' | 'legend';
 
 export function jobTier(job: number): JobTier | null {
   if (job < 0) return null;
-  if (job < MAX_JOBBASE) return "base";
-  if (job < MAX_EXPERT) return "expert";
-  if (job < MAX_PROFESSIONAL) return "pro";
-  if (job < MAX_MASTER) return "master";
-  if (job < MAX_HERO) return "hero";
-  if (job < MAX_LEGEND_HERO) return "legend";
+  if (job < MAX_JOBBASE) return 'base';
+  if (job < MAX_EXPERT) return 'expert';
+  if (job < MAX_PROFESSIONAL) return 'pro';
+  if (job < MAX_MASTER) return 'master';
+  if (job < MAX_HERO) return 'hero';
+  if (job < MAX_LEGEND_HERO) return 'legend';
   return null;
 }
 
@@ -89,47 +89,47 @@ export function planJobChange(
   };
 
   switch (tier) {
-    case "base":
+    case 'base':
       return {
         level: 1,
         remainGp: gpForLevel(1),
         stats: reset,
-        note: "Vagrant — level 1, stats reset to 15, GP 0.",
+        note: 'Vagrant — level 1, stats reset to 15, GP 0.',
       };
-    case "expert":
+    case 'expert':
       return {
         level: 15,
         remainGp: gpForLevel(15),
         stats: reset,
-        note: "1st job — level 15 (MAX_JOB_LEVEL), InitStat: stats 15, GP 28.",
+        note: '1st job — level 15 (MAX_JOB_LEVEL), InitStat: stats 15, GP 28.',
       };
-    case "pro":
+    case 'pro':
       return {
         level: 60,
         remainGp: current.remainGp,
         stats: null,
-        note: "2nd job — level 60 (MAX_JOB_LEVEL+MAX_EXP_LEVEL). The mada_* scripts do NOT call InitStat here, so stats and GP carry over.",
+        note: '2nd job — level 60 (MAX_JOB_LEVEL+MAX_EXP_LEVEL). The mada_* scripts do NOT call InitStat here, so stats and GP carry over.',
       };
-    case "master":
+    case 'master':
       return {
         level: 60,
         remainGp: gpForLevel(60),
         stats: reset,
-        note: "Master — InitStat at 120 then SetLevel(60) + AddGPPoint(-120): level 60, stats 15, GP 118.",
+        note: 'Master — InitStat at 120 then SetLevel(60) + AddGPPoint(-120): level 60, stats 15, GP 118.',
       };
-    case "hero":
+    case 'hero':
       return {
         level: 121,
         remainGp: current.remainGp + 15,
         stats: null,
-        note: "Hero — SetLevel(121) + AddGPPoint(15). No InitStat: stats carry over, GP gains 15.",
+        note: 'Hero — SetLevel(121) + AddGPPoint(15). No InitStat: stats carry over, GP gains 15.',
       };
-    case "legend":
+    case 'legend':
       return {
         level: Math.max(current.level, 130),
         remainGp: current.remainGp,
         stats: null,
-        note: "Legend Hero — requires level 130; the script changes job only, no level/stat/GP change.",
+        note: 'Legend Hero — requires level 130; the script changes job only, no level/stat/GP change.',
       };
   }
 }

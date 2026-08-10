@@ -37,7 +37,7 @@ import {
   buildGuildMemberLevel, buildGuildClass, buildGuildNickname, buildChgMaster,
   buildGuildSetName, buildGuildChat, buildGuildGameLogin, buildGuildGameJoin,
   buildGuildError,
-  GUD_MASTER, GUD_ROOKIE, MAX_GM_LEVEL, PF_MEMBERLEVEL, PF_LEVEL, PF_INVITATION,
+  MAX_GM_LEVEL, PF_MEMBERLEVEL, PF_LEVEL, PF_INVITATION,
   MAX_G_NAME, MAX_BYTE_NOTICE, CUSTOM_LOGO_MAX, GUILD_LOGO_GM_ONLY_ABOVE,
   GUILD_ERROR_DUPLICATE_NAME, GUILD_ERROR_BAD_PENYA, MAX_GUILD_RANK_PENYA,
   GUILD_MULTI_NO_DEFAULT,
@@ -45,7 +45,7 @@ import {
 } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 import {
-  GuildManager, type Guild, type GuildMemberState,
+  type GuildManager, type Guild, type GuildMemberState,
 } from '../managers/guild.manager';
 import type { GuildWarManager } from '../managers/guildWar.manager';
 import {
@@ -218,7 +218,7 @@ export class GuildService {
       return;
     }
 
-    const timer = setTimeout(() => this.expireInvite(target.m_idPlayer), GUILD_INVITE_TIMEOUT_MS);
+    const timer = setTimeout(() => { this.expireInvite(target.m_idPlayer); }, GUILD_INVITE_TIMEOUT_MS);
     this.deps.guildManager.addPending({
       guildId: guild.id, inviterId: inviter.m_idPlayer, targetId: target.m_idPlayer,
       expiresAt: this.now() + GUILD_INVITE_TIMEOUT_MS, timer,

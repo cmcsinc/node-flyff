@@ -63,7 +63,7 @@ export function buildGetGoldBank(objid: number, tab: number, dwGold: number, dwG
  * `if( nMode )`): 1 = `CWndConfirmBank` (enter-pin), 0 = `CWndBankPassword`
  * (set/change-pin). Set by `BankService.open` from `m_szBankPass`.
  */
-export function buildBankWindow(objid: number, nMode: number, dwId: number = NULL_ID, dwItemId: number = 0): Buffer {
+export function buildBankWindow(objid: number, nMode: number, dwId: number = NULL_ID, dwItemId = 0): Buffer {
   return snapshotFrame(objid, SNAPSHOTTYPE.BANKWINDOW, (w) => {
     w.writeDword(nMode);
     w.writeDword(dwId);
@@ -76,7 +76,7 @@ export function buildBankWindow(objid: number, nMode: number, dwId: number = NUL
  * `[objid][0x0058][int nMode][DWORD dwId][DWORD dwItemId]`. nMode 1 = password
  * accepted -> client opens the bank; 0 = wrong password -> re-prompts.
  */
-export function buildConfirmBankPass(objid: number, nMode: number, dwId: number = NULL_ID, dwItemId: number = 0): Buffer {
+export function buildConfirmBankPass(objid: number, nMode: number, dwId: number = NULL_ID, dwItemId = 0): Buffer {
   return snapshotFrame(objid, SNAPSHOTTYPE.CONFIRMBANKPASS, (w) => {
     w.writeDword(nMode);
     w.writeDword(dwId);
@@ -90,7 +90,7 @@ export function buildConfirmBankPass(objid: number, nMode: number, dwId: number 
  * password matched, new one saved -> client shows success; 0 = old password
  * wrong -> client re-prompts.
  */
-export function buildChangeBankPass(objid: number, nMode: number, dwId: number = NULL_ID, dwItemId: number = 0): Buffer {
+export function buildChangeBankPass(objid: number, nMode: number, dwId: number = NULL_ID, dwItemId = 0): Buffer {
   return snapshotFrame(objid, SNAPSHOTTYPE.CHANGEBANKPASS, (w) => {
     w.writeDword(nMode);
     w.writeDword(dwId);

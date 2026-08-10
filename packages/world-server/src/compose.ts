@@ -1,5 +1,4 @@
-import { createLogger, type Logger, loadConfig, type WorldServerConfig } from '@flyff/core';
-import { WorldServerConfigSchema } from '@flyff/core/config/schemas/world';
+import { createLogger, type Logger, loadConfig, type WorldServerConfig, WorldServerConfigSchema } from '@flyff/core';
 import { createDb, type DbConfig, CharacterRepository, AccountRepository, Journal, QuestRepository, InventoryRepository, BankRepository, SkillRepository, BuffRepository, MailRepository, PresenceRepository, FriendRepository, CampusRepository, PartyRepository, GuildRepository, GuildBankRepository, GuildWarRepository, GuildQuestRepository } from '@flyff/database';
 import { ClusterRegistrar } from './ipc/clusterRegistrar';
 import { ClusterListener } from './ipc/clusterListener';
@@ -8,8 +7,9 @@ import { AdminCommandService } from './services/adminCommand.service';
 import { MailService, MailHandler } from '@flyff/mail';
 import { SetPosSerializer } from './net/snapshot/setPos.serializer';
 import { ModifyModeSerializer } from './net/snapshot/modifyMode.serializer';
-import { loadAllResources, type ResourceIndex } from '@flyff/resources';
-import type { CPlayer } from '@flyff/entities';
+import { loadAllResources, type ResourceIndex, type ItemDefinition, type MoverDefinition } from '@flyff/resources';
+import type { SetItemDef } from '@flyff/resources/loaders/setItem.loader';
+import type { CPlayer, CMover } from '@flyff/entities';
 import { AUTH, hasAuthority } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
 import { ZoneManager } from '@flyff/world-core';
@@ -287,6 +287,30 @@ export interface WorldComposeResult {
   petSystem: PetSystem;
 }
 
+// createDb's declared return type (`ReturnType<typeof knex>`) does not resolve
+// under strict TS (TS2344 in database/src/db.ts), so the call site would be
+// `any`-typed and trip no-unsafe-assignment. Narrow via a runtime guard,
+// matching the pattern in login-server/cluster-server.
+interface Database {
+  (...args: readonly unknown[]): unknown;
+  readonly schema: object;
+  destroy(): Promise<void>;
+}
+
+function isDatabase(value: unknown): value is Database {
+  return typeof value === 'function'
+    && 'schema' in value
+    && typeof value.schema === 'object'
+    && value.schema !== null
+    && 'destroy' in value
+    && typeof value.destroy === 'function';
+}
+
+function requireDatabase(value: unknown): Database {
+  if (isDatabase(value)) return value;
+  throw new TypeError('createDb returned an invalid database instance');
+}
+
 export async function compose(): Promise<WorldComposeResult> {
   const config = await loadConfig('world-server', WorldServerConfigSchema);
   const logger = createLogger({ service: 'world-server', serverId: config.server.id });
@@ -316,7 +340,7 @@ export async function compose(): Promise<WorldComposeResult> {
     clusterInternalPort: config.registration.clusterInternalPort,
     reconnectIntervalMs: config.registration.reconnectIntervalMs,
     heartbeatIntervalMs: config.registration.heartbeatIntervalMs,
-    getPlayerCount: () => 0,
+    getPlayerCount: (): number => 0,
     logger,
   });
 
@@ -325,7 +349,7 @@ export async function compose(): Promise<WorldComposeResult> {
     client: config.database.client,
     connection: config.database.client === 'better-sqlite3'
       ? config.database.filename
-      : config.database.url || {
+      : config.database.url ?? {
           host: 'localhost',
           port: 3306,
           user: 'root',
@@ -333,7 +357,7 @@ export async function compose(): Promise<WorldComposeResult> {
           database: 'flyff',
         },
   };
-  const db = createDb(dbConfig);
+  const db = requireDatabase(createDb(dbConfig));
   const charRepo = new CharacterRepository(db);
   const accountRepo = new AccountRepository(db);
   const questRepo = new QuestRepository(db);
@@ -355,7 +379,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // staleness window would otherwise take to expire them.
   void presenceRepo
     .clearByServer(config.server.id)
-    .catch((err: unknown) => logger.warn({ err }, 'stale presence cleanup failed'));
+    .catch((err: unknown) => { logger.warn({ err }, 'stale presence cleanup failed'); });
 
   // WAL journal -- embedded SQLite, opened once per process. Critical mutations
   // (items, gold, exp, level) append here before ack so a crash never dupes or
@@ -389,15 +413,15 @@ export async function compose(): Promise<WorldComposeResult> {
   const spawnManager = new SpawnManager({
     resources,
     // Respawn: ADD_OBJ to in-range players that don't already know the mover.
-    onSpawn: (mover) => visibilitySlot.svc?.onMoverSpawn(mover),
+    onSpawn: (mover): void => { visibilitySlot.svc?.onMoverSpawn(mover); },
     // Corpse despawn: after CORPSE_DESPAWN_MS, DEL_OBJ to everyone tracking it.
-    onDespawn: (mover) => visibilitySlot.svc?.onMoverDespawn(mover),
+    onDespawn: (mover): void => { visibilitySlot.svc?.onMoverDespawn(mover); },
   });
   const visibilityService = new VisibilityService({
     playerManager, zoneManager, spawnManager,
-    buildAddMovers: (movers) => npcSnapshotSerializer.build(movers),
-    buildAddPeers: (players) => peerSnapshotSerializer.build(players),
-    buildRemove: (objids) => peerSnapshotSerializer.buildRemove(objids),
+    buildAddMovers: (movers): Buffer => npcSnapshotSerializer.build(movers),
+    buildAddPeers: (players): Buffer => peerSnapshotSerializer.build(players),
+    buildRemove: (objids: number[]): Buffer => peerSnapshotSerializer.buildRemove(objids),
   });
   visibilitySlot.svc = visibilityService;
   spawnManager.bootstrap();
@@ -420,7 +444,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // conditions + rewards through the real bag (questInventory adapter).
   const inventoryService = new InventoryService({
     inventoryRepo, journal,
-    getStackSize: (id: number) => resources.items.items.get(id)?.stack_size ?? 1,
+    getStackSize: (id: number): number => resources.items.items.get(id)?.stack_size ?? 1,
   });
   const createItemSerializer = new CreateItemSnapshotSerializer();
 
@@ -429,9 +453,9 @@ export async function compose(): Promise<WorldComposeResult> {
   // into EquipService for the arrow-needs-bow equip gate.
   const ammoService = new AmmoService({
     inventoryRepo, journal,
-    getItem: (id: number) => resources.items.items.get(id),
-    sendTo: (player, buf) => playerManager.sendTo(player, buf),
-    broadcastAround: (player, buf) =>
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    sendTo: (player, buf): void => { playerManager.sendTo(player, buf); },
+    broadcastAround: (player, buf): void =>
       zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
   });
 
@@ -440,17 +464,17 @@ export async function compose(): Promise<WorldComposeResult> {
   // this is an emulator-side addition for a visible "you acquired X" log line.
   // Shared by LootService (ground piles) and QuestService (reward items).
   const noticeSerializer = new NoticeSerializer();
-  const notifyItemAcquire = (player: CPlayer, itemId: number, count: number) => {
-    const name = resources.items.items.get(itemId)?.name ?? `Item ${itemId}`;
-    playerManager.sendTo(player, noticeSerializer.build(count > 1 ? `${name} x${count}` : name));
+  const notifyItemAcquire = (player: CPlayer, itemId: number, count: number): void => {
+    const name = resources.items.items.get(itemId)?.name ?? `Item ${String(itemId)}`;
+    playerManager.sendTo(player, noticeSerializer.build(count > 1 ? `${name} x${String(count)}` : name));
   };
   // `TID_GAME_TROUPEREAPITEM` equivalent: tell a party peer who received a
   // distributed drop. Same emulator-side text channel as `notifyItemAcquire`.
   const notifyPeerItemAcquire = (
     peer: CPlayer, receiver: CPlayer, itemId: number, count: number,
-  ) => {
-    const name = resources.items.items.get(itemId)?.name ?? `Item ${itemId}`;
-    const label = count > 1 ? `${name} x${count}` : name;
+  ): void => {
+    const name = resources.items.items.get(itemId)?.name ?? `Item ${String(itemId)}`;
+    const label = count > 1 ? `${name} x${String(count)}` : name;
     playerManager.sendTo(peer, noticeSerializer.build(`${receiver.m_szName}: ${label}`));
   };
 
@@ -465,7 +489,7 @@ export async function compose(): Promise<WorldComposeResult> {
     // Quest-reward exp gains broadcast SETEXPERIENCE (self) + SETLEVEL
     // (vicinity, level-up only) so the bar updates live. Matches the C++
     // AddExperienceSolo tail (Mover.cpp:6254 + LevelUpSetting -> AddSetLevel).
-    onExpGain: (player, leveled) => {
+    onExpGain: (player, leveled): void => {
       playerManager.sendTo(player, setExperienceSerializer.build(player.m_idPlayer, {
         exp: player.m_nExp, level: player.m_nLevel,
         skillLevel: player.m_nSkillLevel, skillPoint: player.m_nSkillPoint,
@@ -478,12 +502,12 @@ export async function compose(): Promise<WorldComposeResult> {
         );
       }
     },
-    onItemReward: (player, itemId, count) => notifyItemAcquire(player, itemId, count),
+    onItemReward: (player, itemId, count): void => { notifyItemAcquire(player, itemId, count); },
     // C++ `__SetQuestState` on QS_END emits AddDefinedText(TID_EVE_ENDQUEST,
     // "\"%s\"", title) (ScriptHelper.cpp:895). Resolve the quest's IDS title
     // token to display text + wrap in literal quotes exactly as the C++
     // vsnprintf("\"%s\"", title) does.
-    onComplete: (player, _questId, titleToken) => {
+    onComplete: (player, _questId, titleToken): void => {
       const title = resources.questText.get(titleToken) ?? titleToken;
       playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, TID_EVE_ENDQUEST, `"${title}"`));
     },
@@ -518,7 +542,7 @@ export async function compose(): Promise<WorldComposeResult> {
     // v19 RA_SAFETY gate: true if the target's position is inside any of the
     // zone's `regions` tagged `type: safe` (AABB check on the ground plane).
     // Backed by `worlds/zones/*.yml` -> `resources.zones.byNumericId`.
-    safeZone: (zoneId, pos) => {
+    safeZone: (zoneId, pos): boolean => {
       const z = resources.zones.byNumericId.get(zoneId);
       if (!z?.regions) return false;
       for (const r of z.regions) {
@@ -529,8 +553,8 @@ export async function compose(): Promise<WorldComposeResult> {
       }
       return false;
     },
-    getItem: (id: number) => resources.items.items.get(id),
-    onPlayerDeath: (p, killerObjid) => revivalService.onPlayerDeath(p, killerObjid),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    onPlayerDeath: (p, killerObjid): void => { revivalService.onPlayerDeath(p, killerObjid); },
   });
   aiSystem.start();
 
@@ -543,8 +567,8 @@ export async function compose(): Promise<WorldComposeResult> {
     skillRepo,
     buffRepo,
     skills: resources.skills,
-    getItem: (id: number) => resources.items.items.get(id),
-    getSetItem: (id: number) => resources.setItems.byItemId.get(id),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    getSetItem: (id: number): SetItemDef | undefined => resources.setItems.byItemId.get(id),
     playerManager,
     zoneManager,
     handoffSource: clusterListener,
@@ -553,10 +577,10 @@ export async function compose(): Promise<WorldComposeResult> {
     // mailHandler is constructed further down (it needs inventoryService).
     // Wrapped in a closure so the reference resolves at call time, after
     // compose() has returned -- never during this constructor.
-    mailHandler: { sendMailBox: (player: CPlayer) => mailHandler.sendMailBox(player) },
+    mailHandler: { sendMailBox: (player: CPlayer): Promise<void> => mailHandler.sendMailBox(player) },
     // Same late-resolution trick: friendService/campusService are composed below.
     // Friend first -- the roster blob is what makes the messenger window usable.
-    socialJoin: async (player: CPlayer) => {
+    socialJoin: async (player: CPlayer): Promise<void> => {
       await friendService.onJoin(player);
       await campusService.onJoin(player);
       // Durable party (migration 022): re-push the roster to a returning member
@@ -597,13 +621,13 @@ export async function compose(): Promise<WorldComposeResult> {
   // Graceful disconnect is covered by JoinService.disconnectByCharId. Wired
   // after joinService exists so the closure captures a bound reference.
   const checkpointSystem = new CheckpointSystem({
-    flush: () => joinService.flushAll(),
+    flush: (): void => { joinService.flushAll(); },
   });
   checkpointSystem.start();
 
   const cheerService = new CheerService({
     playerManager, zoneManager,
-    getItemProp: (id: number) => resources.items.items.get(id),
+    getItemProp: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
   });
   // Passive HP/MP/FP regen -- C++ `CMover::ProcessRecovery` stand branch. Fires
   // every 3 s for players untouched by combat for 10 s. Self-driven 1 s timer
@@ -616,7 +640,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const campusRecoverSlot: { fn: ((p: CPlayer, now: number) => void) | null } = { fn: null };
   const recoverySystem = new RecoverySystem({
     playerManager, zoneManager, cheerService,
-    campusService: { recoverPoints: (p, now) => campusRecoverSlot.fn?.(p, now) },
+    campusService: { recoverPoints: (p, now): void => { campusRecoverSlot.fn?.(p, now); } },
   });
   recoverySystem.start();
   const buffSystem = new BuffSystem({ playerManager, zoneManager });
@@ -652,10 +676,10 @@ export async function compose(): Promise<WorldComposeResult> {
   const campusLevelUpSlot: { fn: ((p: CPlayer) => void) | null } = { fn: null };
   const partyService = new PartyService({
     playerManager, partyManager,
-    grantExpAmount: (p, amount) => combatGrantSlot.fn!(p, amount),
+    grantExpAmount: (p, amount): void => { combatGrantSlot.fn?.(p, amount); },
     // `s_fPartyExpRate` -- party-LEVEL exp rate only (the member exp split has
     // its own curve). A thunk so a runtime change applies on the next kill.
-    partyExpRate: () => config.world.partyExpRate,
+    partyExpRate: (): number => config.world.partyExpRate,
   });
   // Guild -- independent of the party/combat seams (no exp or loot share), so
   // it composes in one shot right after the party service. GuildService owns
@@ -670,12 +694,12 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager, zoneManager, guildManager, guildWarManager,
     // Refusal texts -- `CDPCacheSrvr::SendDefinedText`. Without this every guild
     // guard refuses silently and a rejected click looks like a dead button.
-    sendDefinedText: (player, tid, args) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
+    sendDefinedText: (player, tid, args): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')); },
     // `CUser::IsAuthHigher( AUTH_GAMEMASTER )` -- gates guild logos above 20
     // (DPSrvr.cpp:1833). Ordinal compare on the ASCII rank byte, same as every
     // other `/cmd` gate in this codebase.
-    isGameMaster: (p: CPlayer) => hasAuthority(p.m_bAuthority, AUTH.GAMEMASTER),
+    isGameMaster: (p: CPlayer): boolean => hasAuthority(p.m_bAuthority, AUTH.GAMEMASTER),
   });
 
   // Guild contribution -- penya/gem donation, guild level-up, the 21:00 payroll.
@@ -684,16 +708,16 @@ export async function compose(): Promise<WorldComposeResult> {
   // never imports `@flyff/inventory`.
   const guildContributionService = new GuildContributionService({
     playerManager, guildManager,
-    sendDefinedText: (player, tid, args) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
+    sendDefinedText: (player, tid, args): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')); },
     inventory: {
-      getGold: (p: CPlayer) => p.m_nGold,
-      spendGold: (p: CPlayer, amount: number) => inventoryService.spendGold(p, amount),
+      getGold: (p: CPlayer): number => p.m_nGold,
+      spendGold: (p: CPlayer, amount: number): boolean => inventoryService.spendGold(p, amount),
       // C++ walks the whole bag and donates EVERY gem stack it finds
       // (`DPSrvr.cpp:1885`). `item_lv` is emitted only for IK3_GEM rows, which is
       // also the kind filter, so a missing grade yields 0 PXP and the stack is
       // skipped rather than consumed for nothing.
-      findGems: (p: CPlayer) => {
+      findGems: (p: CPlayer): GemStack[] => {
         const out: GemStack[] = [];
         for (let slot = 0; slot < MAX_INVENTORY; slot++) {
           const s = p.m_Inventory[slot];
@@ -704,7 +728,7 @@ export async function compose(): Promise<WorldComposeResult> {
         }
         return out;
       },
-      removeItem: (p: CPlayer, slot: number, count: number) =>
+      removeItem: (p: CPlayer, slot: number, count: number): boolean =>
         inventoryService.removeItem(p, slot, count).ok,
     },
   });
@@ -713,25 +737,25 @@ export async function compose(): Promise<WorldComposeResult> {
   // (the same field level-up spends), so no separate balance is threaded here.
   const guildBankService = new GuildBankService({
     playerManager, guildManager, spawnManager, repo: guildBankRepo,
-    sendDefinedText: (player, tid, args) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
+    sendDefinedText: (player, tid, args): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')); },
     inventory: {
       getSlot: (p: CPlayer, slot: number) =>
         slot >= 0 && slot < MAX_INVENTORY ? (p.m_Inventory[slot] ?? null) : null,
-      removeItem: (p: CPlayer, slot: number, count: number) =>
+      removeItem: (p: CPlayer, slot: number, count: number): boolean =>
         inventoryService.removeItem(p, slot, count).ok,
-      addItem: (p: CPlayer, item) => {
+      addItem: (p: CPlayer, item): number => {
         // `m_Inventory.Add` returns the destination slot; ours reports changes.
         const r = inventoryService.addItem(p, item.itemId, item.count);
         return r.ok ? (r.changes[0]?.slot ?? -1) : -1;
       },
-      addGold: (p: CPlayer, amount: number) => inventoryService.addGold(p, amount),
-      canAddGold: (p: CPlayer, amount: number) => p.m_nGold + amount <= MAX_GOLD,
+      addGold: (p: CPlayer, amount: number): void => { inventoryService.addGold(p, amount); },
+      canAddGold: (p: CPlayer, amount: number): boolean => p.m_nGold + amount <= MAX_GOLD,
       // `OnPutItemGuildBank`'s refused-chain (`DPSrvr.cpp:3598-3627`). Quest items
       // are the one gate our slot model can express today; bound / in-use /
       // charged / `PARTS_RIDE`-on-vagrant are not modelled on the slot, same
       // ponytail the vendor listing check carries.
-      isDepositBlocked: (p: CPlayer, slot: number) => {
+      isDepositBlocked: (p: CPlayer, slot: number): boolean => {
         const item = p.m_Inventory[slot];
         if (!item) return true;
         return resources.items.items.get(item.itemId)?.item_kind3 === 'IK3_QUEST';
@@ -740,7 +764,7 @@ export async function compose(): Promise<WorldComposeResult> {
   });
   void guildBankService
     .hydrate()
-    .catch((err: unknown) => logger.warn({ err }, 'guild bank hydrate failed'));
+    .catch((err: unknown) => { logger.warn({ err }, 'guild bank hydrate failed'); });
 
   // The 21:00 payroll poll (`CGuildMng::Process`). Hour-granular, so a
   // one-minute interval cannot miss the 21:00 or 22:00 boundary.
@@ -760,11 +784,11 @@ export async function compose(): Promise<WorldComposeResult> {
   // end. Recorded in docs/c++-fidelity-audit.md.
   const guildWarService = new GuildWarService({
     playerManager, zoneManager, guildManager, guildWarManager,
-    isWarEnabled: () => config.world.guildWarEnabled,
+    isWarEnabled: (): boolean => config.world.guildWarEnabled,
     // Nine declare gates all refuse; without the text a failed declaration is
     // indistinguishable from a bug.
-    sendDefinedText: (player, tid, args) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
+    sendDefinedText: (player, tid, args): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')); },
   });
   // The war tick. Armed unconditionally -- `GuildWarService.tick` re-checks the
   // flag itself (as the C++ call site does), and with no wars live the callback
@@ -788,14 +812,14 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager, guildManager,
     processor: guildQuestProcessor,
     spawn: {
-      spawnMonster: (moverId, pos, zoneId, activeAttack) =>
+      spawnMonster: (moverId, pos, zoneId, activeAttack): CMover =>
         spawnManager.spawnMonster(moverId, pos, zoneId, activeAttack),
-      kill: (id, opts) => spawnManager.kill(id, opts),
+      kill: (id, opts): void => { spawnManager.kill(id, opts); },
     },
     teleport: {
       // Same-world SETPOS + forced view re-diff -- the arena and every revival
       // point it ejects to are in Madrigal, so REPLACE is never needed here.
-      teleport: (player, pos) => {
+      teleport: (player, pos): void => {
         player.m_vPos = { ...pos };
         player._dirty.add('x'); player._dirty.add('y'); player._dirty.add('z');
         playerManager.sendTo(player, guildQuestSetPos.build(player.m_idPlayer, pos));
@@ -806,7 +830,7 @@ export async function compose(): Promise<WorldComposeResult> {
       // tables are unported.
       revivalPos: (player) => resources.zones.byNumericId.get(player.m_nZoneId)?.revival.position,
     },
-    isQuestEnabled: () => config.world.guildQuestEnabled,
+    isQuestEnabled: (): boolean => config.world.guildQuestEnabled,
   });
   guildManager.setQuestRepo(guildQuestRepo);
   const guildQuestSystem = new GuildQuestSystem({ questService: guildQuestService });
@@ -816,14 +840,14 @@ export async function compose(): Promise<WorldComposeResult> {
   // pooling, and anything else that asks "are these two in one party".
   const sameParty = (a: number, b: number): boolean => {
     const pa = partyManager.getByMember(a);
-    return pa !== undefined && pa.members.includes(b);
+    return pa?.members.includes(b) ?? false;
   };
   const lootService = new LootService({
     inventoryService, itemManager, playerManager, zoneManager,
-    onAcquireItem: (player, itemId, count) => notifyItemAcquire(player, itemId, count),
+    onAcquireItem: (player, itemId, count): void => { notifyItemAcquire(player, itemId, count); },
     onPeerAcquireItem: notifyPeerItemAcquire,
-    onGoldPickup: (player, plus, total) =>
-      playerManager.sendTo(player, buildGoldText(player.m_idPlayer, plus, total)),
+    onGoldPickup: (player, plus, total): void =>
+      { playerManager.sendTo(player, buildGoldText(player.m_idPlayer, plus, total)); },
     sameParty,
     // Party item/gold distribution (`SubLootDropMobParty` + `PickupGold` party
     // branch). PartyService satisfies the structural `PartyLootShare` surface.
@@ -833,16 +857,16 @@ export async function compose(): Promise<WorldComposeResult> {
   // route pickups through the owner's own DoLoot path, as C++ does.
   const petSystem = new PetSystem({
     playerManager, zoneManager, spawnManager, itemManager, lootService, inventoryService,
-    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    notify: (player, tid): void => { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
     // `pEatPet->Delete()` -- same DEL_OBJ + `m_known` clear the spawn manager's
     // own despawn callback uses. Without it a dismissed pet renders forever and
     // each leash re-summon stacks another model.
-    onDespawn: (mover) => visibilitySlot.svc?.onMoverDespawn(mover),
+    onDespawn: (mover): void => { visibilitySlot.svc?.onMoverDespawn(mover); },
   });
   petSystem.start();
   const movementService = new MovementService({
     zoneManager,
-    onMoved: (p) => questTracker.onPlayerMoved(p),
+    onMoved: (p): void => { questTracker.onPlayerMoved(p); },
     lootService,
     visibilityService,
     destPollService,
@@ -864,13 +888,13 @@ export async function compose(): Promise<WorldComposeResult> {
     guildService,
     // `/sgq` -- ledger-only, per the C++ command. See the dep's note.
     guildQuest: {
-      setStateByGuildName: (name, questId, state) =>
+      setStateByGuildName: (name, questId, state): boolean =>
         guildQuestService.setStateByGuildName(name, questId, state),
     },
-    getItemByName: (name: string) => resources.items.byName.get(name),
+    getItemByName: (name: string): ItemDefinition | undefined => resources.items.byName.get(name),
     // `/cn <id|name>` -- C++ tries `GetMoverPropEx(id)` on a numeric token,
     // else `GetMoverProp(name)` (FuncTextCmd.cpp:2940-2946).
-    lookupMover: (token: string) => {
+    lookupMover: (token: string): MoverDefinition | undefined => {
       const id = Number.parseInt(token, 10);
       return Number.isInteger(id) && String(id) === token
         ? resources.movers.movers.get(id)
@@ -917,19 +941,19 @@ export async function compose(): Promise<WorldComposeResult> {
     // `m_idGuild != 0`. `questState` returns `-1` for an absent entry, which is
     // load-bearing at `NpcScript.cpp:2059`.
     guild: {
-      isMember: (charId) => guildManager.getByMember(charId) !== undefined,
-      isMaster: (charId) => guildManager.getByMember(charId)?.masterId === charId,
-      hasQuest: (charId, questId) => {
+      isMember: (charId): boolean => guildManager.getByMember(charId) !== undefined,
+      isMaster: (charId): boolean => guildManager.getByMember(charId)?.masterId === charId,
+      hasQuest: (charId, questId): boolean => {
         const g = guildManager.getByMember(charId);
         return g !== undefined && guildManager.getQuest(g.id, questId) !== undefined;
       },
-      questState: (charId, questId) => {
+      questState: (charId, questId): number => {
         const g = guildManager.getByMember(charId);
         if (!g) return -1;
         return guildManager.getQuest(g.id, questId)?.state ?? -1;
       },
-      isWormonServer: () => config.world.guildQuestEnabled,
-      monHuntStart: (charId, questId, state, ns, nf) => {
+      isWormonServer: (): boolean => config.world.guildQuestEnabled,
+      monHuntStart: (charId, questId, state, ns, nf): boolean => {
         const player = playerManager.get(charId);
         if (!player) return false;
         return guildQuestService.start(player, questId, state, ns, nf).ok;
@@ -949,7 +973,7 @@ export async function compose(): Promise<WorldComposeResult> {
     // A thunk, not a value: a GM changing the rate at runtime (or a future
     // hot-reload of world config) takes effect on the next kill, no restart.
     rates: () => ({ dropRate: config.world.dropRate, goldRate: config.world.goldRate }),
-    needsItem: (killer, itemId) => questTracker.needsItem(killer, itemId),
+    needsItem: (killer, itemId): boolean => questTracker.needsItem(killer, itemId),
   });
   // Duel manager + service -- created before CombatService so the PvP-kill seam
   // can clear active-duel flags on a lethal blow (in addition to revival).
@@ -959,17 +983,17 @@ export async function compose(): Promise<WorldComposeResult> {
   // two warring players opt out of the war's targeting rules.
   const duelService = new DuelService({
     playerManager, duelManager,
-    isInWar: (player) => guildWarService.isInWar(player),
-    sendDefinedText: (player, tid) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    isInWar: (player): boolean => guildWarService.isInWar(player),
+    sendDefinedText: (player, tid): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
   });
   const combatService = new CombatService({
     spawnManager, zoneManager, playerManager, charRepo, journal, questTracker, dropService,
-    getItem: (id: number) => resources.items.items.get(id),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     // Hand PvP kills to the revival loop (flag victim dead + broadcast + open
     // revive dialog) AND tear down any active duel. Mirrors the AISystem
     // `onPlayerDeath` seam.
-    onPvpKill: (victim, killerObjid) => {
+    onPvpKill: (victim, killerObjid): void => {
       revivalService.onPlayerDeath(victim, killerObjid);
       duelService.onPlayerDeath(victim);
     },
@@ -980,30 +1004,30 @@ export async function compose(): Promise<WorldComposeResult> {
     // Pools co-party attackers' recorded damage into one share before the split.
     sameParty,
     // Campus reward + graduation on level-up (CCampusHelper::SetLevelUpReward).
-    onLevelUp: (player) => campusLevelUpSlot.fn?.(player),
+    onLevelUp: (player): void => { campusLevelUpSlot.fn?.(player); },
     // HITTYPE_WAR -- `CMover::IsWarTarget` (`MoverAttack.cpp:2047`). Grants PvP
     // consent between two warring guilds regardless of PK mode, and (via
     // `GetPVPCase`) routes the kill to `SubWar` instead of `SubPK`, so a war
     // death costs the killer no PK value.
-    isWarTarget: (attacker, target) => guildWarService.isWarTarget(attacker, target),
+    isWarTarget: (attacker, target): boolean => guildWarService.isWarTarget(attacker, target),
     // ...and the flip side: being in a war makes you un-PK-able by anyone OUTSIDE
     // it (`MoverAttack.cpp:1945`). Checked after `isWarTarget`, so the enemy
     // guild stays attackable.
-    isInWar: (player) => guildWarService.isInWar(player),
-    onWarDeath: (victim) => guildWarService.onWarDeath(victim),
+    isInWar: (player): boolean => guildWarService.isInWar(player),
+    onWarDeath: (victim): void => { guildWarService.onWarDeath(victim); },
     // Guild-quest arena: a monster death may be the boss. Cheap when no arena is
     // live (an empty Map scan).
-    onGuildQuestBossKilled: (bossObjid) => guildQuestService.onBossKilled(bossObjid),
+    onGuildQuestBossKilled: (bossObjid): void => { guildQuestService.onBossKilled(bossObjid); },
   });
   // Fill the late-bound exp-applier slot so party share routes through the
   // SAME grantExpAmount path as solo kills (one exp-application code path).
-  combatGrantSlot.fn = (p, amount) => combatService.grantExpAmount(p, amount);
+  combatGrantSlot.fn = (p, amount): void => { combatService.grantExpAmount(p, amount); };
   const meleeAttackService = new MeleeAttackService({ zoneManager, combatService });
   const rangeAttackService = new RangeAttackService({
     zoneManager, combatService,
-    hasArrow: (player) => ammoService.hasArrow(player),
-    arrowDown: (player, count) => ammoService.arrowDown(player, count),
-    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    hasArrow: (player): boolean => ammoService.hasArrow(player),
+    arrowDown: (player, count): void => { ammoService.arrowDown(player, count); },
+    notify: (player, tid): void => { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
   });
   const playerSetDestObjHandler = new PlayerSetDestObjHandler(playerManager, movementService);
   const meleeAttackHandler = new MeleeAttackHandler(playerManager, meleeAttackService);
@@ -1043,19 +1067,19 @@ export async function compose(): Promise<WorldComposeResult> {
   // Equipment -- equip/unequip + stat fold into combat.
   const equipService = new EquipService({
     inventoryRepo, journal,
-    getItem: (id: number) => resources.items.items.get(id),
-    getSetItem: (id: number) => resources.setItems.byItemId.get(id),
-    sendTo: (player, buf) => playerManager.sendTo(player, buf),
-    broadcastAround: (player, buf) =>
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    getSetItem: (id: number): SetItemDef | undefined => resources.setItems.byItemId.get(id),
+    sendTo: (player, buf): void => { playerManager.sendTo(player, buf); },
+    broadcastAround: (player, buf): void =>
       zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
     flight: flightService,
-    isArrowEquipAllowed: (player, prop) => ammoService.isArrowEquipAllowed(player, prop),
+    isArrowEquipAllowed: (player, prop): boolean => ammoService.isArrowEquipAllowed(player, prop),
   });
   const doEquipHandler = new DoEquipHandler({
     playerManager, zoneManager, equipService,
-    getItem: (id: number) => resources.items.items.get(id),
-    isFlightSpeedValid: (prop, claimed) => flightService.isFlightSpeedValid(prop, claimed),
-    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    isFlightSpeedValid: (prop, claimed): boolean => flightService.isFlightSpeedValid(prop, claimed),
+    notify: (player, tid): void => { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
   });
 
   // Use-item -- DOUSEITEM router (equip / potion+food / buff-skill-warp-text).
@@ -1066,30 +1090,30 @@ export async function compose(): Promise<WorldComposeResult> {
   const blinkwingSetPosSerializer = new SetPosSerializer();
   const blinkwingService = new BlinkwingService({
     inventoryService, playerManager,
-    getItem: (id: number) => resources.items.items.get(id),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     zones: resources.zones,
     // Same-world SETPOS + forced view re-diff -- identical to `/teleport`
     // (command.service applyReplace). Cross-world is refused upstream.
-    teleport: (player, pos) => {
+    teleport: (player, pos): void => {
       player.m_vPos = { ...pos };
       player._dirty.add('x'); player._dirty.add('y'); player._dirty.add('z');
       playerManager.sendTo(player, blinkwingSetPosSerializer.build(player.m_idPlayer, pos));
       visibilityService.refresh(player.m_idPlayer, true);
     },
-    broadcastStateMode: (player, flag, itemId) =>
+    broadcastStateMode: (player, flag, itemId): void =>
       zoneManager.broadcastAround(
         player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
         buildStateMode(player.m_idPlayer, player.m_dwStateMode, flag, itemId),
       ),
-    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    notify: (player, tid): void => { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
     // `prj.IsGuildQuestRegion` -- refuses the Return scroll inside an arena rect
     // (`MoverSkill.cpp:2842`). The only one of the C++'s eight suppression sites
     // whose feature exists in this port.
-    isGuildQuestRegion: (pos, worldId) => guildQuestService.isQuestRegion(pos, worldId),
+    isGuildQuestRegion: (pos, worldId): boolean => guildQuestService.isQuestRegion(pos, worldId),
   });
   const useItemService = new UseItemService({
     equipService, consumableService, inventoryService,
-    getItem: (id: number) => resources.items.items.get(id),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     potionCooldownMs: config.consumable.potionCooldownMs,
     playerManager, zoneManager,
     togglePet: (player, itemObjid, linkKind) => petSystem.toggle(player, itemObjid, linkKind),
@@ -1103,9 +1127,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const stateModeHandler = new StateModeHandler(playerManager, blinkwingService);
   const doUseItemHandler = new DoUseItemHandler({
     playerManager, zoneManager, useItemService,
-    getItem: (id: number) => resources.items.items.get(id),
-    isFlightSpeedValid: (prop, claimed) => flightService.isFlightSpeedValid(prop, claimed),
-    notify: (player, tid) => playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    isFlightSpeedValid: (prop, claimed): boolean => flightService.isFlightSpeedValid(prop, claimed),
+    notify: (player, tid): void => { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
   });
 
   // Enchant -- PACKETTYPE_ENCHANT refine (Sunstone) + element (card). Reuses
@@ -1113,7 +1137,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // absolute end-state (refine/element) for crash-safe WAL recovery.
   const enchantService = new EnchantService({
     inventoryRepo, journal,
-    getItem: (id: number) => resources.items.items.get(id),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     consume: (player, slot, count) => inventoryService.consume(player, slot, count),
   });
   const enchantHandler = new EnchantHandler({ playerManager, enchantService });
@@ -1122,8 +1146,8 @@ export async function compose(): Promise<WorldComposeResult> {
   // stat/persist primitives; journals each repaired slot's absolute end-state.
   const repairService = new RepairService({
     inventoryRepo, journal,
-    getItem: (id: number) => resources.items.items.get(id),
-    spendGold: (player, amount) => inventoryService.spendGold(player, amount),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    spendGold: (player, amount): boolean => inventoryService.spendGold(player, amount),
   });
   const repairHandler = new RepairHandler({ playerManager, repairService });
 
@@ -1132,9 +1156,9 @@ export async function compose(): Promise<WorldComposeResult> {
   // every abort path, so TradeService.onDisconnect must run on leave.
   const tradeService = new TradeService({
     playerManager, inventoryRepo, journal,
-    getItemProp: (id: number) => resources.items.items.get(id),
-    sendDefinedText: (player, tid) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    getItemProp: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    sendDefinedText: (player, tid): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
   });
   const tradeHandler = new TradeHandler(playerManager, tradeService);
 
@@ -1143,9 +1167,9 @@ export async function compose(): Promise<WorldComposeResult> {
   // VendorService.onDisconnect must run on leave (next to trade's).
   const vendorService = new VendorService({
     playerManager, zoneManager, inventoryService,
-    getItemProp: (id: number) => resources.items.items.get(id),
-    sendDefinedText: (player, tid) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')),
+    getItemProp: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
+    sendDefinedText: (player, tid): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
   });
   const vendorHandler = new VendorHandler(playerManager, vendorService);
 
@@ -1153,8 +1177,8 @@ export async function compose(): Promise<WorldComposeResult> {
   // written through immediately (no WAL, matching C++ which has no batch save).
   const friendService = new FriendService({
     playerManager, friendRepo, charRepo,
-    sendDefinedText: (player, tid, args) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
+    sendDefinedText: (player, tid, args): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')); },
   });
   const friendHandler = new FriendHandler(playerManager, friendService);
 
@@ -1163,40 +1187,40 @@ export async function compose(): Promise<WorldComposeResult> {
   // but keeps the persist-then-notify order.
   const campusService = new CampusService({
     playerManager, campusRepo, charRepo,
-    isQuestComplete: (player, questId) => player.isCompleteQuest(questId),
-    applyCampusBuff: (player, itemId) => {
+    isQuestComplete: (player, questId): boolean => player.isCompleteQuest(questId),
+    applyCampusBuff: (player, itemId): void => {
       // IK3_TS_BUFF campus buff -- rides the existing item-buff path. The buff
       // items (II_TS_BUFF_POWER_LOVE01-03) carry their own DST effects.
       const prop = resources.items.items.get(itemId);
-      if (!prop?.effects?.length) return;
+      if (!prop?.effects.length) return;
       const effects = prop.effects.map((e) =>
         e.chg === undefined ? { dst: e.dst, adj: e.adj } : { dst: e.dst, adj: e.adj, chg: e.chg });
       player.m_buffs.addItemBuff(itemId, (prop.duration ?? 0) * 1_000, effects, Date.now());
     },
-    removeCampusBuff: (player) => {
+    removeCampusBuff: (player): void => {
       for (const id of Object.values(CAMPUS_BUFF_BY_LEVEL)) player.m_buffs.remove(id);
     },
-    sendDefinedText: (player, tid, args) =>
-      playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')),
+    sendDefinedText: (player, tid, args): void =>
+      { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')); },
   });
   const campusHandler = new CampusHandler(playerManager, campusService);
   // Close the level-up seam now that campusService exists. Fire-and-forget: a
   // reward write must never block or reject the exp grant that triggered it.
-  campusRecoverSlot.fn = (player: CPlayer, now: number) => {
+  campusRecoverSlot.fn = (player: CPlayer, now: number): void => {
     void campusService.recoverPoints(player, now)
-      .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer },
-        'campus point recovery failed'));
+      .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer },
+        'campus point recovery failed'); });
   };
-  campusLevelUpSlot.fn = (player: CPlayer) => {
+  campusLevelUpSlot.fn = (player: CPlayer): void => {
     void campusService.onLevelUp(player)
-      .catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer },
-        'campus level-up reward failed'));
+      .catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer },
+        'campus level-up reward failed'); });
   };
   // Boot-time campus load -- the equivalent of the DB server pushing
   // PACKETTYPE_CAMPUS_ALL into each world. Fire-and-forget: an empty campus map
   // is a valid state, and a failure must not block the listener.
   void campusService.bootstrap()
-    .catch((err: unknown) => logger.warn({ err }, 'campus bootstrap failed'));
+    .catch((err: unknown) => { logger.warn({ err }, 'campus bootstrap failed'); });
 
   // Durable party rosters (migration 022) -- reload every persisted party before
   // the first client can JOIN, so a returning member's `onJoin` finds their
@@ -1204,7 +1228,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // boot, and new parties still form normally.
   void partyManager
     .hydrate()
-    .catch((err: unknown) => logger.warn({ err }, 'party hydrate failed'));
+    .catch((err: unknown) => { logger.warn({ err }, 'party hydrate failed'); });
   // Guilds ARE durable in C++ too (CoreServer reloads GUILD_TBL at boot), so
   // this is a faithful port rather than a divergence. Same fire-and-forget
   // shape: a failed hydrate logs and leaves the registry empty.
@@ -1223,7 +1247,7 @@ export async function compose(): Promise<WorldComposeResult> {
     // the flag is on; we always load, because a flag flipped on later must not
     // silently see an empty ledger.
     .then(() => guildManager.hydrateQuests())
-    .catch((err: unknown) => logger.warn({ err }, 'guild hydrate failed'));
+    .catch((err: unknown) => { logger.warn({ err }, 'guild hydrate failed'); });
 
   // Bank -- open + deposit/withdraw item & gold (account-shared).
   const bankService = new BankService({ bankRepo, inventoryRepo, journal });
@@ -1232,7 +1256,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // Taskbar -- hotkey shortcut bind/clear. Write-through persists the grid to
   // `characters.taskbar` on every add/remove; hydrate happens in JoinService.
   const taskbarService = new TaskBarService(
-    (charId, json) => charRepo.update(charId, { taskbar: json }),
+    (charId, json): Promise<number> => charRepo.update(charId, { taskbar: json }),
   );
   const taskbarHandler = new TaskBarHandler({ playerManager, taskbarService });
   const endSkillQueueHandler = new EndSkillQueueHandler(playerManager);
@@ -1243,7 +1267,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const shopService = new ShopService({
     spawnManager,
     inventoryService,
-    getItem: (id: number) => resources.items.items.get(id),
+    getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     shopCostRate: config.world.shopCostRate,
   });
   const shopHandler = new ShopHandler({ playerManager, shopService, createItemSerializer });
@@ -1271,7 +1295,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const mailHandler = new MailHandler({
     playerManager,
     mailService,
-    onModeChanged: (player, mode) =>
+    onModeChanged: (player, mode): void =>
       playerManager.broadcastAll(modifyModeSerializer.build(player.m_idPlayer, mode)),
   });
 
@@ -1282,7 +1306,7 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager,
     setPosSer: adminSetPosSerializer,
     zones: resources.zones,
-    refreshVisibility: (player) => visibilityService.refresh(player.m_idPlayer, true),
+    refreshVisibility: (player): void => { visibilityService.refresh(player.m_idPlayer, true); },
     mailHandler,
     // Only `kickAll` uses this -- single kicks let the socket-close hook flush.
     saveAndLeave: (charId) => joinService.disconnectByCharId(charId),
@@ -1290,7 +1314,7 @@ export async function compose(): Promise<WorldComposeResult> {
     // removes the player from PlayerManager, so the hook that fires on the
     // deferred socket close can no longer resolve them -- without this, a drain
     // skips the trade gold refund and the staked penya is lost on replay.
-    beforeLeave: (player) => {
+    beforeLeave: (player): void => {
       partyService.onDisconnect(player);
       tradeService.onDisconnect(player);
       vendorService.onDisconnect(player);

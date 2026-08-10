@@ -142,7 +142,7 @@ export class UseItemService {
       // C++ MoverSkill.cpp:1335). Effects come from the item's `dwDestParam*`
       // triplets; duration from the item's `duration` field (seconds→ms).
       if (k2 === 'IK2_BUFF' || k2 === 'IK2_BUFF2') {
-        const effects = prop.effects ?? [];
+        const effects = prop.effects;
         const durationMs = (prop.duration ?? 0) * 1_000;
         if (effects.length > 0 && durationMs > 0) {
           const now = Date.now();

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import * as React from 'react';
+import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ModalProps {
   open: boolean;
@@ -54,12 +54,12 @@ export function Modal({
     }
 
     const onKey = (e: KeyboardEvent): void => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         e.preventDefault();
         onOpenChange(false);
         return;
       }
-      if (e.key !== "Tab") return;
+      if (e.key !== 'Tab') return;
       const items = focusables();
       if (items.length === 0) return;
       const first = items[0];
@@ -72,11 +72,11 @@ export function Modal({
         first.focus();
       }
     };
-    document.addEventListener("keydown", onKey);
+    document.addEventListener('keydown', onKey);
     const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevOverflow;
     };
   }, [open, onOpenChange]);
@@ -93,14 +93,16 @@ export function Modal({
     >
       <div
         className="fixed inset-0 bg-scrim backdrop-blur-sm animate-[fade-in-up_0.15s_ease-out]"
-        onClick={(): void => { onOpenChange(false); }}
+        onClick={(): void => {
+          onOpenChange(false);
+        }}
         aria-hidden
       />
       <div
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "relative my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col rounded-xl border border-border bg-popover shadow-overlay outline-none animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]",
+          'relative my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col rounded-xl border border-border bg-popover shadow-overlay outline-none animate-[fade-in-up_0.2s_cubic-bezier(0.4,0,0.2,1)]',
           className,
         )}
       >
@@ -118,7 +120,9 @@ export function Modal({
           <button
             type="button"
             aria-label="Close dialog"
-            onClick={(): void => { onOpenChange(false); }}
+            onClick={(): void => {
+              onOpenChange(false);
+            }}
             className="-mr-2 -mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
             <X className="h-4 w-4" />
@@ -126,7 +130,9 @@ export function Modal({
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">{children}</div>
         {footer && (
-          <div className="flex flex-wrap items-center gap-3 border-t border-border px-6 py-3">{footer}</div>
+          <div className="flex flex-wrap items-center gap-3 border-t border-border px-6 py-3">
+            {footer}
+          </div>
         )}
       </div>
     </div>

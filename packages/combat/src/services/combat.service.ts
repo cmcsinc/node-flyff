@@ -308,7 +308,7 @@ export class CombatService {
    * Shared damage tail: apply MinusHP, record hit-share, broadcast DAMAGE
    * (per-mover HP sync), then grant exp + broadcast death if lethal, else rage.
    */
-  private applyHit(player: CPlayer, mover: CMover, eff: MeleeResult): CombatOutcome {
+  private applyHit(player: CPlayer, mover: CMover, eff: MeleeResult & { readonly effectProc?: boolean }): CombatOutcome {
     const dealt = applyDamage(mover, eff);
     // Stamp the attacker's combat cursor so stand regen pauses for 10 s
     // (RecoverySystem gate). C++ only flags the defender (`m_nAtkCnt = 1` on
@@ -334,7 +334,7 @@ export class CombatService {
    * and on lethal hit run `onPvpKill` (PK value increment + revival hook).
    * No exp grant (PvP kills give no exp in v19), no rage, no spawn removal.
    */
-  private applyHitPlayer(player: CPlayer, target: CPlayer, eff: MeleeResult): CombatOutcome {
+  private applyHitPlayer(player: CPlayer, target: CPlayer, eff: MeleeResult & { readonly effectProc?: boolean }): CombatOutcome {
     const dealt = applyDamagePlayer(target, eff);
     if (dealt > 0) {
       player.m_tmLastDamage = Date.now();
@@ -417,7 +417,7 @@ export class CombatService {
     // Persist the PK state fire-and-forget (rule 02: service calls repo).
     this.deps.charRepo.updatePKState(
       killer.m_idPlayer, killer.m_dwPKPropensity, killer.m_nPKValue, killer.m_dwPKTime,
-    ).catch((err: unknown) => logger.error({ err, charId: killer.m_idPlayer }, 'PK state persist failed'));
+    ).catch((err: unknown) => { logger.error({ err, charId: killer.m_idPlayer }, 'PK state persist failed'); });
   }
 
   /**
@@ -536,8 +536,8 @@ export class CombatService {
     // Single-pass, no merge logic: the forward scan (slice(i+1)) always finds
     // ALL later same-party members.  Earlier same-party members are impossible
     // here because the earlier one's own forward scan already consumed them.
-    const partyGrants: Array<{ representative: CPlayer; hits: number }> = [];
-    const soloGrants: Array<{ attacker: CPlayer; hits: number }> = [];
+    const partyGrants: { representative: CPlayer; hits: number }[] = [];
+    const soloGrants: { attacker: CPlayer; hits: number }[] = [];
     for (const [i, { id: attackerId, hit: ownHit }] of attackers.entries()) {
       if (consumed.has(attackerId)) continue;
       const attacker = resolve(attackerId);
@@ -694,7 +694,7 @@ export class CombatService {
     // The WAL row above is the crash-recovery backup for this write.
     this.deps.charRepo.updateLevelAndExp(
       player.m_idPlayer, player.m_nLevel, BigInt(Math.floor(player.m_nExp)),
-    ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'));
+    ).catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'exp persist failed'); });
   }
 
   /**
@@ -720,7 +720,7 @@ export class CombatService {
     );
     this.deps.charRepo.updateSkillPoints(
       player.m_idPlayer, player.m_nSkillPoint, player.m_nSkillLevel,
-    ).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'skill-point persist failed'));
+    ).catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'skill-point persist failed'); });
   }
 
   /**
@@ -755,7 +755,7 @@ export class CombatService {
       strength: player.m_nStr, stamina: player.m_nSta,
       dexterity: player.m_nDex, intelligence: player.m_nInt,
       remain_gp: player.m_nRemainGP,
-    }).catch((err: unknown) => logger.error({ err, charId: player.m_idPlayer }, 'growth-point persist failed'));
+    }).catch((err: unknown) => { logger.error({ err, charId: player.m_idPlayer }, 'growth-point persist failed'); });
   }
 }
 

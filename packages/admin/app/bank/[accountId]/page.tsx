@@ -1,21 +1,25 @@
-import { db } from "@/lib/db";
-import { accounts, bank, bankItems } from "@/../drizzle/schema";
-import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { PageHeader } from "@/components/page-header";
-import { BankItemsTable } from "./bank-items-table";
-import { BankGoldEditor } from "./actions";
+import { db } from '@/lib/db';
+import { accounts, bank, bankItems } from '@/../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { notFound } from 'next/navigation';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { PageHeader } from '@/components/page-header';
+import { BankItemsTable } from './bank-items-table';
+import { BankGoldEditor } from './actions';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-export default async function BankPage({ params }: { params: Promise<{ accountId: string }> }) {
+export default async function BankPage({
+  params,
+}: {
+  params: Promise<{ accountId: string }>;
+}): Promise<React.JSX.Element> {
   const { accountId } = await params;
   const accId = Number(accountId);
   if (isNaN(accId)) notFound();
 
-  const [account] = await db.select().from(accounts).where(eq(accounts.id, accId)).limit(1);
+  const account = (await db.select().from(accounts).where(eq(accounts.id, accId)).limit(1)).at(0);
   if (!account) notFound();
 
   const bankRow = await db.select().from(bank).where(eq(bank.accountId, accId)).limit(1);
@@ -36,8 +40,8 @@ export default async function BankPage({ params }: { params: Promise<{ accountId
     <div className="space-y-6">
       <PageHeader
         title={`${account.username} — Bank`}
-        description={`${items.length} items across 3 tabs · Password: ${bankRow[0]?.bankPass === "0000" ? "Not set" : "****"}`}
-        backHref={`/accounts/${accId}`}
+        description={`${String(items.length)} items across 3 tabs · Password: ${bankRow[0]?.bankPass === '0000' ? 'Not set' : '****'}`}
+        backHref={`/accounts/${String(accId)}`}
       />
 
       <Card>
@@ -61,7 +65,7 @@ export default async function BankPage({ params }: { params: Promise<{ accountId
         </TabsList>
 
         {[0, 1, 2].map((t) => (
-          <TabsContent key={t} value={`tab${t}`}>
+          <TabsContent key={t} value={`tab${String(t)}`}>
             <Card>
               <CardContent className="p-0">
                 <BankItemsTable rows={tabItems[t]} />

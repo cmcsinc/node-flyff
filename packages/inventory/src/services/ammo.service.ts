@@ -96,7 +96,7 @@ export class AmmoService {
     player.m_Inventory[equipIdx] = null;
     this.deps.inventoryRepo
       .removeItem(player.m_idPlayer, equipIdx)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer }, 'arrow removeItem failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer }, 'arrow removeItem failed'); });
     this.deps.sendTo(player, buildUpdateItemCount(player.m_idPlayer, slot.objid ?? equipIdx, 0));
     player._dirty.add('m_Inventory');
     this.promoteNextStack(player, itemId, equipIdx);
@@ -109,7 +109,8 @@ export class AmmoService {
       if (player.m_Inventory[i]?.itemId === itemId) { src = i; break; }
     }
     if (src === -1) return;
-    const next = player.m_Inventory[src]!;
+    const next = player.m_Inventory[src];
+    if (!next) return;
     this.journalSlot(player, src, 0, 0);
     this.journalSlot(player, equipIdx, next.itemId, next.count);
     player.m_Inventory[src] = null;
@@ -118,7 +119,7 @@ export class AmmoService {
     player._dirty.add('m_Inventory');
     this.deps.inventoryRepo
       .removeItem(player.m_idPlayer, src)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, src }, 'arrow re-equip removeItem failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, src }, 'arrow re-equip removeItem failed'); });
     this.persist(player, equipIdx, next);
     // nId = the slot the client currently holds the item at (the bag slot), per
     // the DOEQUIP contract in `doEquip.serializer.ts:16`.
@@ -151,6 +152,6 @@ export class AmmoService {
   private persist(player: CPlayer, slot: number, s: InventorySlot): void {
     this.deps.inventoryRepo
       .setItem(player.m_idPlayer, slot, s.itemId, s.count, s.flags ?? 0, s.durability ?? -1, s.refine ?? 0)
-      .catch((err: unknown) => logger.warn({ err, charId: player.m_idPlayer, slot }, 'arrow setItem failed'));
+      .catch((err: unknown) => { logger.warn({ err, charId: player.m_idPlayer, slot }, 'arrow setItem failed'); });
   }
 }

@@ -13,15 +13,18 @@
  * @module characters/[id]/quests/resolve
  */
 
-import { formatNumber } from "@/lib/utils";
+import { formatNumber } from '@/lib/utils';
 import {
-  getQuest, resolveQuestText, resolveItem, resolveMoverName,
-  resolveNpcName, resolveNpcPlacement, resolveMoverPlacement,
-} from "@/lib/quest-catalog";
-import type {
-  QuestSlotItem, QuestGoal, QuestRequirement, QuestReward,
-} from "./types";
-import { QUEST_CATEGORY_LABELS } from "./types";
+  getQuest,
+  resolveQuestText,
+  resolveItem,
+  resolveMoverName,
+  resolveNpcName,
+  resolveNpcPlacement,
+  resolveMoverPlacement,
+} from '@/lib/quest-catalog';
+import type { QuestSlotItem, QuestGoal, QuestRequirement, QuestReward } from './types';
+import { QUEST_CATEGORY_LABELS } from './types';
 
 /** A quest DB row — completed rows carry only `id` + `questId`. */
 export interface QuestRow {
@@ -73,15 +76,15 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
   // The state block matching the character's current state carries the live
   // desc/cond/status; fall back to state 0 (QS_BEGIN) when absent.
   const stateKey = String(isCompleted ? 14 : (r.state ?? 0));
-  const block = def?.states[stateKey] ?? def?.states["0"];
+  const block = def?.states[stateKey] ?? def?.states['0'];
   const description = (await resolveQuestText(block?.desc)) || undefined;
   const conditionText = (await resolveQuestText(block?.cond)) || undefined;
   const statusText = (await resolveQuestText(block?.status)) || undefined;
 
   const requirements: QuestRequirement[] = [];
   const rewards: QuestReward[] = [];
-  let beginNpc: QuestSlotItem["beginNpc"];
-  let endNpc: QuestSlotItem["endNpc"];
+  let beginNpc: QuestSlotItem['beginNpc'];
+  let endNpc: QuestSlotItem['endNpc'];
   let levelReq: [number, number] | undefined;
   let jobReq: number[] | undefined;
   let headQuestId: number | undefined;
@@ -91,9 +94,9 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
     const a = cmd.args;
     switch (cmd.cmd) {
       // `SetCharacter( key )` — the begin NPC (Project.cpp:1520).
-      case "SetCharacter": {
+      case 'SetCharacter': {
         const key = a[0]?.value;
-        if (typeof key === "string" && key) {
+        if (typeof key === 'string' && key) {
           beginNpc = {
             name: await resolveNpcName(key),
             key,
@@ -104,31 +107,33 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
       }
 
       // `SetBeginCondCharacter( key, worldId, x, z )` — begin NPC + map goal.
-      case "SetBeginCondCharacter": {
+      case 'SetBeginCondCharacter': {
         const key = a[0]?.value;
-        if (typeof key === "string" && key) {
-          const goal = goalFrom(num(a[2]?.value), num(a[3]?.value), num(a[1]?.value))
-            ?? await resolveNpcPlacement(key);
+        if (typeof key === 'string' && key) {
+          const goal =
+            goalFrom(num(a[2]?.value), num(a[3]?.value), num(a[1]?.value)) ??
+            (await resolveNpcPlacement(key));
           beginNpc = { name: await resolveNpcName(key), key, goal };
         }
         break;
       }
 
       // `SetEndCondCharacter( key, worldId, x, z, textId )` (Project.cpp:1991).
-      case "SetEndCondCharacter": {
+      case 'SetEndCondCharacter': {
         const key = a[0]?.value;
-        if (typeof key === "string" && key) {
-          const goal = goalFrom(num(a[2]?.value), num(a[3]?.value), num(a[1]?.value))
-            ?? await resolveNpcPlacement(key);
+        if (typeof key === 'string' && key) {
+          const goal =
+            goalFrom(num(a[2]?.value), num(a[3]?.value), num(a[1]?.value)) ??
+            (await resolveNpcPlacement(key));
           const name = await resolveNpcName(key);
           endNpc = { name, key, goal };
-          requirements.push({ kind: "npc", label: `Report to ${name}`, goal });
+          requirements.push({ kind: 'npc', label: `Report to ${name}`, goal });
         }
         break;
       }
 
       // `SetBeginCondLevel( min, max )`.
-      case "SetBeginCondLevel": {
+      case 'SetBeginCondLevel': {
         const lo = num(a[0]?.value);
         const hi = num(a[1]?.value);
         if (lo !== undefined && hi !== undefined && (lo > 0 || hi > 0)) {
@@ -138,22 +143,22 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
       }
 
       // `SetBeginCondJob( JOB_*, ... )`.
-      case "SetBeginCondJob": {
+      case 'SetBeginCondJob': {
         const jobs = a.map((arg) => num(arg.value)).filter((n): n is number => n !== undefined);
         if (jobs.length > 0) jobReq = jobs;
         break;
       }
 
       // `SetEndCondKillNPC( idx, MI_*, count, x, z, textId )` (Project.cpp:1926).
-      case "SetEndCondKillNPC": {
+      case 'SetEndCondKillNPC': {
         const killIndex = num(a[0]?.value);
         const moverId = num(a[1]?.value);
         const count = num(a[2]?.value);
         if (moverId === undefined) break;
-        const goal = goalFrom(num(a[3]?.value), num(a[4]?.value))
-          ?? await resolveMoverPlacement(moverId);
+        const goal =
+          goalFrom(num(a[3]?.value), num(a[4]?.value)) ?? (await resolveMoverPlacement(moverId));
         requirements.push({
-          kind: "kill",
+          kind: 'kill',
           label: `Defeat ${await resolveMoverName(moverId)}`,
           count,
           refId: moverId,
@@ -165,13 +170,13 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
 
       // `SetEndCondItem( sex, type, jobOrItem, itemId, count, [x, z, textId] )`
       // (Project.cpp:1885).
-      case "SetEndCondItem": {
+      case 'SetEndCondItem': {
         const itemId = num(a[3]?.value);
         const count = num(a[4]?.value);
         if (itemId === undefined || itemId < 0) break;
         const { name, iconUrl } = await resolveItem(itemId);
         requirements.push({
-          kind: "item",
+          kind: 'item',
           label: `Collect ${name}`,
           count,
           iconUrl,
@@ -182,59 +187,62 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
       }
 
       // `SetEndRewardItem( sex, type, jobOrItem, itemId, count )` (Project.cpp:2151).
-      case "SetEndRewardItem": {
+      case 'SetEndRewardItem': {
         const itemId = num(a[3]?.value);
         const count = num(a[4]?.value);
         if (itemId === undefined || itemId < 0) break;
         const { name, iconUrl } = await resolveItem(itemId);
-        rewards.push({ kind: "item", label: name, count, iconUrl, refId: itemId });
+        rewards.push({ kind: 'item', label: name, count, iconUrl, refId: itemId });
         break;
       }
 
       // `SetEndRewardGold( min, max )` (Project.cpp:2215).
-      case "SetEndRewardGold": {
+      case 'SetEndRewardGold': {
         const lo = num(a[0]?.value) ?? 0;
         const hi = num(a[1]?.value) ?? lo;
         if (lo > 0 || hi > 0) {
           rewards.push({
-            kind: "gold",
-            label: lo === hi
-              ? `${formatNumber(lo)} Penya`
-              : `${formatNumber(lo)}–${formatNumber(hi)} Penya`,
+            kind: 'gold',
+            label:
+              lo === hi
+                ? `${formatNumber(lo)} Penya`
+                : `${formatNumber(lo)}–${formatNumber(hi)} Penya`,
           });
         }
         break;
       }
 
       // `SetEndRewardExp( min, max )` (Project.cpp:2229).
-      case "SetEndRewardExp": {
+      case 'SetEndRewardExp': {
         const lo = num(a[0]?.value) ?? 0;
         const hi = num(a[1]?.value) ?? lo;
         if (lo > 0 || hi > 0) {
           rewards.push({
-            kind: "exp",
-            label: lo === hi
-              ? `${formatNumber(lo)} EXP`
-              : `${formatNumber(lo)}–${formatNumber(hi)} EXP`,
+            kind: 'exp',
+            label:
+              lo === hi ? `${formatNumber(lo)} EXP` : `${formatNumber(lo)}–${formatNumber(hi)} EXP`,
           });
         }
         break;
       }
 
       // `SetEndRewardSkillPoint( n )` (Project.cpp:2237).
-      case "SetEndRewardSkillPoint": {
+      case 'SetEndRewardSkillPoint': {
         const sp = num(a[0]?.value);
         if (sp !== undefined && sp > 0) {
-          rewards.push({ kind: "skillPoint", label: `${sp} Skill Point${sp > 1 ? "s" : ""}` });
+          rewards.push({
+            kind: 'skillPoint',
+            label: `${String(sp)} Skill Point${sp > 1 ? 's' : ''}`,
+          });
         }
         break;
       }
 
-      case "SetHeadQuest":
+      case 'SetHeadQuest':
         headQuestId = num(a[0]?.value);
         break;
 
-      case "SetRepeat":
+      case 'SetRepeat':
         repeatable = true;
         break;
 
@@ -244,7 +252,7 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
   }
 
   // Quest-item drop generators: which monster drops the collectible, and where.
-  const questItems: QuestSlotItem["questItems"] = [];
+  const questItems: QuestSlotItem['questItems'] = [];
   for (const qi of def?.quest_items ?? []) {
     const { name, iconUrl } = await resolveItem(qi.item);
     questItems.push({
@@ -258,8 +266,7 @@ async function resolveOne(r: QuestRow, isCompleted: boolean): Promise<QuestSlotI
   }
 
   // Prefer resolved title text; a bare numeric symbol carries no information.
-  const name = title
-    ?? (/^\d+$/.test(symbol) ? `Quest #${r.questId}` : symbol);
+  const name = title ?? (/^\d+$/.test(symbol) ? `Quest #${String(r.questId)}` : symbol);
 
   return {
     id: r.id,

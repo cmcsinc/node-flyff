@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Select } from "@/components/ui/select";
-import { PER_PAGE_OPTIONS } from "@/lib/paginate";
-import type { Sort } from "@/lib/sort";
+import Link from 'next/link';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Select } from '@/components/ui/select';
+import { PER_PAGE_OPTIONS } from '@/lib/paginate';
+import type { Sort } from '@/lib/sort';
 
 interface FilterBarProps {
   /** Filter controls (SearchInput, Select, …). Each needs a `name` + `defaultValue`. */
@@ -18,7 +18,7 @@ interface FilterBarProps {
  * GET form wrapper for the resource browser filters. Submitting drops `page`
  * (it is simply not a field here), so any filter change resets to page 1.
  */
-export function FilterBar({ children, perPage, active, sort }: FilterBarProps) {
+export function FilterBar({ children, perPage, active, sort }: FilterBarProps): React.JSX.Element {
   return (
     <form className="flex flex-wrap items-end gap-2" method="GET">
       {/* A GET form submits only its own fields, so the sort would be lost
@@ -28,15 +28,22 @@ export function FilterBar({ children, perPage, active, sort }: FilterBarProps) {
       {children}
       <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
         Per page
-        <Select name="perPage" defaultValue={String(perPage)} className="w-20" aria-label="Rows per page">
+        <Select
+          name="perPage"
+          defaultValue={String(perPage)}
+          className="w-20"
+          aria-label="Rows per page"
+        >
           {PER_PAGE_OPTIONS.map((n) => (
-            <option key={n} value={n}>{n}</option>
+            <option key={n} value={n}>
+              {n}
+            </option>
           ))}
         </Select>
       </label>
       <Button type="submit">Apply</Button>
       {active && (
-        <Link href="?" className={buttonVariants({ variant: "ghost" })}>
+        <Link href="?" className={buttonVariants({ variant: 'ghost' })}>
           Reset
         </Link>
       )}

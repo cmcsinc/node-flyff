@@ -33,7 +33,7 @@ import type { Knex } from '../types';
  * @param db - Knex instance
  */
 export async function up(db: Knex): Promise<void> {
-  await db.schema.createTable('parties', (table: any) => {
+  await db.schema.createTable('parties', (table) => {
     // NOT `increments`: `PartyManager` issues the id in-memory (the roster
     // broadcast needs it before any await) and inserts it explicitly, seeding
     // its counter from `max(id) + 1` at boot.
@@ -57,7 +57,7 @@ export async function up(db: Knex): Promise<void> {
     table.bigInteger('created_at_ms').notNullable();
   });
 
-  await db.schema.createTable('party_member', (table: any) => {
+  await db.schema.createTable('party_member', (table) => {
     table.increments('id').primary();
     table.integer('party_id').unsigned().notNullable()
       .references('id').inTable('parties').onDelete('CASCADE');

@@ -1,6 +1,6 @@
-import type * as React from "react";
-import { Badge } from "@/components/ui/badge";
-import { Dash } from "@/components/resource-cells";
+import type * as React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Dash } from '@/components/resource-cells';
 
 /**
  * A list of items rendered as name chips.
@@ -42,7 +42,10 @@ export function ItemChipList({
         <li>
           <Badge
             variant="outline"
-            title={ids.slice(limit).map((id, i) => names[limit + i] || `#${String(id)}`).join(", ")}
+            title={ids
+              .slice(limit)
+              .map((id, i) => names[limit + i] || `#${String(id)}`)
+              .join(', ')}
             className="font-normal text-muted-foreground"
           >
             +{rest} more

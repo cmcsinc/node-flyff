@@ -21,7 +21,7 @@ export interface QuestGoal {
 
 /** One requirement row. `iconUrl` present for item requirements. */
 export interface QuestRequirement {
-  kind: "item" | "kill" | "npc" | "level" | "job" | "party" | "other";
+  kind: 'item' | 'kill' | 'npc' | 'level' | 'job' | 'party' | 'other';
   /** Primary label (item name, NPC name, monster name, or a description). */
   label: string;
   /** Count needed, when the requirement is countable. */
@@ -38,7 +38,7 @@ export interface QuestRequirement {
 
 /** One reward row. */
 export interface QuestReward {
-  kind: "item" | "gold" | "exp" | "skillPoint" | "other";
+  kind: 'item' | 'gold' | 'exp' | 'skillPoint' | 'other';
   label: string;
   count?: number;
   iconUrl?: string;
@@ -91,7 +91,7 @@ export interface QuestSlotItem {
   /** `SetRepeat` present. */
   repeatable: boolean;
   /** Quest-item drop generators: which monster drops what. */
-  questItems: Array<{
+  questItems: {
     moverName: string;
     itemName: string;
     itemIconUrl: string;
@@ -99,19 +99,19 @@ export interface QuestSlotItem {
     /** Drop chance as a percentage (prob is out of 1e9). */
     chance: number;
     goal?: QuestGoal;
-  }>;
+  }[];
 }
 
 /** `QS_*` state labels (`packages/core/src/constants/quest.ts`). */
 export const QUEST_STATE_LABELS: Record<number, string> = {
-  0: "In Progress",
-  14: "Complete",
+  0: 'In Progress',
+  14: 'Complete',
 };
 
 /** Badge variant per state. */
-export const QUEST_STATE_VARIANT: Record<number, "default" | "secondary" | "success"> = {
-  0: "default",
-  14: "success",
+export const QUEST_STATE_VARIANT: Record<number, 'default' | 'secondary' | 'success'> = {
+  0: 'default',
+  14: 'success',
 };
 
 /**
@@ -119,8 +119,8 @@ export const QUEST_STATE_VARIANT: Record<number, "default" | "secondary" | "succ
  * whose `SetHeadQuest` points at one of these group under that label in-game.
  */
 export const QUEST_CATEGORY_LABELS: Record<number, string> = {
-  6000: "Scenario",
-  6001: "Normal",
-  6002: "Request",
-  6003: "Event",
+  6000: 'Scenario',
+  6001: 'Normal',
+  6002: 'Request',
+  6003: 'Event',
 };

@@ -1,50 +1,58 @@
-import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
-import { SidebarNav } from "@/components/sidebar-nav";
+import type { Metadata } from 'next';
+import { Space_Grotesk, Inter } from 'next/font/google';
+import { SidebarNav } from '@/components/sidebar-nav';
 import {
   AppShellProvider,
   MobileNavToggle,
   SidebarBackdrop,
   SidebarContainer,
-} from "@/components/app-shell";
-import { auth } from "@/lib/auth";
-import { ThemedToaster } from "@/components/themed-toaster";
-import { ThemeToggle, THEME_INIT_SCRIPT } from "@/components/theme-toggle";
-import { LogOut } from "lucide-react";
-import "./globals.css";
+} from '@/components/app-shell';
+import { auth } from '@/lib/auth';
+import { ThemedToaster } from '@/components/themed-toaster';
+import { ThemeToggle, THEME_INIT_SCRIPT } from '@/components/theme-toggle';
+import { LogOut } from 'lucide-react';
+import './globals.css';
 
 const displayFont = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
 });
 
 const bodyFont = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Flyff Admin",
-  description: "Server management panel for the Flyff emulator",
+  title: 'Flyff Admin',
+  description: 'Server management panel for the Flyff emulator',
 };
 
 function initials(name?: string | null): string {
-  if (!name) return "?";
+  if (!name) return '?';
   return name
     .trim()
     .split(/\s+/)
     .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase() ?? "")
-    .join("");
+    .map((p) => p[0].toUpperCase())
+    .join('');
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}): Promise<React.JSX.Element> {
   const session = await auth();
 
   return (
-    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${displayFont.variable} ${bodyFont.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Applies the stored theme before first paint — no flash of wrong palette. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />

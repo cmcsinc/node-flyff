@@ -22,7 +22,7 @@ export const ADMIN_COMMAND_CHANNEL = 'admin:command';
 
 /** Minimal bus port -- `IpcBus` satisfies it. Mirrors `ClusterBusPort`. */
 export interface AdminBusPort {
-  subscribe<T>(channel: string, handler: (payload: T, from: string) => void | Promise<void>): Promise<void>;
+  subscribe(channel: string, handler: (payload: unknown, from: string) => void | Promise<void>): Promise<void>;
   unsubscribe(channel: string): void;
 }
 
@@ -138,8 +138,8 @@ export class AdminListener {
       this.log.warn('No IPC bus -- admin:command listener not started');
       return;
     }
-    await this.bus.subscribe<AdminCommand>(ADMIN_COMMAND_CHANNEL, (payload, from) =>
-      this.onCommand(payload, from),
+    await this.bus.subscribe(ADMIN_COMMAND_CHANNEL, (payload, from) =>
+      { this.onCommand(payload, from); },
     );
     this.log.info({ channel: ADMIN_COMMAND_CHANNEL }, 'Listening for admin commands');
   }
