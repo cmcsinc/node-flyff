@@ -79,7 +79,7 @@ export function readMovement2Frame(reader: PacketReader): Movement2Frame {
   };
 }
 
-function readVec3(reader: PacketReader) {
+function readVec3(reader: PacketReader): { x: number; y: number; z: number } {
   const x = reader.readFloat();
   const y = reader.readFloat();
   const z = reader.readFloat();

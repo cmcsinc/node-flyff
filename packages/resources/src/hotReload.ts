@@ -6,13 +6,16 @@
  * @module hotReload
  */
 
+import type * as Chokidar from 'chokidar';
 import type { FSWatcher } from 'chokidar';
 import { createResourceLogger } from './logger';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import { reloadResources } from './index';
 
 const logger = createResourceLogger('hotReload');
+
+/** No-op cleanup returned when a watcher is already running. */
+const noopCleanup = (): void => undefined;
 
 let watcher: FSWatcher | null = null;
 
@@ -39,11 +42,11 @@ export async function watchResources(options: WatchOptions = {}): Promise<() => 
 
   if (watcher) {
     logger.warn('Watcher already running');
-    return () => {};
+    return noopCleanup;
   }
 
   // Dynamic import chokidar (only load this module in development)
-  let chokidar: typeof import('chokidar');
+  let chokidar: typeof Chokidar;
   try {
     chokidar = await import('chokidar');
   } catch (err) {
@@ -75,8 +78,8 @@ export async function watchResources(options: WatchOptions = {}): Promise<() => 
     },
   });
 
-  watcher.on('change', async (filePath) => {
-    logger.info({ file: filePath }, 'Resource file changed, reloading...');
+  const reload = async (filePath: string, reason: string): Promise<void> => {
+    logger.info({ file: filePath }, reason);
 
     try {
       const resources = await reloadResources(resolvedDataDir);
@@ -86,19 +89,14 @@ export async function watchResources(options: WatchOptions = {}): Promise<() => 
       logger.error({ file: filePath, err }, 'Failed to reload resources');
       onError?.(err as Error);
     }
+  };
+
+  watcher.on('change', (filePath) => {
+    void reload(filePath, 'Resource file changed, reloading...');
   });
 
-  watcher.on('add', async (filePath) => {
-    logger.info({ file: filePath }, 'New resource file added, reloading...');
-
-    try {
-      const resources = await reloadResources(resolvedDataDir);
-      onReload?.(resources);
-      logger.info('Resources reloaded successfully');
-    } catch (err) {
-      logger.error({ file: filePath, err }, 'Failed to reload resources');
-      onError?.(err as Error);
-    }
+  watcher.on('add', (filePath) => {
+    void reload(filePath, 'New resource file added, reloading...');
   });
 
   watcher.on('error', (error) => {
@@ -109,7 +107,7 @@ export async function watchResources(options: WatchOptions = {}): Promise<() => 
   // Return cleanup function
   return () => {
     logger.info('Stopping resource hot-reload watcher...');
-    watcher?.close();
+    void watcher?.close();
     watcher = null;
   };
 }
@@ -120,7 +118,7 @@ export async function watchResources(options: WatchOptions = {}): Promise<() => 
 export function stopWatching(): void {
   if (watcher) {
     logger.info('Stopping resource hot-reload watcher...');
-    watcher.close();
+    void watcher.close();
     watcher = null;
   }
 }

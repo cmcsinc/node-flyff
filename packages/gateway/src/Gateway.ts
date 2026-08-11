@@ -1,14 +1,13 @@
 import { WebSocketServer, WebSocket } from 'ws';
-import { IncomingMessage } from 'node:http';
+import type { IncomingMessage } from 'node:http';
 import {
   PacketBuffer,
   PacketReader,
-  PacketWriter,
   framePacket,
   PACKETTYPE,
   lookupPacketType,
   createLogger,
-  type EventBus,
+  type PacketWriter,
 } from '@flyff/core';
 import type { ClientSession } from './ClientSession';
 import type { PacketHandlerMap } from './types';
@@ -50,9 +49,12 @@ export class Gateway {
     }
     this.sessions.clear();
 
-    if (this.wss) {
+    const { wss } = this;
+    if (wss) {
       await new Promise<void>((resolve) => {
-        this.wss!.close(() => resolve());
+        wss.close(() => {
+          resolve();
+        });
       });
     }
     logger.info('Gateway stopped');
@@ -118,8 +120,8 @@ export class Gateway {
 
     logger.debug({ opcode: name, ip: session.ip }, 'Dispatching packet');
 
-    Promise.resolve(handler(session, reader)).catch((err) => {
-      logger.error({ opcode: name, err: err.message }, 'Handler error');
+    Promise.resolve(handler(session, reader)).catch((err: unknown) => {
+      logger.error({ opcode: name, err }, 'Handler error');
     });
   }
 
@@ -128,7 +130,9 @@ export class Gateway {
 
     const handler = this.opts.handlers[PACKETTYPE.LEAVE];
     if (handler && session.state === 'in_world') {
-      Promise.resolve(handler(session, new PacketReader(Buffer.alloc(0)))).catch(() => {});
+      Promise.resolve(handler(session, new PacketReader(Buffer.alloc(0)))).catch((err: unknown) => {
+        logger.error({ ip: session.ip, err }, 'LEAVE handler error');
+      });
     }
 
     this.sessions.delete(session.ws);

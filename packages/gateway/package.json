@@ -32,7 +32,8 @@
     "build": "tsup",
     "dev": "tsx watch src/main.ts",
     "start": "node dist/main.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "lint": "eslint src"
   },
   "dependencies": {
     "@flyff/core": "workspace:*",

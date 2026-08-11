@@ -22,7 +22,9 @@ export class World {
 
   start(): void {
     if (this.snapshotTimer) return;
-    this.snapshotTimer = setInterval(() => this.flushSnapshots(), SNAPSHOT_INTERVAL_MS);
+    this.snapshotTimer = setInterval(() => {
+      this.flushSnapshots();
+    }, SNAPSHOT_INTERVAL_MS);
     logger.info('World simulation started');
   }
 
@@ -53,8 +55,6 @@ export class World {
   removePlayer(moverId: number): Mover | null {
     const mover = this.movers.get(moverId);
     if (!mover) return null;
-
-    const session = this.sessions.get(moverId);
 
     for (const [otherId, other] of this.movers) {
       if (otherId === moverId) continue;

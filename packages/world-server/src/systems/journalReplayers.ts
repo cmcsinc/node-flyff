@@ -34,7 +34,7 @@ export interface ReplayerRegistryDeps {
 
 /** Parse a journal row's JSON payload. Throws on corrupt JSON (abort recovery). */
 function payload(row: JournalRow): unknown {
-  return JSON.parse(row.payload);
+  return JSON.parse(row.payload) as unknown;
 }
 
 /**
@@ -59,11 +59,11 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // `refine`/`element`/`element_level` optional for back-compat with rows
   // written before migration 012 (they default 0 -- plain item, same as before).
   r.register('INVENTORY_SLOT', async (row) => {
-    const p = payload<{
+    const p = payload(row) as {
       slot: number; itemId: number; count: number;
       flags?: number; durability?: number; refine?: number;
       element?: number; element_level?: number;
-    }>(row);
+    };
     if (p.itemId === 0) {
       await deps.inventoryRepo.removeItem(row.char_id, p.slot);
     } else {
@@ -86,9 +86,9 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // Absolute stat block + unspent stat points (C++ m_nStr/Sta/Dex/Int/RemainGP).
   // Emitted by StatService on allocation; absolute so replay is idempotent.
   r.register('CHAR_STATS', async (row) => {
-    const p = payload<{
+    const p = payload(row) as {
       strength: number; stamina: number; dexterity: number; intelligence: number; remain_gp: number;
-    }>(row);
+    };
     await deps.charRepo.updateStats(row.char_id, p);
   });
 
@@ -96,10 +96,10 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // Emitted by SkillService.learnSkills; absolute (whole roster) so replay is
   // idempotent. saveAll delete+reinserts the whole set, matching the payload.
   r.register('SKILL_LEARN', async (row) => {
-    const p = payload<{
+    const p = payload(row) as {
       roster: { slot: number; skillId: number; level: number }[];
       skillPoint: number; skillLevel: number;
-    }>(row);
+    };
     await deps.skillRepo.saveAll(row.char_id, p.roster);
     await deps.charRepo.updateSkillPoints(row.char_id, p.skillPoint, p.skillLevel);
   });
@@ -118,10 +118,10 @@ export function registerReplayers(r: JournalReplayer, deps: ReplayerRegistryDeps
   // alongside the matching INVENTORY_SLOT row, so replaying both restores the
   // whole move idempotently.
   r.register('BANK_SLOT', async (row) => {
-    const p = payload<{
+    const p = payload(row) as {
       accountId: number; tab: number; slot: number; itemId: number; count: number;
       flags?: number; durability?: number; refine?: number;
-    }>(row);
+    };
     if (p.itemId === 0) {
       await deps.bankRepo.removeItem(p.accountId, p.tab, p.slot);
     } else {

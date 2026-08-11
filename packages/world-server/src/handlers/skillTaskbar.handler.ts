@@ -65,7 +65,7 @@ export class SkillTaskBarHandler {
           dwUserId: reader.readDword(),
           dwData: reader.readDword(),
         };
-        for (const v of Object.values(shortcut)) Validate.dword(v);
+        for (const v of [shortcut.dwShortcut, shortcut.dwId, shortcut.dwType, shortcut.dwIndex, shortcut.dwUserId, shortcut.dwData]) Validate.dword(v);
         slots[nIndex] = shortcut;
       }
       this.deps.taskbarService.setQueue(player, slots);

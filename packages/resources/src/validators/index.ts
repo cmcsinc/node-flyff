@@ -8,6 +8,9 @@
  */
 
 import type { ResourceIndex } from '../index';
+import { createResourceLogger } from '../logger';
+
+const logger = createResourceLogger('validators');
 
 /**
  * Validation error.
@@ -36,7 +39,7 @@ export function validateReferences(resources: ResourceIndex): void {
     for (const spawn of zone.spawns) {
       if (!resources.movers.movers.has(spawn.mover_id)) {
         errors.push(
-          `Zone ${zoneId}: Spawn ${spawn.id} references invalid mover_id ${spawn.mover_id}`
+          `Zone ${zoneId}: Spawn ${String(spawn.id)} references invalid mover_id ${String(spawn.mover_id)}`
         );
       }
     }
@@ -47,7 +50,7 @@ export function validateReferences(resources: ResourceIndex): void {
     for (const npc of zone.npcs) {
       if (!resources.movers.movers.has(npc.mover_id)) {
         errors.push(
-          `Zone ${zoneId}: NPC ${npc.id} references invalid mover_id ${npc.mover_id}`
+          `Zone ${zoneId}: NPC ${String(npc.id)} references invalid mover_id ${String(npc.mover_id)}`
         );
       }
     }
@@ -58,7 +61,7 @@ export function validateReferences(resources: ResourceIndex): void {
     for (const portal of zone.portals) {
       if (!resources.zones.zones.has(portal.target.zone)) {
         errors.push(
-          `Zone ${zoneId}: Portal ${portal.id} targets non-existent zone ${portal.target.zone}`
+          `Zone ${zoneId}: Portal ${String(portal.id)} targets non-existent zone ${portal.target.zone}`
         );
       }
     }
@@ -71,15 +74,15 @@ export function validateReferences(resources: ResourceIndex): void {
         // Quest validation would go here when quest system is implemented
         // For now, just log a warning
         console.warn(
-          `Zone ${zoneId}: Region ${region.id} has quest requirement ${region.requirements.quest_id} (quest system not yet implemented)`
+          `Zone ${zoneId}: Region ${String(region.id)} has quest requirement ${String(region.requirements.quest_id)} (quest system not yet implemented)`
         );
       }
 
       if (region.requirements?.item_req !== undefined) {
-        const { id, count } = region.requirements.item_req;
+        const { id } = region.requirements.item_req;
         if (!resources.items.items.has(id)) {
           errors.push(
-            `Zone ${zoneId}: Region ${region.id} references invalid item_id ${id}`
+            `Zone ${zoneId}: Region ${String(region.id)} references invalid item_id ${String(id)}`
           );
         }
       }
@@ -93,9 +96,9 @@ export function validateReferences(resources: ResourceIndex): void {
         if (func.type === 'shop' && func.shop_id) {
           // Shop validation would go here when shop system is implemented
           // For now, just verify the shop_id format is valid
-          if (!/^[a-z\-]+$/.test(func.shop_id)) {
+          if (!/^[a-z-]+$/.test(func.shop_id)) {
             errors.push(
-              `Zone ${zoneId}: NPC ${npc.id} has invalid shop_id format "${func.shop_id}"`
+              `Zone ${zoneId}: NPC ${String(npc.id)} has invalid shop_id format "${func.shop_id}"`
             );
           }
         }
@@ -117,7 +120,7 @@ export function validateReferences(resources: ResourceIndex): void {
 export function validateAndLog(resources: ResourceIndex): boolean {
   try {
     validateReferences(resources);
-    console.log('[OK] Resource validation passed');
+    logger.info('[OK] Resource validation passed');
     return true;
   } catch (err) {
     if (err instanceof ValidationError) {

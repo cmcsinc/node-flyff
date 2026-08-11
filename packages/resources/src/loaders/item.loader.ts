@@ -12,25 +12,39 @@ import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
 import { createResourceLogger } from '../logger';
 import {
-  ItemDefinitionSchema,
   ItemFileSchema,
   ItemIndexSchema,
 } from '../schemas/item.schema';
+import type { ItemDefinition } from '../schemas/item.schema';
 
 const logger = createResourceLogger('item.loader');
+
+/** Appends `item` to the bucket keyed by `key`, creating the bucket if absent. */
+function pushBucket(
+  map: Map<string, ItemDefinition[]>,
+  key: string,
+  item: ItemDefinition
+): void {
+  const bucket = map.get(key);
+  if (bucket === undefined) {
+    map.set(key, [item]);
+    return;
+  }
+  bucket.push(item);
+}
 
 /**
  * Loaded item index structure.
  */
 export interface ItemIndex {
   /** Map of item ID -> definition */
-  items: Map<number, import('../schemas/item.schema').ItemDefinition>;
+  items: Map<number, ItemDefinition>;
 
   /** Map of item name -> definition */
-  byName: Map<string, import('../schemas/item.schema').ItemDefinition>;
+  byName: Map<string, ItemDefinition>;
 
   /** Map of kind -> array of definitions */
-  byKind: Map<string, import('../schemas/item.schema').ItemDefinition[]>;
+  byKind: Map<string, ItemDefinition[]>;
 
   /**
    * Map of `item_kind3` symbol (IK3_*, e.g. `IK3_AXE`) -> definitions. Used by
@@ -39,7 +53,7 @@ export interface ItemIndex {
    * skipped. Symbol form (not numeric) so it matches `character.inc` verbatim
    * without a second `defineItemkind.h` parse.
    */
-  byKind3: Map<string, import('../schemas/item.schema').ItemDefinition[]>;
+  byKind3: Map<string, ItemDefinition[]>;
 
   /**
    * Set of `II_*` numeric ids declared in `defineItem.h`. The client's
@@ -99,20 +113,19 @@ export async function loadItems(dataDir: string, rawDir: string): Promise<ItemIn
 
   // Load index
   const indexContent = await readFile(indexPath, 'utf-8');
-  const indexData = parse(indexContent);
+  const indexData: unknown = parse(indexContent);
   const index = ItemIndexSchema.parse(indexData);
 
-  const items = new Map<number, import('../schemas/item.schema').ItemDefinition>();
-  const byName = new Map<string, import('../schemas/item.schema').ItemDefinition>();
-  const byKind = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
-  const byKind3 = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
+  const items = new Map<number, ItemDefinition>();
+  const byName = new Map<string, ItemDefinition>();
+  const byKind = new Map<string, ItemDefinition[]>();
+  const byKind3 = new Map<string, ItemDefinition[]>();
 
   // Track loaded files to avoid duplicates
   const loadedFiles = new Set<string>();
 
   // Load each file referenced in index
-  for (const [idStr, entry] of Object.entries(index)) {
-    const id = parseInt(idStr, 10);
+  for (const entry of Object.values(index)) {
     const file = entry.file;
     const filePath = resolve(itemsDir, file);
 
@@ -122,7 +135,7 @@ export async function loadItems(dataDir: string, rawDir: string): Promise<ItemIn
     try {
       // Parse and validate
       const content = await readFile(filePath, 'utf-8');
-      const data = parse(content);
+      const data: unknown = parse(content);
       const validated = ItemFileSchema.parse(data);
 
       // Index items
@@ -130,15 +143,11 @@ export async function loadItems(dataDir: string, rawDir: string): Promise<ItemIn
         items.set(item.id, item);
         byName.set(item.name, item);
 
-        if (!byKind.has(validated._kind)) {
-          byKind.set(validated._kind, []);
-        }
-        byKind.get(validated._kind)!.push(item);
+        pushBucket(byKind, validated._kind, item);
 
         // NPC shop stock resolver groups by IK3 symbol (AddVendorItem expansion).
         if (item.item_kind3) {
-          if (!byKind3.has(item.item_kind3)) byKind3.set(item.item_kind3, []);
-          byKind3.get(item.item_kind3)!.push(item);
+          pushBucket(byKind3, item.item_kind3, item);
         }
       }
 
@@ -166,32 +175,28 @@ async function loadItemsWithoutIndex(
   const files = await readdir(itemsDir);
   const ymlFiles = files.filter((f) => f.endsWith('.yml') && f !== '_index.yml');
 
-  const items = new Map<number, import('../schemas/item.schema').ItemDefinition>();
-  const byName = new Map<string, import('../schemas/item.schema').ItemDefinition>();
-  const byKind = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
-  const byKind3 = new Map<string, import('../schemas/item.schema').ItemDefinition[]>();
+  const items = new Map<number, ItemDefinition>();
+  const byName = new Map<string, ItemDefinition>();
+  const byKind = new Map<string, ItemDefinition[]>();
+  const byKind3 = new Map<string, ItemDefinition[]>();
 
   for (const file of ymlFiles) {
     const filePath = resolve(itemsDir, file);
 
     try {
       const content = await readFile(filePath, 'utf-8');
-      const data = parse(content);
+      const data: unknown = parse(content);
       const validated = ItemFileSchema.parse(data);
 
       for (const item of validated.items) {
         items.set(item.id, item);
         byName.set(item.name, item);
 
-        if (!byKind.has(validated._kind)) {
-          byKind.set(validated._kind, []);
-        }
-        byKind.get(validated._kind)!.push(item);
+        pushBucket(byKind, validated._kind, item);
 
         // NPC shop stock resolver groups by IK3 symbol (AddVendorItem expansion).
         if (item.item_kind3) {
-          if (!byKind3.has(item.item_kind3)) byKind3.set(item.item_kind3, []);
-          byKind3.get(item.item_kind3)!.push(item);
+          pushBucket(byKind3, item.item_kind3, item);
         }
       }
 

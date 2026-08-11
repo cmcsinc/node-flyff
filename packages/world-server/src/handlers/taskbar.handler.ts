@@ -50,7 +50,7 @@ export class TaskBarHandler {
         dwUserId: r.readDword(),
         dwData: r.readDword(),
       };
-      for (const v of Object.values(shortcut)) Validate.dword(v);
+      for (const v of [shortcut.dwShortcut, shortcut.dwId, shortcut.dwType, shortcut.dwIndex, shortcut.dwUserId, shortcut.dwData]) Validate.dword(v);
       if (shortcut.dwShortcut === SHORTCUT.CHAT) {
         shortcut.szString = r.readString();
         Validate.string(shortcut.szString, 0, MAX_SHORTCUT_STRING);

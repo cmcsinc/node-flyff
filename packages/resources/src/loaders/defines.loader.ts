@@ -24,9 +24,9 @@ const DEFINE_RE = /^\s*#\s*define\s+([A-Za-z_]\w*)\s+(-?\d+)/gm;
  * Parse one define header buffer to UTF-8 text, handling the UTF-16LE BOM the
  * v19 source files carry. Returns the symbol -> value pairs found inside.
  */
-function parseDefineHeader(buf: Buffer): Array<[string, number]> {
+function parseDefineHeader(buf: Buffer): [string, number][] {
   const text = buf[0] === 0xff && buf[1] === 0xfe ? buf.subarray(2).toString('utf16le') : buf.toString('utf8');
-  const out: Array<[string, number]> = [];
+  const out: [string, number][] = [];
   for (let m = DEFINE_RE.exec(text); m !== null; m = DEFINE_RE.exec(text)) {
     const sym = m[1];
     const raw = m[2];

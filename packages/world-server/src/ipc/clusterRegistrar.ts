@@ -186,7 +186,7 @@ export class ClusterRegistrar extends EventEmitter {
     socket.on('connect', () => {
       this.#reconnectAttempts = 0;
       this.#log.info({ host: clusterHost, port: clusterInternalPort }, 'TCP connected to Cluster Server');
-      void this.#sendRegistration();
+      this.#sendRegistration();
     });
 
     socket.on('data', (chunk: Buffer) => {

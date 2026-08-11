@@ -93,7 +93,7 @@ function findBlockRange(text: string, key: string): [number, number, number] | u
   // Header: key, then optional trailing `//` comment, then `{` (same or later line).
   const re = new RegExp(`^${escapeRe(key)}[ \\t]*(?://[^\\r\\n]*)?\\s*\\{`, 'gm');
   const m = re.exec(text);
-  if (!m?.[0] || m.index === undefined) return undefined;
+  if (!m?.[0]) return undefined;
   const openIdx = m.index + m[0].length - 1;
 
   let depth = 1;
@@ -165,16 +165,16 @@ function genSetEquipLine(equip: readonly CharacterIncEquipPart[], syms: WriterSy
  * lines keep the raw file's own shallower indent.
  */
 function genVendorSlotLine(tab: CharacterIncVendorTab): string {
-  return `AddVendorSlot( ${tab.slot},\n\t${tab.label}\n\t);`;
+  return `AddVendorSlot( ${String(tab.slot)},\n\t${tab.label}\n\t);`;
 }
 
 function genVendorItemLine(v: CharacterIncVendorItem): string {
   const sym = v.itemKind3Symbol || String(v.itemKind3);
-  return `AddVendorItem( ${v.slot}, ${sym}, ${v.itemJob}, ${v.uniqueMin}, ${v.uniqueMax}, ${v.totalNum} );`;
+  return `AddVendorItem( ${String(v.slot)}, ${sym}, ${String(v.itemJob)}, ${String(v.uniqueMin)}, ${String(v.uniqueMax)}, ${String(v.totalNum)} );`;
 }
 
 function genVendorItemIdLine(v: CharacterIncVendorItemId): string {
-  return `AddVendorItem2( ${v.slot}, ${v.itemId} );`;
+  return `AddVendorItem2( ${String(v.slot)}, ${String(v.itemId)} );`;
 }
 
 // ── Public API ──
@@ -205,7 +205,7 @@ export function applyCharacterEdit(
   // that is where the raw file keeps all of them, and appending after the group
   // would put them in the block's outer scope where the client's parser ignores
   // them.
-  const at = () => settingEnd(lines);
+  const at = (): number => settingEnd(lines);
 
   if (edit.menus) {
     // AddMenuLang is the localized variant; both are replaced by the plain form.
@@ -279,9 +279,12 @@ function rewriteOutfit(
 ): void {
   const sortedEquip = [...outfit.equip].sort((a, b) => a.parts - b.parts);
   for (let i = 1; i < sortedEquip.length; i++) {
-    if (sortedEquip[i]!.parts !== sortedEquip[i - 1]!.parts + 1) {
+    const cur = sortedEquip[i];
+    const prev = sortedEquip[i - 1];
+    if (cur === undefined || prev === undefined) continue;
+    if (cur.parts !== prev.parts + 1) {
       throw new Error(
-        `SetEquip: non-contiguous parts (gap between ${sortedEquip[i - 1]!.parts} and ${sortedEquip[i]!.parts}). ` +
+        `SetEquip: non-contiguous parts (gap between ${String(prev.parts)} and ${String(cur.parts)}). ` +
         `All slots between min and max must be filled to avoid positional misalignment.`,
       );
     }
@@ -318,7 +321,7 @@ function rewriteOutfit(
   replaceStatements(
     lines,
     'SetFigure',
-    [`SetFigure( ${miToken}, ${outfit.hairMesh}, ${colorHex}, ${outfit.headMesh} );`],
+    [`SetFigure( ${miToken}, ${String(outfit.hairMesh)}, ${colorHex}, ${String(outfit.headMesh)} );`],
     at(),
   );
 }
@@ -333,7 +336,7 @@ export function setTextEntry(txtText: string, token: string, text: string): stri
   const lines = splitLines(txtText);
   const prefix = `${token}\t`;
   for (let i = 0; i < lines.length; i++) {
-    if (lines[i]!.startsWith(prefix)) {
+    if (lines[i]?.startsWith(prefix)) {
       lines[i] = `${token}\t${text}`;
       return joinLinesEol(lines, eol);
     }
@@ -461,7 +464,7 @@ function findSetNameToken(text: string, key: string): string | undefined {
   if (!range) return undefined;
   const body = text.slice(range[1], range[2] - 1);
   // Multi-line SetName form: SetName\r\n(\r\nIDS_...\r\n)
-  const m = body.match(/\bSetName\s*\(\s*([A-Za-z0-9_]+)\s*\)/);
+  const m = /\bSetName\s*\(\s*([A-Za-z0-9_]+)\s*\)/.exec(body);
   return m?.[1];
 }
 

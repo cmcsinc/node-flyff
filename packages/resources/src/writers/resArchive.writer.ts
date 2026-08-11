@@ -248,7 +248,7 @@ export async function writePatchedResArchive(
   resPath: string,
   outPath: string,
   members: Readonly<Record<string, string>>,
-): Promise<Array<{ name: string; size: number }>> {
+): Promise<{ name: string; size: number }[]> {
   if (resPath === outPath) {
     throw new Error('.res: refusing to overwrite the source archive in place');
   }

@@ -12,25 +12,39 @@ import { readdir } from 'node:fs/promises';
 import { parse } from 'yaml';
 import { createResourceLogger } from '../logger';
 import {
-  MoverDefinitionSchema,
   MoverFileSchema,
   MoverIndexSchema,
 } from '../schemas/mover.schema';
+import type { MoverDefinition } from '../schemas/mover.schema';
 
 const logger = createResourceLogger('mover.loader');
+
+/** Appends `mover` to the bucket keyed by `key`, creating the bucket if absent. */
+function pushBucket(
+  map: Map<string, MoverDefinition[]>,
+  key: string,
+  mover: MoverDefinition
+): void {
+  const bucket = map.get(key);
+  if (bucket === undefined) {
+    map.set(key, [mover]);
+    return;
+  }
+  bucket.push(mover);
+}
 
 /**
  * Loaded mover index structure.
  */
 export interface MoverIndex {
   /** Map of mover ID -> definition */
-  movers: Map<number, import('../schemas/mover.schema').MoverDefinition>;
+  movers: Map<number, MoverDefinition>;
 
   /** Map of mover name -> definition */
-  byName: Map<string, import('../schemas/mover.schema').MoverDefinition>;
+  byName: Map<string, MoverDefinition>;
 
   /** Map of type -> array of definitions */
-  byType: Map<string, import('../schemas/mover.schema').MoverDefinition[]>;
+  byType: Map<string, MoverDefinition[]>;
 }
 
 /**
@@ -55,17 +69,17 @@ export async function loadMovers(dataDir: string): Promise<MoverIndex> {
 
   // Load index
   const indexContent = await readFile(indexPath, 'utf-8');
-  const indexData = parse(indexContent);
+  const indexData: unknown = parse(indexContent);
   const index = MoverIndexSchema.parse(indexData);
 
-  const movers = new Map<number, import('../schemas/mover.schema').MoverDefinition>();
-  const byName = new Map<string, import('../schemas/mover.schema').MoverDefinition>();
-  const byType = new Map<string, import('../schemas/mover.schema').MoverDefinition[]>();
+  const movers = new Map<number, MoverDefinition>();
+  const byName = new Map<string, MoverDefinition>();
+  const byType = new Map<string, MoverDefinition[]>();
 
   // Track loaded files
   const loadedFiles = new Set<string>();
 
-  for (const [idStr, entry] of Object.entries(index)) {
+  for (const entry of Object.values(index)) {
     const file = entry.file;
     const filePath = resolve(moversDir, file);
 
@@ -74,18 +88,14 @@ export async function loadMovers(dataDir: string): Promise<MoverIndex> {
 
     try {
       const content = await readFile(filePath, 'utf-8');
-      const data = parse(content);
+      const data: unknown = parse(content);
       const validated = MoverFileSchema.parse(data);
 
       for (const mover of validated.movers) {
         movers.set(mover.id, mover);
         byName.set(mover.name, mover);
 
-        const type = mover.type || 'unknown';
-        if (!byType.has(type)) {
-          byType.set(type, []);
-        }
-        byType.get(type)!.push(mover);
+        pushBucket(byType, mover.type ?? 'unknown', mover);
       }
 
       logger.debug({ file, count: validated.movers.length }, 'Loaded mover file');
@@ -112,27 +122,23 @@ async function loadMoversWithoutIndex(
   const files = await readdir(moversDir);
   const ymlFiles = files.filter((f) => f.endsWith('.yml') && f !== '_index.yml');
 
-  const movers = new Map<number, import('../schemas/mover.schema').MoverDefinition>();
-  const byName = new Map<string, import('../schemas/mover.schema').MoverDefinition>();
-  const byType = new Map<string, import('../schemas/mover.schema').MoverDefinition[]>();
+  const movers = new Map<number, MoverDefinition>();
+  const byName = new Map<string, MoverDefinition>();
+  const byType = new Map<string, MoverDefinition[]>();
 
   for (const file of ymlFiles) {
     const filePath = resolve(moversDir, file);
 
     try {
       const content = await readFile(filePath, 'utf-8');
-      const data = parse(content);
+      const data: unknown = parse(content);
       const validated = MoverFileSchema.parse(data);
 
       for (const mover of validated.movers) {
         movers.set(mover.id, mover);
         byName.set(mover.name, mover);
 
-        const type = mover.type || 'unknown';
-        if (!byType.has(type)) {
-          byType.set(type, []);
-        }
-        byType.get(type)!.push(mover);
+        pushBucket(byType, mover.type ?? 'unknown', mover);
       }
 
       logger.debug({ file, count: validated.movers.length }, 'Loaded mover file');

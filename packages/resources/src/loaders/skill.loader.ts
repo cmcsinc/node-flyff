@@ -22,6 +22,20 @@ import {
 
 const logger = createResourceLogger('skill.loader');
 
+/** Appends `skill` to the bucket keyed by `key`, creating the bucket if absent. */
+function pushBucket(
+  map: Map<string, SkillDefinition[]>,
+  key: string,
+  skill: SkillDefinition
+): void {
+  const bucket = map.get(key);
+  if (bucket === undefined) {
+    map.set(key, [skill]);
+    return;
+  }
+  bucket.push(skill);
+}
+
 /**
  * Loaded skill index structure.
  */
@@ -56,7 +70,7 @@ export async function loadSkills(dataDir: string): Promise<SkillIndex> {
 
   // Load index
   const indexContent = await readFile(indexPath, 'utf-8');
-  const indexData = parse(indexContent);
+  const indexData: unknown = parse(indexContent);
   const index = SkillIndexSchema.parse(indexData);
 
   const skills = new Map<number, SkillDefinition>();
@@ -65,7 +79,7 @@ export async function loadSkills(dataDir: string): Promise<SkillIndex> {
 
   const loadedFiles = new Set<string>();
 
-  for (const [idStr, entry] of Object.entries(index)) {
+  for (const entry of Object.values(index)) {
     const file = entry.file;
     const filePath = resolve(skillsDir, file);
 
@@ -74,19 +88,16 @@ export async function loadSkills(dataDir: string): Promise<SkillIndex> {
 
     try {
       const content = await readFile(filePath, 'utf-8');
-      const data = parse(content);
+      const data: unknown = parse(content);
       const validated = SkillFileSchema.parse(data);
 
-      const job = validated._job || 'all';
+      const job = validated._job ?? 'all';
 
       for (const skill of validated.skills) {
         skills.set(skill.id, skill);
         byName.set(skill.name, skill);
 
-        if (!byJob.has(job)) {
-          byJob.set(job, []);
-        }
-        byJob.get(job)!.push(skill);
+        pushBucket(byJob, job, skill);
       }
 
       logger.debug({ file, job, count: validated.skills.length }, 'Loaded skill file');
@@ -122,19 +133,16 @@ async function loadSkillsWithoutIndex(
 
     try {
       const content = await readFile(filePath, 'utf-8');
-      const data = parse(content);
+      const data: unknown = parse(content);
       const validated = SkillFileSchema.parse(data);
 
-      const job = validated._job || 'all';
+      const job = validated._job ?? 'all';
 
       for (const skill of validated.skills) {
         skills.set(skill.id, skill);
         byName.set(skill.name, skill);
 
-        if (!byJob.has(job)) {
-          byJob.set(job, []);
-        }
-        byJob.get(job)!.push(skill);
+        pushBucket(byJob, job, skill);
       }
 
       logger.debug({ file, job, count: validated.skills.length }, 'Loaded skill file');

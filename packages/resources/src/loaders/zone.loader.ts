@@ -14,6 +14,7 @@ import { createResourceLogger } from '../logger';
 import {
   ZoneDefinitionSchema,
 } from '../schemas/zone.schema';
+import type { ZoneDefinition } from '../schemas/zone.schema';
 
 const logger = createResourceLogger('zone.loader');
 
@@ -22,13 +23,13 @@ const logger = createResourceLogger('zone.loader');
  */
 export interface ZoneIndex {
   /** Map of zone ID -> definition */
-  zones: Map<string, import('../schemas/zone.schema').ZoneDefinition>;
+  zones: Map<string, ZoneDefinition>;
 
   /** Map of numeric ID -> definition */
-  byNumericId: Map<number, import('../schemas/zone.schema').ZoneDefinition>;
+  byNumericId: Map<number, ZoneDefinition>;
 
   /** Map of world ID -> array of zones */
-  byWorld: Map<string, import('../schemas/zone.schema').ZoneDefinition[]>;
+  byWorld: Map<string, ZoneDefinition[]>;
 }
 
 /**
@@ -45,25 +46,27 @@ export async function loadZones(dataDir: string): Promise<ZoneIndex> {
   const files = await readdir(zonesDir);
   const ymlFiles = files.filter((f) => f.endsWith('.yml'));
 
-  const zones = new Map<string, import('../schemas/zone.schema').ZoneDefinition>();
-  const byNumericId = new Map<number, import('../schemas/zone.schema').ZoneDefinition>();
-  const byWorld = new Map<string, import('../schemas/zone.schema').ZoneDefinition[]>();
+  const zones = new Map<string, ZoneDefinition>();
+  const byNumericId = new Map<number, ZoneDefinition>();
+  const byWorld = new Map<string, ZoneDefinition[]>();
 
   for (const file of ymlFiles) {
     const filePath = resolve(zonesDir, file);
 
     try {
       const content = await readFile(filePath, 'utf-8');
-      const data = parse(content);
+      const data: unknown = parse(content);
       const zone = ZoneDefinitionSchema.parse(data);
 
       zones.set(zone._id, zone);
       byNumericId.set(zone._id_numeric, zone);
 
-      if (!byWorld.has(zone.world_id)) {
-        byWorld.set(zone.world_id, []);
+      const bucket = byWorld.get(zone.world_id);
+      if (bucket === undefined) {
+        byWorld.set(zone.world_id, [zone]);
+      } else {
+        bucket.push(zone);
       }
-      byWorld.get(zone.world_id)!.push(zone);
 
       logger.debug({ file, zone: zone._id }, 'Loaded zone file');
     } catch (err) {

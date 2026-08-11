@@ -301,21 +301,21 @@ function parseBlock(
     if (id !== undefined) menus.add(id);
   }
 
-  const dlg = body.match(/m_szDialog\s*=\s*"([^"]+)"/);
+  const dlg = /m_szDialog\s*=\s*"([^"]+)"/.exec(body);
   const dialogFile = dlg?.[1];
 
   // `SetName( IDS_* )` / `SetImage( IDS_* )` -- the token may sit on its own line
   // (character.inc formats these multi-line), hence the `\s*` around the arg.
-  const nameId = body.match(/\bSetName\s*\(\s*([A-Za-z0-9_]+)\s*\)/)?.[1];
-  const imageId = body.match(/\bSetImage\s*\(\s*([A-Za-z0-9_]+)\s*\)/)?.[1];
+  const nameId = (/\bSetName\s*\(\s*([A-Za-z0-9_]+)\s*\)/.exec(body))?.[1];
+  const imageId = (/\bSetImage\s*\(\s*([A-Za-z0-9_]+)\s*\)/.exec(body))?.[1];
 
   const vendorTabs = parseVendorTabs(body);
   const vendorItems = parseVendorItems(body, ik3Ids);
   const vendorItemIds = parseVendorItemIds(body);
   const buffSkills = parseBuffSkills(body, siIds);
-  const vt = body.match(/\bSetVend[oe]rType\s*\(\s*(-?\d+)\s*\)/);
+  const vt = /\bSetVend[oe]rType\s*\(\s*(-?\d+)\s*\)/.exec(body);
   const venderType = vt?.[1] !== undefined ? parseInt(vt[1], 10) : undefined;
-  const sr = body.match(/\bm_nStructure\s*=\s*(\d+|SRT_\w+)/);
+  const sr = /\bm_nStructure\s*=\s*(\d+|SRT_\w+)/.exec(body);
   let structure: number | undefined;
   if (sr?.[1] !== undefined) {
     if (/^\d+$/.test(sr[1])) structure = parseInt(sr[1], 10);
@@ -324,16 +324,14 @@ function parseBlock(
 
   // `SetOutput( TRUE|FALSE )` -- default TRUE (Project.cpp:2975); only the
   // literal FALSE flips it (`:3256` compares the uppercased token).
-  const so = body.match(/\bSetOutput\s*\(\s*([A-Za-z]+)\s*\)/);
+  const so = /\bSetOutput\s*\(\s*([A-Za-z]+)\s*\)/.exec(body);
   const output = so?.[1] === undefined ? true : so[1].toUpperCase() !== 'FALSE';
   const langs = [...body.matchAll(/\bSetLang\s*\(\s*(LANG_[A-Z]+)\s*\)/g)]
     .map((m) => m[1])
     .filter((l): l is string => l !== undefined);
 
-  const fig = body.match(
-    /SetFigure\s*\(\s*MI_[A-Z0-9_]+\s*,\s*(\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(\d+)\s*\)/,
-  );
-  const eq = body.match(/SetEquip\s*\(\s*([^)]+)\)/);
+  const fig = /SetFigure\s*\(\s*MI_[A-Z0-9_]+\s*,\s*(\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(\d+)\s*\)/.exec(body);
+  const eq = /SetEquip\s*\(\s*([^)]+)\)/.exec(body);
 
   let outfit: CharacterIncOutfit | undefined;
   if (fig || eq) {
@@ -409,7 +407,7 @@ function parseVendorItems(body: string, ik3Ids: Map<string, number>): CharacterI
     out.push({
       slot: parseInt(slotRaw, 10),
       itemKind3,
-      itemKind3Symbol: /^IK3_/.test(kindTok) ? kindTok : '',
+      itemKind3Symbol: kindTok.startsWith("IK3_") ? kindTok : '',
       itemJob: parseInt(jobRaw, 10),
       uniqueMin: parseInt(minRaw, 10),
       uniqueMax: parseInt(maxRaw, 10),
@@ -477,7 +475,7 @@ export function parseCharacterInc(
   iiIds: Map<string, number>,
   ik3Ids: Map<string, number>,
   mmiIds: Map<string, number>,
-  siIds: Map<string, number> = new Map(),
+  siIds = new Map<string, number>(),
 ): CharacterIncBlock[] {
   const blocks: CharacterIncBlock[] = [];
   const src = stripComments(content);

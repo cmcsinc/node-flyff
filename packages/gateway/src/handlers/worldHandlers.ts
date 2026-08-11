@@ -1,7 +1,7 @@
-import { PacketReader, PacketWriter, PACKETTYPE, SNAPSHOTTYPE, framePacket, createLogger } from '@flyff/core';
-import type { ClientSession } from '../ClientSession';
+import { PacketWriter, PACKETTYPE, framePacket, createLogger } from '@flyff/core';
 import type { Gateway } from '../Gateway';
 import type { World } from '../world/World';
+import type { PacketHandlerMap } from '../types';
 import type { CharacterRepository } from '@flyff/database';
 import type { Mover } from '../world/Mover';
 
@@ -15,9 +15,9 @@ export function createWorldHandlers(
   getGateway: GatewayGetter,
   world: World,
   characterRepo: CharacterRepository,
-): Record<number, (session: ClientSession, reader: PacketReader) => Promise<void>> {
+): PacketHandlerMap {
   return {
-    [PACKETTYPE.PRE_JOIN]: async (session, reader) => {
+    [PACKETTYPE.PRE_JOIN]: (session): void => {
       if (!session.accountId) return;
       logger.info({ accountId: session.accountId }, 'Pre-join request');
 
@@ -28,7 +28,7 @@ export function createWorldHandlers(
       getGateway().sendToSession(session, writer);
     },
 
-    [PACKETTYPE.JOIN]: async (session, reader) => {
+    [PACKETTYPE.JOIN]: async (session): Promise<void> => {
       if (!session.accountId) return;
       const moverId = world.allocateMoverId();
       session.moverId = moverId;
@@ -89,7 +89,7 @@ export function createWorldHandlers(
       logger.info({ moverId, name: mover.name }, 'Player joined world');
     },
 
-    [PACKETTYPE.PLAYERMOVED]: async (session, reader) => {
+    [PACKETTYPE.PLAYERMOVED]: (session, reader): void => {
       if (!session.moverId) return;
       const x = reader.readFloat();
       const y = reader.readFloat();
@@ -99,9 +99,9 @@ export function createWorldHandlers(
       world.updatePosition(session.moverId, { x, y, z }, angle);
     },
 
-    [PACKETTYPE.MOVERDESTPOS]: async (session, reader) => {
+    [PACKETTYPE.MOVERDESTPOS]: (session, reader): void => {
       if (!session.moverId) return;
-      const objId = reader.readDword();
+      reader.readDword(); // objId -- destination is self-relative, the id is unused
       const x = reader.readFloat();
       const y = reader.readFloat();
       const z = reader.readFloat();
@@ -109,7 +109,7 @@ export function createWorldHandlers(
       world.updateDestination(session.moverId, { x, y, z });
     },
 
-    [PACKETTYPE.PLAYERANGLE]: async (session, reader) => {
+    [PACKETTYPE.PLAYERANGLE]: (session, reader): void => {
       if (!session.moverId) return;
       const angle = reader.readFloat();
 
@@ -119,7 +119,7 @@ export function createWorldHandlers(
       }
     },
 
-    [PACKETTYPE.CHAT]: async (session, reader) => {
+    [PACKETTYPE.CHAT]: (session, reader): void => {
       if (!session.moverId) return;
       const chatType = reader.readByte();
       const message = reader.readString();
@@ -140,7 +140,6 @@ export function createWorldHandlers(
       const nearby = world.getMoversInRadius(mover.pos, 5000);
       for (const other of nearby) {
         if (other.id === session.moverId) continue;
-        const pos = other.pos;
         const otherSession = Array.from(getGateway().getSessions()).find((s) => s.moverId === other.id);
         if (otherSession && otherSession.ws.readyState === 1) {
           otherSession.ws.send(framed);
@@ -149,13 +148,13 @@ export function createWorldHandlers(
       session.ws.send(framed);
     },
 
-    [PACKETTYPE.PING]: async (session, reader) => {
+    [PACKETTYPE.PING]: (session): void => {
       const writer = new PacketWriter();
       writer.writeDword(PACKETTYPE.PING);
       getGateway().sendToSession(session, writer);
     },
 
-    [PACKETTYPE.LEAVE]: async (session, reader) => {
+    [PACKETTYPE.LEAVE]: async (session): Promise<void> => {
       if (!session.moverId) return;
       const mover = world.removePlayer(session.moverId);
       if (mover && session.characterId) {

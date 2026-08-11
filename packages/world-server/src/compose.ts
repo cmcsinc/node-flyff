@@ -9,7 +9,7 @@ import { SetPosSerializer } from './net/snapshot/setPos.serializer';
 import { ModifyModeSerializer } from './net/snapshot/modifyMode.serializer';
 import { loadAllResources, type ResourceIndex, type ItemDefinition, type MoverDefinition } from '@flyff/resources';
 import type { SetItemDef } from '@flyff/resources/loaders/setItem.loader';
-import type { CPlayer, CMover } from '@flyff/entities';
+import type { CPlayer, CMover, InventorySlot, Vec3 } from '@flyff/entities';
 import { AUTH, hasAuthority } from '@flyff/entities';
 import { PlayerManager } from '@flyff/world-core';
 import { ZoneManager } from '@flyff/world-core';
@@ -740,7 +740,7 @@ export async function compose(): Promise<WorldComposeResult> {
     sendDefinedText: (player, tid, args): void =>
       { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, args ?? '')); },
     inventory: {
-      getSlot: (p: CPlayer, slot: number) =>
+      getSlot: (p: CPlayer, slot: number): InventorySlot | null =>
         slot >= 0 && slot < MAX_INVENTORY ? (p.m_Inventory[slot] ?? null) : null,
       removeItem: (p: CPlayer, slot: number, count: number): boolean =>
         inventoryService.removeItem(p, slot, count).ok,
@@ -828,7 +828,7 @@ export async function compose(): Promise<WorldComposeResult> {
       // `GetNearRevivalPos` (`guild.cpp:1000`) collapsed to the zone's single
       // revival point, matching RevivalService's own note: the nearest-point
       // tables are unported.
-      revivalPos: (player) => resources.zones.byNumericId.get(player.m_nZoneId)?.revival.position,
+      revivalPos: (player): Vec3 | undefined => resources.zones.byNumericId.get(player.m_nZoneId)?.revival.position,
     },
     isQuestEnabled: (): boolean => config.world.guildQuestEnabled,
   });
@@ -972,7 +972,7 @@ export async function compose(): Promise<WorldComposeResult> {
     resources, itemManager,
     // A thunk, not a value: a GM changing the rate at runtime (or a future
     // hot-reload of world config) takes effect on the next kill, no restart.
-    rates: () => ({ dropRate: config.world.dropRate, goldRate: config.world.goldRate }),
+    rates: (): { dropRate: number; goldRate: number } => ({ dropRate: config.world.dropRate, goldRate: config.world.goldRate }),
     needsItem: (killer, itemId): boolean => questTracker.needsItem(killer, itemId),
   });
   // Duel manager + service -- created before CombatService so the PvP-kill seam
@@ -1000,7 +1000,7 @@ export async function compose(): Promise<WorldComposeResult> {
     // Party exp-share seam -- delegates to PartyService.distributeExp, which
     // splits the kill exp among nearby party members (proximity + level gate).
     // Returns null when the killer has no party -> combat runs its solo grant.
-    partyExp: (killer, mover, baseExp) => partyService.distributeExp(killer, mover, baseExp),
+    partyExp: (killer, mover, baseExp): number | null => partyService.distributeExp(killer, mover, baseExp),
     // Pools co-party attackers' recorded damage into one share before the split.
     sameParty,
     // Campus reward + graduation on level-up (CCampusHelper::SetLevelUpReward).
@@ -1116,7 +1116,7 @@ export async function compose(): Promise<WorldComposeResult> {
     getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     potionCooldownMs: config.consumable.potionCooldownMs,
     playerManager, zoneManager,
-    togglePet: (player, itemObjid, linkKind) => petSystem.toggle(player, itemObjid, linkKind),
+    togglePet: (player, itemObjid, linkKind): boolean => petSystem.toggle(player, itemObjid, linkKind),
     blinkwingService,
   });
   // Channel-completion poll -- fires the teleport when `m_nReadyTime` elapses
@@ -1138,7 +1138,7 @@ export async function compose(): Promise<WorldComposeResult> {
   const enchantService = new EnchantService({
     inventoryRepo, journal,
     getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
-    consume: (player, slot, count) => inventoryService.consume(player, slot, count),
+    consume: (player, slot, count): { count: number } | null => inventoryService.consume(player, slot, count),
   });
   const enchantHandler = new EnchantHandler({ playerManager, enchantService });
 
@@ -1309,7 +1309,7 @@ export async function compose(): Promise<WorldComposeResult> {
     refreshVisibility: (player): void => { visibilityService.refresh(player.m_idPlayer, true); },
     mailHandler,
     // Only `kickAll` uses this -- single kicks let the socket-close hook flush.
-    saveAndLeave: (charId) => joinService.disconnectByCharId(charId),
+    saveAndLeave: (charId): Promise<void> => joinService.disconnectByCharId(charId),
     // Mirrors the dispatcher's onDisconnect hook (index.ts). `saveAndLeave`
     // removes the player from PlayerManager, so the hook that fires on the
     // deferred socket close can no longer resolve them -- without this, a drain

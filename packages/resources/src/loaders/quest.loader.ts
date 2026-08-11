@@ -68,7 +68,7 @@ export async function loadQuests(dataDir: string): Promise<QuestIndex> {
   const dir = resolve(dataDir, 'quests');
   logger.info({ dir }, 'Loading quests...');
 
-  const indexFile = parse(await readFile(resolve(dir, '_index.yml'), 'utf-8'));
+  const indexFile: unknown = parse(await readFile(resolve(dir, '_index.yml'), 'utf-8'));
   const indexRow = QuestIndexSchema.parse(indexFile);
 
   // Build id->title lookup from _index.yml so individual YAMLs that lack a

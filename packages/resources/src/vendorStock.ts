@@ -70,8 +70,8 @@ export function resolveVendorStock(
   // with nulls so every tab is exactly MAX_VENDOR_INVENTORY wide.
   const tabs: (VendorSlot | null)[][] = Array.from({ length: VENDOR_TABS }, () => []);
   const place = (tab: number, itemId: number): void => {
-    if (tab < 0 || tab >= tabs.length) return;
-    const row = tabs[tab]!;
+    const row = tabs[tab];
+    if (row === undefined) return;
     if (row.length >= VENDOR_TAB_SLOTS) return;
     const count = Math.max(1, items.items.get(itemId)?.stack_size ?? 1);
     row.push({ itemId, count });

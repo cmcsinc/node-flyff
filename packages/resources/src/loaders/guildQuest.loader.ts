@@ -76,7 +76,7 @@ function stripComments(content: string): string {
   let out = '';
   let inStr = false;
   for (let i = 0; i < content.length; i++) {
-    const c = content[i];
+    const c = content.charAt(i);
     if (inStr) {
       out += c;
       if (c === '"') inStr = false;

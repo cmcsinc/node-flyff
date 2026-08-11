@@ -1,7 +1,7 @@
-import { PacketReader, PacketWriter, PACKETTYPE, createLogger } from '@flyff/core';
+import { PacketWriter, PACKETTYPE, createLogger } from '@flyff/core';
 import { verifyPassword } from '@flyff/core/utils/password';
-import type { ClientSession } from '../ClientSession';
 import type { Gateway } from '../Gateway';
+import type { PacketHandlerMap } from '../types';
 import type { CharacterRepository, AccountRepository } from '@flyff/database';
 import crypto from 'node:crypto';
 
@@ -24,9 +24,9 @@ export function createAuthHandlers(
   getGateway: GatewayGetter,
   accountRepo: AccountRepository,
   characterRepo: CharacterRepository,
-): Record<number, (session: ClientSession, reader: PacketReader) => Promise<void>> {
+): PacketHandlerMap {
   return {
-    [PACKETTYPE.CERTIFY]: async (session, reader) => {
+    [PACKETTYPE.CERTIFY]: async (session, reader): Promise<void> => {
       const version = reader.readDword();
       const username = reader.readString();
       const password = reader.readString();
@@ -87,7 +87,7 @@ export function createAuthHandlers(
       logger.info({ accountId: account.id, username }, 'Certify successful');
     },
 
-    [PACKETTYPE.GETPLAYERLIST]: async (session, reader) => {
+    [PACKETTYPE.GETPLAYERLIST]: async (session, reader): Promise<void> => {
       if (!session.accountId) return;
 
       const account = reader.readString();
@@ -103,12 +103,12 @@ export function createAuthHandlers(
         writer.writeDword(ch.slot);
         writer.writeString(ch.name);
         writer.writeDword(ch.level);
-        writer.writeDword(ch.class ?? 0);
-        writer.writeByte(ch.gender ?? 0);
-        writer.writeByte(ch.hair_style ?? 1);
-        writer.writeByte(ch.hair_color ?? 1);
-        writer.writeByte(ch.face_style ?? 1);
-        writer.writeByte(ch.skin_color ?? 1);
+        writer.writeDword(ch.class);
+        writer.writeByte(ch.gender);
+        writer.writeByte(ch.hair_style);
+        writer.writeByte(ch.hair_color);
+        writer.writeByte(ch.face_style);
+        writer.writeByte(ch.skin_color);
         writer.writeDword(ch.hp);
         writer.writeDword(ch.max_hp);
         writer.writeDword(ch.mp);
@@ -123,7 +123,7 @@ export function createAuthHandlers(
       logger.info({ accountId: session.accountId, count: chars.length }, 'Player list sent');
     },
 
-    [PACKETTYPE.CREATE_PLAYER]: async (session, reader) => {
+    [PACKETTYPE.CREATE_PLAYER]: async (session, reader): Promise<void> => {
       if (!session.accountId) return;
 
       const name = reader.readString();
@@ -201,10 +201,12 @@ export function createAuthHandlers(
       getGateway().sendToSession(session, writer);
     },
 
-    [PACKETTYPE.DELETE_PLAYER]: async (session, reader) => {
+    [PACKETTYPE.DELETE_PLAYER]: async (session, reader): Promise<void> => {
       if (!session.accountId) return;
       const slot = reader.readDword();
-      const password = reader.readString();
+      // Password field is consumed to keep the reader aligned. It is NOT
+      // verified here -- deletion is currently ungated (pre-existing gap).
+      reader.readString();
 
       logger.info({ accountId: session.accountId, slot }, 'Delete character');
       const char = await characterRepo.findByAccountAndSlot(session.accountId, slot);

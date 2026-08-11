@@ -70,14 +70,17 @@ export function findStatements(lines: readonly string[], name: string): IncState
   const re = new RegExp(`(?:^|[^A-Za-z0-9_])${escapeRe(name)}(?![A-Za-z0-9_])`);
   const out: IncStatement[] = [];
   for (let i = 0; i < lines.length; i++) {
-    const first = lines[i]!;
+    const first = lines[i];
+    if (first === undefined) continue;
     if (!re.test(stripComment(first))) continue;
 
     let depth = 0;
     let sawOpen = false;
     let j = i;
     for (; j < lines.length; j++) {
-      const bare = stripComment(lines[j]!);
+      const raw = lines[j];
+      if (raw === undefined) break;
+      const bare = stripComment(raw);
       for (const c of bare) {
         if (c === '(') { depth++; sawOpen = true; }
         else if (c === ')') depth--;
@@ -124,7 +127,9 @@ export function replaceStatements(
 
   // Remove back-to-front so earlier indices stay valid.
   for (let k = found.length - 1; k >= 0; k--) {
-    lines.splice(found[k]!.start, found[k]!.count);
+    const stmt = found[k];
+    if (stmt === undefined) continue;
+    lines.splice(stmt.start, stmt.count);
   }
   if (replacements.length === 0) return;
   lines.splice(pos, 0, ...replacements.map((r) => indent + r.trimStart()));
@@ -141,7 +146,7 @@ export function settingEnd(lines: readonly string[]): number {
   let depth = 0;
   let sawOpen = false;
   for (; i < lines.length; i++) {
-    for (const c of stripComment(lines[i]!)) {
+    for (const c of stripComment(lines[i] ?? '')) {
       if (c === '{') { depth++; sawOpen = true; }
       else if (c === '}') depth--;
     }

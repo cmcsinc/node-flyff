@@ -92,7 +92,7 @@ export interface ResourceIndex {
  * @returns Complete resource index
  */
 export async function loadAllResources(
-  dataDir: string = './resources/data',
+  dataDir = './resources/data',
   rawDir: string = resolve(dataDir, '..', 'raw'),
 ): Promise<ResourceIndex> {
   logger.info({ dataDir, rawDir }, 'Loading all resources...');
@@ -150,7 +150,7 @@ let cachedResources: ResourceIndex | null = null;
  * @returns Resource index (cached)
  */
 export async function getResources(
-  dataDir: string = './resources/data'
+  dataDir = './resources/data'
 ): Promise<ResourceIndex> {
   if (!cachedResources) {
     cachedResources = await loadAllResources(dataDir);
@@ -175,7 +175,7 @@ export function clearResourceCache(): void {
  * @returns Freshly loaded resource index
  */
 export async function reloadResources(
-  dataDir: string = './resources/data'
+  dataDir = './resources/data'
 ): Promise<ResourceIndex> {
   logger.info('Reloading resources...');
   clearResourceCache();

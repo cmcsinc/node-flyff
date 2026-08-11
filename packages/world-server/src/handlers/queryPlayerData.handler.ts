@@ -26,7 +26,7 @@ const logger = createLogger({ module: 'query-player-data-handler' });
 export class QueryPlayerDataHandler {
   constructor(private queryPlayerDataService: QueryPlayerDataService) {}
 
-  async handleQueryPlayerData(socket: ClientSocket, reader: PacketReader): Promise<void> {
+  handleQueryPlayerData(socket: ClientSocket, reader: PacketReader): void {
     let idPlayer: number;
     let nVer: number;
     let charId: number;

@@ -17,6 +17,7 @@
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf dist",
+    "lint": "eslint src",
     "test": "tsx --test test/**/*.test.ts",
     "typecheck": "tsc --noEmit",
     "convert": "tsx scripts/convert.ts",

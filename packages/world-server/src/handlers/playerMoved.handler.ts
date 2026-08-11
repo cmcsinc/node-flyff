@@ -80,7 +80,7 @@ export function readMovementFrame(reader: PacketReader): MovementFrame {
   return { v, vd, f, dwState, dwStateFlag, dwMotion, nMotionEx, nLoop, dwMotionOption, nTickCount };
 }
 
-function readVec3(reader: PacketReader) {
+function readVec3(reader: PacketReader): { x: number; y: number; z: number } {
   const x = reader.readFloat();
   const y = reader.readFloat();
   const z = reader.readFloat();

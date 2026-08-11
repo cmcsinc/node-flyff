@@ -57,6 +57,20 @@ export function createResourceLogger(scope: string): pino.Logger {
 
 const LEVEL_COLORS = 'trace:gray,debug:blue,info:green,warn:yellow,error:red,fatal:magentaBright';
 
+/** SGR codes for the dim `[scope]` tag (colorette's `gray`, inlined). */
+const GRAY_ON = '\u001b[90m';
+const GRAY_OFF = '\u001b[39m';
+
+/**
+ * Gray-wraps the `[scope]` tag. Inlined instead of pino-pretty's
+ * `extras.colors` (colorette) because this package does not depend on
+ * colorette, so its types are unresolved here. `shouldPretty()` already returns
+ * false when `NO_COLOR` is set, so the codes never reach a no-color stream.
+ */
+function gray(text: string): string {
+  return `${GRAY_ON}${text}${GRAY_OFF}`;
+}
+
 function prettyStream(): ReturnType<typeof pretty> {
   return pretty({
     colorize: true,
@@ -64,11 +78,15 @@ function prettyStream(): ReturnType<typeof pretty> {
     translateTime: 'HH:MM:ss.l',
     ignore: 'pid,hostname',
     customColors: LEVEL_COLORS,
-    messageFormat(log, messageKey, _levelLabel, extras) {
-      const msg = String(log[messageKey] ?? '');
-      const tag = log['scope'] ?? log['name'];
-      if (tag === undefined || tag === '') return msg;
-      return `${extras.colors.gray(`[${String(tag)}]`)} ${msg}`;
+    messageFormat(log, messageKey) {
+      const rawMessage = log[messageKey];
+      const msg = typeof rawMessage === 'string' ? rawMessage : '';
+      const rawTag = log['scope'] ?? log['name'];
+      const tag = typeof rawTag === 'string' || typeof rawTag === 'number'
+        ? String(rawTag)
+        : '';
+      if (tag === '') return msg;
+      return `${gray(`[${tag}]`)} ${msg}`;
     },
   });
 }

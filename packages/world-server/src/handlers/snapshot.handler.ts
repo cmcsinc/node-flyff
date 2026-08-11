@@ -87,7 +87,7 @@ export class SnapshotHandler {
 }
 
 /** Read a Vec3 (3 LE floats) -- matches C++ `ar >> D3DXVECTOR3`. */
-function readVec3(reader: PacketReader) {
+function readVec3(reader: PacketReader): { x: number; y: number; z: number } {
   const x = reader.readFloat();
   const y = reader.readFloat();
   const z = reader.readFloat();

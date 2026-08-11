@@ -148,7 +148,7 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   const { server, dispatcher } = createClientServer(dd);
   dispatcher.register(PACKETTYPE.JOIN, (s, r) => deps.joinHandler.handleJoin(s, r));
   dispatcher.register(PACKETTYPE.MAP_KEY, (s, r) => { deps.mapKeyHandler.handleMapKey(s, r); });
-  dispatcher.register(PACKETTYPE.QUERY_PLAYER_DATA, (s, r) => deps.queryPlayerDataHandler.handleQueryPlayerData(s, r));
+  dispatcher.register(PACKETTYPE.QUERY_PLAYER_DATA, (s, r) => { deps.queryPlayerDataHandler.handleQueryPlayerData(s, r); });
   dispatcher.register(PACKETTYPE.SNAPSHOT, (s, r) => { deps.snapshotHandler.handleSnapshot(s, r); });
   dispatcher.register(PACKETTYPE.PLAYERMOVED, (s, r) => { deps.playerMovedHandler.handlePlayerMoved(s, r); });
   dispatcher.register(PACKETTYPE.PLAYERBEHAVIOR, (s, r) => { deps.playerBehaviorHandler.handlePlayerBehavior(s, r); });

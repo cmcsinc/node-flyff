@@ -5,15 +5,67 @@ import { createWorldHandlers } from './handlers/worldHandlers';
 import { createLogger } from '@flyff/core';
 import type { PacketHandlerMap } from './types';
 import { AccountRepository, CharacterRepository } from '@flyff/database';
-import crypto from 'node:crypto';
+import knexFactory from 'knex';
 import { existsSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 
 const logger = createLogger({ module: 'main' });
 
-async function ensureSchema(db: any): Promise<void> {
+/**
+ * Minimal structural view of the knex surface this entry point uses.
+ *
+ * `knex`'s ESM type entry (`types/index.d.mts`) exports only
+ * `Omit<typeof cjs, 'default' | 'knex'>` -- it is neither callable nor does it
+ * re-export the `Knex` namespace, so under `moduleResolution: Bundler` every
+ * `db.*` access degrades to `any`/`error`. Declaring the slice we need locally
+ * (same approach as `login-server/src/seed.ts`) keeps the call sites typed.
+ */
+interface ColumnBuilder {
+  primary(): ColumnBuilder;
+  notNullable(): ColumnBuilder;
+  nullable(): ColumnBuilder;
+  unique(): ColumnBuilder;
+  unsigned(): ColumnBuilder;
+  defaultTo(value: string | number | boolean): ColumnBuilder;
+  references(column: string): ColumnBuilder;
+  inTable(table: string): ColumnBuilder;
+  onDelete(action: string): ColumnBuilder;
+}
+
+interface TableBuilder {
+  increments(name: string): ColumnBuilder;
+  string(name: string, length?: number): ColumnBuilder;
+  integer(name: string): ColumnBuilder;
+  bigInteger(name: string): ColumnBuilder;
+  float(name: string): ColumnBuilder;
+  boolean(name: string): ColumnBuilder;
+  timestamp(name: string): ColumnBuilder;
+  timestamps(useTimestamps: boolean, defaultToNow: boolean): void;
+  unique(columns: readonly string[]): void;
+}
+
+interface SchemaBuilder {
+  hasTable(name: string): Promise<boolean>;
+  createTable(name: string, build: (t: TableBuilder) => void): Promise<void>;
+}
+
+interface Db {
+  readonly schema: SchemaBuilder;
+  destroy(): Promise<void>;
+}
+
+type DbFactory = (config: Record<string, unknown>) => Db;
+
+function requireDbFactory(value: unknown): DbFactory {
+  if (typeof value !== 'function') {
+    throw new TypeError('knex default export is not callable');
+  }
+  return value as DbFactory;
+}
+
+async function ensureSchema(db: Db): Promise<void> {
   if (!(await db.schema.hasTable('accounts'))) {
-    await db.schema.createTable('accounts', (t: any) => {
+    await db.schema.createTable('accounts', (t) => {
       t.increments('id').primary();
       t.string('username', 32).notNullable().unique();
       t.string('password_hash', 255).notNullable();
@@ -27,7 +79,7 @@ async function ensureSchema(db: any): Promise<void> {
   }
 
   if (!(await db.schema.hasTable('characters'))) {
-    await db.schema.createTable('characters', (t: any) => {
+    await db.schema.createTable('characters', (t) => {
       t.increments('id').primary();
       t.integer('account_id').unsigned().notNullable()
         .references('id').inTable('accounts').onDelete('CASCADE');
@@ -70,10 +122,7 @@ async function main(): Promise<void> {
     mkdirSync(dataDir, { recursive: true });
   }
 
-  const { default: knexModule } = await import('knex');
-  const knex = (knexModule as any).default || knexModule;
-
-  const db = knex({
+  const db = requireDbFactory(knexFactory)({
     client: 'better-sqlite3',
     connection: { filename: dbPath },
     useNullAsDefault: true,
@@ -89,7 +138,11 @@ async function main(): Promise<void> {
   world.start();
 
   const ctx: { gateway: Gateway | null } = { gateway: null };
-  const getGateway = () => ctx.gateway!;
+  const getGateway = (): Gateway => {
+    const { gateway } = ctx;
+    if (gateway === null) throw new Error('Gateway accessed before initialization');
+    return gateway;
+  };
 
   const handlers: PacketHandlerMap = {
     ...createAuthHandlers(getGateway, accountRepo, characterRepo),
@@ -105,23 +158,24 @@ async function main(): Promise<void> {
   // exec tsx src/seed.ts`) -- the gateway shares that DB and never mints its own.
   logger.info({ port }, 'Gateway ready -- connect via WebSocket');
 
-  process.on('SIGINT', async () => {
-    logger.info('Shutting down...');
+  const shutdown = async (): Promise<void> => {
     world.stop();
     await gateway.stop();
     await db.destroy();
     process.exit(0);
+  };
+
+  process.on('SIGINT', () => {
+    logger.info('Shutting down...');
+    void shutdown();
   });
 
-  process.on('SIGTERM', async () => {
-    world.stop();
-    await gateway.stop();
-    await db.destroy();
-    process.exit(0);
+  process.on('SIGTERM', () => {
+    void shutdown();
   });
 }
 
-main().catch((err) => {
-  logger.error({ err: err.message, stack: err.stack }, 'Fatal error');
+main().catch((err: unknown) => {
+  logger.error({ err }, 'Fatal error');
   process.exit(1);
 });
