@@ -50,7 +50,10 @@ function mkDialogs(strings: string[] = [], prefix = 'mafl_test'): DialogIndex {
 }
 
 function mkQuests(defs: QuestDef[]): QuestIndex {
-  return { byId: new Map(defs.map((d) => [d.id, d])), drops: new Map() } as unknown as QuestIndex;
+  return {
+    byId: new Map(defs.map((d) => [d.id, d])), drops: new Map(),
+    byNpc: { begin: new Map(), end: new Map() },
+  } as unknown as QuestIndex;
 }
 
 /** SetEndCondDialog quest command for the sweep. */

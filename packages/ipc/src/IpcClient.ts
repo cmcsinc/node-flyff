@@ -186,7 +186,8 @@ export class IpcClient {
     data: unknown,
     timeoutMs = 5000
   ): Promise<T> {
-    if (this.socket === null) {
+    const socket = this.socket;
+    if (socket === null) {
       throw new Error('Not connected -- call connect() first');
     }
 
@@ -237,7 +238,6 @@ export class IpcClient {
         reject(new Error('Socket error during request'));
       };
 
-      const socket = this.socket;
       const cleanup = (): void => {
         clearTimeout(timeout);
         socket.off('data', dataHandler);

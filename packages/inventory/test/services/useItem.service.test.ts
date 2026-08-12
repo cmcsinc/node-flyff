@@ -105,7 +105,7 @@ describe('UseItemService.use', () => {
     const player = CPlayer.fromRow(makeRow(), { write: () => true });
     player.m_Inventory[1] = { itemId: 7100, count: 1 };
     const table = new Map<number, ItemDefinition>([
-      [7100, { id: 7100, name: 'Buff', name_id: 'ITEM_B', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_BUFF' }],
+      [7100, { id: 7100, name: 'Buff', name_id: 'ITEM_B', stack_size: 1, weight: 1, level_req: 1, price: 0, sell_price: 0, item_kind2: 'IK2_BUFF', effects: [] }],
     ]);
     const { svc, consumeCalled } = makeSvc({ getItem: (id) => table.get(id) });
 

@@ -223,18 +223,15 @@ export class PartyHandler {
     }
   }
 
-  private resolve(socket: ClientSocket): CPlayerLike | null {
+  private resolve(socket: ClientSocket): ResolvedPlayer | null {
     if (socket.session.state !== SessionState.IN_WORLD) { socket.destroy(); return null; }
     const id = socket.session.charId;
     if (id === undefined) { socket.destroy(); return null; }
     const player = this.deps.playerManager.get(id);
     if (!player) { socket.destroy(); return null; }
-    return player as CPlayerLike;
+    return player;
   }
 }
 
-/** Structural surface this handler reads off a CPlayer (avoids the import cycle). */
-interface CPlayerLike {
-  readonly m_idPlayer: number;
-  readonly m_szName: string;
-}
+/** The live player object as PlayerManager hands it out (NonNullable of `get`). */
+type ResolvedPlayer = NonNullable<ReturnType<PlayerManager['get']>>;

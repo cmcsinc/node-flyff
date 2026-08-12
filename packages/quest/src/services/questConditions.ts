@@ -210,7 +210,7 @@ function evalBegin(
   }
   if (beginSetItems > 0 && inv.emptySlots() < beginSetItems)
     return { ok: false, reason: 'inventory_space' };
-  if (nextLevel) return { ok: nextLevelMet };
+  if (nextLevel) return nextLevelMet ? { ok: true } : { ok: false, reason: 'level' };
   return { ok: true };
 }
 

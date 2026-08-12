@@ -13,26 +13,6 @@ interface LoginEvents {
   [event: string]: unknown[];
 }
 
-interface Database {
-  (...args: readonly unknown[]): unknown;
-  readonly schema: object;
-  destroy(): Promise<void>;
-}
-
-function isDatabase(value: unknown): value is Database {
-  return typeof value === 'function'
-    && 'schema' in value
-    && typeof value.schema === 'object'
-    && value.schema !== null
-    && 'destroy' in value
-    && typeof value.destroy === 'function';
-}
-
-function requireDatabase(value: unknown): Database {
-  if (isDatabase(value)) return value;
-  throw new TypeError('createDb returned an invalid database instance');
-}
-
 /**
  * Login server composition result.
  *
@@ -68,7 +48,9 @@ export async function compose(): Promise<LoginComposeResult> {
     client: config.database.client,
     connection: config.database.client === 'better-sqlite3'
       ? config.database.filename
-      : config.database.url ?? {
+      // `url` is `.default('')` in the schema, so it is a string -- empty means
+      // "not configured", hence the truthiness check rather than `??`.
+      : config.database.url || {
           host: 'localhost',
           port: 3306,
           user: 'root',
@@ -76,7 +58,7 @@ export async function compose(): Promise<LoginComposeResult> {
           database: 'flyff',
         },
   };
-  const db = requireDatabase(createDb(dbConfig));
+  const db = createDb(dbConfig);
   const accountRepo = new AccountRepository(db);
 
   // Initialize cluster registry

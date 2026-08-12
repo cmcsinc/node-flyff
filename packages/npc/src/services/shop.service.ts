@@ -23,12 +23,12 @@ import { MAX_INVENTORY, MAX_VENDOR_INVENTORY, MAX_VENDOR_INVENTORY_TAB } from '@
 
 /** propItem fields the shop needs to price an item. */
 interface ShopItemDef {
-  readonly price?: number;
-  readonly sellable?: boolean;
+  readonly price?: number | undefined;
+  readonly sellable?: boolean | undefined;
   /** Raw IK3_* symbol (e.g. `IK3_EVENTMAIN`, `IK3_QUEST`). */
-  readonly item_kind3?: string;
+  readonly item_kind3?: string | undefined;
   /** Raw IK2_* symbol (e.g. `IK2_QUEST`). */
-  readonly item_kind2?: string;
+  readonly item_kind2?: string | undefined;
 }
 
 export type ShopOpenResult =

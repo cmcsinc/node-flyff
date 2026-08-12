@@ -23,6 +23,8 @@ function makeRow(over: Partial<CharacterRow> = {}): CharacterRow {
     level: 1, exp: 0n, hp: 200, mp: 100, max_hp: 200, max_mp: 100,
     strength: 15, stamina: 15, dexterity: 15, intelligence: 15,
     x: 0, y: 0, z: 0, world_id: 'flaris', zone_id: 1,
+    remain_gp: 0, skill_point: 0, skill_level: 0,
+    pk_propensity: 0, pk_value: 0, pk_time: 0, pk_exp: 0,
     created_at: new Date(), updated_at: new Date(),
     ...over,
   };

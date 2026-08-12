@@ -40,7 +40,7 @@ function RequirementRow({
       {req.count !== undefined && (
         <span className="text-muted-foreground">
           {req.kind === 'kill'
-            ? `${String(String(killProgress)(item, req))} / ${String(req.count)}`
+            ? `${String(killProgress(item, req))} / ${String(req.count)}`
             : `×${String(req.count)}`}
         </span>
       )}

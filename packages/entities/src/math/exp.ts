@@ -46,7 +46,7 @@ export function expPartyReduceFactor(monsterLevel: number, maxPartyLevel: number
   const delta = maxPartyLevel - monsterLevel;
   if (delta <= 0) return 1.0;
   const factors = [0.8, 0.8, 0.6, 0.35, 0.2, 0.12, 0.08, 0.04, 0.02, 0.01];
-  return factors[Math.min(delta, 9)];
+  return factors[Math.min(delta, 9)] ?? 0.01;
 }
 
 /**

@@ -59,7 +59,7 @@ export class FriendRepository {
 
   /** Roster size for the `MAX_FRIEND` gate. */
   async count(characterId: number): Promise<number> {
-    const row: { n: number } | undefined = await this.db('friends')
+    const row = await this.db('friends')
       .where({ character_id: characterId })
       .count({ n: '*' })
       .first();

@@ -129,12 +129,13 @@ export class InventoryService {
         return { ok: false, reason: 'bag_full' };
       }
       const place = Math.min(remaining, stackSize);
-      const placed: InventorySlot = { objid: player.clientObjId(slot), itemId, count: place };
+      const objid = player.clientObjId(slot);
+      const placed: InventorySlot = { objid, itemId, count: place };
       this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot, itemId, count: place } });
       player.m_Inventory[slot] = placed;
       this.persist(player, slot, placed);
       remaining -= place;
-      changes.push({ slot, objid: placed.objid, itemId, count: place, isNew: true });
+      changes.push({ slot, objid, itemId, count: place, isNew: true });
     }
 
     player._dirty.add('m_Inventory');
@@ -205,7 +206,7 @@ export class InventoryService {
     // replayed safely (re-applying a swap undoes it) and had no replayer at all.
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: src, itemId: b?.itemId ?? 0, count: b?.count ?? 0 } });
     this.deps.journal?.append({ charId: player.m_idPlayer, type: 'INVENTORY_SLOT', payload: { slot: dst, itemId: a.itemId, count: a.count } });
-    player.m_Inventory[src] = b;
+    player.m_Inventory[src] = b ?? null;
     player.m_Inventory[dst] = a;
     // Mirror CItemContainer::Swap2 -- m_apIndex entries travel with the items, so
     // future CREATEITEM objids stay aligned with the client's grid after swaps.

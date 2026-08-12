@@ -143,7 +143,9 @@ export type SkillCastOutcome =
         | 'invalid_target'
         | 'target_dead'
         | 'target_not_attackable'
-        | 'too_far';
+        | 'too_far'
+        // forwarded verbatim from CombatService.resolveSkill
+        | 'pvp_not_enabled';
     };
 
 export type LearnOutcome =

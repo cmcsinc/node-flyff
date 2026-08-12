@@ -92,37 +92,9 @@ const SALT = 'kikugalanet';
 const ACCOUNT = 'test';
 const PASSWORD = 'test';
 
-interface DatabaseSchema {
-  hasColumn(table: string, column: string): Promise<boolean>;
-  hasTable(table: string): Promise<boolean>;
-}
-
-interface Database {
-  (...args: readonly unknown[]): unknown;
-  readonly schema: DatabaseSchema;
-  destroy(): Promise<void>;
-}
-
-function isDatabase(value: unknown): value is Database {
-  if (typeof value !== 'function' || !('schema' in value) || !('destroy' in value)) return false;
-  const { schema, destroy } = value;
-  return typeof schema === 'object'
-    && schema !== null
-    && 'hasColumn' in schema
-    && typeof schema.hasColumn === 'function'
-    && 'hasTable' in schema
-    && typeof schema.hasTable === 'function'
-    && typeof destroy === 'function';
-}
-
-function requireDatabase(value: unknown): Database {
-  if (isDatabase(value)) return value;
-  throw new TypeError('createDb returned an invalid database instance');
-}
-
 async function main(): Promise<void> {
   if (DB_FILENAME !== ':memory:') mkdirSync(dirname(DB_FILENAME), { recursive: true });
-  const db = requireDatabase(createDb({ client: 'better-sqlite3', connection: DB_FILENAME }));
+  const db = createDb({ client: 'better-sqlite3', connection: DB_FILENAME });
   try {
     for (const m of MIGRATIONS) {
       const done = 'dropColumn' in m

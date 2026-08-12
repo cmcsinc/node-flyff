@@ -145,7 +145,10 @@ export class BuffManager {
       }
     }
     this.params.applyEffects(effects);
-    this.buffs.set(skillId, { skillId, level, type: BUFF_SKILL, expiresAtMs: nowMs + durationMs, effects, dot });
+    this.buffs.set(skillId, {
+      skillId, level, type: BUFF_SKILL, expiresAtMs: nowMs + durationMs, effects,
+      ...(dot !== undefined ? { dot } : {}),
+    });
     return existing !== undefined ? 'replaced' : 'added';
   }
 

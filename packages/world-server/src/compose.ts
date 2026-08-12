@@ -287,30 +287,6 @@ export interface WorldComposeResult {
   petSystem: PetSystem;
 }
 
-// createDb's declared return type (`ReturnType<typeof knex>`) does not resolve
-// under strict TS (TS2344 in database/src/db.ts), so the call site would be
-// `any`-typed and trip no-unsafe-assignment. Narrow via a runtime guard,
-// matching the pattern in login-server/cluster-server.
-interface Database {
-  (...args: readonly unknown[]): unknown;
-  readonly schema: object;
-  destroy(): Promise<void>;
-}
-
-function isDatabase(value: unknown): value is Database {
-  return typeof value === 'function'
-    && 'schema' in value
-    && typeof value.schema === 'object'
-    && value.schema !== null
-    && 'destroy' in value
-    && typeof value.destroy === 'function';
-}
-
-function requireDatabase(value: unknown): Database {
-  if (isDatabase(value)) return value;
-  throw new TypeError('createDb returned an invalid database instance');
-}
-
 export async function compose(): Promise<WorldComposeResult> {
   const config = await loadConfig('world-server', WorldServerConfigSchema);
   const logger = createLogger({ service: 'world-server', serverId: config.server.id });
@@ -349,7 +325,9 @@ export async function compose(): Promise<WorldComposeResult> {
     client: config.database.client,
     connection: config.database.client === 'better-sqlite3'
       ? config.database.filename
-      : config.database.url ?? {
+      // `url` is `.default('')` in the schema, so it is a string -- empty means
+      // "not configured", hence the truthiness check rather than `??`.
+      : config.database.url || {
           host: 'localhost',
           port: 3306,
           user: 'root',
@@ -357,7 +335,7 @@ export async function compose(): Promise<WorldComposeResult> {
           database: 'flyff',
         },
   };
-  const db = requireDatabase(createDb(dbConfig));
+  const db = createDb(dbConfig);
   const charRepo = new CharacterRepository(db);
   const accountRepo = new AccountRepository(db);
   const questRepo = new QuestRepository(db);
@@ -421,7 +399,7 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager, zoneManager, spawnManager,
     buildAddMovers: (movers): Buffer => npcSnapshotSerializer.build(movers),
     buildAddPeers: (players): Buffer => peerSnapshotSerializer.build(players),
-    buildRemove: (objids: number[]): Buffer => peerSnapshotSerializer.buildRemove(objids),
+    buildRemove: (objids: readonly number[]): Buffer => peerSnapshotSerializer.buildRemove([...objids]),
   });
   visibilitySlot.svc = visibilityService;
   spawnManager.bootstrap();
@@ -455,8 +433,9 @@ export async function compose(): Promise<WorldComposeResult> {
     inventoryRepo, journal,
     getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     sendTo: (player, buf): void => { playerManager.sendTo(player, buf); },
-    broadcastAround: (player, buf): void =>
-      zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
+    broadcastAround: (player, buf): void => {
+      zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf);
+    },
   });
 
   // Item-acquire chat-line notifier (SNAPSHOTTYPE_TEXT). v19 C++ sends no
@@ -812,9 +791,9 @@ export async function compose(): Promise<WorldComposeResult> {
     playerManager, guildManager,
     processor: guildQuestProcessor,
     spawn: {
-      spawnMonster: (moverId, pos, zoneId, activeAttack): CMover =>
+      spawnMonster: (moverId, pos, zoneId, activeAttack): CMover | undefined =>
         spawnManager.spawnMonster(moverId, pos, zoneId, activeAttack),
-      kill: (id, opts): void => { spawnManager.kill(id, opts); },
+      kill: (id, opts): boolean => spawnManager.kill(id, opts),
     },
     teleport: {
       // Same-world SETPOS + forced view re-diff -- the arena and every revival
@@ -1017,7 +996,7 @@ export async function compose(): Promise<WorldComposeResult> {
     onWarDeath: (victim): void => { guildWarService.onWarDeath(victim); },
     // Guild-quest arena: a monster death may be the boss. Cheap when no arena is
     // live (an empty Map scan).
-    onGuildQuestBossKilled: (bossObjid): void => { guildQuestService.onBossKilled(bossObjid); },
+    onGuildQuestBossKilled: (bossObjid): boolean => guildQuestService.onBossKilled(bossObjid),
   });
   // Fill the late-bound exp-applier slot so party share routes through the
   // SAME grantExpAmount path as solo kills (one exp-application code path).
@@ -1070,8 +1049,9 @@ export async function compose(): Promise<WorldComposeResult> {
     getItem: (id: number): ItemDefinition | undefined => resources.items.items.get(id),
     getSetItem: (id: number): SetItemDef | undefined => resources.setItems.byItemId.get(id),
     sendTo: (player, buf): void => { playerManager.sendTo(player, buf); },
-    broadcastAround: (player, buf): void =>
-      zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf),
+    broadcastAround: (player, buf): void => {
+      zoneManager.broadcastAround(player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS, buf);
+    },
     flight: flightService,
     isArrowEquipAllowed: (player, prop): boolean => ammoService.isArrowEquipAllowed(player, prop),
   });
@@ -1100,11 +1080,12 @@ export async function compose(): Promise<WorldComposeResult> {
       playerManager.sendTo(player, blinkwingSetPosSerializer.build(player.m_idPlayer, pos));
       visibilityService.refresh(player.m_idPlayer, true);
     },
-    broadcastStateMode: (player, flag, itemId): void =>
+    broadcastStateMode: (player, flag, itemId): void => {
       zoneManager.broadcastAround(
         player.m_vPos, player.m_nZoneId, VISIBILITY_RADIUS,
         buildStateMode(player.m_idPlayer, player.m_dwStateMode, flag, itemId),
-      ),
+      );
+    },
     notify: (player, tid): void => { playerManager.sendTo(player, buildDefinedText(player.m_idPlayer, tid, '')); },
     // `prj.IsGuildQuestRegion` -- refuses the Return scroll inside an arena rect
     // (`MoverSkill.cpp:2842`). The only one of the C++'s eight suppression sites
@@ -1256,7 +1237,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // Taskbar -- hotkey shortcut bind/clear. Write-through persists the grid to
   // `characters.taskbar` on every add/remove; hydrate happens in JoinService.
   const taskbarService = new TaskBarService(
-    (charId, json): Promise<number> => charRepo.update(charId, { taskbar: json }),
+    async (charId, json): Promise<void> => { await charRepo.update(charId, { taskbar: json }); },
   );
   const taskbarHandler = new TaskBarHandler({ playerManager, taskbarService });
   const endSkillQueueHandler = new EndSkillQueueHandler(playerManager);
@@ -1295,8 +1276,9 @@ export async function compose(): Promise<WorldComposeResult> {
   const mailHandler = new MailHandler({
     playerManager,
     mailService,
-    onModeChanged: (player, mode): void =>
-      playerManager.broadcastAll(modifyModeSerializer.build(player.m_idPlayer, mode)),
+    onModeChanged: (player, mode): void => {
+      playerManager.broadcastAll(modifyModeSerializer.build(player.m_idPlayer, mode));
+    },
   });
 
   // Admin-panel commands over `admin:command` (HMAC-signed via IpcBus). The

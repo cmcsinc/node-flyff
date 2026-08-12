@@ -392,10 +392,10 @@ export class InventoryRepository {
   async countItems(characterId: number): Promise<number> {
     const result = await this.db('inventory_item')
       .where({ character_id: characterId })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
 
-    return (result?.count as number) || 0;
+    return Number(result?.count ?? 0);
   }
 
   /**
@@ -408,9 +408,9 @@ export class InventoryRepository {
   async slotOccupied(characterId: number, slot: number): Promise<boolean> {
     const result = await this.db('inventory_item')
       .where({ character_id: characterId, slot })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
 
-    return (result?.count as number) > 0;
+    return Number(result?.count ?? 0) > 0;
   }
 }

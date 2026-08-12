@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import * as assert from 'node:assert/strict';
-import { parseLogLine, passesLevel, type LogLevel } from '../lib/log-line';
+import { parseLogLine, passesLevel, type LogLevel, type ParsedLine } from '../lib/log-line';
 
 describe('parseLogLine', () => {
   it('parses a pino-pretty line with module and JSON context', () => {

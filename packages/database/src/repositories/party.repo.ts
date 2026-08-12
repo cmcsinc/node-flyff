@@ -84,7 +84,7 @@ export class PartyRepository {
 
   /** Highest party id in use, or 0 when there are none (id-counter seed). */
   async maxId(): Promise<number> {
-    const row: { m: number | null } | undefined = await this.db('parties')
+    const row = await this.db('parties')
       .max({ m: 'id' })
       .first();
     return Number(row?.m ?? 0);

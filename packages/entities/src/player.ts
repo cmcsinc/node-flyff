@@ -781,9 +781,9 @@ export class CPlayer {
 
   /** MOVEITEM pure swap: mirror `CItemContainer::Swap` -- swap both slots' objids. */
   onInvSlotsSwapped(a: number, b: number): void {
-    const tmp = this.m_invIndex[a];
-    this.m_invIndex[a] = this.m_invIndex[b];
-    this.m_invIndex[b] = tmp ?? b;
+    const tmp = this.m_invIndex[a] ?? a;
+    this.m_invIndex[a] = this.m_invIndex[b] ?? b;
+    this.m_invIndex[b] = tmp;
   }
 
   /**

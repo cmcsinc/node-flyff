@@ -325,7 +325,10 @@ export class CombatService {
     const killed = mover.m_nHitPoint <= 0;
     if (killed) this.onDeath(player, mover);
     else this.triggerRage(mover, player);
-    return { ok: true, hit: eff.hit, damage: dealt, killed, effectProc: eff.effectProc };
+    return {
+      ok: true, hit: eff.hit, damage: dealt, killed,
+      ...(eff.effectProc !== undefined ? { effectProc: eff.effectProc } : {}),
+    };
   }
 
   /**
@@ -349,7 +352,10 @@ export class CombatService {
     this.deps.zoneManager.broadcastAround(target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS, packet);
     const killed = target.m_nHp <= 0 && !target.m_bDead;
     if (killed) this.onPvpKill(player, target);
-    return { ok: true, hit: eff.hit, damage: dealt, killed, effectProc: eff.effectProc };
+    return {
+      ok: true, hit: eff.hit, damage: dealt, killed,
+      ...(eff.effectProc !== undefined ? { effectProc: eff.effectProc } : {}),
+    };
   }
 
   /**

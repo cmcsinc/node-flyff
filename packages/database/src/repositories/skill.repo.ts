@@ -106,9 +106,9 @@ export class SkillRepository {
   async count(characterId: number): Promise<number> {
     const result = await this.db('skills')
       .where({ character_id: characterId })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
-    return (result?.count as number) || 0;
+    return Number(result?.count ?? 0);
   }
 
   /**

@@ -165,7 +165,7 @@ export class GuildRepository {
 
   /** Highest guild id in use, or 0 when there are none (id-counter seed). */
   async maxId(): Promise<number> {
-    const row: { m: number | null } | undefined = await this.db('guild')
+    const row = await this.db('guild')
       .max({ m: 'id' })
       .first();
     return Number(row?.m ?? 0);

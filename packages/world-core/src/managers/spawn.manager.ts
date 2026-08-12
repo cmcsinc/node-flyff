@@ -155,7 +155,10 @@ export class SpawnManager {
         // AI system's own gate is `m_bAttackable`. ponytail: the record's `dwAI`
         // / `dwAI2` (initial FSM state) are not read, so the 14 MaEw guardian
         // placements stored as `STATE_STAND` wander instead of standing.
-        const belli = npcSpawn.belligerence;
+        // The per-placement value wins when the .dyo carries one (offset 192);
+        // otherwise inherit the prop's own belligerence. `def.belligerence` is
+        // `.default(0)` in the schema, so no further fallback is needed.
+        const belli = npcSpawn.belligerence ?? def.belligerence;
         const peaceful = belli === BELLI_PEACEFUL;
         // Resolve the character.inc block by the placement's character_key when
         // present -- multiple NPCs can share one mover model (e.g. Boboku /

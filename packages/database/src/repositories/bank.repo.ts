@@ -37,11 +37,13 @@ const MAX_BANK_TABS = 3;
  * (migration 011). Returned name is from a fixed map -- never derived from
  * caller input -- so it is safe to interpolate into a Knex column reference.
  */
-function goldColumn(tab: number): string {
+type GoldColumn = 'gold' | 'gold_tab1' | 'gold_tab2';
+
+function goldColumn(tab: number): GoldColumn {
   if (!Number.isInteger(tab) || tab < 0 || tab >= MAX_BANK_TABS) {
     throw new Error(`bank tab out of range: ${String(tab)}`);
   }
-  return tab === 0 ? 'gold' : `gold_tab${String(tab)}`;
+  return tab === 0 ? 'gold' : tab === 1 ? 'gold_tab1' : 'gold_tab2';
 }
 
 /**

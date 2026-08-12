@@ -434,7 +434,9 @@ export class ScriptDlgService {
   private emitQuestOffer(
     player: CPlayer, npc: CMover, frames: Buffer[], dialogMenuEmitted: boolean,
   ): void {
-    const lk = npcLookupKey(npc);
+    // '' stands in for "no lookup key": the guard below still rejects it for a
+    // non-quest-office NPC, and no quest map is keyed by the empty string.
+    const lk = npcLookupKey(npc) ?? '';
     const isQuestOffice = npc.m_nStructure === SRT_QUESTOFFICE;
     if (!lk && !isQuestOffice) return;
     const inv = this.questInv(player);

@@ -4,66 +4,14 @@ import { createAuthHandlers } from './handlers/authHandlers';
 import { createWorldHandlers } from './handlers/worldHandlers';
 import { createLogger } from '@flyff/core';
 import type { PacketHandlerMap } from './types';
-import { AccountRepository, CharacterRepository } from '@flyff/database';
-import knexFactory from 'knex';
+import { AccountRepository, CharacterRepository, createDb } from '@flyff/database';
+import type { Knex } from 'knex';
 import { existsSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 
 const logger = createLogger({ module: 'main' });
 
-/**
- * Minimal structural view of the knex surface this entry point uses.
- *
- * `knex`'s ESM type entry (`types/index.d.mts`) exports only
- * `Omit<typeof cjs, 'default' | 'knex'>` -- it is neither callable nor does it
- * re-export the `Knex` namespace, so under `moduleResolution: Bundler` every
- * `db.*` access degrades to `any`/`error`. Declaring the slice we need locally
- * (same approach as `login-server/src/seed.ts`) keeps the call sites typed.
- */
-interface ColumnBuilder {
-  primary(): ColumnBuilder;
-  notNullable(): ColumnBuilder;
-  nullable(): ColumnBuilder;
-  unique(): ColumnBuilder;
-  unsigned(): ColumnBuilder;
-  defaultTo(value: string | number | boolean): ColumnBuilder;
-  references(column: string): ColumnBuilder;
-  inTable(table: string): ColumnBuilder;
-  onDelete(action: string): ColumnBuilder;
-}
-
-interface TableBuilder {
-  increments(name: string): ColumnBuilder;
-  string(name: string, length?: number): ColumnBuilder;
-  integer(name: string): ColumnBuilder;
-  bigInteger(name: string): ColumnBuilder;
-  float(name: string): ColumnBuilder;
-  boolean(name: string): ColumnBuilder;
-  timestamp(name: string): ColumnBuilder;
-  timestamps(useTimestamps: boolean, defaultToNow: boolean): void;
-  unique(columns: readonly string[]): void;
-}
-
-interface SchemaBuilder {
-  hasTable(name: string): Promise<boolean>;
-  createTable(name: string, build: (t: TableBuilder) => void): Promise<void>;
-}
-
-interface Db {
-  readonly schema: SchemaBuilder;
-  destroy(): Promise<void>;
-}
-
-type DbFactory = (config: Record<string, unknown>) => Db;
-
-function requireDbFactory(value: unknown): DbFactory {
-  if (typeof value !== 'function') {
-    throw new TypeError('knex default export is not callable');
-  }
-  return value as DbFactory;
-}
-
-async function ensureSchema(db: Db): Promise<void> {
+async function ensureSchema(db: Knex): Promise<void> {
   if (!(await db.schema.hasTable('accounts'))) {
     await db.schema.createTable('accounts', (t) => {
       t.increments('id').primary();
@@ -122,12 +70,7 @@ async function main(): Promise<void> {
     mkdirSync(dataDir, { recursive: true });
   }
 
-  const db = requireDbFactory(knexFactory)({
-    client: 'better-sqlite3',
-    connection: { filename: dbPath },
-    useNullAsDefault: true,
-    pool: { min: 1, max: 1 },
-  });
+  const db = createDb({ client: 'better-sqlite3', connection: dbPath });
 
   await ensureSchema(db);
 

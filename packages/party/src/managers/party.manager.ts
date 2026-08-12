@@ -305,9 +305,10 @@ export class PartyManager {
     if (!p) return undefined;
     const idx = p.members.indexOf(targetId);
     if (idx <= 0) return undefined;
-    const tmp = p.members[0];
-    p.members[0] = p.members[idx];
-    p.members[idx] = tmp;
+    const [oldLeader, newLeader] = [p.members[0], p.members[idx]];
+    if (oldLeader === undefined || newLeader === undefined) return undefined;
+    p.members[0] = newLeader;
+    p.members[idx] = oldLeader;
     this.persistMembers(p);
     return p;
   }

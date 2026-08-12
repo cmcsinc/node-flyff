@@ -45,6 +45,16 @@ import {
 import { createLogger } from '@flyff/core/logger';
 import type { Party } from '../managers/party.manager';
 
+/**
+ * Leader id of a party -- roster order is leader-first, so `members[0]`.
+ * `noUncheckedIndexedAccess` types that as possibly-undefined; a party always
+ * has at least one member (the manager disbands at zero), so NULL_ID stands in
+ * for the impossible empty roster and every `playerManager.get` on it misses.
+ */
+function leaderIdOf(party: Party): number {
+  return party.members[0] ?? NULL_ID;
+}
+
 const logger = createLogger({ module: 'party-service' });
 
 /** Shared-EXP proximity gate -- members within 64m of the dead mover share. */
@@ -189,7 +199,7 @@ export class PartyService {
     const wasTargetLeader = party.members[0] === targetId;
     // Names must be captured BEFORE the removal -- once the target is spliced
     // out, members[0] is a different player.
-    const leaderName = this.deps.playerManager.get(party.members[0])?.m_szName ?? '';
+    const leaderName = this.deps.playerManager.get(leaderIdOf(party))?.m_szName ?? '';
     const targetName = target?.m_szName ?? '';
     const res = this.deps.partyManager.removeMember(party.id, targetId);
     if (target) target.m_idParty = NULL_ID;
@@ -206,7 +216,7 @@ export class PartyService {
     }
     if (wasTargetLeader) {
       // Leader left -> members[0] is already the auto-promoted new leader.
-      const newLeaderId = res.party.members[0];
+      const newLeaderId = leaderIdOf(res.party);
       this.broadcastAddPartyChangeLeader(res.party, newLeaderId);
     }
     this.broadcastRosterOnly(res.party, targetId, targetName);
@@ -387,7 +397,7 @@ export class PartyService {
       return false;
     }
     player.m_idParty = party.id;
-    const leaderName = this.deps.playerManager.get(party.members[0])?.m_szName ?? '';
+    const leaderName = this.deps.playerManager.get(leaderIdOf(party))?.m_szName ?? '';
     // Full roster to the returning member. `affectedPlayerId` is themself, the
     // C++ `idMember` argument, and the size is unchanged so the client prints no
     // join/leave line -- it just rebuilds `g_Party`.
@@ -591,21 +601,23 @@ export class PartyService {
 
   /** The `m_nTroupeShareItem` switch (`MoverActEvent.cpp:2432-2477`). */
   private selectReceiver(party: Party, candidates: CPlayer[], finder: CPlayer): CPlayer {
+    const first = candidates[0];
+    if (!first) return finder;
     switch (party.itemMode) {
       case PARTY_ITEM_MODE_SEQUENTIAL: {
         const id = this.deps.partyManager.nextSequentialLooter(
           party.id, candidates.map((p) => p.m_idPlayer),
         );
         const next = id !== undefined ? this.deps.playerManager.get(id) : undefined;
-        return next ?? candidates[0];
+        return next ?? first;
       }
       case PARTY_ITEM_MODE_LEADER:
         // C++ checks `IsLeader(pListMember[0])` -- i.e. the leader takes it only
         // when the leader is IN RANGE (they are candidates[0] when present,
         // roster order being leader-first); otherwise the finder keeps it.
-        return party.members[0] === candidates[0].m_idPlayer ? candidates[0] : finder;
+        return leaderIdOf(party) === first.m_idPlayer ? first : finder;
       case PARTY_ITEM_MODE_RANDOM:
-        return candidates[Math.floor(this.random() * candidates.length)];
+        return candidates[Math.floor(this.random() * candidates.length)] ?? first;
       default:
         return finder; // 0 = finder keeps ("free order" in C++ comments)
     }
@@ -634,7 +646,8 @@ export class PartyService {
     if (share > 0) for (const p of candidates) out.push({ player: p, amount: share });
     if (rest > 0) {
       const luckyIdx = Math.floor(this.random() * candidates.length);
-      const lucky = candidates[luckyIdx];
+      const lucky = candidates[luckyIdx] ?? candidates[0];
+      if (!lucky) return out.length > 0 ? out : null;
       const existing = out.find((e) => e.player.m_idPlayer === lucky.m_idPlayer);
       if (existing) existing.amount += rest;
       else out.push({ player: lucky, amount: rest });
@@ -690,7 +703,7 @@ export class PartyService {
    * the `pszMember` string, and only when `nOldSize > nSizeofMember`.
    */
   private broadcastRosterOnly(party: Party, affectedId: number, affectedName: string): void {
-    const leader = this.deps.playerManager.get(party.members[0]);
+    const leader = this.deps.playerManager.get(leaderIdOf(party));
     if (!leader) return;
     for (const id of party.members) {
       const p = this.deps.playerManager.get(id);

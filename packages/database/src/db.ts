@@ -1,6 +1,8 @@
 import knex from 'knex';
 import { z } from 'zod';
 
+import type { Knex } from './types';
+
 /**
  * Zod schema for database configuration.
  * Supports better-sqlite3, PostgreSQL, and MySQL/MariaDB.
@@ -31,7 +33,7 @@ export type DbConfig = z.infer<typeof DbConfigSchema>;
  * @param config - Validated database configuration
  * @returns Configured Knex instance
  */
-export function createDb(config: DbConfig): ReturnType<typeof knex> {
+export function createDb(config: DbConfig): Knex {
   const validated = DbConfigSchema.parse(config);
 
   return knex({

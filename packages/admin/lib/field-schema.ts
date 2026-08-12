@@ -169,7 +169,7 @@ function plain(values: readonly string[]): EnumOption[] {
 }
 
 /** Built once on first use — the DST table alone is ~180 entries. */
-const REGISTRY_BUILDERS: Record<string, () => EnumOption[]> = {
+const REGISTRY_BUILDERS: Partial<Record<string, () => EnumOption[]>> = {
   dst: () => fromNumericNames(DST_NAMES),
   parts: () => fromNumericNames(PARTS_NAMES),
   job: () => fromNumericNames(JOB_NAMES),
@@ -191,6 +191,7 @@ export function getOptions(name: string | undefined): EnumOption[] | null {
   const hit = registryCache.get(name);
   if (hit) return hit;
   const build = REGISTRY_BUILDERS[name];
+  if (!build) return null;
   const built = build();
   registryCache.set(name, built);
   return built;

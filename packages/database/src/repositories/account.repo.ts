@@ -110,6 +110,7 @@ export class AccountRepository {
       })
       .returning('id');
 
+    if (row === undefined) throw new Error('INSERT ... RETURNING id yielded no row');
     return row.id;
   }
 
@@ -186,10 +187,10 @@ export class AccountRepository {
   async usernameExists(username: string): Promise<boolean> {
     const count = await this.db('accounts')
       .where({ username })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
 
-    return (count?.count as number) > 0;
+    return Number(count?.count ?? 0) > 0;
   }
 
   /**
@@ -201,9 +202,9 @@ export class AccountRepository {
   async emailExists(email: string): Promise<boolean> {
     const count = await this.db('accounts')
       .where({ email })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
 
-    return (count?.count as number) > 0;
+    return Number(count?.count ?? 0) > 0;
   }
 }

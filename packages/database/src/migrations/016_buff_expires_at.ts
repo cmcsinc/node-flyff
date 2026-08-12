@@ -33,9 +33,13 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
-  await db.schema.alterTable('character_buffs', (table) => {
-    table.integer('total_ms').unsigned().notNullable().defaultTo(0);
-  });
+  // `018.down` re-adds `total_ms` first when rolling all the way back, so only
+  // add it if it is actually missing.
+  if (!(await db.schema.hasColumn('character_buffs', 'total_ms'))) {
+    await db.schema.alterTable('character_buffs', (table) => {
+      table.integer('total_ms').unsigned().notNullable().defaultTo(0);
+    });
+  }
   await db.schema.alterTable('character_buffs', (table) => {
     table.dropColumn('expires_at_ms');
   });

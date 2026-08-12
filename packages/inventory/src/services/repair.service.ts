@@ -45,7 +45,7 @@ export type RepairResult =
 export interface RepairServiceDeps {
   inventoryRepo: InventoryRepository;
   journal: Journal;
-  getItem: (id: number) => { durability?: number } | undefined;
+  getItem: (id: number) => { durability?: number | undefined } | undefined;
   /** Debit gold; returns false if the player cannot afford it. WAL + persist
    * wired by InventoryService.spendGold. */
   spendGold: (player: CPlayer, amount: number) => boolean;
@@ -66,7 +66,7 @@ export class RepairService {
       const nRepair = 100 - Math.floor((s.durability * 100) / max);
       if (nRepair <= 0) continue;
       const cost = nRepair * (Math.floor(max / 1000) + 1) * REPAIR_COST_PER_PERCENT;
-      plan.push({ slot, max, cost, objid: s.objid });
+      plan.push({ slot, max, cost, objid: s.objid ?? player.clientObjId(slot) });
       total += cost;
     }
     if (plan.length === 0) return { ok: false, reason: 'empty' };

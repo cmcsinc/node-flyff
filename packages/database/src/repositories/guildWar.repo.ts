@@ -77,7 +77,7 @@ export class GuildWarRepository {
 
   /** Highest war id in use, or 0 when there are none (id-counter seed). */
   async maxId(): Promise<number> {
-    const row: { m: number | null } | undefined = await this.db('guild_war')
+    const row = await this.db('guild_war')
       .max({ m: 'id' })
       .first();
     return Number(row?.m ?? 0);

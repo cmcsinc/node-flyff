@@ -128,7 +128,7 @@ export class CampusRepository {
 
   /** Remaining member count, for the "fewer than 2 left" dissolve rule. */
   async memberCount(campusId: number): Promise<number> {
-    const row: { n: number } | undefined = await this.db('campus_member')
+    const row = await this.db('campus_member')
       .where({ campus_id: campusId })
       .count({ n: '*' })
       .first();

@@ -58,7 +58,7 @@ export interface NpcRow {
         zoneName,
         id,
         moverId: Number(npc.mover_id ?? 0),
-        characterKey: String(npc.character_key()),
+        characterKey: typeof npc.character_key === 'string' ? npc.character_key : '',
         x: Number(pos.x ?? 0),
         y: Number(pos.y ?? 0),
         z: Number(pos.z ?? 0),

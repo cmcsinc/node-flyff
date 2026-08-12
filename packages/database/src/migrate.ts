@@ -23,8 +23,11 @@ export async function runMigrations(db: Knex): Promise<void> {
  * @param step - Number of batches to roll back (default: 1)
  * @throws If rollback fails
  */
-export async function rollbackMigrations(db: Knex, step?: number): Promise<void> {
-  await db.migrate.rollback(undefined, step);
+export async function rollbackMigrations(db: Knex, step = 1): Promise<void> {
+  // knex.migrate.rollback(config, all) has no step param -- one batch per call.
+  for (let i = 0; i < step; i++) {
+    await db.migrate.rollback(undefined, false);
+  }
 }
 
 /**

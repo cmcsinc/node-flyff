@@ -224,7 +224,7 @@ export class JoinService {
    */
   private applyEquipDstParams(player: CPlayer): void {
     if (!this.deps.getItem) return;
-    const seeded: { dst: number; adj: number; chg?: number }[] = [];
+    const seeded: { dst: number; adj: number; chg?: number | undefined }[] = [];
     for (let part = 0; part < MAX_HUMAN_PARTS; part++) {
       const slot = player.m_Inventory[MAX_INVENTORY + part];
       if (!slot) continue;

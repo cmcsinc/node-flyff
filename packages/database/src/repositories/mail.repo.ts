@@ -107,6 +107,7 @@ export class MailRepository {
       })
       .returning('id');
 
+    if (row === undefined) throw new Error('INSERT ... RETURNING id yielded no row');
     return row.id;
   }
 

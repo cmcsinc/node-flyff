@@ -293,23 +293,28 @@ void describe('client-auth-file — real v19 Flyff.a', () => {
     // below. Comparing against the live file measures the wrong pair.
     const original = await readFile(join(CLIENT, 'Flyff.a.bak')).catch(() => null);
     if (!original) return; // client tree absent, or never patched
+    const shipped = parseAuthFile(original);
 
-    // `dataSub1.res.bak` is the pre-patch archive the shipped manifest describes.
-    const sources: [string, string][] = [
-      ['data.res', 'data.res'],
-      ['dataSub1.res', 'dataSub1.res.bak'],
-      ['dataSub2.res', 'dataSub2.res'],
-    ];
+    // Which of `<archive>` / `<archive>.bak` the shipped manifest describes is
+    // per-archive: each patch rotates only the archives it touched plus
+    // `Flyff.a`, so on a tree patched more than once the backup manifest matches
+    // a MIX of live and backup archives. Hash both candidates per archive and
+    // keep, per member, whichever digest the manifest actually names.
+    // ponytail: a member whose digest matches neither candidate is reported as
+    // the live one, which is what makes the assertion below fail loudly.
     const hashes = new Map<string, string>();
-    for (const [, file] of sources) {
-      const buf = await readFile(join(CLIENT, file)).catch(() => null);
-      if (!buf) return; // a pre-patch archive is missing; nothing to compare against
-      const archive = parseResArchive(buf);
-      for (const entry of archive.entries) {
-        hashes.set(
-          createHash('md5').update(entry.name.toLowerCase()).digest('hex'),
-          createHash('md5').update(readResMember(archive, entry.name)).digest('hex'),
-        );
+    for (const name of ['data.res', 'dataSub1.res', 'dataSub2.res']) {
+      const live = await readFile(join(CLIENT, name)).catch(() => null);
+      if (!live) return; // client tree absent
+      const bak = await readFile(join(CLIENT, `${name}.bak`)).catch(() => null);
+      for (const buf of bak ? [bak, live] : [live]) {
+        const archive = parseResArchive(buf);
+        for (const entry of archive.entries) {
+          const key = createHash('md5').update(entry.name.toLowerCase()).digest('hex');
+          const digest = createHash('md5').update(readResMember(archive, entry.name)).digest('hex');
+          // First candidate wins unless the manifest names the other one.
+          if (!hashes.has(key) || shipped.get(key) === digest) hashes.set(key, digest);
+        }
       }
     }
 

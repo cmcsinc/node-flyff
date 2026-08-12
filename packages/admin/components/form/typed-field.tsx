@@ -875,11 +875,11 @@ export function TypedField({
       <SearchableSelect
         id={id}
         value={scalarText(value)}
-        options={options}
+        options={options ?? []}
         // The option list's values decide the type, not the current value: an
         // unset field is `undefined` and would otherwise be typed as a string.
         onChange={(v) => {
-          onChange(kind === 'int' || numericOptions(options) ? Number(v) : v);
+          onChange(kind === 'int' || numericOptions(options ?? []) ? Number(v) : v);
         }}
         placeholder={`Select ${meta.label.toLowerCase()}…`}
       />

@@ -205,7 +205,7 @@
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\actionSlot.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\skills\\test\\services\\skill.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\consumable.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\entities\\test\\player.test.ts": "fail",
+  "H:\\flyff\\node-flyff\\packages\\entities\\test\\player.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\setItem.loader.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\net\\snapshot\\createItem.serializer.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\entities\\test\\mover.test.ts": "pass",
@@ -278,5 +278,6 @@
   "H:\\flyff\\node-flyff\\packages\\database\\test\\repositories\\guildQuest.repo.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\guildQuest.loader.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\guild\\test\\services\\guildQuest.service.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\ammo.service.test.ts": "pass"
+  "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\ammo.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\ipc\\test\\circuit.test.ts": "fail"
 }

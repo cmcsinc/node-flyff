@@ -77,6 +77,12 @@ export interface CharacterRow {
    * Added by migration 013.
    */
   pk_exp: number;
+  /** Messenger visibility state (C++ `m_dwMode` messenger bits); migration 019. */
+  messenger_state?: number;
+  /** `CMover::m_nCampusPoint` -- signed campus currency; migration 020. */
+  campus_point?: number;
+  /** `CMover::m_dwTickCampus` -- campus recovery cursor (0 = not started); migration 020. */
+  campus_tick_ms?: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -88,8 +94,19 @@ export interface CharacterRow {
  */
 export type CharacterCreateData = Omit<
   CharacterRow,
-  'id' | 'created_at' | 'updated_at' | 'skill_point' | 'skill_level' | 'remain_gp'
-> & { skill_point?: number; skill_level?: number; remain_gp?: number };
+  | 'id' | 'created_at' | 'updated_at'
+  | 'skill_point' | 'skill_level' | 'remain_gp'
+  | 'pk_propensity' | 'pk_value' | 'pk_time' | 'pk_exp'
+> & {
+  skill_point?: number;
+  skill_level?: number;
+  remain_gp?: number;
+  /** PK columns all default to 0 at the DB layer (migration 013). */
+  pk_propensity?: number;
+  pk_value?: number;
+  pk_time?: number;
+  pk_exp?: number;
+};
 
 /**
  * Character update data (all fields optional).
@@ -199,6 +216,7 @@ export class CharacterRepository {
       })
       .returning('id');
 
+    if (row === undefined) throw new Error('INSERT ... RETURNING id yielded no row');
     return row.id;
   }
 
@@ -385,10 +403,10 @@ export class CharacterRepository {
   async countByAccountId(accountId: number): Promise<number> {
     const result = await this.db('characters')
       .where({ account_id: accountId })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
 
-    return (result?.count as number) || 0;
+    return Number(result?.count ?? 0);
   }
 
   /**
@@ -400,10 +418,10 @@ export class CharacterRepository {
   async nameExists(name: string): Promise<boolean> {
     const result = await this.db('characters')
       .where({ name })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
 
-    return (result?.count as number) > 0;
+    return Number(result?.count ?? 0) > 0;
   }
 
   /**
@@ -416,10 +434,10 @@ export class CharacterRepository {
   async slotOccupied(accountId: number, slot: number): Promise<boolean> {
     const result = await this.db('characters')
       .where({ account_id: accountId, slot })
-      .count('id as count')
+      .count({ count: 'id' })
       .first();
 
-    return (result?.count as number) > 0;
+    return Number(result?.count ?? 0) > 0;
   }
 
   /**

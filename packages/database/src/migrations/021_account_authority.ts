@@ -36,7 +36,12 @@ export async function down(db: Knex): Promise<void> {
     });
   }
   if (await db.schema.hasColumn('accounts', 'authority')) {
-    await db('accounts').where('authority', '>=', AUTH_ADMINISTRATOR).update({ gm: true });
+    // `gm` is the pre-021 column this migration replaced, so it is absent from
+    // the `accounts` row type -- the explicit generic re-types the builder for
+    // the rollback shape.
+    await db<{ gm: boolean; authority: number }>('accounts')
+      .where('authority', '>=', AUTH_ADMINISTRATOR)
+      .update({ gm: true });
     await db.schema.alterTable('accounts', (t) => {
       t.dropColumn('authority');
     });

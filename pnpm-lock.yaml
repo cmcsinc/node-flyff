@@ -70,7 +70,7 @@ importers:
         version: 4.4.0
       drizzle-orm:
         specifier: ^0.36.0
-        version: 0.36.4(@types/better-sqlite3@7.6.13)(@types/pg@8.20.0)(@types/react@19.2.17)(better-sqlite3@12.11.1)(knex@3.2.4(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7))(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(react@19.2.8)(sqlite3@5.1.7)
+        version: 0.36.4(@types/better-sqlite3@7.6.13)(@types/pg@8.20.0)(@types/react@19.2.17)(better-sqlite3@12.11.1)(knex@3.3.0(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7))(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(react@19.2.8)(sqlite3@5.1.7)
       ioredis:
         specifier: ^5.4.1
         version: 5.10.1
@@ -244,8 +244,8 @@ importers:
         specifier: ^12.11.1
         version: 12.11.1
       knex:
-        specifier: ^3.1.0
-        version: 3.2.4(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7)
+        specifier: 3.3.0
+        version: 3.3.0(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7)
       mysql2:
         specifier: ^3.9.7
         version: 3.20.0(@types/node@20.19.37)
@@ -300,8 +300,8 @@ importers:
         specifier: workspace:*
         version: link:../database
       knex:
-        specifier: ^3.1.0
-        version: 3.2.4(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7)
+        specifier: 3.3.0
+        version: 3.3.0(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7)
       sqlite3:
         specifier: ^5.1.7
         version: 5.1.7
@@ -2752,12 +2752,13 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  knex@3.2.4:
-    resolution: {integrity: sha512-aTpal0lRQKH4YVJD032sicM4fsrZxCMq2r+kOjoFtleeX150JIry/C3Sw1/9uwE52ladrbFiO/OxBDNwQKDwEQ==}
+  knex@3.3.0:
+    resolution: {integrity: sha512-LgWl031hNuLv9Lhxdd9093zULa2aNcoP04Bk29e5NidgRcEr/T0rAr2WYi4BhjTiCDoQiRU56meUE5rppLKZzQ==}
     engines: {node: '>=16'}
     hasBin: true
     peerDependencies:
       better-sqlite3: '*'
+      mariadb: '*'
       mysql: '*'
       mysql2: '*'
       pg: '*'
@@ -2767,6 +2768,8 @@ packages:
       tedious: '*'
     peerDependenciesMeta:
       better-sqlite3:
+        optional: true
+      mariadb:
         optional: true
       mysql:
         optional: true
@@ -2885,8 +2888,8 @@ packages:
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
-  lodash@4.17.23:
-    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   long@5.3.2:
     resolution: {integrity: sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==}
@@ -3616,8 +3619,8 @@ packages:
     engines: {node: '>=10'}
     deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
-  tarn@3.0.2:
-    resolution: {integrity: sha512-51LAVKUSZSVfI05vjPESNc5vwqqZpbXCsU+/+wxlOrUjk2SnFTt97v9ZgQrD4YmxYW1Px6w2KjaDitCfkvgxMQ==}
+  tarn@3.1.2:
+    resolution: {integrity: sha512-3RTvqKZcK/17jnJ8rMKFXbyNogywTs1z0gVPPwFsJGX46rkmUHOdIaSQ/aVO1rS7nH+soiXiWk7rvUXxndm8Dg==}
     engines: {node: '>=8.0.0'}
 
   thenify-all@1.6.0:
@@ -4965,13 +4968,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.36.4(@types/better-sqlite3@7.6.13)(@types/pg@8.20.0)(@types/react@19.2.17)(better-sqlite3@12.11.1)(knex@3.2.4(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7))(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(react@19.2.8)(sqlite3@5.1.7):
+  drizzle-orm@0.36.4(@types/better-sqlite3@7.6.13)(@types/pg@8.20.0)(@types/react@19.2.17)(better-sqlite3@12.11.1)(knex@3.3.0(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7))(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(react@19.2.8)(sqlite3@5.1.7):
     optionalDependencies:
       '@types/better-sqlite3': 7.6.13
       '@types/pg': 8.20.0
       '@types/react': 19.2.17
       better-sqlite3: 12.11.1
-      knex: 3.2.4(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7)
+      knex: 3.3.0(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7)
       mysql2: 3.20.0(@types/node@20.19.37)
       pg: 8.20.0
       react: 19.2.8
@@ -5441,7 +5444,7 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  knex@3.2.4(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7):
+  knex@3.3.0(better-sqlite3@12.11.1)(mysql2@3.20.0(@types/node@20.19.37))(pg@8.20.0)(sqlite3@5.1.7):
     dependencies:
       colorette: 2.0.19
       commander: 10.0.1
@@ -5451,11 +5454,11 @@ snapshots:
       get-package-type: 0.1.0
       getopts: 2.3.0
       interpret: 2.2.0
-      lodash: 4.17.23
+      lodash: 4.18.1
       pg-connection-string: 2.6.2
       rechoir: 0.8.0
       resolve-from: 5.0.0
-      tarn: 3.0.2
+      tarn: 3.1.2
       tildify: 2.0.0
     optionalDependencies:
       better-sqlite3: 12.11.1
@@ -5535,7 +5538,7 @@ snapshots:
 
   lodash.merge@4.6.2: {}
 
-  lodash@4.17.23: {}
+  lodash@4.18.1: {}
 
   long@5.3.2: {}
 
@@ -6337,7 +6340,7 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  tarn@3.0.2: {}
+  tarn@3.1.2: {}
 
   thenify-all@1.6.0:
     dependencies:

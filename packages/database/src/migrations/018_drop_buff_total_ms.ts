@@ -28,6 +28,9 @@ export async function up(db: Knex): Promise<void> {
  * @param db - Knex instance
  */
 export async function down(db: Knex): Promise<void> {
+  // `016.down` also re-adds `total_ms`; a full rollback runs both, so this must
+  // be a no-op when the column is already back (mirrors the guard in `up`).
+  if (await db.schema.hasColumn('character_buffs', 'total_ms')) return;
   await db.schema.alterTable('character_buffs', (table) => {
     table.integer('total_ms').unsigned().notNullable().defaultTo(0);
   });

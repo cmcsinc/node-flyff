@@ -19,7 +19,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import type { ZodType } from 'zod';
+import type { output, ZodType } from 'zod';
 import { deepMerge } from './merge';
 
 // ---------------------------------------------------------------------------
@@ -232,11 +232,11 @@ function loadDotenv(repoRoot: string): void {
  * console.log(cfg.world.tickRateMs); // 50
  * ```
  */
-export async function loadConfig<T>(
+export async function loadConfig<S extends ZodType>(
   serverName: string,
-  schema: ZodType<T>,
+  schema: S,
   options: LoadConfigOptions = {},
-): Promise<T> {
+): Promise<output<S>> {
   const configRoot = options.configRoot ?? discoverConfigRoot(process.cwd());
   loadDotenv(path.dirname(configRoot));
   const filePaths = resolveFilePaths(serverName, configRoot);
@@ -281,6 +281,9 @@ export async function loadConfig<T>(
     );
   }
 
+  // `output<S>` resolves to `any` on the unresolved type param (zod's ZodType
+  // defaults Output = any); every real caller passes a concrete schema.
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return result.data;
 }
 
@@ -290,11 +293,11 @@ export async function loadConfig<T>(
  *
  * Prefer {@link loadConfig} (async) whenever possible.
  */
-export function loadConfigSync<T>(
+export function loadConfigSync<S extends ZodType>(
   serverName: string,
-  schema: ZodType<T>,
+  schema: S,
   options: LoadConfigOptions = {},
-): T {
+): output<S> {
   const configRoot = options.configRoot ?? discoverConfigRoot(process.cwd());
   loadDotenv(path.dirname(configRoot));
   const filePaths = resolveFilePaths(serverName, configRoot);
@@ -331,5 +334,8 @@ export function loadConfigSync<T>(
     );
   }
 
+  // `output<S>` resolves to `any` on the unresolved type param (zod's ZodType
+  // defaults Output = any); every real caller passes a concrete schema.
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return result.data;
 }

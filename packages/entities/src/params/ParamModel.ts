@@ -38,8 +38,12 @@ export interface DstEffect {
   dst: number;
   /** Additive adjustment (most item bonuses). */
   adj: number;
-  /** Override value; omit/`CHG_SENTINEL` for "no override". */
-  chg?: number;
+  /**
+   * Override value; omit/`undefined`/`CHG_SENTINEL` for "no override".
+   * Explicit `| undefined` so resource-parsed effects (where `chg` is present
+   * but undefined) satisfy this under `exactOptionalPropertyTypes`.
+   */
+  chg?: number | undefined;
 }
 
 /** ParamView over an empty adjustment table -- `get` always returns `def`. */

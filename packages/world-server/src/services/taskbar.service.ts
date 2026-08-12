@@ -75,22 +75,22 @@ interface TaskBarBlobV2 {
   queue: unknown[];
 }
 
-function isStoredShortcut(e: unknown): e is StoredShortcut {
+/** True when `e` is an object whose every listed key holds a number. */
+function hasNumberKeys(e: unknown, keys: readonly string[]): boolean {
   if (typeof e !== 'object' || e === null) return false;
   const o = e as Record<string, unknown>;
-  return typeof o.i === 'number' && typeof o.j === 'number'
-    && typeof o.dwShortcut === 'number' && typeof o.dwId === 'number'
-    && typeof o.dwType === 'number' && typeof o.dwIndex === 'number'
-    && typeof o.dwUserId === 'number' && typeof o.dwData === 'number';
+  return keys.every((k) => typeof o[k] === 'number');
+}
+
+const QUEUE_KEYS = ['i', 'dwShortcut', 'dwId', 'dwType', 'dwIndex', 'dwUserId', 'dwData'] as const;
+const GRID_KEYS = ['i', 'j', ...QUEUE_KEYS.slice(1)] as const;
+
+function isStoredShortcut(e: unknown): e is StoredShortcut {
+  return hasNumberKeys(e, GRID_KEYS);
 }
 
 function isStoredQueueShortcut(e: unknown): e is StoredQueueShortcut {
-  if (typeof e !== 'object' || e === null) return false;
-  const o = e as Record<string, unknown>;
-  return typeof o.i === 'number' && typeof o.dwShortcut === 'number'
-    && typeof o.dwId === 'number' && typeof o.dwType === 'number'
-    && typeof o.dwIndex === 'number' && typeof o.dwUserId === 'number'
-    && typeof o.dwData === 'number';
+  return hasNumberKeys(e, QUEUE_KEYS);
 }
 
 /**

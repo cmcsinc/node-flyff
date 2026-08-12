@@ -211,7 +211,9 @@ describe('CircuitBreaker', () => {
   });
 
   it('should allow custom reset timeout', async () => {
-    const breaker = new CircuitBreaker({ threshold: 2, resetMs: 50 });
+    // Wide margins: the "not yet elapsed" window has to survive slow CI hosts,
+    // where the two failing calls above can themselves eat tens of ms.
+    const breaker = new CircuitBreaker({ threshold: 2, resetMs: 500 });
 
     // Open the circuit
     try {
@@ -232,7 +234,7 @@ describe('CircuitBreaker', () => {
     assert.strictEqual(breaker.getState(), 'OPEN');
 
     // Wait less than reset timeout
-    await new Promise((resolve) => setTimeout(resolve, 30));
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
     // Should still be OPEN
     try {
@@ -246,7 +248,7 @@ describe('CircuitBreaker', () => {
     assert.strictEqual(breaker.getState(), 'OPEN');
 
     // Wait for reset timeout
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 550));
 
     // Should now transition to HALF_OPEN
     await breaker.call(async () => {

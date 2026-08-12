@@ -51,7 +51,10 @@ export function parseLogLine(line: string): ParsedLine {
     return {
       time: m[1],
       level: LEVELS.has(level) ? (level as LogLevel) : 'plain',
-      module: m[3],
+      // `.at()` (not `m[3]`) because the module group is optional: indexing a
+      // RegExpExecArray types as `string`, which hides the undefined it really
+      // returns when the line carries no `[module]` binding.
+      module: m.at(3) ?? null,
       message,
       detail,
     };

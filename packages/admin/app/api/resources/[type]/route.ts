@@ -87,10 +87,10 @@ export async function PUT(
     !('yaml' in rawBody)
   )
     return NextResponse.json({ error: 'Missing id or yaml' }, { status: 400 });
-  const id = rawBody.id;
-  const yamlContent = rawBody.yaml;
-  if (!id || !yamlContent)
+  const { id, yaml: yamlRaw } = rawBody as { id: unknown; yaml: unknown };
+  if (!id || typeof yamlRaw !== 'string' || yamlRaw === '')
     return NextResponse.json({ error: 'Missing id or yaml' }, { status: 400 });
+  const yamlContent = yamlRaw;
   const idStr = typeof id === 'string' || typeof id === 'number' ? String(id) : null;
   if (!idStr) return NextResponse.json({ error: 'Invalid id' }, { status: 400 });
 
