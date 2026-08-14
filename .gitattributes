@@ -1,0 +1,5 @@
+# `raw/NpcScript.cpp` is a byte-for-byte copy of the client's CRLF-only compile
+# input, and the surgical writer + its tests assert that convention. Without
+# this, Linux checkouts get LF (the index is normalized) and the writer emits
+# LF, so the CRLF invariants fail on CI but pass on Windows.
+packages/resources/raw/NpcScript.cpp text eol=crlf
