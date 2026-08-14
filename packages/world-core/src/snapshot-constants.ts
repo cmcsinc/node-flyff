@@ -266,6 +266,26 @@ export const SNAPSHOTTYPE_REVIVAL = 0x00a1;              // MsgHdr.h:1044 -- scr
 export const SNAPSHOTTYPE_REVIVAL_TO_LODESTAR = 0x00a2;  // MsgHdr.h:1045 -- town (lodestar) revive
 export const SNAPSHOTTYPE_REVIVAL_TO_LODELIGHT = 0x00a3; // MsgHdr.h:1046 -- lodelight (unused -- C++ stub)
 
+// --- Other-player resurrection S->C snapshots (a DIFFERENT family from the
+// 0x00a1-0x00a3 REVIVAL block above -- those are the dead player's OWN revive
+// choices; these two drive the "another player cast Resurrection on you" flow).
+/**
+ * `SNAPSHOTTYPE_RESURRECTION_MESSAGE` (MsgHdr.h:929) --
+ * `CUserMng::AddResurrectionMessage` (called from `ApplySkillHardCoding`,
+ * _Common/Ctrl.cpp:817). Bodyless, **self-only** (the dead player). Opens the
+ * modal `CWndResurrectionConfirm` (_Interface/WndField.cpp:14840) whose OK/Cancel
+ * buttons send `RESURRECTION_OK` / `RESURRECTION_CANCEL`. No timer -- the offer
+ * lives until answered.
+ */
+export const SNAPSHOTTYPE_RESURRECTION_MESSAGE = 0x0027;
+/**
+ * `SNAPSHOTTYPE_RESURRECTION` (MsgHdr.h:1152) -- `g_UserMng.AddHdr(pUser,
+ * SNAPSHOTTYPE_RESURRECTION)` on accept (DPSrvr.cpp:6903). Bodyless, broadcast to
+ * vicinity so peers clear the corpse state. HP is NOT carried here -- the client
+ * learns it from the follow-up SETPOINTPARAM.
+ */
+export const SNAPSHOTTYPE_RESURRECTION = 0x00eb;
+
 // --- Ground-item S->C snapshot sub-types (`_Network/MsgHdr.h`) -----------------
 // OT_ITEM=4 is the CObj type for ground `CItem` (CreateObj.cpp:618). DEL_OBJ
 // (MsgHdr.h:1128) is bodyless: `User::AddRemoveObj(objid)` -> `AddHdr(objid, DEL_OBJ)`.

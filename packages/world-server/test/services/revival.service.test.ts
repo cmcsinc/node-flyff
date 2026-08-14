@@ -186,3 +186,114 @@ describe('RevivalService', () => {
     assert.deepEqual(svc.revive(p, 'LODELIGHT'), { ok: false, reason: 'lodelight_unsupported' });
   });
 });
+
+/**
+ * Other-player Resurrection answer path (`OnResurrectionOK` /
+ * `OnResurrectionCancel`, DPSrvr.cpp:6877/6868). Skill 45 L1 rows mirror
+ * `resources/data/skills/assist.yml`: referStats INT, referValues 15,
+ * adjParamVals [50,100], destParams [DST_HP, DST_RECOVERY_EXP].
+ */
+describe('RevivalService (other-player resurrection)', () => {
+  const SKILL_ID = 45;
+  const levelRow = {
+    level: 1, destParams: [38, 71], adjParamVals: [50, 100], reqMp: 35,
+  };
+  const skillDef = { id: SKILL_ID, referStats: [3, 0], referValues: [15, 0], levels: [levelRow] };
+
+  function makeResDeps(caster: CPlayer) {
+    const base = makeDeps();
+    const deps = {
+      ...base.deps,
+      playerManager: {
+        sendTo: base.deps.playerManager.sendTo,
+        get: (id: number) => (id === caster.m_idPlayer ? caster : undefined),
+      },
+      skills: { skills: new Map([[SKILL_ID, skillDef]]) },
+    };
+    return { ...base, deps };
+  }
+
+  function makeDeadWithOffer(casterId: number): CPlayer {
+    const p = CPlayer.fromRow(makeRow({ id: 2, name: 'Dead', level: 30 }), { write: () => true });
+    p.m_bDead = true;
+    p.m_nHp = 0;
+    p.m_resurrectionOffer = { casterId, skillId: SKILL_ID, skillLevel: 1 };
+    return p;
+  }
+
+  it('cancelResurrection clears the offer and sends nothing', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 1 }), { write: () => true });
+    const { deps, sends, broadcasts } = makeResDeps(caster);
+    const svc = new RevivalService(deps);
+    const dead = makeDeadWithOffer(caster.m_idPlayer);
+
+    assert.deepEqual(svc.cancelResurrection(dead), { ok: true });
+    assert.equal(dead.m_resurrectionOffer, undefined);
+    assert.equal(dead.m_bDead, true); // still dead -- CWndRevival stays available
+    assert.equal(sends.length, 0);
+    assert.equal(broadcasts.length, 0);
+  });
+
+  it('cancelResurrection with no pending offer is rejected', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 1 }), { write: () => true });
+    const { deps } = makeResDeps(caster);
+    const svc = new RevivalService(deps);
+    const p = CPlayer.fromRow(makeRow({ id: 2 }), { write: () => true });
+    assert.deepEqual(svc.cancelResurrection(p), { ok: false, reason: 'no_offer' });
+  });
+
+  it('acceptResurrection revives in place: SFX + RESURRECTION + actmsg + DST_HP grant', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 1, intelligence: 15 }), { write: () => true });
+    const { deps, sends, broadcasts } = makeResDeps(caster);
+    const svc = new RevivalService(deps);
+    const dead = makeDeadWithOffer(caster.m_idPlayer);
+    const posBefore = { ...dead.m_vPos };
+
+    const out = svc.acceptResurrection(dead);
+
+    assert.deepEqual(out, { ok: true });
+    assert.equal(dead.m_bDead, false);
+    assert.equal(dead.m_resurrectionOffer, undefined);
+    // ApplyParam DST_HP: adj(50) + floor(15/10)*INT(15) + level(1)*floor(15/50) = 65.
+    assert.equal(dead.m_nHp, Math.min(dead.getMaxHp(), 65));
+    // No position change (unlike the OnRevival* paths).
+    assert.deepEqual(dead.m_vPos, posBefore);
+    // Vicinity: CREATESFXOBJ, RESURRECTION (0x00eb), SETPOINTPARAM.
+    assert.equal(snapshotSubtype(broadcasts[1]), 0x00eb);
+    // Self: OBJMSG_RESURRECTION actmsg (SNAPSHOTTYPE_ACTMSG 0x0002).
+    assert.equal(sends.some((b) => snapshotSubtype(b) === 0x0002), true);
+  });
+
+  it('acceptResurrection applies the exp penalty scaled by nAdjParamVal2', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 1 }), { write: () => true });
+    const { deps, journal } = makeResDeps(caster);
+    const svc = new RevivalService(deps);
+    const dead = makeDeadWithOffer(caster.m_idPlayer);
+    dead.m_nExp = 50_000;
+
+    svc.acceptResurrection(dead);
+
+    // destParams[1] == DST_RECOVERY_EXP -> SubDieDecExp(TRUE, nAdjParamVal2=100),
+    // i.e. 100% of the bracket penalty is STILL applied.
+    assert.equal(dead.m_nExp < 50_000, true);
+    assert.equal(journal.some((j) => j.type === 'CHAR_EXP'), true);
+  });
+
+  it('acceptResurrection rejects when no offer / not dead / caster offline', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 1 }), { write: () => true });
+    const { deps } = makeResDeps(caster);
+    const svc = new RevivalService(deps);
+
+    const noOffer = CPlayer.fromRow(makeRow({ id: 2 }), { write: () => true });
+    assert.deepEqual(svc.acceptResurrection(noOffer), { ok: false, reason: 'no_offer' });
+
+    const alive = makeDeadWithOffer(caster.m_idPlayer);
+    alive.m_bDead = false;
+    assert.deepEqual(svc.acceptResurrection(alive), { ok: false, reason: 'not_dead' });
+    assert.equal(alive.m_resurrectionOffer, undefined); // cleared per C++ :6883
+
+    const gone = makeDeadWithOffer(999);
+    assert.deepEqual(svc.acceptResurrection(gone), { ok: false, reason: 'caster_gone' });
+    assert.equal(gone.m_resurrectionOffer, undefined); // cleared per C++ :6912
+  });
+});

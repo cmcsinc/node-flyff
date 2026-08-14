@@ -302,6 +302,75 @@ describe('SkillService.cast (heal)', () => {
   });
 });
 
+/**
+ * Resurrection (skill 45, `SI_ASS_HEAL_RESURRECTION`). Classified `heal` by
+ * `referTargets[0] == RT_HEAL`, but targeting is the INVERSE of Heal: the target
+ * must be a DEAD player (`Ctrl.cpp:800-822`). No HP is applied at cast time --
+ * `Ctrl.cpp:1222-1224` returns before `ApplyParam` while the offer is pending, so
+ * the cast only stamps `m_resurrectionOffer` + sends the prompt.
+ */
+describe('SkillService.cast (resurrection)', () => {
+  /** Skill 45 shape from resources/data/skills/assist.yml:347+. */
+  function resSkill(over: Partial<SkillDefinition> = {}): SkillDefinition {
+    return {
+      id: 45, name: 'Resurrection', name_id: 'IDS_RESURRECTION', tier: 1, job: 3,
+      discipline: 11, reqLevel: 20, prereqs: [], resourceType: 1, maxLevel: 20,
+      referStats: [3, 0], referTargets: [3, 0], referValues: [15, 0],
+      levels: [{
+        level: 1, reqMp: 35, castingTime: 250, cooldown: 0,
+        destParams: [38, 71], adjParamVals: [50, 100],
+      }],
+      ...over,
+    };
+  }
+
+  it('stamps the offer on a dead player target and spends MP', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 42, mp: 50, max_mp: 100 }), makeSocket());
+    const target = CPlayer.fromRow(makeRow({ id: 99, hp: 0, max_hp: 1000 }), makeSocket());
+    target.m_bDead = true;
+    caster.hydrateSkills([{ slot: 0, skillId: 45, level: 1 }]);
+    const m = makeService(new Map([[45, resSkill()]]), caster, [target]);
+
+    const out = m.service.cast(caster, { wId: 0, objid: 99, useType: 0 });
+
+    assert.equal(out.ok, true);
+    assert.deepEqual(target.m_resurrectionOffer, { casterId: 42, skillId: 45, skillLevel: 1 });
+    // NO HP granted at cast time -- the whole effect defers to the accept path.
+    assert.equal(target.m_nHp, 0);
+    assert.equal(target.m_bDead, true);
+    assert.equal(caster.m_nMp, 15, 'caster spent reqMp 35');
+  });
+
+  it('rejects a LIVE player target (inverse of Heal)', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 42, mp: 50, max_mp: 100 }), makeSocket());
+    const target = CPlayer.fromRow(makeRow({ id: 99, hp: 100, max_hp: 100 }), makeSocket());
+    caster.hydrateSkills([{ slot: 0, skillId: 45, level: 1 }]);
+    const m = makeService(new Map([[45, resSkill()]]), caster, [target]);
+
+    const out = m.service.cast(caster, { wId: 0, objid: 99, useType: 0 });
+
+    assert.equal(out.ok === false && out.reason, 'target_not_dead');
+    assert.equal(target.m_resurrectionOffer, undefined);
+    assert.equal(caster.m_nMp, 50, 'no MP spent before the target check');
+  });
+
+  it('rejects self-cast and a target that already holds an offer', () => {
+    const caster = CPlayer.fromRow(makeRow({ id: 42, mp: 50, max_mp: 100 }), makeSocket());
+    const target = CPlayer.fromRow(makeRow({ id: 99, hp: 0, max_hp: 100 }), makeSocket());
+    target.m_bDead = true;
+    target.m_resurrectionOffer = { casterId: 7, skillId: 45, skillLevel: 1 };
+    caster.hydrateSkills([{ slot: 0, skillId: 45, level: 1 }]);
+    const m = makeService(new Map([[45, resSkill()]]), caster, [target]);
+
+    const self = m.service.cast(caster, { wId: 0, objid: caster.m_idPlayer, useType: 0 });
+    assert.equal(self.ok === false && self.reason, 'invalid_target');
+
+    const busy = m.service.cast(caster, { wId: 0, objid: 99, useType: 0 });
+    assert.equal(busy.ok === false && busy.reason, 'target_already_resurrecting');
+    assert.deepEqual(target.m_resurrectionOffer, { casterId: 7, skillId: 45, skillLevel: 1 });
+  });
+});
+
 describe('SkillService.cast (buff)', () => {
   /** RT_TIME self-buff: +20 STA for 300s (Assist-style Cannonball). */
   function buffSkill(over: Partial<SkillDefinition> = {}): SkillDefinition {

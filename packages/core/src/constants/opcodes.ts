@@ -70,6 +70,13 @@ export const PACKETTYPE = Object.freeze({
   // OnRevivalLodelight=empty C++ stub.
   REVIVAL_TO_LODESTAR:  0x00ff00c1,
   REVIVAL_TO_LODELIGHT: 0x00ff00c2,
+  // MsgHdr.h:385-386 -- `CDPSrvr::OnResurrectionOK` (DPSrvr.cpp:6877) /
+  // `OnResurrectionCancel` (DPSrvr.cpp:6868). Both read ZERO body fields; the
+  // opcode alone selects accept/decline of a pending other-player resurrection
+  // offer (`CWndResurrectionConfirm`, _Interface/WndField.cpp:14840). The actor
+  // is the DEAD player who holds the offer, identified by session.
+  RESURRECTION_OK:      0xffffff78,
+  RESURRECTION_CANCEL:  0xffffff79,
   // MsgHdr.h:191 -- `CDPSrvr::OnSfxHit` (DPSrvr.cpp:4099): `int idSfxHit, int
   // nMagicPower, DWORD dwSkill, OBJID idAttacker, int nDmgCnt, float fDmgAngle,
   // float fDmgPower`. Reports a registered projectile landing. In C++ it only

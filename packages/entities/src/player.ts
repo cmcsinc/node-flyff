@@ -157,6 +157,22 @@ export class CPlayer {
    * ponytail: full `m_dwState` bitfield if more state bits are ever needed.
    */
   m_bDead = false;
+  /**
+   * Pending other-player Resurrection offer (C++ `RESURRECTION_DATA
+   * m_Resurrection_Data`, `_Common/Mover.h:336-343,713`, zeroed in the ctor at
+   * `Mover.cpp:430`). Lives on the **dead target**, not the caster:
+   * `ApplySkillHardCoding` (`Ctrl.cpp:814-821`) stamps it when an Assist casts
+   * skill 45 on a corpse, and the dead player's own `RESURRECTION_OK` /
+   * `RESURRECTION_CANCEL` consumes it (`DPSrvr.cpp:6868/6877`).
+   *
+   * `undefined` == C++ `bUseing == FALSE`. There is **no timeout** in C++ -- the
+   * offer survives caster disconnect and target logout until answered or until a
+   * self-revive path clears it (`DPSrvr.cpp:993`, `:1094`).
+   *
+   * `skillId`/`skillLevel` stand in for the C++ `pSkillProp`/`pAddSkillProp`
+   * pointers (we re-resolve the rows from the skill index on accept).
+   */
+  m_resurrectionOffer?: { casterId: number; skillId: number; skillLevel: number } | undefined;
   m_nStr: number;
   m_nSta: number;
   m_nDex: number;

@@ -2,8 +2,9 @@
 
 **What works, what partly works, and what is missing.**
 
-Last verified: 2026-08-05 against `master` (`b54ee36`) — full build (19/19
-packages) and test suite green at time of writing.
+Last verified: 2026-08-13 against `master` (`646d159`) — full build (19/19
+packages) and test suite green at time of the 2026-08-12 sweep; the 2026-08-13
+pass was a citation re-verification that changed no code.
 
 ---
 
@@ -24,11 +25,19 @@ doesn't", not as a warranty.
 
 The authoritative, line-level version of this document is
 [`.claude/state/MISSING-FEATURES.md`](../.claude/state/MISSING-FEATURES.md) —
-25 sections, ~200 tracked items, each with a `file:line` citation. This page is
+27 sections, **323 tracked items**, each with a `file:line` citation. This page is
 the readable summary. For known behavioural deviations from the original C++
 server, see [`c++-fidelity-audit.md`](c++-fidelity-audit.md).
 
-There are also **164 `ponytail:` markers across 85 source files**. Each one names
+Every citation in that file was re-read against live source on 2026-08-13 and
+each cite now carries its construct name (`guild.service.ts:158 destroy`) so a
+future refactor produces a detectable mismatch rather than silent drift. That
+pass found one row that named the right gap but blamed the wrong file, two wrong
+counts, and one method name that does not exist — all corrected in place with the
+old claim recorded. Sections written more than ~2 weeks before a read should be
+treated as unverified until re-grepped.
+
+There are also **179 `ponytail:` markers across 94 source files**. Each one names
 a deliberate simplification at the exact line it applies to:
 
 ```bash
@@ -41,8 +50,11 @@ That sweep is the densest gap inventory in the project.
 
 ## Summary
 
-Tracked items across sections 1–22: **143 ✅ · 41 🟡 · 6 🟥 · 22 ❌** (3 marked
-not-applicable — faithful ports of C++ stubs).
+Tracked items across sections 1–22: **149 ✅ · 47 🟡 · 7 🟥 · 34 ❌** (2 marked
+not-applicable — faithful ports of C++ stubs), 239 rows. Guild (§26) and pets
+(§27) are tracked in their own sections outside that tally; across all 27
+sections the totals are **323 rows — 192 ✅ · 62 🟡 · 11 🟥 · 65 ❌ · 9 🚫**
+(recounted 2026-08-13).
 
 A player can currently: create an account, log in, create and pick a character,
 enter Flaris, walk and fly around, fight monsters with melee / ranged / skills,
@@ -72,7 +84,7 @@ arena) ship OFF as vanilla v19 does.
 - Authentic v19 binary TCP protocol — `0x5E` marker framing, CRC integrity,
   DWORD-length-prefixed strings, stream reassembly
 - Three-server topology: login (`:23000`), cluster (`:38100`), world (`:38180`)
-- **112 inbound opcodes** dispatched in the world server alone
+- **144 unique inbound opcodes** dispatched across the three servers
 - HMAC-SHA256-signed IPC over Redis pub/sub plus internal TLS TCP, with replay
   rejection and a circuit breaker
 - Hybrid WAL persistence: local SQLite journal written before every
@@ -183,24 +195,25 @@ the `Flyff.a` manifest.
 
 ## Partly working
 
-The 41 🟡 items, condensed. Each has a `file:line` in the detailed checklist.
+The 62 🟡 items, condensed. Each has a `file:line` in the detailed checklist.
 
 | Area | Works | Missing |
 | --- | --- | --- |
-| **Death / revival** | Death, revival in place and at town, exp penalty, chaotic HP rate | The real `m_nDead` 5 s countdown; `DiePenalty.inc` table loader (brackets are hardcoded); cross-world revive teleport |
+| **Death / revival** | Death, revival in place and at town, exp penalty, chaotic HP rate, other-player Resurrection skill (offer + accept/cancel) | The real `m_nDead` 5 s countdown; `DiePenalty.inc` table loader (brackets are hardcoded); cross-world revive teleport; Resurrection `nProbability` roll and 35 s second-offer suppression |
 | **PvP** | Everything listed above | Safe-zone region enforcement; PK item-drop penalty (KarmaProp); PvP-specific skill damage variables (parsed, unread) |
 | **Monster AI** | Wander, aggro, chase, flee | Self-heal cadence (`healCadenceMs` never threaded, defaults to 1000 ms); disguise-buff aggro check tests only the transparency mode |
 | **Quests** | Offer through reward | Party conditions fail closed — `partyQuery` is never passed to `QuestService`; TRN3 job-change quests absent |
 | **Inventory** | Everything listed above | Item weight, durability decay (so `RepairService` is a no-op sink), piercing / sockets / awakening — all parsed and stored, consumed by nothing |
 | **Social** | Chat, friends, campus, blocklist | `/p` and `/g` slash aliases; applet taskbar grid; sit-and-rest state and its recovery multipliers |
-| **Peer data** | 🟥 `QUERY_PLAYER_DATA` always replies null — the friend, guild, and party windows ask for this |
+| **Peer data** | Nothing — the service is a 54-line stub | 🟥 `QUERY_PLAYER_DATA` always replies null; the friend, guild, and party windows ask for this and survive only because the client keeps its own cache |
 | **Character delete** | Ownership check | The second factor (password + delete key) arrives on the wire and is discarded |
 | **Job change** | 1st→2nd tier | Master / Hero / Legend tiers are rejected by the server while the admin panel models all five |
 | **Flight** | Board / broom mount and dismount, `OBJSTAF_FLY` state, fly-mismatch targeting | `HATTR_NOFLY` terrain gating; disguise-buff and pet gates; fuel and turbo |
-| **Pets** | Looter pet — summon, follow, auto-loot, dismiss | The egg → D-C-B-A-S system pet; `dwPetId` still serializes as `NULL_ID` |
+| **Pets** | Looter pet — summon, follow, auto-loot, dismiss, leash resummon | The egg → D-C-B-A-S system pet (no pet opcode is even declared); `dwPetId` still serializes as `NULL_ID`; buff pets and VisPet; the flight↔pet exclusion is one-directional — a pet cannot be summoned while flying, but you *can* take off with one already out |
 | **Zones** | One zone (Flaris) | Cross-world `REPLACE` handoff; terrain collision; movement speed enforcement |
+| **Admin panel / live-ops** | Resource editors, character live-ops, online list, kick, teleport, mail, supervisor start/stop, long-poll log hub (constant-time token compare on every route) | No admin page for any of the four guild tables, so live-ops cannot inspect or repair a guild. The per-server `logs/<id>.log` files are append-only with no size cap or rollover, and the panel can only read the 500-line in-memory ring — never the file — so there is no download, search, or rotation |
 | **Trade / vending** | Core flows | Edge cases around cancellation and stack splitting |
-| **Guild** | Roster, ranks and authority, `/cg` + `/g`, rejoin cooldown, contribution and guild level, the 21:00 salary payroll, guild bank, war (declare / accept / surrender / truce / timeout, war kills routed away from PK), the four dialog predicates, refusal notices, and the boss arena | **Untested in client.** Votes are compiled out of v19 upstream so they are deliberately absent. War and the arena are behind runtime flags that ship OFF (`world.guildWarEnabled`, `world.guildQuestEnabled`), matching vanilla. Guild 1v1 combat and Guild House are unported |
+| **Guild** | Roster, ranks and authority, `/cg` + `/g`, rejoin cooldown, contribution and guild level, the 21:00 salary payroll, guild bank, war (declare / accept / surrender / truce / timeout, war kills routed away from PK), the four dialog predicates, refusal notices, and the boss arena | **Untested in client.** Votes are missing — `__GUILDVOTE` *is* compiled in upstream (`WORLDSERVER/VersionCommon.h:253`), correcting an earlier note here; the two vote opcodes are declared but unrouted. War and the arena are behind runtime flags that ship OFF (`world.guildWarEnabled`, `world.guildQuestEnabled`), matching vanilla. Guild 1v1 combat is unported; Guild House is compiled out server-side upstream. Bank log viewer, `SetPKTargetLimit` during war, guild-war revive, and the ranking read path are absent |
 
 ### Accepted and discarded (🟥)
 
@@ -243,30 +256,37 @@ Ranked by how much else they block.
 
 ### Protocol coverage
 
-The emulator dispatches **112 client→server opcodes**. The original C++ dispatch
-table carries substantially more; §23 of the detailed checklist enumerates **~156
-still unrouted**, split into declared-but-undispatched (cheapest to close — the
-opcode value is already pinned in `opcodes.ts`) and per-subsystem clusters.
+The emulator dispatches **144 unique client→server opcodes** across login,
+cluster, and world. The original C++ dispatch table carries substantially more —
+300 `ON_MSG` entries (110 login/cluster, 190 world) against 307 client send
+sites; §23 of the detailed checklist enumerates **~163 still unrouted**, split
+into declared-but-undispatched (cheapest to close — the opcode value is already
+pinned in `opcodes.ts`) and per-subsystem clusters.
 
 Notably cheap: `MAGIC_ATTACK` is declared but has no handler, leaving one combat
 path unclosed. The four couple opcodes are declared and undispatched.
 
 ### Slash commands
 
-Player commands: 3 of 25 ported (`/w`, `/say`, `/s`). Most of the remainder are
-either client-only display toggles that need no server work, or blocked on the
-guild and party subsystems.
+**43 of 162** server-side commands are ported; 119 are missing.
 
-GM commands: roughly 35 ported, 60 missing. The highest-value missing ones need
-no new subsystem — `/cjob`, the mute/freeze mode pipeline, and the skill-level
-family.
+Player commands: 4 of 25 ported (`/w`, `/say`, `/s`, `/g`). Most of the remainder
+are client-only display toggles that need no server work, or blocked on an
+unported subsystem (system pet, couple, guild 1v1).
+
+GM commands: the rest of the 43. Now that guild and party exist, `/dg`, `/gstat`,
+`/ranking`, and `/plv` are no longer subsystem-blocked — the data is there and
+only a command row is missing. `/dg` in particular needs nothing but the row: the
+service method already exists, named `destroy` (not `disband`). The
+highest-value missing ones still need no new subsystem: `/cjob`, the mute/freeze
+mode pipeline, and the skill-level family.
 
 ---
 
 ## Quick wins
 
 Features that are **implemented but inert** — a wiring or data fix, not a build.
-Verified open as of 2026-08-04:
+Verified open as of 2026-08-13:
 
 1. `MAGIC_ATTACK` dispatch — the opcode is declared, no handler file exists
 2. `partyQuery` never passed to `QuestService`, so every quest party condition
@@ -275,6 +295,15 @@ Verified open as of 2026-08-04:
 4. Disguise-buff aggro check reads only the transparency mode, though buffs
    shipped long ago
 5. Monster self-heal cadence never threaded from the converter to the entity
+6. Guild-cloak non-tradeable flag — ponytail'd as blocked on guild, but
+   `m_idGuild` now reaches the wire
+7. Quest guild conditions still return permissive constants although
+   `GuildManager` exists — the dialog interpreter already made this jump
+8. Flight's summoned-pet gate — ponytail'd as blocked on "no pet system", but the
+   looter pet shipped; the check is one field comparison
+9. `/dg` — the guild-destroy service method exists; only the command row is missing
+10. Guild bank log — the ledger rows are already written and `GUILDLOG_VIEW` is a
+    real C++ opcode, but no constant is declared on our side
 
 If you are looking for a first contribution, start here.
 

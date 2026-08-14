@@ -167,6 +167,8 @@ export function buildWorldClientServer(deps: WorldClientServerDeps): {
   dispatcher.register(PACKETTYPE.REVIVAL, (s, r) => { deps.revivalHandler.handleRevival(s, r); });
   dispatcher.register(PACKETTYPE.REVIVAL_TO_LODESTAR, (s, r) => { deps.revivalHandler.handleRevivalLodestar(s, r); });
   dispatcher.register(PACKETTYPE.REVIVAL_TO_LODELIGHT, (s, r) => { deps.revivalHandler.handleRevivalLodelight(s, r); });
+  dispatcher.register(PACKETTYPE.RESURRECTION_OK, (s, r) => { deps.revivalHandler.handleResurrectionOk(s, r); });
+  dispatcher.register(PACKETTYPE.RESURRECTION_CANCEL, (s, r) => { deps.revivalHandler.handleResurrectionCancel(s, r); });
   dispatcher.register(PACKETTYPE.MODE, (s, r) => { deps.pkModeHandler.handleMode(s, r); });
   dispatcher.register(PACKETTYPE.STATEMODE, (s, r) => { deps.stateModeHandler.handleStateMode(s, r); });
   dispatcher.register(PACKETTYPE.PLAYERSETDESTOBJ, (s, r) => { deps.playerSetDestObjHandler.handlePlayerSetDestObj(s, r); });

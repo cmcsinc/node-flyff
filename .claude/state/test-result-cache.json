@@ -203,7 +203,7 @@
   "H:\\flyff\\node-flyff\\packages\\combat\\test\\combat\\formulas.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\quest\\test\\services\\questRewards.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\world-core\\test\\actionSlot.serializer.test.ts": "pass",
-  "H:\\flyff\\node-flyff\\packages\\skills\\test\\services\\skill.service.test.ts": "pass",
+  "H:\\flyff\\node-flyff\\packages\\skills\\test\\services\\skill.service.test.ts": "fail",
   "H:\\flyff\\node-flyff\\packages\\inventory\\test\\services\\consumable.service.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\entities\\test\\player.test.ts": "pass",
   "H:\\flyff\\node-flyff\\packages\\resources\\test\\loaders\\setItem.loader.test.ts": "fail",

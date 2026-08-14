@@ -93,6 +93,16 @@ export const OBJMSG_STOP = 6;
  * (`_Interface/WndField.cpp:12109`).
  */
 export const OBJMSG_DIE = 40;
+/**
+ * `OBJMSG_RESURRECTION` (`_Common/MoverMsg.h`, enum index 12 from
+ * `OBJMSG_NONE=0`: NONE,FORWARD,BACKWARD,STAND,SITDOWN,STANDUP,STOP=6,ASTOP,
+ * LTURN,RTURN,STOP_TURN,PICKUP,RESURRECTION=12). Sent to a player who accepted an
+ * other-player Resurrection offer (`DPSrvr.cpp:6904`); the client's action FSM
+ * (`_AIInterface/ActionMoverMsg.cpp:1136`) does `ClearState()` +
+ * `SetState(OBJSTA_DMG_ALL, OBJSTA_RESURRECTION)` + the MTI_ASS_RESURRECTION
+ * motion -- i.e. this is what takes the model out of the corpse pose.
+ */
+export const OBJMSG_RESURRECTION = 12;
 
 /**
  * `II_SYS_SYS_SCR_RESURRECTION` (10431, `resource/defineItem.h:2477`) -- the

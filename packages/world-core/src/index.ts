@@ -39,3 +39,4 @@ export * from './serializers/party.serializer';
 export * from './serializers/guild.serializer';
 export * from './serializers/naviPoint.serializer';
 export * from './serializers/stateMode.serializer';
+export * from './serializers/resurrection.serializer';

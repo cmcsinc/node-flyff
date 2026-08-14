@@ -28,6 +28,7 @@ import { DoApplyUseSkillSerializer } from '../net/snapshot/doApplyUseSkill.seria
 import { DoUseSkillPointSerializer } from '@flyff/world-core';
 import { buildSetPointParam, DST_MP, DST_FP, DST_HP, buildSetSkillState, buildSetDestParam } from '@flyff/world-core';
 import { buildEndSkillQueue } from '@flyff/world-core';
+import { buildResurrectionMessage } from '@flyff/world-core';
 import { VISIBILITY_RADIUS, NULL_ID, MAX_SKILL_JOB, MAX_SLOT_QUEUE, SHORTCUT } from '@flyff/world-core';
 import { createLogger } from '@flyff/core/logger';
 
@@ -58,6 +59,15 @@ const SI_ASS_CHEER_QUICKSTEP = 114;
 const SI_ASS_CHEER_HASTE = 20;
 const SI_ASS_CHEER_HEAPUP = 49;
 const SI_ASS_CHEER_ACCURACY = 116;
+
+/**
+ * `SI_ASS_HEAL_RESURRECTION` (resource/defineSkill.h:41) -- "Resurrects a dead
+ * player". The one skill whose whole effect is hardcoded in C++
+ * (`CCtrl::ApplySkillHardCoding`, `_Common/Ctrl.cpp:790-835`) rather than driven
+ * off its propSkill row: it targets a **dead** player, grants nothing at cast
+ * time, and instead stamps a pending offer on the corpse + prompts that player.
+ */
+const SI_ASS_HEAL_RESURRECTION = 45;
 
 /**
  * Generic event buff -> Assist Cheer conflict table
@@ -142,6 +152,8 @@ export type SkillCastOutcome =
         | 'unsupported'
         | 'invalid_target'
         | 'target_dead'
+        | 'target_not_dead'
+        | 'target_already_resurrecting'
         | 'target_not_attackable'
         | 'too_far'
         // forwarded verbatim from CombatService.resolveSkill
@@ -319,7 +331,9 @@ export class SkillService {
     // resource spend so a bad target never burns MP/FP (matches C++ DoUseSkill
     // target-before-afford gate order).
     const target = kind === 'heal'
-      ? this.resolveHealTarget(player, frame.objid)
+      ? (skill.id === SI_ASS_HEAL_RESURRECTION
+        ? this.resolveResurrectionTarget(player, frame.objid)
+        : this.resolveHealTarget(player, frame.objid))
       : kind === 'buff'
         ? this.resolveBuffTarget(player, frame.objid)
         : this.resolveDamageTarget(frame.objid);
@@ -375,6 +389,9 @@ export class SkillService {
 
     if ('player' in target) {
       if (kind === 'buff') return this.applyBuffToPlayer(player, target.player, skill, levelRow, now);
+      if (skill.id === SI_ASS_HEAL_RESURRECTION) {
+        return this.offerResurrection(player, target.player, skill, levelRow);
+      }
       return this.applyHeal(player, target.player, skill, levelRow);
     }
     if ('mover' in target) {
@@ -475,8 +492,72 @@ export class SkillService {
     return { player: other };
   }
 
-  /** Damage target: a live mover in the spawn table (full attackable check in resolveSkill). */
-  private resolveDamageTarget(
+  /**
+   * Resurrection (skill 45) target: the **inverse** of {@link resolveHealTarget}
+   * -- only a DEAD other player qualifies. `CCtrl::ApplySkillHardCoding`
+   * (`_Common/Ctrl.cpp:800-822`) requires `pTarget->IsPlayer() &&
+   * pTarget->IsDie()`, and the alive-target gate at `MoverSkill.cpp:372` is
+   * scoped to `SI_ASS_HEAL_HEALING` alone -- Resurrection is deliberately exempt.
+   *
+   * Self is rejected: the C++ path reads the target off `pTarget` and a live
+   * caster can never be dead, so there is no self arm.
+   *
+   * `target_already_resurrecting` mirrors the
+   * `GetDmgState() == OBJSTA_RESURRECTION` refusal (`Ctrl.cpp:812`) -- a target
+   * mid-resurrection-animation is not offerable again. We approximate that state
+   * with "an offer is already pending", which is also the `bUseing` no-op guard
+   * at `Ctrl.cpp:816`.
+   */
+  private resolveResurrectionTarget(
+    player: CPlayer,
+    objid: number,
+  ): { player: CPlayer } | {
+    ok: false; reason: 'invalid_target' | 'target_not_dead' | 'target_already_resurrecting';
+  } {
+    if (objid === NULL_ID || objid === player.m_idPlayer) return { ok: false, reason: 'invalid_target' };
+    const other = this.deps.playerManager.get(objid);
+    if (other === undefined) return { ok: false, reason: 'invalid_target' };
+    if (!other.m_bDead) return { ok: false, reason: 'target_not_dead' };
+    if (other.m_resurrectionOffer !== undefined) {
+      return { ok: false, reason: 'target_already_resurrecting' };
+    }
+    return { player: other };
+  }
+
+  /**
+   * Stamp the pending offer on the dead target + prompt it (`Ctrl.cpp:814-821`).
+   *
+   * **No HP, no exp adjustment, no DST is applied here.** `Ctrl.cpp:1222-1224`
+   * returns before `ApplyParam` whenever `m_Resurrection_Data.bUseing` is set, so
+   * the whole effect is deferred to the target's `RESURRECTION_OK`
+   * (`DPSrvr.cpp:6877`) -- which is why the C++ cast still costs MP even if the
+   * offer is declined. The cast broadcast (USESKILL) has already gone out by the
+   * time we get here, matching that.
+   *
+   * ponytail: `nProbability` roll (56 for this skill) -- `ApplySkill`
+   * (`Ctrl.cpp:1153-1167`) rolls it BEFORE the hardcoded branch, so a failed roll
+   * silently produces no offer. The emulator's skill path ignores nProbability
+   * everywhere (see the class doc), so this stays consistent with the rest.
+   * ponytail: the 35 s buff entry (`Ctrl.cpp:1169-1206`) that suppresses a second
+   * offer while it lives.
+   * ponytail: `WI_WORLD_GUILDWAR` non-WAR_STATE + `EVE_SCHOOL` refusals
+   * (`MoverSkill.cpp:498-533`).
+   */
+  private offerResurrection(
+    caster: CPlayer, target: CPlayer, skill: SkillDefinition, level: SkillLevel,
+  ): SkillCastOutcome {
+    target.m_resurrectionOffer = {
+      casterId: caster.m_idPlayer, skillId: skill.id, skillLevel: level.level,
+    };
+    this.deps.playerManager.sendTo(target, buildResurrectionMessage(target.m_idPlayer));
+    logger.info(
+      { casterId: caster.m_idPlayer, targetId: target.m_idPlayer, skillLevel: level.level },
+      'resurrection offered',
+    );
+    return { ok: true, hit: true, damage: 0, killed: false };
+  }
+
+  /** Damage target: a live mover in the spawn table (full attackable check in resolveSkill). */  private resolveDamageTarget(
     objid: number,
   ): { objid: number } | { ok: false; reason: 'invalid_target' | 'target_dead' } {
     const mover = this.deps.spawnManager.get(objid);
@@ -512,11 +593,7 @@ export class SkillService {
 
   /** RT_HEAL restore amount (floor per term, matching the C++ integer math). */
   private healAmount(caster: CPlayer, skill: SkillDefinition, level: SkillLevel): number {
-    const stat = statForDst(caster, skill.referStats?.[0] ?? 0);
-    const refVal = skill.referValues?.[0] ?? 0;
-    const adj = level.adjParamVals?.[0] ?? 0;
-    const skillLvl = level.level;
-    return adj + Math.floor(refVal / 10) * stat + skillLvl * Math.floor(stat / 50);
+    return skillHealAmount(caster, skill, level);
   }
 
   /**
@@ -750,6 +827,24 @@ export class SkillService {
     const m = this.deps.spawnManager.get(objid);
     return m?.m_vPos ?? null;
   }
+}
+
+/**
+ * `ApplyParam` RT_HEAL amount: `nIncHP = nAdjParamVal1 + (dwReferValue1/10)*stat
+ * + skillLvl*(stat/50)`, where `stat` is the CASTER's first referStat (DST_INT
+ * for both Heal and Resurrection). Floors per term to match the C++ integer math.
+ *
+ * Exported because the other-player Resurrection accept path
+ * (`DPSrvr.cpp:6906` -> `ApplyParam`) grants DST_HP with this same formula, but
+ * runs in `world-server`'s RevivalService rather than in the cast path.
+ */
+export function skillHealAmount(
+  caster: CPlayer, skill: SkillDefinition, level: SkillLevel,
+): number {
+  const stat = statForDst(caster, skill.referStats?.[0] ?? 0);
+  const refVal = skill.referValues?.[0] ?? 0;
+  const adj = level.adjParamVals?.[0] ?? 0;
+  return adj + Math.floor(refVal / 10) * stat + level.level * Math.floor(stat / 50);
 }
 
 /**

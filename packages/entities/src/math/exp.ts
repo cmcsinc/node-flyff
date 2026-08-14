@@ -15,9 +15,6 @@
  */
 
 import { EXP_TABLE, MAX_LEVEL } from './expTable';
-import { EMPTY_PARAM_VIEW } from '../params/ParamModel';
-import type { ParamView } from '../params/ParamModel';
-import { DST } from '../constants/dst';
 
 /**
  * `AddExperienceSolo` level-diff multiplier (Mover.cpp:6085).
@@ -126,31 +123,42 @@ export function addExp(
  * (Lv<=20=0%, Lv<=29=6%, Lv<=59=5%, Lv<=89=4%, Lv<=99=3%, Lv<=109=2%,
  * Lv<=129=1.5%, Lv<=200=1%).
  *
- * Modifiers (`GetDieDecExpRate`, Mover.cpp:7333):
- * - `DST_RECOVERY_EXP` (Resurrection skill): reduces penalty by
- *   `(100 - n) / 100` where `n` is the DST value (e.g. 50 → halved).
- * - SM_REVIVAL + chaotic: 0.9x penalty (ponytail: no SM tracking yet).
- * - SM_REVIVAL alone (not chaotic): zero penalty (ponytail).
+ * `recoveryPct` is the C++ `dwDestParam` argument
+ * (`Mover.h:1555: SubDieDecExp(BOOL bTransfer=TRUE, DWORD dwDestParam=0, BOOL
+ * bResurrection=FALSE)`). It is the percentage of the penalty that is **still
+ * applied**, NOT the percentage forgiven -- `GetDieDecExpRate`
+ * (`Mover.cpp:7333`) computes `fAddDec = (100 - dwDestParam)/100; fDecExp -=
+ * fDecExp * fAddDec;` which algebraically nets `fDecExp * dwDestParam/100`.
+ * 0 (the default) means "no modifier", i.e. the full bracket loss.
  *
+ * The only caller that passes a nonzero value is the other-player Resurrection
+ * accept path (`DPSrvr.cpp:6908`), which forwards the skill's `nAdjParamVal2`
+ * when `dwDestParam2 == DST_RECOVERY_EXP`. Skill 45 ships 100 at L1 (full
+ * penalty) down to 60 at L20 (40% forgiven). Both self-revive paths
+ * (`OnRevival`, `OnRevivalLodestar`) call `SubDieDecExp()` with no args.
+ *
+ * DIVERGENCE FIXED (2026-08-13): this used to read the pct off the target's
+ * `DST_RECOVERY_EXP` param and apply `loss * (100 - pct)/100` -- the inverse of
+ * the C++ curve, and from a source C++ never consults here. A skill value of
+ * 100 ("full penalty") would have forgiven the penalty entirely.
+ *
+ * ponytail: `bResurrection` + SM_REVIVAL interaction (`Mover.cpp:7342-7345`:
+ * chaotic + (SM_REVIVAL || bResurrection) -> 0.9x; SM_REVIVAL alone -> 0). No SM
+ * mode tracking yet.
  * ponytail: load the real `DiePenalty.inc` table when the resource converter
  * exports it; the bracket values then come from data, not code.
  */
 export function subDieDecExp(
   level: number,
   exp: number,
-  params: ParamView = EMPTY_PARAM_VIEW,
+  recoveryPct = 0,
 ): { level: number; exp: number } {
   const pct = deathExpLossPct(level);
   if (pct <= 0) return { level, exp: Math.max(0, exp) };
   let loss = Math.floor(expToNextLevel(level) * pct);
-  // C++ `GetDieDecExpRate` -- DST_RECOVERY_EXP reduces penalty.
-  const recoveryPct = params.get(DST.RECOVERY_EXP, 0);
   if (recoveryPct > 0) {
-    const factor = (100 - recoveryPct) / 100;
-    loss = Math.floor(loss * factor);
+    loss = Math.floor((loss * Math.min(100, recoveryPct)) / 100);
   }
-  // ponytail: SM_REVIVAL + chaotic → 0.9x; SM_REVIVAL alone → 0.
-  // No SM mode tracking yet; add when SM_REVIVAL buff lands.
   return { level, exp: Math.max(0, exp - loss) };
 }
 

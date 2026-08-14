@@ -509,7 +509,7 @@ export async function compose(): Promise<WorldComposeResult> {
   // player damage to `onPlayerDeath` (flag dead + broadcast + open revive dlg).
   const revivalService = new RevivalService({
     charRepo, inventoryRepo, journal, zoneManager, playerManager, zones: resources.zones,
-    visibilityService,
+    visibilityService, skills: resources.skills,
   });
 
   // Monster idle-wander FSM (C++ CAIMonster::StateIdle). Emits one DESTPOS per
