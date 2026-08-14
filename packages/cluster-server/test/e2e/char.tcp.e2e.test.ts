@@ -119,14 +119,17 @@ describe('Cluster TCP smoke (CRC + DPID prefix + GETPLAYERLIST)', () => {
       .writeDword(1)
       .build();
 
+    // `drain()` consumes, so accumulate across `data` events -- the three writes
+    // arrive in one segment on Windows but split on Linux loopback.
+    const got: Buffer[] = [];
     const replies = await new Promise<Buffer[]>((resolve) => {
       const onData = (c: Buffer) => {
         rx.push(c);
-        const frames = rx.drain();
-        if (frames.length >= 3) { sock.off('data', onData); resolve(frames); }
+        got.push(...rx.drain());
+        if (got.length >= 3) { sock.off('data', onData); resolve(got); }
       };
       sock.on('data', onData);
-      setTimeout(() => { sock.off('data', onData); resolve(rx.drain()); }, 2000);
+      setTimeout(() => { sock.off('data', onData); resolve(got); }, 2000);
       sock.write(clusterFrame(PACKETTYPE.GETPLAYERLIST, body, protocolId));
     });
     sock.destroy();
