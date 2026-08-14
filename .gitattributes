@@ -3,3 +3,7 @@
 # this, Linux checkouts get LF (the index is normalized) and the writer emits
 # LF, so the CRLF invariants fail on CI but pass on Windows.
 packages/resources/raw/NpcScript.cpp text eol=crlf
+
+# Same for `raw/WorldDialog.txt`: the worldDialog writer round-trips it
+# byte-identically, so an LF checkout shifts every row offset.
+packages/resources/raw/WorldDialog.txt text eol=crlf
