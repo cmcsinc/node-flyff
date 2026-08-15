@@ -18,7 +18,7 @@
     "build": "tsup",
     "clean": "rm -rf dist",
     "lint": "eslint src",
-    "test": "tsx --test \"test/**/*.test.ts\"",
+    "test": "node ../../scripts/run-tests.mjs test",
     "typecheck": "tsc --noEmit",
     "convert": "tsx scripts/convert.ts",
     "migrate:drops": "tsx scripts/migrateDropChance.ts",

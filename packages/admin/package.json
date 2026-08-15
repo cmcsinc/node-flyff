@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "tsx --test \"test/**/*.test.ts\" \"test/**/*.test.tsx\"",
+    "test": "node ../../scripts/run-tests.mjs test",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "seed": "node ../../scripts/seed-admin.mjs",

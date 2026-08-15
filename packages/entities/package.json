@@ -16,7 +16,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "lint": "eslint src",
-    "test": "tsx --test \"test/**/*.test.ts\"",
+    "test": "node ../../scripts/run-tests.mjs test",
     "clean": "rm -rf dist"
   },
   "dependencies": {

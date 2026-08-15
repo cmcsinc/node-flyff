@@ -531,6 +531,9 @@ describe('AISystem (retaliation)', () => {
       spawnManager: makeSpawn([m]),
       zoneManager: makeZone(casts),
       playerManager: makePlayers(new Map([[player.m_idPlayer, player]])),
+      // Deterministic rolls: int()=0 always passes the hit-rate check (m_nHR=40
+      // would otherwise miss ~60% of the time on the default Math.random rng).
+      rng: { int: () => 0, range: () => 16 } as never,
     });
     ai.tick(1000);
     assert.equal(m.m_idTarget, player.m_idPlayer, 'target retained');
