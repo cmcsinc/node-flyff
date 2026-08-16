@@ -61,12 +61,17 @@ const tank: Combatant = {
   ...player, level: 30, sta: 30,
 };
 
-/** Scripted rng -- `int()` draws from `ints` in call order; `range()` is fixed. */
-function makeRng(ints: number[], rangeVal: number): Rng {
+/**
+ * Scripted rng — `int()` draws from `ints` in call order; `range(lo)` returns `lo`
+ * (the lower bound). Returning `lo` keeps non-crit tests deterministic (they pass
+ * `rangeVal` == `getHitMinMax.min` == `lo`) while making crit pre-roll min/max
+ * scaling observable (scaled min differs from unscaled min).
+ */
+function makeRng(ints: number[], _rangeVal: number): Rng {
   let i = 0;
   return {
     int: () => ints[i++] ?? 0,
-    range: () => rangeVal,
+    range: (lo: number) => lo,
   };
 }
 
@@ -203,6 +208,20 @@ describe('combat DST param un-stubs', () => {
     assert.equal(getCriticalProb({ ...player, params }), base + 8);
   });
 
+  it('DST_CHR_CHANCECRITICAL chg-override REPLACES the base prob (GetParam)', () => {
+    // GetParam(dst, nProb): a chg value wins outright -- the DEX/job roll is only
+    // the default. C++ MoverParam.cpp:2909.
+    const params = new ParamModel();
+    params.applyEffects([{ dst: DST.CHR_CHANCECRITICAL, adj: 0, chg: 42 }]);
+    assert.equal(getCriticalProb({ ...player, params }), 42);
+  });
+
+  it('getCriticalProb clamps negative to 0 (__JEFF_11)', () => {
+    const params = new ParamModel();
+    params.applyEffects([{ dst: DST.CHR_CHANCECRITICAL, adj: 0, chg: -5 }]);
+    assert.equal(getCriticalProb({ ...player, params }), 0);
+  });
+
   it('H3: DST_ABILITY_MIN raises min (MoverAttack.cpp:508)', () => {
     const params = new ParamModel();
     params.setDestParam(DST.ABILITY_MIN, 10);
@@ -330,12 +349,54 @@ describe('combat resolveMelee', () => {
     assert.equal(r.atkFlags & AF_MISS, AF_MISS);
   });
 
-  it('crit (crit roll < critProb=1) -> 2.3* ATK -> 36-1 = 35, AF_CRITICAL1', () => {
-    // ints: hit=0, crit=0(<1 -> crit), block=50. range=16.
+  it('C3: crit scales min/max PRE-roll (1.1/1.4) -- no post-roll 2.3*', () => {
+    // ints: hit=0, crit=0(<1 -> crit), block=50. Attacker L1 == defender L1 so
+    // fMin=1.1/fMax=1.4. min 16 -> trunc(16*1.1)=17; range() returns lo=17.
+    // DEF 1 -> 16.
     const r = resolveMelee(player, aibatt, makeRng([0, 0, 50], 16));
     assert.equal(r.hit, true);
-    assert.equal(r.damage, 35); // floor(16*2.3)=36, minus DEF 1
+    assert.equal(r.damage, 16);
     assert.equal(r.atkFlags & AF_CRITICAL1, AF_CRITICAL1);
+  });
+
+  it('C3: attacker level > NPC defender level -> fMin 1.2', () => {
+    // tank(L30 player) vs aibatt(L1 npc): defender is NPC -> fMin=1.2.
+    // getHitMinMax(tank).min = 1*2 + (15-12)*4.5 + 30*1.1 = 48.5 -> 48.
+    // trunc(48*1.2)=57; DEF 1 -> 56. player->npc, nDelta<0 -> no cosine.
+    const r = resolveMelee(tank, aibatt, makeRng([0, 0, 50], 48));
+    assert.equal(r.damage, 56);
+  });
+
+  it('C3: NPC attacker above defender level -> fMin 1.4 (overrides 1.2)', () => {
+    // pukepuke(L7 npc) -> player(L1): attacker is NPC -> fMin=1.4. NPC DEX is 0
+    // so the crit chance comes from DST_CHR_CHANCECRITICAL.
+    // min 37 -> trunc(37*1.4)=51; NPC->player +5%/level boost nDelta=6 ->
+    // floor(51*1.3)=66; player DEF 0 -> 66; no cosine (nDelta<0).
+    const params = new ParamModel();
+    params.setDestParam(DST.CHR_CHANCECRITICAL, 100);
+    const critPuke: Combatant = { ...pukepuke, params };
+    const r = resolveMelee(critPuke, player, makeRng([0, 0, 50], 37));
+    assert.equal(r.damage, 66);
+  });
+
+  it('C3: DST_CRITICAL_BONUS scales the crit min/max', () => {
+    // +100% bonus -> fCriticalBonus=2. min 16 -> trunc(16*1.1*2)=35; DEF 1 -> 34.
+    const params = new ParamModel();
+    params.setDestParam(DST.CRITICAL_BONUS, 100);
+    const buffed: Combatant = { ...player, params };
+    const r = resolveMelee(buffed, aibatt, makeRng([0, 0, 50], 16));
+    assert.equal(r.damage, 34);
+  });
+
+  it('C3: DST_CRITICAL_BONUS floors at 0.1 (__JEFF_11)', () => {
+    // -500% would give -4; clamped to 0.1. min 16 -> trunc(16*1.1*0.1)=1;
+    // DEF 1 -> 0.
+    const params = new ParamModel();
+    params.setDestParam(DST.CRITICAL_BONUS, -500);
+    const nerfed: Combatant = { ...player, params };
+    const r = resolveMelee(nerfed, aibatt, makeRng([0, 0, 50], 16));
+    assert.equal(r.damage, 0);
+    assert.equal(r.atkFlags & AF_CRITICAL1, 0, 'zero damage clears the crit flag');
   });
 
   it('NPC block (block roll >=95) -> 90% reduction', () => {

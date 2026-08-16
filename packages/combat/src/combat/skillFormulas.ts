@@ -245,11 +245,10 @@ export interface SkillCastInputs {
  *
  * Sets `AF_MELEESKILL`/`AF_MAGICSKILL` on `atkFlags` per docs #4.
  *
- * **Crit** (`AF_CRITICAL1`, 2.3×): skill damage reuses melee `CalcDamage`
- * (docs #4 line 77), so it shares the melee crit branch -- `getCriticalProb`
- * (DEX/10 × job.fCritical + DST_CHR_CHANCECRITICAL), rolled here and applied to
- * `nATK` BEFORE defense subtract, exactly as `resolveMelee`. Applies to melee
- * AND magic skills (both flow through `CalcDamage`).
+ * **No crit**: `IsCriticalAttack` returns `FALSE` outright for any skill attack
+ * (`MoverAttack.cpp:800`: `if (IsSkillAttack(dwAtkFlags)) return FALSE`), so
+ * neither melee nor magic skills roll crit. Both `IsCriticalAttack` call sites
+ * (`GetHitPower`, `ApplyDPC`) pass through that guard.
  *
  * **Effect proc** (`effectProc`): `nProbability` (level field) is the
  * secondary-effect gate -- rolled per-target in C++ `ApplySkill` (docs #4

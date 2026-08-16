@@ -13,7 +13,7 @@
 
 import {
   ATK_SPEED_PLUS, elementFactor,
-  AF_MISS, AF_CRITICAL1, AF_BLOCKING, AF_GENERIC,
+  AF_MISS, AF_CRITICAL1, AF_CRITICAL, AF_FLYING, AF_BLOCKING, AF_GENERIC,
   WT_MELEE_SWD, WT_MELEE_AXE, WT_MELEE_STICK, WT_MELEE_KNUCKLE,
   WT_MELEE_STAFF, WT_MAGIC_WAND, WT_MELEE_YOYO, WT_RANGE_BOW,
   MIN_HR, MAX_HR,
@@ -190,9 +190,14 @@ export function getParrying(c: Combatant): number {
   return Math.floor(c.dex * 0.5 + c.params.get(DST.PARRY, c.parry));
 }
 
-/** `GetCriticalProb` (MoverAttack.cpp:609) -- `(DEX/10) * job.fCritical` + DST_CHR_CHANCECRITICAL. */
+/** `GetCriticalProb` (MoverAttack.cpp:684) -- `(DEX/10) * job.fCritical`, then `GetParam(DST_CHR_CHANCECRITICAL, that)` as OVERRIDE. */
 export function getCriticalProb(c: Combatant): number {
-  return Math.floor((c.dex / 10) * getJobProps(c.job).fCritical) + c.params.get(DST.CHR_CHANCECRITICAL, 0);
+  // GetParam(dst, nProb): chg-override > adj + nProb > nProb -- the base roll is
+  // the DEFAULT, so DST_CHR_CHANCECRITICAL replaces it, never adds. C++ also
+  // clamps negatives to 0 (__JEFF_11).
+  let nProb = Math.floor((c.dex / 10) * getJobProps(c.job).fCritical);
+  nProb = c.params.get(DST.CHR_CHANCECRITICAL, nProb);
+  return nProb < 0 ? 0 : nProb;
 }
 
 /**
@@ -339,7 +344,33 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
   }
 
   // CalcATK -> GetHitPower (normal melee roll).
-  const { min, max } = getHitMinMax(attacker);
+  let { min, max } = getHitMinMax(attacker);
+
+  // C3: crit is a PRE-ROLL min/max variance layer (`GetHitPower`,
+  // MoverAttack.cpp:1429-1460), not a post-roll multiplier. The flat 2.3x/2.6x
+  // layer lives in `ApplyDPC` (MoverAttack.cpp:1645), whose only call site is
+  // the POSTCALC_DPC branch (AttackArbiter.cpp:476) -- generic melee sets
+  // AF_GENERIC (ActionMoverMsg.cpp:698) -> POSTCALC_GENERIC, so it never
+  // reaches it. Hence no *2.3 here.
+  if (rng.int(100) < getCriticalProb(attacker)) {
+    atkFlags |= AF_CRITICAL1;
+    let fMin = 1.1;
+    let fMax = 1.4;
+    if (attacker.level > defender.level) {
+      // v19 __PVPDEMAGE0608 gates the wide range on an NPC defender.
+      if (defender.kind === 'npc') { fMin = 1.2; fMax = 2.0; }
+      // NPC attacker overrides (narrower band).
+      if (attacker.kind === 'npc') { fMin = 1.4; fMax = 1.8; }
+    }
+    // fCriticalBonus = 1 + GetParam(DST_CRITICAL_BONUS,0)/100, floored 0.1 (__JEFF_11).
+    let fCriticalBonus = 1 + attacker.params.get(DST.CRITICAL_BONUS, 0) / 100.0;
+    if (fCriticalBonus < 0.1) fCriticalBonus = 0.1;
+    min = Math.trunc(min * fMin * fCriticalBonus);
+    max = Math.trunc(max * fMax * fCriticalBonus);
+    // ponytail: AF_FLYING (15% roll, blocked for yoyo/AF_FORCE/player defender,
+    //   needs CanFlyByAttack()) not ported -- knockback model absent.
+  }
+
   const lo = Math.min(min, max);
   const hi = Math.max(min, max);
   let nATK = rng.range(lo, hi + 1); // xRandom(min,max) is [min,max); +1 for inclusive feel
@@ -350,12 +381,6 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
 
   // M3: DST_ATKPOWER (flat) applied after element factor (CalcATK:334).
   nATK += attacker.params.get(DST.ATKPOWER, 0);
-
-  // Crit (IsCriticalAttack -> AF_CRITICAL1, flat 2.3* for v1).
-  if (rng.int(100) < getCriticalProb(attacker)) {
-    atkFlags |= AF_CRITICAL1;
-    nATK = Math.floor(nATK * 2.3);
-  }
   if (nATK < 0) nATK = 0;
 
   // PostCalcDamage (AttackArbiter.cpp:462-470): NPC melee ATK boost vs
@@ -390,9 +415,13 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
 
   nDamage = Math.floor(nDamage * getDamageMultiplier(attacker, defender));
   if (nDamage <= 0) {
-    atkFlags &= ~(AF_CRITICAL1);
+    // PostCalcGeneric (MoverAttack.cpp:1533): clears the full AF_CRITICAL mask
+    // (both 1 and 2) AND AF_FLYING -- not just AF_CRITICAL1.
+    atkFlags &= ~(AF_CRITICAL | AF_FLYING);
     nDamage = 0;
   }
+  // ponytail: GetWeaponPlusDamage(nDamage) (enchant option bonus) added just
+  // before the zero-check in PostCalcGeneric -- enchant model absent.
   return { hit: true, damage: nDamage, atkFlags };
 }
 

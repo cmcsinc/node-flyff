@@ -39,17 +39,34 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 - **C++** (`MoverAttack.cpp:333-336`): `(HR*1.6/(HR+parry)) * 1.5 * (LVL*1.2/(LVL+defLVL)) * 100`
 - **Impact**: Player misses far more (or less) than intended vs monsters
 
-### C2. Skill attacks can crit — C++ blocks it
-- **File**: `packages/combat/src/combat/skillFormulas.ts:286-289`
-- **TS**: `if (rng.int(100) < getCriticalProb(attacker)) { nATK *= 2.3 }`
+### C2. ~~Skill attacks can crit — C++ blocks it~~ ✅ Already correct
+- **File**: `packages/combat/src/combat/skillFormulas.ts:294`
+- **TS**: `IsCriticalAttack` short-circuits at the `IsSkillAttack` guard — no crit roll, no multiplier
 - **C++** (`MoverAttack.cpp:800`): `if (IsSkillAttack(dwAtkFlags)) return FALSE;`
-- **Impact**: Skill damage inflated by 2.3x when crit rolls — skills should never crit
+- **Status**: Was a stale audit row; code already correct. The old C2 description (skills crit via 2.3×) described code that does not exist.
 
-### C3. Critical hit multiplier wrong — flat 2.3x vs variable range
-- **File**: `packages/combat/src/combat/formulas.ts:277`
-- **TS**: flat `nATK = Math.floor(nATK * 2.3)`
-- **C++** (`MoverAttack.cpp:1659-1677`): variable `xRandom(1.1, 1.4)` pre-roll to min/max, then `*2.3` post-roll; 4th-attack crit uses `*2.6`
-- **Impact**: Crit damage is always the same; C++ has a 1.1–1.4x variance layer
+### C3. ~~Critical hit multiplier wrong — flat 2.3x vs variable range~~ ✅ Ported (2026-08-16)
+- **File**: `packages/combat/src/combat/formulas.ts` (`resolveMelee`)
+- **Was**: flat `nATK = Math.floor(nATK * 2.3)` post-roll
+- **C++** (`MoverAttack.cpp:1429-1466`): crit is a **pre-roll** `min`/`max` variance layer —
+  `fMin/fMax = 1.1/1.4` (default), `1.2/2.0` when attacker level > NPC defender (v19 `__PVPDEMAGE0608`),
+  `1.4/1.8` when attacker is NPC; then `fCriticalBonus = 1 + GetParam(DST_CRITICAL_BONUS,0)/100`
+  floored at 0.1 (`__JEFF_11`). The post-roll `*2.3`/`*2.6` lives in `ApplyDPC`
+  (`MoverAttack.cpp:1645`), which is only called from `POSTCALC_DPC` — generic melee routes to
+  `PostCalcGeneric` instead and never reaches it.
+- **Fix**: hoisted the crit roll before `xRandom(min,max)`, scales `min`/`max` per the three tiers,
+  now consumes `DST.CRITICAL_BONUS`; removed the flat `*2.3`. `skillFormulas.ts` stale doc comment
+  updated; 5 new test cases; all 204 tests pass.
+- **ponytail**: `AF_FLYING` knock-up (15% roll, needs `CanFlyByAttack()`); ATK4/max-charge `*2.6`
+  and `*2.3` (`ApplyDPC`) when that path is eventually ported; `GetWeaponPlusDamage(nDamage)`
+  (enchant option bonus) added right before the zero-check in `PostCalcGeneric`.
+- **Follow-ups shipped with C3**:
+  - `getCriticalProb` was **adding** `DST_CHR_CHANCECRITICAL`; `GetParam(dst, nProb)`
+    (`MoverParam.cpp:2909`) treats the DEX/job roll as the *default*, so a chg value **overrides**
+    it. Now `params.get(DST.CHR_CHANCECRITICAL, nProb)` + the `__JEFF_11` negative clamp
+    (`MoverAttack.cpp:684-693`).
+  - Zero damage cleared only `AF_CRITICAL1`; `PostCalcGeneric` (`MoverAttack.cpp:1533`) clears the
+    full `AF_CRITICAL` (0xC0) mask **and** `AF_FLYING`. Both now cleared.
 
 ### C4. Hit-rate integer truncation differs
 - **File**: `packages/combat/src/combat/formulas.ts:195`
@@ -184,10 +201,14 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 - **File**: `packages/combat/src/combat/formulas.ts:131-132`
 - **C++**: added AFTER GetATKMultiplier; TS adds BEFORE element/crit/defense
 
-### M4. Elemental defense factor + crit ordering differs
-- **TS**: crit on element-modified ATK, subtract element-modified DEF
-- **C++**: crit on (element-ATK minus element-DEF)
-- Produces different numbers on crit
+### M4. ~~Elemental defense factor + crit ordering differs~~ ✅ Resolved by C3 (2026-08-16)
+- **File**: `packages/combat/src/combat/formulas.ts` (`resolveMelee`)
+- **C++ actual order** (`MoverAttack.cpp` `GetHitPower` → `PostCalcGeneric`): crit scales `min`/`max`
+  **pre-roll** → `xRandom(min,max)` → element ATK factor (`MulDiv(nATK, nATKFactor, 10000)`) →
+  *return* → `PostCalcGeneric` subtracts element-adjusted DEF. Crit therefore precedes both the
+  element factor and the DEF subtract.
+- **Status**: The old row's "C++ crits on (element-ATK minus element-DEF)" was incorrect — no C++ site
+  applies a crit multiplier after DEF. TS now mirrors the real order (see C3), so this is closed.
 
 ### M5. DST_HP/MP/FP_RECOVERY not applied in recovery system
 - **File**: `packages/entities/src/math/vitals.ts:59-73`
