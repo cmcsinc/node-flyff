@@ -22,7 +22,7 @@ import { responseError } from '@/lib/api-response';
  * fixed order (Identity → Classification → … ), leaf fields sit in a 2-column
  * grid, and collections/nested objects span the full width.
  *
- * See `.claude/rules/12-admin-form-ux.md`.
+ * See skill `flyff-admin-form-ux`.
  *
  * @module components/resource-form-editor
  */

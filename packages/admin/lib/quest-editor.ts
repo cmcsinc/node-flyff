@@ -9,7 +9,7 @@
  * one grouping a GM has to act on: a `server` edit needs a world-server restart,
  * a `cosmetic` or `structural` edit also needs the client archive rebuilt or
  * every un-patched client renders the quest wrong (`structural`) or shows the
- * wrong prize (`cosmetic`). See `.claude/rules/12-admin-form-ux.md` for why this
+ * wrong prize (`cosmetic`). See skill `flyff-admin-form-ux` for why this
  * is a form-correctness concern and not decoration.
  *
  * @module lib/quest-editor

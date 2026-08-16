@@ -5,7 +5,7 @@ import type { Knex } from '../types';
  *
  * The container's scalar state (gold + bank_pass) lives on the separate `bank`
  * table (1 row per account); this table holds only the per-slot item instances.
- * See rule `.claude/rules/11-database-normalization.md` + migration 008.
+ * See skill `flyff-db-normalization` + migration 008.
  */
 export interface BankItemRow {
   id: number;

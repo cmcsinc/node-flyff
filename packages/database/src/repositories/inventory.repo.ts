@@ -5,7 +5,7 @@ import type { Knex } from '../types';
  *
  * The container's scalar state (gold) lives on the separate `inventory` table
  * (1 row per character); this table holds only the per-slot item instances.
- * See rule `.claude/rules/11-database-normalization.md` + migration 008.
+ * See skill `flyff-db-normalization` + migration 008.
  */
 export interface InventoryItemRow {
   id: number;

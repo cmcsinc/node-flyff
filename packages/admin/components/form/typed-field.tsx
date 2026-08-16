@@ -32,7 +32,7 @@ import { cn } from '@/lib/utils';
  * Every value shape gets a real control — never a JSON textarea. Types are
  * preserved on round-trip: an int stays an int, a float keeps its precision, and
  * an empty numeric input restores the previous value instead of collapsing to 0.
- * See `.claude/rules/12-admin-form-ux.md`.
+ * See skill `flyff-admin-form-ux`.
  *
  * @module components/form/typed-field
  */

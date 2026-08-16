@@ -16,7 +16,7 @@ import type { Knex } from '../types';
  *   bank             (account_id PK, gold, bank_pass)-- 1 row per account
  *   bank_item        (account_id, tab, slot, ...)    -- renamed from `bank`
  *
- * Rule `.claude/rules/11-database-normalization.md`: a container's scalar state
+ * Skill `flyff-db-normalization`: a container's scalar state
  * lives on the container, never on the owner row. This also makes the bank an
  * independently addressable container (unblocks a future "share-a-bank via an
  * item" feature -- the gold + pin travel with the container).

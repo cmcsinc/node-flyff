@@ -7,7 +7,7 @@
  * `typeof value`, so an integer stays an integer, a float keeps its precision,
  * and an enum renders as a name + raw value rather than a bare number.
  *
- * See `.claude/rules/12-admin-form-ux.md`. No JSON escape hatches.
+ * See skill `flyff-admin-form-ux`. No JSON escape hatches.
  *
  * @module lib/field-schema
  */

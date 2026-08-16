@@ -16,7 +16,7 @@ import type { QuestArg } from '@flyff/resources';
  * shapeless. This maps each one onto its `QuestArgSpec` so a GM sees "Item to
  * collect / count", not `args[4] = 100`.
  *
- * Two rules from `.claude/rules/12-admin-form-ux.md` drive the design:
+ * Two rules from skill `flyff-admin-form-ux` drive the design:
  *
  * - **The stored `type` is preserved.** A `sym` arg that comes back unchanged must
  *   round-trip as a `sym` so the writer's symbol ladder can reuse the file's
