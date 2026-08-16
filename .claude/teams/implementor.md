@@ -66,7 +66,7 @@ If two workers must edit the same file (rare), serialize them via the parent —
 ## Parallelism Notes
 
 - Phase 1 is the speed win: 3-4 implementors + db-agent + test-agent all read/write disjoint files.
-- Respect `maxConcurrent: 5` per parent (`08-agent-workflow.md`). If the split exceeds 5 workers, queue Phase 1 in two batches.
+- Respect `maxConcurrent: 5` per parent (skill `flyff-parallel-spawning`). If the split exceeds 5 workers, queue Phase 1 in two batches.
 - For true isolation (no shared working tree), pass `isolation: "worktree"` per implementor — only worth it if workers might graze shared files. Default is fine when ownership table above is clean.
 - Phase 2 is deliberately serial — `compose.ts` and the handler are the integration seam; one writer.
 

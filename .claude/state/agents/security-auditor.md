@@ -70,7 +70,7 @@ security-auditor (parent)
 - maxDepth: 3 (security-auditor → security-auditor → security-auditor)
 - maxConcurrent: 5 (max 5 parallel file audits at once)
 
-**See:** `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning" for full protocol.
+**See:** skill `flyff-parallel-spawning` for full protocol.
 
 ## Audit Queue
 

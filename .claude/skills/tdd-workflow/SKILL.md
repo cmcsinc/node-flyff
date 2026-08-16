@@ -5,7 +5,7 @@ description: Use this skill when writing new features, fixing bugs, or refactori
 
 # Test-Driven Development Workflow
 
-> PROJECT OVERRIDE (node-flyff): The test-runner mechanics here are generic. This repo's authoritative testing rules win on conflict — `node:test` via tsx only (no Jest/Mocha/Vitest), tests in `test/` mirroring `src/`, in-memory SQLite for DB. See rules/06-testing.md, rules/10-test-organization.md, and skill `flyff-testing-patterns`. Keep this skill's TDD *discipline* (test-first, red-green-refactor); take commands/structure from the flyff rules.
+> PROJECT OVERRIDE (node-flyff): The test-runner mechanics here are generic. This repo's authoritative testing rules win on conflict — `node:test` via tsx only (no Jest/Mocha/Vitest), tests in `test/` mirroring `src/`, in-memory SQLite for DB. See rules/06-testing.md and skill `flyff-testing-patterns`. Keep this skill's TDD *discipline* (test-first, red-green-refactor); take commands/structure from the flyff rules.
 
 This skill ensures all code development follows TDD principles with comprehensive test coverage.
 

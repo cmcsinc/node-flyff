@@ -1,3 +1,8 @@
+---
+name: flyff-parallel-spawning
+description: Parallel sub-agent spawning protocol for this repo — safety limits (maxDepth 3, maxConcurrent 5), per-agent fan-out patterns, result aggregation into PROGRESS.md, and failure/timeout handling. Trigger on: "parallel", "concurrent", "simultaneous", "multiple agents", "spawn helpers", "delegate tasks", "independent subtasks", "fan out", "can I spawn multiple agents".
+---
+
 # Parallel Sub-Agent Spawning
 
 Expert knowledge of the parallel sub-agent spawning workflow for the Flyff TypeScript server emulator. Use this skill when an agent needs to delegate independent subtasks to multiple specialized agents simultaneously.
@@ -371,8 +376,7 @@ if (dbResult.status === 'completed' && secResult.status === 'completed' && testR
 ## Rules File References
 
 For full protocol details, see:
-- `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning" section
-- `.claude/rules/09-agentic-selflearning.md` → "Parallel Mode" section
+- Skill `flyff-agent-workflow` → "Agent Roles" + "The 5-Phase Loop and Its Gates"
 - `.claude/state/agents/<agent-name>.md` → Each agent's parallel spawning capabilities
 
 ---

@@ -29,7 +29,7 @@ Phase 3 (optional):
 
 - Phase 1 is the highest-leverage parallel spawn in this project — 3-4 researchers on different C++ files is the norm, not the exception.
 - Each researcher reads a DIFFERENT file -> zero conflict. Safe to run all at once.
-- Cap at `maxConcurrent: 5` per `08-agent-workflow.md`.
+- Cap at `maxConcurrent: 5` per skill `flyff-parallel-spawning`.
 
 ## Output Contract (every researcher)
 

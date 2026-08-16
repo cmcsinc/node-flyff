@@ -1,3 +1,16 @@
+---
+name: flyff-admin-form-ux
+description: >
+  MANDATORY form/UX rules for packages/admin (the Flyff admin panel): no raw
+  JSON textareas, one typed control per leaf value, enum name+raw value,
+  type/precision preservation on round-trip, labels wired by htmlFor, inline
+  errors, one spacing scale, no card-in-card, one sticky action bar. Read this
+  BEFORE writing or editing any admin form, field, or resource editor.
+  Trigger on: "admin panel", "admin form", "resource editor", "field",
+  "form layout", "live-ops UI", "character editor", "NPC form", "zone editor",
+  "packages/admin".
+---
+
 # Admin Form UX Rules
 
 Governs every form in `packages/admin` — resource editors, character live-ops,

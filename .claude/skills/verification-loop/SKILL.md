@@ -17,7 +17,7 @@ Invoke this skill:
 
 ## Verification Phases
 
-> PROJECT (node-flyff): pnpm monorepo, ESM, `node:test` via tsx. Use `pnpm -r` and per-package `--filter`. Tests live in `test/`, never `src/` (see rules/06-testing.md, rules/10-test-organization.md).
+> PROJECT (node-flyff): pnpm monorepo, ESM, `node:test` via tsx. Use `pnpm -r` and per-package `--filter`. Tests live in `test/`, never `src/` (see rules/06-testing.md).
 
 ### Phase 1: Build Verification
 ```bash

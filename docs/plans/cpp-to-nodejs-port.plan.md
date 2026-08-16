@@ -42,7 +42,7 @@ All 3 `compose.test.ts` fail with `ERR_PACKAGE_PATH_NOT_EXPORTED`. Nothing else 
    - Decide once: dev runs off `src` via tsx; `dist` only for `pnpm build`. Wire `exports` with `"development"` condition → `src`, default → `dist`.
 3. **GREEN** — fix broken `test:coverage` script: `node_modulestsx` → `node_modules/.bin/tsx` (or use `tsx --test --experimental-test-coverage`).
 4. Re-run all `test:*` — establish the current green baseline. Record pass/fail counts.
-5. Prune stale `.d.ts`/`.js`/`.d.ts.map` committed under `src/` (e.g. `packages/core/src/net/*.js`) — source dirs must hold `.ts` only (rule 10). Confirm `.gitignore` covers build output.
+5. Prune stale `.d.ts`/`.js`/`.d.ts.map` committed under `src/` (e.g. `packages/core/src/net/*.js`) — source dirs must hold `.ts` only (rule 06). Confirm `.gitignore` covers build output.
 
 **Gate:** `pnpm test` runs with 0 unexpected failures; import resolution works under tsx.
 **Checkpoint commit:** `fix: repair @flyff/core exports map and test scripts`

@@ -1,3 +1,15 @@
+---
+name: flyff-db-normalization
+description: >
+  MANDATORY schema-shape rules for the Flyff emulator: container tables
+  (inventory/bank metadata vs items), 1:N collections (buffs, skills, quests,
+  hotkeys, mail) as dedicated tables, and the absolute ban on JSON columns or
+  packed strings on owner rows. Read this BEFORE adding any column, table, or
+  migration. Trigger on: "migration", "add a table", "add a column", "schema",
+  "normalize", "JSON column", "gold", "penya", "bank", "inventory table",
+  "1:N", "collection", "buffs table", "where should this field live".
+---
+
 # Database Normalization Rules
 
 Governs schema shape for containers (inventory, bank), 1:N collections (buffs,

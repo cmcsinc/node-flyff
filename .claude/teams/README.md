@@ -30,7 +30,7 @@
 - **Default: parallel where independent, serial where files touch.**
 - Independent fan-outs (research, security review, migration drafting) run concurrently in one `Agent` message.
 - Anything editing the same file is serialized through the parent — never let two agents `Edit` the same path in the same round.
-- Limits from `08-agent-workflow.md`: maxDepth 3, maxConcurrent 5 per parent.
+- Limits from skill `flyff-parallel-spawning`: maxDepth 3, maxConcurrent 5 per parent.
 - For `worktree` isolation (true parallel edits), pass `isolation: "worktree"` to the Agent tool — only when agents mutate files concurrently.
 
 ## State Files (every agent respects)

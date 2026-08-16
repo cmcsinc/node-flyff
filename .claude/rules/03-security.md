@@ -25,18 +25,9 @@ Required validations by type:
 
 ## WAL-First for Critical Mutations
 
-Any handler that changes items, gold, or experience **must** call `appendJournal()` synchronously BEFORE sending the success response to the client:
-
-```ts
-// WRONG — crash after this line = item dupe
-await inventoryRepo.removeItem(charId, srcSlot);
-socket.write(responsePacket);
-
-// CORRECT — journal survives crash
-appendJournal(charId, 'ITEM_REMOVED', { slot: srcSlot, itemId });
-await inventoryRepo.removeItem(charId, srcSlot);
-socket.write(responsePacket);
-```
+Any mutation of items, gold, or experience **must** `appendJournal()` before the success
+response reaches the client — a crash between the DB write and the ack is an item dupe. Full
+ordering, payload, and what-must-be-journaled lists: rule `04-persistence`.
 
 ## Session State Guard
 

@@ -55,7 +55,7 @@ database-agent (parent)
 - maxDepth: 3 (database-agent → database-agent → database-agent)
 - maxConcurrent: 5 (max 5 parallel database tasks at once)
 
-**See:** `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning" for full protocol.
+**See:** skill `flyff-parallel-spawning` for full protocol.
 
 ## Schema Decisions Log
 

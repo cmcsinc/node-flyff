@@ -1,12 +1,16 @@
 ---
 name: flyff-agent-workflow
 description: >
-  Standard operating procedures for Flyff emulator agents: session restoration,
-  checkpointing, task tracking, and autonomous handoffs. Use this skill to
-  ensure work continues seamlessly after a session restart or when handing
-  off tasks to a sub-agent. Trigger on: "restore session", "checkpoint",
-  "resume", "handoff", "workflow", "agent state", "save progress".
+  Standard operating procedures for Flyff emulator agents: the 5-phase
+  Research→Implement→Validate→Test→Fix loop, per-agent responsibilities,
+  quality/security gates, session restoration, checkpointing, task tracking,
+  and autonomous handoffs. Read this before spawning a sub-agent, writing a
+  plan, or resuming interrupted work. Trigger on: "restore session",
+  "checkpoint", "resume", "handoff", "workflow", "agent state",
+  "save progress", "which agent", "spawn an agent", "sub-agent",
+  "phase gate", "quality gate", "PROGRESS.md", "SESSION.md".
 ---
+
 
 # Flyff Emulator — Agent Workflow & Session Restoration
 
@@ -153,7 +157,100 @@ Update PROGRESS.md on completion. Update .claude/state/agents/implementor.md.
 
 ---
 
-## 7. The Full Agentic Loop
+## 8. Agent Roles — One Agent, One Responsibility
+
+| Agent | Sole Responsibility |
+| --- | --- |
+| `architect` | Design plans only — no code |
+| `implementor` | Write code from approved plans — no design |
+| `researcher` | Find facts from C++ source or hex dumps — no code |
+| `security-auditor` | Find vulnerabilities — no fixes |
+| `database-agent` | Migrations + repositories only |
+| `test-agent` | Test files only |
+| `devops-agent` | Infrastructure and config only |
+
+Never mix concerns. For fanning work out to several of these at once, use the
+`flyff-parallel-spawning` skill (limits: maxDepth 3, maxConcurrent 5).
+
+---
+
+## 9. The 5-Phase Loop and Its Gates
+
+```
+1. RESEARCH → 2. IMPLEMENT → 2.5 VALIDATE → 3. TEST → 4. FIX
+researcher     implementor    sec-auditor    test-agent  implementor
+```
+
+No phase may be skipped. Gates:
+
+| Phase | Gate before moving on |
+| --- | --- |
+| 1 Research | C++ findings logged to `PROGRESS.md` → Research Findings (or marked "best effort") |
+| 2 Implement | `tsc --noEmit` clean; `.test.ts` stub exists in `test/` |
+| 2.5 Validate | Zero 🔴 Critical findings from `security-auditor` plan review; 🟠 High acknowledged |
+| 3 Test | `tsx --test` green, 0 failures |
+| 4 Fix | Loop back to 3 until green — never `.skip()`, never weaken an assertion |
+
+**Code quality gate** (implementor, before handing off): no `any`, no
+`console.log`, no skipped validation, companion test exists and passes.
+
+**Security gate**: any new Handler or Service touching player state is reviewed
+against `.claude/rules/03-security.md`. A 🔴 Critical finding sends the task
+back to `in_progress`.
+
+---
+
+## 10. Anti-Patterns
+
+- **Never fabricate** a packet structure or formula. Research it (`flyff-research`) or ask.
+- **Never skip** the `.test.ts` file — a stub is required before marking in-progress.
+- **Never overwrite** `PROGRESS.md` rows without reading them first.
+- **Never** leave a lesson only in `SESSION.md` — it must reach `PROGRESS.md` and/or `MEMORY.md` to survive.
+- **Never** mark anything complete — see the Task Completion override in `CLAUDE.md`. Only the user declares work done or fixed.
+
+---
+
+## 11. PROGRESS.md Section Formats
+
+```markdown
+## Research Findings
+| Topic | Found By | Summary | Source |
+|-------|----------|---------|--------|
+| SNSP_LOGIN_CERTIFY | researcher | 4 fields: key, username, md5pw, version | game/source/.../Login.cpp:42 |
+
+## Agent Communication Log
+| Date | From | To | Message |
+|------|------|----|---------|
+| 2026-03-24 | test-agent | implementor | drain() fails on chunk < 4 bytes — add length guard |
+
+## Security Audit Log
+| File | Audited By | Result | Date |
+|------|-----------|--------|------|
+| auth.handler.ts | security-auditor | 🟡 Rate limiter missing on CERTIFY | 2026-03-24 |
+```
+
+### Per-agent session file format (`.claude/state/agents/<name>.md`)
+
+```markdown
+# <Agent Name> Session
+- **Agent**: implementor
+- **Active Task**: Implement packages/core/src/net/PacketReader.ts
+- **Phase**: 2 — Implement
+- **Current Depth**: 2
+- **Active Spawns**: database-agent (task abc123) — COMPLETED
+
+## Current Work
+- [x] Designed interface
+- [/] Writing readDword() — line 45 done, readString() pending
+
+## Next Step
+Complete readString(), then run tests.
+```
+
+---
+
+## 12. The Full Agentic Loop
+
 
 ```
 researcher  →  architect  →  security-auditor  →  implementor  →  test-agent

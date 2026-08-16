@@ -57,7 +57,7 @@ test-agent (parent)
 - maxDepth: 3 (test-agent → test-agent → test-agent)
 - maxConcurrent: 5 (max 5 parallel test runners at once)
 
-**See:** `.claude/rules/08-agent-workflow.md` → "Parallel Sub-Agent Spawning" for full protocol.
+**See:** skill `flyff-parallel-spawning` for full protocol.
 
 ## Test Run Log
 

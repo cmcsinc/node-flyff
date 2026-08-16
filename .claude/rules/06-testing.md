@@ -1,52 +1,48 @@
 # Testing Rules
 
-All code must be testable and tested. These rules govern how tests are written and when they must exist.
+All code must be testable and tested. Code samples and mock factories live in the
+`flyff-testing-patterns` skill — this file is the enforceable rule set.
 
 ## Test Runner
 
-**Mandatory:** Node.js native `node:test` with `tsx`. **Never** use Jest, Mocha, Vitest, or any other test framework.
+**Mandatory:** Node.js native `node:test` with `tsx`. **Never** Jest, Mocha, Vitest, or any
+other framework.
 
 ```ts
 import { describe, it, before, after, mock } from 'node:test';
 import * as assert from 'node:assert/strict';
 ```
 
-Run with: `tsx --test test/**/*.test.ts` (from package root)
+Every package's `package.json` must use `"test": "tsx --test test/**/*.test.ts"`; the root uses
+`"tsx --test packages/*/test/**/*.test.ts"`.
 
-## Test Directory Structure
+## Test File Location — Cardinal Rule
 
-**CRITICAL:** All test files MUST be in a `test/` directory at the package level, mirroring the `src/` structure. **NEVER** place `.test.ts` files in `src/`.
+**NEVER create `.test.ts` files under `src/`.** Tests live in a package-level `test/` directory
+mirroring `src/`, and import across with a relative path:
 
-```
-packages/core/
-  src/
-    net/
-      PacketWriter.ts          ← Source code only
-    cache/
-      MemoryCache.ts
-  test/
-    net/
-      PacketWriter.test.ts     ← Tests go here
-    cache/
-      MemoryCache.test.ts
-    utils/
-      mocks.ts
+```text
+src/handlers/auth.handler.ts     → test/handlers/auth.handler.test.ts
+src/services/auth.service.ts     → test/services/auth.service.test.ts
+src/repositories/account.repo.ts → test/repositories/account.repo.test.ts
+src/utils/math.ts                → test/utils/math.test.ts
 ```
 
-## One Test File Per Source File
-
-Every `.ts` source file in `src/` must have a companion `.test.ts` in the corresponding `test/` directory:
-
-```
-src/handlers/auth.handler.ts      → test/handlers/auth.handler.test.ts
-src/services/auth.service.ts      → test/services/auth.service.test.ts
-src/repositories/account.repo.ts  → test/repositories/account.repo.test.ts
+```ts
+// test/net/PacketWriter.test.ts  ← correct location
+import { PacketWriter } from '../../src/net/PacketWriter';  // ← import from src/, never './'
 ```
 
-**Forbidden:** Creating `.test.ts` files in `src/` directories.
-**Required:** Creating `.test.ts` files in `test/` directories with proper relative imports to `src/`.
+`src/` holds `.ts` source only — no tests, no committed `.js`/`.d.ts` build output. Pre-commit
+hooks reject `src/**/*.test.ts`, and CI fails if any are found. The split keeps `src/` clean,
+keeps test code out of the production bundle, and lets the runner ignore `src/` entirely.
 
-If the companion test file does not exist in `test/`, the `post-tool-test-reminder` hook will flag it in `SESSION.md`.
+Every `.ts` file in `src/` should have a companion `.test.ts` in `test/`. If it is missing, the
+`post-tool-test-reminder` hook flags it in `SESSION.md`.
+
+When migrating a legacy co-located test: move the file preserving its subpath, rewrite
+`./File` imports to `../../src/path/File`, fix the `package.json` glob, confirm it still
+passes, then delete the original.
 
 ## What Must Be Tested
 
@@ -58,50 +54,22 @@ If the companion test file does not exist in `test/`, the `post-tool-test-remind
 | **Utils/Math** | All formulas with boundary values and known game outputs |
 | **IpcBus** | Messages are HMAC-signed; invalid signatures are rejected |
 
-## Mock Standards
+## Mocks
 
-### Mock Sockets
-
-```ts
-function makeMockSocket(overrides = {}) {
-  const written: Buffer[] = [];
-  return {
-    session: { state: SessionState.IN_WORLD, charId: 1, accountId: 1 },
-    write: (buf: Buffer) => { written.push(buf); return true; },
-    destroy: () => {},
-    remoteAddress: '127.0.0.1',
-    _written: written,
-    ...overrides,
-  };
-}
-```
-
-### Mock DB (In-Memory SQLite)
-
-```ts
-before(async () => {
-  db = Knex({ client: 'sqlite3', connection: ':memory:', useNullAsDefault: true });
-  await db.migrate.latest({ directory: '../../migrations' });
-});
-after(() => db.destroy());
-```
-
-### Mock EventBus
-
-```ts
-const emitted: Array<[string, unknown]> = [];
-const bus = { emit: (ev: string, data: unknown) => emitted.push([ev, data]) };
-```
+Never touch real infrastructure. Mock sockets expose a `_written: Buffer[]` array and a
+`session` stub; databases use `Knex({ client: 'sqlite3', connection: ':memory:' })` with
+`migrate.latest()` in `before()` and `destroy()` in `after()`; the EventBus is a `{ emit }`
+stub that pushes to an array. Ready-made factories: skill `flyff-testing-patterns`.
 
 ## Assert Standards
 
-- Always use `node:assert/strict` — never the non-strict `node:assert`.
-- Prefer `assert.deepEqual` for objects, `assert.equal` for primitives.
-- Test error cases with `assert.rejects(async () => fn(), /pattern/)` or `assert.throws(() => fn(), /pattern/)`.
+- Always `node:assert/strict` — never the non-strict `node:assert`.
+- `assert.deepEqual` for objects, `assert.equal` for primitives.
+- Error cases via `assert.rejects(async () => fn(), /pattern/)` or `assert.throws(...)`.
 
 ## Forbidden in Tests
 
 - No real network calls — mock sockets and IPC.
-- No real file I/O for DB — use in-memory SQLite.
-- No `setTimeout` without `mock.timers` — use `mock.timers.enable()` and `mock.timers.tick()`.
-- No `console.log` — use `assert` statements only.
+- No real file I/O for the DB — in-memory SQLite only.
+- No `setTimeout` without `mock.timers` — use `mock.timers.enable()` / `.tick()` / `.reset()`.
+- No `console.log` — assertions only.

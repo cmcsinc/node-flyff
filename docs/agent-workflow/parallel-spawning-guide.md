@@ -290,8 +290,8 @@ Default timeout is 120 seconds per sub-agent:
 ## Files Reference
 
 ### Core Documentation
-- `.claude/rules/08-agent-workflow.md` → Full parallel spawning protocol
-- `.claude/rules/09-agentic-selflearning.md` → Parallel mode in self-learning loop
+- skill `flyff-parallel-spawning` → Full parallel spawning protocol
+- skill `flyff-agent-workflow` → the 5-phase loop and its gates
 - `.claude/skills/flyff-parallel-spawning/SKILL.md` → Comprehensive skill guide
 
 ### Agent Session Files
@@ -328,5 +328,5 @@ The parallel spawning skill is triggered by:
 
 For questions or issues with parallel spawning:
 1. Check `.claude/skills/flyff-parallel-spawning/SKILL.md` for detailed patterns
-2. Review `.claude/rules/08-agent-workflow.md` for protocol details
+2. Review skill `flyff-parallel-spawning` for protocol details
 3. Check `.claude/state/PROGRESS.md` → Agent Communication Log for examples from other agents
