@@ -755,15 +755,28 @@ describe('vitals recovery (maxHitPoint / maxManaPoint / maxFatiguePoint / standR
     assert.equal(v, 32); // clamps lv=1 -> same as the L1 case
   });
 
-  it('standRecovery hand-computed for L1 VAGRANT (v9+ 0.9 factor baked in)', () => {
+  it('standRecovery truncates to int BEFORE the v9 10% shave (MoverParam.cpp:3147)', () => {
     const maxFp = maxFatiguePoint(1, 15, vagrant.fFactorMaxFP);
     const r = standRecovery(1, 15, 15, 100, 50, maxFp, vagrant);
-    // HP: ((1/3) + 100/500 + 15*1.2) * 0.9 = (0.333+0.2+18)*0.9 = 16.68 -> 16
+    // C++ is two casts: `nValue = (int)(sum)`, then `(int)(nValue - nValue*0.1f)`.
+    // HP: sum = (1/3) + 100/500 + 15*1.2 = 18.533 -> 18 -> 18-1.8 = 16.2 -> 16
     assert.equal(r.hp, 16);
-    // MP: ((1.5 + 50/500 + 15*0.5) * 0.2) * 0.9 = (9.1*0.2)*0.9 = 1.638 -> 1
-    assert.equal(r.mp, 1);
-    // FP: ((2 + 32/500 + 15*0.5) * 0.2) * 0.9 = (9.564*0.2)*0.9 = 1.72 -> 1
-    assert.equal(r.fp, 1);
+    // MP: sum = (1.5 + 50/500 + 15*0.5) * 0.2 = 1.82 -> 1 -> 1-0.1 = 0.9 -> 0
+    // The folded `floor(sum*0.9)` form gave 1 here; the C++ gives 0.
+    assert.equal(r.mp, 0, 'L1 stand MP regen truncates away entirely');
+    // FP: sum = (2 + 32/500 + 15*0.5) * 0.2 = 1.913 -> 1 -> 0.9 -> 0
+    assert.equal(r.fp, 0, 'L1 stand FP regen truncates away entirely');
+  });
+
+  it('standRecovery double-truncation only differs from folded 0.9 below the int boundary', () => {
+    // L20 VAGRANT, STA/INT 30: HP sum = 6.667 + 500/10000 + 36 = 42.717 -> 42
+    //   -> 42 - 4.2 = 37.8 -> 37. Folded floor(42.717*0.9) = 38. C++ says 37.
+    const r = standRecovery(20, 30, 30, 500, 300, 200, vagrant);
+    assert.equal(r.hp, 37);
+    // MP sum = (30 + 300/10000 + 15) * 0.2 = 9.006 -> 9 -> 9-0.9 = 8.1 -> 8
+    assert.equal(r.mp, 8);
+    // FP sum = (40 + 200/10000 + 15) * 0.2 = 11.004 -> 11 -> 11-1.1 = 9.9 -> 9
+    assert.equal(r.fp, 9);
   });
 
   it('standRecovery clamps negatives to 0 (never drains)', () => {

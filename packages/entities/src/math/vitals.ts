@@ -52,12 +52,31 @@ export function maxFatiguePoint(level: number, sta: number, fFactorMaxFP: number
 
 /**
  * Stand regen amounts per 3 s tick (`ProcessRecovery` stand branch,
- * `Mover.cpp:8381`, formulas `MoverParam.cpp:2972/2989/3006`). The v9+
- * `__RECOVERY10` `-10%` is baked in via the trailing `* 0.9`. `level` is
- * clamped `>= 1` to guard the `/ (500*level)` term. Pure: the caller mutates
- * the entity + sends the SETPOINTPARAM sync (`RecoverySystem`). Negatives clamp to 0.
+ * `Mover.cpp:8381`, formulas `GetHPRecovery`/`GetMPRecovery`/`GetFPRecovery`,
+ * `MoverParam.cpp:3135-3183`). `level` is clamped `>= 1` to guard the
+ * `/ (500*level)` term. Pure: the caller mutates the entity + sends the
+ * SETPOINTPARAM sync (`RecoverySystem`). Negatives clamp to 0.
  */
 export interface RecoveryAmount { readonly hp: number; readonly mp: number; readonly fp: number; }
+
+/**
+ * `__RECOVERY10` (v9+) 10% shave -- `MoverParam.cpp:3147`.
+ *
+ * ```cpp
+ * int nValue = (int)( <formula> );            // truncate #1
+ * nValue     = (int)( nValue - nValue*0.1f ); // truncate #2
+ * ```
+ *
+ * The C++ truncates to `int` **before** shaving, so the shave operates on a
+ * whole number. Folding both into `floor(sum * 0.9)` is NOT equivalent: a sum
+ * of 11.2 gives C++ `trunc(11 - 1.1) = 9` but the folded form
+ * `floor(11.2*0.9) = 10`. Values are non-negative here, so `Math.floor` is the
+ * right stand-in for the C-cast.
+ */
+function recovery10(sum: number): number {
+  const nValue = Math.floor(sum);
+  return Math.floor(nValue - nValue * 0.1);
+}
 
 export function standRecovery(
   level: number,
@@ -70,9 +89,9 @@ export function standRecovery(
   params: ParamView = EMPTY_PARAM_VIEW,
 ): RecoveryAmount {
   const lv = Math.max(1, level);
-  const baseHp = Math.floor(((lv / 3) + maxHp / (500 * lv) + sta * job.fFactorHPRec) * 0.9);
-  const baseMp = Math.floor(((lv * 1.5 + maxMp / (500 * lv) + int_ * job.fFactorMPRec) * 0.2) * 0.9);
-  const baseFp = Math.floor(((lv * 2 + maxFp / (500 * lv) + sta * job.fFactorFPRec) * 0.2) * 0.9);
+  const baseHp = recovery10((lv / 3) + maxHp / (500 * lv) + sta * job.fFactorHPRec);
+  const baseMp = recovery10((lv * 1.5 + maxMp / (500 * lv) + int_ * job.fFactorMPRec) * 0.2);
+  const baseFp = recovery10((lv * 2 + maxFp / (500 * lv) + sta * job.fFactorFPRec) * 0.2);
   // C++ `GetParam(DST_HP_RECOVERY, nValue)` -- flat addition from equip/buff DST.
   // `ParamView.get` returns `def + adj`, so pass 0 and add to base.
   const hp = baseHp + params.get(DST.HP_RECOVERY, 0);

@@ -158,11 +158,29 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 - The `skillFormulas.test.ts` case that had a `ponytail:` pinning the old defender-based model
   is rewritten; 2 cases added (no-weapon → 1.0, defender-element invariance).
 
-### C6. Recovery uses raw m_nSta/m_nInt, not DST-adjusted
-- **File**: `packages/world-server/src/systems/recovery.system.ts:106`
-- **TS**: `p.m_nSta, p.m_nInt` (raw stat)
-- **C++** (`MoverParam.cpp:3145`): `GetSta()`, `GetInt()` (DST-adjusted)
-- **Impact**: Gear/buff +STA/+INT doesn't boost HP/MP/FP regen
+### ~~C6. Recovery uses raw m_nSta/m_nInt, not DST-adjusted~~ ✅ Resolved (2026-08-18)
+- **The row was stale as written.** `recovery.system.ts:135` already passes
+  `p.getSta(), p.getInt()` (DST-adjusted), and already recomputes
+  `p.m_nMaxHp = p.getMaxHp()` (+ Mp/Fp) each tick, so gear/buff +STA/+INT *does*
+  boost regen and the raised ceiling is respected. Nothing to fix there.
+- **A real divergence turned up next door**, in `standRecovery`
+  (`packages/entities/src/math/vitals.ts`). `GetHPRecovery`/`GetMPRecovery`/
+  `GetFPRecovery` (`MoverParam.cpp:3135-3183`) truncate **twice**:
+  ```cpp
+  int nValue = (int)( <formula> );              // cast #1
+  nValue     = (int)( nValue - nValue * 0.1f ); // __RECOVERY10, cast #2
+  ```
+  The TS had folded both into one `Math.floor(sum * 0.9)`, which is not
+  equivalent — the shave must operate on the already-truncated integer.
+- **Fixed**: extracted `recovery10(sum)` = `floor(floor(sum) - floor(sum)*0.1)`
+  and routed all three amounts through it.
+- **Observable change**: L1 VAGRANT (STA/INT 15) stand regen goes MP 1→0 and
+  FP 1→0 (sums 1.82 / 1.913 truncate to 1, then 0.9 → 0). L20 STA/INT 30 HP
+  goes 38→37. HP at L1 is unchanged (16). Low levels lose the sliver of MP/FP
+  regen they were never supposed to have.
+- **Tests**: `formulas.test.ts` recovery case rewritten with the corrected
+  expectations; one case added at the L20 int boundary where folded-vs-double
+  truncation diverges. 88/88 in that file.
 
 ### C7. ACTMSG handler invented — no C++ server-side handler
 - **File**: `packages/inventory/src/handlers/actMsg.handler.ts`
