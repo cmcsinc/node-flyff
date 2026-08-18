@@ -95,6 +95,23 @@ describe('combat getAttackResult', () => {
     // (15*1.5/18)*2*(0.5/1.3)*100 = 96.15 -> clamp 96
     assert.equal(getAttackResult(player, aibatt), 96);
   });
+
+  it('monster->player uses its OWN coefficients (MoverAttack.cpp:330-331)', () => {
+    // L7 Pukepuke (dwHR 40) swinging at the L30 tank (parry = floor(30*0.5)... no:
+    // tank keeps dex 15, so parry = floor(15*0.5 + 0) = 7).
+    //   (40*1.5/(40+7)) * 2.0 * (7*0.5 / (7 + 30*0.3)) * 100
+    //   = 1.2765957 * 2 * (3.5/16) * 100 = 55.85 -> 55
+    // The player-arm constants (*1.6/*1.5, level term LVL*1.2/(LVL+defLVL))
+    // would give 46 instead -- a monster loses accuracy much faster as the
+    // player out-levels it.
+    assert.equal(getAttackResult(pukepuke, tank), 55);
+  });
+
+  it('monster->player still floors at MIN_HR against a far higher-level player', () => {
+    const veteran: Combatant = { ...player, level: 200 };
+    // level term collapses: (1*0.5)/(1 + 200*0.3) = 0.0082 -> rate ~2 -> MIN_HR 20
+    assert.equal(getAttackResult(aibatt, veteran), 20);
+  });
 });
 
 describe('combat calcDefense', () => {

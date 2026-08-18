@@ -288,13 +288,8 @@ export function getAttackSpeed(c: Combatant): number {
  * The branch result is truncated to int BEFORE `GetAdjHitRate()` is added
  * (`nHitRate = (int)(...)` then `nHitRate += ...`, C++ :330/:348), so a +20 buff
  * moves the rate by exactly 20 points -- flooring the sum instead would drop a
- * fractional point.
- *
- * ponytail: the `IsNPC() && pDefender->IsPlayer()` branch below still carries the
- * player->NPC coefficients (`*1.6 / *1.5`, level term `LVL*1.2/(LVL+defLVL)`)
- * instead of the C++ NPC ones (`*1.5 / *2.0`, level term
- * `LVL*0.5/(LVL + defLVL*0.3)`, MoverAttack.cpp:330-331). Correcting it changes
- * how often monsters land a hit, so it is left for a separate, deliberate pass.
+ * fractional point. `(int)` truncates toward zero and every branch here is
+ * positive, so `Math.floor` is exact.
  */
 export function getAttackResult(attacker: Combatant, defender: Combatant): number {
   const HR = getHR(attacker);
@@ -305,8 +300,13 @@ export function getAttackResult(attacker: Combatant, defender: Combatant): numbe
     // MoverAttack.cpp:335-336 -- Player->NPC hit rate
     rate = (HR * 1.6 / (HR + parry)) * 1.5 * (LVL * 1.2 / (LVL + defLVL)) * 100;
   } else if (attacker.kind === 'npc' && defender.kind === 'player') {
-    rate = (HR * 1.6 / (HR + parry)) * 1.5 * (LVL * 1.2 / (LVL + defLVL)) * 100;
-  } else { // PvP -- MoverAttack.cpp:344-345
+    // MoverAttack.cpp:330-331 -- Monster->player. Note this arm's constants and
+    // level term BOTH differ from the player arm above: *1.5/*2.0 instead of
+    // *1.6/*1.5, and the defender's level is weighted 0.3 while the attacker's
+    // is halved. A monster therefore loses accuracy far faster as the player
+    // out-levels it than the mirrored player formula would suggest.
+    rate = (HR * 1.5 / (HR + parry)) * 2.0 * (LVL * 0.5 / (LVL + defLVL * 0.3)) * 100;
+  } else { // PvP -- MoverAttack.cpp:344-345 (__VER > 9 arm; the <=9 arm is a flat *0.6)
     rate = (HR * 1.6 / (HR + parry)) * 1.2 * (LVL * 1.2 / (LVL + defLVL)) * 100;
   }
   // nHitRate += GetAdjHitRate() (MoverAttack.cpp:348), after the (int) cast.

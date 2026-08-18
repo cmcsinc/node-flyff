@@ -33,11 +33,11 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 
 ## CRITICAL — Must Fix
 
-### C1. Player→NPC hit rate formula has wrong coefficients
-- **File**: `packages/combat/src/combat/formulas.ts:187-193`
-- **TS**: `(HR*1.5/(HR+parry)) * 2.0 * (LVL*0.5/(LVL+defLVL*0.3)) * 100`
-- **C++** (`MoverAttack.cpp:333-336`): `(HR*1.6/(HR+parry)) * 1.5 * (LVL*1.2/(LVL+defLVL)) * 100`
-- **Impact**: Player misses far more (or less) than intended vs monsters
+### C1. ~~Player→NPC hit rate formula has wrong coefficients~~ ✅ Resolved (2026-08-18)
+- **File**: `packages/combat/src/combat/formulas.ts` (`getAttackResult`)
+- The player→NPC arm already carried the correct C++ coefficients
+  (`MoverAttack.cpp:335-336`: `HR*1.6/(HR+parry) * 1.5 * (LVL*1.2/(LVL+defLVL)) * 100`) — this
+  row was stale. What *was* wrong is that the **monster→player** arm was a copy of it; see C4.
 
 ### C2. ~~Skill attacks can crit — C++ blocks it~~ ✅ Already correct
 - **File**: `packages/combat/src/combat/skillFormulas.ts:294`
@@ -111,11 +111,21 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
   - Zero damage cleared only `AF_CRITICAL1`; `PostCalcGeneric` (`MoverAttack.cpp:1533`) clears the
     full `AF_CRITICAL` (0xC0) mask **and** `AF_FLYING`. Both now cleared.
 
-### C4. Hit-rate integer truncation differs
-- **File**: `packages/combat/src/combat/formulas.ts:195`
-- **TS**: floating point throughout, clamp at end
-- **C++**: integer `(int)` cast on the full expression before clamp
-- **Impact**: Intermediate rounding changes hit probability by 1-2%
+### C4. ~~Hit-rate integer truncation differs~~ ✅ Resolved (2026-08-18)
+- **File**: `packages/combat/src/combat/formulas.ts` (`getAttackResult`)
+- **Truncation**: already correct — the TS floors the branch result *before* adding
+  `getAdjHitRate` and before the clamp, matching `nHitRate = (int)(...)` then
+  `nHitRate += GetAdjHitRate()` (`MoverAttack.cpp:330`/`:348`). Every branch is positive, so
+  `Math.floor` and C's truncate-toward-zero agree.
+- **The real bug found while checking it**: the `IsNPC() && pDefender->IsPlayer()` arm was a
+  verbatim copy of the player→NPC arm. C++ (`MoverAttack.cpp:330-331`) uses different constants
+  **and** a different level term: `HR*1.5/(HR+parry) * 2.0 * (LVL*0.5/(LVL + defLVL*0.3)) * 100`
+  versus the player's `*1.6 / *1.5` and `LVL*1.2/(LVL+defLVL)`. Because the defender's level is
+  weighted 0.3 while the attacker's is halved, a monster loses accuracy far faster as the player
+  out-levels it than the mirrored formula produced. Fixed; L7 Pukepuke vs an L30 player now
+  rolls 55 rather than 46. PvP arm confirmed to be the `__VER > 9` branch (`:344-345`), not the
+  `<= 9` flat `*0.6`.
+- 2 new test cases (own-coefficient check + `MIN_HR` floor against a far higher-level player).
 
 ### C5. Magic element factor compares wrong elements — skill vs defender instead of skill vs weapon
 - **File**: `packages/combat/src/combat/skillFormulas.ts:176-178`
