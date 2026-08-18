@@ -57,9 +57,52 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
 - **Fix**: hoisted the crit roll before `xRandom(min,max)`, scales `min`/`max` per the three tiers,
   now consumes `DST.CRITICAL_BONUS`; removed the flat `*2.3`. `skillFormulas.ts` stale doc comment
   updated; 5 new test cases; all 204 tests pass.
-- **ponytail**: `AF_FLYING` knock-up (15% roll, needs `CanFlyByAttack()`); ATK4/max-charge `*2.6`
-  and `*2.3` (`ApplyDPC`) when that path is eventually ported; `GetWeaponPlusDamage(nDamage)`
-  (enchant option bonus) added right before the zero-check in `PostCalcGeneric`.
+- **~~ponytail~~ — all three resolved (2026-08-18)**:
+  - `AF_FLYING` knock-up ported (15% roll in `GetHitPower`, gated on `canFlyByAttack`). The
+    serializer's pos/angle tail now carries the **victim's** pos + angle, matching `AddDamage`
+    (`pMover->GetPos()`); `CanFlyByAttack` needs the raw `dwClass` rank to exempt
+    SUPER/MATERIAL/MIDBOSS, so `rank` was added to `MoverDefinition`, the converter, and
+    `SpawnManager`.
+  - `ApplyDPC` ported as `applyDpc()` — see **C3-DPC** below.
+  - `GetWeaponPlusDamage` is a **no-op at v19**: the sink (`MoverAttack.cpp:117-138`) is
+    `return 0;` unconditionally. Nothing to port.
+
+### C3-DPC. `ApplyDPC` POSTCALC_DPC sink — ported (2026-08-18)
+- **File**: `packages/combat/src/combat/formulas.ts` (`applyDpc`), routed from
+  `skillFormulas.ts`'s melee arm.
+- **C++** (`MoverAttack.cpp:1645`): defender-side sink reached when `GetPostCalcType`
+  (`AttackArbiter.cpp:434-450`) matches neither AF_MAGICSKILL nor AF_GENERIC. `CanIgnoreDEF`
+  (AF_FORCE / Asalraalaikum 159 / Hit of Penya 212) → full ATK, else `nATK - CalcDefense`
+  clamped at 0; then on crit the full `AF_CRITICAL` mask plus `*2.6` + 50% fly roll when
+  `OBJSTA_ATK4` or `nChargeLevel == MAX_CHARGE_LEVEL`, else `*2.3` + 30% fly roll; then
+  `DST_CRITICAL_BONUS` floored at 0.1.
+- **Note the fly-roll asymmetry**: `GetHitPower` rolls **15**, `ApplyDPC` rolls **50**/**30**.
+- **Routing fix shipped with it**: `skillFormulas.ts` no longer sets `AF_GENERIC` —
+  `Ctrl.cpp:1024-1031` sets only AF_MELEESKILL/AF_MAGICSKILL, and that absence is precisely
+  what routes a melee skill to POSTCALC_DPC.
+- **ponytail — the crit branch is unreachable today**: melee skills do reach `applyDpc` but
+  `IsSkillAttack` (`MoverAttack.cpp:800`) blocks their crit, and the only other POSTCALC_DPC
+  producer is the bare-`AF_MAGIC` wand auto-attack (`MoverActEvent.cpp:859`), which has no TS
+  path — `WT_MAGIC_WAND` appears only in the `formulas.ts` STR-scaling switch. The 2.3×/2.6×
+  layer lights up when that swing ships. Observable change today is the DEF path plus the
+  `CanIgnoreDEF` bypass on those two skills.
+
+### C3-PARTY. `GetCriticalProb` party SphereCircle bonus — ported (2026-08-18)
+- **Files**: `formulas.ts` (`getCriticalProb` adds `partyCritBonus`),
+  `combat.service.ts` (`takePartyCritBonus`), `entities/src/constants/stateFlag.ts`
+  (`MVRF.CRITICAL = 0x2`), `mover.ts` + `player.ts` (`m_dwFlag`),
+  `world-server/src/compose.ts` (`partySize` seam).
+- **C++** (`MoverAttack.cpp:697-707`): `nProb += pParty->m_nSizeofMember / 2`, gated on the
+  one-shot `MVRF_CRITICAL` flag. The bonus is added **after** the `GetParam` override and after
+  the `__JEFF_11` negative clamp, and caps at +4 (`MAX_PTMEMBER_SIZE_SPECIAL` = 8).
+  The `m_dwFlag &= ~MVRF_CRITICAL` clear sits **outside** the `pParty &&` guard, so a stale
+  party id still burns the charge — the TS mirrors that.
+- The `IsAfterDeath()` and berserk-HP terms below it are `#if __VER < 9` → not compiled at v19.
+- `CPlayer` does **not** extend `CMover` in this port, so `m_dwFlag` is mirrored on both.
+- **ponytail — nothing arms the flag**: the producer is `CParty::DoUsePartySkill`
+  `case ST_SPHERECIRCLE:` (`party.cpp:441-488`), which needs `m_nKindTroup`, party level/points,
+  `m_idSetTarget`, `m_nModeTime[...]` and `IsNearPC` — none exist in `PartyManager`. The
+  consumer side is faithful.
 - **Follow-ups shipped with C3**:
   - `getCriticalProb` was **adding** `DST_CHR_CHANCECRITICAL`; `GetParam(dst, nProb)`
     (`MoverParam.cpp:2909`) treats the DEX/job roll as the *default*, so a chg value **overrides**
